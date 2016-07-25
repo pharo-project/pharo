@@ -9,10 +9,10 @@ VERSION=`./pharo Pharo.image eval SystemVersion current highestUpdate`
 echo "GOT ${VERSION}!"
 
 echo "INSTALL GIT FILETREE SUPPORT"
-./pharo Pharo.image --save ${PWD}/pre_install_exporter.st
+./pharo Pharo.image --save --quit ${PWD}/pre_install_exporter.st
 
 echo "EXPORTING SOURCE CODE"
-./pharo Pharo.image --save ${PWD}/export.st
+./pharo Pharo.image --save --quit ${PWD}/export.st
 
 echo "GIT COMMIT, TAG, AND PUSH"
 git add *
