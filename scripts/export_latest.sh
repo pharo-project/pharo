@@ -18,4 +18,4 @@ echo "GIT COMMIT, TAG, AND PUSH"
 git add *
 git commit -m "EXPORT VERSION ${VERSION}"
 git tag -a v${VERSION} -m "TAG VERSION ${VERSION}"
-git push --force --tags
+git push --force --tags git@github.com:guillep/pharo-core.git
