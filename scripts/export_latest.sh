@@ -1,7 +1,6 @@
 #!/bin/sh
 
-$PWD=parent_path=$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )
-
+PWD="$( dirname $(readlink -f $0) )"
 wget --quiet -O - get.pharo.org/60+vm | bash
 ./pharo Pharo.image --save ${PWD}/pre_install_exporter.st
 
