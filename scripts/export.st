@@ -18,5 +18,5 @@ MCWorkingCopy allManagers
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
 			MCFileTreeGitWriter
 				fileOut: version
-				on: (MCFileTreeRepository new directory: directory: 'pharo-core' asFileReference ensureCreateDirectory)
+				on: (MCFileTreeRepository new directory: 'pharo-core' asFileReference ensureCreateDirectory)
 				] ] on: Warning do: #resume.
