@@ -1,0 +1,3 @@
+accessing
+currentSearchMode
+	^self finder currentSearchMode

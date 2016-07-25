@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 15:16",
+	"instvars" : [
+		 ],
+	"name" : "EpRefactoring",
+	"pools" : [
+		 ],
+	"super" : "EpEvent",
+	"type" : "normal" }

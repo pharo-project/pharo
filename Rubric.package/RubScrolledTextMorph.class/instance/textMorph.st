@@ -1,0 +1,3 @@
+accessing
+textMorph
+	^ self textArea

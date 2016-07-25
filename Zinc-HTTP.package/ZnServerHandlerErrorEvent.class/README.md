@@ -1,0 +1,1 @@
+ZnServerHandlerErrorEvent signals an error that occurred during handling by the delegate. This is considered a real error.

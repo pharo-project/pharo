@@ -1,0 +1,1 @@
+I have the common behavior for storing and loading pointer objects.

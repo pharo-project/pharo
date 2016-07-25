@@ -1,0 +1,16 @@
+{
+	"category" : "Fuel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/6/2012 16:04",
+	"instvars" : [
+		"sourceClassName",
+		"variables",
+		"targetClass" ],
+	"name" : "FLMigration",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

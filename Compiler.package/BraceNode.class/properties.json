@@ -1,0 +1,16 @@
+{
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"elements",
+		"sourceLocations",
+		"emitNode" ],
+	"name" : "BraceNode",
+	"pools" : [
+		 ],
+	"super" : "ParseNode",
+	"type" : "normal" }

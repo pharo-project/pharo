@@ -1,0 +1,1 @@
+This inline a variable in an assignment sentence

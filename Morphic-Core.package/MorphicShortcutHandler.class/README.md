@@ -1,0 +1,1 @@
+I am a null shortcut handler for morphic. I register myself as a tool to be replaced by somebody else who really wants to handle shortcuts.

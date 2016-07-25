@@ -1,0 +1,3 @@
+private
+workingCopy 
+	^ self subclassResponsibility

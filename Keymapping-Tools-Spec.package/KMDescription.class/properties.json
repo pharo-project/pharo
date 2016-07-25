@@ -1,0 +1,21 @@
+{
+	"category" : "Keymapping-Tools-Spec",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"shortcutList",
+		"collectingBlock",
+		"categories",
+		"orderingList",
+		"sortingBlock",
+		"updatingBlock",
+		"okToolbar",
+		"categoryList" ],
+	"name" : "KMDescription",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 9/5/2014 17:00",
+	"instvars" : [
+		 ],
+	"name" : "SupplyAnswerTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

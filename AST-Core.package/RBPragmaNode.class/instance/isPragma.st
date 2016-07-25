@@ -1,0 +1,3 @@
+testing
+isPragma
+	^ true

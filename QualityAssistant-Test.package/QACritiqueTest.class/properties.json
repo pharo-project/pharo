@@ -1,0 +1,14 @@
+{
+	"category" : "QualityAssistant-Test",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "QACritiqueTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

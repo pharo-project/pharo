@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-FastTable-Morphic-Renderer",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/10/2015 11:39",
+	"instvars" : [
+		 ],
+	"name" : "GLMMorphicFastListRenderer",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicFTRenderer",
+	"type" : "normal" }

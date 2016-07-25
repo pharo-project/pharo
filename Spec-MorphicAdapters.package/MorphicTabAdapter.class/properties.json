@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/16/2015 23:29",
+	"instvars" : [
+		 ],
+	"name" : "MorphicTabAdapter",
+	"pools" : [
+		 ],
+	"super" : "AbstractMorphicAdapter",
+	"type" : "normal" }

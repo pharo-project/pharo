@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-DependencyAnalyser-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 8/7/2014 12:09",
+	"instvars" : [
+		 ],
+	"name" : "DAPackageItemDiff",
+	"pools" : [
+		 ],
+	"super" : "DAAbstractItemDiff",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CursorEdgeMargin" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"controller",
+		"cursorMorph",
+		"layoutViewMorph" ],
+	"name" : "TxTextEditorMorph",
+	"pools" : [
+		 ],
+	"super" : "TxBasicViewMorph",
+	"type" : "normal" }

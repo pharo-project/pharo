@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "monty 9/22/2015 16:43",
+	"instvars" : [
+		 ],
+	"name" : "RBGuardClauseRule",
+	"pools" : [
+		 ],
+	"super" : "RBTransformationRule",
+	"type" : "normal" }

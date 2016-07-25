@@ -1,0 +1,33 @@
+{
+	"category" : "Compression-Archives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CentralDirectoryFileHeaderSignature",
+		"CompressionDeflated",
+		"CompressionLevelDefault",
+		"CompressionLevelNone",
+		"CompressionStored",
+		"DataDescriptorLength",
+		"DefaultDirectoryPermissions",
+		"DefaultFilePermissions",
+		"DeflatingCompressionFast",
+		"DeflatingCompressionMaximum",
+		"DeflatingCompressionNormal",
+		"DeflatingCompressionSuperFast",
+		"DirectoryAttrib",
+		"EndOfCentralDirectorySignature",
+		"FaMsdos",
+		"FaUnix",
+		"FileAttrib",
+		"IfaBinaryFile",
+		"IfaTextFile",
+		"LocalFileHeaderSignature" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ZipFileConstants",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

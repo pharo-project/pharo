@@ -1,0 +1,3 @@
+selection
+resetClassesList
+	self subclassResponsibility 

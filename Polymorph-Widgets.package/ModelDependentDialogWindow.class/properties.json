@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 12:44",
+	"instvars" : [
+		 ],
+	"name" : "ModelDependentDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

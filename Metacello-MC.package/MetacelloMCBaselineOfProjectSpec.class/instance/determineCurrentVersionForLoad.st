@@ -1,0 +1,3 @@
+loading
+determineCurrentVersionForLoad
+    ^ self version

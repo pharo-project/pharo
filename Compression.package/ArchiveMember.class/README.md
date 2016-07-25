@@ -1,0 +1,1 @@
+This is the abstract superclass for archive members, which are files or directories stored in archives.

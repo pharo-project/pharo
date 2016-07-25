@@ -1,0 +1,3 @@
+running
+setUp
+	hasSetup := true

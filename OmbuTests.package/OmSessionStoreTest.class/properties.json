@@ -1,0 +1,14 @@
+{
+	"category" : "OmbuTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OmSessionStoreTest",
+	"pools" : [
+		 ],
+	"super" : "OmStoreTest",
+	"type" : "normal" }

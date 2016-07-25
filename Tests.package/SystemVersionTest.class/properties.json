@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-System",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tlk 11/14/2004 10:47",
+	"instvars" : [
+		 ],
+	"name" : "SystemVersionTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

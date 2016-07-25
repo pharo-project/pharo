@@ -1,0 +1,3 @@
+code-critics
+ruleExtraBlockRuleV1FalsePositive
+^ #(#(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingMultipleVariablesInVector #false)) #'2015-04-09T21:02:04.935487+02:00') #(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingTempsVectorInBlock #false)) #'2015-04-09T21:02:04.935425+02:00') #(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingVariablesInBlock #false)) #'2015-04-09T21:02:04.935457+02:00') )

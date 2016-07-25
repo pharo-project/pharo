@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "kfr 10/27/2003 11:17",
+	"instvars" : [
+		"borderWidth",
+		"borderColor" ],
+	"name" : "BorderedMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

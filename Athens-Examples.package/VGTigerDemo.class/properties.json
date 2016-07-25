@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"surface" ],
+	"name" : "VGTigerDemo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

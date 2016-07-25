@@ -1,0 +1,14 @@
+{
+	"category" : "Zodiac-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/17/2011 18:57",
+	"instvars" : [
+		 ],
+	"name" : "ZdcOptimizedSocketStream",
+	"pools" : [
+		 ],
+	"super" : "ZdcSimpleSocketStream",
+	"type" : "normal" }

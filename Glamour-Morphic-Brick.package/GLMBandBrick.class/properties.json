@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/22/2015 11:35",
+	"instvars" : [
+		 ],
+	"name" : "GLMBandBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

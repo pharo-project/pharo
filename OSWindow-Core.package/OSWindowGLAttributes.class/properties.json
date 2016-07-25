@@ -1,0 +1,34 @@
+{
+	"category" : "OSWindow-Core-OpenGL",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultAlphaSize",
+		"DefaultBlueSize",
+		"DefaultDepthSize",
+		"DefaultDoubleBuffer",
+		"DefaultGreenSize",
+		"DefaultMajorVersion",
+		"DefaultMinorVersion",
+		"DefaultProfileType",
+		"DefaultRedSize",
+		"DefaultStencilSize",
+		"DefaultSwapControl" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 16:38",
+	"instvars" : [
+		"redSize",
+		"blueSize",
+		"greenSize",
+		"alphaSize",
+		"depthSize",
+		"doubleBuffer",
+		"swapControl",
+		"stencilSize",
+		"minorVersion",
+		"majorVersion",
+		"profileType" ],
+	"name" : "OSWindowGLAttributes",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

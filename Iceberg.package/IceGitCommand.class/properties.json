@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Adapters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicoPasserini 5/24/2016 11:11",
+	"instvars" : [
+		 ],
+	"name" : "IceGitCommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

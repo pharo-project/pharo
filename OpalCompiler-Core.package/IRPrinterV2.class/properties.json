@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-IR-Manipulation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBer 10/14/2014 14:16",
+	"instvars" : [
+		"stream" ],
+	"name" : "IRPrinterV2",
+	"pools" : [
+		 ],
+	"super" : "IRVisitor",
+	"type" : "normal" }

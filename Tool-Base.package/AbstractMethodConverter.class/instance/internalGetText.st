@@ -1,0 +1,4 @@
+private
+internalGetText
+
+	^ self subclassResponsibility

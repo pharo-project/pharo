@@ -1,0 +1,4 @@
+private
+setDescriptionInMetacelloVersion: aMetacelloVersionSpec
+
+	aMetacelloVersionSpec setDescription: self

@@ -1,0 +1,26 @@
+{
+	"category" : "Tool-Profilers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultPollPeriod",
+		"Timer" ],
+	"commentStamp" : "StephaneDucasse 9/27/2009 10:42",
+	"instvars" : [
+		"class",
+		"method",
+		"process",
+		"tally",
+		"receivers",
+		"senders",
+		"time",
+		"gcStats",
+		"maxClassNameSize",
+		"maxClassPlusSelectorSize",
+		"maxTabs",
+		"reportOtherProcesses" ],
+	"name" : "MessageTally",
+	"pools" : [
+		 ],
+	"super" : "Magnitude",
+	"type" : "normal" }

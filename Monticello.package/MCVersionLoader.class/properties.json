@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Loading",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"versions" ],
+	"name" : "MCVersionLoader",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

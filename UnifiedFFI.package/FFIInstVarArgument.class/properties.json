@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"argName" ],
+	"name" : "FFIInstVarArgument",
+	"pools" : [
+		 ],
+	"super" : "FFIFunctionArgument",
+	"type" : "normal" }

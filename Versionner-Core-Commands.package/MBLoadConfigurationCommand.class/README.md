@@ -1,0 +1,1 @@
+Command to load a configuration in Versionner

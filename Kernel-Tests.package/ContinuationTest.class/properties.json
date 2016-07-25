@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"tmp",
+		"tmp2" ],
+	"name" : "ContinuationTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

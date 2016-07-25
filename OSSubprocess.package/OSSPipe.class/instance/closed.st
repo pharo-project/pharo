@@ -1,0 +1,4 @@
+testing
+closed
+
+	^ reader closed

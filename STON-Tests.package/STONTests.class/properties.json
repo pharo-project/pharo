@@ -1,0 +1,14 @@
+{
+	"category" : "STON-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "STONTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

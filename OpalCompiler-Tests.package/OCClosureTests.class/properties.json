@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"collection" ],
+	"name" : "OCClosureTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

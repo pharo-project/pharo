@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-Languages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestMultilingualLanguages",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

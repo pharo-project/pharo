@@ -1,0 +1,16 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"session",
+		"data",
+		"resourceClass" ],
+	"name" : "FFIExternalResourceExecutor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

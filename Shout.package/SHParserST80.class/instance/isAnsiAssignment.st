@@ -1,0 +1,3 @@
+token testing
+isAnsiAssignment
+	^ currentToken = ':='

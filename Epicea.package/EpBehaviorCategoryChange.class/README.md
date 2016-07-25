@@ -1,0 +1,1 @@
+I represent a change in the category of a class or a trait.

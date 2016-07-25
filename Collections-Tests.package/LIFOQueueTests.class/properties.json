@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Atomic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:30",
+	"instvars" : [
+		 ],
+	"name" : "LIFOQueueTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

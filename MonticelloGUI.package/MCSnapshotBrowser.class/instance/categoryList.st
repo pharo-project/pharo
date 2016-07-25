@@ -1,0 +1,3 @@
+listing
+categoryList
+	^ self visibleCategories

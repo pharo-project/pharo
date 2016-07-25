@@ -1,0 +1,18 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"radii",
+		"phi",
+		"large",
+		"sweep",
+		"endPoint" ],
+	"name" : "AthensEllipticalArcSegment",
+	"pools" : [
+		 ],
+	"super" : "AthensPathSegment",
+	"type" : "normal" }

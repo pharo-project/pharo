@@ -1,0 +1,3 @@
+compatibility
+do
+	^self redo

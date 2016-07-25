@@ -1,0 +1,14 @@
+{
+	"category" : "System-OSEnvironments",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 1/24/2014 16:41",
+	"instvars" : [
+		 ],
+	"name" : "PlatformIndependentEnvironment",
+	"pools" : [
+		 ],
+	"super" : "OSEnvironment",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"variable",
+		"assignment",
+		"value" ],
+	"name" : "RBAssignmentNode",
+	"pools" : [
+		 ],
+	"super" : "RBValueNode",
+	"type" : "normal" }

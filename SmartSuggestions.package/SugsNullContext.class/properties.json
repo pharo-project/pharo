@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 2/26/2016 15:41",
+	"instvars" : [
+		 ],
+	"name" : "SugsNullContext",
+	"pools" : [
+		 ],
+	"super" : "SugsAbstractContext",
+	"type" : "normal" }

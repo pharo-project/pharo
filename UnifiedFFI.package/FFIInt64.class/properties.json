@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FFIInt64",
+	"pools" : [
+		 ],
+	"super" : "FFIUInt64",
+	"type" : "normal" }

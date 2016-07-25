@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Pager-Announcement",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"smooth",
+		"callback" ],
+	"name" : "GLMPagerScrollPositionChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

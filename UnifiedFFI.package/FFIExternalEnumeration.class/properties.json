@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Objects",
+	"classinstvars" : [
+		"representationType" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"value" ],
+	"name" : "FFIExternalEnumeration",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

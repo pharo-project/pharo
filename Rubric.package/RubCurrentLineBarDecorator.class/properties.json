@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RubCurrentLineBarDecorator",
+	"pools" : [
+		 ],
+	"super" : "RubParagraphDecorator",
+	"type" : "normal" }

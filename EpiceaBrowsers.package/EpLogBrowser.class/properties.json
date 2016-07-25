@@ -1,0 +1,25 @@
+{
+	"category" : "EpiceaBrowsers-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 4/15/2014 18:19",
+	"instvars" : [
+		"log",
+		"view",
+		"tabManagerModel",
+		"entryContentModel",
+		"entryContentTabModel",
+		"filtersModel",
+		"filtersTabModel",
+		"statusBarModel",
+		"itemsModel",
+		"commentsLog",
+		"commitLog",
+		"andFilter" ],
+	"name" : "EpLogBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

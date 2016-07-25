@@ -1,0 +1,3 @@
+meta data
+ruleBadMessageRuleV1FalsePositive
+^ #(#(#(#RGMethodDefinition #(#TheManifestBuilder #hasTruePositiveOf:version: #false)) #'2013-02-01T15:29:51.978000008+01:00') #(#(#RGMethodDefinition #(#TheManifestBuilder #hasFalsePositiveOf:version: #false)) #'2013-02-01T15:29:51.978000006+01:00') #(#(#RGMethodDefinition #(#TheManifestBuilder #rejectRules #false)) #'2013-02-01T15:29:51.978000007+01:00') #(#(#RGMethodDefinition #(#TheManifestBuilder #hasToDoOf:version: #false)) #'2013-02-01T15:29:51.978000005+01:00') )

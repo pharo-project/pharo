@@ -1,0 +1,14 @@
+{
+	"category" : "System-Finalization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 5/30/2016 12:35",
+	"instvars" : [
+		"ephemeronCollection" ],
+	"name" : "EphemeronRegistry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

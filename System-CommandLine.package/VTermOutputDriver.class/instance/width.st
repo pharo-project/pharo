@@ -1,0 +1,3 @@
+accessing
+width
+	^ self columns

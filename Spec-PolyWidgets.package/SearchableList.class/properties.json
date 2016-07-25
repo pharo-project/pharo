@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-PolyWidgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"listModel",
+		"searchModel" ],
+	"name" : "SearchableList",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

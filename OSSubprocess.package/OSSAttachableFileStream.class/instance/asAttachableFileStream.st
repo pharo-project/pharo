@@ -1,0 +1,4 @@
+converting
+asAttachableFileStream
+
+	^ self

@@ -1,0 +1,19 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"range",
+		"offset",
+		"lineRange",
+		"highlights",
+		"color",
+		"text" ],
+	"name" : "JoinSide",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

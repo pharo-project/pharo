@@ -1,0 +1,15 @@
+{
+	"category" : "FuelPlatform",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current",
+		"CurrentConfigurationVersion" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FLPlatform",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

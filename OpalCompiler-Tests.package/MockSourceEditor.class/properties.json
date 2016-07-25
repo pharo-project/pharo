@@ -1,0 +1,16 @@
+{
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:25",
+	"instvars" : [
+		"text",
+		"selectionStart",
+		"selectionEnd" ],
+	"name" : "MockSourceEditor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

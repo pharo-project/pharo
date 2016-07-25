@@ -1,0 +1,3 @@
+creating
+withNotificationsNewClass
+	^  self withNotificationsNewClassWithInstanceVariableNames: ''

@@ -1,0 +1,1 @@
+I visit IRMethod instructions, sending the appropriate bytecode messages to my BytecodeGenerator (gen). 

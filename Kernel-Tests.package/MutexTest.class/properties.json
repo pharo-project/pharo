@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"mutex",
+		"forkedProcesses" ],
+	"name" : "MutexTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

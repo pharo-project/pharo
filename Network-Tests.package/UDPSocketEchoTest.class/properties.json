@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Tests-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 10/21/2014 14:45",
+	"instvars" : [
+		 ],
+	"name" : "UDPSocketEchoTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

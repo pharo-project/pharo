@@ -1,0 +1,1 @@
+A label that underdraws to the top-left and/or bottom-right with a lighter and/or darker colour to the receiver.

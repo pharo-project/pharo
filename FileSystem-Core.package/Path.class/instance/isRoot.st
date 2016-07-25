@@ -1,0 +1,3 @@
+testing
+isRoot
+	self subclassResponsibility 

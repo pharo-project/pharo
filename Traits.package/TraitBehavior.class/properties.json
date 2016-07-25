@@ -1,0 +1,19 @@
+{
+	"category" : "Traits-Kernel",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TBehavior classTrait",
+	"classvars" : [
+		"TraitProperties" ],
+	"commentStamp" : "apb 3/2/2006 17:49",
+	"instvars" : [
+		"methodDict",
+		"traitComposition",
+		"localSelectors",
+		"users" ],
+	"name" : "TraitBehavior",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TBehavior",
+	"type" : "normal" }

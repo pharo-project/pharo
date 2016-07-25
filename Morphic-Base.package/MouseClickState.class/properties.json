@@ -1,0 +1,24 @@
+{
+	"category" : "Morphic-Base-ProgressBar",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"clickClient",
+		"clickState",
+		"firstClickDown",
+		"firstClickUp",
+		"firstClickTime",
+		"clickSelector",
+		"dblClickSelector",
+		"dblClickTime",
+		"dblClickTimeoutSelector",
+		"dragSelector",
+		"dragThreshold" ],
+	"name" : "MouseClickState",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

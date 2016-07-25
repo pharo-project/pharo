@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 10/12/2014 17:49",
+	"instvars" : [
+		 ],
+	"name" : "OSJoyButtonDownEvent",
+	"pools" : [
+		 ],
+	"super" : "OSJoyButtonEvent",
+	"type" : "normal" }

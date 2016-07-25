@@ -1,0 +1,1 @@
+Common superclass for tests of guidance through the filesystem

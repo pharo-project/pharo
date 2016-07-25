@@ -1,0 +1,4 @@
+*metacello-mc
+versions
+
+	^versions

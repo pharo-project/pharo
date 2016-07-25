@@ -1,0 +1,3 @@
+public accessing
+beForSmalltalkScripting
+	self editingMode: RubSmalltalkScriptingMode new

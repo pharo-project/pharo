@@ -1,0 +1,1 @@
+MCClassTraitParser identifies classTrait. 

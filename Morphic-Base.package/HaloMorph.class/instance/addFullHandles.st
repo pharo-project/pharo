@@ -1,0 +1,3 @@
+private
+addFullHandles
+	self addCircleHandles

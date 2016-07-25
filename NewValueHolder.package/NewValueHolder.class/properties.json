@@ -1,0 +1,16 @@
+{
+	"category" : "NewValueHolder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/5/2016 11:16",
+	"instvars" : [
+		"announcer",
+		"lock",
+		"value" ],
+	"name" : "NewValueHolder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

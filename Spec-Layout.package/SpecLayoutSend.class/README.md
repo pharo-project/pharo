@@ -1,0 +1,1 @@
+A SpecLayoutSend is a spec layout action used when a selector is sent to the layout

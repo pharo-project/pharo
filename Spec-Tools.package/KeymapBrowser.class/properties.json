@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Tools-Keymapping",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 2/16/2015 14:58",
+	"instvars" : [
+		"clearFilterButton",
+		"filterField",
+		"kmTable" ],
+	"name" : "KeymapBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

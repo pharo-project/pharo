@@ -1,0 +1,4 @@
+private
+flashPackage
+
+	^ nil

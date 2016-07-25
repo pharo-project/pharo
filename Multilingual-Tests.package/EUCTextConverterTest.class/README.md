@@ -1,0 +1,1 @@
+SUnit tests for EUC-JP encoding

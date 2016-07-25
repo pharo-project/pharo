@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikSperreJohansen 5/21/2010 02:06",
+	"instvars" : [
+		 ],
+	"name" : "ClassDiffBuilder",
+	"pools" : [
+		 ],
+	"super" : "TextDiffBuilder",
+	"type" : "normal" }

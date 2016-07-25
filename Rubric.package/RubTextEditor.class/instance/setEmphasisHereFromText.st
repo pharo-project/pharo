@@ -1,0 +1,4 @@
+typing support
+setEmphasisHereFromText
+
+	self setEmphasisHereFromTextForward: true

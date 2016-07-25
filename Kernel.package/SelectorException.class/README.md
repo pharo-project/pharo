@@ -1,0 +1,1 @@
+I am SelectorException, an abstract superclass for exceptions related to a selector.

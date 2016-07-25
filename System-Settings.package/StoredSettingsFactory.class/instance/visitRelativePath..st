@@ -1,0 +1,3 @@
+visitor
+visitRelativePath: aRelativePath 
+	self newRelativePathStoredSetting realValue: aRelativePath segments

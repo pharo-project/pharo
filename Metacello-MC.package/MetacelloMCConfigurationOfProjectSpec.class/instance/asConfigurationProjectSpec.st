@@ -1,0 +1,3 @@
+scripting
+asConfigurationProjectSpec
+    ^ self

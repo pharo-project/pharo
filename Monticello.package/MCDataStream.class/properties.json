@@ -1,0 +1,18 @@
+{
+	"category" : "Monticello-Storing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ReadSelectors",
+		"TypeMap",
+		"WriteSelectors" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"byteStream",
+		"topCall",
+		"basePos" ],
+	"name" : "MCDataStream",
+	"pools" : [
+		 ],
+	"super" : "Stream",
+	"type" : "normal" }

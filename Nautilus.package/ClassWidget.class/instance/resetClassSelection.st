@@ -1,0 +1,3 @@
+protocol
+resetClassSelection
+	self classesSelection removeAll

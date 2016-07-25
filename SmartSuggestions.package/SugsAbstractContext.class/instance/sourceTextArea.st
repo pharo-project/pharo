@@ -1,0 +1,3 @@
+accessing
+sourceTextArea
+	self subclassResponsibility 

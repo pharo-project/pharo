@@ -1,0 +1,3 @@
+model protocol
+getSelectionSelector
+	^ getSelectionSelector

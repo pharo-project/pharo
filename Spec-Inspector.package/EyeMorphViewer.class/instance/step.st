@@ -1,0 +1,3 @@
+initialization
+step
+	self objectChanged

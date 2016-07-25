@@ -1,0 +1,4 @@
+actions
+resizeCursor
+
+	self subclassResponsibility

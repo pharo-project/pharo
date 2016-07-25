@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector-Examples-Tools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"action" ],
+	"name" : "GTExampleTraverser",
+	"pools" : [
+		 ],
+	"super" : "GTExampleProcessor",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I'm an abstract superclass for enumeration operations on directory entries. 

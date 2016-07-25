@@ -1,0 +1,3 @@
+updating
+isExpanded
+	^ self subclassResponsibility 

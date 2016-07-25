@@ -1,0 +1,21 @@
+{
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 9/5/2014 15:25",
+	"instvars" : [
+		"header",
+		"container",
+		"currentWidth",
+		"rowMorphGetSelector",
+		"shrinkWrap",
+		"color",
+		"isPotentialDropTarget",
+		"resizable" ],
+	"name" : "MorphTreeColumn",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RubAbstractTextAreaTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

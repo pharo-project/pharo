@@ -1,0 +1,1 @@
+I am a log browser item that represents an absent entry.

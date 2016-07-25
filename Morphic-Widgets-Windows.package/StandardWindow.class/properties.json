@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TEasilyThemed classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 10/17/2009 18:59",
+	"instvars" : [
+		 ],
+	"name" : "StandardWindow",
+	"pools" : [
+		 ],
+	"super" : "SystemWindow",
+	"traitcomposition" : "TEasilyThemed - {#theme}",
+	"type" : "normal" }

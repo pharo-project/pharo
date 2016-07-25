@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgnacioSniechowski 2/25/2015 08:32",
+	"instvars" : [
+		 ],
+	"name" : "TheHeartOfSpec",
+	"pools" : [
+		 ],
+	"super" : "SpecHelpTopics",
+	"type" : "normal" }

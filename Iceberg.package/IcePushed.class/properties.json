@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IcePushed",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

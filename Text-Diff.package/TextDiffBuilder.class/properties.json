@@ -1,0 +1,19 @@
+{
+	"category" : "Text-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DiffsWithPrettyPrint",
+		"IgnoreLineEndings",
+		"InsertTextAttributes",
+		"NormalTextAttributes",
+		"RemoveTextAttributes" ],
+	"commentStamp" : "HenrikSperreJohansen 5/21/2010 02:00",
+	"instvars" : [
+		"xLines",
+		"yLines" ],
+	"name" : "TextDiffBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

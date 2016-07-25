@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cwp 11/18/2009 12:33",
+	"instvars" : [
+		 ],
+	"name" : "DirectoryDoesNotExist",
+	"pools" : [
+		 ],
+	"super" : "FileSystemError",
+	"type" : "normal" }

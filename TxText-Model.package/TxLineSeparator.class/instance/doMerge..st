@@ -1,0 +1,3 @@
+operations
+doMerge: aCharacterSpan
+	^ false.

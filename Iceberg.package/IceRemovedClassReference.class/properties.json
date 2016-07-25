@@ -1,0 +1,15 @@
+{
+	"category" : "Iceberg-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicoPasserini 5/18/2016 12:19",
+	"instvars" : [
+		"targetClassName",
+		"package" ],
+	"name" : "IceRemovedClassReference",
+	"pools" : [
+		 ],
+	"super" : "IceClassReference",
+	"type" : "normal" }

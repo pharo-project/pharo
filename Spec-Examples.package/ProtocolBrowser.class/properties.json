@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 1/21/2014 16:36",
+	"instvars" : [
+		"viewer",
+		"text" ],
+	"name" : "ProtocolBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

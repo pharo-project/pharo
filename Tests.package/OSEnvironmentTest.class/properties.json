@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-System",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "OSEnvironmentTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

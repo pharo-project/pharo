@@ -1,0 +1,3 @@
+factory
+newAthensRenderer
+	self subclassResponsibility

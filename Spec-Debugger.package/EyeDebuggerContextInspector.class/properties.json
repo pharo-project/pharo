@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "EyeDebuggerContextInspector",
+	"pools" : [
+		 ],
+	"super" : "EyeMethodContextInspector",
+	"type" : "normal" }

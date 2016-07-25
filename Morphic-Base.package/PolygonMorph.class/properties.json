@@ -1,0 +1,25 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TAbleToRotate classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "md 2/24/2006 20:34",
+	"instvars" : [
+		"vertices",
+		"closed",
+		"filledForm",
+		"arrows",
+		"arrowForms",
+		"smoothCurve",
+		"curveState",
+		"borderDashSpec",
+		"handles",
+		"borderForm" ],
+	"name" : "PolygonMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"traitcomposition" : "TAbleToRotate",
+	"type" : "normal" }

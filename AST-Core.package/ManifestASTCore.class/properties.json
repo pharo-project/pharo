@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestASTCore",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

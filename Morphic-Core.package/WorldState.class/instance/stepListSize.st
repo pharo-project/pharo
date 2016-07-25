@@ -1,0 +1,3 @@
+initialization
+stepListSize
+	^ stepList size

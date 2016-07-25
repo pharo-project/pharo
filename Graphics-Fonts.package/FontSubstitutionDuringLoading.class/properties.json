@@ -1,0 +1,15 @@
+{
+	"category" : "Graphics-Fonts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"familyName",
+		"pixelSize" ],
+	"name" : "FontSubstitutionDuringLoading",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

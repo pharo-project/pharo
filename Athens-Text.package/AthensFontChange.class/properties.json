@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 2/6/2012 16:17",
+	"instvars" : [
+		"font" ],
+	"name" : "AthensFontChange",
+	"pools" : [
+		 ],
+	"super" : "AthensTextDisplayCommand",
+	"type" : "normal" }

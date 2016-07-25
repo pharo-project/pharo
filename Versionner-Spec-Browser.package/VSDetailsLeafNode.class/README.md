@@ -1,0 +1,1 @@
+A VSDetailsLeafNode is used to display dependencies requirements or project loads in a tree.

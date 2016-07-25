@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 3/16/2016 11:48",
+	"instvars" : [
+		 ],
+	"name" : "SlotSilentTest",
+	"pools" : [
+		 ],
+	"super" : "SlotClassBuilderTest",
+	"type" : "normal" }

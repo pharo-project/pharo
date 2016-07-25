@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 2/14/2014 17:53",
+	"instvars" : [
+		 ],
+	"name" : "VSCatalogAdderCommand",
+	"pools" : [
+		 ],
+	"super" : "VSConfigurationCommand",
+	"type" : "normal" }

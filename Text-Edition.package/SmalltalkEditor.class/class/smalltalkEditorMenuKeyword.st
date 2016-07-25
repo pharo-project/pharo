@@ -1,0 +1,3 @@
+menu declaration
+smalltalkEditorMenuKeyword
+	^'smalltalkEditorMenu'

@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 11/10/2014 15:19",
+	"instvars" : [
+		 ],
+	"name" : "TxPasswordSpan",
+	"pools" : [
+		 ],
+	"super" : "TxCharacterSpan",
+	"type" : "normal" }

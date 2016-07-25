@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 6/27/2016 13:51",
+	"instvars" : [
+		"labelHolder",
+		"emphasis" ],
+	"name" : "LabelModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

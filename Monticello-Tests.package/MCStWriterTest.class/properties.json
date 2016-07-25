@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stream",
+		"writer" ],
+	"name" : "MCStWriterTest",
+	"pools" : [
+		 ],
+	"super" : "MCTestCase",
+	"type" : "normal" }

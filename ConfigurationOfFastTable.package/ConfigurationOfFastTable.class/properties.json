@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfFastTable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "TorstenBergmann 10/11/2015 21:48",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfFastTable",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

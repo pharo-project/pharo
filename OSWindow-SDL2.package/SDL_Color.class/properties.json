@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
+	"instvars" : [
+		 ],
+	"name" : "SDL_Color",
+	"pools" : [
+		 ],
+	"super" : "SDL2Structure",
+	"type" : "normal" }

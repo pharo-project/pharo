@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SDL2EventHandler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

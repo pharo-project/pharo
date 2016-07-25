@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 7/2/2014 14:26",
+	"instvars" : [
+		"slot" ],
+	"name" : "OCSlotVariable",
+	"pools" : [
+		 ],
+	"super" : "OCAbstractVariable",
+	"type" : "normal" }

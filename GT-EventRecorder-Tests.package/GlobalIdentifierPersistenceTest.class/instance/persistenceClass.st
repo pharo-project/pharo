@@ -1,0 +1,3 @@
+accessing
+persistenceClass
+	^ self subclassResponsibility

@@ -1,0 +1,3 @@
+initialization
+fillOutDefinition: aDictionary
+	self subclassResponsibility

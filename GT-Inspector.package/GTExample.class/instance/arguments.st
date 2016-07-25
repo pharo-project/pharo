@@ -1,0 +1,3 @@
+public
+arguments
+	^ children asArray

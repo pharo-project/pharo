@@ -1,0 +1,1 @@
+I know how to map an object to its default cluster. I can map every object.

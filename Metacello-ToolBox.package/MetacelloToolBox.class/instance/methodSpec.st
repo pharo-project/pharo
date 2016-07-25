@@ -1,0 +1,4 @@
+accessing
+methodSpec
+
+	^methodSpec

@@ -1,0 +1,14 @@
+{
+	"category" : "Traits-Composition",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "TraitCompositionException",
+	"pools" : [
+		 ],
+	"super" : "TraitException",
+	"type" : "normal" }

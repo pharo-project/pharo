@@ -1,0 +1,15 @@
+{
+	"category" : "System-Settings-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 10:35",
+	"instvars" : [
+		"node",
+		"builder" ],
+	"name" : "SettingNodeBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

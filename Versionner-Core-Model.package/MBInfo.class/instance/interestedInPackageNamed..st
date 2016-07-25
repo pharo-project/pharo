@@ -1,0 +1,4 @@
+testing
+interestedInPackageNamed: packageName
+
+	^false

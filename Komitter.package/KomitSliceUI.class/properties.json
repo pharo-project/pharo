@@ -1,0 +1,18 @@
+{
+	"category" : "Komitter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"fork",
+		"issueNumber",
+		"loadingWidget",
+		"titleWidget",
+		"valid" ],
+	"name" : "KomitSliceUI",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

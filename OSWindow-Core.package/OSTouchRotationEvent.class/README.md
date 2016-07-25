@@ -1,0 +1,1 @@
+Superclass of all rotation events

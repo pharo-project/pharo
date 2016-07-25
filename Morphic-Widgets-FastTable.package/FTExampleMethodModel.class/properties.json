@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"method",
+		"actionIcon" ],
+	"name" : "FTExampleMethodModel",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

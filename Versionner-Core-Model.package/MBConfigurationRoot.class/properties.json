@@ -1,0 +1,17 @@
+{
+	"category" : "Versionner-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"announcer",
+		"configurations",
+		"username",
+		"password" ],
+	"name" : "MBConfigurationRoot",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

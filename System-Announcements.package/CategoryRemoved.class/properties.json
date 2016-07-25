@@ -1,0 +1,14 @@
+{
+	"category" : "System-Announcements-System-Categories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cyrilledelaunay 1/18/2011 12:28",
+	"instvars" : [
+		"categoryName" ],
+	"name" : "CategoryRemoved",
+	"pools" : [
+		 ],
+	"super" : "SystemAnnouncement",
+	"type" : "normal" }

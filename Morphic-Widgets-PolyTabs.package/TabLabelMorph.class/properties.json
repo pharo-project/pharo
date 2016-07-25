@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-PolyTabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 11:49",
+	"instvars" : [
+		"tabSelector",
+		"normalLabel",
+		"selectedLabel" ],
+	"name" : "TabLabelMorph",
+	"pools" : [
+		 ],
+	"super" : "PanelMorph",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Alien-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "NotFoundError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

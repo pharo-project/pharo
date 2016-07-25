@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 11:04",
+	"instvars" : [
+		"bytes" ],
+	"name" : "ZnByteArrayEntity",
+	"pools" : [
+		 ],
+	"super" : "ZnEntity",
+	"type" : "normal" }

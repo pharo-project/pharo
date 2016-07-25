@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ajh 3/24/2003 21:53",
+	"instvars" : [
+		"assoc" ],
+	"name" : "OCLiteralVariable",
+	"pools" : [
+		 ],
+	"super" : "OCAbstractVariable",
+	"type" : "normal" }

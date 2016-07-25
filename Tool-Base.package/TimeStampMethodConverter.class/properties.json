@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "TimeStampMethodConverter",
+	"pools" : [
+		 ],
+	"super" : "AbstractMethodConverter",
+	"type" : "normal" }

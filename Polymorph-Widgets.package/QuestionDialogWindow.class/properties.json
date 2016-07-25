@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 12:20",
+	"instvars" : [
+		"answer" ],
+	"name" : "QuestionDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "ProceedDialogWindow",
+	"type" : "normal" }

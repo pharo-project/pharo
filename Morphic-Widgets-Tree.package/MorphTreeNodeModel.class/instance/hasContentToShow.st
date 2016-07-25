@@ -1,0 +1,4 @@
+testing
+hasContentToShow
+
+	^ false

@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "lr 10/19/2007 09:16",
+	"instvars" : [
+		 ],
+	"name" : "RBRealizeClassRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBClassRefactoring",
+	"type" : "normal" }

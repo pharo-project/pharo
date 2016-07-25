@@ -1,0 +1,17 @@
+{
+	"category" : "OpalCompiler-Core-Bytecode",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"temps",
+		"numArgs",
+		"ownTempVectors",
+		"copiedValues" ],
+	"name" : "IRBytecodeScope",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

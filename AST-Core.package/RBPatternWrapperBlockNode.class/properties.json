@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Pattern",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"wrappedNode" ],
+	"name" : "RBPatternWrapperBlockNode",
+	"pools" : [
+		 ],
+	"super" : "RBPatternBlockNode",
+	"type" : "normal" }

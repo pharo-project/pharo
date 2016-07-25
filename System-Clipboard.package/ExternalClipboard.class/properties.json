@@ -1,0 +1,14 @@
+{
+	"category" : "System-Clipboard",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "michael.rueger 3/2/2009 13:25",
+	"instvars" : [
+		"clipboard" ],
+	"name" : "ExternalClipboard",
+	"pools" : [
+		 ],
+	"super" : "Clipboard",
+	"type" : "normal" }

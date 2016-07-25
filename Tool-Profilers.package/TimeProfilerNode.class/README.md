@@ -1,0 +1,1 @@
+A TimeProfilerNode represents a node in the tally tree

@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SDL2Error",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

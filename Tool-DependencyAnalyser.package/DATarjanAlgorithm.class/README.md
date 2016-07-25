@@ -1,0 +1,2 @@
+A class to do Tarjan Algorithm on a PDPackageRelation, in order to detect strongly connected components.
+Give a package dependency graph (PDPackageRelationGraph)  in entry of the message run to run the Tarjan algorithm and retrieve all the strongly connected components graph.

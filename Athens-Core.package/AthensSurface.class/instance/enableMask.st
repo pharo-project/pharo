@@ -1,0 +1,3 @@
+masking
+enableMask
+	self subclassResponsibility

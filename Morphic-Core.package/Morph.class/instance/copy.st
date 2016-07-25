@@ -1,0 +1,4 @@
+copying
+copy
+
+	^ self veryDeepCopy

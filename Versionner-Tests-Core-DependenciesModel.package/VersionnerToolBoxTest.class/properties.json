@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Tests-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 2/21/2014 14:00",
+	"instvars" : [
+		"classFactory" ],
+	"name" : "VersionnerToolBoxTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

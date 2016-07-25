@@ -1,0 +1,1 @@
+A SpecDebuggerStack is responsible for displaying and managing the stack. All actions from the context menu of the stack are loaded by using the pragmas 'self contextMenuDebuggingActions'.

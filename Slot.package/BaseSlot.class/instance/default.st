@@ -1,0 +1,3 @@
+initalize
+default
+	^ default

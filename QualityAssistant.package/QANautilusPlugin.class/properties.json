@@ -1,0 +1,15 @@
+{
+	"category" : "QualityAssistant",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 3/17/2015 17:33",
+	"instvars" : [
+		"morph",
+		"currentEntity" ],
+	"name" : "QANautilusPlugin",
+	"pools" : [
+		 ],
+	"super" : "AbstractNautilusPlugin",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 7/28/2014 14:59",
+	"instvars" : [
+		"builder",
+		"graphviz",
+		"nameOfGraph" ],
+	"name" : "DAGraphVizGenerator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

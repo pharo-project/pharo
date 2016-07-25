@@ -1,0 +1,1 @@
+This announcement correspond to code evaluation.  For example, a DoIt or PrintIt evaluated in a workspace raises one of this announcements.

@@ -1,0 +1,1 @@
+A PDDependencyItemDiff is a object which represent a dependent package who added/removed from an old analysis.

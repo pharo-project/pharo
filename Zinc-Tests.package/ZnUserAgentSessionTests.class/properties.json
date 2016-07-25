@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZnUserAgentSessionTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

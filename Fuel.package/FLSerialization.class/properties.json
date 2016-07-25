@@ -1,0 +1,17 @@
+{
+	"category" : "Fuel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 10/23/2011 14:42",
+	"instvars" : [
+		"encoder",
+		"root",
+		"clusters",
+		"analyzer" ],
+	"name" : "FLSerialization",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

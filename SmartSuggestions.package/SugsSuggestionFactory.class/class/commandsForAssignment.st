@@ -1,0 +1,3 @@
+assignment
+commandsForAssignment
+	^self collectCommandsFrom: self collectorForAssignment.

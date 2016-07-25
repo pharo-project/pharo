@@ -1,0 +1,3 @@
+private-writing
+localHeaderRelativeOffset
+	^localHeaderRelativeOffset

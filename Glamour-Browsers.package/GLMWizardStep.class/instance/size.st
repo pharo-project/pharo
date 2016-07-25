@@ -1,0 +1,4 @@
+accessing
+size
+
+	^ 1

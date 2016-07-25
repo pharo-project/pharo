@@ -1,0 +1,3 @@
+accessing
+shortcut
+	^ KMNoShortcut new

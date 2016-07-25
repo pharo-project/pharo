@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-AST",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"scopes" ],
+	"name" : "OCScopesCollector",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

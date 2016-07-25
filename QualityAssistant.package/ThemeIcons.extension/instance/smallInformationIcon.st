@@ -1,0 +1,4 @@
+*qualityAssistant
+smallInformationIcon
+
+	^ self smallInfoIcon 

@@ -1,0 +1,26 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TAbleToRotate classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 2/14/2010 22:24",
+	"instvars" : [
+		"textStyle",
+		"text",
+		"wrapFlag",
+		"paragraph",
+		"editor",
+		"container",
+		"predecessor",
+		"successor",
+		"backgroundColor",
+		"margins",
+		"defaultColor" ],
+	"name" : "TextMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"traitcomposition" : "TAbleToRotate",
+	"type" : "normal" }

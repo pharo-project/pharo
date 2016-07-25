@@ -1,0 +1,19 @@
+{
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"id",
+		"name",
+		"message",
+		"date",
+		"time",
+		"author" ],
+	"name" : "MCVersionInfo",
+	"pools" : [
+		 ],
+	"super" : "MCAncestry",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "OpalTools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 10/16/2014 11:26",
+	"instvars" : [
+		 ],
+	"name" : "GTOpalScopeBrowser",
+	"pools" : [
+		 ],
+	"super" : "GLMCompositePresentation",
+	"type" : "normal" }

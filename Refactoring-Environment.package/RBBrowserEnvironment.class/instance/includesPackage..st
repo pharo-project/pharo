@@ -1,0 +1,3 @@
+testing
+includesPackage: packageName
+	^ true

@@ -1,0 +1,4 @@
+accessing
+strikethroughColor
+
+	^ self stringColor 

@@ -1,0 +1,4 @@
+accessing
+haveFindReplaceSelectionTextColor
+
+	^ findReplaceSelectionTextColor notNil

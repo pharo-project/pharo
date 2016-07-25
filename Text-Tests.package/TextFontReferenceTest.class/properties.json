@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 12:24",
+	"instvars" : [
+		 ],
+	"name" : "TextFontReferenceTest",
+	"pools" : [
+		 ],
+	"super" : "HashAndEqualsTestCase",
+	"type" : "normal" }

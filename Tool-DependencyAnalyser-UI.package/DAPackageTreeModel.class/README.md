@@ -1,0 +1,1 @@
+A PDPackageTreeModel is an abstract class. It's a the superclass of the two tree model vizualisations (package dependency and cycle detection).

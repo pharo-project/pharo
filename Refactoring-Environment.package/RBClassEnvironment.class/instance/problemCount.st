@@ -1,0 +1,3 @@
+accessing
+problemCount
+	^self numberClasses

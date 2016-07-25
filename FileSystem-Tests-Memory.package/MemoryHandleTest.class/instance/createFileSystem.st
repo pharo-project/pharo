@@ -1,0 +1,3 @@
+running
+createFileSystem
+	^ FileSystem memory

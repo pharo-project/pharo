@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 3/7/2012 13:32",
+	"instvars" : [
+		"via",
+		"to" ],
+	"name" : "AthensQuadSegment",
+	"pools" : [
+		 ],
+	"super" : "AthensPathSegment",
+	"type" : "normal" }

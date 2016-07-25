@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Loaders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"spec" ],
+	"name" : "MetacelloSpecLoader",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

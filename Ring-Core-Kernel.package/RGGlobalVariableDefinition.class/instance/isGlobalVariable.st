@@ -1,0 +1,4 @@
+testing
+isGlobalVariable
+
+	^true

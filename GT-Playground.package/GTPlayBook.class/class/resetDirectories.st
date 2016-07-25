@@ -1,0 +1,4 @@
+private
+resetDirectories
+
+	cacheDirectory := nil

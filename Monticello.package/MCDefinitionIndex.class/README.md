@@ -1,0 +1,1 @@
+I'm a simple container of MCDefinitions which can be added or removed.

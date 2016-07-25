@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Core",
+	"classinstvars" : [
+		"bindings" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model",
+		"spec",
+		"arrayToInterpret",
+		"index" ],
+	"name" : "SpecInterpreter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

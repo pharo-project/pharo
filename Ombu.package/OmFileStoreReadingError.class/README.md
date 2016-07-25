@@ -1,0 +1,1 @@
+I am a notification raised when a OmFileStore has a problem reading an entry from his file.

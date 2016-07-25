@@ -1,0 +1,15 @@
+{
+	"category" : "Reflectivity-Links",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 5/3/2015 13:49",
+	"instvars" : [
+		"condition",
+		"linkCondition" ],
+	"name" : "RFCondition",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

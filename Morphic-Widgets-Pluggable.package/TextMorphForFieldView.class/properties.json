@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 12:28",
+	"instvars" : [
+		"maxLength" ],
+	"name" : "TextMorphForFieldView",
+	"pools" : [
+		 ],
+	"super" : "TextMorphForEditView",
+	"type" : "normal" }

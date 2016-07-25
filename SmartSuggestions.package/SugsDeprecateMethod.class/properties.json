@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarkRizun 7/22/2014 14:33",
+	"instvars" : [
+		 ],
+	"name" : "SugsDeprecateMethod",
+	"pools" : [
+		 ],
+	"super" : "SugsSuggestion",
+	"type" : "normal" }

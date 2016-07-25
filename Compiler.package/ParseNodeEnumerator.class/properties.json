@@ -1,0 +1,15 @@
+{
+	"category" : "Compiler-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "eem 8/31/2010 11:41",
+	"instvars" : [
+		"theBlock",
+		"theSelectBlock" ],
+	"name" : "ParseNodeEnumerator",
+	"pools" : [
+		 ],
+	"super" : "ParseNodeVisitor",
+	"type" : "normal" }

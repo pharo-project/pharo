@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsersTests-Visitors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "EpRedoAndUndoVisitorTest",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

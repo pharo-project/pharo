@@ -1,0 +1,3 @@
+traits-factory
+traitNamePrefix
+	^'FLTraitForTesting'

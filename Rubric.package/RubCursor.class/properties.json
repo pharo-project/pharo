@@ -1,0 +1,20 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultColor",
+		"DefaultWidth",
+		"FixedColor",
+		"Period" ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 12:55",
+	"instvars" : [
+		"stayVisible",
+		"invisibleCursorColor",
+		"visibleCursorColor",
+		"period" ],
+	"name" : "RubCursor",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

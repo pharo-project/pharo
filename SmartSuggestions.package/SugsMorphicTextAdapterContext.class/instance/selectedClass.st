@@ -1,0 +1,3 @@
+refactoring
+selectedClass
+	^model behavior

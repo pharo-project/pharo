@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMDashboardTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

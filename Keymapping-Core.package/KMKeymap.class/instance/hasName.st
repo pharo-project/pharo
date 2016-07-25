@@ -1,0 +1,3 @@
+accessing
+hasName
+	^name notNil

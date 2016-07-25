@@ -1,0 +1,3 @@
+mockup
+classVariableWriter
+	ClassVariable := nil

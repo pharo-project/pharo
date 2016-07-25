@@ -1,0 +1,1 @@
+ZnConnectionEstablishedEvent signals that a client HTTP connection to hostname:port (address:port) was established in duration milliseconds. This time includes DNS resolving.

@@ -1,0 +1,1 @@
+Error raised when a tab is asked its contents but have no morph and no retrieving block, or the retrieving block is returning nil.

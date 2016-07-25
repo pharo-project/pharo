@@ -1,0 +1,2 @@
+manage swipe
+beginSwipe: anEvent

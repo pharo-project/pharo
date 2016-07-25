@@ -1,0 +1,4 @@
+protocol
+vRigid
+
+	self subclassResponsibility

@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RBSelfNode",
+	"pools" : [
+		 ],
+	"super" : "RBVariableNode",
+	"type" : "normal" }

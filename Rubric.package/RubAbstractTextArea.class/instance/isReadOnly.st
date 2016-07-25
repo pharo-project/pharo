@@ -1,0 +1,3 @@
+testing
+isReadOnly
+	^ self readOnly

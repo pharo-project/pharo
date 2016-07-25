@@ -1,0 +1,4 @@
+accessing
+open
+	^ self openInWorld.
+	

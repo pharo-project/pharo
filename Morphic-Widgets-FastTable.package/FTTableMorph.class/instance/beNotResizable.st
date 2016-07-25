@@ -1,0 +1,3 @@
+accessing
+beNotResizable
+	resizable := false

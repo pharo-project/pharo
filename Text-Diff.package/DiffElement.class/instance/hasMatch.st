@@ -1,0 +1,4 @@
+testing
+hasMatch
+
+	^match notNil

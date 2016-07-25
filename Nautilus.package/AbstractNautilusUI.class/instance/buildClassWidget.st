@@ -1,0 +1,3 @@
+widget class
+buildClassWidget
+	self subclassResponsibility 

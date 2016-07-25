@@ -1,0 +1,3 @@
+groups
+lastModifiedMethods
+	^ RecentMessageList uniqueInstance methodReferenceList asSet asOrderedCollection

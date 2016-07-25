@@ -1,0 +1,15 @@
+{
+	"category" : "Slot-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"targetClass" ],
+	"name" : "SlotNotFound",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

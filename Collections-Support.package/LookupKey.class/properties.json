@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"key" ],
+	"name" : "LookupKey",
+	"pools" : [
+		 ],
+	"super" : "Magnitude",
+	"type" : "normal" }

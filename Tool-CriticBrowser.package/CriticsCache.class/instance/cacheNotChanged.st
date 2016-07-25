@@ -1,0 +1,3 @@
+private
+cacheNotChanged 
+	change := false

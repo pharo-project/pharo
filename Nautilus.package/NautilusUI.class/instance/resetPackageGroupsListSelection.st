@@ -1,0 +1,4 @@
+selection
+resetPackageGroupsListSelection
+	self packageWidget resetPackagesSelection.
+	self packageWidget resetGroupsSelection.

@@ -1,0 +1,1 @@
+I am a morph the plugin displays. I constist of list of critics and a refresh button

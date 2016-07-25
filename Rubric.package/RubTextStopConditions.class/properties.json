@@ -1,0 +1,16 @@
+{
+	"category" : "Rubric-TextScanning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:52",
+	"instvars" : [
+		"stops",
+		"crossedX",
+		"endOfRun" ],
+	"name" : "RubTextStopConditions",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

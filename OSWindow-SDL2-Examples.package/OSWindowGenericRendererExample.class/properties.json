@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/9/2016 23:42",
+	"instvars" : [
+		"renderer",
+		"window" ],
+	"name" : "OSWindowGenericRendererExample",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

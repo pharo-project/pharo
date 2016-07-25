@@ -1,0 +1,3 @@
+private - access
+target
+	^ target

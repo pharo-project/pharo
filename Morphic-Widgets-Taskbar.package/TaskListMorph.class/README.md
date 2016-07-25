@@ -1,0 +1,2 @@
+Themed task list/switcher to select the topmost window. Use cmd + left or right arrows (not ideal but the os typically handles cmd + tab/shift-tab).
+On Linux, release of the command key is not detected (vm issue), so press and release cmd again or move the mouse!

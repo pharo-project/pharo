@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 12:51",
+	"instvars" : [
+		"imageMorph",
+		"textMorph",
+		"defaultImageForm" ],
+	"name" : "ImagePreviewMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

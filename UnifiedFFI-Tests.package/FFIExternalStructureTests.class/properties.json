@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFIExternalStructureTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

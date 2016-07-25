@@ -1,0 +1,19 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 13:15",
+	"instvars" : [
+		"selector",
+		"extractionInterval",
+		"extractedParseTree",
+		"modifiedParseTree",
+		"parameters",
+		"needsReturn" ],
+	"name" : "RBExtractMethodRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBMethodRefactoring",
+	"type" : "normal" }

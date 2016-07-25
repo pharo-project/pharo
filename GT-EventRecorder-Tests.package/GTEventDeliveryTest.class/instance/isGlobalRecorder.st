@@ -1,0 +1,3 @@
+testing
+isGlobalRecorder
+	^ false

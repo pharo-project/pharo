@@ -1,0 +1,1 @@
+I am a widget to select classes and packages from a tree.

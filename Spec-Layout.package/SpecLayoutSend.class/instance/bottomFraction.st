@@ -1,0 +1,4 @@
+protocol
+bottomFraction
+
+	^ 0

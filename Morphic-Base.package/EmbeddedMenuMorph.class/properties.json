@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:18",
+	"instvars" : [
+		 ],
+	"name" : "EmbeddedMenuMorph",
+	"pools" : [
+		 ],
+	"super" : "MenuMorph",
+	"type" : "normal" }

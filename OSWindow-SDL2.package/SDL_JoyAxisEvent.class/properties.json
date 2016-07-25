@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 10/12/2014 17:41",
+	"instvars" : [
+		 ],
+	"name" : "SDL_JoyAxisEvent",
+	"pools" : [
+		 ],
+	"super" : "SDL2MappedEvent",
+	"type" : "normal" }

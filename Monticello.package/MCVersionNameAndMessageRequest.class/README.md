@@ -1,0 +1,1 @@
+Notify to requests for version name and message

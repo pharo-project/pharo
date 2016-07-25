@@ -1,0 +1,2 @@
+tree
+pluginsSelectedIndex: anIndex

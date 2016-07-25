@@ -1,0 +1,17 @@
+{
+	"category" : "GT-Playground",
+	"classinstvars" : [
+		"instance",
+		"cacheDirectory",
+		"stashDirectory" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 10/22/2014 07:51",
+	"instvars" : [
+		"pages",
+		"pagesLimit" ],
+	"name" : "GTPlayBook",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

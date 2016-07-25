@@ -1,0 +1,4 @@
+actions lookup
+contextMenuDebuggingActionsPragmas
+
+	^ { #contextMenuDebuggingAction }

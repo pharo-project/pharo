@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Phlow",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"computation",
+		"title",
+		"style" ],
+	"name" : "GLMPhlowTableColumn",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

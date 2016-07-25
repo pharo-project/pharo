@@ -1,0 +1,3 @@
+accessing
+text
+	^ next text

@@ -1,0 +1,3 @@
+testing
+includesClass: aClass
+	^ true

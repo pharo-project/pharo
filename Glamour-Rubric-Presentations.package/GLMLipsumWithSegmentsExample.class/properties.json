@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Rubric-Presentations-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GLMLipsumWithSegmentsExample",
+	"pools" : [
+		 ],
+	"super" : "GLMRubricExample",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+externalTypeSize
+	^ 2

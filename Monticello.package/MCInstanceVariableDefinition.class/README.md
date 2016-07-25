@@ -1,0 +1,1 @@
+A MCInstanceVariableDefinition represents an instance variable definition.

@@ -1,0 +1,3 @@
+accessing
+default
+	^ self new

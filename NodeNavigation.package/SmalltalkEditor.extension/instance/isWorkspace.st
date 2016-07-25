@@ -1,0 +1,3 @@
+*NodeNavigation
+isWorkspace
+	^ model isWorkspace

@@ -1,0 +1,4 @@
+events
+handlesMouseDown: evt
+
+	^ true

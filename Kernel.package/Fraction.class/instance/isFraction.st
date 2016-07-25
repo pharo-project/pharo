@@ -1,0 +1,3 @@
+converting
+isFraction
+	^ true

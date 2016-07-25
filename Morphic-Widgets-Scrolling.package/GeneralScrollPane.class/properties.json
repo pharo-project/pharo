@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:01",
+	"instvars" : [
+		"scroller",
+		"hScrollbar",
+		"vScrollbar" ],
+	"name" : "GeneralScrollPane",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

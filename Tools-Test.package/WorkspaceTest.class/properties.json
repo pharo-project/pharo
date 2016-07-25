@@ -1,0 +1,14 @@
+{
+	"category" : "Tools-Test-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 20:47",
+	"instvars" : [
+		 ],
+	"name" : "WorkspaceTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

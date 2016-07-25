@@ -1,0 +1,3 @@
+acessing
+instanceScope
+	^self

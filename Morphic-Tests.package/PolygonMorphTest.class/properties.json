@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 2/16/2008 02:13",
+	"instvars" : [
+		 ],
+	"name" : "PolygonMorphTest",
+	"pools" : [
+		 ],
+	"super" : "MorphTest",
+	"type" : "normal" }

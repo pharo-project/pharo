@@ -1,0 +1,3 @@
+mocking
+text
+	^ text

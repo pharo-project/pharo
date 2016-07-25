@@ -1,0 +1,1 @@
+A FLAbstractCollectionCluster is the common behavior for all cluster collections. 

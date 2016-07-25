@@ -1,0 +1,18 @@
+{
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"ruleHolder",
+		"criticHolder",
+		"browseModel",
+		"falsepositiveModel",
+		"transformModel" ],
+	"name" : "CriticToolbar",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

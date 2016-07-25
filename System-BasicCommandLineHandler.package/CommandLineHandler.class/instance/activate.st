@@ -1,0 +1,3 @@
+activation
+activate
+	 self subclassResponsibility

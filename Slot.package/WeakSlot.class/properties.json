@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 2/26/2015 12:08",
+	"instvars" : [
+		 ],
+	"name" : "WeakSlot",
+	"pools" : [
+		 ],
+	"super" : "IndexedSlot",
+	"type" : "normal" }

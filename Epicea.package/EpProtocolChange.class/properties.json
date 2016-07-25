@@ -1,0 +1,15 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 14:45",
+	"instvars" : [
+		"behavior",
+		"protocol" ],
+	"name" : "EpProtocolChange",
+	"pools" : [
+		 ],
+	"super" : "EpBehaviorChange",
+	"type" : "normal" }

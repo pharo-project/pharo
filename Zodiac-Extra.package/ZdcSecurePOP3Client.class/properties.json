@@ -1,0 +1,14 @@
+{
+	"category" : "Zodiac-Extra",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/6/2011 12:46",
+	"instvars" : [
+		"lineReader" ],
+	"name" : "ZdcSecurePOP3Client",
+	"pools" : [
+		 ],
+	"super" : "POP3Client",
+	"type" : "normal" }

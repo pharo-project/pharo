@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"offImage",
+		"pressedImage",
+		"state",
+		"target",
+		"actionSelector",
+		"arguments",
+		"actWhen" ],
+	"name" : "ThreePhaseButtonMorph",
+	"pools" : [
+		 ],
+	"super" : "ImageMorph",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I am an abstract view model for editors displayed in the inspector

@@ -1,0 +1,1 @@
+My instances implement OSWindowGLRenderer interface using SDL2 library

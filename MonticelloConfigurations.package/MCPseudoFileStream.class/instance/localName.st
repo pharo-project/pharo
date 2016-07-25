@@ -1,0 +1,3 @@
+accessing
+localName
+	^localName

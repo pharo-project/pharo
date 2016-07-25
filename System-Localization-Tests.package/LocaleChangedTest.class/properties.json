@@ -1,0 +1,14 @@
+{
+	"category" : "System-Localization-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "LocaleChangedTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

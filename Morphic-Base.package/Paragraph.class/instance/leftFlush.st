@@ -1,0 +1,3 @@
+alignment
+leftFlush 
+	textStyle leftFlush

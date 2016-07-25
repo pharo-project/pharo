@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Athens-Spec",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TxAdapterBindings",
+	"pools" : [
+		 ],
+	"super" : "SpecAdapterBindings",
+	"type" : "normal" }

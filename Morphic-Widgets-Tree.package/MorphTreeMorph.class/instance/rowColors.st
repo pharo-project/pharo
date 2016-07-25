@@ -1,0 +1,3 @@
+accessing colors
+rowColors
+	^ rowColors

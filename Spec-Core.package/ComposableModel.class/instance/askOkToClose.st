@@ -1,0 +1,4 @@
+api
+askOkToClose
+
+	^ askOkToClose value

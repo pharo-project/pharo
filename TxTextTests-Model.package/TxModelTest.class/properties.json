@@ -1,0 +1,16 @@
+{
+	"category" : "TxTextTests-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"text",
+		"selection",
+		"cursor" ],
+	"name" : "TxModelTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

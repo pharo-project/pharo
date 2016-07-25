@@ -1,0 +1,4 @@
+visitor-double dispatching
+visitSequenceNode: aSequenceNode 
+
+	self shouldBeSentToValueOrEffectTranslator

@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestMonticello",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

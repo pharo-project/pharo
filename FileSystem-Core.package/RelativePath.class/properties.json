@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RelativePath",
+	"pools" : [
+		 ],
+	"super" : "Path",
+	"type" : "variable" }

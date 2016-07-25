@@ -1,0 +1,15 @@
+{
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"classSearches",
+		"currentSelector" ],
+	"name" : "RBSearchTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Modeling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"categories" ],
+	"name" : "MCOrganizationDefinition",
+	"pools" : [
+		 ],
+	"super" : "MCDefinition",
+	"type" : "normal" }

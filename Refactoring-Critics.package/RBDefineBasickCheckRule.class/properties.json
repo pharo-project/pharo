@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/13/2016 22:46",
+	"instvars" : [
+		 ],
+	"name" : "RBDefineBasickCheckRule",
+	"pools" : [
+		 ],
+	"super" : "RBBlockLintRule",
+	"type" : "normal" }

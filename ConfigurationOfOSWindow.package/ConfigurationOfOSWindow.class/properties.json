@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfOSWindow",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfOSWindow",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

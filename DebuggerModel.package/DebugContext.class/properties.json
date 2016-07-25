@@ -1,0 +1,15 @@
+{
+	"category" : "DebuggerModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"context",
+		"topContext" ],
+	"name" : "DebugContext",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Tests-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MTProjectExampleBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

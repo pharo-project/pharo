@@ -1,0 +1,15 @@
+{
+	"category" : "TxText-Athens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"span",
+		"morph" ],
+	"name" : "TxEmbeddedObjectCommand",
+	"pools" : [
+		 ],
+	"super" : "TxDisplayCommand",
+	"type" : "normal" }

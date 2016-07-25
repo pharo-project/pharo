@@ -1,0 +1,3 @@
+creation
+asMorph
+	^ self

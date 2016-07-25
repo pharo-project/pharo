@@ -1,0 +1,3 @@
+fillstyle protocol
+isGradientFill
+	^false

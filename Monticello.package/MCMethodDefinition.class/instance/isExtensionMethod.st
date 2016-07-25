@@ -1,0 +1,3 @@
+installing
+isExtensionMethod
+	^ category beginsWith: '*'

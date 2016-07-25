@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Resource-Meta-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZnMultiValueDictionaryTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

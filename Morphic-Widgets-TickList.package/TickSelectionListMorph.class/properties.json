@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-TickList",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"storeValue" ],
+	"name" : "TickSelectionListMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphTreeMorph",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 7/14/2011 11:49",
+	"instvars" : [
+		"contextClass" ],
+	"name" : "GLMDiffPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMFormatedPresentation",
+	"type" : "normal" }

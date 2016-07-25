@@ -1,0 +1,1 @@
+Using assert:equals: produces better context on rule failure

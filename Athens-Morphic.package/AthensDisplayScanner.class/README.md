@@ -1,0 +1,1 @@
+An AthensDisplayScanner displays the paragraphs text on an AthensCanvas.

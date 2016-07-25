@@ -1,0 +1,3 @@
+generate
+genForRBSelfNode
+	^self genForRBProgramNode 

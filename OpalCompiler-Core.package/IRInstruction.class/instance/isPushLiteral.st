@@ -1,0 +1,3 @@
+testing
+isPushLiteral
+	^false

@@ -1,0 +1,4 @@
+announcement handling
+onResized
+
+	self setWidthAfterResizing

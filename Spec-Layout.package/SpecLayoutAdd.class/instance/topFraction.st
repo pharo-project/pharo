@@ -1,0 +1,4 @@
+protocol
+topFraction
+
+	^ layoutFrame topFraction

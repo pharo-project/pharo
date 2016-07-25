@@ -1,0 +1,3 @@
+accessing
+rightOffset
+	^rightOffset

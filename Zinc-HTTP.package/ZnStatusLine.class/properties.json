@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"version",
+		"code",
+		"reason" ],
+	"name" : "ZnStatusLine",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

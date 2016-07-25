@@ -1,0 +1,15 @@
+{
+	"category" : "FontInfrastructure",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:07",
+	"instvars" : [
+		"familyName",
+		"members" ],
+	"name" : "FontFamilyAbstract",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

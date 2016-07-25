@@ -1,0 +1,4 @@
+testing
+isCursorOverHandle
+
+	^ true

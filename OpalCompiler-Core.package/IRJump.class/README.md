@@ -1,0 +1,1 @@
+Instruction "goto: labelNum"

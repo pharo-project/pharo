@@ -1,0 +1,19 @@
+{
+	"category" : "NECompletion-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"instVars",
+		"localVars",
+		"includeVariables",
+		"includeSelectors",
+		"classVars",
+		"listLimit" ],
+	"name" : "NECUntypedModel",
+	"pools" : [
+		 ],
+	"super" : "NECModel",
+	"type" : "normal" }

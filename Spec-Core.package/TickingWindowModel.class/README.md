@@ -1,0 +1,1 @@
+In addition to my superclass, I provide an API to execute the #step method every #stepTime.

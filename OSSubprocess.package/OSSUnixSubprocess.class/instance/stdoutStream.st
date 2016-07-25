@@ -1,0 +1,3 @@
+streams
+stdoutStream
+	^ stdoutStream

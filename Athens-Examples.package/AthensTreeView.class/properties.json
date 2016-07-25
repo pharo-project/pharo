@@ -1,0 +1,17 @@
+{
+	"category" : "Athens-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:16",
+	"instvars" : [
+		"nodeExtentBlock",
+		"nodeChildsBlock",
+		"root",
+		"rows" ],
+	"name" : "AthensTreeView",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

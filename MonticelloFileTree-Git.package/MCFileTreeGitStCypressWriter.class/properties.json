@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloFileTree-Git",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MCFileTreeGitStCypressWriter",
+	"pools" : [
+		 ],
+	"super" : "MCFileTreeStCypressWriter",
+	"type" : "normal" }

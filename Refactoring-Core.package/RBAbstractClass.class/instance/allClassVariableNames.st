@@ -1,0 +1,3 @@
+accessing
+allClassVariableNames
+	^self subclassResponsibility

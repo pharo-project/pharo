@@ -1,0 +1,1 @@
+I am a symbol table where variable names are associated with SemVars.  Each context (method/closure) get a fresh scope that inherits from its outer scope.

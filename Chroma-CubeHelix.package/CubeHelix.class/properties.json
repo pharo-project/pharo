@@ -1,0 +1,17 @@
+{
+	"category" : "Chroma-CubeHelix",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Coefficients" ],
+	"commentStamp" : "DamienPollet 12/23/2014 17:17",
+	"instvars" : [
+		"hueShift",
+		"rotations",
+		"saturation",
+		"gamma" ],
+	"name" : "CubeHelix",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

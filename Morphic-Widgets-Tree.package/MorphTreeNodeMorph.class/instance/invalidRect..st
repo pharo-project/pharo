@@ -1,0 +1,3 @@
+change reporting
+invalidRect: aRectangle
+	

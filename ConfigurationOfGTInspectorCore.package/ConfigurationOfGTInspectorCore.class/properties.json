@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGTInspectorCore",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "AndreiChis 10/29/2014 12:02",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGTInspectorCore",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

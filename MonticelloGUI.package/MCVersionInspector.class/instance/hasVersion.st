@@ -1,0 +1,3 @@
+testing
+hasVersion
+	^version notNil

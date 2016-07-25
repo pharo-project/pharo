@@ -1,0 +1,22 @@
+{
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"sourceStream",
+		"requestor",
+		"receiver",
+		"class",
+		"category",
+		"context",
+		"parser",
+		"compilationContext",
+		"compilationContextClass" ],
+	"name" : "Compiler",
+	"pools" : [
+		 ],
+	"super" : "AbstractCompiler",
+	"type" : "normal" }

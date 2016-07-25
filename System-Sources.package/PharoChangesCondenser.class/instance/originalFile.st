@@ -1,0 +1,3 @@
+accessing
+originalFile
+	^ Smalltalk changesFile

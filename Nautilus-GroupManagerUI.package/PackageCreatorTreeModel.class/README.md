@@ -1,0 +1,1 @@
+I am the model to manage packages selection to add them in groups

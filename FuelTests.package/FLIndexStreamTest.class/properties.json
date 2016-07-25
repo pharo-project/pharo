@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:22",
+	"instvars" : [
+		 ],
+	"name" : "FLIndexStreamTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+morphic ui
+workingCopySearchMaxSize
+	^self class workingCopySearchMaxSize

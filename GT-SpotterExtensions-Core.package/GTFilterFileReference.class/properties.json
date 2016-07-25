@@ -1,0 +1,14 @@
+{
+	"category" : "GT-SpotterExtensions-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTFilterFileReference",
+	"pools" : [
+		 ],
+	"super" : "GTFilterSubstring",
+	"type" : "normal" }

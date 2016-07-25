@@ -1,0 +1,1 @@
+I'm represent an entry in the spaceTally.

@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/13/2016 10:55",
+	"instvars" : [
+		 ],
+	"name" : "ReInspectorPresentationsNonlazyCode",
+	"pools" : [
+		 ],
+	"super" : "ReBasicTreeRule",
+	"type" : "normal" }

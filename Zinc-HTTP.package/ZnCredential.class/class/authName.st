@@ -1,0 +1,3 @@
+accessing
+authName
+	self subclassResponsibility 

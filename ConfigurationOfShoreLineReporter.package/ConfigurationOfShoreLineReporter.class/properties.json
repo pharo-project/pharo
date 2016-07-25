@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfShoreLineReporter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfShoreLineReporter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

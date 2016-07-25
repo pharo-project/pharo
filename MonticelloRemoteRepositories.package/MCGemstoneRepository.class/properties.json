@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CamilloBruni 2/8/2012 18:10",
+	"instvars" : [
+		 ],
+	"name" : "MCGemstoneRepository",
+	"pools" : [
+		 ],
+	"super" : "MCHttpRepository",
+	"type" : "normal" }

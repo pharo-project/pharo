@@ -1,0 +1,3 @@
+methods
+refersToClass
+	^ RBSmalllintTestObject

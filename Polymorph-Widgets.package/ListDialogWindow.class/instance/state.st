@@ -1,0 +1,4 @@
+button behavior
+state
+
+	^ false

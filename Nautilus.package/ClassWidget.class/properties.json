@@ -1,0 +1,18 @@
+{
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/11/2015 16:12",
+	"instvars" : [
+		"classesList",
+		"classesSelection",
+		"classesListElements",
+		"cachedHierarchy",
+		"showHierarchy" ],
+	"name" : "ClassWidget",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidget",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I represent a keyboard Key. I am mapped from the platform specific keycodes into a common keycode base, by using my class side methods.

@@ -1,0 +1,3 @@
+accessing
+allowReadingUpToEnd
+	allowReadingUpToEnd := true

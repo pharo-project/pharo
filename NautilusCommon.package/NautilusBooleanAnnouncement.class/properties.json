@@ -1,0 +1,14 @@
+{
+	"category" : "NautilusCommon-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"boolean" ],
+	"name" : "NautilusBooleanAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

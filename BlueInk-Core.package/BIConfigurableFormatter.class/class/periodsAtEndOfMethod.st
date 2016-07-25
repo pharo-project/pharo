@@ -1,0 +1,3 @@
+accessing
+periodsAtEndOfMethod
+	^ DefaultPrettyPrintContext periodsAtEndOfMethod

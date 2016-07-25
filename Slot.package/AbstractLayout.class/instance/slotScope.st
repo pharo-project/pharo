@@ -1,0 +1,3 @@
+accessing
+slotScope
+	^ LayoutEmptyScope instance

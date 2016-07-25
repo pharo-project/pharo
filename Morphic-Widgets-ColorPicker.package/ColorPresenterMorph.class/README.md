@@ -1,0 +1,1 @@
+Displays a colour with alpha against a white, hatched and black background.

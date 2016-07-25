@@ -1,0 +1,3 @@
+testing
+hasFields
+	self subclassResponsibility

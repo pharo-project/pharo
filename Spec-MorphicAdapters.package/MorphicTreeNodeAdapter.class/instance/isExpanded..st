@@ -1,0 +1,4 @@
+spec protocol
+isExpanded: aBoolean
+
+	

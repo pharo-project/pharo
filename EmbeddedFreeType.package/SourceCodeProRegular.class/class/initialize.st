@@ -1,0 +1,3 @@
+class initialization
+initialize 
+	EmbeddedFreeTypeFontInstaller registerFont: self

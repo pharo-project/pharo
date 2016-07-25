@@ -1,0 +1,1 @@
+All instances of UITestCase are skipped in headless mode.

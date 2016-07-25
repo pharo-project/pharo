@@ -1,0 +1,3 @@
+performing
+symbolReference
+	^ #RBClassToRename

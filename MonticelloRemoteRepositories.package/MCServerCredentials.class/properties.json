@@ -1,0 +1,15 @@
+{
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"username",
+		"password" ],
+	"name" : "MCServerCredentials",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

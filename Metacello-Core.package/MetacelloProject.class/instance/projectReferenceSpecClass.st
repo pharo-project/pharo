@@ -1,0 +1,4 @@
+spec classes
+projectReferenceSpecClass
+
+	^MetacelloProjectReferenceSpec

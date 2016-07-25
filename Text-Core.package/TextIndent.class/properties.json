@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"amount" ],
+	"name" : "TextIndent",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

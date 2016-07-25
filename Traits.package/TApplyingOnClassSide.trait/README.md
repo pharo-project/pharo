@@ -1,0 +1,1 @@
+Kernel trait for applying on the class side

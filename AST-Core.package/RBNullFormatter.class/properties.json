@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Formatter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FormatAsYouReadPolicy" ],
+	"commentStamp" : "StephaneDucasse 8/6/2015 19:10",
+	"instvars" : [
+		"codeStream" ],
+	"name" : "RBNullFormatter",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

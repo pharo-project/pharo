@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cwp 11/18/2009 12:30",
+	"instvars" : [
+		 ],
+	"name" : "DeleteVisitor",
+	"pools" : [
+		 ],
+	"super" : "FileSystemVisitor",
+	"type" : "normal" }

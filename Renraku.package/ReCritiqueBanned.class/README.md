@@ -1,0 +1,1 @@
+Announced when a critic gets banned.

@@ -1,0 +1,3 @@
+methods
+release
+	self printString

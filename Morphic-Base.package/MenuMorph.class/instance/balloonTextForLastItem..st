@@ -1,0 +1,3 @@
+construction
+balloonTextForLastItem: balloonText
+	submorphs last setBalloonText: balloonText

@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:27",
+	"instvars" : [
+		 ],
+	"name" : "SDL_Texture",
+	"pools" : [
+		"SDL2Constants",
+		"SDL2Types" ],
+	"super" : "SDL2Handle",
+	"type" : "normal" }

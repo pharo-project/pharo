@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 23:35",
+	"instvars" : [
+		 ],
+	"name" : "RBSplitCascadeRefactoringTest",
+	"pools" : [
+		 ],
+	"super" : "RBRefactoringTest",
+	"type" : "normal" }

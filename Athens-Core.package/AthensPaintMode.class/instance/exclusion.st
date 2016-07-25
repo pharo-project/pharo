@@ -1,0 +1,3 @@
+modes
+exclusion
+	self notAvailable

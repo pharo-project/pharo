@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:43",
+	"instvars" : [
+		"guide",
+		"visited" ],
+	"name" : "GuideTest",
+	"pools" : [
+		 ],
+	"super" : "SingleTreeTest",
+	"type" : "normal" }

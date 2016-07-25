@@ -1,0 +1,16 @@
+{
+	"category" : "RPackage-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 4/24/2011 17:10",
+	"instvars" : [
+		"packageOrganizer",
+		"previousAuthor",
+		"quadrangleClass" ],
+	"name" : "RPackageOrganizerTest",
+	"pools" : [
+		 ],
+	"super" : "RPackageTestCase",
+	"type" : "normal" }

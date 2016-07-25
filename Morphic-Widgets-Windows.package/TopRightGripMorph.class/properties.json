@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Windows-Resizing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "jmv 1/29/2006 17:18",
+	"instvars" : [
+		 ],
+	"name" : "TopRightGripMorph",
+	"pools" : [
+		 ],
+	"super" : "CornerGripMorph",
+	"type" : "normal" }

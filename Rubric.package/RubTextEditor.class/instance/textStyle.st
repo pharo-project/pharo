@@ -1,0 +1,3 @@
+accessing
+textStyle
+	^ textArea textStyle

@@ -1,0 +1,19 @@
+{
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mk 8/9/2005 10:34",
+	"instvars" : [
+		"scrollBar",
+		"scroller",
+		"getMenuSelector",
+		"getMenuTitleSelector",
+		"hasFocus",
+		"hScrollBar" ],
+	"name" : "ScrollPane",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"type" : "normal" }

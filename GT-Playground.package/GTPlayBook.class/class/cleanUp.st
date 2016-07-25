@@ -1,0 +1,4 @@
+private
+cleanUp
+	
+	self reset

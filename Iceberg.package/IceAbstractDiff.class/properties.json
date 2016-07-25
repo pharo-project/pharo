@@ -1,0 +1,15 @@
+{
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicoPasserini 5/12/2016 17:23",
+	"instvars" : [
+		"elements",
+		"announcer" ],
+	"name" : "IceAbstractDiff",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

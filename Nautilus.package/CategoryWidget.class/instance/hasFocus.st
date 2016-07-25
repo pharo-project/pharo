@@ -1,0 +1,4 @@
+private
+hasFocus
+	
+	^ categoriesList hasKeyboardFocus

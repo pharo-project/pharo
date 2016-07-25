@@ -1,0 +1,26 @@
+{
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"cellInset",
+		"cellPositioning",
+		"cellSpacing",
+		"layoutInset",
+		"listCentering",
+		"listDirection",
+		"listSpacing",
+		"reverseTableCells",
+		"rubberBandCells",
+		"wrapCentering",
+		"wrapDirection",
+		"minCellSize",
+		"maxCellSize" ],
+	"name" : "TableLayoutProperties",
+	"pools" : [
+		 ],
+	"super" : "LayoutProperties",
+	"type" : "normal" }

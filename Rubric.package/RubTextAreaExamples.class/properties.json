@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ModelForShout" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RubTextAreaExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

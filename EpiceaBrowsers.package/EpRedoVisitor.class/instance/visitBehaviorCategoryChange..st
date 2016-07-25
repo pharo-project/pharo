@@ -1,0 +1,4 @@
+visitor
+visitBehaviorCategoryChange: aClassRecategorization
+	aClassRecategorization realClassAffected 
+		category: aClassRecategorization newCategory

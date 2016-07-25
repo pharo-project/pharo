@@ -1,0 +1,3 @@
+testing
+isBaselineOfProjectSpec
+	^ true

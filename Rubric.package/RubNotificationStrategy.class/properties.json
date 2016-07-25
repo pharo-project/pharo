@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/1/2014 13:34",
+	"instvars" : [
+		"editor" ],
+	"name" : "RubNotificationStrategy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

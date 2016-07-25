@@ -1,0 +1,4 @@
+accessing
+endIndex
+
+	^ endIndex

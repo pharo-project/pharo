@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloFileTree-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:59",
+	"instvars" : [
+		 ],
+	"name" : "MCFileTreeFileUtils",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

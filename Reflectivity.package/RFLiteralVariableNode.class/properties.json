@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Compiler",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 10/20/2015 15:45",
+	"instvars" : [
+		"binding" ],
+	"name" : "RFLiteralVariableNode",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNode",
+	"type" : "normal" }

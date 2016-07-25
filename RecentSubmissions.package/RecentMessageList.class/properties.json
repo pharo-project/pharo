@@ -1,0 +1,16 @@
+{
+	"category" : "RecentSubmissions-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"UniqueInstance" ],
+	"commentStamp" : "BenjaminVanRyseghem 11/29/2010 11:31",
+	"instvars" : [
+		"methodReferenceList",
+		"lastEntry",
+		"maxListSize" ],
+	"name" : "RecentMessageList",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

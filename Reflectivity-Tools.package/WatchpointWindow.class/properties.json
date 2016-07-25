@@ -1,0 +1,18 @@
+{
+	"category" : "Reflectivity-Tools-Watchpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "johanfabry 11/24/2015 14:11",
+	"instvars" : [
+		"watchpoint",
+		"numItems",
+		"menu",
+		"list",
+		"inspectIt" ],
+	"name" : "WatchpointWindow",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

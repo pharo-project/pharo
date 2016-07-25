@@ -1,0 +1,3 @@
+accessing
+baseSnapshot
+	^ package snapshot

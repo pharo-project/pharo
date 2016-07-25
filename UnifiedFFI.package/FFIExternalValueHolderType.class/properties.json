@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 3/17/2016 13:43",
+	"instvars" : [
+		"representationType" ],
+	"name" : "FFIExternalValueHolderType",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalReferenceType",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Canvas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Canvas",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

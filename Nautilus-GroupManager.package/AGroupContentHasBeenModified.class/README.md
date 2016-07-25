@@ -1,0 +1,1 @@
+Notify that a group content has been modified

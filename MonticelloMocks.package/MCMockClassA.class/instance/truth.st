@@ -1,0 +1,3 @@
+boolean
+truth
+	^ true

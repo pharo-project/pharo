@@ -1,0 +1,3 @@
+accessing
+semanticNodeClass
+	self subclassResponsibility 

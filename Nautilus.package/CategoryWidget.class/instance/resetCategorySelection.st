@@ -1,0 +1,4 @@
+protocol
+resetCategorySelection
+
+	categoriesSelection removeAll

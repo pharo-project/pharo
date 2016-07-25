@@ -1,0 +1,4 @@
+accessing
+capacity
+
+	^ array size

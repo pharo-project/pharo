@@ -1,0 +1,4 @@
+testing
+hasInverse
+
+	^inverseName notNil

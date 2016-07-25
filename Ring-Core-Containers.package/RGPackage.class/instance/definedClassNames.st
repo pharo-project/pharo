@@ -1,0 +1,4 @@
+accessing
+definedClassNames
+
+	^ super classNames

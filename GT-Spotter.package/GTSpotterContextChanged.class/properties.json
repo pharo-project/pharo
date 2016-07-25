@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"previous",
+		"current" ],
+	"name" : "GTSpotterContextChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

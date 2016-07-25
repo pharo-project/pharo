@@ -1,0 +1,3 @@
+testing
+isSmalltalkEditor
+	^ false 

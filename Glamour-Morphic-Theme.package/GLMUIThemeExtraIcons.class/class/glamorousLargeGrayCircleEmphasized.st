@@ -1,0 +1,3 @@
+icons
+glamorousLargeGrayCircleEmphasized
+	^ Smalltalk ui icons iconNamed: #glamorousLargeGrayCircleEmphasized

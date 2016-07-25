@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Resource-Meta-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 4/23/2015 16:38",
+	"instvars" : [
+		 ],
+	"name" : "ZnMaximumNumberOfDictionaryEntries",
+	"pools" : [
+		 ],
+	"super" : "DynamicVariable",
+	"type" : "normal" }

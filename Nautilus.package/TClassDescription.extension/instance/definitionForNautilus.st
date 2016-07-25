@@ -1,0 +1,4 @@
+*Nautilus
+definitionForNautilus
+
+	^ self definition

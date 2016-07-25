@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfEpicea",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "MartinDias 2/11/2014 16:29",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfEpicea",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

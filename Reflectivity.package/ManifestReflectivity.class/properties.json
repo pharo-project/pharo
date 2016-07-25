@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestReflectivity",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I provide a test suite for SmallInteger values. Examine my tests to see how SmallIntegers should behave, and see how to use them.

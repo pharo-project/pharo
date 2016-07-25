@@ -1,0 +1,18 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:02",
+	"instvars" : [
+		"text",
+		"composer",
+		"container",
+		"drawingEnabled",
+		"textArea" ],
+	"name" : "RubParagraph",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

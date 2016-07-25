@@ -1,0 +1,14 @@
+{
+	"category" : "Tools-Test-Finder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "sd 4/21/2011 16:54",
+	"instvars" : [
+		 ],
+	"name" : "MethodFinderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

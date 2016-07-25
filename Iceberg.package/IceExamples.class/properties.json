@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IceExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

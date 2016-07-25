@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tools-Breakpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 11/13/2015 11:08",
+	"instvars" : [
+		 ],
+	"name" : "Break",
+	"pools" : [
+		 ],
+	"super" : "Halt",
+	"type" : "normal" }

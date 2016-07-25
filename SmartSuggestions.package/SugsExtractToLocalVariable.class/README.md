@@ -1,0 +1,1 @@
+The classic option to extract a line of code in a local variable

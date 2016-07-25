@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-Tests-OtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 09:58",
+	"instvars" : [
+		 ],
+	"name" : "EUCTextConverterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

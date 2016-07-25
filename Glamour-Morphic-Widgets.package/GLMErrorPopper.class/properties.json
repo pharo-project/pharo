@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets-Popper",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/1/2014 13:03",
+	"instvars" : [
+		 ],
+	"name" : "GLMErrorPopper",
+	"pools" : [
+		 ],
+	"super" : "GLMPopper",
+	"type" : "normal" }

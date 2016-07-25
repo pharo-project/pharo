@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Character-Encoding-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 9/13/2014 22:45",
+	"instvars" : [
+		 ],
+	"name" : "ZnByteEncoder",
+	"pools" : [
+		 ],
+	"super" : "ZnSimplifiedByteEncoder",
+	"type" : "normal" }

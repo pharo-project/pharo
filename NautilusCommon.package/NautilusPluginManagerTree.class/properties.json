@@ -1,0 +1,14 @@
+{
+	"category" : "NautilusCommon-Plugin-Manager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model" ],
+	"name" : "NautilusPluginManagerTree",
+	"pools" : [
+		 ],
+	"super" : "MorphTreeModel",
+	"type" : "normal" }

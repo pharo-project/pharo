@@ -1,0 +1,4 @@
+requirements
+collectionWithElementsToRemove
+	
+	^ subCollectionInNonEmpty .

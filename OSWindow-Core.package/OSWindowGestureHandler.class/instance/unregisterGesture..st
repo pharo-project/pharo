@@ -1,0 +1,3 @@
+detector registering
+unregisterGesture: anOSTouchGesture
+	registeredGestures remove: anOSTouchGesture 

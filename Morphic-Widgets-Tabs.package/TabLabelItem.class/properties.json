@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-Tabs-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"tab",
+		"storedIcon" ],
+	"name" : "TabLabelItem",
+	"pools" : [
+		 ],
+	"super" : "IconicListItem",
+	"type" : "normal" }

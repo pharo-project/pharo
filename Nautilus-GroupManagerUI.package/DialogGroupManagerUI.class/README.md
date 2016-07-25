@@ -1,0 +1,1 @@
+Dialog UI for the group manager

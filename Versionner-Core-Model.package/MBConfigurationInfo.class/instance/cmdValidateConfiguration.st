@@ -1,0 +1,4 @@
+commands
+cmdValidateConfiguration
+	<command>
+	^ VSValidateConfigurationCommand

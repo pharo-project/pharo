@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Instances",
+		"InstancesWriteLock" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MCDefinition",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

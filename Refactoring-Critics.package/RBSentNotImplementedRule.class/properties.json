@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 8/31/2015 16:07",
+	"instvars" : [
+		 ],
+	"name" : "RBSentNotImplementedRule",
+	"pools" : [
+		 ],
+	"super" : "RBBlockLintRule",
+	"type" : "normal" }

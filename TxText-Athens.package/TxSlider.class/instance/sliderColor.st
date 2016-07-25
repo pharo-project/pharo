@@ -1,0 +1,3 @@
+protocol
+sliderColor
+	^ Color lightGray 

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 10:18",
+	"instvars" : [
+		 ],
+	"name" : "TransformWithLayoutMorph",
+	"pools" : [
+		 ],
+	"super" : "TransformMorph",
+	"type" : "normal" }

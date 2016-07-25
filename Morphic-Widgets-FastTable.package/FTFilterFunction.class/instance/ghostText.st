@@ -1,0 +1,3 @@
+widget API
+ghostText
+	^ 'Filter...'

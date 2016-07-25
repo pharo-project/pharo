@@ -1,0 +1,3 @@
+generate
+genForRBGlobalNode
+	^self genForRBVariableNode 

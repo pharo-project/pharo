@@ -1,0 +1,3 @@
+accessing
+contentsOfEntireFile
+	^ self upToEnd

@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/10/2014 14:16",
+	"instvars" : [
+		 ],
+	"name" : "PharoShortcuts",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+order
+isActionHandled
+
+	^ method containsHalt

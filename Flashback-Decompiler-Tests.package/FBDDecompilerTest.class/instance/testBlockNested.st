@@ -1,0 +1,3 @@
+tests
+testBlockNested
+	self checkCorrectDecompilation: #exampleBlockNested

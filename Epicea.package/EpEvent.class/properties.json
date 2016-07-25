@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 14:37",
+	"instvars" : [
+		 ],
+	"name" : "EpEvent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

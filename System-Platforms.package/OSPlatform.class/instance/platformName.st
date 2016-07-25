@@ -1,0 +1,3 @@
+compatbility
+platformName
+	^ self name

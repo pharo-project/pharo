@@ -1,0 +1,3 @@
+constants
+callTypeCDecl
+	^FFICallTypeCDecl

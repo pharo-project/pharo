@@ -1,0 +1,1 @@
+MetacelloValidationWarning indicates that there is a logical inconsistency that is not likely to cause any functional problems

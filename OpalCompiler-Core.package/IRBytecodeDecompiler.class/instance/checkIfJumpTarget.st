@@ -1,0 +1,3 @@
+private
+checkIfJumpTarget
+	irBuilder testJumpAheadTarget: instructionStream pc

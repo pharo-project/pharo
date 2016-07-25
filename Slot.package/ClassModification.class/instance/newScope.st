@@ -1,0 +1,3 @@
+accessing
+newScope
+	^ layout slotScope

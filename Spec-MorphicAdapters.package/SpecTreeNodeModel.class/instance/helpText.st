@@ -1,0 +1,4 @@
+accessing
+helpText
+
+	^ nodeModel help

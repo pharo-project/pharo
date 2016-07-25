@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Selection",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FTSimpleSelection",
+	"pools" : [
+		 ],
+	"super" : "FTSelectionStrategy",
+	"type" : "normal" }

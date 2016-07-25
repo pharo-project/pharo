@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"environmentDictionaries" ],
+	"name" : "RBMultiEnvironment",
+	"pools" : [
+		 ],
+	"super" : "RBBrowserEnvironmentWrapper",
+	"type" : "normal" }

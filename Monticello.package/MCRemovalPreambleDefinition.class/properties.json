@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Modeling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:48",
+	"instvars" : [
+		 ],
+	"name" : "MCRemovalPreambleDefinition",
+	"pools" : [
+		 ],
+	"super" : "MCScriptDefinition",
+	"type" : "normal" }

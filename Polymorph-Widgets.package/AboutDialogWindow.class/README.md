@@ -1,0 +1,1 @@
+Default superclass for application about dialogs.

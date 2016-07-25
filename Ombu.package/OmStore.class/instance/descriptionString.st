@@ -1,0 +1,4 @@
+printing
+descriptionString
+
+	^ self shouldBeImplemented 

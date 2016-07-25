@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Pharo3TabPanelBorder",
+	"pools" : [
+		 ],
+	"super" : "TabPanelBorder",
+	"type" : "normal" }

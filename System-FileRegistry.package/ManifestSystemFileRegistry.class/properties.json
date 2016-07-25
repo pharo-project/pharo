@@ -1,0 +1,14 @@
+{
+	"category" : "System-FileRegistry",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemFileRegistry",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

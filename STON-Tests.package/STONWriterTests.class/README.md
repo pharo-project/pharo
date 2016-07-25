@@ -1,0 +1,1 @@
+STONWriterTests test serialization.

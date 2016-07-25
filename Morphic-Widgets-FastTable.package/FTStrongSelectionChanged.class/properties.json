@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Announcement",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/17/2015 12:45",
+	"instvars" : [
+		"selectedRowIndex",
+		"event" ],
+	"name" : "FTStrongSelectionChanged",
+	"pools" : [
+		 ],
+	"super" : "FTAnnouncement",
+	"type" : "normal" }

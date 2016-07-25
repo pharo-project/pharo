@@ -1,0 +1,4 @@
+testing
+isNegated
+
+	^negated

@@ -1,0 +1,21 @@
+{
+	"category" : "GT-EventRecorder-Tests-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"bundle1",
+		"bundle2",
+		"bundle3",
+		"bundle4",
+		"factory",
+		"multiBundles",
+		"multiBundle1",
+		"multiBundle2" ],
+	"name" : "GTEventMultiBundleFactoryTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

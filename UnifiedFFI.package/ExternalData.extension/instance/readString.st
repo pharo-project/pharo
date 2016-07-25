@@ -1,0 +1,3 @@
+*UnifiedFFI
+readString
+	^ self fromCString

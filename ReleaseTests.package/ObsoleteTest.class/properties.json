@@ -1,0 +1,14 @@
+{
+	"category" : "ReleaseTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SteveFreeman 7/17/2010 11:31",
+	"instvars" : [
+		"classFactory" ],
+	"name" : "ObsoleteTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

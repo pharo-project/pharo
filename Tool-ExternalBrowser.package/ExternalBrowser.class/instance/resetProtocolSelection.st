@@ -1,0 +1,4 @@
+selection operation
+resetProtocolSelection
+
+	self protocols resetSelection

@@ -1,0 +1,16 @@
+{
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/14/2016 15:04",
+	"instvars" : [
+		"action",
+		"icon",
+		"description" ],
+	"name" : "RePropertyAction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I'm a node allowing to compute and browse potential dependencies of a package, i.e. messages sent in the package but with no corresponding method in the package or in its dependencies.

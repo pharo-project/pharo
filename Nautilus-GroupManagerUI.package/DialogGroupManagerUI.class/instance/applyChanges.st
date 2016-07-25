@@ -1,0 +1,4 @@
+private
+applyChanges
+
+	self valid

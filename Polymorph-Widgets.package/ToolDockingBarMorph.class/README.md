@@ -1,0 +1,1 @@
+A non user-moveable docking bar that uses theme-based fill styles.

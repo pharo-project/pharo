@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"navigation",
+		"isModified" ],
+	"name" : "MCMethodDefinitionTest",
+	"pools" : [
+		 ],
+	"super" : "MCTestCase",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Slot-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"layout",
+		"subType" ],
+	"name" : "IncompatibleLayoutConflict",
+	"pools" : [
+		 ],
+	"super" : "ClassBuilderError",
+	"type" : "normal" }

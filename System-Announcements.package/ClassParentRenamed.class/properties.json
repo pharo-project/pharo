@@ -1,0 +1,16 @@
+{
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 11/20/2015 20:47",
+	"instvars" : [
+		"classAffected",
+		"parentOldName",
+		"parentNewName" ],
+	"name" : "ClassParentRenamed",
+	"pools" : [
+		 ],
+	"super" : "ClassAnnouncement",
+	"type" : "normal" }

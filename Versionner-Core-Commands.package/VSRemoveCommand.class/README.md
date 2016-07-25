@@ -1,0 +1,1 @@
+Remove from the configuration the selected version or baseline

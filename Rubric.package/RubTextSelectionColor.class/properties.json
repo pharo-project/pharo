@@ -1,0 +1,19 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FindReplaceSelection",
+		"OppositeDelimiterSelection",
+		"PrimarySelection",
+		"SecondarySelection" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"colorBlock",
+		"backgroundColorBlock",
+		"emphasisCode" ],
+	"name" : "RubTextSelectionColor",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

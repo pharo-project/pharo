@@ -1,0 +1,1 @@
+I am the Pharo Local Exception return that something wrong in SDL2

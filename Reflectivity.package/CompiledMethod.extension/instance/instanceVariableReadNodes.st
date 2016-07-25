@@ -1,0 +1,3 @@
+*Reflectivity
+instanceVariableReadNodes
+	^self ast instanceVariableReadNodes

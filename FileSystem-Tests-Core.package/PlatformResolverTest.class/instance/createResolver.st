@@ -1,0 +1,3 @@
+running
+createResolver
+	^ PlatformResolver forCurrentPlatform

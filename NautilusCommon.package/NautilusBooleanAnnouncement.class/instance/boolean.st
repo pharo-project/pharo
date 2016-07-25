@@ -1,0 +1,4 @@
+accessing
+boolean
+
+		^ boolean

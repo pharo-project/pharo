@@ -1,0 +1,4 @@
+api
+getPassword
+
+	^ password text

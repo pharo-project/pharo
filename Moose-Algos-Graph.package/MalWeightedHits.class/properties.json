@@ -1,0 +1,14 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MalWeightedHits",
+	"pools" : [
+		 ],
+	"super" : "MalHits",
+	"type" : "normal" }

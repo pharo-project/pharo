@@ -1,0 +1,15 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 3/26/2015 14:28",
+	"instvars" : [
+		"start",
+		"end" ],
+	"name" : "MalDijkstra",
+	"pools" : [
+		 ],
+	"super" : "MalGraphAlgorithm",
+	"type" : "normal" }

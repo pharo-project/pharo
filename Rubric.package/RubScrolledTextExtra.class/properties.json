@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RubScrolledTextExtra",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

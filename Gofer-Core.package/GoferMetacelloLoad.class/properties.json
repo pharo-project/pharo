@@ -1,0 +1,14 @@
+{
+	"category" : "Gofer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"version" ],
+	"name" : "GoferMetacelloLoad",
+	"pools" : [
+		 ],
+	"super" : "GoferLoad",
+	"type" : "normal" }

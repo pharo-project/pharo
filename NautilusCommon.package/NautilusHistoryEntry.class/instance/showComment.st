@@ -1,0 +1,4 @@
+accessing
+showComment
+
+		^ showComment

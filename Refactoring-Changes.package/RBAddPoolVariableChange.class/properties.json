@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RBAddPoolVariableChange",
+	"pools" : [
+		 ],
+	"super" : "RBRefactoryVariableChange",
+	"type" : "normal" }

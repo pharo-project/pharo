@@ -1,0 +1,1 @@
+This represents the state of CompoundTextConverter.

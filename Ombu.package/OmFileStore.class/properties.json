@@ -1,0 +1,21 @@
+{
+	"category" : "Ombu-Stores",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 5/30/2014 18:00",
+	"instvars" : [
+		"writerLock",
+		"globalName",
+		"entryWriter",
+		"headReference",
+		"fileReference",
+		"entryPositionsByLocalName",
+		"entryCount",
+		"lastWrite" ],
+	"name" : "OmFileStore",
+	"pools" : [
+		 ],
+	"super" : "OmStore",
+	"type" : "normal" }

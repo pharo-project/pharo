@@ -1,0 +1,3 @@
+execution
+isValidForContext
+	^  context hasSubclasses

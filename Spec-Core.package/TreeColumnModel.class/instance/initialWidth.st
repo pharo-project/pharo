@@ -1,0 +1,4 @@
+api
+initialWidth
+
+	^ initialWidth value

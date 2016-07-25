@@ -1,0 +1,4 @@
+accessing
+storeValue
+
+	^ storeValue

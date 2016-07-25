@@ -1,0 +1,14 @@
+{
+	"category" : "NewValueHolder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 1/23/2014 15:18",
+	"instvars" : [
+		 ],
+	"name" : "CollectionValueHolder",
+	"pools" : [
+		 ],
+	"super" : "NewValueHolder",
+	"type" : "normal" }

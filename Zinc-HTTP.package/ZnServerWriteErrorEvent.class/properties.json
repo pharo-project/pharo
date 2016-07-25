@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 6/16/2014 15:13",
+	"instvars" : [
+		 ],
+	"name" : "ZnServerWriteErrorEvent",
+	"pools" : [
+		 ],
+	"super" : "ZnServerErrorEvent",
+	"type" : "normal" }

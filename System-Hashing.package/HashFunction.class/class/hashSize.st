@@ -1,0 +1,3 @@
+accessing
+hashSize
+	^ self subclassResponsibility

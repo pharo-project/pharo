@@ -1,0 +1,3 @@
+mask
+withMask
+	^self

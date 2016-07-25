@@ -1,0 +1,4 @@
+api
+resizable
+
+	^ resizable value

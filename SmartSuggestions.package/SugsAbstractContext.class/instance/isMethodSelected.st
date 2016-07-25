@@ -1,0 +1,3 @@
+testing
+isMethodSelected
+	^selectedNode isMethod 

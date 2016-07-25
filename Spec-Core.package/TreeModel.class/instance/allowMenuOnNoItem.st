@@ -1,0 +1,4 @@
+api
+allowMenuOnNoItem
+
+	^ allowMenuOnNoItem value

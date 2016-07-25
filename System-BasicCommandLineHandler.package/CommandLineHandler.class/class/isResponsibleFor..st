@@ -1,0 +1,3 @@
+handler selection
+isResponsibleFor: aCommandLineArguments
+	^ aCommandLineArguments includesSubCommand: self commandName

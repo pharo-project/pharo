@@ -1,0 +1,14 @@
+{
+	"category" : "WorldMenuHelp",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "WorldMenuHelp",
+	"pools" : [
+		 ],
+	"super" : "CustomHelp",
+	"type" : "normal" }

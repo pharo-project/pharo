@@ -1,0 +1,3 @@
+transforming
+compileMethod
+	class compileTree: sourceParseTree

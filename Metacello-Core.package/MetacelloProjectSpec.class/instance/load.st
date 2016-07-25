@@ -1,0 +1,4 @@
+loading
+load
+
+	self subclassResponsibility

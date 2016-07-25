@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Debugger-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 3/29/2016 23:26",
+	"instvars" : [
+		"debugActionExecutedAnnouncement" ],
+	"name" : "GTDebuggerBrowserUpdateRequest",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

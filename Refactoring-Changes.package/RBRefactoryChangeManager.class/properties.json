@@ -1,0 +1,17 @@
+{
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Instance",
+		"UndoSize" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"undo",
+		"redo",
+		"isPerformingRefactoring" ],
+	"name" : "RBRefactoryChangeManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

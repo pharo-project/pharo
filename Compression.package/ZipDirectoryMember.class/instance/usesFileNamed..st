@@ -1,0 +1,3 @@
+testing
+usesFileNamed: aName
+	^false

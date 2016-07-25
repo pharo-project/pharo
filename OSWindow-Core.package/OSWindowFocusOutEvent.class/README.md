@@ -1,0 +1,1 @@
+I am delivered when window loses the user input focus.

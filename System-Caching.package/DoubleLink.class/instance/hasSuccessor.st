@@ -1,0 +1,3 @@
+testing
+hasSuccessor
+	^ nextLink notNil

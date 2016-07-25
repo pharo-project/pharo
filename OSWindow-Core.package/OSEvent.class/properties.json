@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:13",
+	"instvars" : [
+		"window",
+		"suppressDefaultAction" ],
+	"name" : "OSEvent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

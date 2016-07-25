@@ -1,0 +1,15 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 12:29",
+	"instvars" : [
+		"parameterIndex",
+		"argument" ],
+	"name" : "RBRemoveParameterRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBChangeMethodNameRefactoring",
+	"type" : "normal" }

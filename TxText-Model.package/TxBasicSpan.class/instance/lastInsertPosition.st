@@ -1,0 +1,3 @@
+accessing
+lastInsertPosition
+	^ 0

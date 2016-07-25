@@ -1,0 +1,18 @@
+{
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/6/2014 08:10",
+	"instvars" : [
+		"layers",
+		"depthIndex",
+		"depths",
+		"stepparents",
+		"roots" ],
+	"name" : "MCVersionSorter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

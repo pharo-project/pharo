@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"checkerBackup" ],
+	"name" : "RBPharoBootstrapRuleTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

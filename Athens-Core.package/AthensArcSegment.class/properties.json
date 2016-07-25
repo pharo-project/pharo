@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 3/7/2012 13:41",
+	"instvars" : [
+		"endPoint",
+		"angle" ],
+	"name" : "AthensArcSegment",
+	"pools" : [
+		 ],
+	"super" : "AthensPathSegment",
+	"type" : "normal" }

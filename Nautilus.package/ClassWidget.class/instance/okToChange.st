@@ -1,0 +1,3 @@
+protocol
+okToChange
+	^ model okToChange

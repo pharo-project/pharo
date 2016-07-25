@@ -1,0 +1,3 @@
+equation translation
+selector
+	^selector

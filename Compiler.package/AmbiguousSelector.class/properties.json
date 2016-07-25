@@ -1,0 +1,14 @@
+{
+	"category" : "Compiler-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 2/23/2010 15:40",
+	"instvars" : [
+		"interval" ],
+	"name" : "AmbiguousSelector",
+	"pools" : [
+		 ],
+	"super" : "ParserNotification",
+	"type" : "normal" }

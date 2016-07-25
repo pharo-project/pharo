@@ -1,0 +1,4 @@
+accessing
+entries
+
+	^ compositeStore entries

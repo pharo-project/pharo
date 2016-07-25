@@ -1,0 +1,14 @@
+{
+	"category" : "FontInfrastructure",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 6/8/2011 22:20",
+	"instvars" : [
+		"fontProviders" ],
+	"name" : "LogicalFontManager",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "Object",
+	"type" : "normal" }

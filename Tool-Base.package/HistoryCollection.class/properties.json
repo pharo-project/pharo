@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 3/17/2011 13:41",
+	"instvars" : [
+		"storage",
+		"maxSize" ],
+	"name" : "HistoryCollection",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

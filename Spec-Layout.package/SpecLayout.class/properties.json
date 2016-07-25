@@ -1,0 +1,18 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"type",
+		"commands",
+		"selector",
+		"result",
+		"shouldCheckSplitters" ],
+	"name" : "SpecLayout",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

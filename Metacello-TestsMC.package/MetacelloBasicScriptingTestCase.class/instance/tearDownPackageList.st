@@ -1,0 +1,3 @@
+running
+tearDownPackageList
+  ^ #('ConfigurationOfExternalX' 'ConfigurationOfExternalXX' 'ConfigurationOfExternal' 'ConfigurationOfExternalXXX' 'ConfigurationOfExternalIV' 'ConfigurationOfExternalIV' 'BaselineOfExternalX' 'BaselineOfGithubRefXX' 'BaselineOfGithubRefIV' 'BaselineOfGithubRefV' 'BaselineOfGithubRefVI' 'BaselineOfGithubRefVII' 'BaselineOfExternal' 'BaselineOfExternalX' 'External-CoreX' 'Sample-CoreX' 'ConfigurationOfMetacelloExample' 'GoferFoo' 'Sample-Core' 'Sample-Platform' 'Sample-Tests' 'External-Core' 'ExternalCore' 'External-Tests' 'BaselineOfGithubRefVIII' 'BaselineOfGithubRefIX' 'MarianosImage' 'BaselineOfGithubRefXI' 'BaselineOfGithubRefXII' 'BaselineOfGithubRefXIII')

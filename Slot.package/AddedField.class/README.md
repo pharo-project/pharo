@@ -1,0 +1,1 @@
+I represent the change of a newly added field on an instance.

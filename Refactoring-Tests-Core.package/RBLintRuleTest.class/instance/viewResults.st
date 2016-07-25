@@ -1,0 +1,3 @@
+private
+viewResults
+	self subclassResponsibility

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Tests-Rubric",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMRubricTextMorphicTest",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicTest",
+	"type" : "normal" }

@@ -1,0 +1,18 @@
+{
+	"category" : "Graphics-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 18:35",
+	"instvars" : [
+		"alpha",
+		"fillPattern",
+		"lastFont",
+		"lastFontForegroundColor",
+		"lastFontBackgroundColor" ],
+	"name" : "GrafPort",
+	"pools" : [
+		 ],
+	"super" : "BitBlt",
+	"type" : "normal" }

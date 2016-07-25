@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ValidateBeforeSaving" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "VSSaveProjectCommand",
+	"pools" : [
+		 ],
+	"super" : "VSVersionCommand",
+	"type" : "normal" }

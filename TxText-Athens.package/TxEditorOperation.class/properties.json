@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"editor" ],
+	"name" : "TxEditorOperation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+resize/collapse
+collapsedFrame
+	^ collapsedFrame

@@ -1,0 +1,16 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 01:45",
+	"instvars" : [
+		"category",
+		"superclass",
+		"subclasses" ],
+	"name" : "RBAddClassRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBClassRefactoring",
+	"type" : "normal" }

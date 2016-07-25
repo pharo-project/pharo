@@ -1,0 +1,4 @@
+accessing
+oldCategoryOfTraitAffected
+
+	^ oldTrait category

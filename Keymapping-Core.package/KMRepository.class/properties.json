@@ -1,0 +1,16 @@
+{
+	"category" : "Keymapping-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Singleton" ],
+	"commentStamp" : "GuillermoPolito 12/14/2010 21:37",
+	"instvars" : [
+		"categories",
+		"categoryHolders",
+		"globalCategories" ],
+	"name" : "KMRepository",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+private
+resizeWidget
+	"Do nothing"

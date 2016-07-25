@@ -1,0 +1,14 @@
+{
+	"category" : "PragmaCollector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "alain.plantec 10/20/2009 11:34",
+	"instvars" : [
+		 ],
+	"name" : "PragmaAdded",
+	"pools" : [
+		 ],
+	"super" : "PragmaAnnouncement",
+	"type" : "normal" }

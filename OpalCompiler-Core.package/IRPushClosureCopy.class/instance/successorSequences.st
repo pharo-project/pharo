@@ -1,0 +1,4 @@
+accessing
+successorSequences
+
+	^ {destination. blockSequence} 

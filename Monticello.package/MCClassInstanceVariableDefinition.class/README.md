@@ -1,0 +1,1 @@
+A MCClassInstanceVariableDefinition represents a class instance variable.

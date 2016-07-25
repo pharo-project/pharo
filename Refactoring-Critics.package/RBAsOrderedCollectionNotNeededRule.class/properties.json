@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 17:36",
+	"instvars" : [
+		 ],
+	"name" : "RBAsOrderedCollectionNotNeededRule",
+	"pools" : [
+		 ],
+	"super" : "RBTransformationRule",
+	"type" : "normal" }

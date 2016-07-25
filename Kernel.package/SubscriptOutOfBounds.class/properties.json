@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 4/21/2011 13:00",
+	"instvars" : [
+		"subscript",
+		"lowerBound",
+		"upperBound" ],
+	"name" : "SubscriptOutOfBounds",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+This class represents the symbols containing 32bit characters.

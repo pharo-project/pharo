@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Tests-Resources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfVersionnerTestXMLWriter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

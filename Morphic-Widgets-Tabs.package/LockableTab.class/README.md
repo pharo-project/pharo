@@ -1,0 +1,1 @@
+I am a tab which can be locked/unlocked with according action and icon

@@ -1,0 +1,3 @@
+generate
+genForInstanceVariableSlot
+	^entity name asLiteralNode

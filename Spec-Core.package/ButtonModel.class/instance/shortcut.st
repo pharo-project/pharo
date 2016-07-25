@@ -1,0 +1,4 @@
+api
+shortcut
+
+	^ shortcutHolder value

@@ -1,0 +1,3 @@
+accessing
+previousContents
+	^ previousContents

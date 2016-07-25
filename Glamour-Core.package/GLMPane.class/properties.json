@@ -1,0 +1,20 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 2/15/2011 11:03",
+	"instvars" : [
+		"browser",
+		"name",
+		"presentations",
+		"ports",
+		"lastActivePresentation",
+		"allowedToNotePresentationsChanged",
+		"cachedMatchingPresentations" ],
+	"name" : "GLMPane",
+	"pools" : [
+		 ],
+	"super" : "GLMLoggedObject",
+	"type" : "normal" }

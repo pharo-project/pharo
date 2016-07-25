@@ -1,0 +1,3 @@
+setUp-tearDown
+createSystemNavigationToTest
+	^SystemNavigation new

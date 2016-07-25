@@ -1,0 +1,2 @@
+enumerating
+allSlotsDo: aBlock

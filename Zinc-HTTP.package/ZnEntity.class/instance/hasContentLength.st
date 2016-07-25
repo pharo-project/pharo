@@ -1,0 +1,3 @@
+testing
+hasContentLength
+	^ contentLength notNil

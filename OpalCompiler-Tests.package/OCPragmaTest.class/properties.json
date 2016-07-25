@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Source",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OCPragmaTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

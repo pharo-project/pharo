@@ -1,0 +1,20 @@
+{
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 11:15",
+	"instvars" : [
+		"color",
+		"lineRange",
+		"bounds",
+		"borderWidth",
+		"borderColor",
+		"borderSides",
+		"fillWidth" ],
+	"name" : "TextHighlightByBounds",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

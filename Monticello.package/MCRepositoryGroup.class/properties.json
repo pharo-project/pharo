@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [
+		"default" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"repositories",
+		"useCache" ],
+	"name" : "MCRepositoryGroup",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

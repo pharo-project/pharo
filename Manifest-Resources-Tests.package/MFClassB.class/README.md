@@ -1,0 +1,1 @@
+I'm a dummy class for test purposes  

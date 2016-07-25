@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Compiler",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 6/23/2015 17:38",
+	"instvars" : [
+		 ],
+	"name" : "RFASTTranslator",
+	"pools" : [
+		 ],
+	"super" : "OCASTTranslator",
+	"type" : "normal" }

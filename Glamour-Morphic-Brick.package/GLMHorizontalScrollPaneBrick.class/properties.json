@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Scrollpane",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 1/7/2015 23:38",
+	"instvars" : [
+		 ],
+	"name" : "GLMHorizontalScrollPaneBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMScrollPaneBrick",
+	"type" : "normal" }

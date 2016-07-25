@@ -1,0 +1,16 @@
+{
+	"category" : "SUnit-Core-Extensions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Counter" ],
+	"commentStamp" : "LaurentLaffont 4/15/2011 20:20",
+	"instvars" : [
+		"createdClasses",
+		"createdTraits",
+		"createdSilently" ],
+	"name" : "ClassFactoryForTestCase",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

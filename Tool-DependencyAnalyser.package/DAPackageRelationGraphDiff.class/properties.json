@@ -1,0 +1,17 @@
+{
+	"category" : "Tool-DependencyAnalyser-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 8/7/2014 15:09",
+	"instvars" : [
+		"oldRelationGraph",
+		"newRelationGraph",
+		"packagesDiff",
+		"dependentPackagesDiff" ],
+	"name" : "DAPackageRelationGraphDiff",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

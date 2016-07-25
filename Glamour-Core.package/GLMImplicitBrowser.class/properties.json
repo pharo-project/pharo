@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 3/5/2011 21:22",
+	"instvars" : [
+		"presentations",
+		"transmission" ],
+	"name" : "GLMImplicitBrowser",
+	"pools" : [
+		 ],
+	"super" : "GLMBrowser",
+	"type" : "normal" }

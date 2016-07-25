@@ -1,0 +1,4 @@
+accessing
+defaultMaxSize
+
+	^ 15

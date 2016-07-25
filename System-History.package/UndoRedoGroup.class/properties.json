@@ -1,0 +1,14 @@
+{
+	"category" : "System-History",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 12/14/2010 23:30",
+	"instvars" : [
+		 ],
+	"name" : "UndoRedoGroup",
+	"pools" : [
+		 ],
+	"super" : "HistoryNode",
+	"type" : "normal" }

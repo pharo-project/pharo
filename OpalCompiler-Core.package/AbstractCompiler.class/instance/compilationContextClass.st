@@ -1,0 +1,3 @@
+accessing
+compilationContextClass
+	self subclassResponsibility

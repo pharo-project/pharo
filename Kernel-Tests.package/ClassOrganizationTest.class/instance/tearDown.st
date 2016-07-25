@@ -1,0 +1,3 @@
+running
+tearDown
+	class removeFromSystem

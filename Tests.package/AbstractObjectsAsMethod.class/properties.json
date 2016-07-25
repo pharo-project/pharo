@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-ObjectsAsMethods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "AbstractObjectsAsMethod",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

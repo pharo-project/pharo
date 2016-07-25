@@ -1,0 +1,3 @@
+drawing
+messageFont
+	^ NECMenuMorph messageFont

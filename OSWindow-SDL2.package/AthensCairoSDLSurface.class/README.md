@@ -1,0 +1,1 @@
+I'm a cairo surface who renders directly to a SDL2 surface.

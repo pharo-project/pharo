@@ -1,0 +1,4 @@
+accessing
+newValue
+
+	^ newValue

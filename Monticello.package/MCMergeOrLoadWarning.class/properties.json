@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Loading",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"versions" ],
+	"name" : "MCMergeOrLoadWarning",
+	"pools" : [
+		 ],
+	"super" : "Warning",
+	"type" : "normal" }

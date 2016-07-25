@@ -1,0 +1,3 @@
+plugin interface
+key
+	^#value

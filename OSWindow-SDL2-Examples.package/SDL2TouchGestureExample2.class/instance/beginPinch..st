@@ -1,0 +1,2 @@
+manage pinch
+beginPinch: anEvent

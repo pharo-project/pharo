@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-BasicObjects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 8/8/2010 18:13",
+	"instvars" : [
+		"origin",
+		"corner" ],
+	"name" : "Rectangle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

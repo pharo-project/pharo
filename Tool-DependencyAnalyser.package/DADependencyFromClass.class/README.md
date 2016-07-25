@@ -1,0 +1,1 @@
+A PDDependencyFromClass is a dependency from the class. The source class is stored in the inst var.

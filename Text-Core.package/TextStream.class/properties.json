@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "TextStream",
+	"pools" : [
+		 ],
+	"super" : "WriteStream",
+	"type" : "normal" }

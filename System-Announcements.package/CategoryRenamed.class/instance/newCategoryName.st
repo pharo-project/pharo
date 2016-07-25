@@ -1,0 +1,3 @@
+accessing
+newCategoryName
+	^newCategoryName

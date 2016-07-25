@@ -1,0 +1,15 @@
+{
+	"category" : "MenuRegistration-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"builder",
+		"client" ],
+	"name" : "FallbackMenu",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

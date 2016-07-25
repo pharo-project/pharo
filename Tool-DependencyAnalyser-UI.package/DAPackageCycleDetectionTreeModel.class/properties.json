@@ -1,0 +1,18 @@
+{
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 6/12/2014 15:50",
+	"instvars" : [
+		"analysis",
+		"cycles",
+		"cyclesLabel",
+		"filter",
+		"buttonReversed" ],
+	"name" : "DAPackageCycleDetectionTreeModel",
+	"pools" : [
+		 ],
+	"super" : "DAPackageTreeModel",
+	"type" : "normal" }

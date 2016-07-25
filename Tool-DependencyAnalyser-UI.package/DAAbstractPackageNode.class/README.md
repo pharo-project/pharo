@@ -1,0 +1,1 @@
+Abstract class from package node displaying in the tree.

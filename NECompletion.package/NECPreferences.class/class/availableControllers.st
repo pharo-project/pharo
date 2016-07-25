@@ -1,0 +1,3 @@
+private
+availableControllers
+	^NECController withAllSubclasses copyWithout: NECWorkspaceController

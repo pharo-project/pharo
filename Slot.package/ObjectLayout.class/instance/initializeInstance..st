@@ -1,0 +1,3 @@
+initialize-release
+initializeInstance: anInstance
+	self subclassResponsibility

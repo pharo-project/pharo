@@ -1,0 +1,4 @@
+protocol
+last
+
+	^ storage last

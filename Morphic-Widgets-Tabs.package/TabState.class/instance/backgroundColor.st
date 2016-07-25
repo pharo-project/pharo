@@ -1,0 +1,4 @@
+protocol
+backgroundColor
+	
+	^ self subclassResponsibility

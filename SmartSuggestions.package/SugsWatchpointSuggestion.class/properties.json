@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mcamp 11/20/2015 12:08",
+	"instvars" : [
+		 ],
+	"name" : "SugsWatchpointSuggestion",
+	"pools" : [
+		 ],
+	"super" : "SugsSuggestion",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+accessing
+hasRun
+
+	^ RunStatus

@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 2/23/2012 22:09",
+	"instvars" : [
+		 ],
+	"name" : "OCCompilerSyntaxErrorNotifyingTest",
+	"pools" : [
+		 ],
+	"super" : "OCCompilerNotifyingTest",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Announcements-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestAnnouncementsCore",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

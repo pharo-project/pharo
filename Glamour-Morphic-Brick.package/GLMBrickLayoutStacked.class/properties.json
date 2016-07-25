@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Brick-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"index",
+		"position" ],
+	"name" : "GLMBrickLayoutStacked",
+	"pools" : [
+		 ],
+	"super" : "GLMBrickLayoutEvent",
+	"type" : "normal" }

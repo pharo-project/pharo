@@ -1,0 +1,17 @@
+{
+	"category" : "TxText-Athens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"currentPosition",
+		"currentLine",
+		"metStopCondition",
+		"layout" ],
+	"name" : "TxAthensLayoutStrategy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

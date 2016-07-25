@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tbn 12/16/2010 22:26",
+	"instvars" : [
+		 ],
+	"name" : "SUnitHelp",
+	"pools" : [
+		 ],
+	"super" : "CustomHelp",
+	"type" : "normal" }

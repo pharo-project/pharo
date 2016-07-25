@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"exclusions" ],
+	"name" : "ExceptionSetWithExclusions",
+	"pools" : [
+		 ],
+	"super" : "ExceptionSet",
+	"type" : "normal" }

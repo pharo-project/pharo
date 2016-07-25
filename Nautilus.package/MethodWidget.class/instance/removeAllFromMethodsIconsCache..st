@@ -1,0 +1,3 @@
+protocol
+removeAllFromMethodsIconsCache: aMethod
+	^self class removeAllFromMethodsIconsCache: aMethod

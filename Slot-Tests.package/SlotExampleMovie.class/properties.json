@@ -1,0 +1,17 @@
+{
+	"category" : "Slot-Tests-Associations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JanVanDeSandt 2/27/2015 11:27",
+	"instvars" : [
+		"#name",
+		"#year",
+		"#director => ToOneRelationSlot inverse: #directedMovies inClass: #SlotExamplePerson",
+		"#actors => ToManyRelationSlot inverse: #actedInMovies inClass: #SlotExamplePerson" ],
+	"name" : "SlotExampleMovie",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

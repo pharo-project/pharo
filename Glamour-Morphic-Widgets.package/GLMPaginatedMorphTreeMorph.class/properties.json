@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stopStepping" ],
+	"name" : "GLMPaginatedMorphTreeMorph",
+	"pools" : [
+		 ],
+	"super" : "PaginatedMorphTreeMorph",
+	"type" : "normal" }

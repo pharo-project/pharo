@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 5/1/2011 23:14",
+	"instvars" : [
+		"sourcePath",
+		"dest",
+		"endPoint" ],
+	"name" : "AthensPathConverter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

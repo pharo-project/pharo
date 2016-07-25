@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TAbleToRotate classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 5/5/2010 09:19",
+	"instvars" : [
+		 ],
+	"name" : "TransformationMorph",
+	"pools" : [
+		 ],
+	"super" : "TransformMorph",
+	"traitcomposition" : "TAbleToRotate",
+	"type" : "normal" }

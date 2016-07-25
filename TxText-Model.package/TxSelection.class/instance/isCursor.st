@@ -1,0 +1,4 @@
+testing
+isCursor
+
+	^ end == start

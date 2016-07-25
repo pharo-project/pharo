@@ -1,0 +1,14 @@
+{
+	"category" : "Alien-CoreTest",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "AlienSunit",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

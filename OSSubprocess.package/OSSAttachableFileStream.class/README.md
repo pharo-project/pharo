@@ -1,0 +1,3 @@
+OSSAttachableFileStream represents a  stream on an input or output channel provided by the underlying operating system. It behaves like an ordinary file stream, except that it can be attached myself to an input or output stream which has already been opened by the underlying operating system.
+
+The most common use is to represent either the read or write end of a Pipe from the  Operatying System . This way, it provides a Stream API for both, reading and writing. An OSSPipe  contains a 'reader' and a 'writer' which will be two different instances of this class.

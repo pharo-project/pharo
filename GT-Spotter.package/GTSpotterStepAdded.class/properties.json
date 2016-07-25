@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stepModel" ],
+	"name" : "GTSpotterStepAdded",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

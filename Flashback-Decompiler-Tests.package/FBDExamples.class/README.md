@@ -1,0 +1,1 @@
+The method of this class in the protocols named examples are supposed to represent all the possible smalltalk semantics in the point of view of the Decompiler

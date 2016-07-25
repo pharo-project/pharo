@@ -1,0 +1,15 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"kern",
+		"active" ],
+	"name" : "TextKern",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

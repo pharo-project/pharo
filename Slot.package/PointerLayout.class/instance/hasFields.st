@@ -1,0 +1,3 @@
+testing
+hasFields
+	^ slotScope hasFields

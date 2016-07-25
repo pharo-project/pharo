@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Layouts",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMHorizontalLinearLayout",
+	"pools" : [
+		 ],
+	"super" : "GLMLinearLayout",
+	"type" : "normal" }

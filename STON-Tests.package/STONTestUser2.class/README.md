@@ -1,0 +1,1 @@
+STONTestUser2 extends STONTestUser with explicit implementations of #fromSton: and #stonOn:

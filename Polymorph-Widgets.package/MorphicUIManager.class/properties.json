@@ -1,0 +1,17 @@
+{
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TEasilyThemed classTrait",
+	"classvars" : [
+		"UIProcess" ],
+	"commentStamp" : "StephaneDucasse 6/5/2011 22:19",
+	"instvars" : [
+		"interactiveParser",
+		"activeTranscript" ],
+	"name" : "MorphicUIManager",
+	"pools" : [
+		 ],
+	"super" : "UIManager",
+	"traitcomposition" : "TEasilyThemed - {#theme}",
+	"type" : "normal" }

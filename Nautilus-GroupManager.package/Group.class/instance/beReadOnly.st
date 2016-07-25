@@ -1,0 +1,4 @@
+accessing
+beReadOnly
+
+	readOnly := true

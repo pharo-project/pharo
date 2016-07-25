@@ -1,0 +1,3 @@
+accessing
+size
+	^ queue size

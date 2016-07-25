@@ -1,0 +1,15 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"auth",
+		"hub" ],
+	"name" : "MalHitsNode",
+	"pools" : [
+		 ],
+	"super" : "MalNodeWithPreviousAndNext",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+running
+useNodeDecomposition
+
+	sccExtractorClass := MalSccNodeDecomposition 

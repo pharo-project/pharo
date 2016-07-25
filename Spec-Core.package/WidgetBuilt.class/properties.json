@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model",
+		"widget" ],
+	"name" : "WidgetBuilt",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

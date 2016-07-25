@@ -1,0 +1,6 @@
+{
+	"category" : "Collections-Tests-Abstract",
+	"classtraitcomposition" : "TOccurrencesTest classTrait",
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:34",
+	"name" : "TOccurrencesForMultiplinessTest",
+	"traitcomposition" : "TOccurrencesTest" }

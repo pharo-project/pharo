@@ -1,0 +1,1 @@
+I am a special kind of rule where the verification is specified using a block. The methods checkClass: and checkMethods are the hooks to specify such verifications.

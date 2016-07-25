@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 8/21/2015 14:47",
+	"instvars" : [
+		 ],
+	"name" : "OSWindowAthensDrawingExampleEventHandler",
+	"pools" : [
+		 ],
+	"super" : "OSWindowAthensExampleEventHandler",
+	"type" : "normal" }

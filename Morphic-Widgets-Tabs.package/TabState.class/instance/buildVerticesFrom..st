@@ -1,0 +1,4 @@
+protocol
+buildVerticesFrom: borderVertices
+
+	^ borderVertices

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Announcements-System-Protocols",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ProtocolRemoved",
+	"pools" : [
+		 ],
+	"super" : "ProtocolAnnouncement",
+	"type" : "normal" }

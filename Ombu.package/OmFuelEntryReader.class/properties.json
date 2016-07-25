@@ -1,0 +1,14 @@
+{
+	"category" : "Ombu-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 16:11",
+	"instvars" : [
+		"materializer" ],
+	"name" : "OmFuelEntryReader",
+	"pools" : [
+		 ],
+	"super" : "OmEntryReader",
+	"type" : "normal" }

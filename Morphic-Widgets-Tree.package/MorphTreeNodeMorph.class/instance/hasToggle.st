@@ -1,0 +1,3 @@
+testing
+hasToggle
+	^ self canExpand

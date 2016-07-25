@@ -1,0 +1,4 @@
+classification
+isHandMorph
+
+	^ true

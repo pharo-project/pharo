@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 10:59",
+	"instvars" : [
+		"statusLine" ],
+	"name" : "ZnResponse",
+	"pools" : [
+		 ],
+	"super" : "ZnMessage",
+	"type" : "normal" }

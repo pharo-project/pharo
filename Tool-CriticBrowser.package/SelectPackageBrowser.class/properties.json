@@ -1,0 +1,16 @@
+{
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"addTestCaseClassesModel",
+		"removeTestPackageModel",
+		"testPackage" ],
+	"name" : "SelectPackageBrowser",
+	"pools" : [
+		 ],
+	"super" : "SelectBrowser",
+	"type" : "normal" }

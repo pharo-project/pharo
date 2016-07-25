@@ -1,0 +1,16 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"model",
+		"from",
+		"to" ],
+	"name" : "MalGraphEdge",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

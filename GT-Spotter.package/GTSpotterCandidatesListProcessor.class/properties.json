@@ -1,0 +1,25 @@
+{
+	"category" : "GT-Spotter-Processors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 11/30/2014 22:12",
+	"instvars" : [
+		"allCandidatesBlock",
+		"candidatesLimit",
+		"queryMatchingBlock",
+		"title",
+		"itemNameBlock",
+		"itemIconBlock",
+		"actBlock",
+		"wantsToDisplayOnEmptyQuery",
+		"filterBlock",
+		"itemFilterNameBlock",
+		"keyBinding",
+		"sortBlock" ],
+	"name" : "GTSpotterCandidatesListProcessor",
+	"pools" : [
+		 ],
+	"super" : "GTSpotterCandidatesProcessor",
+	"type" : "normal" }

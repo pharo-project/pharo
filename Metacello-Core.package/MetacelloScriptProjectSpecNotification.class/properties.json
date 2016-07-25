@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"projectSpec" ],
+	"name" : "MetacelloScriptProjectSpecNotification",
+	"pools" : [
+		 ],
+	"super" : "MetacelloScriptNotification",
+	"type" : "normal" }

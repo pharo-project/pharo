@@ -1,0 +1,17 @@
+{
+	"category" : "Glamour-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tg 2/20/2010 14:55",
+	"instvars" : [
+		"presentation",
+		"property",
+		"value",
+		"oldValue" ],
+	"name" : "GLMContextChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGTPlaygroundCore",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "AndreiChis 10/29/2014 12:02",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGTPlaygroundCore",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

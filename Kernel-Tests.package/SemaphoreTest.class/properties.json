@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tlk 5/5/2006 13:32",
+	"instvars" : [
+		 ],
+	"name" : "SemaphoreTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

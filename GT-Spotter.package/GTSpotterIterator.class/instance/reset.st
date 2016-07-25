@@ -1,0 +1,3 @@
+public
+reset
+	items := nil.

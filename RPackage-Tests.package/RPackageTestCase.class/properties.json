@@ -1,0 +1,18 @@
+{
+	"category" : "RPackage-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:58",
+	"instvars" : [
+		"announcerForTest",
+		"oldSystemAnnouncer",
+		"createdClasses",
+		"createdPackages",
+		"createdCategories" ],
+	"name" : "RPackageTestCase",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

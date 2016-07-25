@@ -1,0 +1,1 @@
+I know how to use a Transcript to extract the information needed for the suggestions

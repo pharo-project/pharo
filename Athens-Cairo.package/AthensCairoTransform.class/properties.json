@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Cairo-Transforms",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"canvas" ],
+	"name" : "AthensCairoTransform",
+	"pools" : [
+		 ],
+	"super" : "AthensTransform",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

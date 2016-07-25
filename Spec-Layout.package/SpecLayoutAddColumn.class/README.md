@@ -1,0 +1,1 @@
+A SpecLayoutAddColumn is an action representing the addition of a column to a layout

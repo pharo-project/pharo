@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Extras",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 8/20/2015 12:20",
+	"instvars" : [
+		 ],
+	"name" : "OSWindowAnimated",
+	"pools" : [
+		 ],
+	"super" : "OSWindow",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+A link to a hidden mail message.  Clicking on it allows the message to be viewed or saved to disk.

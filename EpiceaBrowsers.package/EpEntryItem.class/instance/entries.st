@@ -1,0 +1,3 @@
+accessing
+entries
+	^ { self entry }

@@ -1,0 +1,15 @@
+{
+	"category" : "Slot-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 3/31/2015 15:58",
+	"instvars" : [
+		"baseSlot",
+		"offset" ],
+	"name" : "BooleanSlot",
+	"pools" : [
+		 ],
+	"super" : "Slot",
+	"type" : "normal" }

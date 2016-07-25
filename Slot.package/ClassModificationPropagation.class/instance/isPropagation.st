@@ -1,0 +1,3 @@
+testing
+isPropagation
+	^true

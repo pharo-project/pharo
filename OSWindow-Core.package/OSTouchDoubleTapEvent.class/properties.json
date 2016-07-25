@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 5/13/2015 09:58",
+	"instvars" : [
+		 ],
+	"name" : "OSTouchDoubleTapEvent",
+	"pools" : [
+		 ],
+	"super" : "OSTouchComplexEvent",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/15/2011 20:47",
+	"instvars" : [
+		"position",
+		"contents",
+		"wasHandled" ],
+	"name" : "DropEvent",
+	"pools" : [
+		 ],
+	"super" : "MorphicEvent",
+	"type" : "normal" }

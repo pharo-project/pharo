@@ -1,0 +1,1 @@
+Same as SmalllintManifestChecker but with tweaks for Renraku model 

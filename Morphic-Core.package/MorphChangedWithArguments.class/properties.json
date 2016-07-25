@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Core-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"arguments" ],
+	"name" : "MorphChangedWithArguments",
+	"pools" : [
+		 ],
+	"super" : "MorphChanged",
+	"type" : "normal" }

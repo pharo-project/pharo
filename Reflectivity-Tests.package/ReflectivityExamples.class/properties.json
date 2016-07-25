@@ -1,0 +1,16 @@
+{
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ClassVar",
+		"singleton" ],
+	"commentStamp" : "MarcusDenker 3/8/2015 09:28",
+	"instvars" : [
+		"ivar",
+		"tag" ],
+	"name" : "ReflectivityExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

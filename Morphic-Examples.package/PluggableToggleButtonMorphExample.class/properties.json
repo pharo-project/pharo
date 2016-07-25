@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Examples-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "PluggableToggleButtonMorphExample",
+	"pools" : [
+		 ],
+	"super" : "PluggableButtonMorphExample",
+	"type" : "normal" }

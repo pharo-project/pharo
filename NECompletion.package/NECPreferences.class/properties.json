@@ -1,0 +1,28 @@
+{
+	"category" : "NECompletion-Model",
+	"classinstvars" : [
+		"enabled",
+		"caseSensitive",
+		"smartCharacters",
+		"smartCharactersMapping",
+		"backgroundColor",
+		"expandPrefixes",
+		"captureNavigationKeys",
+		"useEnterToAccept",
+		"popupShowAutomatic",
+		"popupAutomaticDelay",
+		"popupShowWithShortcut",
+		"spaceAfterCompletion",
+		"smartCharactersWithSingleSpace",
+		"smartCharactersWithDoubleSpace",
+		"overrideModel" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NECPreferences",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

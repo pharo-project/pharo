@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"isInlinedLoop" ],
+	"name" : "OCOptimizedBlockScope",
+	"pools" : [
+		 ],
+	"super" : "OCBlockScope",
+	"type" : "normal" }

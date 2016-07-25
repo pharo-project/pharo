@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"repository",
+		"ancestors" ],
+	"name" : "MCRepositoryTest",
+	"pools" : [
+		 ],
+	"super" : "MCTestCase",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+private
+stringhash
+
+	^ self hash.

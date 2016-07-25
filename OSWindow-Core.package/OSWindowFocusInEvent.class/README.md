@@ -1,0 +1,1 @@
+I am delivered when window obtains a user input focus.

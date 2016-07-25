@@ -1,0 +1,1 @@
+This is a common superclass for errors in regular expressions.

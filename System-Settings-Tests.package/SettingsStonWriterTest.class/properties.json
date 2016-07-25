@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"writer" ],
+	"name" : "SettingsStonWriterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

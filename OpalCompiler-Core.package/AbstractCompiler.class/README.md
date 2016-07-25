@@ -1,0 +1,1 @@
+I define the public API of compilers that can be used as system compilers (e.g. overriding #compiler on the class side).

@@ -1,0 +1,3 @@
+*metacello-testscommonmc
+species
+	^ MCPackage

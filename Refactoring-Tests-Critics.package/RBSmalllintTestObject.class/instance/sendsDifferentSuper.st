@@ -1,0 +1,3 @@
+methods
+sendsDifferentSuper
+	super printString

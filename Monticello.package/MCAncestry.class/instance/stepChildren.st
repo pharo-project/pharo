@@ -1,0 +1,3 @@
+ancestry
+stepChildren
+	^ stepChildren ifNil: [#()]

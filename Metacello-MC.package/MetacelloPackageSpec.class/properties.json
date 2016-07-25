@@ -1,0 +1,18 @@
+{
+	"category" : "Metacello-MC-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"file",
+		"repositories",
+		"goferPackage",
+		"preLoadDoIt",
+		"postLoadDoIt" ],
+	"name" : "MetacelloPackageSpec",
+	"pools" : [
+		 ],
+	"super" : "MetacelloAbstractPackageSpec",
+	"type" : "normal" }

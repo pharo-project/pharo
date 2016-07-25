@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Scanning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestTextScanning",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

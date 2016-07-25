@@ -1,0 +1,3 @@
+factory
+createEventDuringMove
+	self subclassResponsibility 

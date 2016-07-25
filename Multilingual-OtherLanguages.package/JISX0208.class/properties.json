@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "yo 10/19/2004 19:52",
+	"instvars" : [
+		 ],
+	"name" : "JISX0208",
+	"pools" : [
+		 ],
+	"super" : "EncodedCharSet",
+	"type" : "normal" }

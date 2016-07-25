@@ -1,0 +1,1 @@
+Text converter for Mac Roman.  An encoding used for the languages originated from Western Europe area.

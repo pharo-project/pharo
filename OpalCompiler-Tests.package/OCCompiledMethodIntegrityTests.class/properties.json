@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OCCompiledMethodIntegrityTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

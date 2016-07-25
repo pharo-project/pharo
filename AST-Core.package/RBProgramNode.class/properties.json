@@ -1,0 +1,15 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FormatterClass" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"parent",
+		"properties" ],
+	"name" : "RBProgramNode",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

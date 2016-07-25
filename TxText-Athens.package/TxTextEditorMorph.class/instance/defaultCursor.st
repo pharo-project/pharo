@@ -1,0 +1,3 @@
+initialization
+defaultCursor
+	^ TxCaretCursor new

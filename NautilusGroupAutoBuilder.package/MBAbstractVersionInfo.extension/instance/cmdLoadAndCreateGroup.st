@@ -1,0 +1,4 @@
+*NautilusGroupAutoBuilder
+cmdLoadAndCreateGroup
+	<command>
+	^ VSLoadAndCreateNautilusGroupCommand

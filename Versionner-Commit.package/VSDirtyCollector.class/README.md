@@ -1,0 +1,1 @@
+I'm a visitor to collect all dependencies of a package.

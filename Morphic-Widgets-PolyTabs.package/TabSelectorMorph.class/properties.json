@@ -1,0 +1,19 @@
+{
+	"category" : "Morphic-Widgets-PolyTabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 11:54",
+	"instvars" : [
+		"selectedIndex",
+		"visibleTabRange",
+		"font",
+		"tabs",
+		"controls",
+		"wrapScrolling" ],
+	"name" : "TabSelectorMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"type" : "normal" }

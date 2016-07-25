@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:52",
+	"instvars" : [
+		 ],
+	"name" : "AlertDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "MessageDialogWindow",
+	"type" : "normal" }

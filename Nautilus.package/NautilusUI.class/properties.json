@@ -1,0 +1,20 @@
+{
+	"category" : "Nautilus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"categoryWidget",
+		"methodWidget",
+		"classWidget",
+		"packageWidget",
+		"packagePatternString",
+		"packagePattern",
+		"searchWidget" ],
+	"name" : "NautilusUI",
+	"pools" : [
+		 ],
+	"super" : "AbstractNautilusUI",
+	"type" : "normal" }

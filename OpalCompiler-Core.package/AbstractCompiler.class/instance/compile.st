@@ -1,0 +1,3 @@
+public access
+compile
+	self subclassResponsibility

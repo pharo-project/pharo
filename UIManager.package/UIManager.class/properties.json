@@ -1,0 +1,14 @@
+{
+	"category" : "UIManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "ar 12/27/2004 08:39",
+	"instvars" : [
+		 ],
+	"name" : "UIManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

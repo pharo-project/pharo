@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "DateError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

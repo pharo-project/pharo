@@ -1,0 +1,1 @@
+Sets spec's for how handles are layed out in a halo.

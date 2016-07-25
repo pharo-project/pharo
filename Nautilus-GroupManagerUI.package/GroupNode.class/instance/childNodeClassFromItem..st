@@ -1,0 +1,4 @@
+accessing
+childNodeClassFromItem: anItem
+
+	^ ItemNode

@@ -1,0 +1,4 @@
+private
+browse
+
+	self subclassResponsibility

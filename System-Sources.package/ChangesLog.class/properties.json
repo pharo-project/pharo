@@ -1,0 +1,14 @@
+{
+	"category" : "System-Sources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultInstance" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"startupStamp" ],
+	"name" : "ChangesLog",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

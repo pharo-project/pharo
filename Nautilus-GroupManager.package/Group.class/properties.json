@@ -1,0 +1,17 @@
+{
+	"category" : "Nautilus-GroupManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/6/2015 11:03",
+	"instvars" : [
+		"name",
+		"readOnly",
+		"removable",
+		"isFillable" ],
+	"name" : "Group",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

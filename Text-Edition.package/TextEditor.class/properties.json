@@ -1,0 +1,20 @@
+{
+	"category" : "Text-Edition",
+	"classinstvars" : [
+		"cmdActions",
+		"shiftCmdActions" ],
+	"classvars" : [
+		"CaseSensitiveFinds",
+		"UseFindReplaceSelection",
+		"UseSecondarySelection",
+		"UseSelectionBar",
+		"WalkAlongDisplayedLine" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model",
+		"editingState" ],
+	"name" : "TextEditor",
+	"pools" : [
+		 ],
+	"super" : "Editor",
+	"type" : "normal" }

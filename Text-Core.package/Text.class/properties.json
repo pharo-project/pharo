@@ -1,0 +1,15 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"string",
+		"runs" ],
+	"name" : "Text",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "ArrayedCollection",
+	"type" : "normal" }

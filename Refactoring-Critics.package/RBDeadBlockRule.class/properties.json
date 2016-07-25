@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-ParseTreeRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 6/28/2016 18:46",
+	"instvars" : [
+		 ],
+	"name" : "RBDeadBlockRule",
+	"pools" : [
+		 ],
+	"super" : "RBParseTreeLintRule",
+	"type" : "normal" }

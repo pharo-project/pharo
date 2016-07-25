@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"browser",
+		"copiedBrowser" ],
+	"name" : "GLMExplicitBrowserCopyTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

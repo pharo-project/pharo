@@ -1,0 +1,4 @@
+accessing
+predicate
+
+	^predicate

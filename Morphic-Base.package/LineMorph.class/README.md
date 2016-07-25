@@ -1,0 +1,1 @@
+This is really only a shell for creating single-segment straight-line Shapes.

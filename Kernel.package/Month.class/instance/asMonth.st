@@ -1,0 +1,4 @@
+conversion
+asMonth
+
+	^ self 

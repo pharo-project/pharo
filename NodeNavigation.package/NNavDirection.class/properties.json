@@ -1,0 +1,14 @@
+{
+	"category" : "NodeNavigation-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Instance" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NNavDirection",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

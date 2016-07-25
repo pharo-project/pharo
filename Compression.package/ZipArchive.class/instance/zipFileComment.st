@@ -1,0 +1,3 @@
+accessing
+zipFileComment
+	^zipFileComment asString

@@ -1,0 +1,4 @@
+private
+startupScriptName
+
+	^ 'startup.st'

@@ -1,0 +1,3 @@
+accessing
+collectionSpecies
+	^ Array

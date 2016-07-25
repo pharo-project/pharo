@@ -1,0 +1,3 @@
+recording
+isRecording
+	^recording

@@ -1,0 +1,1 @@
+An FastTableModel is a spec model for a FastTable

@@ -1,0 +1,1 @@
+Dialog window displaying a message with a single OK button. Escape/return will close. Icon is a themed lock icon.

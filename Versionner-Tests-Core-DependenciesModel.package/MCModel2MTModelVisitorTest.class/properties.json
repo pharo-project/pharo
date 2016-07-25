@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Tests-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"classFactory" ],
+	"name" : "MCModel2MTModelVisitorTest",
+	"pools" : [
+		 ],
+	"super" : "RPackageTestCase",
+	"type" : "normal" }

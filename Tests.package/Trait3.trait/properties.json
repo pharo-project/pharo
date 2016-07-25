@@ -1,0 +1,6 @@
+{
+	"category" : "Tests-Traits-MOP",
+	"classtraitcomposition" : "Trait2 classTrait",
+	"commentStamp" : "",
+	"name" : "Trait3",
+	"traitcomposition" : "Trait2" }

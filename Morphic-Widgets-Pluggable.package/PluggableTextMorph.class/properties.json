@@ -1,0 +1,36 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ShowTextEditingState",
+		"StylingClass" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"textMorph",
+		"getTextSelector",
+		"setTextSelector",
+		"getSelectionSelector",
+		"hasUnacceptedEdits",
+		"askBeforeDiscardingEdits",
+		"selectionInterval",
+		"hasEditingConflicts",
+		"acceptAction",
+		"getColorSelector",
+		"unstyledAcceptText",
+		"styler",
+		"autoAccept",
+		"enabled",
+		"getEnabledSelector",
+		"highlights",
+		"acceptOnFocusChange",
+		"selectionColor",
+		"alwaysAccept",
+		"changedAction",
+		"doubleClickSelector",
+		"setSelectionSelector" ],
+	"name" : "PluggableTextMorph",
+	"pools" : [
+		 ],
+	"super" : "ScrollPane",
+	"type" : "normal" }

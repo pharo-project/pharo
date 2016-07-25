@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"commands" ],
+	"name" : "SpecSplitterVertical",
+	"pools" : [
+		 ],
+	"super" : "SpecLayoutAdd",
+	"type" : "normal" }

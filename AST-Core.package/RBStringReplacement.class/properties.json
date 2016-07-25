@@ -1,0 +1,16 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"startPosition",
+		"stopPosition",
+		"string" ],
+	"name" : "RBStringReplacement",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

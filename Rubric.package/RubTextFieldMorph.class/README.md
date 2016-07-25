@@ -1,0 +1,1 @@
+I am a morph for a text area which has only one line, like search field

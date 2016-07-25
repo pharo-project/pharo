@@ -1,0 +1,34 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BackgroundColor",
+		"CaseSensitiveFinds",
+		"DefaultTextColor",
+		"LineNumbersBackgroundColor",
+		"LineNumbersFont",
+		"LineNumbersTextColor",
+		"WalkAlongDisplayedLine" ],
+	"commentStamp" : "AlainPlantec 5/15/2015 10:44",
+	"instvars" : [
+		"model",
+		"paragraph",
+		"editor",
+		"scrollPane",
+		"editingState",
+		"textStyle",
+		"textColor",
+		"margins",
+		"readOnly",
+		"menuAllowed",
+		"editingMode",
+		"cursor",
+		"segments",
+		"getMenuPolicy",
+		"mouseDownPoint" ],
+	"name" : "RubAbstractTextArea",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

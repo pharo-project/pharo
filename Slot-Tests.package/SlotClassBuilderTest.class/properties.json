@@ -1,0 +1,18 @@
+{
+	"category" : "Slot-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"aClass",
+		"instance",
+		"anotherClass",
+		"yetAnotherClass",
+		"yetYetAnotherClass" ],
+	"name" : "SlotClassBuilderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

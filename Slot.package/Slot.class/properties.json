@@ -1,0 +1,15 @@
+{
+	"category" : "Slot-Variables",
+	"classinstvars" : [
+		"slotClassDefinition" ],
+	"classvars" : [
+		"Properties" ],
+	"commentStamp" : "JurajKubelka 3/4/2015 20:09",
+	"instvars" : [
+		"index",
+		"name" ],
+	"name" : "Slot",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

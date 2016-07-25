@@ -1,0 +1,18 @@
+{
+	"category" : "Fuel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 10/23/2011 14:42",
+	"instvars" : [
+		"clusterCount",
+		"clusters",
+		"root",
+		"decoder",
+		"header" ],
+	"name" : "FLMaterialization",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

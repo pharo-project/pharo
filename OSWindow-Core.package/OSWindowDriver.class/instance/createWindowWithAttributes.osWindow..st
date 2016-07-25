@@ -1,0 +1,3 @@
+window creation
+createWindowWithAttributes: anOSWindowAttributes osWindow: osWindow
+	self subclassResponsibility

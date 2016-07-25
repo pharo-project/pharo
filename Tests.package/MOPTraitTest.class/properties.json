@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-Traits-MOP",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MOPTraitTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

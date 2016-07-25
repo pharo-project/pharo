@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"process" ],
+	"name" : "GLMMorphicWatcherRenderer",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicWidgetRenderer",
+	"type" : "normal" }

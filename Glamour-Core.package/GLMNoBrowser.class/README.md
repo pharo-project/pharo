@@ -1,0 +1,2 @@
+A NoBrowser is a browser without behavior and that does not require a container pane. The root pane is always placed in a NoBrowser.
+Given that it has no behavior, a NoBrowser is a singleton to avoid multiple unnecessary instances.

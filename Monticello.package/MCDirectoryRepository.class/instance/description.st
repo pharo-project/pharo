@@ -1,0 +1,3 @@
+accessing
+description
+	^ directory fullName

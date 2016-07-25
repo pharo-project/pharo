@@ -1,0 +1,4 @@
+api
+selectedClass
+
+	 ^ classesListModel selectedItem

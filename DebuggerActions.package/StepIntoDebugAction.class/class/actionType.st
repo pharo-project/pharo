@@ -1,0 +1,4 @@
+registration
+actionType
+	<debuggingAction>
+	<contextMenuDebuggingAction>

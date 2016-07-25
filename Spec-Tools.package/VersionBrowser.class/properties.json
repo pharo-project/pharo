@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Tools-VersionBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 11/6/2015 11:09",
+	"instvars" : [
+		"rgMethod",
+		"browser" ],
+	"name" : "VersionBrowser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

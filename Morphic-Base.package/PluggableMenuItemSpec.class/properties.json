@@ -1,0 +1,24 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 9/30/2014 20:22",
+	"instvars" : [
+		"label",
+		"action",
+		"checked",
+		"enabled",
+		"separator",
+		"subMenu",
+		"icon",
+		"enabledBlock",
+		"keyText",
+		"help",
+		"name" ],
+	"name" : "PluggableMenuItemSpec",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

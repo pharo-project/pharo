@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mjr 8/20/2003 17:37",
+	"instvars" : [
+		"prototypes" ],
+	"name" : "HashAndEqualsTestCase",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

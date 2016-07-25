@@ -1,0 +1,3 @@
+constants
+abstractMarker
+	^ #subclassResponsibility

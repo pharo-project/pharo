@@ -1,0 +1,20 @@
+{
+	"category" : "QualityAssistant",
+	"classinstvars" : [
+		"wasOpenedBefore" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 4/16/2015 14:48",
+	"instvars" : [
+		"listMorph",
+		"progressMorph",
+		"entity",
+		"pluginDelegate",
+		"updateTask",
+		"showPrivacyMorph",
+		"critiques" ],
+	"name" : "QANautilusPluginMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

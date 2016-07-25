@@ -1,0 +1,3 @@
+scopes
+currentScope 
+	^currentScope top

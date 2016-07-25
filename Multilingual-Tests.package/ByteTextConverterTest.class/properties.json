@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-Tests-TextConversion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 10:18",
+	"instvars" : [
+		 ],
+	"name" : "ByteTextConverterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

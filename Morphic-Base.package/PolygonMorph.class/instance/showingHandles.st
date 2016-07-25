@@ -1,0 +1,3 @@
+menu
+showingHandles
+	^ handles notNil

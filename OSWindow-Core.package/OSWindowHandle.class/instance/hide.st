@@ -1,0 +1,3 @@
+accessing
+hide
+	self subclassResponsibility 

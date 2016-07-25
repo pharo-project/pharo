@@ -1,0 +1,4 @@
+accessing
+classAffectedName
+
+	^ classRemoved name

@@ -1,0 +1,3 @@
+testing
+directlyDefinesClassVariable: aString 
+	self subclassResponsibility

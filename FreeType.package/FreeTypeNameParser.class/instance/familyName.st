@@ -1,0 +1,3 @@
+accessing
+familyName
+	^combinedName trimBoth

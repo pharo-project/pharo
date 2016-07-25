@@ -1,0 +1,4 @@
+accessing
+indentsForKeywords: anInteger
+	DefaultPrettyPrintContext indentsForKeywords: anInteger.
+	self announceASettingChange

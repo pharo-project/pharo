@@ -1,0 +1,3 @@
+lint
+equalsTrue
+	^true == self

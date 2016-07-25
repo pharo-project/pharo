@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGTSpotter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "AndreiChis 12/7/2014 14:50",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGTSpotter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

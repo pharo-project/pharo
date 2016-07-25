@@ -1,0 +1,3 @@
+private
+resetSearchedTextList
+	self searchedTextList removeAll.

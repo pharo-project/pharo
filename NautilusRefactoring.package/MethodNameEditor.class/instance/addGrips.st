@@ -1,0 +1,4 @@
+grips
+addGrips
+
+	self addEdgeGrips

@@ -1,0 +1,1 @@
+Text converter for CP1253.  Windows code page used for Greek. 

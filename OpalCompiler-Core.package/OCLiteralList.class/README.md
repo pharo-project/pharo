@@ -1,0 +1,1 @@
+Holds a unique ordered collection of literals

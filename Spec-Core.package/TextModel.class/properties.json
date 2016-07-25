@@ -1,0 +1,30 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 6/29/2016 14:30",
+	"instvars" : [
+		"aboutToStyleHolder",
+		"behaviorHolder",
+		"textHolder",
+		"actionToPerformHolder",
+		"readSelectionHolder",
+		"actionPerformedHolder",
+		"isCodeCompletionAllowedHolder",
+		"doItContext",
+		"doItReceiver",
+		"hasUnacceptedEdits",
+		"selection",
+		"scrollValue",
+		"menuHolder",
+		"autoAccept",
+		"wantsVisualFeedback",
+		"askBeforeDiscardingEdits",
+		"isForSmalltalkCodeHolder" ],
+	"name" : "TextModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+generate
+genForRBProgramNode
+	^entity asLiteralNode

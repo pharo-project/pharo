@@ -1,0 +1,14 @@
+{
+	"category" : "NECompletion-Model",
+	"classinstvars" : [
+		"cachedSymbols" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 8/10/2014 12:02",
+	"instvars" : [
+		 ],
+	"name" : "NECSymbols",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

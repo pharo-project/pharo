@@ -1,0 +1,3 @@
+initialize-release
+updateTextAreaWhenUnplugged
+	super updateTextAreaWhenUnplugged

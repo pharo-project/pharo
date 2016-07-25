@@ -1,0 +1,3 @@
+*SmartSuggestions
+selectedMessage
+	^ nil

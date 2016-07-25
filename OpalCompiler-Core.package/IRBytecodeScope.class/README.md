@@ -1,0 +1,1 @@
+I am an internal class used by the  decompiler to recreat variable information

@@ -1,0 +1,3 @@
+accessing
+numberOfLines
+	^ lines size

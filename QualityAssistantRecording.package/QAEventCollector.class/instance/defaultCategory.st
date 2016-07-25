@@ -1,0 +1,3 @@
+configuration
+defaultCategory
+	^ #qualityAssistantEvents

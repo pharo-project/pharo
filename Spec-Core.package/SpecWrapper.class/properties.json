@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"instance",
+		"selector" ],
+	"name" : "SpecWrapper",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

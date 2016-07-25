@@ -1,0 +1,4 @@
+slider-accessing
+pagerModel
+
+	^ pagerModel

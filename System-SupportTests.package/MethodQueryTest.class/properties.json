@@ -1,0 +1,14 @@
+{
+	"category" : "System-SupportTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MethodQueryTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+Each trait in the system is represented as an instance of me. Like Class, I concretize my superclass by providing instance variables for the name and the environment. Since traits do not define variables, I not provide facilities for pool variables. However, I declare an instance variable to hold the associated classtrait, which is an instance of the class ClassTrait. 

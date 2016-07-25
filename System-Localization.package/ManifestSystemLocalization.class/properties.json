@@ -1,0 +1,14 @@
+{
+	"category" : "System-Localization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemLocalization",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

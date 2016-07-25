@@ -1,0 +1,4 @@
+api
+selectedIndex
+
+	^ listModel selectedIndex

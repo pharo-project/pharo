@@ -1,0 +1,4 @@
+api
+childNodeClass
+
+	^ childNodeClass value

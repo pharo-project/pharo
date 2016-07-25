@@ -1,0 +1,4 @@
+actions
+beForScripting
+
+	isForScripting := true

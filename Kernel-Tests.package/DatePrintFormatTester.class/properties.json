@@ -1,0 +1,22 @@
+{
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TAssertable classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"dayPosition",
+		"monthPosition",
+		"yearPosition",
+		"delimiter",
+		"monthType",
+		"yearType",
+		"date" ],
+	"name" : "DatePrintFormatTester",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "TAssertable",
+	"type" : "normal" }

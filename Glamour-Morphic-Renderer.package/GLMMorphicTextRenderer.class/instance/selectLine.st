@@ -1,0 +1,4 @@
+rendering
+selectLine
+	
+	textMorph selectLine

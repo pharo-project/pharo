@@ -1,0 +1,3 @@
+testing
+hasContentType
+	^ contentType notNil

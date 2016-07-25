@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/15/2011 20:49",
+	"instvars" : [
+		"stepTime" ],
+	"name" : "StepMessage",
+	"pools" : [
+		 ],
+	"super" : "MorphicAlarm",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Privacy",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 12/18/2015 12:48",
+	"instvars" : [
+		 ],
+	"name" : "PrivacyChangedAnnoucement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

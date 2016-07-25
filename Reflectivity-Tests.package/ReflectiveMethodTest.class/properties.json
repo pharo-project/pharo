@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"selector" ],
+	"name" : "ReflectiveMethodTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

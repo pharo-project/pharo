@@ -1,0 +1,4 @@
+accessing
+defaultStackSize
+
+	^ 20

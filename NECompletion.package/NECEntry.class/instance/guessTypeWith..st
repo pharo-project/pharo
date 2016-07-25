@@ -1,0 +1,3 @@
+operations
+guessTypeWith: anECContext 
+	^ nil

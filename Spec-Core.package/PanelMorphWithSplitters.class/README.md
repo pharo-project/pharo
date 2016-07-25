@@ -1,0 +1,1 @@
+A PanelMorphWithSplitters is which add splitters the way SystemWindow do it

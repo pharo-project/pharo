@@ -1,0 +1,3 @@
+testing
+isClassPatch
+	^definition isClassDefinition

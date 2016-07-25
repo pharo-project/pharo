@@ -1,0 +1,1 @@
+I announce that a MCVersion was saved into a MCRepository.

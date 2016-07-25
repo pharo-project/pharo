@@ -1,0 +1,3 @@
+accessing
+capacity
+	^keys size

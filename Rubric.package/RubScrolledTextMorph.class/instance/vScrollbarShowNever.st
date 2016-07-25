@@ -1,0 +1,3 @@
+accessing scrollbars
+vScrollbarShowNever
+	self scrollPane vScrollbarShowNever

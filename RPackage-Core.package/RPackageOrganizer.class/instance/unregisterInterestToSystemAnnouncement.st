@@ -1,0 +1,5 @@
+system integration
+unregisterInterestToSystemAnnouncement
+	"self unregisterInterestToSystemAnnouncement"
+
+	SystemAnnouncer uniqueInstance unsubscribe: self

@@ -1,0 +1,14 @@
+{
+	"category" : "ReleaseTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ReleaseTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

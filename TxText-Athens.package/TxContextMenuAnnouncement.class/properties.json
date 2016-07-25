@@ -1,0 +1,17 @@
+{
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"event",
+		"editorMorph",
+		"textPosition",
+		"menu" ],
+	"name" : "TxContextMenuAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

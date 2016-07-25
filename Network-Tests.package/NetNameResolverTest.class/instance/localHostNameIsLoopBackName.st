@@ -1,0 +1,3 @@
+accessing
+localHostNameIsLoopBackName
+		^NetNameResolver localHostName = NetNameResolver loopBackName

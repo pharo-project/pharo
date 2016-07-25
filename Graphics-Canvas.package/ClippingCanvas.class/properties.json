@@ -1,0 +1,15 @@
+{
+	"category" : "Graphics-Canvas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"canvas",
+		"clipRect" ],
+	"name" : "ClippingCanvas",
+	"pools" : [
+		 ],
+	"super" : "PluggableCanvas",
+	"type" : "normal" }

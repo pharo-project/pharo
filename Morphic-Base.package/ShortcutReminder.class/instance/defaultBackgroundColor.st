@@ -1,0 +1,4 @@
+defaults
+defaultBackgroundColor
+
+	^Color gray

@@ -1,0 +1,4 @@
+streaming
+writeStream
+
+	^ self openForWrite

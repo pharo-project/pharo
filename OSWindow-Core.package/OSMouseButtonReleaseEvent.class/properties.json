@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:23",
+	"instvars" : [
+		 ],
+	"name" : "OSMouseButtonReleaseEvent",
+	"pools" : [
+		 ],
+	"super" : "OSMouseButtonEvent",
+	"type" : "normal" }

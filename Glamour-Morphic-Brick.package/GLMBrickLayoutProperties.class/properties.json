@@ -1,0 +1,26 @@
+{
+	"category" : "Glamour-Morphic-Brick-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 10/17/2014 10:13",
+	"instvars" : [
+		"floating",
+		"hAlign",
+		"heightDependencies",
+		"maxHeight",
+		"maxWidth",
+		"minHeight",
+		"vAlign",
+		"widthDependencies",
+		"zIndex",
+		"minWidth",
+		"isDirty",
+		"hState",
+		"vState" ],
+	"name" : "GLMBrickLayoutProperties",
+	"pools" : [
+		 ],
+	"super" : "TableLayoutProperties",
+	"type" : "normal" }

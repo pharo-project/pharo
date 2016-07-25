@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:43",
+	"instvars" : [
+		 ],
+	"name" : "SugsMenuBuilderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

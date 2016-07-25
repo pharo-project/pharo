@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 8/21/2015 14:41",
+	"instvars" : [
+		"strokes",
+		"currentStroke" ],
+	"name" : "SDL2AthensDrawingExample",
+	"pools" : [
+		 ],
+	"super" : "SDL2AthensExample",
+	"type" : "normal" }

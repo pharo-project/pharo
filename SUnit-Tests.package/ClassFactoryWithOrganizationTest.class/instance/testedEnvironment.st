@@ -1,0 +1,3 @@
+accessing
+testedEnvironment
+	^self testedOrganization environment

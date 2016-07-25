@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-ParseTreeRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 23:06",
+	"instvars" : [
+		 ],
+	"name" : "RBPrecedenceRule",
+	"pools" : [
+		 ],
+	"super" : "RBParseTreeLintRule",
+	"type" : "normal" }

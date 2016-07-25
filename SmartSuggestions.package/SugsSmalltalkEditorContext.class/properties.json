@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 7/24/2015 12:01",
+	"instvars" : [
+		 ],
+	"name" : "SugsSmalltalkEditorContext",
+	"pools" : [
+		 ],
+	"super" : "SugsAbstractContext",
+	"type" : "normal" }

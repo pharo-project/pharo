@@ -1,0 +1,4 @@
+acessing
+successorSequences
+
+	^ {destination. otherwise}

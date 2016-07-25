@@ -1,0 +1,3 @@
+terminating
+terminate
+	^ self sigterm

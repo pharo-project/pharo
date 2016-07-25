@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Core-Paints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"fillPaint",
+		"width",
+		"miterLimit" ],
+	"name" : "AthensStrokePaint",
+	"pools" : [
+		 ],
+	"super" : "AthensPaint",
+	"type" : "normal" }

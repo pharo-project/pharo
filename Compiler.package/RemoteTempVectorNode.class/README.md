@@ -1,0 +1,1 @@
+I am a node for a vector of remote temps, created to share temps between closures when those temps are written to in closures other than their defining ones.

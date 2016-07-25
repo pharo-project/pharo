@@ -1,0 +1,4 @@
+testing
+exists
+
+	^ Current notNil

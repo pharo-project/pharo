@@ -1,0 +1,22 @@
+{
+	"category" : "Tool-DependencyAnalyser-Test",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"packageA",
+		"packageB",
+		"packageC",
+		"packageD",
+		"packageE",
+		"aPackageCycleDetection",
+		"cycleA",
+		"cycleB",
+		"cycleC" ],
+	"name" : "DAPackageCycleDetectorTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

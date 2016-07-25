@@ -1,0 +1,4 @@
+class-annotations
+superclassNameKey
+	
+	^#superclassName

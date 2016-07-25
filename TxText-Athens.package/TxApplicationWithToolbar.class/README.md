@@ -1,0 +1,1 @@
+TxApplicationWithToolbar new openWithSpec

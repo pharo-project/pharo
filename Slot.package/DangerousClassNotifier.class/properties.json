@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [
+		"enabled" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenComan 2/18/2014 01:44",
+	"instvars" : [
+		 ],
+	"name" : "DangerousClassNotifier",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

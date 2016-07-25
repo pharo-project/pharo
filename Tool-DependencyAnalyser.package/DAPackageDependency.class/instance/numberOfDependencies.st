@@ -1,0 +1,3 @@
+accessing
+numberOfDependencies
+	^ 1

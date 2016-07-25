@@ -1,0 +1,3 @@
+testing
+isBalloonCanvas
+	^canvas isBalloonCanvas

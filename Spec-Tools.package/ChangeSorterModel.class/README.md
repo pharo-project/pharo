@@ -1,0 +1,1 @@
+A ChangeSorterModel is a model used by Change Sorter UIs for computation

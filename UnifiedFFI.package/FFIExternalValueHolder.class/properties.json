@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Objects",
+	"classinstvars" : [
+		"type" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 3/17/2016 13:42",
+	"instvars" : [
+		"data" ],
+	"name" : "FFIExternalValueHolder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

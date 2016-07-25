@@ -1,0 +1,20 @@
+{
+	"category" : "Tool-ExternalBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 5/29/2015 13:37",
+	"instvars" : [
+		"classes",
+		"packages",
+		"protocols",
+		"selectors",
+		"method",
+		"showClassSide",
+		"model" ],
+	"name" : "ExternalBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

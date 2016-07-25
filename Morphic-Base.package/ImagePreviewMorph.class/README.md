@@ -1,0 +1,1 @@
+Displays an image scaled to a fixed size along with a label describing the original dimensions.

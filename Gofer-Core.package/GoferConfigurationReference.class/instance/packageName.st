@@ -1,0 +1,3 @@
+accessing
+packageName
+	^ self configurationName

@@ -1,0 +1,3 @@
+accessing
+errorBlockFor: aBoolean
+	^errorBlock

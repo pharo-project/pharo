@@ -1,0 +1,1 @@
+I represent a handle of SDL2 window, coming from SDL2 library

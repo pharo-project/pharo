@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfSessionManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfSessionManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

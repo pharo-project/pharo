@@ -1,0 +1,14 @@
+{
+	"category" : "System-SessionManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 10/2/2015 11:06",
+	"instvars" : [
+		"registeredClassName" ],
+	"name" : "ClassSessionHandler",
+	"pools" : [
+		 ],
+	"super" : "AbstractSessionHandler",
+	"type" : "normal" }

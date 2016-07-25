@@ -1,0 +1,3 @@
+resize/collapse
+fullFrame
+	^ fullFrame

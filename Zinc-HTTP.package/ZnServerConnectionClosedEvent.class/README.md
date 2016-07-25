@@ -1,0 +1,1 @@
+ZnServerConnectionClosedEvent signals that the server closed a client connection to address. 

@@ -1,0 +1,15 @@
+{
+	"category" : "System-Caching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"hits",
+		"misses" ],
+	"name" : "CacheStatistics",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

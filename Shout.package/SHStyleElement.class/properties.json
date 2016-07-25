@@ -1,0 +1,16 @@
+{
+	"category" : "Shout-Styling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 23:23",
+	"instvars" : [
+		"tokens",
+		"color",
+		"emphasis" ],
+	"name" : "SHStyleElement",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

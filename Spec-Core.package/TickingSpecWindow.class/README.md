@@ -1,0 +1,1 @@
+TickingSpecWindow new openInWorld

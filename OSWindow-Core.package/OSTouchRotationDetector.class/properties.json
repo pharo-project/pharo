@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"MinAngleBeforeDetection" ],
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:25",
+	"instvars" : [
+		"minAngleBeforeDetection",
+		"vectorAtBeginnig",
+		"lastAngle",
+		"currentAngle" ],
+	"name" : "OSTouchRotationDetector",
+	"pools" : [
+		 ],
+	"super" : "OSTouchStateGestureDetector",
+	"type" : "normal" }

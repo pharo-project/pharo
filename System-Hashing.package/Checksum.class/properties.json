@@ -1,0 +1,14 @@
+{
+	"category" : "System-Hashing-Checksums",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Checksum",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

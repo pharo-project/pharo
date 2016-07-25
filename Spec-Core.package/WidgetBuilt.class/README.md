@@ -1,0 +1,1 @@
+I am raised when a widget has been built

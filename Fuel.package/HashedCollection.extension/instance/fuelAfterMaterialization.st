@@ -1,0 +1,4 @@
+*Fuel
+fuelAfterMaterialization
+
+	self rehash

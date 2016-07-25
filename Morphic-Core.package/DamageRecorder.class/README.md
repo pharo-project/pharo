@@ -1,0 +1,1 @@
+Recording damages to repair by repainting

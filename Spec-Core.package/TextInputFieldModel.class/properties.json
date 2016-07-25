@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/19/2016 11:19",
+	"instvars" : [
+		"ghostText",
+		"acceptOnCR",
+		"entryCompletion",
+		"isEncrypted" ],
+	"name" : "TextInputFieldModel",
+	"pools" : [
+		 ],
+	"super" : "TextModel",
+	"type" : "normal" }

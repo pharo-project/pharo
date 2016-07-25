@@ -1,0 +1,20 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 4/3/2015 15:00",
+	"instvars" : [
+		"defaultValue",
+		"itemsHeaderName",
+		"itemsList",
+		"listModel",
+		"listMorph",
+		"resultStorage",
+		"wrapBlockOrSelector" ],
+	"name" : "TickDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

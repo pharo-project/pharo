@@ -1,0 +1,16 @@
+{
+	"category" : "NECompletion-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"type",
+		"kind",
+		"temporaryOffset" ],
+	"name" : "NECTypeInfo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+errorShouldntRaise
+	self someMessageThatIsntUnderstood

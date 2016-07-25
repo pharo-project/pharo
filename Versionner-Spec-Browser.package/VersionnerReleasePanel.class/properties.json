@@ -1,0 +1,17 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 3/11/2014 17:32",
+	"instvars" : [
+		"symbolicVersionResolutionCheckBox",
+		"releaseNumber",
+		"releaseNumberLabel",
+		"developmentVersion" ],
+	"name" : "VersionnerReleasePanel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

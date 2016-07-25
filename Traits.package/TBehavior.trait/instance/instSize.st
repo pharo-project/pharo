@@ -1,0 +1,3 @@
+testing
+instSize
+	^self explicitRequirement.

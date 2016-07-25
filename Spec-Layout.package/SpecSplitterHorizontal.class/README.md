@@ -1,0 +1,1 @@
+A SpecSplitterHorizontal is a description of the addition of a horizontal splitter

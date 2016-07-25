@@ -1,0 +1,3 @@
+converting
+asZnMimeType
+	^ self

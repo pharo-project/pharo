@@ -1,0 +1,1 @@
+These tests are used to assert that FloatArrayPlugin has same results as Float asIEEE32BitWord

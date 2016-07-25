@@ -1,0 +1,4 @@
+examples
+constructCannotReturnBlockInDeadFrame
+
+	^ [:arg | ^arg].

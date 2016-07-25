@@ -1,0 +1,3 @@
+private
+setNeedsRefreshExposedRows
+	needsRefreshExposedRows := true

@@ -1,0 +1,4 @@
+class-annotations
+definitionSourceKey
+
+	^#definitionSource

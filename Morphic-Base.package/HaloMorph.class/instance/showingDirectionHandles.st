@@ -1,0 +1,3 @@
+private
+showingDirectionHandles
+	^directionArrowAnchor notNil

@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AthensInteractiveScene",
+	"pools" : [
+		 ],
+	"super" : "AthensSceneView",
+	"type" : "normal" }

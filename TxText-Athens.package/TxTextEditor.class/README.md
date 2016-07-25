@@ -1,0 +1,1 @@
+I control text edit operations by using selection and can support undo operations.

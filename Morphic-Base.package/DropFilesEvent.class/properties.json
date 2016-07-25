@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 11/24/2015 18:07",
+	"instvars" : [
+		 ],
+	"name" : "DropFilesEvent",
+	"pools" : [
+		 ],
+	"super" : "DropEvent",
+	"type" : "normal" }

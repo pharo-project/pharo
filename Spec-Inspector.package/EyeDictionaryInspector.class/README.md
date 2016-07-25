@@ -1,0 +1,1 @@
+Specialized version of inspector showing keys on left panel and values on description panel

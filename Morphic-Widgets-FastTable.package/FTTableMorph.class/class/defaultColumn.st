@@ -1,0 +1,3 @@
+accessing
+defaultColumn	
+	^ FTColumn new

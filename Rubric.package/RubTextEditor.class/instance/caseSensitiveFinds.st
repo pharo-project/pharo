@@ -1,0 +1,3 @@
+settings
+caseSensitiveFinds
+	^ textArea caseSensitiveFinds

@@ -1,0 +1,15 @@
+{
+	"category" : "Renraku-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 3/4/2016 15:27",
+	"instvars" : [
+		"preConditions",
+		"postConditions" ],
+	"name" : "ReInvocationSequenceRule",
+	"pools" : [
+		 ],
+	"super" : "ReBasicTreeRule",
+	"type" : "normal" }

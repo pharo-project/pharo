@@ -1,0 +1,14 @@
+{
+	"category" : "System-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemAnnouncements",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

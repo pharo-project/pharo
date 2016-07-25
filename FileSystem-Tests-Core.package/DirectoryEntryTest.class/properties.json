@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:38",
+	"instvars" : [
+		 ],
+	"name" : "DirectoryEntryTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

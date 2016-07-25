@@ -1,0 +1,14 @@
+{
+	"category" : "Ring-Monticello",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestRingMonticello",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I define different usefull colors

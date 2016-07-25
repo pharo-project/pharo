@@ -1,0 +1,17 @@
+{
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CamilloBruni 8/4/2011 14:39",
+	"instvars" : [
+		"maxSize",
+		"currentCompletionIndex",
+		"updateSelector",
+		"keystrokeSelector" ],
+	"name" : "SearchMorph",
+	"pools" : [
+		 ],
+	"super" : "EditableDropListMorph",
+	"type" : "normal" }

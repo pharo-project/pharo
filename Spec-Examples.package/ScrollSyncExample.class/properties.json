@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"text",
+		"sideRuler",
+		"currentVerticalScrollPosition" ],
+	"name" : "ScrollSyncExample",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

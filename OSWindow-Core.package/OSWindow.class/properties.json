@@ -1,0 +1,18 @@
+{
+	"category" : "OSWindow-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"TraceEvents",
+		"VMWindow" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 16:01",
+	"instvars" : [
+		"handle",
+		"initialAttributes",
+		"eventHandler",
+		"currentCursor" ],
+	"name" : "OSWindow",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

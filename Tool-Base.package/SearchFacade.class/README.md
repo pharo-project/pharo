@@ -1,0 +1,1 @@
+SearchFacade is a facade for creating searching dialog window

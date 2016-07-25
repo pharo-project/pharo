@@ -1,0 +1,1 @@
+ZdcSimpleSocketStreamTests tests ZdcSimpleSocketStream

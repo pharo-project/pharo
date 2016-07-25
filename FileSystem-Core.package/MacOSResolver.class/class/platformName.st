@@ -1,0 +1,3 @@
+accessing
+platformName
+	^  'Mac OS'

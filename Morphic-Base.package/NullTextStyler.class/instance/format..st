@@ -1,0 +1,3 @@
+formatting
+format: aText
+	^aText

@@ -1,0 +1,1 @@
+Abstract superclass for file infos for a FreeType font

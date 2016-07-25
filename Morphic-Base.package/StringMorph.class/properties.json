@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TAbleToRotate classTrait",
+	"classvars" : [
+		"EditableStringMorph" ],
+	"commentStamp" : "efc 3/7/2003 17:34",
+	"instvars" : [
+		"font",
+		"emphasis",
+		"contents",
+		"hasFocus",
+		"backgroundColor" ],
+	"name" : "StringMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"traitcomposition" : "TAbleToRotate",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+failures
+expectedFailures
+	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal testWideStringClassName)

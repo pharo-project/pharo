@@ -1,0 +1,5 @@
+convenience-inspecting
+inspectorClass
+
+	^ EyeInspector 
+	

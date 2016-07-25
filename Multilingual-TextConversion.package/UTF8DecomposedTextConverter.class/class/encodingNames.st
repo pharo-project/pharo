@@ -1,0 +1,4 @@
+utilities
+encodingNames
+
+	^Array new

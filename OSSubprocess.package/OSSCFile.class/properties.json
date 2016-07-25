@@ -1,0 +1,14 @@
+{
+	"category" : "OSSubprocess",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 1/10/2016 23:35",
+	"instvars" : [
+		 ],
+	"name" : "OSSCFile",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalObject",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing decorators
+withoutOpeningClosingDelimitersHighlight
+	self withoutDecoratorNamed: #openingClosingDelimitersHighlight

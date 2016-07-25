@@ -1,0 +1,16 @@
+{
+	"category" : "System-Announcements-System-Packages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:57",
+	"instvars" : [
+		"methodRepackaged",
+		"newPackage",
+		"oldPackage" ],
+	"name" : "MethodRepackaged",
+	"pools" : [
+		 ],
+	"super" : "SystemAnnouncement",
+	"type" : "normal" }

@@ -1,0 +1,2 @@
+events
+onPrimitiveError: aString	

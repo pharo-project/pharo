@@ -1,0 +1,2 @@
+manage rotation
+endRotation: anEvent

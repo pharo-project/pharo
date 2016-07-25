@@ -1,0 +1,1 @@
+Abstract superclass for version info tests for Versionner

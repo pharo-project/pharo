@@ -1,0 +1,14 @@
+{
+	"category" : "Traits-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "TraitException",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+managing editing mode
+switchToSmalltalkScriptingMode
+	self paragraphProvider beForSmalltalkScripting 

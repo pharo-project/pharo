@@ -1,0 +1,1 @@
+I'm a glamour column for fast tables.

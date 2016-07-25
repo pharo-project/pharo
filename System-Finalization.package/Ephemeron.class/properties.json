@@ -1,0 +1,14 @@
+{
+	"category" : "System-Finalization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 5/30/2016 10:05",
+	"instvars" : [
+		"container" ],
+	"name" : "Ephemeron",
+	"pools" : [
+		 ],
+	"super" : "Association",
+	"type" : "ephemeron" }

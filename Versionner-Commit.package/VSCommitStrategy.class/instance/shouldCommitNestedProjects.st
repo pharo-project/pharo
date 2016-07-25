@@ -1,0 +1,3 @@
+accessing
+shouldCommitNestedProjects
+	^ shouldCommitNestedProjects

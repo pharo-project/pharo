@@ -1,0 +1,22 @@
+{
+	"category" : "Metacello-MC-Loaders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"overrideRepositories",
+		"repositoryMap",
+		"ensuredMap",
+		"cacheRepository",
+		"cacheGofer",
+		"ignoreImage",
+		"loadData",
+		"loadDirective",
+		"silently" ],
+	"name" : "MetacelloLoaderPolicy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

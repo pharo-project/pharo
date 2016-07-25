@@ -1,0 +1,3 @@
+copying
+copy
+	^ self errorDontCopy

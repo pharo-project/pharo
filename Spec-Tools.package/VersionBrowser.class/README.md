@@ -1,0 +1,1 @@
+A VersionBrowser is a tool made for browsing the several versions of the provided method.

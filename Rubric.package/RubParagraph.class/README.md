@@ -1,0 +1,1 @@
+I represent a paragraph of a text area

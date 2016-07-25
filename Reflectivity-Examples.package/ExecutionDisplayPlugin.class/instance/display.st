@@ -1,0 +1,4 @@
+display
+display
+
+	^morph.

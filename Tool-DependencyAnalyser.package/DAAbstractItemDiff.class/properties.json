@@ -1,0 +1,18 @@
+{
+	"category" : "Tool-DependencyAnalyser-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 8/7/2014 12:08",
+	"instvars" : [
+		"new",
+		"underteminate",
+		"content",
+		"diff",
+		"removed" ],
+	"name" : "DAAbstractItemDiff",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

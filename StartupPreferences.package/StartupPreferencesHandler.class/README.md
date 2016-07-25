@@ -1,0 +1,1 @@
+I manage the links of the chain of responsibilites to retrieve the good preference file.

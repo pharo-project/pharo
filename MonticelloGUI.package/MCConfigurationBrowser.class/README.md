@@ -1,0 +1,1 @@
+A MCConfigurationBrowser displays an MCConfiguration, and edits the configuration to add or remove package dependencies and repository specifications. It allows a configuration to be stored in a repository or posted to an update stream.

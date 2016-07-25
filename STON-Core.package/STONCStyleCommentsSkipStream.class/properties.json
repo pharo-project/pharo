@@ -1,0 +1,17 @@
+{
+	"category" : "STON-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 7/17/2015 13:50",
+	"instvars" : [
+		"stream",
+		"peekedCharacter",
+		"delimiter",
+		"escape" ],
+	"name" : "STONCStyleCommentsSkipStream",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

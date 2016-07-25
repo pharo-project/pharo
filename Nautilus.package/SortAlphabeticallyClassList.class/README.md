@@ -1,0 +1,1 @@
+Like SortHierarchically but sort by name and without indentation.

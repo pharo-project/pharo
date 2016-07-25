@@ -1,0 +1,4 @@
+testing
+isRemoteString
+
+	^ true

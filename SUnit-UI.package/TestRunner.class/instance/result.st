@@ -1,0 +1,3 @@
+accessing-testing
+result
+	^ result

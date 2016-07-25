@@ -1,0 +1,3 @@
+factory
+createEventBeginning
+	self subclassResponsibility

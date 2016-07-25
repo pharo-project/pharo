@@ -1,0 +1,21 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "GLMTBlockTags classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/3/2014 18:34",
+	"instvars" : [
+		"children",
+		"rootsExpanded",
+		"allExpanded",
+		"expandLevel",
+		"tagsBlock",
+		"tagsFilterBlock" ],
+	"name" : "GLMTreePresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMListingPresentation",
+	"traitcomposition" : "GLMTBlockTags",
+	"type" : "normal" }

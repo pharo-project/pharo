@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 6/16/2014 14:34",
+	"instvars" : [
+		"target" ],
+	"name" : "ZnClientFollowingRedirectEvent",
+	"pools" : [
+		 ],
+	"super" : "ZnClientLogEvent",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+childNodeClassFromItem: anItem
+	^  PackageClassNodeExample 

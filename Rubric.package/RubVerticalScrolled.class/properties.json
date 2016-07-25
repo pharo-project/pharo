@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 11:19",
+	"instvars" : [
+		"scrollValue" ],
+	"name" : "RubVerticalScrolled",
+	"pools" : [
+		 ],
+	"super" : "RubMorphAnnouncement",
+	"type" : "normal" }

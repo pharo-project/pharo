@@ -1,0 +1,4 @@
+evaluating
+valueWithArguments: aSequenceOfArguments
+
+	^self

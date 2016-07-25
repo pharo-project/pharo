@@ -1,0 +1,3 @@
+accessing
+text
+	^ position text

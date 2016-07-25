@@ -1,0 +1,4 @@
+accessing
+nullReference
+
+	^ OmNullReference uniqueInstance

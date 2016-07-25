@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"url" ],
+	"name" : "TextURL",
+	"pools" : [
+		 ],
+	"super" : "TextAction",
+	"type" : "normal" }

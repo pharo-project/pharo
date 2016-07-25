@@ -1,0 +1,1 @@
+I represent a removal of a method in a class or a trait.

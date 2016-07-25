@@ -1,0 +1,1 @@
+I am an abstract renderer that provides a generic API for native window rendering.

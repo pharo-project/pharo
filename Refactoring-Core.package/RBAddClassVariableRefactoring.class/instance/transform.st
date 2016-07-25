@@ -1,0 +1,3 @@
+transforming
+transform
+	class addClassVariable: variableName

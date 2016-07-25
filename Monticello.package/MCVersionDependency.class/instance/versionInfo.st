@@ -1,0 +1,3 @@
+accessing
+versionInfo
+	^ versionInfo

@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"AlwaysRestart",
+		"ManagedServers" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"options",
+		"sessionManager" ],
+	"name" : "ZnServer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

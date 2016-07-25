@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"package",
+		"workingCopy" ],
+	"name" : "MCWorkingCopyDeleted",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

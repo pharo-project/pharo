@@ -1,0 +1,4 @@
+private
+newEntryWriter
+
+	^ OmSTONEntryWriter new

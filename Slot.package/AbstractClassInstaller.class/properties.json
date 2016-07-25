@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"builder" ],
+	"name" : "AbstractClassInstaller",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,20 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 2/7/2014 11:53",
+	"instvars" : [
+		"vertices",
+		"filledForm",
+		"smoothCurve",
+		"curveState",
+		"borderForm",
+		"borderColor",
+		"borderWidth" ],
+	"name" : "RubSegmentMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

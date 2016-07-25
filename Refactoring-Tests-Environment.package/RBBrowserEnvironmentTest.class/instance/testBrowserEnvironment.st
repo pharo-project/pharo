@@ -1,0 +1,3 @@
+testing-environments
+testBrowserEnvironment
+	self universalTestFor: RBBrowserEnvironment new

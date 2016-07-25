@@ -1,0 +1,4 @@
+testing
+isEmpty
+
+	^ items isEmpty

@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Core-Extensions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"longTestCaseSettingValue" ],
+	"name" : "LongTestCaseTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

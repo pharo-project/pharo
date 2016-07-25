@@ -1,0 +1,18 @@
+{
+	"category" : "OSWindow-SDL2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"EventLoopProcess",
+		"JoystickMap",
+		"WindowMap" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:21",
+	"instvars" : [
+		"inputSemaphore",
+		"eventQueue",
+		"globalListeners" ],
+	"name" : "OSSDL2Driver",
+	"pools" : [
+		"SDL2Constants" ],
+	"super" : "OSWindowDriver",
+	"type" : "normal" }

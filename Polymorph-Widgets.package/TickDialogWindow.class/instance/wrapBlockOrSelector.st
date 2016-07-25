@@ -1,0 +1,4 @@
+accessing
+wrapBlockOrSelector
+
+	^ wrapBlockOrSelector

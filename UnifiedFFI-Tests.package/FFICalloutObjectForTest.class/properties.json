@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"handle" ],
+	"name" : "FFICalloutObjectForTest",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

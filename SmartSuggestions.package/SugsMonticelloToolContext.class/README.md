@@ -1,0 +1,1 @@
+I am a general suggestion context for a monticello tools. I give the Suggestion framework information about the selection so it can propose the correct suggestions.

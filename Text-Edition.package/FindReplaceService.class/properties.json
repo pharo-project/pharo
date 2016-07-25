@@ -1,0 +1,21 @@
+{
+	"category" : "Text-Edition",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Singleton" ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 12:21",
+	"instvars" : [
+		"findText",
+		"replaceText",
+		"caseSensitive",
+		"entireWordsOnly",
+		"wrapAround",
+		"searchBackwards",
+		"findStartIndex",
+		"isRegex" ],
+	"name" : "FindReplaceService",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

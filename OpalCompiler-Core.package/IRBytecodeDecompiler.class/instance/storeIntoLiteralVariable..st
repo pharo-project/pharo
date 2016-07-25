@@ -1,0 +1,3 @@
+instruction decoding
+storeIntoLiteralVariable: value
+	irBuilder storeIntoLiteralVariable: value

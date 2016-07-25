@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 2/13/2015 11:40",
+	"instvars" : [
+		 ],
+	"name" : "AssemblyManifest",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

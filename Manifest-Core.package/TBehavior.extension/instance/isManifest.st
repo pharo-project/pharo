@@ -1,0 +1,3 @@
+*Manifest-Core
+isManifest
+	^ false

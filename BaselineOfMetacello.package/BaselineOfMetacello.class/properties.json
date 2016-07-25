@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfMetacello",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfMetacello",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

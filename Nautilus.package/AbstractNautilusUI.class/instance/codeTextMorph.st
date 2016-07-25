@@ -1,0 +1,4 @@
+browser compatibility
+codeTextMorph
+
+	^ sourceTextWidget 

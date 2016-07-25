@@ -1,0 +1,1 @@
+Specialist border for a TabGroup panel. Does not draw border beneath selected tab.

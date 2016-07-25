@@ -1,0 +1,15 @@
+{
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"compilationContext",
+		"node" ],
+	"name" : "OCSemanticError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

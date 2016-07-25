@@ -1,0 +1,4 @@
+accessing
+result
+
+	^result

@@ -1,0 +1,4 @@
+private
+canDiscardEdits
+
+	^ true

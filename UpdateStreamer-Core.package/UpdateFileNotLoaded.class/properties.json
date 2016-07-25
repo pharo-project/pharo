@@ -1,0 +1,14 @@
+{
+	"category" : "UpdateStreamer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"file" ],
+	"name" : "UpdateFileNotLoaded",
+	"pools" : [
+		 ],
+	"super" : "Warning",
+	"type" : "normal" }

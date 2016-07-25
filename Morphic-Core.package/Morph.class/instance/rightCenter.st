@@ -1,0 +1,4 @@
+geometry
+rightCenter
+
+	^ bounds rightCenter

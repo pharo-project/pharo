@@ -1,0 +1,29 @@
+{
+	"category" : "Nautilus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"NextFocusKey",
+		"PackagesIconsCache",
+		"PreviousFocusKey" ],
+	"commentStamp" : "FranckWarlouzet 6/17/2015 10:37",
+	"instvars" : [
+		"model",
+		"window",
+		"sourceCodePanel",
+		"fullDisplayedComment",
+		"sourceCodeContainer",
+		"shouldUpdateTitle",
+		"contentSelection",
+		"acceptor",
+		"classCommentTextModel",
+		"commentWidget",
+		"sourceTextWidget",
+		"sourceCodeSelectionInterval",
+		"sourceTextModel",
+		"methodClassifier" ],
+	"name" : "AbstractNautilusUI",
+	"pools" : [
+		 ],
+	"super" : "AbstractTool",
+	"type" : "normal" }

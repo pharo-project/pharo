@@ -1,0 +1,3 @@
+querying
+version
+    self subclassResponsibility

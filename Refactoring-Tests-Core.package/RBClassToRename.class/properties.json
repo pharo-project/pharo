@@ -1,0 +1,16 @@
+{
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [
+		"notUsed" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"rewriteRule",
+		"builder",
+		"class" ],
+	"name" : "RBClassToRename",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

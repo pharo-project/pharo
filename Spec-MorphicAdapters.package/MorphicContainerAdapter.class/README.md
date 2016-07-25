@@ -1,0 +1,1 @@
+I am the adapter providing the correct container class: PanelMorph

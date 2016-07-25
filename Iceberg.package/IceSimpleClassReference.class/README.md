@@ -1,0 +1,1 @@
+Wraps a Pharo class, to allow to handle it polymorphicaly with other references to classes (see IceRemovedClassReference)

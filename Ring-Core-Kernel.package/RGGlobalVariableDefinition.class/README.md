@@ -1,0 +1,1 @@
+A global variable definition

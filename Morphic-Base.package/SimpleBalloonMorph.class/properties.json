@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SimpleBalloonMorph",
+	"pools" : [
+		 ],
+	"super" : "BalloonMorph",
+	"type" : "normal" }

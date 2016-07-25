@@ -1,0 +1,16 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"target",
+		"targetNode",
+		"requestor" ],
+	"name" : "MBCommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

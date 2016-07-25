@@ -1,0 +1,1 @@
+Check for code that checks that a collection is non-empty before sending it an iteration message (e.g., do:, collect:, etc.). Since the collection iteration messages work for empty collections, we do not need to clutter up our method with the extra size check.

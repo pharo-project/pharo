@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Variables",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/9/2012 20:54",
+	"instvars" : [
+		 ],
+	"name" : "ZnConnectionTimeout",
+	"pools" : [
+		 ],
+	"super" : "DynamicVariable",
+	"type" : "normal" }

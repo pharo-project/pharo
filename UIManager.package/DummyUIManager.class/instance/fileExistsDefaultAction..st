@@ -1,0 +1,2 @@
+default actions
+fileExistsDefaultAction: anException

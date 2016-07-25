@@ -1,0 +1,3 @@
+*Spec-Core
+isSpecContainer
+	^ false

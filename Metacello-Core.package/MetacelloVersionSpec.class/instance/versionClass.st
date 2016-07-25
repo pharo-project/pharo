@@ -1,0 +1,4 @@
+private
+versionClass
+
+	^MetacelloVersion

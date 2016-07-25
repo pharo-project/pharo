@@ -1,0 +1,1 @@
+Browse the configuration class.

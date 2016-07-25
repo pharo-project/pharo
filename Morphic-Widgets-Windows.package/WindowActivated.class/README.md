@@ -1,0 +1,1 @@
+Emitted when navigating between windows. 

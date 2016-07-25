@@ -1,0 +1,3 @@
+private
+getCurrentPoint
+	^ context getCurrentPoint

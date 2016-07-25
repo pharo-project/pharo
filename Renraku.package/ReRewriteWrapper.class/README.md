@@ -1,0 +1,1 @@
+A wrapper that provides a single interface to produce a new node from the matched node and a maping of wildcard variables.

@@ -1,0 +1,1 @@
+A MCDependencySorter computes the dependencies to a set of entities.

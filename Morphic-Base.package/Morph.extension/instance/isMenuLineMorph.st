@@ -1,0 +1,3 @@
+*Morphic-Base
+isMenuLineMorph
+	^false

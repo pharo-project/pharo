@@ -1,0 +1,16 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:27",
+	"instvars" : [
+		"textMorph",
+		"textFont",
+		"iconMorph" ],
+	"name" : "MessageDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

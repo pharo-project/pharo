@@ -1,0 +1,3 @@
+invalidate
+installReflectiveMethod
+	self installMethod: self

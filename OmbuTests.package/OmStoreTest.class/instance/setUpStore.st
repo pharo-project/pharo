@@ -1,0 +1,3 @@
+resources
+setUpStore
+	^ self subclassResponsibility

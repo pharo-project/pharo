@@ -1,0 +1,4 @@
+extended bytecode generation
+genBranchPopFalseNoMustBeBoolean: distance
+	self genNoMustBeBooleanFlag.
+	self genBranchPopFalseLong: distance

@@ -1,0 +1,1 @@
+I check that packages constituing the Pharo Bootstrap do not depend on any other package.

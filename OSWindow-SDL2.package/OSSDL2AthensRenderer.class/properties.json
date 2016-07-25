@@ -1,0 +1,18 @@
+{
+	"category" : "OSWindow-SDL2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Matthieu 5/28/2015 12:10",
+	"instvars" : [
+		"texture",
+		"renderer",
+		"pixels",
+		"pitch",
+		"sdlSurface" ],
+	"name" : "OSSDL2AthensRenderer",
+	"pools" : [
+		"SDL2Constants" ],
+	"super" : "OSWindowAthensRenderer",
+	"type" : "normal" }

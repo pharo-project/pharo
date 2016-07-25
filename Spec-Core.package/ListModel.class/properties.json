@@ -1,0 +1,27 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/19/2016 11:13",
+	"instvars" : [
+		"selectionHolder",
+		"listHolder",
+		"menuHolder",
+		"shortcutsHolder",
+		"multiSelectionHolder",
+		"multiSelection",
+		"allowToSelect",
+		"listItemsCache",
+		"filteringBlockHolder",
+		"sortingBlockHolder",
+		"wrapBlockHolder",
+		"listAnnouncer",
+		"backgroundColorBlock",
+		"autoDeselect" ],
+	"name" : "ListModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

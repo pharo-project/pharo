@@ -1,0 +1,1 @@
+Model used for radio buttons in example of basic controls (see "UITheme exampleBasicControls").

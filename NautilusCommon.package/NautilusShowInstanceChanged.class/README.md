@@ -1,0 +1,1 @@
+A NautilusShowInstanceChanged is raised when the value of showInstances is changed

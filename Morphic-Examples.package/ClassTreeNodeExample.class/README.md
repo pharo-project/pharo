@@ -1,0 +1,1 @@
+Example for class tree nodes

@@ -1,0 +1,18 @@
+{
+	"category" : "System-Sources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CamilloBruni 2/21/2014 22:29",
+	"instvars" : [
+		"newChangesFile",
+		"stream",
+		"job",
+		"remoteStringMap",
+		"sourceStreams" ],
+	"name" : "PharoChangesCondenser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"out",
+		"block" ],
+	"name" : "AbstractEnumerationVisitor",
+	"pools" : [
+		 ],
+	"super" : "FileSystemVisitor",
+	"type" : "normal" }

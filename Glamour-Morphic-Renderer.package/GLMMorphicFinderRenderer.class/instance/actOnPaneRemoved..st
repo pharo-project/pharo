@@ -1,0 +1,3 @@
+rendering
+actOnPaneRemoved: ann
+	self subclassResponsibility

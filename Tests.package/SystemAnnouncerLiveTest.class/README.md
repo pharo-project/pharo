@@ -1,0 +1,1 @@
+Tests verifiying the behaviour of the default SystemAnnouncer instance.

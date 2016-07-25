@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-VM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:55",
+	"instvars" : [
+		 ],
+	"name" : "VMWindowDriver",
+	"pools" : [
+		 ],
+	"super" : "OSWindowDriver",
+	"type" : "normal" }

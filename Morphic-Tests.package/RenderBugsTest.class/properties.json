@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Bugs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "wiz 5/15/2008 22:58",
+	"instvars" : [
+		 ],
+	"name" : "RenderBugsTest",
+	"pools" : [
+		 ],
+	"super" : "MorphicUIBugTest",
+	"type" : "normal" }

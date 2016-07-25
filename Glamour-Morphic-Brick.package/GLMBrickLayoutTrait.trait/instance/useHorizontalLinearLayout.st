@@ -1,0 +1,4 @@
+brick-layout-properties
+useHorizontalLinearLayout
+
+	self layout: GLMHorizontalLinearLayout uniqueInstance

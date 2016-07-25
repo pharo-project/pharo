@@ -1,0 +1,1 @@
+This class represents the domestic character encoding called ISO-8859-1, also known as Latin-1 used for Most of the Western European Languages.

@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloFileTree-Git",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MCFileTreeGitRemoteRepository",
+	"pools" : [
+		 ],
+	"super" : "MCFileTreeGitRepository",
+	"type" : "normal" }

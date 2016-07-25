@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 8/13/2015 14:42",
+	"instvars" : [
+		 ],
+	"name" : "DAManuallyAddedDependentPackageNode",
+	"pools" : [
+		 ],
+	"super" : "DADependentPackageNode",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+This is an action that is supposed to work in any context (e.g., Morphic or Seaside)

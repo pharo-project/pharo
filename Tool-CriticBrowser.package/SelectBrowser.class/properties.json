@@ -1,0 +1,20 @@
+{
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"toSelectModel",
+		"selectedModel",
+		"addButtonModel",
+		"addAllButtonModel",
+		"removeButtonModel",
+		"removeAllButtonModel",
+		"nextButtonModel" ],
+	"name" : "SelectBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,18 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"selectedBorderColor",
+		"selected",
+		"selectionState",
+		"stateIcons",
+		"allowClick" ],
+	"name" : "MergeJoinSection",
+	"pools" : [
+		 ],
+	"super" : "JoinSection",
+	"type" : "normal" }

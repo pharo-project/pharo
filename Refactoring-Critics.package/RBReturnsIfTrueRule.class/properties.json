@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-ParseTreeRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 23:05",
+	"instvars" : [
+		 ],
+	"name" : "RBReturnsIfTrueRule",
+	"pools" : [
+		 ],
+	"super" : "RBParseTreeLintRule",
+	"type" : "normal" }

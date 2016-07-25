@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Messaging",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DF 5/25/2006 19:54",
+	"instvars" : [
+		"receiver",
+		"selector",
+		"arguments" ],
+	"name" : "MessageSend",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

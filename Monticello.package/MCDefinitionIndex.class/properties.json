@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Patching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/31/2011 21:06",
+	"instvars" : [
+		"definitions" ],
+	"name" : "MCDefinitionIndex",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

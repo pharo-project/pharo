@@ -1,0 +1,4 @@
+private
+clearMemberMap
+
+	memberMap := nil.

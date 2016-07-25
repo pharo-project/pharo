@@ -1,0 +1,14 @@
+{
+	"category" : "System-Platforms",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "michael.rueger 2/25/2009 18:29",
+	"instvars" : [
+		 ],
+	"name" : "OSPlatform",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+testing
+shouldDisplayPresentationCreateBy: aMethod
+
+	self subclassResponsibility

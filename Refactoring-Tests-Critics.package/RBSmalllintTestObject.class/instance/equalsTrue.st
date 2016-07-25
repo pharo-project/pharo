@@ -1,0 +1,3 @@
+methods
+equalsTrue
+	^true == self

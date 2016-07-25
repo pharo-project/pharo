@@ -1,0 +1,4 @@
+accessing
+announcementClass
+
+	^ announcementClass

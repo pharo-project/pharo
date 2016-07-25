@@ -1,0 +1,16 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 21:25",
+	"instvars" : [
+		"newName",
+		"browsedEnvironment",
+		"renameAccessors" ],
+	"name" : "RBRenameInstanceVariableRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBVariableRefactoring",
+	"type" : "normal" }

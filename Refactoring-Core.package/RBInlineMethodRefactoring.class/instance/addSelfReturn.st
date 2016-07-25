@@ -1,0 +1,3 @@
+transforming
+addSelfReturn
+	inlineParseTree addSelfReturn

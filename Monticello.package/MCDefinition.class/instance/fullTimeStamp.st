@@ -1,0 +1,3 @@
+comparing
+fullTimeStamp
+	^ DateAndTime current

@@ -1,0 +1,21 @@
+{
+	"category" : "TxText-Athens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"text",
+		"font",
+		"canvas",
+		"glyphRenderer",
+		"color",
+		"advance",
+		"maxAscent",
+		"currentLine" ],
+	"name" : "TxTextRenderer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

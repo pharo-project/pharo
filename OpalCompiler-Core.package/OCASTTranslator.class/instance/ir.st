@@ -1,0 +1,4 @@
+accessing
+ir
+
+	^ methodBuilder ir

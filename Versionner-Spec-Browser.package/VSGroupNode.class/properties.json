@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "VSGroupNode",
+	"pools" : [
+		 ],
+	"super" : "TreeNodeModel",
+	"type" : "normal" }

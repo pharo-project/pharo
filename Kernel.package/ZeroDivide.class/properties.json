@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 4/21/2011 12:36",
+	"instvars" : [
+		"dividend" ],
+	"name" : "ZeroDivide",
+	"pools" : [
+		 ],
+	"super" : "ArithmeticError",
+	"type" : "normal" }

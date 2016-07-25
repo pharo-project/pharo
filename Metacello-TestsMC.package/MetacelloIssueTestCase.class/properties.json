@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-TestsMC",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"gofer",
+		"initialWorkingCopyList" ],
+	"name" : "MetacelloIssueTestCase",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

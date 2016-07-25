@@ -1,0 +1,4 @@
+accessing
+packagesSpec
+
+	^self packages

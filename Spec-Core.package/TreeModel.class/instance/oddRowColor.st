@@ -1,0 +1,4 @@
+api
+oddRowColor
+
+	^ oddRowColor value

@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"parentScope" ],
+	"name" : "LayoutClassScope",
+	"pools" : [
+		 ],
+	"super" : "LayoutAbstractScope",
+	"type" : "variable" }

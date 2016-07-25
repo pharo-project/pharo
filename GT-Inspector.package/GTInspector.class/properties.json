@@ -1,0 +1,17 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTInspectorEnabledStatus",
+		"GTNumberOfInspectorPanes",
+		"PreferredExtent",
+		"RememberPreferredExtent" ],
+	"commentStamp" : "TudorGirba 8/21/2011 16:57",
+	"instvars" : [
+		"presentationFilter" ],
+	"name" : "GTInspector",
+	"pools" : [
+		 ],
+	"super" : "GLMCompositePresentation",
+	"type" : "normal" }

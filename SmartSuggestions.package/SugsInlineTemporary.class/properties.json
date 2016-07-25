@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SugsInlineTemporary",
+	"pools" : [
+		 ],
+	"super" : "SugsSuggestion",
+	"type" : "normal" }

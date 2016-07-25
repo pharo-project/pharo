@@ -1,0 +1,1 @@
+i have settings for QA recording functions

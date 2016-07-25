@@ -1,0 +1,3 @@
+accessing
+now
+	^ Time totalSeconds

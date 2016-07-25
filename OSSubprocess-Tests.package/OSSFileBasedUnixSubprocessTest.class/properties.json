@@ -1,0 +1,14 @@
+{
+	"category" : "OSSubprocess-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OSSFileBasedUnixSubprocessTest",
+	"pools" : [
+		 ],
+	"super" : "OSSUnixSubprocessTest",
+	"type" : "normal" }

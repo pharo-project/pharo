@@ -1,0 +1,16 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 3/26/2015 14:29",
+	"instvars" : [
+		"start",
+		"end",
+		"fifo" ],
+	"name" : "MalBreadthFirstSearchPath",
+	"pools" : [
+		 ],
+	"super" : "MalGraphAlgorithm",
+	"type" : "normal" }

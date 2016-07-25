@@ -1,0 +1,4 @@
+accessing
+firstDayOfMonth
+
+	^ start firstDayOfMonth

@@ -1,0 +1,3 @@
+accessing
+compiledMethodTrailer: aClass
+	self subclassResponsibility

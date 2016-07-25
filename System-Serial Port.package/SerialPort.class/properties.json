@@ -1,0 +1,22 @@
+{
+	"category" : "System-Serial Port",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"port",
+		"baudRate",
+		"stopBitsType",
+		"parityType",
+		"dataBits",
+		"outputFlowControlType",
+		"inputFlowControlType",
+		"xOnByte",
+		"xOffByte" ],
+	"name" : "SerialPort",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

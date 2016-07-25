@@ -1,0 +1,4 @@
+accessing
+object
+
+	^ object value

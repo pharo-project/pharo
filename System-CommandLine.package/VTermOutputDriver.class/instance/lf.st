@@ -1,0 +1,3 @@
+writing
+lf
+	outStream lf

@@ -1,0 +1,1 @@
+We need to analyse the #after hook: it is a block

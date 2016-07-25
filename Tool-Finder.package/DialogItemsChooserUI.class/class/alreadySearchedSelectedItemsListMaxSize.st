@@ -1,0 +1,4 @@
+accessing
+alreadySearchedSelectedItemsListMaxSize
+
+	^ alreadySearchedSelectedItemsListMaxSize

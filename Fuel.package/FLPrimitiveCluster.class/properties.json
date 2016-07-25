@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/29/2011 19:21",
+	"instvars" : [
+		 ],
+	"name" : "FLPrimitiveCluster",
+	"pools" : [
+		 ],
+	"super" : "FLIteratingCluster",
+	"type" : "normal" }

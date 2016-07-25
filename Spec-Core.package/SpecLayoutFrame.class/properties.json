@@ -1,0 +1,22 @@
+{
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"bottomFraction",
+		"bottomOffset",
+		"layout",
+		"leftFraction",
+		"leftOffset",
+		"rightFraction",
+		"rightOffset",
+		"topFraction",
+		"topOffset" ],
+	"name" : "SpecLayoutFrame",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

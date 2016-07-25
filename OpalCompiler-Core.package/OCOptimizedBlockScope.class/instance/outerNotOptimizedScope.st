@@ -1,0 +1,3 @@
+accessing
+outerNotOptimizedScope
+	^self outerScope outerNotOptimizedScope

@@ -1,0 +1,4 @@
+api
+autoRefresh
+
+	^ autoRefresh value

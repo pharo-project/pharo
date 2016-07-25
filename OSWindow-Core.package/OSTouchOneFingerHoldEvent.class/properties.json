@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 5/17/2015 21:07",
+	"instvars" : [
+		 ],
+	"name" : "OSTouchOneFingerHoldEvent",
+	"pools" : [
+		 ],
+	"super" : "OSTouchHoldEvent",
+	"type" : "normal" }

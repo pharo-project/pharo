@@ -1,0 +1,3 @@
+delegated
+sourcesName
+	^ Smalltalk sourcesName

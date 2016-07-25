@@ -1,0 +1,16 @@
+{
+	"category" : "Versionner-Commit",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 4/23/2015 15:50",
+	"instvars" : [
+		"project",
+		"commitVersion",
+		"nextVersion" ],
+	"name" : "VSCommitProjectAction",
+	"pools" : [
+		 ],
+	"super" : "VSCommitAction",
+	"type" : "normal" }

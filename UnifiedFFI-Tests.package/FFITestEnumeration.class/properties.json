@@ -1,0 +1,17 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"AAA",
+		"BBB",
+		"CCC",
+		"DDD" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFITestEnumeration",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalEnumeration",
+	"type" : "normal" }

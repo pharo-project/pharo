@@ -1,0 +1,3 @@
+slots
+allSlots
+	^#()

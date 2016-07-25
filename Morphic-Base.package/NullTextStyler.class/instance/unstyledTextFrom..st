@@ -1,0 +1,3 @@
+styling
+unstyledTextFrom: aText
+	^aText

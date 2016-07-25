@@ -1,0 +1,3 @@
+modes
+multiply
+	self notAvailable

@@ -1,0 +1,3 @@
+accessing
+text
+	^ span text

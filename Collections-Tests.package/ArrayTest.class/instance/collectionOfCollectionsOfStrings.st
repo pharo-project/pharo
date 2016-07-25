@@ -1,0 +1,3 @@
+requirements
+collectionOfCollectionsOfStrings
+	^ collectionOfCollectionsOfStrings.

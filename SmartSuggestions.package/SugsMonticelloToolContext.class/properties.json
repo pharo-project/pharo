@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 2/10/2016 16:29",
+	"instvars" : [
+		 ],
+	"name" : "SugsMonticelloToolContext",
+	"pools" : [
+		 ],
+	"super" : "SugsAbstractContext",
+	"type" : "normal" }

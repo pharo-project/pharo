@@ -1,0 +1,3 @@
+accessing
+lineNumbersBackgroundColor
+	^ self class lineNumbersBackgroundColor

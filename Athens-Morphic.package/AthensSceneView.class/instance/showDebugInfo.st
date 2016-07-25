@@ -1,0 +1,3 @@
+drawing
+showDebugInfo
+	^ true 

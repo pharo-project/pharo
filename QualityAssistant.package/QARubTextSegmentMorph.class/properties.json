@@ -1,0 +1,15 @@
+{
+	"category" : "QualityAssistant",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 6/21/2016 20:54",
+	"instvars" : [
+		"entity",
+		"critique" ],
+	"name" : "QARubTextSegmentMorph",
+	"pools" : [
+		 ],
+	"super" : "RubTextSegmentMorph",
+	"type" : "normal" }

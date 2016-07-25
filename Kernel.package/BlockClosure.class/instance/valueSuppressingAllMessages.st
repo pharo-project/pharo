@@ -1,0 +1,4 @@
+evaluating
+valueSuppressingAllMessages
+
+	^ self valueSuppressingMessages: #('*')

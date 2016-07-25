@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-System-Hashing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"hash" ],
+	"name" : "MD5Test",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

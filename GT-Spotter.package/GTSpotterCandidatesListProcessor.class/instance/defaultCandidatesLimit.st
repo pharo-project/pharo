@@ -1,0 +1,3 @@
+compatibility
+defaultCandidatesLimit
+	^ self defaultItemsLimit

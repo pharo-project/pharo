@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"package2",
+		"package1" ],
+	"name" : "MCPackageManagerTest",
+	"pools" : [
+		 ],
+	"super" : "MCTestCase",
+	"type" : "normal" }

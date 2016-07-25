@@ -1,0 +1,3 @@
+resources
+pageSize
+	^ self subclassResponsibility

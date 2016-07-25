@@ -1,0 +1,3 @@
+accessing
+first
+	^sequence first

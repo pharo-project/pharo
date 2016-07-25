@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"element",
+		"eventType" ],
+	"name" : "GTSpotterDiveInElement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

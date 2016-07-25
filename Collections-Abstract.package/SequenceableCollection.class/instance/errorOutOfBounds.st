@@ -1,0 +1,4 @@
+private
+errorOutOfBounds
+
+	SubscriptOutOfBounds signal

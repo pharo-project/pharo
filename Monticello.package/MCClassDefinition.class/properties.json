@@ -1,0 +1,22 @@
+{
+	"category" : "Monticello-Modeling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"superclassName",
+		"variables",
+		"category",
+		"type",
+		"comment",
+		"commentStamp",
+		"traitComposition",
+		"classTraitComposition" ],
+	"name" : "MCClassDefinition",
+	"pools" : [
+		 ],
+	"super" : "MCDefinition",
+	"type" : "normal" }

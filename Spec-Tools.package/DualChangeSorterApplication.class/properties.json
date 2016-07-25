@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Tools-ChangeSorter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model",
+		"changeSorterLeft",
+		"changeSorterRight",
+		"isRefreshing" ],
+	"name" : "DualChangeSorterApplication",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+testing
+isStderr
+	
+	^ fileName = #stderr

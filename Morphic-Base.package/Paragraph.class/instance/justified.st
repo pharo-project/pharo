@@ -1,0 +1,3 @@
+alignment
+justified 
+	textStyle justified

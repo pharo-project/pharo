@@ -1,0 +1,15 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:46",
+	"instvars" : [
+		"listMorph",
+		"list" ],
+	"name" : "ChooseDropListDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "MessageDialogWindow",
+	"type" : "normal" }

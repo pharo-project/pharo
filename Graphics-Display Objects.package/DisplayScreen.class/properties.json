@@ -1,0 +1,18 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DeferringUpdates",
+		"DisplayChangeSignature",
+		"LastScreenModeSelected",
+		"ScreenSave" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"clippingBox",
+		"extraRegions" ],
+	"name" : "DisplayScreen",
+	"pools" : [
+		 ],
+	"super" : "Form",
+	"type" : "normal" }

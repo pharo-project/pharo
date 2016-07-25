@@ -1,0 +1,22 @@
+{
+	"category" : "Metacello-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"versionMap",
+		"symbolicVersionMap",
+		"errorMap",
+		"loader",
+		"loaderClass",
+		"loadType",
+		"configuration",
+		"projectAttributes",
+		"versionNumberClass" ],
+	"name" : "MetacelloProject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

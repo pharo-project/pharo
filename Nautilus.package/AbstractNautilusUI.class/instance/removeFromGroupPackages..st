@@ -1,0 +1,3 @@
+group
+removeFromGroupPackages: aCollectionOfPackages
+	self parentOfSelectedPackage item removePackages: aCollectionOfPackages

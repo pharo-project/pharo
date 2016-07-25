@@ -1,0 +1,4 @@
+class methods
+printingDirection
+
+	^ #right.

@@ -1,0 +1,15 @@
+{
+	"category" : "HudsonBuildTools20",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
+	"instvars" : [
+		"environment",
+		"rules" ],
+	"name" : "HDLintReport",
+	"pools" : [
+		 ],
+	"super" : "HDReport",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"compiledMethods" ],
+	"name" : "FFIMethodRegistry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

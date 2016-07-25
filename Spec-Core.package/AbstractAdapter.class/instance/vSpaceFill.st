@@ -1,0 +1,4 @@
+protocol
+vSpaceFill
+
+	self subclassResponsibility

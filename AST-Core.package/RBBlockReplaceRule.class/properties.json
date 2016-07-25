@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Matching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "md 8/9/2005 14:55",
+	"instvars" : [
+		"replaceBlock" ],
+	"name" : "RBBlockReplaceRule",
+	"pools" : [
+		 ],
+	"super" : "RBReplaceRule",
+	"type" : "normal" }

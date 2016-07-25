@@ -1,0 +1,1 @@
+I define a default null suggestion context that provides no suggestions

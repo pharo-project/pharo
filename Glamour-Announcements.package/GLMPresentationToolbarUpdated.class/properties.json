@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/5/2014 18:58",
+	"instvars" : [
+		"presentation" ],
+	"name" : "GLMPresentationToolbarUpdated",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

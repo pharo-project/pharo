@@ -1,0 +1,17 @@
+{
+	"category" : "Iceberg-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"package",
+		"repository",
+		"entry",
+		"commit" ],
+	"name" : "IceSavedPackageVersion",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

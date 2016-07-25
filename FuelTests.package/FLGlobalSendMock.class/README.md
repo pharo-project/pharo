@@ -1,0 +1,1 @@
+A mock for a global send

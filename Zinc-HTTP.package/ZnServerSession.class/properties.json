@@ -1,0 +1,17 @@
+{
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"id",
+		"attributes",
+		"created",
+		"modified" ],
+	"name" : "ZnServerSession",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

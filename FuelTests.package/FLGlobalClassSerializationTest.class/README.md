@@ -1,0 +1,1 @@
+I test the serialization of classes as *global* objects, i.e. the classes has to be present in the image at materialization time.

@@ -1,0 +1,15 @@
+{
+	"category" : "FreeType-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"errorCode",
+		"errorString" ],
+	"name" : "FT2Error",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

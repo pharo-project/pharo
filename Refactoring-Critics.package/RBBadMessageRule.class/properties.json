@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 21:14",
+	"instvars" : [
+		 ],
+	"name" : "RBBadMessageRule",
+	"pools" : [
+		 ],
+	"super" : "RBBlockLintRule",
+	"type" : "normal" }

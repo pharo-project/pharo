@@ -1,0 +1,21 @@
+{
+	"category" : "RPackage-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"PackageGlobalOrganizer",
+		"Properties" ],
+	"commentStamp" : "StephaneDucasse 7/25/2011 21:55",
+	"instvars" : [
+		"classDefinedSelectors",
+		"metaclassDefinedSelectors",
+		"classExtensionSelectors",
+		"metaclassExtensionSelectors",
+		"classes",
+		"name",
+		"classTags" ],
+	"name" : "RPackage",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

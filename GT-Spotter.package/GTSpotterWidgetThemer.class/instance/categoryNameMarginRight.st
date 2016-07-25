@@ -1,0 +1,4 @@
+values
+categoryNameMarginRight
+
+	^ 10

@@ -1,0 +1,3 @@
+accessing
+traitMethod
+	^ class >> #one

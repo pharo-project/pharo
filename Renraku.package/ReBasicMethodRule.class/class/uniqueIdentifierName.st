@@ -1,0 +1,4 @@
+accessing
+uniqueIdentifierName
+
+	^ self name

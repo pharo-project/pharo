@@ -1,0 +1,3 @@
+blinking support
+startBlinking
+	self startStepping

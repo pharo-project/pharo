@@ -1,0 +1,17 @@
+{
+	"category" : "NautilusRefactoring-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"argumentIndex",
+		"labelMorph",
+		"methodName",
+		"selectorField" ],
+	"name" : "MethodNameEditor",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

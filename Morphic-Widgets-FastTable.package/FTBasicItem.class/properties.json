@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Tree",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/23/2015 15:53",
+	"instvars" : [
+		"isExpanded",
+		"data",
+		"depth",
+		"recentlyChanged" ],
+	"name" : "FTBasicItem",
+	"pools" : [
+		 ],
+	"super" : "FTTreeItem",
+	"type" : "normal" }

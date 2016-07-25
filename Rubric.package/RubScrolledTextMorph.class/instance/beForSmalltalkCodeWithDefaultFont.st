@@ -1,0 +1,4 @@
+initialize-release
+beForSmalltalkCodeWithDefaultFont
+	self textArea beForSmalltalkCodeWithDefaultFont.
+	self withTextSegmentIcons

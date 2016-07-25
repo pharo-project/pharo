@@ -1,0 +1,4 @@
+sunitgui
+packageNamesUnderTest
+	<ignoreForCoverage>
+	^ #('SplitJoin')

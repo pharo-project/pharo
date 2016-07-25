@@ -1,0 +1,3 @@
+accessing
+menuShortcutString
+	^ self subclassResponsibility

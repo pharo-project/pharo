@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "IdentityBag",
+	"pools" : [
+		 ],
+	"super" : "Bag",
+	"type" : "normal" }

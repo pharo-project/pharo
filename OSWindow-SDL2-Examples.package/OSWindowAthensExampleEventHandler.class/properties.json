@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 8/21/2015 14:02",
+	"instvars" : [
+		"athensExample" ],
+	"name" : "OSWindowAthensExampleEventHandler",
+	"pools" : [
+		 ],
+	"super" : "OSWindowEventVisitor",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+helpers
+getStreamsInfoForRunningTest
+	^ self numberOfOpenFiles 

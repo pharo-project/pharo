@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"descriptionBlock",
+		"saveBlock",
+		"labelBlock",
+		"valueBlock" ],
+	"name" : "DynamicEyeElement",
+	"pools" : [
+		 ],
+	"super" : "AbstractEyeElement",
+	"type" : "normal" }

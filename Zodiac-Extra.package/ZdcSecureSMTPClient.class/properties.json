@@ -1,0 +1,15 @@
+{
+	"category" : "Zodiac-Extra",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/6/2011 11:46",
+	"instvars" : [
+		"variant",
+		"lineReader" ],
+	"name" : "ZdcSecureSMTPClient",
+	"pools" : [
+		 ],
+	"super" : "SMTPClient",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"handle",
+		"startOffset" ],
+	"name" : "FFIExternalStructureReferenceHandle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

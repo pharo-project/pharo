@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Theme",
+	"classinstvars" : [
+		"icons" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 1/30/2011 22:55",
+	"instvars" : [
+		 ],
+	"name" : "GLMUIThemeExtraIcons",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

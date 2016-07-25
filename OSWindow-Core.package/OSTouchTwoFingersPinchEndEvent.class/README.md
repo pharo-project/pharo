@@ -1,0 +1,1 @@
+Two fingers finished to pinch

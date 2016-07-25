@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 3/15/2014 23:38",
+	"instvars" : [
+		 ],
+	"name" : "RootEyeElement",
+	"pools" : [
+		 ],
+	"super" : "SelfEyeElement",
+	"type" : "normal" }

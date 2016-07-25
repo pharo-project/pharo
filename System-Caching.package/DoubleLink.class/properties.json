@@ -1,0 +1,16 @@
+{
+	"category" : "System-Caching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/12/2014 14:15",
+	"instvars" : [
+		"value",
+		"nextLink",
+		"previousLink" ],
+	"name" : "DoubleLink",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

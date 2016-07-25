@@ -1,0 +1,3 @@
+accessing
+behavior
+	^ self selectedClass 

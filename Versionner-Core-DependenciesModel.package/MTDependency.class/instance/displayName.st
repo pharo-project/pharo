@@ -1,0 +1,3 @@
+accessing
+displayName
+	^ self name

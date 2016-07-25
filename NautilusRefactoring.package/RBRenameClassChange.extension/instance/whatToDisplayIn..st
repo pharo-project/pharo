@@ -1,0 +1,4 @@
+*NautilusRefactoring
+whatToDisplayIn: aChangeBrowser
+	^ { self }
+	

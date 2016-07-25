@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Extra",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 9/28/2014 16:49",
+	"instvars" : [
+		 ],
+	"name" : "DockingBarToggleMenuItemMorph",
+	"pools" : [
+		 ],
+	"super" : "ToggleMenuItemMorph",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 3/7/2012 14:41",
+	"instvars" : [
+		 ],
+	"name" : "AthensTransform",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+private
+getTrue: anArg
+
+	^true

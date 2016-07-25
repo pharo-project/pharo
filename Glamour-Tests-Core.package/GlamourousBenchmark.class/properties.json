@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"progressBarSize",
+		"progress" ],
+	"name" : "GlamourousBenchmark",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

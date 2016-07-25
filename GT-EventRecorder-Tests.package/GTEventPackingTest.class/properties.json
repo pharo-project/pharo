@@ -1,0 +1,22 @@
+{
+	"category" : "GT-EventRecorder-Tests-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"packing",
+		"event1",
+		"event2",
+		"collector",
+		"bundle",
+		"announcement",
+		"unpackedData",
+		"storage",
+		"file" ],
+	"name" : "GTEventPackingTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

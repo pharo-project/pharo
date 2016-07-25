@@ -1,0 +1,3 @@
+api
+aboutTitle
+	^ self toolName.

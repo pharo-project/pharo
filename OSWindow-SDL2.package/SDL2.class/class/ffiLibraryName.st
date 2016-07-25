@@ -1,0 +1,3 @@
+native
+ffiLibraryName
+	^ self moduleName

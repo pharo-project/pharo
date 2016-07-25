@@ -1,0 +1,1 @@
+I represent a node for the genPushNewArray: opcode.

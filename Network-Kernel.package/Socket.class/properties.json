@@ -1,0 +1,27 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Connected",
+		"DeadServer",
+		"InvalidSocket",
+		"OtherEndClosed",
+		"Registry",
+		"RegistryThreshold",
+		"TCPSocketType",
+		"ThisEndClosed",
+		"UDPSocketType",
+		"Unconnected",
+		"WaitingForConnection" ],
+	"commentStamp" : "VeronicaUquillas 6/11/2010 13:03",
+	"instvars" : [
+		"semaphore",
+		"socketHandle",
+		"readSemaphore",
+		"writeSemaphore" ],
+	"name" : "Socket",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

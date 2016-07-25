@@ -1,0 +1,3 @@
+accessing decorators
+withoutSecondarySelection
+	self withoutDecoratorNamed: #secondarySelection

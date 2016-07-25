@@ -1,0 +1,1 @@
+I am a cluster that serializes and materializes interacting directly with the stream.

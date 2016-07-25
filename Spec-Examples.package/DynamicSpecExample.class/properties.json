@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"object" ],
+	"name" : "DynamicSpecExample",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

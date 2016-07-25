@@ -1,0 +1,1 @@
+I provide "primitives" for doing IO on files in a MemoryFileSystem. I delegate most of my actions to the MemoryFile. This way there is only one place needed where the data is stored.

@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFIOop",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalType",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Core-Worlds",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"osWindow",
+		"session" ],
+	"name" : "WorldMorph",
+	"pools" : [
+		 ],
+	"super" : "PasteUpMorph",
+	"type" : "normal" }

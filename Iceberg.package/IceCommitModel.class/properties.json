@@ -1,0 +1,17 @@
+{
+	"category" : "Iceberg-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"message",
+		"commitButton",
+		"model",
+		"refreshButton" ],
+	"name" : "IceCommitModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,19 @@
+{
+	"category" : "FreeType-FontManager",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 8/23/2014 12:55",
+	"instvars" : [
+		"fileInfos",
+		"fileInfoCache",
+		"tempFileInfos",
+		"families",
+		"tempFamilies",
+		"fontInstallers" ],
+	"name" : "FreeTypeFontProvider",
+	"pools" : [
+		 ],
+	"super" : "FontProviderAbstract",
+	"type" : "normal" }

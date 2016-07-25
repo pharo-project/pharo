@@ -1,0 +1,33 @@
+{
+	"category" : "Nautilus",
+	"classinstvars" : [
+		"groups",
+		"methodGroup",
+		"useOldStyleKeys" ],
+	"classvars" : [
+		"MethodClassifierClass",
+		"PluginClasses",
+		"SortHierarchically" ],
+	"commentStamp" : "StephaneDucasse 9/5/2015 22:00",
+	"instvars" : [
+		"announcer",
+		"browsedEnvironment",
+		"browsingHistory",
+		"plugins",
+		"selectedCategory",
+		"selectedClass",
+		"selectedGroup",
+		"selectedMethod",
+		"selectedPackage",
+		"showCategories",
+		"showComment",
+		"sortHierarchically",
+		"showInstance",
+		"showHierarchy",
+		"ui",
+		"methodClassifier" ],
+	"name" : "Nautilus",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

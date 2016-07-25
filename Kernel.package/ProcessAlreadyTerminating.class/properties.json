@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MaxLeske 9/22/2014 09:56",
+	"instvars" : [
+		 ],
+	"name" : "ProcessAlreadyTerminating",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

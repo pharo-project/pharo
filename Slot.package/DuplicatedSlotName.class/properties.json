@@ -1,0 +1,16 @@
+{
+	"category" : "Slot-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"newSlot",
+		"oldSlot",
+		"host" ],
+	"name" : "DuplicatedSlotName",
+	"pools" : [
+		 ],
+	"super" : "ClassBuilderWarning",
+	"type" : "normal" }

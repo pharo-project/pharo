@@ -1,0 +1,3 @@
+helpers-names
+yetAnotherClassName
+	^ #SlotTestsClassC

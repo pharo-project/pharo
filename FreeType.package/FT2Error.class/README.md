@@ -1,0 +1,1 @@
+This is an Error that knows how to get the Freetype2 error code and string.

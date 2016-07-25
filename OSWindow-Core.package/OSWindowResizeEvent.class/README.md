@@ -1,0 +1,1 @@
+I am delivered when window resized by user or OS/window manager.

@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"registry" ],
+	"name" : "FFIExternalResourceManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

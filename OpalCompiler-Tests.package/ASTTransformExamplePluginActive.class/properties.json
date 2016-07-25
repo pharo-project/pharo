@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Plugins",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 2/28/2015 16:02",
+	"instvars" : [
+		 ],
+	"name" : "ASTTransformExamplePluginActive",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

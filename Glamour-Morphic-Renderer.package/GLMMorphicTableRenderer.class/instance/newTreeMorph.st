@@ -1,0 +1,3 @@
+private
+newTreeMorph
+	^ GLMPaginatedResizableMorphTreeMorph new.

@@ -1,0 +1,4 @@
+*Metacello-Core
+setDescriptionInMetacelloVersion: aMetacelloVersionSpec
+
+	aMetacelloVersionSpec setDescription: self

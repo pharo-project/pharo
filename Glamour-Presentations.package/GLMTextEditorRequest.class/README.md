@@ -1,0 +1,1 @@
+I indicate to the renderer to execute a message on the text editor morph that contains the actual text.

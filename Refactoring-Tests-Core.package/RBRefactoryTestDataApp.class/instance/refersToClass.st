@@ -1,0 +1,3 @@
+lint
+refersToClass
+	^ RBRefactoryTestDataApp

@@ -1,0 +1,1 @@
+A composite presentation offers means to control the composition of multiple presentations by providing the arrangement of these presentations.

@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "md 4/8/2003 12:50",
+	"instvars" : [
+		 ],
+	"name" : "InstructionClient",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

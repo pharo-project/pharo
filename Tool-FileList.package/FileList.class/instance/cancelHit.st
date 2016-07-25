@@ -1,0 +1,4 @@
+private
+cancelHit
+
+	modalView delete.

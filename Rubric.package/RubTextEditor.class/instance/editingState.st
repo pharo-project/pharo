@@ -1,0 +1,3 @@
+accessing
+editingState
+	^ textArea editingState

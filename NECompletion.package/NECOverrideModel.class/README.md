@@ -1,0 +1,1 @@
+I'm used when completing a method override. I contain all selectors of the superclass minus the already implemented selectors of the current class. When a completion occurs I complete a method template with a send to super.

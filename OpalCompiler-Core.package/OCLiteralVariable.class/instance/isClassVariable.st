@@ -1,0 +1,3 @@
+testing
+isClassVariable
+	^ assoc isClassVariable

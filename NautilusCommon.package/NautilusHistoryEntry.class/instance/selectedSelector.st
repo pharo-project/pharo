@@ -1,0 +1,4 @@
+accessing
+selectedSelector
+
+	^ selectedSelector

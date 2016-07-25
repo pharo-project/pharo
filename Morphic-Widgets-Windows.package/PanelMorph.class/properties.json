@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 12:38",
+	"instvars" : [
+		 ],
+	"name" : "PanelMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

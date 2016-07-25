@@ -1,0 +1,3 @@
+accessing
+inspectItem
+	self inspect

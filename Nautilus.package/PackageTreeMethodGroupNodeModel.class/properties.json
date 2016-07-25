@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-Tree",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/8/2015 16:55",
+	"instvars" : [
+		 ],
+	"name" : "PackageTreeMethodGroupNodeModel",
+	"pools" : [
+		 ],
+	"super" : "PackageTreeGroupModel",
+	"type" : "normal" }

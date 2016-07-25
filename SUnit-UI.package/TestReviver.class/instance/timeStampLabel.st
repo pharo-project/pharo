@@ -1,0 +1,3 @@
+accessing
+timeStampLabel
+	^ timeStampLabel

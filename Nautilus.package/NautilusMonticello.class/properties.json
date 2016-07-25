@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NautilusMonticello",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

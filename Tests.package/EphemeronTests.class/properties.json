@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-Finalization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "EphemeronTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

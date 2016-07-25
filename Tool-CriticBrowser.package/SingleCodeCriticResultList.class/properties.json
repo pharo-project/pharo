@@ -1,0 +1,20 @@
+{
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [
+		"icons" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"rule",
+		"criticsModel",
+		"toolbarModel",
+		"sourceCodeModel",
+		"textInputFieldModel",
+		"cache",
+		"thread" ],
+	"name" : "SingleCodeCriticResultList",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

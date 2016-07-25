@@ -1,0 +1,4 @@
+accessing
+delta
+	
+	^ delta

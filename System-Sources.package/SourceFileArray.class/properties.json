@@ -1,0 +1,15 @@
+{
+	"category" : "System-Sources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"files",
+		"readOnlyQueue" ],
+	"name" : "SourceFileArray",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

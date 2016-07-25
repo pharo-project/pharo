@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Views",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"browser" ],
+	"name" : "EpLogBrowserItem",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

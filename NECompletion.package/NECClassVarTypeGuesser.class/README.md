@@ -1,0 +1,1 @@
+I'm a simple InstructionClient that tries to guess the type of a given class variable name of a class. 

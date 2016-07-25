@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 8/5/2014 16:11",
+	"instvars" : [
+		"onlyStrong" ],
+	"name" : "EyePointerExplorer",
+	"pools" : [
+		 ],
+	"super" : "EyeTreeInspector",
+	"type" : "normal" }

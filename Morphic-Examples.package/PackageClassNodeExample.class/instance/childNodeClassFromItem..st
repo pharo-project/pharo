@@ -1,0 +1,3 @@
+menu
+childNodeClassFromItem: anItem
+	^PackageMethodCategoryNodeExample

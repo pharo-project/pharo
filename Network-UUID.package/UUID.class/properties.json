@@ -1,0 +1,14 @@
+{
+	"category" : "Network-UUID",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "UUID",
+	"pools" : [
+		 ],
+	"super" : "ByteArray",
+	"type" : "bytes" }

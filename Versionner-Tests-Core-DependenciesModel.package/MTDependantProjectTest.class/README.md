@@ -1,0 +1,1 @@
+Test clas for a dependant project

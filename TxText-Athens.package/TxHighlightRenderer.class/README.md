@@ -1,0 +1,1 @@
+I highlight text backgroung e.g. to show a selection. I require a layout view, paint, and text interval.

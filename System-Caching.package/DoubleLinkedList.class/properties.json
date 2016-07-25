@@ -1,0 +1,15 @@
+{
+	"category" : "System-Caching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/26/2015 15:32",
+	"instvars" : [
+		"head",
+		"tail" ],
+	"name" : "DoubleLinkedList",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

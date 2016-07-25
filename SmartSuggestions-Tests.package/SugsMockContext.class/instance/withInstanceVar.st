@@ -1,0 +1,3 @@
+instance creation
+withInstanceVar
+	anInstanceVar.

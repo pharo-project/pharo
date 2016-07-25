@@ -1,0 +1,16 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"selector",
+		"argumentNames",
+		"methodClass" ],
+	"name" : "FFICalloutMethodBuilderTestContext",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

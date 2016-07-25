@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-System",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SystemSettings",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

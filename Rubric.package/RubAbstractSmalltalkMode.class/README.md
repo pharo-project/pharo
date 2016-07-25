@@ -1,0 +1,1 @@
+I am an abstract class to set a mode of editing for smalltalk

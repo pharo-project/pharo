@@ -1,0 +1,4 @@
+accessing
+totalMcuBlocks
+
+	^ heightInBlocks * widthInBlocks

@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tools-Watchpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 6/21/2016 15:18",
+	"instvars" : [
+		 ],
+	"name" : "CounterIconStyler",
+	"pools" : [
+		 ],
+	"super" : "IconStyler",
+	"type" : "normal" }

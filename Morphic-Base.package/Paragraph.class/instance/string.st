@@ -1,0 +1,3 @@
+access
+string
+	^ text string

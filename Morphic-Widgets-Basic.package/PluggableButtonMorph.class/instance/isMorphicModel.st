@@ -1,0 +1,4 @@
+compatibility
+isMorphicModel 
+
+	^ true

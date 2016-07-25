@@ -1,0 +1,1 @@
+I am the superclass of standard layouts for Objects.

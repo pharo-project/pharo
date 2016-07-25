@@ -1,0 +1,3 @@
+accessing
+time
+	^ rootMessageTally time

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"EndianCache" ],
+	"commentStamp" : "GuillermoPolito 5/4/2015 15:17",
+	"instvars" : [
+		 ],
+	"name" : "EndianDetector",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "words" }

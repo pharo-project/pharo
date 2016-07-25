@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Patching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"obsoletion",
+		"modification" ],
+	"name" : "MCModification",
+	"pools" : [
+		 ],
+	"super" : "MCPatchOperation",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Windows-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 11/8/2015 13:51",
+	"instvars" : [
+		"window" ],
+	"name" : "WindowAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

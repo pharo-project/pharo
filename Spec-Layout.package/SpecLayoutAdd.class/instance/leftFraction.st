@@ -1,0 +1,4 @@
+protocol
+leftFraction
+
+	^ layoutFrame leftFraction 

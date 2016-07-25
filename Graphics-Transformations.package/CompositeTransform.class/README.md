@@ -1,0 +1,1 @@
+A composite transform provides the effect of several levels of coordinate transformations.

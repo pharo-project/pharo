@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"dict" ],
+	"name" : "MCDictionaryRepositoryTest",
+	"pools" : [
+		 ],
+	"super" : "MCRepositoryTest",
+	"type" : "normal" }

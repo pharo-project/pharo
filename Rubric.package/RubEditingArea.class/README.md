@@ -1,0 +1,1 @@
+I am the common class to use for editing text in an area

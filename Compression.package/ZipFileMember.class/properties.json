@@ -1,0 +1,17 @@
+{
+	"category" : "Compression-Archives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"externalFileName",
+		"stream",
+		"localHeaderRelativeOffset",
+		"dataOffset" ],
+	"name" : "ZipFileMember",
+	"pools" : [
+		 ],
+	"super" : "ZipArchiveMember",
+	"type" : "normal" }

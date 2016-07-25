@@ -1,0 +1,1 @@
+An OCSourceCodeChanged is used to pass corrected source code from OCUndeclaredVariableWarning back to OpalCompiler>>compile  so that parsing can be restarted,. Introduced to resolve Case 12954.

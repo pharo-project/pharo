@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-SystemChangeNotification",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "hn 3/28/2016 12:31",
+	"instvars" : [
+		 ],
+	"name" : "SystemAnnouncerLiveTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

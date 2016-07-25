@@ -1,0 +1,30 @@
+{
+	"category" : "Balloon-Engine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BezierStats",
+		"BufferCache",
+		"CacheProtect",
+		"Counts",
+		"Debug",
+		"Times" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"workBuffer",
+		"span",
+		"bitBlt",
+		"forms",
+		"clipRect",
+		"destOffset",
+		"externals",
+		"aaLevel",
+		"edgeTransform",
+		"colorTransform",
+		"deferred",
+		"postFlushNeeded" ],
+	"name" : "BalloonEngine",
+	"pools" : [
+		"BalloonEngineConstants" ],
+	"super" : "Object",
+	"type" : "normal" }

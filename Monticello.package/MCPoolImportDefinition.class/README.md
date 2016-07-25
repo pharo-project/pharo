@@ -1,0 +1,1 @@
+A MCPoolImportDefinition represents a pool definition.

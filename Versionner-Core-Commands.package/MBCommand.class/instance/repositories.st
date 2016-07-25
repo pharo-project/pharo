@@ -1,0 +1,3 @@
+repositories
+repositories
+	^MCRepositoryGroup default repositories

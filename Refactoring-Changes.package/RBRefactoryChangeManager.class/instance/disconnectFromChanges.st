@@ -1,0 +1,3 @@
+initialize-release
+disconnectFromChanges
+	SystemAnnouncer uniqueInstance unsubscribe: self

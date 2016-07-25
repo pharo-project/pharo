@@ -1,0 +1,15 @@
+{
+	"category" : "Settings-System",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"SoundEnabled",
+		"UseThemeSounds" ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 23:29",
+	"instvars" : [
+		 ],
+	"name" : "SystemSystemSettings",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

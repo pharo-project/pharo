@@ -1,0 +1,1 @@
+Holds the information about a commit in a git repository.

@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 7/21/2014 14:35",
+	"instvars" : [
+		"packages",
+		"classToPackage" ],
+	"name" : "DAPackageRelationGraph",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

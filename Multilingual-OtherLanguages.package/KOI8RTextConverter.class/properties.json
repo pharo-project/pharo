@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "KOI8RTextConverter",
+	"pools" : [
+		 ],
+	"super" : "ByteTextConverter",
+	"type" : "normal" }

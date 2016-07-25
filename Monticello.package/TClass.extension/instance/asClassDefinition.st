@@ -1,0 +1,3 @@
+*Monticello
+asClassDefinition
+	^self explicitRequirement.

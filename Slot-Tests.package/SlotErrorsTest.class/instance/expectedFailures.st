@@ -1,0 +1,4 @@
+running
+expectedFailures 
+
+	^ #(testCannotBeRecompiled)

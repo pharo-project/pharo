@@ -1,0 +1,4 @@
+streaming
+position
+
+	^stream position

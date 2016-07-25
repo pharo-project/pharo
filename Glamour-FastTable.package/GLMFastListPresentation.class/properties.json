@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-FastTable-Presentations",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGLMFastTableFunctionsPresentation classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/10/2015 10:52",
+	"instvars" : [
+		"parameters" ],
+	"name" : "GLMFastListPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMListPresentation",
+	"traitcomposition" : "TGLMFastTableFunctionsPresentation",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I'm in charge to style  the editor for  a "haltOnCount:". Clicking on it resets the counter.

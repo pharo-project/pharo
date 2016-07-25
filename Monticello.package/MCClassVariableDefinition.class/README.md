@@ -1,0 +1,1 @@
+A MCClassVariableDefinition represent a class variable.

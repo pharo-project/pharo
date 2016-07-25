@@ -1,0 +1,14 @@
+{
+	"category" : "Manifest-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestManifestCore",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

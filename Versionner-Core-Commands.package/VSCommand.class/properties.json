@@ -1,0 +1,16 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"target",
+		"requestor",
+		"workflow" ],
+	"name" : "VSCommand",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

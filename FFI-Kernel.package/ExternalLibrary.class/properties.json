@@ -1,0 +1,14 @@
+{
+	"category" : "FFI-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name" ],
+	"name" : "ExternalLibrary",
+	"pools" : [
+		 ],
+	"super" : "ExternalObject",
+	"type" : "normal" }

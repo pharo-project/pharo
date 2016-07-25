@@ -1,0 +1,3 @@
+singleton
+reset
+	Default := nil

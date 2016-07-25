@@ -1,0 +1,1 @@
+A Renraku event with a single critic.

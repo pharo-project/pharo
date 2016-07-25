@@ -1,0 +1,4 @@
+actions
+preAction
+
+	self notifyDebuggingActionAboutToExecute

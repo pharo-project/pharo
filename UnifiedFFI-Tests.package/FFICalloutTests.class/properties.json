@@ -1,0 +1,15 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CLASSVAR",
+		"TYPEVAR" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFICalloutTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

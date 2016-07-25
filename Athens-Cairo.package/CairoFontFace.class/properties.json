@@ -1,0 +1,17 @@
+{
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"ftFace" ],
+	"name" : "CairoFontFace",
+	"pools" : [
+		"AthensCairoDefs",
+		"FT2Constants" ],
+	"super" : "FFIExternalObject",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

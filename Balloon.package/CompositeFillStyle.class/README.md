@@ -1,0 +1,1 @@
+Fillstyle supporting compositing of multiple sub-fillstyles.

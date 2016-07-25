@@ -1,0 +1,3 @@
+private
+useSecondarySelection
+	^ TextEditor useSecondarySelection

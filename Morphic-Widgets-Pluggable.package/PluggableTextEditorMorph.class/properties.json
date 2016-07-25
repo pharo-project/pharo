@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TEnableOnHaloMenu classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "GaryChambers 4/24/2012 13:52",
+	"instvars" : [
+		 ],
+	"name" : "PluggableTextEditorMorph",
+	"pools" : [
+		 ],
+	"super" : "PluggableTextMorph",
+	"traitcomposition" : "TEnableOnHaloMenu - {#enabled:. #enabled}",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+version protocol
+version
+	^ self

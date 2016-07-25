@@ -1,0 +1,29 @@
+{
+	"category" : "Graphics-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CachedFontColorMaps",
+		"ColorConvertingMaps" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"destForm",
+		"sourceForm",
+		"halftoneForm",
+		"combinationRule",
+		"destX",
+		"destY",
+		"width",
+		"height",
+		"sourceX",
+		"sourceY",
+		"clipX",
+		"clipY",
+		"clipWidth",
+		"clipHeight",
+		"colorMap" ],
+	"name" : "BitBlt",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

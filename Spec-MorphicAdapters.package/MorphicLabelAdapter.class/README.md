@@ -1,0 +1,1 @@
+I am the adapter used to bridget a LabelModel and a LabelMorph

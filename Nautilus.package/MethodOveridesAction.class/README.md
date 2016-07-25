@@ -1,0 +1,1 @@
+Action when the method overrides another one, or the method is overidden by another one or both

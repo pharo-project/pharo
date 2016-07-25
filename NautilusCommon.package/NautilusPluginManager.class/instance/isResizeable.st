@@ -1,0 +1,3 @@
+private
+isResizeable
+	^true

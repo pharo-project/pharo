@@ -1,0 +1,3 @@
+events handling
+whenTextAreaSelectionChanged: anAnnouncement 
+	self updateFindStartIndex

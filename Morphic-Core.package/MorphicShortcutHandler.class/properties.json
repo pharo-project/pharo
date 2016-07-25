@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MorphicShortcutHandler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I am raised when the configuration of a view changes

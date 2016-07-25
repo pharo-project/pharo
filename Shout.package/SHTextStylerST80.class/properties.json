@@ -1,0 +1,20 @@
+{
+	"category" : "Shout-Styling",
+	"classinstvars" : [
+		"styleTable",
+		"textAttributesByPixelHeight" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"classOrMetaClass",
+		"workspace",
+		"font",
+		"parser",
+		"environment",
+		"pixelHeight" ],
+	"name" : "SHTextStylerST80",
+	"pools" : [
+		 ],
+	"super" : "SHTextStyler",
+	"type" : "normal" }

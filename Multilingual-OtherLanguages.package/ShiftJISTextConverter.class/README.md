@@ -1,0 +1,1 @@
+Text converter for Shift-JIS.  Mac and Windows in Japanese mode use this encoding.

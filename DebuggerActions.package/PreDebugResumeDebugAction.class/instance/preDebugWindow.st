@@ -1,0 +1,4 @@
+accessing
+preDebugWindow
+	
+	^ preDebugWindow

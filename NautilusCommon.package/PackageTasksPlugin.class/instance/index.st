@@ -1,0 +1,3 @@
+display
+index
+	^index

@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DependentsFields" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Object",
+	"pools" : [
+		 ],
+	"super" : "ProtoObject",
+	"type" : "normal" }

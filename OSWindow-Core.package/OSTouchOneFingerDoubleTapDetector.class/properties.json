@@ -1,0 +1,20 @@
+{
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DoubleTouchSpeed",
+		"MaxDistance" ],
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:27",
+	"instvars" : [
+		"doubleTouchSpeed",
+		"maxDistanceBetweenEachTouch",
+		"position",
+		"timestamp",
+		"previousPosition",
+		"previousTimestamp" ],
+	"name" : "OSTouchOneFingerDoubleTapDetector",
+	"pools" : [
+		 ],
+	"super" : "OSTouchPunctualGestureDetector",
+	"type" : "normal" }

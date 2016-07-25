@@ -1,0 +1,1 @@
+A dictionary repository (in nemory)

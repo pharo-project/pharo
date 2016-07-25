@@ -1,0 +1,4 @@
+testing
+isMethod
+
+	^ false

@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RubPlainSegmentMorph",
+	"pools" : [
+		 ],
+	"super" : "RubTextSegmentMorph",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "EmbeddedFreeType",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 12/1/2014 14:54",
+	"instvars" : [
+		 ],
+	"name" : "SourceSansProRegular",
+	"pools" : [
+		 ],
+	"super" : "EmbeddedFreeTypeFontFontDescription",
+	"type" : "normal" }

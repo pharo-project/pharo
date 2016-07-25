@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-DependencyAnalyser-Test",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"packageA",
+		"aPDPackageDependencyWrapper" ],
+	"name" : "DAPackageDependencyWrapperTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

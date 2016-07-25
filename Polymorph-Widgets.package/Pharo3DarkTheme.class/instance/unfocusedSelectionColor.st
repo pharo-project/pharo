@@ -1,0 +1,3 @@
+accessing colors
+unfocusedSelectionColor
+	^ self secondarySelectionColor

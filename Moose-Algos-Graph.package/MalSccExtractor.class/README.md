@@ -1,0 +1,1 @@
+A utility class to easily get circuits, i.e. SCC with more than one node.

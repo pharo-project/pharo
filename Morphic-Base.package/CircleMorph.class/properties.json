@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "CircleMorph",
+	"pools" : [
+		 ],
+	"super" : "EllipseMorph",
+	"type" : "normal" }

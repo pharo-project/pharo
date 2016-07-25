@@ -1,0 +1,3 @@
+private
+applyFilter
+	^ self filteredItems

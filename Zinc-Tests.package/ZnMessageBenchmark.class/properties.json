@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"message",
+		"representation",
+		"buffer" ],
+	"name" : "ZnMessageBenchmark",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

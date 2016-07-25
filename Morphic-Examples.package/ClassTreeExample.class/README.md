@@ -1,0 +1,1 @@
+ClassTreeExample new openOn: Object

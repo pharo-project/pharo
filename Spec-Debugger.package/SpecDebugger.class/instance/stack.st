@@ -1,0 +1,4 @@
+accessing widgets
+stack
+
+	^ stack

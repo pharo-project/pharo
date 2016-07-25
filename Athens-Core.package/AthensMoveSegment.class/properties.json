@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 5/2/2011 05:35",
+	"instvars" : [
+		"closed" ],
+	"name" : "AthensMoveSegment",
+	"pools" : [
+		 ],
+	"super" : "AthensLineSegment",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+public
+maxFileNameLength
+	^ maxFileNameLength

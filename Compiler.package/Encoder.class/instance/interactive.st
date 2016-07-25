@@ -1,0 +1,3 @@
+private
+interactive
+	^requestor interactive

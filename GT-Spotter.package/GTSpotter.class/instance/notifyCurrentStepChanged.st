@@ -1,0 +1,4 @@
+notifying
+notifyCurrentStepChanged
+
+	self announce: GTSpotterCurrentStepChanged new

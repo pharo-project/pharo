@@ -1,0 +1,3 @@
+accessing
+fontToUse
+	^ RubAbstractTextArea lineNumbersFont 

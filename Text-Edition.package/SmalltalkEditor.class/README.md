@@ -1,0 +1,1 @@
+The editor built specifically for Smalltalk code

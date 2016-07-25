@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BernardoContreras 3/7/2015 01:31",
+	"instvars" : [
+		"models",
+		"protocols",
+		"events" ],
+	"name" : "ProtocolViewer",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

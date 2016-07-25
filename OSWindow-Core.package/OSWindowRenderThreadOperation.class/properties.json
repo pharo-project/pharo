@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-Core-Extras",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"operation",
+		"semaphore",
+		"blocking",
+		"failed" ],
+	"name" : "OSWindowRenderThreadOperation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

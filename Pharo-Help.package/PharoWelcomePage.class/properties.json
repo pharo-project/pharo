@@ -1,0 +1,14 @@
+{
+	"category" : "Pharo-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PavelKrivanek 4/22/2016 17:18",
+	"instvars" : [
+		 ],
+	"name" : "PharoWelcomePage",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

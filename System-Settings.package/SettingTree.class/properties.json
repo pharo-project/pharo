@@ -1,0 +1,16 @@
+{
+	"category" : "System-Settings-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 1/2/2011 22:56",
+	"instvars" : [
+		"collector",
+		"nodeList",
+		"persistence" ],
+	"name" : "SettingTree",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

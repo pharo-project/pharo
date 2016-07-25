@@ -1,0 +1,3 @@
+accessing
+numberOfSubscriptions
+	^ subscriptions size

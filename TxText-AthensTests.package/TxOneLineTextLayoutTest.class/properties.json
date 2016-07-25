@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-AthensTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TxOneLineTextLayoutTest",
+	"pools" : [
+		 ],
+	"super" : "TxTextLayoutTest",
+	"type" : "normal" }

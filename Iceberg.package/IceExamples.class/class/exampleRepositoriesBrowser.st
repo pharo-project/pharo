@@ -1,0 +1,3 @@
+examples - repositories
+exampleRepositoriesBrowser
+	IceRepositoriesBrowser open

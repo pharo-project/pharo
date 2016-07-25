@@ -1,0 +1,3 @@
+tools
+browserTool
+	^ self browser

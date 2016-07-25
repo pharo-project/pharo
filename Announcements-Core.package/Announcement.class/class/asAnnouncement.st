@@ -1,0 +1,3 @@
+converting
+asAnnouncement
+	^ self new

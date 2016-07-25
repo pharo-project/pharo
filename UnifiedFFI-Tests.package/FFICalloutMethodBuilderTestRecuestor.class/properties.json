@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FFICalloutMethodBuilderTestRecuestor",
+	"pools" : [
+		 ],
+	"super" : "FFICallout",
+	"type" : "normal" }

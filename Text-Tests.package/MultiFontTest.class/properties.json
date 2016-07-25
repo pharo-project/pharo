@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Tests-Fonts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MultiFontTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

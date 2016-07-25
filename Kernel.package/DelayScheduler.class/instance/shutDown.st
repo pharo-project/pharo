@@ -1,0 +1,3 @@
+snapshotting
+shutDown
+	self subclassResponsibility 

@@ -1,0 +1,3 @@
+list-morph
+allowToSelect
+	^ true

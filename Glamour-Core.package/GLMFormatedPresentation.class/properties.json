@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 2/4/2011 17:56",
+	"instvars" : [
+		"format",
+		"icon" ],
+	"name" : "GLMFormatedPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMPresentation",
+	"type" : "normal" }

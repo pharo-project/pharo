@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikSperreJohansen 6/1/2015 15:09",
+	"instvars" : [
+		 ],
+	"name" : "NoBroadcastAllowed",
+	"pools" : [
+		 ],
+	"super" : "SocketPrimitiveFailed",
+	"type" : "normal" }

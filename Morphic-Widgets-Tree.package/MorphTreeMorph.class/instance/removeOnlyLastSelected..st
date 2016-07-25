@@ -1,0 +1,3 @@
+selection
+removeOnlyLastSelected: aBoolean
+	self listManager removeOnlyLastSelected: aBoolean

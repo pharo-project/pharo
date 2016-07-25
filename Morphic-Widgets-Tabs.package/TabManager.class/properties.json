@@ -1,0 +1,18 @@
+{
+	"category" : "Morphic-Widgets-Tabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"toolbar",
+		"container",
+		"contentsWrapper",
+		"processes",
+		"model" ],
+	"name" : "TabManager",
+	"pools" : [
+		 ],
+	"super" : "PanelMorph",
+	"type" : "normal" }

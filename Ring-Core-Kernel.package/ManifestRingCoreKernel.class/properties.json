@@ -1,0 +1,14 @@
+{
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestRingCoreKernel",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+defaults
+borderColor 
+	^Color gray

@@ -1,0 +1,1 @@
+This class is an abstrat class for defining breakpoint commands

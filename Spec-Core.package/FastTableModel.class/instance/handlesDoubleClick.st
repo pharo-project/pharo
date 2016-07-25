@@ -1,0 +1,4 @@
+api
+handlesDoubleClick
+
+	^ handlesDoubleClick value

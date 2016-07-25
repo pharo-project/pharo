@@ -1,0 +1,4 @@
+conversion
+asDosTimestamp 
+
+	^ start asDosTimestamp 

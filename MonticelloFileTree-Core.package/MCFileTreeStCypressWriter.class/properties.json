@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloFileTree-Core",
+	"classinstvars" : [
+		"specials" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:57",
+	"instvars" : [
+		"fileStream" ],
+	"name" : "MCFileTreeStCypressWriter",
+	"pools" : [
+		 ],
+	"super" : "MCFileTreeStSnapshotWriter",
+	"type" : "normal" }

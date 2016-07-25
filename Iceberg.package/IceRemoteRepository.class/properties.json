@@ -1,0 +1,17 @@
+{
+	"category" : "Iceberg-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicoPasserini 5/18/2016 17:25",
+	"instvars" : [
+		"url",
+		"host",
+		"owner",
+		"projectName" ],
+	"name" : "IceRemoteRepository",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

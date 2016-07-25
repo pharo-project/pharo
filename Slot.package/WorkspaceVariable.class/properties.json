@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Variables",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 8/5/2014 16:48",
+	"instvars" : [
+		 ],
+	"name" : "WorkspaceVariable",
+	"pools" : [
+		 ],
+	"super" : "LiteralVariable",
+	"type" : "normal" }

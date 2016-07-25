@@ -1,0 +1,16 @@
+{
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"sourceNode",
+		"bytecodeIndex",
+		"sequence" ],
+	"name" : "IRInstruction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

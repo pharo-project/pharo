@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:15",
+	"instvars" : [
+		"style",
+		"trackPaneColor" ],
+	"name" : "EmbossedStringMorph",
+	"pools" : [
+		 ],
+	"super" : "StringMorph",
+	"type" : "normal" }

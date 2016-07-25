@@ -1,0 +1,3 @@
+private
+removeScope
+	^scopeStack removeLast

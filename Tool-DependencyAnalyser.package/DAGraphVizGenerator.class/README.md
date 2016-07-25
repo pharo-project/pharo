@@ -1,0 +1,1 @@
+A PDGraphVizGenerator is a class able to generate a dot file to represent a graph.

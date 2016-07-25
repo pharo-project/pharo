@@ -1,0 +1,16 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"srcOffset",
+		"dstOffset",
+		"mappings" ],
+	"name" : "DiffJoinMorph",
+	"pools" : [
+		 ],
+	"super" : "ProportionalSplitterMorph",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+pager managing
+chunkSize
+	^ pageSize 

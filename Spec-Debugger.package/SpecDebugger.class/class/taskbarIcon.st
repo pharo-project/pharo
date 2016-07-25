@@ -1,0 +1,4 @@
+icons
+taskbarIcon
+
+	^ #smallDebugIcon asIcon

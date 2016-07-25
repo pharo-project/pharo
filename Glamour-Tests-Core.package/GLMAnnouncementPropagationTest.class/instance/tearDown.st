@@ -1,0 +1,3 @@
+setup
+tearDown
+	GLMLogger reset

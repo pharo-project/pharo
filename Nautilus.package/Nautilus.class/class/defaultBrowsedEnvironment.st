@@ -1,0 +1,4 @@
+private
+defaultBrowsedEnvironment
+
+	^ RBBrowserEnvironment new

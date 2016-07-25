@@ -1,0 +1,3 @@
+factory
+newParser   
+	^ FFIExternalStructureFieldParser new

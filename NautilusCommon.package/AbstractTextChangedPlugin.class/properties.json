@@ -1,0 +1,14 @@
+{
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AbstractTextChangedPlugin",
+	"pools" : [
+		 ],
+	"super" : "AbstractNautilusPlugin",
+	"type" : "normal" }

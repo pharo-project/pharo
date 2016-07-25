@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Source",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ClassVar" ],
+	"commentStamp" : "kwl 10/14/2006 10:43",
+	"instvars" : [
+		"instVar" ],
+	"name" : "OCSourceCode2BytecodeTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+isLiteralToken
+	^false

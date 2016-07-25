@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Tokens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"source" ],
+	"name" : "RBNumberLiteralToken",
+	"pools" : [
+		 ],
+	"super" : "RBLiteralToken",
+	"type" : "normal" }

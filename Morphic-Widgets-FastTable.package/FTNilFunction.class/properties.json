@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Functions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 10/27/2015 14:03",
+	"instvars" : [
+		 ],
+	"name" : "FTNilFunction",
+	"pools" : [
+		 ],
+	"super" : "FTFunction",
+	"type" : "normal" }

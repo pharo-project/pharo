@@ -1,0 +1,21 @@
+{
+	"category" : "Regex-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Cr",
+		"Lf" ],
+	"commentStamp" : "Tbn 11/12/2010 23:13",
+	"instvars" : [
+		"matcher",
+		"ignoreCase",
+		"startOptimizer",
+		"stream",
+		"markerPositions",
+		"markerCount",
+		"lastResult" ],
+	"name" : "RxMatcher",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

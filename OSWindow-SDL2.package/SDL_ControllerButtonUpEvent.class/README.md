@@ -1,0 +1,1 @@
+SDL2 library structure representing a game controller button up event data.

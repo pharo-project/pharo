@@ -1,0 +1,14 @@
+{
+	"category" : "HelpSystem-Tests-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 21:18",
+	"instvars" : [
+		 ],
+	"name" : "CustomHelpTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

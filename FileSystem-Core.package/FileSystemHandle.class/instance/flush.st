@@ -1,0 +1,3 @@
+public
+flush
+	self subclassResponsibility

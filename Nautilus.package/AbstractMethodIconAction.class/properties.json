@@ -1,0 +1,16 @@
+{
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 6/3/2015 13:55",
+	"instvars" : [
+		"method",
+		"browser",
+		"icon" ],
+	"name" : "AbstractMethodIconAction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

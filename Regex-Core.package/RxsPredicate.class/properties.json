@@ -1,0 +1,16 @@
+{
+	"category" : "Regex-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"EscapedLetterSelectors",
+		"NamedClassSelectors" ],
+	"commentStamp" : "Tbn 11/12/2010 23:15",
+	"instvars" : [
+		"predicate",
+		"negation" ],
+	"name" : "RxsPredicate",
+	"pools" : [
+		 ],
+	"super" : "RxsNode",
+	"type" : "normal" }

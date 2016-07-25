@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ActOnClickBlock" ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 12:15",
+	"instvars" : [
+		"actOnClickBlock" ],
+	"name" : "TextAction",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

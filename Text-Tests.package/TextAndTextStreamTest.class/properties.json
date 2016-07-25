@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "TextAndTextStreamTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

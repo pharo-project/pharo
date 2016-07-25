@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Compiler",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 9/24/2015 09:54",
+	"instvars" : [
+		 ],
+	"name" : "RFASTClosureAnalyzer",
+	"pools" : [
+		 ],
+	"super" : "OCASTClosureAnalyzer",
+	"type" : "normal" }

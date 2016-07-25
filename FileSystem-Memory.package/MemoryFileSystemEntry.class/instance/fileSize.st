@@ -1,0 +1,3 @@
+accessing
+fileSize
+	self subclassResponsibility 

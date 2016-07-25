@@ -1,0 +1,3 @@
+accessing
+log
+	^ browser log

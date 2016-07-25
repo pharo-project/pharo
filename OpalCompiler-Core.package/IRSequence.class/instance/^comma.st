@@ -1,0 +1,3 @@
+copying
+, otherCollection 
+	^sequence, otherCollection

@@ -1,0 +1,16 @@
+{
+	"category" : "Nautilus-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"nautilusUI",
+		"nautilusUI2",
+		"nautilusUI3" ],
+	"name" : "NautilusUITest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

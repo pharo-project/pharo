@@ -1,0 +1,3 @@
+loading
+load
+	self loadBleedingEdge

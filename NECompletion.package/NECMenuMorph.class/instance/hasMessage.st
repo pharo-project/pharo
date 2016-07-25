@@ -1,0 +1,3 @@
+drawing
+hasMessage
+	^ true 

@@ -1,0 +1,4 @@
+api
+triggerCancelAction
+
+	self performCancelAction

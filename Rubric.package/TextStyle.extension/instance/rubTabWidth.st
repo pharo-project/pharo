@@ -1,0 +1,3 @@
+*Rubric
+rubTabWidth
+	 ^ tabsArray first

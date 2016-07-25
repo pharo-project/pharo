@@ -1,0 +1,1 @@
+An instance variable definition

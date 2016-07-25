@@ -1,0 +1,3 @@
+accessing
+inverse
+	self subclassResponsibility

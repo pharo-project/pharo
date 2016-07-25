@@ -1,0 +1,4 @@
+private
+defaultBindings
+	
+	^ MorphicAdapterBindings new

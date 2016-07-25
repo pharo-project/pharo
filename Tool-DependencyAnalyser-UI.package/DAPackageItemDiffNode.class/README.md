@@ -1,0 +1,1 @@
+A PDPackageNode is used to display a package diff in a tree.

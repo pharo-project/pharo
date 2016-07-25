@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultGraphics" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"graphicalMorph",
+		"oldBorder",
+		"oldBorderStyle" ],
+	"name" : "IconicButton",
+	"pools" : [
+		 ],
+	"super" : "SimpleButtonMorph",
+	"type" : "normal" }

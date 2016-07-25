@@ -1,0 +1,3 @@
+comparing
+hash
+	^ id hash

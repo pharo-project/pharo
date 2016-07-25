@@ -1,0 +1,14 @@
+{
+	"category" : "System-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"initialAnswer" ],
+	"name" : "AuthorNameRequest",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

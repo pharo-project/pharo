@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"toolbar" ],
+	"name" : "EyeMethodEditor",
+	"pools" : [
+		 ],
+	"super" : "EyeEditor",
+	"type" : "normal" }

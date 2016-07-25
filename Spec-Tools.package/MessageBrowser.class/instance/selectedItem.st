@@ -1,0 +1,4 @@
+accessing
+selectedItem
+
+	^ listModel selectedItem

@@ -1,0 +1,4 @@
+configuration
+defaultPath
+
+	^ 'api/stacktraces'

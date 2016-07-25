@@ -1,0 +1,3 @@
+accessing
+vrsnStatus
+	^vrsnStatus

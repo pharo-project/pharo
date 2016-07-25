@@ -1,0 +1,3 @@
+operations
+none
+	self collapse.

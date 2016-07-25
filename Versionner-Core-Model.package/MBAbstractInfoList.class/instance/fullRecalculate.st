@@ -1,0 +1,4 @@
+updating
+fullRecalculate
+
+	self recalculate

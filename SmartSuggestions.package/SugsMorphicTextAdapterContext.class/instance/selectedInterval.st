@@ -1,0 +1,3 @@
+selection
+selectedInterval
+	^ model selectionInterval

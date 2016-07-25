@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Sequenceable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OrderedIdentityDictionaryTest",
+	"pools" : [
+		 ],
+	"super" : "OrderedDictionaryTest",
+	"type" : "normal" }

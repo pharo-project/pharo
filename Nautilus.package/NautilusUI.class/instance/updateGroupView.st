@@ -1,0 +1,3 @@
+private
+updateGroupView 
+	self updatePackageView

@@ -1,0 +1,16 @@
+{
+	"category" : "GT-EventRecorder-Tests-Identifier",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"existing",
+		"stored",
+		"merger" ],
+	"name" : "GlobalIdentifierMergerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"strongSelectionValue" ],
+	"name" : "GLMTreeMorphStrongSelectionChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

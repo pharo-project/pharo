@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/17/2015 14:21",
+	"instvars" : [
+		"id",
+		"width" ],
+	"name" : "FTColumn",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

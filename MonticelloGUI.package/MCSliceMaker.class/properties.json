@@ -1,0 +1,16 @@
+{
+	"category" : "MonticelloGUI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 9/27/2011 11:43",
+	"instvars" : [
+		"info",
+		"window",
+		"okToDoSlice" ],
+	"name" : "MCSliceMaker",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

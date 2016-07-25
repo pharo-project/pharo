@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"specWidget",
+		"toolbar" ],
+	"name" : "SpecDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

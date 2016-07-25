@@ -1,0 +1,3 @@
+building suites
+buildSuiteFromSelectors
+	^self buildSuiteFromMethods: self allTestSelectors

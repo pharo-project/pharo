@@ -1,0 +1,16 @@
+{
+	"category" : "FFI-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"module",
+		"errorCodeName" ],
+	"name" : "ExternalLibraryFunction",
+	"pools" : [
+		 ],
+	"super" : "ExternalFunction",
+	"type" : "normal" }

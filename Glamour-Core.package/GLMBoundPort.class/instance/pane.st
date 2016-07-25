@@ -1,0 +1,4 @@
+accessing
+pane 
+	 
+	self subclassResponsibility

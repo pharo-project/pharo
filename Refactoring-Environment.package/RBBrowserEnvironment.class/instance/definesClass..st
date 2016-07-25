@@ -1,0 +1,3 @@
+testing
+definesClass: aClass
+	^ true

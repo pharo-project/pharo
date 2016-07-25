@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"x",
+		"y" ],
+	"name" : "CompiledMethodTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

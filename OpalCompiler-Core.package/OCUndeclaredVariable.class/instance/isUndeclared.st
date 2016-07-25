@@ -1,0 +1,4 @@
+testing
+isUndeclared
+
+	^ true

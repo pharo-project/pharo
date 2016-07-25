@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 6/13/2014 16:00",
+	"instvars" : [
+		"requestDuration",
+		"handlerDuration",
+		"responseDuration" ],
+	"name" : "ZnServerTransactionTiming",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

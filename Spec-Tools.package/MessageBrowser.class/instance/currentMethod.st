@@ -1,0 +1,3 @@
+accessing
+currentMethod
+	^ self selectedMessage

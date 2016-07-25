@@ -1,0 +1,3 @@
+testing
+isSuitable
+	^ self isSupported

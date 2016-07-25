@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 10:22",
+	"instvars" : [
+		"getStateSelector",
+		"enablementSelector",
+		"keyText" ],
+	"name" : "ToggleMenuItemMorph",
+	"pools" : [
+		 ],
+	"super" : "MenuItemMorph",
+	"type" : "normal" }

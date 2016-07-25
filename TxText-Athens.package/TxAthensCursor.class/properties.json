@@ -1,0 +1,16 @@
+{
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 8/26/2014 13:12",
+	"instvars" : [
+		"paint",
+		"layoutPosition",
+		"lastChangeTick" ],
+	"name" : "TxAthensCursor",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

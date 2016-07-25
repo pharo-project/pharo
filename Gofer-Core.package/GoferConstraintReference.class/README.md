@@ -1,0 +1,1 @@
+A GoferPackageReference refers to the latest version of a Monticello package satisfying an additional constraint.

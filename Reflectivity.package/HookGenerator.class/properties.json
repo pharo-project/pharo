@@ -1,0 +1,17 @@
+{
+	"category" : "Reflectivity-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 7/2/2015 10:30",
+	"instvars" : [
+		"entity",
+		"node",
+		"links",
+		"plugins" ],
+	"name" : "HookGenerator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Character-Encoding-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/26/2016 11:09",
+	"instvars" : [
+		 ],
+	"name" : "ZnCodePointReadStream",
+	"pools" : [
+		 ],
+	"super" : "ZnEncodedReadStream",
+	"type" : "normal" }

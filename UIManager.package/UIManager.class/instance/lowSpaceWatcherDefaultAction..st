@@ -1,0 +1,2 @@
+default actions
+lowSpaceWatcherDefaultAction: preemptedProcess

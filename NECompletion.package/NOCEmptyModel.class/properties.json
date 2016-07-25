@@ -1,0 +1,14 @@
+{
+	"category" : "NECompletion-OCompletion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NOCEmptyModel",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 3/5/2011 21:22",
+	"instvars" : [
+		"highlightSmalltalk",
+		"highlightSmalltalkContext" ],
+	"name" : "GLMTextPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMTextualPresentation",
+	"type" : "normal" }

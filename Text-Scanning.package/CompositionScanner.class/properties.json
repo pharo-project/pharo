@@ -1,0 +1,21 @@
+{
+	"category" : "Text-Scanning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 10/6/2013 23:24",
+	"instvars" : [
+		"spaceX",
+		"spaceIndex",
+		"lineHeight",
+		"baseline",
+		"lineHeightAtSpace",
+		"baselineAtSpace",
+		"lastBreakIsNotASpace",
+		"nextIndexAfterLineBreak" ],
+	"name" : "CompositionScanner",
+	"pools" : [
+		 ],
+	"super" : "CharacterScanner",
+	"type" : "normal" }

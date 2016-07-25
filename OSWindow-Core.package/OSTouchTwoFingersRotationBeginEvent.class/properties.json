@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 4/21/2015 12:50",
+	"instvars" : [
+		 ],
+	"name" : "OSTouchTwoFingersRotationBeginEvent",
+	"pools" : [
+		 ],
+	"super" : "OSTouchTwoFingersRotationEvent",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+tests profiler
+testSimpleReport
+	AndreasSystemProfiler new report

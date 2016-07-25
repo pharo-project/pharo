@@ -1,0 +1,1 @@
+This a wrapper around inspectors for diving. It is used in the case where the inspector is dynamically replaced by another inspector. For example, EyeCollectionInspector would be replaced by EyeIntegerInspector.

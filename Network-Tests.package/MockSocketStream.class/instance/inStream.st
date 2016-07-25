@@ -1,0 +1,3 @@
+accessing
+inStream
+	^inStream

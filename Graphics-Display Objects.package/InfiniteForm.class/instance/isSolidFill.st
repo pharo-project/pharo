@@ -1,0 +1,3 @@
+fillstyle protocol
+isSolidFill
+	^false

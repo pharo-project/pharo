@@ -1,0 +1,16 @@
+{
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"username",
+		"password",
+		"url" ],
+	"name" : "MCCredentialsRequest",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

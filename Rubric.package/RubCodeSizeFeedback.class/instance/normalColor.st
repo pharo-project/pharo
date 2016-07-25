@@ -1,0 +1,3 @@
+accessing
+normalColor
+	^ Color transparent

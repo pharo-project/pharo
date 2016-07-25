@@ -1,0 +1,3 @@
+ston-core
+stonShouldWriteNilInstVars
+	^ true

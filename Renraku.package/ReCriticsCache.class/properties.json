@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 7/7/2016 19:08",
+	"instvars" : [
+		 ],
+	"name" : "ReCriticsCache",
+	"pools" : [
+		 ],
+	"super" : "CriticsCache",
+	"type" : "normal" }

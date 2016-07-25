@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "brp 10/21/2004 17:47",
+	"instvars" : [
+		 ],
+	"name" : "TimedOut",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

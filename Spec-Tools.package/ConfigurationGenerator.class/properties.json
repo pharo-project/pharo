@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Tools-Monticello",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"repository",
+		"workingCopy" ],
+	"name" : "ConfigurationGenerator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

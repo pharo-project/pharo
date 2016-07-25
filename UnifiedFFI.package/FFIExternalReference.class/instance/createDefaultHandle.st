@@ -1,0 +1,3 @@
+initialization
+createDefaultHandle
+	^ ExternalAddress new

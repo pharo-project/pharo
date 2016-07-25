@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-Traits",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ClassTraitTest",
+	"pools" : [
+		 ],
+	"super" : "TraitsTestCase",
+	"type" : "normal" }

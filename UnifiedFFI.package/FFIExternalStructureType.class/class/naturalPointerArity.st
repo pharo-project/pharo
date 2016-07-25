@@ -1,0 +1,3 @@
+private
+naturalPointerArity
+	^ 1

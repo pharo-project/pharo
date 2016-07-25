@@ -1,0 +1,3 @@
+preconditions
+stayActiveConditions
+	^ self hasGoodNumberOfFingers

@@ -1,0 +1,23 @@
+{
+	"category" : "RPackage-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:59",
+	"instvars" : [
+		"p4",
+		"p5",
+		"a1",
+		"b1",
+		"a2",
+		"b2",
+		"a3",
+		"t1",
+		"t2",
+		"p6" ],
+	"name" : "RPackageTraitTest",
+	"pools" : [
+		 ],
+	"super" : "RPackageIncrementalTest",
+	"type" : "normal" }

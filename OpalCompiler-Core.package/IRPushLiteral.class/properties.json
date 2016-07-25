@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ajh 3/24/2003 23:56",
+	"instvars" : [
+		"literal" ],
+	"name" : "IRPushLiteral",
+	"pools" : [
+		 ],
+	"super" : "IRInstruction",
+	"type" : "normal" }

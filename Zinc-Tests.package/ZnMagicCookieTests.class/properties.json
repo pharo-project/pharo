@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZnMagicCookieTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

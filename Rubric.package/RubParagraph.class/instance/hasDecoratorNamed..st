@@ -1,0 +1,3 @@
+querying
+hasDecoratorNamed: aKey
+	^ false

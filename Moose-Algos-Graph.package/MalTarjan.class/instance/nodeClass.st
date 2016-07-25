@@ -1,0 +1,3 @@
+configuration
+nodeClass
+	^ MalTarjanNode 

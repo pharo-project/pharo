@@ -1,0 +1,4 @@
+api
+wantsVisualFeedback
+
+	^ wantsVisualFeedback value

@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:26",
+	"instvars" : [
+		 ],
+	"name" : "SDL2Handle",
+	"pools" : [
+		"SDL2Constants",
+		"SDL2Types" ],
+	"super" : "FFIExternalObject",
+	"type" : "normal" }

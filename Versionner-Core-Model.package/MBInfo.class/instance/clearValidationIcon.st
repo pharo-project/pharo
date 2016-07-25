@@ -1,0 +1,4 @@
+actions
+clearValidationIcon
+
+	validationIcon := nil

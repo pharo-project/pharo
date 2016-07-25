@@ -1,0 +1,1 @@
+I am a Tree node especially made for being used by the Spec framework.

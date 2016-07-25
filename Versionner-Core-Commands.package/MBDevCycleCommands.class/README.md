@@ -1,0 +1,1 @@
+Common superclass for Versionner commands related to the development cycle

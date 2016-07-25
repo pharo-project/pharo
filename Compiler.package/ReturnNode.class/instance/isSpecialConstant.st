@@ -1,0 +1,4 @@
+testing
+isSpecialConstant
+
+	^expr isSpecialConstant

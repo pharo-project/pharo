@@ -1,0 +1,3 @@
+streams
+stdinStream
+	^ stdinStream

@@ -1,0 +1,4 @@
+visitor
+visitTraitDefinition: aMCTraitDefinition 
+	
+	self ensureClassChangeWrapperNamed: aMCTraitDefinition fullClassName

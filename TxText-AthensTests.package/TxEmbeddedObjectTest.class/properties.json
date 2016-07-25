@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-AthensTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TxEmbeddedObjectTest",
+	"pools" : [
+		 ],
+	"super" : "TxAthensLayoutTest",
+	"type" : "normal" }

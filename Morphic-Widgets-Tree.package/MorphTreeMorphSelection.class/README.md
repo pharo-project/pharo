@@ -1,0 +1,1 @@
+Superclass for selections in a morphic based tree

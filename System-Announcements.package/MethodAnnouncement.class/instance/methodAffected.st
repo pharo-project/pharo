@@ -1,0 +1,3 @@
+accessing
+methodAffected
+	^self method

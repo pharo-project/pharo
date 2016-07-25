@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MustBeBooleanTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

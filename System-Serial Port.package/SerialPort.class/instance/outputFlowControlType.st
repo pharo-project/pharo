@@ -1,0 +1,4 @@
+accessing
+outputFlowControlType
+
+	^ outputFlowControlType

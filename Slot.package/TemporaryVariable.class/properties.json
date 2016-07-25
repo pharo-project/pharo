@@ -1,0 +1,17 @@
+{
+	"category" : "Slot-Variables",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"PersistentTemps",
+		"Properties" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"name",
+		"method",
+		"startpc" ],
+	"name" : "TemporaryVariable",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

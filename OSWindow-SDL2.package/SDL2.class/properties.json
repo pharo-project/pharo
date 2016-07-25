@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ModuleName",
+		"ModuleSession",
+		"Session" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:24",
+	"instvars" : [
+		 ],
+	"name" : "SDL2",
+	"pools" : [
+		"SDL2Constants",
+		"SDL2Types" ],
+	"super" : "Object",
+	"type" : "normal" }

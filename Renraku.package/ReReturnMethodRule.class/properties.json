@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/18/2016 17:13",
+	"instvars" : [
+		 ],
+	"name" : "ReReturnMethodRule",
+	"pools" : [
+		 ],
+	"super" : "ReBasicMethodRule",
+	"type" : "normal" }

@@ -1,0 +1,24 @@
+{
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ArrowImagesCache",
+		"BoxesImagesCache" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"upButton",
+		"downButton",
+		"pagingArea",
+		"scrollDelta",
+		"pageDelta",
+		"interval",
+		"timeOfMouseDown",
+		"timeOfLastScroll",
+		"nextPageDirection",
+		"currentScrollDelay" ],
+	"name" : "ScrollBar",
+	"pools" : [
+		 ],
+	"super" : "Slider",
+	"type" : "normal" }

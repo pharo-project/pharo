@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"method" ],
+	"name" : "AbstractMethodConverter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

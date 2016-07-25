@@ -1,0 +1,1 @@
+A structure that contains information about the version of SDL in use. 

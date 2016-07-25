@@ -1,0 +1,1 @@
+When no receiver class is known, I'm the right model. I store all temporary variables, instance variables of the selected class and all selectors in system. For performance reasons I only collect selectors when at least one character is known.

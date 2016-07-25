@@ -1,0 +1,3 @@
+utility
+quit
+	self exitSuccess

@@ -1,0 +1,18 @@
+{
+	"category" : "Compression-Tests-Archive",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:04",
+	"instvars" : [
+		"fileToZip",
+		"zip",
+		"subdir",
+		"zipFile",
+		"fileSystem" ],
+	"name" : "ZipArchiveTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

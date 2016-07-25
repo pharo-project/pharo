@@ -1,0 +1,17 @@
+{
+	"category" : "SUnit-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"tests",
+		"resources",
+		"name",
+		"announcer" ],
+	"name" : "TestSuite",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

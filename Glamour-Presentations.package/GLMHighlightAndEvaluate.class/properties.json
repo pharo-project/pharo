@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Presentations-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 1/14/2015 13:15",
+	"instvars" : [
+		"action" ],
+	"name" : "GLMHighlightAndEvaluate",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

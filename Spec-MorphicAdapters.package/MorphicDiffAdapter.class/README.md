@@ -1,0 +1,1 @@
+I am an adpater to bridge a DiffModel and a DiffMorph

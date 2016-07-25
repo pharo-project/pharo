@@ -1,0 +1,1 @@
+This class provides the support for the languages in 'Latin-9' category.

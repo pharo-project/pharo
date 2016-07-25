@@ -1,0 +1,18 @@
+{
+	"category" : "System-Settings-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ValueListCache" ],
+	"commentStamp" : "AlainPlantec 1/3/2011 10:52",
+	"instvars" : [
+		"getSelector",
+		"setSelector",
+		"type",
+		"default",
+		"ghostHelp" ],
+	"name" : "SettingDeclaration",
+	"pools" : [
+		 ],
+	"super" : "PragmaSetting",
+	"type" : "normal" }

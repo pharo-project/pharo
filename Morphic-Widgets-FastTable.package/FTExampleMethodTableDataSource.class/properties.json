@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 5/15/2015 13:13",
+	"instvars" : [
+		 ],
+	"name" : "FTExampleMethodTableDataSource",
+	"pools" : [
+		 ],
+	"super" : "FTSimpleDataSource",
+	"type" : "normal" }

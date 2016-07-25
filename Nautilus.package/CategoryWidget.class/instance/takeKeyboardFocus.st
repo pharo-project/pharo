@@ -1,0 +1,4 @@
+protocol
+takeKeyboardFocus
+
+	categoriesList takeKeyboardFocus

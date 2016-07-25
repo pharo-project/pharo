@@ -1,0 +1,3 @@
+requirements
+collectionWithEqualElements
+	^ nonEmpty 

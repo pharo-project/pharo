@@ -1,0 +1,4 @@
+conversion
+asWeek
+
+	^ self 

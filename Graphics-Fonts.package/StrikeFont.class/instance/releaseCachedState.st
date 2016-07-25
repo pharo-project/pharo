@@ -1,0 +1,4 @@
+emphasis
+releaseCachedState
+
+	self reset.

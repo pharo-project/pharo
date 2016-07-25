@@ -1,0 +1,14 @@
+{
+	"category" : "Random-Core",
+	"classinstvars" : [
+		"global" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenComan 9/24/2015 23:15",
+	"instvars" : [
+		"mutex" ],
+	"name" : "SharedRandom",
+	"pools" : [
+		 ],
+	"super" : "Random",
+	"type" : "normal" }

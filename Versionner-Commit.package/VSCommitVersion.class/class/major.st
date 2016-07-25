@@ -1,0 +1,3 @@
+accessing
+major 
+	^ VSCommitMajorVersion uniqueInstance

@@ -1,0 +1,3 @@
+utility
+quadrangleClass
+	^ 'QuadrangleForTesting' asClass 

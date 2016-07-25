@@ -1,0 +1,4 @@
+accessing
+lightBaseColor
+
+	^ Color white

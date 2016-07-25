@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tools-Breakpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "johanfabry 11/27/2015 11:55",
+	"instvars" : [
+		 ],
+	"name" : "SemanticWarningIconStyler",
+	"pools" : [
+		 ],
+	"super" : "IconStyler",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 18:29",
+	"instvars" : [
+		"whichButton" ],
+	"name" : "MouseButtonEvent",
+	"pools" : [
+		 ],
+	"super" : "MouseEvent",
+	"type" : "normal" }

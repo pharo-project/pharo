@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DamienCassou 7/9/2011 23:02",
+	"instvars" : [
+		"presentationsFactory" ],
+	"name" : "GLMPresentStrategy",
+	"pools" : [
+		 ],
+	"super" : "GLMTransmissionStrategy",
+	"type" : "normal" }

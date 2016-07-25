@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestToolDiff",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

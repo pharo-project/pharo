@@ -1,0 +1,1 @@
+I collect and provide the information to update methods when a class changed.

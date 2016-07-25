@@ -1,0 +1,3 @@
+extending
+extend
+	^ self extend: { }

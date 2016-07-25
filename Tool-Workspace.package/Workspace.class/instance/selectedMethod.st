@@ -1,0 +1,3 @@
+menu
+selectedMethod
+	^ nil

@@ -1,0 +1,17 @@
+{
+	"category" : "System-Hashing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"hash",
+		"key",
+		"ipad",
+		"epad" ],
+	"name" : "HMAC",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

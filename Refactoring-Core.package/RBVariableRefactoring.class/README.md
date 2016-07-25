@@ -1,0 +1,1 @@
+I am an abstract base class of refactorings modifying class or instance variables.

@@ -1,0 +1,16 @@
+{
+	"category" : "RPackage-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinWalk 7/12/2014 17:09",
+	"instvars" : [
+		"package",
+		"name",
+		"classNames" ],
+	"name" : "RPackageTag",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

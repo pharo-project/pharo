@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SugsDiffModelContext",
+	"pools" : [
+		 ],
+	"super" : "SugsAbstractContext",
+	"type" : "normal" }

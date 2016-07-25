@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephanEggermont 2/1/2016 10:57",
+	"instvars" : [
+		"iconHolder",
+		"displayBlock",
+		"handlesDoubleClick",
+		"doubleClick" ],
+	"name" : "FastTableModel",
+	"pools" : [
+		 ],
+	"super" : "ListModel",
+	"type" : "normal" }

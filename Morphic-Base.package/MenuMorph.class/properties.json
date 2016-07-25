@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CloseBoxImage",
+		"PushPinImage" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"defaultTarget",
+		"selectedItem",
+		"stayUp",
+		"popUpOwner",
+		"activeSubMenu",
+		"titleMorph" ],
+	"name" : "MenuMorph",
+	"pools" : [
+		 ],
+	"super" : "AlignmentMorph",
+	"type" : "normal" }

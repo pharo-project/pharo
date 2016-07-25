@@ -1,0 +1,4 @@
+font description
+fontSlant
+
+	^ fontSlant

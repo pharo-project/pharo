@@ -1,0 +1,4 @@
+*spec-debugger
+specModel
+
+	^ #SpecDebugActionButton

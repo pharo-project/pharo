@@ -1,0 +1,3 @@
+accessing
+subclassDefinerClass
+	^self explicitRequirement.

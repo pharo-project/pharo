@@ -1,0 +1,3 @@
+visitor
+visitTraitModification: aTraitModificationChange
+	^ self displayBehavior: aTraitModificationChange newTrait name

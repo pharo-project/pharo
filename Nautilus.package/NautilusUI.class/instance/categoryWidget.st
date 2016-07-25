@@ -1,0 +1,4 @@
+widget category
+categoryWidget
+
+	^ categoryWidget

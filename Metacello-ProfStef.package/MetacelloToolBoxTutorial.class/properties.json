@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-ProfStef",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloToolBoxTutorial",
+	"pools" : [
+		 ],
+	"super" : "AbstractTutorial",
+	"type" : "normal" }

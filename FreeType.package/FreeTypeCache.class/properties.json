@@ -1,0 +1,17 @@
+{
+	"category" : "FreeType-Cache",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
+	"instvars" : [
+		"maximumSize",
+		"used",
+		"fontTable",
+		"fifo" ],
+	"name" : "FreeTypeCache",
+	"pools" : [
+		"FreeTypeCacheConstants" ],
+	"super" : "Object",
+	"type" : "normal" }

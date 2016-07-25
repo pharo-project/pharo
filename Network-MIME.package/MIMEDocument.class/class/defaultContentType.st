@@ -1,0 +1,3 @@
+compatibility
+defaultContentType
+	^self defaultMIMEType asString

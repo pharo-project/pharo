@@ -1,0 +1,3 @@
+testing
+hasUsername
+	^ username notNil

@@ -1,0 +1,4 @@
+accessing
+lastResult
+
+	^lastResult

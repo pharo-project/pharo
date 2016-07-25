@@ -1,0 +1,4 @@
+helpers
+anIndex
+
+	^ #aMethodName

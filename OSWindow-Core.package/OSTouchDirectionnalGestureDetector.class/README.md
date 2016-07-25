@@ -1,0 +1,1 @@
+I detect gestures which needs all fingers to go on a certain direction (creating a delta distance)

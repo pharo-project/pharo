@@ -1,0 +1,3 @@
+copying
+copyAccordingToPaneMapping: newPanesMapping inNewBrowser: anotherBrowser
+	^ self subclassResponsibility

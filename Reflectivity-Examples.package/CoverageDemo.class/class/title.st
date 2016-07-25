@@ -1,0 +1,3 @@
+specs
+title
+	^'Coverage Demo'

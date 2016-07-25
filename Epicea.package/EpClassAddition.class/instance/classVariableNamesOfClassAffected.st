@@ -1,0 +1,5 @@
+accessing
+classVariableNamesOfClassAffected
+
+	^ class classVarNames
+	

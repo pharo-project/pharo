@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-Tree-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 9/5/2014 15:25",
+	"instvars" : [
+		"action",
+		"arguments" ],
+	"name" : "MorphTreeChangeRequest",
+	"pools" : [
+		 ],
+	"super" : "MorphTreeAnnounce",
+	"type" : "normal" }

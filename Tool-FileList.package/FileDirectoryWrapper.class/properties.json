@@ -1,0 +1,16 @@
+{
+	"category" : "Tool-FileList",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"itemName",
+		"balloonText",
+		"hasContents" ],
+	"name" : "FileDirectoryWrapper",
+	"pools" : [
+		 ],
+	"super" : "ListItemWrapper",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"specFocusOrder",
+		"button1",
+		"button2" ],
+	"name" : "SpecFocusOrderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

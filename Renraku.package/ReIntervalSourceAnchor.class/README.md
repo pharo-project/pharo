@@ -1,0 +1,1 @@
+This anchor stores the actual interval object which is set during initialization.

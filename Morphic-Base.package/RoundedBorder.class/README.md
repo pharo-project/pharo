@@ -1,0 +1,1 @@
+Rounded corner border supporting radii of 1-4 pixels. Slower but more flexible than CornerRounder.

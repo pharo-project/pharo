@@ -1,0 +1,1 @@
+Raises a semantic error during semantic analysis

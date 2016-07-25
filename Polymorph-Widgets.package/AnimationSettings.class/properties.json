@@ -1,0 +1,17 @@
+{
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 10:31",
+	"instvars" : [
+		"useAnimation",
+		"animateClosing",
+		"delay",
+		"numberOfSteps" ],
+	"name" : "AnimationSettings",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

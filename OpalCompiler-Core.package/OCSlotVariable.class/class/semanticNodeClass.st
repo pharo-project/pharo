@@ -1,0 +1,4 @@
+accessing
+semanticNodeClass
+
+	^RBInstanceVariableNode

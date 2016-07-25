@@ -1,0 +1,1 @@
+I responsible for scanning the Text and transforming it into a list of AthensTextLine, where each line is a list of AthensTextDisplayCommand (sub)instances

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Pager-Announcement",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"brick" ],
+	"name" : "GLMPagePopedAndReplaced",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

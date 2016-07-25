@@ -1,0 +1,3 @@
+accessing
+defaultDirectoryName
+	^ FileSystem workingDirectory fullName

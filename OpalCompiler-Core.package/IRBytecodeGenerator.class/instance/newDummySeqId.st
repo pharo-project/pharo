@@ -1,0 +1,4 @@
+private
+newDummySeqId
+
+	^ Object new

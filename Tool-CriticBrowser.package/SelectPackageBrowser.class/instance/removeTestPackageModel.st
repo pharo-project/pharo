@@ -1,0 +1,6 @@
+initialization
+removeTestPackageModel
+
+	^ removeTestPackageModel
+	
+	

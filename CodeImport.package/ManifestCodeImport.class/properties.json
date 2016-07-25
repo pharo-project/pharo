@@ -1,0 +1,14 @@
+{
+	"category" : "CodeImport",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCodeImport",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

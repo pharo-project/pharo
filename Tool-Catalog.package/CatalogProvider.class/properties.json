@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-Catalog-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "SvenVanCaekenberghe 4/1/2016 14:00",
+	"instvars" : [
+		"projects",
+		"lastModified" ],
+	"name" : "CatalogProvider",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"nextNodes" ],
+	"name" : "MalDisjointSetsNextNode",
+	"pools" : [
+		 ],
+	"super" : "MalDisjointSetNode",
+	"type" : "normal" }

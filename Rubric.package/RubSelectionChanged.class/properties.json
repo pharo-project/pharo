@@ -1,0 +1,15 @@
+{
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 11:15",
+	"instvars" : [
+		"previousMarkBlock",
+		"previousPointBlock" ],
+	"name" : "RubSelectionChanged",
+	"pools" : [
+		 ],
+	"super" : "RubMorphAnnouncement",
+	"type" : "normal" }

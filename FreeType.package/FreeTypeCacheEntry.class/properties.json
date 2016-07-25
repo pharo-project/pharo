@@ -1,0 +1,18 @@
+{
+	"category" : "FreeType-Cache",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
+	"instvars" : [
+		"font",
+		"charCode",
+		"type",
+		"object",
+		"previousLink" ],
+	"name" : "FreeTypeCacheEntry",
+	"pools" : [
+		 ],
+	"super" : "Link",
+	"type" : "normal" }

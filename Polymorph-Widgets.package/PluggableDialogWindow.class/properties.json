@@ -1,0 +1,18 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 8/8/2007 14:08",
+	"instvars" : [
+		"statusValue",
+		"buttons",
+		"contentMorph",
+		"applyChangesSelector",
+		"defaultFocusMorph" ],
+	"name" : "PluggableDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "ModelDependentDialogWindow",
+	"type" : "normal" }

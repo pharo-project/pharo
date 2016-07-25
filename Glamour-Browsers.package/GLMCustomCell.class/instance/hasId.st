@@ -1,0 +1,4 @@
+testing
+hasId 
+	 
+	^id notNil

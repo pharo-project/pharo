@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloUseUpgradeError",
+	"pools" : [
+		 ],
+	"super" : "MetacelloScriptingError",
+	"type" : "normal" }

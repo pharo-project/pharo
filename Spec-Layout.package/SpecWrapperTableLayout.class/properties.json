@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "webwarrior 6/12/2014 16:39",
+	"instvars" : [
+		"elementAdded" ],
+	"name" : "SpecWrapperTableLayout",
+	"pools" : [
+		 ],
+	"super" : "SpecTableLayout",
+	"type" : "normal" }

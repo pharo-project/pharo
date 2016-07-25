@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ShiftJISTextConverter",
+	"pools" : [
+		 ],
+	"super" : "TextConverter",
+	"type" : "normal" }

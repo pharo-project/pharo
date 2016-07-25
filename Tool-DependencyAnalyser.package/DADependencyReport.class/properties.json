@@ -1,0 +1,17 @@
+{
+	"category" : "Tool-DependencyAnalyser-Report",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 8/27/2015 09:13",
+	"instvars" : [
+		"dependencies",
+		"warnings",
+		"imageVersion",
+		"analysisRunString" ],
+	"name" : "DADependencyReport",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

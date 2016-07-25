@@ -1,0 +1,4 @@
+private
+selectedIndexHolder
+
+	^ selectionHolder index

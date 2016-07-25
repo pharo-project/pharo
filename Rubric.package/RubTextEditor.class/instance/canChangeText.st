@@ -1,0 +1,3 @@
+testing
+canChangeText
+	^ textArea canChangeText

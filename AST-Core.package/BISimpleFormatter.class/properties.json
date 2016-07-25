@@ -1,0 +1,18 @@
+{
+	"category" : "AST-Core-Formatter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FormatAsYouReadPolicy" ],
+	"commentStamp" : "StephaneDucasse 8/7/2015 15:08",
+	"instvars" : [
+		"codeStream",
+		"indent",
+		"lookaheadCode",
+		"originalSource",
+		"lineStart" ],
+	"name" : "BISimpleFormatter",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

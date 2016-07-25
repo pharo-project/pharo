@@ -1,0 +1,3 @@
+specs
+title
+	^ 'Critic Browser' 

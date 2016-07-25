@@ -1,0 +1,6 @@
+{
+	"category" : "Glamour-Morphic-Brick-Traits",
+	"classtraitcomposition" : "GLMBrickExtensionTrait classTrait",
+	"commentStamp" : "AliakseiSyrel 1/30/2015 10:47",
+	"name" : "GLMBrickGeometryTrait",
+	"traitcomposition" : "GLMBrickExtensionTrait" }

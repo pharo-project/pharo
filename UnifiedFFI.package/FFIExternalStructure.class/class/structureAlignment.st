@@ -1,0 +1,4 @@
+accessing
+structureAlignment
+	externalStructureAlignment ifNil: self rebuildFieldAccessors.
+	^ externalStructureAlignment

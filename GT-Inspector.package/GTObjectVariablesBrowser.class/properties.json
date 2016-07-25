@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 8/22/2011 12:52",
+	"instvars" : [
+		 ],
+	"name" : "GTObjectVariablesBrowser",
+	"pools" : [
+		 ],
+	"super" : "GTRawObjectVariablesBrowser",
+	"type" : "normal" }

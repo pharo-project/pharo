@@ -1,0 +1,3 @@
+operations
+mergeUpTo: aTxEndSpan 
+	^ self

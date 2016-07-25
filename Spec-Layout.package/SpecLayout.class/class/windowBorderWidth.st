@@ -1,0 +1,4 @@
+constants
+windowBorderWidth
+
+	^ 0

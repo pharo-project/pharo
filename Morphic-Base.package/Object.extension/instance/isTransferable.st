@@ -1,0 +1,4 @@
+*Morphic-Base
+isTransferable
+
+	^ false

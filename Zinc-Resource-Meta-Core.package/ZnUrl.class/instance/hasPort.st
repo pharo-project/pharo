@@ -1,0 +1,3 @@
+testing
+hasPort
+	^ port notNil

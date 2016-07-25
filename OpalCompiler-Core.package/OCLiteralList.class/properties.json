@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Extras",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ajh 3/25/2003 00:31",
+	"instvars" : [
+		"equalitySet" ],
+	"name" : "OCLiteralList",
+	"pools" : [
+		 ],
+	"super" : "OrderedCollection",
+	"type" : "normal" }

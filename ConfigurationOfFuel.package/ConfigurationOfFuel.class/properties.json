@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfFuel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfFuel",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

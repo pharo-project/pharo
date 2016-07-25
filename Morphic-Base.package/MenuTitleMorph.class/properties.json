@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 9/8/2015 17:52",
+	"instvars" : [
+		"titleContainer",
+		"icon",
+		"closeBox",
+		"pinBox" ],
+	"name" : "MenuTitleMorph",
+	"pools" : [
+		 ],
+	"super" : "AlignmentMorph",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+AbstractFont defines the generic interface that all fonts need to implement.

@@ -1,0 +1,17 @@
+{
+	"category" : "Zinc-Resource-Meta-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ExtensionsMap",
+		"SubTypeBinaryCache" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"main",
+		"sub",
+		"parameters" ],
+	"name" : "ZnMimeType",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

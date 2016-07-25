@@ -1,0 +1,3 @@
+requirements
+classToBeTested
+	^ WeakSet

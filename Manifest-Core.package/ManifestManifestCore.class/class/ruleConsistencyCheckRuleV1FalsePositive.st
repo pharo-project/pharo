@@ -1,0 +1,3 @@
+meta data
+ruleConsistencyCheckRuleV1FalsePositive
+^ #(#(#(#RGMethodDefinition #(#TheManifestBuilder #addItem:wihtComment:selector: #false)) #'2013-02-01T15:29:51.672000001+01:00') #(#(#RGMethodDefinition #(#'RGMetaclassDefinition class' #manifestReadOn: #true)) #'2013-02-01T15:29:51.672000002+01:00') #(#(#RGMethodDefinition #(#'RGMethodDefinition class' #manifestReadOn: #true)) #'2013-02-01T15:29:51.672000003+01:00') )

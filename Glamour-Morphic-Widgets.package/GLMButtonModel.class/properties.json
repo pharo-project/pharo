@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"glamourAction" ],
+	"name" : "GLMButtonModel",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicModel",
+	"type" : "normal" }

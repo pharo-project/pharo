@@ -1,0 +1,3 @@
+configuration
+startMinPercentageToExpand
+	^ 20

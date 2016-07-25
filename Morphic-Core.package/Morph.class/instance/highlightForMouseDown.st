@@ -1,0 +1,3 @@
+drawing
+highlightForMouseDown
+	self highlightForMouseDown: true

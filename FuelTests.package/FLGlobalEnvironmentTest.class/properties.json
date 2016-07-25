@@ -1,0 +1,15 @@
+{
+	"category" : "FuelTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:27",
+	"instvars" : [
+		"serializationEnvironment",
+		"materializationEnvironment" ],
+	"name" : "FLGlobalEnvironmentTest",
+	"pools" : [
+		 ],
+	"super" : "FLSerializationTest",
+	"type" : "normal" }

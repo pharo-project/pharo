@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:20",
+	"instvars" : [
+		 ],
+	"name" : "OSTouchThreeFingersScrollDetector",
+	"pools" : [
+		 ],
+	"super" : "OSTouchScrollDetector",
+	"type" : "normal" }

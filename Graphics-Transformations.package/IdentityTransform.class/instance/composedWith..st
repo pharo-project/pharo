@@ -1,0 +1,3 @@
+composing
+composedWith: aTransform
+	^aTransform

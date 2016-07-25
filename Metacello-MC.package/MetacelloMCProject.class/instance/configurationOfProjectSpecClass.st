@@ -1,0 +1,3 @@
+spec classes
+configurationOfProjectSpecClass
+    ^ MetacelloMCConfigurationOfProjectSpec

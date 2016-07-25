@@ -1,0 +1,1 @@
+I am an IdentityDictionary optimized for including a large number of elements.

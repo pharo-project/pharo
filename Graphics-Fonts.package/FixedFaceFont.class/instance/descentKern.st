@@ -1,0 +1,3 @@
+accessing
+descentKern
+	^baseFont descentKern

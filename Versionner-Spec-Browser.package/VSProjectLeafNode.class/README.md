@@ -1,0 +1,1 @@
+Abstract class used to display a project with its specific icons and no child in a tree.

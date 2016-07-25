@@ -1,0 +1,21 @@
+{
+	"category" : "MenuRegistration-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 2/16/2010 23:17",
+	"instvars" : [
+		"parentName",
+		"itemList",
+		"order",
+		"spec",
+		"owner",
+		"isGroup",
+		"ordering",
+		"precondition" ],
+	"name" : "MenuRegistration",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

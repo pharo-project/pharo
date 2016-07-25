@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Borders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 11:52",
+	"instvars" : [
+		"cornerRadius" ],
+	"name" : "RoundedBorder",
+	"pools" : [
+		 ],
+	"super" : "SimpleBorder",
+	"type" : "normal" }

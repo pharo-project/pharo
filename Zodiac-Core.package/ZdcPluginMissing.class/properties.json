@@ -1,0 +1,14 @@
+{
+	"category" : "Zodiac-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ZdcPluginMissing",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Playground",
+	"classinstvars" : [
+		"urlProvider" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 10/22/2014 07:50",
+	"instvars" : [
+		"urlProvider" ],
+	"name" : "GTUrlProvider",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

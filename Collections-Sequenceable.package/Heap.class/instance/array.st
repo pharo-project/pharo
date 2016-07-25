@@ -1,0 +1,3 @@
+private
+array
+	^array

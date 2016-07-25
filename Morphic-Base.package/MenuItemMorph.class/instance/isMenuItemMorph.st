@@ -1,0 +1,3 @@
+testing
+isMenuItemMorph
+	^ true

@@ -1,0 +1,4 @@
+structure
+world
+	
+	^self

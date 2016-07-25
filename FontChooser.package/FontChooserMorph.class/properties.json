@@ -1,0 +1,25 @@
+{
+	"category" : "FontChooser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"fontPreviewPanel",
+		"okButton",
+		"cancelButton",
+		"applyButton",
+		"updateButton",
+		"result",
+		"pointSizeMorph",
+		"styleList",
+		"pointSizeList",
+		"selectedPangram",
+		"languageList",
+		"fontList" ],
+	"name" : "FontChooserMorph",
+	"pools" : [
+		 ],
+	"super" : "StandardWindow",
+	"type" : "normal" }

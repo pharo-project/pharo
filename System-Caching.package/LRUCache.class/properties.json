@@ -1,0 +1,15 @@
+{
+	"category" : "System-Caching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"lruList",
+		"keyIndex" ],
+	"name" : "LRUCache",
+	"pools" : [
+		 ],
+	"super" : "AbstractCache",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Inspector-Examples-Tools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"processed",
+		"result" ],
+	"name" : "GTExampleEvaluator",
+	"pools" : [
+		 ],
+	"super" : "GTExampleProcessor",
+	"type" : "normal" }

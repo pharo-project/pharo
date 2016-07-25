@@ -1,0 +1,2 @@
+accessing
+clipboardText: anObject

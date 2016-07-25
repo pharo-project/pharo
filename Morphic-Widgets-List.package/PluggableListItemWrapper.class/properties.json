@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Widgets-List",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ar 10/14/2003 23:51",
+	"instvars" : [
+		"string",
+		"getContentsSelector",
+		"getStringSelector",
+		"hasContentsSelector" ],
+	"name" : "PluggableListItemWrapper",
+	"pools" : [
+		 ],
+	"super" : "ListItemWrapper",
+	"type" : "normal" }

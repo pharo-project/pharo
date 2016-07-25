@@ -1,0 +1,3 @@
+accessing
+now
+	^ DateAndTime now

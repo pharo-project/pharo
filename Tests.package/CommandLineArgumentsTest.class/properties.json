@@ -1,0 +1,14 @@
+{
+	"category" : "Tests-System-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AdrienBarreau 2/12/2011 15:55",
+	"instvars" : [
+		"commandLine" ],
+	"name" : "CommandLineArgumentsTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

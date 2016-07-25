@@ -1,0 +1,1 @@
+A PortReference is used in Transmissions to bahavior that is specific to a Transmission instance.

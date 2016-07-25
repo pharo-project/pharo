@@ -1,0 +1,1 @@
+This announcment is thrown when a test suite just finished (more precisly when hisoties are updated)

@@ -1,0 +1,14 @@
+{
+	"category" : "Random-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestRandomCore",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

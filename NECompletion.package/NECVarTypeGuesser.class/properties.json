@@ -1,0 +1,20 @@
+{
+	"category" : "NECompletion-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"types",
+		"receiverClass",
+		"variableName",
+		"found",
+		"currentMethod",
+		"hasSend",
+		"contextCount" ],
+	"name" : "NECVarTypeGuesser",
+	"pools" : [
+		 ],
+	"super" : "InstructionClient",
+	"type" : "normal" }

@@ -1,0 +1,17 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 9/21/2015 14:22",
+	"instvars" : [
+		"callback",
+		"thunk",
+		"functionSpec",
+		"block" ],
+	"name" : "FFICallback",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

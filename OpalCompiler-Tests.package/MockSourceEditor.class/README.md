@@ -1,0 +1,1 @@
+A mock object mocking a source editor

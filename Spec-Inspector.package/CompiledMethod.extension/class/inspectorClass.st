@@ -1,0 +1,3 @@
+*Spec-Inspector
+inspectorClass
+	^ EyeCompiledMethodInspector

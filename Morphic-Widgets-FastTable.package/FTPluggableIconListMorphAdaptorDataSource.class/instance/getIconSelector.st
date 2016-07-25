@@ -1,0 +1,3 @@
+accessing selectors
+getIconSelector
+	^ getIconSelector

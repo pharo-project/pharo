@@ -1,0 +1,15 @@
+{
+	"category" : "System-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastStats",
+		"WordSize" ],
+	"commentStamp" : "IgorStasenko 8/16/2011 17:41",
+	"instvars" : [
+		 ],
+	"name" : "VirtualMachine",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

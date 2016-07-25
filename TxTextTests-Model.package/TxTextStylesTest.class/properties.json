@@ -1,0 +1,14 @@
+{
+	"category" : "TxTextTests-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"text" ],
+	"name" : "TxTextStylesTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

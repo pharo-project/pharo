@@ -1,0 +1,3 @@
+masking
+maskEnabled
+	^ maskEnabled

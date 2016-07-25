@@ -1,0 +1,3 @@
+accessing
+acceptSelector
+	^ self setIndexSelector

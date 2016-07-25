@@ -1,0 +1,1 @@
+I represent a handle of SDL rendering context, coming from SDL2 library

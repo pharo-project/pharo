@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/17/2015 21:31",
+	"instvars" : [
+		"dotsBrick",
+		"stringBrick" ],
+	"name" : "GLMLabelBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMInteractableBrick",
+	"type" : "normal" }

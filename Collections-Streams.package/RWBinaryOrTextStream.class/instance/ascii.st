@@ -1,0 +1,3 @@
+converting
+ascii
+	isBinary := false

@@ -1,0 +1,4 @@
+accessing
+heightAndDescent
+
+	^ height + maxDescent

@@ -1,0 +1,16 @@
+{
+	"category" : "GT-EventRecorder-Privacy",
+	"classinstvars" : [
+		"sendDiagnosticsAndUsageData",
+		"sendEntityNames",
+		"sendSourceCode" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 9/2/2015 12:56",
+	"instvars" : [
+		 ],
+	"name" : "Privacy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"finalizationAction" ],
+	"name" : "MockFinalizerAction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

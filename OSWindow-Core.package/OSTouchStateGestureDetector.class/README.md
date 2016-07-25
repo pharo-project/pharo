@@ -1,0 +1,1 @@
+I am a gesture detector who detects gestures with a begin, current and end state

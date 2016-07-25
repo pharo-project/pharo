@@ -1,0 +1,3 @@
+accessing
+defaultPortNumber
+	self subclassResponsibility

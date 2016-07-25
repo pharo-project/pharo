@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Strings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "StringInitializationTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"dijkstra" ],
+	"name" : "MalCircuitSpanningEdges",
+	"pools" : [
+		 ],
+	"super" : "MalSccExtractor",
+	"type" : "normal" }

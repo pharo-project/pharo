@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"tempName",
+		"tempIndex" ],
+	"name" : "ContextTempEyeElement",
+	"pools" : [
+		 ],
+	"super" : "AbstractEyeElement",
+	"type" : "normal" }

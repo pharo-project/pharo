@@ -1,0 +1,1 @@
+i am common ancestor of spans which can carry separate (own) list of attributes.

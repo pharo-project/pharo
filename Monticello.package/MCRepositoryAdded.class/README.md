@@ -1,0 +1,1 @@
+Announcement sent when a Repository is added to a Repository group.

@@ -1,0 +1,15 @@
+{
+	"category" : "Graphics-Transformations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"globalTransform",
+		"localTransform" ],
+	"name" : "CompositeTransform",
+	"pools" : [
+		 ],
+	"super" : "DisplayTransform",
+	"type" : "normal" }

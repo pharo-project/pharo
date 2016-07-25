@@ -1,0 +1,4 @@
+private
+sampleStream
+
+	^sample readStream

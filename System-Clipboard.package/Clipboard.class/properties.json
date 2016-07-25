@@ -1,0 +1,15 @@
+{
+	"category" : "System-Clipboard",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "AlainPlantec 1/15/2010 11:42",
+	"instvars" : [
+		"contents",
+		"recent" ],
+	"name" : "Clipboard",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,18 @@
+{
+	"category" : "GT-EventRecorder-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 11/17/2015 14:35",
+	"instvars" : [
+		"url",
+		"category",
+		"recordedEvents",
+		"registry",
+		"updateAnnouncementBlock" ],
+	"name" : "GTEventCollector",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

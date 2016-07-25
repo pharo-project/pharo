@@ -1,0 +1,3 @@
+configuration
+deliveryPreSuspendingAction: aBlockClosure 
+	self delivery preSuspendingAction: aBlockClosure

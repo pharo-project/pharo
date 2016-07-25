@@ -1,0 +1,1 @@
+i am a base class to display a cursor in text

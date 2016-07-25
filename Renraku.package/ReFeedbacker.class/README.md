@@ -1,0 +1,1 @@
+I am reporting complaints about critics. No one should use me dirrectly. Use ReCritic>>#reportUselessness instead

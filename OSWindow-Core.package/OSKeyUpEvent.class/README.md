@@ -1,0 +1,1 @@
+This event is delivered when user releases previously pressed key

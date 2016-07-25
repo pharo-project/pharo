@@ -1,0 +1,20 @@
+{
+	"category" : "Versionner-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"version",
+		"configurationClass",
+		"repository",
+		"dependencies",
+		"devWorkflow",
+		"announcer" ],
+	"name" : "MTProject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+This error is signalled whenever there is a non recoverable error during refactorings.

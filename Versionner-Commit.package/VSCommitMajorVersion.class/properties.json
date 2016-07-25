@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Commit",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "VSCommitMajorVersion",
+	"pools" : [
+		 ],
+	"super" : "VSCommitVersion",
+	"type" : "normal" }

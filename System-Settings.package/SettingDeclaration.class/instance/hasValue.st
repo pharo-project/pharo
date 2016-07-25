@@ -1,0 +1,3 @@
+accessing
+hasValue
+	^ true

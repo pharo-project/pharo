@@ -1,0 +1,3 @@
+accessing
+useBasicCommentFormat
+	^ DefaultPrettyPrintContext useBasicCommentFormat

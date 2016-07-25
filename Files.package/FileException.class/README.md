@@ -1,0 +1,1 @@
+Common superclass for exceptions while using file streams

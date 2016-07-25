@@ -1,0 +1,4 @@
+compatibility
+doMessage
+
+	^ self redoMessage

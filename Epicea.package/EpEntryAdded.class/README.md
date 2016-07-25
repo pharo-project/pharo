@@ -1,0 +1,1 @@
+I announce that an entry has been added to a log.

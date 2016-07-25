@@ -1,0 +1,3 @@
+navigating
+startOfLine
+	^ self cr

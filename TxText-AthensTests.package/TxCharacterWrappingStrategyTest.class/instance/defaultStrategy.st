@@ -1,0 +1,5 @@
+private
+defaultStrategy
+	^ TxAthensCharacterWrappingStrategy new 
+	
+

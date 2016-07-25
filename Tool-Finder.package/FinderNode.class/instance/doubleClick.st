@@ -1,0 +1,3 @@
+private
+doubleClick
+	self browse

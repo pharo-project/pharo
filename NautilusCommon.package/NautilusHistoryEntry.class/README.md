@@ -1,0 +1,1 @@
+I am a history entry which hold a single step of the Nautilus browsing history

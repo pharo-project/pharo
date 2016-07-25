@@ -1,0 +1,3 @@
+buttons behavior
+browseButtonLabel
+	^'Browse'

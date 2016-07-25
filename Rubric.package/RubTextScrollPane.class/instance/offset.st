@@ -1,0 +1,3 @@
+private
+offset
+	^ scroller offset

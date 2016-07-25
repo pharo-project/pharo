@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"token" ],
+	"name" : "TokenTreeFilter",
+	"pools" : [
+		 ],
+	"super" : "AbstractTreeFilter",
+	"type" : "normal" }

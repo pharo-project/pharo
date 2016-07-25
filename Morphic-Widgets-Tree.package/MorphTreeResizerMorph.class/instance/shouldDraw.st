@@ -1,0 +1,3 @@
+Polymorph-Widgets
+shouldDraw
+	^ true

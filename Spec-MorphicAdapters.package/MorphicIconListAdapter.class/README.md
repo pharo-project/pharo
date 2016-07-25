@@ -1,0 +1,1 @@
+I am the adapter used to bridge an IconListModel and a PluggableIconListMorph

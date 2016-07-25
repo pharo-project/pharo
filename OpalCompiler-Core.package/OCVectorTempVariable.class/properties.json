@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 8/11/2014 10:20",
+	"instvars" : [
+		"vectorName" ],
+	"name" : "OCVectorTempVariable",
+	"pools" : [
+		 ],
+	"super" : "OCTempVariable",
+	"type" : "normal" }

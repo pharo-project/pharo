@@ -1,0 +1,4 @@
+api
+isBrick
+
+	^ false

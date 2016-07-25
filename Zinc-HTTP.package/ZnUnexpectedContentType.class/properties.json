@@ -1,0 +1,15 @@
+{
+	"category" : "Zinc-HTTP-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/20/2011 12:52",
+	"instvars" : [
+		"expectedContentType",
+		"actualContentType" ],
+	"name" : "ZnUnexpectedContentType",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

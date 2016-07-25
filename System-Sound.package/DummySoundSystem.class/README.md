@@ -1,0 +1,1 @@
+A BeepingSoundSystem is a simple sound system just doing beep and niling everything else. 

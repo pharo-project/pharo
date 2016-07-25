@@ -1,0 +1,3 @@
+accessing
+chooseRemote
+	isApplicable := true

@@ -1,0 +1,19 @@
+{
+	"category" : "OSWindow-Core-Extras",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"OperationAvailableSemaphore",
+		"RegisteredWindows",
+		"RegisteredWindowsMutex",
+		"RenderSession",
+		"RenderThreadProcess",
+		"RenderThreadQueue" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "OSWindowRenderThread",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"cachedMinExtent",
+		"cachedMinExtents" ],
+	"name" : "StackLayout",
+	"pools" : [
+		 ],
+	"super" : "LayoutPolicy",
+	"type" : "normal" }

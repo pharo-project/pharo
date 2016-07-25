@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 1/18/2014 14:29",
+	"instvars" : [
+		 ],
+	"name" : "GTSimpleMethodsBrowser",
+	"pools" : [
+		 ],
+	"super" : "GLMCompositePresentation",
+	"type" : "normal" }

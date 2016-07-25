@@ -1,0 +1,23 @@
+{
+	"category" : "Text-Edition",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 3/12/2016 12:59",
+	"instvars" : [
+		"emphasisHere",
+		"pointBlock",
+		"markBlock",
+		"startOfTyping",
+		"previousInterval",
+		"previousSelection",
+		"undoManager",
+		"lastParenLocation",
+		"mouseDownInterval",
+		"secondarySelectionToken" ],
+	"name" : "EditingState",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

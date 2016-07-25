@@ -1,0 +1,14 @@
+{
+	"category" : "GT-BytecodeDebugger-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 12/30/2015 11:03",
+	"instvars" : [
+		 ],
+	"name" : "GTBytecodeDebuggerVariablesBrowser",
+	"pools" : [
+		 ],
+	"super" : "GTDebuggerVariablesBrowser",
+	"type" : "normal" }

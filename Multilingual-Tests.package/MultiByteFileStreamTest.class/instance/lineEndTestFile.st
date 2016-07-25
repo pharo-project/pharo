@@ -1,0 +1,3 @@
+support
+lineEndTestFile
+	^'lineEndTesting.txt'

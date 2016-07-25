@@ -1,0 +1,4 @@
+commands
+cmdLoad
+	<command>
+	^ VSLoadCommand

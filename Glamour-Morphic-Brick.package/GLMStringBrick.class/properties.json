@@ -1,0 +1,21 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 10/17/2014 10:06",
+	"instvars" : [
+		"font",
+		"familyName",
+		"fontSize",
+		"textSize",
+		"text",
+		"textColor",
+		"textPosition",
+		"highlightedString" ],
+	"name" : "GLMStringBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMInteractableBrick",
+	"type" : "normal" }

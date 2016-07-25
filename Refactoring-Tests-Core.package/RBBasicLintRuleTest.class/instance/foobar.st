@@ -1,0 +1,4 @@
+accessing
+foobar
+
+	^#( true false )

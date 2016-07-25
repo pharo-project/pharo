@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-GroupManager-Announcements",
+	"classinstvars" : [
+		"announcer" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 21:10",
+	"instvars" : [
+		 ],
+	"name" : "GroupAnnouncer",
+	"pools" : [
+		 ],
+	"super" : "Announcer",
+	"type" : "normal" }

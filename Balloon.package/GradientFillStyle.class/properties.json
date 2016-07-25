@@ -1,0 +1,17 @@
+{
+	"category" : "Balloon-Fills",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"PixelRampCache" ],
+	"commentStamp" : "efc 8/30/2005 21:44",
+	"instvars" : [
+		"colorRamp",
+		"pixelRamp",
+		"radial",
+		"isTranslucent" ],
+	"name" : "GradientFillStyle",
+	"pools" : [
+		 ],
+	"super" : "OrientedFillStyle",
+	"type" : "normal" }

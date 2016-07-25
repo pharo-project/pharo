@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFITestUnion",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalUnion",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I am raised when I an operation is attempted inside a directory that does not exist. 

@@ -1,0 +1,17 @@
+{
+	"category" : "Network-UUID",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "SvenVanCaekenberghe 7/10/2016 13:56",
+	"instvars" : [
+		"node",
+		"random",
+		"counter",
+		"lock" ],
+	"name" : "NeoUUIDGenerator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"repository" ],
+	"name" : "IceCurrentHead",
+	"pools" : [
+		 ],
+	"super" : "IceCommitish",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IceChangesTreeNodeModel",
+	"pools" : [
+		 ],
+	"super" : "TreeNodeModel",
+	"type" : "normal" }

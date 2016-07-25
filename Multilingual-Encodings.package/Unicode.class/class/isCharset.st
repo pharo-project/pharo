@@ -1,0 +1,4 @@
+class methods
+isCharset
+
+	^ false.

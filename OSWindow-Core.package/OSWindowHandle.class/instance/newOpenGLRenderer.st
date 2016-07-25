@@ -1,0 +1,3 @@
+factory
+newOpenGLRenderer
+	self subclassResponsibility

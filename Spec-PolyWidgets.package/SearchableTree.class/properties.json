@@ -1,0 +1,18 @@
+{
+	"category" : "Spec-PolyWidgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"inputField",
+		"roots",
+		"tree",
+		"label",
+		"button" ],
+	"name" : "SearchableTree",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

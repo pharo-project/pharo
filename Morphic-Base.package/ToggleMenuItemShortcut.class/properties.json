@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 5/28/2015 17:19",
+	"instvars" : [
+		"keyText",
+		"font",
+		"owner" ],
+	"name" : "ToggleMenuItemShortcut",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

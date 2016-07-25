@@ -1,0 +1,1 @@
+store literal variable

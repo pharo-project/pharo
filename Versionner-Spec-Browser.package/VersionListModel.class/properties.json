@@ -1,0 +1,16 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 3/18/2014 17:31",
+	"instvars" : [
+		"okToChange",
+		"changedBlock",
+		"selectionVersionString" ],
+	"name" : "VersionListModel",
+	"pools" : [
+		 ],
+	"super" : "IconListModel",
+	"type" : "normal" }

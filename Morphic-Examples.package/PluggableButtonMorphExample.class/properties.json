@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Examples-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"label",
+		"state",
+		"icon" ],
+	"name" : "PluggableButtonMorphExample",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+converting
+asStringOrText
+
+	^self text

@@ -1,0 +1,15 @@
+{
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 20:14",
+	"instvars" : [
+		"trueBinding",
+		"falseBinding" ],
+	"name" : "RBUsesTrueRule",
+	"pools" : [
+		 ],
+	"super" : "RBBlockLintRule",
+	"type" : "normal" }

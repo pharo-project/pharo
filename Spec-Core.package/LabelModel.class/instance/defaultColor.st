@@ -1,0 +1,4 @@
+initialization
+defaultColor
+
+	^ Color black

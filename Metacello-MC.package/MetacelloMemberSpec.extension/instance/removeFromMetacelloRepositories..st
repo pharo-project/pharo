@@ -1,0 +1,4 @@
+*metacello-mc
+removeFromMetacelloRepositories: aMetacelloRepositoriesSpec
+
+	aMetacelloRepositoriesSpec addMember: self

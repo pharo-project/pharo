@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/22/2016 20:49",
+	"instvars" : [
+		 ],
+	"name" : "ReBasicClassRule",
+	"pools" : [
+		 ],
+	"super" : "RBBasicLintRule",
+	"type" : "normal" }

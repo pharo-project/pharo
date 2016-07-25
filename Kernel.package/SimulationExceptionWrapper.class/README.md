@@ -1,0 +1,1 @@
+Notify about an exception while simulating an execution

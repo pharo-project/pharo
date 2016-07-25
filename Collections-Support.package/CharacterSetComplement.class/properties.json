@@ -1,0 +1,15 @@
+{
+	"category" : "Collections-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 8/31/2008 14:53",
+	"instvars" : [
+		"absent",
+		"byteArrayMapCache" ],
+	"name" : "CharacterSetComplement",
+	"pools" : [
+		 ],
+	"super" : "Collection",
+	"type" : "normal" }

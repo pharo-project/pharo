@@ -1,0 +1,3 @@
+accessing
+beResizable
+	resizable := true

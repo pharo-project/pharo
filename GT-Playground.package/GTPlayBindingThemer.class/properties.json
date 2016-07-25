@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Playground",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTPlayBindingThemer",
+	"pools" : [
+		 ],
+	"super" : "GLMBrickThemerModule",
+	"type" : "normal" }

@@ -1,0 +1,30 @@
+{
+	"category" : "NECompletion-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ClassVar" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"third",
+		"fourth",
+		"typeSuggestingParameter",
+		"messageSend",
+		"messageSend2",
+		"typeSuggestingParameter2",
+		"complexInit",
+		"complexInit2",
+		"constantInteger",
+		"constantSymbol",
+		"constantArray",
+		"constantBoolean",
+		"constantString",
+		"constantNil",
+		"globalVarKeyword",
+		"globalVarKeyword2",
+		"constantLargeInteger" ],
+	"name" : "NECTestClass",
+	"pools" : [
+		 ],
+	"super" : "NECTestSuperClass",
+	"type" : "normal" }

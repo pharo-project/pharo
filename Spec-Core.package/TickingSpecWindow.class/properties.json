@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 3/7/2014 10:41",
+	"instvars" : [
+		 ],
+	"name" : "TickingSpecWindow",
+	"pools" : [
+		 ],
+	"super" : "SpecWindow",
+	"type" : "normal" }

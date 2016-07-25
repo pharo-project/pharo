@@ -1,0 +1,18 @@
+{
+	"category" : "Kernel-Classes",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TApplyingOnClassSide classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"thisClass",
+		"traitComposition",
+		"localSelectors" ],
+	"name" : "Metaclass",
+	"pools" : [
+		 ],
+	"super" : "ClassDescription",
+	"traitcomposition" : "TApplyingOnClassSide",
+	"type" : "normal" }

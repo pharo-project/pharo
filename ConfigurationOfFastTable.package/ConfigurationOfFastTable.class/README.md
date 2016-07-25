@@ -1,0 +1,3 @@
+ConfigurationOfFastTable loadDevelopment.
+
+ConfigurationOfFastTable loadBleedingEdge

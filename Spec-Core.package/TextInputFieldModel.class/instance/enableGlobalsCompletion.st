@@ -1,0 +1,3 @@
+api
+enableGlobalsCompletion
+	self entryCompletion: self globalsEntryCompletion

@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:36",
+	"instvars" : [
+		 ],
+	"name" : "InteractiveResolverTest",
+	"pools" : [
+		 ],
+	"super" : "FileSystemResolverTest",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+public
+close
+	store close

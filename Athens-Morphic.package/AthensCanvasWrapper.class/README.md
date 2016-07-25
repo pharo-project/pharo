@@ -1,0 +1,1 @@
+I am a wrapper for a (Form-)Canvas that implements the Canvas API on top of an AthensCanvas.

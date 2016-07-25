@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Numbers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:41",
+	"instvars" : [
+		 ],
+	"name" : "NumberTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

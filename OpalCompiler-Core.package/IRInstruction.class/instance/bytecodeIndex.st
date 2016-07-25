@@ -1,0 +1,4 @@
+mapping
+bytecodeIndex
+
+	^ bytecodeIndex

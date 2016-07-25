@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2011 22:25",
+	"instvars" : [
+		 ],
+	"name" : "RussianEnvironment",
+	"pools" : [
+		 ],
+	"super" : "LanguageEnvironment",
+	"type" : "normal" }

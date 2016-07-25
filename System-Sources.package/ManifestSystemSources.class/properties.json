@@ -1,0 +1,14 @@
+{
+	"category" : "System-Sources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemSources",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

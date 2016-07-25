@@ -1,0 +1,1 @@
+I am especially designed to contain a list selection (an index + an object)

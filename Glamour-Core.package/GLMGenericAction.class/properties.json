@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GLMGenericAction",
+	"pools" : [
+		 ],
+	"super" : "GLMAction",
+	"type" : "normal" }

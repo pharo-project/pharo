@@ -1,0 +1,4 @@
+geometry
+width
+
+	^ bounds width

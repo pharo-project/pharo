@@ -1,0 +1,15 @@
+{
+	"category" : "Compression-Archives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"fileName",
+		"isCorrupt" ],
+	"name" : "ArchiveMember",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

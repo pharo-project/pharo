@@ -1,0 +1,3 @@
+testing
+hasCondition	
+	^condition notNil

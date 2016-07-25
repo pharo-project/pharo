@@ -1,0 +1,3 @@
+testing
+hasFragment
+	^ fragment notNil

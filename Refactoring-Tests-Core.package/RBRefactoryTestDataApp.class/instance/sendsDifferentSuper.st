@@ -1,0 +1,3 @@
+lint
+sendsDifferentSuper
+	super printString

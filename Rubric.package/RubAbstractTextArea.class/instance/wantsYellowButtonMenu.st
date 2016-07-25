@@ -1,0 +1,3 @@
+menu
+wantsYellowButtonMenu
+	^ self menuAllowed 

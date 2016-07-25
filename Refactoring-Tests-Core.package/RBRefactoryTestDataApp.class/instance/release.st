@@ -1,0 +1,3 @@
+lint
+release
+	self printString

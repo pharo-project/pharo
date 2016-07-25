@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StefanReichhart 12/4/2015 22:01",
+	"instvars" : [
+		"versionLoader",
+		"label" ],
+	"name" : "MCVersionLoaderStarted",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

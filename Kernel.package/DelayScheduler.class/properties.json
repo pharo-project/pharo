@@ -1,0 +1,23 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenComan 3/19/2015 22:55",
+	"instvars" : [
+		"accessProtect",
+		"activeDelay",
+		"activeDelayStartTime",
+		"delaySuspended",
+		"finishedDelay",
+		"runTimerEventLoop",
+		"scheduledDelay",
+		"suspendedDelays",
+		"timerEventLoop",
+		"timingSemaphore" ],
+	"name" : "DelayScheduler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

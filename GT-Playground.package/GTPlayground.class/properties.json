@@ -1,0 +1,16 @@
+{
+	"category" : "GT-Playground",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GTPlaygroundEnabledStatus",
+		"PreferredExtent",
+		"RememberPreferredExtent" ],
+	"commentStamp" : "TudorGirba 10/22/2014 07:37",
+	"instvars" : [
+		 ],
+	"name" : "GTPlayground",
+	"pools" : [
+		 ],
+	"super" : "GLMCompositePresentation",
+	"type" : "normal" }

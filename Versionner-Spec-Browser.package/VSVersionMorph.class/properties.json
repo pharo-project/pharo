@@ -1,0 +1,15 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"version",
+		"tags" ],
+	"name" : "VSVersionMorph",
+	"pools" : [
+		 ],
+	"super" : "PanelMorph",
+	"type" : "normal" }

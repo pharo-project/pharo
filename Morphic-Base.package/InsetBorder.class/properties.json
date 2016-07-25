@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Borders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "kfr 10/27/2003 09:32",
+	"instvars" : [
+		 ],
+	"name" : "InsetBorder",
+	"pools" : [
+		 ],
+	"super" : "SimpleBorder",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Character-Encoding-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ZnBufferedReadStreamTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,24 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/19/2016 11:01",
+	"instvars" : [
+		"helpHolder",
+		"borderWidth",
+		"borderColor",
+		"enabledHolder",
+		"dragEnabled",
+		"dropEnabled",
+		"dragTransformationBlock",
+		"wantDropBlock",
+		"acceptDropBlock",
+		"transferBlock",
+		"color" ],
+	"name" : "AbstractWidgetModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

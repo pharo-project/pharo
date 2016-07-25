@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-Browsers-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 2/4/2011 21:24",
+	"instvars" : [
+		"pane",
+		"browser",
+		"position" ],
+	"name" : "GLMPaneAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

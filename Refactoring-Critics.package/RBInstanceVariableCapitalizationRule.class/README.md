@@ -1,0 +1,3 @@
+This smell arises when instance variable names (in instance and class side) do not start with an lowercase letter, which is a standard style in Smalltalk.
+
+Instance variable names on the instance- and class-side should start with a lowercase letter. A lowercase letter is used to represent variables with a local scope such as instance variables, temporary variables, method and block arguments. Uppercase is used to represent the case where the scope of a variable is either global (class name and global variables such Transcript) or shared mong different classes (class variables or pool variables).

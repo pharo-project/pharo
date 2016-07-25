@@ -1,0 +1,15 @@
+{
+	"category" : "StartupPreferences",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"firstLink",
+		"actions" ],
+	"name" : "StartupPreferencesHandler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+exceptiondescription
+defaultAction
+
+	^ UIManager default syntaxErrorNotificationDefaultAction: self

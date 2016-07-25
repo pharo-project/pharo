@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests-StreamStrategies",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"targetStrategy" ],
+	"name" : "FLGZipStrategy",
+	"pools" : [
+		 ],
+	"super" : "FLStreamStrategy",
+	"type" : "normal" }

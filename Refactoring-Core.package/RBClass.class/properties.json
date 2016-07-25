@@ -1,0 +1,17 @@
+{
+	"category" : "Refactoring-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LookupComment" ],
+	"commentStamp" : "NicolaiHess 5/18/2016 23:41",
+	"instvars" : [
+		"classVariableNames",
+		"poolDictionaryNames",
+		"category",
+		"comment" ],
+	"name" : "RBClass",
+	"pools" : [
+		 ],
+	"super" : "RBAbstractClass",
+	"type" : "normal" }

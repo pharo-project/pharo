@@ -1,0 +1,3 @@
+tests
+testTemporaryVariableCapitalization
+	self ruleFor: self currentSelector

@@ -1,0 +1,4 @@
+display
+checkForNewDisplaySize	
+	
+	self subclassResponsibility 

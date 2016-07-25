@@ -1,0 +1,1 @@
+This is a utility class for printing objects to Text or String.

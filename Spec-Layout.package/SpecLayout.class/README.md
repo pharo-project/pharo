@@ -1,0 +1,1 @@
+A SpecPresenter is a object used to describe a user interface

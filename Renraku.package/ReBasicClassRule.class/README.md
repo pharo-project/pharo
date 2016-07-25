@@ -1,0 +1,1 @@
+I'm a basic root for all cless rules of renraku.

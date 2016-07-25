@@ -1,0 +1,3 @@
+tests
+testWhileWithTemp
+	self checkCorrectDecompilation: #exampleWhileWithTemp

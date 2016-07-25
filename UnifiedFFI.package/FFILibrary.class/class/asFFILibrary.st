@@ -1,0 +1,3 @@
+converting
+asFFILibrary
+	^ self uniqueInstance

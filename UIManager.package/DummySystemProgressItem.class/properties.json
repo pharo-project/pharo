@@ -1,0 +1,14 @@
+{
+	"category" : "UIManager-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:56",
+	"instvars" : [
+		 ],
+	"name" : "DummySystemProgressItem",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

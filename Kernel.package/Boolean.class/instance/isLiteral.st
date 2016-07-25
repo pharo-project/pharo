@@ -1,0 +1,3 @@
+printing
+isLiteral 
+	^ true

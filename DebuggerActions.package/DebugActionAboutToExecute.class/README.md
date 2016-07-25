@@ -1,0 +1,1 @@
+A DebugActionAboutToExecute is an event send to the debugger before a debugging action is executed.

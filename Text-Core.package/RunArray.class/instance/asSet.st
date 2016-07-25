@@ -1,0 +1,3 @@
+converting
+asSet
+	^values asSet

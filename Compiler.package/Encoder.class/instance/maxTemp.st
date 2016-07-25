@@ -1,0 +1,4 @@
+temps
+maxTemp
+
+	^nTemps

@@ -1,0 +1,15 @@
+{
+	"category" : "NautilusCommon-Plugin-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 10/30/2014 07:33",
+	"instvars" : [
+		"stringMorph",
+		"counter" ],
+	"name" : "CountingKeyPressedPlugin",
+	"pools" : [
+		 ],
+	"super" : "AbstractKeyPressedPlugin",
+	"type" : "normal" }

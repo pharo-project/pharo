@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"debugger",
+		"title",
+		"message" ],
+	"name" : "SpecPreDebugWindow",
+	"pools" : [
+		 ],
+	"super" : "DynamicComposableModel",
+	"type" : "normal" }

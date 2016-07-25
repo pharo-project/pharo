@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AbstractMorphicAdapter",
+	"pools" : [
+		 ],
+	"super" : "AbstractAdapter",
+	"type" : "normal" }

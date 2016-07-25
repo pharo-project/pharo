@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Layouts-Utils",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMBrickHeightTraverser",
+	"pools" : [
+		 ],
+	"super" : "GLMBrickLayoutTraverser",
+	"type" : "normal" }

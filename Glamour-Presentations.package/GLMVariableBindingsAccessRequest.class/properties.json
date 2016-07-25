@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Presentations-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 3/19/2015 17:59",
+	"instvars" : [
+		"actionBlock" ],
+	"name" : "GLMVariableBindingsAccessRequest",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

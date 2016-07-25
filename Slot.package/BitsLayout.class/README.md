@@ -1,0 +1,1 @@
+I am a specialized layout which does not hold slots but only raw data (bytes or words).

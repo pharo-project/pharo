@@ -1,0 +1,1 @@
+I am delivered when mouse enters the area , covered by a window

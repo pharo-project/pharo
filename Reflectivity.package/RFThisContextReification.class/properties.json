@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Links",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 5/25/2015 11:04",
+	"instvars" : [
+		 ],
+	"name" : "RFThisContextReification",
+	"pools" : [
+		 ],
+	"super" : "RFReification",
+	"type" : "normal" }

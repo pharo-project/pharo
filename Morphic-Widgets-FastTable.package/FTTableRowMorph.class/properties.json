@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"selectionColor" ],
+	"name" : "FTTableRowMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

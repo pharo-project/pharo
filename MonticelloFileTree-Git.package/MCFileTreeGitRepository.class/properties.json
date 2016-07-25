@@ -1,0 +1,17 @@
+{
+	"category" : "MonticelloFileTree-Git",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GitCommand",
+		"NamesMap" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"remoteUrl",
+		"branch",
+		"subdirectory" ],
+	"name" : "MCFileTreeGitRepository",
+	"pools" : [
+		 ],
+	"super" : "MCFileTreeRepository",
+	"type" : "normal" }

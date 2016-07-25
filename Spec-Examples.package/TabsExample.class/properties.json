@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 7/26/2014 13:55",
+	"instvars" : [
+		"manager" ],
+	"name" : "TabsExample",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

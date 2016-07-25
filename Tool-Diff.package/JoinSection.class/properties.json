@@ -1,0 +1,20 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"src",
+		"dst",
+		"borderWidth",
+		"borderColor",
+		"type",
+		"width",
+		"shape" ],
+	"name" : "JoinSection",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

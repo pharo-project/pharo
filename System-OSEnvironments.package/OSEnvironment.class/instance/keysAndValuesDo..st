@@ -1,0 +1,3 @@
+enumeration
+keysAndValuesDo: aBlock
+	self subclassResponsibility

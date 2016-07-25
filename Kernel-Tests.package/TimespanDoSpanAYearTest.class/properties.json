@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tlk 1/6/2004 17:55",
+	"instvars" : [
+		"aTimespan",
+		"aDuration",
+		"aDate" ],
+	"name" : "TimespanDoSpanAYearTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

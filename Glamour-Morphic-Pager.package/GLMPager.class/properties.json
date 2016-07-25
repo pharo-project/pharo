@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Pager-Glamour",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"scrollButtonIconRenderBlock",
+		"minimumPageNumberForScrollbar" ],
+	"name" : "GLMPager",
+	"pools" : [
+		 ],
+	"super" : "GLMFinder",
+	"type" : "normal" }

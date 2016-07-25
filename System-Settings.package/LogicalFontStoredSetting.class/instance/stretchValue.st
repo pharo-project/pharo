@@ -1,0 +1,3 @@
+accessing
+stretchValue
+	^ stretchValue

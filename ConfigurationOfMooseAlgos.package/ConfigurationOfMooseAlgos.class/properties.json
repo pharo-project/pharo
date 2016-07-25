@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfMooseAlgos",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfMooseAlgos",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

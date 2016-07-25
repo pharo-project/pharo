@@ -1,0 +1,3 @@
+accessing
+cacheRepository
+	^ MCCacheRepository uniqueInstance

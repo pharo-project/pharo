@@ -1,0 +1,3 @@
+rendering
+clear
+	renderer clear

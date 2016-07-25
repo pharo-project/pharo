@@ -1,0 +1,1 @@
+A find/replace dialog window for editors

@@ -1,0 +1,3 @@
+canvas accessing
+origin
+	^ origin

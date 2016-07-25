@@ -1,0 +1,1 @@
+A concrete wrapper implementation that uses a block to create new nodes

@@ -1,0 +1,1 @@
+This is root class of announcements related to text editor events.

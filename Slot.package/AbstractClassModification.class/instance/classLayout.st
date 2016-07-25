@@ -1,0 +1,3 @@
+accessing
+classLayout
+	^ self layout

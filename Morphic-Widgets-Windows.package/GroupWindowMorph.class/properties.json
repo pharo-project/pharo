@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TEasilyThemed classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 7/12/2011 23:33",
+	"instvars" : [
+		"tabGroup" ],
+	"name" : "GroupWindowMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"traitcomposition" : "TEasilyThemed",
+	"type" : "normal" }

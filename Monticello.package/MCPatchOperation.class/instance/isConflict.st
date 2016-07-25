@@ -1,0 +1,3 @@
+testing
+isConflict
+	^ isConflict == true

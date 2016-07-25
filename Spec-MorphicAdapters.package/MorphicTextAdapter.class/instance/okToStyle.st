@@ -1,0 +1,4 @@
+private-shout
+okToStyle
+
+	^ true

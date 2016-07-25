@@ -1,0 +1,1 @@
+RGTraitDefinition is the concrete representation of a trait (no class)

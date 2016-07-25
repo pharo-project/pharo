@@ -1,0 +1,3 @@
+accessing
+key
+	^ self object

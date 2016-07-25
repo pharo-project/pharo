@@ -1,0 +1,4 @@
+drawing
+borderColor
+
+	^ Color gray

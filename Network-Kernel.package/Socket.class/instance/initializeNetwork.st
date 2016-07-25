@@ -1,0 +1,3 @@
+initialize-destroy
+initializeNetwork
+	self class initializeNetwork

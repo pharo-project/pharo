@@ -1,0 +1,3 @@
+menu
+browseImplementors
+	SystemNavigation new browseAllImplementorsOf: rgMethod selector

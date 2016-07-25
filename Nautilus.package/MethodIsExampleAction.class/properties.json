@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 8/22/2014 23:40",
+	"instvars" : [
+		 ],
+	"name" : "MethodIsExampleAction",
+	"pools" : [
+		 ],
+	"super" : "AbstractMethodIconAction",
+	"type" : "normal" }

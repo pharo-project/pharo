@@ -1,0 +1,44 @@
+running
+setUp
+  "self reset"
+
+  super setUp.
+  self
+    setUpRepositories;
+    setUpExternalCore;
+    setUpExternalCoreX;
+    setUpSampleCore;
+    setUpBaselineOfExternalX;
+    setUpBaselineOfExternalXX;
+    setUpBaselineOfExternalXXX;
+    setUpConfigurationOfExternaldkh1;
+    setUpConfigurationOfExternaldkh2;
+    setUpConfigurationExternalRef;
+    setUpConfigurationOfExternalX;
+    setUpConfigurationOfExternalXX;
+    setUpConfigurationOfExternalXXX;
+    setUpConfigurationOfExternalIV;
+    setUpBaselineGithubReferenceXX;
+    setUpBaselineGithubReferenceIV;
+    setUpBaselineGithubReferenceV;
+    setUpBaselineGithubReferenceVI;
+    setUpBaselineGithubReferenceVII;
+    setUpBaselineGithubReferenceVIII;
+    setUpBaselineGithubReferenceIX;
+    setUpBaselineGithubReferenceXI;
+    setUpBaselineGithubReferenceXII;
+    setUpBaselineGithubReferenceXIII;
+    setUpMarianosImage;
+    setUpConfigurationOfConflict;
+    setUpInvalidConfigurations;
+    setUpConfigurationIssue32;
+    setUpBaselineIssue32;
+    setUpConfigurationIssue59;
+    setUpConfiguration63;
+    setUpLockConfigurations;
+    setUpConfigurationIssue84;
+    setUpConfigurationNextedIssue84;
+    setUpConfiguration181;
+    setUpBaselineIssue215;
+    setUpConfigurationIssue339;
+    yourself

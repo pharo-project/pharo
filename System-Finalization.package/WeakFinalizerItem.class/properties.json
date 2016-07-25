@@ -1,0 +1,16 @@
+{
+	"category" : "System-Finalization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Igor.Stasenko 9/22/2010 20:59",
+	"instvars" : [
+		"list",
+		"next",
+		"executor" ],
+	"name" : "WeakFinalizerItem",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "weak" }

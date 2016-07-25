@@ -1,0 +1,3 @@
+private
+resetCache 
+	cachePackages := nil.

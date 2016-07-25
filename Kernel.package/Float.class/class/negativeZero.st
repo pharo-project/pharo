@@ -1,0 +1,4 @@
+constants
+negativeZero
+
+	^ NegativeZero

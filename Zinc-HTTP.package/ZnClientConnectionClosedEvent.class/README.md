@@ -1,0 +1,1 @@
+ZnClientConnectionClosedEvent signals that a client side connection to address:port is closed.

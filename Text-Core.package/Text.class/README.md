@@ -1,0 +1,3 @@
+I represent a character string that has been marked with abstract changes in character appearance. Actual display is performed in the presence of a TextStyle which indicates, for each abstract code, an actual font to be used.  A Text associates a set of TextAttributes with each character in its character string.  These attributes may be font numbers, emphases such as bold or italic, or hyperling actions.  Font numbers are interpreted relative to whatever textStyle appears, along with the text, in a Paragraph.  Since most characters have the same attributes as their neighbors, the attributes are stored in a RunArray for efficiency.  Each of my instances has
+	string		a String
+	runs		a RunArray

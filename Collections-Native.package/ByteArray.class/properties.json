@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Native",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ByteArray",
+	"pools" : [
+		 ],
+	"super" : "ArrayedCollection",
+	"type" : "bytes" }

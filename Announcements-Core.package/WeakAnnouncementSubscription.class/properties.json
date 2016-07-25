@@ -1,0 +1,18 @@
+{
+	"category" : "Announcements-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FinalizationList" ],
+	"commentStamp" : "IgorStasenko 3/12/2011 20:43",
+	"instvars" : [
+		"list",
+		"next",
+		"announcer",
+		"announcementClass",
+		"action" ],
+	"name" : "WeakAnnouncementSubscription",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "weak" }

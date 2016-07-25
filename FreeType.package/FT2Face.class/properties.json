@@ -1,0 +1,38 @@
+{
+	"category" : "FreeType-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"numFaces",
+		"faceIndex",
+		"faceFlags",
+		"styleFlags",
+		"numGlyphs",
+		"familyName",
+		"styleName",
+		"numFixedSizes",
+		"availableSizes",
+		"numCharmaps",
+		"charmaps",
+		"bbox",
+		"unitsPerEm",
+		"ascender",
+		"descender",
+		"height",
+		"maxAdvanceWidth",
+		"maxAdvanceHeight",
+		"underlinePosition",
+		"underlineThickness",
+		"glyph",
+		"encoding",
+		"platformId",
+		"encodingId",
+		"size" ],
+	"name" : "FT2Face",
+	"pools" : [
+		 ],
+	"super" : "FT2Handle",
+	"type" : "normal" }

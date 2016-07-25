@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGTDebugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "AndreiChis 8/28/2014 11:12",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGTDebugger",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

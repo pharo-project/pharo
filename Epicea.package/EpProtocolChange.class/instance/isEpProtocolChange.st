@@ -1,0 +1,4 @@
+testing
+isEpProtocolChange
+
+	^ true

@@ -1,0 +1,3 @@
+compatibility
+numberOfDependencies
+	^ 0

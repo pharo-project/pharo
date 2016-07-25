@@ -1,0 +1,4 @@
+accessing
+releaseActionMap
+
+    actionMap := nil

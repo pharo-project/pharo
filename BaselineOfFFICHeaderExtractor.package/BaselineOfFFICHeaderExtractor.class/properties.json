@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfFFICHeaderExtractor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 1/27/2016 10:38",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfFFICHeaderExtractor",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

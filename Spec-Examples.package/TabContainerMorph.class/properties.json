@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"container",
+		"tab" ],
+	"name" : "TabContainerMorph",
+	"pools" : [
+		 ],
+	"super" : "PanelMorph",
+	"type" : "normal" }

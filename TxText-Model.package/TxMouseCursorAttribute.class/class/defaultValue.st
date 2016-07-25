@@ -1,0 +1,3 @@
+defaults
+defaultValue
+	^ Cursor overEditableText

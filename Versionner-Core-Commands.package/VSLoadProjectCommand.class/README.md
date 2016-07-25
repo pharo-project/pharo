@@ -1,0 +1,1 @@
+Load a project configuration into the image. The project should have a configuration class. It will always load the latest version of the configuration package.

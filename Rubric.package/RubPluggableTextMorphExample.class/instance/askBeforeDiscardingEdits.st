@@ -1,0 +1,3 @@
+edits
+askBeforeDiscardingEdits
+	^ false

@@ -1,0 +1,1 @@
+This class provides a compact bit encoding for the most commonly used layout properties.

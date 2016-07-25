@@ -1,0 +1,27 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/22/2015 11:38",
+	"instvars" : [
+		"normalImage",
+		"pressedImage",
+		"selectedImage",
+		"checkedImage",
+		"announcer",
+		"checkedColor",
+		"normalColor",
+		"pressedColor",
+		"selectedColor",
+		"isSelected",
+		"isPressed",
+		"isChecked",
+		"isEnabled",
+		"isDoubleClickEnabled" ],
+	"name" : "GLMInteractableBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

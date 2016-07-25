@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Bytecode",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"currentCompiler" ],
+	"name" : "OCBytecodeDecompilerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

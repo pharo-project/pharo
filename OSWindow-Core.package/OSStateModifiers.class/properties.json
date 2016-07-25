@@ -1,0 +1,24 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:42",
+	"instvars" : [
+		"leftShift",
+		"rightShift",
+		"leftAlt",
+		"rightAlt",
+		"leftCtrl",
+		"rightCtrl",
+		"leftCmd",
+		"rightCmd",
+		"capsLock",
+		"numLock",
+		"buttons" ],
+	"name" : "OSStateModifiers",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

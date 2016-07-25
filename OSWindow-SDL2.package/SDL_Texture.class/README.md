@@ -1,0 +1,1 @@
+I represent a handle of GL texture, coming from SDL2 library

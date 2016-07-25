@@ -1,0 +1,17 @@
+{
+	"category" : "System-Caching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"factory",
+		"statistics",
+		"weight",
+		"access" ],
+	"name" : "AbstractCache",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

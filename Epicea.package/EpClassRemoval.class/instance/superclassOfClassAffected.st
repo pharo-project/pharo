@@ -1,0 +1,4 @@
+accessing
+superclassOfClassAffected
+
+	^ classRemoved superclassName 

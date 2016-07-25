@@ -1,0 +1,1 @@
+I represent an error raised while building a class. 

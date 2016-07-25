@@ -1,0 +1,21 @@
+{
+	"category" : "Tool-Finder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 9/15/2010 11:17",
+	"instvars" : [
+		"searchingString",
+		"selectedMethod",
+		"selectedClass",
+		"packagesSelection",
+		"currentSearchMode",
+		"environment",
+		"resultDictionary",
+		"useRegEx" ],
+	"name" : "Finder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "brp 5/13/2003 08:07",
+	"instvars" : [
+		"start",
+		"duration" ],
+	"name" : "Timespan",
+	"pools" : [
+		 ],
+	"super" : "Magnitude",
+	"type" : "normal" }

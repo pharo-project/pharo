@@ -1,0 +1,3 @@
+*NodeNavigation
+sourceTextArea
+	^morph

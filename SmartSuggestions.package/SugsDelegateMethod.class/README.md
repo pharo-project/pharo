@@ -1,0 +1,1 @@
+I know how to delegate the selected method in an instance variable and move the code to a class

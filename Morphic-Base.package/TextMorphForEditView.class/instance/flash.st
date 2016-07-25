@@ -1,0 +1,3 @@
+macpal
+flash
+	^ editView flash

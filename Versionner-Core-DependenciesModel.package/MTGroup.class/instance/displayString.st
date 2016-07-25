@@ -1,0 +1,3 @@
+displaying
+displayString
+	^ name

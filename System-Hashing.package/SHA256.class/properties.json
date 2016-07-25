@@ -1,0 +1,22 @@
+{
+	"category" : "System-Hashing-SHA256",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 6/26/2014 08:58",
+	"instvars" : [
+		"totalA",
+		"totalB",
+		"totalC",
+		"totalD",
+		"totalE",
+		"totalF",
+		"totalG",
+		"totalH",
+		"totals" ],
+	"name" : "SHA256",
+	"pools" : [
+		 ],
+	"super" : "HashFunction",
+	"type" : "normal" }

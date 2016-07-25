@@ -1,0 +1,14 @@
+{
+	"category" : "System-FileRegistry",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 8/20/2015 15:33",
+	"instvars" : [
+		 ],
+	"name" : "FileServices",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+inline messages
+emitIfTrue: aMessageNode
+
+	self shouldBeSentToValueOrEffectTranslator

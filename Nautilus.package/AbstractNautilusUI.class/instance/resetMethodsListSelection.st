@@ -1,0 +1,3 @@
+selection
+resetMethodsListSelection
+	self subclassResponsibility 

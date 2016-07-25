@@ -1,0 +1,3 @@
+actions
+beRemoved
+	removed := true

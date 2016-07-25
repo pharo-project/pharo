@@ -1,0 +1,4 @@
+building suites
+shouldInheritSelectors
+
+^true

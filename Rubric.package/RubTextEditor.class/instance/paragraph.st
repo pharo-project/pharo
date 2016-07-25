@@ -1,0 +1,3 @@
+private
+paragraph
+	^ textArea paragraph

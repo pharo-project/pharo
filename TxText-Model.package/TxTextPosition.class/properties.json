@@ -1,0 +1,15 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/25/2015 20:53",
+	"instvars" : [
+		"span",
+		"spanPosition" ],
+	"name" : "TxTextPosition",
+	"pools" : [
+		 ],
+	"super" : "TxBasicTextPosition",
+	"type" : "normal" }

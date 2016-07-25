@@ -1,0 +1,1 @@
+Common superclass for package related announcements

@@ -1,0 +1,1 @@
+my subclasses used internally in balloon backend for Athens to represenet gradient paints.

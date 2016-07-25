@@ -1,0 +1,4 @@
+examples
+exampleWindowWithScrolledText
+
+	^self open

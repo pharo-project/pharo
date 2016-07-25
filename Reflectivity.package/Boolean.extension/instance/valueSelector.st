@@ -1,0 +1,3 @@
+*Reflectivity
+valueSelector
+	^#value

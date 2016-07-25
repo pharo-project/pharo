@@ -1,0 +1,16 @@
+{
+	"category" : "Keymapping-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"target",
+		"category",
+		"morph" ],
+	"name" : "KMCategoryTarget",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

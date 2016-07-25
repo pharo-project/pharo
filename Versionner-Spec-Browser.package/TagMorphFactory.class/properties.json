@@ -1,0 +1,15 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"color",
+		"text" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "TagMorphFactory",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

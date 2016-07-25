@@ -1,0 +1,3 @@
+subdivision callbacks
+angleTolerance
+	^ CurveAngleToleranceEpsilon 

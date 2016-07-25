@@ -1,0 +1,14 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"cseVisited" ],
+	"name" : "MalCseEdge",
+	"pools" : [
+		 ],
+	"super" : "MalDijkstraEdge",
+	"type" : "normal" }

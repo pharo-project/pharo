@@ -1,0 +1,3 @@
+testing
+needsParenthesis
+	^self subclassResponsibility

@@ -1,0 +1,4 @@
+display
+restoreDisplay	
+	
+	self subclassResponsibility 

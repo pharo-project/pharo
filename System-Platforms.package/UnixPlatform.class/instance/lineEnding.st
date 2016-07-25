@@ -1,0 +1,4 @@
+accessing
+lineEnding
+
+	^ String lf

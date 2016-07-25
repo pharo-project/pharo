@@ -1,0 +1,1 @@
+I am the adpater used to bridge a TabManagerModel and a TabManager

@@ -1,0 +1,18 @@
+{
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"text",
+		"morph",
+		"expectedErrors",
+		"expectedErrorPositions",
+		"failure" ],
+	"name" : "OCCompilerNotifyingTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

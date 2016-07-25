@@ -1,0 +1,1 @@
+This is a helper class for modeling a selector. We need this in order to support diving in such a selector and to offer specific processors (like implementors or senders) in Spotter .

@@ -1,0 +1,4 @@
+api
+hasChildren
+
+	^ hasChildren value

@@ -1,0 +1,8 @@
+accessing
+knownHTTPMethods
+	^ #(
+		"Standard HTTP 1.1 Verbs"
+		GET PUT POST DELETE HEAD 
+		TRACE OPTIONS CONNECT PATCH
+		"WebDAV verbs"
+		PROPFIND PROPPATCH MKCOL COPY MOVE LOCK UNLOCK)

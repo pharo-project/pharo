@@ -1,0 +1,4 @@
+accessing
+markOpened
+
+	wasOpened := true

@@ -1,0 +1,3 @@
+drawing
+scrollBarColor
+	^self paneColor

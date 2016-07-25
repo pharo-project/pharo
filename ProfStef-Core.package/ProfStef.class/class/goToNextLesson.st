@@ -1,0 +1,3 @@
+navigating
+goToNextLesson
+  self next

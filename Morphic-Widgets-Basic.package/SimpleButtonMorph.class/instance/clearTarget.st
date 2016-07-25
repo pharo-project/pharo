@@ -1,0 +1,4 @@
+menu
+clearTarget
+
+	target := nil.

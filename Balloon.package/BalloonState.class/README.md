@@ -1,0 +1,1 @@
+This class is a repository for data which needs to be preserved during certain operations of BalloonCanvas.

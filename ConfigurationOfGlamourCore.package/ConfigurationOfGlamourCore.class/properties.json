@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGlamourCore",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "AndreiChis 10/29/2014 12:06",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGlamourCore",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+hasClassTraitComposition
+	^self classTraitCompositionString ~= '{}'

@@ -1,0 +1,4 @@
+setting
+notVisited
+
+	firstDepth := nil

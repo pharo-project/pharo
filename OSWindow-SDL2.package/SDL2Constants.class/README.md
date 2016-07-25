@@ -1,0 +1,1 @@
+Pool of various SDL2 library constants

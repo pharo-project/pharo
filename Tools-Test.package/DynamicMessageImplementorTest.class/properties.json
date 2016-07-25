@@ -1,0 +1,14 @@
+{
+	"category" : "Tools-Test-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 20:46",
+	"instvars" : [
+		"instVar" ],
+	"name" : "DynamicMessageImplementorTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

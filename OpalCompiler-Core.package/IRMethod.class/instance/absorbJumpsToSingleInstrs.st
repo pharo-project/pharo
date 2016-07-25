@@ -1,0 +1,4 @@
+optimizing
+absorbJumpsToSingleInstrs
+
+	startSequence absorbJumpToSingleInstr: IdentitySet new

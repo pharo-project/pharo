@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-GroupManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/7/2015 09:21",
+	"instvars" : [
+		"methods" ],
+	"name" : "MethodGroup",
+	"pools" : [
+		 ],
+	"super" : "Group",
+	"type" : "normal" }

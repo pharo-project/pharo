@@ -1,0 +1,4 @@
+*qualityAssistantRecording
+dataForQAR
+
+	^ self

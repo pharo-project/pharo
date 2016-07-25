@@ -1,0 +1,1 @@
+Literal arrays containing only characters can more efficiently represented as strings.

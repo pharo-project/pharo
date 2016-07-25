@@ -1,0 +1,4 @@
+streaming
+readStream
+	
+	^ self openForRead

@@ -1,0 +1,3 @@
+actions
+nextString
+	^ stream nextDelimited: $'

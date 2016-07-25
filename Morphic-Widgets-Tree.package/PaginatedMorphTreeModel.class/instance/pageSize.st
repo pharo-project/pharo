@@ -1,0 +1,3 @@
+pager managing
+pageSize
+	^ pageSize

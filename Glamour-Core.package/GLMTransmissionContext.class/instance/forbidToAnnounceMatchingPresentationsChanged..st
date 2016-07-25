@@ -1,0 +1,3 @@
+accessing
+forbidToAnnounceMatchingPresentationsChanged: aPane
+	self forbid: aPane toAnnounce: GLMMatchingPresentationsChanged

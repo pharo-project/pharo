@@ -1,0 +1,3 @@
+*renraku
+package
+	^ self

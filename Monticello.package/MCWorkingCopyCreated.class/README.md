@@ -1,0 +1,1 @@
+A MCWorkingCopyCreated is a announcement raised when a new MCWorkingCopy is created

@@ -1,0 +1,4 @@
+accessing
+alphaSize
+	
+	^ alphaSize

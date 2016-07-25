@@ -1,0 +1,15 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"hNumber",
+		"previousNodes" ],
+	"name" : "MalHalNode",
+	"pools" : [
+		 ],
+	"super" : "MalTarjanNode",
+	"type" : "normal" }

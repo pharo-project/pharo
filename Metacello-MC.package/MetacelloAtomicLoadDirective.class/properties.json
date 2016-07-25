@@ -1,0 +1,16 @@
+{
+	"category" : "Metacello-MC-Directives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"packageloads",
+		"preloads",
+		"postloads" ],
+	"name" : "MetacelloAtomicLoadDirective",
+	"pools" : [
+		 ],
+	"super" : "MetacelloVersionLoadDirective",
+	"type" : "normal" }

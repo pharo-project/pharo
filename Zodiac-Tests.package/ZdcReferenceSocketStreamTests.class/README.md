@@ -1,0 +1,1 @@
+ZdcReferenceSocketStreamTests test the reference SocketStream in the image

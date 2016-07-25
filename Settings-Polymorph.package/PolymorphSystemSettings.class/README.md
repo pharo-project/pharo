@@ -1,0 +1,1 @@
+I provide settings for Morphic appearance (theme, fonts, colors, ...) that can be found and changed in the Settings browser.

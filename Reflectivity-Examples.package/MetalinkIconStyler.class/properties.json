@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mcamp 11/17/2015 11:33",
+	"instvars" : [
+		 ],
+	"name" : "MetalinkIconStyler",
+	"pools" : [
+		 ],
+	"super" : "IconStyler",
+	"type" : "normal" }

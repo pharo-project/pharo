@@ -1,0 +1,3 @@
+accessing
+internalDictionaryWithAssociations
+	^ self internalDictionaryClass newFrom: self dictionaryAssociations

@@ -1,0 +1,20 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"size",
+		"numberOfProportionals",
+		"lastFractionIndex",
+		"autoFractionComputation",
+		"height",
+		"currentProportional",
+		"currentOffset" ],
+	"name" : "SpecColumnLayout",
+	"pools" : [
+		 ],
+	"super" : "SpecLayout",
+	"type" : "normal" }

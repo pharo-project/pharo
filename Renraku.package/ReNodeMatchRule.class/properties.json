@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Rewrite",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 7/9/2016 13:31",
+	"instvars" : [
+		"matchers" ],
+	"name" : "ReNodeMatchRule",
+	"pools" : [
+		 ],
+	"super" : "ReNodeBasedRule",
+	"type" : "normal" }

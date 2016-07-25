@@ -1,0 +1,29 @@
+{
+	"category" : "Collections-Tests-Sequenceable",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TSortTest classTrait + TCloneTest classTrait + TIncludesWithIdentityCheckTest classTrait + TSequencedElementAccessTest classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TSubCollectionAccess classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TPrintOnSequencedTest classTrait + TConvertTest classTrait + TCopySequenceableWithReplacement classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyTest classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesTest classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:28",
+	"instvars" : [
+		"empty",
+		"nonEmpty",
+		"one",
+		"elementIn",
+		"elementNotIn",
+		"subCollectionNotIn",
+		"collectionOfFloat",
+		"anotherCollection",
+		"nonEmpty1Element",
+		"subCollection",
+		"collectionWithSubCollection",
+		"subCollectionInNonEmpty",
+		"collectionWithoutNil",
+		"collectResult" ],
+	"name" : "IntervalTest",
+	"pools" : [
+		 ],
+	"super" : "CollectionRootTest",
+	"traitcomposition" : "TSortTest - {#testSort. #testSortUsingSortBlock} + TCloneTest + TIncludesWithIdentityCheckTest + TSequencedElementAccessTest + TIterateSequencedReadableTest + TSequencedConcatenationTest + TSubCollectionAccess + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TPrintOnSequencedTest + TConvertTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurence. #collectionWith2TimeSubcollection}) + TCopySequenceableWithOrWithoutSpecificElements + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + TCopyTest + TBeginsEndsWith + TConvertAsSortedTest + TSequencedStructuralEqualityTest + TOccurrencesTest",
+	"type" : "normal" }

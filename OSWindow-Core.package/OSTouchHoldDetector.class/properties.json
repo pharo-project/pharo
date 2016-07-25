@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"MaxDistanceTravelled",
+		"WaitingTime" ],
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:08",
+	"instvars" : [
+		"waitingTime",
+		"maxDistanceTravelled",
+		"process" ],
+	"name" : "OSTouchHoldDetector",
+	"pools" : [
+		 ],
+	"super" : "OSTouchPunctualGestureDetector",
+	"type" : "normal" }

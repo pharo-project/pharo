@@ -1,0 +1,1 @@
+ifNotEmptyDo: should not be used as ifNotEmpty: works for blocks with arguments, too.

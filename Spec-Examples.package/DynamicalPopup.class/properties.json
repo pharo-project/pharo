@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Examples-BuildUIWithSpec",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/19/2016 16:50",
+	"instvars" : [
+		 ],
+	"name" : "DynamicalPopup",
+	"pools" : [
+		 ],
+	"super" : "DynamicComposableModel",
+	"type" : "normal" }

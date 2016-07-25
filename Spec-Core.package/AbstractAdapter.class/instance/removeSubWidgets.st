@@ -1,0 +1,4 @@
+protocol
+removeSubWidgets
+
+	self subclassResponsibility

@@ -1,0 +1,3 @@
+api
+nextAction
+	self subclassResponsibility

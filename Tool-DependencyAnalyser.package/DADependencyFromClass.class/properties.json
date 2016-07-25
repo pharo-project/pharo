@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 7/31/2014 12:03",
+	"instvars" : [
+		"theClass" ],
+	"name" : "DADependencyFromClass",
+	"pools" : [
+		 ],
+	"super" : "DAPackageDependency",
+	"type" : "normal" }

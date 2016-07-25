@@ -1,0 +1,16 @@
+{
+	"category" : "Multilingual-TextConversion",
+	"classinstvars" : [
+		"latin1Map",
+		"latin1Encodings" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"latin1Map",
+		"latin1Encodings" ],
+	"name" : "TextConverter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

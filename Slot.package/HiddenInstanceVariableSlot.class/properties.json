@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 3/4/2015 20:15",
+	"instvars" : [
+		 ],
+	"name" : "HiddenInstanceVariableSlot",
+	"pools" : [
+		 ],
+	"super" : "InstanceVariableSlot",
+	"type" : "normal" }

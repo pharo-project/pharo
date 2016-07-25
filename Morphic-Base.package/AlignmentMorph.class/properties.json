@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TAbleToRotate classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "kfr 10/27/2003 10:25",
+	"instvars" : [
+		 ],
+	"name" : "AlignmentMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"traitcomposition" : "TAbleToRotate",
+	"type" : "normal" }

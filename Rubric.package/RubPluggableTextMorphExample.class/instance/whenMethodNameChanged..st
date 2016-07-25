@@ -1,0 +1,3 @@
+events handling
+whenMethodNameChanged: anAnnouncement
+	self checkMethodName

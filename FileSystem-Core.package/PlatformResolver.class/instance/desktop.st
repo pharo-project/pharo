@@ -1,0 +1,3 @@
+origins
+desktop
+	^ self subclassResponsibility

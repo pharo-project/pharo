@@ -1,0 +1,4 @@
+protocol
+isExpanded
+
+	^ false

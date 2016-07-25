@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-Core-Members",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"list",
+		"memberMap" ],
+	"name" : "MetacelloMemberListSpec",
+	"pools" : [
+		 ],
+	"super" : "MetacelloSpec",
+	"type" : "normal" }

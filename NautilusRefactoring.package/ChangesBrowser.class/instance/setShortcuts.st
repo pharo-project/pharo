@@ -1,0 +1,3 @@
+initialization
+setShortcuts
+	self changesTree attachKeymapCategory: #ChangesBrowserGlobalShortcuts targetting: self

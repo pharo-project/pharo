@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MorphicMultiColumnListAdapter",
+	"pools" : [
+		 ],
+	"super" : "MorphicListAdapter",
+	"type" : "normal" }

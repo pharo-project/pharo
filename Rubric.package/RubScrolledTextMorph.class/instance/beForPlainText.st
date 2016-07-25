@@ -1,0 +1,3 @@
+initialize-release
+beForPlainText
+	self textArea beForPlainText

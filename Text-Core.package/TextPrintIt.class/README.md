@@ -1,0 +1,1 @@
+A "Print It" action on a text. When the text is clicked the text is seen as source code and evaluated. After that the result is printed

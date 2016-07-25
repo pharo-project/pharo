@@ -1,0 +1,1 @@
+A SlReporter is the automatic reporter window.

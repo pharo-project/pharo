@@ -1,0 +1,18 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/10/2016 06:39",
+	"instvars" : [
+		"which",
+		"axis",
+		"value",
+		"mapped",
+		"hasMapping" ],
+	"name" : "OSJoyAxisEvent",
+	"pools" : [
+		 ],
+	"super" : "OSEvent",
+	"type" : "normal" }

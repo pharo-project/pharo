@@ -1,0 +1,1 @@
+A class to wrap the inIoProcessEvents flag in the WIndows VM.

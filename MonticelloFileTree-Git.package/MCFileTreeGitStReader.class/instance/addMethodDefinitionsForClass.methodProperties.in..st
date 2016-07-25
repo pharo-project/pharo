@@ -1,0 +1,3 @@
+private
+addMethodDefinitionsForClass: className methodProperties: methodProperties in: entries
+	self shouldNotImplement

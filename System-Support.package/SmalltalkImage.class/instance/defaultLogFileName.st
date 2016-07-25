@@ -1,0 +1,4 @@
+log
+defaultLogFileName
+ 
+	^ 'PharoDebug.log'

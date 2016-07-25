@@ -1,0 +1,4 @@
+accessing
+configuration
+
+	^configuration

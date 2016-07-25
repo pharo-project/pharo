@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FTExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

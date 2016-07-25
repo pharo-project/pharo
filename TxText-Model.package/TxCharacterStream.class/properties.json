@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 5/19/2015 12:27",
+	"instvars" : [
+		"position" ],
+	"name" : "TxCharacterStream",
+	"pools" : [
+		 ],
+	"super" : "Stream",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+objectClass
+	^ objectClass

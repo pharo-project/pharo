@@ -1,0 +1,3 @@
+private
+addNewVariable
+	self subclassResponsibility

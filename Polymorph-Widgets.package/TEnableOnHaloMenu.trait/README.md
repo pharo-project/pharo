@@ -1,0 +1,1 @@
+Trait providing an "enabled" option on the halo menu.

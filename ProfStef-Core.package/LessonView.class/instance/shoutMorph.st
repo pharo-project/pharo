@@ -1,0 +1,3 @@
+accessing
+shoutMorph
+	^ shoutMorph

@@ -1,0 +1,1 @@
+I am an abstract class to get the correct menu of a text area

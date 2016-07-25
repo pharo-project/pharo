@@ -1,0 +1,3 @@
+private
+errorBlockFor: aBoolean 
+	^nil

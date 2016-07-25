@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Core-Paints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"start",
+		"stop" ],
+	"name" : "LinearGradientPaint",
+	"pools" : [
+		 ],
+	"super" : "GradientPaint",
+	"type" : "normal" }

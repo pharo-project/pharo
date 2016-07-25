@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Base-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"KeyboardFocusOnMouseDown",
+		"MouseOverForKeyboardFocus" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model" ],
+	"name" : "MorphicModel",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

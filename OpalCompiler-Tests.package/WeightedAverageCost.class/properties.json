@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 6/9/2010 20:53",
+	"instvars" : [
+		 ],
+	"name" : "WeightedAverageCost",
+	"pools" : [
+		 ],
+	"super" : "AverageCost",
+	"type" : "normal" }

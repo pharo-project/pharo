@@ -1,0 +1,3 @@
+events
+wantsHalo
+	^ false

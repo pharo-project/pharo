@@ -1,0 +1,1 @@
+Similar to a ProportionalSplitterMorph but designed to attach to an edge of a single morph only.

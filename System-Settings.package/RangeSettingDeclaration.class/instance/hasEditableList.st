@@ -1,0 +1,3 @@
+user interface
+hasEditableList
+	^ false

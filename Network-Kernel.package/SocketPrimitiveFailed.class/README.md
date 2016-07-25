@@ -1,0 +1,1 @@
+Notify that a socket primitive failed

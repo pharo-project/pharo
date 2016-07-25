@@ -1,0 +1,3 @@
+accessing
+stringInsideParentheses
+	^ DefaultPrettyPrintContext stringInsideParentheses

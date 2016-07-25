@@ -1,0 +1,17 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"storage",
+		"index",
+		"maxSize",
+		"paused" ],
+	"name" : "NavigationHistory",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

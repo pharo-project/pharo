@@ -1,0 +1,1 @@
+A DropListItem is an item (wrapper) designed to fit into a DropList

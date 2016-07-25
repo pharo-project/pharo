@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Stack",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dc 7/24/2005 15:41",
+	"instvars" : [
+		 ],
+	"name" : "Stack",
+	"pools" : [
+		 ],
+	"super" : "LinkedList",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "RingChunkImporter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestRingChunkImporter",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

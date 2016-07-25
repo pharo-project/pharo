@@ -1,0 +1,3 @@
+accessing
+oldMethod
+	^ oldMethod

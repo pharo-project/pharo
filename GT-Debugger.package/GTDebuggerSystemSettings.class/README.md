@@ -1,0 +1,1 @@
+I register settings only needed for GTDebugger.

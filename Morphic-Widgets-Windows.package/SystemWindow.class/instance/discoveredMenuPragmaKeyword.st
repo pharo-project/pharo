@@ -1,0 +1,4 @@
+menu building
+discoveredMenuPragmaKeyword
+
+	^ 'windowMenu'.

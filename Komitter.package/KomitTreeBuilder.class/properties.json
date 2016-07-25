@@ -1,0 +1,14 @@
+{
+	"category" : "Komitter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "KomitTreeBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

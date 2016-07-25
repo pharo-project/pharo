@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Pattern",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "md 8/9/2005 14:59",
+	"instvars" : [
+		"isList" ],
+	"name" : "RBPatternMethodNode",
+	"pools" : [
+		 ],
+	"super" : "RBMethodNode",
+	"type" : "normal" }

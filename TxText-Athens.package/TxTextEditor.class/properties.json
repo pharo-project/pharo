@@ -1,0 +1,17 @@
+{
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/25/2015 14:22",
+	"instvars" : [
+		"text",
+		"selection",
+		"undoBuffer",
+		"announcer" ],
+	"name" : "TxTextEditor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

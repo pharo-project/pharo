@@ -1,0 +1,17 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"receiver",
+		"selector",
+		"keywordsPositions",
+		"arguments" ],
+	"name" : "RBMessageNode",
+	"pools" : [
+		 ],
+	"super" : "RBValueNode",
+	"type" : "normal" }

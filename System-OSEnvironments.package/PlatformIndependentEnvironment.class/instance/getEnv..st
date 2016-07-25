@@ -1,0 +1,3 @@
+private
+getEnv: aVariableName
+	^ nil

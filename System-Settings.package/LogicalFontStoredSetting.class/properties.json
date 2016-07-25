@@ -1,0 +1,17 @@
+{
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 10/1/2015 14:39",
+	"instvars" : [
+		"fallbackFamilyNames",
+		"stretchValue",
+		"weightValue",
+		"slantValue" ],
+	"name" : "LogicalFontStoredSetting",
+	"pools" : [
+		 ],
+	"super" : "AbstractFontStoredSetting",
+	"type" : "normal" }

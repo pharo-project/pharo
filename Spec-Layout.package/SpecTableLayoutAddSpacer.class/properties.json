@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "webwarrior 6/12/2014 14:16",
+	"instvars" : [
+		"commands",
+		"spaceFillWeight",
+		"size",
+		"orientation" ],
+	"name" : "SpecTableLayoutAddSpacer",
+	"pools" : [
+		 ],
+	"super" : "SpecTableLayoutAdd",
+	"type" : "normal" }

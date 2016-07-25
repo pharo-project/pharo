@@ -1,0 +1,4 @@
+accessing
+contextClass
+
+	^ contextClassHolder value

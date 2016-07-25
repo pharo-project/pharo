@@ -1,0 +1,3 @@
+accessing
+versionFromRepositoryFromFileNamed: aGitFileTreeRepositoryEntry
+	^ self versionFromFileNamed: aGitFileTreeRepositoryEntry

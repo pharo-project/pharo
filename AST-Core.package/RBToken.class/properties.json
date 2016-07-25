@@ -1,0 +1,15 @@
+{
+	"category" : "AST-Core-Tokens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"sourcePointer",
+		"comments" ],
+	"name" : "RBToken",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

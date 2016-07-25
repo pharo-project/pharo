@@ -1,0 +1,18 @@
+{
+	"category" : "Files-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Busy",
+		"ErrorCode" ],
+	"commentStamp" : "HenrikSperreJohansen 2/16/2012 11:40",
+	"instvars" : [
+		"name",
+		"writeable",
+		"semaphore",
+		"fileHandle" ],
+	"name" : "AsyncFile",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

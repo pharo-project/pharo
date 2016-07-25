@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "LocalTimeZone",
+	"pools" : [
+		"ChronologyConstants" ],
+	"super" : "AbstractTimeZone",
+	"type" : "normal" }

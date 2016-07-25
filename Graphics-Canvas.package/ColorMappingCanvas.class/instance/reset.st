@@ -1,0 +1,3 @@
+initialization
+reset
+	myCanvas reset.

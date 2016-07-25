@@ -1,0 +1,3 @@
+persistence
+storeSettingNodes
+	self persistence storeSettingNodes

@@ -1,0 +1,3 @@
+accessing
+isBinary
+	^ isBinary

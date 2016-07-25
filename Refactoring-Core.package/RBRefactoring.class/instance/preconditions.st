@@ -1,0 +1,3 @@
+preconditions
+preconditions
+	self subclassResponsibility

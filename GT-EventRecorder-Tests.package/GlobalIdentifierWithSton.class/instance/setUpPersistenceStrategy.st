@@ -1,0 +1,4 @@
+running
+setUpPersistenceStrategy
+	identifier persistenceStrategy: GlobalIdentifierPersistence ston.
+	identifier persistenceStrategy preferences: preferences

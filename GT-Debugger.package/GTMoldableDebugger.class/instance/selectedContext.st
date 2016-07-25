@@ -1,0 +1,3 @@
+accessing context
+selectedContext
+	self subclassResponsibility 

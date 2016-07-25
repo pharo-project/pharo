@@ -1,0 +1,3 @@
+rendering
+actOnPresentationUpdated: anAnnouncement
+	labelMorph contents: anAnnouncement presentation formatedDisplayValue

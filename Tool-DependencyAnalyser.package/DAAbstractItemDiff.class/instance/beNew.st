@@ -1,0 +1,3 @@
+actions
+beNew
+	new := true

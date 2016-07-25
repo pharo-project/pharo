@@ -1,0 +1,1 @@
+I am signalled when a repositroy cannot save or access a version.

@@ -1,0 +1,1 @@
+I am a keyboard event. I contain the char code of the event pressed, the modifiers pressed, and the keycode of the key pressed.

@@ -1,0 +1,14 @@
+{
+	"category" : "System-CachingTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TTLCacheTests",
+	"pools" : [
+		 ],
+	"super" : "LRUCacheTests",
+	"type" : "normal" }

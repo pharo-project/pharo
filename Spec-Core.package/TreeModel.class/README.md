@@ -1,0 +1,1 @@
+I am the Spec model of a MorphTreeMorph tree.

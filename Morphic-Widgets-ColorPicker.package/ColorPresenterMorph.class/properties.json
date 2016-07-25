@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Widgets-ColorPicker",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"HatchForm" ],
+	"commentStamp" : "gvc 5/18/2007 13:38",
+	"instvars" : [
+		"contentMorph",
+		"labelMorph",
+		"solidLabelMorph",
+		"getColorSelector" ],
+	"name" : "ColorPresenterMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"type" : "normal" }

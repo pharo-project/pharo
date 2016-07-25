@@ -1,0 +1,29 @@
+{
+	"category" : "Glamour-Morphic-Pager-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"numberOfVisiblePages",
+		"announcer",
+		"firstVisiblePageIndex",
+		"pagesCount",
+		"lastVisiblePageIndex",
+		"selectedPageIndex",
+		"focusedMorphs",
+		"focusedPageIndex",
+		"virtualFirstVisiblePageIndex",
+		"virtualLastVisiblePageIndex",
+		"scrollButtonIconRenderBlock",
+		"isDependenciesShown",
+		"scrollToRightTask",
+		"isNotificationsAllowed",
+		"scrollingDelay",
+		"minimumPageNumberForScrollbar" ],
+	"name" : "GLMPagerModel",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

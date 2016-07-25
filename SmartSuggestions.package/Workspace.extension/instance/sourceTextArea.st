@@ -1,0 +1,3 @@
+*SmartSuggestions
+sourceTextArea
+	^ self textView

@@ -1,0 +1,15 @@
+{
+	"category" : "Collections-Abstract",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TSortable classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ArrayedCollection",
+	"pools" : [
+		 ],
+	"super" : "SequenceableCollection",
+	"type" : "normal" }

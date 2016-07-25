@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Resource-Meta-FileSystem",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ZnFileRetrieveContents",
+	"pools" : [
+		 ],
+	"super" : "ZnUrlOperation",
+	"type" : "normal" }

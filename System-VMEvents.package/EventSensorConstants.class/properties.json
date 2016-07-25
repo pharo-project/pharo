@@ -1,0 +1,34 @@
+{
+	"category" : "System-VMEvents",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BlueButtonBit",
+		"CommandKeyBit",
+		"CtrlKeyBit",
+		"EventKeyChar",
+		"EventKeyDown",
+		"EventKeyUp",
+		"EventTypeDragDropFiles",
+		"EventTypeKeyboard",
+		"EventTypeMenu",
+		"EventTypeMouse",
+		"EventTypeNone",
+		"EventTypeWindow",
+		"OptionKeyBit",
+		"RedButtonBit",
+		"ShiftKeyBit",
+		"WindowEventActivated",
+		"WindowEventClose",
+		"WindowEventIconise",
+		"WindowEventMetricChange",
+		"WindowEventPaint",
+		"YellowButtonBit" ],
+	"commentStamp" : "LaurentLaffont 3/15/2011 20:48",
+	"instvars" : [
+		 ],
+	"name" : "EventSensorConstants",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

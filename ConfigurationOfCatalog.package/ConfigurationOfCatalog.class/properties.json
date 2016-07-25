@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfCatalog",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "TorstenBergmann 6/11/2015 11:53",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfCatalog",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

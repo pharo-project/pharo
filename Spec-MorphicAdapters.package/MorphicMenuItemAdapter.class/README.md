@@ -1,0 +1,1 @@
+I am the bridge between a MenuItemModel and a ToggleMenuItemMorph

@@ -1,0 +1,3 @@
+accessing decorators
+withoutSelectionBar
+	self withoutDecoratorNamed: #selectionBar

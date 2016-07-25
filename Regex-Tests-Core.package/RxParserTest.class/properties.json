@@ -1,0 +1,14 @@
+{
+	"category" : "Regex-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Tbn 11/12/2010 22:31",
+	"instvars" : [
+		 ],
+	"name" : "RxParserTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

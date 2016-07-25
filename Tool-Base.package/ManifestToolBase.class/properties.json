@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestToolBase",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

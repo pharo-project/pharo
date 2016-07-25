@@ -1,0 +1,1 @@
+I extend the simple Rubric text presentation with basic support for dealing with Smalltalk code.

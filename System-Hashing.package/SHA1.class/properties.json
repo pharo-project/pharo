@@ -1,0 +1,22 @@
+{
+	"category" : "System-Hashing-SHA1",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"K1",
+		"K2",
+		"K3",
+		"K4" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"totalA",
+		"totalB",
+		"totalC",
+		"totalD",
+		"totalE",
+		"totals" ],
+	"name" : "SHA1",
+	"pools" : [
+		 ],
+	"super" : "HashFunction",
+	"type" : "normal" }

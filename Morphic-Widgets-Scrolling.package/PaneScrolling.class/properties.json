@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"step",
+		"scrollPane" ],
+	"name" : "PaneScrolling",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

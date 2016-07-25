@@ -1,0 +1,15 @@
+{
+	"category" : "System-Announcements-System-Protocols",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"protocol",
+		"classReorganized" ],
+	"name" : "ProtocolAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "SystemAnnouncement",
+	"type" : "normal" }

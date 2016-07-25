@@ -1,0 +1,22 @@
+{
+	"category" : "Spec-Tools-Senders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"listModel",
+		"textModel",
+		"toolbarModel",
+		"refreshingBlockHolder",
+		"cachedHierarchy",
+		"model",
+		"topologicSortHolder",
+		"textConverterHolder",
+		"browsedEnvironment" ],
+	"name" : "MessageBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,17 @@
+{
+	"category" : "NautilusRefactoring-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"textArea",
+		"scopeChooser",
+		"changesTree",
+		"changes" ],
+	"name" : "ChangesBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

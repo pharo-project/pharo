@@ -1,0 +1,16 @@
+{
+	"category" : "NECompletion-OCompletion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"date",
+		"next",
+		"previous" ],
+	"name" : "NOCDatedEntry",
+	"pools" : [
+		 ],
+	"super" : "NECSelectorEntry",
+	"type" : "normal" }

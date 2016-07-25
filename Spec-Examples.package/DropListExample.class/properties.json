@@ -1,0 +1,19 @@
+{
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"container",
+		"morph1",
+		"morph2",
+		"morph3",
+		"uniformDropList",
+		"heterogeneousDropList" ],
+	"name" : "DropListExample",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

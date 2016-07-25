@@ -1,0 +1,3 @@
+migrating
+fixClassBindings: newClass
+	methodUpdateStrategy updateClassLiteralKeysIn: newClass

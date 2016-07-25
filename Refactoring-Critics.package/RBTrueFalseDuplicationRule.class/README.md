@@ -1,0 +1,1 @@
+Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end. Instead of having the same code in two places, you should move it outside the blocks.

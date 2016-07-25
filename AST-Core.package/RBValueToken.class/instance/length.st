@@ -1,0 +1,3 @@
+private
+length
+	^value size

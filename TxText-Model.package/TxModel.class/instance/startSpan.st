@@ -1,0 +1,3 @@
+accessing-spans
+startSpan
+	^ startSpan 

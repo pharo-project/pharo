@@ -1,0 +1,1 @@
+I represent the mode to use to edit plain text (in menus, help browser etc)

@@ -1,0 +1,1 @@
+A text command to render a character span containing the range of characters for with same attributes

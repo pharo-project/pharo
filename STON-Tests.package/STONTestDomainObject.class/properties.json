@@ -1,0 +1,22 @@
+{
+	"category" : "STON-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 2/10/2012 20:25",
+	"instvars" : [
+		"created",
+		"modified",
+		"integer",
+		"float",
+		"description",
+		"color",
+		"tags",
+		"bytes",
+		"boolean" ],
+	"name" : "STONTestDomainObject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "EUCJPTextConverter",
+	"pools" : [
+		 ],
+	"super" : "EUCTextConverter",
+	"type" : "normal" }

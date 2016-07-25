@@ -1,0 +1,3 @@
+accessing
+asString
+	^ text asString

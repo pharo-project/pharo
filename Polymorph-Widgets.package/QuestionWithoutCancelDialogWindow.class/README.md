@@ -1,0 +1,1 @@
+A yes/no message dialog. Yes (return) is the default. Escape will answer no.

@@ -1,0 +1,4 @@
+position
+position
+
+	^ file position

@@ -1,0 +1,1 @@
+SUnit tests to tests conflicts for instance variables and class variable names

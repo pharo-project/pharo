@@ -1,0 +1,3 @@
+buttons creations
+searchButtonLabel
+	^'Search'

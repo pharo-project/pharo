@@ -1,0 +1,1 @@
+I'm a relation slot  that  describes  slots that contain collections.

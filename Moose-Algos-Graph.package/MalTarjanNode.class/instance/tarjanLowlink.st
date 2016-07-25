@@ -1,0 +1,3 @@
+accessing
+tarjanLowlink
+	^ lowlink

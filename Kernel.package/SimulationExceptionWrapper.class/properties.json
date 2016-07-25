@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 21:43",
+	"instvars" : [
+		"exception" ],
+	"name" : "SimulationExceptionWrapper",
+	"pools" : [
+		 ],
+	"super" : "Exception",
+	"type" : "normal" }

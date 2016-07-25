@@ -1,0 +1,4 @@
+class methods
+ucsTable
+
+	^ UcsTable 

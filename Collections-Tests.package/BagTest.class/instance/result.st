@@ -1,0 +1,5 @@
+setup
+result
+
+	^ collectResult.
+	

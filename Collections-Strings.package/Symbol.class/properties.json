@@ -1,0 +1,17 @@
+{
+	"category" : "Collections-Strings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"NewSymbols",
+		"OneCharacterSymbols",
+		"SelectorTable",
+		"SymbolTable" ],
+	"commentStamp" : "MarcusDenker 7/7/2016 16:05",
+	"instvars" : [
+		 ],
+	"name" : "Symbol",
+	"pools" : [
+		 ],
+	"super" : "String",
+	"type" : "normal" }

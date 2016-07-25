@@ -1,0 +1,3 @@
+reading
+peekLast
+	^ lastElement

@@ -1,0 +1,17 @@
+{
+	"category" : "TxText-AthensTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"isPaintSet",
+		"drawnShapes",
+		"interval",
+		"renderer" ],
+	"name" : "TxHighlightRendererTest",
+	"pools" : [
+		 ],
+	"super" : "TxAthensLayoutTest",
+	"type" : "normal" }

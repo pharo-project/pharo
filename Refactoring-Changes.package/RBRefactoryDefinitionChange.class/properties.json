@@ -1,0 +1,16 @@
+{
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"controller",
+		"definition",
+		"definedClass" ],
+	"name" : "RBRefactoryDefinitionChange",
+	"pools" : [
+		 ],
+	"super" : "RBRefactoryClassChange",
+	"type" : "normal" }

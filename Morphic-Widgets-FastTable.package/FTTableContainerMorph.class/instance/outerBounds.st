@@ -1,0 +1,3 @@
+geometry
+outerBounds 
+	^ self bounds

@@ -1,0 +1,1 @@
+I am a Tree column made especially to be used by the Spec framework

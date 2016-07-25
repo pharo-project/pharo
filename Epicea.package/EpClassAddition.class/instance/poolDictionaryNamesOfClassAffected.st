@@ -1,0 +1,4 @@
+accessing
+poolDictionaryNamesOfClassAffected
+
+	^ class sharedPoolNames 

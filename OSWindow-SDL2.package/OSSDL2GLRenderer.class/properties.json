@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-OpenGL",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:22",
+	"instvars" : [
+		"context" ],
+	"name" : "OSSDL2GLRenderer",
+	"pools" : [
+		"SDL2Constants" ],
+	"super" : "OSWindowGLRenderer",
+	"type" : "normal" }

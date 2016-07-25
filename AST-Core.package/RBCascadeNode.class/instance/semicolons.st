@@ -1,0 +1,3 @@
+accessing-token
+semicolons
+	^ semicolons

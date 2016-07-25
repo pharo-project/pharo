@@ -1,0 +1,24 @@
+{
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 11/26/2014 15:13",
+	"instvars" : [
+		"announcer",
+		"processors",
+		"origin",
+		"context",
+		"selected",
+		"stream",
+		"candidates",
+		"asyncTask",
+		"spotter",
+		"lastSearchContext",
+		"event" ],
+	"name" : "GTSpotterStep",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

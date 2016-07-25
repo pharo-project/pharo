@@ -1,0 +1,4 @@
+selection operation
+resetClassSelection
+
+	self classes resetSelection

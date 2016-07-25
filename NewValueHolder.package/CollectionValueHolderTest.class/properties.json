@@ -1,0 +1,16 @@
+{
+	"category" : "NewValueHolder-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"empty",
+		"withItems",
+		"fired" ],
+	"name" : "CollectionValueHolderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

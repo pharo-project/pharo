@@ -1,0 +1,3 @@
+accessing
+newLineAfterCascade
+	^ context newLineAfterCascade

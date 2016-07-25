@@ -1,0 +1,3 @@
+accessing
+rectangle
+	^rectangle

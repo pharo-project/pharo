@@ -1,0 +1,4 @@
+accessing
+realClassAffected
+
+	^ class realClass

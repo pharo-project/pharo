@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tools-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "WatchpointTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

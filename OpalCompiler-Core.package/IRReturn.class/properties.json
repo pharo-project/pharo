@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "IRReturn",
+	"pools" : [
+		 ],
+	"super" : "IRInstruction",
+	"type" : "normal" }

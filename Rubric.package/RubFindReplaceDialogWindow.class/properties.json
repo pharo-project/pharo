@@ -1,0 +1,15 @@
+{
+	"category" : "Rubric-Editing-FindReplaceService",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Finds",
+		"Replacements" ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:31",
+	"instvars" : [
+		"findTextField" ],
+	"name" : "RubFindReplaceDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

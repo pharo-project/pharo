@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarkRizun 7/24/2014 14:19",
+	"instvars" : [
+		"oldClass" ],
+	"name" : "RBMoveInstVarToClassRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBVariableRefactoring",
+	"type" : "normal" }

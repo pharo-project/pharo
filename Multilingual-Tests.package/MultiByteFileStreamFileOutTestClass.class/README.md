@@ -1,0 +1,1 @@
+MultiByteFileStreamFileOutTestClass is used in MultiByteFileStreamTest>>#testFileOutNonAscii.

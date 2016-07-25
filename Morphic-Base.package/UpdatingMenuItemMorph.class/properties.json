@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"nameSelector",
+		"iconSelector",
+		"subMenuSelector",
+		"balloonTextSelector" ],
+	"name" : "UpdatingMenuItemMorph",
+	"pools" : [
+		 ],
+	"super" : "ToggleMenuItemMorph",
+	"type" : "normal" }

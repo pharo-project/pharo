@@ -1,0 +1,3 @@
+accessing
+highlightSmalltalk
+	^ highlightSmalltalk

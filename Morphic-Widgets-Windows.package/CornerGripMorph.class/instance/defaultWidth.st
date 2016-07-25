@@ -1,0 +1,3 @@
+accessing
+defaultWidth
+	^ 22

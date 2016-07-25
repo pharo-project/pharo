@@ -1,0 +1,1 @@
+I know how to use a Text model that came from a SmalltalkEditor and extract the information needed for the suggestions :)

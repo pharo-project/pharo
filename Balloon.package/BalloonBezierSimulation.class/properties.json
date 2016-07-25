@@ -1,0 +1,26 @@
+{
+	"category" : "Balloon-Simulation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"HeightSubdivisions",
+		"LineConversions",
+		"MonotonSubdivisions",
+		"OverflowSubdivisions" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"start",
+		"end",
+		"via",
+		"lastX",
+		"lastY",
+		"fwDx",
+		"fwDy",
+		"fwDDx",
+		"fwDDy",
+		"maxSteps" ],
+	"name" : "BalloonBezierSimulation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+SUnit tests for extract locale suggestion

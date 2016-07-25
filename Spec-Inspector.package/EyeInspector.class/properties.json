@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Inspector",
+	"classinstvars" : [
+		"useAutoRefresh" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 1/17/2014 13:44",
+	"instvars" : [
+		"list",
+		"description" ],
+	"name" : "EyeInspector",
+	"pools" : [
+		 ],
+	"super" : "EyeAbstractInspector",
+	"type" : "normal" }

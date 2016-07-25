@@ -1,0 +1,18 @@
+{
+	"category" : "HelpSystem-Core-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultHelpBrowser" ],
+	"commentStamp" : "tbn 3/8/2010 09:33",
+	"instvars" : [
+		"rootTopic",
+		"window",
+		"treeMorph",
+		"helpTopicCache",
+		"sourceTextModel" ],
+	"name" : "HelpBrowser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

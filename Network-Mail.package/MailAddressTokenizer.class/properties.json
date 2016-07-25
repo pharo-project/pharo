@@ -1,0 +1,19 @@
+{
+	"category" : "Network-Mail",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CSNonAtom",
+		"CSNonSeparators",
+		"CSParens",
+		"CSSpecials" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"cachedToken",
+		"text",
+		"pos" ],
+	"name" : "MailAddressTokenizer",
+	"pools" : [
+		 ],
+	"super" : "Stream",
+	"type" : "normal" }

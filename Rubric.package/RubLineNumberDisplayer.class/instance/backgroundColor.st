@@ -1,0 +1,3 @@
+accessing
+backgroundColor
+	^ self paragraphProvider lineNumbersBackgroundColor 

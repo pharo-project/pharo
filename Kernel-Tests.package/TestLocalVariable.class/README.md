@@ -1,0 +1,1 @@
+TestLocalVariable is a test class using in ProcessSpecificTest.

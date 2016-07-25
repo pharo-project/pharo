@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Examples-Widgets",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TEasilyThemed classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 7/19/2007 16:49",
+	"instvars" : [
+		 ],
+	"name" : "ExampleBuilderMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"traitcomposition" : "TEasilyThemed",
+	"type" : "normal" }

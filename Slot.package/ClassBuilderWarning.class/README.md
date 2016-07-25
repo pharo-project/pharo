@@ -1,0 +1,1 @@
+I represent a warning signaled while building a class.

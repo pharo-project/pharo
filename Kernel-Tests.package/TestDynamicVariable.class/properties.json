@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mvl 3/13/2007 13:51",
+	"instvars" : [
+		 ],
+	"name" : "TestDynamicVariable",
+	"pools" : [
+		 ],
+	"super" : "DynamicVariable",
+	"type" : "normal" }

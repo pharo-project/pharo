@@ -1,0 +1,1 @@
+I am the adapter used to bridge a TextModel and a PluggableTextMorph

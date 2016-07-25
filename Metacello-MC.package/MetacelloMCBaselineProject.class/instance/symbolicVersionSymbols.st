@@ -1,0 +1,3 @@
+versions
+symbolicVersionSymbols
+    ^ nil

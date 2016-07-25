@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 7/11/2014 11:53",
+	"instvars" : [
+		"packageAnalyzerTreeModel",
+		"nautilus" ],
+	"name" : "DAPackageAnalyzerWindow",
+	"pools" : [
+		 ],
+	"super" : "StandardWindow",
+	"type" : "normal" }

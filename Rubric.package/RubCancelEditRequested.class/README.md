@@ -1,0 +1,1 @@
+I am raised when edits are cancelled in the text area

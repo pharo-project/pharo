@@ -1,0 +1,1 @@
+i am abstract class for different kinds of paints in cairo backend.

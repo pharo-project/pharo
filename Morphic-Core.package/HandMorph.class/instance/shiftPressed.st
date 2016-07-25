@@ -1,0 +1,3 @@
+accessing
+shiftPressed
+	^lastMouseEvent shiftPressed

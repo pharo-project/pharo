@@ -1,0 +1,3 @@
+button behavior
+openBIInspectorButtonState
+	^ true

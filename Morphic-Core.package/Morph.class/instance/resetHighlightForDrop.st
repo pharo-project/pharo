@@ -1,0 +1,3 @@
+dropping/grabbing
+resetHighlightForDrop
+	self highlightForDrop: false

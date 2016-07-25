@@ -1,0 +1,18 @@
+{
+	"category" : "Morphic-Core-Worlds",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ShouldSwapMenuOpenerButtons",
+		"WindowEventHandler",
+		"WorldAnnouncer" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"backgroundMorph",
+		"worldState",
+		"griddingOn" ],
+	"name" : "PasteUpMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

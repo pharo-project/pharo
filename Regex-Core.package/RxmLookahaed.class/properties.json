@@ -1,0 +1,15 @@
+{
+	"category" : "Regex-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"lookahead",
+		"positive" ],
+	"name" : "RxmLookahaed",
+	"pools" : [
+		 ],
+	"super" : "RxmLink",
+	"type" : "normal" }

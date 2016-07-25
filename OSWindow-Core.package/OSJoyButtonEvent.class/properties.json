@@ -1,0 +1,18 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/10/2016 06:40",
+	"instvars" : [
+		"which",
+		"button",
+		"pressed",
+		"mapped",
+		"hasMapping" ],
+	"name" : "OSJoyButtonEvent",
+	"pools" : [
+		 ],
+	"super" : "OSEvent",
+	"type" : "normal" }

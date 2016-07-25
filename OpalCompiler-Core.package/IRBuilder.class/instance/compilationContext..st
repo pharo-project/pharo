@@ -1,0 +1,3 @@
+initialize
+compilationContext: aCompilationContext
+	ir compilationContext: aCompilationContext

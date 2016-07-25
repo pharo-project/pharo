@@ -1,0 +1,3 @@
+visiting
+visitWindowCloseEvent: anEvent
+	athensExample destroy

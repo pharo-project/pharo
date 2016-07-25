@@ -1,0 +1,4 @@
+accessing
+globalName
+	
+	^ globalName

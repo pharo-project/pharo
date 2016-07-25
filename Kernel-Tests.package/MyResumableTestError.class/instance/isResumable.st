@@ -1,0 +1,4 @@
+exception description
+isResumable
+
+	^true

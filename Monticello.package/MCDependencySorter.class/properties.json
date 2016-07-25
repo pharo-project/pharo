@@ -1,0 +1,16 @@
+{
+	"category" : "Monticello-Loading",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"required",
+		"provided",
+		"orderedItems" ],
+	"name" : "MCDependencySorter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

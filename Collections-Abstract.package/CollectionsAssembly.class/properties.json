@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Abstract",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 6/23/2015 10:52",
+	"instvars" : [
+		 ],
+	"name" : "CollectionsAssembly",
+	"pools" : [
+		 ],
+	"super" : "AssemblyManifest",
+	"type" : "normal" }

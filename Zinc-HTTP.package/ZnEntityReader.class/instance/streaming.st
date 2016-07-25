@@ -1,0 +1,3 @@
+accessing
+streaming
+	streaming := true

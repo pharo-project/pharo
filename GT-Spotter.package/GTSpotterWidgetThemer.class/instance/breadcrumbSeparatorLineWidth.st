@@ -1,0 +1,4 @@
+values
+breadcrumbSeparatorLineWidth
+
+	^ 2

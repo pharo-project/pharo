@@ -1,0 +1,3 @@
+accessing
+hasExtensions
+	^self extensionClassNames notEmpty

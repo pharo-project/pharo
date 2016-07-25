@@ -1,0 +1,4 @@
+testing
+name
+
+	^self versionString

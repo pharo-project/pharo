@@ -1,0 +1,18 @@
+{
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 6/16/2014 15:20",
+	"instvars" : [
+		"method",
+		"url",
+		"response",
+		"size",
+		"duration" ],
+	"name" : "ZnSimplifiedServerTransactionEvent",
+	"pools" : [
+		 ],
+	"super" : "ZnServerLogEvent",
+	"type" : "normal" }

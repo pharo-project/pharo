@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters-Optionals",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 9/8/2011 22:53",
+	"instvars" : [
+		 ],
+	"name" : "FLRectangleCluster",
+	"pools" : [
+		 ],
+	"super" : "FLOptimizedObjectCluster",
+	"type" : "normal" }

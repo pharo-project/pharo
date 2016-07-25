@@ -1,0 +1,3 @@
+testing
+captureNavigationKeys
+	^ NECPreferences captureNavigationKeys

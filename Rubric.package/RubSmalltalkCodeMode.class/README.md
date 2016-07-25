@@ -1,0 +1,1 @@
+I represent the mode to use for editing smalltalk code

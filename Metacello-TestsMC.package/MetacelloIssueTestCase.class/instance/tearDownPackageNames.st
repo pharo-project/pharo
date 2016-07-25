@@ -1,0 +1,3 @@
+running
+tearDownPackageNames
+    ^ {(self projectName)}

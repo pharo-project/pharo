@@ -1,0 +1,1 @@
+My instances implement OSWindowGenericRenderer interface by wrapping a SDL2 renderer.

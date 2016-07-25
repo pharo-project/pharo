@@ -1,0 +1,28 @@
+{
+	"category" : "Graphics-Files",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"currentX",
+		"currentY",
+		"hSampleFactor",
+		"vSampleFactor",
+		"mcuBlocks",
+		"widthInBlocks",
+		"heightInBlocks",
+		"dctSize",
+		"mcuWidth",
+		"mcuHeight",
+		"priorDCValue",
+		"id",
+		"qTableIndex",
+		"dcTableIndex",
+		"acTableIndex" ],
+	"name" : "JPEGColorComponent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

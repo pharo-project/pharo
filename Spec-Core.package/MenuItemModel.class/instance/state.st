@@ -1,0 +1,4 @@
+accessing
+state
+
+	^ state value

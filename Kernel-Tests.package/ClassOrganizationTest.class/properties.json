@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Protocols",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:00",
+	"instvars" : [
+		"organization",
+		"class" ],
+	"name" : "ClassOrganizationTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+sample repository
+isSample
+    ^ false

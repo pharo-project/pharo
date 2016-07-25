@@ -1,0 +1,4 @@
+testing
+isNullable
+
+	^#syntaxAny ~~ kind

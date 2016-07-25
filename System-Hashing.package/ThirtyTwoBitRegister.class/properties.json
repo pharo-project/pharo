@@ -1,0 +1,15 @@
+{
+	"category" : "System-Hashing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"hi",
+		"low" ],
+	"name" : "ThirtyTwoBitRegister",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

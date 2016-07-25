@@ -1,0 +1,4 @@
+api
+resizerWidth
+
+	^ resizerWidth value

@@ -1,0 +1,3 @@
+modes
+hardLight
+	self notAvailable

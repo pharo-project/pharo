@@ -1,0 +1,14 @@
+{
+	"category" : "Ombu-Persistence",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 16:10",
+	"instvars" : [
+		 ],
+	"name" : "OmEntryWriter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

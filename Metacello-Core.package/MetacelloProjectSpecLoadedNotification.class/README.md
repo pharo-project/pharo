@@ -1,0 +1,1 @@
+**MetacelloLoadProjectSpecVersionNotification** is signalled to indicate that the given project spec was loaded into the image.

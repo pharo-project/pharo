@@ -1,0 +1,3 @@
+private
+displayString
+	^ '<' , self item  , '>'

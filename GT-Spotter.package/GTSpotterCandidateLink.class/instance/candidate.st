@@ -1,0 +1,3 @@
+accessing
+candidate
+	^ self value

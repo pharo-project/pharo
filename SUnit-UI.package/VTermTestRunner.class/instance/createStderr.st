@@ -1,0 +1,3 @@
+private
+createStderr
+	^ VTermOutputDriver stderr

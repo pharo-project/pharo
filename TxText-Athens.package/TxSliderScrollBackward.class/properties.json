@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TxSliderScrollBackward",
+	"pools" : [
+		 ],
+	"super" : "TxSliderAnnouncement",
+	"type" : "normal" }

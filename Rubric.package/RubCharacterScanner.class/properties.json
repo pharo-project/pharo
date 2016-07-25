@@ -1,0 +1,36 @@
+{
+	"category" : "Rubric-TextScanning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultStopConditions",
+		"NilCondition",
+		"PaddedSpaceCondition",
+		"SpaceCondition" ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:48",
+	"instvars" : [
+		"destX",
+		"lastIndex",
+		"destY",
+		"stopConditions",
+		"text",
+		"textStyle",
+		"alignment",
+		"leftMargin",
+		"rightMargin",
+		"font",
+		"line",
+		"runStopIndex",
+		"spaceCount",
+		"spaceWidth",
+		"emphasisCode",
+		"kern",
+		"indentationLevel",
+		"baselineY",
+		"firstDestX",
+		"pendingKernX" ],
+	"name" : "RubCharacterScanner",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "Object",
+	"type" : "normal" }

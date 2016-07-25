@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsersTests-Views",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "EpFilteredViewTest",
+	"pools" : [
+		 ],
+	"super" : "EpLogBrowserViewTest",
+	"type" : "normal" }

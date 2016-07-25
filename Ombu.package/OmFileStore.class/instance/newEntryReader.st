@@ -1,0 +1,4 @@
+private
+newEntryReader
+
+	^ OmSTONEntryReader new

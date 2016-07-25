@@ -1,0 +1,4 @@
+testing
+isPoolVariable
+
+	^true

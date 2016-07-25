@@ -1,0 +1,16 @@
+{
+	"category" : "Metacello-Core-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project",
+		"loader",
+		"mutable" ],
+	"name" : "MetacelloSpec",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

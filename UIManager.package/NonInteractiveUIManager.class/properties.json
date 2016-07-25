@@ -1,0 +1,14 @@
+{
+	"category" : "UIManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 1/24/2011 15:36",
+	"instvars" : [
+		 ],
+	"name" : "NonInteractiveUIManager",
+	"pools" : [
+		 ],
+	"super" : "CommandLineUIManager",
+	"type" : "normal" }

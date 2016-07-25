@@ -1,0 +1,15 @@
+{
+	"category" : "Keymapping-Core-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"event",
+		"source" ],
+	"name" : "KMCompleteMatch",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+source
+formatSourceCode
+	self model sourceTextModel formatSourceCodeInView

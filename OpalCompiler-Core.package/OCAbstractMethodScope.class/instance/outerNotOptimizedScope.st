@@ -1,0 +1,3 @@
+scope
+outerNotOptimizedScope
+	^self

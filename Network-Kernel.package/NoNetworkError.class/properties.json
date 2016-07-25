@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mir 5/12/2003 18:17",
+	"instvars" : [
+		 ],
+	"name" : "NoNetworkError",
+	"pools" : [
+		 ],
+	"super" : "NetworkError",
+	"type" : "normal" }

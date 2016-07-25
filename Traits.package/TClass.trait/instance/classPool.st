@@ -1,0 +1,3 @@
+accessing
+classPool
+	^self explicitRequirement.

@@ -1,0 +1,3 @@
+accessing
+vmDirectory 
+	^ self directory

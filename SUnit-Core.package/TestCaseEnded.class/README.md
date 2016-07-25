@@ -1,0 +1,1 @@
+This event is announced when testing a test case ends.

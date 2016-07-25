@@ -1,0 +1,1 @@
+A MCAddition represents the operation to add an entity to a snapshot. 

@@ -1,0 +1,4 @@
+examples
+exampleOpen
+
+	self gtExample openCenteredInBrickWindow

@@ -1,0 +1,1 @@
+A Notification is an indication that something interesting has occurred.  If it is not handled, it will pass by without effect.

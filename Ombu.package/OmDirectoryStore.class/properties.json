@@ -1,0 +1,15 @@
+{
+	"category" : "Ombu-Stores",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"directoryFileReference",
+		"compositeStore" ],
+	"name" : "OmDirectoryStore",
+	"pools" : [
+		 ],
+	"super" : "OmStore",
+	"type" : "normal" }

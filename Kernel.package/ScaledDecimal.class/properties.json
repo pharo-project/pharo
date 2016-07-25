@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 5/16/2009 20:45",
+	"instvars" : [
+		"scale" ],
+	"name" : "ScaledDecimal",
+	"pools" : [
+		 ],
+	"super" : "Fraction",
+	"type" : "normal" }

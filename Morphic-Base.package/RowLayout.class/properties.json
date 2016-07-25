@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/31/2007 16:12",
+	"instvars" : [
+		"cachedMinExtent",
+		"cachedMinExtents" ],
+	"name" : "RowLayout",
+	"pools" : [
+		 ],
+	"super" : "LayoutPolicy",
+	"type" : "normal" }

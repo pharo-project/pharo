@@ -1,0 +1,15 @@
+{
+	"category" : "Shout-Styling",
+	"classinstvars" : [
+		"enabled" ],
+	"classvars" : [
+		"CustomStyleTable",
+		"Groups" ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 23:23",
+	"instvars" : [
+		 ],
+	"name" : "SHPreferences",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

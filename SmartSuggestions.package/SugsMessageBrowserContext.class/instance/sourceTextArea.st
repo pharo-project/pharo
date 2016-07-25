@@ -1,0 +1,3 @@
+refactoring
+sourceTextArea
+	^ model widget.

@@ -1,0 +1,4 @@
+accessing
+package
+	
+	self subclassResponsibility

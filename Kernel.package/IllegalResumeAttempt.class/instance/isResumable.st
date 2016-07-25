@@ -1,0 +1,4 @@
+comment
+isResumable
+	
+	^ false

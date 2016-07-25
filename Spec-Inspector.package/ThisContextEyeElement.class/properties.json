@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ThisContextEyeElement",
+	"pools" : [
+		 ],
+	"super" : "SelfEyeElement",
+	"type" : "normal" }

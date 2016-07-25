@@ -1,0 +1,4 @@
+information
+possiblePositions
+
+	^ { #middle . #bottom }

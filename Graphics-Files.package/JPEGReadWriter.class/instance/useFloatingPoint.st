@@ -1,0 +1,4 @@
+preferences
+useFloatingPoint
+
+	^ false

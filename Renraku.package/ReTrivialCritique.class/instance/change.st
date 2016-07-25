@@ -1,0 +1,3 @@
+accessing
+change
+	^ self shouldNotImplement 

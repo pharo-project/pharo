@@ -1,0 +1,4 @@
+running
+startedStateSymbol
+
+	^#started

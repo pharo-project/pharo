@@ -1,0 +1,4 @@
+api
+selectedMessage
+
+	^ listModel selectedItem

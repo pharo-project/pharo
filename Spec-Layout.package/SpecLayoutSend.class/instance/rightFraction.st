@@ -1,0 +1,4 @@
+protocol
+rightFraction
+
+	^ 0

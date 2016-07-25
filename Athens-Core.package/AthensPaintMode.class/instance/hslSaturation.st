@@ -1,0 +1,3 @@
+modes
+hslSaturation
+	self notAvailable

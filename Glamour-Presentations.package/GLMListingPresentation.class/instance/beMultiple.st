@@ -1,0 +1,3 @@
+scripting
+beMultiple
+	allowsMultipleSelection := true

@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"versionString",
+		"projectVersion" ],
+	"name" : "MetacelloProjectRegistrationVersionInfo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

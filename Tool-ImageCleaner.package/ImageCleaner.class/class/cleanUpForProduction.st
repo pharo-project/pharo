@@ -1,0 +1,3 @@
+instance creation
+cleanUpForProduction
+	self new cleanUpForProduction

@@ -1,0 +1,3 @@
+accessing
+basicDescription
+  ^ self subclassResponsibility

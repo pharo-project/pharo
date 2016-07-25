@@ -1,0 +1,4 @@
+accessing
+tabs
+
+	^ tabs value

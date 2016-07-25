@@ -1,0 +1,3 @@
+accessing
+defaultLocalDirectoryName
+	^ 'pharo-local'

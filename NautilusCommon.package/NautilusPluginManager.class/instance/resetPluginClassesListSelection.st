@@ -1,0 +1,4 @@
+lists behavior
+resetPluginClassesListSelection
+
+	pluginClassesSelected removeAll

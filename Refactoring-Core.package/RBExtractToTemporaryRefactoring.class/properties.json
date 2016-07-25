@@ -1,0 +1,17 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 13:24",
+	"instvars" : [
+		"sourceInterval",
+		"selector",
+		"newVariableName",
+		"parseTree" ],
+	"name" : "RBExtractToTemporaryRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBMethodRefactoring",
+	"type" : "normal" }

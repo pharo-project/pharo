@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Tests-Associations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RelationSetTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

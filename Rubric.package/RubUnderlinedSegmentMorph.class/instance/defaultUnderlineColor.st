@@ -1,0 +1,3 @@
+initialization
+defaultUnderlineColor
+	^ super defaultColor

@@ -1,0 +1,3 @@
+An external library bundles calls to functions from the same library. It is provided mainly as convenience since every external function can be fully specified by the name and the module it resides in.
+
+Every external function that is defined in an external library by default will use the library it is defined in. This can always be modified by providing the appropriate module in the specification. 

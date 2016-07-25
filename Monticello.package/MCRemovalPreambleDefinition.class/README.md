@@ -1,0 +1,1 @@
+A preamble evaluated before unloading/removing

@@ -1,0 +1,4 @@
+encoding
+flush
+
+	^ stream flush.

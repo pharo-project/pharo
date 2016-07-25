@@ -1,0 +1,1 @@
+I am a class dedicated to the transformation of a Komit object into a MCCommit and its submission

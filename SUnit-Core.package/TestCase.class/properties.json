@@ -1,0 +1,16 @@
+{
+	"category" : "SUnit-Core-Kernel",
+	"classinstvars" : [
+		"history" ],
+	"classvars" : [
+		"Announcers",
+		"HistoryAnnouncer" ],
+	"commentStamp" : "nfr 1/3/2010 17:56",
+	"instvars" : [
+		"testSelector",
+		"expectedFails" ],
+	"name" : "TestCase",
+	"pools" : [
+		 ],
+	"super" : "TestAsserter",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"link",
+		"selector" ],
+	"name" : "CoverageDemoTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

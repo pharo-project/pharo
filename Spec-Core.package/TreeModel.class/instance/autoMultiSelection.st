@@ -1,0 +1,4 @@
+api
+autoMultiSelection
+
+	^ autoMultiSelection value

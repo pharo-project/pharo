@@ -1,0 +1,3 @@
+accessing
+createdTraits
+	^createdTraits

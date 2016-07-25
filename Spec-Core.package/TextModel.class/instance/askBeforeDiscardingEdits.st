@@ -1,0 +1,4 @@
+api
+askBeforeDiscardingEdits
+
+	^ askBeforeDiscardingEdits value

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 10:30",
+	"instvars" : [
+		"domainValues" ],
+	"name" : "MultipleSettingDeclaration",
+	"pools" : [
+		 ],
+	"super" : "SettingDeclaration",
+	"type" : "normal" }

@@ -1,0 +1,23 @@
+{
+	"category" : "Settings-Polymorph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DesktopColor",
+		"DesktopGradientDirection",
+		"DesktopGradientFillColor",
+		"DesktopGradientOrigin",
+		"DesktopImageFileName",
+		"DesktopImageLayout",
+		"DesktopLogo",
+		"DesktopLogoFileName",
+		"ShowDesktopLogo",
+		"UseDesktopGradientFill" ],
+	"commentStamp" : "LaurentLaffont 3/15/2011 20:46",
+	"instvars" : [
+		 ],
+	"name" : "PolymorphSystemSettings",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

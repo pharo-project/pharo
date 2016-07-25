@@ -1,0 +1,1 @@
+Dialog based file chooser for selecting or saving files. Supports various types of answer (file stream, file name, directory path etc) with optional extension filters and image or text file preview.

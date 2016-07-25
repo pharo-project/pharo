@@ -1,0 +1,3 @@
+compatibility
+text
+	^ self currentText

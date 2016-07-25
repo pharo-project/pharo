@@ -1,0 +1,1 @@
+I am a handler who can manage gestures and provide them informations on past and current touch events

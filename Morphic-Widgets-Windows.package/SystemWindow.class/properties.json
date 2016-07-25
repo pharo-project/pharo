@@ -1,0 +1,34 @@
+{
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CloseBoxImage",
+		"CollapseBoxImage",
+		"FullscreenMargin",
+		"TopWindow" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"labelString",
+		"stripes",
+		"label",
+		"closeBox",
+		"collapseBox",
+		"paneMorphs",
+		"collapsedFrame",
+		"fullFrame",
+		"isCollapsed",
+		"menuBox",
+		"mustNotClose",
+		"labelWidgetAllowance",
+		"updatablePanes",
+		"labelArea",
+		"expandBox",
+		"embeddable",
+		"menuBuilder",
+		"isResizeable" ],
+	"name" : "SystemWindow",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"type" : "normal" }

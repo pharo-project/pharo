@@ -1,0 +1,14 @@
+{
+	"category" : "NautilusGroupAutoBuilder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 8/13/2015 12:55",
+	"instvars" : [
+		 ],
+	"name" : "VSLoadAndCreateNautilusGroupCommand",
+	"pools" : [
+		 ],
+	"super" : "VSLoadCommand",
+	"type" : "normal" }

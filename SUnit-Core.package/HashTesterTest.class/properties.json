@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mjr 8/20/2003 12:48",
+	"instvars" : [
+		 ],
+	"name" : "HashTesterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

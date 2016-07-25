@@ -1,0 +1,4 @@
+helper
+nonEmpty
+
+	^ self explicitRequirement

@@ -1,0 +1,3 @@
+model protocol
+takeKeyboardFocus
+	self textArea takeKeyboardFocus

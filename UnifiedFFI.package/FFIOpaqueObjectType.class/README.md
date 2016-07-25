@@ -1,0 +1,1 @@
+I'm  an opaque object type (see ==FFIOpaqueObject== comment)

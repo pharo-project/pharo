@@ -1,0 +1,4 @@
+protocol
+closeAllTabs
+
+	toolbar closeAllTabs

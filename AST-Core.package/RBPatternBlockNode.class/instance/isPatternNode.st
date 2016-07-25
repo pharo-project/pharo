@@ -1,0 +1,3 @@
+testing-matching
+isPatternNode
+	^ true

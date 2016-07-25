@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloMocks",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MCMockClassI",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "weak" }

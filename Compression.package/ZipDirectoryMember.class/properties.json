@@ -1,0 +1,14 @@
+{
+	"category" : "Compression-Archives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ZipDirectoryMember",
+	"pools" : [
+		 ],
+	"super" : "ZipFileMember",
+	"type" : "normal" }

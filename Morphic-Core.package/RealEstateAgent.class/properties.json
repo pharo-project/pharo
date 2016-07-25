@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Core-Worlds",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"StaggerOffset",
+		"StandardSize",
+		"UsedStrategy" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RealEstateAgent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

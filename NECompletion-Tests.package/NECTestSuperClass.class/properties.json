@@ -1,0 +1,14 @@
+{
+	"category" : "NECompletion-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"SuperClassVar" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"superInstVar" ],
+	"name" : "NECTestSuperClass",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

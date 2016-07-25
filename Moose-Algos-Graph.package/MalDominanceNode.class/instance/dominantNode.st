@@ -1,0 +1,4 @@
+accessing
+dominantNode
+
+	^ self find

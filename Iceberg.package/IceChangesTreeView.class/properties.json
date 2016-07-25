@@ -1,0 +1,15 @@
+{
+	"category" : "Iceberg-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"tree",
+		"changeSetHolder" ],
+	"name" : "IceChangesTreeView",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

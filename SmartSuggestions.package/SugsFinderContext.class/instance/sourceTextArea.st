@@ -1,0 +1,4 @@
+refactoring
+sourceTextArea
+	
+	^ model sourceTextArea

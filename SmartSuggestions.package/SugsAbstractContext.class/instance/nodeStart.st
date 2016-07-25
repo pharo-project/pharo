@@ -1,0 +1,3 @@
+accessing
+nodeStart
+	^selectedNode start.

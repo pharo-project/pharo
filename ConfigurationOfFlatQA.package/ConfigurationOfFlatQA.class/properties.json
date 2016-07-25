@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfFlatQA",
+	"classinstvars" : [
+		"mainRepo" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 6/7/2016 00:43",
+	"instvars" : [
+		 ],
+	"name" : "ConfigurationOfFlatQA",
+	"pools" : [
+		 ],
+	"super" : "ConfigurationOf",
+	"type" : "normal" }

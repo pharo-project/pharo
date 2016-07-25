@@ -1,0 +1,19 @@
+{
+	"category" : "System-Changes",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		"AllChangeSets",
+		"DefaultChangeSetDirectoryName",
+		"MustCheckForSlips" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"preamble",
+		"postscript",
+		"changeRecords" ],
+	"name" : "ChangeSet",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

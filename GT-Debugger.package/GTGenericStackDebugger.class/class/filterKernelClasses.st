@@ -1,0 +1,3 @@
+settings api
+filterKernelClasses
+	^ false

@@ -1,0 +1,3 @@
+converting
+asSequenceNode
+	^self

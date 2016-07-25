@@ -1,0 +1,4 @@
+accessing
+isStayUpItem
+
+	^selector == #toggleStayUp:

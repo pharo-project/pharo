@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ar 2/12/2005 04:37",
+	"instvars" : [
+		 ],
+	"name" : "PluggableTreeItemNode",
+	"pools" : [
+		 ],
+	"super" : "ListItemWrapper",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-TextConverterOtherLanguages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FromTable" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "CP1253TextConverter",
+	"pools" : [
+		 ],
+	"super" : "ByteTextConverter",
+	"type" : "normal" }

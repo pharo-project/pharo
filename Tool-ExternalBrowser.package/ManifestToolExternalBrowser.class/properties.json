@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-ExternalBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestToolExternalBrowser",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

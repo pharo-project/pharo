@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-Tree",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/8/2015 17:15",
+	"instvars" : [
+		 ],
+	"name" : "PackageTreeGroupSelection",
+	"pools" : [
+		 ],
+	"super" : "PackageTreeSelection",
+	"type" : "normal" }

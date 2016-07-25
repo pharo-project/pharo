@@ -1,0 +1,4 @@
+tests
+isSuper
+	
+	^type == #super

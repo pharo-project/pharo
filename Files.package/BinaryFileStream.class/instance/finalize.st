@@ -1,0 +1,4 @@
+finalization
+finalize
+
+	^ self close

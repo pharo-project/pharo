@@ -1,0 +1,3 @@
+icons
+taskbarIcon
+	^ #changeSorterIcon asIcon

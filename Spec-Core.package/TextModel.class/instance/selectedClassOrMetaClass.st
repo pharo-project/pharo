@@ -1,0 +1,4 @@
+NOCompletion
+selectedClassOrMetaClass
+
+	^ self behavior

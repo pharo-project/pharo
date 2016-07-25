@@ -1,0 +1,1 @@
+I know how to talk with a debugger and extract the information needed for the suggestions :)

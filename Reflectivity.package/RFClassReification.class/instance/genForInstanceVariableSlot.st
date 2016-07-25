@@ -1,0 +1,3 @@
+generate
+genForInstanceVariableSlot
+	^self generate

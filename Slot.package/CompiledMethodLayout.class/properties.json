@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "CompiledMethodLayout",
+	"pools" : [
+		 ],
+	"super" : "ObjectLayout",
+	"type" : "normal" }

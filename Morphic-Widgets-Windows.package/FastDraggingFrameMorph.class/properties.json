@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 2/22/2012 23:23",
+	"instvars" : [
+		"target",
+		"startGap",
+		"location" ],
+	"name" : "FastDraggingFrameMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

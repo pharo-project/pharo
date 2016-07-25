@@ -1,0 +1,3 @@
+private
+primitiveExecute
+	self changeClass removeFromSystem

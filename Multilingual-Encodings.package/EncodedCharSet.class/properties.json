@@ -1,0 +1,15 @@
+{
+	"category" : "Multilingual-Encodings",
+	"classinstvars" : [
+		"compoundTextSequence",
+		"UcsTable" ],
+	"classvars" : [
+		"EncodedCharSets" ],
+	"commentStamp" : "yo 10/19/2004 19:08",
+	"instvars" : [
+		 ],
+	"name" : "EncodedCharSet",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Iceberg-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicoPasserini 4/26/2016 12:30",
+	"instvars" : [
+		"changes",
+		"diff",
+		"commit" ],
+	"name" : "IceCommitBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

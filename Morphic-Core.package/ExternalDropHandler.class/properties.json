@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Core-Worlds",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultHandler",
+		"RegisteredHandlers" ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 10:29",
+	"instvars" : [
+		"action",
+		"type",
+		"extension" ],
+	"name" : "ExternalDropHandler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

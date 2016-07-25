@@ -1,0 +1,3 @@
+accessing decorators
+withFindReplaceSelection
+	self withDecoratorNamed: #findReplaceSelection

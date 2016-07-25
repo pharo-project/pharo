@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 10:20",
+	"instvars" : [
+		 ],
+	"name" : "RubAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

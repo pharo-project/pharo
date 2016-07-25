@@ -1,0 +1,3 @@
+action
+title
+	^clazz name

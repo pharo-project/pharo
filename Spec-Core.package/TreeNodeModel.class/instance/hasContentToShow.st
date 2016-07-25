@@ -1,0 +1,4 @@
+api
+hasContentToShow
+
+	^ hasContentToShow value

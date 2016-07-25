@@ -1,0 +1,25 @@
+{
+	"category" : "GT-EventRecorder-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"recorder",
+		"server",
+		"event1",
+		"event2",
+		"delegate",
+		"receivedContents",
+		"semaphore",
+		"receiverSemaphore",
+		"collector1",
+		"collector2",
+		"event3",
+		"event4" ],
+	"name" : "GTEventRecorderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

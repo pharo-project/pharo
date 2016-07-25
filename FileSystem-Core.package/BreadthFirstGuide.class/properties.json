@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cwp 11/18/2009 12:13",
+	"instvars" : [
+		 ],
+	"name" : "BreadthFirstGuide",
+	"pools" : [
+		 ],
+	"super" : "FileSystemGuide",
+	"type" : "normal" }

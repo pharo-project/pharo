@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"hResizing",
+		"vResizing",
+		"disableLayout" ],
+	"name" : "LayoutProperties",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

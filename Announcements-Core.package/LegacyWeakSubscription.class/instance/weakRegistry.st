@@ -1,0 +1,3 @@
+finalization
+weakRegistry
+	^ WeakRegistry default

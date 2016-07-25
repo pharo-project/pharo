@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Core-Public",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"workingDirectory",
+		"store" ],
+	"name" : "FileSystem",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Refactoring-Tests-Environment",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ClassSideOnlyVariable",
+		"ClassVariable" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"universalEnvironment" ],
+	"name" : "RBBrowserEnvironmentTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

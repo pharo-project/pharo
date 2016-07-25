@@ -1,0 +1,15 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"messages",
+		"semicolons" ],
+	"name" : "RBCascadeNode",
+	"pools" : [
+		 ],
+	"super" : "RBValueNode",
+	"type" : "normal" }

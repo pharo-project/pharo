@@ -1,0 +1,3 @@
+private
+foreignMethod
+	"see testForeignMethodModified"

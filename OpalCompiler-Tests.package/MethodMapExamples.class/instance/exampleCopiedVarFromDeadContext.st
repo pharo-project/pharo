@@ -1,0 +1,3 @@
+examples
+exampleCopiedVarFromDeadContext
+	^ self defineCopiedVarBecomeDeadContext value

@@ -1,0 +1,1 @@
+I am an atomic item used to execute a portion of code at image startup.

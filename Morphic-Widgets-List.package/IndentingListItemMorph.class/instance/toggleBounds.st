@@ -1,0 +1,3 @@
+private
+toggleBounds
+	^self toggleRectangle

@@ -1,0 +1,1 @@
+A NECEntryDescription is a holder for some information to be displayed.

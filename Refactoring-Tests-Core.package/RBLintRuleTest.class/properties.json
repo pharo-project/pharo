@@ -1,0 +1,15 @@
+{
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Foo1" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"name",
+		"foo1" ],
+	"name" : "RBLintRuleTest",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "Object",
+	"type" : "normal" }

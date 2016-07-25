@@ -1,0 +1,3 @@
+requirements
+integerCollectionWithoutEqualElements
+	^ otherCollectionWithoutEqualElements

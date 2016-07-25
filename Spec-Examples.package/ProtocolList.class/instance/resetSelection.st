@@ -1,0 +1,4 @@
+api
+resetSelection
+
+	protocols resetSelection

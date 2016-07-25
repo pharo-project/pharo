@@ -1,0 +1,14 @@
+{
+	"category" : "Traits",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestTraits",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

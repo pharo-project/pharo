@@ -1,0 +1,3 @@
+menu declaring
+pragmaKeyword
+	^ 'worldMenuExample'

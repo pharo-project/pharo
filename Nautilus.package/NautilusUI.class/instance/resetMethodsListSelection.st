@@ -1,0 +1,4 @@
+selection
+resetMethodsListSelection
+
+	methodWidget resetMethodSelection

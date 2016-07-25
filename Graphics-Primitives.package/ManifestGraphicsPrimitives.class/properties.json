@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestGraphicsPrimitives",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

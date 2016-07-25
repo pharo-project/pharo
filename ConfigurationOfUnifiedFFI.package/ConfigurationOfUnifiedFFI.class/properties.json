@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfUnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfUnifiedFFI",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

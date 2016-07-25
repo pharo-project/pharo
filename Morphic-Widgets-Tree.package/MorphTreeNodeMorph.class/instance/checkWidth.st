@@ -1,0 +1,3 @@
+accessing
+checkWidth
+	^ 10

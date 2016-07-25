@@ -1,0 +1,4 @@
+accessing
+indentingItemClass
+	
+	^ TickSelectionListNodeMorph

@@ -1,0 +1,3 @@
+visiting
+acceptVisitor: anMTProjectVisitor
+	anMTProjectVisitor visitDependantProject: self

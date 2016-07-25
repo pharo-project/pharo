@@ -1,0 +1,1 @@
+I represent an object that is kept by a GTEventCollector. I serve only for the testing purpose.

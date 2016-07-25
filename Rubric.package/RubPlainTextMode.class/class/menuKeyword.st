@@ -1,0 +1,3 @@
+menu
+menuKeyword
+	^ 'RubPlainTextMenu'

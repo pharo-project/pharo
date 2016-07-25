@@ -1,0 +1,14 @@
+{
+	"category" : "GT-SUnitDebugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 2/19/2016 21:36",
+	"instvars" : [
+		"a" ],
+	"name" : "GTSUnitExampleWithSetUpAndNoTearDownTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+A general user input event like for keyboard or mouse

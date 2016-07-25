@@ -1,0 +1,15 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 3/24/2015 09:53",
+	"instvars" : [
+		"nodes",
+		"edges" ],
+	"name" : "MalGraphAlgorithm",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+protocol
+bottomFraction
+
+	^ layoutFrame bottomFraction

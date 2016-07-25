@@ -1,0 +1,1 @@
+Checkbox/radio - button only.

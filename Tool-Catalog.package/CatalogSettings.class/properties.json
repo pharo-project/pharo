@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-Catalog-Settings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CatalogSourceURL",
+		"DisplayCatalogProjectsInSpotter" ],
+	"commentStamp" : "TorstenBergmann 11/12/2015 00:54",
+	"instvars" : [
+		 ],
+	"name" : "CatalogSettings",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

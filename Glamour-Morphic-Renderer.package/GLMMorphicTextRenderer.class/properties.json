@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"textModel",
+		"textMorph" ],
+	"name" : "GLMMorphicTextRenderer",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicWidgetRenderer",
+	"type" : "normal" }

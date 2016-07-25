@@ -1,0 +1,1 @@
+I am raised when the text is accepted in the model side

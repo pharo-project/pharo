@@ -1,0 +1,4 @@
+accessing
+clearBitBltSubPixelAvailable	
+	
+	bitBltSubPixelAvailable := nil.

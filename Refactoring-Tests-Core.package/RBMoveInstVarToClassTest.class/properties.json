@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RBMoveInstVarToClassTest",
+	"pools" : [
+		 ],
+	"super" : "RBRefactoringTest",
+	"type" : "normal" }

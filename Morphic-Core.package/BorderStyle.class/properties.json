@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Core-Borders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "kfr 10/27/2003 10:19",
+	"instvars" : [
+		 ],
+	"name" : "BorderStyle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

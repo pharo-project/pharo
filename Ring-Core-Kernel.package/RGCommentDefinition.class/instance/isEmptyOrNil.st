@@ -1,0 +1,4 @@
+testing
+isEmptyOrNil
+
+	^content isEmptyOrNil 

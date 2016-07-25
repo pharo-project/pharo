@@ -1,0 +1,3 @@
+testing
+hasPredecessor
+	^ previousLink notNil

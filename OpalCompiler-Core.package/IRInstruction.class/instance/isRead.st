@@ -1,0 +1,3 @@
+testing
+isRead
+	^false

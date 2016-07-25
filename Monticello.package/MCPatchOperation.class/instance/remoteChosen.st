@@ -1,0 +1,3 @@
+testing
+remoteChosen
+	^ isApplicable ~~ false

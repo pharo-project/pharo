@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Tests-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMCompositePresentationMorphicTest",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicTest",
+	"type" : "normal" }

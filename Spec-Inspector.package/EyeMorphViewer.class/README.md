@@ -1,0 +1,1 @@
+A simple inspector view that displays a morph

@@ -1,0 +1,17 @@
+{
+	"category" : "GT-Tests-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StefanReichhart 4/26/2016 21:38",
+	"instvars" : [
+		"allFailures",
+		"allClasses",
+		"allTestedClasses",
+		"allUntestedClasses" ],
+	"name" : "GTInspectorExamplesManualTest",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

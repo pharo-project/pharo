@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Tabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"action",
+		"icon",
+		"label" ],
+	"name" : "TabAction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

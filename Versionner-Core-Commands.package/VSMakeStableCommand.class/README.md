@@ -1,0 +1,1 @@
+I'm a command to declare versions as stable.

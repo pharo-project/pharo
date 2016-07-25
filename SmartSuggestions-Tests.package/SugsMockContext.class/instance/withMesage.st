@@ -1,0 +1,3 @@
+testing
+withMesage
+	self withClassVariable 

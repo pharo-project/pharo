@@ -1,0 +1,3 @@
+converting
+asCursor
+	^ self subclassResponsibility 

@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Contexts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 3/11/2015 08:44",
+	"instvars" : [
+		"level" ],
+	"name" : "RFMetaContext",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

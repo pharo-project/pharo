@@ -1,0 +1,3 @@
+requirements
+elementInCollectionOfFloat
+	^ collectionOfCollection atRandom

@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-OldDataStreamCompatibility",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestMonticelloOldDataStreamCompatibility",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

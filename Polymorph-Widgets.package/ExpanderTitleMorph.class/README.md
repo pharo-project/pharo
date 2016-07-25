@@ -1,0 +1,1 @@
+The titlebar area for and ExpanderMorph. Includes title label and expand/collapse button.

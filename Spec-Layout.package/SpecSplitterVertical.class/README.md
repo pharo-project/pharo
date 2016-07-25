@@ -1,0 +1,1 @@
+A SpecSplitterVertical is the description of the addition of a vertical splitter

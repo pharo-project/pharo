@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Transformations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "DisplayTransform",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

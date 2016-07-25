@@ -1,0 +1,17 @@
+{
+	"category" : "Graphics-Canvas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"TranslucentPatterns" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"origin",
+		"clipRect",
+		"form",
+		"port" ],
+	"name" : "FormCanvas",
+	"pools" : [
+		 ],
+	"super" : "Canvas",
+	"type" : "normal" }

@@ -1,0 +1,5 @@
+cleaning
+removeAllScriptsFromAllDirectories
+	self removeScriptFromImageDirectory.
+	self removeAllScriptsFromPreferencesVersionDirectory.
+	self removeAllScriptsFromGeneralPreferencesDirectory.

@@ -1,0 +1,3 @@
+testing
+allowsSearch
+	^ searchBlock notNil

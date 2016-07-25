@@ -1,0 +1,3 @@
+lookups
+resolverStatus
+	^self primNameResolverStatus

@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-MC-Directives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"spec",
+		"loader" ],
+	"name" : "MetacelloDirective",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

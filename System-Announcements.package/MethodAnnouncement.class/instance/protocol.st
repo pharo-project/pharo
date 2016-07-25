@@ -1,0 +1,4 @@
+accessing
+protocol
+	
+	^ method protocol

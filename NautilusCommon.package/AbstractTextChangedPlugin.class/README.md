@@ -1,0 +1,1 @@
+An AbstractTextChangedPlugin is a plugin which simply log each time the method displayer changed

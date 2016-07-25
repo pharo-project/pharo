@@ -1,0 +1,27 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 2/4/2011 20:41",
+	"instvars" : [
+		"searchBlock",
+		"filterBlock",
+		"amountToShowBlock",
+		"allowsMultipleSelection",
+		"allowsDeselection",
+		"tagsStyle",
+		"helpMessage",
+		"sortBlock",
+		"textBackgroundColor",
+		"dropOnItemBlock",
+		"allowDropOnItemBlock",
+		"allowItemDragBlock",
+		"transformDraggedItemBlock",
+		"allowsRecursiveSearch" ],
+	"name" : "GLMListingPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMFormatedPresentation",
+	"type" : "normal" }

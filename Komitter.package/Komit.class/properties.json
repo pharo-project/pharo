@@ -1,0 +1,14 @@
+{
+	"category" : "Komitter-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Komit",
+	"pools" : [
+		 ],
+	"super" : "KomitableObject",
+	"type" : "normal" }

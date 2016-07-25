@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Sequenceable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:30",
+	"instvars" : [
+		 ],
+	"name" : "SharedQueueTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

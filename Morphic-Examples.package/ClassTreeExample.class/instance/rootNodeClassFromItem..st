@@ -1,0 +1,3 @@
+accessing
+rootNodeClassFromItem: anItem
+	^ ClassTreeNodeExample

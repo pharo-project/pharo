@@ -1,0 +1,3 @@
+*Metacello-Core
+asMetacelloAttributeList
+    ^ self

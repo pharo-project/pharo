@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-AthensTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TxViewCoordinatesToTextPositionTest",
+	"pools" : [
+		 ],
+	"super" : "TxAthensTextTransformsTest",
+	"type" : "normal" }

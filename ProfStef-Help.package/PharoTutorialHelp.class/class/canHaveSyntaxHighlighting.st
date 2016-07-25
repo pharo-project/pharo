@@ -1,0 +1,3 @@
+testing
+canHaveSyntaxHighlighting
+	^ true 

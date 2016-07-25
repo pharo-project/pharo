@@ -1,0 +1,4 @@
+accessing
+destination
+
+	^ destination

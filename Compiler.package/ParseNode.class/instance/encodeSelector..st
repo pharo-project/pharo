@@ -1,0 +1,4 @@
+encoding
+encodeSelector: aSelector
+
+	^nil

@@ -1,0 +1,1 @@
+Move a method from the class to the instance side, or vice versa. Normally this is not considered to be a refactoring.

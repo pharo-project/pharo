@@ -1,0 +1,1 @@
+I represent an error which may happen while tracing in the graph an object that is forbidden of being serialized.

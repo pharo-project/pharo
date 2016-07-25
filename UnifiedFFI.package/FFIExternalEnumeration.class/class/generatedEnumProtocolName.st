@@ -1,0 +1,3 @@
+private
+generatedEnumProtocolName
+	^ 'accessing enum'

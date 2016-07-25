@@ -1,0 +1,23 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DayNames",
+		"DaysInMonth",
+		"MicrosecondsInDay",
+		"MonthNames",
+		"NanosInMillisecond",
+		"NanosInSecond",
+		"SecondsInDay",
+		"SecondsInHour",
+		"SecondsInMinute",
+		"SqueakEpoch" ],
+	"commentStamp" : "brp 3/12/2004 14:34",
+	"instvars" : [
+		 ],
+	"name" : "ChronologyConstants",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

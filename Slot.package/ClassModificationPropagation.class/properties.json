@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/28/2014 16:22",
+	"instvars" : [
+		"origin" ],
+	"name" : "ClassModificationPropagation",
+	"pools" : [
+		 ],
+	"super" : "AbstractClassModification",
+	"type" : "normal" }

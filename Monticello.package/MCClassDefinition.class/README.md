@@ -1,0 +1,1 @@
+A MCClassDefinition represents a class.

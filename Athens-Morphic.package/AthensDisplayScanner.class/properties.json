@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"canvas" ],
+	"name" : "AthensDisplayScanner",
+	"pools" : [
+		 ],
+	"super" : "DisplayScanner",
+	"type" : "normal" }

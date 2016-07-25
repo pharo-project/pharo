@@ -1,0 +1,3 @@
+displaying
+flash
+	^ textArea flash

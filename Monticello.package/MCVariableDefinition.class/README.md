@@ -1,0 +1,1 @@
+A MCVariableDefinition represents a variable.

@@ -1,0 +1,3 @@
+mocking
+open
+	isOpen := true

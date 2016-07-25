@@ -1,0 +1,1 @@
+This is the default strategy that does nothing (an implementation of the Null pattern)

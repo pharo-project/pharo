@@ -1,0 +1,4 @@
+controls
+title
+	
+	^self label

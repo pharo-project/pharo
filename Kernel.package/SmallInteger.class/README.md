@@ -1,0 +1,1 @@
+My instances are 31-bit numbers, stored in twos complement form. The allowable range is approximately +- 1 billion (see SmallInteger minVal, maxVal).

@@ -1,0 +1,1 @@
+QuestionDialog supporting custom text/buttons for yes/no choices.

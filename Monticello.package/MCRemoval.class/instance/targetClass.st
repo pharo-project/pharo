@@ -1,0 +1,3 @@
+accessing
+targetClass
+	^ definition actualClass

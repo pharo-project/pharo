@@ -1,0 +1,1 @@
+You can move the circle by scrolling and change his size by pinching

@@ -1,0 +1,4 @@
+accessing
+with
+
+	^ with

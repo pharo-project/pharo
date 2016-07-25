@@ -1,0 +1,1 @@
+ZnClientFollowingRedirectEvent signals that a redirect to target is being followed. How many redirects to follow, if any is configurable.

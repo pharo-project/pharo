@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CommonHeaders" ],
+	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 10:57",
+	"instvars" : [
+		"headers" ],
+	"name" : "ZnHeaders",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

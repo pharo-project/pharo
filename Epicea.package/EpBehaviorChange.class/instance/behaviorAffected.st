@@ -1,0 +1,3 @@
+accessing
+behaviorAffected
+	^ self shouldBeImplemented 

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMBrickLayoutState",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

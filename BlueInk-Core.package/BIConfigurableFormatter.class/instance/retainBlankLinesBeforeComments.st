@@ -1,0 +1,3 @@
+accessing
+retainBlankLinesBeforeComments
+	^ context retainBlankLinesBeforeComments

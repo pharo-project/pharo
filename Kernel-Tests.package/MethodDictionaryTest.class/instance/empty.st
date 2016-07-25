@@ -1,0 +1,3 @@
+requirements
+empty
+	^ MethodDictionary new

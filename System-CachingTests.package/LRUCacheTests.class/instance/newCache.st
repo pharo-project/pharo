@@ -1,0 +1,3 @@
+accessing
+newCache
+	^ LRUCache new

@@ -1,0 +1,1 @@
+I am a strategy that emulate what we offer with FLSerializer class >> #serializeInMemory:  and  FLMaterializer class >> #materializeFromByteArray: 

@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SpecTreeColumn",
+	"pools" : [
+		 ],
+	"super" : "MorphTreeColumn",
+	"type" : "normal" }

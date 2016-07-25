@@ -1,0 +1,14 @@
+{
+	"category" : "System-CommandLine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"cache" ],
+	"name" : "Termcap",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

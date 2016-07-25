@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:20",
+	"instvars" : [
+		"lines",
+		"text" ],
+	"name" : "AthensTextComposer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

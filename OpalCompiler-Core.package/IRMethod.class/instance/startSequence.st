@@ -1,0 +1,4 @@
+accessing
+startSequence
+
+	^ startSequence

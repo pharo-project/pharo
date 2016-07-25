@@ -1,0 +1,23 @@
+{
+	"category" : "Tool-Profilers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"semaphore",
+		"ticks",
+		"profilerProcess",
+		"tallyRoot",
+		"vmStats",
+		"totalTally",
+		"totalTime",
+		"startTime",
+		"ticksPerMSec",
+		"totalTicks" ],
+	"name" : "AndreasSystemProfiler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

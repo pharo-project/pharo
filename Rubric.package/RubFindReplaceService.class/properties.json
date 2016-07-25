@@ -1,0 +1,23 @@
+{
+	"category" : "Rubric-Editing-FindReplaceService",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Singleton" ],
+	"commentStamp" : "StephaneDucasse 6/13/2015 14:25",
+	"instvars" : [
+		"findText",
+		"replaceText",
+		"caseSensitive",
+		"entireWordsOnly",
+		"wrapAround",
+		"searchBackwards",
+		"findStartIndex",
+		"isRegex",
+		"dialog",
+		"textAreaHolder" ],
+	"name" : "RubFindReplaceService",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

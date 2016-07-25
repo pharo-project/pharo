@@ -1,0 +1,17 @@
+{
+	"category" : "Network-Mail",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"text",
+		"body",
+		"fields",
+		"parts" ],
+	"name" : "MailMessage",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

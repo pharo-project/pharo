@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"SubMenuMarker" ],
+	"commentStamp" : "StephaneDucasse 4/22/2012 16:43",
+	"instvars" : [
+		"isEnabled",
+		"subMenu",
+		"isSelected",
+		"target",
+		"selector",
+		"arguments",
+		"icon" ],
+	"name" : "MenuItemMorph",
+	"pools" : [
+		 ],
+	"super" : "StringMorph",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 2/27/2015 11:47",
+	"instvars" : [
+		 ],
+	"name" : "ProcessLocalSlot",
+	"pools" : [
+		 ],
+	"super" : "IndexedSlot",
+	"type" : "normal" }

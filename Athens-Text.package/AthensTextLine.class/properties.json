@@ -1,0 +1,23 @@
+{
+	"category" : "Athens-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 2/6/2012 16:20",
+	"instvars" : [
+		"text",
+		"startIndex",
+		"endIndex",
+		"height",
+		"maxAscent",
+		"maxDescent",
+		"width",
+		"top",
+		"commands",
+		"tail" ],
+	"name" : "AthensTextLine",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

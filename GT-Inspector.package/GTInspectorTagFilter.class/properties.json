@@ -1,0 +1,16 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 1/27/2015 23:31",
+	"instvars" : [
+		"allTags",
+		"selectedTags",
+		"defaultTag" ],
+	"name" : "GTInspectorTagFilter",
+	"pools" : [
+		 ],
+	"super" : "GTInspectorPresentationFilter",
+	"type" : "normal" }

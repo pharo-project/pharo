@@ -1,0 +1,20 @@
+{
+	"category" : "System-SessionManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "ChristopheDemarey 10/2/2015 15:21",
+	"instvars" : [
+		"currentSession",
+		"categories",
+		"guiCategory",
+		"toolsCategory",
+		"networkCategory",
+		"systemCategory",
+		"userCategory" ],
+	"name" : "SessionManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+compatibility
+package
+
+	^ self selectedPackage 

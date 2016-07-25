@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:15",
+	"instvars" : [
+		 ],
+	"name" : "OSKeyUpEvent",
+	"pools" : [
+		 ],
+	"super" : "OSKeyboardEvent",
+	"type" : "normal" }

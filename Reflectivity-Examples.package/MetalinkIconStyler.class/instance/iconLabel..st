@@ -1,0 +1,3 @@
+defaults
+iconLabel: aNode
+	^ 'Metalink'

@@ -1,0 +1,3 @@
+tests
+testIfNilClosure
+	self checkCorrectDecompilation: #exampleIfNilClosure

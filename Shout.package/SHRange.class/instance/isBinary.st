@@ -1,0 +1,3 @@
+tests
+isBinary
+	^type == #binary

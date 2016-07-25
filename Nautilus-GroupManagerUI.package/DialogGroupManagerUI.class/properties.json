@@ -1,0 +1,17 @@
+{
+	"category" : "Nautilus-GroupManagerUI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 21:12",
+	"instvars" : [
+		"groupManager",
+		"textModel",
+		"groupTreeModel",
+		"groupTree" ],
+	"name" : "DialogGroupManagerUI",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

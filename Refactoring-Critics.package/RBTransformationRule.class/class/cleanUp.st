@@ -1,0 +1,3 @@
+cleanup
+cleanUp
+	RecursiveSelfRule := nil.

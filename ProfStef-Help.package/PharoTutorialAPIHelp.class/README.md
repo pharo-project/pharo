@@ -1,0 +1,1 @@
+I'm a PharoTutorial which builds a HelpSystem book by collecting comment from classes and method.

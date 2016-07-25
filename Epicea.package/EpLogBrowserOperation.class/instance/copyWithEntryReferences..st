@@ -1,0 +1,3 @@
+copying
+copyWithEntryReferences: aCollectionOfEntryReferences
+	^self subclassResponsibility

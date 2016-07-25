@@ -1,0 +1,3 @@
+accessing
+anyButtonPressed
+	^lastMouseEvent anyButtonPressed

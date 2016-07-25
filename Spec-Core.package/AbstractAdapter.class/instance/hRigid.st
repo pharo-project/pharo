@@ -1,0 +1,4 @@
+protocol
+hRigid
+
+	self subclassResponsibility

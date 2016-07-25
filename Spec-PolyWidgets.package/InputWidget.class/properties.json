@@ -1,0 +1,18 @@
+{
+	"category" : "Spec-PolyWidgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 1/23/2014 11:40",
+	"instvars" : [
+		"input",
+		"label",
+		"okAction",
+		"value",
+		"title" ],
+	"name" : "InputWidget",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

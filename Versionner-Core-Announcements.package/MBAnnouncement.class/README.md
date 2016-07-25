@@ -1,0 +1,1 @@
+Common superclass for Versionner announcements

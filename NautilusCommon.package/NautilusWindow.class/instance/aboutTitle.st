@@ -1,0 +1,4 @@
+about
+aboutTitle
+
+	^'About Nautilus'

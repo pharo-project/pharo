@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:49",
+	"instvars" : [
+		"frontier",
+		"bag" ],
+	"name" : "MCFrontier",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

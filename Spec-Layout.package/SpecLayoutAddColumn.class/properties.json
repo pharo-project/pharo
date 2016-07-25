@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SpecLayoutAddColumn",
+	"pools" : [
+		 ],
+	"super" : "SpecLayoutAdd",
+	"type" : "normal" }

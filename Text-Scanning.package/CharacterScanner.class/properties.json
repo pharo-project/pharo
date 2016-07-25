@@ -1,0 +1,38 @@
+{
+	"category" : "Text-Scanning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ColumnBreakStopConditions",
+		"CompositionStopConditions",
+		"DefaultStopConditions",
+		"MeasuringStopConditions",
+		"PaddedSpaceCondition" ],
+	"commentStamp" : "nice 10/22/2013 20:04",
+	"instvars" : [
+		"destX",
+		"lastIndex",
+		"xTable",
+		"map",
+		"destY",
+		"stopConditions",
+		"text",
+		"textStyle",
+		"alignment",
+		"leftMargin",
+		"rightMargin",
+		"font",
+		"line",
+		"runStopIndex",
+		"spaceCount",
+		"spaceWidth",
+		"emphasisCode",
+		"kern",
+		"indentationLevel",
+		"wantsColumnBreaks",
+		"pendingKernX" ],
+	"name" : "CharacterScanner",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "Object",
+	"type" : "normal" }

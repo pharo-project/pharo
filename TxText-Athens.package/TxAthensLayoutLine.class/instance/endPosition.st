@@ -1,0 +1,3 @@
+accessing
+endPosition
+	^ interval end 

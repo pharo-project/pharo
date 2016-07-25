@@ -1,0 +1,3 @@
+interface
+loadAllFileNames
+	self subclassResponsibility

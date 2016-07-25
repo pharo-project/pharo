@@ -1,0 +1,17 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"browser",
+		"updateButton",
+		"releaseButton",
+		"commitButton" ],
+	"name" : "VersionnerProjectToolBar",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+hasScheme
+	^ scheme notNil

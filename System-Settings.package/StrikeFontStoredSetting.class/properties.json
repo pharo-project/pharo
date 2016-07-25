@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 10/1/2015 14:39",
+	"instvars" : [
+		 ],
+	"name" : "StrikeFontStoredSetting",
+	"pools" : [
+		 ],
+	"super" : "AbstractFontStoredSetting",
+	"type" : "normal" }

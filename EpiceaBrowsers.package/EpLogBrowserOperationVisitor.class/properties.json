@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Visitors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 10/27/2014 18:01",
+	"instvars" : [
+		"environment" ],
+	"name" : "EpLogBrowserOperationVisitor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+private
+shoutEnabled
+	^ SHPreferences enabled

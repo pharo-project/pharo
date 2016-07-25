@@ -1,0 +1,4 @@
+accessing
+classAffectedName
+
+	^ class name

@@ -1,0 +1,3 @@
+gui
+close
+	window delete.

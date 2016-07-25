@@ -1,0 +1,14 @@
+{
+	"category" : "System-VMEvents",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 6/10/2015 13:24",
+	"instvars" : [
+		"filterBlock" ],
+	"name" : "InputEventLog",
+	"pools" : [
+		 ],
+	"super" : "InputEventHandler",
+	"type" : "normal" }

@@ -1,0 +1,18 @@
+{
+	"category" : "Reflectivity-Tools-Breakpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"AllBreakpoints" ],
+	"commentStamp" : "ClaraAllende 11/29/2014 11:12",
+	"instvars" : [
+		"condition",
+		"link",
+		"node",
+		"level",
+		"options" ],
+	"name" : "Breakpoint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

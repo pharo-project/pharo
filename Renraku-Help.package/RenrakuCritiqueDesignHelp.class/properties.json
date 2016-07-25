@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 7/10/2016 15:56",
+	"instvars" : [
+		 ],
+	"name" : "RenrakuCritiqueDesignHelp",
+	"pools" : [
+		 ],
+	"super" : "RenrakuCritiqueHelp",
+	"type" : "normal" }

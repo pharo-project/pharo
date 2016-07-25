@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 9/8/2015 20:54",
+	"instvars" : [
+		 ],
+	"name" : "FFICallbackType",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalObjectType",
+	"type" : "normal" }

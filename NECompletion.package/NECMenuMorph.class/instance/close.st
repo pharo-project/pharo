@@ -1,0 +1,3 @@
+actions
+close
+	self delete.

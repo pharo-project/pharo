@@ -1,0 +1,1 @@
+Text converter for Simplified Chinese variation of EUC.  (Even though the name doesn't look so, it is what it is.)

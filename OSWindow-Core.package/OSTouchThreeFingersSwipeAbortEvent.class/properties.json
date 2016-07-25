@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 5/11/2015 15:18",
+	"instvars" : [
+		 ],
+	"name" : "OSTouchThreeFingersSwipeAbortEvent",
+	"pools" : [
+		 ],
+	"super" : "OSTouchThreeFingersSwipeEvent",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+snapshotting
+saveResumptionTimes
+	self subclassResponsibility 

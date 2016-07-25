@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tlk 5/21/2006 14:16",
+	"instvars" : [
+		 ],
+	"name" : "CircleMorphTest",
+	"pools" : [
+		 ],
+	"super" : "MorphTest",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+*UnifiedFFI
+ffiCallingConvention
+	^ #stdcall

@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Base-Borders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:28",
+	"instvars" : [
+		"dashColors",
+		"dashLengths" ],
+	"name" : "DashedBorder",
+	"pools" : [
+		 ],
+	"super" : "SimpleBorder",
+	"type" : "normal" }

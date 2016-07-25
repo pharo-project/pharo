@@ -1,0 +1,14 @@
+{
+	"category" : "Jobs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestJobs",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

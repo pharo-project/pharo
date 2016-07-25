@@ -1,0 +1,1 @@
+I am simple update strategy that recompiles all methods.

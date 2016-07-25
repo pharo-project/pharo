@@ -1,0 +1,14 @@
+{
+	"category" : "System-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemModel",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

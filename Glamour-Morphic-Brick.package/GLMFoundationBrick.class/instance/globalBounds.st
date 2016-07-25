@@ -1,0 +1,4 @@
+geometry
+globalBounds
+
+	^ self bounds

@@ -1,0 +1,4 @@
+accessing
+rightText
+
+	^ rightTextHolder value

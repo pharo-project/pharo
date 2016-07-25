@@ -1,0 +1,1 @@
+NautilusPluginManager is a manger of plugins used to set up plugin for Nautilus UI

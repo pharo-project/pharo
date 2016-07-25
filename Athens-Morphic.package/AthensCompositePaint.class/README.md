@@ -1,0 +1,1 @@
+i am used to convert CompositeFillStyle into paint, used in Morphic.

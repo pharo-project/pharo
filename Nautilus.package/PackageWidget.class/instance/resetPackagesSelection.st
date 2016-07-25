@@ -1,0 +1,3 @@
+protocol
+resetPackagesSelection
+	packagesSelection removeAll

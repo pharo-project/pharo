@@ -1,0 +1,3 @@
+event handling
+scrollerOffsetChanged
+	self changed

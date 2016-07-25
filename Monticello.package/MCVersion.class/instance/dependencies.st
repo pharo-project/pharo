@@ -1,0 +1,3 @@
+accessing
+dependencies
+	^ dependencies ifNil: [#()]

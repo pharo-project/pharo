@@ -1,0 +1,15 @@
+{
+	"category" : "MonticelloGUI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:52",
+	"instvars" : [
+		"conflicts",
+		"merger" ],
+	"name" : "MCMergeBrowser",
+	"pools" : [
+		 ],
+	"super" : "MCPatchBrowser",
+	"type" : "normal" }

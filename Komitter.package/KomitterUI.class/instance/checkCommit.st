@@ -1,0 +1,3 @@
+accessing
+checkCommit
+	^ checkCommit

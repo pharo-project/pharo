@@ -1,0 +1,24 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 7/12/2012 14:49",
+	"instvars" : [
+		"options",
+		"roots",
+		"singleRoot",
+		"projectSpecGenerator",
+		"actionArg",
+		"configurationArg",
+		"baselineArg",
+		"projectArg",
+		"classNameArg",
+		"versionArg",
+		"repositoryArg" ],
+	"name" : "MetacelloScriptExecutor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

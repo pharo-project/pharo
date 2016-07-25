@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Borders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 11:48",
+	"instvars" : [
+		"tabSelector" ],
+	"name" : "TabPanelBorder",
+	"pools" : [
+		 ],
+	"super" : "SimpleBorder",
+	"type" : "normal" }

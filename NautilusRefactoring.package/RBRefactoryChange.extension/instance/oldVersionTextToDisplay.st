@@ -1,0 +1,4 @@
+*NautilusRefactoring
+oldVersionTextToDisplay
+
+	^ ''

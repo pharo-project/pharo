@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Tree",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/3/2015 14:06",
+	"instvars" : [
+		"dataSource",
+		"pattern" ],
+	"name" : "FTTreeFunctionStrategy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

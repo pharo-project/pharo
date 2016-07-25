@@ -1,0 +1,14 @@
+{
+	"category" : "Files-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:36",
+	"instvars" : [
+		"fileName" ],
+	"name" : "FileException",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

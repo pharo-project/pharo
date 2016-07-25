@@ -1,0 +1,19 @@
+{
+	"category" : "SmartSuggestions-Tests",
+	"classinstvars" : [
+		"anInstanceVar" ],
+	"classvars" : [
+		"ClassVariable" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"selectorToUse",
+		"anInstanceVar",
+		"selectedClass",
+		"selectedVariable",
+		"selectedInterval",
+		"message" ],
+	"name" : "SugsMockContext",
+	"pools" : [
+		 ],
+	"super" : "SugsAbstractContext",
+	"type" : "normal" }

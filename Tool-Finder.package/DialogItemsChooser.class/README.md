@@ -1,0 +1,1 @@
+Dialog for choosing from a list of items

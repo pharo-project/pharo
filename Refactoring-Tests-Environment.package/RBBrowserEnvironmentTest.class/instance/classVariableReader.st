@@ -1,0 +1,3 @@
+mockup
+classVariableReader
+	^ ClassVariable

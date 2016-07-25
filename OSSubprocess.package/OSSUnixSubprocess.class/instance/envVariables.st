@@ -1,0 +1,3 @@
+env building
+envVariables
+	^ envVariables

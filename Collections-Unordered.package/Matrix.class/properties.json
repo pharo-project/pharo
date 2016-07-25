@@ -1,0 +1,16 @@
+{
+	"category" : "Collections-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 2/15/2015 15:25",
+	"instvars" : [
+		"contents",
+		"numberOfColumns",
+		"numberOfRows" ],
+	"name" : "Matrix",
+	"pools" : [
+		 ],
+	"super" : "Collection",
+	"type" : "normal" }

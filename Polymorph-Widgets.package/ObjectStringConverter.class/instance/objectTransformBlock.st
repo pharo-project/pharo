@@ -1,0 +1,4 @@
+accessing
+objectTransformBlock
+
+	^ objectTransformBlock

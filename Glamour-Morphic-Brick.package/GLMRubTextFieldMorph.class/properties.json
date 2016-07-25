@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/21/2015 18:59",
+	"instvars" : [
+		"customHeight" ],
+	"name" : "GLMRubTextFieldMorph",
+	"pools" : [
+		 ],
+	"super" : "RubTextFieldMorph",
+	"type" : "normal" }

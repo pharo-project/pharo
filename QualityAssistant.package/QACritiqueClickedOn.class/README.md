@@ -1,0 +1,1 @@
+Happens when someone clicks on a critic to highlight the thing

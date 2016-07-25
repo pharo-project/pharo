@@ -1,0 +1,18 @@
+{
+	"category" : "Ombu-Stores",
+	"classinstvars" : [
+		"defaultBaseLocator" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 4/16/2014 14:14",
+	"instvars" : [
+		"currentSession",
+		"currentImagePathString",
+		"currentStore",
+		"alternativeStore",
+		"baseLocator" ],
+	"name" : "OmSessionStore",
+	"pools" : [
+		 ],
+	"super" : "OmStore",
+	"type" : "normal" }

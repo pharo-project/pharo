@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfDependencyAnalyser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "StephaneDucasse 11/17/2014 10:22",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfDependencyAnalyser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

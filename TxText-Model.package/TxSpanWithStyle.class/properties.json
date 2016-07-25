@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"style" ],
+	"name" : "TxSpanWithStyle",
+	"pools" : [
+		 ],
+	"super" : "TxBasicSpan",
+	"type" : "normal" }

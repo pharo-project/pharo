@@ -1,0 +1,3 @@
+tests
+testSimpleBlockReturn
+	self checkCorrectDecompilation: #exampleSimpleBlockReturn

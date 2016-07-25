@@ -1,0 +1,3 @@
+visiting
+visitMouseButtonReleaseEvent: anEvent
+	athensExample endStroke

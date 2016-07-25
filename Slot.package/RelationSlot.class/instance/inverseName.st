@@ -1,0 +1,4 @@
+accessing
+inverseName
+
+	^inverseName

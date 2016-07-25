@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Log",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"entry" ],
+	"name" : "EpEntryAdded",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+api
+preferedPaneColor
+
+	^ preferedPaneColor value

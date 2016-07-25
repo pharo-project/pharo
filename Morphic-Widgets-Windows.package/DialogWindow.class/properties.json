@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:26",
+	"instvars" : [
+		"cancelled" ],
+	"name" : "DialogWindow",
+	"pools" : [
+		 ],
+	"super" : "StandardWindow",
+	"type" : "normal" }

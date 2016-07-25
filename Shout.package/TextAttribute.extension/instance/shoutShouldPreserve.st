@@ -1,0 +1,3 @@
+*Shout-styling
+shoutShouldPreserve
+	^ false

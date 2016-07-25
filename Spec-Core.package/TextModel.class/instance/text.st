@@ -1,0 +1,4 @@
+api
+text
+
+	^ self getText

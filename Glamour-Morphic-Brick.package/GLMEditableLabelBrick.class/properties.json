@@ -1,0 +1,18 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/19/2015 15:22",
+	"instvars" : [
+		"labelBrick",
+		"editBrick",
+		"borderAnimation",
+		"cancelOnEscape",
+		"cancelOnFocusLost" ],
+	"name" : "GLMEditableLabelBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMInteractableBrick",
+	"type" : "normal" }

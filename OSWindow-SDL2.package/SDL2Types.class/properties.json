@@ -1,0 +1,29 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Int16",
+		"Int32",
+		"Int64",
+		"Int8",
+		"SDL_GLattr",
+		"SDL_Keycode",
+		"SDL_Keymod",
+		"SDL_Scancode",
+		"Sint16",
+		"Sint32",
+		"Sint64",
+		"Sint8",
+		"Uint16",
+		"Uint32",
+		"Uint64",
+		"Uint8" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:45",
+	"instvars" : [
+		 ],
+	"name" : "SDL2Types",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

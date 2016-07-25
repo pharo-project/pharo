@@ -1,0 +1,3 @@
+scope
+scope
+	^ scopeStack top

@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/14/2016 15:26",
+	"instvars" : [
+		"sourceAnchor" ],
+	"name" : "ReProperty",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

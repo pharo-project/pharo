@@ -1,0 +1,14 @@
+{
+	"category" : "NewValueHolder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PeterUhnak 3/5/2016 11:41",
+	"instvars" : [
+		"newValue" ],
+	"name" : "ValueAdded",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

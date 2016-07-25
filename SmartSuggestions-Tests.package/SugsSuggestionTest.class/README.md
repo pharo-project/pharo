@@ -1,0 +1,1 @@
+Superclass for SUnit tests for smart suggestions

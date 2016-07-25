@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/28/2015 19:15",
+	"instvars" : [
+		 ],
+	"name" : "RubTextFieldArea",
+	"pools" : [
+		 ],
+	"super" : "RubAbstractTextArea",
+	"type" : "normal" }

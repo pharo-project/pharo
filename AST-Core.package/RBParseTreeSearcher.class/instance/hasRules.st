@@ -1,0 +1,3 @@
+testing
+hasRules
+	^searches notEmpty

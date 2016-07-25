@@ -1,0 +1,3 @@
+package filter
+packagePattern
+	^ packagePattern

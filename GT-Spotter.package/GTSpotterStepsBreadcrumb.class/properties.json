@@ -1,0 +1,17 @@
+{
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"spotterModel",
+		"items",
+		"band",
+		"animation" ],
+	"name" : "GTSpotterStepsBreadcrumb",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+rawResponseCodes
+	self subclassResponsibility

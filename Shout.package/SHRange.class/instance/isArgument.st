@@ -1,0 +1,4 @@
+tests
+isArgument
+
+	^type == #methodArg

@@ -1,0 +1,1 @@
+I know how to use a Glamour  code model to  and extract the information needed for the suggestions

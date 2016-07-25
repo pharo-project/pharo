@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBera 5/23/2016 11:08",
+	"instvars" : [
+		 ],
+	"name" : "CompiledBlock",
+	"pools" : [
+		 ],
+	"super" : "CompiledCode",
+	"type" : "compiledMethod" }

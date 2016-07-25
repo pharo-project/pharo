@@ -1,0 +1,3 @@
+testing
+isMultipleSelection
+	^ selectionStrategy isMultiple

@@ -1,0 +1,3 @@
+accessing
+buildStringOrText
+	^self printString

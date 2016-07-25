@@ -1,0 +1,3 @@
+private
+valid
+	self dialogItemsChooser sendSelection

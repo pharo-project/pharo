@@ -1,0 +1,3 @@
+expanding-collapsing
+collapseAll
+	self subclassResponsibility

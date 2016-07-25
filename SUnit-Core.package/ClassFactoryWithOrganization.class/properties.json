@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Core-Extensions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 5/4/2011 21:25",
+	"instvars" : [
+		"organization" ],
+	"name" : "ClassFactoryWithOrganization",
+	"pools" : [
+		 ],
+	"super" : "ClassFactoryForTestCase",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+cursorPosition
+	^ selection end

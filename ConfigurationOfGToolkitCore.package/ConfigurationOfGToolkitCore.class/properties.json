@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGToolkitCore",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "AndreiChis 2/1/2015 14:39",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGToolkitCore",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

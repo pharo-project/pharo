@@ -1,0 +1,1 @@
+i used to represent gradient paints (both radial and linear)  in cairo backend

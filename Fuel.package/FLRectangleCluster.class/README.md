@@ -1,0 +1,1 @@
+FLRectangleCluster is an optional class that optimizes Rectangle instances, since there are a lot of instances in the system, it makes sense to optimize them. We take advantage of bytecode optimizations done by Pharo for messages like #new, #@, #x and #y. In addition, we avoid the overhead of class reshape, etc. 

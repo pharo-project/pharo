@@ -1,0 +1,20 @@
+{
+	"category" : "Rubric-TextScanning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:50",
+	"instvars" : [
+		"spaceX",
+		"lineHeight",
+		"baseline",
+		"breakableIndex",
+		"lineHeightAtBreak",
+		"baselineAtBreak",
+		"breakAtSpace" ],
+	"name" : "RubCompositionScanner",
+	"pools" : [
+		 ],
+	"super" : "RubCharacterScanner",
+	"type" : "normal" }

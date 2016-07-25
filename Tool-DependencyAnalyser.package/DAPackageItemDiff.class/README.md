@@ -1,0 +1,1 @@
+A PDAbstractItemDiff is a object which represent a package who added/modified/removed from an old analysis.

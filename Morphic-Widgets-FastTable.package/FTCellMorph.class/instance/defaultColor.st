@@ -1,0 +1,3 @@
+initialize
+defaultColor
+	^ Color transparent

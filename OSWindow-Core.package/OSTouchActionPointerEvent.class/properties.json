@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "jeanbaptistearnaud 2/26/2015 17:05",
+	"instvars" : [
+		"position",
+		"delta",
+		"pressure",
+		"fingerId" ],
+	"name" : "OSTouchActionPointerEvent",
+	"pools" : [
+		 ],
+	"super" : "OSTouchActionEvent",
+	"type" : "normal" }

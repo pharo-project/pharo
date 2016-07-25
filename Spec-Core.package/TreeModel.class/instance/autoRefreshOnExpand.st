@@ -1,0 +1,3 @@
+api
+autoRefreshOnExpand
+	^ autoRefreshOnExpand value

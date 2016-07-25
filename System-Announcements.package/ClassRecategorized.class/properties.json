@@ -1,0 +1,16 @@
+{
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cyrilledelaunay 1/18/2011 10:42",
+	"instvars" : [
+		"newCategory",
+		"oldCategory",
+		"classRecategorized" ],
+	"name" : "ClassRecategorized",
+	"pools" : [
+		 ],
+	"super" : "ClassAnnouncement",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Functions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 10/27/2015 14:59",
+	"instvars" : [
+		"actionButton",
+		"actionBlock" ],
+	"name" : "FTFilterFunctionWithAction",
+	"pools" : [
+		 ],
+	"super" : "FTFilterFunction",
+	"type" : "normal" }

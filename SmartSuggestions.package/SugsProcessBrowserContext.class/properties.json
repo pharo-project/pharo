@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 2/24/2016 10:27",
+	"instvars" : [
+		 ],
+	"name" : "SugsProcessBrowserContext",
+	"pools" : [
+		 ],
+	"super" : "SugsAbstractContext",
+	"type" : "normal" }

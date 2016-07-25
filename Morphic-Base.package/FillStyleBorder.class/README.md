@@ -1,0 +1,1 @@
+BorderStyle supporting general (potentially composite) fillstyles. 

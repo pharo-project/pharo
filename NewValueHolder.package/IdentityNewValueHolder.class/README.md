@@ -1,0 +1,1 @@
+I am a special because I announce changes only if the new value set is different from the current value.

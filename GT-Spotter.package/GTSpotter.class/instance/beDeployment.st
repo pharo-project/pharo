@@ -1,0 +1,3 @@
+accessing-convenience
+beDeployment
+	self exceptionHandler: GTSpotterDeploymentExceptionHandler new

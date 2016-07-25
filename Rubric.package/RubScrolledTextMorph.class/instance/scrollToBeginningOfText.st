@@ -1,0 +1,3 @@
+model protocol
+scrollToBeginningOfText
+	self scrollPane scrollToBeginningOfText

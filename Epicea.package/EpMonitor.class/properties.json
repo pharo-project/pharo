@@ -1,0 +1,18 @@
+{
+	"category" : "Epicea-Integration",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"systemAnnouncer",
+		"log",
+		"testAnnouncer",
+		"entryReferenceByEvent",
+		"jobAnnouncer" ],
+	"name" : "EpMonitor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

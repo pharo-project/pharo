@@ -1,0 +1,4 @@
+*Epicea
+isEpEvent
+	
+	^ false

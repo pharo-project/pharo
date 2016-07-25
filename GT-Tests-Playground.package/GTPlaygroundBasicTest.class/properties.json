@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Tests-Playground",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"playground",
+		"window" ],
+	"name" : "GTPlaygroundBasicTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

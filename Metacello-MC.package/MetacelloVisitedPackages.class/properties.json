@@ -1,0 +1,16 @@
+{
+	"category" : "Metacello-MC-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"groups",
+		"packages",
+		"projects" ],
+	"name" : "MetacelloVisitedPackages",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

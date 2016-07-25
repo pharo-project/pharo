@@ -1,0 +1,22 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Gesture",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 4/22/2015 13:21",
+	"instvars" : [
+		"circleSize",
+		"negativeColor",
+		"positiveColor",
+		"circleCenter",
+		"hasAbortedSwipe",
+		"discoMode",
+		"blackBackground",
+		"blackBackgroundPosition" ],
+	"name" : "SDL2TouchGestureExample2",
+	"pools" : [
+		"SDL2Constants",
+		"SDL2Types" ],
+	"super" : "SDL2TouchExample",
+	"type" : "normal" }

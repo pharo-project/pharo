@@ -1,0 +1,18 @@
+{
+	"category" : "Random-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenComan 9/28/2015 23:37",
+	"instvars" : [
+		"seed",
+		"a",
+		"m",
+		"q",
+		"r" ],
+	"name" : "Random",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

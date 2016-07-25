@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestKernel",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

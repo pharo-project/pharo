@@ -1,0 +1,3 @@
+protocol
+expandAllFromNode: aPackageTreePackageNodeModel 
+	packagesList model expandAllFromNode: aPackageTreePackageNodeModel 

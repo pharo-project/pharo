@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-TestsCommonMC",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloTestsPackageSet",
+	"pools" : [
+		 ],
+	"super" : "RPackageSet",
+	"type" : "normal" }

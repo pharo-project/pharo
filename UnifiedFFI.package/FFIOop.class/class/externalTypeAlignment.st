@@ -1,0 +1,3 @@
+accessing
+externalTypeAlignment
+	^ self pointerSize

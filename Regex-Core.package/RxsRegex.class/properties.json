@@ -1,0 +1,15 @@
+{
+	"category" : "Regex-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Tbn 11/12/2010 23:15",
+	"instvars" : [
+		"branch",
+		"regex" ],
+	"name" : "RxsRegex",
+	"pools" : [
+		 ],
+	"super" : "RxsNode",
+	"type" : "normal" }

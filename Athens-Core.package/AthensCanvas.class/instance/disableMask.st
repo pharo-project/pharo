@@ -1,0 +1,3 @@
+masking
+disableMask
+	^ surface disableMask

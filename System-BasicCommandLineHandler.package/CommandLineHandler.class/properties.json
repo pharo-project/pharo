@@ -1,0 +1,17 @@
+{
+	"category" : "System-BasicCommandLineHandler",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"commandLine",
+		"session",
+		"stdout",
+		"stderr" ],
+	"name" : "CommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

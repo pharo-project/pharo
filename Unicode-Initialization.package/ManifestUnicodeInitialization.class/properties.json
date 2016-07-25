@@ -1,0 +1,14 @@
+{
+	"category" : "Unicode-Initialization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestUnicodeInitialization",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

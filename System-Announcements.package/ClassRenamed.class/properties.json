@@ -1,0 +1,17 @@
+{
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cyrilledelaunay 1/18/2011 11:44",
+	"instvars" : [
+		"category",
+		"classRenamed",
+		"newName",
+		"oldName" ],
+	"name" : "ClassRenamed",
+	"pools" : [
+		 ],
+	"super" : "ClassAnnouncement",
+	"type" : "normal" }

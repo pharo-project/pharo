@@ -1,0 +1,3 @@
+accessing
+visibleSlots
+	self subclassResponsibility

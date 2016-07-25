@@ -1,0 +1,22 @@
+{
+	"category" : "Reflectivity-Links",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 3/1/2015 18:09",
+	"instvars" : [
+		"arguments",
+		"condition",
+		"conditionArguments",
+		"control",
+		"level",
+		"metaObject",
+		"nodes",
+		"selector",
+		"options" ],
+	"name" : "MetaLink",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

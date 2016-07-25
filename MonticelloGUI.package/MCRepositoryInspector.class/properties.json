@@ -1,0 +1,18 @@
+{
+	"category" : "MonticelloGUI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:53",
+	"instvars" : [
+		"repository",
+		"packages",
+		"versions",
+		"selectedPackage",
+		"selectedVersion" ],
+	"name" : "MCRepositoryInspector",
+	"pools" : [
+		 ],
+	"super" : "MCVersionInspector",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+results
+ir
+
+	^ ir optimize

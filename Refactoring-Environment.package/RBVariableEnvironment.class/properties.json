@@ -1,0 +1,18 @@
+{
+	"category" : "Refactoring-Environment",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 4/27/2015 21:24",
+	"instvars" : [
+		"instanceVariables",
+		"instanceVariableReaders",
+		"instanceVariableWriters",
+		"classVariables",
+		"selectorCache" ],
+	"name" : "RBVariableEnvironment",
+	"pools" : [
+		 ],
+	"super" : "RBBrowserEnvironmentWrapper",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+api
+label
+
+	self subclassResponsibility

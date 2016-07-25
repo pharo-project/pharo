@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IcePackageUnloaded",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

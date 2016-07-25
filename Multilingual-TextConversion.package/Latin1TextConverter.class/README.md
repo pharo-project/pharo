@@ -1,0 +1,1 @@
+Text converter for ISO 8859-1.  An international encoding used in Western Europe.

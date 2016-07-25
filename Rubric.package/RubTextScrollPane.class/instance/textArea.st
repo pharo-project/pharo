@@ -1,0 +1,3 @@
+accessing
+textArea
+	^ self scrollTarget

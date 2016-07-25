@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:24",
+	"instvars" : [
+		 ],
+	"name" : "OSTouchTwoFingersRotationDetector",
+	"pools" : [
+		 ],
+	"super" : "OSTouchRotationDetector",
+	"type" : "normal" }

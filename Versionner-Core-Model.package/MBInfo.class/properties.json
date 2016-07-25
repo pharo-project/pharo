@@ -1,0 +1,18 @@
+{
+	"category" : "Versionner-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ValidateAll" ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 14:11",
+	"instvars" : [
+		"name",
+		"text",
+		"validationResult",
+		"validationIcon",
+		"validationIconSymbol" ],
+	"name" : "MBInfo",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

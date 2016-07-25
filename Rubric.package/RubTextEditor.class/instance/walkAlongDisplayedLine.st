@@ -1,0 +1,3 @@
+settings
+walkAlongDisplayedLine
+	^ textArea walkAlongDisplayedLine

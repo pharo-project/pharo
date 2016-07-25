@@ -1,0 +1,4 @@
+accessing
+behaviorAffectedName
+
+	^ self classAffectedName 

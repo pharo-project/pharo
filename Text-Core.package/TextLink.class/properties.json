@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 12:18",
+	"instvars" : [
+		"classAndMethod" ],
+	"name" : "TextLink",
+	"pools" : [
+		 ],
+	"super" : "TextAction",
+	"type" : "normal" }

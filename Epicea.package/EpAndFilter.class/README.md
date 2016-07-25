@@ -1,0 +1,1 @@
+A TrAndFilter is a chain of AND filters.

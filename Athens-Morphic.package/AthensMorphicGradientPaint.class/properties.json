@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"gradient" ],
+	"name" : "AthensMorphicGradientPaint",
+	"pools" : [
+		 ],
+	"super" : "AthensPaint",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 6/25/2015 17:50",
+	"instvars" : [
+		"implementedMethods" ],
+	"name" : "DAMessageSendDependency",
+	"pools" : [
+		 ],
+	"super" : "DADependencyFromClass",
+	"type" : "normal" }

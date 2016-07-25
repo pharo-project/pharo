@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/18/2015 17:11",
+	"instvars" : [
+		"labelBrick",
+		"checkBrick",
+		"id" ],
+	"name" : "GLMCheckboxBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMInteractableBrick",
+	"type" : "normal" }

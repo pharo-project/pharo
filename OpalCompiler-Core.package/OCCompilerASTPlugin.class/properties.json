@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Translator",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 2/28/2015 15:00",
+	"instvars" : [
+		"ast" ],
+	"name" : "OCCompilerASTPlugin",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

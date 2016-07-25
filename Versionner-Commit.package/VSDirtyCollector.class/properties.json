@@ -1,0 +1,16 @@
+{
+	"category" : "Versionner-Commit",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"packages",
+		"projects",
+		"commitStrategy" ],
+	"name" : "VSDirtyCollector",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

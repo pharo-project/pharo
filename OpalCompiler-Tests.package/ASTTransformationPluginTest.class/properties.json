@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Plugins",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ASTTransformationPluginTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

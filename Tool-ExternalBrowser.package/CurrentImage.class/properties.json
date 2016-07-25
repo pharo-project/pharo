@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-ExternalBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 5/29/2015 13:43",
+	"instvars" : [
+		 ],
+	"name" : "CurrentImage",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

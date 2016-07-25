@@ -1,0 +1,3 @@
+initialize
+resetTargets
+    targets := nil

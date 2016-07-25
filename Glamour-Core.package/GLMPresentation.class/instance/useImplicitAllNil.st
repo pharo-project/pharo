@@ -1,0 +1,4 @@
+accessing
+useImplicitAllNil 
+	 
+	implicitAllNil := true

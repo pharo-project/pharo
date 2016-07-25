@@ -1,0 +1,15 @@
+{
+	"category" : "MonticelloFileTree-Git",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"commitID",
+		"repository" ],
+	"name" : "MCFileTreeGitStReader",
+	"pools" : [
+		 ],
+	"super" : "MCFileTreeStCypressReader",
+	"type" : "normal" }

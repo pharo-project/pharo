@@ -1,0 +1,16 @@
+{
+	"category" : "System-Caching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"total",
+		"maximum",
+		"compute" ],
+	"name" : "CacheWeight",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

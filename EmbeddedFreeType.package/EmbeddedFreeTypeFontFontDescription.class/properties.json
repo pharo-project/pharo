@@ -1,0 +1,14 @@
+{
+	"category" : "EmbeddedFreeType",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 4/8/2014 17:19",
+	"instvars" : [
+		 ],
+	"name" : "EmbeddedFreeTypeFontFontDescription",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

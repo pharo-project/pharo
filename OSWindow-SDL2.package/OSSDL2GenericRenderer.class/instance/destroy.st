@@ -1,0 +1,3 @@
+deleting
+destroy
+	renderer destroy

@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 6/3/2015 15:16",
+	"instvars" : [
+		 ],
+	"name" : "OSWindowMaximizedEvent",
+	"pools" : [
+		 ],
+	"super" : "OSWindowEvent",
+	"type" : "normal" }

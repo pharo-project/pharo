@@ -1,0 +1,16 @@
+{
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"isOverridden",
+		"isOverride",
+		"result" ],
+	"name" : "MethodOveridesAction",
+	"pools" : [
+		 ],
+	"super" : "AbstractMethodIconAction",
+	"type" : "normal" }

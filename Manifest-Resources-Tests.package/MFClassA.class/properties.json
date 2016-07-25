@@ -1,0 +1,14 @@
+{
+	"category" : "Manifest-Resources-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SimonAllier 1/17/2012 10:44",
+	"instvars" : [
+		 ],
+	"name" : "MFClassA",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

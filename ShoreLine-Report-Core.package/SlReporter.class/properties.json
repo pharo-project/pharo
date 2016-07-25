@@ -1,0 +1,21 @@
+{
+	"category" : "ShoreLine-Report-Core",
+	"classinstvars" : [
+		"enabled",
+		"host",
+		"port",
+		"autoSubmit",
+		"showNotification",
+		"showSummary" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TommasoDalSasso 2/26/2014 15:16",
+	"instvars" : [
+		"path",
+		"client",
+		"extractor" ],
+	"name" : "SlReporter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

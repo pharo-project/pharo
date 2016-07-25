@@ -1,0 +1,1 @@
+a history record containing selection change operation

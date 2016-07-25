@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloGUI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"b" ],
+	"name" : "MCWorkingCopyBrowserTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

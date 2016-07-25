@@ -1,0 +1,3 @@
+private
+showIndex 
+	^ showIndex

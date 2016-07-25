@@ -1,0 +1,4 @@
+api
+labelClickable
+	
+	^ labelClickableHolder value

@@ -1,0 +1,1 @@
+I am an abstract class to choose the editing mode of the text area 

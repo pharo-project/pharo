@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FFIFunctionResolutionStrategy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

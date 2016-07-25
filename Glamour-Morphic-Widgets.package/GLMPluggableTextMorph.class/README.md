@@ -1,0 +1,1 @@
+We subclass the default PluggableTextMorph just to raise the proper announcements when the text or when the selection changes.

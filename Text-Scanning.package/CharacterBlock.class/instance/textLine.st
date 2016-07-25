@@ -1,0 +1,3 @@
+accessing
+textLine
+	^ textLine

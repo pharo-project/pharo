@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 12/6/2010 13:04",
+	"instvars" : [
+		"cookiejar",
+		"credentials",
+		"currentRealm" ],
+	"name" : "ZnUserAgentSession",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

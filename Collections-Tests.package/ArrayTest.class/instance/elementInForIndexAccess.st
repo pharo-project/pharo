@@ -1,0 +1,3 @@
+requirements
+elementInForIndexAccess
+	^ elementInForCopy 

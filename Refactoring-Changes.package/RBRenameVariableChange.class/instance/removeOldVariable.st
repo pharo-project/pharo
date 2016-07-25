@@ -1,0 +1,3 @@
+private
+removeOldVariable
+	self subclassResponsibility

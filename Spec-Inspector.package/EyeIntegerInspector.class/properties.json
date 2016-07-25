@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "EyeIntegerInspector",
+	"pools" : [
+		 ],
+	"super" : "EyeInspector",
+	"type" : "normal" }

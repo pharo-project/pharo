@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 9/4/2015 14:26",
+	"instvars" : [
+		"package",
+		"dependency" ],
+	"name" : "PotentialOutDatedDependencyWarning",
+	"pools" : [
+		 ],
+	"super" : "Warning",
+	"type" : "normal" }

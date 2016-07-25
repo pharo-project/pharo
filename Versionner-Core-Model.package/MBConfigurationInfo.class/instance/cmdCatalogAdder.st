@@ -1,0 +1,4 @@
+commands
+cmdCatalogAdder
+	<command>
+	^ VSCatalogAdderCommand

@@ -1,0 +1,3 @@
+A Socket represents a network connection point. Current sockets are designed to support the TCP/IP and UDP protocols. Sockets are the lowest level of networking object in Pharo and are not normally used directly. SocketStream is a higher level object wrapping a Socket in a stream like protocol.
+
+ProtocolClient and subclasses are in turn wrappers around a SocketStream to provide support for specific network protocols such as POP, NNTP, HTTP, and FTP.

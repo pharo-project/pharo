@@ -1,0 +1,14 @@
+{
+	"category" : "Text-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"color" ],
+	"name" : "TextColor",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

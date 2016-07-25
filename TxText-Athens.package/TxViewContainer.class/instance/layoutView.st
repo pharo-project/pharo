@@ -1,0 +1,3 @@
+accessing
+layoutView
+	^ view layoutView

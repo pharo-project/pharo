@@ -1,0 +1,14 @@
+{
+	"category" : "OSSubprocess",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"VMProcessSystemAcessor" ],
+	"commentStamp" : "MarianoMartinezPeck 1/11/2016 13:15",
+	"instvars" : [
+		 ],
+	"name" : "OSSUnixSystemAccessor",
+	"pools" : [
+		"LibCWaitSharedPool" ],
+	"super" : "Object",
+	"type" : "normal" }

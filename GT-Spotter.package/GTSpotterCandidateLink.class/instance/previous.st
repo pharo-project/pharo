@@ -1,0 +1,3 @@
+accessing
+previous
+	^ self previousLink

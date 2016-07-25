@@ -1,0 +1,3 @@
+accessing
+cookieName
+	^ 'session-id'

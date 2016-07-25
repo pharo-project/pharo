@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/3/2014 18:23",
+	"instvars" : [
+		"selectedIndex" ],
+	"name" : "GLMDropDownListPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMFormatedPresentation",
+	"type" : "normal" }

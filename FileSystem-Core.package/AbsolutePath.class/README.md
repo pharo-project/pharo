@@ -1,0 +1,1 @@
+I represent an absolute path (a position starting from Path root)

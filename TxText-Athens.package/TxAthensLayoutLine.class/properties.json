@@ -1,0 +1,20 @@
+{
+	"category" : "TxText-Athens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"interval",
+		"commands",
+		"width",
+		"height",
+		"baselineOffset",
+		"maxAscent",
+		"layout" ],
+	"name" : "TxAthensLayoutLine",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

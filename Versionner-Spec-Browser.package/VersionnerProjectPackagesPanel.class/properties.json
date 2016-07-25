@@ -1,0 +1,20 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project",
+		"packagesList",
+		"packagesLabel",
+		"addPackageButton",
+		"removePackageButton",
+		"editPackageButton",
+		"savePackageButton" ],
+	"name" : "VersionnerProjectPackagesPanel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

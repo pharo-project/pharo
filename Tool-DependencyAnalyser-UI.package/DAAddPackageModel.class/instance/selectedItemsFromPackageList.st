@@ -1,0 +1,3 @@
+initialization
+selectedItemsFromPackageList
+	^ self packageList selectedItems

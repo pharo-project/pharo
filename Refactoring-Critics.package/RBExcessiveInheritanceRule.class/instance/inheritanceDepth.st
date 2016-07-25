@@ -1,0 +1,3 @@
+private
+inheritanceDepth
+	^ 10

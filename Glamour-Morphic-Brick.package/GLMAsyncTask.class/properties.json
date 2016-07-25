@@ -1,0 +1,19 @@
+{
+	"category" : "Glamour-Morphic-Brick-Async",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 11/26/2014 15:07",
+	"instvars" : [
+		"process",
+		"callback",
+		"delay",
+		"task",
+		"priority",
+		"arguments" ],
+	"name" : "GLMAsyncTask",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

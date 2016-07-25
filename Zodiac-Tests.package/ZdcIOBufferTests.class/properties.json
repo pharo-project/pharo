@@ -1,0 +1,14 @@
+{
+	"category" : "Zodiac-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/17/2011 18:48",
+	"instvars" : [
+		 ],
+	"name" : "ZdcIOBufferTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

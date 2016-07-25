@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 9/29/2015 12:46",
+	"instvars" : [
+		 ],
+	"name" : "RBPharoBootstrapAnalyzerStubWithNewDependency",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

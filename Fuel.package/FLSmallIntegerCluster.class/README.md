@@ -1,0 +1,1 @@
+I don't have so much sense as a class.

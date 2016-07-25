@@ -1,0 +1,3 @@
+accessing
+style
+	^ self subclassResponsibility

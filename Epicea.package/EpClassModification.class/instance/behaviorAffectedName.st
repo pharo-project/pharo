@@ -1,0 +1,3 @@
+accessing
+behaviorAffectedName
+	^ newClass name

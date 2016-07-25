@@ -1,0 +1,1 @@
+I declare api and logic to work with properties of a Brick, such as color, shadow, renderer and more

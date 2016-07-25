@@ -1,0 +1,4 @@
+protocol
+selected
+
+	^ true

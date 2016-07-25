@@ -1,0 +1,3 @@
+accessing
+selectedObject
+	^ self value

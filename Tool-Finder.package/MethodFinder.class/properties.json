@@ -1,0 +1,26 @@
+{
+	"category" : "Tool-Finder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"AddAndRemove",
+		"Approved",
+		"Blocks" ],
+	"commentStamp" : "sd 4/21/2011 17:22",
+	"instvars" : [
+		"data",
+		"answers",
+		"selector",
+		"argMap",
+		"thisData",
+		"mapStage",
+		"mapList",
+		"expressions",
+		"cachedClass",
+		"cachedArgNum",
+		"cachedSelectorLists" ],
+	"name" : "MethodFinder",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

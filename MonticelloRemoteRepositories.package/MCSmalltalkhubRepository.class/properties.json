@@ -1,0 +1,15 @@
+{
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"owner",
+		"project" ],
+	"name" : "MCSmalltalkhubRepository",
+	"pools" : [
+		 ],
+	"super" : "MCHttpRepository",
+	"type" : "normal" }

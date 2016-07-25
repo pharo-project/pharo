@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model" ],
+	"name" : "MockContainer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

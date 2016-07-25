@@ -1,0 +1,3 @@
+model protocol
+scrollToEndOfText
+	self scrollPane scrollToEndOfText

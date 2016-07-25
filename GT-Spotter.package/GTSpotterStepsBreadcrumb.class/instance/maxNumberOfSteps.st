@@ -1,0 +1,3 @@
+accessing
+maxNumberOfSteps
+	^ 5

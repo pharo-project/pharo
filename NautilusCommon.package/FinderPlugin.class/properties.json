@@ -1,0 +1,15 @@
+{
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"finder",
+		"finderui" ],
+	"name" : "FinderPlugin",
+	"pools" : [
+		 ],
+	"super" : "AbstractNautilusPlugin",
+	"type" : "normal" }

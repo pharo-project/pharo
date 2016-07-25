@@ -1,0 +1,17 @@
+{
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"methodBlock",
+		"result",
+		"classBlock",
+		"anInstVar" ],
+	"name" : "RBBasicLintRuleTest",
+	"pools" : [
+		 ],
+	"super" : "RBLintRuleTest",
+	"type" : "normal" }

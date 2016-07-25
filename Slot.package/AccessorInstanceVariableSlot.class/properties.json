@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 2/6/2015 17:09",
+	"instvars" : [
+		 ],
+	"name" : "AccessorInstanceVariableSlot",
+	"pools" : [
+		 ],
+	"super" : "InstanceVariableSlot",
+	"type" : "normal" }

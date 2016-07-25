@@ -1,0 +1,21 @@
+{
+	"category" : "ShoreLine-Report-UI-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TommasoDalSasso 2/24/2014 11:26",
+	"instvars" : [
+		"reporter",
+		"report",
+		"debugger",
+		"cancel",
+		"stack",
+		"sendButton",
+		"autoSubmit",
+		"help" ],
+	"name" : "SlReportWindow",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

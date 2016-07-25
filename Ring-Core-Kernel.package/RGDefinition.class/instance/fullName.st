@@ -1,0 +1,4 @@
+accessing
+fullName
+
+	^self name

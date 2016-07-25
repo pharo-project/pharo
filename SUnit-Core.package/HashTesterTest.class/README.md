@@ -1,0 +1,1 @@
+I am a simple test case to check that HashTester works correctly

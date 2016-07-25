@@ -1,0 +1,1 @@
+I answer a String that represents the new state of an EpEvent.

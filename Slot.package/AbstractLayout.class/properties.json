@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"host" ],
+	"name" : "AbstractLayout",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Hashing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemHashing",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

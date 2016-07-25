@@ -1,0 +1,3 @@
+testing
+localDefinition
+	^ self baseDefinition

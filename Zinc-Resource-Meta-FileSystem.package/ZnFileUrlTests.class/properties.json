@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Resource-Meta-FileSystem",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZnFileUrlTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

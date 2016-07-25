@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"pane",
+		"presentation" ],
+	"name" : "GLMTreePresentationTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

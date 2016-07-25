@@ -1,0 +1,18 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FloodFillTolerance" ],
+	"commentStamp" : "ls 1/4/2004 17:16",
+	"instvars" : [
+		"bits",
+		"width",
+		"height",
+		"depth",
+		"offset" ],
+	"name" : "Form",
+	"pools" : [
+		 ],
+	"super" : "DisplayMedium",
+	"type" : "normal" }

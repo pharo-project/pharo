@@ -1,0 +1,3 @@
+accessing
+resetHighestUpdate
+	highestUpdate := nil

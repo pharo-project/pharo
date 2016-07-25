@@ -1,0 +1,15 @@
+{
+	"category" : "NewValueHolder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"newValue",
+		"oldValue" ],
+	"name" : "ValueChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

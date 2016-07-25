@@ -1,0 +1,1 @@
+General exception used for example to signal invalid trait compositions

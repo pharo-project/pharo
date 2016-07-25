@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model-Filters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/20/2014 11:58",
+	"instvars" : [
+		 ],
+	"name" : "EpFilter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

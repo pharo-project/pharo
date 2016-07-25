@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:31",
+	"instvars" : [
+		"filePath",
+		"timestamp" ],
+	"name" : "OSWindowDropEvent",
+	"pools" : [
+		 ],
+	"super" : "OSWindowEvent",
+	"type" : "normal" }

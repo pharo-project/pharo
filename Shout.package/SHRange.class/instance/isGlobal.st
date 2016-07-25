@@ -1,0 +1,4 @@
+tests
+isGlobal
+
+	^type == #globalVar

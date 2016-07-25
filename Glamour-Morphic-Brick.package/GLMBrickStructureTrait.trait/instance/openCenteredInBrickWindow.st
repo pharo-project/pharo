@@ -1,0 +1,4 @@
+brick-structure-opening
+openCenteredInBrickWindow
+
+	self openCenteredInBrickWindowLabeled: self

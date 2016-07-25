@@ -1,0 +1,4 @@
+conversion
+asDuration
+
+	^ self duration

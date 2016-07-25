@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-EventRecorder-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 2/27/2015 14:38",
+	"instvars" : [
+		 ],
+	"name" : "GTSpotterRecorderOpenEvent",
+	"pools" : [
+		 ],
+	"super" : "GTSpotterRecorderEvent",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+defaults
+defaultMenuAllowed
+	^ true

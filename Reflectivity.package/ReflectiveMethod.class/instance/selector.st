@@ -1,0 +1,3 @@
+forwarding
+selector 
+	^compiledMethod selector

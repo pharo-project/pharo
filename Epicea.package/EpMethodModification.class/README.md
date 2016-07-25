@@ -1,0 +1,1 @@
+I represent a modification of a method in a class or a trait.

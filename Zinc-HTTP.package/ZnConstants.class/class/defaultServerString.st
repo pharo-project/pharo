@@ -1,0 +1,3 @@
+accessing
+defaultServerString 
+	^ self frameworkNameAndVersion 

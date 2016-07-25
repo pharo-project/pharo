@@ -1,0 +1,14 @@
+{
+	"category" : "IssueTracking-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestIssueTrackingTests",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

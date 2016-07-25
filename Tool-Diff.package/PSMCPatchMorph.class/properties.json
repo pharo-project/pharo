@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"UsedByDefault" ],
+	"commentStamp" : "LaurentLaffont 2/23/2011 20:21",
+	"instvars" : [
+		"changeTree",
+		"selectedChangeWrapper" ],
+	"name" : "PSMCPatchMorph",
+	"pools" : [
+		 ],
+	"super" : "DiffChangeMorph",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+accessing
+shortTitle
+
+	^ self subclassResponsibility 

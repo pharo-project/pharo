@@ -1,0 +1,3 @@
+accessing
+stopWithoutParentheses
+	^value stop

@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-MC-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloRepositoriesSpec",
+	"pools" : [
+		 ],
+	"super" : "MetacelloMemberListSpec",
+	"type" : "normal" }

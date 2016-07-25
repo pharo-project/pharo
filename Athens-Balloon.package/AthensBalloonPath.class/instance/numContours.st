@@ -1,0 +1,3 @@
+accessing
+numContours
+	^ contours size

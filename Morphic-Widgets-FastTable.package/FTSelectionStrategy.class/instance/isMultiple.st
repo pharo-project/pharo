@@ -1,0 +1,3 @@
+testing
+isMultiple
+	^ self subclassResponsibility

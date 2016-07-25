@@ -1,0 +1,3 @@
+accessing
+selectionRegexString
+	^ self convertedFindString

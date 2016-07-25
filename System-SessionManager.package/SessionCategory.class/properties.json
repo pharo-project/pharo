@@ -1,0 +1,15 @@
+{
+	"category" : "System-SessionManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 10/2/2015 11:14",
+	"instvars" : [
+		"name",
+		"priorityLists" ],
+	"name" : "SessionCategory",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

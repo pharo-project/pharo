@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tg 2/20/2010 14:57",
+	"instvars" : [
+		"pane",
+		"oldPresentations" ],
+	"name" : "GLMPresentationsChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

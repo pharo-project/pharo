@@ -1,0 +1,3 @@
+accessing
+minimumNewLinesBetweenStatements
+	^ context minimumNewLinesBetweenStatements

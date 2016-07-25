@@ -1,0 +1,3 @@
+testing
+isLineMorph
+	^closed not

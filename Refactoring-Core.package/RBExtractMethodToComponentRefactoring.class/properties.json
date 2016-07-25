@@ -1,0 +1,16 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 13:19",
+	"instvars" : [
+		"selector",
+		"extractionInterval",
+		"extractedMethodSelector" ],
+	"name" : "RBExtractMethodToComponentRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBMethodRefactoring",
+	"type" : "normal" }

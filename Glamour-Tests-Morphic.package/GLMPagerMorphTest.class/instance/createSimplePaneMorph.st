@@ -1,0 +1,4 @@
+private
+createSimplePaneMorph
+
+	^ Morph new

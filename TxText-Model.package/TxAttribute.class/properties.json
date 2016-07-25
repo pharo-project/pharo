@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"value" ],
+	"name" : "TxAttribute",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

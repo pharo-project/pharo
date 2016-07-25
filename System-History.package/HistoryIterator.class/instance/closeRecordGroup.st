@@ -1,0 +1,3 @@
+compatibility
+closeRecordGroup
+	^ self closeGroup

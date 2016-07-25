@@ -1,0 +1,17 @@
+tests-layouter
+testChangeChildrenInParent
+	|parent brick|
+	parent := self newBrickWithFullDependsOnChildren.
+	brick := self newBrickWithStaticExtent.
+	
+	parent addBrickBack: brick.
+	self assertAllSubbricksAreClean: parent.
+	self assert: parent extent equals: brick extent.
+	"height and width are changed, so parent should be re-layouted"
+	brick height: self staticHeight * 2.
+	brick width: self staticWidth * 2.
+	
+	self assertAllSubbricksAreClean: parent.
+	self assert: brick extent equals: self staticExtent * 2.
+	self assert: parent extent equals: brick extent
+	

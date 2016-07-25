@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/10/2016 01:49",
+	"instvars" : [
+		 ],
+	"name" : "SDL_JoyDeviceRemovedEvent",
+	"pools" : [
+		 ],
+	"super" : "SDL_JoyDeviceEvent",
+	"type" : "normal" }

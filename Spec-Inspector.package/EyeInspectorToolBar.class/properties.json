@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"previousButton",
+		"nextButton",
+		"inspectorChoice",
+		"isUpdating" ],
+	"name" : "EyeInspectorToolBar",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

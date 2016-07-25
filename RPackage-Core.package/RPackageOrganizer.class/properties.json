@@ -1,0 +1,17 @@
+{
+	"category" : "RPackage-Core",
+	"classinstvars" : [
+		"default" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"classPackageMapping",
+		"packages",
+		"classExtendingPackagesMapping",
+		"debuggingName" ],
+	"name" : "RPackageOrganizer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

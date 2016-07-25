@@ -1,0 +1,16 @@
+{
+	"category" : "OpalCompiler-Core-Translator",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"OptimizedMessages" ],
+	"commentStamp" : "ajh 3/24/2003 22:19",
+	"instvars" : [
+		"methodBuilder",
+		"effectTranslator",
+		"valueTranslator" ],
+	"name" : "OCASTTranslator",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

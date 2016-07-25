@@ -1,0 +1,3 @@
+accessing
+beSeen
+	seen := true

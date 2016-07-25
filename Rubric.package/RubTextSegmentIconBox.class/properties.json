@@ -1,0 +1,15 @@
+{
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"icon",
+		"previouslyIn" ],
+	"name" : "RubTextSegmentIconBox",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "NautilusRefactoring",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 6/19/2015 10:12",
+	"instvars" : [
+		 ],
+	"name" : "RefactoringAborted",
+	"pools" : [
+		 ],
+	"super" : "Exception",
+	"type" : "normal" }

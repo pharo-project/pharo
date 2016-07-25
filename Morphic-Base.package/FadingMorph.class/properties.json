@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 1/25/2016 00:17",
+	"instvars" : [
+		"alpha",
+		"fadingFactor",
+		"resetable" ],
+	"name" : "FadingMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

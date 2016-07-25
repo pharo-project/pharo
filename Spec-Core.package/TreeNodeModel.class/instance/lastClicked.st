@@ -1,0 +1,4 @@
+api
+lastClicked
+	
+	^ lastClicked value

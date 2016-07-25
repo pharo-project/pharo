@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Core-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MorphDeleted",
+	"pools" : [
+		 ],
+	"super" : "MorphAnnouncement",
+	"type" : "normal" }

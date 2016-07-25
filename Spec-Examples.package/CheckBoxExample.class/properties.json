@@ -1,0 +1,20 @@
+{
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"button1",
+		"button2",
+		"button3",
+		"container",
+		"morph1",
+		"morph2",
+		"morph3" ],
+	"name" : "CheckBoxExample",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

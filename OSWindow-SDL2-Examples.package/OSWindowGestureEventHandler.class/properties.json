@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Gesture",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 7/23/2015 10:56",
+	"instvars" : [
+		"touchExample" ],
+	"name" : "OSWindowGestureEventHandler",
+	"pools" : [
+		 ],
+	"super" : "OSWindowGestureHandler",
+	"type" : "normal" }

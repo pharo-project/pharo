@@ -1,0 +1,3 @@
+structure
+topRendererOrSelf
+	^owner topRendererOrSelf

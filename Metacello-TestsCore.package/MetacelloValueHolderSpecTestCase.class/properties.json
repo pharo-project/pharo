@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-TestsCore-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloValueHolderSpecTestCase",
+	"pools" : [
+		 ],
+	"super" : "MetacelloSpecTestCase",
+	"type" : "normal" }

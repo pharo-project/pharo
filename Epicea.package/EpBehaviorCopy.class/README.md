@@ -1,0 +1,1 @@
+I represent a copy of a class or a trait .

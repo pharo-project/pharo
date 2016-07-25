@@ -1,0 +1,3 @@
+initialize
+initialize
+	endianness := #big

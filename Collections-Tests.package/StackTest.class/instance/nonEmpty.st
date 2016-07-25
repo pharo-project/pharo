@@ -1,0 +1,4 @@
+tests - empty
+nonEmpty
+	
+ 	^ nonEmpty

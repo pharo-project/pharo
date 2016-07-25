@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"menuMorph" ],
+	"name" : "GLMMenuInvoked",
+	"pools" : [
+		 ],
+	"super" : "GLMActionAnnouncement",
+	"type" : "normal" }

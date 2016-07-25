@@ -1,0 +1,3 @@
+execute
+commit
+	Komitter openAndCommitToMonticelloWorkingCopiesFilteredBy: self filterBlock 

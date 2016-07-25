@@ -1,0 +1,1 @@
+Happens when someone clicks a question mark and a popup with critic's description appears

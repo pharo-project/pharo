@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Variables",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Properties" ],
+	"commentStamp" : "MarcusDenker 7/29/2014 16:32",
+	"instvars" : [
+		 ],
+	"name" : "LiteralVariable",
+	"pools" : [
+		 ],
+	"super" : "Association",
+	"type" : "normal" }

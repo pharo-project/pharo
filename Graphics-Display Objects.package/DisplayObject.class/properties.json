@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "DisplayObject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

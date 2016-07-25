@@ -1,0 +1,23 @@
+{
+	"category" : "Morphic-Base-ProgressBar",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BarHeight",
+		"BarWidth" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"bar",
+		"endValue",
+		"hasResult",
+		"job",
+		"labelMorph",
+		"lastRefresh",
+		"lock",
+		"result",
+		"startValue" ],
+	"name" : "JobProgressMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

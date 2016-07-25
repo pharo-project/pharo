@@ -1,0 +1,3 @@
+converting
+asSortedCollection
+	^ contents asSortedCollection

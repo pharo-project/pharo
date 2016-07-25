@@ -1,0 +1,4 @@
+api
+selectedChangeSet
+
+	 ^ changesListModel selectedItem

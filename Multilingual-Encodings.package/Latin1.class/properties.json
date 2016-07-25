@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-Encodings",
+	"classinstvars" : [
+		"rightHalfSequence" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "yo 10/19/2004 19:53",
+	"instvars" : [
+		 ],
+	"name" : "Latin1",
+	"pools" : [
+		 ],
+	"super" : "EncodedCharSet",
+	"type" : "normal" }

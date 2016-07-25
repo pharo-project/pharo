@@ -1,0 +1,1 @@
+Remove writing of method properties.

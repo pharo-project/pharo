@@ -1,0 +1,3 @@
+removing
+pop
+	^ work removeLast

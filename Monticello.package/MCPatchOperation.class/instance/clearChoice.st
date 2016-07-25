@@ -1,0 +1,3 @@
+accessing
+clearChoice
+	isApplicable := nil

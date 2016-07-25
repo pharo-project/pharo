@@ -1,0 +1,3 @@
+private
+logInManifest
+	cache logInManifest

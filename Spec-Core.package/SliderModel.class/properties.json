@@ -1,0 +1,21 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 6/28/2016 13:16",
+	"instvars" : [
+		"max",
+		"min",
+		"quantum",
+		"value",
+		"isSetting",
+		"isChanging",
+		"absoluteValue",
+		"labelHolder" ],
+	"name" : "SliderModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

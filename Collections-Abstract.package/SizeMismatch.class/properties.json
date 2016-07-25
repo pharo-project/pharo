@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Abstract",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 4/18/2011 14:56",
+	"instvars" : [
+		 ],
+	"name" : "SizeMismatch",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

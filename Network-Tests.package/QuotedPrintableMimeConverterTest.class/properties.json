@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Tests-MIME",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 10:12",
+	"instvars" : [
+		"coder" ],
+	"name" : "QuotedPrintableMimeConverterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

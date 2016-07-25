@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-GroupManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"groupName" ],
+	"name" : "GroupAlreadyExists",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Clipboard",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikSperreJohansen 1/28/2011 15:15",
+	"instvars" : [
+		 ],
+	"name" : "UnixClipboard",
+	"pools" : [
+		 ],
+	"super" : "Clipboard",
+	"type" : "normal" }

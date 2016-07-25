@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 8/11/2014 10:19",
+	"instvars" : [
+		"escaping" ],
+	"name" : "OCTempVariable",
+	"pools" : [
+		 ],
+	"super" : "OCAbstractLocalVariable",
+	"type" : "normal" }

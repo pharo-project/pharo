@@ -1,0 +1,4 @@
+display
+open
+
+	^ self openWithSpec

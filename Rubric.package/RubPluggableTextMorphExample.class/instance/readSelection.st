@@ -1,0 +1,3 @@
+accessing
+readSelection
+	^ selection

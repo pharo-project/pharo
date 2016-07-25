@@ -1,0 +1,1 @@
+I am a storage of shortcuts. I store and provide facilities to access named and annonimous shortcuts.

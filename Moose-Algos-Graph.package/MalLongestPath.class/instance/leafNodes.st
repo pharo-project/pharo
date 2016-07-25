@@ -1,0 +1,4 @@
+accessing
+leafNodes
+	^ leafNodes
+	

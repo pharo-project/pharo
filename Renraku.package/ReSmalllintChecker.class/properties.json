@@ -1,0 +1,18 @@
+{
+	"category" : "Renraku-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 7/7/2016 19:08",
+	"instvars" : [
+		"methodRules",
+		"nodeRules",
+		"classRules",
+		"packageRules",
+		"critiques" ],
+	"name" : "ReSmalllintChecker",
+	"pools" : [
+		 ],
+	"super" : "SmalllintManifestChecker",
+	"type" : "normal" }

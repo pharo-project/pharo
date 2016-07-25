@@ -1,0 +1,4 @@
+testing
+isGroup
+
+	^ true

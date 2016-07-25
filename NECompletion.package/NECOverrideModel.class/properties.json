@@ -1,0 +1,14 @@
+{
+	"category" : "NECompletion-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NECOverrideModel",
+	"pools" : [
+		 ],
+	"super" : "NECTypedModel",
+	"type" : "normal" }

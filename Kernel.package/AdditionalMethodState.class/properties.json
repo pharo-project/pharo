@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"method",
+		"selector" ],
+	"name" : "AdditionalMethodState",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "variable" }

@@ -1,0 +1,1 @@
+I simulate the functionality of MenuItemMorph while providing more sophisticated visualization for rubric annotations 

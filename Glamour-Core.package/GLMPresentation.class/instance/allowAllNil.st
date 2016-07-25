@@ -1,0 +1,3 @@
+scripting
+allowAllNil
+	^ self useExplicitAllNil

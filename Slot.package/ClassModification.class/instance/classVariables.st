@@ -1,0 +1,4 @@
+accessing
+classVariables
+	
+	^ classVariables

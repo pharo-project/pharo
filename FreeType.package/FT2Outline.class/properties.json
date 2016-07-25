@@ -1,0 +1,18 @@
+{
+	"category" : "FreeType-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"contoursSize",
+		"pointsSize",
+		"points",
+		"tags",
+		"contours" ],
+	"name" : "FT2Outline",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

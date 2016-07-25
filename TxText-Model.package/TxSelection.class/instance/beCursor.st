@@ -1,0 +1,4 @@
+operations
+beCursor
+
+	self collapse

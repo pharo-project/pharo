@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DamienCassou 7/9/2011 23:44",
+	"instvars" : [
+		"ports",
+		"forbiddenAnnouncements" ],
+	"name" : "GLMTransmissionContext",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

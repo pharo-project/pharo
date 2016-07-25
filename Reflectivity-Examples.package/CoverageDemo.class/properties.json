@@ -1,0 +1,19 @@
+{
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mcamp 11/17/2015 11:33",
+	"instvars" : [
+		"installMetalinkButton",
+		"runCodeButton",
+		"codePanelMorph",
+		"metalinkBlock",
+		"compiledMethods",
+		"coverageCode" ],
+	"name" : "CoverageDemo",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

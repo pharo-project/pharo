@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:44",
+	"instvars" : [
+		 ],
+	"name" : "SelfEvaluatingObjectTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

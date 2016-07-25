@@ -1,0 +1,3 @@
+running
+andFilter
+	^ EpPluggableFilter behaviorFilter

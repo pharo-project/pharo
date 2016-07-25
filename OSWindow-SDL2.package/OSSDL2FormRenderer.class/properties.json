@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-SDL2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:22",
+	"instvars" : [
+		"texture",
+		"renderer",
+		"extent",
+		"deferUpdates" ],
+	"name" : "OSSDL2FormRenderer",
+	"pools" : [
+		"SDL2Constants" ],
+	"super" : "OSWindowFormRenderer",
+	"type" : "normal" }

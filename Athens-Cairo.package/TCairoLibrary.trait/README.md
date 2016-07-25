@@ -1,0 +1,1 @@
+a simple trait used for NB callouts to cairo library functions

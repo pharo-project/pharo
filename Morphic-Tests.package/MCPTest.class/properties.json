@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MCPTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

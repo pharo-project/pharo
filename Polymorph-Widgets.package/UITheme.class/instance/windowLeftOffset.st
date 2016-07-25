@@ -1,0 +1,4 @@
+defaults
+windowLeftOffset
+
+	^ 0

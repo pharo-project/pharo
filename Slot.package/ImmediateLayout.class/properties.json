@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ImmediateLayout",
+	"pools" : [
+		 ],
+	"super" : "ObjectLayout",
+	"type" : "normal" }

@@ -1,0 +1,21 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultHostName",
+		"HaveNetwork",
+		"ResolverBusy",
+		"ResolverError",
+		"ResolverMutex",
+		"ResolverReady",
+		"ResolverSemaphore",
+		"ResolverUninitialized" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NetNameResolver",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,29 @@
+{
+	"category" : "MonticelloGUI",
+	"classinstvars" : [
+		"packageSearchList",
+		"versionSearchList" ],
+	"classvars" : [
+		"Order" ],
+	"commentStamp" : "LaurentLaffont 2/5/2011 17:35",
+	"instvars" : [
+		"repository",
+		"versions",
+		"loaded",
+		"loadedPackages",
+		"newer",
+		"packageList",
+		"selectedPackage",
+		"selectedVersion",
+		"order",
+		"versionInfo",
+		"packagePattern",
+		"versionPattern",
+		"packageListUpdateProcess",
+		"versionProcess",
+		"selectedPackageAncestors" ],
+	"name" : "MCFileRepositoryInspector",
+	"pools" : [
+		 ],
+	"super" : "MCVersionInspector",
+	"type" : "normal" }

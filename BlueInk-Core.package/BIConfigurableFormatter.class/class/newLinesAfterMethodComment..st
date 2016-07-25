@@ -1,0 +1,4 @@
+accessing
+newLinesAfterMethodComment: anInteger
+	DefaultPrettyPrintContext newLinesAfterMethodComment: anInteger.
+	self announceASettingChange

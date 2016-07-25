@@ -1,0 +1,3 @@
+accessing
+reset
+	Instance := nil

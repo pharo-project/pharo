@@ -1,0 +1,18 @@
+{
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 6/3/2015 12:59",
+	"instvars" : [
+		"lineAnnotation",
+		"row",
+		"wrappingPolicyMorph",
+		"lineNumbersDisplayMorph",
+		"formatAsYouReadMorph" ],
+	"name" : "NautilusAnnotationDisplayer",
+	"pools" : [
+		 ],
+	"super" : "RubScrolledTextSideRuler",
+	"type" : "normal" }

@@ -1,0 +1,5 @@
+testing
+testWhenRunMarkTestedToTrue
+
+
+	RunStatus := true.

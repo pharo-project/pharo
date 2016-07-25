@@ -1,0 +1,3 @@
+accessing
+defaultWorkingDirectory
+	^ Path root

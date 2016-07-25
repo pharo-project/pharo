@@ -1,0 +1,4 @@
+buttons behavior
+addButtonLabel
+	
+	^ 'Add'

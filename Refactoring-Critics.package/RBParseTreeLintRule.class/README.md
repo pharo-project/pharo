@@ -1,0 +1,1 @@
+A RBParseTreeLintRule is a rule that is expressed using a parse tree matcher on a method AST.

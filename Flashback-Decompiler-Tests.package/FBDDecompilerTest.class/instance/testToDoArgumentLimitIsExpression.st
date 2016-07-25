@@ -1,0 +1,3 @@
+tests
+testToDoArgumentLimitIsExpression
+	self checkCorrectDecompilation: #exampleToDoArgumentLimitIsExpression

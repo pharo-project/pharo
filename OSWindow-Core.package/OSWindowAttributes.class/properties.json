@@ -1,0 +1,36 @@
+{
+	"category" : "OSWindow-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultBorderless",
+		"DefaultExtent",
+		"DefaultFullscreen",
+		"DefaultMaximized",
+		"DefaultMinimized",
+		"DefaultPosition",
+		"DefaultResizable",
+		"DefaultTitle",
+		"DefaultVisible",
+		"DefaultWindowCentered" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 16:18",
+	"instvars" : [
+		"position",
+		"extent",
+		"title",
+		"fullscreen",
+		"screenId",
+		"preferableDriver",
+		"icon",
+		"glAttributes",
+		"windowCentered",
+		"borderless",
+		"resizable",
+		"maximized",
+		"minimized",
+		"visible" ],
+	"name" : "OSWindowAttributes",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

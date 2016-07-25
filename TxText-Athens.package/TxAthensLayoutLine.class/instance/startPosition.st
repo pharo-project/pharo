@@ -1,0 +1,3 @@
+accessing
+startPosition
+	^ interval start

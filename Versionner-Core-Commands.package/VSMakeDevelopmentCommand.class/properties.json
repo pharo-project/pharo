@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "VSMakeDevelopmentCommand",
+	"pools" : [
+		 ],
+	"super" : "VSMakeVersionCommand",
+	"type" : "normal" }

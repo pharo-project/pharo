@@ -1,0 +1,1 @@
+An explicit subclass of MCHttpRepository to provide a template for gemstone repositories.

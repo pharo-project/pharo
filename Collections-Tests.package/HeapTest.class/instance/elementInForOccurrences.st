@@ -1,0 +1,3 @@
+requirements
+elementInForOccurrences
+	^self nonEmpty anyOne

@@ -1,0 +1,3 @@
+tarjan
+tarjanLowLink
+	^ tarjanLowLink

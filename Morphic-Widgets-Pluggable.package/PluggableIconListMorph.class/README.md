@@ -1,0 +1,1 @@
+A type of PluggableListMorph that supports a single icon (Form) for items. Useful for lists with icons.

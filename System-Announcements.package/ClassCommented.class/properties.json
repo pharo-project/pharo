@@ -1,0 +1,18 @@
+{
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"newStamp",
+		"newComment",
+		"classCommented",
+		"oldComment",
+		"oldStamp" ],
+	"name" : "ClassCommented",
+	"pools" : [
+		 ],
+	"super" : "ClassAnnouncement",
+	"type" : "normal" }

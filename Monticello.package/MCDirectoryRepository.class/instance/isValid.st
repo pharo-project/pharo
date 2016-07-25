@@ -1,0 +1,3 @@
+testing
+isValid
+	^directory exists

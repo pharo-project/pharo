@@ -1,0 +1,3 @@
+ui
+windowIsClosing
+	self unregister.

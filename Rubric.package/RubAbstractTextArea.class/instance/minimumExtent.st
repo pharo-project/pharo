@@ -1,0 +1,3 @@
+geometry
+minimumExtent
+	^ self minExtent

@@ -1,0 +1,3 @@
+private-classes
+literalNodeClass
+	^ RBLiteralNode

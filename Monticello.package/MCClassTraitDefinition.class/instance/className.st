@@ -1,0 +1,3 @@
+accessing
+className
+	^self baseTrait

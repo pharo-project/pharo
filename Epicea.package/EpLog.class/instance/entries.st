@@ -1,0 +1,4 @@
+accessing
+entries
+
+	^ store entries

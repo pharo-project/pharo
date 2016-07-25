@@ -1,0 +1,4 @@
+protocol
+vShrinkWrap
+
+	self subclassResponsibility

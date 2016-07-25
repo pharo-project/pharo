@@ -1,0 +1,3 @@
+coloring
+light
+	light := true.

@@ -1,0 +1,4 @@
+accessing
+sourceName
+
+	^self name

@@ -1,0 +1,4 @@
+accessing
+debugHighlightStart
+
+	^ self start 

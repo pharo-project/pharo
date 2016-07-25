@@ -1,0 +1,4 @@
+font description
+fontWeight
+
+	^ fontWeight

@@ -1,0 +1,1 @@
+Locates the start of a block

@@ -1,0 +1,4 @@
+defaults
+defaultReadOnly
+
+	^ false

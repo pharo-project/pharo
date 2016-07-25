@@ -1,0 +1,4 @@
+accessing
+lineGrid
+
+	^realFont lineGrid 

@@ -1,0 +1,3 @@
+testing
+isCurve
+	^ smoothCurve

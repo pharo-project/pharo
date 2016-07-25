@@ -1,0 +1,3 @@
+actions
+useBasicInspector
+	self inspectorType: EyeBasicInspector

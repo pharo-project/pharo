@@ -1,0 +1,4 @@
+commands
+cmdSetDescription
+	<command>
+	^ VSSetDescriptionCommand

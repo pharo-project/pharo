@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Windows-Resizing",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 11:58",
+	"instvars" : [
+		"target",
+		"edgeName",
+		"fitTargetOwner" ],
+	"name" : "EdgeGripMorph",
+	"pools" : [
+		 ],
+	"super" : "AbstractResizerMorph",
+	"type" : "normal" }

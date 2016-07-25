@@ -1,0 +1,4 @@
+controls
+defaultIsResizeable
+
+	^ true

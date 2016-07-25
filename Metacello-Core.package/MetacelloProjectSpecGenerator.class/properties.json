@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"target" ],
+	"name" : "MetacelloProjectSpecGenerator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

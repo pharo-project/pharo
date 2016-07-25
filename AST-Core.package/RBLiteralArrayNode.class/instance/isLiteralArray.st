@@ -1,0 +1,3 @@
+testing
+isLiteralArray
+	^true

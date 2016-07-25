@@ -1,0 +1,14 @@
+{
+	"category" : "System-CommandLineHandler",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "PharoCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "BasicCommandLineHandler",
+	"type" : "normal" }

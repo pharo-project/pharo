@@ -1,0 +1,3 @@
+transforming
+defaultEnvironment
+	^RBBrowserEnvironment new

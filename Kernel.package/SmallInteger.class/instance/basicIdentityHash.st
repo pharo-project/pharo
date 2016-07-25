@@ -1,0 +1,4 @@
+system primitives
+basicIdentityHash
+
+	^self

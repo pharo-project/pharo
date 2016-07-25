@@ -1,0 +1,1 @@
+my role is to record the movements of a finger and associate a color to this movement

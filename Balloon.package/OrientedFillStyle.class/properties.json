@@ -1,0 +1,16 @@
+{
+	"category" : "Balloon-Fills",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"origin",
+		"direction",
+		"normal" ],
+	"name" : "OrientedFillStyle",
+	"pools" : [
+		 ],
+	"super" : "FillStyle",
+	"type" : "normal" }

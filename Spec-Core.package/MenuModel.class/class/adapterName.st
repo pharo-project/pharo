@@ -1,0 +1,4 @@
+specs
+adapterName
+
+	^ #MenuAdapter

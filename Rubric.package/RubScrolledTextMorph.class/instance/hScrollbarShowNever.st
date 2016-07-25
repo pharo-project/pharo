@@ -1,0 +1,3 @@
+accessing scrollbars
+hScrollbarShowNever
+	self scrollPane hScrollbarShowNever

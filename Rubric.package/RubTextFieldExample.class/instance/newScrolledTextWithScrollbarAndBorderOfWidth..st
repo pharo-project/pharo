@@ -1,0 +1,3 @@
+user interface
+newScrolledTextWithScrollbarAndBorderOfWidth: anInteger
+	^ self newScrolledText hScrollbarShowAlways; borderWidth: anInteger

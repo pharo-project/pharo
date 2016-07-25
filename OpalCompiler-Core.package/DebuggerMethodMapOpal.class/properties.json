@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-FrontEnd",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"methodNode" ],
+	"name" : "DebuggerMethodMapOpal",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

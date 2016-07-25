@@ -1,0 +1,4 @@
+accessing
+theNonMetaClass
+
+	self subclassResponsibility

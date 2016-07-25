@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"object" ],
+	"name" : "NonBooleanReceiver",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

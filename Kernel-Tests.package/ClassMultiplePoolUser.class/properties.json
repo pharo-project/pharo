@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 12/13/2011 15:59",
+	"instvars" : [
+		 ],
+	"name" : "ClassMultiplePoolUser",
+	"pools" : [
+		"PoolDefiner",
+		"PoolDefiner2" ],
+	"super" : "Object",
+	"type" : "normal" }

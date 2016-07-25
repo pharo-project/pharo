@@ -1,0 +1,1 @@
+I am an abstract class providing all the properties shared amongs all the morphic specific adapters

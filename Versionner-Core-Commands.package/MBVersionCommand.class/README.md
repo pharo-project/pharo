@@ -1,0 +1,1 @@
+Superclass for commands on versions

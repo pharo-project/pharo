@@ -1,0 +1,15 @@
+{
+	"category" : "ProfStef-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Instance" ],
+	"commentStamp" : "StephaneDucasse 7/28/2015 17:20",
+	"instvars" : [
+		"lessonView",
+		"player" ],
+	"name" : "ProfStef",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

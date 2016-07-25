@@ -1,0 +1,3 @@
+accessing
+valueSelector
+	^condition valueSelector

@@ -1,0 +1,4 @@
+api
+multiSelection
+
+	^ multiSelection value

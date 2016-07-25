@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBera 6/27/2016 10:36",
+	"instvars" : [
+		"receiver" ],
+	"name" : "FullBlockClosure",
+	"pools" : [
+		 ],
+	"super" : "BlockClosure",
+	"type" : "variable" }

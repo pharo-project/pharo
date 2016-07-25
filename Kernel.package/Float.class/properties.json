@@ -1,0 +1,30 @@
+{
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"E",
+		"Epsilon",
+		"Halfpi",
+		"Infinity",
+		"Ln10",
+		"Ln2",
+		"MaxVal",
+		"MaxValLn",
+		"MinValLogBase2",
+		"NaN",
+		"NegativeInfinity",
+		"NegativeZero",
+		"Pi",
+		"RadiansPerDegree",
+		"Sqrt2",
+		"ThreePi",
+		"Twopi" ],
+	"commentStamp" : "VeronicaUquillas 6/11/2010 14:51",
+	"instvars" : [
+		 ],
+	"name" : "Float",
+	"pools" : [
+		 ],
+	"super" : "Number",
+	"type" : "normal" }

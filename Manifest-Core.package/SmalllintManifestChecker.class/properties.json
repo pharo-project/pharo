@@ -1,0 +1,14 @@
+{
+	"category" : "Manifest-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"manifestClassCache" ],
+	"name" : "SmalllintManifestChecker",
+	"pools" : [
+		 ],
+	"super" : "RBSmalllintChecker",
+	"type" : "normal" }

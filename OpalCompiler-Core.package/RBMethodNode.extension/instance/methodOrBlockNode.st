@@ -1,0 +1,3 @@
+*OpalCompiler-Core
+methodOrBlockNode
+	"^ self"

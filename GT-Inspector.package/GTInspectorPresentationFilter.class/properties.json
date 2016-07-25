@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 1/27/2015 23:31",
+	"instvars" : [
+		 ],
+	"name" : "GTInspectorPresentationFilter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

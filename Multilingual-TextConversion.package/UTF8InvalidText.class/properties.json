@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-TextConversion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ThomasHeniart 7/10/2015 14:06",
+	"instvars" : [
+		 ],
+	"name" : "UTF8InvalidText",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

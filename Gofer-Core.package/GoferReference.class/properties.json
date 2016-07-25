@@ -1,0 +1,14 @@
+{
+	"category" : "Gofer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "lr 1/30/2010 14:38",
+	"instvars" : [
+		"name" ],
+	"name" : "GoferReference",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

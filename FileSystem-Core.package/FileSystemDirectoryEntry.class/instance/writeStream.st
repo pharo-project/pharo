@@ -1,0 +1,3 @@
+delegate
+writeStream
+	^ reference writeStream

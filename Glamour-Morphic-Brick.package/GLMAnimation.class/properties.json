@@ -1,0 +1,31 @@
+{
+	"category" : "Glamour-Morphic-Brick-Async",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 2/17/2015 21:04",
+	"instvars" : [
+		"asyncTask",
+		"duration",
+		"animationLogic",
+		"startTime",
+		"fromLogic",
+		"fromValue",
+		"toLogic",
+		"toValue",
+		"currentValue",
+		"animatedObject",
+		"stepLogic",
+		"doStep",
+		"shouldStop",
+		"callback",
+		"steppedLogic",
+		"isCompleted",
+		"ensureLogic",
+		"stamp" ],
+	"name" : "GLMAnimation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+commands
+addSpacerWeighted: aNumber
+	self shouldNotImplement

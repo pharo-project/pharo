@@ -1,0 +1,3 @@
+buttons behavior
+browseVariablesButtonLabel
+	^ 'Variables'

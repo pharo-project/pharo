@@ -1,0 +1,3 @@
+accessing
+isAbstract
+	^ self = CommandLineHandler

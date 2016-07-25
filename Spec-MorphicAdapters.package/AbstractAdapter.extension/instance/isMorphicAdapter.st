@@ -1,0 +1,4 @@
+*Spec-MorphicAdapters
+isMorphicAdapter
+
+	^ false

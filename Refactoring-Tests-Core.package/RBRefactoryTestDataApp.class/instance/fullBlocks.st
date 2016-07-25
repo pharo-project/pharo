@@ -1,0 +1,3 @@
+lint
+fullBlocks
+	^[thisContext]

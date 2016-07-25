@@ -1,0 +1,1 @@
+I represent  handle of a mouse cursor.

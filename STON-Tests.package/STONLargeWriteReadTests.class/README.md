@@ -1,0 +1,1 @@
+STONLargeWriteReadTests test the optimalizations for large structures.

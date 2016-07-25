@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tools-VersionBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 1/19/2014 23:41",
+	"instvars" : [
+		 ],
+	"name" : "DiffMorphChangeRecordConverter",
+	"pools" : [
+		 ],
+	"super" : "AbstractMethodReferenceConverter",
+	"type" : "normal" }

@@ -1,0 +1,23 @@
+{
+	"category" : "Spec-PolyWidgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"title",
+		"list",
+		"addButton",
+		"removeButton",
+		"upButton",
+		"downButton",
+		"topButton",
+		"bottomButton",
+		"addItemBlock",
+		"okBlock" ],
+	"name" : "EditableList",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

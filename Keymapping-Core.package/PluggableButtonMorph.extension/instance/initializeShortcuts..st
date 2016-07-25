@@ -1,0 +1,5 @@
+*Keymapping-Core
+initializeShortcuts: aKMDispatcher
+	super initializeShortcuts: aKMDispatcher.
+	aKMDispatcher attachCategory: #MorphFocusNavigation.
+	aKMDispatcher attachCategory: #PluggableButtonMorph

@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/10/2016 00:57",
+	"instvars" : [
+		 ],
+	"name" : "SDL_ControllerButtonUpEvent",
+	"pools" : [
+		 ],
+	"super" : "SDL_ControllerButtonEvent",
+	"type" : "normal" }

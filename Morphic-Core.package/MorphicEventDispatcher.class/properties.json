@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"morph" ],
+	"name" : "MorphicEventDispatcher",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

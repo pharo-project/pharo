@@ -1,0 +1,15 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 12:54",
+	"instvars" : [
+		"wrapped",
+		"editorClass" ],
+	"name" : "RubEditingArea",
+	"pools" : [
+		 ],
+	"super" : "RubAbstractTextArea",
+	"type" : "normal" }

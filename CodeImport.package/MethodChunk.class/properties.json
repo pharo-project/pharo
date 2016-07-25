@@ -1,0 +1,15 @@
+{
+	"category" : "CodeImport",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"categoryName",
+		"stamp" ],
+	"name" : "MethodChunk",
+	"pools" : [
+		 ],
+	"super" : "BehaviorOwnedChunk",
+	"type" : "normal" }

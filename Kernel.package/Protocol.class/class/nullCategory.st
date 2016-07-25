@@ -1,0 +1,4 @@
+accessing
+nullCategory
+
+	^ #'no messages'

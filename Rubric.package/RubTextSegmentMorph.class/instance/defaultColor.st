@@ -1,0 +1,3 @@
+initialization
+defaultColor
+	^ Color red

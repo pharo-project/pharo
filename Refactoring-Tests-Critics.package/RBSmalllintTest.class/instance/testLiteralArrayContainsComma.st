@@ -1,0 +1,3 @@
+tests
+testLiteralArrayContainsComma
+	self ruleFor: self currentSelector

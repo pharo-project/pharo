@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloGUI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nk 11/10/2003 22:00",
+	"instvars" : [
+		"items" ],
+	"name" : "MCCodeTool",
+	"pools" : [
+		 ],
+	"super" : "MCTool",
+	"type" : "normal" }

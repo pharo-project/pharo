@@ -1,0 +1,1 @@
+CompilerTest is a holder for SUnit test of Compiler

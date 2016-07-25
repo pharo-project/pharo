@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"reader" ],
+	"name" : "SettingsStonReaderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

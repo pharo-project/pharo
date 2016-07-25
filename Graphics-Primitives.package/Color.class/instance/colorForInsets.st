@@ -1,0 +1,3 @@
+other
+colorForInsets
+	^ self

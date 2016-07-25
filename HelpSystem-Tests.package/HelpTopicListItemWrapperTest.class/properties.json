@@ -1,0 +1,14 @@
+{
+	"category" : "HelpSystem-Tests-Core-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 21:19",
+	"instvars" : [
+		 ],
+	"name" : "HelpTopicListItemWrapperTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

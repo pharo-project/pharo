@@ -1,0 +1,15 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"total",
+		"amount" ],
+	"name" : "HTTPProgress",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

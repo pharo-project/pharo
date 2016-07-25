@@ -1,0 +1,1 @@
+MBCommand is a command design pattern for capturing actions.

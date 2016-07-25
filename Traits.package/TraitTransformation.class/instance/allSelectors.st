@@ -1,0 +1,3 @@
+enquiries
+allSelectors
+	^self subclassResponsibility

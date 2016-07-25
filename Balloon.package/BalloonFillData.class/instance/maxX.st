@@ -1,0 +1,3 @@
+accessing
+maxX
+	^maxX

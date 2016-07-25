@@ -1,0 +1,15 @@
+{
+	"category" : "OpalCompiler-Tests-AST",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"iVar",
+		"collection" ],
+	"name" : "OCOpalExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

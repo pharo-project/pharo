@@ -1,0 +1,15 @@
+{
+	"category" : "System-Announcements-System-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 4/1/2011 16:04",
+	"instvars" : [
+		"oldMethod",
+		"oldProtocol" ],
+	"name" : "MethodModified",
+	"pools" : [
+		 ],
+	"super" : "MethodAnnouncement",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestIceberg",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+settingDeclaration
+	^ self item

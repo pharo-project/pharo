@@ -1,0 +1,4 @@
+accessing widgets
+contextInspector
+
+	^ contextInspector

@@ -1,0 +1,1 @@
+SDL2 library structure representing a game controller axis event data.

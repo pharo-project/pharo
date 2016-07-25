@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 10:31",
+	"instvars" : [
+		 ],
+	"name" : "UIThemeRegistry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

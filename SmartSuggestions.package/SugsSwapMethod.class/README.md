@@ -1,0 +1,1 @@
+I know how to move a method from instance side to class side and the oposit, depending the method.

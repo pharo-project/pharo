@@ -1,0 +1,4 @@
+api
+windowIcon
+
+	^ windowIcon value

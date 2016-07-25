@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Scrollpane",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 12/6/2014 20:15",
+	"instvars" : [
+		 ],
+	"name" : "GLMApproximateScrollbarBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMScrollbarBrick",
+	"type" : "normal" }

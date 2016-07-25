@@ -1,0 +1,3 @@
+compatibility
+content
+	^self contents

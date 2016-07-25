@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/10/2016 01:43",
+	"instvars" : [
+		 ],
+	"name" : "OSJoyDeviceAddedEvent",
+	"pools" : [
+		 ],
+	"super" : "OSJoyDeviceEvent",
+	"type" : "normal" }

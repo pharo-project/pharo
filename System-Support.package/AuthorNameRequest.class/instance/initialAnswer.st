@@ -1,0 +1,4 @@
+accessing
+initialAnswer
+	
+	^ initialAnswer

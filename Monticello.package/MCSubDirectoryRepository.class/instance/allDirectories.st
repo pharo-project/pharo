@@ -1,0 +1,3 @@
+enumeration
+allDirectories
+	^directory allDirectories 

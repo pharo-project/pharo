@@ -1,0 +1,16 @@
+{
+	"category" : "OpalCompiler-Core-IR-Manipulation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBera 10/27/2014 10:59",
+	"instvars" : [
+		"prevInstr",
+		"storePopToFix",
+		"retToFix" ],
+	"name" : "IRFix",
+	"pools" : [
+		 ],
+	"super" : "IRVisitor",
+	"type" : "normal" }

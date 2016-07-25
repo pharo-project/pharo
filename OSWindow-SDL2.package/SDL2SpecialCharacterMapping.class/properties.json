@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Mapping" ],
+	"commentStamp" : "RonieSalgado 3/25/2014 17:19",
+	"instvars" : [
+		 ],
+	"name" : "SDL2SpecialCharacterMapping",
+	"pools" : [
+		"SDL2Constants" ],
+	"super" : "Object",
+	"type" : "normal" }

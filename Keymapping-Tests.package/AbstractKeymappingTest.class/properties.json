@@ -1,0 +1,14 @@
+{
+	"category" : "Keymapping-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 6/4/2016 16:14",
+	"instvars" : [
+		"default" ],
+	"name" : "AbstractKeymappingTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,19 @@
+{
+	"category" : "Traits-Kernel",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TClass classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"environment",
+		"classTrait",
+		"category" ],
+	"name" : "Trait",
+	"pools" : [
+		 ],
+	"super" : "TraitDescription",
+	"traitcomposition" : "TClass",
+	"type" : "normal" }

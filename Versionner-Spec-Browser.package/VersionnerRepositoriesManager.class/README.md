@@ -1,0 +1,1 @@
+A VersionnerRepositoriesManager allows to select / deselect  / add new repositories. The UI is shared with Komitter.

@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"listModel",
+		"methodModel" ],
+	"name" : "ClassMethodBrowser",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

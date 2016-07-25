@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZnBivalentWriteStreamTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

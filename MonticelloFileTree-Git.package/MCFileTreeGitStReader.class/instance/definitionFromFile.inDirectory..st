@@ -1,0 +1,3 @@
+private
+definitionFromFile: directoryEntry inDirectory: aDirectory
+	self shouldNotImplement

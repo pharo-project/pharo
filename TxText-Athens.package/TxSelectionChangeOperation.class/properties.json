@@ -1,0 +1,15 @@
+{
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 8/26/2014 13:13",
+	"instvars" : [
+		"startDelta",
+		"endDelta" ],
+	"name" : "TxSelectionChangeOperation",
+	"pools" : [
+		 ],
+	"super" : "TxEditorOperation",
+	"type" : "normal" }

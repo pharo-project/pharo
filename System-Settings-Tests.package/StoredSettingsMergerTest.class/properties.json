@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"merger" ],
+	"name" : "StoredSettingsMergerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

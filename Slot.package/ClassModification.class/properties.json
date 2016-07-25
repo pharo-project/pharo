@@ -1,0 +1,23 @@
+{
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"superclass",
+		"additions",
+		"removals",
+		"changes",
+		"slotShift",
+		"methodModification",
+		"copies",
+		"traitComposition",
+		"classVariables",
+		"sharedPools" ],
+	"name" : "ClassModification",
+	"pools" : [
+		 ],
+	"super" : "AbstractClassModification",
+	"type" : "normal" }

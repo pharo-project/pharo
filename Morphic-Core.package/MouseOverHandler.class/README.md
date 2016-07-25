@@ -1,0 +1,1 @@
+Mouse over handler in a hand morph

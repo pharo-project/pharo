@@ -1,0 +1,24 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BlabEmail",
+		"HTTPProxyExceptions",
+		"HTTPProxyPort",
+		"HTTPProxyServer",
+		"LastHTTPProxyExceptions",
+		"LastHTTPProxyPort",
+		"LastHTTPProxyServer",
+		"ProxyPassword",
+		"ProxyUser",
+		"UseHTTPProxy",
+		"UseNetworkAuthentification" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "NetworkSystemSettings",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

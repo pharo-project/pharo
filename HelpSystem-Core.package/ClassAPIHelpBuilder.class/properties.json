@@ -1,0 +1,17 @@
+{
+	"category" : "HelpSystem-Core-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tbn 4/30/2010 15:37",
+	"instvars" : [
+		"addSubclasses",
+		"addMethods",
+		"subclassesAsSeparateTopic",
+		"addMethodsWithoutComment" ],
+	"name" : "ClassAPIHelpBuilder",
+	"pools" : [
+		 ],
+	"super" : "HelpBuilder",
+	"type" : "normal" }

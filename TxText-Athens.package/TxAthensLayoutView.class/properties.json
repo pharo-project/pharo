@@ -1,0 +1,19 @@
+{
+	"category" : "TxText-Athens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/27/2015 10:06",
+	"instvars" : [
+		"announcer",
+		"extent",
+		"layoutStrategy",
+		"layout",
+		"offset",
+		"container" ],
+	"name" : "TxAthensLayoutView",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

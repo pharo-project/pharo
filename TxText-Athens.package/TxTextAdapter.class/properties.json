@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Athens-Spec",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TxTextAdapter",
+	"pools" : [
+		 ],
+	"super" : "AbstractMorphicAdapter",
+	"type" : "normal" }

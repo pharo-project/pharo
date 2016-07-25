@@ -1,0 +1,1 @@
+A test mock where a new instance is enforced

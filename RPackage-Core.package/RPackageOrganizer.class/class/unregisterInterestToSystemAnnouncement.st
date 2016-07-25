@@ -1,0 +1,4 @@
+class initialization
+unregisterInterestToSystemAnnouncement
+
+	self default unregisterInterestToSystemAnnouncement

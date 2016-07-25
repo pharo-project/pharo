@@ -1,0 +1,3 @@
+testing
+isExternalType
+	^ true

@@ -1,0 +1,16 @@
+{
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"vertical",
+		"scrollbar",
+		"autohide" ],
+	"name" : "TxScrollbarDecorator",
+	"pools" : [
+		 ],
+	"super" : "TxViewDecoratorMorph",
+	"type" : "normal" }

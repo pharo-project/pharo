@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Objects",
+	"classinstvars" : [
+		"externalStructureAlignment" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FFIExternalStructure",
+	"pools" : [
+		 ],
+	"super" : "ExternalStructure",
+	"type" : "normal" }

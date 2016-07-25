@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"menuModel" ],
+	"name" : "MenuModelTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

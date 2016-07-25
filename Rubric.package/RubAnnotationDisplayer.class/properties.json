@@ -1,0 +1,20 @@
+{
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:37",
+	"instvars" : [
+		"lineAnnotation",
+		"row",
+		"wrappingPolicyMorph",
+		"editingModeMorph",
+		"tabWidthMorph",
+		"columnDisplayMorph",
+		"lineNumbersDisplayMorph" ],
+	"name" : "RubAnnotationDisplayer",
+	"pools" : [
+		 ],
+	"super" : "RubScrolledTextSideRuler",
+	"type" : "normal" }

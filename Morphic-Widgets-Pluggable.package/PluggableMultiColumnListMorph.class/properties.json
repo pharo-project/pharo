@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"gapSize" ],
+	"name" : "PluggableMultiColumnListMorph",
+	"pools" : [
+		 ],
+	"super" : "PluggableListMorph",
+	"type" : "normal" }

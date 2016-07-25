@@ -1,0 +1,4 @@
+private
+listMorphClass
+
+	^ PluggableIconListMorph

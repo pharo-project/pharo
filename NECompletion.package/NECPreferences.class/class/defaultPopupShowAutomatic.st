@@ -1,0 +1,3 @@
+defaults
+defaultPopupShowAutomatic
+	^true

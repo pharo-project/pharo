@@ -1,0 +1,3 @@
+accessing
+nextVersionOf: aProject
+	self subclassResponsibility

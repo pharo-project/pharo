@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBer 10/14/2014 14:47",
+	"instvars" : [
+		 ],
+	"name" : "IRPopIntoInstVar",
+	"pools" : [
+		 ],
+	"super" : "IRInstVarAccess",
+	"type" : "normal" }

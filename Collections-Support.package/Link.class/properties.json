@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"nextLink" ],
+	"name" : "Link",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

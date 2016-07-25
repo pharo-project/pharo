@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-TestsMCResources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloMCTestsAbstractConfig",
+	"pools" : [
+		 ],
+	"super" : "ConfigurationOf",
+	"type" : "normal" }

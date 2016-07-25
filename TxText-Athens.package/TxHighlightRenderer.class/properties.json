@@ -1,0 +1,18 @@
+{
+	"category" : "TxText-Athens",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/4/2014 10:36",
+	"instvars" : [
+		"layoutView",
+		"paint",
+		"shapes",
+		"extendEnd",
+		"interval" ],
+	"name" : "TxHighlightRenderer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

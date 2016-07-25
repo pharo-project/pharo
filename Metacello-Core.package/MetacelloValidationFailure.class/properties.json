@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Exceptions-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"issues" ],
+	"name" : "MetacelloValidationFailure",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

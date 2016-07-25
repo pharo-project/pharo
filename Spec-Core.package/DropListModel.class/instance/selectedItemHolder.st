@@ -1,0 +1,4 @@
+private
+selectedItemHolder
+
+	^ selectionHolder selection

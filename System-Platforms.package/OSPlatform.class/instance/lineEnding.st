@@ -1,0 +1,4 @@
+accessing
+lineEnding
+
+	^ self subclassResponsibility

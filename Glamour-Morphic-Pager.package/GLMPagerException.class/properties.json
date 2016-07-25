@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Pager-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMPagerException",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

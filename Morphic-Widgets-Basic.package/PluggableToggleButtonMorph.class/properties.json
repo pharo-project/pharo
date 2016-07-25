@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 8/7/2015 17:04",
+	"instvars" : [
+		"pressed" ],
+	"name" : "PluggableToggleButtonMorph",
+	"pools" : [
+		 ],
+	"super" : "PluggableButtonMorph",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I am the decorator for highliting opposite character in a text area (like parenthese or square bracket)

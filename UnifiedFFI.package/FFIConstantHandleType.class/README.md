@@ -1,0 +1,1 @@
+I'm a constant handle type (see ==FFIConstantHandle==  comment).

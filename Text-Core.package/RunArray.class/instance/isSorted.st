@@ -1,0 +1,3 @@
+testing
+isSorted
+	^values isSorted

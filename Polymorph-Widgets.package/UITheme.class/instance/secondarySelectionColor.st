@@ -1,0 +1,3 @@
+accessing colors
+secondarySelectionColor
+	^ self settings secondarySelectionColor

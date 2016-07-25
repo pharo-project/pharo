@@ -1,0 +1,1 @@
+I'm a node  representing a dependency not computed automatically but added manually on the package Manifest.

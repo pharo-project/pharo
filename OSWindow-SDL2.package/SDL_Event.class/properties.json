@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"EventTypeMap" ],
+	"commentStamp" : "IgorStasenko 7/30/2014 18:45",
+	"instvars" : [
+		 ],
+	"name" : "SDL_Event",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalObject",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+private
+defaultLabel
+	^'some methods'

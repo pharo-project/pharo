@@ -1,0 +1,28 @@
+{
+	"category" : "Morphic-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"locked",
+		"visible",
+		"sticky",
+		"balloonText",
+		"externalName",
+		"eventHandler",
+		"otherProperties",
+		"fillStyle",
+		"layoutPolicy",
+		"layoutFrame",
+		"layoutProperties",
+		"borderStyle",
+		"cornerStyle",
+		"actionMap",
+		"clipSubmorphs" ],
+	"name" : "MorphExtension",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

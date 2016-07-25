@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-Resource-Meta-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZnMimeTypeTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+preconditions
+necessaryFingers
+	self subclassResponsibility

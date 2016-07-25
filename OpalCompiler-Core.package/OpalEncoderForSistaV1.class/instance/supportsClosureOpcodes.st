@@ -1,0 +1,3 @@
+bytecode generation
+supportsClosureOpcodes
+	^true

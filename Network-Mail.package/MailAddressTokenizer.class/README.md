@@ -1,0 +1,1 @@
+Divides an address into tokens, as specified in RFC 822.  Used by MailAddressParser.

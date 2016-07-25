@@ -1,0 +1,14 @@
+{
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "EncoderForLongFormV3PlusClosures",
+	"pools" : [
+		 ],
+	"super" : "EncoderForLongFormV3",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+fullName
+	^ reference fullName

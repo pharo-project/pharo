@@ -1,0 +1,3 @@
+modes
+colorDodge
+	self notAvailable

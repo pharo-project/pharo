@@ -1,0 +1,1 @@
+I know how to replace the call of a class variable for the use of an accessor and create accessors if it's necessary.

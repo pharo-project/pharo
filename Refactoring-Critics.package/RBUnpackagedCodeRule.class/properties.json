@@ -1,0 +1,15 @@
+{
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 20:16",
+	"instvars" : [
+		"packages",
+		"package" ],
+	"name" : "RBUnpackagedCodeRule",
+	"pools" : [
+		 ],
+	"super" : "RBBlockLintRule",
+	"type" : "normal" }

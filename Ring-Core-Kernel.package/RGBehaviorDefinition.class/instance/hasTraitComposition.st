@@ -1,0 +1,4 @@
+testing
+hasTraitComposition
+
+	^self traitCompositionSource ~= '{}'

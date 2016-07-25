@@ -1,0 +1,3 @@
+preconditions
+myConditions
+	"^self subclassResponsibility"

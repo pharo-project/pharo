@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-FastTable-DataSource",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/17/2015 12:00",
+	"instvars" : [
+		"table" ],
+	"name" : "FTDataSource",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

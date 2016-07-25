@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/19/2016 11:09",
+	"instvars" : [
+		"widgets",
+		"layout" ],
+	"name" : "DynamicComposableModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

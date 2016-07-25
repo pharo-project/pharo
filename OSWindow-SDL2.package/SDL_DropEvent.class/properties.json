@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 8/24/2015 16:50",
+	"instvars" : [
+		 ],
+	"name" : "SDL_DropEvent",
+	"pools" : [
+		 ],
+	"super" : "SDL2MappedEvent",
+	"type" : "normal" }

@@ -1,0 +1,18 @@
+{
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [
+		"defaultSettings" ],
+	"classvars" : [
+		"Builder",
+		"Current" ],
+	"commentStamp" : "HenrikNergaard 11/15/2015 14:11",
+	"instvars" : [
+		"settings",
+		"forms",
+		"soundTheme",
+		"focusIndicator" ],
+	"name" : "UITheme",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Localization-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 9/16/2014 14:32",
+	"instvars" : [
+		 ],
+	"name" : "LocaleIDTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

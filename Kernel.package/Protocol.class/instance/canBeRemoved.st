@@ -1,0 +1,3 @@
+private
+canBeRemoved
+	^ self isEmpty 

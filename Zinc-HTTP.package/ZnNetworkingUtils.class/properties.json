@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default",
+		"DefaultSocketStreamTimeout" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"socketStreamClass",
+		"secureSocketStreamClass" ],
+	"name" : "ZnNetworkingUtils",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+api
+showOnlyDestination
+
+	^ showOnlyDestination value

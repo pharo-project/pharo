@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 7/28/2014 15:12",
+	"instvars" : [
+		"packageCycle" ],
+	"name" : "DAPackageCycleGenerator",
+	"pools" : [
+		 ],
+	"super" : "DAGraphVizGenerator",
+	"type" : "normal" }

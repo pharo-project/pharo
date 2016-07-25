@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:02",
+	"instvars" : [
+		"textArea" ],
+	"name" : "RubGetMenuPolicy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

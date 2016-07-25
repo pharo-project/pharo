@@ -1,0 +1,4 @@
+accessing
+haveSelectionTextColor
+	
+	^ selectionTextColor notNil

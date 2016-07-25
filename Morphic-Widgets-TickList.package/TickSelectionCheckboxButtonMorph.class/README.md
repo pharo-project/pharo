@@ -1,0 +1,1 @@
+A TickSelectionCheckboxButtonMorph is the button hidden into the TickSelectionCheckboxMorph

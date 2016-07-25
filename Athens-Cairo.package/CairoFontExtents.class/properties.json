@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "CairoFontExtents",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalStructure",
+	"type" : "normal" }

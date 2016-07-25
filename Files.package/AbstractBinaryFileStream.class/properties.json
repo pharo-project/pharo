@@ -1,0 +1,16 @@
+{
+	"category" : "Files-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 6/5/2015 11:05",
+	"instvars" : [
+		"file",
+		"handle",
+		"forWrite" ],
+	"name" : "AbstractBinaryFileStream",
+	"pools" : [
+		 ],
+	"super" : "Stream",
+	"type" : "normal" }

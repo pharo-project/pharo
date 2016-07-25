@@ -1,0 +1,2 @@
+visitor
+visitJoyDeviceRemovedEvent: joyDeviceEvent

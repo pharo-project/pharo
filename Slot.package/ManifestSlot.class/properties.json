@@ -1,0 +1,14 @@
+{
+	"category" : "Slot",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSlot",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

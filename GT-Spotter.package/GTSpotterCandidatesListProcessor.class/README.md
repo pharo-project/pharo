@@ -1,0 +1,1 @@
+This is a candidates processor that can be parameterized via blocks.

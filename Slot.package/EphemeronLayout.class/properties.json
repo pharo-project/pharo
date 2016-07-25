@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "EphemeronLayout",
+	"pools" : [
+		 ],
+	"super" : "PointerLayout",
+	"type" : "normal" }

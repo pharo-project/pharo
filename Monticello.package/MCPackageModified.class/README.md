@@ -1,0 +1,1 @@
+An MCPackageModified is raised when a MCPackage is modified

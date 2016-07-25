@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mjr 8/20/2003 13:04",
+	"instvars" : [
+		 ],
+	"name" : "EqualityTester",
+	"pools" : [
+		 ],
+	"super" : "PrototypeTester",
+	"type" : "normal" }

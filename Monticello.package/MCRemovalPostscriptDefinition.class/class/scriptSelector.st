@@ -1,0 +1,3 @@
+accessing
+scriptSelector
+	^ #postscriptOfRemoval 

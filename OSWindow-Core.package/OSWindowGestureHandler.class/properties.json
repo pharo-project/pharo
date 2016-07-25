@@ -1,0 +1,18 @@
+{
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:05",
+	"instvars" : [
+		"fingers",
+		"fingerCount",
+		"registeredGestures",
+		"devicesFingers",
+		"lastUpdateTimestamp" ],
+	"name" : "OSWindowGestureHandler",
+	"pools" : [
+		 ],
+	"super" : "OSWindowEventGestureVisitor",
+	"type" : "normal" }

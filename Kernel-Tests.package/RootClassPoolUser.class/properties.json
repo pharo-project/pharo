@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 12/13/2011 15:57",
+	"instvars" : [
+		 ],
+	"name" : "RootClassPoolUser",
+	"pools" : [
+		"PoolDefiner" ],
+	"super" : "Object",
+	"type" : "normal" }

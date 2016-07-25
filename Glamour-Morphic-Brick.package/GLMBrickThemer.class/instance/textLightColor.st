@@ -1,0 +1,4 @@
+brick
+textLightColor
+
+	^ Color gray

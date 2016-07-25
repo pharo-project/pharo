@@ -1,0 +1,31 @@
+{
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 10/26/2015 11:29",
+	"instvars" : [
+		"container",
+		"verticalScrollBar",
+		"selectionColor",
+		"showIndex",
+		"dataSource",
+		"intercellSpacing",
+		"rowHeight",
+		"selectedRowIndexes",
+		"highlightedRowIndexes",
+		"selectionStrategy",
+		"columns",
+		"secondarySelectionColor",
+		"headerColor",
+		"showColumnHeaders",
+		"allowsDeselection",
+		"needToggleAtMouseUp",
+		"function",
+		"resizable" ],
+	"name" : "FTTableMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

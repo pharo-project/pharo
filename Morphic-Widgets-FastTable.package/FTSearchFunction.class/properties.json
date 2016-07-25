@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Functions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 5/21/2015 19:46",
+	"instvars" : [
+		"currentSelIndex",
+		"currentHighlightedIndexes",
+		"pattern" ],
+	"name" : "FTSearchFunction",
+	"pools" : [
+		 ],
+	"super" : "FTFunctionWithField",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-List",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ls 3/1/2004 17:32",
+	"instvars" : [
+		 ],
+	"name" : "MorphWithSubmorphsWrapper",
+	"pools" : [
+		 ],
+	"super" : "ListItemWrapper",
+	"type" : "normal" }

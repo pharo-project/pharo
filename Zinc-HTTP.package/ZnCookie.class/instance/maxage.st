@@ -1,0 +1,3 @@
+accessing
+maxage
+	^ self expires

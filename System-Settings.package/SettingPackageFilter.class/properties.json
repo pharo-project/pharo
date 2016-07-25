@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Filter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 12/31/2010 11:38",
+	"instvars" : [
+		"packages" ],
+	"name" : "SettingPackageFilter",
+	"pools" : [
+		 ],
+	"super" : "SettingFilter",
+	"type" : "normal" }

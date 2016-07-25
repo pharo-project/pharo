@@ -1,0 +1,3 @@
+testing
+isFromBlock
+	^startpc isNotNil

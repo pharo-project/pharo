@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-Diff",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"conflict",
+		"contents" ],
+	"name" : "PSMCClassChangeWrapper",
+	"pools" : [
+		 ],
+	"super" : "PSMCChangeWrapper",
+	"type" : "normal" }

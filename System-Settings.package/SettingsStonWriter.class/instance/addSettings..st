@@ -1,0 +1,3 @@
+adding
+addSettings: aCollectionOfStoredSettings
+	storedSettings addAll: aCollectionOfStoredSettings

@@ -1,0 +1,3 @@
+accessing
+allVisibleSlots
+	^ OrderedCollection new

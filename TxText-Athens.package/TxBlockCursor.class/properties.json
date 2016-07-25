@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/27/2015 12:33",
+	"instvars" : [
+		 ],
+	"name" : "TxBlockCursor",
+	"pools" : [
+		 ],
+	"super" : "TxAthensCursor",
+	"type" : "normal" }

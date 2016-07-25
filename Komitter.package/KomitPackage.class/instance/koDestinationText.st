@@ -1,0 +1,3 @@
+*Komitter-UI
+koDestinationText
+	^ ''

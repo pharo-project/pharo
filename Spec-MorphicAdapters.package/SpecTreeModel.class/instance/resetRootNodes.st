@@ -1,0 +1,4 @@
+private
+resetRootNodes
+
+	rootNodes := nil

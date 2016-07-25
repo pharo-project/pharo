@@ -1,0 +1,1 @@
+Only one gesture at the time, you can scroll to move the circle, pinch to zoom, rotate to rotate, double tap to change the color of the circle and swipe to have a little surprise

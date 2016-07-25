@@ -1,0 +1,14 @@
+{
+	"category" : "System-Finalization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"HasNewFinalization" ],
+	"commentStamp" : "Igor.Stasenko 9/22/2010 21:09",
+	"instvars" : [
+		"first" ],
+	"name" : "WeakFinalizationList",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

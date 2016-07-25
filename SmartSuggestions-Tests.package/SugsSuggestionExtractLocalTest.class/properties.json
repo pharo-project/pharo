@@ -1,0 +1,14 @@
+{
+	"category" : "SmartSuggestions-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:44",
+	"instvars" : [
+		 ],
+	"name" : "SugsSuggestionExtractLocalTest",
+	"pools" : [
+		 ],
+	"super" : "SugsSuggestionTest",
+	"type" : "normal" }

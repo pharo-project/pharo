@@ -1,0 +1,1 @@
+I visit an IRMethod instructions and write them out to a print stream.

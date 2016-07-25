@@ -1,0 +1,26 @@
+{
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 6/12/2014 15:49",
+	"instvars" : [
+		"systemCycles",
+		"packageLabel",
+		"buttonBrowseCycles",
+		"buttonDefault",
+		"textPackageField",
+		"filter",
+		"buttonAddPackage",
+		"buttonGenerateGraphViz",
+		"buttonRemovePackage",
+		"buttonReverseAnalysis",
+		"buttonSave",
+		"buttonMakeDiff",
+		"relationGraph" ],
+	"name" : "DAPackageAnalyzerTreeModel",
+	"pools" : [
+		 ],
+	"super" : "DAPackageTreeModel",
+	"type" : "normal" }

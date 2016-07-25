@@ -1,0 +1,4 @@
+accessing
+current
+
+	^ self new

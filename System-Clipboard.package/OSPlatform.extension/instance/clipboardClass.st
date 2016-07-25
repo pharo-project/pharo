@@ -1,0 +1,3 @@
+*System-Clipboard
+clipboardClass
+	^Clipboard

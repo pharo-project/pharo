@@ -1,0 +1,3 @@
+testing
+isClassPatch
+	^obsoletion isClassDefinition

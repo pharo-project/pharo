@@ -1,0 +1,3 @@
+accessing
+accessorCode
+	^ super label

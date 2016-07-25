@@ -1,0 +1,4 @@
+accessing
+minimumNewLinesBetweenStatements: anInteger
+	DefaultPrettyPrintContext minimumNewLinesBetweenStatements: anInteger.
+	self announceASettingChange

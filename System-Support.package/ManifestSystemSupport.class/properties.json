@@ -1,0 +1,14 @@
+{
+	"category" : "System-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemSupport",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+private
+handlesMouseDown: anEvent
+	^ true

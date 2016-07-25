@@ -1,0 +1,3 @@
+accessing-spans
+endSpan
+	^ endSpan 

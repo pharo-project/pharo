@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Profilers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "sd 6/20/2003 22:31",
+	"instvars" : [
+		"results" ],
+	"name" : "SpaceTally",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"button",
+		"list",
+		"text" ],
+	"name" : "TestAutoFractionComputation",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

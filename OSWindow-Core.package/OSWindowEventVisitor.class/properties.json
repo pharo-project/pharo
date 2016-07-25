@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:45",
+	"instvars" : [
+		 ],
+	"name" : "OSWindowEventVisitor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

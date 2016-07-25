@@ -1,0 +1,3 @@
+NOcompletion
+selectedClassOrMetaClass
+	^ ModelForShout class

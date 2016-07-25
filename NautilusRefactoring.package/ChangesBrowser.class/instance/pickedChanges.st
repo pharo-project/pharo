@@ -1,0 +1,3 @@
+accessing
+pickedChanges
+	^ changesTree selectedItems

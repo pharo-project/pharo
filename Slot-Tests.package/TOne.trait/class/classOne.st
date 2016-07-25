@@ -1,0 +1,3 @@
+testing
+classOne
+	^ 1

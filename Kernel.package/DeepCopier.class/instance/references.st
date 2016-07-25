@@ -1,0 +1,3 @@
+like fullCopy
+references
+	^ references

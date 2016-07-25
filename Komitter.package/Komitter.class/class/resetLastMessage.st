@@ -1,0 +1,4 @@
+protocol
+resetLastMessage
+
+	lastMessage := nil

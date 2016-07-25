@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"repository" ],
+	"name" : "MCPermissionDenied",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

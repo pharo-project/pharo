@@ -1,0 +1,21 @@
+{
+	"category" : "Graphics-Files",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BitBufferSize",
+		"Lookahead" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"bits",
+		"values",
+		"mincode",
+		"maxcode",
+		"valptr",
+		"lookaheadBits",
+		"lookaheadSymbol" ],
+	"name" : "JPEGHuffmanTable",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

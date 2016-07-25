@@ -1,0 +1,4 @@
+converting
+asString
+
+	^ self name

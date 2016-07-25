@@ -1,0 +1,1 @@
+I test a primitive failure with perform:withArguments: which was raised when selectors with many arguments was called from methods with small stack sizes.

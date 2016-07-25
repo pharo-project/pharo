@@ -1,0 +1,17 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"hintBrick",
+		"hintText",
+		"titleBrick",
+		"titleText" ],
+	"name" : "GLMPopupBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMEmptyPopupBrick",
+	"type" : "normal" }

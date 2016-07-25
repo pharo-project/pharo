@@ -1,0 +1,1 @@
+This action encapsulates the logic of debugging a selected piece of code from the code pane of the debugger.

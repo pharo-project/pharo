@@ -1,0 +1,1 @@
+a history record containing delete operation

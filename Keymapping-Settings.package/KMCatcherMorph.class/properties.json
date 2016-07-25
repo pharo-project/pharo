@@ -1,0 +1,19 @@
+{
+	"category" : "Keymapping-Settings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"focused",
+		"keystrokes",
+		"keymapSetting",
+		"labelMorph",
+		"initialShortcut",
+		"edited" ],
+	"name" : "KMCatcherMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

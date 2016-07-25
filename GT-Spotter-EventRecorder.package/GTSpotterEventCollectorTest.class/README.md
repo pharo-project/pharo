@@ -1,0 +1,1 @@
+A GTSpotterEventCollectorTest is a test class for testing the behavior of GTSpotterEventCollector

@@ -1,0 +1,4 @@
+testing
+methodArgument: anObject
+	^ [ anObject ]
+	

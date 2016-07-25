@@ -1,0 +1,3 @@
+factory
+newFormRenderer: aForm
+	self subclassResponsibility

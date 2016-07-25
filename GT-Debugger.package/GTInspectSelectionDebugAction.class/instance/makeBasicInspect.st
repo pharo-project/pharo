@@ -1,0 +1,4 @@
+actions
+makeBasicInspect
+
+	shouldBasicInspect := true

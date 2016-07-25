@@ -1,0 +1,3 @@
+initialization
+defaultFilteringBlock 
+	^ [:col | col]

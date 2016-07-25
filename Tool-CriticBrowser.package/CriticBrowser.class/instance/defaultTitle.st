@@ -1,0 +1,4 @@
+api
+defaultTitle
+
+	^ 'Critic Browser'

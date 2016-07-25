@@ -1,0 +1,16 @@
+{
+	"category" : "MonticelloGUI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:52",
+	"instvars" : [
+		"includedPackages",
+		"issue",
+		"title" ],
+	"name" : "MCSliceInfo",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

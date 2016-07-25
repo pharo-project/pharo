@@ -1,0 +1,16 @@
+{
+	"category" : "Tests-Traits-MOP",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "Trait2 classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MOPTestClassD",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"traitcomposition" : "Trait2 @ {#c3->#c2}",
+	"type" : "normal" }

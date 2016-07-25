@@ -1,0 +1,4 @@
+api
+resetEventSelection
+
+	events resetSelection

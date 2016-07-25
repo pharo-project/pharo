@@ -1,0 +1,24 @@
+{
+	"category" : "AST-Core-Parser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 2/13/2010 00:31",
+	"instvars" : [
+		"sourceStream",
+		"base",
+		"neg",
+		"integerPart",
+		"fractionPart",
+		"exponent",
+		"scale",
+		"nDigits",
+		"lastNonZero",
+		"requestor",
+		"failBlock" ],
+	"name" : "NumberParser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

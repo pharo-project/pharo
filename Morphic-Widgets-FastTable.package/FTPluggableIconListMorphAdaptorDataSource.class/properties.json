@@ -1,0 +1,22 @@
+{
+	"category" : "Morphic-Widgets-FastTable-PluggableAdaptor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"model",
+		"getListSelector",
+		"getListElementSelector",
+		"wrapSelector",
+		"getIconSelector",
+		"getListSizeSelector",
+		"getMenuSelector",
+		"dropItemSelector",
+		"wantsDropSelector" ],
+	"name" : "FTPluggableIconListMorphAdaptorDataSource",
+	"pools" : [
+		 ],
+	"super" : "FTDataSource",
+	"type" : "normal" }

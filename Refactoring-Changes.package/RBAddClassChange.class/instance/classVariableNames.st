@@ -1,0 +1,3 @@
+accessing
+classVariableNames
+	^ classVariableNames

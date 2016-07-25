@@ -1,0 +1,23 @@
+{
+	"category" : "DebuggerActions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"label",
+		"order",
+		"icon",
+		"keyText",
+		"category",
+		"debugger",
+		"needsValidation",
+		"needsUpdate",
+		"needsSeparatorAfter",
+		"actionSelector" ],
+	"name" : "DebugAction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

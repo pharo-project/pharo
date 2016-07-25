@@ -1,0 +1,3 @@
+printing
+isSelfEvaluating
+	^ false

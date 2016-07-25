@@ -1,0 +1,3 @@
+accessing
+problemCount
+	^builder problemCount

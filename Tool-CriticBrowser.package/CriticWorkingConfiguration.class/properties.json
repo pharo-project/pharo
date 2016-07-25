@@ -1,0 +1,17 @@
+{
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"rule",
+		"environment",
+		"removeTestCase",
+		"logInManifest" ],
+	"name" : "CriticWorkingConfiguration",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

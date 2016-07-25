@@ -1,0 +1,1 @@
+A FinderPragmaNode is a Node used to render a pragma in the Finder Tree

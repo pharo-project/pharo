@@ -1,0 +1,4 @@
+protocol
+bottomOffset
+
+	^ layoutFrame bottomOffset 

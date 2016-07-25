@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 6/22/2012 12:00",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloVersionNumber",
+	"pools" : [
+		 ],
+	"super" : "Magnitude",
+	"type" : "variable" }

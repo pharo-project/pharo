@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"sliderMorph",
+		"getValueSelector",
+		"setValueSelector",
+		"getEnabledSelector" ],
+	"name" : "IncrementalSliderMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Files-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Stderr",
+		"Stdin",
+		"Stdout" ],
+	"commentStamp" : "GuillermoPolito 6/4/2015 15:43",
+	"instvars" : [
+		 ],
+	"name" : "Stdio",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

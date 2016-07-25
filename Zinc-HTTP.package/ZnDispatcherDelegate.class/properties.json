@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/15/2012 16:03",
+	"instvars" : [
+		"dispatcherDictionary" ],
+	"name" : "ZnDispatcherDelegate",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

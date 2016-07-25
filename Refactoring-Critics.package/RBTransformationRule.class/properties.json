@@ -1,0 +1,16 @@
+{
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"RecursiveSelfRule" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"rewriteRule",
+		"builder",
+		"class" ],
+	"name" : "RBTransformationRule",
+	"pools" : [
+		 ],
+	"super" : "RBLintRule",
+	"type" : "normal" }

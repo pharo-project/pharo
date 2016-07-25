@@ -1,0 +1,4 @@
+taskbar-thumbnail
+taskbarCanShowThumbnail
+
+	^ false

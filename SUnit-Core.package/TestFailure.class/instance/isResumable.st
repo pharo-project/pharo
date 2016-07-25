@@ -1,0 +1,4 @@
+camp smalltalk
+isResumable
+	
+	^ false

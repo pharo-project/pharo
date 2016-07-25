@@ -1,0 +1,2 @@
+initialize-release
+initializeInstance: anInstance

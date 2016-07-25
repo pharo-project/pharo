@@ -1,0 +1,1 @@
+This pool contains all the platform independent key symbols. They are the same used by SDL2 to avoid having to perform any kind of translation.

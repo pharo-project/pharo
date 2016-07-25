@@ -1,0 +1,21 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"container",
+		"displayBlock",
+		"initialWidth",
+		"resizable",
+		"headerLabel",
+		"headerFont",
+		"headerIcon",
+		"headerAction" ],
+	"name" : "TreeColumnModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

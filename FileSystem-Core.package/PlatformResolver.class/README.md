@@ -1,0 +1,1 @@
+I am an abstract superclass for platform-specific resolvers.

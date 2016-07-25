@@ -1,0 +1,5 @@
+coverage
+classToBeTested
+
+	^ DateAndTime
+

@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"prefixMapping",
+		"pragmaMapping" ],
+	"name" : "MethodClassifier",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

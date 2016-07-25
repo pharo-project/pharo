@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Contexts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 3/11/2015 08:45",
+	"instvars" : [
+		 ],
+	"name" : "ActiveMetaContext",
+	"pools" : [
+		 ],
+	"super" : "ProcessLocalVariable",
+	"type" : "normal" }

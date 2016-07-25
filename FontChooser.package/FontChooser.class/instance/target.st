@@ -1,0 +1,4 @@
+accessing
+target
+
+	^ target

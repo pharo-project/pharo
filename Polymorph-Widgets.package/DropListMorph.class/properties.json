@@ -1,0 +1,28 @@
+{
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TEnableOnHaloMenu classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/23/2007 14:12",
+	"instvars" : [
+		"contentMorph",
+		"listMorph",
+		"buttonMorph",
+		"list",
+		"listSelectionIndex",
+		"getListSelector",
+		"getIndexSelector",
+		"setIndexSelector",
+		"getEnabledSelector",
+		"enabled",
+		"useSelectionIndex",
+		"wrapSelector",
+		"defaultContents" ],
+	"name" : "DropListMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"traitcomposition" : "TEnableOnHaloMenu",
+	"type" : "normal" }

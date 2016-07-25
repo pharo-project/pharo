@@ -1,0 +1,15 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"start",
+		"end" ],
+	"name" : "TxInterval",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

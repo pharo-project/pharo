@@ -1,0 +1,32 @@
+{
+	"category" : "OSSubprocess",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 5/30/2016 11:25",
+	"instvars" : [
+		"command",
+		"arguments",
+		"pointers",
+		"posixSpawnFileActionsT",
+		"exitStatus",
+		"envVariables",
+		"stderrStream",
+		"stdinStream",
+		"stdoutStream",
+		"createMissingStandardStreams",
+		"defaultWriteStreamCreationBlock",
+		"defaultReadStreamCreationBlock",
+		"pid",
+		"retrievedStdout",
+		"retrievedStderr",
+		"mutexForSigchld",
+		"shouldContinueWaiting",
+		"terminateOnShutdown",
+		"workingDirectory" ],
+	"name" : "OSSUnixSubprocess",
+	"pools" : [
+		"LibCSignalSharedPool" ],
+	"super" : "Object",
+	"type" : "normal" }

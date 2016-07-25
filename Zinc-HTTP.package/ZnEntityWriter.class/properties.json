@@ -1,0 +1,15 @@
+{
+	"category" : "Zinc-HTTP-Streaming",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"headers",
+		"stream" ],
+	"name" : "ZnEntityWriter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

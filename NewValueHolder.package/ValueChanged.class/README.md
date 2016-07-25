@@ -1,0 +1,1 @@
+A ValueChanged is an announcement raised when a value of a NewValueHolder is changed

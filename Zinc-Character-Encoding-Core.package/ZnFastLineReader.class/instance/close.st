@@ -1,0 +1,3 @@
+initialize
+close
+	readStream close

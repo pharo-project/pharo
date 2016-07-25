@@ -1,0 +1,3 @@
+api
+isForSmalltalkCode
+	^ isForSmalltalkCodeHolder value

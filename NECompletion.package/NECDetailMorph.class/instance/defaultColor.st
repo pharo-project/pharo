@@ -1,0 +1,3 @@
+drawing
+defaultColor
+	^ NECMenuMorph backgroundColor. 

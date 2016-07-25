@@ -1,0 +1,1 @@
+MetacelloPharoPlatform contains all Pharo specific code to load Metacello.

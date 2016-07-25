@@ -1,0 +1,4 @@
+accessing
+autoRefresh
+
+	^ autoRefresh value

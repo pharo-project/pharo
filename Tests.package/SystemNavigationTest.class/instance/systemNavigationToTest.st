@@ -1,0 +1,4 @@
+accessing
+systemNavigationToTest
+	^navigator
+	

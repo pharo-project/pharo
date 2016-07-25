@@ -1,0 +1,3 @@
+site credentials
+sitePassword
+  ^ sitePassword

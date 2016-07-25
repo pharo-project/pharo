@@ -1,0 +1,4 @@
+protocol
+resetCategoryList
+
+	categories := nil

@@ -1,0 +1,16 @@
+{
+	"category" : "Text-Edition",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FindReplaceSelection",
+		"PrimarySelection",
+		"SecondarySelection" ],
+	"commentStamp" : "AlainPlantec 2/15/2011 21:42",
+	"instvars" : [
+		"colorBlock" ],
+	"name" : "TextSelectionColor",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

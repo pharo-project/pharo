@@ -1,0 +1,17 @@
+{
+	"category" : "Kernel-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 10/13/2014 14:42",
+	"instvars" : [
+		"method",
+		"scanner",
+		"oldPC",
+		"symbolicBytecodes" ],
+	"name" : "SymbolicBytecodeBuilder",
+	"pools" : [
+		 ],
+	"super" : "InstructionClient",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Versionner-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project",
+		"queue",
+		"alreadyVisited" ],
+	"name" : "MTProjectBFSIterator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+windowCentered
+	^ windowCentered

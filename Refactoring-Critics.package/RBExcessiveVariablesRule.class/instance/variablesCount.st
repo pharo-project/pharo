@@ -1,0 +1,3 @@
+private
+variablesCount
+	^ 10

@@ -1,0 +1,3 @@
+initialization
+defineUnpackagedClassesPackage
+	^ self ensureExistAndRegisterPackageNamed: self packageClass defaultPackageName

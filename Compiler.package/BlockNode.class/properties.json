@@ -1,0 +1,28 @@
+{
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"arguments",
+		"statements",
+		"returns",
+		"nArgsNode",
+		"size",
+		"remoteCopyNode",
+		"temporaries",
+		"optimized",
+		"optimizedMessageNode",
+		"actualScopeIfOptimized",
+		"blockExtent",
+		"remoteTempNode",
+		"copiedValues",
+		"closureCreationNode",
+		"startOfLastStatement" ],
+	"name" : "BlockNode",
+	"pools" : [
+		 ],
+	"super" : "ParseNode",
+	"type" : "normal" }

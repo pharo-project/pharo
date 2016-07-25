@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 8/11/2014 10:14",
+	"instvars" : [
+		"tempVectorName" ],
+	"name" : "IRRemoteTempAccess",
+	"pools" : [
+		 ],
+	"super" : "IRTempAccess",
+	"type" : "normal" }

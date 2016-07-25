@@ -1,0 +1,1 @@
+I am a raw data layout that holds words (32 / 64 bit depending on the platform).

@@ -1,0 +1,14 @@
+{
+	"category" : "Multilingual-Tests-TextConversion",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 11/24/2014 14:45",
+	"instvars" : [
+		 ],
+	"name" : "MultiByteFileStreamFileOutTestClass",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

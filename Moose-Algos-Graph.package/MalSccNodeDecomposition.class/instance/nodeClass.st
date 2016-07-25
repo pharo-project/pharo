@@ -1,0 +1,4 @@
+running
+nodeClass
+
+	^ MalSndNode

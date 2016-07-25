@@ -1,0 +1,3 @@
+accessing
+treeLineDashes
+	^ container treeLineDashes

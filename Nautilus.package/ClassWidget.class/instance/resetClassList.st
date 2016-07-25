@@ -1,0 +1,3 @@
+protocol
+resetClassList
+	classesListElements := nil.

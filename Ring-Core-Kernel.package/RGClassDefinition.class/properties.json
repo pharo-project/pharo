@@ -1,0 +1,19 @@
+{
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "VeronicaUquillas 4/19/2011 16:01",
+	"instvars" : [
+		"metaClass",
+		"comment",
+		"classVariables",
+		"category",
+		"package",
+		"sharedPools" ],
+	"name" : "RGClassDefinition",
+	"pools" : [
+		 ],
+	"super" : "RGClassDescriptionDefinition",
+	"type" : "normal" }

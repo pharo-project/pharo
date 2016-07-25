@@ -1,0 +1,3 @@
+running
+tearDownTraits
+	self cleanUpTraits

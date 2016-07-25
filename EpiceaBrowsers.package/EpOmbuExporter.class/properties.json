@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Exporter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 5/27/2014 14:29",
+	"instvars" : [
+		"outputLog" ],
+	"name" : "EpOmbuExporter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

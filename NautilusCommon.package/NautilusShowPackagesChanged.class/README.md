@@ -1,0 +1,1 @@
+A NautilusShowPackagesChanged is raised when the value of showPackages changed

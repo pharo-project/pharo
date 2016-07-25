@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Parser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 8/14/2015 11:16",
+	"instvars" : [
+		 ],
+	"name" : "ASTCacheReset",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

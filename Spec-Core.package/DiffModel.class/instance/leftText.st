@@ -1,0 +1,4 @@
+accessing
+leftText
+
+	^ leftTextHolder value

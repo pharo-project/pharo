@@ -1,0 +1,3 @@
+testing
+isRemoteTemp
+	^ false

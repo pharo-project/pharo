@@ -1,0 +1,4 @@
+testing
+hasRepositoryOverrides
+
+	^self loaderPolicy hasRepositoryOverrides

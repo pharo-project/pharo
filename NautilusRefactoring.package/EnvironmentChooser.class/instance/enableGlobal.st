@@ -1,0 +1,3 @@
+accessing
+enableGlobal
+	^ enableGlobal value

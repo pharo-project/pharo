@@ -1,0 +1,4 @@
+updating
+updateWidth
+
+	self resize

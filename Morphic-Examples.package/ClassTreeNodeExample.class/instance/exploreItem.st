@@ -1,0 +1,3 @@
+accessing
+exploreItem
+	self explore

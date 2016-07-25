@@ -1,0 +1,3 @@
+testing
+isHttps
+	^ scheme == #https

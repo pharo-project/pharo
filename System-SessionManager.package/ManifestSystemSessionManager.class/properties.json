@@ -1,0 +1,14 @@
+{
+	"category" : "System-SessionManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemSessionManager",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

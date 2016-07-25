@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"OuterMargin" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"textMorph",
+		"shadowForm",
+		"vertProfile",
+		"minWidth",
+		"rectangleCache",
+		"fillsOwner",
+		"avoidsOcclusions" ],
+	"name" : "TextContainer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+rendering
+clear
+	"Do nothing"

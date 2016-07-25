@@ -1,0 +1,3 @@
+testing
+isValue
+	^false

@@ -1,0 +1,1 @@
+I'm a group node model for the package groups

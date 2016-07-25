@@ -1,0 +1,1 @@
+Common superclass for workin copies in Gofer

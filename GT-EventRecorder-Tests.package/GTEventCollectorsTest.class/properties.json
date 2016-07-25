@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Tests-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"collectors" ],
+	"name" : "GTEventCollectorsTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

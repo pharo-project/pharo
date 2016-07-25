@@ -1,0 +1,4 @@
+*necompletion
+selectedClassOrMetaClass
+
+	^ self selectedClass

@@ -1,0 +1,1 @@
+ConfigurationOfGTSpotter loadDevelopment

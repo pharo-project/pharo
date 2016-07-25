@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:43",
+	"instvars" : [
+		"firstEvent",
+		"aSchedule",
+		"restoredTimeZone" ],
+	"name" : "ScheduleTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

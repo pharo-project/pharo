@@ -1,0 +1,3 @@
+other
+contents
+	^byteStream contents

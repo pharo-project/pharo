@@ -1,0 +1,1 @@
+RGMetatraitDefinition is a concrete representation of metaclasses of traits

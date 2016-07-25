@@ -1,0 +1,15 @@
+{
+	"category" : "System-Localization-Locales",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 9/16/2014 14:24",
+	"instvars" : [
+		"newLocale",
+		"oldLocale" ],
+	"name" : "LocaleChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+inspectorWrapper
+	^ self owner

@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:41",
+	"instvars" : [
+		 ],
+	"name" : "MonitorTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

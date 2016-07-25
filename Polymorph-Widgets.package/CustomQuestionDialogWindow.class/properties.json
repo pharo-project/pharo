@@ -1,0 +1,16 @@
+{
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 11:59",
+	"instvars" : [
+		"yesButton",
+		"noButton",
+		"cancelButton" ],
+	"name" : "CustomQuestionDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "QuestionDialogWindow",
+	"type" : "normal" }

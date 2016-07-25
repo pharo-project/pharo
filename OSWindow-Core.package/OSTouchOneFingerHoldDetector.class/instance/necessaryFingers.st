@@ -1,0 +1,3 @@
+preconditions
+necessaryFingers
+	^ 1

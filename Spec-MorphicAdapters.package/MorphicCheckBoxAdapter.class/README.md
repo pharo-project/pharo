@@ -1,0 +1,1 @@
+I am an adapter to ease the bridge a CheckBoxModel and a CheckboxMorph

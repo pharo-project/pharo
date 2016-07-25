@@ -1,0 +1,1 @@
+I'm a style module related to a checkbox and its componenets

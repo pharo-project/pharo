@@ -1,0 +1,17 @@
+{
+	"category" : "Zinc-HTTP-Streaming",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 11:02",
+	"instvars" : [
+		"stream",
+		"position",
+		"limit",
+		"binary" ],
+	"name" : "ZnLimitedReadStream",
+	"pools" : [
+		 ],
+	"super" : "Stream",
+	"type" : "normal" }

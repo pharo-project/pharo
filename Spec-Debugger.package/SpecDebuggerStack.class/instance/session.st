@@ -1,0 +1,4 @@
+accessing
+session
+
+	^ sessionHolder value

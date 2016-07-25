@@ -1,0 +1,4 @@
+brick
+backgroundColor
+
+	^ Color transparent

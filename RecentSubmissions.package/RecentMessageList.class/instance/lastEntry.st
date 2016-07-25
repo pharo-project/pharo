@@ -1,0 +1,4 @@
+accessing
+lastEntry 
+
+	^lastEntry

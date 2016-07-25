@@ -1,0 +1,3 @@
+defaults
+defaultYellowButtonMenuEnabled
+	^ self defaultMenuAllowed 

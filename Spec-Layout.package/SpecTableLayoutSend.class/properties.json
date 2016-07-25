@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "webwarrior 6/9/2014 19:37",
+	"instvars" : [
+		"arguments",
+		"selector" ],
+	"name" : "SpecTableLayoutSend",
+	"pools" : [
+		 ],
+	"super" : "AbstractSpecLayoutAction",
+	"type" : "normal" }

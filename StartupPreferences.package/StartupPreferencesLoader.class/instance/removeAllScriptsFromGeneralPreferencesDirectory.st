@@ -1,0 +1,5 @@
+cleaning
+removeAllScriptsFromGeneralPreferencesDirectory
+	self removeAllScriptsFromDirectory: self preferencesGeneralFolder.
+	
+	

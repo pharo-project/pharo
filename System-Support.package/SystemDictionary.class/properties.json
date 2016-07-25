@@ -1,0 +1,15 @@
+{
+	"category" : "System-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/23/2015 23:40",
+	"instvars" : [
+		"cachedClassNames",
+		"cachedNonClassNames" ],
+	"name" : "SystemDictionary",
+	"pools" : [
+		 ],
+	"super" : "IdentityDictionary",
+	"type" : "normal" }

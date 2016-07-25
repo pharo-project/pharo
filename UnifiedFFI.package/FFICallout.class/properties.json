@@ -1,0 +1,19 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"TypeAliases" ],
+	"commentStamp" : "EstebanLorenzano 3/23/2016 16:22",
+	"instvars" : [
+		"fnSpec",
+		"options",
+		"requestor",
+		"methodArgs",
+		"receiver",
+		"method" ],
+	"name" : "FFICallout",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

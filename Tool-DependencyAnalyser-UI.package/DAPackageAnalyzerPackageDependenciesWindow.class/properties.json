@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 7/11/2014 11:55",
+	"instvars" : [
+		 ],
+	"name" : "DAPackageAnalyzerPackageDependenciesWindow",
+	"pools" : [
+		 ],
+	"super" : "DAPackageAnalyzerWindow",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+private
+argumentsCount
+	^ 5

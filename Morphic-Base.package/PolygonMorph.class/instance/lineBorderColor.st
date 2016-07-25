@@ -1,0 +1,3 @@
+geometry
+lineBorderColor
+	^self borderColor

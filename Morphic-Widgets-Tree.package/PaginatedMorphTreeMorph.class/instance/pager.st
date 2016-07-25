@@ -1,0 +1,4 @@
+pager managing
+pager
+	^ pager
+	

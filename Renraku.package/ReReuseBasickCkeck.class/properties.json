@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/18/2016 15:58",
+	"instvars" : [
+		 ],
+	"name" : "ReReuseBasickCkeck",
+	"pools" : [
+		 ],
+	"super" : "ReBasicMethodRule",
+	"type" : "normal" }

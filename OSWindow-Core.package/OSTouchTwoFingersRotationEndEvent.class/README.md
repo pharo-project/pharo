@@ -1,0 +1,1 @@
+Two fingers had stopped to rotate

@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/22/2015 12:20",
+	"instvars" : [
+		"hoverAction",
+		"unhoverAction",
+		"clickAction" ],
+	"name" : "GLMActionButtonBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMInteractableBrick",
+	"type" : "normal" }

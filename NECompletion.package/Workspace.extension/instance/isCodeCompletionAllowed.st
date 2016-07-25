@@ -1,0 +1,3 @@
+*necompletion
+isCodeCompletionAllowed
+	^true

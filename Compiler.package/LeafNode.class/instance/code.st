@@ -1,0 +1,4 @@
+code generation
+code
+
+	^ code

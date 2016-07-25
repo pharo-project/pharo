@@ -1,0 +1,1 @@
+I am a bytecode accessing an instance variable. As such, I have an index.

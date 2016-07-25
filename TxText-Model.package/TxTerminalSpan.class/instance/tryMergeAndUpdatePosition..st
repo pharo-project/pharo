@@ -1,0 +1,3 @@
+operation
+tryMergeAndUpdatePosition: position
+	^ position

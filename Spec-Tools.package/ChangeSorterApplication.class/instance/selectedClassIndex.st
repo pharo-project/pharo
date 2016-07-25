@@ -1,0 +1,4 @@
+api
+selectedClassIndex
+
+	 ^ classesListModel selectedIndex

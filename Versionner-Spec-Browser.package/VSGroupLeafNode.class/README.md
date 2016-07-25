@@ -1,0 +1,1 @@
+Abstract class used to display a group with its specific icons and no child in a tree.

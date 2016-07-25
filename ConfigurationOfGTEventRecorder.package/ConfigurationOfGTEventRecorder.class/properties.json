@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfGTEventRecorder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfGTEventRecorder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

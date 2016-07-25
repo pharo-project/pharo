@@ -1,0 +1,19 @@
+{
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 5/21/2016 16:45",
+	"instvars" : [
+		"selector",
+		"interval",
+		"name",
+		"parseTree",
+		"blockNodes",
+		"definingNode" ],
+	"name" : "RBMoveVariableDefinitionRefactoring",
+	"pools" : [
+		 ],
+	"super" : "RBMethodRefactoring",
+	"type" : "normal" }

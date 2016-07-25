@@ -1,0 +1,1 @@
+I represent an executable check applied on an environment (groups of classes, methods... )

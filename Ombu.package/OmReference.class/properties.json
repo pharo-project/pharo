@@ -1,0 +1,15 @@
+{
+	"category" : "Ombu-Entries",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 4/14/2014 23:27",
+	"instvars" : [
+		"localName",
+		"globalName" ],
+	"name" : "OmReference",
+	"pools" : [
+		 ],
+	"super" : "OmAbstractReference",
+	"type" : "normal" }

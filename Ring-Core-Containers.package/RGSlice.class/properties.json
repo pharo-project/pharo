@@ -1,0 +1,14 @@
+{
+	"category" : "Ring-Core-Containers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "VeronicaUquillas 4/22/2011 13:36",
+	"instvars" : [
+		 ],
+	"name" : "RGSlice",
+	"pools" : [
+		 ],
+	"super" : "RGContainer",
+	"type" : "normal" }

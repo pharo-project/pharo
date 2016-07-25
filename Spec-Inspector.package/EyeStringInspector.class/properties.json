@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 3/14/2014 10:35",
+	"instvars" : [
+		 ],
+	"name" : "EyeStringInspector",
+	"pools" : [
+		 ],
+	"super" : "EyeCollectionInspector",
+	"type" : "normal" }

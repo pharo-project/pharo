@@ -1,0 +1,3 @@
+accessing
+instVarNames
+	^ slotScope visibleSlotNames

@@ -1,0 +1,4 @@
+*Network-Kernel
+configureHttpProxy
+
+	InternetConfiguration configureHttpProxy

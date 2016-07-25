@@ -1,0 +1,3 @@
+compatibility
+openRecordGroup
+	^ self openGroup

@@ -1,0 +1,15 @@
+{
+	"category" : "System-Sources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"sourceFileNumber",
+		"filePositionHi" ],
+	"name" : "RemoteString",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

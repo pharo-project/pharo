@@ -1,0 +1,15 @@
+{
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/31/2014 16:31",
+	"instvars" : [
+		"newClassDefinition",
+		"oldClassDefinition" ],
+	"name" : "ClassModifiedClassDefinition",
+	"pools" : [
+		 ],
+	"super" : "ClassAnnouncement",
+	"type" : "normal" }

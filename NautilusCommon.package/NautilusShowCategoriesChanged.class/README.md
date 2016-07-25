@@ -1,0 +1,1 @@
+A NautilusShowCategoriesChanged is raised the value showCategories changed

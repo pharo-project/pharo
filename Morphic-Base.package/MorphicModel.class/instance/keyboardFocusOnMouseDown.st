@@ -1,0 +1,3 @@
+settings
+keyboardFocusOnMouseDown
+	^ self class keyboardFocusOnMouseDown

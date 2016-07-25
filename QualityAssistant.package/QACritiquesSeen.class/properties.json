@@ -1,0 +1,14 @@
+{
+	"category" : "QualityAssistant-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 8/29/2015 20:58",
+	"instvars" : [
+		 ],
+	"name" : "QACritiquesSeen",
+	"pools" : [
+		 ],
+	"super" : "ReMultipleCritiquesEvent",
+	"type" : "normal" }

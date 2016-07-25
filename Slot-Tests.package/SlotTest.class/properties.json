@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"ivarForTesting" ],
+	"name" : "SlotTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

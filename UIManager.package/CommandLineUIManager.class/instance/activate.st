@@ -1,0 +1,3 @@
+private
+activate
+	NonInteractiveTranscript stderr install

@@ -1,0 +1,4 @@
+initializing
+layoutIsAboutToReset
+
+	container layoutIsAboutToResetIn: self

@@ -1,0 +1,1 @@
+I represent the editor for plain text, I do the operations related to plain text

@@ -1,0 +1,17 @@
+{
+	"category" : "Zinc-HTTP-Streaming",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"stream",
+		"extraHeaders",
+		"totalSize",
+		"chunkCount" ],
+	"name" : "ZnChunkedWriteStream",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

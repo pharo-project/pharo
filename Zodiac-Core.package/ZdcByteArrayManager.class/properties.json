@@ -1,0 +1,16 @@
+{
+	"category" : "Zodiac-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "SvenVanCaekenberghe 5/6/2015 21:39",
+	"instvars" : [
+		"limit",
+		"resources",
+		"access" ],
+	"name" : "ZdcByteArrayManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

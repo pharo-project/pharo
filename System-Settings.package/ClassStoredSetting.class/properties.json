@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 10/1/2015 14:42",
+	"instvars" : [
+		 ],
+	"name" : "ClassStoredSetting",
+	"pools" : [
+		 ],
+	"super" : "StoredSetting",
+	"type" : "normal" }

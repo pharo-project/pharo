@@ -1,0 +1,1 @@
+I represent a comment to Epicea entries  performed in an EpLogBrowser.

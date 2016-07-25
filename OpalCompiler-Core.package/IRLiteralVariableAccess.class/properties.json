@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"association" ],
+	"name" : "IRLiteralVariableAccess",
+	"pools" : [
+		 ],
+	"super" : "IRAccess",
+	"type" : "normal" }

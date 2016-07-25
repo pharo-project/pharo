@@ -1,0 +1,14 @@
+{
+	"category" : "System-CachingTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DoubleLinkedListTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+isValid
+	self subclassResponsibility 

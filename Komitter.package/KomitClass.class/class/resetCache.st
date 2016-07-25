@@ -1,0 +1,4 @@
+protocol
+resetCache
+
+	classes removeAll

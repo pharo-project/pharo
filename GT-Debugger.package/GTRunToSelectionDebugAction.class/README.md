@@ -1,0 +1,1 @@
+This action is responsible for continuing the execution up to the point selected in the code pane.

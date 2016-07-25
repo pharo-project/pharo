@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMPopupAction",
+	"pools" : [
+		 ],
+	"super" : "GLMAction",
+	"type" : "normal" }

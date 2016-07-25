@@ -1,0 +1,1 @@
+I announce when a class is selected, and also contain an information about selected package

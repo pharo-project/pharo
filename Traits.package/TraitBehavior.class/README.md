@@ -1,0 +1,1 @@
+I declare the instance variables methodDict, traitComposition and localSelectors that normally would be defined on PureBehavior (see class comment of PureBehavior). Furthermore I keep track of where I am used and I provide compatibility methods to make me useable in tools where originally a class was expected.

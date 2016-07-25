@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tools-ChangeSorter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ChangeSorterModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractTool",
+	"type" : "normal" }

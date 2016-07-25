@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Pager-Theme",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMPagerWidgetThemer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

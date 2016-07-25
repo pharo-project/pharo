@@ -1,0 +1,1 @@
+I'm an announcement raised when a morph losts keyboard focus.

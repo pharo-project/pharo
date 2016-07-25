@@ -1,0 +1,16 @@
+{
+	"category" : "OSWindow-SDL2-Examples-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 8/15/2015 10:56",
+	"instvars" : [
+		"renderer",
+		"drawingProcess",
+		"window" ],
+	"name" : "SDL2AthensExample",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

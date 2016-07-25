@@ -1,0 +1,17 @@
+{
+	"category" : "Collections-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FinalizationDependents",
+		"FinalizationLock",
+		"FinalizationProcess",
+		"FinalizationSemaphore" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "WeakArray",
+	"pools" : [
+		 ],
+	"super" : "Array",
+	"type" : "weak" }

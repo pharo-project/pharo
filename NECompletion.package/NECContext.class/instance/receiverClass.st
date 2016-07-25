@@ -1,0 +1,3 @@
+private
+receiverClass
+	^ receiverClass

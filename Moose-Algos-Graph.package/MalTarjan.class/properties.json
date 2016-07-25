@@ -1,0 +1,16 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 3/23/2015 14:26",
+	"instvars" : [
+		"stack",
+		"runningIndex",
+		"sccs" ],
+	"name" : "MalTarjan",
+	"pools" : [
+		 ],
+	"super" : "MalGraphAlgorithm",
+	"type" : "normal" }

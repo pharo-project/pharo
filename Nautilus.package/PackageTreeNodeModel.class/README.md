@@ -1,0 +1,1 @@
+I'm a generic model for package tree nodes. 

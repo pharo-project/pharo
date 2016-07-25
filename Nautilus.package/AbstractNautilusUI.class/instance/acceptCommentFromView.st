@@ -1,0 +1,3 @@
+class comment pane
+acceptCommentFromView
+	self classCommentTextModel acceptEditsInView

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Browsers-Other",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 4/21/2011 21:20",
+	"instvars" : [
+		 ],
+	"name" : "GLMAccumulator",
+	"pools" : [
+		 ],
+	"super" : "GLMImplicitBrowser",
+	"type" : "normal" }

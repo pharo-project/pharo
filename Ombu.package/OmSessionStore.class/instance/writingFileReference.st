@@ -1,0 +1,4 @@
+accessing
+writingFileReference
+
+	^ currentStore writingFileReference

@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:21",
+	"instvars" : [
+		"color" ],
+	"name" : "AthensTextBackground",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-ImageCleaner",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 1/25/2014 13:04",
+	"instvars" : [
+		 ],
+	"name" : "ImageCleanerCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "CommandLineHandler",
+	"type" : "normal" }

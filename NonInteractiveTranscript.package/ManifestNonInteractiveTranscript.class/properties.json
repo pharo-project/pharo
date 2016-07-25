@@ -1,0 +1,14 @@
+{
+	"category" : "NonInteractiveTranscript",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestNonInteractiveTranscript",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

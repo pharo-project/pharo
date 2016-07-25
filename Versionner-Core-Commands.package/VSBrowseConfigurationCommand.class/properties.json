@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "VSBrowseConfigurationCommand",
+	"pools" : [
+		 ],
+	"super" : "VSConfigurationCommand",
+	"type" : "normal" }

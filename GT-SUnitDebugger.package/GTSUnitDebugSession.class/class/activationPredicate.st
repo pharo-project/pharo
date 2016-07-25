@@ -1,0 +1,4 @@
+accessing
+activationPredicate
+
+	^  GTSUnitActivationPredicate new

@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Tests-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"command" ],
+	"name" : "MBAddConfigurationCommandTest",
+	"pools" : [
+		 ],
+	"super" : "MBCommandTests",
+	"type" : "normal" }

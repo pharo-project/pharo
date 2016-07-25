@@ -1,0 +1,4 @@
+api
+isCheckList
+
+	^ isCheckList value

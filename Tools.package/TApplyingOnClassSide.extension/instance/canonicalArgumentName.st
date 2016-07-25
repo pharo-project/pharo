@@ -1,0 +1,3 @@
+*Tools
+canonicalArgumentName
+	^self explicitRequirement.

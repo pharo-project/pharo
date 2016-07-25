@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Copying",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "stephane.ducasse 9/25/2008 17:47",
+	"instvars" : [
+		"references" ],
+	"name" : "DeepCopier",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

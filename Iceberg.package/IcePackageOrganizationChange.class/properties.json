@@ -1,0 +1,15 @@
+{
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"oldOrganization",
+		"newOrganization" ],
+	"name" : "IcePackageOrganizationChange",
+	"pools" : [
+		 ],
+	"super" : "IceChangeSet",
+	"type" : "normal" }

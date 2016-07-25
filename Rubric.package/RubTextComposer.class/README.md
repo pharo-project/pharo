@@ -1,0 +1,1 @@
+I represent the composer of a text, I am used to represent a paragraph

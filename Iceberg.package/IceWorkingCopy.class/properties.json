@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Instance" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IceWorkingCopy",
+	"pools" : [
+		 ],
+	"super" : "IceCommitish",
+	"type" : "normal" }

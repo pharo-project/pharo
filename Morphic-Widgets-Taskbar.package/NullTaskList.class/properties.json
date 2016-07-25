@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Taskbar",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 1/23/2014 11:53",
+	"instvars" : [
+		"world" ],
+	"name" : "NullTaskList",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"result" ],
+	"name" : "RBBasicLintRule",
+	"pools" : [
+		 ],
+	"super" : "RBLintRule",
+	"type" : "normal" }

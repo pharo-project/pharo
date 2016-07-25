@@ -1,0 +1,23 @@
+{
+	"category" : "Tool-DependencyAnalyser-Test",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"tarjanPackage",
+		"packageA",
+		"packageB",
+		"packageC",
+		"packageD",
+		"packageE",
+		"packageF",
+		"packageG",
+		"packageH",
+		"anArray" ],
+	"name" : "DATarjanAlgorithmTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

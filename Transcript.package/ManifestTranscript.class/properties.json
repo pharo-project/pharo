@@ -1,0 +1,14 @@
+{
+	"category" : "Transcript",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestTranscript",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

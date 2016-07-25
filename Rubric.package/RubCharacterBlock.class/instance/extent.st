@@ -1,0 +1,3 @@
+accessing
+extent
+	^ surface extent

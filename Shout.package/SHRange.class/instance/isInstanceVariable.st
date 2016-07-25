@@ -1,0 +1,4 @@
+tests
+isInstanceVariable
+	
+	^type == #instVar

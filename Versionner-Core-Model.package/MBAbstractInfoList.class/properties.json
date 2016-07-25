@@ -1,0 +1,17 @@
+{
+	"category" : "Versionner-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"packages",
+		"projects",
+		"groups",
+		"infoList" ],
+	"name" : "MBAbstractInfoList",
+	"pools" : [
+		 ],
+	"super" : "MBInfo",
+	"type" : "normal" }

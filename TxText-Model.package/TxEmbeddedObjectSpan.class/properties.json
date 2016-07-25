@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 4/25/2015 14:19",
+	"instvars" : [
+		"object" ],
+	"name" : "TxEmbeddedObjectSpan",
+	"pools" : [
+		 ],
+	"super" : "TxSpanWithStyle",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Zodiac-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/18/2011 10:05",
+	"instvars" : [
+		 ],
+	"name" : "ZdcAbstractSSLSession",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

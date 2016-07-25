@@ -1,0 +1,3 @@
+generate
+genForRBReturnNode
+	^self genForRBProgramNode

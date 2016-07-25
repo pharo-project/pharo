@@ -1,0 +1,1 @@
+Pluggable form of dialog window supporting custom selector on model for applying changes along with configurable content and buttons.

@@ -1,0 +1,3 @@
+model protocol
+scrollToEndOfLine
+	self scrollPane scrollToEndOfLine

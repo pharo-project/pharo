@@ -1,0 +1,1 @@
+I'm a simple plugin which displays the number of keystrokes at the bottom of Nautilus. I'm mainly an example.

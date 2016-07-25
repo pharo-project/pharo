@@ -1,0 +1,1 @@
+Text converter for Japanese variation of EUC.

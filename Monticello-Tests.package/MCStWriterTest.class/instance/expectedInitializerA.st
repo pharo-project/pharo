@@ -1,0 +1,3 @@
+testing
+expectedInitializerA
+	^ 'MCMockClassA initialize'

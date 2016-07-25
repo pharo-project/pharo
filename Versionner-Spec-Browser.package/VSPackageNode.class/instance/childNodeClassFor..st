@@ -1,0 +1,3 @@
+accessing
+childNodeClassFor: anItem
+	^ VSDetailsLeafNode

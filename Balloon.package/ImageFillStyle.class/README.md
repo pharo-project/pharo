@@ -1,0 +1,1 @@
+Simple fillstyle that draws a (potentially translucent) form at the specified origin. Direction and normal are unused.

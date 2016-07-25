@@ -1,0 +1,3 @@
+numeric
+one
+	^ 1

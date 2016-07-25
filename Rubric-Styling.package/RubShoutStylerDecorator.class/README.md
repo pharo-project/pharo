@@ -1,0 +1,1 @@
+I am the shout styler decorator for a text area, I highlight the text 

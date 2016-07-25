@@ -1,0 +1,3 @@
+checking
+check
+	self subclassResponsibility

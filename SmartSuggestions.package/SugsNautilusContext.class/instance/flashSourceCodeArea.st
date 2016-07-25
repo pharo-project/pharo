@@ -1,0 +1,3 @@
+refactoring
+flashSourceCodeArea
+	^ model flashSourceCodeArea

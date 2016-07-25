@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"slotScope" ],
+	"name" : "PointerLayout",
+	"pools" : [
+		 ],
+	"super" : "ObjectLayout",
+	"type" : "normal" }

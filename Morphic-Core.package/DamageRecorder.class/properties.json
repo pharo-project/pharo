@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Core-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 18:27",
+	"instvars" : [
+		"invalidRects",
+		"totalRepaint" ],
+	"name" : "DamageRecorder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

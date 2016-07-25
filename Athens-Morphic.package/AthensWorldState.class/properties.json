@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 1/4/2015 18:31",
+	"instvars" : [
+		"display" ],
+	"name" : "AthensWorldState",
+	"pools" : [
+		 ],
+	"super" : "WorldState",
+	"type" : "normal" }

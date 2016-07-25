@@ -1,0 +1,1 @@
+A TimeStampMessageConverter is a wrapper wich display the timestamp of the provided message

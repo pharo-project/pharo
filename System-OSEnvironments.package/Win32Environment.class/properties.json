@@ -1,0 +1,14 @@
+{
+	"category" : "System-OSEnvironments",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Win32Environment",
+	"pools" : [
+		 ],
+	"super" : "OSEnvironment",
+	"type" : "normal" }

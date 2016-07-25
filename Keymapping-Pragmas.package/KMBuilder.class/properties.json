@@ -1,0 +1,14 @@
+{
+	"category" : "Keymapping-Pragmas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"platform" ],
+	"name" : "KMBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

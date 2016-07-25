@@ -1,0 +1,1 @@
+A filter on the current stack for debugging

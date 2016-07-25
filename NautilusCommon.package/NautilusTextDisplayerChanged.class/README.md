@@ -1,0 +1,1 @@
+A NautilusTextDisplayerChanged is raised when the way to display the method changed.

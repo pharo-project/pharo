@@ -1,0 +1,1 @@
+SUnit tests for global definitions (pools, global variables)

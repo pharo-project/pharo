@@ -1,0 +1,4 @@
+defaults
+staticSmallWidth
+
+	^ 50

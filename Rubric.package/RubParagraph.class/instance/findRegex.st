@@ -1,0 +1,3 @@
+mock selection
+findRegex
+	^ nil

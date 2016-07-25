@@ -1,0 +1,4 @@
+private
+defaultTitle
+	
+	^  'Change Sorter'

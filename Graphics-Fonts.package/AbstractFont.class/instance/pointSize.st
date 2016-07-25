@@ -1,0 +1,3 @@
+accessing
+pointSize
+	self subclassResponsibility.

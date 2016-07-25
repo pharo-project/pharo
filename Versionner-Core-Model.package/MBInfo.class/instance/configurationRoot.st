@@ -1,0 +1,4 @@
+accessing
+configurationRoot
+
+	^self configurationInfo configurationRoot

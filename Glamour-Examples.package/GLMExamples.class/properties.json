@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 8/28/2014 17:00",
+	"instvars" : [
+		 ],
+	"name" : "GLMExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

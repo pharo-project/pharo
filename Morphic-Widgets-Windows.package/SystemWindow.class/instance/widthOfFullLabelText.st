@@ -1,0 +1,3 @@
+label
+widthOfFullLabelText
+	^StandardFonts windowTitleFont widthOfString: labelString

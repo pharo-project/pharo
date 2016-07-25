@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"temporaryVariable" ],
+	"name" : "RBRefactoryTestDataApp",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

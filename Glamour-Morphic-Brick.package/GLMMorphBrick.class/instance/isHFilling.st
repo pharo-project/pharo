@@ -1,0 +1,4 @@
+testing
+isHFilling
+
+	^ hResizing = #spaceFill

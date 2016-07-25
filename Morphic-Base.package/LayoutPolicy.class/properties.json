@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "LayoutPolicy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-PolyTabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 11:54",
+	"instvars" : [
+		"tabSelectorMorph",
+		"contentMorph",
+		"pageMorphs" ],
+	"name" : "TabGroupMorph",
+	"pools" : [
+		 ],
+	"super" : "MorphicModel",
+	"type" : "normal" }

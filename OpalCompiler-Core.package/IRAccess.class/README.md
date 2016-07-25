@@ -1,0 +1,1 @@
+IRAccess models all bytecodes that read or write variables or self/super/thisContext

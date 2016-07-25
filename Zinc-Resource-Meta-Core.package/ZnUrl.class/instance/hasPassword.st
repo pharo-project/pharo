@@ -1,0 +1,3 @@
+testing
+hasPassword
+	^ password notNil

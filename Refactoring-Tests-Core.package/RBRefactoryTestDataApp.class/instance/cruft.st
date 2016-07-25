@@ -1,0 +1,3 @@
+lint
+cruft
+	self halt

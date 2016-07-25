@@ -1,0 +1,4 @@
+geometry
+lineBorderWidth
+
+	^self borderWidth

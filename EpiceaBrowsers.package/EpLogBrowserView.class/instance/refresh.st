@@ -1,0 +1,3 @@
+refreshing
+refresh
+	self subclassResponsibility

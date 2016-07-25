@@ -1,0 +1,3 @@
+actions
+windowIsClosing
+	self unregister.

@@ -1,0 +1,15 @@
+{
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"tag",
+		"link" ],
+	"name" : "ReflectivityReificationTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

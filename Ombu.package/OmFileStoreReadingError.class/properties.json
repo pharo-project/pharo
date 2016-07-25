@@ -1,0 +1,14 @@
+{
+	"category" : "Ombu-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 5/30/2014 18:53",
+	"instvars" : [
+		 ],
+	"name" : "OmFileStoreReadingError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

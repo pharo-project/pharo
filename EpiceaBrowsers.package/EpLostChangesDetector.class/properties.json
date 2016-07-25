@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Integration",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 5/27/2016 17:17",
+	"instvars" : [
+		 ],
+	"name" : "EpLostChangesDetector",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

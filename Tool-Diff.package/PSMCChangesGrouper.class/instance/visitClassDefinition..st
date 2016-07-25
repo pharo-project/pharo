@@ -1,0 +1,4 @@
+visitor
+visitClassDefinition: aMCClassDefinition 
+	
+	self ensureClassChangeWrapperNamed: aMCClassDefinition fullClassName

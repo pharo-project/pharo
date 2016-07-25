@@ -1,0 +1,3 @@
+menu
+accessorCode
+	^ self instVarName

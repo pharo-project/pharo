@@ -1,0 +1,1 @@
+A pool used for testing purposes

@@ -1,0 +1,4 @@
+exceptions
+exError
+	^Error
+			

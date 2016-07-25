@@ -1,0 +1,15 @@
+{
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"string",
+		"encoder" ],
+	"name" : "ZnStringEntity",
+	"pools" : [
+		 ],
+	"super" : "ZnEntity",
+	"type" : "normal" }

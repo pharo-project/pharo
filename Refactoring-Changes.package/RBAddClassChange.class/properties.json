@@ -1,0 +1,18 @@
+{
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"superclassName",
+		"instanceVariableNames",
+		"classVariableNames",
+		"poolDictionaryNames",
+		"category" ],
+	"name" : "RBAddClassChange",
+	"pools" : [
+		 ],
+	"super" : "RBRefactoryDefinitionChange",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+#entity stands for the structural entity that the link is installed on. It is #node for AST nodes, #variable for variables.

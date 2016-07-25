@@ -1,0 +1,1 @@
+Text converter for CP1250.  Windows code page used in Eastern Europe.

@@ -1,0 +1,4 @@
+loading
+repositories
+
+	^self repositorySpecs

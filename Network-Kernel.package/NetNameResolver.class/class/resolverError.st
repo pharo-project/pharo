@@ -1,0 +1,3 @@
+lookups
+resolverError
+	^self primNameResolverError

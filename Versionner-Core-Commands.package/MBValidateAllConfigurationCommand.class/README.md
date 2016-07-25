@@ -1,0 +1,1 @@
+Command to validate all configurations in versionner

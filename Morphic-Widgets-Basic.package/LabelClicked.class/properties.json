@@ -1,0 +1,15 @@
+{
+	"category" : "Morphic-Widgets-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"source",
+		"stateChanged" ],
+	"name" : "LabelClicked",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

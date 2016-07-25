@@ -1,0 +1,4 @@
+buttons behavior
+addLabel
+	
+	^ 'Create'

@@ -1,0 +1,1 @@
+A filter for kernel classes

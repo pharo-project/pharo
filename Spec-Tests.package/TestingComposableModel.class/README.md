@@ -1,0 +1,1 @@
+A TestingComposableModel is a stupid composable model used to test SpecInterpreter

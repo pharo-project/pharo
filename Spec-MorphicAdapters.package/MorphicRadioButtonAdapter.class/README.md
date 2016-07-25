@@ -1,0 +1,1 @@
+I am the adapter used to link a RadioButtonModel with a CheckboxMorph (which can also act as a radio button)

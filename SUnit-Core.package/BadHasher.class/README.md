@@ -1,0 +1,1 @@
+I am an object that doesn't always hash correctly.  I am used for testing the HashTester.

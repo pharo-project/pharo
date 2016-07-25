@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 23:14",
+	"instvars" : [
+		 ],
+	"name" : "TestCaseTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

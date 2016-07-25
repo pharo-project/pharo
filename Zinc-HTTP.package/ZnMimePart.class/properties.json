@@ -1,0 +1,15 @@
+{
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 10/5/2010 19:20",
+	"instvars" : [
+		"headers",
+		"entity" ],
+	"name" : "ZnMimePart",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

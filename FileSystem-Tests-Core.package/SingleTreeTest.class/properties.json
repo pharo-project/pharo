@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:40",
+	"instvars" : [
+		"filesystem" ],
+	"name" : "SingleTreeTest",
+	"pools" : [
+		 ],
+	"super" : "FileSystemTreeTest",
+	"type" : "normal" }

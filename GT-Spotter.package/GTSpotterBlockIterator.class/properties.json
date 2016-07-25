@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Iterators",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"onDo" ],
+	"name" : "GTSpotterBlockIterator",
+	"pools" : [
+		 ],
+	"super" : "GTSpotterIterator",
+	"type" : "normal" }

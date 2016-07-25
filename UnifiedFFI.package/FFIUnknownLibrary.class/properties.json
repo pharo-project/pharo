@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Libraries",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"moduleName" ],
+	"name" : "FFIUnknownLibrary",
+	"pools" : [
+		 ],
+	"super" : "FFILibrary",
+	"type" : "normal" }

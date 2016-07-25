@@ -1,0 +1,1 @@
+I represent a refactoring performed in the system. 

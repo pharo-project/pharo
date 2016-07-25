@@ -1,0 +1,1 @@
+I represent a change in the comment of a class or a trait.

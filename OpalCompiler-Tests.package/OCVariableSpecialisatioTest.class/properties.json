@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-Misc",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OCVariableSpecialisatioTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

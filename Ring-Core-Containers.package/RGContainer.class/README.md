@@ -1,0 +1,1 @@
+A concrete container already knows how to treat classes, methods and packages. 

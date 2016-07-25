@@ -1,0 +1,1 @@
+A NautilusGroupSelected is raised when a group is selected

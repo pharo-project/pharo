@@ -1,0 +1,3 @@
+accessing
+pages
+	^ #(matchRules rewriteRules)

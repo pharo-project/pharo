@@ -1,0 +1,19 @@
+{
+	"category" : "Athens-Cairo-Paints",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"capStyle",
+		"joinStyle",
+		"dashLenghts",
+		"dashOffset" ],
+	"name" : "AthensCairoStrokePaint",
+	"pools" : [
+		"AthensCairoDefs" ],
+	"super" : "AthensStrokePaint",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

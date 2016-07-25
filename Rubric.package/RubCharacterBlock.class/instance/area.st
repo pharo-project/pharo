@@ -1,0 +1,3 @@
+accessing
+area
+	^ surface area

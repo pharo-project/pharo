@@ -1,0 +1,1 @@
+This class provides the support for the languages in 'Latin-1' category.  Although we could have different language environments for different languages in the category, so far nobody seriously needed it.

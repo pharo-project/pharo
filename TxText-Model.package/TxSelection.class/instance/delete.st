@@ -1,0 +1,3 @@
+operations
+delete
+	self cut

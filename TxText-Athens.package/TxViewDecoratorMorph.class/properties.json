@@ -1,0 +1,15 @@
+{
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 2/12/2014 12:13",
+	"instvars" : [
+		"placement",
+		"viewContainer" ],
+	"name" : "TxViewDecoratorMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"offImageSelector",
+		"onImageSelector",
+		"pressedImageSelector",
+		"stateSelector" ],
+	"name" : "PluggableThreePhaseButtonMorph",
+	"pools" : [
+		 ],
+	"super" : "ThreePhaseButtonMorph",
+	"type" : "normal" }

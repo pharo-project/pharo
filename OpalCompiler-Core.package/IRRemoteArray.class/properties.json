@@ -1,0 +1,15 @@
+{
+	"category" : "OpalCompiler-Core-Bytecode",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"size",
+		"index" ],
+	"name" : "IRRemoteArray",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

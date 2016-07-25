@@ -1,0 +1,3 @@
+testing
+hasHost
+	^ host notNil

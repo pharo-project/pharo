@@ -1,0 +1,4 @@
+decorating
+position
+	
+	^ decoratedStream position

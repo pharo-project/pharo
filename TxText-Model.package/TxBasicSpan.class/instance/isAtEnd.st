@@ -1,0 +1,3 @@
+testing
+isAtEnd
+	^ false

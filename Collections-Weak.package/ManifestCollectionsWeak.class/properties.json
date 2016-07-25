@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCollectionsWeak",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "System-Localization-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"saveCurrent",
+		"catchedAnnouncement" ],
+	"name" : "LocaleAnnouncementTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

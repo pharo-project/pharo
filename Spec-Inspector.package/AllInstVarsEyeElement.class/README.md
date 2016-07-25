@@ -1,0 +1,1 @@
+I am an eye element for all inst vars, printing a description of all the instance vriables (usually second field in the inspector)

@@ -1,0 +1,18 @@
+{
+	"category" : "Versionner-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"name",
+		"version",
+		"platforms",
+		"dependencies",
+		"parent" ],
+	"name" : "MTDependency",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Events",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 4/22/2012 19:16",
+	"instvars" : [
+		"subscriptions" ],
+	"name" : "MorphicEventHandler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

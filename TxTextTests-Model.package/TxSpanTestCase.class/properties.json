@@ -1,0 +1,15 @@
+{
+	"category" : "TxTextTests-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"span",
+		"textModel" ],
+	"name" : "TxSpanTestCase",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

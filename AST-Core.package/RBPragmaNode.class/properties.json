@@ -1,0 +1,18 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"selector",
+		"keywordsPositions",
+		"arguments",
+		"left",
+		"right" ],
+	"name" : "RBPragmaNode",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNode",
+	"type" : "normal" }

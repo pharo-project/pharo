@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Browsers-Wizards",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 3/10/2015 22:01",
+	"instvars" : [
+		"size",
+		"numberOfDisplayBlock" ],
+	"name" : "GLMWizardGenericStep",
+	"pools" : [
+		 ],
+	"super" : "GLMAbstractWizardStep",
+	"type" : "normal" }

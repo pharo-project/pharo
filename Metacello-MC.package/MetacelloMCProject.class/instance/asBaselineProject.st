@@ -1,0 +1,3 @@
+scripting
+asBaselineProject
+    ^ MetacelloMCBaselineProject new

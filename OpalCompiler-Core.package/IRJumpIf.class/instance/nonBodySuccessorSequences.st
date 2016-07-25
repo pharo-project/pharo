@@ -1,0 +1,4 @@
+acessing
+nonBodySuccessorSequences
+
+	^ {destination}

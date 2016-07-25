@@ -1,0 +1,15 @@
+{
+	"category" : "Versionner-Commit",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project",
+		"basename" ],
+	"name" : "VSCommitProjectValidator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+selection
+resetPackageGroupsListSelection
+	self subclassResponsibility 

@@ -1,0 +1,3 @@
+testing
+defines: aName
+	^false

@@ -1,0 +1,1 @@
+I represent an accessor for a sequence of objects that can only read objects from the sequence.

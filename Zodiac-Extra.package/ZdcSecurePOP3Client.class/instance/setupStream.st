@@ -1,0 +1,3 @@
+private
+setupStream
+	self setupStreamForSSL

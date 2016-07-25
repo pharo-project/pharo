@@ -1,0 +1,3 @@
+streaming
+flush
+	stream flush

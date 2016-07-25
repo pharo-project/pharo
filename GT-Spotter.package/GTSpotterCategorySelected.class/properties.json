@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTSpotterCategorySelected",
+	"pools" : [
+		 ],
+	"super" : "GTSpotterAnnouncement",
+	"type" : "normal" }

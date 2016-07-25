@@ -1,0 +1,1 @@
+Text converter for Korean variation of EUC.

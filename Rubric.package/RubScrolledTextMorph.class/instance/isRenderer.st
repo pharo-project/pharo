@@ -1,0 +1,3 @@
+classification
+isRenderer
+	^ true

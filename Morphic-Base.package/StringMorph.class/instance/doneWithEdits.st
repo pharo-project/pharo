@@ -1,0 +1,4 @@
+editing
+doneWithEdits
+
+	hasFocus := false

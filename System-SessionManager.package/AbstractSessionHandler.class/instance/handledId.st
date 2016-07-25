@@ -1,0 +1,3 @@
+accessing
+handledId
+	self subclassResponsibility

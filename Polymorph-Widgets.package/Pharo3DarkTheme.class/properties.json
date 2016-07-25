@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 5/14/2014 14:35",
+	"instvars" : [
+		 ],
+	"name" : "Pharo3DarkTheme",
+	"pools" : [
+		 ],
+	"super" : "UIThemeWatery",
+	"type" : "normal" }

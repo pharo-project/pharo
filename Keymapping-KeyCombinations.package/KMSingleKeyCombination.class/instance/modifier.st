@@ -1,0 +1,4 @@
+accessing
+modifier
+
+	^ KMNoModifier new.

@@ -1,0 +1,4 @@
+private
+getFalse: anArg
+
+	^false

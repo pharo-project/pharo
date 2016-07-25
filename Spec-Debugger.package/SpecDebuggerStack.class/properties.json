@@ -1,0 +1,20 @@
+{
+	"category" : "Spec-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DoItFilterEnabled",
+		"FilterDictionary",
+		"KCFilterEnabled",
+		"LinkSelectorFilterEnabled",
+		"NilSelectorsFilterEnabled" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"sessionHolder",
+		"listWidget",
+		"actionsCache" ],
+	"name" : "SpecDebuggerStack",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

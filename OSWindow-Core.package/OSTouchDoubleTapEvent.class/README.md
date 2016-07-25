@@ -1,0 +1,1 @@
+I am the abstract class for all double tap gestures

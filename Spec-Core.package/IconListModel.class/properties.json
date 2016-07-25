@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 6/28/2016 13:27",
+	"instvars" : [
+		"iconHolder" ],
+	"name" : "IconListModel",
+	"pools" : [
+		 ],
+	"super" : "ListModel",
+	"type" : "normal" }

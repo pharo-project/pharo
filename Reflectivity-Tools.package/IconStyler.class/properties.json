@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tools-Breakpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mcamp 11/17/2015 11:33",
+	"instvars" : [
+		"textModel" ],
+	"name" : "IconStyler",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

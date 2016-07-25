@@ -1,0 +1,4 @@
+protocol
+hasActions
+
+	^ actions notEmpty

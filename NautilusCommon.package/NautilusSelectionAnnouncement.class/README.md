@@ -1,0 +1,1 @@
+I am a common superclass for package, class, protocol and method selection. I contain all the state and functionality, my subclasses are there only to allow the distinction between announcements

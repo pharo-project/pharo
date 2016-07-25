@@ -1,0 +1,3 @@
+switch
+switchIsClass
+	^ switch = #class

@@ -1,0 +1,1 @@
+I provide at least one test which corresponds to a message sent by InstructionStream>>#interpretNextInstructionFor: to its client.

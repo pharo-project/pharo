@@ -1,0 +1,3 @@
+faking
+info
+	^MCVersionInfo new

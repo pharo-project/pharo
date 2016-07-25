@@ -1,0 +1,25 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ar 2/12/2005 04:38",
+	"instvars" : [
+		"roots",
+		"selectedWrapper",
+		"getRootsSelector",
+		"getChildrenSelector",
+		"hasChildrenSelector",
+		"getLabelSelector",
+		"getIconSelector",
+		"getSelectedPathSelector",
+		"getHelpSelector",
+		"dropItemSelector",
+		"wantsDropSelector",
+		"dragItemSelector" ],
+	"name" : "PluggableTreeMorph",
+	"pools" : [
+		 ],
+	"super" : "SimpleHierarchicalListMorph",
+	"type" : "normal" }

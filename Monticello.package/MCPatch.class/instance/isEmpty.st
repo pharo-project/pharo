@@ -1,0 +1,3 @@
+querying
+isEmpty
+	^ operations isEmpty

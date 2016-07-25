@@ -1,0 +1,4 @@
+accessing
+size
+
+	^ ephemeronCollection size

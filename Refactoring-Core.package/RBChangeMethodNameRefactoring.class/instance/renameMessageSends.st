@@ -1,0 +1,3 @@
+transforming
+renameMessageSends
+	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter

@@ -1,0 +1,18 @@
+{
+	"category" : "Metacello-TestsMC",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 5/5/2012 19:52",
+	"instvars" : [
+		"externalRepository",
+		"mczConfigurationRepository",
+		"configurationDirectory",
+		"externalDirectory",
+		"sampleDirectory" ],
+	"name" : "MetacelloScriptingTestCase",
+	"pools" : [
+		 ],
+	"super" : "MetacelloScriptingStdTstHarness",
+	"type" : "normal" }

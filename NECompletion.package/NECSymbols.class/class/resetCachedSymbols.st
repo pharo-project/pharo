@@ -1,0 +1,3 @@
+accessing
+resetCachedSymbols
+	cachedSymbols := nil

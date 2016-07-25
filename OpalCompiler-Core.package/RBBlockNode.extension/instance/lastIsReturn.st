@@ -1,0 +1,3 @@
+*opalcompiler-core
+lastIsReturn
+	^ false

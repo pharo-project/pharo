@@ -1,0 +1,4 @@
+initialization
+debugPolicy
+	self 
+		beOneShot

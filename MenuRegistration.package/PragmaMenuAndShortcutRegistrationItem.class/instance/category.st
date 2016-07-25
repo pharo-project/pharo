@@ -1,0 +1,4 @@
+protocol
+category
+
+	^ category

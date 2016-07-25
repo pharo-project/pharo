@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:34",
+	"instvars" : [
+		 ],
+	"name" : "RubCodeSizeFeedback",
+	"pools" : [
+		 ],
+	"super" : "RubScrolledTextExtraSurface",
+	"type" : "normal" }

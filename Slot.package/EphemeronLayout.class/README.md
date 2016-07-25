@@ -1,0 +1,1 @@
+A layout for ephemeron objects

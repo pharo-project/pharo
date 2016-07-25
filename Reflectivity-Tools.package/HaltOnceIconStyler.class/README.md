@@ -1,0 +1,1 @@
+I'm in charge to style  the editor for  a "haltOnce". Clicking on it re-enables the haltOnce.

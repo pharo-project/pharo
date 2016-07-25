@@ -1,0 +1,3 @@
+accessing
+borderWidth
+	^ 0

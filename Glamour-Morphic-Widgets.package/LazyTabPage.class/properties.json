@@ -1,0 +1,17 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"actualPageMorph",
+		"labelMorph",
+		"lazyPageMorphCreation",
+		"toolbar" ],
+	"name" : "LazyTabPage",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

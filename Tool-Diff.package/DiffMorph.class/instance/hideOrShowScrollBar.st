@@ -1,0 +1,4 @@
+private
+hideOrShowScrollBar
+	"Do nothing"
+	

@@ -1,0 +1,3 @@
+accessing
+selectedNodePathList: aCollectionOfPath
+	selectedNodePathList := aCollectionOfPath

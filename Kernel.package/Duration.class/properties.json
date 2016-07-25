@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "marcus.denker 6/5/2009 11:27",
+	"instvars" : [
+		"nanos",
+		"seconds" ],
+	"name" : "Duration",
+	"pools" : [
+		"ChronologyConstants" ],
+	"super" : "Magnitude",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Regex-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Tbn 11/12/2010 23:13",
+	"instvars" : [
+		"source",
+		"lookahead",
+		"elements" ],
+	"name" : "RxCharSetParser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

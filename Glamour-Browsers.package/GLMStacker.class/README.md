@@ -1,0 +1,1 @@
+A GLMStacker is an explicit browser that allows us to stack panes on top of each other and typically show them as tabs.

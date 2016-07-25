@@ -1,0 +1,14 @@
+{
+	"category" : "STON-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"streamPosition" ],
+	"name" : "STONReaderError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

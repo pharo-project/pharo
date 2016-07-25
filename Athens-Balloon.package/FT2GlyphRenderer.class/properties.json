@@ -1,0 +1,29 @@
+{
+	"category" : "Athens-Balloon",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"pixelSize",
+		"form",
+		"blt",
+		"matrix",
+		"translation",
+		"penX",
+		"penY",
+		"slot",
+		"surface",
+		"colorMap",
+		"bitmapX",
+		"bitmapY",
+		"descend",
+		"origin",
+		"currentColor",
+		"hAdvance" ],
+	"name" : "FT2GlyphRenderer",
+	"pools" : [
+		"FT2Constants" ],
+	"super" : "GlyphRenderer",
+	"type" : "normal" }

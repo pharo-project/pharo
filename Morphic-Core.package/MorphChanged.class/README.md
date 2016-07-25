@@ -1,0 +1,1 @@
+I am raised when a morph property changed, and should be propagated to dependents

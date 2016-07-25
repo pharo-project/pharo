@@ -1,0 +1,3 @@
+configuration
+toolName
+	^ 'Time profiler'

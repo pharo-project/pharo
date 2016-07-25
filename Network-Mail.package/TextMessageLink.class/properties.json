@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Mail",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"message" ],
+	"name" : "TextMessageLink",
+	"pools" : [
+		 ],
+	"super" : "TextAttribute",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 11:03",
+	"instvars" : [
+		 ],
+	"name" : "ZnUtils",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

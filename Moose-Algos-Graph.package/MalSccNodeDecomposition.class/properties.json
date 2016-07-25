@@ -1,0 +1,16 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "MalTNormalize classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MalSccNodeDecomposition",
+	"pools" : [
+		 ],
+	"super" : "MalSccExtractor",
+	"traitcomposition" : "MalTNormalize",
+	"type" : "normal" }

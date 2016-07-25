@@ -1,0 +1,1 @@
+I am NaNException, an ArithmeticException signaled when Float nan was encountered where it was not allowed. 

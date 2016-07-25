@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "KLC 9/17/2004 11:26",
+	"instvars" : [
+		"target",
+		"tabs",
+		"activeTab" ],
+	"name" : "PluggableTabBarMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

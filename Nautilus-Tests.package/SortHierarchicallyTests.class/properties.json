@@ -1,0 +1,17 @@
+{
+	"category" : "Nautilus-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"completeTree",
+		"partialTree",
+		"unrelatedClasses",
+		"archivesClasses" ],
+	"name" : "SortHierarchicallyTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

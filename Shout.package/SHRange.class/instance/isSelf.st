@@ -1,0 +1,4 @@
+tests
+isSelf
+	
+	^type == #self

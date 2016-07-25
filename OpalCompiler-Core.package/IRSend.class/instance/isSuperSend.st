@@ -1,0 +1,3 @@
+testing
+isSuperSend
+    ^superOf notNil

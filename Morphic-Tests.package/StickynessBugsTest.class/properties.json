@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Bugs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "wiz 11/24/2006 00:24",
+	"instvars" : [
+		 ],
+	"name" : "StickynessBugsTest",
+	"pools" : [
+		 ],
+	"super" : "MorphicUIBugTest",
+	"type" : "normal" }

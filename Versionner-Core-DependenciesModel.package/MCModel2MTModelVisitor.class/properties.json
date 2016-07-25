@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"project" ],
+	"name" : "MCModel2MTModelVisitor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

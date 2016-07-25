@@ -1,0 +1,3 @@
+focus management
+takesKeyboardFocus
+	^ true

@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MCWorkingAncestry",
+	"pools" : [
+		 ],
+	"super" : "MCAncestry",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 5/23/2016 16:30",
+	"instvars" : [
+		 ],
+	"name" : "ReTrivialCritic",
+	"pools" : [
+		 ],
+	"super" : "ReTrivialCritique",
+	"type" : "normal" }

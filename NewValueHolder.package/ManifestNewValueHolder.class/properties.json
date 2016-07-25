@@ -1,0 +1,14 @@
+{
+	"category" : "NewValueHolder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestNewValueHolder",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

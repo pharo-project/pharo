@@ -1,0 +1,21 @@
+{
+	"category" : "System-FileRegistry",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"provider",
+		"label",
+		"selector",
+		"usingLineAfter",
+		"stateSelector",
+		"description",
+		"argumentGetter",
+		"buttonLabel" ],
+	"name" : "SimpleServiceEntry",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

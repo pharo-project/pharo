@@ -1,0 +1,20 @@
+{
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/1/2014 13:48",
+	"instvars" : [
+		"withLineNumbers",
+		"withAnnotation",
+		"wrapped",
+		"tabWidth",
+		"withColumns",
+		"textSegments",
+		"primarySelectionInterval" ],
+	"name" : "GLMRubricTextPresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMTextualPresentation",
+	"type" : "normal" }

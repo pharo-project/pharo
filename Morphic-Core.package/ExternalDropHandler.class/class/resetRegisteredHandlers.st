@@ -1,0 +1,3 @@
+private
+resetRegisteredHandlers
+	RegisteredHandlers := nil

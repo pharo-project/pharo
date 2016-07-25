@@ -1,0 +1,3 @@
+copying
+parentPrototype
+	^ parentPrototype

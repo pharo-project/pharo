@@ -1,0 +1,16 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"findReplaceRanges",
+		"findReplaceShapes",
+		"secondarySelectionShapes" ],
+	"name" : "RubExtraSelectionDecorator",
+	"pools" : [
+		 ],
+	"super" : "RubParagraphDecorator",
+	"type" : "normal" }

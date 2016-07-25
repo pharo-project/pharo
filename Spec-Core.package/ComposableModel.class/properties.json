@@ -1,0 +1,27 @@
+{
+	"category" : "Spec-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/19/2016 16:31",
+	"instvars" : [
+		"focusOrder",
+		"owner",
+		"window",
+		"spec",
+		"extentHolder",
+		"needRebuild",
+		"additionalKeyBindings",
+		"announcer",
+		"keyStrokesForNextFocusHolder",
+		"keyStrokesForPreviousFocusHolder",
+		"windowIcon",
+		"aboutText",
+		"askOkToClose",
+		"titleHolder" ],
+	"name" : "ComposableModel",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

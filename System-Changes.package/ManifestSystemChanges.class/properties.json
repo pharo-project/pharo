@@ -1,0 +1,14 @@
+{
+	"category" : "System-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestSystemChanges",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

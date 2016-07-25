@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-FindReplaceService",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:31",
+	"instvars" : [
+		 ],
+	"name" : "RubFindReplaceWindowRequired",
+	"pools" : [
+		 ],
+	"super" : "RubAnnouncement",
+	"type" : "normal" }

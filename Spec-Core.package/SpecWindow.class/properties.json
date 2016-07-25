@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SpecWindow",
+	"pools" : [
+		 ],
+	"super" : "StandardWindow",
+	"type" : "normal" }

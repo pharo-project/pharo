@@ -1,0 +1,4 @@
+accessing
+oldClassVariableNamesOfClassAffected
+
+	^ oldClass classVarNames 

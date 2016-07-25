@@ -1,0 +1,15 @@
+{
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"ghostText",
+		"textColor" ],
+	"name" : "RubGhostTextDisplayer",
+	"pools" : [
+		 ],
+	"super" : "RubScrolledTextExtraSurface",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+A PDDependentPackageNode is used to display a dependent package in a tree.

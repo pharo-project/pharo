@@ -1,0 +1,3 @@
+accessing
+newLinesAfterTemporaries
+	^ context newLinesAfterTemporaries

@@ -1,0 +1,3 @@
+testing
+hasMetaLevel
+	^level notNil

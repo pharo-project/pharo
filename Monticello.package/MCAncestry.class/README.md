@@ -1,0 +1,1 @@
+Abstract superclass of records of ancestry.

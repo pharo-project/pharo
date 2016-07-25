@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Integration",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 5/3/2014 20:54",
+	"instvars" : [
+		 ],
+	"name" : "EpWorldMenu",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

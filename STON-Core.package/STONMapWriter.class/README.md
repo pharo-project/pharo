@@ -1,0 +1,1 @@
+STONDictionaryWriter helps in writing dictionary based STON representations.

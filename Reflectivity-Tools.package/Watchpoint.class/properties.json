@@ -1,0 +1,18 @@
+{
+	"category" : "Reflectivity-Tools-Watchpoints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Watchpoints" ],
+	"commentStamp" : "mcamp 11/20/2015 11:05",
+	"instvars" : [
+		"tagname",
+		"node",
+		"link",
+		"values",
+		"recording" ],
+	"name" : "Watchpoint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

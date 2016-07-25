@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 12:04",
+	"instvars" : [
+		 ],
+	"name" : "ControlButtonMorph",
+	"pools" : [
+		 ],
+	"super" : "PluggableButtonMorph",
+	"type" : "normal" }

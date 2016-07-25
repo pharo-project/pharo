@@ -1,0 +1,1 @@
+I am an abstract class for the gestures detector, to work I have to register with an OSWindowGestureHandler

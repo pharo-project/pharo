@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector-Examples-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"exception" ],
+	"name" : "GTExampleDependencyError",
+	"pools" : [
+		 ],
+	"super" : "GTExampleError",
+	"type" : "normal" }

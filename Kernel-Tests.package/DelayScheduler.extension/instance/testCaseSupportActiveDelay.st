@@ -1,0 +1,3 @@
+*Kernel-Tests
+testCaseSupportActiveDelay
+	^activeDelay

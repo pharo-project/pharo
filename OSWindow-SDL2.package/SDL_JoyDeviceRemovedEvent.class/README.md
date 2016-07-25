@@ -1,0 +1,1 @@
+SDL2 library structure representing a joystick device removed event data.

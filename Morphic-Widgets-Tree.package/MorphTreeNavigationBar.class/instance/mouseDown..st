@@ -1,0 +1,2 @@
+private
+mouseDown: anEvent

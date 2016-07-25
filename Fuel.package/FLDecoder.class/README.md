@@ -1,0 +1,1 @@
+I am an abstraction used by the materialization algorithm to decode the graph from a stream.

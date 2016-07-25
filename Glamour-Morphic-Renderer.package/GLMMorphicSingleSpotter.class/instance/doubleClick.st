@@ -1,0 +1,3 @@
+callbacks
+doubleClick
+	self ok

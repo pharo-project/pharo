@@ -1,0 +1,3 @@
+*Rubric
+isParagraphProvider
+	^ false

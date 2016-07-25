@@ -1,0 +1,14 @@
+{
+	"category" : "STON-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 1/22/2012 20:14",
+	"instvars" : [
+		 ],
+	"name" : "STONReaderTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

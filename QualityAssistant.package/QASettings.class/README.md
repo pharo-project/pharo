@@ -1,0 +1,1 @@
+I hold settings for quality assistant

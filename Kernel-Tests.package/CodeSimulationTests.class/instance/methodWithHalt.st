@@ -1,0 +1,3 @@
+tests
+methodWithHalt
+	self halt

@@ -1,0 +1,18 @@
+{
+	"category" : "FreeType-Cache",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"FreeTypeCacheGlyph",
+		"FreeTypeCacheGlyphLCD",
+		"FreeTypeCacheGlyphMono",
+		"FreeTypeCacheLinearWidth",
+		"FreeTypeCacheWidth" ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
+	"instvars" : [
+		 ],
+	"name" : "FreeTypeCacheConstants",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

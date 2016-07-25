@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfOSSubprocess",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 1/13/2016 11:20",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfOSSubprocess",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

@@ -1,0 +1,2 @@
+bytecode decoding
+prepare: aCompiledMethod 

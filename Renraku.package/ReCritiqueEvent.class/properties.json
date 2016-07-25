@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 8/29/2015 21:31",
+	"instvars" : [
+		"entity" ],
+	"name" : "ReCritiqueEvent",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

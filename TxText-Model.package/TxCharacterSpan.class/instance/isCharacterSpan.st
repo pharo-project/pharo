@@ -1,0 +1,3 @@
+testing
+isCharacterSpan
+	^ true

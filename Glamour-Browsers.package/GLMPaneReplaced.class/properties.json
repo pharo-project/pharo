@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Browsers-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 3/10/2015 21:59",
+	"instvars" : [
+		"oldPane",
+		"newPane" ],
+	"name" : "GLMPaneReplaced",
+	"pools" : [
+		 ],
+	"super" : "GLMPaneAnnouncement",
+	"type" : "normal" }

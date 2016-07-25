@@ -1,0 +1,4 @@
+running
+resultClass
+
+	^ TestAsserter classForTestResult

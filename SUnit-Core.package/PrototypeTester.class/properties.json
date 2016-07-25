@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 12/28/2014 11:26",
+	"instvars" : [
+		"prototype" ],
+	"name" : "PrototypeTester",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

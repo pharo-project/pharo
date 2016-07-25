@@ -1,0 +1,21 @@
+{
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:22",
+	"instvars" : [
+		"font",
+		"utfConverter",
+		"cairoFont",
+		"extents",
+		"glyphExtents",
+		"cache" ],
+	"name" : "CairoFontMetricsProvider",
+	"pools" : [
+		"AthensCairoDefs" ],
+	"super" : "Object",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

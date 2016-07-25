@@ -1,0 +1,1 @@
+The receiver is signaled whenever a precondition of a refactoring is violated. The action block, if defined, might help the user to resolve the issue.

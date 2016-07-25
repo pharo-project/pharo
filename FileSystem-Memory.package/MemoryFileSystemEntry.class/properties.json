@@ -1,0 +1,16 @@
+{
+	"category" : "FileSystem-Memory",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"creationTime",
+		"modificationTime",
+		"basename" ],
+	"name" : "MemoryFileSystemEntry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

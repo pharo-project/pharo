@@ -1,0 +1,38 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:20",
+	"instvars" : [
+		"lines",
+		"maxRightX",
+		"currentY",
+		"scanner",
+		"possibleSlide",
+		"nowSliding",
+		"prevIndex",
+		"prevLines",
+		"currCharIndex",
+		"startCharIndex",
+		"stopCharIndex",
+		"deltaCharIndex",
+		"theText",
+		"theContainer",
+		"isFirstLine",
+		"theTextStyle",
+		"defaultLineHeight",
+		"actualHeight",
+		"actualWidth",
+		"numberOfPhysicalLines",
+		"prevTextStyle",
+		"prevText",
+		"prevContainer",
+		"emphasisHere",
+		"cursorWidth" ],
+	"name" : "RubTextComposer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

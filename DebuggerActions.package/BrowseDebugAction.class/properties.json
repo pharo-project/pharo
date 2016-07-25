@@ -1,0 +1,14 @@
+{
+	"category" : "DebuggerActions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "BrowseDebugAction",
+	"pools" : [
+		 ],
+	"super" : "MessageSendDebugAction",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Balloon-Fills",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 9/23/2008 12:05",
+	"instvars" : [
+		"fillStyles" ],
+	"name" : "CompositeFillStyle",
+	"pools" : [
+		 ],
+	"super" : "FillStyle",
+	"type" : "normal" }

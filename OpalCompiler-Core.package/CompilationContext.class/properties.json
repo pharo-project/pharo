@@ -1,0 +1,31 @@
+{
+	"category" : "OpalCompiler-Core-FrontEnd",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BytecodeBackend",
+		"WarningAllowed" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"requestor",
+		"failBlock",
+		"noPattern",
+		"class",
+		"category",
+		"logged",
+		"interactive",
+		"options",
+		"environment",
+		"parserClass",
+		"semanticAnalyzerClass",
+		"astTranslatorClass",
+		"bytecodeGeneratorClass",
+		"compiledMethodTrailer",
+		"forSyntaxHighlighting",
+		"encoderClass",
+		"astTransformPlugins" ],
+	"name" : "CompilationContext",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

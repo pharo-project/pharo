@@ -1,0 +1,17 @@
+{
+	"category" : "Versionner-Commit",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 4/28/2015 16:31",
+	"instvars" : [
+		"shouldCommitProjects",
+		"shouldCommitNestedProjects",
+		"shouldNestProjects",
+		"shouldCommitDirtyPackages" ],
+	"name" : "VSCommitStrategy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

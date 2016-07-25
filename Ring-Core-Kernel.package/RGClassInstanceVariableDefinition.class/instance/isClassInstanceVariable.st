@@ -1,0 +1,4 @@
+testing
+isClassInstanceVariable
+
+	^true

@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Core-Paints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"center",
+		"radius",
+		"focalPoint" ],
+	"name" : "RadialGradientPaint",
+	"pools" : [
+		 ],
+	"super" : "GradientPaint",
+	"type" : "normal" }

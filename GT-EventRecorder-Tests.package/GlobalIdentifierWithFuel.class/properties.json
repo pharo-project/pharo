@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Tests-Identifier",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GlobalIdentifierWithFuel",
+	"pools" : [
+		 ],
+	"super" : "GlobalIdentifierTest",
+	"type" : "normal" }

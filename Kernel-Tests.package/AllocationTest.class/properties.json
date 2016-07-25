@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 12/18/2009 12:03",
+	"instvars" : [
+		 ],
+	"name" : "AllocationTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

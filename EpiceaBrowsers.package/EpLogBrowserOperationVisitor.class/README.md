@@ -1,0 +1,1 @@
+I am an abstract superclass useful for visitors of EpLogBrowserOperation.

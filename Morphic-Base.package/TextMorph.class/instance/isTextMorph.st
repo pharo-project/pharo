@@ -1,0 +1,3 @@
+classification
+isTextMorph
+	^true

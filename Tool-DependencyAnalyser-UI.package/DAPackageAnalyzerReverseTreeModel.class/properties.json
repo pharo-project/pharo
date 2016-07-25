@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BaptisteQuide 8/4/2014 10:47",
+	"instvars" : [
+		"relationGraph",
+		"packageLabel" ],
+	"name" : "DAPackageAnalyzerReverseTreeModel",
+	"pools" : [
+		 ],
+	"super" : "DAPackageTreeModel",
+	"type" : "normal" }

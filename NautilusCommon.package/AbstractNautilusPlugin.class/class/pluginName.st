@@ -1,0 +1,4 @@
+display
+pluginName
+
+	^ self name

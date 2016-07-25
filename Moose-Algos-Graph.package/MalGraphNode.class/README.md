@@ -1,0 +1,1 @@
+Default representation of a graph vertice (node).

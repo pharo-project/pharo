@@ -1,0 +1,3 @@
+private
+receiverArgumentLoader
+	^ FFISelfArgument new

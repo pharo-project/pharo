@@ -1,0 +1,1 @@
+A declaration for multiple settings

@@ -1,0 +1,1 @@
+Border with customisable inner margin.

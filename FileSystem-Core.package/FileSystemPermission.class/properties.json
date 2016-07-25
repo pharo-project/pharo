@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Public",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"posixPermission" ],
+	"name" : "FileSystemPermission",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

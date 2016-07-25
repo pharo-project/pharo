@@ -1,0 +1,3 @@
+accessing-token
+assignment
+	^ assignment

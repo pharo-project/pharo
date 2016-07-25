@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "webwarrior 6/9/2014 15:40",
+	"instvars" : [
+		 ],
+	"name" : "TableContainerModel",
+	"pools" : [
+		 ],
+	"super" : "ContainerModel",
+	"type" : "normal" }

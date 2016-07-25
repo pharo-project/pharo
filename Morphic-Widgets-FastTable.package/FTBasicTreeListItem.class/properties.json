@@ -1,0 +1,18 @@
+{
+	"category" : "Morphic-Widgets-FastTable-Tree-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikNergaard 3/27/2016 14:25",
+	"instvars" : [
+		"expanded",
+		"depth",
+		"item",
+		"children",
+		"dataSource" ],
+	"name" : "FTBasicTreeListItem",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

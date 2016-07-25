@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Repositories",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultDirectoryName" ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:55",
+	"instvars" : [
+		"directory" ],
+	"name" : "MCDirectoryRepository",
+	"pools" : [
+		 ],
+	"super" : "MCFileBasedRepository",
+	"type" : "normal" }

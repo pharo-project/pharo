@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 1/25/2016 11:04",
+	"instvars" : [
+		 ],
+	"name" : "GTHelpDebugAction",
+	"pools" : [
+		 ],
+	"super" : "DebugAction",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Nautilus-GroupManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/7/2015 09:21",
+	"instvars" : [
+		"packages",
+		"browsedEnvironment" ],
+	"name" : "PackageGroup",
+	"pools" : [
+		 ],
+	"super" : "Group",
+	"type" : "normal" }

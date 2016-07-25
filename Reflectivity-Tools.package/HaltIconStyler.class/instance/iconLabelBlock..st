@@ -1,0 +1,3 @@
+defaults
+iconLabelBlock: aNode
+	^ ['halt']

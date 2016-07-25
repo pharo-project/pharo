@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-WindowNotification",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"window" ],
+	"name" : "WindowAnnouncementTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

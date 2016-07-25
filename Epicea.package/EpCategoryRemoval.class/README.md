@@ -1,0 +1,1 @@
+I represent the removal of a category in a package.

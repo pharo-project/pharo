@@ -1,0 +1,3 @@
+morphic protocol
+listIndex
+	^ listIndex 

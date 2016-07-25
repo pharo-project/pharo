@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RBProtectInstanceVariableTest",
+	"pools" : [
+		 ],
+	"super" : "RBRefactoringTest",
+	"type" : "normal" }

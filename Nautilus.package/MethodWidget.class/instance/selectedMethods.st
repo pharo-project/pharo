@@ -1,0 +1,3 @@
+protocol
+selectedMethods
+	^ self methodsSelection

@@ -1,0 +1,14 @@
+{
+	"category" : "System-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"environment" ],
+	"name" : "SystemOrganizer",
+	"pools" : [
+		 ],
+	"super" : "Categorizer",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "QualityAssistantRecording",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 11/4/2015 14:04",
+	"instvars" : [
+		 ],
+	"name" : "QAEventCollector",
+	"pools" : [
+		 ],
+	"super" : "GTEventCollector",
+	"type" : "normal" }

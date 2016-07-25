@@ -1,0 +1,1 @@
+I visit the AST of method a second time (after OCASTSemanticAnalyzer) to analyze temps related to closures.

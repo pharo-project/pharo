@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 4/10/2016 01:50",
+	"instvars" : [
+		 ],
+	"name" : "SDL_ControllerDeviceEvent",
+	"pools" : [
+		 ],
+	"super" : "SDL2MappedEvent",
+	"type" : "normal" }

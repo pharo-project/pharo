@@ -1,0 +1,3 @@
+tests
+testNestedBlocksRemoteInBlockCase2
+	self checkCorrectDecompilation: #nestedBlocksRemoteInBlockCase2

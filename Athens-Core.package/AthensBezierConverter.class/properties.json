@@ -1,0 +1,17 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CollinearityEps",
+		"CurveAngleTolerance",
+		"DistanceEps" ],
+	"commentStamp" : "IgorStasenko 5/1/2011 21:50",
+	"instvars" : [
+		"distanceTolerance",
+		"angleTolerance" ],
+	"name" : "AthensBezierConverter",
+	"pools" : [
+		 ],
+	"super" : "AthensPathConverter",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I am signaled when the name of a Slot is an invalid variable name.

@@ -1,0 +1,4 @@
+*NautilusRefactoring
+nameToDisplay
+
+	^ self name

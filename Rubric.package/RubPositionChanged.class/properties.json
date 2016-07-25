@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 10:51",
+	"instvars" : [
+		 ],
+	"name" : "RubPositionChanged",
+	"pools" : [
+		 ],
+	"super" : "RubBoundsChanged",
+	"type" : "normal" }

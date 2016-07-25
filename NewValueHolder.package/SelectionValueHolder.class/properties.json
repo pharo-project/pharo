@@ -1,0 +1,15 @@
+{
+	"category" : "NewValueHolder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 1/23/2014 15:18",
+	"instvars" : [
+		"index",
+		"selection" ],
+	"name" : "SelectionValueHolder",
+	"pools" : [
+		 ],
+	"super" : "NewValueHolder",
+	"type" : "normal" }

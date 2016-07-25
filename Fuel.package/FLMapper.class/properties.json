@@ -1,0 +1,15 @@
+{
+	"category" : "Fuel-Mappers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/11/2011 03:09",
+	"instvars" : [
+		"next",
+		"analysis" ],
+	"name" : "FLMapper",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

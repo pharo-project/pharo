@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMMorphicDashboardRenderer",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicBrowserRenderer",
+	"type" : "normal" }

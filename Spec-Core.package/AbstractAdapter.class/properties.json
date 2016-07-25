@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 2/27/2015 20:31",
+	"instvars" : [
+		"model",
+		"widget",
+		"selector" ],
+	"name" : "AbstractAdapter",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

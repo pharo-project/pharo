@@ -1,0 +1,1 @@
+A GoferRepositoryError is the error thrown when a repository cannot be accessed.

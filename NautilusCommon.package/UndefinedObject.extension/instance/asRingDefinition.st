@@ -1,0 +1,4 @@
+*NautilusCommon
+asRingDefinition
+	
+	^ self

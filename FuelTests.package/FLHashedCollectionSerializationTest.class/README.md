@@ -1,0 +1,1 @@
+SUnit tests for fuel serialization of hashed collections

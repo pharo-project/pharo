@@ -1,0 +1,1 @@
+a single token from an RFC822 mail address.  Used internally in MailAddressParser

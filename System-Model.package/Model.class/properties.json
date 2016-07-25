@@ -1,0 +1,15 @@
+{
+	"category" : "System-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"dependents",
+		"announceur" ],
+	"name" : "Model",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

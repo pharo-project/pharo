@@ -1,0 +1,14 @@
+{
+	"category" : "Tools-Test-Profilers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 20:46",
+	"instvars" : [
+		 ],
+	"name" : "MessageTallyTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

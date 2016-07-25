@@ -1,0 +1,3 @@
+printing
+formattedCode
+	^ self fullPrintString 

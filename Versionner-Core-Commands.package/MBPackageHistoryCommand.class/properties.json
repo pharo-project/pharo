@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 14:06",
+	"instvars" : [
+		 ],
+	"name" : "MBPackageHistoryCommand",
+	"pools" : [
+		 ],
+	"super" : "MBAbstractPackageCommand",
+	"type" : "normal" }

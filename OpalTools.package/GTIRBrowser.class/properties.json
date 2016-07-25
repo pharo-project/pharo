@@ -1,0 +1,14 @@
+{
+	"category" : "OpalTools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 10/21/2014 11:04",
+	"instvars" : [
+		 ],
+	"name" : "GTIRBrowser",
+	"pools" : [
+		 ],
+	"super" : "GLMCompositePresentation",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+hasFailures
+	^ result hasFailures.

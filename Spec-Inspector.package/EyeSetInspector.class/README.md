@@ -1,0 +1,1 @@
+Specialized version of inspector showing values only

@@ -1,0 +1,1 @@
+I represent the Meta or Command key modifier. Look at my superclass for a more detailed explanaition.

@@ -1,0 +1,3 @@
+persistence
+updateSettingNodes
+	self persistence updateSettingNodes

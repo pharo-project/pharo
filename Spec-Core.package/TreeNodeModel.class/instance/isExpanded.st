@@ -1,0 +1,4 @@
+api
+isExpanded
+	
+	^ isExpanded value

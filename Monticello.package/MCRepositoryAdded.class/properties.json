@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 11/4/2015 23:56",
+	"instvars" : [
+		"repository" ],
+	"name" : "MCRepositoryAdded",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

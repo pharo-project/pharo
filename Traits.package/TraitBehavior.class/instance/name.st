@@ -1,0 +1,3 @@
+naming
+name
+	^ self subclassResponsibility.

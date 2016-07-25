@@ -1,0 +1,1 @@
+ZnResponseWrittenEvent signals that response was written in duration milliseconds.

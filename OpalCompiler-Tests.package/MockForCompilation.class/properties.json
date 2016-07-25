@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"var1" ],
+	"name" : "MockForCompilation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

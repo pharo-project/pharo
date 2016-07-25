@@ -1,0 +1,4 @@
+*Keymapping-Core
+detachAllKeymapCategories
+
+	self kmDispatcher detachAllKeymapCategories

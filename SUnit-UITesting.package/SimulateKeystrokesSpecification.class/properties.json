@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-UITesting",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SimulateKeystrokesSpecification",
+	"pools" : [
+		 ],
+	"super" : "UITestCase",
+	"type" : "normal" }

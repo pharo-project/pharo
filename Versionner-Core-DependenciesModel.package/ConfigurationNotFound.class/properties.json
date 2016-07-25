@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Core-DependenciesModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 2/24/2014 16:36",
+	"instvars" : [
+		 ],
+	"name" : "ConfigurationNotFound",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

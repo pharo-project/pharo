@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"debugActionHolder" ],
+	"name" : "SpecDebugActionButton",
+	"pools" : [
+		 ],
+	"super" : "ButtonModel",
+	"type" : "normal" }

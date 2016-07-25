@@ -1,0 +1,14 @@
+{
+	"category" : "FuelCommandLineHandler",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"files" ],
+	"name" : "FLFuelCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "CommandLineHandler",
+	"type" : "normal" }

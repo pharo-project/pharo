@@ -1,0 +1,3 @@
+querying
+hasDecorator: aDecorator
+	^ false

@@ -1,0 +1,15 @@
+{
+	"category" : "System-Announcements-System-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"context",
+		"expressionEvaluated" ],
+	"name" : "ExpressionEvaluated",
+	"pools" : [
+		 ],
+	"super" : "SystemAnnouncement",
+	"type" : "normal" }

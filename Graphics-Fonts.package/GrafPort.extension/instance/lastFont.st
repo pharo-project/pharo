@@ -1,0 +1,4 @@
+*Graphics-Fonts
+lastFont
+
+	^ lastFont.

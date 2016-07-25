@@ -1,0 +1,16 @@
+{
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicoPasserini 5/12/2016 17:32",
+	"instvars" : [
+		"package",
+		"changes",
+		"organizationChange" ],
+	"name" : "IcePackageChangeSet",
+	"pools" : [
+		 ],
+	"super" : "IceStructuralChangeSet",
+	"type" : "normal" }

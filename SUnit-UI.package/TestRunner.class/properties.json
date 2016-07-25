@@ -1,0 +1,29 @@
+{
+	"category" : "SUnit-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"classes",
+		"classIndex",
+		"classesSelected",
+		"failedList",
+		"failedSelected",
+		"errorList",
+		"errorSelected",
+		"lastUpdate",
+		"result",
+		"previousRun",
+		"classPattern",
+		"testAnnouncementBlock",
+		"packages",
+		"packagesSelected",
+		"packagePattern",
+		"packageIndex" ],
+	"name" : "TestRunner",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

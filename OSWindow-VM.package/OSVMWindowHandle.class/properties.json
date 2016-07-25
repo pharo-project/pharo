@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-VM",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:58",
+	"instvars" : [
+		"fullscreen" ],
+	"name" : "OSVMWindowHandle",
+	"pools" : [
+		 ],
+	"super" : "OSWindowHandle",
+	"type" : "normal" }

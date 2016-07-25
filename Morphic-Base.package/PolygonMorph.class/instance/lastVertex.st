@@ -1,0 +1,3 @@
+attachments
+lastVertex
+	^vertices last

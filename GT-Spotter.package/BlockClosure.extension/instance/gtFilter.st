@@ -1,0 +1,3 @@
+*GT-Spotter
+gtFilter
+	^ self 

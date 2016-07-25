@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenjaminVanRyseghem 1/21/2014 16:35",
+	"instvars" : [
+		"label",
+		"protocols" ],
+	"name" : "ProtocolList",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

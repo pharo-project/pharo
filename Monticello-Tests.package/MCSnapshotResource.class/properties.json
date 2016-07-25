@@ -1,0 +1,14 @@
+{
+	"category" : "Monticello-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"snapshot" ],
+	"name" : "MCSnapshotResource",
+	"pools" : [
+		 ],
+	"super" : "TestResource",
+	"type" : "normal" }

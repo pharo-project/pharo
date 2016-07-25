@@ -1,0 +1,3 @@
+printing
+classInstanceVariablesString
+	^ self stringForVariablesOfType: #isClassInstanceVariable

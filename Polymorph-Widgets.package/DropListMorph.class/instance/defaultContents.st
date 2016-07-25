@@ -1,0 +1,4 @@
+private
+defaultContents
+	
+	^ defaultContents

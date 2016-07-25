@@ -1,0 +1,14 @@
+{
+	"category" : "SUnit-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "VTermTestRunner",
+	"pools" : [
+		 ],
+	"super" : "CommandLineTestRunner",
+	"type" : "normal" }

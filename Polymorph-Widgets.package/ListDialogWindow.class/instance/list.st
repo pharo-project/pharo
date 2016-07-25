@@ -1,0 +1,3 @@
+morphic protocol
+list
+	^ list

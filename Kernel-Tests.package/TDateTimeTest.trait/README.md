@@ -1,0 +1,1 @@
+I am a helper Trait for date tests. By providing methods to locally change the time zones I simplify date and time tests.

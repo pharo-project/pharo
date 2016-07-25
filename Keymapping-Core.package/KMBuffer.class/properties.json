@@ -1,0 +1,15 @@
+{
+	"category" : "Keymapping-Core",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"buffer",
+		"currentEvent" ],
+	"name" : "KMBuffer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

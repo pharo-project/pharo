@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Core-Parser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "RBPatternParser",
+	"pools" : [
+		 ],
+	"super" : "RBParser",
+	"type" : "normal" }

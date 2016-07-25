@@ -1,0 +1,14 @@
+{
+	"category" : "ConfigurationOfPharoMetacello",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LastVersionLoad" ],
+	"commentStamp" : "ChristopheDemarey 8/6/2015 18:11",
+	"instvars" : [
+		"project" ],
+	"name" : "ConfigurationOfPharoMetacello",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

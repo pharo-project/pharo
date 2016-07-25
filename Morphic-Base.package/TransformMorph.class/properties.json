@@ -1,0 +1,16 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "wiz 11/6/2005 15:59",
+	"instvars" : [
+		"transform",
+		"smoothing",
+		"localBounds" ],
+	"name" : "TransformMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"slotShift",
+		"modificationMap" ],
+	"name" : "AbstractModification",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

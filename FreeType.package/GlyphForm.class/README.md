@@ -1,0 +1,1 @@
+A specialized form for glyphs

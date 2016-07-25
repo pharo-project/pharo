@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "mir 5/12/2003 18:16",
+	"instvars" : [
+		"hostName" ],
+	"name" : "NameLookupFailure",
+	"pools" : [
+		 ],
+	"super" : "NetworkError",
+	"type" : "normal" }

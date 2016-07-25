@@ -1,0 +1,3 @@
+evaluating
+value
+	^ progressBar value

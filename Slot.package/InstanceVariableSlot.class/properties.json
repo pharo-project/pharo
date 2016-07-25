@@ -1,0 +1,14 @@
+{
+	"category" : "Slot-Variables",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 1/22/2015 17:43",
+	"instvars" : [
+		 ],
+	"name" : "InstanceVariableSlot",
+	"pools" : [
+		 ],
+	"super" : "IndexedSlot",
+	"type" : "normal" }

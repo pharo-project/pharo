@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"listHolder",
+		"selectionHolder",
+		"displayBlock",
+		"iconHolder" ],
+	"name" : "DropListModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

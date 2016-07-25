@@ -1,0 +1,21 @@
+{
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 11/29/2010 10:50",
+	"instvars" : [
+		"requestor",
+		"labels",
+		"choiceMenus",
+		"chooseBlock",
+		"maxLines",
+		"choicesMorph",
+		"scrollPaneWidth",
+		"baseColor" ],
+	"name" : "IdentifierChooserMorph",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

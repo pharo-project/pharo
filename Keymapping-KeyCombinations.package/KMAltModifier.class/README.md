@@ -1,0 +1,1 @@
+I represent the Alt key modifier. Look at my superclass for a more detailed explanaition.

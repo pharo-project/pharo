@@ -1,0 +1,18 @@
+{
+	"category" : "GT-Inspector-Examples-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"example",
+		"context",
+		"returnValue",
+		"expectedError",
+		"unexpectedError" ],
+	"name" : "GTExampleResult",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

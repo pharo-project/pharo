@@ -1,0 +1,1 @@
+Provides a filtered version of a diff, restricted to a package.

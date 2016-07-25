@@ -1,0 +1,3 @@
+private
+copyOldValuesToNewVariable
+	self subclassResponsibility

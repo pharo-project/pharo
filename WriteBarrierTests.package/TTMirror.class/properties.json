@@ -1,0 +1,14 @@
+{
+	"category" : "WriteBarrierTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBera 4/21/2016 14:14",
+	"instvars" : [
+		 ],
+	"name" : "TTMirror",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

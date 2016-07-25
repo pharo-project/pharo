@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"dest",
+		"endPoint",
+		"contourStartPt" ],
+	"name" : "AthensPathSegmentConverter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

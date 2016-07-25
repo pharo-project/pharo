@@ -1,0 +1,14 @@
+{
+	"category" : "Network-Tests-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 3/3/2015 14:03",
+	"instvars" : [
+		 ],
+	"name" : "TCPSocketEchoTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

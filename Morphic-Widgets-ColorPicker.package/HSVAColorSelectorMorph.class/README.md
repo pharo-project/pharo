@@ -1,0 +1,1 @@
+Colour selector featuring a saturation/volume area, hue selection strip and alpha selection strip.

@@ -1,0 +1,19 @@
+{
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stepsBrick",
+		"searchField",
+		"closeButton",
+		"spotterModel",
+		"settingsButton",
+		"helpButton" ],
+	"name" : "GTSpotterHeaderBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

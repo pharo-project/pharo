@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "OSWindowBench",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

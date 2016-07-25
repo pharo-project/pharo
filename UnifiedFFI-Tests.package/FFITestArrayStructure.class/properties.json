@@ -1,0 +1,15 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Byte10",
+		"Char5" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFITestArrayStructure",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalStructure",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTSpotterProfiler",
+	"pools" : [
+		 ],
+	"super" : "KMCategory",
+	"type" : "normal" }
