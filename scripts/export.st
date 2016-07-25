@@ -14,6 +14,7 @@ MCWorkingCopy allManagers
 
 [MCWorkingCopy allManagers
 		do: [ :manager | | version |
+			FileStream stdout nextPutAll: 'Exporting', manager packageName; cr.
 			manager repositoryGroup addRepository: pharoRepo.
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
 			MCFileTreeGitWriter
