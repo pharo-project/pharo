@@ -12,12 +12,11 @@ MCWorkingCopy allManagers
 	select: [ :m | m packageName beginsWith: 'Zodiac' ]
 	thenDo: [ :m | m repositoryGroup addRepository: zodiacRepo ].
 
-repo := (MCFileTreeGitRemoteRepository basicFromUrl: 'gitfiletree://github.com/guillep/pharo-core' asZnUrl)
-	setNoMetadata;
-	yourself.
-	
 [MCWorkingCopy allManagers
 		do: [ :manager | | version |
 			manager repositoryGroup addRepository: pharoRepo.
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
-			MCFileTreeGitWriter fileOut: version on: repo ] ] on: Warning do: #resume.
+			MCFileTreeGitWriter
+				fileOut: version
+				on: (MCDirectoryRepository new directory: 'pharo-core' asFileReference ensureCreateDirectory)
+				] ] on: Warning do: #resume.
