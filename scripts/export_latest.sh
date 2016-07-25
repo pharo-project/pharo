@@ -1,7 +1,9 @@
 #!/bin/sh
 
+$PWD=parent_path=$( cd "$(dirname "${BASH_SOURCE}")" ; pwd -P )
+
 wget --quiet -O - get.pharo.org/60+vm | bash
-./pharo Pharo.image --save pre_install_exporter.st
+./pharo Pharo.image --save ${PWD}/pre_install_exporter.st
 
 $VERSION=`./pharo Pharo.image eval SystemVersion current highestUpdate`
 git add *

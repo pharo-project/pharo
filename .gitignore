@@ -1,0 +1,12 @@
+*.image
+*.changes
+*.log
+
+pharo
+pharo-ui
+pharo-vm/
+
+pharo-local/
+epicea-sessions/
+github-cache/
+package-cache/
