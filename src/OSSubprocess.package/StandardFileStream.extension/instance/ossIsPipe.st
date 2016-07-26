@@ -1,3 +1,0 @@
-*OSSubprocess
-ossIsPipe
-	^ false

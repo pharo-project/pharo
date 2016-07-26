@@ -1,1 +1,0 @@
-I just avoid writing the metadata if my repository is without metadata.

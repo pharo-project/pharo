@@ -1,1 +1,0 @@
-This code is there to adapt the GUI to the FileTreeGitRepository.

@@ -1,14 +1,15 @@
 printing
 printOn: aStream
 
+	super printOn: aStream.
+
 	aStream 
-		nextPutAll: 'MorphMargin';
 		nextPutAll: ' top: ';
-		nextPutAll: top printString;
+		print: top;
 		nextPutAll: ' left: ';
-		nextPutAll: left printString;
+		print: left;
 		nextPutAll: ' bottom: ';
-		nextPutAll: bottom printString;
+		print: bottom;
 		nextPutAll: ' right: ';
-		nextPutAll: right printString. 
+		print: right. 
 	

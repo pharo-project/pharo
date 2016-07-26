@@ -1,3 +1,0 @@
-terminating
-kill
-	^ self sigkill

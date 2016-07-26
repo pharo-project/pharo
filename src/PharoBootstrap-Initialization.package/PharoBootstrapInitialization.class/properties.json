@@ -1,0 +1,14 @@
+{
+	"category" : "PharoBootstrap-Initialization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 2/13/2016 14:50",
+	"instvars" : [
+		 ],
+	"name" : "PharoBootstrapInitialization",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

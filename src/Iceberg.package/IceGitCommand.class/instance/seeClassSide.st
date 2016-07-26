@@ -1,2 +1,0 @@
-see class side
-seeClassSide

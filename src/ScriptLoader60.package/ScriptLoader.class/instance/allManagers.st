@@ -1,4 +1,0 @@
-accessing
-allManagers
-
-	^ MCWorkingCopy allManagers

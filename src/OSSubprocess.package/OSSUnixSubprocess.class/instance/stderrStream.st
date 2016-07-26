@@ -1,3 +1,0 @@
-streams
-stderrStream
-	^ stderrStream

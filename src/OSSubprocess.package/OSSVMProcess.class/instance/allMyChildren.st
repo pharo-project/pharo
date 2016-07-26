@@ -1,4 +1,0 @@
-childs management
-allMyChildren
-
-	^ childProcessList

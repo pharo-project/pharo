@@ -1,1 +1,0 @@
-Configuration class for Versionner.

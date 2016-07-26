@@ -1,0 +1,3 @@
+accessing
+currentActivated
+	^ currentActivated value

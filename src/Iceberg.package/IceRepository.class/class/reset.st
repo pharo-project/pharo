@@ -1,3 +1,0 @@
-registry
-reset
-	Registry := nil

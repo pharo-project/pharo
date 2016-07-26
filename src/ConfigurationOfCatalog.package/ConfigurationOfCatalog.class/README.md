@@ -1,1 +1,0 @@
-A configuration for Catalog browser

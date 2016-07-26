@@ -1,3 +1,0 @@
-helpers
-getStreamsInfoForRunningTest
-	^ self numberOfOpenFiles 

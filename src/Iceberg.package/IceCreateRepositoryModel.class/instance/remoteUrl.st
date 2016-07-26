@@ -1,3 +1,0 @@
-accessing
-remoteUrl
-	^ remoteUrl

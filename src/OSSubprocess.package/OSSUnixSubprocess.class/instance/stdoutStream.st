@@ -1,3 +1,0 @@
-streams
-stdoutStream
-	^ stdoutStream

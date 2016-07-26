@@ -1,0 +1,16 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 7/18/2016 17:33",
+	"instvars" : [
+		"buttons",
+		"canDeselectByClick",
+		"currentActivated" ],
+	"name" : "RadioButtonGroupModel",
+	"pools" : [
+		 ],
+	"super" : "DynamicComposableModel",
+	"type" : "normal" }

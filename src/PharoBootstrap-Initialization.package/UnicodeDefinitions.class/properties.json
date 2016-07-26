@@ -1,0 +1,14 @@
+{
+	"category" : "PharoBootstrap-Initialization",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 1/5/2016 20:31",
+	"instvars" : [
+		 ],
+	"name" : "UnicodeDefinitions",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

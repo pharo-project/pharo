@@ -1,4 +1,0 @@
-properties
-rootConfNamesForLookup
-
-	^ #(BaselineOfRenraku BaselineOfQualityAssistant)

@@ -1,3 +1,0 @@
-private
-addClassAndMethodDefinitionsFromDirectory: aDirectory
-	self shouldNotImplement

@@ -6,8 +6,7 @@
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"arguments",
-		"selector" ],
+		 ],
 	"name" : "SpecLayoutSend",
 	"pools" : [
 		 ],

@@ -1,4 +1,0 @@
-extracting
-extractAndStoreHeadersInformation
-	"Read the comment of FFICHeaderExtractor >> extractAndStoreHeadersInformation"
-	self cHeaderExtractor extractAndStoreHeadersInformation.

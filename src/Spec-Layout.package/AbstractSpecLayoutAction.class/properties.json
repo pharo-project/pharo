@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		 ],
+		"arguments",
+		"selector" ],
 	"name" : "AbstractSpecLayoutAction",
 	"pools" : [
 		 ],

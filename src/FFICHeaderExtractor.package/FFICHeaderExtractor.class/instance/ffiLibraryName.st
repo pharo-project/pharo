@@ -1,3 +1,0 @@
-primitives
-ffiLibraryName 
-	^ LibC 

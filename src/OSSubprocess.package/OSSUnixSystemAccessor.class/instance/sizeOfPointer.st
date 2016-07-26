@@ -1,6 +1,0 @@
-sizeof
-sizeOfPointer
-	
-	^ FFIExternalType pointerSize
-	
-

@@ -1,3 +1,0 @@
-accessing
-catalogDescription
-	^ 'Smalltalk Object Notation (STON) is a lightweight, text-based, human-readable data interchange format for class-based object-oriented languages like Smalltalk. It can be used to serialize domain level objects, either for persistency or network transport. As its name suggests, it is based on JSON (Javascript Object Notation). It adds symbols as a primitive value, class tags for object values and references.'

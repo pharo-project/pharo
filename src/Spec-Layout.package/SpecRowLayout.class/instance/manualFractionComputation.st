@@ -1,11 +1,9 @@
 private
 manualFractionComputation
 	| delta |
-	
-	numberOfProportionals isZero
-		ifTrue: [ delta := 0 ]
-		ifFalse: [ delta := 1 / numberOfProportionals ].
-		
+	delta := numberOfProportionals isZero
+		ifTrue: [ 0 ]
+		ifFalse: [ 1 / numberOfProportionals ].
 	self commands
 		doWithIndex: [ :e :idx | 
 			e layoutFrame hasNoOffsets

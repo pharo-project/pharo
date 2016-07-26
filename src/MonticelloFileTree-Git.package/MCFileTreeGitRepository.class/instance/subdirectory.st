@@ -1,3 +1,0 @@
-accessing-repository
-subdirectory
-	^ subdirectory

@@ -1,3 +1,0 @@
-accessing
-shortCommitID
-	^ shortCommitID

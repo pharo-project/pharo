@@ -1,6 +1,5 @@
 actions
 acceptBasic
-	"should be refactored with accept that comes from PluugableTextMorphPlus "
 	"Inform the model of text to be accepted, and return true if OK."
 
 	| ok saveSelection saveScrollerOffset |

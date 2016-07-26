@@ -1,0 +1,17 @@
+{
+	"category" : "Spec-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"radioGroupModel",
+		"radio1",
+		"radio2",
+		"window" ],
+	"name" : "RadioButtonGroupModelTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
