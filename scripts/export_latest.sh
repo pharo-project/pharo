@@ -13,15 +13,15 @@ echo "INSTALL GIT FILETREE SUPPORT"
 ./pharo Pharo.image --save --quit ${PWD}/pre_install_exporter.st
 
 echo "EXPORTING SOURCE CODE"
-git mv src/BaselineOfPharoBootstrap .
+git mv src/BaselineOfPharoBootstrap* .
 rm -rf src
-git mv BaselineOfPharoBootstrap src
+git mv BaselineOfPharoBootstrap* src
 ./pharo Pharo.image --save --quit ${PWD}/export.st
 
 echo "GIT COMMIT, TAG, AND PUSH"
 git add src
 git add -u
 git commit -m "EXPORT VERSION ${VERSION}"
-git tag -a v${VERSION} -m "TAG VERSION v${VERSION}"
+git tag -fa v${VERSION} -m "TAG VERSION v${VERSION}"
 git push git@github.com:guillep/pharo-core.git
 git push --tags git@github.com:guillep/pharo-core.git
