@@ -1,6 +1,7 @@
 #!/bin/sh
 
 PWD="$( dirname $(readlink -f $0) )"
+git checkout master
 
 echo "GET LATEST PHARO"
 wget --quiet -O - get.pharo.org/60+vm | bash
@@ -16,7 +17,6 @@ rm -rf src
 ./pharo Pharo.image --save --quit ${PWD}/export.st
 
 echo "GIT COMMIT, TAG, AND PUSH"
-git checkout master
 git add src
 git add -u
 git commit -m "EXPORT VERSION ${VERSION}"
