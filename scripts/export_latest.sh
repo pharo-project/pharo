@@ -21,4 +21,4 @@ git add src
 git add -u
 git commit -m "EXPORT VERSION ${VERSION}"
 git tag -a v${VERSION} -m "TAG VERSION v${VERSION}"
-git push --force --tags git@github.com:guillep/pharo-core.git
+git push --follow-tags
