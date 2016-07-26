@@ -17,11 +17,12 @@ versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 [versions do: [ :versionName | | packageName manager |
 	packageName := $- join: (versionName substrings: '-') allButLast.
 	manager := MCWorkingCopy hasPackageNamed: packageName.
-	FileStream stdout nextPutAll: 'Exporting ', packageName; cr.
-
-	manager repositoryGroup addRepository: pharoRepo.
-	version := manager repositoryGroup versionWithInfo: manager ancestors first.
-	MCFileTreeGitWriter
-		fileOut: version
-		on: (MCFileTreeRepository new directory: 'pharo-core' asFileReference ensureCreateDirectory)
-		] ] on: Warning do: #resume.
+	manager == false
+		ifTrue: [ FileStream stdout nextPutAll: 'Package with no working copy: ', packageName; cr. ]
+		ifFalse: [
+			FileStream stdout nextPutAll: 'Exporting ', packageName; cr. ]
+			manager repositoryGroup addRepository: pharoRepo.
+			version := manager repositoryGroup versionWithInfo: manager ancestors first.
+			MCFileTreeGitWriter
+				fileOut: version
+				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] on: Warning do: #resume.
