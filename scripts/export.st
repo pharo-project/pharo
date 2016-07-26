@@ -12,12 +12,16 @@ MCWorkingCopy allManagers
 	select: [ :m | m packageName beginsWith: 'Zodiac' ]
 	thenDo: [ :m | m repositoryGroup addRepository: zodiacRepo ].
 
-[(MCWorkingCopy allManagers sorted: [ :m1 :m2 | m1 packageName < m2 packageName ])
-	do: [ :manager | | version |
-		FileStream stdout nextPutAll: 'Exporting ', manager packageName; cr.
-		manager repositoryGroup addRepository: pharoRepo.
-		version := manager repositoryGroup versionWithInfo: manager ancestors first.
-		MCFileTreeGitWriter
-			fileOut: version
-			on: (MCFileTreeRepository new directory: 'pharo-core' asFileReference ensureCreateDirectory)
-			] ] on: Warning do: #resume.
+versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
+versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
+[versions do: [ :versionName | | packageName manager |
+	packageName := $- join: (versionName substrings: '-') allButLast.
+	manager := MCWorkingCopy hasPackageNamed: packageName.
+	FileStream stdout nextPutAll: 'Exporting ', packageName; cr.
+
+	manager repositoryGroup addRepository: pharoRepo.
+	version := manager repositoryGroup versionWithInfo: manager ancestors first.
+	MCFileTreeGitWriter
+		fileOut: version
+		on: (MCFileTreeRepository new directory: 'pharo-core' asFileReference ensureCreateDirectory)
+		] ] on: Warning do: #resume.
