@@ -13,7 +13,9 @@ echo "INSTALL GIT FILETREE SUPPORT"
 ./pharo Pharo.image --save --quit ${PWD}/pre_install_exporter.st
 
 echo "EXPORTING SOURCE CODE"
+git mv src/BaselineOfPharoBootstrap .
 rm -rf src
+git mv BaselineOfPharoBootstrap src
 ./pharo Pharo.image --save --quit ${PWD}/export.st
 
 echo "GIT COMMIT, TAG, AND PUSH"
