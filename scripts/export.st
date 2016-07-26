@@ -25,7 +25,7 @@ MCFileTreeGitWriter
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
 versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 [versions do: [ :versionName | | packageName manager |
-	packageName := $- join: (versionName substrings: '-') allButLast.
+	packageName := ($- join: (versionName substrings: '-') allButLast) copyUpTo: $..
 	manager := MCWorkingCopy hasPackageNamed: packageName.
 	manager == false
 		ifTrue: [ FileStream stdout nextPutAll: 'Package with no working copy: ', packageName; cr. ]
