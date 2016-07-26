@@ -20,9 +20,9 @@ versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 	manager == false
 		ifTrue: [ FileStream stdout nextPutAll: 'Package with no working copy: ', packageName; cr. ]
 		ifFalse: [
-			FileStream stdout nextPutAll: 'Exporting ', packageName; cr. ]
+			FileStream stdout nextPutAll: 'Exporting ', packageName; cr.
 			manager repositoryGroup addRepository: pharoRepo.
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
 			MCFileTreeGitWriter
 				fileOut: version
-				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] on: Warning do: #resume.
+				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] ] on: Warning do: #resume.
