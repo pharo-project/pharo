@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:27",
+	"instvars" : [
+		 ],
+	"name" : "WeakValueDictionaryTest",
+	"pools" : [
+		 ],
+	"super" : "DictionaryTest",
+	"type" : "normal" }

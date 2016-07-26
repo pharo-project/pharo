@@ -1,0 +1,14 @@
+{
+	"category" : "HelpSystem-Core-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 21:17",
+	"instvars" : [
+		 ],
+	"name" : "HelpHowToHelpTopicsFromCode",
+	"pools" : [
+		 ],
+	"super" : "HelpHowToHelpTopics",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Inspector-Examples-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"providerName",
+		"arguments" ],
+	"name" : "GTExampleProviderMethod",
+	"pools" : [
+		 ],
+	"super" : "GTExampleMethod",
+	"type" : "normal" }

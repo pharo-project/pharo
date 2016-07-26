@@ -1,0 +1,18 @@
+{
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"iconBrick",
+		"labelBrick",
+		"stepModel",
+		"candidateLink",
+		"actionbarBrick" ],
+	"name" : "GTSpotterItemBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMInteractableBrick",
+	"type" : "normal" }

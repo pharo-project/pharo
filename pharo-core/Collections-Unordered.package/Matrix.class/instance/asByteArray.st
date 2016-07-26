@@ -1,0 +1,3 @@
+converting
+asByteArray
+	^ contents asByteArray

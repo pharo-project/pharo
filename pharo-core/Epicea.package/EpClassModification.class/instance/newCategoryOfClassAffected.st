@@ -1,0 +1,4 @@
+accessing
+newCategoryOfClassAffected
+
+	^ newClass category 

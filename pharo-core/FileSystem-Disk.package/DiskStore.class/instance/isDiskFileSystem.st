@@ -1,0 +1,3 @@
+testing
+isDiskFileSystem
+	^ true

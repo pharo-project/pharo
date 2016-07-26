@@ -1,0 +1,4 @@
+converting
+asWideString 
+
+	^ self.

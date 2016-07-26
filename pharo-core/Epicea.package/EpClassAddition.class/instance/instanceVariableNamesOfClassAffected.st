@@ -1,0 +1,4 @@
+accessing
+instanceVariableNamesOfClassAffected
+
+	^ class instVarNames 

@@ -1,0 +1,3 @@
+statistics
+numberOfSubscriptions
+	^ registry numberOfSubscriptions

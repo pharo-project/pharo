@@ -1,0 +1,15 @@
+{
+	"category" : "EmbeddedFreeType",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 8/23/2014 15:01",
+	"instvars" : [
+		"embeddedFileInfoCache",
+		"provider" ],
+	"name" : "EmbeddedFreeTypeFontInstaller",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

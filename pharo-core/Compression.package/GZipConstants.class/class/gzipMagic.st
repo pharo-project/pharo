@@ -1,0 +1,3 @@
+pool initialization
+gzipMagic
+	^GZipMagic

@@ -1,0 +1,4 @@
+*metacello-mc
+resolveToLoadableSpec
+
+	^self

@@ -1,0 +1,14 @@
+{
+	"category" : "HelpSystem-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tbn 4/30/2010 15:35",
+	"instvars" : [
+		 ],
+	"name" : "SystemReference",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

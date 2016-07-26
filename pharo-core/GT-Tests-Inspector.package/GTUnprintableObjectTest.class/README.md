@@ -1,0 +1,1 @@
+GTUnprintableObjectTest is a test that checks that print string does not trigger an error in the inspector.

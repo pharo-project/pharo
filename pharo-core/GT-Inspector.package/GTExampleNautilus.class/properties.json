@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector-Examples-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTExampleNautilus",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

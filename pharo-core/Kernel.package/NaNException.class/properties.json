@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SvenVanCaekenberghe 4/15/2011 16:41",
+	"instvars" : [
+		 ],
+	"name" : "NaNException",
+	"pools" : [
+		 ],
+	"super" : "ArithmeticError",
+	"type" : "normal" }

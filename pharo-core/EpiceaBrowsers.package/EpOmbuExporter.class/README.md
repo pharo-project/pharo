@@ -1,0 +1,1 @@
+I know how to export Epicea entries from one log to a new one.

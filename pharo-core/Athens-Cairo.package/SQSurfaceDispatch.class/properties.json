@@ -1,0 +1,17 @@
+{
+	"category" : "Athens-Cairo",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 12/30/2011 12:35",
+	"instvars" : [
+		"getSurfaceFormatFn",
+		"lookSurfaceFn",
+		"showSurfaceFn",
+		"unlockSurfaceFn" ],
+	"name" : "SQSurfaceDispatch",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalStructure",
+	"type" : "normal" }

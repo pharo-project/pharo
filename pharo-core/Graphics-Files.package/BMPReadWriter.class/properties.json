@@ -1,0 +1,27 @@
+{
+	"category" : "Graphics-Files",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 5/4/2011 21:27",
+	"instvars" : [
+		"bfType",
+		"bfSize",
+		"bfOffBits",
+		"biSize",
+		"biWidth",
+		"biHeight",
+		"biPlanes",
+		"biBitCount",
+		"biCompression",
+		"biSizeImage",
+		"biXPelsPerMeter",
+		"biYPelsPerMeter",
+		"biClrUsed",
+		"biClrImportant" ],
+	"name" : "BMPReadWriter",
+	"pools" : [
+		 ],
+	"super" : "ImageReadWriter",
+	"type" : "normal" }

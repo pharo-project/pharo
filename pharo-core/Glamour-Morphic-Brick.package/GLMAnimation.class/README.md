@@ -1,0 +1,1 @@
+A GLMAnimation class is a basic animation class that works in background thread and performs brick transformation in UI thread

@@ -1,0 +1,3 @@
+accessing
+configurationName
+	^ 'ConfigurationOf', name

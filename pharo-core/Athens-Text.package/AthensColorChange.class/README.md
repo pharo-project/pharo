@@ -1,0 +1,1 @@
+A command to change the current font color

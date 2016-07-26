@@ -1,0 +1,3 @@
+*FileSystem-Memory
+isMemoryFileSystem
+	^ false

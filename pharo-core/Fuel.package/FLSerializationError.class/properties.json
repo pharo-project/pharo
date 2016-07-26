@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FLSerializationError",
+	"pools" : [
+		 ],
+	"super" : "FLError",
+	"type" : "normal" }

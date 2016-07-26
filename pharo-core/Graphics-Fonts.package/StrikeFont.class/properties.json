@@ -1,0 +1,32 @@
+{
+	"category" : "Graphics-Fonts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"characterToGlyphMap",
+		"xTable",
+		"glyphs",
+		"name",
+		"type",
+		"minAscii",
+		"maxAscii",
+		"maxWidth",
+		"strikeLength",
+		"ascent",
+		"descent",
+		"xOffset",
+		"raster",
+		"subscript",
+		"superscript",
+		"emphasis",
+		"derivativeFonts",
+		"pointSize",
+		"fallbackFont" ],
+	"name" : "StrikeFont",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "AbstractFont",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+forSmalltalk
+	highlightSmalltalk := true

@@ -1,0 +1,3 @@
+custom points
+commentStampSelector
+	^ commentStampSelector

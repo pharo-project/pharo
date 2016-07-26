@@ -1,0 +1,3 @@
+testing
+isAbsolute
+	^ path isAbsolute

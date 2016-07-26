@@ -1,0 +1,3 @@
+requirements
+elementInCollectionOfFloat
+	^ collectionOfFloat anyOne.

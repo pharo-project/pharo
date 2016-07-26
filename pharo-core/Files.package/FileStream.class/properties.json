@@ -1,0 +1,18 @@
+{
+	"category" : "Files-Deprecated",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Stderr",
+		"Stdin",
+		"StdioFiles",
+		"Stdout",
+		"TheStdioHandles" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"rwmode" ],
+	"name" : "FileStream",
+	"pools" : [
+		 ],
+	"super" : "ReadWriteStream",
+	"type" : "normal" }

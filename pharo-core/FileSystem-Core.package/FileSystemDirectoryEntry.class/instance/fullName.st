@@ -1,0 +1,3 @@
+delegate
+fullName
+	^ reference fullName

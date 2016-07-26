@@ -1,0 +1,19 @@
+{
+	"category" : "Balloon-Simulation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"index",
+		"minX",
+		"maxX",
+		"yValue",
+		"source",
+		"destForm" ],
+	"name" : "BalloonFillData",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

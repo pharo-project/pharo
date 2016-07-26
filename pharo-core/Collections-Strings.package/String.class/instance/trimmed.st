@@ -1,0 +1,3 @@
+copying
+trimmed
+	^ self trimBoth

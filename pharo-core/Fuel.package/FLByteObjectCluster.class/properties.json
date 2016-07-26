@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/1/2011 02:59",
+	"instvars" : [
+		 ],
+	"name" : "FLByteObjectCluster",
+	"pools" : [
+		 ],
+	"super" : "FLBitsObjectCluster",
+	"type" : "normal" }

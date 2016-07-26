@@ -1,0 +1,3 @@
+code generation
+sizeCodeForValue: encoder
+	self subclassResponsibility

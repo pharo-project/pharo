@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Cairo",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"canvas" ],
+	"name" : "AthensCairoPaintMode",
+	"pools" : [
+		"AthensCairoDefs" ],
+	"super" : "AthensPaintMode",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

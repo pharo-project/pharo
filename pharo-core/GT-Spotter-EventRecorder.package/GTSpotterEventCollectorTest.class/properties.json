@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-EventRecorder-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"collector" ],
+	"name" : "GTSpotterEventCollectorTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

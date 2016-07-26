@@ -1,0 +1,4 @@
+api
+title
+
+	^ 'Remotes manager'

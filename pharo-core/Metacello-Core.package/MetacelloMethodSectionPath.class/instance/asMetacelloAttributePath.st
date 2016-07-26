@@ -1,0 +1,3 @@
+conversion
+asMetacelloAttributePath
+    ^ self

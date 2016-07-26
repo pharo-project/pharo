@@ -1,0 +1,24 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"action",
+		"title",
+		"keymap",
+		"position",
+		"category",
+		"icon",
+		"condition",
+		"enabledCondition",
+		"separatorAfter",
+		"separatorBefore",
+		"shouldShowTitle" ],
+	"name" : "GLMAction",
+	"pools" : [
+		 ],
+	"super" : "GLMLoggedObject",
+	"type" : "normal" }

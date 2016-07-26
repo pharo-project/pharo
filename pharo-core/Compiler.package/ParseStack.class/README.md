@@ -1,0 +1,1 @@
+I keep track of the current and high position of the stack that will be needed by code being compiled.

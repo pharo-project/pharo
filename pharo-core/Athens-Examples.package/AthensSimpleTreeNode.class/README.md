@@ -1,0 +1,1 @@
+A node in an AthensTreeView

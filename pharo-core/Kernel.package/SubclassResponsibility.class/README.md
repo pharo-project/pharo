@@ -1,0 +1,1 @@
+I am SubclassResponsibility, an exception signaled when an inherited method should have been implemented in a subclass but was not.

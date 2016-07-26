@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Browsers-Other",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GLMWrapper",
+	"pools" : [
+		 ],
+	"super" : "GLMImplicitBrowser",
+	"type" : "normal" }

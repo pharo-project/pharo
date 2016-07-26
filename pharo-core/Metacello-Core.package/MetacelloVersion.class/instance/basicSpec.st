@@ -1,0 +1,3 @@
+accessing
+basicSpec
+    ^ self spec

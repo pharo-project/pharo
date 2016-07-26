@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"StartDay" ],
+	"commentStamp" : "brp 5/13/2003 09:48",
+	"instvars" : [
+		 ],
+	"name" : "Week",
+	"pools" : [
+		"ChronologyConstants" ],
+	"super" : "Timespan",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "FFI-Kernel",
+	"classinstvars" : [
+		"wordSize" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ExternalAddress",
+	"pools" : [
+		 ],
+	"super" : "ByteArray",
+	"type" : "bytes" }

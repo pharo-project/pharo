@@ -1,0 +1,15 @@
+{
+	"category" : "Keymapping-Pragmas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"shortcutName",
+		"platform" ],
+	"name" : "KMKeymapBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+printing
+descriptionString
+	
+	^ store descriptionString

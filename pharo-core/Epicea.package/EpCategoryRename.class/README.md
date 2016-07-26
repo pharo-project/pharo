@@ -1,0 +1,1 @@
+I represent the rename of a category in a package.

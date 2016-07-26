@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"oldPage" ],
+	"name" : "LazyTabPageChanged",
+	"pools" : [
+		 ],
+	"super" : "LazyTabPageAnnouncement",
+	"type" : "normal" }

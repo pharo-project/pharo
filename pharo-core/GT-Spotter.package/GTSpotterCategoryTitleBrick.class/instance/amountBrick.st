@@ -1,0 +1,4 @@
+accessing
+amountBrick
+
+	^ amountBrick

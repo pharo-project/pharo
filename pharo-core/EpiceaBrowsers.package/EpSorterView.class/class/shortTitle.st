@@ -1,0 +1,4 @@
+accessing
+shortTitle
+
+	^ 'Session Sorter'

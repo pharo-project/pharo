@@ -1,0 +1,16 @@
+{
+	"category" : "Graphics-Canvas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"canvases",
+		"extent",
+		"depth" ],
+	"name" : "MultiCanvas",
+	"pools" : [
+		 ],
+	"super" : "PluggableCanvas",
+	"type" : "normal" }

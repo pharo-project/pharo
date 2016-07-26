@@ -1,0 +1,3 @@
+accessing
+presentations: aCompositePresentation
+	self transmissionStrategy presentations: aCompositePresentation

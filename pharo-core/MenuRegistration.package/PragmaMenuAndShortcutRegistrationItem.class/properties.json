@@ -1,0 +1,35 @@
+{
+	"category" : "MenuRegistration-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"item",
+		"action",
+		"parent",
+		"order",
+		"enabledBlock",
+		"label",
+		"help",
+		"icon",
+		"selector",
+		"arguments",
+		"withSeparatorAfter",
+		"target",
+		"enabled",
+		"group",
+		"with",
+		"precondition",
+		"shortcut",
+		"platform",
+		"default",
+		"category",
+		"shortcutName",
+		"keyText" ],
+	"name" : "PragmaMenuAndShortcutRegistrationItem",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

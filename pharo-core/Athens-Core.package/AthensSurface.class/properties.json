@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"currentCanvas" ],
+	"name" : "AthensSurface",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

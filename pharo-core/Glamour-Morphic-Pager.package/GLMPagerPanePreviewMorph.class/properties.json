@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Pager-Morphic",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 5/27/2014 19:59",
+	"instvars" : [
+		"thumbnail",
+		"position" ],
+	"name" : "GLMPagerPanePreviewMorph",
+	"pools" : [
+		 ],
+	"super" : "ImageMorph",
+	"type" : "normal" }

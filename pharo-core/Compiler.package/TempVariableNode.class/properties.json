@@ -1,0 +1,21 @@
+{
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"argType",
+		"hasRefs",
+		"hasDefs",
+		"scope",
+		"definingScope",
+		"readingScopes",
+		"writingScopes",
+		"remoteNode" ],
+	"name" : "TempVariableNode",
+	"pools" : [
+		 ],
+	"super" : "VariableNode",
+	"type" : "normal" }

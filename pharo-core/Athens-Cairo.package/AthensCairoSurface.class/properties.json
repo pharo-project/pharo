@@ -1,0 +1,23 @@
+{
+	"category" : "Athens-Cairo",
+	"classinstvars" : [
+		"session",
+		"dispatch",
+		"dispatchStruct" ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 4/29/2014 17:05",
+	"instvars" : [
+		"handle",
+		"context",
+		"builder",
+		"id",
+		"ftFontRenderer",
+		"session" ],
+	"name" : "AthensCairoSurface",
+	"pools" : [
+		"AthensCairoDefs" ],
+	"super" : "AthensSurface",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

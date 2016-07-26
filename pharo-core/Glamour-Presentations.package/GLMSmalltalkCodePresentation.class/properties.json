@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/3/2014 18:37",
+	"instvars" : [
+		"highlightSmalltalkContext",
+		"variableBindingsBlock",
+		"isForScripting" ],
+	"name" : "GLMSmalltalkCodePresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMTextualPresentation",
+	"type" : "normal" }

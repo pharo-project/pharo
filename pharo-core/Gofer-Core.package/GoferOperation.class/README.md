@@ -1,0 +1,1 @@
+Common superclass of Gofer operations

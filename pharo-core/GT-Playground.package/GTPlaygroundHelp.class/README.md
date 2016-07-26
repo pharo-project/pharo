@@ -1,0 +1,1 @@
+A utility class containing the help for the GT Playground.

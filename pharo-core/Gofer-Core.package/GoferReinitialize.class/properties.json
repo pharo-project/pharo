@@ -1,0 +1,14 @@
+{
+	"category" : "Gofer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 2/23/2011 20:22",
+	"instvars" : [
+		 ],
+	"name" : "GoferReinitialize",
+	"pools" : [
+		 ],
+	"super" : "GoferWorking",
+	"type" : "normal" }

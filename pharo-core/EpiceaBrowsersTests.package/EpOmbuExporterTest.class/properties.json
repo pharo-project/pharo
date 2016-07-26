@@ -1,0 +1,16 @@
+{
+	"category" : "EpiceaBrowsersTests-Exporter",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"outputLog",
+		"inputLog1",
+		"inputLog2" ],
+	"name" : "EpOmbuExporterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

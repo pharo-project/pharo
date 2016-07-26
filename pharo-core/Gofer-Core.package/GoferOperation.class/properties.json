@@ -1,0 +1,15 @@
+{
+	"category" : "Gofer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 09:30",
+	"instvars" : [
+		"gofer",
+		"model" ],
+	"name" : "GoferOperation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

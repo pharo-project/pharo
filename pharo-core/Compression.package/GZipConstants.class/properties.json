@@ -1,0 +1,22 @@
+{
+	"category" : "Compression-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"GZipAsciiFlag",
+		"GZipCommentFlag",
+		"GZipContinueFlag",
+		"GZipDeflated",
+		"GZipEncryptFlag",
+		"GZipExtraField",
+		"GZipMagic",
+		"GZipNameFlag",
+		"GZipReservedFlags" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GZipConstants",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

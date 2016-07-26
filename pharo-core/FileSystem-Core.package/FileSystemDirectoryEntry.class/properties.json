@@ -1,0 +1,20 @@
+{
+	"category" : "FileSystem-Core-Public",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cwp 11/18/2009 11:09",
+	"instvars" : [
+		"reference",
+		"creation",
+		"modification",
+		"isDirectory",
+		"isSymlink",
+		"size",
+		"posixPermissions" ],
+	"name" : "FileSystemDirectoryEntry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

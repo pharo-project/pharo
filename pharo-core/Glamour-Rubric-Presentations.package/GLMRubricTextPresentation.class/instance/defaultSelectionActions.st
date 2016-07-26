@@ -1,0 +1,5 @@
+accessing
+defaultSelectionActions
+
+	^ self executionSelectionActions
+	

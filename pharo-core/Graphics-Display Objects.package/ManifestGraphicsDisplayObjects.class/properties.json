@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestGraphicsDisplayObjects",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

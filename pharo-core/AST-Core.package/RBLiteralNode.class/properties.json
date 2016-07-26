@@ -1,0 +1,15 @@
+{
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"start",
+		"stop" ],
+	"name" : "RBLiteralNode",
+	"pools" : [
+		 ],
+	"super" : "RBValueNode",
+	"type" : "normal" }

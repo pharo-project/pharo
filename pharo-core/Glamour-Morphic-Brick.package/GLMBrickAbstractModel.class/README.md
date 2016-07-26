@@ -1,0 +1,1 @@
+A GLMBrickAbstractAdaptor is an interface for all adaptors to be used with brick lazy widgets

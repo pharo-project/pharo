@@ -1,0 +1,3 @@
+accessing
+newLinesAfterTemporaries
+	^ DefaultPrettyPrintContext newLinesAfterTemporaries

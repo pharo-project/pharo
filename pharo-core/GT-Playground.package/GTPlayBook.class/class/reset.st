@@ -1,0 +1,4 @@
+private
+reset
+	
+	instance := nil

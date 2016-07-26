@@ -1,0 +1,4 @@
+closure support
+asContext
+
+	^ self

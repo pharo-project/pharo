@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "BasicBehaviorClassMetaclassTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

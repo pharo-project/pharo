@@ -1,0 +1,4 @@
+actions
+executeAction
+
+	self serializeStack

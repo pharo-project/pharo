@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [
+		"enabled" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 5/24/2016 17:14",
+	"instvars" : [
+		 ],
+	"name" : "TestInheritableVariable",
+	"pools" : [
+		 ],
+	"super" : "ProcessLocalVariable",
+	"type" : "normal" }

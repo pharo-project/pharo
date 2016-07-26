@@ -1,0 +1,17 @@
+{
+	"category" : "Athens-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"surface",
+		"circle",
+		"frame",
+		"spike" ],
+	"name" : "AthensFlakeDemo",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

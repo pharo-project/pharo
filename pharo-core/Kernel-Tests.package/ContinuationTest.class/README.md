@@ -1,0 +1,1 @@
+I represent intentend to provide complete coverage for the Continuation class.

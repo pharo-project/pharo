@@ -1,0 +1,1 @@
+The abstract strategy that deals with setting of presentations on the pane of the destination port.

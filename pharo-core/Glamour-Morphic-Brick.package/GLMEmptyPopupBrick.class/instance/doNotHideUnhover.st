@@ -1,0 +1,4 @@
+actions
+doNotHideUnhover
+
+	isHideUnhover := false

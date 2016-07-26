@@ -1,0 +1,17 @@
+{
+	"category" : "Kernel-Tests-Pragmas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:42",
+	"instvars" : [
+		"atPragma",
+		"anotherAtPragma",
+		"yetAnotherAtPragma",
+		"atPutPragma" ],
+	"name" : "PragmaTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

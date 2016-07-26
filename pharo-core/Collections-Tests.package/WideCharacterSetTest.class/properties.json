@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "nice 11/19/2007 22:45",
+	"instvars" : [
+		 ],
+	"name" : "WideCharacterSetTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

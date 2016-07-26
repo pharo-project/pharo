@@ -1,0 +1,1 @@
+Sunit tests for metaclasses

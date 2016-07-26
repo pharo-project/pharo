@@ -1,0 +1,3 @@
+tests
+testReturn1plus2
+	self checkCorrectDecompilation: #exampleReturn1plus2

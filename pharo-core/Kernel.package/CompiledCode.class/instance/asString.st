@@ -1,0 +1,4 @@
+printing
+asString
+
+	  ^self sourceCode

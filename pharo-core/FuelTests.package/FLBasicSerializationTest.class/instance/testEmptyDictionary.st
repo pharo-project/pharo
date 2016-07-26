@@ -1,0 +1,4 @@
+tests-collections
+testEmptyDictionary
+
+	self assertSerializationEqualityOf: Dictionary new

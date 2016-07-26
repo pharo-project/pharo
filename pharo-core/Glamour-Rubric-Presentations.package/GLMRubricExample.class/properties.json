@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Rubric-Presentations-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMRubricExample",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

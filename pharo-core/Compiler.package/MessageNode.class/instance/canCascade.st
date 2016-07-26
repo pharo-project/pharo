@@ -1,0 +1,4 @@
+testing
+canCascade
+
+	^receiver ~~ NodeSuper

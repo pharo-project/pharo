@@ -1,0 +1,1 @@
+I represent an error produced during materialization when a serialized global name doesn't exist (at Smalltalk globals).

@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Debugger-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RogerStebler 3/15/2016 14:07",
+	"instvars" : [
+		"debugger",
+		"newContext" ],
+	"name" : "GTGenericStackDebuggerSelectionChanged",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

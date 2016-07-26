@@ -1,0 +1,28 @@
+{
+	"category" : "GT-Inspector-Examples-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 9/6/2015 11:03",
+	"instvars" : [
+		"source",
+		"provider",
+		"finder",
+		"pragma",
+		"label",
+		"description",
+		"form",
+		"exceptions",
+		"subjects",
+		"parents",
+		"children",
+		"result",
+		"properties",
+		"after",
+		"afterFinish" ],
+	"name" : "GTExample",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

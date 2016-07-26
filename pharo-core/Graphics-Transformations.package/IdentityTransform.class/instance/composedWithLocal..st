@@ -1,0 +1,3 @@
+composing
+composedWithLocal: aTransformation
+	^aTransformation

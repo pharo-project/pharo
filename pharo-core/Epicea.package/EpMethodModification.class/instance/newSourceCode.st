@@ -1,0 +1,4 @@
+accessing
+newSourceCode
+
+	^ newMethod sourceCode

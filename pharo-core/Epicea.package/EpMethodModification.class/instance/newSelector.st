@@ -1,0 +1,4 @@
+accessing
+newSelector
+
+	^ newMethod selector

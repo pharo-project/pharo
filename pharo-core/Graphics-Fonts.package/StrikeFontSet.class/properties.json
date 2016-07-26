@@ -1,0 +1,17 @@
+{
+	"category" : "Graphics-Fonts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/31/2011 21:07",
+	"instvars" : [
+		"fontArray",
+		"emphasis",
+		"derivativeFonts",
+		"name" ],
+	"name" : "StrikeFontSet",
+	"pools" : [
+		"TextConstants" ],
+	"super" : "AbstractFont",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+initialization
+isCollection
+
+	^true

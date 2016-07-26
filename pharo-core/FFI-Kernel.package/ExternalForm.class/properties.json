@@ -1,0 +1,14 @@
+{
+	"category" : "FFI-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "jcg 1/29/2010 01:00",
+	"instvars" : [
+		"pointer" ],
+	"name" : "ExternalForm",
+	"pools" : [
+		 ],
+	"super" : "Form",
+	"type" : "normal" }

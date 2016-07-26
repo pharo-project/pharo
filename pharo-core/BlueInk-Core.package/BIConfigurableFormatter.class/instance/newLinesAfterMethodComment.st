@@ -1,0 +1,3 @@
+accessing
+newLinesAfterMethodComment
+	^ context newLinesAfterMethodComment

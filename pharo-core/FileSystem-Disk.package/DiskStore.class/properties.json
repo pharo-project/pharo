@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Disk",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CurrentFS",
+		"Primitives" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"maxFileNameLength" ],
+	"name" : "DiskStore",
+	"pools" : [
+		 ],
+	"super" : "FileSystemStore",
+	"type" : "normal" }

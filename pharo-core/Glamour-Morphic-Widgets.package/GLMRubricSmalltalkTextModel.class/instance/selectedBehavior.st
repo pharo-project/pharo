@@ -1,0 +1,4 @@
+accessing
+selectedBehavior
+	
+	^ self highlightSmalltalkContext

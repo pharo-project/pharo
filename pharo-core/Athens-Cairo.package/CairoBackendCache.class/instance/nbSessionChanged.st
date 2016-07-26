@@ -1,0 +1,5 @@
+removeMe
+nbSessionChanged
+
+	self initialize.
+	

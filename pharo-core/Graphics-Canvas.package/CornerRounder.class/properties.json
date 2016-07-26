@@ -1,0 +1,18 @@
+{
+	"category" : "Graphics-Canvas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CR0",
+		"CR1",
+		"CR2" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"cornerMasks",
+		"cornerOverlays",
+		"underBits" ],
+	"name" : "CornerRounder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

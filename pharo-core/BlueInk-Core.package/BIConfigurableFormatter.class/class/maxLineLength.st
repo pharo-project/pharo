@@ -1,0 +1,3 @@
+accessing
+maxLineLength
+	^ DefaultPrettyPrintContext maxLineLength

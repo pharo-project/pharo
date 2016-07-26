@@ -1,0 +1,1 @@
+Just like LargePositiveInteger, but represents a negative number.

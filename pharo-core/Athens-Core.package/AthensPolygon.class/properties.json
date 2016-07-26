@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 12/20/2011 18:38",
+	"instvars" : [
+		"contours",
+		"currentContour" ],
+	"name" : "AthensPolygon",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

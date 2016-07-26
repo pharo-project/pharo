@@ -1,0 +1,15 @@
+{
+	"category" : "FuelTests-Mocks",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:23",
+	"instvars" : [
+		"left",
+		"right" ],
+	"name" : "FLPair",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

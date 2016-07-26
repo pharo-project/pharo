@@ -1,0 +1,3 @@
+testing
+isBold
+	^self isBoldOrBolder

@@ -1,0 +1,22 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"absolute",
+		"open",
+		"contourStartPt",
+		"xMin",
+		"yMin",
+		"xMax",
+		"yMax",
+		"pathStart",
+		"lastSegment" ],
+	"name" : "AthensSimplePathBuilder",
+	"pools" : [
+		 ],
+	"super" : "AthensPathBuilder",
+	"type" : "normal" }

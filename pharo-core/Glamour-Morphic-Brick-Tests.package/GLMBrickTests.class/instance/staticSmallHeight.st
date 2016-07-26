@@ -1,0 +1,4 @@
+defaults
+staticSmallHeight
+
+	^ 50

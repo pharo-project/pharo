@@ -1,0 +1,1 @@
+I am an abstract superclass for some visitors that answer objects describing EpEvent instances.

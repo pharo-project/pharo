@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cwp 3/29/2011 17:04",
+	"instvars" : [
+		"next" ],
+	"name" : "FileSystemResolver",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

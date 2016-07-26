@@ -1,0 +1,4 @@
+compatibility
+value
+
+	^ self currentValue.

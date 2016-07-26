@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"processors",
+		"query" ],
+	"name" : "GTSpotterSearchFinished",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:38",
+	"instvars" : [
+		 ],
+	"name" : "MyTestNotification",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

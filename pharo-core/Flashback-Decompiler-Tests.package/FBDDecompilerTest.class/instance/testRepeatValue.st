@@ -1,0 +1,3 @@
+tests
+testRepeatValue
+	self checkCorrectDecompilation: #exampleRepeatValue

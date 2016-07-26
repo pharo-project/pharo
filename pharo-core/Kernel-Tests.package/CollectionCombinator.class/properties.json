@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"resultProcessingBlock",
+		"collectionOfArrays",
+		"buffer" ],
+	"name" : "CollectionCombinator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

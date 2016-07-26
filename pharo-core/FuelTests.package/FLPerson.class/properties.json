@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests-Mocks",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 5/19/2011 23:51",
+	"instvars" : [
+		"id" ],
+	"name" : "FLPerson",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+handle holds a (typically 32-bit) pointer to an externally managed object.

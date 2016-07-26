@@ -1,0 +1,1 @@
+My instances decide if an OmEntry is accepted.

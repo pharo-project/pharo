@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 14:50",
+	"instvars" : [
+		"expression" ],
+	"name" : "EpExpressionEvaluation",
+	"pools" : [
+		 ],
+	"super" : "EpEvent",
+	"type" : "normal" }

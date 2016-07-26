@@ -1,0 +1,1 @@
+My class-side protocol initializes System Settings' stuff.

@@ -1,0 +1,4 @@
+comparing
+<= aKomitObject 
+
+	^ self subclassResponsibility

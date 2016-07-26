@@ -1,0 +1,3 @@
+converting
+asOrderedCollection
+	^ self

@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "WeakValueDictionary",
+	"pools" : [
+		 ],
+	"super" : "Dictionary",
+	"type" : "normal" }

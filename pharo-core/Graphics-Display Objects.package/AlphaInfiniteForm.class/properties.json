@@ -1,0 +1,15 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 5/18/2007 13:49",
+	"instvars" : [
+		"origin",
+		"extent" ],
+	"name" : "AlphaInfiniteForm",
+	"pools" : [
+		 ],
+	"super" : "InfiniteForm",
+	"type" : "normal" }

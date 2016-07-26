@@ -1,0 +1,24 @@
+{
+	"category" : "Growl",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultBackgroundColor",
+		"Position" ],
+	"commentStamp" : "StephanEggermont 9/5/2014 12:12",
+	"instvars" : [
+		"dismissHandle",
+		"vanishTime",
+		"alpha",
+		"actionBlock",
+		"vanishDelay",
+		"attr",
+		"labelAttr",
+		"contentsAttr",
+		"labelColor",
+		"contentsColor" ],
+	"name" : "GrowlMorph",
+	"pools" : [
+		 ],
+	"super" : "TextMorph",
+	"type" : "normal" }

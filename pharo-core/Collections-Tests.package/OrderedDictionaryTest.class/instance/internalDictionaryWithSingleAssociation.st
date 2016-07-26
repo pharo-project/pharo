@@ -1,0 +1,3 @@
+accessing
+internalDictionaryWithSingleAssociation
+	^ self internalDictionaryClass with: self singleAssociation

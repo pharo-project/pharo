@@ -1,0 +1,1 @@
+An AllProtocol is a special protocol to hanlde the "all" case

@@ -1,0 +1,3 @@
+rendering presentations
+renderAccordionCompositePresentation: aCompositePresentation
+	^ GLMMorphicAccordionRenderer render: aCompositePresentation from: self

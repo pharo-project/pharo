@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Playground",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTPlayBindingDarkThemer",
+	"pools" : [
+		 ],
+	"super" : "GTPlayBindingThemer",
+	"type" : "normal" }

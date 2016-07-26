@@ -1,0 +1,3 @@
+running
+setUpPersistenceStrategy
+	identifier persistenceStrategy preferences: preferences

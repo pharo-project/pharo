@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:29",
+	"instvars" : [
+		 ],
+	"name" : "KeyedTreeTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

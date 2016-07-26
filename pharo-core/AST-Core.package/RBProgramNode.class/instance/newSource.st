@@ -1,0 +1,3 @@
+accessing
+newSource
+	^self formattedCode

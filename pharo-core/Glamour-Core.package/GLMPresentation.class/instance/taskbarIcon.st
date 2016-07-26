@@ -1,0 +1,3 @@
+accessing
+taskbarIcon 
+	^ self titleIcon

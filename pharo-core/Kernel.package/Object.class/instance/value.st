@@ -1,0 +1,4 @@
+evaluating
+value
+
+	^self

@@ -1,0 +1,3 @@
+private
+defaultModel
+	^ OrderedCollection new

@@ -1,0 +1,3 @@
+*Athens-Text
+asFreetypeFont
+	^ self

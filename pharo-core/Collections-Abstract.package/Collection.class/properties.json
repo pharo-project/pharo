@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Abstract",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Collection",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

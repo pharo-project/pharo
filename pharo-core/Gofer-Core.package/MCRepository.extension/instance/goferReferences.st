@@ -1,0 +1,3 @@
+*gofer-core-accessing
+goferReferences
+	^ #()

@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Strings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"NonAsciiMap" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ByteString",
+	"pools" : [
+		 ],
+	"super" : "String",
+	"type" : "bytes" }

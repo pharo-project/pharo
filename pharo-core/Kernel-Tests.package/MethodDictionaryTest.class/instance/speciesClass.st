@@ -1,0 +1,3 @@
+requirement
+speciesClass
+	^ MethodDictionary

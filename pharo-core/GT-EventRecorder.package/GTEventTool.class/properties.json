@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 11/15/2015 23:13",
+	"instvars" : [
+		 ],
+	"name" : "GTEventTool",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+signaling
+waitForNewItems
+	availSema wait

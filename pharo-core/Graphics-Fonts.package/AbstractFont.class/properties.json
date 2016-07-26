@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Fonts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AbstractFont",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

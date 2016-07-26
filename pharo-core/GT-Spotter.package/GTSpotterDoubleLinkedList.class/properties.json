@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTSpotterDoubleLinkedList",
+	"pools" : [
+		 ],
+	"super" : "DoubleLinkedList",
+	"type" : "normal" }

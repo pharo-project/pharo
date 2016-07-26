@@ -1,0 +1,10 @@
+operations
+redoSelectionCompleteRefactoring
+
+	| entries |
+	entries := self entriesToRedo.
+
+	self 
+		trigger: [ entries do: [ :each |		
+			self redoRefactoring: each content asRBRefactoring ] ] 
+		with: (EpRedo forAll: (browser log referencesToAll: entries))

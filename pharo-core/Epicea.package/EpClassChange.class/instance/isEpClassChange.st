@@ -1,0 +1,4 @@
+testing
+isEpClassChange
+
+	^ true

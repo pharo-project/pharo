@@ -1,0 +1,16 @@
+{
+	"category" : "Komitter-UI",
+	"classinstvars" : [
+		"deletedClassIcon",
+		"modifiedClassIcon",
+		"addedClassIcon" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "KomitClassNode",
+	"pools" : [
+		 ],
+	"super" : "KomitNode",
+	"type" : "normal" }

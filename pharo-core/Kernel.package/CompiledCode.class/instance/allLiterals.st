@@ -1,0 +1,3 @@
+literals
+allLiterals
+	^self literals

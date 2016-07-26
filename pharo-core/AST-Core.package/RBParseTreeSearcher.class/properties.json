@@ -1,0 +1,18 @@
+{
+	"category" : "AST-Core-Matching",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"searches",
+		"answer",
+		"argumentSearches",
+		"context",
+		"messages" ],
+	"name" : "RBParseTreeSearcher",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

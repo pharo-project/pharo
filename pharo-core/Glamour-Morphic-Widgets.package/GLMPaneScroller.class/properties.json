@@ -1,0 +1,18 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"sizing",
+		"transform",
+		"scrollBar",
+		"paneCount",
+		"maxPanes" ],
+	"name" : "GLMPaneScroller",
+	"pools" : [
+		 ],
+	"super" : "BorderedMorph",
+	"type" : "normal" }

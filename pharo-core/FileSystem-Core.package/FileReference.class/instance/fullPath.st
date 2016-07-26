@@ -1,0 +1,3 @@
+accessing
+fullPath
+	^ self path

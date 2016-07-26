@@ -1,0 +1,3 @@
+private
+constructorForMethod: aMethod
+	^DecompilerConstructorForClosures new

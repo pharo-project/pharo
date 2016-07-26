@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Tests-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"pragmas" ],
+	"name" : "GTInspectorExamplesTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

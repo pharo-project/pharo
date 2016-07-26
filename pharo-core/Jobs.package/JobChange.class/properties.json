@@ -1,0 +1,14 @@
+{
+	"category" : "Jobs-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "JobChange",
+	"pools" : [
+		 ],
+	"super" : "JobAnnouncement",
+	"type" : "normal" }

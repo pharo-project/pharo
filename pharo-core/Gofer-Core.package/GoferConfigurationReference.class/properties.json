@@ -1,0 +1,14 @@
+{
+	"category" : "Gofer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GoferConfigurationReference",
+	"pools" : [
+		 ],
+	"super" : "GoferPackageReference",
+	"type" : "normal" }

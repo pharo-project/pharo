@@ -1,0 +1,4 @@
+properties
+methodName
+
+	^ 'testMethod'

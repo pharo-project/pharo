@@ -1,0 +1,14 @@
+{
+	"category" : "Manifest-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "BuilderManifestTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

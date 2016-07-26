@@ -1,0 +1,17 @@
+{
+	"category" : "MenuRegistration-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 11/16/2010 19:48",
+	"instvars" : [
+		"pragmaKeywords",
+		"model",
+		"pragmaCollector",
+		"currentRoot" ],
+	"name" : "PragmaMenuBuilder",
+	"pools" : [
+		 ],
+	"super" : "MenuRegistration",
+	"type" : "normal" }

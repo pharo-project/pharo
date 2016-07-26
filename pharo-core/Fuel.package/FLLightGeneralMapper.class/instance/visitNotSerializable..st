@@ -1,0 +1,3 @@
+visiting
+visitNotSerializable: anObject
+	FLNotSerializable signalWith: anObject

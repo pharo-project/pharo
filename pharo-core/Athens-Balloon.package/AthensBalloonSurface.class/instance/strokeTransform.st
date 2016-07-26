@@ -1,0 +1,4 @@
+accessing matrices
+strokeTransform
+
+	^ strokeTransform

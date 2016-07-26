@@ -1,0 +1,3 @@
+accessing
+packageNamesUnderTest
+	^ #('Gofer-Core')

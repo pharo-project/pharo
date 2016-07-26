@@ -1,0 +1,4 @@
+requirements
+collectionClass 
+	
+	^ FloatArray

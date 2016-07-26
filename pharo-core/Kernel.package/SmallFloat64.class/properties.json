@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "eem 11/25/2014 07:54",
+	"instvars" : [
+		 ],
+	"name" : "SmallFloat64",
+	"pools" : [
+		 ],
+	"super" : "Float",
+	"type" : "immediate" }

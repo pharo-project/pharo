@@ -1,0 +1,4 @@
+measuring
+lineGrid
+
+	^self height

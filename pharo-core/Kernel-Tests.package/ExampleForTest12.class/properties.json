@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:35",
+	"instvars" : [
+		 ],
+	"name" : "ExampleForTest12",
+	"pools" : [
+		 ],
+	"super" : "ExampleForTest1",
+	"type" : "normal" }

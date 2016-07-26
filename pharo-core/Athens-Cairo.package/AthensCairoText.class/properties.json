@@ -1,0 +1,20 @@
+{
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"text",
+		"fontFamily",
+		"fontSlant",
+		"fontWeight",
+		"fontSize" ],
+	"name" : "AthensCairoText",
+	"pools" : [
+		"AthensCairoDefs" ],
+	"super" : "Object",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

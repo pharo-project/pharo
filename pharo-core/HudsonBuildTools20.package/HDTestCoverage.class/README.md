@@ -1,0 +1,1 @@
+Used to measure test coverage for Hudson reports

@@ -1,0 +1,16 @@
+{
+	"category" : "FreeType-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"major",
+		"minor",
+		"patch" ],
+	"name" : "FT2Version",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

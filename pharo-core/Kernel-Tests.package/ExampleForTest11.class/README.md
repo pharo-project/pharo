@@ -1,0 +1,1 @@
+An example class at level 2 (indirectly below Object) used for testing class hierarchy

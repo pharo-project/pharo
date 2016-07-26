@@ -1,0 +1,1 @@
+I represent a change in the definition of a trait.

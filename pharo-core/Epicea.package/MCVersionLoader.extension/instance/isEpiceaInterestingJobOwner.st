@@ -1,0 +1,4 @@
+*Epicea-Triggering
+isEpiceaInterestingJobOwner
+
+	^ true

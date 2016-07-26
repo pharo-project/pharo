@@ -1,0 +1,4 @@
+requirements
+subCollectionNotIn
+
+	^ self collectionNotIncluded .

@@ -1,0 +1,1 @@
+Gradient fillstyle that draws with optional extent.

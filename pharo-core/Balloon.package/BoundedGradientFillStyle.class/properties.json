@@ -1,0 +1,14 @@
+{
+	"category" : "Balloon-Fills",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 3/13/2009 12:19",
+	"instvars" : [
+		"extent" ],
+	"name" : "BoundedGradientFillStyle",
+	"pools" : [
+		 ],
+	"super" : "GradientFillStyle",
+	"type" : "normal" }

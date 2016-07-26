@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ZeroPoint" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AthensPathBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

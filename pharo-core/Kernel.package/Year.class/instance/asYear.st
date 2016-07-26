@@ -1,0 +1,4 @@
+conversion
+asYear 
+
+	^ self 

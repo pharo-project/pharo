@@ -1,0 +1,6 @@
+setup
+nonEmpty
+
+	^ nonEmpty
+	
+	

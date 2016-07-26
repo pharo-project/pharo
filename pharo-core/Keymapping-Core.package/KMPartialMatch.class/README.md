@@ -1,0 +1,1 @@
+A KMPartialMatch is an announcement raised when a partial match is completed

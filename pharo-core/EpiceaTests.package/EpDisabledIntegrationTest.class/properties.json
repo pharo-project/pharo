@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaTests-Integration",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "EpDisabledIntegrationTest",
+	"pools" : [
+		 ],
+	"super" : "EpMonitorIntegrationTest",
+	"type" : "normal" }

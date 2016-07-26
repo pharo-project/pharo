@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Cairo-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "AthensCairoMatrixTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

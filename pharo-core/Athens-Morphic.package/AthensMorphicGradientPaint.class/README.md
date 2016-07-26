@@ -1,0 +1,1 @@
+i am used to convert gradient fill style(s) used in Morphic to appropriate paint(s) in Athens.

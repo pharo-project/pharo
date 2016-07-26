@@ -1,0 +1,4 @@
+accessing
+opposite
+
+	^ GLMBrickHeightTraverser uniqueInstance

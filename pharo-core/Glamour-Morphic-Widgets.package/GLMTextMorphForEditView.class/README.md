@@ -1,0 +1,1 @@
+GLMTextMorphForEditView is meant to work with GLMPluggableTextMorph.

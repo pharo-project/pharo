@@ -1,0 +1,3 @@
+private
+foundMatch
+	answer := true

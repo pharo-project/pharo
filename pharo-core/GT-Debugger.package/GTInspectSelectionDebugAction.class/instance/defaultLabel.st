@@ -1,0 +1,4 @@
+accessing
+defaultLabel
+
+	^ 'Inspect it'

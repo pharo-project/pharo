@@ -1,0 +1,4 @@
+accessing
+methodUpdateSelector
+
+	^self subclassResponsibility

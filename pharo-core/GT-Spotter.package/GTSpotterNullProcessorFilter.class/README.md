@@ -1,0 +1,1 @@
+I implement a filtering strategy for processors that always returns true. Use me by default instead of adding null checks to determnine if a filter is present.

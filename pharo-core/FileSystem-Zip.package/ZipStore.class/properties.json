@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Zip",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"reference" ],
+	"name" : "ZipStore",
+	"pools" : [
+		 ],
+	"super" : "MemoryStore",
+	"type" : "normal" }

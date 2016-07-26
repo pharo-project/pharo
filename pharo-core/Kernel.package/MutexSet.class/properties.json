@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"array" ],
+	"name" : "MutexSet",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

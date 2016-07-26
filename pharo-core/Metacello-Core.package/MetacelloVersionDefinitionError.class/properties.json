@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Exceptions-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"exception" ],
+	"name" : "MetacelloVersionDefinitionError",
+	"pools" : [
+		 ],
+	"super" : "MetacelloVersionDoesNotExistError",
+	"type" : "normal" }

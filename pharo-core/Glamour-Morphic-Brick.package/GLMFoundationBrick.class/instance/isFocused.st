@@ -1,0 +1,4 @@
+testing
+isFocused
+
+	^ false

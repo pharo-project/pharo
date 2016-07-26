@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"message",
+		"receiver",
+		"reachedDefaultHandler" ],
+	"name" : "MessageNotUnderstood",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Collections-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"isBinary",
+		"converter" ],
+	"name" : "MultiByteBinaryOrTextStream",
+	"pools" : [
+		 ],
+	"super" : "ReadWriteStream",
+	"type" : "normal" }

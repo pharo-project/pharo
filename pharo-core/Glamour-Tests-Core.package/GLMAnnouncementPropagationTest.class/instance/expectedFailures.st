@@ -1,0 +1,3 @@
+setup
+expectedFailures
+	^ #(testEntityPropogationAnnouncements testSimplePropagation)

@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:41",
+	"instvars" : [
+		 ],
+	"name" : "ObjectTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

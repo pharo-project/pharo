@@ -1,0 +1,31 @@
+{
+	"category" : "Compression-Archives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"lastModFileDateTime",
+		"fileAttributeFormat",
+		"versionMadeBy",
+		"versionNeededToExtract",
+		"bitFlag",
+		"compressionMethod",
+		"desiredCompressionMethod",
+		"desiredCompressionLevel",
+		"internalFileAttributes",
+		"externalFileAttributes",
+		"cdExtraField",
+		"localExtraField",
+		"fileComment",
+		"crc32",
+		"compressedSize",
+		"uncompressedSize",
+		"writeLocalHeaderRelativeOffset",
+		"readDataRemaining" ],
+	"name" : "ZipArchiveMember",
+	"pools" : [
+		"ZipFileConstants" ],
+	"super" : "ArchiveMember",
+	"type" : "normal" }

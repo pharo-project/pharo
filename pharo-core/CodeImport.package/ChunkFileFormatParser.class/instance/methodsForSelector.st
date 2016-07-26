@@ -1,0 +1,3 @@
+custom points
+methodsForSelector
+	^ methodsForSelector

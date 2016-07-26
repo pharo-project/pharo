@@ -1,0 +1,3 @@
+public
+new
+	self shouldNotImplement

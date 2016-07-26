@@ -1,0 +1,1 @@
+I represent a shortcut declaration for the settings pharo framework.

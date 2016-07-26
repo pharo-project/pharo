@@ -1,0 +1,3 @@
+*GT-InspectorExtensions-Core
+gtInspectorChildren
+	^ {}

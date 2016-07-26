@@ -1,0 +1,20 @@
+{
+	"category" : "Glamour-Morphic-Pager-Brick",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"band",
+		"currentFocus",
+		"pagerModel",
+		"maxPanes",
+		"focus",
+		"currentScrollDelta",
+		"animation" ],
+	"name" : "GLMPagerScrollBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

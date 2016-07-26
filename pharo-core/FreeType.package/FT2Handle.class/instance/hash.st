@@ -1,0 +1,3 @@
+comparing
+hash
+	^ handle hash

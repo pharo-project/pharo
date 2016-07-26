@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Exceptions-Notifications",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloCleanLoadAndTestsNotification",
+	"pools" : [
+		 ],
+	"super" : "MetacelloCleanNotification",
+	"type" : "normal" }

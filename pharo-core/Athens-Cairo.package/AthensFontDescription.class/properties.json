@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FernandoOlivero 1/24/2012 18:30",
+	"instvars" : [
+		"family",
+		"options",
+		"size" ],
+	"name" : "AthensFontDescription",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

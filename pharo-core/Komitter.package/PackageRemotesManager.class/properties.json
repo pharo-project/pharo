@@ -1,0 +1,16 @@
+{
+	"category" : "Komitter-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 1/8/2014 16:53",
+	"instvars" : [
+		"packages",
+		"remotes",
+		"silent" ],
+	"name" : "PackageRemotesManager",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Alien-Win32",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "eem 11/28/2007 14:28",
+	"instvars" : [
+		 ],
+	"name" : "EnumWindowsProc",
+	"pools" : [
+		 ],
+	"super" : "Alien",
+	"type" : "bytes" }

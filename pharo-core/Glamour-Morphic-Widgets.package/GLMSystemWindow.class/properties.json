@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 1/27/2011 22:09",
+	"instvars" : [
+		"toolbarBox" ],
+	"name" : "GLMSystemWindow",
+	"pools" : [
+		 ],
+	"super" : "StandardWindow",
+	"type" : "normal" }

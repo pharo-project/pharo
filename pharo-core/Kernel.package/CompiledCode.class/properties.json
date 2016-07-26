@@ -1,0 +1,17 @@
+{
+	"category" : "Kernel-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LargeFrame",
+		"PrimaryBytecodeSetEncoderClass",
+		"SecondaryBytecodeSetEncoderClass",
+		"SmallFrame" ],
+	"commentStamp" : "ClementBera 5/23/2016 11:00",
+	"instvars" : [
+		 ],
+	"name" : "CompiledCode",
+	"pools" : [
+		 ],
+	"super" : "ByteArray",
+	"type" : "compiledMethod" }

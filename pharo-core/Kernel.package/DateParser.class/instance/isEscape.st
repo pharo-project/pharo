@@ -1,0 +1,4 @@
+parsing - private
+isEscape
+
+	^ char = $\

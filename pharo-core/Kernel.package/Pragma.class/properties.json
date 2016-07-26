@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Pragmas",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"method",
+		"keyword",
+		"arguments" ],
+	"name" : "Pragma",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

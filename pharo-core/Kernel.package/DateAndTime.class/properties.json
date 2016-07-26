@@ -1,0 +1,18 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ClockProvider",
+		"LocalTimeZone" ],
+	"commentStamp" : "SvenVanCaekenberghe 1/10/2014 11:04",
+	"instvars" : [
+		"seconds",
+		"offset",
+		"julianDayNumber",
+		"nanos" ],
+	"name" : "DateAndTime",
+	"pools" : [
+		"ChronologyConstants" ],
+	"super" : "Magnitude",
+	"type" : "normal" }

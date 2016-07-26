@@ -1,0 +1,15 @@
+{
+	"category" : "Announcements-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 3/12/2011 18:43",
+	"instvars" : [
+		"subscriptions",
+		"monitor" ],
+	"name" : "SubscriptionRegistry",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

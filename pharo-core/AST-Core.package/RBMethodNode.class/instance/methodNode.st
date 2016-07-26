@@ -1,0 +1,3 @@
+accessing
+methodNode
+	^self

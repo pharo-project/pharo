@@ -1,0 +1,29 @@
+{
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"MacroEmitters",
+		"MacroPrinters",
+		"MacroSelectors",
+		"MacroSizers",
+		"MacroTransformers",
+		"StdTypers",
+		"ThenFlag" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"receiver",
+		"selector",
+		"precedence",
+		"special",
+		"arguments",
+		"sizes",
+		"equalNode",
+		"caseErrorNode",
+		"originalSelector",
+		"originalArguments" ],
+	"name" : "MessageNode",
+	"pools" : [
+		 ],
+	"super" : "ParseNode",
+	"type" : "normal" }

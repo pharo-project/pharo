@@ -1,0 +1,4 @@
+values
+privacyAgreementIsNotSendingDataColor
+
+	^ Color paleRed

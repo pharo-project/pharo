@@ -1,0 +1,3 @@
+converting
+asEpiceaEvent
+	^ EpPropagateRefactoring target: targetRefactoring asEpiceaEvent

@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"stepModel",
+		"categories" ],
+	"name" : "GTSpotterResultsBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMStackedScrollPaneBrick",
+	"type" : "normal" }

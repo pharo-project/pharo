@@ -1,0 +1,1 @@
+A GlobalIdentifierFuelPersistenceTest is a test class for testing the behavior of GlobalIdentifierFuelPersistence

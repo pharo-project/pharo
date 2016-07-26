@@ -1,0 +1,3 @@
+testing
+isConstantNumber
+	^ key isNumber

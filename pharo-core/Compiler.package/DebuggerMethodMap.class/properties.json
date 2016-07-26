@@ -1,0 +1,19 @@
+{
+	"category" : "Compiler-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"methodReference",
+		"methodNode",
+		"abstractSourceRanges",
+		"sortedSourceMap",
+		"blockExtentsToTempRefs",
+		"startpcsToTempRefs" ],
+	"name" : "DebuggerMethodMap",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

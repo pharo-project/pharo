@@ -1,0 +1,1 @@
+DelayWaitTimeout is a special kind of Delay used in waitTimeoutMSecs: to avoid signaling the underlying semaphore when the wait times out.

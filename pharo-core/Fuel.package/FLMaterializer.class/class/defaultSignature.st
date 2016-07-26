@@ -1,0 +1,3 @@
+protected
+defaultSignature
+	^ 'FUEL'

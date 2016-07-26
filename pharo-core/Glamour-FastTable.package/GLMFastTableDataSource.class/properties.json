@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-FastTable-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/10/2015 11:54",
+	"instvars" : [
+		"columnToSortBy" ],
+	"name" : "GLMFastTableDataSource",
+	"pools" : [
+		 ],
+	"super" : "GLMFastListDataSource",
+	"type" : "normal" }

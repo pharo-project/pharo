@@ -1,0 +1,1 @@
+I am a simple UI used to set the credentials of a remote

@@ -1,0 +1,3 @@
+visitor
+visitClassModification: aModificationClassChange
+	^ self displayBehavior: aModificationClassChange newClass printString

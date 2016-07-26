@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"projectPath",
+		"versionString" ],
+	"name" : "MetacelloScriptGitBasedDownloadNotification",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

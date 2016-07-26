@@ -1,0 +1,27 @@
+{
+	"category" : "FontChooser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 1/1/2010 18:00",
+	"instvars" : [
+		"title",
+		"selectedFontIndex",
+		"fontList",
+		"fontListStrings",
+		"target",
+		"getSelector",
+		"setSelector",
+		"pointSize",
+		"fontStyleList",
+		"selectedFontStyleIndex",
+		"weightValue",
+		"slantValue",
+		"stretchValue",
+		"pointSizeList" ],
+	"name" : "FontChooser",
+	"pools" : [
+		 ],
+	"super" : "Model",
+	"type" : "normal" }

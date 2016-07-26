@@ -1,0 +1,18 @@
+{
+	"category" : "Glamour-Morphic-Pager-Brick",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"firstCombination",
+		"pagerBar",
+		"scrollBrick",
+		"pagerModel",
+		"showScrollBarWhenNeeded" ],
+	"name" : "GLMPagerBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

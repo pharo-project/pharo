@@ -1,0 +1,4 @@
+accessing
+widthTraverser
+
+	^ GLMBrickWidthTraverser uniqueInstance

@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Tests-Identifier",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GlobalIdentifierWithSton",
+	"pools" : [
+		 ],
+	"super" : "GlobalIdentifierTest",
+	"type" : "normal" }

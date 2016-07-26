@@ -1,0 +1,20 @@
+{
+	"category" : "Fuel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/6/2012 16:08",
+	"instvars" : [
+		"stream",
+		"objects",
+		"isBigEndian",
+		"indexStream",
+		"migrations",
+		"objectsWriteStream",
+		"globalEnvironment" ],
+	"name" : "FLDecoder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

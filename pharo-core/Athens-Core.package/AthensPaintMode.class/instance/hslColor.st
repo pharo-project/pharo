@@ -1,0 +1,3 @@
+modes
+hslColor
+	self notAvailable

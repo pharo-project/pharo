@@ -1,0 +1,17 @@
+{
+	"category" : "DebuggerModel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"message",
+		"class",
+		"argumentNames",
+		"stream" ],
+	"name" : "DynamicMessageImplementor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

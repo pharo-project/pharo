@@ -1,0 +1,3 @@
+accessing
+fallbackFamilyNames: aSequencableCollection
+	fallbackFamilyNames := aSequencableCollection

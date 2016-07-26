@@ -1,0 +1,1 @@
+Simple glyph infos

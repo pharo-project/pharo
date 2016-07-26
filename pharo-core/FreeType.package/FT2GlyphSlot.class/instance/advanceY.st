@@ -1,0 +1,3 @@
+accessing-fields
+advanceY
+	^advanceY

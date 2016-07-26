@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"theClass" ],
+	"name" : "FLHookPrimitiveCluster",
+	"pools" : [
+		 ],
+	"super" : "FLPrimitiveCluster",
+	"type" : "normal" }

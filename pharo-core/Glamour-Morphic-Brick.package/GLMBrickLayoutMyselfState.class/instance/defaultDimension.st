@@ -1,0 +1,4 @@
+initialization
+defaultDimension
+
+	^ 50

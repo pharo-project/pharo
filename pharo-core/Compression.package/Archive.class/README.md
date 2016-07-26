@@ -1,0 +1,1 @@
+This is the abstract superclass for file archives. Archives can be read from or written to files, and contain members that represent files and directories.

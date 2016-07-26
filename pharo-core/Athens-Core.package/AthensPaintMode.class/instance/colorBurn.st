@@ -1,0 +1,3 @@
+modes
+colorBurn
+	self notAvailable

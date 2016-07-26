@@ -1,0 +1,1 @@
+I am a strategy for traditional file streams.

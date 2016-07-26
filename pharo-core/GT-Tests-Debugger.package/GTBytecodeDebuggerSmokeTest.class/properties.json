@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Tests-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTBytecodeDebuggerSmokeTest",
+	"pools" : [
+		 ],
+	"super" : "GTDebuggerSmokeTest",
+	"type" : "normal" }

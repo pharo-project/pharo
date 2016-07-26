@@ -1,0 +1,4 @@
+initialization
+defaultPercent
+
+	^ 100

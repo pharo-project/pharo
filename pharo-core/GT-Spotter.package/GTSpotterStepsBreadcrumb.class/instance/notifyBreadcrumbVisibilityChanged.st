@@ -1,0 +1,4 @@
+notifying
+notifyBreadcrumbVisibilityChanged
+
+	self announcer announce: GTSpotterBreadcrumbVisibilityChanged new

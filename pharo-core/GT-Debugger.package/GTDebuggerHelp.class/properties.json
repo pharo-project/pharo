@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Debugger-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 1/25/2016 11:07",
+	"instvars" : [
+		 ],
+	"name" : "GTDebuggerHelp",
+	"pools" : [
+		 ],
+	"super" : "CustomHelp",
+	"type" : "normal" }

@@ -1,0 +1,6 @@
+accessing
+monthIndex
+ 
+ 
+ 	^ self month
+ 

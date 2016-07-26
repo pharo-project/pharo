@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AthensCCWArcSegment",
+	"pools" : [
+		 ],
+	"super" : "AthensArcSegment",
+	"type" : "normal" }

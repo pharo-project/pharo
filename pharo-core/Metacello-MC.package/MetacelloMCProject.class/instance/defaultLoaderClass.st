@@ -1,0 +1,4 @@
+spec classes
+defaultLoaderClass
+
+	^MetacelloLoadingMCSpecLoader

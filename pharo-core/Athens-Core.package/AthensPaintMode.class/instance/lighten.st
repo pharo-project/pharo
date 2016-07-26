@@ -1,0 +1,3 @@
+modes
+lighten
+	self notAvailable

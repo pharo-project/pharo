@@ -1,0 +1,3 @@
+converting
+asArray
+	^ contents shallowCopy

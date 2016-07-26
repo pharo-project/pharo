@@ -1,0 +1,3 @@
+debugger support
+hasGeneratedMethod
+	^encoder hasGeneratedMethod

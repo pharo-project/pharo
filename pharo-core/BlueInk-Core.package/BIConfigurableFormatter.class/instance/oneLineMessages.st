@@ -1,0 +1,3 @@
+accessing
+oneLineMessages
+	^ context oneLineMessages

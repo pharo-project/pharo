@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Core-Public",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"filesystem",
+		"path" ],
+	"name" : "FileReference",
+	"pools" : [
+		 ],
+	"super" : "AbstractFileReference",
+	"type" : "normal" }

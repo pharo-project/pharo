@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Primitives" ],
+	"commentStamp" : "cwp 11/18/2009 11:11",
+	"instvars" : [
+		"reference",
+		"writable" ],
+	"name" : "FileSystemHandle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

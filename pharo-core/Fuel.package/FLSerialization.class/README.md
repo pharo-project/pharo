@@ -1,0 +1,1 @@
+I implement the algorithm for serializing an object graph on a stream. FLSerializer known how to build instances of me.

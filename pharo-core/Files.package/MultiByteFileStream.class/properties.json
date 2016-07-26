@@ -1,0 +1,21 @@
+{
+	"category" : "Files-Deprecated",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Cr",
+		"CrLf",
+		"Lf",
+		"LineEndDefault",
+		"LineEndStrings",
+		"LookAheadCount" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"converter",
+		"lineEndConvention",
+		"wantsLineEndConversion" ],
+	"name" : "MultiByteFileStream",
+	"pools" : [
+		 ],
+	"super" : "StandardFileStream",
+	"type" : "normal" }

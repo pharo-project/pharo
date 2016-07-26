@@ -1,0 +1,15 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 14:52",
+	"instvars" : [
+		"newComment",
+		"oldComment" ],
+	"name" : "EpLogEntriesComment",
+	"pools" : [
+		 ],
+	"super" : "EpLogBrowserOperation",
+	"type" : "normal" }

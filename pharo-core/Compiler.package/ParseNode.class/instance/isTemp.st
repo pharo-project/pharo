@@ -1,0 +1,3 @@
+testing
+isTemp
+	^ false

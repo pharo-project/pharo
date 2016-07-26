@@ -1,0 +1,3 @@
+tests
+testWhileFalse
+	self checkCorrectDecompilation: #exampleWhileFalse

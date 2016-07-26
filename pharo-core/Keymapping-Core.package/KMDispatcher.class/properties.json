@@ -1,0 +1,18 @@
+{
+	"category" : "Keymapping-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 12/24/2010 19:00",
+	"instvars" : [
+		"target",
+		"currentEvent",
+		"targets",
+		"morph",
+		"directKeymaps" ],
+	"name" : "KMDispatcher",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

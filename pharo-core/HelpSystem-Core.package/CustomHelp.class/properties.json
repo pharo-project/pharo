@@ -1,0 +1,14 @@
+{
+	"category" : "HelpSystem-Core-Utilities",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tbn 3/29/2010 13:23",
+	"instvars" : [
+		 ],
+	"name" : "CustomHelp",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

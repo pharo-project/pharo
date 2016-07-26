@@ -1,0 +1,3 @@
+accessing
+firstArgument
+	^ arguments first

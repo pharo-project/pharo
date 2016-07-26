@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:48",
+	"instvars" : [
+		 ],
+	"name" : "WeakMessageSendTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

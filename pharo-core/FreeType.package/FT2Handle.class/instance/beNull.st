@@ -1,0 +1,3 @@
+private
+beNull
+	handle := nil.

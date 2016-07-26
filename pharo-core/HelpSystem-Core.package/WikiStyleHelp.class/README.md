@@ -1,0 +1,1 @@
+This help type extends the system with a wiki like help descriptions

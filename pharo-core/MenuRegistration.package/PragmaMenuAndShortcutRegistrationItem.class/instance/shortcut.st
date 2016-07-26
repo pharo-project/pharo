@@ -1,0 +1,4 @@
+accessing
+shortcut
+	
+	^ shortcut

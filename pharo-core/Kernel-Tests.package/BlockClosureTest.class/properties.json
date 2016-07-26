@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:31",
+	"instvars" : [
+		"aBlockContext",
+		"contextOfaBlockContext" ],
+	"name" : "BlockClosureTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

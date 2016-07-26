@@ -1,0 +1,3 @@
+registration
+gtDebuggingAction
+	"<gtDebuggingAction>"

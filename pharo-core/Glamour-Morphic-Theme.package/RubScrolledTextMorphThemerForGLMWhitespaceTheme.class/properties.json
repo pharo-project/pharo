@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Theme",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "RubScrolledTextMorphThemerForGLMWhitespaceTheme",
+	"pools" : [
+		 ],
+	"super" : "RubScrolledTextMorphThemer",
+	"type" : "normal" }

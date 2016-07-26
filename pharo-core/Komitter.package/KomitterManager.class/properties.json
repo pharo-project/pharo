@@ -1,0 +1,14 @@
+{
+	"category" : "Komitter-Support",
+	"classinstvars" : [
+		"instance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"versions" ],
+	"name" : "KomitterManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+periodsAtEndOfMethod
+	^ context periodsAtEndOfMethod

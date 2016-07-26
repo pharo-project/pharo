@@ -1,0 +1,4 @@
+accessing
+oldTraitAffectedName
+
+	^ oldTrait name

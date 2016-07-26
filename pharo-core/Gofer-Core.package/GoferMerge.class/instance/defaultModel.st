@@ -1,0 +1,3 @@
+private
+defaultModel
+	^ MCVersionMerger new

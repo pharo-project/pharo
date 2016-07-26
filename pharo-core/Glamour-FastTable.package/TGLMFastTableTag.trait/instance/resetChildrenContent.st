@@ -1,0 +1,3 @@
+private
+resetChildrenContent
+	self explicitRequirement

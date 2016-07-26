@@ -1,0 +1,1 @@
+I represent an error produced during materialization when a serialized class or trait name doesn't exist.

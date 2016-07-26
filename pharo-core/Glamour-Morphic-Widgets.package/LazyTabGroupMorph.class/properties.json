@@ -1,0 +1,17 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"announcer",
+		"toolbarMorph",
+		"headerMorph",
+		"tabSelectorWidth" ],
+	"name" : "LazyTabGroupMorph",
+	"pools" : [
+		 ],
+	"super" : "TabGroupMorph",
+	"type" : "normal" }

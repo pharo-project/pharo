@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [
+		"minVal",
+		"maxVal" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SmallInteger",
+	"pools" : [
+		 ],
+	"super" : "Integer",
+	"type" : "immediate" }

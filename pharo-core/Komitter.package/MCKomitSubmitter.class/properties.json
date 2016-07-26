@@ -1,0 +1,14 @@
+{
+	"category" : "Komitter-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MCKomitSubmitter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

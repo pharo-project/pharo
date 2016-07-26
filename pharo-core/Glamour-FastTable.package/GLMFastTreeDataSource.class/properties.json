@@ -1,0 +1,18 @@
+{
+	"category" : "Glamour-FastTable-Model",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGLMFastTable classTrait + TGLMFastTableTag classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/10/2015 11:59",
+	"instvars" : [
+		"glamourPresentation",
+		"announcer",
+		"tagsToFilterBy" ],
+	"name" : "GLMFastTreeDataSource",
+	"pools" : [
+		 ],
+	"super" : "FTTreeDataSource",
+	"traitcomposition" : "TGLMFastTable + TGLMFastTableTag",
+	"type" : "normal" }

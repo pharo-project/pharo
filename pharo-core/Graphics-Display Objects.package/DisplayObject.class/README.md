@@ -1,0 +1,1 @@
+The abstract protocol for most display primitives that are used by Views for presenting information on the screen.

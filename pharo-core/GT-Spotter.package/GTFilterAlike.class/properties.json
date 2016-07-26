@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-Filters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"lowerThreshold",
+		"upperThreshold" ],
+	"name" : "GTFilterAlike",
+	"pools" : [
+		 ],
+	"super" : "GTOrderedFilter",
+	"type" : "normal" }

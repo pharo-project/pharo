@@ -1,0 +1,3 @@
+converting
+asShortcut
+	^ self asKeyCombination

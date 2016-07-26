@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 3/22/2011 16:25",
+	"instvars" : [
+		"flag" ],
+	"name" : "WeakSet",
+	"pools" : [
+		 ],
+	"super" : "Set",
+	"type" : "normal" }

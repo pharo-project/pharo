@@ -1,0 +1,14 @@
+{
+	"category" : "Alien-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "eem 6/17/2016 13:55",
+	"instvars" : [
+		 ],
+	"name" : "CallbackForX64",
+	"pools" : [
+		 ],
+	"super" : "Callback",
+	"type" : "normal" }

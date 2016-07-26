@@ -1,0 +1,15 @@
+{
+	"category" : "AST-Core-Pattern",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "md 8/9/2005 14:58",
+	"instvars" : [
+		"isList",
+		"isCascadeList" ],
+	"name" : "RBPatternMessageNode",
+	"pools" : [
+		 ],
+	"super" : "RBMessageNode",
+	"type" : "normal" }

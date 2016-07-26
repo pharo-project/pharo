@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JB 11/26/2010 16:35",
+	"instvars" : [
+		"arrayClass" ],
+	"name" : "SparseLargeArray",
+	"pools" : [
+		 ],
+	"super" : "SparseLargeTable",
+	"type" : "variable" }

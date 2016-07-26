@@ -1,0 +1,3 @@
+tests
+testToDoValue
+	self checkCorrectDecompilation: #exampleToDoValue

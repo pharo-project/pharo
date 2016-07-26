@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "Number",
+	"pools" : [
+		 ],
+	"super" : "Magnitude",
+	"type" : "normal" }

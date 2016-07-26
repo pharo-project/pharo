@@ -1,0 +1,1 @@
+I represent the removal of a protocol of a class or a trait.

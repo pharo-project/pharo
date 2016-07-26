@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Text",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 2/6/2012 16:17",
+	"instvars" : [
+		"start",
+		"stop" ],
+	"name" : "AthensCharacterSpan",
+	"pools" : [
+		 ],
+	"super" : "AthensTextDisplayCommand",
+	"type" : "normal" }

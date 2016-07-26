@@ -1,0 +1,3 @@
+shout
+highlightSmalltalkContext: aClassOrMetaclass
+	highlightSmalltalkContext := aClassOrMetaclass

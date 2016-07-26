@@ -1,0 +1,14 @@
+{
+	"category" : "CodeImportCommandLineHandlers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"sourceFiles" ],
+	"name" : "STCommandLineHandler",
+	"pools" : [
+		 ],
+	"super" : "CommandLineHandler",
+	"type" : "normal" }

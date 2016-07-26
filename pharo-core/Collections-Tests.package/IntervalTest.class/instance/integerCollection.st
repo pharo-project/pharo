@@ -1,0 +1,3 @@
+requirements
+integerCollection
+	^ nonEmpty 

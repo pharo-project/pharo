@@ -1,0 +1,21 @@
+{
+	"category" : "BlueInk-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DefaultPrettyPrintContext",
+		"FormatAsYouReadPolicy" ],
+	"commentStamp" : "StephaneDucasse 3/31/2015 16:12",
+	"instvars" : [
+		"codeStream",
+		"indent",
+		"lookaheadCode",
+		"originalSource",
+		"lineStart",
+		"context",
+		"isInCascadeNode" ],
+	"name" : "BIConfigurableFormatter",
+	"pools" : [
+		 ],
+	"super" : "RBProgramNodeVisitor",
+	"type" : "normal" }

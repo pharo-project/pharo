@@ -1,0 +1,3 @@
+testing
+isPossibleBaseline
+    self subclassResponsibility

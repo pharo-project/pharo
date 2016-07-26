@@ -1,0 +1,4 @@
+accessing
+whiteRectangledTags
+
+	tagsStyle := #whiteRectangledButton

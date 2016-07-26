@@ -1,0 +1,15 @@
+{
+	"category" : "Collections-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarcusDenker 3/23/2010 18:47",
+	"instvars" : [
+		"hashBlock",
+		"equalBlock" ],
+	"name" : "PluggableSet",
+	"pools" : [
+		 ],
+	"super" : "Set",
+	"type" : "normal" }

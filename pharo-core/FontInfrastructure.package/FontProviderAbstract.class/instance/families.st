@@ -1,0 +1,3 @@
+accessing
+families
+	self subclassResponsibility

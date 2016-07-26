@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Debugger-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 12/30/2015 10:03",
+	"instvars" : [
+		"debugger",
+		"notifyPaneRemoved" ],
+	"name" : "GTDebuggerInspector",
+	"pools" : [
+		 ],
+	"super" : "GTInspector",
+	"type" : "normal" }

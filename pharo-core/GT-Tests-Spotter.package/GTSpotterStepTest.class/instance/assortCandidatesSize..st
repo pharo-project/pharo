@@ -1,0 +1,2 @@
+convenience
+assortCandidatesSize: aNumber

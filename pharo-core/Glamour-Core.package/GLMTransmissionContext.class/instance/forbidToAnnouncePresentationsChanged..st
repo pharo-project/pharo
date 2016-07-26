@@ -1,0 +1,3 @@
+accessing
+forbidToAnnouncePresentationsChanged: aPane
+	self forbid: aPane toAnnounce: GLMPresentationsChanged

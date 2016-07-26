@@ -1,0 +1,3 @@
+testing
+isClass
+	^ false

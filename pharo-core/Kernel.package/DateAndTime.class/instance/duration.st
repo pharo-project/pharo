@@ -1,0 +1,4 @@
+accessing
+duration
+
+	^ Duration zero

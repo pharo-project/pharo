@@ -1,0 +1,4 @@
+accessing
+removeAllMethods
+
+	^ methods removeAll.

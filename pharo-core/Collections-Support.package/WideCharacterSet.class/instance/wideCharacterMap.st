@@ -1,0 +1,3 @@
+comparing
+wideCharacterMap
+	^map

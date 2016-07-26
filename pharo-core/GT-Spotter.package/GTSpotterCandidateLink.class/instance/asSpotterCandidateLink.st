@@ -1,0 +1,4 @@
+converting
+asSpotterCandidateLink
+
+	^ self

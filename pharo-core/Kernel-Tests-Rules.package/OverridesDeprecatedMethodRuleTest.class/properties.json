@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"testClass",
+		"testSubclass" ],
+	"name" : "OverridesDeprecatedMethodRuleTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

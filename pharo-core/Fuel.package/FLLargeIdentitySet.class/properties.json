@@ -1,0 +1,15 @@
+{
+	"category" : "Fuel-Collections",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "HenrikSperreJohansen 12/16/2011 12:55",
+	"instvars" : [
+		"array",
+		"includesNil" ],
+	"name" : "FLLargeIdentitySet",
+	"pools" : [
+		 ],
+	"super" : "FLLargeIdentityHashedCollection",
+	"type" : "normal" }

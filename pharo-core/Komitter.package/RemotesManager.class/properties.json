@@ -1,0 +1,21 @@
+{
+	"category" : "Komitter-Support",
+	"classinstvars" : [
+		"addRemoteIcon",
+		"removeRemoteIcon",
+		"editRemoteIcon" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 1/8/2014 17:00",
+	"instvars" : [
+		"remotes",
+		"addRemote",
+		"removeRemote",
+		"editRemote",
+		"selectedChangedBlock",
+		"selectedRemotes" ],
+	"name" : "RemotesManager",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

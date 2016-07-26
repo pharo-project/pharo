@@ -1,0 +1,4 @@
+icons
+removeIcon
+
+	^ GLMUIThemeExtraIcons glamorousRemove

@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Core-Paints",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "FernandoOlivero 3/9/2012 14:03",
+	"instvars" : [
+		 ],
+	"name" : "AthensAbstractPaint",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

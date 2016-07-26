@@ -1,0 +1,3 @@
+rendering presentations
+renderSmalltalkCodePresentation: aSmalltalkCodePresentation 
+	^ GLMMorphicSmalltalkCodeRenderer render: aSmalltalkCodePresentation from: self

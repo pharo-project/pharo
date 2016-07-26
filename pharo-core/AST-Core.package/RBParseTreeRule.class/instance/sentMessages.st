@@ -1,0 +1,3 @@
+accessing
+sentMessages
+	^searchTree sentMessages

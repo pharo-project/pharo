@@ -1,0 +1,18 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 1/7/2011 07:30",
+	"instvars" : [
+		"condition",
+		"presentation",
+		"announcement",
+		"announcerObjects",
+		"transformation" ],
+	"name" : "GLMUpdateAction",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

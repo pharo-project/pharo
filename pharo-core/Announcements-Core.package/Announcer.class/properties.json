@@ -1,0 +1,14 @@
+{
+	"category" : "Announcements-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 3/12/2011 18:45",
+	"instvars" : [
+		"registry" ],
+	"name" : "Announcer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

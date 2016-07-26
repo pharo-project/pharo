@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Disk",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Disks" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"disk" ],
+	"name" : "WindowsStore",
+	"pools" : [
+		 ],
+	"super" : "DiskStore",
+	"type" : "normal" }

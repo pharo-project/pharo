@@ -1,0 +1,24 @@
+{
+	"category" : "Athens-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:16",
+	"instvars" : [
+		"paint",
+		"path",
+		"fillRule",
+		"fill",
+		"capStyle",
+		"joinStyle",
+		"miterLimit",
+		"strokeWidth",
+		"strokePaint",
+		"fillPaint",
+		"stroke" ],
+	"name" : "AthensTigerShape",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests-StreamStrategies",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 10/12/2011 11:36",
+	"instvars" : [
+		 ],
+	"name" : "FLStreamStrategy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

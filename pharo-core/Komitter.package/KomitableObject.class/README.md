@@ -1,0 +1,1 @@
+I represent any commitable object, mainly a simple commit or a slice

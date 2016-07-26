@@ -1,0 +1,3 @@
+*FreeType-Addition
+lastFontForegroundColor
+	^ nil 

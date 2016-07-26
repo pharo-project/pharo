@@ -1,0 +1,4 @@
+private
+lastCommit
+
+	^ lastCommit value

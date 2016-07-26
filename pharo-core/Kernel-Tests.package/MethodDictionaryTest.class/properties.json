@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TIncludesTest classTrait + TDictionaryKeysValuesAssociationsAccess classTrait + TDictionaryRemovingTest classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:40",
+	"instvars" : [
+		"nonEmptyDict" ],
+	"name" : "MethodDictionaryTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"traitcomposition" : "TIncludesTest + TDictionaryKeysValuesAssociationsAccess + TDictionaryRemovingTest",
+	"type" : "normal" }

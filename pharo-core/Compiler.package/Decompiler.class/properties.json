@@ -1,0 +1,35 @@
+{
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"ArgumentFlag",
+		"CascadeFlag",
+		"CaseFlag",
+		"IfNilFlag" ],
+	"commentStamp" : "nice 2/3/2011 22:54",
+	"instvars" : [
+		"constructor",
+		"method",
+		"instVars",
+		"tempVars",
+		"constTable",
+		"stack",
+		"statements",
+		"lastPc",
+		"exit",
+		"caseExits",
+		"lastJumpPc",
+		"lastReturnPc",
+		"limit",
+		"hasValue",
+		"blockStackBase",
+		"numLocalTemps",
+		"blockStartsToTempVars",
+		"tempVarCount",
+		"lastJumpIfPcStack" ],
+	"name" : "Decompiler",
+	"pools" : [
+		 ],
+	"super" : "InstructionStream",
+	"type" : "normal" }

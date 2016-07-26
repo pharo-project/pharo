@@ -1,0 +1,16 @@
+{
+	"category" : "CodeImport",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 4/15/2016 12:10",
+	"instvars" : [
+		"methodChunk",
+		"fileCompileRequestor",
+		"interactive" ],
+	"name" : "MethodChunkCompilerRequestor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

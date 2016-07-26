@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCollectionsSequenceable",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

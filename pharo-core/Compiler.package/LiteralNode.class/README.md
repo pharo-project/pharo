@@ -1,0 +1,1 @@
+I am a parse tree leaf representing a literal string or number.

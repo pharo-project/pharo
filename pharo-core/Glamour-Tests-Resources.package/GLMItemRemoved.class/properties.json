@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Tests-Resources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMItemRemoved",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

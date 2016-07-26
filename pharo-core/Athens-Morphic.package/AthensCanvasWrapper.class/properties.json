@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"athensCanvas",
+		"currentClipRect",
+		"origin" ],
+	"name" : "AthensCanvasWrapper",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

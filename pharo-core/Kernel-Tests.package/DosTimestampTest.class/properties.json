@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DosTimestampTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,20 @@
+{
+	"category" : "Alien-Core",
+	"classinstvars" : [
+		"concreteClass" ],
+	"classvars" : [
+		"ABI",
+		"FlushThunkToCallbackMap",
+		"ThunkToCallbackMap" ],
+	"commentStamp" : "eem 6/17/2016 19:44",
+	"instvars" : [
+		"block",
+		"thunk",
+		"argsProxyClass",
+		"evaluator",
+		"numEvaluatorArgs" ],
+	"name" : "Callback",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

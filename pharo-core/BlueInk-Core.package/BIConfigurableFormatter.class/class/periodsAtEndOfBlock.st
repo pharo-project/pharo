@@ -1,0 +1,3 @@
+accessing
+periodsAtEndOfBlock
+	^ DefaultPrettyPrintContext periodsAtEndOfBlock

@@ -1,0 +1,6 @@
+coverage
+classToBeTested
+
+	^ Duration
+
+

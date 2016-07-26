@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Atomic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Igor.Stasenko 10/16/2010 03:58",
+	"instvars" : [
+		"head" ],
+	"name" : "LIFOQueue",
+	"pools" : [
+		 ],
+	"super" : "AtomicCollection",
+	"type" : "normal" }

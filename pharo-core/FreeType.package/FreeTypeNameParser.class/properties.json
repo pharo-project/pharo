@@ -1,0 +1,31 @@
+{
+	"category" : "FreeType-FontManager",
+	"classinstvars" : [
+		"weightNames",
+		"stretchNames",
+		"obliqueNames",
+		"normalNames",
+		"italicNames" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:11",
+	"instvars" : [
+		"combinedName",
+		"familyNameIn",
+		"styleNameIn",
+		"delimiters",
+		"tokens",
+		"extractedSlant",
+		"extractedSlantValue",
+		"extractedUpright",
+		"extractedStretch",
+		"extractedWeight",
+		"italicFlag",
+		"boldFlag",
+		"extractedWeightValue",
+		"extractedStretchValue" ],
+	"name" : "FreeTypeNameParser",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

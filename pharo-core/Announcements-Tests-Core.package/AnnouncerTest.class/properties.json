@@ -1,0 +1,14 @@
+{
+	"category" : "Announcements-Tests-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Tbn 11/12/2010 10:55",
+	"instvars" : [
+		"announcer" ],
+	"name" : "AnnouncerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

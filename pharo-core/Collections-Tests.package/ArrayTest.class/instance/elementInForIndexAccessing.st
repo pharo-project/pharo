@@ -1,0 +1,4 @@
+requirements
+elementInForIndexAccessing
+
+	^ withoutEqualElements anyOne

@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 5/30/2011 01:25",
+	"instvars" : [
+		 ],
+	"name" : "FLFixedObjectCluster",
+	"pools" : [
+		 ],
+	"super" : "FLPointerObjectCluster",
+	"type" : "normal" }

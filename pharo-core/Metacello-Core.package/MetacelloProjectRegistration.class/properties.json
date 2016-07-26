@@ -1,0 +1,20 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Registry" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"projectName",
+		"configurationProjectSpec",
+		"baselineProjectSpec",
+		"loadedInImage",
+		"locked",
+		"mutable",
+		"versionInfo" ],
+	"name" : "MetacelloProjectRegistration",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

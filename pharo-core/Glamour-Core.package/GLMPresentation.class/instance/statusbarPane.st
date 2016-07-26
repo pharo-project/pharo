@@ -1,0 +1,3 @@
+statusbar
+statusbarPane
+	^ statusPane

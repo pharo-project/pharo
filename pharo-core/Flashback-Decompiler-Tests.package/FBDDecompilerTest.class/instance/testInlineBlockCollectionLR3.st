@@ -1,0 +1,3 @@
+tests
+testInlineBlockCollectionLR3
+	self checkCorrectDecompilation: #exampleInlineBlockCollectionLR3

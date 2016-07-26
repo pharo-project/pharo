@@ -1,0 +1,4 @@
+values
+previewBorderWidth
+
+	^ self outerBorderWidth

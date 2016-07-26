@@ -1,0 +1,1 @@
+I am an abstract class representing a node in the tree

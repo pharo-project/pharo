@@ -1,0 +1,1 @@
+I represent the creation of a trait.

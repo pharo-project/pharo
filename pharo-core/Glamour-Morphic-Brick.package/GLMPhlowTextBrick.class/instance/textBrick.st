@@ -1,0 +1,5 @@
+accessing
+textBrick
+
+	^ textBrick
+	

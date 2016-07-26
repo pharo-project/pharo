@@ -1,0 +1,1 @@
+This action is responsible for executing a selected piece of code from the code pane of the debugger.

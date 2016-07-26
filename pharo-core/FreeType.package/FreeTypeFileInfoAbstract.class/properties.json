@@ -1,0 +1,30 @@
+{
+	"category" : "FreeType-FontManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:10",
+	"instvars" : [
+		"index",
+		"familyName",
+		"styleName",
+		"postscriptName",
+		"bold",
+		"italic",
+		"fixedWidth",
+		"numFaces",
+		"familyGroupName",
+		"slant",
+		"slantValue",
+		"weight",
+		"stretch",
+		"weightValue",
+		"stretchValue",
+		"styleNameExtracted",
+		"upright" ],
+	"name" : "FreeTypeFileInfoAbstract",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

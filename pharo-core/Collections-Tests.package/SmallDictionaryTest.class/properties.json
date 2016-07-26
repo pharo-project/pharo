@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:22",
+	"instvars" : [
+		 ],
+	"name" : "SmallDictionaryTest",
+	"pools" : [
+		 ],
+	"super" : "DictionaryTest",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+private
+prepareForRendering
+	self fastReset

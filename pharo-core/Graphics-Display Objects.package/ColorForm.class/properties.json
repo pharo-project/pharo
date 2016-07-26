@@ -1,0 +1,16 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"colors",
+		"cachedDepth",
+		"cachedColormap" ],
+	"name" : "ColorForm",
+	"pools" : [
+		 ],
+	"super" : "Form",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+constants
+MAXPATH
+	^260

@@ -1,0 +1,17 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tlk 5/31/2004 16:07",
+	"instvars" : [
+		"aCompiledMethod",
+		"aReceiver",
+		"aMethodContext",
+		"aSender" ],
+	"name" : "MethodContextTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

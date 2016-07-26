@@ -1,0 +1,1 @@
+I serialize or materialize objects using STON framework. Create instance of me calling GlobalIdentifierPersistence ston.

@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dew 10/23/2004 17:58",
+	"instvars" : [
+		"seconds",
+		"nanos" ],
+	"name" : "Time",
+	"pools" : [
+		"ChronologyConstants" ],
+	"super" : "Magnitude",
+	"type" : "normal" }

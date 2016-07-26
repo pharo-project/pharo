@@ -1,0 +1,1 @@
+MetacelloValidationCriticalWarning indicates that there is a logical inconsistency that may not be intentional and that could cause incorrect loads

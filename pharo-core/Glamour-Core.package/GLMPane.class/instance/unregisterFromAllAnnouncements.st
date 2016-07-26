@@ -1,0 +1,3 @@
+updating
+unregisterFromAllAnnouncements
+	self presentations unregisterFromAllAnnouncements

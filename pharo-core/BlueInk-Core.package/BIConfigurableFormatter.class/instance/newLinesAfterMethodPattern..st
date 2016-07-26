@@ -1,0 +1,3 @@
+accessing
+newLinesAfterMethodPattern: anInteger
+	context newLinesAfterMethodPattern: anInteger

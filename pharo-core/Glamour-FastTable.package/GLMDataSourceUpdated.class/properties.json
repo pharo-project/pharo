@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-FastTable-Announcement",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "CyrilFerlicot 11/16/2015 15:51",
+	"instvars" : [
+		"newDataSource" ],
+	"name" : "GLMDataSourceUpdated",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

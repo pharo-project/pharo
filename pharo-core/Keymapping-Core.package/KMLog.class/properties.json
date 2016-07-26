@@ -1,0 +1,14 @@
+{
+	"category" : "Keymapping-Core",
+	"classinstvars" : [
+		"debug" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "KMLog",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

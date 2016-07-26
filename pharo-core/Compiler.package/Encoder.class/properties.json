@@ -1,0 +1,27 @@
+{
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"scopeTable",
+		"nTemps",
+		"supered",
+		"requestor",
+		"class",
+		"selector",
+		"literalStream",
+		"selectorSet",
+		"litIndSet",
+		"litSet",
+		"sourceRanges",
+		"globalSourceRanges",
+		"addedSelectorAndMethodClassLiterals",
+		"optimizedSelectors" ],
+	"name" : "Encoder",
+	"pools" : [
+		 ],
+	"super" : "ParseNode",
+	"type" : "normal" }

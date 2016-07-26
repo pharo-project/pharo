@@ -1,0 +1,3 @@
+constants
+defaultStatusbarPane
+	^ #'_statusbar'

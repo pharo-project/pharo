@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 3/19/2015 13:23",
+	"instvars" : [
+		"textLogic" ],
+	"name" : "GLMLiveLabelBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMLabelBrick",
+	"type" : "normal" }

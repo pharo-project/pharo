@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 6/30/2015 12:15",
+	"instvars" : [
+		"firstLink",
+		"lastLink" ],
+	"name" : "ProcessList",
+	"pools" : [
+		 ],
+	"super" : "SequenceableCollection",
+	"type" : "normal" }

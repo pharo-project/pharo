@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-Filters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 7/17/2015 13:46",
+	"instvars" : [
+		"caseSensitive",
+		"query" ],
+	"name" : "GTStringFilter",
+	"pools" : [
+		 ],
+	"super" : "GTFilter",
+	"type" : "normal" }

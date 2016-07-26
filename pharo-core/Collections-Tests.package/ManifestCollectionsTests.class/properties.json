@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCollectionsTests",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Transformations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MatrixTransform2x3",
+	"pools" : [
+		 ],
+	"super" : "DisplayTransform",
+	"type" : "words" }

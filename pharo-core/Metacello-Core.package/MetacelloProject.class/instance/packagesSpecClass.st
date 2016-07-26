@@ -1,0 +1,4 @@
+spec classes
+packagesSpecClass
+
+	^MetacelloPackagesSpec

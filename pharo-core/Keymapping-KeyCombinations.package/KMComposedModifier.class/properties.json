@@ -1,0 +1,14 @@
+{
+	"category" : "Keymapping-KeyCombinations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"modifiers" ],
+	"name" : "KMComposedModifier",
+	"pools" : [
+		 ],
+	"super" : "KMModifier",
+	"type" : "normal" }

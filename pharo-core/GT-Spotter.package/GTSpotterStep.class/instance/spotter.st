@@ -1,0 +1,4 @@
+accessing
+spotter
+
+	^ spotter

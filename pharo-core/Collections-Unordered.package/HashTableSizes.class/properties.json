@@ -1,0 +1,17 @@
+{
+	"category" : "Collections-Unordered",
+	"classinstvars" : [
+		"sizes" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinMcClure 3/18/2010 21:44",
+	"instvars" : [
+		"candidate",
+		"goodPrimes",
+		"primesToAvoid",
+		"valuesNotToDivide" ],
+	"name" : "HashTableSizes",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

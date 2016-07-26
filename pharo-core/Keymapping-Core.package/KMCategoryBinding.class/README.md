@@ -1,0 +1,1 @@
+I am the reification of the relation morph<->category, created when a morph gets attached a category of shortcuts.

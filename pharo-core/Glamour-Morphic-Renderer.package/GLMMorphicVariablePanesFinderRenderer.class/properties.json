@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"scrollPane" ],
+	"name" : "GLMMorphicVariablePanesFinderRenderer",
+	"pools" : [
+		 ],
+	"super" : "GLMMorphicFinderRenderer",
+	"type" : "normal" }

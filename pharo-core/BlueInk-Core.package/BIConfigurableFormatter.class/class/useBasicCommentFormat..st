@@ -1,0 +1,4 @@
+accessing
+useBasicCommentFormat: aBoolean
+	DefaultPrettyPrintContext useBasicCommentFormat: aBoolean.
+	self announceASettingChange

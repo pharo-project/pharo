@@ -1,0 +1,18 @@
+{
+	"category" : "GT-EventRecorder-Tests-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"unpacking",
+		"collector",
+		"unpackedData",
+		"initialData",
+		"bundle" ],
+	"name" : "GTEventUnpackingTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

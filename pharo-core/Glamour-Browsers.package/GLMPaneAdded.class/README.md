@@ -1,0 +1,1 @@
+A new pane was added

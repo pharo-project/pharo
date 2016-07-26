@@ -1,0 +1,4 @@
+accessing
+defaultLabel
+
+	^ 'Print it'

@@ -1,0 +1,3 @@
+colors
+curveColor
+	^ Color red

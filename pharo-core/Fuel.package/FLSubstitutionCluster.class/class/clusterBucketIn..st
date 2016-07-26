@@ -1,0 +1,4 @@
+analyzing
+clusterBucketIn: aClusterization
+
+	^aClusterization substitutionsBucket

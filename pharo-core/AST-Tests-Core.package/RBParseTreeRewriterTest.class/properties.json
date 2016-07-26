@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"rewriter" ],
+	"name" : "RBParseTreeRewriterTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

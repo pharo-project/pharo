@@ -1,0 +1,4 @@
+setup
+classToBeTested 
+
+	^ Dictionary

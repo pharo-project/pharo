@@ -1,0 +1,15 @@
+{
+	"category" : "Fuel-Mappers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/20/2011 23:45",
+	"instvars" : [
+		"condition",
+		"substitutionFactory" ],
+	"name" : "FLPluggableSubstitutionMapper",
+	"pools" : [
+		 ],
+	"super" : "FLMapper",
+	"type" : "normal" }

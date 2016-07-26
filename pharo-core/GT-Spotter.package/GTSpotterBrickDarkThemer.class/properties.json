@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Theme",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTSpotterBrickDarkThemer",
+	"pools" : [
+		 ],
+	"super" : "GLMBrickDarkThemer",
+	"type" : "normal" }

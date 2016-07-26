@@ -1,0 +1,18 @@
+{
+	"category" : "GT-EventRecorder-Core",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 10/13/2015 22:36",
+	"instvars" : [
+		"collectors",
+		"delivery",
+		"packing",
+		"privacy",
+		"announcer" ],
+	"name" : "GTEventRecorder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

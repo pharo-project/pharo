@@ -1,0 +1,3 @@
+tests
+testSimpleBlockArgument1
+	self checkCorrectDecompilation: #exampleSimpleBlockArgument1

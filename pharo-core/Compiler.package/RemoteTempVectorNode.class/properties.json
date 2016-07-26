@@ -1,0 +1,16 @@
+{
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"remoteTemps",
+		"readNode",
+		"writeNode" ],
+	"name" : "RemoteTempVectorNode",
+	"pools" : [
+		 ],
+	"super" : "TempVariableNode",
+	"type" : "normal" }

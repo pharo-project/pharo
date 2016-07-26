@@ -1,0 +1,3 @@
+accessing
+subscript
+	^ subscript

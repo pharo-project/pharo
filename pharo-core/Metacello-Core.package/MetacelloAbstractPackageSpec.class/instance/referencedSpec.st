@@ -1,0 +1,4 @@
+accessing
+referencedSpec
+
+	^self

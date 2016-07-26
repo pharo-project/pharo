@@ -1,0 +1,3 @@
+accessing-fields
+linearHorizontalAdvance
+	^linearHorizontalAdvance

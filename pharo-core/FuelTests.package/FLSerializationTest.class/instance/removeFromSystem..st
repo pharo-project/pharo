@@ -1,0 +1,3 @@
+cleaning
+removeFromSystem: aClassOrTrait
+	aClassOrTrait removeFromSystem: false

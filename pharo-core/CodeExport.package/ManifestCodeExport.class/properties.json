@@ -1,0 +1,14 @@
+{
+	"category" : "CodeExport",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCodeExport",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

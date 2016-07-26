@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SkipLentz 9/15/2015 10:37",
+	"instvars" : [
+		"oldCategoryName" ],
+	"name" : "EpCategoryRename",
+	"pools" : [
+		 ],
+	"super" : "EpCategoryChange",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+i represent stroke paint for balloon backend

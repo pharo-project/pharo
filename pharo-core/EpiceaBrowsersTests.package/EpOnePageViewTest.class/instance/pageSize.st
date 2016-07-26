@@ -1,0 +1,3 @@
+resources
+pageSize
+	^ 5

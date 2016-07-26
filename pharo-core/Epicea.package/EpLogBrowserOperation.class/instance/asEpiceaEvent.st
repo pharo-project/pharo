@@ -1,0 +1,4 @@
+triggering
+asEpiceaEvent
+
+	^ self

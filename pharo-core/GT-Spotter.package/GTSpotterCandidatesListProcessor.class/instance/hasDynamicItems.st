@@ -1,0 +1,3 @@
+testing
+hasDynamicItems
+	^ allCandidatesBlock hasDynamicItems

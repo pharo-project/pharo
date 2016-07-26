@@ -1,0 +1,3 @@
+signaling
+signalAddedNewItem
+	availSema signal

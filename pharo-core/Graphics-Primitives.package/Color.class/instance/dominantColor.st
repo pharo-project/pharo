@@ -1,0 +1,3 @@
+conversions
+dominantColor
+	^ self

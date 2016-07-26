@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector-Examples-Utils",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"method" ],
+	"name" : "GTExampleImpostorPragma",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

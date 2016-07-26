@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests-StreamStrategies",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MaxLeske 4/30/2016 10:50",
+	"instvars" : [
+		 ],
+	"name" : "FLBinaryFileStreamStrategy",
+	"pools" : [
+		 ],
+	"super" : "FLFileStreamStrategy",
+	"type" : "normal" }

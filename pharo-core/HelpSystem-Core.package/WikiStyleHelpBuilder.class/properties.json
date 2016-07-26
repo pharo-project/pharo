@@ -1,0 +1,14 @@
+{
+	"category" : "HelpSystem-Core-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 2/13/2011 16:53",
+	"instvars" : [
+		 ],
+	"name" : "WikiStyleHelpBuilder",
+	"pools" : [
+		 ],
+	"super" : "HelpBuilder",
+	"type" : "normal" }

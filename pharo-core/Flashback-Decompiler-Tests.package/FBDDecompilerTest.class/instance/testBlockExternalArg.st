@@ -1,0 +1,3 @@
+tests
+testBlockExternalArg
+	self checkCorrectDecompilation: #exampleBlockExternalArg.

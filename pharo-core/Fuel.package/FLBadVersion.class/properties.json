@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MarianoMartinezPeck 10/23/2011 14:33",
+	"instvars" : [
+		 ],
+	"name" : "FLBadVersion",
+	"pools" : [
+		 ],
+	"super" : "FLMaterializationError",
+	"type" : "normal" }

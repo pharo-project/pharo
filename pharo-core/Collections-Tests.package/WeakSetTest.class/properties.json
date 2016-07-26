@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:36",
+	"instvars" : [
+		 ],
+	"name" : "WeakSetTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

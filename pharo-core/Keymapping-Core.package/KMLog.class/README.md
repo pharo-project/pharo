@@ -1,0 +1,1 @@
+I am a simple log utility that can be enabled by sending the #setDebug and disabled by using #removeDebug. I trace the keymapping events.

@@ -1,0 +1,3 @@
+arithmetic
+abs
+	^ self negated

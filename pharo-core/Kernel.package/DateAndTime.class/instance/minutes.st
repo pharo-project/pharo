@@ -1,0 +1,4 @@
+accessing
+minutes
+ 
+ 	^ self minute

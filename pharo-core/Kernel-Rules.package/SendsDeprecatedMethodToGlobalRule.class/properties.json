@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/29/2014 23:03",
+	"instvars" : [
+		 ],
+	"name" : "SendsDeprecatedMethodToGlobalRule",
+	"pools" : [
+		 ],
+	"super" : "RBBlockLintRule",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"result" ],
+	"name" : "GLMFormSubmitted",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

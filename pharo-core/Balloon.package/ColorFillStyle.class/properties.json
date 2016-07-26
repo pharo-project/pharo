@@ -1,0 +1,15 @@
+{
+	"category" : "Balloon-Fills",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "gvc 12/8/2008 13:05",
+	"instvars" : [
+		"origin",
+		"extent" ],
+	"name" : "ColorFillStyle",
+	"pools" : [
+		 ],
+	"super" : "SolidFillStyle",
+	"type" : "normal" }

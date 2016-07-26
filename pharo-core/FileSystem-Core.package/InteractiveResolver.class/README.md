@@ -1,0 +1,1 @@
+I resolve origins by consulting the user. I maintain a cache of the user's responses.

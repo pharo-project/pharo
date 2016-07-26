@@ -1,0 +1,3 @@
+accessing
+newLineBeforeFirstKeyword: aBoolean
+	context newLineBeforeFirstKeyword: aBoolean

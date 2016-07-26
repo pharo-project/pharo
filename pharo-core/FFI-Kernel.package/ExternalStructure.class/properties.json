@@ -1,0 +1,14 @@
+{
+	"category" : "FFI-Kernel",
+	"classinstvars" : [
+		"compiledSpec" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ExternalStructure",
+	"pools" : [
+		"FFIConstants" ],
+	"super" : "ExternalObject",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+converting
+asBit
+
+	^ 0

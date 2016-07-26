@@ -1,0 +1,3 @@
+scripting
+itemFilterName: aBlockWithOneArgument
+	itemFilterNameBlock := aBlockWithOneArgument

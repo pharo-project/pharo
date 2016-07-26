@@ -1,0 +1,4 @@
+requirements
+accessCollection
+
+	^ example1

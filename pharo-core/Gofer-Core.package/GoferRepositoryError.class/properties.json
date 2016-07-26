@@ -1,0 +1,14 @@
+{
+	"category" : "Gofer-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "lr 1/30/2010 14:39",
+	"instvars" : [
+		"repository" ],
+	"name" : "GoferRepositoryError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+brick
+focusedBorderWidth
+
+	^ 1

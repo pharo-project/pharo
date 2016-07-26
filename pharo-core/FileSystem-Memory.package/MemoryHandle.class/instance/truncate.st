@@ -1,0 +1,3 @@
+public
+truncate
+	entry truncate

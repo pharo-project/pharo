@@ -1,0 +1,3 @@
+converting
+asFloatArray
+	^self

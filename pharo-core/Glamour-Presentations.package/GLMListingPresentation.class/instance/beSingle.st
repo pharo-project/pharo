@@ -1,0 +1,3 @@
+scripting
+beSingle
+	allowsMultipleSelection := false

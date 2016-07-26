@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector-Examples-Tools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GTExampleDebugger",
+	"pools" : [
+		 ],
+	"super" : "GTExampleEvaluator",
+	"type" : "normal" }

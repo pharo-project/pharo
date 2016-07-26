@@ -1,0 +1,1 @@
+I'm an object holding information to choose a font from a list of fonts.

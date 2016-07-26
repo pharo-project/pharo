@@ -1,0 +1,16 @@
+{
+	"category" : "CodeImport",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"contents",
+		"fileReference",
+		"interactive" ],
+	"name" : "FileCompilerRequestor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

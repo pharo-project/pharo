@@ -1,0 +1,15 @@
+{
+	"category" : "HelpSystem-Tests-Core-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tbn 5/3/2010 19:30",
+	"instvars" : [
+		"rootTopic",
+		"isOpen" ],
+	"name" : "AdvancedHelpBrowserDummy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

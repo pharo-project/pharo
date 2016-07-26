@@ -1,0 +1,16 @@
+{
+	"category" : "GT-Inspector-Examples-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"expected",
+		"defined",
+		"evaluated" ],
+	"name" : "GTExampleArgumentError",
+	"pools" : [
+		 ],
+	"super" : "GTExampleError",
+	"type" : "normal" }

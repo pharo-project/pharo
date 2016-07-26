@@ -1,0 +1,1 @@
+A GoferVersionReference refers to a specific version of a Monticello package in a particular repository. This class is the only one that can actually load the version, because it is the only one knowing where to find it.

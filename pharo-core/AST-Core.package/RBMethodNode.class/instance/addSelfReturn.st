@@ -1,0 +1,3 @@
+accessing
+addSelfReturn
+	^ body addSelfReturn

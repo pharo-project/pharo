@@ -1,0 +1,1 @@
+This renders the top most browser or composite presentation in a window.

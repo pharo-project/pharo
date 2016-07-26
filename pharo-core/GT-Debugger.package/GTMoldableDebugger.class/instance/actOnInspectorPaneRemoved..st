@@ -1,0 +1,2 @@
+callbacks
+actOnInspectorPaneRemoved: ann

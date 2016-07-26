@@ -1,0 +1,14 @@
+{
+	"category" : "FileSystem-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "cwp 11/18/2009 12:32",
+	"instvars" : [
+		"reference" ],
+	"name" : "FileSystemError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

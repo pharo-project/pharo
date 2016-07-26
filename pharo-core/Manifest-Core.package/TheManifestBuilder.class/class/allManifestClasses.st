@@ -1,0 +1,4 @@
+utils
+allManifestClasses
+
+	^ PackageManifest subclasses

@@ -1,0 +1,4 @@
+*Metacello-Core
+setBlessingInMetacelloVersion: aMetacelloVersionSpec
+
+	aMetacelloVersionSpec setBlessing: self

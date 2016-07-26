@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tlk 12/5/2004 14:36",
+	"instvars" : [
+		 ],
+	"name" : "ReadStreamTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

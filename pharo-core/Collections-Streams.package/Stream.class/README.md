@@ -1,0 +1,1 @@
+I am an abstract class that represents an accessor for a sequence of objects. This sequence is referred to as my "contents".

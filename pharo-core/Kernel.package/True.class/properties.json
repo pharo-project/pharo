@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "True",
+	"pools" : [
+		 ],
+	"super" : "Boolean",
+	"type" : "normal" }

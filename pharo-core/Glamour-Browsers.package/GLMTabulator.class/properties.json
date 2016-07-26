@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Browsers-Tabulator",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"cell" ],
+	"name" : "GLMTabulator",
+	"pools" : [
+		 ],
+	"super" : "GLMExplicitBrowser",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+I represent the creation of a category in a package.

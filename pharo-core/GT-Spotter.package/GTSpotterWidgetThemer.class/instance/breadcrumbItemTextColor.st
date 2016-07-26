@@ -1,0 +1,4 @@
+values
+breadcrumbItemTextColor
+
+	^ Color white

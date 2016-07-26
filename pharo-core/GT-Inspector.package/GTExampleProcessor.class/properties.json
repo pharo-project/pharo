@@ -1,0 +1,20 @@
+{
+	"category" : "GT-Inspector-Examples-Tools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"example",
+		"context",
+		"processing",
+		"onProcess",
+		"onRecursionError",
+		"onDependencyError",
+		"onArgumentError" ],
+	"name" : "GTExampleProcessor",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

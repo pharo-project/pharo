@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Spotter-Iterators",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"context",
+		"items" ],
+	"name" : "GTSpotterIterator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

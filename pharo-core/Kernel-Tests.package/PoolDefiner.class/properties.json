@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Tests-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Author",
+		"Gloups" ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:39",
+	"instvars" : [
+		 ],
+	"name" : "PoolDefiner",
+	"pools" : [
+		 ],
+	"super" : "SharedPool",
+	"type" : "normal" }

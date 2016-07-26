@@ -1,0 +1,17 @@
+{
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"compositeBrick",
+		"spotterModel",
+		"asyncTask",
+		"previewObject" ],
+	"name" : "GTSpotterPreviewBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

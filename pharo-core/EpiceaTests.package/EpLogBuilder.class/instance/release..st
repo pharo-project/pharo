@@ -1,0 +1,3 @@
+releasing
+release: aLogCreatedByThisBuilder
+	aLogCreatedByThisBuilder store fileReference ensureDelete

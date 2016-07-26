@@ -1,0 +1,4 @@
+defaults
+staticHeight
+
+	^ 100

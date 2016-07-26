@@ -1,0 +1,14 @@
+{
+	"category" : "Athens-Balloon",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"colorRamp" ],
+	"name" : "AthensBalloonGradientPaint",
+	"pools" : [
+		 ],
+	"super" : "AthensBalloonPaint",
+	"type" : "normal" }

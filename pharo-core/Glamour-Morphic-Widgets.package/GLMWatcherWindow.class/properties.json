@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"isOpen",
+		"contentsMorph",
+		"process" ],
+	"name" : "GLMWatcherWindow",
+	"pools" : [
+		 ],
+	"super" : "SystemWindow",
+	"type" : "normal" }

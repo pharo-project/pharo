@@ -1,0 +1,14 @@
+{
+	"category" : "Balloon-Engine",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "BalloonBuffer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "words" }

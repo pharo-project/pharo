@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Strings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "WideSymbol",
+	"pools" : [
+		 ],
+	"super" : "Symbol",
+	"type" : "words" }

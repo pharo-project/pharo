@@ -1,0 +1,1 @@
+I represent a duration of time. I have nanosecond precision

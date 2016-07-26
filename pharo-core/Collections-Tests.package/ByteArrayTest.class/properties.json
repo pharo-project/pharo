@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Arrayed",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:19",
+	"instvars" : [
+		 ],
+	"name" : "ByteArrayTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

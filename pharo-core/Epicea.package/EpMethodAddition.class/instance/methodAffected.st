@@ -1,0 +1,4 @@
+accessing
+methodAffected
+
+	^ self methodAdded

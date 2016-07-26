@@ -1,0 +1,2 @@
+font dirs
+rememberFontDir: aDirecory

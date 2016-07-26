@@ -1,0 +1,4 @@
+*compression
+convertToSystemString
+
+	^LanguageEnvironment defaultSystemConverter convertToSystemString: self

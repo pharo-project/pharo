@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"transmission" ],
+	"name" : "GLMTransmissionTriggered",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

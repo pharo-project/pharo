@@ -1,0 +1,3 @@
+testing
+hasPermission
+	^ permission

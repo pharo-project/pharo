@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Atomic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCollectionsAtomic",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

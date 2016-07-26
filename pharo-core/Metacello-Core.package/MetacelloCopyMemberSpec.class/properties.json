@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Members",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"sourceName" ],
+	"name" : "MetacelloCopyMemberSpec",
+	"pools" : [
+		 ],
+	"super" : "MetacelloMemberSpec",
+	"type" : "normal" }

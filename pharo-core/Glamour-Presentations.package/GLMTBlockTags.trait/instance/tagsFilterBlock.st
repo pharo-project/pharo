@@ -1,0 +1,3 @@
+accessing
+tagsFilterBlock
+	self explicitRequirement

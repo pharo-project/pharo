@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"browser" ],
+	"name" : "EpSelection",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

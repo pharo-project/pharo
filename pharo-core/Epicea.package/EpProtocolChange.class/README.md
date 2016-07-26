@@ -1,0 +1,1 @@
+I represent a change in the protocols of a class.

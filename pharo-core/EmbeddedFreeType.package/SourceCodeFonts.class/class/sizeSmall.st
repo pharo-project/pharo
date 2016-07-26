@@ -1,0 +1,3 @@
+accessing
+sizeSmall 
+	^ 10

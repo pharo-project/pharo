@@ -1,0 +1,14 @@
+{
+	"category" : "Komitter-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "KomitSqueakSourceRemote",
+	"pools" : [
+		 ],
+	"super" : "KomitRemote",
+	"type" : "normal" }

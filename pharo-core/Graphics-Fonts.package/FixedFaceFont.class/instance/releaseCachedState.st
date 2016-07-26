@@ -1,0 +1,3 @@
+caching
+releaseCachedState
+	baseFont releaseCachedState.

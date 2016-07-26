@@ -1,0 +1,3 @@
+converting
+asIdentitySet
+	^ contents asIdentitySet

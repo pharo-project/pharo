@@ -1,0 +1,1 @@
+I am the abstract superclass of all classes that represent a group of elements.

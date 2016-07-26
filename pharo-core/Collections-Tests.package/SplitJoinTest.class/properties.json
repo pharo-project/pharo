@@ -1,0 +1,15 @@
+{
+	"category" : "Collections-Tests-SplitJoin",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "onierstrasz 4/12/2009 20:33",
+	"instvars" : [
+		"eg",
+		"stringToSplit" ],
+	"name" : "SplitJoinTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

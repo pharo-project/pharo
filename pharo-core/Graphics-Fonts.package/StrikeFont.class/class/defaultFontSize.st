@@ -1,0 +1,3 @@
+accessing
+defaultFontSize
+	^ 9

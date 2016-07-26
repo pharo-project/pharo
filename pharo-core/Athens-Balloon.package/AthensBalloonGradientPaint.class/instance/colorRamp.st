@@ -1,0 +1,4 @@
+accessing
+colorRamp
+
+	^ colorRamp

@@ -1,0 +1,18 @@
+{
+	"category" : "Compiler-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"method",
+		"instVars",
+		"nArgs",
+		"literalValues",
+		"tempVars" ],
+	"name" : "DecompilerConstructor",
+	"pools" : [
+		 ],
+	"super" : "ParseNode",
+	"type" : "normal" }

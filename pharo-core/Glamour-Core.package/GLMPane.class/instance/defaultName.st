@@ -1,0 +1,4 @@
+initialization
+defaultName
+
+	^'undefined'

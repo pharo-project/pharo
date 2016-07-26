@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ProtocolRemovalException",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

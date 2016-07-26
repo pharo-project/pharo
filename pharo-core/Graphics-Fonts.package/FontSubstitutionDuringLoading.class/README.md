@@ -1,0 +1,1 @@
+signaled by font loading code when reading a DiskProxy that calls for a missing font.

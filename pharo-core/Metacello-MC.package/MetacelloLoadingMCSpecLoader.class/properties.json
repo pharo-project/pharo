@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-MC-Loaders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloLoadingMCSpecLoader",
+	"pools" : [
+		 ],
+	"super" : "MetacelloCommonMCSpecLoader",
+	"type" : "normal" }

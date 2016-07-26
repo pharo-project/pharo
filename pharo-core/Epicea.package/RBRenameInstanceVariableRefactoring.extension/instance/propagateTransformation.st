@@ -1,0 +1,3 @@
+*Epicea-Refactorings
+propagateTransformation
+	self renameReferences

@@ -1,0 +1,3 @@
+accessing
+length
+	^self subclassResponsibility

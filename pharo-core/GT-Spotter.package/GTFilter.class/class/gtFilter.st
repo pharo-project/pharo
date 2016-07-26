@@ -1,0 +1,3 @@
+public
+gtFilter
+	^ self new

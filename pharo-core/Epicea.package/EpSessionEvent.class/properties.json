@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"imageName" ],
+	"name" : "EpSessionEvent",
+	"pools" : [
+		 ],
+	"super" : "EpEvent",
+	"type" : "normal" }

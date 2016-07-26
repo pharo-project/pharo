@@ -1,0 +1,3 @@
+configuration
+defaultDownloadDirectory
+	^ FileSystem disk workingDirectory

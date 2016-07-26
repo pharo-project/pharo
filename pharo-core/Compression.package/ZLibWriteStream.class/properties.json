@@ -1,0 +1,14 @@
+{
+	"category" : "Compression-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ZLibWriteStream",
+	"pools" : [
+		 ],
+	"super" : "ZipWriteStream",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+compatibility
+context
+	^ self current

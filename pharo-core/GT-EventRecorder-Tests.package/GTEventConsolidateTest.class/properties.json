@@ -1,0 +1,20 @@
+{
+	"category" : "GT-EventRecorder-Tests-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"consolidate",
+		"collector1",
+		"collector2",
+		"collector3",
+		"collectors",
+		"consolidated",
+		"data" ],
+	"name" : "GTEventConsolidateTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

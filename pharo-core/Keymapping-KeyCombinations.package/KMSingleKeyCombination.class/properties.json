@@ -1,0 +1,14 @@
+{
+	"category" : "Keymapping-KeyCombinations",
+	"classinstvars" : [
+		"specialKeys" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"key" ],
+	"name" : "KMSingleKeyCombination",
+	"pools" : [
+		 ],
+	"super" : "KMKeyCombination",
+	"type" : "normal" }

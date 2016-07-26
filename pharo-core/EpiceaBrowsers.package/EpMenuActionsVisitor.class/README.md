@@ -1,0 +1,1 @@
+I know what are the menu actions that correspond to each EpEvent.

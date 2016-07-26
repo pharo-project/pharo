@@ -1,0 +1,4 @@
+accessing
+point
+
+	^ point

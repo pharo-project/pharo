@@ -1,0 +1,3 @@
+testing
+isSelf
+	^ true

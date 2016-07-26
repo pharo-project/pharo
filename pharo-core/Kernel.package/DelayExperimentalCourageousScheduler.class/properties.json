@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenComan 11/23/2015 22:29",
+	"instvars" : [
+		 ],
+	"name" : "DelayExperimentalCourageousScheduler",
+	"pools" : [
+		 ],
+	"super" : "DelayMicrosecondScheduler",
+	"type" : "normal" }

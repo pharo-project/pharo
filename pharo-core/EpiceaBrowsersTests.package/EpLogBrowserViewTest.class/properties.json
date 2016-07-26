@@ -1,0 +1,15 @@
+{
+	"category" : "EpiceaBrowsersTests-Views",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"view",
+		"browser" ],
+	"name" : "EpLogBrowserViewTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

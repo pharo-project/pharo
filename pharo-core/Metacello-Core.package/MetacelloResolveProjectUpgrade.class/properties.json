@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"existingProjectRegistration",
+		"newProjectRegistration" ],
+	"name" : "MetacelloResolveProjectUpgrade",
+	"pools" : [
+		 ],
+	"super" : "MetacelloScriptNotification",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 14:46",
+	"instvars" : [
+		"oldTrait",
+		"newTrait" ],
+	"name" : "EpTraitModification",
+	"pools" : [
+		 ],
+	"super" : "EpTraitChange",
+	"type" : "normal" }

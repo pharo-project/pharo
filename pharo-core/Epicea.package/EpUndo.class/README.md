@@ -1,0 +1,1 @@
+I represent a Undo operation performed in a EpLogBrowser.

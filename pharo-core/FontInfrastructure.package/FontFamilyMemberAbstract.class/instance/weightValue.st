@@ -1,0 +1,3 @@
+accessing
+weightValue
+	self subclassResponsibility

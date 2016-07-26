@@ -1,0 +1,4 @@
+initialization
+result
+	
+	^ collectResult

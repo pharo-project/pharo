@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:25",
+	"instvars" : [
+		 ],
+	"name" : "FLGZippedBasicSerializationTest",
+	"pools" : [
+		 ],
+	"super" : "FLBasicSerializationTest",
+	"type" : "normal" }

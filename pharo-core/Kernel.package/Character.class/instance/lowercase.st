@@ -1,0 +1,3 @@
+converting
+lowercase
+	^ self asLowercase

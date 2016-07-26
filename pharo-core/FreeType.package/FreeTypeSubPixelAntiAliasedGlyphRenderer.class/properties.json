@@ -1,0 +1,14 @@
+{
+	"category" : "FreeType-GlyphRendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:11",
+	"instvars" : [
+		 ],
+	"name" : "FreeTypeSubPixelAntiAliasedGlyphRenderer",
+	"pools" : [
+		"FT2Constants" ],
+	"super" : "FreeTypeGlyphRenderer",
+	"type" : "normal" }

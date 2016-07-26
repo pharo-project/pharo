@@ -1,0 +1,14 @@
+{
+	"category" : "EmbeddedFreeType",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SourceCodeProRegular",
+	"pools" : [
+		 ],
+	"super" : "EmbeddedFreeTypeFontFontDescription",
+	"type" : "normal" }

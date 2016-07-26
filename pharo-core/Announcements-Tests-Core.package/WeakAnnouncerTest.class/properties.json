@@ -1,0 +1,14 @@
+{
+	"category" : "Announcements-Tests-Core-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:15",
+	"instvars" : [
+		 ],
+	"name" : "WeakAnnouncerTest",
+	"pools" : [
+		 ],
+	"super" : "AnnouncerTest",
+	"type" : "normal" }

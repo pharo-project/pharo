@@ -1,0 +1,4 @@
+signaledexception
+isResumable
+
+	^true

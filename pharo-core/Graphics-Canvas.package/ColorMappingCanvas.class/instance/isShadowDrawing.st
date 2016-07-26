@@ -1,0 +1,3 @@
+testing
+isShadowDrawing
+	^myCanvas isShadowDrawing

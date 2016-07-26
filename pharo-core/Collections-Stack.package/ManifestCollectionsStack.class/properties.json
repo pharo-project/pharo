@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Stack",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCollectionsStack",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

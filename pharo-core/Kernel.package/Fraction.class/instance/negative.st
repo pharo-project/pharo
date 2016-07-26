@@ -1,0 +1,4 @@
+testing
+negative
+
+	^numerator negative

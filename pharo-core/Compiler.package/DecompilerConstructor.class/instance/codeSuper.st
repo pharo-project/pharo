@@ -1,0 +1,4 @@
+constructor
+codeSuper
+
+	^NodeSuper

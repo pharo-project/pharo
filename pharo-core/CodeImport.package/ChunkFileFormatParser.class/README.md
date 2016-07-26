@@ -1,0 +1,1 @@
+I represent the chunk file format.  Right now I know how to parse chunks from a readStream, but not how to write them.

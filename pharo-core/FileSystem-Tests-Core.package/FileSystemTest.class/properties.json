@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"filesystem",
+		"toDelete" ],
+	"name" : "FileSystemTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

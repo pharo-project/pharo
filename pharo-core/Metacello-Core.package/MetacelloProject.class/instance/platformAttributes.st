@@ -1,0 +1,4 @@
+private
+platformAttributes
+
+	 ^self projectPlatformAttributes

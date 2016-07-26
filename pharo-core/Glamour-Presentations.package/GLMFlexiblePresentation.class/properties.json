@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "GLMFlexiblePresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMPresentation",
+	"type" : "normal" }

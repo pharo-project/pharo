@@ -1,0 +1,4 @@
+accessing
+bePassive 
+	 
+	active := false

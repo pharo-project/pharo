@@ -1,0 +1,3 @@
+accessing
+resetRegistry
+    Registry := nil

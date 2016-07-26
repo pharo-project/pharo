@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters-Optionals",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FLAbstractCollectionCluster",
+	"pools" : [
+		 ],
+	"super" : "FLObjectCluster",
+	"type" : "normal" }

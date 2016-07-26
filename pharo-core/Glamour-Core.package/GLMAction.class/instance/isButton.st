@@ -1,0 +1,3 @@
+testing
+isButton
+	^self hasIcon

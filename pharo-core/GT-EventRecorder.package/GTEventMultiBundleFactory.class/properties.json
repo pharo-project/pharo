@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 11/15/2015 18:03",
+	"instvars" : [
+		"multiBundles" ],
+	"name" : "GTEventMultiBundleFactory",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

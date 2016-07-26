@@ -1,0 +1,4 @@
+accessing
+stagingArea
+
+	^ stagingArea value 

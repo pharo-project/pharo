@@ -1,0 +1,17 @@
+{
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:30",
+	"instvars" : [
+		"matrix1",
+		"matrix2",
+		"matrix3",
+		"matrix23" ],
+	"name" : "MatrixTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 12/6/2014 20:15",
+	"instvars" : [
+		 ],
+	"name" : "GLMBrickAbstractModel",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

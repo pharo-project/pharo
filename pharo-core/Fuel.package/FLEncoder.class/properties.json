@@ -1,0 +1,19 @@
+{
+	"category" : "Fuel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/6/2012 16:08",
+	"instvars" : [
+		"stream",
+		"objectsIndexes",
+		"objectCount",
+		"indexStream",
+		"globalEnvironment",
+		"substitutionIndexes" ],
+	"name" : "FLEncoder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

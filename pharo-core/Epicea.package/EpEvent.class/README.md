@@ -1,0 +1,1 @@
+I am an abstract class that represents a system event.

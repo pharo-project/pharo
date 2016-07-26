@@ -1,0 +1,14 @@
+{
+	"category" : "FreeType-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FT2Library",
+	"pools" : [
+		 ],
+	"super" : "FT2Handle",
+	"type" : "normal" }

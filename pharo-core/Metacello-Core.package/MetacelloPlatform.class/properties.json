@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"bypassProgressBars",
+		"bypassGoferLoadUpdateCategories" ],
+	"name" : "MetacelloPlatform",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,17 @@
+{
+	"category" : "Glamour-FastTable-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"glamourColumn",
+		"target",
+		"selector",
+		"arguments" ],
+	"name" : "GLMFastTableColumn",
+	"pools" : [
+		 ],
+	"super" : "FTColumn",
+	"type" : "normal" }

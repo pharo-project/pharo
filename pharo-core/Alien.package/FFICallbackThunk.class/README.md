@@ -1,0 +1,8 @@
+An instance of FFICallbackThunk is a reference to a machine-code thunk/trampoline that calls-back into the VM.  The reference can be passed to C code which can use it as a function pointer through which to call-back into Smalltalk.  The machine-code thunk/trampoline is different for each instance, hence its address is a unique key that can be used to assocuate the Smalltalk side of the call-back (e.g. a block) with the thunk.  Since thunks must be executable and some OSs may not provide default execute permission on memory returned by malloc we may not be able to use malloc directly.  Instead we rely on a primitive to provide memory that is guaranteed to be executable.  The FFICallbackThunk class>>allocateExectablePage primitive answers an Alien that references an executable piece of memory that is some (possiby unitary) multiple of the pagesize.  Class-side code then parcels out pieces of a page to individual thunks.  These pieces are recycled when thunks are reclaimed.  Since the first byte of a thunk is non-zero we can use it as a flag indicating if the piece is in use or not.
+
+See Callback for the higher-level construct that represents a Smalltalk block to be run in response to a callback.  Callbacks wrap instances of FFICallbackThunk and arbitrary Alien instances that describe the stack layout for receiving arguments.
+
+Class Variables
+AccessProtect <Semaphore> critical section for ExecutablePages (de)allocation
+AllocatedThunks <AlienWeakTable of <FFICallbackThunk -> Integer>> - weak collection of thunks, used to return thunk storage to the executable page pool.
+ExecutablePages <Set of: Alien "executable page"> - collection of pages with execute permissions used to provide executable thunks

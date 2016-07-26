@@ -1,0 +1,14 @@
+{
+	"category" : "AST-Tests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dtl 11/24/2004 15:35",
+	"instvars" : [
+		 ],
+	"name" : "NumberParsingTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

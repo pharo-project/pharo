@@ -1,0 +1,1 @@
+I represent a change in the categories of a package.

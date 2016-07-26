@@ -1,0 +1,3 @@
+delegate
+pathSegments
+	^ reference pathSegments

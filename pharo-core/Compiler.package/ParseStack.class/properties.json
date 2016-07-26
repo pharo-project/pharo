@@ -1,0 +1,15 @@
+{
+	"category" : "Compiler-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"position",
+		"length" ],
+	"name" : "ParseStack",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

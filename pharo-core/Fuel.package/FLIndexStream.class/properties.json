@@ -1,0 +1,15 @@
+{
+	"category" : "Fuel-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"stream",
+		"digits" ],
+	"name" : "FLIndexStream",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

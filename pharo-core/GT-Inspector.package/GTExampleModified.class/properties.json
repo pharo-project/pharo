@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector-Examples-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"oldExample" ],
+	"name" : "GTExampleModified",
+	"pools" : [
+		 ],
+	"super" : "GTExampleAnnouncement",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"headerBrick",
+		"contentBrick" ],
+	"name" : "GLMCollapsableBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBrick",
+	"type" : "normal" }

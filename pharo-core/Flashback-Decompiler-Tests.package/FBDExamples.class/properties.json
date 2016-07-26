@@ -1,0 +1,15 @@
+{
+	"category" : "Flashback-Decompiler-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CVar" ],
+	"commentStamp" : "ClementBera 2/6/2015 13:39",
+	"instvars" : [
+		"iVar",
+		"collection" ],
+	"name" : "FBDExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

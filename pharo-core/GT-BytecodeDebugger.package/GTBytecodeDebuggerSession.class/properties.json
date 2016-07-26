@@ -1,0 +1,14 @@
+{
+	"category" : "GT-BytecodeDebugger-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 12/30/2015 10:51",
+	"instvars" : [
+		 ],
+	"name" : "GTBytecodeDebuggerSession",
+	"pools" : [
+		 ],
+	"super" : "DebugSession",
+	"type" : "normal" }

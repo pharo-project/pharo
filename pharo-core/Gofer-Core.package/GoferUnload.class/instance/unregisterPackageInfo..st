@@ -1,0 +1,4 @@
+unregistering
+unregisterPackageInfo: aWorkingCopy
+	RPackageOrganizer default
+		unregisterPackageNamed: aWorkingCopy packageName

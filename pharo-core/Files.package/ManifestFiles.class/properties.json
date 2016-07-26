@@ -1,0 +1,14 @@
+{
+	"category" : "Files",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestFiles",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

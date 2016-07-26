@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Helpers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tg 5/24/2010 16:59",
+	"instvars" : [
+		"announcements" ],
+	"name" : "GLMMemoryLogger",
+	"pools" : [
+		 ],
+	"super" : "GLMLogger",
+	"type" : "normal" }

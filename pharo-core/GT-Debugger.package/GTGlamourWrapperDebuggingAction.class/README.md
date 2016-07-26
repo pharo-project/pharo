@@ -1,0 +1,1 @@
+I simply wrap an existing glamour action. Currently I just return the action when one send #asGlamourAction.

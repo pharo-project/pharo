@@ -1,0 +1,14 @@
+{
+	"category" : "Announcements-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Tbn 11/12/2010 11:17",
+	"instvars" : [
+		 ],
+	"name" : "AnnouncementsHelp",
+	"pools" : [
+		 ],
+	"super" : "CustomHelp",
+	"type" : "normal" }

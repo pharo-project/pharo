@@ -1,0 +1,3 @@
+testing
+isDeliveryActive
+	^ delivery isActive

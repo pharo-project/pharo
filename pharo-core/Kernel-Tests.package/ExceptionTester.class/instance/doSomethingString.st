@@ -1,0 +1,4 @@
+accessing
+doSomethingString
+
+	^'Do something.'

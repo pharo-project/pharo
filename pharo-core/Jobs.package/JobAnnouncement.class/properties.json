@@ -1,0 +1,14 @@
+{
+	"category" : "Jobs-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 6/24/2015 14:59",
+	"instvars" : [
+		"job" ],
+	"name" : "JobAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+This exception is provided to support Object>>doesNotUnderstand:.

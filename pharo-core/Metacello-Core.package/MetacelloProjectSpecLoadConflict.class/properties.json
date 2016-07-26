@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Exceptions-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloProjectSpecLoadConflict",
+	"pools" : [
+		 ],
+	"super" : "MetacelloProjectSpecLoadError",
+	"type" : "normal" }

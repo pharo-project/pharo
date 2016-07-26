@@ -1,0 +1,3 @@
+private
+basicModificationTime: aMemoryFileSystemEntry
+	^ aMemoryFileSystemEntry modificationTime

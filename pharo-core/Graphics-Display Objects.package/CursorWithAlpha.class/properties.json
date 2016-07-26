@@ -1,0 +1,14 @@
+{
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"fallback" ],
+	"name" : "CursorWithAlpha",
+	"pools" : [
+		 ],
+	"super" : "Cursor",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+requirements
+classToBeTested
+
+	^ IdentityDictionary

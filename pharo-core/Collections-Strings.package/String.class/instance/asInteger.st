@@ -1,0 +1,3 @@
+converting
+asInteger 
+	^self asSignedInteger

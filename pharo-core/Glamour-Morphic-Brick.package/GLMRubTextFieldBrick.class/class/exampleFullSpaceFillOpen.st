@@ -1,0 +1,4 @@
+examples-open
+exampleFullSpaceFillOpen
+
+	self gtExampleFullSpaceFill openCenteredInBrickWindow

@@ -1,0 +1,3 @@
+accessing
+fileDirectory
+	^ self subclassResponsibility 

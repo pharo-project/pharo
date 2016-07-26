@@ -1,0 +1,1 @@
+I represent the selection in an EpLogBrowser in some particular moment.

@@ -1,0 +1,4 @@
+accessing
+categoryOfClassAffected
+
+	^ class category

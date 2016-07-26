@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		"soleInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 5/24/2016 17:20",
+	"instvars" : [
+		"index" ],
+	"name" : "ProcessSpecificVariable",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

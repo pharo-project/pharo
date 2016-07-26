@@ -1,0 +1,15 @@
+{
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "VincentBlondeau 4/1/2016 18:22",
+	"instvars" : [
+		"dictionary",
+		"orderedKeys" ],
+	"name" : "OrderedDictionary",
+	"pools" : [
+		 ],
+	"super" : "Collection",
+	"type" : "normal" }

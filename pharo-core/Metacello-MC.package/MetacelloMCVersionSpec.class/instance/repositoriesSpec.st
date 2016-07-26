@@ -1,0 +1,4 @@
+accessing
+repositoriesSpec
+
+	^self repositories

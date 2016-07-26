@@ -1,0 +1,16 @@
+{
+	"category" : "Alien-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"AccessProtect",
+		"AllocatedThunks",
+		"ExecutablePages" ],
+	"commentStamp" : "eem 12/21/2007 15:53",
+	"instvars" : [
+		 ],
+	"name" : "FFICallbackThunk",
+	"pools" : [
+		 ],
+	"super" : "Alien",
+	"type" : "bytes" }

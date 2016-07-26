@@ -1,0 +1,15 @@
+{
+	"category" : "Balloon-Geometry",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"start",
+		"end" ],
+	"name" : "LineSegment",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

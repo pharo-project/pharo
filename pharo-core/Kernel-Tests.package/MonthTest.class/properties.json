@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "brp 7/26/2003 22:44",
+	"instvars" : [
+		"month" ],
+	"name" : "MonthTest",
+	"pools" : [
+		 ],
+	"super" : "ClassTestCase",
+	"type" : "normal" }

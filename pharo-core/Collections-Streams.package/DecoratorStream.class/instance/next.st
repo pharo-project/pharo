@@ -1,0 +1,4 @@
+accessing
+next
+
+	^ decoratedStream next

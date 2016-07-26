@@ -1,0 +1,15 @@
+{
+	"category" : "Metacello-MC-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"repositories",
+		"packages" ],
+	"name" : "MetacelloMCVersionSpec",
+	"pools" : [
+		 ],
+	"super" : "MetacelloVersionSpec",
+	"type" : "normal" }

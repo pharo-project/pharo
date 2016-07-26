@@ -1,0 +1,17 @@
+{
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 11/26/2014 15:08",
+	"instvars" : [
+		"categories",
+		"candidates",
+		"announcer",
+		"processorLinksMap" ],
+	"name" : "GTSpotterCandidatesList",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 15:19",
+	"instvars" : [
+		"targetRefactoring" ],
+	"name" : "EpPropagateRefactoring",
+	"pools" : [
+		 ],
+	"super" : "EpRefactoring",
+	"type" : "normal" }

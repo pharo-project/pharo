@@ -1,0 +1,16 @@
+{
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"EnterCount",
+		"ExitCount",
+		"Running" ],
+	"commentStamp" : "BenComan 10/26/2014 11:54",
+	"instvars" : [
+		 ],
+	"name" : "DelayBenchmark",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+accessing
+lineGrid
+	^baseFont lineGrid

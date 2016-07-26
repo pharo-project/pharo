@@ -1,0 +1,14 @@
+{
+	"category" : "Balloon-Simulation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"color" ],
+	"name" : "BalloonSolidFillSimulation",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

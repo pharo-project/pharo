@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Theme",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMBrickPopupSuccessDarkThemer",
+	"pools" : [
+		 ],
+	"super" : "GLMBrickPopupSuccessThemer",
+	"type" : "normal" }

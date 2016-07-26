@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"timespans",
+		"state" ],
+	"name" : "Stopwatch",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

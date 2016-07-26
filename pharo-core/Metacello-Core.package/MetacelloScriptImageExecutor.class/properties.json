@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloScriptImageExecutor",
+	"pools" : [
+		 ],
+	"super" : "MetacelloScriptExecutor",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:17",
+	"instvars" : [
+		 ],
+	"name" : "ManifestFuel",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

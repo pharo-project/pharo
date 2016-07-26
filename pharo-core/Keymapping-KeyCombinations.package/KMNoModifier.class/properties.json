@@ -1,0 +1,14 @@
+{
+	"category" : "Keymapping-KeyCombinations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/10/2014 13:24",
+	"instvars" : [
+		 ],
+	"name" : "KMNoModifier",
+	"pools" : [
+		 ],
+	"super" : "KMModifier",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "Keymapping-KeyCombinations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"shortcut",
+		"platform" ],
+	"name" : "KMPlatformSpecificKeyCombination",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

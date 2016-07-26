@@ -1,0 +1,3 @@
+private
+basicCreationTime: aMemoryFileSystemEntry
+	^ aMemoryFileSystemEntry creationTime

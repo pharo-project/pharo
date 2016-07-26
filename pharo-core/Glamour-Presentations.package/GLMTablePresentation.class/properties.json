@@ -1,0 +1,17 @@
+{
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/3/2014 18:33",
+	"instvars" : [
+		"columns",
+		"children",
+		"rootsExpanded",
+		"shouldShowHeader" ],
+	"name" : "GLMTablePresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMListingPresentation",
+	"type" : "normal" }

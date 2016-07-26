@@ -1,0 +1,15 @@
+{
+	"category" : "Epicea-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 12/12/2014 15:19",
+	"instvars" : [
+		"newName",
+		"oldName" ],
+	"name" : "EpRenameClassRefactoring",
+	"pools" : [
+		 ],
+	"super" : "EpRefactoring",
+	"type" : "normal" }

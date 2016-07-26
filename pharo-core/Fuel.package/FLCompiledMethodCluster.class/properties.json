@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [
+		"transformationForSerializing" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FLCompiledMethodCluster",
+	"pools" : [
+		 ],
+	"super" : "FLIteratingCluster",
+	"type" : "normal" }

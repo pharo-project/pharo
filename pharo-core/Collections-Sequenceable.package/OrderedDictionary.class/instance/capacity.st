@@ -1,0 +1,3 @@
+accessing
+capacity
+	^ dictionary capacity

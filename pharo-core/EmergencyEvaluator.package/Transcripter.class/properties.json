@@ -1,0 +1,15 @@
+{
+	"category" : "EmergencyEvaluator",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Icon" ],
+	"commentStamp" : "StephaneDucasse 11/19/2011 16:48",
+	"instvars" : [
+		"frame",
+		"para" ],
+	"name" : "Transcripter",
+	"pools" : [
+		"EventSensorConstants" ],
+	"super" : "ReadWriteStream",
+	"type" : "normal" }

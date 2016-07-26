@@ -1,0 +1,34 @@
+capabilities
+availableModes
+
+	^ #(
+		clear
+		source
+		over
+		in
+		out 
+		atop
+		dest
+		destOver
+		destIn
+		destOut
+		destAtop
+		xor
+		add
+		saturate
+		multiply
+		screen
+		overlay
+		darken
+		lighten
+		colorDodge
+		colorBurn
+		hardLight
+		softLight
+		difference
+		exclusion
+		hslHue
+		hslSaturation
+		hslColor
+		hslLuminosity
+	)

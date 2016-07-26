@@ -1,0 +1,4 @@
+accessing
+newProtocol
+
+	^ newMethod protocol

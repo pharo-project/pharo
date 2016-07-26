@@ -1,0 +1,14 @@
+{
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "JurajKubelka 11/17/2015 14:03",
+	"instvars" : [
+		"collectors" ],
+	"name" : "GTEventConsolidate",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

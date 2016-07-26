@@ -1,0 +1,17 @@
+{
+	"category" : "Fuel-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"preMaterializationActions",
+		"additionalObjects",
+		"postMaterializationActions",
+		"materialization" ],
+	"name" : "FLHeader",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

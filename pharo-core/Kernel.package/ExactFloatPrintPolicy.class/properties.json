@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ExactFloatPrintPolicy",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

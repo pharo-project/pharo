@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 1/10/2016 23:43",
+	"instvars" : [
+		 ],
+	"name" : "GTProfileSelectionDebugAction",
+	"pools" : [
+		 ],
+	"super" : "GTCodeDebugAction",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+This is the window in which the Glamour browsers are rendered in Morphic.

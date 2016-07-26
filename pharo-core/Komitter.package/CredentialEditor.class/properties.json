@@ -1,0 +1,18 @@
+{
+	"category" : "Komitter-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"username",
+		"usernameLabel",
+		"password",
+		"passwordLabel",
+		"showPassword" ],
+	"name" : "CredentialEditor",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

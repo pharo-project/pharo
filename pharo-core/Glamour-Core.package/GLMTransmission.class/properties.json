@@ -1,0 +1,20 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DamienCassou 7/19/2011 16:53",
+	"instvars" : [
+		"context",
+		"destination",
+		"browser",
+		"origins",
+		"transmissionStrategy",
+		"transformation",
+		"condition" ],
+	"name" : "GLMTransmission",
+	"pools" : [
+		 ],
+	"super" : "GLMLoggedObject",
+	"type" : "normal" }

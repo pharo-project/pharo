@@ -1,0 +1,3 @@
+accessing-defaults
+defaultStreamed
+	^ true

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "tg 1/6/2010 23:12",
+	"instvars" : [
+		"composite" ],
+	"name" : "GLMCompositeArrangement",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

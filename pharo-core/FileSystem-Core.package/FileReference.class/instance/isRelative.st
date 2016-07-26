@@ -1,0 +1,3 @@
+testing
+isRelative
+	^ path isRelative

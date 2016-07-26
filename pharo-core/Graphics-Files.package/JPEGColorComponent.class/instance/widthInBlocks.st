@@ -1,0 +1,4 @@
+accessing
+widthInBlocks
+
+	^widthInBlocks

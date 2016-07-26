@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CrLf" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"map" ],
+	"name" : "CharacterSet",
+	"pools" : [
+		 ],
+	"super" : "Collection",
+	"type" : "normal" }

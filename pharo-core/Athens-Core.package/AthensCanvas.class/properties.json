@@ -1,0 +1,18 @@
+{
+	"category" : "Athens-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"paint",
+		"surface",
+		"shape",
+		"fontRenderer",
+		"paintMode" ],
+	"name" : "AthensCanvas",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

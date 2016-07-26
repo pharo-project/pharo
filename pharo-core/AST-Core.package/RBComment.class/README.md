@@ -1,0 +1,1 @@
+A RBComment represents a text comment associated to an AST node.

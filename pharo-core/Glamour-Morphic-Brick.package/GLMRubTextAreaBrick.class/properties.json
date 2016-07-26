@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMRubTextAreaBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMRubEditingAreaBrick",
+	"type" : "normal" }

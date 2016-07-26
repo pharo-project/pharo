@@ -1,0 +1,3 @@
+accessing
+previousTextInfo
+	^ previousTextInfo

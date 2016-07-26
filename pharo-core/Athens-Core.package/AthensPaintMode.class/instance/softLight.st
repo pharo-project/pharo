@@ -1,0 +1,3 @@
+modes
+softLight
+	self notAvailable

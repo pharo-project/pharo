@@ -1,0 +1,15 @@
+{
+	"category" : "Athens-Balloon",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"center",
+		"radius" ],
+	"name" : "AthensBalloonRadialGradient",
+	"pools" : [
+		 ],
+	"super" : "AthensBalloonGradientPaint",
+	"type" : "normal" }

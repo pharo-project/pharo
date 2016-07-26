@@ -1,0 +1,3 @@
+testing
+isSolidFill
+	^false

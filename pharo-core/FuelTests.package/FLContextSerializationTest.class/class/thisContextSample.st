@@ -1,0 +1,3 @@
+running
+thisContextSample
+	^ thisContext copy

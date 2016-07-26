@@ -1,0 +1,3 @@
+converting
+asPathWith: anObject
+	^ self

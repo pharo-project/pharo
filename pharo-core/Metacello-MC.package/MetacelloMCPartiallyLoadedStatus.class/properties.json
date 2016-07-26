@@ -1,0 +1,27 @@
+{
+	"category" : "Metacello-MC-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"hasNoPackage",
+		"hasNoProject",
+		"aProjectIsLoaded",
+		"aPackageIsLoaded",
+		"aLoadedProjectIsExact",
+		"aLoadedPackageIsExact",
+		"aLoadedProjectIsCurrent",
+		"aLoadedPackageIsCurrent",
+		"aLoadedProjectIsNotCurrent",
+		"aLoadedPackageIsNotCurrent",
+		"aProjectNotLoaded",
+		"aPackageNotLoaded",
+		"vrsnStatus",
+		"abort" ],
+	"name" : "MetacelloMCPartiallyLoadedStatus",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

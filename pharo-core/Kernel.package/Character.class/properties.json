@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-BasicObjects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"CharacterTable",
+		"DigitValues" ],
+	"commentStamp" : "ar 4/9/2005 22:35",
+	"instvars" : [
+		 ],
+	"name" : "Character",
+	"pools" : [
+		 ],
+	"super" : "Magnitude",
+	"type" : "immediate" }

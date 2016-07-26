@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"textBrick",
+		"okButton" ],
+	"name" : "GLMAlertBrick",
+	"pools" : [
+		 ],
+	"super" : "GLMBandBrick",
+	"type" : "normal" }

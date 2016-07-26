@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Browsers-Tabulator",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMCustomRow",
+	"pools" : [
+		 ],
+	"super" : "GLMCustomCell",
+	"type" : "normal" }

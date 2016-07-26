@@ -1,0 +1,15 @@
+{
+	"category" : "EpiceaBrowsers-Views",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"entryReference",
+		"container" ],
+	"name" : "EpAbsentItem",
+	"pools" : [
+		 ],
+	"super" : "EpLogBrowserItem",
+	"type" : "normal" }

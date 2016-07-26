@@ -1,0 +1,15 @@
+{
+	"category" : "EpiceaTests-Integration",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"monitor",
+		"classFactory" ],
+	"name" : "EpMonitorIntegrationTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

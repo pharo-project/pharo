@@ -1,0 +1,3 @@
+accessing
+rootNodes
+	^self roots

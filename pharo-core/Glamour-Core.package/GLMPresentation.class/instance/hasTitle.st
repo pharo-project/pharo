@@ -1,0 +1,3 @@
+testing
+hasTitle
+	^ title notNil

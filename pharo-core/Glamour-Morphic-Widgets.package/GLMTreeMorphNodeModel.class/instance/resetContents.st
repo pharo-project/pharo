@@ -1,0 +1,3 @@
+actions
+resetContents
+	contents := nil

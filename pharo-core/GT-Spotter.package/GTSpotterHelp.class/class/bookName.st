@@ -1,0 +1,3 @@
+accessing
+bookName 
+	^'GT Spotter'

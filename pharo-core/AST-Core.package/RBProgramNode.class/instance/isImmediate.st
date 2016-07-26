@@ -1,0 +1,3 @@
+deprecated
+isImmediate
+	^self isImmediateNode

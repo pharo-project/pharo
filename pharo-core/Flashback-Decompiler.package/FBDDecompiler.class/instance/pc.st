@@ -1,0 +1,3 @@
+private
+pc
+	^ instructionStream pc

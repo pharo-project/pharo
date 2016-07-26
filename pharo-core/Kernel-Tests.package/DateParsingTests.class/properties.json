@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DateParsingTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

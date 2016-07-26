@@ -1,0 +1,14 @@
+{
+	"category" : "Files-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Registry" ],
+	"commentStamp" : "GuillermoPolito 6/5/2015 11:08",
+	"instvars" : [
+		"name" ],
+	"name" : "File",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

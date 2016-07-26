@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Arithmetic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestCollectionsArithmetic",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

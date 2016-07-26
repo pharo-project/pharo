@@ -1,0 +1,18 @@
+{
+	"category" : "Komitter-Models",
+	"classinstvars" : [
+		"packages" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"package",
+		"classes",
+		"isFullyCommited",
+		"dataRetriever",
+		"patch" ],
+	"name" : "KomitPackage",
+	"pools" : [
+		 ],
+	"super" : "KomitObject",
+	"type" : "normal" }

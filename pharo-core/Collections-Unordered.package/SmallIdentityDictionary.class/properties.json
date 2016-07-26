@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Unordered",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "sd 7/21/2009 10:12",
+	"instvars" : [
+		 ],
+	"name" : "SmallIdentityDictionary",
+	"pools" : [
+		 ],
+	"super" : "SmallDictionary",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+visitor
+visitCategoryRename: aClassCategoryRenamedChange
+
+	^ aClassCategoryRenamedChange oldCategoryName

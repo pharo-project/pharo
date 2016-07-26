@@ -1,0 +1,14 @@
+{
+	"category" : "Metacello-MC-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MetacelloMCProject",
+	"pools" : [
+		 ],
+	"super" : "MetacelloProject",
+	"type" : "normal" }

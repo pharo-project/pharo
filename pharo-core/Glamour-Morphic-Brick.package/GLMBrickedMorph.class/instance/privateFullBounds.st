@@ -1,0 +1,3 @@
+layout
+privateFullBounds
+	^ self fullBounds

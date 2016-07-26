@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"candidateBrick" ],
+	"name" : "GTSpotterCandidateSelected",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

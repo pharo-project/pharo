@@ -1,0 +1,3 @@
+testing
+directlyUses: aNode
+	^true

@@ -1,0 +1,4 @@
+release
+resetCurrent
+
+	current := nil

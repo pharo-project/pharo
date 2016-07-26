@@ -1,0 +1,4 @@
+rendering presentations
+renderRubricHighlightedTextPresentation: aPresentation
+
+	^ GLMMorphicRubricHighlightedTextRenderer render: aPresentation from: self

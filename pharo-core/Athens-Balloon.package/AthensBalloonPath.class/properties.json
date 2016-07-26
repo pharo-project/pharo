@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Balloon",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"bounds",
+		"contours",
+		"last" ],
+	"name" : "AthensBalloonPath",
+	"pools" : [
+		 ],
+	"super" : "AthensPath",
+	"type" : "normal" }

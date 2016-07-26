@@ -1,0 +1,24 @@
+{
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"step",
+		"stream",
+		"search",
+		"text",
+		"textTrimmed",
+		"textLowercase",
+		"processor",
+		"filter",
+		"streamed",
+		"cache",
+		"continuing" ],
+	"name" : "GTSpotterContext",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

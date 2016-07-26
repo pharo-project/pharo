@@ -1,0 +1,3 @@
+converting
+asFraction
+	^ self asTrueFraction 

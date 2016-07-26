@@ -1,0 +1,16 @@
+{
+	"category" : "Keymapping-Settings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"shortcutName",
+		"category",
+		"action" ],
+	"name" : "KMShortcutSetting",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

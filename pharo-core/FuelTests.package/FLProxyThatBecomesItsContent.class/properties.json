@@ -1,0 +1,14 @@
+{
+	"category" : "FuelTests-Mocks",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 11/17/2011 03:18",
+	"instvars" : [
+		"contents" ],
+	"name" : "FLProxyThatBecomesItsContent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

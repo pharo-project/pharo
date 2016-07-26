@@ -1,0 +1,22 @@
+{
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DoItCharacter" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"source",
+		"mark",
+		"hereChar",
+		"aheadChar",
+		"token",
+		"tokenType",
+		"currentComment",
+		"buffer",
+		"typeTable" ],
+	"name" : "Scanner",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

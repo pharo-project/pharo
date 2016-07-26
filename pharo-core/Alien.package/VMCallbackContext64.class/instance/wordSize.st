@@ -1,0 +1,3 @@
+accessing
+wordSize
+	^8

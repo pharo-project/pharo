@@ -1,0 +1,3 @@
+accessing
+fileSize
+	^ 0

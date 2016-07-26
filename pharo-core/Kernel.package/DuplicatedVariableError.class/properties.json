@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"superclass",
+		"variable" ],
+	"name" : "DuplicatedVariableError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

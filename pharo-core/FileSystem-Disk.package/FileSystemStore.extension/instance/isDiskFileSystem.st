@@ -1,0 +1,3 @@
+*FileSystem-Disk
+isDiskFileSystem
+	^ false

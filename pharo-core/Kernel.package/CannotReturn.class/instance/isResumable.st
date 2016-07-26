@@ -1,0 +1,4 @@
+testing
+isResumable
+
+	^true

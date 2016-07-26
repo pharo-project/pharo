@@ -1,0 +1,15 @@
+{
+	"category" : "FileSystem-Core-Public",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Resolver" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"origin",
+		"path" ],
+	"name" : "FileLocator",
+	"pools" : [
+		 ],
+	"super" : "AbstractFileReference",
+	"type" : "normal" }

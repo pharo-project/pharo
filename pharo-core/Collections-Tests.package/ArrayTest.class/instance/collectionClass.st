@@ -1,0 +1,4 @@
+test - creation
+collectionClass 
+	
+	^ Array

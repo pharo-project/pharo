@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"value" ],
+	"name" : "DosTimestamp",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

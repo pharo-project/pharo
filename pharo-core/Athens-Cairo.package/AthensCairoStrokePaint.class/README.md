@@ -1,0 +1,1 @@
+i represent stroke paint in cairo backend

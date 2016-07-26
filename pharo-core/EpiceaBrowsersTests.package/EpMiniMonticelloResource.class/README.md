@@ -1,0 +1,1 @@
+Mini monticello which is in-memory, to be able to compare changes, make snapshots, and revert.

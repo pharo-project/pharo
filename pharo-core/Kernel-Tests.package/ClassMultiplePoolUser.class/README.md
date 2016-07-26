@@ -1,0 +1,1 @@
+I'm a class using two shared pools. 

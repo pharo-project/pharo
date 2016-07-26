@@ -1,0 +1,15 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		"instance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"instance",
+		"snippets" ],
+	"name" : "GTSnippets",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

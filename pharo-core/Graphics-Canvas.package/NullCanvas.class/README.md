@@ -1,0 +1,1 @@
+A canvas which ignores all drawing commands.

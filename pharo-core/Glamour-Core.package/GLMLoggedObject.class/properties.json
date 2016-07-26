@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		"logger" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 3/12/2015 00:01",
+	"instvars" : [
+		"logger" ],
+	"name" : "GLMLoggedObject",
+	"pools" : [
+		 ],
+	"super" : "GLMAnnouncer",
+	"type" : "normal" }

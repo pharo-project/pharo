@@ -1,0 +1,3 @@
+accessing
+methodComments
+	^self comments

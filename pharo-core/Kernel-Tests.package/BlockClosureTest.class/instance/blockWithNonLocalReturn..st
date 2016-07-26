@@ -1,0 +1,4 @@
+helpers
+blockWithNonLocalReturn: resultObject
+		
+	^[ ^resultObject ] 

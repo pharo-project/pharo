@@ -1,0 +1,14 @@
+{
+	"category" : "HudsonBuildTools20",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
+	"instvars" : [
+		"gofer" ],
+	"name" : "HDChangeReport",
+	"pools" : [
+		 ],
+	"super" : "HDReport",
+	"type" : "normal" }

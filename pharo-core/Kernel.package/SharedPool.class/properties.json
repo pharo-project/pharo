@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "SharedPool",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

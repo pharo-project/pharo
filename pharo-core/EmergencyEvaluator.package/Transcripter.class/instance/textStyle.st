@@ -1,0 +1,3 @@
+private
+textStyle
+	^ TextStyle default

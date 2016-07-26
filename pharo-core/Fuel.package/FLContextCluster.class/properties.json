@@ -1,0 +1,14 @@
+{
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 5/30/2011 01:18",
+	"instvars" : [
+		 ],
+	"name" : "FLContextCluster",
+	"pools" : [
+		 ],
+	"super" : "FLVariableObjectCluster",
+	"type" : "normal" }

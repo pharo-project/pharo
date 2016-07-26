@@ -1,0 +1,15 @@
+{
+	"category" : "Graphics-Files",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"MaxBits" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"bitBuffer",
+		"bitsInBuffer" ],
+	"name" : "JPEGReadStream",
+	"pools" : [
+		 ],
+	"super" : "ReadStream",
+	"type" : "normal" }

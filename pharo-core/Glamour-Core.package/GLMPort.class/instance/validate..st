@@ -1,0 +1,4 @@
+validation
+validate: anObject 
+
+	^true

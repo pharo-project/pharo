@@ -1,0 +1,4 @@
+querying
+currentlyLoadedExtensionClassesInVersion
+
+	^self spec currentlyLoadedExtensionClassesInVersion

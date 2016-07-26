@@ -1,0 +1,3 @@
+converting
+asIdentitySet
+	^self

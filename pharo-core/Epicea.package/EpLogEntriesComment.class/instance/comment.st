@@ -1,0 +1,3 @@
+accessing
+comment
+	^ self newComment

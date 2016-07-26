@@ -1,0 +1,16 @@
+{
+	"category" : "Keymapping-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"target",
+		"dispatcher",
+		"initialTarget" ],
+	"name" : "KMDispatchChain",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

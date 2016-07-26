@@ -1,0 +1,3 @@
+initialization
+defaultClassSelector
+	^ #class

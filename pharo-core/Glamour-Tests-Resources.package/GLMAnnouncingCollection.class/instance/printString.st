@@ -1,0 +1,3 @@
+initialization
+printString
+	^ collection printString 
