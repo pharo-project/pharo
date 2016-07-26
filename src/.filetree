@@ -1,2 +1,4 @@
-{"packageExtension" : ".package",
-"propertyFileExtension" : ".json" }
+{
+	"noMethodMetaData" : true,
+	"separateMethodMetaAndSource" : false,
+	"useCypressPropertiesFile" : true }
