@@ -21,4 +21,5 @@ git add src
 git add -u
 git commit -m "EXPORT VERSION ${VERSION}"
 git tag -a v${VERSION} -m "TAG VERSION v${VERSION}"
-git push --follow-tags
+git push
+git push --tags
