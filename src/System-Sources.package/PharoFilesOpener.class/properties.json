@@ -1,0 +1,14 @@
+{
+	"category" : "System-Sources",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Default" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"shouldInformAboutReadOnlyChanges" ],
+	"name" : "PharoFilesOpener",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

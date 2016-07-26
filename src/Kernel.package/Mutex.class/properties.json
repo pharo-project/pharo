@@ -1,0 +1,15 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"semaphore",
+		"owner" ],
+	"name" : "Mutex",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

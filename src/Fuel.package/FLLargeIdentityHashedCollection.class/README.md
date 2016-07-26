@@ -1,0 +1,1 @@
+I share behavior for special HashedCollections that are optimized for including a large number of elements.

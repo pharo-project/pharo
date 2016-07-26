@@ -1,0 +1,3 @@
+accessing
+clipboardText
+	self subclassResponsibility 

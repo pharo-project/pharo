@@ -1,3 +1,0 @@
-emulating
-text
-	^ text

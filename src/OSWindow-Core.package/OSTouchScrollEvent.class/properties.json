@@ -1,0 +1,15 @@
+{
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MerwanOuddane 4/2/2015 15:03",
+	"instvars" : [
+		"dDist",
+		"direction" ],
+	"name" : "OSTouchScrollEvent",
+	"pools" : [
+		 ],
+	"super" : "OSTouchComplexEvent",
+	"type" : "normal" }

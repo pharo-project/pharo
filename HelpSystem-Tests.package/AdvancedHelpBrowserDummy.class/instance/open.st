@@ -1,3 +1,0 @@
-mocking
-open
-	isOpen := true

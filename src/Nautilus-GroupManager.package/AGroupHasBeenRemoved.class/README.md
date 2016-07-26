@@ -1,0 +1,1 @@
+Notify that a group has been removed

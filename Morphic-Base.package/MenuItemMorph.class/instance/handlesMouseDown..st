@@ -1,4 +1,0 @@
-events
-handlesMouseDown: evt
-
-	^ true

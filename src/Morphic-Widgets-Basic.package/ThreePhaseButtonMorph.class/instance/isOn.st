@@ -1,0 +1,3 @@
+testing
+isOn
+	^ state == #on

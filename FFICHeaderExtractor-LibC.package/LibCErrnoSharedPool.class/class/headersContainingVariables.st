@@ -1,3 +1,0 @@
-accessing
-headersContainingVariables
-	^ #( 'errno.h' )

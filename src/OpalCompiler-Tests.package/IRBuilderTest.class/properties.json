@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Tests-IR",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"TestToPush" ],
+	"commentStamp" : "",
+	"instvars" : [
+		"testIvar" ],
+	"name" : "IRBuilderTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

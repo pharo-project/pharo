@@ -1,0 +1,3 @@
+filtering
+keepSettingTreeNode: aSettingNode 
+	^ false

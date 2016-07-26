@@ -1,0 +1,14 @@
+{
+	"category" : "Compiler-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "LiteralDictionary",
+	"pools" : [
+		 ],
+	"super" : "Dictionary",
+	"type" : "normal" }

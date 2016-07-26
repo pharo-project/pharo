@@ -1,0 +1,14 @@
+{
+	"category" : "Tool-Transcript",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestToolTranscript",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

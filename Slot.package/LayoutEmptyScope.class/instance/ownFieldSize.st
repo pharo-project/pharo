@@ -1,3 +1,0 @@
-accessing
-ownFieldSize
-	^ 0

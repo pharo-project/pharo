@@ -1,0 +1,1 @@
+A HandleMorph provides mouse-up control behavior.

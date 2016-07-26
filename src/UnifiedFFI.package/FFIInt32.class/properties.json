@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "EstebanLorenzano 9/2/2015 17:45",
+	"instvars" : [
+		 ],
+	"name" : "FFIInt32",
+	"pools" : [
+		 ],
+	"super" : "FFIUInt32",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"temporaryVariable" ],
+	"name" : "RBSmalllintTestObject",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

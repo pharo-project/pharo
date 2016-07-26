@@ -1,0 +1,14 @@
+{
+	"category" : "UIManager",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestUIManager",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Network-MIME",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"newline" ],
+	"name" : "QuotedPrintableMimeConverter",
+	"pools" : [
+		 ],
+	"super" : "MimeConverter",
+	"type" : "normal" }

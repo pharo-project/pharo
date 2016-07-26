@@ -1,0 +1,3 @@
+initialization
+addMorphsWithoutOptions
+	self addMainMorphsWith: 0

@@ -1,0 +1,1 @@
+I represent the mode to use for editing smalltalk script (class creation script for example)

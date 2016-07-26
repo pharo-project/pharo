@@ -1,0 +1,4 @@
+accessing
+predicateNegation
+
+	^negation

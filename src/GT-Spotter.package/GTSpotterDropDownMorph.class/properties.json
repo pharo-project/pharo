@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"spotterModel" ],
+	"name" : "GTSpotterDropDownMorph",
+	"pools" : [
+		 ],
+	"super" : "GLMPagerBrick",
+	"type" : "normal" }

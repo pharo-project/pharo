@@ -1,4 +1,0 @@
-elements-annotations
-sourcePointerKey 
-
-	^#sourcePointer

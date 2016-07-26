@@ -1,0 +1,15 @@
+{
+	"category" : "IssueTracking",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SeanDeNigris 5/7/2015 10:27",
+	"instvars" : [
+		"number",
+		"title" ],
+	"name" : "PharoIssue",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+This announcement will be emitted when a class or a trait comment changes

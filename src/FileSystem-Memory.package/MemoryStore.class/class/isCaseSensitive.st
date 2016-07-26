@@ -1,0 +1,3 @@
+public
+isCaseSensitive
+	^ true

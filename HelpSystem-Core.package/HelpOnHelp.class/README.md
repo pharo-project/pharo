@@ -1,1 +1,0 @@
-Welcome to Pharo Smalltalk Help System

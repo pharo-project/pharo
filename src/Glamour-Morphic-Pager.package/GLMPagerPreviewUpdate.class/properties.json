@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Pager-Announcement",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"pageIndex" ],
+	"name" : "GLMPagerPreviewUpdate",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

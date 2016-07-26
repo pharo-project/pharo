@@ -1,0 +1,3 @@
+compatibility
+reset
+	fullName := ''

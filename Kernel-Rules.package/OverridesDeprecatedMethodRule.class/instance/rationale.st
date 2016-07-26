@@ -1,3 +1,0 @@
-accessing
-rationale
-	^ 'The method overrided a deprecated method. This is a sign that an API has changed in an upstream project and most likely the method should override another one'

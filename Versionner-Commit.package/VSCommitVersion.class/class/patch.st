@@ -1,3 +1,0 @@
-accessing
-patch
-	^ VSCommitPatchVersion uniqueInstance

@@ -1,4 +1,0 @@
-private
-reset
-	
-	instance := nil

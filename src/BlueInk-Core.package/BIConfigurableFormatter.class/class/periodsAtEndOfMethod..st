@@ -1,0 +1,4 @@
+accessing
+periodsAtEndOfMethod: aBoolean
+	DefaultPrettyPrintContext periodsAtEndOfMethod: aBoolean.
+	self announceASettingChange

@@ -1,0 +1,4 @@
+testing
+isOutdated
+
+	^ currentStore isOutdated

@@ -1,0 +1,1 @@
+A bottom bar to change the editing mode, switch with/without line numbers and switch wrapping mode

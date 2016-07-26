@@ -1,1 +1,0 @@
-I represent the default modifier key for the current platform, late bound to Meta or Ctrl key modifier depending on the platform.

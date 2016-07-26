@@ -1,4 +1,0 @@
-searching
-searchedElement
-
-	^ searchedElement

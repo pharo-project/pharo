@@ -1,0 +1,4 @@
+widget method
+methodWidget
+
+	^ methodWidget

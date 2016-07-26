@@ -1,0 +1,2 @@
+compatibility
+selector: aSymbol

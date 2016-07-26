@@ -1,4 +1,0 @@
-protocol
-title
-
-	^ 'Report exception'

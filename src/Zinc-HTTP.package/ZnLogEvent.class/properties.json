@@ -1,0 +1,16 @@
+{
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"IdCounter",
+		"LogEventAnnouncer" ],
+	"commentStamp" : "SvenVanCaekenberghe 6/11/2014 14:20",
+	"instvars" : [
+		"timestamp",
+		"id" ],
+	"name" : "ZnLogEvent",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

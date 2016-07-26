@@ -1,0 +1,14 @@
+{
+	"category" : "STON-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "STONShortListWriter",
+	"pools" : [
+		 ],
+	"super" : "STONListWriter",
+	"type" : "normal" }

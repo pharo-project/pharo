@@ -1,4 +1,0 @@
-accessing
-beReadOnly
-
-	readOnly := true

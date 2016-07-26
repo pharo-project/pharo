@@ -1,3 +1,0 @@
-buttons behavior
-browseVariablesButtonAction
-	self browseVariableReferences

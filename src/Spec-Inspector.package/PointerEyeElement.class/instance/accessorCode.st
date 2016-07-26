@@ -1,0 +1,3 @@
+accessing
+accessorCode
+	^ self label 

@@ -1,0 +1,4 @@
+accessing
+id
+
+	^ GTGoAndInspectBytecodeDebugAction name

@@ -1,4 +1,0 @@
-protocol
-isSelectedMatchingTheState: aBoolean
-
-	^ aBoolean

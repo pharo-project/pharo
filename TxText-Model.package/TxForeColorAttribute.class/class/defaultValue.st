@@ -1,3 +1,0 @@
-defaults
-defaultValue 
-	^Color black

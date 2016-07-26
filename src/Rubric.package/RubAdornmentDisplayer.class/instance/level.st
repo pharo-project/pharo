@@ -1,0 +1,3 @@
+accessing
+level
+	^ SmallInteger maxVal 

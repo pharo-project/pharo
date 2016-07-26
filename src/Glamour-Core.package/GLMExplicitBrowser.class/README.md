@@ -1,0 +1,1 @@
+A GLMExplicitBrowser is a browser that allows the user to explicitly define the panes and the flow of transmissions between them.

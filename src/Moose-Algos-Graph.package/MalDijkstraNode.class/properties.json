@@ -1,0 +1,19 @@
+{
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "MalTEdgeNode classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"pathWeight",
+		"previousEdges",
+		"nextEdges",
+		"previousNodes" ],
+	"name" : "MalDijkstraNode",
+	"pools" : [
+		 ],
+	"super" : "MalGraphNode",
+	"traitcomposition" : "MalTEdgeNode",
+	"type" : "normal" }

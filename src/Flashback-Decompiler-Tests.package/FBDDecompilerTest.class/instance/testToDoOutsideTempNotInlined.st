@@ -1,0 +1,3 @@
+tests
+testToDoOutsideTempNotInlined
+	self checkCorrectDecompilation: #exampleToDoOutsideTempNotInlined

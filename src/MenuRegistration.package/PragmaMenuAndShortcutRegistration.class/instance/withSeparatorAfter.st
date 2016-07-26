@@ -1,0 +1,4 @@
+menu protocol
+withSeparatorAfter
+
+	self currentItem withSeparatorAfter

@@ -1,4 +1,0 @@
-values
-categoryNameMarginLeft
-
-	^ self itemIconMaxWidth

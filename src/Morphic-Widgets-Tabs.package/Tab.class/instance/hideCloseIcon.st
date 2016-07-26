@@ -1,0 +1,4 @@
+protocol
+hideCloseIcon
+
+	closeIcon hide

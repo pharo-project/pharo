@@ -1,1 +1,0 @@
-i am abstract class , representing an arc segment

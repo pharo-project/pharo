@@ -1,3 +1,0 @@
-accessing
-allHandlers 
-	^ CommandLineHandler allHandlers 

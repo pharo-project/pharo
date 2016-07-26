@@ -1,0 +1,24 @@
+{
+	"category" : "Tools-Debugger",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"contents",
+		"class",
+		"selector",
+		"category",
+		"debugSession",
+		"doitFlag",
+		"dependents",
+		"location",
+		"error",
+		"announcer",
+		"syntaxError" ],
+	"name" : "SyntaxErrorDebugger",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

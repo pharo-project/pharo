@@ -1,0 +1,4 @@
+protocol
+topOffset
+
+	^ layoutFrame topOffset

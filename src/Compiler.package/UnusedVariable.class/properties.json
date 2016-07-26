@@ -1,0 +1,14 @@
+{
+	"category" : "Compiler-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:17",
+	"instvars" : [
+		 ],
+	"name" : "UnusedVariable",
+	"pools" : [
+		 ],
+	"super" : "ParserNotification",
+	"type" : "normal" }

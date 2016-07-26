@@ -1,0 +1,1 @@
+Action when the method is an example

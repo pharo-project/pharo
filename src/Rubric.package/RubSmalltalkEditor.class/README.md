@@ -1,0 +1,1 @@
+I am the editor for smalltalk code, I allow to browse, execute etc

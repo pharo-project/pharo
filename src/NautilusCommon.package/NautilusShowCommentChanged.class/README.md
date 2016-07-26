@@ -1,0 +1,1 @@
+A NautilusShowCommentChanged is raised when showComment is switched

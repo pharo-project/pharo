@@ -1,3 +1,0 @@
-methods
-haltClassMentioned
-	Halt now

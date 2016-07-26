@@ -1,4 +1,0 @@
-testing
-providesChange
-
-	^ self subclassResponsibility 

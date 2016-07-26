@@ -1,4 +1,0 @@
-hands
-activeHand
-
-	^ ActiveHand

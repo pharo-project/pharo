@@ -1,0 +1,16 @@
+{
+	"category" : "Athens-Cairo-Transforms",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TCairoLibrary classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "AthensCairoMatrix",
+	"pools" : [
+		"AthensCairoDefs" ],
+	"super" : "FFIExternalStructure",
+	"traitcomposition" : "TCairoLibrary",
+	"type" : "normal" }

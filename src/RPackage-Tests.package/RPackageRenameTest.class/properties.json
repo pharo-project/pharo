@@ -1,0 +1,14 @@
+{
+	"category" : "RPackage-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"oldSystemAnnouncer" ],
+	"name" : "RPackageRenameTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

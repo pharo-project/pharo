@@ -1,0 +1,1 @@
+Example for a pakage node

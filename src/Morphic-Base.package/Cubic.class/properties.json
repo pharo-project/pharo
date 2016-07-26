@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "wiz 6/17/2004 20:31",
+	"instvars" : [
+		 ],
+	"name" : "Cubic",
+	"pools" : [
+		 ],
+	"super" : "Array",
+	"type" : "variable" }

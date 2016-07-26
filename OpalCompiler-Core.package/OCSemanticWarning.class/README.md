@@ -1,1 +1,0 @@
-If a variable is not found or some other problem occurs during checking (ASTChecker) than a particular subclass instance of me is signal, usually causing a notification to the user. If not handled, the default handling is done, and compiling continues.

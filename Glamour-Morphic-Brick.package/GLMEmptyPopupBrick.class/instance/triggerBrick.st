@@ -1,4 +1,0 @@
-accessing
-triggerBrick
-
-	^ triggerBrick

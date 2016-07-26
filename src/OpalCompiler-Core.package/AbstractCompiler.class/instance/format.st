@@ -1,0 +1,3 @@
+public access
+format
+	self subclassResponsibility

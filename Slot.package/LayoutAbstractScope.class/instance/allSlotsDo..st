@@ -1,3 +1,0 @@
-enumerating
-allSlotsDo: aBlock
-	self subclassResponsibility

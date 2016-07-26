@@ -1,0 +1,1 @@
+I'm the base class for converting some data from a MIME type to another. Subclasses should implement #mimeDecode and #mimeEncode.

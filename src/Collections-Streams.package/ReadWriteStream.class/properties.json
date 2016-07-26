@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ReadWriteStream",
+	"pools" : [
+		 ],
+	"super" : "WriteStream",
+	"type" : "normal" }

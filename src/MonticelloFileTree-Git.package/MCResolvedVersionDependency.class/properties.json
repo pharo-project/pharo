@@ -1,0 +1,14 @@
+{
+	"category" : "MonticelloFileTree-Git",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"version" ],
+	"name" : "MCResolvedVersionDependency",
+	"pools" : [
+		 ],
+	"super" : "MCVersionDependency",
+	"type" : "normal" }

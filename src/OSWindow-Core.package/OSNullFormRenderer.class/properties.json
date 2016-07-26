@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "IgorStasenko 7/30/2014 17:02",
+	"instvars" : [
+		 ],
+	"name" : "OSNullFormRenderer",
+	"pools" : [
+		 ],
+	"super" : "OSWindowFormRenderer",
+	"type" : "normal" }

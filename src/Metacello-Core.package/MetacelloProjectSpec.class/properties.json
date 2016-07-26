@@ -1,0 +1,20 @@
+{
+	"category" : "Metacello-Core-Specs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"name",
+		"className",
+		"versionString",
+		"operator",
+		"loads",
+		"preLoadDoIt",
+		"postLoadDoIt" ],
+	"name" : "MetacelloProjectSpec",
+	"pools" : [
+		 ],
+	"super" : "MetacelloSpec",
+	"type" : "normal" }

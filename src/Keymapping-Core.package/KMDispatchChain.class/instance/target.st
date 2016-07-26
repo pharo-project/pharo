@@ -1,0 +1,3 @@
+iterating
+target
+	^target

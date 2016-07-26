@@ -1,0 +1,3 @@
+managing editing mode
+switchToPlainTextMode
+	self paragraphProvider beForPlainText 

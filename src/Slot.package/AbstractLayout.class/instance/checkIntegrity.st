@@ -1,0 +1,3 @@
+validation
+checkIntegrity
+	self checkSanity

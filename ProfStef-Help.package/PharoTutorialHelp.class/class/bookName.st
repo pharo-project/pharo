@@ -1,3 +1,0 @@
-accessing
-bookName 
-	^ 'Pharo Tutorial'

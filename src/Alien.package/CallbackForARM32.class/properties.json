@@ -1,0 +1,14 @@
+{
+	"category" : "Alien-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "eem 6/17/2016 13:56",
+	"instvars" : [
+		 ],
+	"name" : "CallbackForARM32",
+	"pools" : [
+		 ],
+	"super" : "Callback",
+	"type" : "normal" }

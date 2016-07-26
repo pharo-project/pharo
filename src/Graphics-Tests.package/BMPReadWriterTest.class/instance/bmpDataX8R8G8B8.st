@@ -1,0 +1,17 @@
+data
+bmpDataX8R8G8B8
+	"This is a BMP file based on BitmapV4Header which is currently unsupported."
+	"Created via:
+		(Base64MimeConverter mimeEncode: 
+			(FileStream readOnlyFileNamed: 'bmptest32-X8R8G8B8.bmp') binary)
+				contents
+	"
+	^(Base64MimeConverter mimeDecodeToBytes:
+'Qk1IAQAAAAAAAEYAAAA4AAAACAAAAAgAAAABACAAAwAAAAIBAADDDgAAww4AAAAAAAAAAAAA
+AAAA/wAA/wAA/wAAAAAAAAAA/wAAAP8AAAD/AAAA/wAA/wAAAP8AAAD/AAAA/wAAAAD/AAAA
+/wAAAP8AAAD/AAD/AAAA/wAAAP8AAAD/AAAAAP8AAAD/AAD///8A////AP///wD///8A/wAA
+AP8AAAAA/wAAAP8AAP///wD///8A////AP///wD/AAAA/wAAAAAAAAAAAAAA////AP///wD/
+//8A////AAAA/wAAAP8AAAAAAAAAAAD///8A////AP///wD///8AAAD/AAAA/wAAAAAAAAAA
+AAAAAAAAAAAAAAD/AAAA/wAAAP8AAAD/AAAAAAAAAAAAAAAAAAAAAAAAAP8AAAD/AAAA/wAA
+AP8AAA=='
+readStream) contents

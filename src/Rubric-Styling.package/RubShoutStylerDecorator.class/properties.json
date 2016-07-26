@@ -1,0 +1,18 @@
+{
+	"category" : "Rubric-Styling",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"MinTextSizeForStylingInBackground" ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:11",
+	"instvars" : [
+		"styler",
+		"shoutIsAvailable",
+		"text",
+		"replaceStart",
+		"replaceStop" ],
+	"name" : "RubShoutStylerDecorator",
+	"pools" : [
+		 ],
+	"super" : "RubParagraphDecorator",
+	"type" : "normal" }

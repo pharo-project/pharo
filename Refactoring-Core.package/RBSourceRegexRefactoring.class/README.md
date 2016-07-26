@@ -1,1 +1,0 @@
-I am a regex refactoring replacing method sources.

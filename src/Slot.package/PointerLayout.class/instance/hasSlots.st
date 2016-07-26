@@ -1,0 +1,3 @@
+testing
+hasSlots
+	^ slotScope hasSlots

@@ -1,0 +1,3 @@
+accessing
+elements: aSequenceableCollection
+	self dataSource elements: aSequenceableCollection

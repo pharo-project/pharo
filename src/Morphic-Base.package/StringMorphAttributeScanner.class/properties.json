@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"fontNumber",
+		"textColor",
+		"emphasis",
+		"alignment",
+		"actualFont",
+		"indent",
+		"kern" ],
+	"name" : "StringMorphAttributeScanner",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

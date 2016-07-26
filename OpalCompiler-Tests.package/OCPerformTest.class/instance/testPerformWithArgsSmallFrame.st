@@ -1,3 +1,0 @@
-testing
-testPerformWithArgsSmallFrame
-	self doPerformOldSmallFrame

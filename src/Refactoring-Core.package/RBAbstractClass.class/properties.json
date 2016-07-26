@@ -1,0 +1,21 @@
+{
+	"category" : "Refactoring-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"LookupSuperclass" ],
+	"commentStamp" : "NicolaiHess 5/18/2016 23:34",
+	"instvars" : [
+		"name",
+		"newMethods",
+		"instanceVariableNames",
+		"model",
+		"superclass",
+		"subclasses",
+		"removedMethods",
+		"realClass" ],
+	"name" : "RBAbstractClass",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

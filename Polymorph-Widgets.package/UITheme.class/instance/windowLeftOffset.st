@@ -1,4 +1,0 @@
-defaults
-windowLeftOffset
-
-	^ 0

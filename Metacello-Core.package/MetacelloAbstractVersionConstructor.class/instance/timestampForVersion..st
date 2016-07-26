@@ -1,3 +1,0 @@
-api spec callbacks
-timestampForVersion: aBlockOrStringOrDateAndTime
-    aBlockOrStringOrDateAndTime setTimestampInMetacelloConfig: self

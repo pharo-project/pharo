@@ -1,3 +1,0 @@
-current
-reset
-	CurrentFS := nil

@@ -1,0 +1,1 @@
+I am an entry in a Scope that gets associated with variable nodes of the same name. 

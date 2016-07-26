@@ -1,3 +1,0 @@
-abstract
-eventClassEndGesture
-	self subclassResponsibility

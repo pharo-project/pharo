@@ -1,0 +1,3 @@
+private
+a
+	self b.

@@ -1,0 +1,1 @@
+I encapsulate the context just before a commit.

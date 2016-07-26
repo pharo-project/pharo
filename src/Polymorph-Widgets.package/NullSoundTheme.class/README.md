@@ -1,0 +1,1 @@
+A silent sound theme

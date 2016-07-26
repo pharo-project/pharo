@@ -1,0 +1,1 @@
+i represent close segment (when user issuing #close command to path builder)

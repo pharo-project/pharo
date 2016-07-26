@@ -1,5 +1,0 @@
-class methods
-generalCategory
-
-	^ GeneralCategory.
-

@@ -1,0 +1,14 @@
+{
+	"category" : "Iceberg-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "IceWrongUrl",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

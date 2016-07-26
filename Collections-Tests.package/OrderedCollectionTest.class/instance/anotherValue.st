@@ -1,4 +1,0 @@
-helpers
-anotherValue
-
-	^ 66

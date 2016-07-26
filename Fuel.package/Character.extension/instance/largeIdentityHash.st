@@ -1,4 +1,0 @@
-*Fuel
-largeIdentityHash
-
-	^ self identityHash

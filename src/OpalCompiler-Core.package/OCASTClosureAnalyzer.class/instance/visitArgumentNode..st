@@ -1,0 +1,4 @@
+visiting
+visitArgumentNode: aVariableNode
+
+	aVariableNode adaptToSemanticNode

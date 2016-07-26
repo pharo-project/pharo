@@ -1,1 +1,0 @@
-Text converter for ISO 8859-7.  An international encoding used for Greek. 

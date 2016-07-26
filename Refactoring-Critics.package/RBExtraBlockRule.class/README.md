@@ -1,2 +1,0 @@
-Check for blocks that are immediately evaluated. Since the block is immediately evaluated, there is no need for the statements to be in a block.
-For example, [:x | 1 + x] value: 4 is equivalent to 1 + 4

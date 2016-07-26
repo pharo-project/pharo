@@ -1,0 +1,3 @@
+accessing
+numEntries
+	^ entries size

@@ -1,0 +1,15 @@
+{
+	"category" : "Spec-Layout",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"arguments",
+		"selector" ],
+	"name" : "SpecLayoutSend",
+	"pools" : [
+		 ],
+	"super" : "AbstractSpecLayoutAction",
+	"type" : "normal" }

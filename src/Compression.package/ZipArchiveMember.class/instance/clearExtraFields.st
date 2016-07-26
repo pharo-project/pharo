@@ -1,0 +1,4 @@
+accessing
+clearExtraFields
+	cdExtraField := ''.
+	localExtraField := ''.

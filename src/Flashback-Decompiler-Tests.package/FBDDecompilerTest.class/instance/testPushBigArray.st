@@ -1,0 +1,3 @@
+tests
+testPushBigArray
+	self checkCorrectDecompilation: #examplePushBigArray

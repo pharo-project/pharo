@@ -1,0 +1,29 @@
+{
+	"category" : "Tool-FileList",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 7/6/2014 14:56",
+	"instvars" : [
+		"directoryTreeMorph",
+		"fileListMorph",
+		"directories",
+		"selectedDirectory",
+		"selectedFileIndex",
+		"fileSelectionBlock",
+		"showDirectoriesInFileList",
+		"fileSortBlock",
+		"fileNameText",
+		"defaultExtension",
+		"actionSelector",
+		"answer",
+		"entryCache",
+		"entryCacheDirectory",
+		"previewType",
+		"previewMorph" ],
+	"name" : "FileDialogWindow",
+	"pools" : [
+		 ],
+	"super" : "DialogWindow",
+	"type" : "normal" }

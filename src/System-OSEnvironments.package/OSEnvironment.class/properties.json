@@ -1,0 +1,14 @@
+{
+	"category" : "System-OSEnvironments",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Current" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"platform" ],
+	"name" : "OSEnvironment",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

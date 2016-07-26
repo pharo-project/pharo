@@ -1,0 +1,16 @@
+{
+	"category" : "ProfStef-Tests",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TTutorialTest classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:50",
+	"instvars" : [
+		 ],
+	"name" : "HowToMakeYourOwnTutorialTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"traitcomposition" : "TTutorialTest",
+	"type" : "normal" }

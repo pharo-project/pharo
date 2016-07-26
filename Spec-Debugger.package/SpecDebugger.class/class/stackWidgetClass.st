@@ -1,4 +1,0 @@
-accessing
-stackWidgetClass
-
-	^ SpecDebuggerStack 

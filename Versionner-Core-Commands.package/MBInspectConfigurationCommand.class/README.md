@@ -1,1 +1,0 @@
-Command to inspect a configuration in versionner

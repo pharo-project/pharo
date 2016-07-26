@@ -1,0 +1,4 @@
+searching
+searchedElement
+
+	^ searchedElement

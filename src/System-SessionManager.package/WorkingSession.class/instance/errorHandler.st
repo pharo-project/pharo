@@ -1,0 +1,3 @@
+accessing
+errorHandler
+	^ UIManager default

@@ -1,0 +1,1 @@
+The clipboard for MacOS

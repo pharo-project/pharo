@@ -1,3 +1,0 @@
-visitor
-visitFingerDownEvent: event
-	^nil

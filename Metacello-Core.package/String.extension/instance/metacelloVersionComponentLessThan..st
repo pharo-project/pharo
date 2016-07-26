@@ -1,4 +1,0 @@
-*Metacello-Core-version comparison
-metacelloVersionComponentLessThan: aMetacelloVersonComponent
-
-	^aMetacelloVersonComponent metacelloStringLessThanSelf: self

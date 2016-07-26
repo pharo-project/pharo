@@ -1,0 +1,3 @@
+validation
+notingPresentationChangeDo: aBlock
+	self pane notingPresentationChangeDo: aBlock

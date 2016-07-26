@@ -1,0 +1,1 @@
+I know how to create GTEventMultiBundle object from a collection of GTEventBundle objects.

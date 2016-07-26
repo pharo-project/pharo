@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Examples-MorphTreeWidget",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AlainPlantec 1/17/2010 08:28",
+	"instvars" : [
+		 ],
+	"name" : "LazyClassListExample",
+	"pools" : [
+		 ],
+	"super" : "ClassListExample",
+	"type" : "normal" }

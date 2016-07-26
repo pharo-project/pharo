@@ -1,3 +1,0 @@
-tests
-testBlockNumCopied
-	self checkCorrectDecompilation: #exampleBlockNumCopied

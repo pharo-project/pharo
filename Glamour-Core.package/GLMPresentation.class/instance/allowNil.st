@@ -1,3 +1,0 @@
-scripting
-allowNil
-	^ self useExplicitNotNil

@@ -1,4 +1,0 @@
-emphasis
-releaseCachedState
-
-	self reset.

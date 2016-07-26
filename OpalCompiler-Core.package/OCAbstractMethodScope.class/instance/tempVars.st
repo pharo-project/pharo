@@ -1,4 +1,0 @@
-temp vars
-tempVars
-
-	^ tempVars

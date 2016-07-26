@@ -1,0 +1,24 @@
+{
+	"category" : "FreeType-Fonts",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:10",
+	"instvars" : [
+		"face",
+		"pointSize",
+		"simulatedEmphasis",
+		"pixelSize",
+		"widthAndKernedWidthCache",
+		"cachedHeight",
+		"cachedAscent",
+		"cachedDescent",
+		"subPixelPositioned",
+		"symbolFont" ],
+	"name" : "FreeTypeFont",
+	"pools" : [
+		"FT2Constants",
+		"FreeTypeCacheConstants" ],
+	"super" : "AbstractFont",
+	"type" : "normal" }

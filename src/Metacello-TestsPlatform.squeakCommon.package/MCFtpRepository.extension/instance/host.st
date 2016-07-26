@@ -1,0 +1,4 @@
+*metacello-testsplatform
+host
+
+	^host

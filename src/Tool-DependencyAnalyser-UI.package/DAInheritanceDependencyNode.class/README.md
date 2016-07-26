@@ -1,0 +1,1 @@
+A PDCycleNode is used to display a inheritance dependency in a tree.

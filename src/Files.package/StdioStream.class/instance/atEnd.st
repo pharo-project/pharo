@@ -1,0 +1,4 @@
+position
+atEnd
+
+	^ file atEnd

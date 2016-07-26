@@ -1,0 +1,16 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"returnType",
+		"functionName",
+		"arguments" ],
+	"name" : "FFIFunctionSpec",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,4 +1,0 @@
-menu
-clearTarget
-
-	target := nil.

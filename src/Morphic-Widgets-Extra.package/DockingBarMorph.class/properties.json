@@ -1,0 +1,20 @@
+{
+	"category" : "Morphic-Widgets-Extra",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/4/2011 22:42",
+	"instvars" : [
+		"originalColor",
+		"gradientRamp",
+		"fillsOwner",
+		"avoidVisibleBordersAtEdge",
+		"autoGradient",
+		"selectedItem",
+		"activeSubMenu" ],
+	"name" : "DockingBarMorph",
+	"pools" : [
+		 ],
+	"super" : "AlignmentMorph",
+	"type" : "normal" }

@@ -1,3 +1,0 @@
-setup
-cellSize
-	^ cellSize

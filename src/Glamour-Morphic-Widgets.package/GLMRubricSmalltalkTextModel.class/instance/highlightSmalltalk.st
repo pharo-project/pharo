@@ -1,0 +1,3 @@
+shout
+highlightSmalltalk
+	^ highlightSmalltalk

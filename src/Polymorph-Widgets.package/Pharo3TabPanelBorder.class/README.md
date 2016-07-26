@@ -1,0 +1,1 @@
+Specialized border for TabGroup. Does not draw border beneath the selectd tab and only draws on top.

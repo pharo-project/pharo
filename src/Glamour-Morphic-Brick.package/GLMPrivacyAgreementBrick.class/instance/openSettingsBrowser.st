@@ -1,0 +1,3 @@
+actions
+openSettingsBrowser
+	self class openSettingsBrowser

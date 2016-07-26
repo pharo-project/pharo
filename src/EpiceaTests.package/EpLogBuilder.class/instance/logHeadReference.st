@@ -1,0 +1,3 @@
+accessing
+logHeadReference
+	^ log headReference

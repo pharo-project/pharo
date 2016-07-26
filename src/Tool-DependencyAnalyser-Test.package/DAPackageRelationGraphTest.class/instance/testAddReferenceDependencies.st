@@ -1,0 +1,5 @@
+tests
+testAddReferenceDependencies
+	aPackageRelationGraph addReferenceDependencies: packagePackageDependencies.
+	packagePackageDependencies removeAllInternal.
+	self assert: (packagePackageDependencies  dependentPackages includes: packageStrings).

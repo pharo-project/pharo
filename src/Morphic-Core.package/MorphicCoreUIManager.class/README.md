@@ -1,0 +1,1 @@
+This is a very simplified version of MorphicUIManager for Moprhic subset that contains ony Morphic-Core package and has only support of the most basic morphs.

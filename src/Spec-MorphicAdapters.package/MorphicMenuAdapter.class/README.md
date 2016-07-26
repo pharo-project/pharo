@@ -1,0 +1,1 @@
+I am the adapter used to build a MenuMorph from a MenuModel

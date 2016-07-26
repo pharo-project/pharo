@@ -1,3 +1,0 @@
-tests
-testSend2Args
-	self checkCorrectDecompilation: #exampleSend2Args

@@ -1,4 +1,0 @@
-position
-atEnd
-
-	^ file atEnd

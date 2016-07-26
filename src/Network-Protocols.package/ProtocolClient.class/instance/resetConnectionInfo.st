@@ -1,0 +1,3 @@
+private
+resetConnectionInfo
+	connectInfo := nil

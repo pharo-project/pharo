@@ -1,0 +1,15 @@
+{
+	"category" : "EmbeddedFreeType",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:10",
+	"instvars" : [
+		"fileContents",
+		"baseName" ],
+	"name" : "FreeTypeEmbeddedFileInfo",
+	"pools" : [
+		 ],
+	"super" : "FreeTypeFileInfoAbstract",
+	"type" : "normal" }

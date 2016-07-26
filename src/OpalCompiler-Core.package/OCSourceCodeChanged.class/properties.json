@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "BenComan 3/6/2014 02:40",
+	"instvars" : [
+		"newSourceCode" ],
+	"name" : "OCSourceCodeChanged",
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

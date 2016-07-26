@@ -1,3 +1,0 @@
-running
-setUpPreferences
-	self subclassResponsibility

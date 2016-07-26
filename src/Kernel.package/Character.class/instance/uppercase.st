@@ -1,0 +1,3 @@
+converting
+uppercase
+	^ self asUppercase

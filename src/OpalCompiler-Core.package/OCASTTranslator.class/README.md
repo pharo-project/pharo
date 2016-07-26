@@ -1,0 +1,1 @@
+I visit an abstract syntax tree and generate IR (intermediate representation) instructions for each node by sending the appropriate message to my methodBuilder (an IRBuilder).  I hold onto my two subclasses one for generating instructions for value, the other for generating instructions for effect.

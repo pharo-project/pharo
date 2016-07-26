@@ -1,0 +1,4 @@
+public
+maxFileNameLength
+
+	^ 255

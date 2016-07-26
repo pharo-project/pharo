@@ -1,0 +1,14 @@
+{
+	"category" : "Files-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:37",
+	"instvars" : [
+		 ],
+	"name" : "CannotDeleteFileException",
+	"pools" : [
+		 ],
+	"super" : "FileException",
+	"type" : "normal" }

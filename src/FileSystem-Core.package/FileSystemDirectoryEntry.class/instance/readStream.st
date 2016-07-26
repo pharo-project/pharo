@@ -1,0 +1,3 @@
+delegate
+readStream
+	^ reference readStream

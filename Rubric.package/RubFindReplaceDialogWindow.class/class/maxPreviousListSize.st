@@ -1,3 +1,0 @@
-accessing
-maxPreviousListSize
-	^ 15

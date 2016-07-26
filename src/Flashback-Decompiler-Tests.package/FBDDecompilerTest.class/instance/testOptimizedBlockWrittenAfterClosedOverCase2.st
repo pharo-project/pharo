@@ -1,0 +1,3 @@
+tests
+testOptimizedBlockWrittenAfterClosedOverCase2
+	self checkCorrectDecompilation: #optimizedBlockWrittenAfterClosedOverCase2

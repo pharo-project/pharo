@@ -1,0 +1,28 @@
+{
+	"category" : "Tool-Profilers",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"win",
+		"rootMessageTally",
+		"threshold",
+		"minPercentageToExpand",
+		"treeMorph",
+		"block",
+		"blockCodePane",
+		"withBlockCodePane",
+		"blockSource",
+		"reportOtherProcesses",
+		"showLeavesOnly",
+		"codeTabPane",
+		"resultPane",
+		"result",
+		"withToolBar" ],
+	"name" : "TimeProfiler",
+	"pools" : [
+		 ],
+	"super" : "MorphTreeModel",
+	"type" : "normal" }

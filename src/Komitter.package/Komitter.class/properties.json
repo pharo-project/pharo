@@ -1,0 +1,16 @@
+{
+	"category" : "Komitter-Models",
+	"classinstvars" : [
+		"lastMessage" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 11/24/2015 19:16",
+	"instvars" : [
+		"stagingArea",
+		"lastCommit",
+		"view" ],
+	"name" : "Komitter",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

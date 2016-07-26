@@ -1,0 +1,3 @@
+geometry
+position
+	^ layoutPosition topPointInView 

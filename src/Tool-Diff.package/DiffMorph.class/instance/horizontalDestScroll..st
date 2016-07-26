@@ -1,0 +1,3 @@
+event handling
+horizontalDestScroll: anAnnouncement
+	self srcMorph scrollPane hScrollbarValueWithoutAnnouncement: anAnnouncement scrollValue

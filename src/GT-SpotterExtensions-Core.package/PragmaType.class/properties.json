@@ -1,0 +1,15 @@
+{
+	"category" : "GT-SpotterExtensions-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 11/16/2014 12:57",
+	"instvars" : [
+		"keyword",
+		"pragmas" ],
+	"name" : "PragmaType",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+accessing
+asDebugAction
+
+	^ self new

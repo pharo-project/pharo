@@ -1,3 +1,0 @@
-accessing
-title
-	^ 'copy baseline'

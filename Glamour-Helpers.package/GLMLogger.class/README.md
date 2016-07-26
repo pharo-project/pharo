@@ -1,1 +1,0 @@
-This is the abstract class for the Glamour loggers. These classes are typically used for debugging hte highly dynamic Glamour model.

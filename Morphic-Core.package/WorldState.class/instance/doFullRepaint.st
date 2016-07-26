@@ -1,4 +1,0 @@
-canvas
-doFullRepaint
-
-	damageRecorder doFullRepaint

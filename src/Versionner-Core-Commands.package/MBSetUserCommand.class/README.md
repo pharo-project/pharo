@@ -1,0 +1,1 @@
+Command to bset the user in Versionner

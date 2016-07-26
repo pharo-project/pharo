@@ -1,2 +1,0 @@
-I'm an abstract class to implement the pushing strategy for method arguments. 
-My children define different pushing strategies for the valid types or argument (usually an atomic type object, and external object or a "self" instruction)

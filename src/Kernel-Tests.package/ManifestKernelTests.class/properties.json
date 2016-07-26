@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestKernelTests",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

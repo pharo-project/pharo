@@ -1,0 +1,3 @@
+testing
+isTranslucent
+	^color isTranslucent

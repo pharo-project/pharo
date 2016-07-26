@@ -1,1 +1,0 @@
-Gradient fill style that uses proper alpha-aware interpolation.

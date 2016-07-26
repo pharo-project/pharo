@@ -1,0 +1,3 @@
+private testing
+responseIsError
+	self subclassResponsibility

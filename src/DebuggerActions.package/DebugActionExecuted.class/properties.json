@@ -1,0 +1,14 @@
+{
+	"category" : "DebuggerActions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 11/19/2015 20:13",
+	"instvars" : [
+		"debuggingAction" ],
+	"name" : "DebugActionExecuted",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

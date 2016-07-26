@@ -1,1 +1,0 @@
-push literal variable

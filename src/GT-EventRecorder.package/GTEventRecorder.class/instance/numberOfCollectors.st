@@ -1,0 +1,3 @@
+convenient
+numberOfCollectors
+	^ collectors size

@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Core",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TudorGirba 2/4/2011 20:22",
+	"instvars" : [
+		 ],
+	"name" : "GLMNoBrowser",
+	"pools" : [
+		 ],
+	"super" : "GLMLoggedObject",
+	"type" : "normal" }

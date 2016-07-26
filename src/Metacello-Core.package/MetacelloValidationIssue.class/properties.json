@@ -1,0 +1,17 @@
+{
+	"category" : "Metacello-Core-Validation",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"configurationClass",
+		"explanation",
+		"reasonCode",
+		"callSite" ],
+	"name" : "MetacelloValidationIssue",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

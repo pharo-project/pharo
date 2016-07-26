@@ -1,0 +1,3 @@
+accessing
+ownFieldSize
+	^ 0

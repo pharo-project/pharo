@@ -1,0 +1,1 @@
+SimplestClassListWithChunkExample new openOn: Object

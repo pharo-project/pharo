@@ -1,4 +1,0 @@
-accessing
-traitAffectedName
-
-	^ trait name

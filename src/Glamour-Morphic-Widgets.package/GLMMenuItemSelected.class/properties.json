@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "GLMMenuItemSelected",
+	"pools" : [
+		 ],
+	"super" : "GLMActionAnnouncement",
+	"type" : "normal" }

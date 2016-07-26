@@ -1,0 +1,1 @@
+A morph that can expand or collapse to show its contents.

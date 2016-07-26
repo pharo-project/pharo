@@ -1,1 +1,0 @@
-It is recommended to reuse the #basickCheck: method in #checkClass:, #checkMethod: or #checkPackage:. This will increase the maintainability of lint rules.

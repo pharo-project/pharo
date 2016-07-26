@@ -1,0 +1,3 @@
+construction
+newMenuItem
+	^ PluggableMenuItemSpec new

@@ -1,0 +1,4 @@
+printing
+isLiteral
+
+	^true

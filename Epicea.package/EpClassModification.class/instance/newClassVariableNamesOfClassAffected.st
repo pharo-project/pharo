@@ -1,4 +1,0 @@
-accessing
-newClassVariableNamesOfClassAffected
-
-	^ newClass classVarNames 

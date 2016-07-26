@@ -1,0 +1,14 @@
+{
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 10/3/2014 21:24",
+	"instvars" : [
+		 ],
+	"name" : "OCStoreIntoSpecialVariableError",
+	"pools" : [
+		 ],
+	"super" : "OCSemanticError",
+	"type" : "normal" }

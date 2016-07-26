@@ -1,1 +1,0 @@
-ColorComponentSelector showing an alpha gradient over a hatched background.

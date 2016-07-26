@@ -1,3 +1,0 @@
-accessing
-baseKern
-	^baseFont baseKern

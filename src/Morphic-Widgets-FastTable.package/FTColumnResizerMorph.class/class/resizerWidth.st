@@ -1,0 +1,3 @@
+accessing
+resizerWidth
+	^ 8

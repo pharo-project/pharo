@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsers-Integration",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 2/1/2016 02:46",
+	"instvars" : [
+		 ],
+	"name" : "EpSettings",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

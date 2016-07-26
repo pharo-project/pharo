@@ -1,0 +1,3 @@
+visitor
+visitFingerMotionEvent: event
+	^nil

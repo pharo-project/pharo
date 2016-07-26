@@ -1,0 +1,4 @@
+api
+selectOnlyLastHighlighted
+
+	^ removeOnlyLastSelected value

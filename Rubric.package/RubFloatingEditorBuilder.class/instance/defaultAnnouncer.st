@@ -1,3 +1,0 @@
-initialization
-defaultAnnouncer
-	^ Announcer new

@@ -1,0 +1,14 @@
+{
+	"category" : "Morphic-Tests-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "MorphTreeMorphTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

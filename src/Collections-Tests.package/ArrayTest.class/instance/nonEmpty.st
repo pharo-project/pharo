@@ -1,0 +1,4 @@
+initialization
+nonEmpty
+
+	^ example1
