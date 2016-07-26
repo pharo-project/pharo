@@ -20,7 +20,7 @@ MCWorkingCopy allManagers
 bootInitPackageManager := (MCWorkingCopy hasPackageNamed: 'PharoBootstrap-Initialization').
 MCFileTreeGitWriter
 	fileOut: (bootInitPackageManager repositoryGroup versionWithInfo: bootInitPackageManager ancestors first)
-	on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory)
+	on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory).
 
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
 versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
