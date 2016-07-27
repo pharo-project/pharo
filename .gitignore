@@ -10,3 +10,7 @@ pharo-local/
 epicea-sessions/
 github-cache/
 package-cache/
+iceberg-cache/
+play-cache/
+
+github--*.zip
