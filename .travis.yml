@@ -26,6 +26,6 @@ install:
 # - "./scripts/install-packages.sh"
  
 script:
- - "./scripts/bootstrap.st" # ${BOOTSTRAP_VERSION} ${BOOTSTRAP_ARCH} ${BOOTSTRAP_DISTIRBUTION}"
+ - "./pharo Pharo.image ./scripts/bootstrap.st" # ${BOOTSTRAP_VERSION} ${BOOTSTRAP_ARCH} ${BOOTSTRAP_DISTIRBUTION}"
  - "zip -r bootstrap bootstrap.image" # boot-packages"
- - "./scripts/dropbox_upload.sh upload bootstrap.zip bootstrap-${BOOTSTRAP_VERSION}-${BOOTSTRAP_ARCH}-${BOOTSTRAP_DISTIRBUTION}-${TRAVIS_JOB_NUMBER}.zip"
+ - #"./scripts/dropbox_upload.sh upload bootstrap.zip bootstrap-${BOOTSTRAP_VERSION}-${BOOTSTRAP_ARCH}-${BOOTSTRAP_DISTIRBUTION}-${TRAVIS_JOB_NUMBER}.zip"
