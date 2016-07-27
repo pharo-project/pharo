@@ -1,0 +1,18 @@
+{
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Spirita 6/29/2016 11:11",
+	"instvars" : [
+		"actionWhenActivatedHolder",
+		"stateHolder",
+		"labelClickableHolder",
+		"labelHolder",
+		"actionWhenDeactivatedHolder" ],
+	"name" : "AbstractFormButtonModel",
+	"pools" : [
+		 ],
+	"super" : "AbstractWidgetModel",
+	"type" : "normal" }

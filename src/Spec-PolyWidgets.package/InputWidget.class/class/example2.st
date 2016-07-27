@@ -5,7 +5,7 @@ example2
 	| widget buttonModel buttonWindow |
 	buttonModel := ButtonModel new.
 	buttonWindow := buttonModel openWithSpec.
-	widget := InputWidget new.
+	widget := self new.
 	widget
 		title: 'Label?';
 		label: 'Enter a button label';
