@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
+	"category" : "Spec-Tests",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"listModel",
-		"searchModel" ],
-	"name" : "SearchableList",
+		 ],
+	"name" : "ManifestSpecTests",
 	"pools" : [
 		 ],
-	"super" : "ComposableModel",
+	"super" : "PackageManifest",
 	"type" : "normal" }

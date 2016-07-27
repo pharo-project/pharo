@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
+	"category" : "Spec-Inspector",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"listModel",
-		"searchModel" ],
-	"name" : "SearchableList",
+		 ],
+	"name" : "ManifestSpecInspector",
 	"pools" : [
 		 ],
-	"super" : "ComposableModel",
+	"super" : "PackageManifest",
 	"type" : "normal" }

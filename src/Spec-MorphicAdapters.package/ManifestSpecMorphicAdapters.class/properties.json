@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
+	"category" : "Spec-MorphicAdapters",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"listModel",
-		"searchModel" ],
-	"name" : "SearchableList",
+		 ],
+	"name" : "ManifestSpecMorphicAdapters",
 	"pools" : [
 		 ],
-	"super" : "ComposableModel",
+	"super" : "PackageManifest",
 	"type" : "normal" }
