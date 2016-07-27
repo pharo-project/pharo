@@ -13,4 +13,6 @@ Metacello new
 	location: '.'
 	subdirectory: 'src';
 	espellBackend: #EPSimulatorBackend asClass for32Bit forBootstrap;
-	bootstrap
+	bootstrap.
+
+Smalltalk snapshot: false andQuit: true.
