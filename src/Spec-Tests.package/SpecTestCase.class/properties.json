@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"window" ],
+		"window",
+		"testedInstance" ],
 	"name" : "SpecTestCase",
 	"pools" : [
 		 ],

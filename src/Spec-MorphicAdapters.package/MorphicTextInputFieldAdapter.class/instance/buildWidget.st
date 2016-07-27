@@ -7,7 +7,8 @@ buildWidget
 			text: #getText
 			accept: #accept:
 			readSelection: nil
-			menu: nil.
+			menu: nil
+			setSelection: #setSelection:.
 	plu
 		entryCompletion: self entryCompletion;
 		autoAccept: self autoAccept;

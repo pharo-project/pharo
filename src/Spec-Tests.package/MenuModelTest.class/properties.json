@@ -1,12 +1,12 @@
 {
-	"category" : "Spec-Tests",
+	"category" : "Spec-Tests-Core-Widgets",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"menuModel" ],
+		 ],
 	"name" : "MenuModelTest",
 	"pools" : [
 		 ],

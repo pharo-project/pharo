@@ -1,7 +1,7 @@
 tests
 testEnabled
-	self assert: buttonModel enabled.
-	window := buttonModel openWithSpec.
+	self assert: testedInstance enabled.
+	self openInstance.
 	self assert: self morph enabled.
-	buttonModel enabled: false.
+	testedInstance enabled: false.
 	self deny: self morph enabled

@@ -1,7 +1,6 @@
 example
 example
-	| instance |
-
-	instance := self new.
-	instance openWithSpec.
-	instance items: (Smalltalk allClasses).
+	^ self
+		new
+		openWithSpec;
+		items: Smalltalk allClasses

@@ -1,10 +1,10 @@
 tests
 testAskBeforeChanging
 	| state |
-	self assert: buttonModel askBeforeChanging not.
-	window := buttonModel openWithSpec.
-	state := buttonModel widget askBeforeChanging.
+	self assert: testedInstance askBeforeChanging not.
+	self openInstance.
+	state := testedInstance widget askBeforeChanging.
 	self assert: state not.
-	buttonModel askBeforeChanging: true.
-	state := buttonModel widget askBeforeChanging.
+	testedInstance askBeforeChanging: true.
+	state := testedInstance widget askBeforeChanging.
 	self assert: state
