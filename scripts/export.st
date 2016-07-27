@@ -33,6 +33,7 @@ versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 			FileStream stdout nextPutAll: 'Exporting ', packageName; cr.
 			manager repositoryGroup addRepository: pharoRepo.
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
+			('src' asFileReference / packageName , '.package') ensureDeleteAll.
 			MCFileTreeGitWriter
 				fileOut: version
 				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] ] on: Warning do: #resume.
