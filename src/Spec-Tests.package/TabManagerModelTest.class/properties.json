@@ -1,16 +1,14 @@
 {
-	"category" : "Spec-Tests",
+	"category" : "Spec-Tests-Core-Widgets",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"manager",
-		"window",
 		"redTab" ],
 	"name" : "TabManagerModelTest",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "SpecTestCase",
 	"type" : "normal" }

@@ -1,10 +1,12 @@
 tabs creation
 redMorphTab
-	^ TabModel new
+	| tab |
+	tab := TabModel new.
+	tab
 		label: 'Red Morph';
-		icon: Smalltalk ui icons smallBackIcon;
+		icon: (tab iconNamed: #smallBackIcon);
 		contents:
 			(Morph new
 				color: Color red;
-				yourself);
-		yourself
+				yourself).
+	^ tab

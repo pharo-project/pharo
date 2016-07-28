@@ -3,7 +3,8 @@ parsePatternBlock: aClass
 	| position node |
 	position := currentToken start.
 	self step.
-	node := self parseBlockArgsInto: aClass new.
+	node := aClass new.
+	self parseBlockArgsInto: node.
 	node left: position.
 	
 	node body: self sequenceNodeClass new.

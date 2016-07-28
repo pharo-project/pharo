@@ -1,7 +1,6 @@
 tests
 testAddTabOpened
-	window := manager openWithSpec.
-
-	self assertCollection: manager tabs hasSameElements: #().
-	manager addTab: redTab.
-	self assertCollection: manager tabs hasSameElements: {redTab}
+	self openInstance.
+	self assertCollection: testedInstance tabs hasSameElements: #().
+	testedInstance addTab: redTab.
+	self assertCollection: testedInstance tabs hasSameElements: {redTab}

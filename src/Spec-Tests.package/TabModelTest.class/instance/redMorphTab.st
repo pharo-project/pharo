@@ -1,10 +1,9 @@
 instance creation
 redMorphTab
-	^ TabModel new
+	testedInstance
 		label: 'Red Morph';
-		icon: Smalltalk ui icons smallBackIcon;
+		icon: (testedInstance iconNamed: #smallBackIcon);
 		contents:
-				(Morph new
-						color: Color red;
-						yourself);
-		yourself
+			(Morph new
+				color: Color red;
+				yourself).

@@ -2,7 +2,7 @@ tests
 testRemoveTabUnsetOwner
 	"issue 16553"
 
-	manager addTab: redTab.
-	self assert: redTab owner equals: manager.
-	manager removeTab: redTab.
+	testedInstance addTab: redTab.
+	self assert: redTab owner equals: testedInstance.
+	testedInstance removeTab: redTab.
 	self assert: redTab owner equals: nil

@@ -2,8 +2,7 @@ tests
 testRemoveTab
 	"issue 11461"
 
-	manager addTab: redTab.
-	self assertCollection: manager tabs hasSameElements: {redTab}.
-
-	manager removeTab: redTab.
-	self assertCollection: manager tabs hasSameElements: #()
+	testedInstance addTab: redTab.
+	self assertCollection: testedInstance tabs hasSameElements: {redTab}.
+	testedInstance removeTab: redTab.
+	self assertCollection: testedInstance tabs hasSameElements: #()

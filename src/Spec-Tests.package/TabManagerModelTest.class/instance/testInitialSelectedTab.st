@@ -2,8 +2,8 @@ tests
 testInitialSelectedTab
 	"issue 15145"
 
-	self assert: manager selectedTab equals: nil.
-	manager addTab: redTab.
-	self assert: manager selectedTab equals: redTab.
-	manager addTab: self redMorphTab.
-	self assert: manager selectedTab equals: redTab
+	self assert: testedInstance selectedTab equals: nil.
+	testedInstance addTab: redTab.
+	self assert: testedInstance selectedTab equals: redTab.
+	testedInstance addTab: self redMorphTab.
+	self assert: testedInstance selectedTab equals: redTab
