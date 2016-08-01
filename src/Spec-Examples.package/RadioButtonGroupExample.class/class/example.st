@@ -1,5 +1,3 @@
 example
 example
-	"self example"
-
-	RadioButtonGroupExample new openWithSpec.
+	^ self new openWithSpec

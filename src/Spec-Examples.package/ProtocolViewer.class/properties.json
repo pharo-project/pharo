@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Examples",
+	"category" : "Spec-Examples-BuildUIWithSpec-Reuse",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "BernardoContreras 3/7/2015 01:31",
+	"commentStamp" : "Spirita 7/26/2016 15:31",
 	"instvars" : [
 		"models",
 		"protocols",

@@ -1,7 +1,7 @@
 example
 example
-
-	| mb |
-	mb := MethodBrowser new.
-	mb openWithSpec.
-	mb methods: Object methods
+	| example |
+	example := MethodBrowser new.
+	example methods: Object methods;
+	 openWithSpec.
+	^example

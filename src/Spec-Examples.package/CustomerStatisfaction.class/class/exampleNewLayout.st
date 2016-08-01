@@ -1,5 +1,5 @@
 example
 exampleNewLayout
-	self new openWithSpec: #layout
+	^ self new openWithSpec: #layout
 
 	

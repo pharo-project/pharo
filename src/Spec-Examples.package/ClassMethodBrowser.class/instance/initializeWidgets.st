@@ -1,11 +1,8 @@
 initialization
 initializeWidgets
-
-	listModel := self newList.
+	listModel := self instantiate:  ListModel .
 	methodModel := self instantiate: MethodBrowser.
-	
 	self focusOrder
 		add: listModel;
 		add: methodModel.
-	
-	methodModel displayBlock: [:method | method selector ].
+	methodModel displayBlock: [ :method | method selector ]

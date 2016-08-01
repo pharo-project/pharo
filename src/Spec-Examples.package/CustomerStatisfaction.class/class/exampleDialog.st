@@ -1,3 +1,3 @@
 example
 exampleDialog
-	self new openDialogWithSpec
+	^ self new openDialogWithSpec

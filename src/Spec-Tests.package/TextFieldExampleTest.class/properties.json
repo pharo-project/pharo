@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TextFieldExampleTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-Examples-BuildUIWithSpec-Reuse",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ProtocolBrowserTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

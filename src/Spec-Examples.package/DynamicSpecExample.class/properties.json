@@ -1,12 +1,12 @@
 {
-	"category" : "Spec-Examples",
+	"category" : "Spec-Examples-Wrapper",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "Spirita 7/27/2016 10:55",
 	"instvars" : [
-		"object" ],
+		"ui" ],
 	"name" : "DynamicSpecExample",
 	"pools" : [
 		 ],

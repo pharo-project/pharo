@@ -7,6 +7,7 @@ allReferencesTo: aLiteral
 	
 	| result symbol |
 	result := OrderedCollection new.
+	
 	symbol := aLiteral isSymbol.
 	self allBehaviorsDo: [ :class |
 		| selectors |

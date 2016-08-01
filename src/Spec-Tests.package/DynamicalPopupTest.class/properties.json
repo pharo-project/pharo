@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-Examples-BuildUIWithSpec",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DynamicalPopupTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

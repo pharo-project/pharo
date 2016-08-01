@@ -1,5 +1,3 @@
 example
 example
-	"self example"
-
-	ScrollSyncExample new openWithSpec.
+	^ self new openWithSpec

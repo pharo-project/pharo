@@ -1,0 +1,3 @@
+tests
+testExampleAlternativeToolbar
+window := self classToTest exampleAlternativeToolbar

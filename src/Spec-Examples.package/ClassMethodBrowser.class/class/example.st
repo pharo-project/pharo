@@ -1,8 +1,8 @@
 example
 example
-
-	"self example"
-	| cb |
-	cb := ClassMethodBrowser new.
-	cb openWithSpec.
-	cb classes: Smalltalk allClasses.
+	| example |
+	example := ClassMethodBrowser new.
+	example
+		classes: Smalltalk allClasses;
+		openWithSpec.
+		^example
