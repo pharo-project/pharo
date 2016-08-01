@@ -1,3 +1,4 @@
 accessing
 width 
-	^ self right - self left.
+
+	^ self right + self left

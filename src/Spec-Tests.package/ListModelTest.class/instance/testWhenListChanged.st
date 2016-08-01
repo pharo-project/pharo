@@ -3,11 +3,8 @@ testWhenListChanged
 	"Two stages list changed notification."
 
 	50
-		timesRepeat: [ 
-			| list ok |
-			list := ListModel new.
-			list items: #(1 2).
-			list whenListChanged: [ :aList | ok := aList = list listItems ].
-			list listItems.	"Call listItems to set the cache"
-			list items: #(1 2 3).
+		timesRepeat: [ | ok |
+			testedInstance := ListModel new.
+			testedInstance items: #(1 2); whenListChanged: [ :aList | ok := aList = testedInstance listItems ]; listItems;	"Call listItems to set the cache"
+			 items: #(1 2 3).
 			self assert: ok ]

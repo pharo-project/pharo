@@ -2,14 +2,13 @@ tests
 testWhenListChangedOldContents
 	"access to old and new contents in whenListChanged."
 
-	| list oldL newL ok |
-	list := ListModel new.
+	| oldL newL |
 	oldL := #(1 2).
 	newL := #(1 2 3).
-	list items: oldL.
-	list
+	testedInstance items: oldL.
+	testedInstance
 		whenListChanged: [ :aList :anOldList | 
 			self assert: oldL = anOldList.
 			self assert: newL = aList ].
-	list listItems.	"Call listItems to set the cache"
-	list items: #(1 2 3)
+	testedInstance listItems.	"Call listItems to set the cache"
+	testedInstance items: #(1 2 3)

@@ -17,6 +17,7 @@ buildWidget
 		setBalloonText: self help;
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
+		registerScrollChanges: #scrollValueChanged:;
 		yourself.
 	self setEditingModeFor: newWidget withBehavior: self behavior.
 	^ newWidget

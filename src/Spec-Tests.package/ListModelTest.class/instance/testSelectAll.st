@@ -1,10 +1,9 @@
 tests
 testSelectAll
-	| list items |
-	list := ListModel new.
+	| items |
 	items := #(#AAA #BBB #CCC).
-	list items: items.
-	list beMultipleSelection.
-	self assert: list selectedItems equals: #().
-	list selectAll.
-	self assert: list selectedItems equals: items
+	testedInstance items: items.
+	testedInstance beMultipleSelection.
+	self assert: testedInstance selectedItems equals: #().
+	testedInstance selectAll.
+	self assert: testedInstance selectedItems equals: items

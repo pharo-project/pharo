@@ -6,13 +6,9 @@
 		 ],
 	"commentStamp" : "Spirita 6/29/2016 11:33",
 	"instvars" : [
-		"actionWhenActivatedHolder",
-		"stateHolder",
-		"labelClickableHolder",
-		"labelHolder",
-		"actionWhenDeactivatedHolder" ],
+		 ],
 	"name" : "CheckBoxModel",
 	"pools" : [
 		 ],
-	"super" : "AbstractWidgetModel",
+	"super" : "AbstractFormButtonModel",
 	"type" : "normal" }

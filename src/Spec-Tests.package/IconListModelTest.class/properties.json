@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "ListModelTest",
+	"name" : "IconListModelTest",
 	"pools" : [
 		 ],
-	"super" : "SpecTestCase",
+	"super" : "ListModelTest",
 	"type" : "normal" }

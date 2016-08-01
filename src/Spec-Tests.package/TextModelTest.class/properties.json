@@ -4,10 +4,10 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "ListModelTest",
+	"name" : "TextModelTest",
 	"pools" : [
 		 ],
 	"super" : "SpecTestCase",

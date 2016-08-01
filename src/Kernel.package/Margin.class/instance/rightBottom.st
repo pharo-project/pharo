@@ -1,4 +1,0 @@
-accessing
-rightBottom
-
-	^ right @ bottom
