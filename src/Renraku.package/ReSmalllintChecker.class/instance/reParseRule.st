@@ -1,4 +1,4 @@
-as yet unclassified
+private
 reParseRule
 
 	methodRules  := Set new.
@@ -6,7 +6,7 @@ reParseRule
 	classRules   := Set new.
 	packageRules := Set new.
 
-	rule leaves do: [ :r |
+	self rule do: [ :r |
 		r class checksMethod  ifTrue: [ methodRules  add: r ].
 		r class checksNode    ifTrue: [ nodeRules    add: r ].
 		r class checksClass   ifTrue: [ classRules   add: r ].

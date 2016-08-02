@@ -2,6 +2,7 @@ accessing
 allRules
 
 	^ rules ifNil: [
-		rules := RBCompositeLintRule allGoodRules leaves
-			reject: [ :rule |
-				self excludedRuleNames includes: rule class name ] ]
+		rules := self class visibleRuleClasses
+			reject: [ :ruleClass |
+				self excludedRuleNames includes: ruleClass name ] 
+			thenCollect: #new ]

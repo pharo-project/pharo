@@ -1,7 +1,7 @@
 *renraku
 critiques
 	<eProperty>
-	| rules critics manifest builder |
+	| rules critiques manifest builder |
 	
 	builder  := TheManifestBuilder new.
 	manifest := self compilationContext
@@ -15,24 +15,29 @@ critiques
 						ifPresent: [ :method | builder manifestOf: method ]
 						ifAbsent: [ nil ] ] ].
 		
-	rules    := ReRuleManager uniqueInstance astRules.
-	critics  := Set new.
+	rules    := ReRuleManager uniqueInstance nodeRules.
+	critiques  := Set new.
 
-	rules
+	rules := rules
 		reject: [ :rule |
 			manifest isNotNil and:
 			[ (builder bansRule: rule for: self method) or:
-			[  builder bansRule: rule for: self methodClass ] ] ] 
-		thenDo: [ :rule |
-			[ rule resetResult.
-			  rule
-				  check: self
-				  forCritiquesDo: [ :critic |
-					 critics add: critic ]
-			] on: Error
-			  do: [ :er | ReSettings showErrors ifTrue: [ er pass ] ].
+			[  builder bansRule: rule for: self methodClass ] ] ].
+
+	
+
+	self nodesDo: [ :node |
+			rules do: [ :rule |
+				[
+					rule
+						check: node
+				 		forCritiquesDo: [ :critique |
+							critique sourceAnchor initializeEnitity: self.
+					  		critiques add: critique ]
+				] on: Error
+			  	  do: [ :er | ReSettings showErrors ifTrue: [ er pass ] ] ].
 			Processor yield ].
 	
-	ReSystemAnnouncer uniqueInstance notifyEntity: self criticizedWith: critics. 
+	ReSystemAnnouncer uniqueInstance notifyEntity: self criticizedWith: critiques. 
 	
-	^ critics
+		^ critiques

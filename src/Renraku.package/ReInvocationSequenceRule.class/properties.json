@@ -11,5 +11,5 @@
 	"name" : "ReInvocationSequenceRule",
 	"pools" : [
 		 ],
-	"super" : "ReBasicTreeRule",
+	"super" : "ReAbstractRule",
 	"type" : "normal" }

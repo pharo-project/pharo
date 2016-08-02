@@ -1,5 +1,5 @@
 {
-	"category" : "Renraku-Rules",
+	"category" : "Renraku-Deprecated",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -10,5 +10,5 @@
 	"name" : "ReBasicClassRule",
 	"pools" : [
 		 ],
-	"super" : "RBBasicLintRule",
+	"super" : "ReAbstractRule",
 	"type" : "normal" }

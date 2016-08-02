@@ -1,3 +1,3 @@
-as yet unclassified
+testing
 checksClass
-	^ true
+	^ self name ~= #ReBasicClassRule

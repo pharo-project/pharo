@@ -1,3 +1,3 @@
 accessing
 pages
-	^ #(subclass nameRationale interestInEntities checking advancedChecking testing)
+	^ #(subclass nameRationale interestInEntities checking advancedChecking testing groupSeverity)

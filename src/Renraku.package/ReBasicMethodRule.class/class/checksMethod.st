@@ -1,4 +1,4 @@
 testing
 checksMethod
 
-	^ true
+	^ self name ~= #ReBasicMethodRule

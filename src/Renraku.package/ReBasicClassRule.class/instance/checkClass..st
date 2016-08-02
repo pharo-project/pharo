@@ -1,5 +1,4 @@
-as yet unclassified
+running
 checkClass: aClass
 
-	(self basicCheck: aClass) ifTrue: 
-		[ result addClass: aClass ]
+	^ (self basicCheck: aClass) 

@@ -11,4 +11,4 @@ checkMethodsForClass: aClass
 						check: node
 						forCritiquesDo: [ :crit |
 							crit sourceAnchor initializeEnitity: method.
-							critiques add: crit ] ] ] ]
+							self addCritique: crit ] ] ] ]

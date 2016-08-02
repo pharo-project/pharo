@@ -1,5 +1,5 @@
 {
-	"category" : "Renraku-Rewrite",
+	"category" : "Renraku-Rules-Rewrite",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -10,5 +10,5 @@
 	"name" : "ReNodeBasedRule",
 	"pools" : [
 		 ],
-	"super" : "RBLintRule",
+	"super" : "ReAbstractRule",
 	"type" : "normal" }

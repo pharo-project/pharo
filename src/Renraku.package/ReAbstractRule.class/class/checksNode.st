@@ -1,0 +1,4 @@
+testing-interest
+checksNode
+
+	^ false

@@ -1,5 +1,7 @@
 running
-check: anAST forCritiquesDo: aCriticBlock
+check: aNode forCritiquesDo: aCriticBlock
+
+	aNode isMethod ifFalse: [ ^ self ].
 	
-	(self  preCheck: anAST forCriticsDo: aCriticBlock) &  
-	(self postCheck: anAST forCriticsDo: aCriticBlock)
+	(self  preCheck: aNode forCriticsDo: aCriticBlock) &  
+	(self postCheck: aNode forCriticsDo: aCriticBlock)

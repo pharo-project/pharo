@@ -27,4 +27,4 @@ critiques
 	
 	ReSystemAnnouncer uniqueInstance notifyEntity: self criticizedWith: critiques. 
 	
-	^ critiques, self ast critiques, self nodeCritiques
+	^ critiques, self ast critiques
