@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-PolyWidgets",
+	"category" : "Spec-PolyWidgets-Toolbar",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "Spirita 7/22/2016 17:01",
 	"instvars" : [
 		"methodHolder",
 		"browseModel",

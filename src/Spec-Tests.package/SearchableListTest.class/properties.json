@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-PolyWidgets-ListAndTree",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "SearchableListTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

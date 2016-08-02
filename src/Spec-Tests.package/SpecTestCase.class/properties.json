@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Tests",
+	"category" : "Spec-Tests-Utils",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "Spirita 7/28/2016 11:10",
 	"instvars" : [
 		"window",
 		"testedInstance" ],

@@ -1,17 +1,15 @@
 {
-	"category" : "Spec-Tests",
+	"category" : "Spec-Tests-Core-Widgets",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"radioGroupModel",
 		"radio1",
-		"radio2",
-		"window" ],
+		"radio2" ],
 	"name" : "RadioButtonGroupModelTest",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "SpecTestCase",
 	"type" : "normal" }

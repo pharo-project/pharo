@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-PolyWidgets-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DateModelTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

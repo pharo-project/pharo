@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TextInputFieldModelTest",
+	"pools" : [
+		 ],
+	"super" : "TextModelTest",
+	"type" : "normal" }

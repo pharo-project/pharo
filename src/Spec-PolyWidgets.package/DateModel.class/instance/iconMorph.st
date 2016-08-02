@@ -1,4 +1,4 @@
 private
 iconMorph
 
-	^ ImageMorph new form: (Smalltalk ui icons iconNamed: #calendarIcon)
+	^ ImageMorph new form: (self iconNamed: #calendarIcon)

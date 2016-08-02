@@ -1,7 +1,7 @@
 tests
 testRebuildWidget
-	radioGroupModel
+	testedInstance
 		addRadioButton: radio1;
 		addRadioButton: radio2.
-	self shouldnt: [ radioGroupModel radio2 ] raise: Error.
-	self assert: radioGroupModel buttons size == 2
+	self shouldnt: [ testedInstance radio2 ] raise: Error.
+	self assert: testedInstance buttons size == 2
