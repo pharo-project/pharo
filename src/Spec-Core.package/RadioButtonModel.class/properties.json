@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "Spirita 6/29/2016 11:29",
 	"instvars" : [
-		 ],
+		"canDeselectByClick" ],
 	"name" : "RadioButtonModel",
 	"pools" : [
 		 ],

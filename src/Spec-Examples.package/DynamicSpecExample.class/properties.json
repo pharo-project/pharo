@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "Spirita 7/27/2016 10:55",
 	"instvars" : [
-		"ui" ],
+		"ui",
+		"object" ],
 	"name" : "DynamicSpecExample",
 	"pools" : [
 		 ],
