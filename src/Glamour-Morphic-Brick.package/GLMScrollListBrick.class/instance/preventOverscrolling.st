@@ -7,7 +7,8 @@ preventOverscrolling
 			(self bandTopOffset > 0) ifTrue: [
 				self moveAllSubbricksBy: self topOffset negated.
 				self moveBandTop.
-				^ self update ] ].
+				self update ].
+			^ self ].
 	self isTopOverscrolled
 		ifTrue: [ self moveBandTop.  ^ self update ].
 	self isBottomOverscrolled & (self isFullyVisible not)

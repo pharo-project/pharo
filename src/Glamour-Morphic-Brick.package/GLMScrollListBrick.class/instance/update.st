@@ -1,5 +1,6 @@
 scrolling
 update
+	self hasItems ifFalse: [ ^ self ].
 	isUpdating := true.
 	self updateVisible.
 	self doNotLayoutDuring:  [ |delta|

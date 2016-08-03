@@ -1,9 +1,7 @@
 *GT-SpotterExtensions-Core-private
 withMethodSender: aLiteral do: aBlock
-	| special byte |
-	special := Smalltalk hasSpecialSelector: aLiteral ifTrueSetByte: [ :value | byte := value ].
+	| specialIndex |
+	specialIndex := Smalltalk specialSelectorIndexOrNil: aLiteral.
 	self selectorsAndMethodsDo: [ :selector :method | 
-		((method hasLiteral: aLiteral) 
-			or: [ (method refersToLiteral: aLiteral) 
-				or: [ special and: [ method scanFor: byte ] ] ])
+		(method hasSelector: aLiteral specialSelectorIndex: specialIndex)
 					ifTrue: [ aBlock value: method ] ].

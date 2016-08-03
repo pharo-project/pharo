@@ -14,7 +14,7 @@ exampleDifferentHeights
 				hSpaceFill;
 				yourself ].
 
-	GLMFoundationBrick new
+	^ GLMFoundationBrick new
 		brickRoot: (self new model: adaptor);
 		extent: 800@400;
 		openInWindow

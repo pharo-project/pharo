@@ -2,8 +2,7 @@ lazy scrolling
 updateVisible
 	|invisible|
 	
-	self model ifNil: [ ^ self ].
-	self model count = 0 ifTrue: [ ^ self ].
+	self hasItems ifFalse: [ ^ self ].
 	
 	invisible := self gatherInvisibleItems.
 	invisible = self band subbricks & invisible isEmpty not ifTrue: [ ^ self ].

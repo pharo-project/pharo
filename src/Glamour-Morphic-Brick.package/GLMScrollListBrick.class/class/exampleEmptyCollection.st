@@ -1,9 +1,9 @@
 examples
-exampleInfinity
+exampleEmptyCollection
 	|adaptor|
 	adaptor := nil.
 	adaptor := GLMBrickListModel new
-		sizeLogic: [ Float infinity ];
+		sizeLogic: [ 0 ];
 		morphAtLogic: [ :index :morph | 
 			(morph ifNil: [ GLMLabelBrick new ])
 				color: Color random muchLighter;
@@ -14,6 +14,6 @@ exampleInfinity
 				yourself ].
 
 	^ GLMFoundationBrick new
-		brickRoot: (self new model: adaptor);
-		extent: 300@400;
-		openInWindow
+			brickRoot: (self new model: adaptor);
+			extent: 300@400;
+			openInWindow

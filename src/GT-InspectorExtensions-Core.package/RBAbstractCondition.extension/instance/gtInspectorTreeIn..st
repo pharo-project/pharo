@@ -4,4 +4,5 @@ gtInspectorTreeIn: composite
 	composite tree
 		title: 'Tree';
 		display: [ { self } ]	;
-		children: [ :each | each gtInspectorChildren ]
+		children: [ :each | each gtInspectorChildren ];
+		when: [ self gtInspectorChildren notEmpty ]

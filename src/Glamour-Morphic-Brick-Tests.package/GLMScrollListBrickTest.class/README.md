@@ -1,0 +1,1 @@
+A GLMScrollListBrickTest is a test class for testing the behavior of GLMScrollListBrick

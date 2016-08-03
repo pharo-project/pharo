@@ -1,0 +1,4 @@
+layout
+minWidth
+
+	^ 100
