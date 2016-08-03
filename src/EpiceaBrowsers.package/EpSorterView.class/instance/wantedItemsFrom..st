@@ -1,5 +1,5 @@
 private
 wantedItemsFrom: someItems
-	
-	^ someItems reject: [ :each |
-		(items includes: each) or: [ (each isEntryItem) not ] ]
+
+	^ someItems select: [:each |
+		each isEntryItem and: [(items includes: each) not] ]

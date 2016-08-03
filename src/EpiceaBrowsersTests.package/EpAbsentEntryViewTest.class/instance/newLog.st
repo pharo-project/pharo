@@ -1,3 +1,0 @@
-resources
-newLog
-	^ EpLogTestResource current threeEntriesWithAbsentPrior

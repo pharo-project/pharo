@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		"FormatterClass" ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "NicolaiHess 8/2/2016 14:48",
 	"instvars" : [
 		"parent",
 		"properties" ],

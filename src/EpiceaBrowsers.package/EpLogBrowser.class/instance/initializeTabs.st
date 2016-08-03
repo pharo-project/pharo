@@ -2,12 +2,12 @@ initialization
 initializeTabs
 	entryContentModel showOptions: false.
 	entryContentTabModel
-		label: 'Contents';
+		label: 'Selection';
 		icon: (Smalltalk ui icons iconNamed: #smallOpenIcon);
 		model: self entryContentModel;
 		closeable: false.
 	filtersTabModel
-		label: 'Filters';
+		label: 'Active filters';
 		icon: (Smalltalk ui icons iconNamed: #smallFindIcon);
 		model: self filtersModel;
 		closeable: false.

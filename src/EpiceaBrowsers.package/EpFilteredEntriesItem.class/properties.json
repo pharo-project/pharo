@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"entries" ],
+		"filteredEntriesCount",
+		"olderFilteredEntry" ],
 	"name" : "EpFilteredEntriesItem",
 	"pools" : [
 		 ],

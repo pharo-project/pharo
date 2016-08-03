@@ -1,3 +1,3 @@
 accessing
 priorEntryReference
-	^ self log priorReferenceAt: entries first 
+	^ self log priorReferenceAt: olderFilteredEntry

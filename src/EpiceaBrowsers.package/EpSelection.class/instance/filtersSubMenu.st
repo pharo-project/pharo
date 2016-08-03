@@ -5,18 +5,45 @@ filtersSubMenu
 	aMenu := MenuModel new.
 	
 	aMenu addGroup: [ :aGroup |
+
+		aGroup addItem: [ :anItem |
+			anItem 
+				name: 'remove all filters';
+				icon: (Smalltalk ui icons iconNamed: #smallDelete);
+				action: [ self removeAllFilters ] ].
+
+		aGroup addItem: [ :anItem |
+			anItem 
+				name: 'was done today';
+				icon: (Smalltalk ui icons iconNamed: #calendar);
+				action: [ self filterAfter ] ].
+
+		aGroup addItem: [ :anItem |
+			anItem 
+				name: 'was done before...';
+				icon: (Smalltalk ui icons iconNamed: #calendar);
+				action: [ self filterBefore ] ].
+
+		aGroup addItem: [ :anItem |
+			anItem 
+				name: 'was done after...';
+				icon: (Smalltalk ui icons iconNamed: #calendar);
+				action: [ self filterAfter ] ].
+
 		
 		aGroup addItem: [ :anItem |
 			anItem 
-				name: 'all changes to this method';
-				description: 'Filter any addition, modification or removal of this method.';
+				name: 'is change to this method';
+				description: 'Show only additions, modifications or removals of this method.';
+				icon: (Smalltalk ui icons iconNamed: #smallFind);
 				shortcut: $f command, $m command;
 				action: [ self filterAllChangesToSelection ] ].
 				
 		aGroup addItem: [ :anItem |
 			anItem 
-				name: 'all changes to this package';
-				description: 'Filter any addition, modification or removal of this package.';
+				name: 'is change to this package';
+				description: 'Show only additions, modifications or removals of this package.';
+				icon: (Smalltalk ui icons iconNamed: #smallFind);
 				shortcut: $f command, $p command;
 				action: [ self filterAllChangesToSelectionPackage ]
 			].
@@ -25,8 +52,8 @@ filtersSubMenu
 			aGroup addItem: [ :anItem |
 				anItem 
 					name: aFilter title;
+					icon: (Smalltalk ui icons iconNamed: #smallFind);
 					description: aFilter title;
-					action: [ self filterWith: aFilter ] ] ]
-		].
+					action: [ self filterWith: aFilter ] ] ] ].
 	
-	^ aMenu.
+	^ aMenu

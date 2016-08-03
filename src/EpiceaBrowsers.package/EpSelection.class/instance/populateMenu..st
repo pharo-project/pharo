@@ -9,9 +9,12 @@ populateMenu: aMenu
 							anItem
 								name: oldStyleMenuItemArray first;
 								description: oldStyleMenuItemArray third;
-								icon: (Smalltalk ui icons perform: oldStyleMenuItemArray fourth);
+								icon: (Smalltalk ui icons iconNamed: oldStyleMenuItemArray fourth);
 								shortcut: oldStyleMenuItemArray fifth;
 								action: [ self perform: oldStyleMenuItemArray second ] ] ] ].
+
+"	Useless feature well until drag&drop is fixed. See case 18612.
+	
 	aMenu
 		addGroup: [ :aGroup | 
 			aGroup
@@ -21,7 +24,7 @@ populateMenu: aMenu
 						description: 'Open a new Sorter with the selected entries';
 						icon: EpSorterView icon;
 						shortcut: $s command;
-						action: [ self spawnSorterWithSelection ] ] ].
+						action: [ self spawnSorterWithSelection ] ] ]."
 	aMenu
 		addGroup: [ :aGroup | 
 			aGroup

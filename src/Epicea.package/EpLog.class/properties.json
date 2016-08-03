@@ -9,8 +9,7 @@
 		"announcer",
 		"headReference",
 		"commentByEntryReference",
-		"store",
-		"commitByEntryReference" ],
+		"store" ],
 	"name" : "EpLog",
 	"pools" : [
 		 ],

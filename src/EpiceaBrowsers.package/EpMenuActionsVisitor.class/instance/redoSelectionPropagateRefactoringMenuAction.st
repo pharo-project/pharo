@@ -1,7 +1,7 @@
 private - menu actions
 redoSelectionPropagateRefactoringMenuAction
 
-	^ { 'Redo (propagate)'.
+	^ { 'Redo secondary effects of refactoring'.
 		#redoSelectionPropagateRefactoring.
 		'Redo the secondary effects of the selected refactoring'.
 		#smallRedoIcon.

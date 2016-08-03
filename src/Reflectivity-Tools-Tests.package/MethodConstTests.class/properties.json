@@ -1,0 +1,14 @@
+{
+	"category" : "Reflectivity-Tools-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MethodConstTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,3 +1,3 @@
 accessing
 entries
-	^ entries
+	^ #()

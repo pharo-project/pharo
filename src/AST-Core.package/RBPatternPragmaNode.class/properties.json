@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "NicolaiHess 8/2/2016 15:01",
 	"instvars" : [
 		"isList" ],
 	"name" : "RBPatternPragmaNode",

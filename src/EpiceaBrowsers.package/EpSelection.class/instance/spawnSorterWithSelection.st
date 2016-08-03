@@ -1,4 +1,3 @@
 operations
 spawnSorterWithSelection
-
-	^ (EpLogBrowser newWithItems: self items) open
+	EpLogBrowser openWithItems: self items

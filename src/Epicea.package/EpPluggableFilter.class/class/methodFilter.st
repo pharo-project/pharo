@@ -1,5 +1,5 @@
 well-known filters
 methodFilter
 	^ self
-		title: 'method'
+		title: 'is method change'
 		condition: [ :e | e content isEpMethodChange ]

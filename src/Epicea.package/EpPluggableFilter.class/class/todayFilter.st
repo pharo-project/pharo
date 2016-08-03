@@ -1,4 +1,4 @@
-well-known filters
+special filters
 todayFilter
 	^ self
 		title: 'today'

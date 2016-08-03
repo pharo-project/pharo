@@ -8,14 +8,22 @@ next: numberOfDesiredItems from: initialEntryReference
 	
 	[ nextEntryReference isNull ] whileFalse: [
 		| item |
-		item := result size >= numberOfDesiredItems
-			ifTrue: [
-				self newFetchMoreItemFor: nextEntryReference in: rootItems ]
-			ifFalse: [
-				self itemFor: nextEntryReference ].
-		
-		result addLast: (
-			result 
+		result size >= numberOfDesiredItems ifTrue: [
+			result add: (self newFetchMoreItemFor: nextEntryReference in: rootItems).
+			^ result ]. "Enough items"
+
+		item := self log
+			entryFor: nextEntryReference
+			ifPresent: [ :anEntry | 
+				self 
+					filter: anEntry 
+					ifAccepted: [ self newItemFor: anEntry ]
+					ifNotAccepted: [ self newFilteredItemFor: anEntry ] ]
+			ifAbsent: [ ^ result ]. "Not found then can't continue"
+
+		"Combine item if possible"
+		result addLast: 
+			(result 
 				ifEmpty: [ item ]
 				ifNotEmpty: [
 					result last 

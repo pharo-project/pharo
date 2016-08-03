@@ -2,5 +2,5 @@ private
 newFilteredItemFor: anEntry 
 	^ EpFilteredEntriesItem new
 		browser: browser;
-		entries: { anEntry };
+		olderFilteredEntry: anEntry;
 		yourself
