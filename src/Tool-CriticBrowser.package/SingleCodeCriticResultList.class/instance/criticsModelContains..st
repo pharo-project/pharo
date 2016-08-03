@@ -2,4 +2,4 @@ private
 criticsModelContains: aCritic
 
 	^ criticsModel listItems anySatisfy: [ :each |
-			 each name = aCritic name]
+			 each sourceAnchor entity name = aCritic name]

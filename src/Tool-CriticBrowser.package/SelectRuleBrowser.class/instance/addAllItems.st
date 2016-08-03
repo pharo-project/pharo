@@ -1,5 +1,5 @@
 api
 addAllItems
 	
-	toSelectModel roots do: [ :item | selectedRules addAll: item leaves].
+	toSelectModel roots do: [ :group | selectedRules addAll: group rules].
 	self updateTree.  	  

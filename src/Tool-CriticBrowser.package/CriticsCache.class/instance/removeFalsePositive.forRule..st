@@ -3,7 +3,7 @@ removeFalsePositive: aCritic forRule: aRule
 
 	(falsePositives includesKey: aRule) 
 		ifFalse: [^ self].
-	[ (falsePositiveClasses includes: aCritic criticTheNonMetaclassClass) 
+	[ (falsePositiveClasses includes: aCritic sourceAnchor entity criticTheNonMetaclassClass) 
 			ifTrue: [^ self] ]
 		on: MessageNotUnderstood 
 		do: [ ^ self "#criticTheNonMetaclassClass makes no sense on a Package, ignore"].

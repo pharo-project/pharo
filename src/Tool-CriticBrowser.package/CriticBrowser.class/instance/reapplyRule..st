@@ -3,9 +3,9 @@ reapplyRule: aRule
 
 	|  oldCritics |
 	oldCritics := aRule critics.
-	aRule resetResult.
+	checker resetResult.
 	rbEnvironment packages do: [ :package | 
-		checker runRules: aRule onPackage: package withoutTestCase: removeTestCase ]. 	
+		checker runRules: { aRule } onPackage: package withoutTestCase: removeTestCase ]. 	
 	(oldCritics \ (aRule critics)) do: [ :each |
 		cache removeCritic: each forRule: aRule.
 		cache removeFalsePositive: each forRule: aRule.

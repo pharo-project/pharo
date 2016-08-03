@@ -1,0 +1,15 @@
+{
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SlotIntegrationTest 7/13/2016 01:09",
+	"instvars" : [
+		"name",
+		"rules" ],
+	"name" : "CriticBrowserRulesGroup",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
