@@ -1,3 +1,5 @@
 accessing
 ast
-	^ self compiledMethod ast 
+	self isActive
+		ifTrue: [ ^ self compiledMethod ast ].
+	^  self sourceCode ifNotNil: [ ^ self astFromSource ]

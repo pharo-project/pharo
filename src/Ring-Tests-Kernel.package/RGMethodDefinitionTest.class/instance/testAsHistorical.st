@@ -2,13 +2,13 @@ testing
 testAsHistorical
 	| firstVersion secondVersion |
 
-	RGMethodDefinitionTest compile: 'foo	^ ''first version'''.
+	RGMethodDefinitionTest compileSilently: 'foo	^ ''first version''' classified: 'test'.
 	firstVersion := (RGMethodDefinitionTest >> #foo) asHistoricalRingDefinition.
 	self assert: firstVersion isHistorical.
 	self assert: firstVersion sourceCode = firstVersion compiledMethod sourceCode.
 	self assert: firstVersion stamp = firstVersion compiledMethod timeStamp.
 
-	RGMethodDefinitionTest compile: 'foo	^ ''second version'''.
+	RGMethodDefinitionTest compileSilently: 'foo	^ ''second version''' classified: 'test'.
 	secondVersion := (RGMethodDefinitionTest >> #foo) asHistoricalRingDefinition.
 	self assert: secondVersion isHistorical.
 	self assert: secondVersion sourceCode = secondVersion compiledMethod sourceCode.

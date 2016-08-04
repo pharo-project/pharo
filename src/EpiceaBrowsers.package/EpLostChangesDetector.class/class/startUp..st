@@ -2,8 +2,11 @@ startup - shutdown
 startUp: isImageStarting
 
 	| log freshLog browser |
-	isImageStarting ifFalse: [^self].
-	EpMonitor current isEnabled ifFalse: [^self]. "Imposible to recover anything since we were not recording events"
+	(isImageStarting and: [ 
+		self isEnabled and: [ "Detector can be disabled as a setting"
+		EpMonitor current isEnabled	and: [ "Nothing to recover if not recording"
+		Smalltalk isHeadless not ]]])  "Can't browse if UI disabled"
+			ifFalse: [^self].
 
 	log := EpMonitor current log.
 	freshLog := log copyFromHead. 
@@ -13,10 +16,16 @@ startUp: isImageStarting
 	"Then, there are lost events"
 	browser := EpLogBrowser newWithLog: freshLog.
 
-	log headReference isNull ifFalse: [ 		"Hide known events... i.e. show only lost events"
-		| lastKnownEventTime |
-		lastKnownEventTime := log timeAt: log head.
-		browser addFilter: (EpPluggableFilter after: lastKnownEventTime) ].
+	"Hide known events... i.e. show only lost events"
+	log headReference isNull ifFalse: [
+		log
+			entryFor: log headReference
+			ifPresent: [ :head | 
+				| lastKnownEventTime |
+				lastKnownEventTime := log timeAt: head.
+				browser addFilter: (EpPluggableFilter after: lastKnownEventTime) ]
+			ifAbsent: [^self]. "Lost log is not present"
+		].
 
 	browser
 		refresh;

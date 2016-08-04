@@ -2,13 +2,13 @@ testing
 testAsActive
 	| newMethod |
 
-	RGMethodDefinitionTest compile: 'foo	^ ''first version'''.
+	RGMethodDefinitionTest compileSilently: 'foo	^ ''first version''' classified: 'test'.
 	newMethod := (RGMethodDefinitionTest >> #foo) asActiveRingDefinition.
 	self assert: newMethod isActive.	
 	self assert: newMethod sourcePointer notNil.
 	self assert: newMethod sourceCode = newMethod compiledMethod sourceCode.
 
-	RGMethodDefinitionTest compile: 'foo	^ ''second version'''.
+	RGMethodDefinitionTest compileSilently: 'foo	^ ''second version''' classified: 'test'.
 	self assert: newMethod sourceCode = newMethod compiledMethod sourceCode.
 	
 	newMethod := (Trait >> #asRingDefinition) asActiveRingDefinition.

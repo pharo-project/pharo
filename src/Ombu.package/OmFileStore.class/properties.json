@@ -12,8 +12,7 @@
 		"headReference",
 		"fileReference",
 		"entryPositionsByLocalName",
-		"entryCount",
-		"lastWrite" ],
+		"entryCount" ],
 	"name" : "OmFileStore",
 	"pools" : [
 		 ],

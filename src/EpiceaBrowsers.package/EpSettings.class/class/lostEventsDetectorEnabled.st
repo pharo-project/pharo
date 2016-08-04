@@ -1,0 +1,4 @@
+accessing
+lostEventsDetectorEnabled
+
+	^ EpLostChangesDetector isEnabled

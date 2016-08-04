@@ -1,7 +1,7 @@
 {
 	"category" : "EpiceaBrowsers-Integration",
 	"classinstvars" : [
-		 ],
+		"enabled" ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "DenisKudryashov 5/27/2016 17:17",
