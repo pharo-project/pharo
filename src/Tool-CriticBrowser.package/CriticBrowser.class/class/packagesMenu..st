@@ -4,7 +4,7 @@ packagesMenu: aBuilder
 	(aBuilder item: #'Critic Browser')
 		action: [
 			self  
-				openOnRule: (RBCompositeLintRule allGoodRules) 
+				openOnRule: (ReRuleManager uniqueInstance allRules) 
 				onEnvironment: 
 					(RBPackageEnvironment new 
 						packages: aBuilder model selectedPackages;
