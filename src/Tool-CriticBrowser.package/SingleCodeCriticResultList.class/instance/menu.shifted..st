@@ -1,16 +1,23 @@
 menu
 menu: aMenu shifted: aBoolean
 	(rule notNil and: [ criticsModel selectedItems notEmpty ])
-		ifTrue: [ 
-			self addNavigationMenuItemsTo: aMenu.
+		ifFalse: [ ^ aMenu ]. 
+		
+	self addNavigationMenuItemsTo: aMenu.
+	aMenu addLine.
+	self addMarkingMenuItemsTo: aMenu.
+			
+	criticsModel selectedItem
+		ifNotNil: [ :critique |
+		critique actions ifNotEmpty: [ :actions |
 			aMenu addLine.
-			self addMarkingMenuItemsTo: aMenu.
-			rule isTransformationRule ifTrue: [ 
+			actions do: [ :action |
 				aMenu
-					addLine;
-					add: 'Transform selected critic' target: self selector: #transformCritic ] ].
-			rule isArchitecturalRule ifTrue: [ 
-				aMenu
-					addLine;
-					add: 'Browse dependencies' target: self selector: #browseDependencies ].
+					add: action description
+					target: action
+					selector: #actOnCritic:ofEntity:
+					argumentList: {
+						critique .
+						critique sourceAnchor entity } ] ] ].
+			
 	^ aMenu

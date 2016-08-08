@@ -1,16 +1,13 @@
 initialization
 whenSelectedItemChangesOnListModel
 
-	criticsModel whenSelectedItemChanged: [ :selection |
+	criticsModel whenSelectedItemChanged: [ :critique |
 		 sourceCodeModel setSelection: (0 to: 0). 	
 		rule ifNotNil: [
-			rule isArchitecturalRule ifFalse: [ "Architecural rules apply on Packages, nothing to display"
-				(selection
-					ifNil: [ self setTextModelForNil ]
-					ifNotNil: [
-						toolbarModel critic: selection.
-						selection providesChange 
-							ifTrue: [ self setTextModelForTransformationRule: selection ]
-							ifFalse: [ self setTextModelForClassOrMethod: selection ] ] ) ]			
-			]
-		]
+			critique ifNil: [ ^ self setTextModelForNil ].
+
+			toolbarModel critic: critique.
+			critique providesChange 
+				ifTrue: [ self setTextModelForTransformationRule: critique ]
+				ifFalse: [ self setTextModelForClassOrMethod: critique ] ] 			
+			]		
