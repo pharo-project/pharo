@@ -2,6 +2,7 @@ SystemOrganization addCategory: #'Collections-Tests'!
 SystemOrganization addCategory: 'Collections-Tests-Abstract'!
 SystemOrganization addCategory: 'Collections-Tests-Arrayed'!
 SystemOrganization addCategory: 'Collections-Tests-Atomic'!
+SystemOrganization addCategory: 'Collections-Tests-Grid'!
 SystemOrganization addCategory: 'Collections-Tests-Sequenceable'!
 SystemOrganization addCategory: 'Collections-Tests-SplitJoin'!
 SystemOrganization addCategory: 'Collections-Tests-Stack'!

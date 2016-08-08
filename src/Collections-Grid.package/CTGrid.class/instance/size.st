@@ -1,0 +1,3 @@
+access
+size
+	^ contents size

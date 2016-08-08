@@ -1,0 +1,3 @@
+access
+columnCount
+	^ numberOfColumns

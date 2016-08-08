@@ -1,0 +1,4 @@
+setup
+grid3x2BooksCreatedWithRows
+
+	grid3x2BooksCreatedWithRows := CTGrid grid3x2BooksCreatedWithRows

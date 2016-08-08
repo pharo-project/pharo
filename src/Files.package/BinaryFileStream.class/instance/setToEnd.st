@@ -1,4 +1,4 @@
 position
-setAtEnd
+setToEnd
 	
 	self position: self size

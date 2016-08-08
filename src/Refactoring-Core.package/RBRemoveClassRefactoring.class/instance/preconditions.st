@@ -10,5 +10,5 @@ preconditions
 			sum
 				& ( (self preconditionIsNotMetaclass: aClassOrTrait) 
 					& (self preconditionHasNoReferences: each)
-					& (self preconditionHasNoSubclasses: aClassOrTrait)
+					& (self preconditionEmptyOrHasNoSubclasses: aClassOrTrait)
 					& (self preconditionHasNoUsers: aClassOrTrait ) ) ]
