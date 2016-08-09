@@ -8,7 +8,7 @@ printText: aText
 	aText doWithIndex: [ :char :index| 
 		aText attributesAt: index do: [ :attr| 
 			(attr isKindOf: TextEmphasis )	ifTrue: [ out bold ].
-			(attr isKindOf: TextColor )	ifTrue: [ out color256: attr color ]].
+			(attr isKindOf: TextColor )	ifTrue: [ out color: attr color ]].
 		(char = Character cr)
 			ifTrue: [ out lf ]
 			ifFalse: [ out << char ].
