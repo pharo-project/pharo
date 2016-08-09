@@ -6,7 +6,7 @@ compileFields: specArray withAccessors: defineBoolean
 	totalSize := 0.	
 	externalStructureAlignment := 1.
 	fieldSpec fieldsAndTypesDo: [ :fieldName :type | 
-		defineBoolean ifTrue: [ 
+		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
 			self defineFieldAccessorsFor: fieldName startingAt: 1 type: type ]. 
 		totalSize := totalSize max: type typeSize.
 		externalStructureAlignment := externalStructureAlignment max: type typeAlignment  ].

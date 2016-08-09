@@ -7,7 +7,7 @@ compileFields: specArray withAccessors: defineBoolean
 	externalStructureAlignment := 1.
 	fieldSpec fieldsAndTypesDo: [ :fieldName :type |
 		offset := offset alignedTo: type typeAlignment. 
-		defineBoolean ifTrue: [ 
+		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
 			self defineFieldAccessorsFor: fieldName startingAt: offset + 1 type: type ]. 
 		offset := offset + type typeSize.
 		externalStructureAlignment := externalStructureAlignment max: type typeAlignment  ].
