@@ -13,7 +13,7 @@ parseBlock
 	(currentToken isSpecial and: [currentToken value = $]])
 		ifFalse: [ |errorNode|
 				errorNode :=  self parserError: ''']'' expected'.
-			node body addNode:errorNode.
+			node body addFaultyNode: errorNode .
 			^ node].
 	node right: currentToken start.
 	self step.

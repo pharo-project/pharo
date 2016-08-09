@@ -1,7 +1,7 @@
 testing
 testMethodDefinition
 	writer visitMethodDefinition: (RGMethodDefinition realClass: self mockClassA selector: #one) asMCMethodDefinition.
-	self assertContentsOf: stream match: self expectedMethodDefinition.
+	self assert: (stream contents matchesRegex: self expectedMethodDefinition).
 	
 	stream := ChunkReadStream on: stream contents readStream.
 	
