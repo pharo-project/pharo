@@ -6,6 +6,6 @@ requestProtocolNameFor: aClass initialAnswer: aString
 		displayBlock: [ :e | e ];
 		initialAnswer: aString;
 		acceptNewEntry: true;
-		title: 'New Protocol' translated;
+		title: 'New Protocol Name' translated;
 		yourself.
 	^ ui chooseFromOwner: World
