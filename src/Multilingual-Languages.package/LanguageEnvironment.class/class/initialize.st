@@ -3,4 +3,4 @@ initialize
 	"LanguageEnvironment initialize"
 
 	SessionManager default 
-		registerSystemClassNamed: self name
+		registerSystemClassNamed: #LanguageEnvironment "prevent subclasses ro register themselves"

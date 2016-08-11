@@ -5,4 +5,4 @@ initialize
 	OneCharacterSymbols := (1 to: 256) collect: [ :i | (i - 1) asCharacter asSymbol].
 
 	SessionManager default
-		registerSystemClassNamed: self name
+		registerSystemClassNamed: #Symbol
