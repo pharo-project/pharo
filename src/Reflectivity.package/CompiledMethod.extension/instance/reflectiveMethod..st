@@ -1,3 +1,3 @@
 *Reflectivity
 reflectiveMethod: aReflectiveMethod
-	self propertyValueAt: #reflectiveMethod put: aReflectiveMethod
+	self propertyAt: #reflectiveMethod put: aReflectiveMethod

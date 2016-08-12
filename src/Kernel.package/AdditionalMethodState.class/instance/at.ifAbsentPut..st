@@ -10,4 +10,4 @@ at: aKey ifAbsentPut: aBlock
 			[^propertyOrPragma isVariableBinding
 				ifTrue: [propertyOrPragma value]
 				ifFalse: [propertyOrPragma]]].
-	^method propertyValueAt: aKey put: aBlock value
+	^method propertyAt: aKey put: aBlock value

@@ -1,3 +1,3 @@
 *Reflectivity
 reflectiveMethod
-	^self propertyValueAt: #reflectiveMethod ifAbsent: nil
+	^self propertyAt: #reflectiveMethod ifAbsent: nil

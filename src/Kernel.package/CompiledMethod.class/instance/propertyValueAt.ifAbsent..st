@@ -1,6 +1,4 @@
-accessing-pragmas & properties
+accessing-properties - compatibility
 propertyValueAt: propName ifAbsent: aBlock
-	| propertiesOrSelector |
-	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
-		ifTrue: [propertiesOrSelector propertyValueAt: propName ifAbsent: aBlock]
-		ifFalse: [aBlock value]
+	"use the version without ..Value, this method is retained for compatibility"
+	^self propertyAt: propName ifAbsent: aBlock

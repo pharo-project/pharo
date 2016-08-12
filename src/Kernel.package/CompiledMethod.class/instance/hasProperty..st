@@ -1,4 +1,4 @@
 accessing-pragmas & properties
 hasProperty: aKey
-	self propertyValueAt: aKey ifAbsent: [ ^false ].
+	self propertyAt: aKey ifAbsent: [ ^false ].
 	^true.

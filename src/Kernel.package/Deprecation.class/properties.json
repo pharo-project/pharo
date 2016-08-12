@@ -6,7 +6,7 @@
 		"Log",
 		"RaiseWarning",
 		"ShowWarning" ],
-	"commentStamp" : "dew 5/21/2003 17:46",
+	"commentStamp" : "md 8/11/2016 16:28",
 	"instvars" : [
 		"methodReference",
 		"explanationString",

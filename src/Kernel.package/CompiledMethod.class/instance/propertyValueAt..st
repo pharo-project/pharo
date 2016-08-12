@@ -1,6 +1,4 @@
-accessing-pragmas & properties
+accessing-properties - compatibility
 propertyValueAt: propName
-	| propertiesOrSelector |
-	^(propertiesOrSelector := self penultimateLiteral) isMethodProperties
-		ifTrue: [propertiesOrSelector propertyValueAt: propName ifAbsent: [nil]]
-		ifFalse: [nil]
+	"use the version without ..Value, this methid is retained for compatibility"
+	^self propertyAt: propName

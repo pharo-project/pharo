@@ -1,5 +1,5 @@
-properties
+properties-compatibility
 propertyValueAt: aKey
-	"Answer the property value associated with aKey."
+	"use the version without ..Value, this methid is retained for compatibility"
 	
-	^ self propertyValueAt: aKey ifAbsent: [ self error: 'Property not found' ].
+	^ self propertyAt: aKey
