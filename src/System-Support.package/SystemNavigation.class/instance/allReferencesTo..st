@@ -5,15 +5,12 @@ allReferencesTo: aLiteral
 	"SystemNavigation new allReferencesTo: #+"
 	"SystemNavigation new allReferencesTo: Point binding"
 	
-	| result symbol |
+	| result |
 	result := OrderedCollection new.
-	
-	symbol := aLiteral isSymbol.
+
 	self allBehaviorsDo: [ :class |
-		| selectors |
-		selectors := symbol
-			ifFalse: [ class whichSelectorsReferTo: aLiteral ]
-			ifTrue: [ class thoroughWhichSelectorsReferTo: aLiteral ].
+		| selectors | 
+		selectors :=  class thoroughWhichSelectorsReferTo: aLiteral.
 		selectors do: [ :selector |
 			result addLast: (self createMethodNamed: selector realParent: class) ] ].
 	^ result

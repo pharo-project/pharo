@@ -12,8 +12,10 @@ addTraitSelector: aSymbol withMethod: aCompiledMethod
 	method selector: aSymbol.
 	method methodClass: self.
 		
-	method putSource: source
-		withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr].
+	"write source to changes file only if we have it (not available during bootstrap)"	
+	((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil]) ifTrue: [ 
+		method putSource: source
+			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 	
 	self isTrait ifFalse: [ method properties at: #traitSource put: aCompiledMethod].
 	
