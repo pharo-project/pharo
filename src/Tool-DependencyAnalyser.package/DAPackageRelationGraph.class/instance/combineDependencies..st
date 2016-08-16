@@ -2,7 +2,7 @@ private
 combineDependencies: aPackage
 	| grouped composite |
 	grouped := aPackage dependencies
-		groupBy: [ :each | each target ]
+		groupedBy: [ :each | each target ]
 		having: [ :each | true ].
 	
 	aPackage clearDependencies.

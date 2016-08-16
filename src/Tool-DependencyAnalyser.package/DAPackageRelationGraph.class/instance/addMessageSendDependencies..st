@@ -4,6 +4,7 @@ addMessageSendDependencies: aPackage
 	analyser := (DAMessageSendAnalyzer basicNew
 		initializeWith: aPackage;
 		yourself).
+
 	analyser manuallyResolvedDependencies do: 
 		[ :packageName |
 		(analyser missingMethodsImplementedIn: packageName) 

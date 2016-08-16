@@ -5,7 +5,8 @@ declareClassVariables: newVars
 	|  conflicts |
 	
 	conflicts := false.	
-	(self classVariables reject: [:x | newVars includes: x]) do: [:var | [self removeClassVariable: var] on: InMidstOfFileinNotification do: [:ex | ex resume: true]].
+	"Remove. Warn if vars are removed that are still used"
+	(self classVariables reject: [:x | newVars includes: x]) do: [:var | self removeClassVarNamed: var name interactive: true].
 	
 	(newVars reject: [:var | self classVariables includes: var]) do: [:var | "adding"
 			"check if new vars defined elsewhere"

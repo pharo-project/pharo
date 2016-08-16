@@ -12,6 +12,6 @@ writeSource: aString preamble: preamble onSuccess: successBlock onFail: failBloc
 	position := file position.
 	file nextChunkPut: aString.
 
-	InMidstOfFileinNotification signal ifFalse: [ file flush ].
+	self flushChangesFile.
 
 	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)

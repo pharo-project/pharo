@@ -3,7 +3,7 @@ missingMethodsWithPotentialMatchAfterManuallyResolvedDependenciesAddition
 	| dictionary |
 	
 	dictionary := Dictionary new.
-	self differenceWithManuallyResolvedDependencies do: [ :selector |
+	self unimplementedCallsInAllDependencies do: [ :selector |
 		dictionary 
 			at: selector 
 			put: (self packagesProvidingSelector: selector) ].

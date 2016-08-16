@@ -1,6 +1,6 @@
 computing - dependencies
 shortestPathToPackageIntroducingDependency: dependencyPackageName startingFrom: aPackageName
-	"This method allows to easily spots a package a dependency we want to avoid in the System.
+	"This method allows to easily spots a package dependency we want to avoid in the System.
 	ex: DADependencyChecker new 
 			computeImageDependencies;
 			shortestPathToPackageIntroducingDependency: #'Athens-Core' startingFrom: 'Monticello'.
