@@ -6,7 +6,8 @@ declareClassVariables: newVars
 	
 	conflicts := false.	
 	"Remove. Warn if vars are removed that are still used"
-	(self classVariables reject: [:x | newVars includes: x]) do: [:var | self removeClassVarNamed: var name interactive: true].
+	"self flag: something wrong here. put to true and add an ivar to a class"
+	(self classVariables reject: [:x | newVars includes: x]) do: [:var | self removeClassVarNamed: var name interactive: false].
 	
 	(newVars reject: [:var | self classVariables includes: var]) do: [:var | "adding"
 			"check if new vars defined elsewhere"
