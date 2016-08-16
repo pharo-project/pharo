@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testRBMissingSubclassResponsibilityRule
 	| sup sub1 sub2 |
 	sup := Object subclass: 'MySuperclass' instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: self class category.

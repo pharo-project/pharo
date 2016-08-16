@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 8/8/2016 18:27",
+	"instvars" : [
+		 ],
+	"name" : "ArchitecturalCritique",
+	"pools" : [
+		 ],
+	"super" : "ReTrivialCritique",
+	"type" : "normal" }

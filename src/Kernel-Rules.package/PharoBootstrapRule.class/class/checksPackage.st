@@ -1,0 +1,4 @@
+testing
+checksPackage
+
+	^ true

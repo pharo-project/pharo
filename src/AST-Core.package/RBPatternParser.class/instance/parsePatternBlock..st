@@ -11,7 +11,8 @@ parsePatternBlock: aClass
 	(self parseStatements: false into: node body).
 	
 	(currentToken isSpecial and: [currentToken value = $}]) 
-		ifFalse: [ ^ self parserError: '''}'' expected'].
+		ifFalse: [ self addParserError: '''}'' expected' to: node body.
+			^ node ].
 	node right: currentToken start.
 	self step.
 	^node

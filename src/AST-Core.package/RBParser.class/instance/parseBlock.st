@@ -11,9 +11,7 @@ parseBlock
 	(self parseStatements: false into: node body).
 	
 	(currentToken isSpecial and: [currentToken value = $]])
-		ifFalse: [ |errorNode|
-				errorNode :=  self parserError: ''']'' expected'.
-			node body addFaultyNode: errorNode .
+		ifFalse: [ self addParserError: ''']'' expected' to: node body.
 			^ node].
 	node right: currentToken start.
 	self step.

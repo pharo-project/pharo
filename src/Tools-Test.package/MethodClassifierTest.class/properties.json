@@ -1,0 +1,14 @@
+{
+	"category" : "Tools-Test-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "MethodClassifierTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

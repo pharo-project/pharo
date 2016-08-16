@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ChristopheDemarey 9/29/2015 12:46",
+	"instvars" : [
+		 ],
+	"name" : "PharoBootstrapAnalyzerStubWithNewDependency",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

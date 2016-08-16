@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"checkerBackup" ],
+	"name" : "PharoBootstrapRuleTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -25,10 +25,10 @@ parseBlockArgsInto: node
 									currentToken
 										value: #|;
 										start: currentToken start + 1]
-								ifFalse: [ ^ self parserError: '''|'' expected']]]
+								ifFalse: [ args add:(self parserError: '''|'' expected')]]]
 				ifFalse: 
 					[(currentToken isSpecial and: [currentToken value = $]]) 
-						ifFalse: [ ^ self parserError: '''|'' expected']]].
+						ifFalse: [ args add:(self parserError: '''|'' expected')]]].
 	node
 		arguments: args;
 		colons: colons.

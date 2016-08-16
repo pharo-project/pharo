@@ -5,7 +5,7 @@ isInlineCase
 	(#(caseOf: caseOf:otherwise:) includes: self selector) ifFalse: [^ false].
 	self arguments size = 2 ifTrue: [  "otherwise block"
 		self arguments last isBlock ifFalse: [^ false]].
-	self arguments first isArray ifFalse: [^ false].
+	self arguments first isDynamicArray ifFalse: [^ false].
 	self arguments first statements do: [:assoc |
 		(assoc isMessage and: [assoc selector == #->]) ifFalse: [^ false].
 		assoc receiver isBlock ifFalse: [^ false].

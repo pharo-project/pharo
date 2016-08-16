@@ -1,13 +1,14 @@
 {
 	"category" : "Tool-Base",
 	"classinstvars" : [
-		 ],
+		"prefixMapping",
+		"keywordSuffixMapping",
+		"pragmaMapping" ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		"prefixMapping",
-		"pragmaMapping" ],
+		 ],
 	"name" : "MethodClassifier",
 	"pools" : [
 		 ],

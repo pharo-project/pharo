@@ -3,10 +3,10 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		"DependencyChecker" ],
+		 ],
 	"commentStamp" : "ChristopheDemarey 9/23/2015 08:44",
 	"instvars" : [
-		 ],
+		"renrakuRule" ],
 	"name" : "RBPharoBootstrapRule",
 	"pools" : [
 		 ],

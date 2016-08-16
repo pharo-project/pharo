@@ -1,0 +1,3 @@
+accessing
+parserClass
+	^ RBPatternParser
