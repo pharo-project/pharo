@@ -1,5 +1,4 @@
 private
 basicLoad
     errorDefinitions := OrderedCollection new.
-    SourceFiles deferFlushDuring: [
-        self handleLoadErrorsDuring: [self basicLoadDefinitions]]
+    SourceFiles deferFlushDuring: [self basicLoadDefinitions].

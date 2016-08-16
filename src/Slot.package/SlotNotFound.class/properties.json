@@ -11,5 +11,5 @@
 	"name" : "SlotNotFound",
 	"pools" : [
 		 ],
-	"super" : "Error",
+	"super" : "ClassBuilderError",
 	"type" : "normal" }
