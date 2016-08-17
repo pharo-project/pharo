@@ -2,5 +2,5 @@ methods
 fileBlocks
 	| file |
 	^
-	[file := 'asdf' asFilename readStream.
+	[file := 'asdf' asFileReference readStream.
 	file contents] ensure: [file close]
