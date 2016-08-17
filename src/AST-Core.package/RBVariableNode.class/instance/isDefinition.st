@@ -1,3 +1,3 @@
-*Reflectivity
+testing
 isDefinition
 	^self parent isSequence

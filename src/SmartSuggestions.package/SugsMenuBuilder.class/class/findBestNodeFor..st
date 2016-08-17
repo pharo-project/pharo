@@ -5,7 +5,7 @@ findBestNodeFor: context
 	meta information such as breakpoints, therefore when the code is unchanged do not reparse it."
 	context hasUnacceptedEdits
 		ifTrue: [ 
-			root := OpalCompiler new
+			root := Smalltalk compiler
 				source: context code;
 				options: #(+ optionParseErrors);
 				parse.
