@@ -1,8 +1,8 @@
 menus behavior
 restrictedBrowseGroups: aCollection
-
 	aCollection
-		ifNotEmpty: [:groups || classes newEnvironment |
-			classes := groups flatCollect: [:group | group classes].
-			newEnvironment := self browsedEnvironment forClasses: classes.
-			self model class openOnGroup: groups first inEnvironment: newEnvironment ]
+		ifNotEmpty: [ | environment |
+			environment := aCollection allButFirst
+				inject: (aCollection first restrict: self browsedEnvironment)
+				into: [ :env :group | env | (group restrict: self browsedEnvironment) ].
+			self model class openOnGroup: aCollection first inEnvironment: environment ]
