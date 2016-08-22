@@ -4,8 +4,8 @@ lesson13
 		title: 'Lesson 12 (DoIts)'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #baseline13:.
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version13:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #baseline13:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version13:.
 
 "For version 1.3 we are adding a platform specific package ''Example-Platform''. ''Example-Platform''
 requires ''Example-Core''. On GemStone, Pharo and Squeak, a branch of the ''Example-Platform'' package 

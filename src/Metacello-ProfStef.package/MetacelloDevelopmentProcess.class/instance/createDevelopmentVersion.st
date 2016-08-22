@@ -12,13 +12,13 @@ createDevelopmentVersion
 
 "After evaluating the above expression, take a look at the #version10: method in ConfigurationOfExample:"
 
-	Smalltalk tools browser fullOnClass: ConfigurationOfExample selector: #version10:.
+	Smalltalk tools browser openOnClass: ConfigurationOfExample selector: #version10:.
 
 "The current version of the Shout project has been filled in as well as the current version of the ProfStef packages.
 
 When a new development version is created the #development symbolic version is defined as well:"
 
-	Smalltalk tools browser fullOnClass: ConfigurationOfExample selector: #development:.
+	Smalltalk tools browser openOnClass: ConfigurationOfExample selector: #development:.
 
 "The #development version is defined as 1.0 for all platforms.
 

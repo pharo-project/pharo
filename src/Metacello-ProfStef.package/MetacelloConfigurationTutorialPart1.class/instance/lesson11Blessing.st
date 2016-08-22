@@ -4,7 +4,7 @@ lesson11Blessing
 		title: 'Lesson 11 (Blessing)'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version11:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version11:.
 
 "A version can be tagged with a blessing like #alpha, #beta, #release, #development or any 
 other tag that you find useful. The blessing for version 1.1 is #development"

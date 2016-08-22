@@ -4,9 +4,9 @@ lesson12DoIts
 		title: 'Lesson 12 (DoIts)'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version12:.
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #preloadForCore.
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #postloadForCore:package:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version12:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #preloadForCore.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #postloadForCore:package:.
 
 "Occassionally, you find that you need to perform an expression either before a package is loaded, or
 after a package is loaded. To do that in Metacello, you can define a preLoadDoIt selector and a 

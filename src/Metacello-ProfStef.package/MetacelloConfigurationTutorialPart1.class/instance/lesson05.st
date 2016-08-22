@@ -4,7 +4,7 @@ lesson05
 		title: 'Lesson 5'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version05:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version05:.
 
 "For version 0.5 we''ve added an additional package to the mix: ''Example-AddOn'':"
 

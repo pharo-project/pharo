@@ -18,7 +18,7 @@ RELEASE
 
 For convenience, a number of the methods covered in these sections can be found in the ''development support'' category on the class-side of MetacelloBaseConfiguration." 
 
-	Smalltalk tools browser fullOnClass: MetacelloBaseConfiguration class selector: #DevelopmentProcess.
+	Smalltalk tools browser openOnClass: MetacelloBaseConfiguration class selector: #DevelopmentProcess.
 
 "After deciding which of the development support methods you will use in your project, copy the methods of interest to the the class-side of your own configuration or implement your own ''development support'' methods using the MetacelloToolBox API:"
 

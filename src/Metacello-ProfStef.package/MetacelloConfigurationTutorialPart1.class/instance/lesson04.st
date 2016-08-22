@@ -4,7 +4,7 @@ lesson04
 		title: 'Lesson 4'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version04:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version04:.
 
 "The specification for version 0.4 is basically the same as version 0.3. Instead of listing a 
 repository with each package we specify a project repository that applies to all packages.

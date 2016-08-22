@@ -12,4 +12,4 @@ scanToken
 	currentCharacter = $' ifTrue: [^self scanLiteralString].
 	currentCharacter = $# ifTrue: [^self scanLiteral].
 	currentCharacter = $$ ifTrue: [^self scanLiteralCharacter].
-	^self scanError: 'Unknown character'
+	^self scanUnknownCharacter

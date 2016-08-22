@@ -4,7 +4,7 @@ lesson13
 		title: 'Lesson 13'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #version13:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #version13:.
 
 "In #version13: we are importing the ''1.2-baseline'', but changing the Example project 
 version to 1.3, so project versions can be updated in the verson method jus like 

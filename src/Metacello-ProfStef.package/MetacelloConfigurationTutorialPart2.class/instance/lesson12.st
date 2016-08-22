@@ -4,9 +4,9 @@ lesson12
 		title: 'Lesson 12'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #baseline11:.
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #baseline12:.
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #version12:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #baseline11:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #baseline12:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #version12:.
 
 "In #baseline11: there is redundant information for each of the project references. 
 

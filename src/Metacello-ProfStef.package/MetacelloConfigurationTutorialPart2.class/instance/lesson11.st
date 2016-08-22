@@ -4,8 +4,8 @@ lesson11
 		title: 'Lesson 11'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #baseline11:.
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #version11:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #baseline11:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #version11:.
 
 "As is often the case, it is useful to separate the test package from the core packages 
 for a project. 

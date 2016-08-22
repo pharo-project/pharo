@@ -4,7 +4,7 @@ lesson11Descripton
 		title: 'Lesson 11 (Description)'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version11:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version11:.
 
 "A description can be defined for a version:"
 

@@ -24,6 +24,12 @@ openMenuIn: aBlock
 			actions add: [ self declareGlobal ].
 			labels add: 'Declare new class variable'.
 			actions add: [ self declareClassVar ] ].
+			labels add: 'Define new trait'.
+			actions
+				add: [ 
+					[ self defineTrait: name ]
+						on: Abort
+						do: [ self openMenuIn: aBlock ] ].		
 	lines add: labels size.
 	alternatives
 		do: [ :each | 

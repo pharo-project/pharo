@@ -4,8 +4,8 @@ lesson07
 		title: 'Lesson 7'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #baseline07:.
-Smalltalk tools browser fullOnClass: MetacelloTutorialConfig selector: #version07:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #baseline07:.
+Smalltalk tools browser openOnClass: MetacelloTutorialConfig selector: #version07:.
 
 "For version 0.7, we are ceating a baseline version specification which is expected to be used
 across several versions and the version specification which is restricted to the file versions.
@@ -44,4 +44,5 @@ MetacelloNullRecordingMCSpecLoader the packages names are ''loaded'':"
 #baseline version so that you get the latest work from all of the project members. "
 
 ProfStef next.
+
 '

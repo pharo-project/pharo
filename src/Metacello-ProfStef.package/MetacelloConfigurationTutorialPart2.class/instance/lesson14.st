@@ -4,8 +4,8 @@ lesson14
 		title: 'Lesson 14'
 		lesson: 
 '
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #baseline14:.
-Smalltalk tools browser fullOnClass: MetacelloProjectRefTutorialConfig selector: #version14:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #baseline14:.
+Smalltalk tools browser openOnClass: MetacelloProjectRefTutorialConfig selector: #version14:.
 
 "In this lesson we''ll cover the querying API for Metacello. The querying API is useful for analyzing the contents and structure of a version.
 
