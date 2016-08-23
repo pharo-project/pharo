@@ -1,7 +1,7 @@
 accessing
-associationAt: key ifPresent: aBlock 
-	"Answer the association with the given key.
-	If key is not found, return the result of evaluating aBlock."
+associationAt: key ifPresent: aBlock
+	"Answer the value of evaluating aBlock with the association for the given key.
+	If key is not found, return nil."
 
 	^(array at: (self findElementOrNil: key))
 		ifNotNil: [:assoc | aBlock cull: assoc]

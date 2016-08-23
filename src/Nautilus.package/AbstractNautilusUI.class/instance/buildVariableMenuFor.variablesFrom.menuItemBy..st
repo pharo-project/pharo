@@ -8,7 +8,7 @@ buildVariableMenuFor: aMenu variablesFrom: aBlockOrSymbol menuItemBy: aMenuItemB
 			addLine;
 			addMorphBack: (class printString asStringMorph color: Color gray)
 		].		
-		vars copy sort do: [ :variable | aMenuItemBlock value: variable value: class value: aMenu ]
+		vars sorted do: [ :variable | aMenuItemBlock value: variable value: class value: aMenu ]
 	].
 
 	

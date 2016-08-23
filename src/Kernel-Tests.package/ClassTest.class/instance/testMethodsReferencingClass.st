@@ -1,9 +1,10 @@
 testing - navigation
 testMethodsReferencingClass
-	self assert: (RBLintRuleTest methodsReferencingClass: WriteStream) equals: {(RBLintRuleTest >> #displayName)}.
+	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
 	self
-		assert: ((RBLintRuleTest methodsReferencingClass: Object) sort: [ :a :b | a name <= b name]) asArray
+		assert: ((ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest1)) sort: [ :a :b | a name <= b name]) asArray
 		equals:
-			{(RBLintRuleTest >> #run).
-			(RBLintRuleTest >> #runOnEnvironment:)}.
-	self assert: (RBCompositeLintRuleTest class methodsReferencingClass: RBBasicLintRuleTest) equals: {RBCompositeLintRuleTest class>>#lintChecks}
+			{ClassTest>>#referencingMethod1. 
+			ClassTest>>#referencingMethod2. 
+			ClassTest>>#testOrdersACollectionOfClassesBySuperclass}.
+	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #BehaviorTests)) isEmpty

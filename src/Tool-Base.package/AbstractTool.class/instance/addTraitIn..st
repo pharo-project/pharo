@@ -9,7 +9,7 @@ addTraitIn: aPackage
 	classDefinition := self class defineTraitTemplate 
 		format: { #TNameOfTrait. '{}'. systemCategory }.
 	classDefinition := UIManager default 
-		multiLineRequest: 'Define class definition:'
+		multiLineRequest: 'Define trait definition:'
 		initialAnswer: classDefinition
 		answerHeight: 250.
 	(classDefinition isNil or: [ classDefinition isEmpty ])

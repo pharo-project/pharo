@@ -3,11 +3,11 @@ testMethodsReferencingClasses
 
 	| collectionOfMethods collectionOfMethodsShouldBe |
 	
-	collectionOfMethods := RBAddParameterTest methodsReferencingClasses: {RBLintRuleTest . RBBasicLintRuleTest}.
+	collectionOfMethods := ((ClassTest methodsReferencingClasses: {Smalltalk classNamed: #ExampleForTest12. Smalltalk classNamed: #ExampleForTest1}) sort: [ :a :b | a name <= b name]) asArray.
 	
-	collectionOfMethodsShouldBe := {RBAddParameterTest>>#testModelNonExistantName. 
-	RBAddParameterTest>>#testBadInitializationCode. 
-	RBAddParameterTest>>#testNonExistantName. 
-	RBAddParameterTest>>#testModelBadInitializationCode}.
+	collectionOfMethodsShouldBe := {
+		ClassTest>>#referencingMethod1.
+		ClassTest>>#referencingMethod2.
+		ClassTest>>#testOrdersACollectionOfClassesBySuperclass}.
 		
 	self assert: collectionOfMethods asSet equals: collectionOfMethodsShouldBe asSet
