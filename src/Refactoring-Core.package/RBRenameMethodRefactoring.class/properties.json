@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "NicolaiHess 5/21/2016 13:04",
+	"commentStamp" : "NicolaiHess 8/6/2016 14:10",
 	"instvars" : [
 		"hasPermutedArguments" ],
 	"name" : "RBRenameMethodRefactoring",

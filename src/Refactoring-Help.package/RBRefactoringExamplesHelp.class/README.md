@@ -1,0 +1,1 @@
+This chapter of the refactoring help book is about how to manually use the refactoring operations.

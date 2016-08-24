@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Help",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 7/27/2016 22:36",
+	"instvars" : [
+		 ],
+	"name" : "RBCoreClassesHelp",
+	"pools" : [
+		 ],
+	"super" : "RefactoringHelp",
+	"type" : "normal" }

@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "NicolaiHess 5/21/2016 18:59",
+	"commentStamp" : "NicolaiHess 8/6/2016 14:06",
 	"instvars" : [
 		"selectors" ],
 	"name" : "RBRemoveMethodRefactoring",

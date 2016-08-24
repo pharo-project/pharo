@@ -1,0 +1,3 @@
+accessing
+bookDescription
+	^ self comment

@@ -16,7 +16,6 @@ testPragmas
 	('foo <foo: #(1 2)>' 		#foo: ((1 2)))
 	('foo <foo: 1 bar: 2>' 		#foo:bar: (1 2))
 	('foo |t| <foo: 1.2>' 		#foo: (1.2))
-	('foo self. <foo: $a>' 		#foo: ($a)) 
 	('foo |t| <foo: 1 bar: 2>' #foo:bar: (1 2))
 	) do: [ :each |
 		tree := RBParser parseMethod: each first.

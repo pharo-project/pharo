@@ -1,4 +1,6 @@
-I am a refactoring for inlining code in all senders.
+I am a refactoring for inlining code of this method.
+
+The call to this method in all other methods of this class is replaced by its implementation. The method itself will be removed.
 
 For example, a method 
 foo
@@ -17,4 +19,3 @@ baz
 	a:= 'text'.
 	^ 'text'.
 
-The method itself is not removed!

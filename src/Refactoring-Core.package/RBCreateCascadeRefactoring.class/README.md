@@ -1,3 +1,3 @@
-A RBCreateCascadeRefactoring is a refactoring used to generate cascades in source code.
+I am  a refactoring used to generate cascades in source code.
 
-Copied from OB-Refactory-Tools and should be moved into RB instead
+Two or more message sends to the same object are replaced by a cascaded message send. It expects a selection of the messages and the receiver variable.

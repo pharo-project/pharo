@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "NicolaiHess 5/21/2016 18:48",
+	"commentStamp" : "NicolaiHess 8/6/2016 13:45",
 	"instvars" : [
 		"selectors" ],
 	"name" : "RBPushDownMethodRefactoring",

@@ -1,0 +1,3 @@
+building
+rootHelpClass
+	^ self subclassResponsibility 
