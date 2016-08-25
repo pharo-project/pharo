@@ -10,14 +10,11 @@ check: aClass forCritiquesDo: aCriticBlock
 	sels asSet
 		select: [ :sel | 
 			(sels occurrencesOf: sel) == subs size ]
-		thenDo: [ :sel | aCriticBlock cull: ((ReRefactoringCritique
-			withAnchor: (ReSearchStringSourceAnchor
-				entity: aClass
-				string: sel)
-			by: self
-			hint: sel)
-			refactoring: (
-				RBPullUpInstanceVariableRefactoring
-					variable: sel
-					class: aClass);
-			yourself) ]
+		thenDo: [ :sel | aCriticBlock cull: (
+			(self critiqueFor: aClass)
+				tinyHint: sel;
+				refactoring: (
+					RBPullUpInstanceVariableRefactoring
+						variable: sel
+						class: aClass);
+				yourself) ]
