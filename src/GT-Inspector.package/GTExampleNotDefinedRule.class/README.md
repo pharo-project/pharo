@@ -1,1 +1,0 @@
-Every class that defines a custom extension for GTSpotter or GTInspector should define also, at least, a GTExample.

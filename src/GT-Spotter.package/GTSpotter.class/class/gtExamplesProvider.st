@@ -1,4 +1,0 @@
-example
-gtExamplesProvider
-
-	^ GTSpotterExamples 

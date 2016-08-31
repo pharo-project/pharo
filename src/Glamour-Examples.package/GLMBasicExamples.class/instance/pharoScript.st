@@ -12,6 +12,6 @@ pharoScript
 	browser transmit from: #code port: #acceptedCode; to: #preview; andShow: [ :a | 
 		a text 
 			title: 'Evaluated result';
-			display: [:code | [Smalltalk evaluate: code ] on: Error do: ['Error']];
+			display: [:code | [Smalltalk compiler evaluate: code ] on: Error do: ['Error']];
 			act: [:text | text displayValue explore] icon: GLMUIThemeExtraIcons glamorousInspect entitled: 'Explore' ].
 	^ browser

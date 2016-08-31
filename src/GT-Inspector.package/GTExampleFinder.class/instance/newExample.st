@@ -1,3 +1,0 @@
-private
-newExample
-	^ GTExample new

@@ -1,0 +1,15 @@
+{
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RogerStebler 6/30/2016 15:24",
+	"instvars" : [
+		"info",
+		"timestamp" ],
+	"name" : "GTBasicRecorderEvent",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

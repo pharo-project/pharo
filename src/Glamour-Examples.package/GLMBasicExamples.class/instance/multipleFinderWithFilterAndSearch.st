@@ -14,12 +14,12 @@ multipleFinderWithFilterAndSearch
 			title: 'With filter';
 			beMultiple;
 			dynamicActions: [:list | self actionsFor: list];
-			filterOn: [:text :each | (Smalltalk evaluate: '[:each | ', text, ']') value: each];
+			filterOn: [:text :each | (Smalltalk compiler evaluate: '[:each | ', text, ']') value: each];
 			helpMessage:  'Enter a filtering request (e.g., "each > 10")'.
 		a list
 			title: 'With search';
 			beMultiple;
 			dynamicActions: [:list | self actionsFor: list];
-			searchOn: [:text :each | (Smalltalk evaluate: '[:each | ', text, ']') value: each];
+			searchOn: [:text :each | (Smalltalk compiler evaluate: '[:each | ', text, ']') value: each];
 			helpMessage:  'Enter a search request (e.g., "each > 10")' ].
 	^ finder 

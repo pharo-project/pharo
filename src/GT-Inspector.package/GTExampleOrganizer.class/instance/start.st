@@ -1,4 +1,0 @@
-public
-start
-	self startMonticelloAnnouncements.
-	self startSystemAnnouncements

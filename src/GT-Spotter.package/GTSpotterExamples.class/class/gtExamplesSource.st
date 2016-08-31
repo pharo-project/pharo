@@ -1,3 +1,0 @@
-examples
-gtExamplesSource
-	^ GTSpotter

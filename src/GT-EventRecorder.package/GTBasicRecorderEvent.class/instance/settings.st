@@ -1,0 +1,3 @@
+accessing
+settings
+	^ GlobalIdentifier uniqueInstance

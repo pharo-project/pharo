@@ -33,7 +33,7 @@ variablesIn: composite
 			on: $t
 			entitled: 'Open pointers to';
 		dynamicActionsOnSelection: [ :presentation |
-			(presentation entity class hasInstVarNamed: presentation rawSelection key)
+			(presentation entity class allInstVarNames includes: presentation rawSelection key)
 				ifTrue: [ 
 					{
 						GLMGenericAction new 
