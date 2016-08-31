@@ -1,6 +1,5 @@
 *NautilusCommon
 isTestMethod
+	"Is the receiver a TestCase test method?"
 
-    ^ (self methodClass inheritsFrom: TestCase) and: [ 
-		((self selector beginsWith: 'test') 
-			or: [ (self selector beginsWith: 'should')]) and: [ self numArgs isZero ] ]
+	^ NautilusUtils isTestMethod: self

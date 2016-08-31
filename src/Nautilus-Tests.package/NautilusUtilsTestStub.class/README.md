@@ -1,0 +1,1 @@
+This is just a stub class with a stub test, NautilusUtilsStubTest, so that NautilusUtilsTest can test method-to-test method mapping.

@@ -1,17 +1,19 @@
 menus behavior
 runTestForAMethod: aMethod notifying: aBoolean
 	| testMethod testClass testResult color |
-	testMethod := aMethod correspondingTestMethod.
-	testMethod ifNil: [ ^ self ].
+	(testMethod := aMethod correspondingTestMethod) ifNil: [ ^ self ].
 	testClass := testMethod methodClass.
 	testResult := testClass debug: testMethod selector.
 	aBoolean
 		ifFalse: [ ^ self ].
 	color := Color gray.
-	testMethod hasPassedTest
+	testMethod isPassedTest
 		ifTrue: [ color := Color green ].
-	testMethod hasFailedTest
+	testMethod isFailedTest
 		ifTrue: [ color := Color yellow ].
-	testMethod hasErrorTest
+	testMethod isErrorTest
 		ifTrue: [ color := Color red ].
-	self notifyTitle: 'Test Finished' contents: 'Method: ' , testMethod methodClass asString , '>>#' , testMethod selector asString color: color
+	self
+		notifyTitle: 'Test Finished'
+		contents: 'Method: ' , testMethod methodClass asString , '>>#' , testMethod selector asString
+		color: color

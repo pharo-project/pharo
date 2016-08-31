@@ -1,0 +1,3 @@
+button behavior
+openBIInspectorButtonAction
+	BISettingPreviewer new openWithSpec
