@@ -1,0 +1,14 @@
+{
+	"category" : "Polymorph-Widgets-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 8/29/2016 21:28",
+	"instvars" : [
+		 ],
+	"name" : "IconShortcutRule",
+	"pools" : [
+		 ],
+	"super" : "ReNodeRewriteRule",
+	"type" : "normal" }
