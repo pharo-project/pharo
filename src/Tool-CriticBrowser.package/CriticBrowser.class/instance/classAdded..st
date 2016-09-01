@@ -1,15 +1,15 @@
 system annoucements
-methodAdded: aMethod
+classAdded: aClass
 
 	| rules |
 
-	(rbEnvironment includesMethod: aMethod) ifFalse: [ ^ self ].
+	(rbEnvironment definesClass: aClass) ifFalse: [ ^ self ].
 
 	rules := self allRules.
 	checker
 		resetResult;
-		getCritiquesAbout: aMethod by: (rules select: [ :r | r class checksMethod ]).
-
+		checkClass: aClass.
+		
 	rules do: [ :rule |		
 		(checker criticsOf: rule) do:	[ :crit |
 			cache addCritic: crit forRule: rule ].

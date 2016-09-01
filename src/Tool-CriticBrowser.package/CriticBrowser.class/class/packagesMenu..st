@@ -2,6 +2,7 @@ instance creation
 packagesMenu: aBuilder
 	<nautilusGlobalPackageMenu>
 	(aBuilder item: #'Critic Browser')
+		icon: self icon;
 		action: [
 			self  
 				openOnRule: (ReRuleManager uniqueInstance allRules) 
