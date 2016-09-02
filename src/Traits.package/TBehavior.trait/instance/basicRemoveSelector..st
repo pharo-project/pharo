@@ -6,7 +6,3 @@ basicRemoveSelector: selector
 	| oldMethod |
 	oldMethod := self methodDict at: selector ifAbsent: [^ self].
 	self methodDict removeKey: selector.
-
-	"Now flush the method cache"
-	oldMethod flushCache.
-	selector flushCache.

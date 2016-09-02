@@ -8,4 +8,5 @@ removeKey: key ifAbsent: errorBlock
 	copy := self copy.
 	removedValue := copy removeDangerouslyKey: key ifAbsent: [^ errorBlock value].
 	self copyFrom: copy.
+	key flushCache.
 	^ removedValue

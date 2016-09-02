@@ -6,9 +6,8 @@ at: key put: value
 	(self basicAt: index) 
 		ifNil: 
 			[tally := tally + 1.
-			self basicAt: index put: key]
-		ifNotNil:
-			[(array at: index) flushCache].
+			self basicAt: index put: key].
 	array at: index put: value.
+	key flushCache. "flush the vm cache by selector"
 	self fullCheck.
 	^ value

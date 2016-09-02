@@ -9,7 +9,3 @@ basicAddSelector: selector withMethod: compiledMethod
 	self methodDict at: selector put: compiledMethod.
 	compiledMethod methodClass: self.
 	compiledMethod selector: selector.
-
-	"Now flush Pharo's method cache, either by selector or by method"
-	oldMethodOrNil ifNotNil: [oldMethodOrNil flushCache].
-	selector flushCache.
