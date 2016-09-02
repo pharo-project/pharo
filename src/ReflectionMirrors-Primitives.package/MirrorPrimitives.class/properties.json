@@ -1,0 +1,14 @@
+{
+	"category" : "ReflectionMirrors-Primitives",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 7/27/2016 11:54",
+	"instvars" : [
+		 ],
+	"name" : "MirrorPrimitives",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

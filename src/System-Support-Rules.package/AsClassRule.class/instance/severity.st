@@ -1,0 +1,4 @@
+accessing
+severity
+
+	^ #error

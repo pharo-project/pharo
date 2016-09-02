@@ -1,0 +1,14 @@
+{
+	"category" : "System-Support-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 9/1/2016 23:22",
+	"instvars" : [
+		 ],
+	"name" : "AsClassRule",
+	"pools" : [
+		 ],
+	"super" : "ReNodeRewriteRule",
+	"type" : "normal" }
