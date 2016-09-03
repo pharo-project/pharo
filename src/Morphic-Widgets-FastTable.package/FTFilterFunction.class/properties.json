@@ -8,7 +8,8 @@
 	"instvars" : [
 		"initialDataSource",
 		"pattern",
-		"isEditingSemaphore" ],
+		"isEditingSemaphore",
+		"filterClass" ],
 	"name" : "FTFilterFunction",
 	"pools" : [
 		 ],

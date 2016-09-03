@@ -3,7 +3,7 @@ initializeWidgets
 	"configurations"
 	configurationList := (self instantiate: FastTableModel)
 		icons: [ :configuration | self iconForConfiguration: configuration ];
-		displayBlock: [:item | item asStringMorph ]; 
+		displayBlock: [:item | item asString ]; 
 		"iconMaxSize: 16@16;"
 		handlesDoubleClick: true;
 		on: PharoShortcuts current browseShortcut 

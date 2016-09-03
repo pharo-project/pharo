@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		"instance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 8/29/2016 15:57",
+	"instvars" : [
+		 ],
+	"name" : "DefaultExecutionEnvironment",
+	"pools" : [
+		 ],
+	"super" : "ExecutionEnvironment",
+	"type" : "normal" }

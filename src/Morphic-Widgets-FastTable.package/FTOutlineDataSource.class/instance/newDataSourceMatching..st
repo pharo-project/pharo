@@ -1,5 +1,5 @@
 accessing
-newDataSourceMatching: aRegex
+newDataSourceMatching: aFTFilter
 	| newItems |
-	newItems := items class withAll: (items collect: [ :coll | coll select: [ :each | (aRegex matchesIn: (self toString: each)) notEmpty ] ]).
+	newItems := items class withAll: (items collect: [ :coll | coll select: [ :each | aFTFilter matches: (self toString: each) ] ]).
 	^ self class new items: newItems

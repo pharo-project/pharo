@@ -9,7 +9,8 @@ debugProcess: process context: context label: title fullView: bool notification:
 	debugSession := process newDebugSessionNamed: title startedAt: context.
 	
 	debugSession logStackToFileIfNeeded.
-	debugSession isAboutUIProcess ifTrue: [ self spawnNewProcess  ].
+	debugSession isAboutUIProcess ifTrue: [ 
+		DefaultExecutionEnvironment beActiveDuring: [self spawnNewProcess]].
 		
 	self defer:	[ 
 			"schedule debugger in deferred UI message to address

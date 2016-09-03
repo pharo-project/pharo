@@ -9,7 +9,8 @@
 		"iconHolder",
 		"displayBlock",
 		"handlesDoubleClick",
-		"doubleClick" ],
+		"doubleClick",
+		"columns" ],
 	"name" : "FastTableModel",
 	"pools" : [
 		 ],

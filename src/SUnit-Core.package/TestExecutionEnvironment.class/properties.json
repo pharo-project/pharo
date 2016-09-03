@@ -1,0 +1,20 @@
+{
+	"category" : "SUnit-Core-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 8/30/2016 17:01",
+	"instvars" : [
+		"watchDogProcess",
+		"watchDogSemaphore",
+		"testCase",
+		"maxTimeForTest",
+		"forkedProcesses",
+		"failedProcesses",
+		"testCompleted" ],
+	"name" : "TestExecutionEnvironment",
+	"pools" : [
+		 ],
+	"super" : "ExecutionEnvironment",
+	"type" : "normal" }

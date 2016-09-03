@@ -1,5 +1,15 @@
 accessing
-newDataSourceMatching: aRegex
-	"For now I do nothing. I need to be implemented but I think we will have to change some widgets to do that."
-
-	^ self
+newDataSourceMatching: aFTFilter
+	| newElements wrappedItem text newDataSource modelCopy |
+	newElements := self elements select: [ :each | 
+		wrappedItem := self elementWrapped: each.
+		table columns anySatisfy: [ :column | 
+			text := column transform: wrappedItem.
+			aFTFilter matches: text]].
+	
+	newDataSource := self copy.
+	modelCopy := self model copy.
+	modelCopy prepareForFilteredDataSourceWith: newElements.
+	newDataSource model: modelCopy.
+	
+	^newDataSource

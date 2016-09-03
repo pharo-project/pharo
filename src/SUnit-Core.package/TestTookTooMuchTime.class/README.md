@@ -1,0 +1,1 @@
+I am special error to signal that test exceed time limit

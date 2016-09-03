@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 6/24/2016 16:06",
+	"instvars" : [
+		"index" ],
+	"name" : "FTArrayIndexColumn",
+	"pools" : [
+		 ],
+	"super" : "FTColumn",
+	"type" : "normal" }
