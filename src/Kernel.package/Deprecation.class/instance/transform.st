@@ -1,13 +1,13 @@
 handling
 transform
 	| context node rewriteRule aMethod|
-	self class environment 
-		at:  #RBParseTreeRewriter 
-		ifAbsent: [ ^	self signal ].
+	self rewriterClass ifNil:[ ^ self signal ].
 	context := thisContext sender sender sender.
 	aMethod := context method.
+	"no need to transform doits"
+	aMethod isDoIt ifTrue:[^ self].
 	node := context sourceNodeExecuted.
-	rewriteRule := (self class environment at: #RBParseTreeRewriter) new 
+	rewriteRule := self rewriterClass new 
 		replace: rule key with: rule value.
 	(rewriteRule executeTree: node)
 		ifFalse: [ ^ self ].

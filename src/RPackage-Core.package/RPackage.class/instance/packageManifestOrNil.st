@@ -1,5 +1,5 @@
 accessing
 packageManifestOrNil
-	^ self classes
+	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ nil ]

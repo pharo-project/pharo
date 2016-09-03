@@ -1,5 +1,5 @@
 *Manifest-Core
 packageManifest
-	^ self classes
+	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ TheManifestBuilder new createManifestNamed: name]

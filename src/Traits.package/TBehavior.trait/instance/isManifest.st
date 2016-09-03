@@ -1,3 +1,3 @@
-*Manifest-Core
+testing
 isManifest
 	^ false
