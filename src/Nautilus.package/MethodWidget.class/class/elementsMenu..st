@@ -116,7 +116,7 @@ elementsMenu: aBuilder
 		keyText: 'x' if: Nautilus useOldStyleKeys;
 		action: [ target removeMethods ];
 		order: 1700;
-		icon: (Smalltalk ui icons iconNamed: #removeIcon);
+		icon: (self iconNamed: #removeIcon);
 		withSeparatorAfter.
 		
 	(aBuilder item: #'Compare two methods')		 

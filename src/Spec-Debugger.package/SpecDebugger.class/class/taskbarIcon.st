@@ -1,4 +1,4 @@
 icons
 taskbarIcon
 
-	^ #smallDebugIcon asIcon
+	^ self iconNamed: #smallDebugIcon

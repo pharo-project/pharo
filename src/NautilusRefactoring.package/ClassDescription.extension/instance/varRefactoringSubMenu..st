@@ -16,7 +16,7 @@ varRefactoringSubMenu: aBuilder
 	(aBuilder item: #'Remove')
 		action: [ target refactor removeClassVarFrom: self ];
 		parent: #'Class Var Refactoring';
-		icon: (Smalltalk ui icons iconNamed: #removeIcon);
+		icon: (self iconNamed: #removeIcon);
 		order: 200;
 		withSeparatorAfter.
 		

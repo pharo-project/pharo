@@ -3,7 +3,7 @@ freeTypeSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
 		target: self;
-		icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon);
+		icon: (self iconNamed: #smallConfigurationIcon);
 		type: #Label;
 		label: 'Free type';
 		precondition: [ FT2Library current isNil ];
@@ -14,7 +14,7 @@ freeTypeSettingsOn: aBuilder
 	(aBuilder setting: #loadFt2Library)
 		target: self;
 		dialog: [ self ft2LibraryVersion ];
-		icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon);
+		icon: (self iconNamed: #smallConfigurationIcon);
 		label: 'Use Free type';
 		description:
 			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';

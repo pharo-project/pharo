@@ -12,7 +12,7 @@ refactoringSubmenu: aBuilder
 	
 	(aBuilder item: #'Remove...')
 		action: [ target removeClassWithRefactoringEngine: target selectedClasses ];
-		icon: (Smalltalk ui icons iconNamed: #removeIcon);
+		icon: (self iconNamed: #removeIcon);
 		parent: #'Class Refactoring';
 		order: 100;
 		withSeparatorAfter.

@@ -14,6 +14,6 @@ resetAllFontToDefaultButton
 				newRowIn: World
 				for:
 					{(AlphaImageMorph new
-						image: (Smalltalk ui icons iconNamed: #smallRedoIcon)).
+						image: (self iconNamed: #smallRedoIcon)).
 					(self theme buttonLabelForText: 'Force all' translated)});
 		yourself

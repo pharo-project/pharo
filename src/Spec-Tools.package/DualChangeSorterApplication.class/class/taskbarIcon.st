@@ -1,3 +1,3 @@
 icons
 taskbarIcon
-	^ #changeSorterIcon asIcon
+	^ self iconNamed: #changeSorterIcon

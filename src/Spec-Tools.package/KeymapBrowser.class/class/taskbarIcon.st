@@ -1,3 +1,3 @@
 accessing
 taskbarIcon
-	^ #keymapBrowserIcon asIcon
+	^ self iconNamed: #keymapBrowserIcon

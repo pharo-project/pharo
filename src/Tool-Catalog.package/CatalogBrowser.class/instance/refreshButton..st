@@ -3,5 +3,5 @@ refreshButton: aList
 	<menu>
 	aList
 		act: [ :presenter | self onRefreshFrom: presenter ]
-		icon: (Smalltalk ui icons iconNamed: #glamorousRefresh)
+		icon: (self iconNamed: #glamorousRefresh)
 		entitled: 'Refresh'

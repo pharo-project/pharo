@@ -6,14 +6,14 @@ menuOn: aBuilder
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallDoIt).
+		icon: (self iconNamed: #smallDoIt).
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallPrintIt).
+		icon: (self iconNamed: #smallPrintIt).
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallInspectIt).
+		icon: (self iconNamed: #smallInspectIt).

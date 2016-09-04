@@ -13,7 +13,7 @@ privateActionIcon
 						target: self browser;
 						actionSelector: #arrowUp:;
 						arguments: {method};
-						labelGraphic: (Smalltalk ui icons iconNamed: #arrowUpIcon);
+						labelGraphic: (self iconNamed: #arrowUpIcon);
 						color: Color transparent;
 						helpText: 'Browse overriden message';
 						extent: self iconExtent;
@@ -25,7 +25,7 @@ privateActionIcon
 						target: self browser;
 						actionSelector: #arrowDown:;
 						arguments: {method};
-						labelGraphic: (Smalltalk ui icons iconNamed: #arrowDownIcon);
+						labelGraphic: (self iconNamed: #arrowDownIcon);
 						color: Color transparent;
 						helpText: 'Browse overriding messages';
 						extent: self iconExtent;

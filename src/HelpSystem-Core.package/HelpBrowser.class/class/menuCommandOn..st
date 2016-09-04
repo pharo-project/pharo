@@ -4,4 +4,4 @@ menuCommandOn: aBuilder
 	(aBuilder item: #'Help Browser')
 		parent: #Help;
 		action: [self open]; 
-		icon: (Smalltalk ui icons iconNamed: #smallHelpIcon)
+		icon: (self iconNamed: #smallHelpIcon)

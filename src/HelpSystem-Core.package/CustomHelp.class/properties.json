@@ -10,5 +10,5 @@
 	"name" : "CustomHelp",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

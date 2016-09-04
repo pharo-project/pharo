@@ -16,7 +16,7 @@ instVarRefactoring: aBuilder
 	(aBuilder item: #'Remove')
 		action: [ target refactor removeInstVarFrom: self ];
 		parent: #'Inst Var Refactoring';
-		icon: (Smalltalk ui icons iconNamed: #removeIcon);
+		icon: (self iconNamed: #removeIcon);
 		order: 200;
 		withSeparatorAfter.
 		

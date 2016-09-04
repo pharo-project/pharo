@@ -6,6 +6,7 @@ packageIconFor: aPackage
 		at: aPackage
 		ifPresent: [:icon |
 			 icon class == IconicButtonStateHolder ifFalse: [ ^ icon ].
+			self flag: #toclean. "I do not understand this code"
 			^ icon asIcon ].
 
 	aPackage classes isEmpty 

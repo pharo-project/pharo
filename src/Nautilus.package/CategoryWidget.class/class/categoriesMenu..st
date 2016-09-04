@@ -48,7 +48,7 @@ categoriesMenu: aBuilder
 		keyText: 'x' if: Nautilus useOldStyleKeys;
 		action: [ target removeCategories ];
 		order: 1400;
-		icon: (Smalltalk ui icons iconNamed: #removeIcon);
+		icon: (self iconNamed: #removeIcon);
 		withSeparatorAfter.
 	
 	(aBuilder item: #'File Out')
