@@ -49,7 +49,7 @@ handleEvent: evt from: aHand
 			^true].
 		^false].
 
-	clickState = #firstClickUp ifTrue:[
+	clickState == #firstClickUp ifTrue:[
 		(timedOut) ifTrue:[
 			"timed out after mouseUp - signal timeout and pass the event"
 			aHand resetClickState.

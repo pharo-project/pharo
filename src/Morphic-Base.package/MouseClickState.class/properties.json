@@ -16,7 +16,8 @@
 		"dblClickTime",
 		"dblClickTimeoutSelector",
 		"dragSelector",
-		"dragThreshold" ],
+		"dragThreshold",
+		"localStamp" ],
 	"name" : "MouseClickState",
 	"pools" : [
 		 ],

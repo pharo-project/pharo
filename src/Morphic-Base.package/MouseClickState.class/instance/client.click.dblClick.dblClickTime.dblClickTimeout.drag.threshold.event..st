@@ -10,3 +10,4 @@ client: aMorph click: aClickSelector dblClick: aDblClickSelector dblClickTime: t
 	firstClickDown := firstClickEvent.
 	firstClickTime := firstClickEvent timeStamp.
 	clickState := #firstClickDown.
+	localStamp := Time millisecondClockValue. 

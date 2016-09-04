@@ -31,11 +31,13 @@ processEvents
 					"For better user feedback, return immediately after a mouse event has been processed."
 					(evt isMouse and: [evt isMouseWheel not]) ifTrue: [^self]]].
 	"note: if we come here we didn't have any mouse events"
-	mouseClickState notNil 
-		ifTrue: 
-			["No mouse events during this cycle. Make sure click states time out accordingly"
+	
+	mouseClickState ifNotNil: [ 
+		"No mouse events during this cycle. 
+		Make sure click states time out accordingly"
+		mouseClickState checkTimeoutFrom: self
+	].
 
-			mouseClickState handleEvent: lastMouseEvent asMouseMove from: self].
 	hadAny 
 		ifFalse: 
 			["No pending events. Make sure z-order is up to date"
