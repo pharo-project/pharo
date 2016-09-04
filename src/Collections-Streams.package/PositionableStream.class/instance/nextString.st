@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextString
 	"Read a string from the receiver. The first byte is the length of the string, unless it is greater than 192, in which case the first four bytes encode the length.  I expect to be in ascii mode when called (caller puts back to binary)."
 

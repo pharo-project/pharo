@@ -1,4 +1,4 @@
-crlf private
+private - crlf
 detectLineEndConvention
 	"Detect the line end convention used in this stream. The result may be either #cr, #lf or #crlf."
 	| char numRead state |

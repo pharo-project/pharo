@@ -1,4 +1,4 @@
-private basic
+private
 basicPosition
 
 	^ super position.

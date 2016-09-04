@@ -4,4 +4,7 @@ with: aCollection from: firstIndex to: lastIndex
 	aCollection, determined by the indices firstIndex and lastIndex. Position 
 	the instance to store at the end of the subcollection."
 
-	^self basicNew with: (aCollection copyFrom: firstIndex to: lastIndex)
+	^self basicNew
+		with: aCollection
+		from: firstIndex
+		to: lastIndex 

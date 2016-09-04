@@ -1,4 +1,4 @@
-public
+positioning
 skipSeparators
 
 	| state character |

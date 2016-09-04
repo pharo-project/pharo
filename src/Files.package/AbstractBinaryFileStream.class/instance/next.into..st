@@ -1,4 +1,4 @@
-reading
+accessing
 next: n into: aBuffer
 	"Return a string with the next n characters of the filestream in it."
 	| readBuffer read |

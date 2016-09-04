@@ -1,4 +1,4 @@
-public
+accessing
 skipSeparatorsAndPeekNext
 
 	"A special function to make nextChunk fast"

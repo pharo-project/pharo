@@ -1,4 +1,4 @@
-opening-closing
+open/close
 close
 	self closed
 		ifTrue: [ ^ self ].

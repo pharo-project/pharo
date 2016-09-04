@@ -1,4 +1,4 @@
-filein/out
+fileIn/out
 setConverterForCode
 
 	| current |

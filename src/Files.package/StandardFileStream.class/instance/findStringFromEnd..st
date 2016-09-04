@@ -1,4 +1,4 @@
-read, write, position
+accessing
 findStringFromEnd: string
 	"Fast version to find a String in a file starting from the end.
 	Returns the position and also sets the position there.

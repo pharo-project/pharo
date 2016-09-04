@@ -1,4 +1,4 @@
-read, write, position
+positioning
 setToEnd
 	"Set the position of the receiver to the end of file."
 

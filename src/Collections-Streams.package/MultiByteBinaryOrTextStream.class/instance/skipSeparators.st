@@ -1,4 +1,4 @@
-public
+positioning
 skipSeparators
 
 	[self atEnd] whileFalse: [

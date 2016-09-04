@@ -1,4 +1,4 @@
-read, write, position
+accessing
 readInto: byteArray startingAt: startIndex count: count
 	"Read up to n bytes into the given byteArray.
 	Return the number of bytes actually read."

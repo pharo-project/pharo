@@ -1,8 +1,11 @@
-primitives
+private - primitives
 primFlush: id
-	"Flush pending changes to the disk"
-	| p |
+	"On Unix, the FilePlugin uses stdio FILE* structs which maintain their
+	own internal buffer to minimize write() syscalls. This flushes that buffer.
+	On Windows this and primSync: do the same thing."
+
 	<primitive: 'primitiveFileFlush' module: 'FilePlugin'>
-	"In some OS's seeking to 0 and back will do a flush"
-	p := self position.
-	self position: 0; position: p
+	
+	"We can't ignore fflush() failing, because it can fail for any of the
+	reasons write() can."
+	self primitiveFailed

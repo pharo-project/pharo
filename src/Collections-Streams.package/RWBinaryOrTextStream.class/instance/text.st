@@ -1,3 +1,3 @@
-accessing
+modes
 text
 	isBinary := false

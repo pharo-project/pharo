@@ -1,4 +1,4 @@
-writing
+accessing
 nextPutAll: aCollection
 	"Optimized for ByteArrays"
 	^ aCollection class == ByteArray 

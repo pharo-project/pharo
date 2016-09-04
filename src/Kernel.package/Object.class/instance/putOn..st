@@ -1,3 +1,3 @@
 streaming
-putOn:aStream
-	^aStream nextPut:self.
+putOn: aStream
+	aStream nextPut: self

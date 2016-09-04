@@ -1,4 +1,4 @@
-private
+initialization
 on: aCollection from: firstIndex to: lastIndex
 
 	| len |

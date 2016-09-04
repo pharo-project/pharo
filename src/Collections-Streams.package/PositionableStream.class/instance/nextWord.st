@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextWord
 	"Answer the next two bytes from the receiver as an Integer."
 

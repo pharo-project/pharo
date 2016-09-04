@@ -1,4 +1,4 @@
-private basic
+private
 basicVerbatim: aString
 
 	^ super verbatim: aString.

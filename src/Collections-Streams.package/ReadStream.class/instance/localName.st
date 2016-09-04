@@ -1,3 +1,3 @@
-file stream compatibility
+accessing
 localName
 	^'ReadStream'

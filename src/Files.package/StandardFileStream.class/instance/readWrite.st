@@ -1,4 +1,4 @@
-properties-setting
+modes
 readWrite
 	"Make this file writable."
 

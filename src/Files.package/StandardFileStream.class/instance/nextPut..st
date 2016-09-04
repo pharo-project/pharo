@@ -1,4 +1,4 @@
-read, write, position
+accessing
 nextPut: char
 	"Write the given character to this file."
 

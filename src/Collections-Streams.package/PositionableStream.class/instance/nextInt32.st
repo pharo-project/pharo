@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextInt32
 	"Read a 32-bit signed integer from the next 4 bytes"
 	| s |

@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextInt32Put: int32
 	"Write a signed integer to the next 4 bytes"
 	| pos |

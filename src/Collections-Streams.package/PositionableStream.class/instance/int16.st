@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 int16
 	"Answer the next signed, 16-bit integer from this (binary) stream."
 

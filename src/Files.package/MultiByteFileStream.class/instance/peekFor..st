@@ -1,4 +1,4 @@
-public
+accessing
 peekFor: item 
 
 	| next state |

@@ -1,4 +1,4 @@
-private basic
+private
 basicNextPutAll: aString
 
 	^ super nextPutAll: aString.

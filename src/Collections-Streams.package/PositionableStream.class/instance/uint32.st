@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 uint32
 	"Answer the next unsigned, 32-bit integer from this (binary) stream."
 

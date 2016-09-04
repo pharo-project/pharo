@@ -1,4 +1,4 @@
-testing
+tests
 testNew
 
-	self should: [WriteStream new] raise: Error. 
+	self should: [self streamClass new] raise: Error. 

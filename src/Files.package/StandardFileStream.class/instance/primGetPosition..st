@@ -1,4 +1,4 @@
-primitives
+private - primitives
 primGetPosition: id
 	"Get this files current position."
 

@@ -1,4 +1,4 @@
-private basic
+private
 basicUpTo: delim
 
 	^ super upTo: delim.

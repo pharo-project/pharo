@@ -1,4 +1,4 @@
-public
+accessing
 nextPut: aCharacter
 	^ aCharacter isInteger 
 		ifTrue: [ super nextPut: aCharacter asCharacter ]

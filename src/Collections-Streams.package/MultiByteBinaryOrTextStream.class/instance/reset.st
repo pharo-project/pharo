@@ -1,4 +1,4 @@
-public
+positioning
 reset
 
 	super reset.

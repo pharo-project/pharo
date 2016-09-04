@@ -1,4 +1,4 @@
-initialize
+initialization
 on: aCollection from: firstIndex to: lastIndex
 	"Check the header of the ZLib stream."
 	| method byte |

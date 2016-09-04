@@ -1,3 +1,0 @@
-meta-data
-dependencies
-	^ #(#'AST-Core' #'Collections-Abstract' #'Collections-Strings' #'Collections-Support' #'Collections-Unordered' #'Collections-Weak' #Compression #'FileSystem-Core' #'FileSystem-Disk' #Files #Kernel #Monticello #'Multilingual-Encodings' #'Multilingual-TextConversion' #NonInteractiveTranscript #'OpalCompiler-Core' #'RPackage-Core' #Slot #'System-BasicCommandLineHandler' #'System-Finalization' #'System-Hashing' #'System-Localization' #'System-Platforms' #'System-SessionManager' #'System-Sources' #'System-Support' #Traits #UIManager #'Zinc-Character-Encoding-Core')

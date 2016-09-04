@@ -1,4 +1,4 @@
-read, write, position
+accessing
 padToEndWith: aChar
 	"On the Mac, files do not truncate.  One can delete the old file and write a new one, but sometime deletion fails (file still open? file stale?).  This is a sad compromise.  Just let the file be the same length but pad it with a harmless character."
 

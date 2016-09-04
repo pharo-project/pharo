@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 uint16: anInteger
 	"Store the given unsigned, 16-bit integer on this (binary) stream."
 

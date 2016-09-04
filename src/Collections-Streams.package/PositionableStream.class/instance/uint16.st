@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 uint16
 	"Answer the next unsigned, 16-bit integer from this (binary) stream."
 

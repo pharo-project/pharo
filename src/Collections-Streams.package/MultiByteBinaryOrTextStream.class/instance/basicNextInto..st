@@ -1,4 +1,4 @@
-private basic
+private
 basicNextInto: aString
 
 	^ self nextInto: aString.

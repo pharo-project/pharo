@@ -1,4 +1,4 @@
-crlf private
+private - crlf
 wantsLineEndConversion
 
 	^wantsLineEndConversion == true

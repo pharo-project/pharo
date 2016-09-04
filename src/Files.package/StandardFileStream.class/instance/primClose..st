@@ -1,4 +1,4 @@
-primitives
+private - primitives
 primClose: id
 	"Close this file."
 

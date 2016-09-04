@@ -1,4 +1,4 @@
-read, write, position
+positioning
 truncate
 	"Truncate to zero"
 

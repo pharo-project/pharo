@@ -1,4 +1,4 @@
-read, write, position
+accessing
 nextPutAll: stringOrByteArray
 	"Write all the characters of the given string to this file."
 

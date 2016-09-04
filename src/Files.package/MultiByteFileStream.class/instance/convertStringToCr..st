@@ -1,4 +1,4 @@
-crlf private
+private - crlf
 convertStringToCr: aString 
 	| inStream outStream |
 	lineEndConvention ifNil: [^ aString].

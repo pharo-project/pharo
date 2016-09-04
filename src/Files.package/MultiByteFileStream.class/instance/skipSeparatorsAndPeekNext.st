@@ -1,4 +1,4 @@
-public
+accessing
 skipSeparatorsAndPeekNext
 	"Same as #skipSeparators, but returns the next character after the separators if such exists."
 

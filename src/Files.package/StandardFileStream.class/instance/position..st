@@ -1,4 +1,4 @@
-read, write, position
+positioning
 position: pos
 	"Set the receiver's position as indicated."
 

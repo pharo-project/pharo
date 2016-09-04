@@ -1,4 +1,4 @@
-primitives
+private - primitives
 primSize: id
 	"Answer the size of this file."
 

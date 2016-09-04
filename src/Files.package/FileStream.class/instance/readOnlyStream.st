@@ -1,3 +1,3 @@
-file modes
+modes
 readOnlyStream
 	^self readOnly

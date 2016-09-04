@@ -1,3 +1,3 @@
-accessing
+open/close
 openReadOnly
 	^self

@@ -1,4 +1,4 @@
-initialize
+initialization
 on: aCollection from: firstIndex to: lastIndex
 	bitBuf := bitPos := 0.
 	"The decompression buffer has a size of at 64k,

@@ -1,4 +1,4 @@
-access
+accessing
 directory
 	"Return the directory containing this file."
 

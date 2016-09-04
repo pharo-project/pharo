@@ -1,4 +1,4 @@
-primitives
+private - primitives
 primOpen: fileName writable: writableFlag
 	"Open a file of the given name, and return the file ID obtained.
 	If writableFlag is true, then

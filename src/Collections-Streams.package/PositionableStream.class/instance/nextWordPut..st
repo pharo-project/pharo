@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextWordPut: aWord 
 	"Append to the receiver an Integer as the next two bytes."
 

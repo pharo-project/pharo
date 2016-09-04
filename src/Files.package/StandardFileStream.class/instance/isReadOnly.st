@@ -1,4 +1,4 @@
-properties-setting
+testing
 isReadOnly
 
 	^ rwmode not

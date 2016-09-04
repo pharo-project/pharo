@@ -1,4 +1,4 @@
-initialize
+initialization
 on: aCollection from: firstIndex to: lastIndex
 	"Check the header of the GZIP stream."
 	| method magic flags length |

@@ -1,0 +1,3 @@
+public
+sync
+	self subclassResponsibility

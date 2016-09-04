@@ -1,4 +1,4 @@
-private basic
+private
 basicNext
 	| nextChar |
 

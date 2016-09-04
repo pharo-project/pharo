@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 boolean: aBoolean
 	"Store the given boolean value on this (binary) stream."
 

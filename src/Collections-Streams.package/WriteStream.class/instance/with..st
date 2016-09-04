@@ -1,4 +1,4 @@
-private
+initialization
 with: aCollection
 
 	super on: aCollection.

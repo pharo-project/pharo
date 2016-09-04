@@ -1,4 +1,4 @@
-accessing
+private
 basicNext
 
 	^ self next.

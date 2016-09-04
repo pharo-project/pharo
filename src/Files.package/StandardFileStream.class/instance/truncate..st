@@ -1,4 +1,4 @@
-read, write, position
+positioning
 truncate: pos
 	"Truncate to this position"
 

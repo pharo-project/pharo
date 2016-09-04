@@ -1,4 +1,4 @@
-properties-setting
+modes
 readOnly
 	"Make this file read-only."
 

@@ -1,4 +1,4 @@
-file modes
+modes
 binary
 	"Set this file to binary mode."
 

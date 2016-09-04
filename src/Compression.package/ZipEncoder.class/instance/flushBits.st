@@ -1,4 +1,4 @@
-initialization
+flushing
 flushBits
 	"Flush currently unsent bits"
 	[bitPosition > 0] whileTrue:[

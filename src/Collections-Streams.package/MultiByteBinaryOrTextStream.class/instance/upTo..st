@@ -1,4 +1,4 @@
-public
+accessing
 upTo: delim 
 
 	| out ch |

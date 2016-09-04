@@ -1,4 +1,4 @@
-private basic
+private
 basicNextPut: char
 
 	^ super nextPut: char.

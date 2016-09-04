@@ -8,8 +8,8 @@ loremIpsum: size
 	| words out |
 	words := (self loremIpsum findTokens: ' ,.') collect: #asLowercase.
 	(out := LimitedWriteStream on: (self new: size))
-		setLimit: size - 2 
-		limitBlock: [ 
+		limit: size - 2;
+		limitBlock: [
 			^ out originalContents 
 				at: size - 1 put: $.; 
 				at: size put: Character cr; 

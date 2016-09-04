@@ -1,4 +1,4 @@
-read, write, position
+accessing
 upToAnyOf: delimiters do: aBlock
 	"Fast version to speed up nextChunk"
 	| pos buffer count result |

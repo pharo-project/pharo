@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 string: aString
 	"Store the given string on this (binary) stream. The string must contain 65535 or fewer characters."
 

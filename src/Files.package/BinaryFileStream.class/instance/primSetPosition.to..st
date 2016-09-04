@@ -1,4 +1,4 @@
-primitives
+private
 primSetPosition: id to: anInteger
 	"Set this file to the given position."
 

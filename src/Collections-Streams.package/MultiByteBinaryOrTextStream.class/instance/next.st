@@ -1,4 +1,4 @@
-public
+accessing
 next
 
 	| n |

@@ -1,0 +1,14 @@
+{
+	"category" : "Collections-Tests-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "LimitedWriteStreamTest",
+	"pools" : [
+		 ],
+	"super" : "WriteStreamTest",
+	"type" : "normal" }

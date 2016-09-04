@@ -1,4 +1,4 @@
-public
+accessing
 readInto: buffer startingAt: offset count: requestedCount
 	"Read up to requestedCount elements into the given buffer starting at offset.
 	Return the number of elements actually read.

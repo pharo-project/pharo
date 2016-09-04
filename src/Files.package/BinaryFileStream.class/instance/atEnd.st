@@ -1,4 +1,4 @@
-position
+testing
 atEnd
 
 	^ self primAtEnd: handle

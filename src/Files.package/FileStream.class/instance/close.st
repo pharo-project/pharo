@@ -1,4 +1,4 @@
-file open/close
+open/close
 close
 	"Close this file."
 

@@ -1,4 +1,4 @@
-private basic
+private
 basicSkip: n
 
 	^ super skip: n.

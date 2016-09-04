@@ -1,3 +1,4 @@
-accessing
+modes
 readOnly
+	"do nothing"
 	^self

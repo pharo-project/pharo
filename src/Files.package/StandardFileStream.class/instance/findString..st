@@ -1,4 +1,4 @@
-read, write, position
+accessing
 findString: string
 	"Fast version of #upToAll: to find a String in a file starting from the beginning.
 	Returns the position and also sets the position there.

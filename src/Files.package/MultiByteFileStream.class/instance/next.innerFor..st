@@ -1,4 +1,4 @@
-crlf private
+private - crlf
 next: n innerFor: aString
 
 	| peekChar state |

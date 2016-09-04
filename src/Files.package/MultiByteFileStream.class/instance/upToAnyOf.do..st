@@ -1,4 +1,4 @@
-public
+accessing
 upToAnyOf: delimiters do: aBlock
 
 	^self collectionSpecies new: 1000 streamContents: [ :stream |

@@ -1,4 +1,4 @@
-public
+accessing
 upToEnd
 
 	| newStream element newCollection |

@@ -1,4 +1,4 @@
-accessing
+open/close
 close
 	"Close the receiving generator and unwind its ensure-blocks."
 

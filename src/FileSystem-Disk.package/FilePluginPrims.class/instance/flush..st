@@ -1,9 +1,11 @@
 file primitives
 flush: id
-	"Flush pending changes to the disk"
-	
-	| pos |
+	"On Unix, the FilePlugin uses stdio FILE* structs which maintain their
+	own internal buffer to minimize write() syscalls. This flushes that buffer.
+	On Windows this and primSync: do the same thing."
+
 	<primitive: 'primitiveFileFlush' module: 'FilePlugin'>
-	"In some OS's seeking to 0 and back will do a flush"
-	pos := self getPosition: id.
-	self setPosition: id to: 0; setPosition: id to: pos
+	
+	"We can't ignore fflush() failing, because it can fail for any of the
+	reasons write() can."
+	self primitiveFailed

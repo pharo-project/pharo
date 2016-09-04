@@ -1,4 +1,4 @@
-initialize
+initialization
 on: aCollectionOrStream
 	aCollectionOrStream isStream 
 		ifTrue:[	aCollectionOrStream binary.

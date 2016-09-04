@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 int32: anInteger
 	"Store the given signed, 32-bit integer on this (binary) stream."
 

@@ -1,4 +1,4 @@
-testing
+comparing
 = other
 
 	(self class == ReadWriteStream and: [other class == ReadWriteStream]) ifFalse: [

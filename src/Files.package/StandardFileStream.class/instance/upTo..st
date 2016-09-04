@@ -1,4 +1,4 @@
-read, write, position
+accessing
 upTo: delim 
 	"Fast version to speed up nextChunk"
 	| pos buffer count |

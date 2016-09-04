@@ -1,4 +1,4 @@
-public
+accessing
 upTo: delimiter
 
 	^self collectionSpecies new: 1000 streamContents: [ :stream |

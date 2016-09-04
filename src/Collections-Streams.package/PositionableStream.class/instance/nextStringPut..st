@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextStringPut: s 
 	"Append the string, s, to the receiver.  Only used by DataStream.  Max size of 64*256*256*256."
 

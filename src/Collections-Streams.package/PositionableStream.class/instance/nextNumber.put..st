@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextNumber: n put: v 
 	"Append to the receiver the argument, v, which is a positive 
 	SmallInteger or a LargePositiveInteger, as the next n bytes.

@@ -1,4 +1,4 @@
-truncating
+position
 truncate: pos
 	"Truncate to this position"
 

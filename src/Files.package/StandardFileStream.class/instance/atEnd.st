@@ -1,4 +1,4 @@
-read, write, position
+testing
 atEnd
 	"Answer whether the receiver is at its end.  "
 	

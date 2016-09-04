@@ -1,4 +1,4 @@
-public
+accessing
 next
 
 	| char secondChar state |

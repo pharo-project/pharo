@@ -1,4 +1,4 @@
-initialize
+positioning
 reset
 	"Position zero - nothing decoded yet"
 	position := readLimit := 0.

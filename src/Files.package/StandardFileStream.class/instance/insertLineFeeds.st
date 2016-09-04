@@ -1,4 +1,4 @@
-properties-setting
+utility
 insertLineFeeds
 	"(FileStream oldFileNamed: 'BBfix2.st') insertLineFeeds"
 	| s crLf f |

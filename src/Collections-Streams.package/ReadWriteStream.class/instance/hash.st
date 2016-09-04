@@ -1,4 +1,4 @@
-testing
+comparing
 hash
 
 	self class == ReadWriteStream ifFalse: [^ super hash].

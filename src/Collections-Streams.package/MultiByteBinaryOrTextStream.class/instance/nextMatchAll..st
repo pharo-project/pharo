@@ -1,4 +1,4 @@
-public
+accessing
 nextMatchAll: aColl
 
     | save |

@@ -1,4 +1,4 @@
-read, write, position
+accessing
 next: n into: aString startingAt: startIndex
 	"Read n bytes into the given string.
 	Return aString or a partial copy if less than

@@ -1,4 +1,4 @@
-truncating
+position
 truncate
 
 	self truncate: 0

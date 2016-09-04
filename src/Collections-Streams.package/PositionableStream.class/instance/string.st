@@ -1,4 +1,4 @@
-data get/put
+accessing - data
 string
 	"Answer the next string from this (binary) stream."
 

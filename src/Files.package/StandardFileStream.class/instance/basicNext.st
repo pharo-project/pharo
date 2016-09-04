@@ -1,4 +1,4 @@
-read, write, position
+private
 basicNext
 	"Answer the next byte from this file, or nil if at the end of the file."
 	

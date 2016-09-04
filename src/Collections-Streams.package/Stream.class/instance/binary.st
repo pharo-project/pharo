@@ -1,4 +1,4 @@
-accessing
+modes
 binary
 	"do nothing"
 	^self 

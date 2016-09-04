@@ -1,4 +1,4 @@
-public
+accessing
 nextDelimited: terminator
 
 	| out ch pos |

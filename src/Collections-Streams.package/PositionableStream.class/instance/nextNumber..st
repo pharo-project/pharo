@@ -1,4 +1,4 @@
-nonhomogeneous accessing
+accessing - nonhomogeneous
 nextNumber: n 
 	"Answer the next n bytes as a positive Integer or LargePositiveInteger."
 	| s |
