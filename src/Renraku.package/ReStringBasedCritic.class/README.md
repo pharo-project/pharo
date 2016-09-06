@@ -1,1 +1,1 @@
-mpatibility reasons. Will be removed
+This is here for compatibility reasons. Will be removed

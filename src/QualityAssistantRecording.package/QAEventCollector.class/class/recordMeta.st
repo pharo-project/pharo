@@ -5,8 +5,8 @@ recordMeta
 	category: #qualityAssistantMeta;
 	addIfAvailable: {
 		#nautilus  -> QASettings nautilusPlugin .
-		#inspector -> QASettings inspectorPluggin .
-		#spotter   -> QASettings spotterPlugin
+		#inspector -> ReSettings inspectorPluggin .
+		#spotter   -> ReSettings spotterPlugin
 		} asDictionary;
 	register
 	] on: Error

@@ -1,4 +1,4 @@
-*qualityAssistant
+*renraku
 glmSourcePresentationIn: composite
 
 	composite pharoScript  

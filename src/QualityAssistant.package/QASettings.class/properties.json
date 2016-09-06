@@ -1,13 +1,12 @@
 {
 	"category" : "QualityAssistant",
 	"classinstvars" : [
-		"uniqueInstance" ],
+		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "YuriyTymchuk 10/20/2015 11:57",
 	"instvars" : [
-		"inspectorPlugin",
-		"spotterPlugin" ],
+		 ],
 	"name" : "QASettings",
 	"pools" : [
 		 ],

@@ -7,4 +7,4 @@ spotterPluginSettingsOn: aBuilder
 		label: 'Spotter Plugin' translated;
 		description: 'Enable GTSpotter plugin which shows a group with critiques and allows to preview them.';
 		default: false;
-		parent: #qualityAssistant.
+		parent: #renraku.

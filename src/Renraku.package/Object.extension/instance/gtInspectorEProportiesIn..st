@@ -6,7 +6,7 @@ gtInspectorEProportiesIn: composite
 	| eProperties |
 	composite list
 		when:
-				[ QASettings inspectorPluggin and: [ (eProperties := self externalProperties) notEmpty ] ];
+				[ ReSettings inspectorPluggin and: [ (eProperties := self externalProperties) notEmpty ] ];
 		title: [ eProperties size asString , (' property' asPluralBasedOn: eProperties) ];
 		titleIcon: [ CircleMorph new
 				extent: 16 @ 16;

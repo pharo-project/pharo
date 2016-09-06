@@ -1,0 +1,14 @@
+{
+	"category" : "QualityAssistantRecording-Manifest",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestQualityAssistantRecording",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

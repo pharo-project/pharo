@@ -1,4 +1,4 @@
 instance creation
 basicNew
 
-	^ self basicNew
+	^ super basicNew

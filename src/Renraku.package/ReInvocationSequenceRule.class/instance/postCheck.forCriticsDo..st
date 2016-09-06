@@ -10,16 +10,17 @@ postCheck: anAST forCriticsDo: aCriticBlock
 		
 		remainingPostConditions ifEmpty: [ ^ encounteredCritics ].
 		node isMessage ifTrue: [ 
-			remainingPostConditions do: [ :cond | | beforeMatched |
-
+			
+			"remove the matched conditions while criticizing before-matches"
+			remainingPostConditions removeAllSuchThat: [ :cond |
+				| beforeMatched |
 				(beforeMatched := cond beforeMatches: node selector) ifTrue: [ 
 					
 					encounteredCritics := true.
 					aCriticBlock cull: (
 						self postCriticFor: anAST at: node regarding: cond) ].
-				 
-				(beforeMatched or: [ cond afterMatches: node selector]) ifTrue: [
-					remainingPostConditions remove: cond ] ] ] ].
+				 "if the following expression is true, the condition will be removed"
+				beforeMatched or: [ cond afterMatches: node selector] ] ] ].
 					
 
 	^ encounteredCritics

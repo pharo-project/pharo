@@ -6,7 +6,9 @@
 		 ],
 	"commentStamp" : "YuriyTymchuk 3/4/2016 16:52",
 	"instvars" : [
-		"showErrors" ],
+		"showErrors",
+		"inspectorPlugin",
+		"spotterPlugin" ],
 	"name" : "ReSettings",
 	"pools" : [
 		 ],

@@ -2,4 +2,6 @@ initialization
 initialize
 	super initialize.
 	
-	showErrors := false
+	showErrors := false.
+	inspectorPlugin := false.
+	spotterPlugin := false

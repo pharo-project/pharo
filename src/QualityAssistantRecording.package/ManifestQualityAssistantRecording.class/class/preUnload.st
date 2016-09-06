@@ -1,0 +1,4 @@
+release
+preUnload
+
+	QAEventCollector unload

@@ -1,0 +1,14 @@
+{
+	"category" : "Renraku-Manifest",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestRenraku",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }
