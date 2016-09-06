@@ -4,10 +4,15 @@ methodIconFor: aMethod
 	| actions button action |
 	MethodsIconsCache
 		at: aMethod
-		ifPresent: [:icon | 
-			icon isArray ifTrue: [ ^ self rebuildUpAndDownArrowIconFrom: icon].
-			icon class == IconicButtonStateHolder ifFalse: [ ^ icon ].
-			^ icon asIcon ].
+		ifPresent: [:methodIcon | 
+			methodIcon isArray
+				ifTrue: [ ^ self rebuildUpAndDownArrowIconFrom: methodIcon].
+			methodIcon class == IconicButtonStateHolder
+				ifTrue: [
+					"convert the IconicButtonStateHolder previously cached by
+					this method with #actionStateToCache before returning"
+					^ methodIcon asIcon ].
+			^ methodIcon. ].
 
 	actions := AbstractMethodIconAction allSubclasses collect: [:class | class for: aMethod in: NautilusUI ].
 	actions sort: [:a :b | a actionOrder < b actionOrder ].

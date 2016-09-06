@@ -6,7 +6,7 @@ correspondingTestedMethodsOf: aMethodOrMethodDefinition
 
 	"isTestMethod treats unary TestCase selectors starting with 'should'
 	as test methods, so this check is needed to ignore them"
-	((selectorString := aMethodOrMethodDefinition selector transformSelectorForComparison)
+	((selectorString := aMethodOrMethodDefinition selector normalizedSelectorForComparison)
 		beginsWith: 'test')
 		ifFalse: [ ^ #() ].
 	selectorString := selectorString allButFirst: 4.	"'test' size"
@@ -20,6 +20,6 @@ correspondingTestedMethodsOf: aMethodOrMethodDefinition
 		do: [ :classOrMetaclassTested | 
 			classOrMetaclassTested
 				selectorsDo: [ :each | 
-					each transformSelectorForComparison = selectorString
+					each normalizedSelectorForComparison = selectorString
 						ifTrue: [ methodsTested addLast: classOrMetaclassTested >> each ] ] ].
 	^ methodsTested asArray

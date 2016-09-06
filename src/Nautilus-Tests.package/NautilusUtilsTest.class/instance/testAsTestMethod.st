@@ -1,5 +1,5 @@
 tests
-testCorrespondingTestMethod
+testAsTestMethod
 	{((self stubClass >> #one) -> (self stubTestClass >> #testOne)).
 	((self stubClass >> #one:) -> (self stubTestClass >> #testOne)).
 	((self stubClass >> #two) -> (self stubTestClass >> #testTwo)).
@@ -14,7 +14,7 @@ testCorrespondingTestMethod
 	((self stubClass >> #untestedOneTwo:) -> nil).
 	((self stubClass class >> #one:two:) -> (self stubTestClass >> #testOneTwo)).
 	((self stubClass class >> #untestedOne:two:) -> nil).
-	((self stubTestClass >> #testOne) -> nil).
-	((self stubTestClass >> #testTwo) -> nil).
-	((self stubTestClass >> #testOneTwo) -> nil)}
-		do: [ :each | self assert: each key correspondingTestMethod == each value ]
+	((self stubTestClass >> #testOne) -> (self stubTestClass >> #testOne)).
+	((self stubTestClass >> #testTwo) -> (self stubTestClass >> #testTwo)).
+	((self stubTestClass >> #testOneTwo) -> (self stubTestClass >> #testOneTwo))}
+		do: [ :each | self assert: each key asTestMethod == each value ]

@@ -2,11 +2,11 @@ utilities
 correspondingTestMethodOf: aMethodOrMethodDefinition
 	| selectorString testCase |
 	aMethodOrMethodDefinition isTestMethod
-		ifTrue: [ ^ aMethodOrMethodDefinition ].
+		ifTrue: [ ^ nil ].
 	selectorString := 'test'
-		, aMethodOrMethodDefinition selector transformSelectorForComparison.
+		, aMethodOrMethodDefinition selector normalizedSelectorForComparison.
 	(testCase := aMethodOrMethodDefinition methodClass correspondingTestCase)
 		ifNil: [ ^ nil ].
 	^ testCase methods
-		detect: [ :each | each selector transformSelectorForComparison = selectorString ]
+		detect: [ :each | each selector normalizedSelectorForComparison = selectorString ]
 		ifNone: [ nil ]

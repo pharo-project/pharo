@@ -1,7 +1,7 @@
 menus behavior
 runTestForAMethod: aMethod notifying: aBoolean
 	| testMethod testClass testResult color |
-	(testMethod := aMethod correspondingTestMethod) ifNil: [ ^ self ].
+	(testMethod := aMethod asTestMethod) ifNil: [ ^ self ].
 	testClass := testMethod methodClass.
 	testResult := testClass debug: testMethod selector.
 	aBoolean

@@ -4,10 +4,13 @@ packageIconFor: aPackage
 	
 	PackagesIconsCache
 		at: aPackage
-		ifPresent: [:icon |
-			 icon class == IconicButtonStateHolder ifFalse: [ ^ icon ].
-			self flag: #toclean. "I do not understand this code"
-			^ icon asIcon ].
+		ifPresent: [:packageIcon |
+			packageIcon class == IconicButtonStateHolder
+				ifTrue: [
+					"convert the IconicButtonStateHolder previously cached by
+					this method before returning"
+					^ packageIcon asIcon ].
+			^ packageIcon ].
 
 	aPackage classes isEmpty 
 		ifTrue: [^ PackagesIconsCache at: aPackage put: (self iconNamed: #emptyPackageIcon) ].
