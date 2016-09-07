@@ -10,6 +10,7 @@ duplicateClassWithNewName: aSymbol
 		subclass: copysName
 		instanceVariableNames: self instanceVariablesString
 		classVariableNames: self classVariablesString
+		poolDictionaries: self sharedPoolsString
 		package: self package name.
 	class classSide
 		instanceVariableNames: self classSide instanceVariablesString.

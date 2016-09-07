@@ -3,11 +3,11 @@ updateDebuggingActions
 
 	actionsCache ifNotNil: [ 
 		actionsCache do: [ :each |
-			each shortcutCommand ifNotNil: [ :aShortcut |
+			each keymap ifNotNil: [ :aShortcut |
 				self list removeKeyCombination: aShortcut ] ] ].
 	actionsCache := nil.
 	self generateContextMenuDebuggingActions.
 	
 	actionsCache do: [ :each |
-		each shortcutCommand ifNotNil: [ 
-			self list bindKeyCombination: each shortcutCommand toAction:  [ each execute ] ] ].
+		each keymap ifNotNil: [ 
+			self list bindKeyCombination: each keymap toAction:  [ each execute ] ] ].

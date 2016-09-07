@@ -8,22 +8,22 @@ debugActionsFor: aDebugger
 		self new
 			id: #browseSendersOfMessages;
 			order: initilOrder;
-			keyText: 'n';
+			keymap: PharoShortcuts current browseSendersShortcut;
 			label: 'Senders of...'.
 		self new
 			id: #browseMessages;
 			order: initilOrder + 5;
-			keyText: 'm';
+			keymap: PharoShortcuts current browseImplementorsShortcut;
 			label: 'Implementors of...'.
 		self new
 			id: #methodHierarchy;
 			order: initilOrder + 10;
-			keyText: 'i';
+			keymap: PharoShortcuts new browseMethodHierarchyShortcut;
 			label: 'Inheritance'.
 		self new
 			id: #browseVersions;
 			order: initilOrder + 15;
-			keyText: 'v';
+			keymap: PharoShortcuts current browseVersionsShortcut;
 			label: 'Versions'.
 		self new
 			id: #browseInstVarRefs;
@@ -42,12 +42,12 @@ debugActionsFor: aDebugger
 		self new
 			id: #browseClassRefs;
 			order: initilOrder + 35;
-			keyText: 'N';
+			keymap: PharoShortcuts current browseClassReferencesShortcut;
 			label: 'Class refs'.
 		self new
 			id: #browseMethodFull;
 			order: initilOrder + 40;
-			keyText: 'b';
+			keymap: PharoShortcuts current browseShortcut;
 			label: 'Browse full'.
 		self new
 			id: #fileOutMessage;

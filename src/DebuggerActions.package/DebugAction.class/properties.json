@@ -9,7 +9,7 @@
 		"label",
 		"order",
 		"icon",
-		"keyText",
+		"keymap",
 		"category",
 		"debugger",
 		"needsValidation",
