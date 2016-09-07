@@ -1,4 +1,4 @@
 *renraku
-glmSourcePresentationIn: aGLMCompositePresentation 
+glmCritiqueSourceIn: aGLMCompositePresentation 
 	
 	self gtInspectorSourceCodeIn: aGLMCompositePresentation

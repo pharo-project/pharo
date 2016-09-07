@@ -1,5 +1,5 @@
 *renraku
-glmSourcePresentationIn: composite
+glmCritiqueSourceIn: composite
 
 	self gtInspectorSourceIn: composite
 	
