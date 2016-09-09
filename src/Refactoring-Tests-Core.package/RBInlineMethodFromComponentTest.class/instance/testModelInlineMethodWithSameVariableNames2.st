@@ -1,7 +1,7 @@
 tests
 testModelInlineMethodWithSameVariableNames2
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
 	(model classNamed: #Object) 

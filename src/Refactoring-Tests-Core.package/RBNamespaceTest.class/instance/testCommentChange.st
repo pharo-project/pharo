@@ -1,7 +1,7 @@
 class tests
 testCommentChange
 	| st cl |
-	st := RBNamespace new.
+	st := RBClassModelFactory rbNamespace new.
 	cl := st classNamed: self class name.
 	self assert: cl comment isString.
 	cl comment: 'a comment'.

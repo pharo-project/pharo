@@ -1,7 +1,7 @@
 class tests
 testImplementors
 	| st |
-	st := RBNamespace new.
+	st := RBClassModelFactory rbNamespace new.
 	self assert: ((st allImplementorsOf: #printString) 
 				includes: (st classNamed: #Object)).
 	(st classNamed: #Object) removeMethod: #printString.

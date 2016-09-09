@@ -7,8 +7,8 @@ defineClass: aString
 	newClass isNil
 		ifTrue: [ | newMetaclass |
 			self unmarkAsRemoved: newClassName.
-			newClass := RBClass named: newClassName.
-			newMetaclass := RBMetaclass named: newClassName.
+			newClass := RBClassModelFactory rbClass named: newClassName.
+			newMetaclass := RBClassModelFactory rbMetaclass named: newClassName.
 			newClass model: self.
 			newMetaclass model: self.
 			newClasses

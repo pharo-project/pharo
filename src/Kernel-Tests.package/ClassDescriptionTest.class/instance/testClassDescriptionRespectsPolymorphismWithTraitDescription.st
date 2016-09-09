@@ -22,13 +22,13 @@ testClassDescriptionRespectsPolymorphismWithTraitDescription
 	#layout is the getter of the instance variable layout (which is in ClassDescription but not in TraitDescription)
 	#baseClass and #classClass have their equivalens in TraitDescription (baseTrait classTrait )"
 	self
-		assertCollection: (ClassDescription localSelectors difference: TraitDescription localSelectors)
+		assert: (ClassDescription localSelectors difference: TraitDescription localSelectors) asArray sort
 		equals:
-			#(#superclass:layout: #baseClass #superclass:withLayoutType:slots: #classClass #addSlot:) asSet.	
+			#(#superclass:layout: #baseClass #superclass:withLayoutType:slots: #classClass #addSlot:) asSet asArray sort.	
 	"#isClassTrait, #baseTrait, #isBaseTrait and #classTrait have their equivalents in ClassDescription but with different name,
 		the problem comes from the name of the selector, they are not good names
 	#copyTraitExpresion and #addExclusionOf: have no equivalent in classes"
 	self
 		assertCollection: (TraitDescription localSelectors difference: ClassDescription localSelectors)
 		equals:
-			#(#isClassTrait #addExclusionOf: #copyTraitExpression #baseTrait #-  #isBaseTrait #classTrait syntacticallyEquals: instVarNames) asSet
+			#(#isClassTrait #addExclusionOf: #copyTraitExpression #baseTrait #-  #isBaseTrait #classTrait syntacticallyEquals: instVarNames) asSet asArray sort

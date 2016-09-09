@@ -7,7 +7,7 @@ class: aClass andInstVariable: aBlock
 	variable := variables at: index.
 	class := aClass whichClassDefinesInstVar: variable.
 	class := class isMeta not
-				ifTrue: [ RBClass existingNamed: class name ] 
-				ifFalse: [ RBMetaclass existingNamed: class theNonMetaClass name ].
+				ifTrue: [ RBClassModelFactory rbClass existingNamed: class name ] 
+				ifFalse: [ RBClassModelFactory rbMetaclass existingNamed: class theNonMetaClass name ].
 	class model: environment.
 	^ aBlock value: class value: variable

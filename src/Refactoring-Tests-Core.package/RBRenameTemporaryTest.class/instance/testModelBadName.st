@@ -1,7 +1,7 @@
 failure tests
 testModelBadName
 	| class |
-	model := RBNamespace new.
+	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: #Object.
 	class 
 		compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'

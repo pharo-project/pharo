@@ -1,7 +1,7 @@
 class tests
 testDefineClassChange
 	| st |
-	st := RBNamespace new.
+	st := RBClassModelFactory rbNamespace new.
 	st 
 		defineClass: 'RefactoringBrowserTest subclass: #SmalltalkTestXXX
 				instanceVariableNames: ''''

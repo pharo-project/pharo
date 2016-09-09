@@ -1,8 +1,8 @@
 transforming
 model
-	^model isNil 
+	^ model isNil 
 		ifTrue: 
-			[model := (RBNamespace onEnvironment: self defaultEnvironment)
+			[model := (RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment)
 						name: self printString;
 						yourself]
 		ifFalse: [model]

@@ -3,7 +3,7 @@ testReferencesPrintOn
 	| hasFoundObject hasFoundSelf smalltalk |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	smalltalk := RBNamespace new.
+	smalltalk := RBClassModelFactory rbNamespace new.
 	smalltalk allReferencesTo: #printOn: do: [ :each | 
 		hasFoundObject := hasFoundObject
 			or: [ each selector = #fullPrintString 

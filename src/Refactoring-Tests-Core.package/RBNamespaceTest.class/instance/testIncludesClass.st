@@ -1,9 +1,9 @@
 class tests
 testIncludesClass
-	self assert: (RBNamespace new includesClassNamed: #Object).
-	self deny: (RBNamespace new includesClassNamed: #Object1).
+	self assert: (RBClassModelFactory rbNamespace new includesClassNamed: #Object).
+	self deny: (RBClassModelFactory rbNamespace new includesClassNamed: #Object1).
 	self 
-		deny: ((RBNamespace 
+		deny: ((RBClassModelFactory rbNamespace 
 				onEnvironment: (RBClassEnvironment onEnvironment: RBBrowserEnvironment new
 						classes: (Array with: Object))) 
 					includesClassNamed: #OrderedCollection)

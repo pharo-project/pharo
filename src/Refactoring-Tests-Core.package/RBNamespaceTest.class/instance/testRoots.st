@@ -1,7 +1,7 @@
 class tests
 testRoots
 	| model |
-	model := RBNamespace new.
+	model := RBClassModelFactory rbNamespace new.
 	self 
 		assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) 
 				asArray 

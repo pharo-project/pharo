@@ -1,6 +1,6 @@
 accessing
 model: aNautilusUI
 	model := aNautilusUI.
-	environment := (RBNamespace onEnvironment: aNautilusUI browsedEnvironment)
+	environment := (RBClassModelFactory rbNamespace onEnvironment: aNautilusUI browsedEnvironment)
 						name: self printString;
 						yourself

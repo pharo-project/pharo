@@ -8,7 +8,7 @@ abstractVariableTestData
 				sum add: class; add: class class ].
 			sum ].
 	classEnvironment := RBClassEnvironment classes: classes.
-	newModel := RBNamespace onEnvironment: classEnvironment not.
+	newModel := RBClassModelFactory rbNamespace onEnvironment: classEnvironment not.
 	newModel name: 'Test'.
 	
 	#('Object subclass: #Foo

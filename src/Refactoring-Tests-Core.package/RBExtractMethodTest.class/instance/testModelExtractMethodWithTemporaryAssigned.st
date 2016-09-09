@@ -1,7 +1,7 @@
 tests
 testModelExtractMethodWithTemporaryAssigned
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
 	class 
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'

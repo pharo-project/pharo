@@ -1,7 +1,7 @@
 tests
 testModelInlineMethodWithSameVariableNames1
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: #Rectangle.
 	class 
 		compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'

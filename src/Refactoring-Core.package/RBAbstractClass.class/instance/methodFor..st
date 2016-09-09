@@ -10,7 +10,7 @@ methodFor: aSelector
 			compiledMethod isNil 
 				ifTrue: [nil]
 				ifFalse: 
-					[RBMethod 
+					[RBClassModelFactory rbMethod 
 						for: self
 						fromMethod: compiledMethod
 						andSelector: aSelector]]

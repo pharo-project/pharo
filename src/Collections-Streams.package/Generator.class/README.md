@@ -34,7 +34,6 @@ For example, here is an empty generator and two infinite generators:
 [[[
 Generator on: [ :gen | ]
 Generator on: [ :gen | [ gen yield: 1 ] repeat ]
-Generator inject: 1 into: [ :value | value + 1 ]
 ]]]
 
 As a more concrete example taken from GNU Smalltalk implementation, these lines process a file and create Person objects out of the file:

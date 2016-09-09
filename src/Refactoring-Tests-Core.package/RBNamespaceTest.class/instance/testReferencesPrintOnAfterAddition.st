@@ -3,7 +3,7 @@ testReferencesPrintOnAfterAddition
 	| hasFoundObject hasFoundSelf smalltalk |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	smalltalk := RBNamespace new.
+	smalltalk := RBClassModelFactory rbNamespace new.
 	(smalltalk classNamed: #Object) 
 		compile: 'someTestReference self printOn: nil'
 		classified: #(testing).

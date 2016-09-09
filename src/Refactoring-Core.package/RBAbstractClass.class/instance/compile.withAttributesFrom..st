@@ -5,7 +5,7 @@ compile: aString withAttributesFrom: aRBMethod
 		compile: aString
 		in: self
 		classified: aRBMethod protocols.
-	method := RBMethod 
+	method := RBClassModelFactory rbMethod  
 		for: self
 		source: aString
 		selector: change selector.

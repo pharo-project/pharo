@@ -1,7 +1,7 @@
 tests
 testRecursiveMethod
 	| class |
-	model := RBNamespace new.
+	model := RBClassModelFactory rbNamespace new.
 	class := model classNamed: self class name.
 	class
 		compile: 'foo ^self foo' classified: #(#accessing);

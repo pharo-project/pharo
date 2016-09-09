@@ -2,11 +2,12 @@ statistics
 statisticsReport
 	"Workspace openContents: (Smalltalk vm statisticsReport) label: 'VM Statistics'"
 
-	| oldSpaceEnd youngSpaceEnd memoryEnd fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime upTime2 fullGCs2 fullGCTime2 incrGCs2 incrGCTime2 tenureCount2 str |
-	oldSpaceEnd		:= self oldSpaceEnd.
-	youngSpaceEnd		:= self youngSpaceEnd.
+	| oldSpaceSize youngSpaceSize memorySize freeSize fullGCs fullGCTime incrGCs incrGCTime tenureCount upTime upTime2 fullGCs2 fullGCTime2 incrGCs2 incrGCTime2 tenureCount2 str |
+	oldSpaceSize		:= self oldSpace.
+	youngSpaceSize		:= self youngSpaceSize.
 	tenureCount			:= self tenureCount.
-	memoryEnd			:= self memoryEnd.
+	memorySize			:= self memorySize.
+	freeSize				:= self freeOldSpaceSize + (self edenSpaceSize) - youngSpaceSize.
 	fullGCs				:= self fullGCCount.
 	fullGCTime			:= self totalFullGCTime.
 	incrGCs				:= self incrementalGCCount.
@@ -20,24 +21,24 @@ statisticsReport
 		print: (upTime / 1000 \\ 60) asInteger; nextPut: $s; cr.
 
 	str	<< 'memory			'.
-	memoryEnd printWithCommasOn: str.
+	memorySize printWithCommasOn: str.
 	str << ' bytes'; cr.
 	str	<<	'	old			'.
-	oldSpaceEnd printWithCommasOn: str.
+	oldSpaceSize printWithCommasOn: str.
 	str << ' bytes (';
-		print: ((oldSpaceEnd / memoryEnd * 100) roundTo: 0.1); << '%)'; cr.
+		print: ((oldSpaceSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
 	str	<< '	young		'.
-	(youngSpaceEnd - oldSpaceEnd) printWithCommasOn: str.
+	(youngSpaceSize) printWithCommasOn: str.
 	str << ' bytes (';
-		print: ((youngSpaceEnd - oldSpaceEnd / memoryEnd * 100) roundTo: 0.1); << '%)'; cr.
+		print: ((youngSpaceSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
 	str	<< '	used		'.
-	youngSpaceEnd printWithCommasOn: str.
+	youngSpaceSize + oldSpaceSize - freeSize printWithCommasOn: str.
 	str << ' bytes (';
-		print: ((youngSpaceEnd / memoryEnd * 100) roundTo: 0.1); << '%)'; cr.
+		print: ((youngSpaceSize + oldSpaceSize - freeSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
 	str	<< '	free		'.
-	(memoryEnd - youngSpaceEnd) printWithCommasOn: str.
+	freeSize printWithCommasOn: str.
 	str << ' bytes (';
-		print: ((memoryEnd - youngSpaceEnd / memoryEnd * 100) roundTo: 0.1); << '%)'; cr.
+		print: ((freeSize / memorySize * 100) roundTo: 0.1); << '%)'; cr.
 
 	str	<< 'GCs				'.
 	(fullGCs + incrGCs) printWithCommasOn: str.

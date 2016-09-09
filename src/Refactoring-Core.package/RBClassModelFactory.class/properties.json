@@ -1,0 +1,17 @@
+{
+	"category" : "Refactoring-Core-Model",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"RBclass",
+		"RBmetaclass",
+		"RBmethod",
+		"RBnamespace" ],
+	"commentStamp" : "StephaneDucasse 9/8/2016 09:58",
+	"instvars" : [
+		 ],
+	"name" : "RBClassModelFactory",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
