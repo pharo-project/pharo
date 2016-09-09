@@ -1,0 +1,14 @@
+{
+	"category" : "GeneralRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 9/9/2016 09:54",
+	"instvars" : [
+		 ],
+	"name" : "GRVariableAssignedLiteralRule",
+	"pools" : [
+		 ],
+	"super" : "ReAbstractRule",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+testing
+new
+	
+	^ PharoBootstrapRule asRBRule 

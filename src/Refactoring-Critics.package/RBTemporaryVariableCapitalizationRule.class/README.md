@@ -1,1 +1,0 @@
-This smell arises when a temporary or argument variable do not start with a lowercase letter, which is a standart style in Smalltalk.

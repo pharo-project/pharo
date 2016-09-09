@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 9/5/2016 14:30",
+	"instvars" : [
+		"renrakuRule" ],
+	"name" : "RBRenrakuWrapperLintRule",
+	"pools" : [
+		 ],
+	"super" : "RBBasicLintRule",
+	"type" : "normal" }

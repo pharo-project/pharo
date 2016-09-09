@@ -7,7 +7,8 @@ emphasis: aNumber
 	2r1	 (1) 		bold 
 	2r10 (2)	 	italic 
 	2r100 (4) 	underlined 
-	2r1000	 (8) 	strikethrough 
+	2r1000	 (8) 	narrow 
+	2r10000	 (16) 	strikethrough 
 			
 	examples: 
 		2r0 -> plain.  

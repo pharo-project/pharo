@@ -1,0 +1,1 @@
+I'm a wrapper of renraku rules, so they can be used in other tools that follow the RB architecture

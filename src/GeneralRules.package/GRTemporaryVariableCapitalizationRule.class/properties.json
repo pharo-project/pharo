@@ -1,0 +1,14 @@
+{
+	"category" : "GeneralRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 9/7/2016 16:46",
+	"instvars" : [
+		 ],
+	"name" : "GRTemporaryVariableCapitalizationRule",
+	"pools" : [
+		 ],
+	"super" : "ReNodeBasedRule",
+	"type" : "normal" }
