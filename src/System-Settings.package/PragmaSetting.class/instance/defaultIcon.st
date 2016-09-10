@@ -1,3 +1,3 @@
 user interface
 defaultIcon
-	^ Smalltalk ui icons iconNamed: #smallConfigurationIcon
+	^ self iconNamed: #smallConfigurationIcon

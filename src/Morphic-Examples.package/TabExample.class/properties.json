@@ -12,5 +12,5 @@
 	"name" : "TabExample",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

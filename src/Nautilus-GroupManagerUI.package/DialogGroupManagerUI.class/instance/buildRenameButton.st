@@ -3,7 +3,7 @@ buildRenameButton
 	^ IconicButton new
 		target: self;
 		actionSelector: #renameAction;
-		labelGraphic: (Smalltalk ui icons iconNamed: #edit);
+		labelGraphic: (self iconNamed: #edit);
 		color: Color transparent;
 		helpText: 'Rename the selected group';
 		borderWidth: 0;

@@ -16,17 +16,17 @@ buildBrowser
 				act: [ :presenter | 
 					self configure.
 					presenter pane browser update ]
-					icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon)
+					icon: (self iconNamed: #smallConfigurationIcon)
 					entitled: 'Configure commit options';
 				act: [ :presenter | 
 					self refresh.
 					presenter pane browser update ]
-					icon: (Smalltalk ui icons iconNamed: #glamorousRefresh)
+					icon: (self iconNamed: #glamorousRefresh)
 					entitled: 'Refresh';
 				act: [ :presenter | 
 					self commit.
 					presenter pane browser update ]
-					icon: (Smalltalk ui icons iconNamed: #smallDoItIcon)
+					icon: (self iconNamed: #smallDoItIcon)
 					entitled: 'Commit';
 				selectionAct: [ :presenter | self actionBrowse: presenter selection ]
 					on: $b

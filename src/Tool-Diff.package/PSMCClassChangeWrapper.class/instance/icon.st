@@ -4,5 +4,5 @@ icon
 
 	self isConflict
 		ifTrue: [ self localChosen
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #changeBlockIcon ] ].
+				ifTrue: [ ^ self iconNamed: #changeBlockIcon ] ].
 	^ super icon

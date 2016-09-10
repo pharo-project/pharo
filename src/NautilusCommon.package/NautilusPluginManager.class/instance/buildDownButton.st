@@ -1,10 +1,9 @@
 items creation
 buildDownButton
-
-	^ IconicButton new 
+	^ IconicButton new
 		target: self;
 		actionSelector: #down;
-		labelGraphic: (Smalltalk ui icons iconNamed: #downIcon);
+		labelGraphic: (self iconNamed: #downIcon);
 		color: Color transparent;
 		extent: 24 @ 24;
 		borderWidth: 0

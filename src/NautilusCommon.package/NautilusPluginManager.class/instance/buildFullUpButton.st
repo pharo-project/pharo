@@ -1,10 +1,9 @@
 items creation
 buildFullUpButton
-
-	^ IconicButton new 
+	^ IconicButton new
 		target: self;
 		actionSelector: #fullUp;
-		labelGraphic: (Smalltalk ui icons iconNamed: #topIcon);
+		labelGraphic: (self iconNamed: #topIcon);
 		color: Color transparent;
 		extent: 24 @ 24;
 		borderWidth: 0

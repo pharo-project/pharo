@@ -10,8 +10,7 @@ freshListTab
 		actions:
 		{(TabAction
 				action: [ self halt ]
-				icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon)
+				icon: (self iconNamed: #smallConfigurationIcon)
 				label: 'Halt!')})
-		menu:
-				[ :menu | menu add: 'Fubu' target: self selector: #halt ];
+		menu: [ :menu | menu add: 'Fubu' target: self selector: #halt ];
 		yourself

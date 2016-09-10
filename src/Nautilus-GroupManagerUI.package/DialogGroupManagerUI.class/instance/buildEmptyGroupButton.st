@@ -3,7 +3,7 @@ buildEmptyGroupButton
 	^ IconicButton new
 		target: self;
 		actionSelector: #emptySelectedGroup;
-		labelGraphic: (Smalltalk ui icons iconNamed: #delete);
+		labelGraphic: (self iconNamed: #delete);
 		color: Color transparent;
 		helpText: 'Empty the selected group';
 		borderWidth: 0;

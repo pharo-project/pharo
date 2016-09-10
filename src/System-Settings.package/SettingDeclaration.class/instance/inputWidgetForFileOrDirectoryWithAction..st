@@ -25,7 +25,7 @@ inputWidgetForFileOrDirectoryWithAction: aSymbol
 		getEnabled: nil
 		label:
 			(AlphaImageMorph new
-				image: (Smalltalk ui icons iconNamed: #smallOpenIcon))
+				image: (self iconNamed: #smallOpenIcon))
 		help: 'Open directory chooser dialog' translated.
 	^ self theme
 		newRowIn: World

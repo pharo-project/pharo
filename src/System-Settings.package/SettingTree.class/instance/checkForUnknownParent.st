@@ -8,7 +8,7 @@ checkForUnknownParent
 			self nodeList addFirst: g.
 			g model: self.
 			g item label: '*** Unclassified ***'.
-			g item icon: (Smalltalk ui icons iconNamed: #smallDebugIcon).
+			g item icon: (self iconNamed: #smallDebugIcon).
 			g item order: 0.0.
 			nodesWithUnknownParent
 				do: [ :node | node parentName: #nodesWithUnknownParent ] ]

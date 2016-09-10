@@ -2,5 +2,5 @@ tabs creation
 storedListTab
 	^ Tab
 		label: 'Stored List Model'
-		icon: (Smalltalk ui icons iconNamed: #smallHelpIcon)
+		icon: (self iconNamed: #smallHelpIcon)
 		retrievingBlock: [ listModel buildWithSpec ]

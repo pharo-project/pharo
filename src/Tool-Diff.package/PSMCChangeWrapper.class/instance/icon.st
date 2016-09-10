@@ -5,9 +5,9 @@ icon
 	| o |
 	o := self operation.
 	o isNil
-		ifTrue: [ ^ Smalltalk ui icons iconNamed: #changeEmptyIcon ].
+		ifTrue: [ ^ self iconNamed: #changeEmptyIcon ].
 	o isAddition
-		ifTrue: [ ^ Smalltalk ui icons iconNamed: #changeAddIcon ].
+		ifTrue: [ ^ self iconNamed: #changeAddIcon ].
 	o isRemoval
-		ifTrue: [ ^ Smalltalk ui icons iconNamed: #changeRemoveIcon ].
-	^ Smalltalk ui icons iconNamed: #changeUpdateIcon
+		ifTrue: [ ^ self iconNamed: #changeRemoveIcon ].
+	^ self iconNamed: #changeUpdateIcon

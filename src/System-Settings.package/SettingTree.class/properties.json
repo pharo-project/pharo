@@ -12,5 +12,5 @@
 	"name" : "SettingTree",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

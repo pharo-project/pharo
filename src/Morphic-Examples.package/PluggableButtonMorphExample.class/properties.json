@@ -12,5 +12,5 @@
 	"name" : "PluggableButtonMorphExample",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }
