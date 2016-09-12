@@ -6,5 +6,5 @@ addSearchStringFrom: aCritique in: aSourceCode
 		interval := aCritique sourceAnchor interval.
 		result addSearchString: (
 			aSourceCode
-				copyFrom: interval from
-				to: interval to)  ].
+				copyFrom: interval first
+				to: interval last)  ].
