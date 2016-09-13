@@ -1,3 +1,5 @@
 running
 runAll
-	suite tests do: [ :each | each run: self ]
+	CurrentExecutionEnvironment runTestsBy: [ 
+		suite tests do: [ :each | each run: self ]
+	]

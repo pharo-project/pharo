@@ -1,5 +1,7 @@
 actions
 runTestSuites: testSuites 
-	testSuites
-		do: [:testSuite | self runSuite: testSuite]
-		displayingProgress: 'Running Tests'
+	CurrentExecutionEnvironment runTestsBy: [
+		testSuites
+			do: [:testSuite | self runSuite: testSuite]
+			displayingProgress: 'Running Tests'
+	]

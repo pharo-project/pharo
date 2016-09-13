@@ -1,9 +1,4 @@
 running
 run: aResult
-	self setUp.
-	[ self tests
-		do: [ :each | 
-			each run: aResult.
-			self announceTest: each.
-			self changed: each ] ]
-		ensure: [ self tearDown ]
+	CurrentExecutionEnvironment runTestsBy: [
+		self runUnmanaged: aResult ]

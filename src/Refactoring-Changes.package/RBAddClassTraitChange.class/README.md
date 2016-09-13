@@ -1,0 +1,1 @@
+I am a refactoring change for a class trait  addition, the meta side of a trait definition.

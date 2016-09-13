@@ -5,7 +5,7 @@
 	"classvars" : [
 		"Instance",
 		"UndoSize" ],
-	"commentStamp" : "",
+	"commentStamp" : "NicolaiHess 9/9/2016 20:46",
 	"instvars" : [
 		"undo",
 		"redo",

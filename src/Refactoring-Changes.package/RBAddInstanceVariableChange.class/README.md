@@ -1,0 +1,1 @@
+I am a refactoring for a instance  variable addition. My changes are executed on the instance or class side.
