@@ -18,7 +18,7 @@ testMetaclassAndTraitClassRespectsPolymorphismRules
 	fileOutOn: fileOutOn:initializing: -> the implementation for ClassTraits is in TClassDescription"
 	self
 		assert:
-			(Metaclass localSelectors difference: ClassTrait localSelectors)
+			(Metaclass localSelectors difference: ClassTrait localSelectors) sorted
 				equals:
 					{#baseClass.
 					#basicLocalSelectors:.
@@ -29,10 +29,11 @@ testMetaclassAndTraitClassRespectsPolymorphismRules
 					#fileOutOn:.
 					#fileOutOn:initializing:.
 					#postCopy.
+					#newAnonymousSubclass.
 					#traitComposition.
 					#traitComposition:.
 					#veryDeepCopyWith:.
-					#addSlot:} asSet.	"initializeWithBaseTrait: asMCDefinition -> has no equivalent in classes
+					#addSlot:} asSet asArray sort.	"initializeWithBaseTrait: asMCDefinition -> has no equivalent in classes
 	baseTrait isClassTrait classTrait baseTrait isBaseTrait classTrait: -> they have their equivalent for Metaclasses
 	compile:classified:withStamp:notifying:logSource: -> the implementation for Metaclasses is in TClassDescription
 	copy -> the implementation for Metaclasses is in Object"

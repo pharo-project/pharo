@@ -8,7 +8,6 @@ shortVersionString
 	^String streamContents: [:str |
 		str 
 			nextPutAll: self type;
-			space;
 			nextPutAll: self major printString;
 			nextPut: $.;
 			nextPutAll: self minor printString;
