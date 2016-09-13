@@ -1,4 +1,4 @@
-private - growing
+private
 privateAt: key put: value 
 	size == keys size ifTrue: [self growKeysAndValues].
 	size := size + 1.

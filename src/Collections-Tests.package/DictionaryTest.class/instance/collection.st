@@ -1,3 +1,3 @@
-requirement
+requirements
 collection
 	^ self nonEmptyDict

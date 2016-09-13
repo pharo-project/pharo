@@ -1,4 +1,5 @@
 removing
-removeUnreferencedKeys   "Undeclared removeUnreferencedKeys"
+removeUnreferencedKeys
+	"Undeclared removeUnreferencedKeys"
 
-	^ self unreferencedKeys do: [:key | self removeKey: key].
+	^ self unreferencedKeys do: [ :key | self removeKey: key ]

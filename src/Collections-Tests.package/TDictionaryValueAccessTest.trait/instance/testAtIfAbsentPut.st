@@ -1,11 +1,17 @@
 tests - DictionaryIndexAccessing
 testAtIfAbsentPut
+	"self run: #testAtIfAbsentPut"
+
 	| collection association |
-	collection := self nonEmpty .
+	collection := self nonEmpty.
 	association := collection associations anyOne.
-	
-	collection at: association key ifAbsentPut: [ 888 ].
+	self
+		assert:
+			(collection at: association key ifAbsentPut: [ Error signal ])
+				= association value.
 	self assert: (collection at: association key) = association value.
-	
-	collection at: self keyNotIn  ifAbsentPut: [ 888 ].
-	self assert: ( collection at: self keyNotIn ) = 888.
+	self
+		assert:
+			(collection at: self keyNotIn ifAbsentPut: [ self valueNotIn ])
+				= self valueNotIn.
+	self assert: (collection at: self keyNotIn) = self valueNotIn

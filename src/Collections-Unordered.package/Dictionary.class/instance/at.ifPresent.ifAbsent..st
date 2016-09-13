@@ -1,6 +1,9 @@
 accessing
-at: key ifPresent: oneArgBlock ifAbsent: absentBlock
-	"Lookup the given key in the receiver. If it is present, answer the value of evaluating the oneArgBlock with the value associated with the key, otherwise answer the value of absentBlock."
-	
-	self at: key ifPresent: [ :v | ^oneArgBlock cull: v ].
-	^absentBlock value 
+at: key ifPresent: aPresentBlock ifAbsent: anAbsentBlock
+	"Lookup the given key in the receiver. If it is present, answer the
+	value of evaluating the first block optionally with the value associated
+	with the key.
+	Otherwise answer the value of the second block."
+
+	self at: key ifPresent: [:v | ^ aPresentBlock cull: v].
+	^ anAbsentBlock value

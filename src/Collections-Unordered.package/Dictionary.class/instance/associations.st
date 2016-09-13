@@ -1,6 +1,6 @@
 accessing
 associations
-	"Answer a Collection containing the receiver's associations."
+	"Answer a collection containing the receiver's associations."
 	"Suggested by l. Uzonyi"
 	
 	^Array new: self size streamContents: [ :stream |

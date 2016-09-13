@@ -1,6 +1,6 @@
 test - integrity
 testAllDictionariesAreHealthy
-	"only makes sense on Dictionary"
-	self classToBeTested = Dictionary 
-		ifFalse: [  ^ self ].
-	self assert: (Dictionary allSubInstances select: [:dict | dict isHealthy not ]) isEmpty.
+	self canBeUnhealthy
+		ifTrue: [
+			self collectionClass allSubInstances do: [ :dict |
+				self assert: dict isHealthy ] ]

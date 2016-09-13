@@ -1,5 +1,8 @@
 assertions
 assertSelector: aSelector collects: aCollection from: aDictionary
+	| collected |
+
+	collected := aDictionary perform: aSelector.
 	self
-		assert: (self emptyDictionary perform: aSelector) asArray = #();
-		assert: (aDictionary perform: aSelector) asArray = aCollection asArray
+		assert: collected class == self collectClass;
+		assert: collected asArray = aCollection asArray.

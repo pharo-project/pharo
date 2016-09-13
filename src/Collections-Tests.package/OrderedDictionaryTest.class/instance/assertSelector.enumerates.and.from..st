@@ -4,13 +4,6 @@ assertSelector: aSelector enumerates: aFirstCollection and: aSecondCollection fr
 
 	firstEnumerated := OrderedCollection new.
 	secondEnumerated := OrderedCollection new.
-	self emptyDictionary perform: aSelector with: [:first :second |
-		firstEnumerated add: first.
-		secondEnumerated add: second].
-	self
-		assert: firstEnumerated isEmpty;
-		assert: secondEnumerated isEmpty.
-
 	aDictionary perform: aSelector with: [:first :second |
 		firstEnumerated add: first.
 		secondEnumerated add: second].

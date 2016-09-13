@@ -1,15 +1,22 @@
 tests
 testNewFrom
-	| dictionaryOne dictionaryTwo dictionaryThree |
+	| dictionary |
 	
-	dictionaryOne := self dictionaryClass newFrom: self dictionaryAssociations.
-	dictionaryTwo := self dictionaryClass newFrom: dictionaryOne.
-	dictionaryThree := self dictionaryClass newFrom: self internalDictionaryWithAssociations.
+	dictionary := self dictionaryClass newFrom: self dictionaryAssociations.
 	self
-		assertIsDictionary: dictionaryOne withAssociations: self dictionaryAssociations;
-		assertIsDictionary: dictionaryTwo withAssociations: self dictionaryAssociations;
-		assertIsDictionary: dictionaryThree includesAll: self dictionaryAssociations.
+		assertIsDictionary: dictionary
+		withAssociations: self dictionaryAssociations.
+	self
+		assertIsDictionary: (self dictionaryClass newFrom: dictionary)
+		withAssociations: self dictionaryAssociations.
+	self
+		assertIsDictionary:
+			(self dictionaryClass newFrom: self internalDictionaryWithAssociations)
+		withUnorderedAssociations: self dictionaryAssociations.
 
-	(self dictionaryClass newFrom: dictionaryOne)
-		at: self singleKey put: self newValue.
-	self deny: (dictionaryOne at: self singleKey) = self newValue.
+	self
+		assertDictionary: dictionary
+		doesNotEqual:
+			((self dictionaryClass newFrom: dictionary)
+				at: self singleKey put: self newValue;
+				yourself).

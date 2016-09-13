@@ -1,4 +1,4 @@
-testing - associaitons
+testing
 includesAssociation: anAssociation
   ^ (self   
       associationAt: anAssociation key

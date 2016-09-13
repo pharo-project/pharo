@@ -1,4 +1,4 @@
-enumerating - keys and values
+enumerating
 difference: aCollection
 	"Answer the set theoretic difference of two collections. This is a specialized version for Dictionaries keeping the keys of the objects. At a slightly higher price of an additional Set to track duplicates."
 

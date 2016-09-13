@@ -1,4 +1,4 @@
-accessing - keys
+accessing
 keyAtIdentityValue: value 
 	"Answer the key that is the external name for the argument, value. If 
 	there is none, answer nil.

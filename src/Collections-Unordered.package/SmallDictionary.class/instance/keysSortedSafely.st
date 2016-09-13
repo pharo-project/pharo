@@ -1,4 +1,4 @@
-accessing - keys
+accessing
 keysSortedSafely
 	"Answer a SortedCollection containing the receiver's keys."
 	| sortedKeys |

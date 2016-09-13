@@ -1,4 +1,4 @@
-enumerating - values
+enumerating
 valuesDo: aBlock 
 	"Evaluate aBlock for each of the receiver's values."
 

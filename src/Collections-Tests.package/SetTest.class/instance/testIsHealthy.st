@@ -1,5 +1,5 @@
 test - integrity
-testHealthyWorks
+testIsHealthy
 	"we use associations as keys on purpose, because they changing
 	hash depending on the key"
 	| a1 a2 set |

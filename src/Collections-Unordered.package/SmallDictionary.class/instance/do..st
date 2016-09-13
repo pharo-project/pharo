@@ -1,4 +1,4 @@
-enumerating - values
+enumerating
 do: aBlock
 
 	^ self valuesDo: aBlock.

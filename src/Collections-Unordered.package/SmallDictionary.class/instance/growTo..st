@@ -1,4 +1,4 @@
-private - growing
+private
 growTo: aSize 
 	| newKeys newValues |
 	newKeys := Array new: aSize.

@@ -1,4 +1,4 @@
-requirement
+requirements
 result
 	^ self collectionClass newFromPairs: {
 		#a . SmallInteger .

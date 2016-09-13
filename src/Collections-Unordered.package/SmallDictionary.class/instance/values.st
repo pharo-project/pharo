@@ -1,4 +1,4 @@
-accessing - values
+accessing
 values
 	"Answer a Collection containing the receiver's values."
 	"^ values copyFrom: 1 to: size."

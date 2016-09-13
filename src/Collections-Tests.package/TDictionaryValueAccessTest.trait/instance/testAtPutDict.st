@@ -1,17 +1,26 @@
 tests - DictionaryIndexAccessing
 testAtPutDict
+	"Do not rename to testAtPut, will conflict with TPutBasicTest>>#testAtPut"
+
 	"self run: #testAtPutDict"
+
 	"self debug: #testAtPutDict"
-	
-	| adictionary keyIn |
-	adictionary := self nonEmpty .
-	keyIn := adictionary keys anyOne.
-	
-	adictionary at: keyIn put: 'new'.
-	self assert: (adictionary at: keyIn ) = 'new'.
-	
-	adictionary at: keyIn  put: 'newnew'.
-	self assert: (adictionary at: keyIn ) = 'newnew'.
-	
-	adictionary at: self keyNotIn  put: 666.
-	self assert: (adictionary at: self keyNotIn  ) = 666.
+
+	| collection keyIn newValue |
+	collection := self nonEmpty.
+	keyIn := collection keys anyOne.
+	newValue := self valueNotIn.
+
+	"use == to ensure the exact object argument to put: is stored and returned"
+	self assert: (collection at: keyIn put: newValue) == newValue.
+	self assert: (collection at: keyIn) == newValue.
+
+	newValue := self valueNotIn -> self valueNotIn.
+	self assert: (collection at: keyIn put: newValue) == newValue.
+	self assert: (collection at: keyIn) == newValue.
+
+	newValue := {self valueNotIn.
+	self valueNotIn.
+	self valueNotIn}.
+	self assert: (collection at: self keyNotIn put: newValue) == newValue.
+	self assert: (collection at: self keyNotIn) == newValue
