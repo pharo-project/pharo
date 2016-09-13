@@ -1,5 +1,5 @@
 tests parsing
-testInvalidPragmas
+testInvalidPragmaPosition
 	#(
 	'foo self. <foo: $a>'
 	'<foo: $a>'
