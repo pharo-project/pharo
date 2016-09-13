@@ -3,7 +3,7 @@ runCase: aTestCase
 	self increaseTestCount.
 	self printTestCase: aTestCase.
 	
-	[[ aTestCase runCase. 
+	[[ aTestCase runCaseManaged. 
 		self printPassOf: aTestCase ] 
 		on: Halt , Error, TestFailure
 		do: [ :err | self handleFailure: err of: aTestCase ]]
