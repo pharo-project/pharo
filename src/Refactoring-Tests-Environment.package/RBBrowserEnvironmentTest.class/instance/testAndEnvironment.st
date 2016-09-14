@@ -1,7 +1,6 @@
 testing-environments
 testAndEnvironment
 	| originalEnvironment objectPrintStringEnvironment andEnvironment |
-		self skip: 'Bug on VM. See: Fogbugz issue 17543'.
 	originalEnvironment := universalEnvironment referencesTo: #printOn:.
 	objectPrintStringEnvironment := universalEnvironment forClass: Object
 				selectors: #(#fullPrintString).

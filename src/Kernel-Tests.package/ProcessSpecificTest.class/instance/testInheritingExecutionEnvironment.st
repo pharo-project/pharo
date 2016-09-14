@@ -7,4 +7,4 @@ testInheritingExecutionEnvironment
 		p := [self assert: CurrentExecutionEnvironment value equals: newEnv] fork.
 	].
 
-	self assert: newEnv forkedProcesses first equals: p
+	self assert: newEnv forkedProcesses anyOne equals: p
