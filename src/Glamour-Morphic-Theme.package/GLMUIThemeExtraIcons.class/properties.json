@@ -10,5 +10,5 @@
 	"name" : "GLMUIThemeExtraIcons",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

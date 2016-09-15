@@ -9,7 +9,7 @@ openForPharo
 			width := width
 				max: (Smalltalk ui theme textFont widthOfStringOrText: l) ].
 	dialog := self new entryText: text.
-	dialog iconMorph image: (Smalltalk ui icons iconNamed: #pharoIcon).
+	dialog iconMorph image: (self iconNamed: #pharoIcon).
 	dialog title: 'About Pharo'.
 	dialog open.
 	dialog textMorph

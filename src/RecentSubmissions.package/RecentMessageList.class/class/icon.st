@@ -1,3 +1,3 @@
 icons
 icon 
-	^ Smalltalk ui icons iconNamed: #recentMessagesIcon
+	^ self iconNamed: #recentMessagesIcon

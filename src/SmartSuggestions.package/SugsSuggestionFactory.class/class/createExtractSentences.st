@@ -2,5 +2,5 @@ source
 createExtractSentences
 	<sourceCodeCommand>
 	^ SugsExtractStatements
-		icon: (Smalltalk ui icons iconNamed: #smallUpdateIcon)
+		icon: (self iconNamed: #smallUpdateIcon)
 		position: 10

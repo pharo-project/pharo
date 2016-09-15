@@ -1,3 +1,3 @@
 icons
 configurationChangedIcon
-	^ Smalltalk ui icons iconNamed: #configDirty 
+	^ self iconNamed: #configDirty

@@ -2,5 +2,5 @@ methods
 createSwapMethod
 	<methodCommand>
 	^ SugsSwapMethod new
-		icon: (Smalltalk ui icons iconNamed: #smallRedoIcon);
+		icon: (self iconNamed: #smallRedoIcon);
 		position: 50

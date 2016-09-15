@@ -1,3 +1,3 @@
 icons
 glamorousPlay
-	^ Smalltalk ui icons iconNamed: #glamorousPlay
+	^ self iconNamed: #glamorousPlay

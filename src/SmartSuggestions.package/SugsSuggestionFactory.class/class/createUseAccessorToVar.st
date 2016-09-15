@@ -2,5 +2,5 @@ class-var
 createUseAccessorToVar
 	<classVarCommand>
 	^ SugsUseAccessorsForClassVar
-		icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon)
+		icon: (self iconNamed: #smallLanguageIcon)
 		position: 10

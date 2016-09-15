@@ -2,5 +2,5 @@ class-var
 createAccessors
 	<classVarCommand>
 	^ SugsCreateClassVarAccessors
-		icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon)
+		icon: (self iconNamed: #smallLanguageIcon)
 		position: 30

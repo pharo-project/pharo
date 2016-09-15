@@ -1,3 +1,3 @@
 icons
 glamorousSearch
-	^ Smalltalk ui icons iconNamed: #glamorousSearch
+	^ self iconNamed: #glamorousSearch

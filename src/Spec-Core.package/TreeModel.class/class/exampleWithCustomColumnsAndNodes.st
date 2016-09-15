@@ -8,7 +8,7 @@ exampleWithCustomColumnsAndNodes
 	m rootNodeHolder: [ :item | 
 		TreeNodeModel new
 			content: item;
-			icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon)
+			icon: (self iconNamed: #smallConfigurationIcon)
 	].
 	
 	m openWithSpec.
@@ -19,7 +19,7 @@ exampleWithCustomColumnsAndNodes
 	col2 := TreeColumnModel new
 		displayBlock: [ :node | (Character value: node content asString first asciiValue + 1) asString ];
 		headerLabel: 'Character +1';
-		headerIcon: Smalltalk ui icons smallBackIcon.
+		headerIcon: (self iconNamed: #smallBackIcon).
 	
 	m
 		columns: {col1. col2};
@@ -29,13 +29,13 @@ exampleWithCustomColumnsAndNodes
 		
 	col2 
 		headerLabel: 'Character +2';
-		headerIcon: Smalltalk ui icons smallBackIcon;
+		headerIcon: (self iconNamed: #smallBackIcon);
 		displayBlock: [ :node | (Character value: node content asString first asciiValue + 2) asString ].
 	
 	m rootNodeHolder: [ :item | 
 		TreeNodeModel new
 			content: (Character value: (item asString first asciiValue + 5)) asSymbol;
-			icon: Smalltalk ui icons smallFullscreenIcon
+			icon: (self iconNamed: #smallFullscreenIcon)
 	].
 
-	col1 headerIcon: Smalltalk ui icons nautilusIcon.
+	col1 headerIcon: (self iconNamed: #nautilusIcon).

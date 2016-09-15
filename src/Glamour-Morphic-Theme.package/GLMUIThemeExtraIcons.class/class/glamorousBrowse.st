@@ -1,3 +1,3 @@
 icons
 glamorousBrowse
-	^ Smalltalk ui icons iconNamed: #glamorousBrowse
+	^ self iconNamed: #glamorousBrowse

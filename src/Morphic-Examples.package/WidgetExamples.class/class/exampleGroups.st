@@ -51,7 +51,7 @@ exampleGroups
 										newTabGroup:
 											{((dialog
 												newRow:
-													{(dialog newImage: (Smalltalk ui icons iconNamed: #smallLeftFlushIcon)).
+													{(dialog newImage: (self iconNamed: #smallLeftFlushIcon)).
 													(dialog newLabel: 'Page 1')})
 												->
 													(dialog

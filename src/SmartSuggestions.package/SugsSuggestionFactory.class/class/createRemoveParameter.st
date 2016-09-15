@@ -2,5 +2,5 @@ methods
 createRemoveParameter
 	<methodCommand>
 	^ SugsRemoveParameter
-		icon: (Smalltalk ui icons iconNamed: #smallCancelIcon)
+		icon: (self iconNamed: #smallCancelIcon)
 		position: 210

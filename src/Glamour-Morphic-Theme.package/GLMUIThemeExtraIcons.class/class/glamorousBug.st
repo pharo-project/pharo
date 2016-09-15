@@ -1,3 +1,3 @@
 icons
 glamorousBug
-	^ Smalltalk ui icons iconNamed: #glamorousBug
+	^ self iconNamed: #glamorousBug

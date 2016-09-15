@@ -2,5 +2,5 @@ methods
 createMoveMethod
 	<methodCommand>
 	^ SugsDelegateMethod
-		icon: (Smalltalk ui icons iconNamed: #smallRedoIcon)
+		icon: (self iconNamed: #smallRedoIcon)
 		position: 210

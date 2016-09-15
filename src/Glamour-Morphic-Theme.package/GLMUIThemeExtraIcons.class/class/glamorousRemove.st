@@ -1,3 +1,3 @@
 icons
 glamorousRemove
-	^ Smalltalk ui icons iconNamed: #glamorousRemove
+	^ self iconNamed: #glamorousRemove

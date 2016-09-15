@@ -11,6 +11,6 @@
 	"name" : "AbstractEyeElement",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"traitcomposition" : "TInspectorActions",
 	"type" : "normal" }

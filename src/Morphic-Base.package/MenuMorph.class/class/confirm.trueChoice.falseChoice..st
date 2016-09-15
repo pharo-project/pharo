@@ -12,9 +12,7 @@ confirm: queryString trueChoice: trueChoice falseChoice: falseChoice
 		ifNotNil: [ :answer | ^ trueChoice = answer ].
 	aBlock := [ :v | result := v ].
 	menu := self new.
-	menu
-		addTitle: queryString
-		icon: (Smalltalk ui icons iconNamed: #confirmIcon).
+	menu addTitle: queryString icon: (self iconNamed: #confirmIcon).
 	menu
 		add: trueChoice
 		target: aBlock

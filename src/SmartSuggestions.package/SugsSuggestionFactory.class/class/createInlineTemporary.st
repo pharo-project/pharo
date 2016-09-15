@@ -2,5 +2,5 @@ assignment
 createInlineTemporary
 	<assignmentCommand>
 	^ SugsInlineTemporary
-		icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon)
+		icon: (self iconNamed: #smallLanguageIcon)
 		position: 10

@@ -6,5 +6,5 @@ menuCommandOn: aBuilder
 		order: 0.21;
 		parent: #Tools;
 		label: 'Versionner';
-		icon: (Smalltalk ui icons iconNamed: #databaseIcon);
+		icon: (self iconNamed: #databaseIcon);
 		action: [ VersionnerSpecBrowser open ]

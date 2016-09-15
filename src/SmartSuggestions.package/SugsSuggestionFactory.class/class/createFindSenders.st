@@ -3,6 +3,6 @@ createFindSenders
 	<methodCommand>
 	<messageCommand>
 	^ SugsFindSenders
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon)
+		icon: (self iconNamed: #smallFindIcon)
 		position: 10
 		keyText: 'n'

@@ -2,5 +2,5 @@ inst-var
 createAccesorsFor
 	<instVarCommand>
 	^ SugsCreateInstanceVarAccessors
-		icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon)
+		icon: (self iconNamed: #smallLanguageIcon)
 		position: 100

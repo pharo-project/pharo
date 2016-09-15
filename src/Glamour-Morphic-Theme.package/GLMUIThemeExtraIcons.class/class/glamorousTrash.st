@@ -1,3 +1,3 @@
 icons
 glamorousTrash
-	^ Smalltalk ui icons iconNamed: #glamorousTrash
+	^ self iconNamed: #glamorousTrash

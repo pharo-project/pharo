@@ -10,15 +10,15 @@ fullReportMenuOn: aBuilder
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon).
+		icon: (self iconNamed: #smallFindIcon).
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon).
+		icon: (self iconNamed: #smallFindIcon).
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		icon: (Smalltalk ui icons iconNamed: #smallCopyIcon)
+		icon: (self iconNamed: #smallCopyIcon)

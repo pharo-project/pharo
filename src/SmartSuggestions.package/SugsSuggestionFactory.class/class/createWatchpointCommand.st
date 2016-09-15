@@ -7,5 +7,5 @@ createWatchpointCommand
 	<instVarCommand>
 	<classVarCommand>
 	^ SugsWatchpointSuggestion
-		icon: (Smalltalk ui icons iconNamed: #haloView)
+		icon: (self iconNamed: #haloView)
 		position: 18

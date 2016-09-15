@@ -7,7 +7,7 @@ example
 	page1 := (builder
 		newStack:
 		{((builder
-		newAlphaImage: (Smalltalk ui icons iconNamed: #warningIcon)
+		newAlphaImage: (self iconNamed: #warningIcon)
 		help: nil) alpha: 0.5).
 	(CircleMorph new
 		hResizing: #spaceFill;

@@ -2,6 +2,6 @@ methods
 createBreakConditionCommand
 	<globalCommand>
 	^ SugsBreakConditionSuggestion
-		icon: (Smalltalk ui icons iconNamed: #smallCancelIcon)
+		icon: (self iconNamed: #smallCancelIcon)
 		position: 17
 		keyText: 'b,c'

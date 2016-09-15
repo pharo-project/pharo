@@ -4,5 +4,5 @@ createExtractMethod
 	<literalCommand>
 	<blockCommand>
 	^ SugsExtractMethod
-		icon: (Smalltalk ui icons iconNamed: #smallUpdateIcon)
+		icon: (self iconNamed: #smallUpdateIcon)
 		position: 50

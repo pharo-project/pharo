@@ -1,3 +1,3 @@
 icons
 glamorousSaveToUrl
-	^ Smalltalk ui icons iconNamed: #glamorousSaveToUrl
+	^ self iconNamed: #glamorousSaveToUrl

@@ -11,4 +11,4 @@ createVariableCorrection
 			index := UIManager default chooseFrom: variables.
 			UIManager default inform: (variables at: index) ]
 		named: 'Correct variable to...' translated
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon)
+		icon: (self iconNamed: #smallFindIcon)

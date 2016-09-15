@@ -2,5 +2,5 @@ methods
 createPullUp
 	<methodCommand>
 	^ SugsPullUpMethod
-		icon: (Smalltalk ui icons iconNamed: #smallRedoIcon)
+		icon: (self iconNamed: #smallRedoIcon)
 		position: 100

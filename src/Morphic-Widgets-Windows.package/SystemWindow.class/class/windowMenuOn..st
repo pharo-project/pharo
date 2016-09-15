@@ -7,12 +7,12 @@ windowMenuOn: aBuilder
 	(aBuilder item: #Close)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
-		icon: self icons windowCloseForm;
+		icon: (self iconNamed: #windowCloseForm);
 		enabledBlock: [ aBuilder model allowedToClose ];
 		withSeparatorAfter.
 	(aBuilder item: #About)
 		action: [ aBuilder model showAbout ];
-		icon: (Smalltalk ui icons iconNamed: #smallHelpIcon);
+		icon: (self iconNamed: #smallHelpIcon);
 		withSeparatorAfter.
 	(aBuilder item: #'Change title...')
 		action: [ aBuilder model relabel ];

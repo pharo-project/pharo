@@ -4,8 +4,8 @@ checkBox
 
 	| f |
 	^ self new
-		onImage: (f := Smalltalk ui icons iconNamed: #checkBoxOnIcon);
-		pressedImage: (Smalltalk ui icons iconNamed: #checkBoxPressedIcon);
-		offImage: (Smalltalk ui icons iconNamed: #checkBoxOffIcon);
+		onImage: (f := self iconNamed: #checkBoxOnIcon);
+		pressedImage: (self iconNamed: #checkBoxPressedIcon);
+		offImage: (self iconNamed: #checkBoxOffIcon);
 		extent: f extent + (2 @ 0);
 		yourself

@@ -7,5 +7,5 @@ createCounterCommand
 	<instVarCommand>
 	<classVarCommand>
 	^ SugsCounterSuggestion
-		icon: (Smalltalk ui icons iconNamed: #classIcon)
+		icon: (self iconNamed: #classIcon)
 		position: 18

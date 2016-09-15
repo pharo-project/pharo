@@ -1,3 +1,3 @@
 icons
 glamorousRedCircle
-	^ Smalltalk ui icons iconNamed: #glamorousRedCircle
+	^ self iconNamed: #glamorousRedCircle

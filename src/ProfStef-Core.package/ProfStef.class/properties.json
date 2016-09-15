@@ -11,5 +11,5 @@
 	"name" : "ProfStef",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

@@ -2,5 +2,5 @@ methods
 createDeprecateMethod
 	<methodCommand>
 	^ SugsDeprecateMethod
-		icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon)
+		icon: (self iconNamed: #smallLanguageIcon)
 		position: 125
