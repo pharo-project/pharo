@@ -1,3 +1,0 @@
-accessing widgets
-statusBarModel
-	^ statusBarModel

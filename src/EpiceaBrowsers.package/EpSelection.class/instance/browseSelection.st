@@ -1,4 +1,4 @@
 operations
 browseSelection
 
-	self itemsForMenuAction do: [ :each | each browseItem ]
+	self selectedEntryItems do: [ :each | each browseItem ]

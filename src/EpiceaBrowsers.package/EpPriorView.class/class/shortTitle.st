@@ -1,4 +1,4 @@
 accessing
 shortTitle
 
-	^ 'Session'
+	^ 'Log'

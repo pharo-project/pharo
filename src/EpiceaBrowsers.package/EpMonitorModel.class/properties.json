@@ -1,0 +1,20 @@
+{
+	"category" : "EpiceaBrowsers-Monitor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/17/2016 23:53",
+	"instvars" : [
+		"logModel",
+		"monitor",
+		"logSetButtonModel",
+		"activeLogLabelModel",
+		"activeLogTextModel",
+		"createActiveLogButtonModel",
+		"enableMonitorButtonModel" ],
+	"name" : "EpMonitorModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

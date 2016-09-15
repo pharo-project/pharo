@@ -1,6 +1,9 @@
 SystemOrganization addCategory: #EpiceaBrowsers!
-SystemOrganization addCategory: 'EpiceaBrowsers-Core'!
+SystemOrganization addCategory: 'EpiceaBrowsers-Common'!
 SystemOrganization addCategory: 'EpiceaBrowsers-Exporter'!
 SystemOrganization addCategory: 'EpiceaBrowsers-Integration'!
-SystemOrganization addCategory: 'EpiceaBrowsers-Views'!
-SystemOrganization addCategory: 'EpiceaBrowsers-Visitors'!
+SystemOrganization addCategory: 'EpiceaBrowsers-Log'!
+SystemOrganization addCategory: 'EpiceaBrowsers-Log-Items'!
+SystemOrganization addCategory: 'EpiceaBrowsers-Log-Visitors'!
+SystemOrganization addCategory: 'EpiceaBrowsers-LogSet'!
+SystemOrganization addCategory: 'EpiceaBrowsers-Monitor'!

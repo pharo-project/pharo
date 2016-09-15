@@ -1,0 +1,16 @@
+{
+	"category" : "EpiceaBrowsers-LogSet",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/13/2016 17:13",
+	"instvars" : [
+		"logModel",
+		"logNodesModel",
+		"monitorLog" ],
+	"name" : "EpLogSetModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -1,12 +1,12 @@
 private
 nextEntryFromPosition: aFilePosition
 
-	^ self readEntriesWith: [ :entryReader :readStream | 
+	^ self readEntriesWith: [ :readStream | 
 		[ readStream position: aFilePosition.
-			self newEntryReader nextEntryFrom: readStream ]
+			self entryReader nextEntryFrom: readStream ]
 				on: Error 
 				do: [ :error | 
 					self 
-						error: error 
-						reading: self fileReference 
+						readingError: error 
+						on: self fileReference 
 						position: aFilePosition ] ]

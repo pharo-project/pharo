@@ -7,8 +7,14 @@ asMorph
 	
 	morphs add: 
 		(ButtonModel new
-			label: 'fetch more';
+			label: 'See ', browser view pageSize asString, ' more';
 			action: [ self fetchMore ];
 			buildWithSpec).
+
+	morphs add: 
+		(ButtonModel new
+			label: 'See all';
+			action: [ self fetchAll ];
+			buildWithSpec).
 	
-	^ self panelWidgetWithAll: morphs
+	^ EpMorphFactory default rowWithAll: morphs

@@ -12,7 +12,8 @@
 		"headReference",
 		"fileReference",
 		"entryPositionsByLocalName",
-		"entryCount" ],
+		"entryCount",
+		"entryReader" ],
 	"name" : "OmFileStore",
 	"pools" : [
 		 ],

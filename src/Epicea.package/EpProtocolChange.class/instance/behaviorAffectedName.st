@@ -1,3 +1,4 @@
 accessing
 behaviorAffectedName
+
 	^ behavior name

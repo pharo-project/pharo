@@ -1,0 +1,14 @@
+{
+	"category" : "Ombu-Errors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 9/13/2016 00:16",
+	"instvars" : [
+		 ],
+	"name" : "OmFileStoreWritingError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

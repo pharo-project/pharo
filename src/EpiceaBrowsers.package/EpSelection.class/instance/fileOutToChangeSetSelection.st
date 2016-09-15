@@ -1,4 +1,0 @@
-operations
-fileOutToChangeSetSelection
-	
-	self shouldBeImplemented

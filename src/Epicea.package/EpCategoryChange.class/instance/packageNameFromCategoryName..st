@@ -1,3 +1,7 @@
 initialization
 packageNameFromCategoryName: aName
-	^ (RPackage organizer packageMatchingExtensionName: aName) name
+
+	self flag: #todo. "Is it really necessary to know the package name?"
+	^ (RPackage organizer packageMatchingExtensionName: aName) 
+		ifNotNil: [ :package | package name ]
+		ifNil: [ aName ]

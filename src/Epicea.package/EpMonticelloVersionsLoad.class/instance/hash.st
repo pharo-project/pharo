@@ -1,5 +1,5 @@
-visitor
+comparing
 hash
 
-	^ (self class)
+	^ self class hash
 		bitXor: self versionNames hash

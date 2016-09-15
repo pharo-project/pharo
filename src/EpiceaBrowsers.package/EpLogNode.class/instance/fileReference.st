@@ -1,0 +1,4 @@
+accessing
+fileReference
+
+	^ directoryEntry asFileReference

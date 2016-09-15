@@ -2,7 +2,7 @@ populating menu
 menuActions
 
 	| items |
-	items := self itemsForMenuAction.
+	items := self selectedEntryItems.
 
 	items ifEmpty: [ ^ #() ].
 

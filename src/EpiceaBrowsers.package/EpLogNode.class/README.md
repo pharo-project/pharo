@@ -1,0 +1,1 @@
+I a node in a tree of Epicea logs. The nodes of such tree are Epicea files and an edge between a node A and another B exist when A contains an entry whose prior node is in B.

@@ -1,6 +1,7 @@
 instance creation
 newWithLog: aLog withViewClass: aViewClass
 
-	^ self basicNew 
-		initializeWithLog: aLog withViewClass: aViewClass;
+	^ self new
+		log: aLog; 
+		viewClass: aViewClass;
 		yourself

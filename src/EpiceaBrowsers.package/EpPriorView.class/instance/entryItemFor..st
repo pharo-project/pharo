@@ -6,6 +6,6 @@ entryItemFor: entryReference
 			self log 
 				entryFor: entryReference
 				ifPresent: [ :anEntry | 
-					self newItemFor: anEntry ]
+					self newEntryItemFor: anEntry ]
 				ifAbsent: [ 
 					self newAbsentItemFor: entryReference in: rootItems ] ]

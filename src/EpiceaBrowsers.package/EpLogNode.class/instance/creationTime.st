@@ -1,0 +1,4 @@
+accessing
+creationTime
+
+	^ directoryEntry creationTime

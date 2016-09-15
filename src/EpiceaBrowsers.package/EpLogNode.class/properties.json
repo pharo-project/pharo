@@ -1,0 +1,17 @@
+{
+	"category" : "EpiceaBrowsers-LogSet",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/14/2016 01:44",
+	"instvars" : [
+		"globalName",
+		"referencedNodes",
+		"directoryEntry",
+		"log" ],
+	"name" : "EpLogNode",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

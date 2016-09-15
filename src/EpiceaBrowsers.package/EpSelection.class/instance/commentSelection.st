@@ -3,7 +3,7 @@ commentSelection
 
 	| newCommentOrNil oldComment entryReferences |
 	oldComment := self oldComment.
-	entryReferences := self itemsForMenuAction collect: #reference.
+	entryReferences := self selectedEntryItems collect: #reference.
 	
 	newCommentOrNil := UIManager default
 		multiLineRequest: 'Enter a comment for the selection' 

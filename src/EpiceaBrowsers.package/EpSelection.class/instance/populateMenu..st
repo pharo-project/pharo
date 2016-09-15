@@ -38,17 +38,10 @@ populateMenu: aMenu
 			aGroup
 				addItem: [ :anItem | 
 					anItem
-						name: 'File Out (ombu format)';
+						name: 'File Out';
 						description: 'Write selected entries to an Ombu file';
 						icon: (Smalltalk ui icons iconNamed: #smallSaveAsIcon);
-						action: [ self fileOutToOmbuSelection ] ].
-			aGroup
-				addItem: [ :anItem | 
-					anItem
-						name: 'File Out (cs format)';
-						description: 'Write selected entries to a ChangeSet file';
-						icon: (Smalltalk ui icons iconNamed: #smallSaveAsIcon);
-						action: [ self fileOutToChangeSetSelection ] ] ].
+						action: [ self fileOutSelection ] ] ].
 	aMenu
 		addGroup: [ :aGroup | 
 			aGroup

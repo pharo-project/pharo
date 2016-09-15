@@ -1,5 +1,5 @@
 {
-	"category" : "EpiceaBrowsers-Visitors",
+	"category" : "EpiceaBrowsers-Log-Visitors",
 	"classinstvars" : [
 		 ],
 	"classtraitcomposition" : "EpTCodeChangeVisitor classTrait",

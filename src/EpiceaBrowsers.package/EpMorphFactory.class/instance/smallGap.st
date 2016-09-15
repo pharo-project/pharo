@@ -1,0 +1,4 @@
+generic
+smallGap
+
+	^ self wrapping: ''

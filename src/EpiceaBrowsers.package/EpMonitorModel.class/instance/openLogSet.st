@@ -1,0 +1,4 @@
+private
+openLogSet
+		
+	EpLogSetModel open

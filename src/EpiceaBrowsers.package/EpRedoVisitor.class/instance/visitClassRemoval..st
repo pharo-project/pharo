@@ -1,3 +1,0 @@
-visitor
-visitClassRemoval: aClassRemoval
-	environment removeClassNamed: aClassRemoval realClassAffected name

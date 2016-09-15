@@ -1,4 +1,4 @@
 {
-	"category" : "Epicea-Model-Visitors",
+	"category" : "Epicea-Visitors",
 	"commentStamp" : "<historical>",
 	"name" : "EpTCodeChangeVisitor" }

@@ -1,10 +1,10 @@
 {
-	"category" : "EpiceaBrowsers-Core",
+	"category" : "EpiceaBrowsers-Log",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "MartinDias 4/15/2014 18:19",
+	"commentStamp" : "MartinDias 8/14/2016 01:55",
 	"instvars" : [
 		"log",
 		"view",
@@ -13,7 +13,6 @@
 		"entryContentTabModel",
 		"filtersModel",
 		"filtersTabModel",
-		"statusBarModel",
 		"itemsModel",
 		"commentsLog",
 		"commitLog",

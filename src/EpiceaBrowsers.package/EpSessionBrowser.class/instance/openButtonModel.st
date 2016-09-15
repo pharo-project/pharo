@@ -1,3 +1,0 @@
-accessing widgets
-openButtonModel
-	^ openButtonModel

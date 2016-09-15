@@ -2,7 +2,6 @@ initialization
 initializeWidgets
 
 	self instantiateModels: {
-		#statusBarModel -> #LabelModel.
 		#itemsModel -> #TreeModel.
 
 		"tabs"
@@ -16,5 +15,4 @@ initializeWidgets
 		}.
 		
 	self whenWindowChanged: [ :windowModel | 
-		self subscribeToLog.
 		windowModel whenClosedDo: [ self unsubscribeFromLog ] ].

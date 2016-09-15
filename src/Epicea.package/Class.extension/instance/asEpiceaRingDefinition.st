@@ -2,10 +2,9 @@
 asEpiceaRingDefinition
 	
 	| ring |
-	
 	ring := (RGClassDefinition named: self name)
 		category: self category;
-		superclassName: self superclass name;  
+		superclassName: self superclass asString; "Note it's nil for ProtoObject"
 		traitCompositionSource: self traitCompositionString;
 		addInstanceVariables: self instVarNames;
 		addClassVariables: self classVarNames;
@@ -13,7 +12,7 @@ asEpiceaRingDefinition
 		comment: self organization classComment;
 		stamp: self organization commentStamp;
 		definitionSource: self definition;
-		package: ((RPackage organizer packageOfClassNamed: self name) ifNotNil:#name);  "FIX: this is a workaround for class modifications... check if it's still necessary."
+		package: self epiceaPackageName;
 		withMetaclass.
 
 	ring theMetaClass 

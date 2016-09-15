@@ -1,3 +1,3 @@
 accessing
 title
-	^ 'Undo'
+	^ 'Revert changes'

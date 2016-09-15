@@ -29,4 +29,5 @@ startUp: isImageStarting
 
 	browser
 		refresh;
+		title: 'Epicea - Lost Changes Detected';
 		open.

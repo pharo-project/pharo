@@ -1,14 +1,15 @@
 announcement handling
 jobStarted: aJobStart
 
-	| newEntry aJob |
+	| aJob |
 	aJob := aJobStart job.
 
 	"We only care in these cases"
 	aJob owner isEpiceaInterestingJobOwner ifFalse: [ ^ self ].
 
-	newEntry := self addEvent: aJob owner asEpiceaEvent.
-
-	entryReferenceByEvent
-		at: aJob
-		put: (log referenceTo: newEntry)
+	self 
+		addEvent: aJob owner asEpiceaEvent 
+		newEntryDo: [ :newEntry |
+			entryReferenceByEvent
+				at: aJob
+				put: (log referenceTo: newEntry) ]

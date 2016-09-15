@@ -8,32 +8,25 @@ asMorph
 	morphs add: self icon asMorph.
 
 	"create the main display"	
-	morphs addAll: (entry content accept: EpDisplayMorphVisitor new).
+	morphs addAll: (entry content accept: EpMorphVisitor new).
 
 	"add a small gap"
-	morphs add: self smallGapWidget.
+	morphs add: EpMorphFactory default smallGap.
 
 	"add author"
 	self authorString ifNotEmpty: [ :authorString |
-		morphs add: (self 
-			smallStringWidgetFor: authorString
-			color: Color transparent) ].
+		morphs add: (EpMorphFactory default secondaryStringFor: authorString) ].
 
 	"add time"
 	self timeString ifNotEmpty: [ :timeString |
-		morphs add: (self 
-			smallStringWidgetFor: timeString
-			color: Color transparent) ].
+		morphs add: (EpMorphFactory default secondaryStringFor: timeString) ].
 
 	"maybe add comment tag"
 	browser commentsLog ifNotNil: [ :commentsLog | commentsLog
 		commentAt: entry 
 		ifPresent: [ :comment |
 			comment trim isEmpty ifFalse: [
-				morphs add: (
-					self 
-						tagWidgetFor: comment 
-						color: Color lightYellow) ] ] ].
+				morphs add: (EpMorphFactory default pillWith: comment trim) ] ] ].
 
 	"create the row morph"	
-	^ self panelWidgetWithAll: morphs
+	^ EpMorphFactory default rowWithAll: morphs

@@ -2,12 +2,14 @@ private
 next: numberOfDesiredItems from: initialEntryReference
 	"Answer up to a numberOfDesiredItems starting at initialEntryReference."
 
-	| result nextEntryReference |
+	| result nextEntryReference lastGlobalName |
 	result := OrderedCollection new.
+	initialEntryReference isNull ifTrue: [ ^ result ].
+
 	nextEntryReference := initialEntryReference.
+	lastGlobalName := initialEntryReference globalName.
 	
-	[ nextEntryReference isNull ] whileFalse: [
-		| item |
+	[	| item |
 		result size >= numberOfDesiredItems ifTrue: [
 			result add: (self newFetchMoreItemFor: nextEntryReference in: rootItems).
 			^ result ]. "Enough items"
@@ -17,7 +19,7 @@ next: numberOfDesiredItems from: initialEntryReference
 			ifPresent: [ :anEntry | 
 				self 
 					filter: anEntry 
-					ifAccepted: [ self newItemFor: anEntry ]
+					ifAccepted: [ self newEntryItemFor: anEntry ]
 					ifNotAccepted: [ self newFilteredItemFor: anEntry ] ]
 			ifAbsent: [ ^ result ]. "Not found then can't continue"
 
@@ -32,7 +34,13 @@ next: numberOfDesiredItems from: initialEntryReference
 							result removeLast.
 							combinedItem ]
 						ifFalse: [ item ] ]).
+
+		nextEntryReference globalName = lastGlobalName ifFalse: [
+			result add: (EpLogHeaderItem new entryReference: nextEntryReference; yourself).
+			lastGlobalName := nextEntryReference globalName ].
 		
-		nextEntryReference := item priorEntryReference ].
+		nextEntryReference := item priorEntryReference.
+
+	] doWhileFalse: [ nextEntryReference isNull ].
 
 	^ result

@@ -4,16 +4,16 @@ entriesAndPositionsDo: aBlockClosure
 
 	self fileReference exists ifFalse: [ ^self ].
 
-	self readEntriesWith: [ :entryReader :readStream | 
+	self readEntriesWith: [ :readStream | 
 		[ readStream atEnd ] whileFalse: [ | filePosition entry |
 
 			[ filePosition := readStream position.
-			entry := entryReader nextEntryFrom: readStream.
+			entry := self entryReader nextEntryFrom: readStream.
 
 			aBlockClosure cull: entry cull: filePosition.
 	
 			] on: Error do: [ :error | 
 				self 
-					error: error
-					reading: self fileReference
+					readingError: error
+					on: self fileReference
 					position: filePosition ] ] ]

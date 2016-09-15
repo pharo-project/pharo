@@ -14,19 +14,19 @@ filtersSubMenu
 
 		aGroup addItem: [ :anItem |
 			anItem 
-				name: 'was done today';
+				name: 'done today';
 				icon: (Smalltalk ui icons iconNamed: #calendar);
-				action: [ self filterAfter ] ].
+				action: [ self filterToday ] ].
 
 		aGroup addItem: [ :anItem |
 			anItem 
-				name: 'was done before...';
+				name: 'done earlier';
 				icon: (Smalltalk ui icons iconNamed: #calendar);
 				action: [ self filterBefore ] ].
 
 		aGroup addItem: [ :anItem |
 			anItem 
-				name: 'was done after...';
+				name: 'done afterwards';
 				icon: (Smalltalk ui icons iconNamed: #calendar);
 				action: [ self filterAfter ] ].
 

@@ -1,6 +1,4 @@
-announcement handling
+private
 addEvent: anEvent 
 
-	^ self 
-		addEvent: anEvent
-		triggerReference: self currentTriggerReference
+	self addEvent: anEvent newEntryDo: [ :newEntry | ]
