@@ -1,0 +1,1 @@
+I draw links with curved lines. See comment in superclass.

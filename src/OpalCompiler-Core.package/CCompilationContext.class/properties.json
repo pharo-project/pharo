@@ -3,7 +3,8 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		"BytecodeBackend" ],
+		"BytecodeBackend",
+		"UsesFullBlockClosure" ],
 	"commentStamp" : "ClementBera 1/27/2015 13:10",
 	"instvars" : [
 		"astTranslatorClass",
@@ -22,7 +23,8 @@
 		"requestor",
 		"forSyntaxHighlighting",
 		"semanticAnalyzerClass",
-		"astTransformPlugins" ],
+		"astTransformPlugins",
+		"usesFullBlockClosure" ],
 	"name" : "CCompilationContext",
 	"pools" : [
 		 ],

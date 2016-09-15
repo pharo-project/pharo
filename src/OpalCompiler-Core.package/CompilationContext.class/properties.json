@@ -4,6 +4,7 @@
 		 ],
 	"classvars" : [
 		"BytecodeBackend",
+		"UsesFullBlockClosure",
 		"WarningAllowed" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
@@ -23,7 +24,8 @@
 		"compiledMethodTrailer",
 		"forSyntaxHighlighting",
 		"encoderClass",
-		"astTransformPlugins" ],
+		"astTransformPlugins",
+		"usesFullBlockClosure" ],
 	"name" : "CompilationContext",
 	"pools" : [
 		 ],

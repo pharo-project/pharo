@@ -28,7 +28,8 @@
 		"additionalLiterals",
 		"forceLongForm",
 		"primNumber",
-		"encoderClass" ],
+		"encoderClass",
+		"inBlock" ],
 	"name" : "IRBytecodeGenerator",
 	"pools" : [
 		 ],

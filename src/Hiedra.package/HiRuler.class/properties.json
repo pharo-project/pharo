@@ -1,0 +1,18 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"freeColumnIndexByRow",
+		"linkBuilders",
+		"values",
+		"nodes",
+		"links" ],
+	"name" : "HiRuler",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

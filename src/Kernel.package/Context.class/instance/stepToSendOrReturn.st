@@ -6,6 +6,7 @@ stepToSendOrReturn
 	| context |
 	[ self willSend or: [  self willReturn or: [ self willStore or: [self willCreateBlock ] ] ] ]
 		whileFalse: [
+			self isDead ifTrue: [ ^ self ].
 			context := self step.
 			context == self ifFalse: [
 				"Caused by mustBeBoolean handling"

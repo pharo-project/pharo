@@ -1,0 +1,18 @@
+{
+	"category" : "Hiedra-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"rowSize",
+		"columnSize",
+		"nodeBuilder",
+		"linkBuilders",
+		"values" ],
+	"name" : "HiRulerBuilder",
+	"pools" : [
+		 ],
+	"super" : "HiBuilder",
+	"type" : "normal" }

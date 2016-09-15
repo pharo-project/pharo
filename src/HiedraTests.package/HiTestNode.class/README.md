@@ -1,0 +1,1 @@
+I am a node in Hiedra tests and examples.

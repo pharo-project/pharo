@@ -1,0 +1,16 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"location",
+		"nodeShape",
+		"nodeBuilder" ],
+	"name" : "HiNodeRenderer",
+	"pools" : [
+		 ],
+	"super" : "HiRenderer",
+	"type" : "normal" }

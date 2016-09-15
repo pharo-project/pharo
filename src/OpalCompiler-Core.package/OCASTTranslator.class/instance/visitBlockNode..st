@@ -4,6 +4,8 @@ visitBlockNode: aBlockNode
 	aBlockNode arguments size >15 ifTrue: [self backendError: 'Too many arguments' forNode: aBlockNode ].
 	
 	aBlockNode isInlined ifTrue: [^ self visitInlinedBlockNode: aBlockNode ].
+	
+	self compilationContext usesFullBlockClosure ifTrue: [ ^ self visitFullBlockNode: aBlockNode ].
 		
 	argumentNames := aBlockNode argumentNames asArray.
 	tempNames := (aBlockNode scope tempVars asArray collect: [ :each | each name]) copyWithoutAll: argumentNames.

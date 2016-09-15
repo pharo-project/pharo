@@ -1,0 +1,15 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"ruler",
+		"rulerBuilder" ],
+	"name" : "HiRulerRenderer",
+	"pools" : [
+		 ],
+	"super" : "HiRenderer",
+	"type" : "normal" }

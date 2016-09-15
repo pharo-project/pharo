@@ -1,0 +1,17 @@
+{
+	"category" : "HiedraTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 3/30/2016 23:18",
+	"instvars" : [
+		"content",
+		"parents",
+		"owner",
+		"origin" ],
+	"name" : "HiTestNode",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

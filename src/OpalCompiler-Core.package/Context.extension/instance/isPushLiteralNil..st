@@ -1,3 +1,3 @@
 *OpalCompiler-Core
 isPushLiteralNil: aPC
-	^ (self method at: aPC) = 115
+	^ (self method at: aPC) = method encoderClass pushNilByte

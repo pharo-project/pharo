@@ -7,6 +7,6 @@ compiledMethodWith: trailer header: header literals: lits
 		nextPutAll: self bytecodes.
 	lits withIndexDo: [:obj :i | cm literalAt: i put: obj].
 	cm needsFrameSize: self stackFrameSize.
-	
+	self updateLiterals: cm.
 	self addProperties: cm.
 	^ cm

@@ -1,0 +1,20 @@
+{
+	"category" : "Hiedra-Builders",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"label",
+		"color",
+		"width",
+		"rendererClass",
+		"dashes",
+		"conditionBlock",
+		"targetsBlock" ],
+	"name" : "HiLinkBuilder",
+	"pools" : [
+		 ],
+	"super" : "HiBuilder",
+	"type" : "normal" }

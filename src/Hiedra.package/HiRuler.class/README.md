@@ -1,0 +1,1 @@
+I represent a ruler of nodes with links.

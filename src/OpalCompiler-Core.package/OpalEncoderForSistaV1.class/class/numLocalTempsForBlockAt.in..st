@@ -1,8 +1,6 @@
 block closure support
 numLocalTempsForBlockAt: startpc in: method
-	| firstByte |
-	firstByte := method at: startpc.
-	^ firstByte = 230 
-		ifFalse: [ 0 ]
-		ifTrue: [ (method at: startpc + 1) ]
-	
+	"**	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
+	^ BlockLocalTempCounter
+		tempCountForBlockAt: startpc - 3 - (((method at: startpc - 2) >> 6) * 2)
+		in: method 

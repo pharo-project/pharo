@@ -23,6 +23,12 @@ doPrimitive: primitiveIndex method: meth receiver: aReceiver args: arguments
 			[^aReceiver simulateValueWithArguments: arguments caller: self].
 		 primitiveIndex = 206 ifTrue:						"BlockClosure>>valueWithArguments:"
 			[^aReceiver simulateValueWithArguments: arguments first caller: self]].
+	
+	((primitiveIndex between: 207 and: 209) "FullBlockClosure primitives"
+	  and: [(self objectClass: aReceiver) includesBehavior: FullBlockClosure]) ifTrue: 
+		[^primitiveIndex = 208 
+			ifTrue: [aReceiver simulateValueWithArguments: arguments first caller: self]
+			ifFalse: [aReceiver simulateValueWithArguments: arguments caller: self]].
 
 	primitiveIndex = 83 ifTrue: "afr 9/11/1998 19:50" "Object>>perform:[with:...]"
 		[^self send: arguments first to: aReceiver with: arguments allButFirst super: false].

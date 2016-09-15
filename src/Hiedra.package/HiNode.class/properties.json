@@ -1,0 +1,16 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 3/30/2016 23:18",
+	"instvars" : [
+		"value",
+		"columnIndex",
+		"rowIndex" ],
+	"name" : "HiNode",
+	"pools" : [
+		 ],
+	"super" : "HiRenderingElement",
+	"type" : "normal" }

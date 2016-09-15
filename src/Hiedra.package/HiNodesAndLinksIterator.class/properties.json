@@ -1,0 +1,17 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"alreadyIteratedItems",
+		"linkBuilders",
+		"nodeByValue",
+		"values" ],
+	"name" : "HiNodesAndLinksIterator",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,16 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"checkpoints",
+		"linkBuilder",
+		"rulerBuilder" ],
+	"name" : "HiLinkRenderer",
+	"pools" : [
+		 ],
+	"super" : "HiRenderer",
+	"type" : "normal" }

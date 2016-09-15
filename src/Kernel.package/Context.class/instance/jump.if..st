@@ -7,8 +7,8 @@ jump: distance if: condition
 	bool := self pop.
 	(bool == true or: [bool == false]) ifFalse: [
 		^self
-			send: #mustBeBooleanIn:
+			send: #mustBeBoolean
 			to: bool
-			with: {self}
+			with: {}
 			super: false].
 	(bool eqv: condition) ifTrue: [self jump: distance]

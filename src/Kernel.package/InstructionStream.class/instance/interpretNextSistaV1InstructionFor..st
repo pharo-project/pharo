@@ -97,7 +97,8 @@ interpretNextSistaV1InstructionFor: client
 		 offset < 8 ifTrue:
 		 	[^client popIntoTemporaryVariable: offset].
 		 offset = 8 ifTrue: [ ^ client doPop ].
-		 ^self unusedBytecode: client at: savedPC].
+		 offset = 9 ifTrue: [ ^ client trap ].
+		^self unusedBytecode: client at: savedPC].
 	"2 byte and 3 byte codes"
 	byte < 248 ifTrue:
 		[^self interpretNext2ByteSistaV1Instruction: byte for: client extA: extA extB: extB startPC: savedPC].

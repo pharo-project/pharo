@@ -1,0 +1,3 @@
+accessing
+preferredWidth
+	^ rulerForm width

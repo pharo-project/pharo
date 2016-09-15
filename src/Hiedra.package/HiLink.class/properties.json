@@ -1,0 +1,17 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 3/18/2016 21:16",
+	"instvars" : [
+		"linkBuilder",
+		"origin",
+		"target",
+		"checkpoints" ],
+	"name" : "HiLink",
+	"pools" : [
+		 ],
+	"super" : "HiRenderingElement",
+	"type" : "normal" }

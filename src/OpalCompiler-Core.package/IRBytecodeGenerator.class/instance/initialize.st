@@ -8,6 +8,7 @@ initialize
 	
 	primNumber := 0.
 	
+	inBlock := false.
 	literals := OCLiteralList new.
 	"The following dicts are keyed by sequence id given by client in label: (and gotos)."
 	seqOrder := IdentityDictionary new.  "seqId -> seq order num"

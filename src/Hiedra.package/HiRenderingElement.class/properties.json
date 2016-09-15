@@ -1,0 +1,14 @@
+{
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 3/18/2016 21:21",
+	"instvars" : [
+		 ],
+	"name" : "HiRenderingElement",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

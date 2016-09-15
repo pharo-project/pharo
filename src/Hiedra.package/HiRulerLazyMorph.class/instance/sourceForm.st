@@ -1,0 +1,3 @@
+accessing
+sourceForm
+	^ model rulerForm

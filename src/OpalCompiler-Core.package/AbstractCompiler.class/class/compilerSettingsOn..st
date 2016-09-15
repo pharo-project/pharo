@@ -17,4 +17,8 @@ compilerSettingsOn: aBuilder
 						label: 'Bytecode Backend';
 						domainValues:
 								{#V3PlusClosures -> OpalEncoderForV3PlusClosures.
-								#SistaV1 -> OpalEncoderForSistaV1 }]
+								#SistaV1 -> OpalEncoderForSistaV1 }.
+					(aBuilder setting: #usesFullBlockClosure)
+						target: CompilationContext;
+						label: 'FullBlockClosure';
+						default: CompilationContext usesFullBlockClosure.]

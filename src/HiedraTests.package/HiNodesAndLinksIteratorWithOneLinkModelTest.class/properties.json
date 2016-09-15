@@ -1,0 +1,20 @@
+{
+	"category" : "HiedraTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"a",
+		"b",
+		"c",
+		"d",
+		"expectedArray",
+		"reversedNodes",
+		"linkBuilder" ],
+	"name" : "HiNodesAndLinksIteratorWithOneLinkModelTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

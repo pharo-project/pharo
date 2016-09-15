@@ -1,0 +1,3 @@
+additions
+sourceNode
+	^ self sourceNodeInOuter

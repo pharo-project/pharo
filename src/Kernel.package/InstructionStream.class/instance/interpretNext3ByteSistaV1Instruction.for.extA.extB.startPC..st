@@ -25,5 +25,14 @@ interpretNext3ByteSistaV1Instruction: bytecode for: client extA: extA extB: extB
 	bytecode = 253 ifTrue:
 		[^client popIntoRemoteTemp: byte2 inVectorAt: byte3].
 	"249		11111001 	xxxxxxxx	syyyyyyy	Reserved for Push Float"
-	"254-255	1111111 i	xxxxxxxx	yyyyyyyy	UNASSIGNED"
+	bytecode = 254 ifTrue: 
+		[^client 
+			jumpOrPopIfNotInstanceOf: (method literalAt: (extA bitShift: 8) + byte2 + 1) 
+			distance: ((extB bitShift: 8) + byte3) ].
+	bytecode = 249 ifTrue: 
+		[^client 
+			pushFullClosure: (method literalAt: (extA bitShift: 8) + byte2 + 1) 
+			numCopied: (byte3 bitAnd: 16r3F) 
+			receiverOnStack: (byte3 bitAt: 7) = 1
+			ignoreOuterContext: (byte3 bitAt: 8) = 1 ].
 	^self unusedBytecode: client at: startPC

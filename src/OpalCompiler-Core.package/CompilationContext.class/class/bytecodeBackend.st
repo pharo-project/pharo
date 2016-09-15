@@ -1,3 +1,3 @@
 accessing
 bytecodeBackend
-	^ BytecodeBackend ifNil: [ self initialize ]
+	^ BytecodeBackend ifNil: [ self initialize. BytecodeBackend ]
