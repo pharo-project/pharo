@@ -1,12 +1,16 @@
 changing suspended state
 stepToHome: aContext 
-	"Resume self until the home of top context is aContext.  Top context may be a block context."
-
-	| home ctxt |
-	home := aContext home.
-	[	ctxt := self step.
-		home == ctxt home.
-	] whileFalse: [
-		home isDead ifTrue: [^ self suspendedContext].
-	].
-	^ self suspendedContext
+	| ctxt pair error |
+	ctxt := suspendedContext.
+	suspendedContext := nil.
+	pair := Processor activeProcess
+				evaluate: [ctxt stepToHome: aContext]
+				onBehalfOf: self.
+	suspendedContext := pair first.
+	error := pair second.
+	"error class = Halt ifTrue: [ 
+		aContext methodNode 
+			pragmaNamed: #debuggerCompleteToSender 
+			ifPresent: [ ^ self completeTo: aContext sender ] ]."
+	error ifNotNil: [^ suspendedContext := error signalerContext].
+	^ suspendedContext
