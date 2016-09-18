@@ -1,3 +1,3 @@
 api
 icon
-	^ Smalltalk ui icons iconNamed: #dirtyPackageIcon
+	^ self iconNamed: #dirtyPackageIcon

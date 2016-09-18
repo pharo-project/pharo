@@ -6,7 +6,7 @@ actions
 	actions := OrderedCollection new: 3.
 
 	actions add: (RePropertyAction new
-			icon: (Smalltalk ui icons iconNamed: #smallQuestionIcon);
+			icon: (self iconNamed: #smallQuestionIcon);
 			description: 'View rationale behind the rule';
 			action: [ :crit |
 				crit popDescriptionUp.
@@ -17,7 +17,7 @@ actions
 	
 	self providesChange ifTrue: [ 
 		actions add: (RePropertyAction new
-			icon: (Smalltalk ui icons iconNamed: #repairIcon);
+			icon: (self iconNamed: #repairIcon);
 			description: 'Automatically resolve the issue';
 			action: [ :crit |
 				| changesBrowser |
@@ -50,7 +50,7 @@ actions
 			yourself) ].
 	
 	actions add: (RePropertyAction new
-			icon: (Smalltalk ui icons iconNamed: #smallCancelIcon);
+			icon: (self iconNamed: #smallCancelIcon);
 			description: 'Ban this rule';
 			action: [ :crit | crit guidedBan ];
 			yourself).

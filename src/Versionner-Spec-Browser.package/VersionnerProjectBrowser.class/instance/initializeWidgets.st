@@ -12,7 +12,7 @@ initializeWidgets
 		acceptOnCR: true;
 		ghostText: 'none'.
 	repositoryAddButton := (self instantiate: ButtonModel)
-		icon: (Smalltalk ui icons iconNamed: #monticelloPackageIcon);
+		icon: (self iconNamed: #monticelloPackageIcon);
 		help: 'Add a new repository to this project';
 		yourself.
 	

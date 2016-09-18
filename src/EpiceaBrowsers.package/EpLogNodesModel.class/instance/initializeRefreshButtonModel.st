@@ -3,5 +3,5 @@ initializeRefreshButtonModel
 
 	refreshButtonModel 
 		help: 'Refresh';
-		icon: (Smalltalk ui icons iconNamed: #smallUpdate);
+		icon: (self iconNamed: #smallUpdate);
 		action: [ self refresh ]

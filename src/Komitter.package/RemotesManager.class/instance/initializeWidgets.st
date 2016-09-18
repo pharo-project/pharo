@@ -12,16 +12,16 @@ initializeWidgets
 		iconBlock: [ :item | item icon ];
 		roots: self buildRoots.
 	addRemote
-		icon: (Smalltalk ui icons iconNamed: #remotesManagerAddRemote);
+		icon: (self iconNamed: #remotesManagerAddRemote);
 		action: [ self addRemote ];
 		help: 'Add a new remote'.
 	removeRemote
-		icon: (Smalltalk ui icons iconNamed: #remotesManagerRemoveRemote);
+		icon: (self iconNamed: #remotesManagerRemoveRemote);
 		action: [ self removeRemote ];
 		enabled: false;
 		help: 'Remote the selected remote'.
 	editRemote
-		icon: (Smalltalk ui icons iconNamed: #remotesManagerEditRemote);
+		icon: (self iconNamed: #remotesManagerEditRemote);
 		action: [ self editRemote ];
 		enabled: false;
 		help: 'Edit the selected remote'.

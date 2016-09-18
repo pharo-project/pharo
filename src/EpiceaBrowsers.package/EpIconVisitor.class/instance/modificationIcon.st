@@ -1,3 +1,3 @@
 private
 modificationIcon
-	^ Smalltalk ui icons iconNamed: #changeUpdateIcon
+	^ self iconNamed: #changeUpdateIcon

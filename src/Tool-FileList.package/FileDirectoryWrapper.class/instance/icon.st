@@ -6,4 +6,4 @@ icon
 		ifTrue: [ Smalltalk ui icons smallRemoteOpenIcon]
 		ifFalse: [Smalltalk ui icons smallOpenIcon]"
 
-	^ Smalltalk ui icons iconNamed: #smallOpenIcon
+	^ self iconNamed: #smallOpenIcon

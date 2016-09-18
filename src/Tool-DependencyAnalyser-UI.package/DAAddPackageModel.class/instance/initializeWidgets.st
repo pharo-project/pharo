@@ -8,5 +8,5 @@ initializeWidgets
 	buttonAddPackage := self newButton
 		help: 'Add these packages to the current analysis';
 		label: 'Add packages';
-		icon: (Smalltalk ui icons iconNamed: #addIcon);
+		icon: (self iconNamed: #addIcon);
 		yourself.

@@ -13,7 +13,7 @@ initializeButtons
 	buttonRemovePackage := self newButton
 		help: 'Remove package to the current analysis';
 		label: 'Remove packages';
-		icon: (Smalltalk ui icons iconNamed: #removeIcon).
+		icon: (self iconNamed: #removeIcon).
 	buttonGenerateGraphViz := self newButton
 		help: 'Open the graph in world';
 		label: 'Open the graph'.

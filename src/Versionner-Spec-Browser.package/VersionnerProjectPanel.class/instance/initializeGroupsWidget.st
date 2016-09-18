@@ -18,12 +18,12 @@ initializeGroupsWidget
 	
 	addGroupButton := (self instantiate: ButtonModel)
 		label: nil;
-		icon: (Smalltalk ui icons iconNamed: #addIcon);
+		icon: (self iconNamed: #addIcon);
 		enabled: false;
 		help: 'Add a new group to this project'.
 	
 	removeGroupButton  := (self instantiate: ButtonModel)
 		label: nil;
-		icon: (Smalltalk ui icons iconNamed: #deleteIcon);
+		icon: (self iconNamed: #deleteIcon);
 		enabled: false;
 		help: 'Remove a group from this project'.

@@ -17,16 +17,16 @@ initializeProjectsWidget
 		text  asStringMorph ]."
 	addProjectButton := (self instantiate: ButtonModel)
 		label: nil;
-		icon: (Smalltalk ui icons iconNamed: #addIcon);
+		icon: (self iconNamed: #addIcon);
 		enabled: false;
 		help: 'Add a new dependent project to this project'.
 	removeProjectButton := (self instantiate: ButtonModel)
 		label: nil;
-		icon: (Smalltalk ui icons iconNamed: #deleteIcon);
+		icon: (self iconNamed: #deleteIcon);
 		enabled: false;
 		help: 'Remove a dependent project from this project'.
 	editProjectButton := self newButton
 		label: nil;
-		icon: (Smalltalk ui icons iconNamed: #editIcon);
+		icon: (self iconNamed: #editIcon);
 		enabled: false;
 		help: 'Edit the dependent project loads list'

@@ -1,3 +1,3 @@
 accessing
 icon
-	^  Smalltalk ui icons iconNamed: #groupIcon
+	^ self iconNamed: #groupIcon

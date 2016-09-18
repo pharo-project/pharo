@@ -1,3 +1,3 @@
 *Komitter-UI
 icon
-	^ Smalltalk ui icons iconNamed: #komitterSmalltalkhubRemote
+	^ self iconNamed: #komitterSmalltalkhubRemote

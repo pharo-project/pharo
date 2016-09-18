@@ -1,3 +1,3 @@
 ui
 iconForVersion: aMBVersionInfo 
-	^ Smalltalk ui icons iconNamed: #databaseIcon
+	^ self iconNamed: #databaseIcon

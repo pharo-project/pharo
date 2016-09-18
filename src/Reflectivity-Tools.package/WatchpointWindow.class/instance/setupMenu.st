@@ -9,21 +9,21 @@ setupMenu
 					item
 						name: nil;
 						description: 'Show More Items';
-						icon: (Smalltalk ui icons iconNamed: #up);
+						icon: (self iconNamed: #up);
 						action: [ self moreItems ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: nil;
 						description: 'Show Less Items';
-						icon: (Smalltalk ui icons iconNamed: #down);
+						icon: (self iconNamed: #down);
 						action: [ self lessItems ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: nil;
 						description: 'Remove All Items';
-						icon: (Smalltalk ui icons iconNamed: #smallDelete);
+						icon: (self iconNamed: #smallDelete);
 						action: [ self watchpoint deleteHistory ] ] ].
 	menu
 		addGroup: [ :group | 
@@ -32,14 +32,14 @@ setupMenu
 					item
 						name: nil;
 						description: 'Stop Monitoring';
-						icon: (Smalltalk ui icons iconNamed: #stop);
+						icon: (self iconNamed: #stop);
 						action: [ self watchpoint stop ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: nil;
 						description: 'Start Monitoring';
-						icon: (Smalltalk ui icons iconNamed: #smallPrintIt);
+						icon: (self iconNamed: #smallPrintIt);
 						action: [ self watchpoint start ] ] ].
 	menu
 		addGroup: [ :group | 
@@ -48,14 +48,14 @@ setupMenu
 					item
 						name: nil;
 						description: 'Inspect ...';
-						icon: (Smalltalk ui icons iconNamed: #smallInspectIt);
+						icon: (self iconNamed: #smallInspectIt);
 						action: [ self watchpoint inspect ] ].
 			group
 				addItem: [ :item | 
 					item
 						name: nil;
 						description: 'Browse ...';
-						icon: (Smalltalk ui icons iconNamed: #nautilus);
+						icon: (self iconNamed: #nautilus);
 						action:
 								[ Smalltalk tools browser openOnMethod: self watchpoint compiledMethod ] ].
 			group
@@ -63,5 +63,5 @@ setupMenu
 					item
 						name: nil;
 						description: 'Remove !';
-						icon: (Smalltalk ui icons iconNamed: #delete);
+						icon: (self iconNamed: #delete);
 						action: [ self watchpoint uninstall ] ] ]

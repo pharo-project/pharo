@@ -1,3 +1,3 @@
 accessing
 icon
-	^ Smalltalk ui icons iconNamed: #smallLanguageIcon
+	^ self iconNamed: #smallLanguageIcon

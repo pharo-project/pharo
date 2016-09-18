@@ -3,7 +3,7 @@ initializePositiveFeedback
 	
 	^ positive := IconicButton new
 				target: self;
-				labelGraphic: (Smalltalk ui icons iconNamed: #thumbsUpIcon);
+				labelGraphic: (self iconNamed: #thumbsUpIcon);
 				actionSelector: #fireDialogWithFeedback:;
 				arguments: { true };
 				color: Color transparent;

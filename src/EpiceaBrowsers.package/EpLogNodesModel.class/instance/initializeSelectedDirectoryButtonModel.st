@@ -3,5 +3,5 @@ initializeSelectedDirectoryButtonModel
 	
 	selectDirectoryButtonModel 
 		help: 'Select directory';
-		icon: (Smalltalk ui icons iconNamed: #openIcon);
+		icon: (self iconNamed: #openIcon);
 		action: [ self selectDirectory ]

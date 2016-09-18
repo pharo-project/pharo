@@ -9,25 +9,25 @@ filtersSubMenu
 		aGroup addItem: [ :anItem |
 			anItem 
 				name: 'remove all filters';
-				icon: (Smalltalk ui icons iconNamed: #smallDelete);
+				icon: (self iconNamed: #smallDelete);
 				action: [ self removeAllFilters ] ].
 
 		aGroup addItem: [ :anItem |
 			anItem 
 				name: 'done today';
-				icon: (Smalltalk ui icons iconNamed: #calendar);
+				icon: (self iconNamed: #calendar);
 				action: [ self filterToday ] ].
 
 		aGroup addItem: [ :anItem |
 			anItem 
 				name: 'done earlier';
-				icon: (Smalltalk ui icons iconNamed: #calendar);
+				icon: (self iconNamed: #calendar);
 				action: [ self filterBefore ] ].
 
 		aGroup addItem: [ :anItem |
 			anItem 
 				name: 'done afterwards';
-				icon: (Smalltalk ui icons iconNamed: #calendar);
+				icon: (self iconNamed: #calendar);
 				action: [ self filterAfter ] ].
 
 		
@@ -35,7 +35,7 @@ filtersSubMenu
 			anItem 
 				name: 'is change to this method';
 				description: 'Show only additions, modifications or removals of this method.';
-				icon: (Smalltalk ui icons iconNamed: #smallFind);
+				icon: (self iconNamed: #smallFind);
 				shortcut: $f command, $m command;
 				action: [ self filterAllChangesToSelection ] ].
 				
@@ -43,7 +43,7 @@ filtersSubMenu
 			anItem 
 				name: 'is change to this package';
 				description: 'Show only additions, modifications or removals of this package.';
-				icon: (Smalltalk ui icons iconNamed: #smallFind);
+				icon: (self iconNamed: #smallFind);
 				shortcut: $f command, $p command;
 				action: [ self filterAllChangesToSelectionPackage ]
 			].
@@ -52,7 +52,7 @@ filtersSubMenu
 			aGroup addItem: [ :anItem |
 				anItem 
 					name: aFilter title;
-					icon: (Smalltalk ui icons iconNamed: #smallFind);
+					icon: (self iconNamed: #smallFind);
 					description: aFilter title;
 					action: [ self filterWith: aFilter ] ] ] ].
 	

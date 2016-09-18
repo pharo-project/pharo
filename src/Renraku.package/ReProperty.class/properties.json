@@ -10,5 +10,5 @@
 	"name" : "ReProperty",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

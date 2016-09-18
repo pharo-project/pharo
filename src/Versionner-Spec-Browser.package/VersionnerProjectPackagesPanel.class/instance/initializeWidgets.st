@@ -23,24 +23,24 @@ initializeWidgets
 	
 	addPackageButton := self instantiate: ButtonModel .
 	addPackageButton
-		icon: (Smalltalk ui icons iconNamed: #packageAddIcon);
+		icon: (self iconNamed: #packageAddIcon);
 		enabled: false;
 		help: 'Add a package to this project'.
 	
 	removePackageButton  := self instantiate: ButtonModel .
 	removePackageButton 
-		icon: (Smalltalk ui icons iconNamed: #packageDeleteIcon);
+		icon: (self iconNamed: #packageDeleteIcon);
 		enabled: false;
 		help: 'Remove a package from this project'.
 	
 	editPackageButton  := self instantiate: ButtonModel .
 	editPackageButton
-		icon: (Smalltalk ui icons iconNamed: #editIcon);
+		icon: (self iconNamed: #editIcon);
 		enabled: false;
 		help: 'Edit package requirements'.
 	
 	savePackageButton  := self instantiate: ButtonModel .
 	savePackageButton
-		icon: (Smalltalk ui icons iconNamed: #smallSaveIcon);
+		icon: (self iconNamed: #smallSaveIcon);
 		enabled: false;
 		help: 'Save the selected package'.

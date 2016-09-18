@@ -20,5 +20,5 @@ refresh
 	enableMonitorButtonModel
 		state: self monitor isEnabled;
 		label: 'Monitor ', theState;
-		icon: (Smalltalk ui icons iconNamed: theIconSelector).
+		icon: (self iconNamed: theIconSelector).
 		

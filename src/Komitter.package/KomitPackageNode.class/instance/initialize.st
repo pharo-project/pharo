@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self icon: (Smalltalk ui icons iconNamed: #dirtyPackageIcon).
+	self icon: (self iconNamed: #dirtyPackageIcon).
 	self
 		whenSelectedChanged: [ :aBoolean | 
 			self
