@@ -1,3 +1,3 @@
 accessing
 defaultTimeLimit
-	^10 minutes
+	^self class defaultTimeLimit

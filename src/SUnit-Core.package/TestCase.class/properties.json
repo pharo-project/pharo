@@ -4,6 +4,7 @@
 		"history" ],
 	"classvars" : [
 		"Announcers",
+		"DefaultTimeLimit",
 		"HistoryAnnouncer" ],
 	"commentStamp" : "nfr 1/3/2010 17:56",
 	"instvars" : [
