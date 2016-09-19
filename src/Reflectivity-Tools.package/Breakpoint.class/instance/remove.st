@@ -1,5 +1,4 @@
 install
-remove	 
-	link uninstall.
+remove
 	AllBreakpoints remove: self.
-	
+	link uninstall

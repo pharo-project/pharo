@@ -1,3 +1,3 @@
 defaults
 iconBlock: aNode
-	^[ :seg :event | "ignore for now"]
+	^[ :seg | ExecutionCounter removeFrom: aNode. seg delete]
