@@ -1,3 +1,3 @@
 private
 selectorTable
-	^SelectorTable ifNil: [self initSelectorTable. SelectorTable]
+	^SelectorTable ifNil: [self initSelectorTable]

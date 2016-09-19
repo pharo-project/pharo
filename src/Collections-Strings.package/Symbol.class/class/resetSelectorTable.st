@@ -1,3 +1,0 @@
-private
-resetSelectorTable
-	SelectorTable := nil.
