@@ -13,4 +13,7 @@ themeChanged
 	self setStripeColorsFrom: self paneColor.
 	(self isCollapsed not or: [self isTaskbarPresent]) ifTrue: [
 		self addGripsIfWanted].
+	
+	self isEmbedded ifTrue: [ self borderWidth: 0 ].
+	
 	super themeChanged
