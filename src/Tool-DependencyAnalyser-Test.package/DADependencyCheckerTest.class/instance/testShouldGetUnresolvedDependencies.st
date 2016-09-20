@@ -6,9 +6,7 @@ testShouldGetUnresolvedDependencies
 	
 	self 	
 		assert: result size
-		equals: 2.
+		equals: 1.
 	self 
 		assertCollection: result
-		equals: { 
-			#asClass->#('System-Support') asSet .
-			#collect:as:->#(#'GT-Spotter' #'Collections-Abstract') asSet } asDictionary
+		equals: { #collect:as: -> #(#'GT-Spotter' #'Collections-Abstract') asSet } asDictionary
