@@ -40,7 +40,7 @@ populateMenu: aMenu
 					anItem
 						name: 'File Out';
 						description: 'Write selected entries to an Ombu file';
-						icon: (self icons iconNamed: #smallSaveAsIcon);
+						icon: (self iconNamed: #smallSaveAsIcon);
 						action: [ self fileOutSelection ] ] ].
 	aMenu
 		addGroup: [ :aGroup | 

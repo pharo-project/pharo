@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "NicolaiHess 8/22/2016 15:46",
 	"instvars" : [
-		"source" ],
+		 ],
 	"name" : "RBNumberLiteralToken",
 	"pools" : [
 		 ],

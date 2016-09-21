@@ -1,3 +1,3 @@
 accessing
 mainIcon
-	^ Smalltalk ui icons iconNamed: #recoverLostChangesIcon
+	^ self iconNamed: #recoverLostChangesIcon

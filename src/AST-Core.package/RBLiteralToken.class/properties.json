@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "md 8/9/2005 14:52",
 	"instvars" : [
-		"stopPosition" ],
+		"stopPosition",
+		"source" ],
 	"name" : "RBLiteralToken",
 	"pools" : [
 		 ],

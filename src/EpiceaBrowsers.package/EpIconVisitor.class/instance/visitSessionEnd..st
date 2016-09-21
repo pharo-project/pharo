@@ -1,3 +1,3 @@
 visitor
 visitSessionEnd: anEvent
-	^ Smalltalk ui icons iconNamed: #smallQuitIcon
+	^ self iconNamed: #smallQuitIcon

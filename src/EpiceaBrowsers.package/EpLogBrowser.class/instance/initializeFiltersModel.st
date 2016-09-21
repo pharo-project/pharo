@@ -1,7 +1,7 @@
 initialization
 initializeFiltersModel
 	filtersModel
-		iconBlock: [ Smalltalk ui icons iconNamed: #smallFind ];
+		iconBlock: [ self iconNamed: #smallFind ];
 		displayBlock: [ :aFilter | aFilter title ];
 		menu: [ :aMenu | 
 			aMenu
@@ -11,7 +11,7 @@ initializeFiltersModel
 							anItem
 								name: 'Remove';
 								description: 'Remove this filter';
-								icon: (Smalltalk ui icons iconNamed: #smallDeleteIcon);
+								icon: (self iconNamed: #smallDeleteIcon);
 								shortcut: $x command;
 								action: [ self removeFilter: filtersModel selectedItem content.
 									self refresh ] ] ] ]

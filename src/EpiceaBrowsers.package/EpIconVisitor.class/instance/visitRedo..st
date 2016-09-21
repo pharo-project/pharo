@@ -1,3 +1,3 @@
 visitor
 visitRedo: aRedoEvent
-	^ Smalltalk ui icons iconNamed: #smallRedoIcon
+	^ self iconNamed: #smallRedoIcon
