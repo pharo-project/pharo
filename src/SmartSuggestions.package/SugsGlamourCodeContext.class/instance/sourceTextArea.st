@@ -1,3 +1,3 @@
 refactoring
-sourceTextArea
-	^ model dependents ifEmpty: [ nil ] ifNotEmpty: [ model dependents at: 1  ]
+sourceTextArea 
+	^ model dependents ifEmpty: [ RubScrolledTextModel new interactionModel: model  ] ifNotEmpty: [ model dependents at: 1  ]
