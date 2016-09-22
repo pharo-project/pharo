@@ -1,4 +1,4 @@
-visiting
+attributes
 addAttributes: style forNode: node
 	| start selection |
 	start := text startPosition moveRight: node start - 1 .

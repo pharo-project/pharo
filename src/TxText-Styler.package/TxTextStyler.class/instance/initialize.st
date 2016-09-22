@@ -1,4 +1,4 @@
 initialization
 initialize
 
-	self initializeStylesFor: SHTextStylerST80 solarizedStyleTable 
+	self initializeStylesFor: Smalltalk ui theme shStyleTable

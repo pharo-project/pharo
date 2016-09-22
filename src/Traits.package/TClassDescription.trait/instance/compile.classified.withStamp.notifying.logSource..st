@@ -6,7 +6,6 @@ compile: text classified: category withStamp: changeStamp notifying: requestor l
 	method := self compiler
 		source: text;
 		requestor: requestor;
-		category: category;
 		failBlock:  [ ^nil ];
 		compile.
 	

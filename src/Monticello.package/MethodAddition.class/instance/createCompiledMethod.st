@@ -3,7 +3,6 @@ createCompiledMethod
 	compiledMethod := myClass compiler 
 		source: text asString;
 		requestor: requestor;
-		category: category;
 		failBlock: [ ^nil ];
 		compile.
 	selector := compiledMethod selector.

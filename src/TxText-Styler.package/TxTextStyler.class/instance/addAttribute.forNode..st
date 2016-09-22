@@ -1,4 +1,4 @@
-visiting
+attributes
 addAttribute: attr forNode: node
 	| start selection startIndex nodeSize |
 	startIndex := node start - 1.

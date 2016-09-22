@@ -1,3 +1,4 @@
-as yet unclassified
+initialization
 initialize
-	color := Color black.
+	super initialize.
+	color := Smalltalk ui theme textColor.

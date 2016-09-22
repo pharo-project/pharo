@@ -3,7 +3,8 @@
 	"classinstvars" : [
 		"groups",
 		"methodGroup",
-		"useOldStyleKeys" ],
+		"useOldStyleKeys",
+		"showSourceCodeAnnotation" ],
 	"classvars" : [
 		"MethodClassifierClass",
 		"PluginClasses",

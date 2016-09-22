@@ -1,4 +1,4 @@
-visiting
+attributes
 addAttributes: style startPosition: startPosition stopPosition: stopPosition
 	| start selection |
 	start := text startPosition moveRight: startPosition - 1.

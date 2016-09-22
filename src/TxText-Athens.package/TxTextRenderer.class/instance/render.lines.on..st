@@ -1,4 +1,4 @@
-as yet unclassified
+rendering
 render: aText lines: lines on: aCanvas
 
 	text := aText.

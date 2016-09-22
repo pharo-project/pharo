@@ -9,7 +9,6 @@
 	"instvars" : [
 		"astTranslatorClass",
 		"bytecodeGeneratorClass",
-		"category",
 		"class",
 		"compiledMethodTrailer",
 		"encoderClass",

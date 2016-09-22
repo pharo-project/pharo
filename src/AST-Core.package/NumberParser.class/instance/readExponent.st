@@ -24,4 +24,10 @@ readExponent
 					^ false].
 	eneg
 		ifTrue: [exponent := exponent negated].
+	
+	exponent abs > 1000 ifTrue:[
+		"Number literals should have a maximun of 1000 and a minumum of -1000 as exponent, in exponential notation"
+			self fail
+		].
+	
 	^ true

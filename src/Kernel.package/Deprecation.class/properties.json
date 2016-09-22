@@ -12,7 +12,8 @@
 		"explanationString",
 		"deprecationDate",
 		"versionString",
-		"rule" ],
+		"rule",
+		"sendingMethodName" ],
 	"name" : "Deprecation",
 	"pools" : [
 		 ],

@@ -4,15 +4,13 @@
 		 ],
 	"classvars" : [
 		"BytecodeBackend",
-		"UsesFullBlockClosure",
-		"WarningAllowed" ],
+		"UsesFullBlockClosure" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		"requestor",
 		"failBlock",
 		"noPattern",
 		"class",
-		"category",
 		"logged",
 		"interactive",
 		"options",

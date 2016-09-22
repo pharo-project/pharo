@@ -1,3 +1,3 @@
-rendering
+accessing
 setColor: aColor 
 	color := aColor.

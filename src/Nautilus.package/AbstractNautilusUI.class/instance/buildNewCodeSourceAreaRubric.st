@@ -2,10 +2,13 @@ build ui text
 buildNewCodeSourceAreaRubric
 	| scrolledText |
 	scrolledText := self sourceTextModel newScrolledText
-		withSourceCodeAnnotation;
 		beForSmalltalkCode;
 		beWrapped;
 		yourself.
+		
+	Nautilus showSourceCodeAnnotation ifTrue: [
+		scrolledText withSourceCodeAnnotation].
+	
 	self updateSourceCodeAreaWith: self sourceCode.
 	scrolledText textArea announcer when: RubSelectionChanged send: #whenTextAreaSelectionChanged: to: self.
 	self sourceTextModel announcer 

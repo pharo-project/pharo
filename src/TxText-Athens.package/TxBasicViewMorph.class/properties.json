@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"backgroundColor" ],
 	"name" : "TxBasicViewMorph",
 	"pools" : [
 		 ],

@@ -1,5 +1,9 @@
 visiting
-visitAssignmentNode: node 
+visitAssignmentNode: anAssignmentNode 
 
-	self visitNode: node variable.
-	self visitNode: node value
+	self visitNode: anAssignmentNode variable.
+	self visitNode: anAssignmentNode value.
+	
+	anAssignmentNode variable binding isWritable ifFalse: [ 
+		self addStyle: #invalid forNode: anAssignmentNode 
+	]

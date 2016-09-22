@@ -1,0 +1,14 @@
+{
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AliakseiSyrel 9/7/2015 19:23",
+	"instvars" : [
+		 ],
+	"name" : "TxNewTextAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "TxTextEditorAnnouncement",
+	"type" : "normal" }

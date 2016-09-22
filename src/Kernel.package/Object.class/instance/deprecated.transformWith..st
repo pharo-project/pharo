@@ -4,6 +4,7 @@ deprecated: anExplanationString transformWith: aRule
 	
 	Deprecation new
 		method: thisContext sender method;
+		sendingMethodName: thisContext sender sender method printString;
 		explanation: anExplanationString;
 		rule: aRule;
 		transform.

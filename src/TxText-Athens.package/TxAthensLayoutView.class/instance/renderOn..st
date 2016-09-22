@@ -8,7 +8,6 @@ renderOn: canvas
 	| renderer |
 
 	canvas pathTransform restoreAfter: [
-
 		canvas pathTransform translateBy: offset negated.
 			
 		renderer := TxTextRenderer new.

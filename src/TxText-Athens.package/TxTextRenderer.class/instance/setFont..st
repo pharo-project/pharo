@@ -1,3 +1,3 @@
-rendering
+accessing
 setFont: aFont 
 	font := aFont

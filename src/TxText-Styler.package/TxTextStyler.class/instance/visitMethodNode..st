@@ -11,12 +11,17 @@ visitMethodNode: aMethodNode
 			addStyle: #patternArg
 			forNode: argument ].
 		
-	aMethodNode selectorParts do: [ :selectorPart |
-		self 
-			addStyle: #patternKeyword
-			forNode: selectorPart ].
+		aMethodNode selectorParts
+		with: aMethodNode keywordsPositions
+		do: [ :keyword :position | 
+			self
+				addStyle: #patternKeyword
+				startPosition: position
+				stopPosition: position + keyword size - 1 
+		].
 	
-	aMethodNode pragmas
-		do: [ :each | self visitNode: each ].
+	aMethodNode pragmas do: [ :each | 
+		self visitNode: each 
+	].
 		
 	self visitNode: aMethodNode body
