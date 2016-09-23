@@ -3,11 +3,10 @@ compose
 	self title: self defaultPlaygroundTitle.
 	self act: [:b | b update] icon: GLMUIThemeExtraIcons glamorousRefresh entitled: 'Update'.
 	self act: [:b | 
-		| tree item |
-		tree := (HelpBrowser open instVarNamed: #treeMorph).
-		item := tree allItems detect: [:each | 
-			each complexContents item key = GTPlaygroundHelp key].
-		tree selection: item ] 
+		HelpBrowser open selectTopicSatisfying: [:each |
+			each owner notNil and:  [
+			(each owner key = GTPlaygroundHelp key) and: [
+				each title = 'Overview' ] ] ] ] 
 		icon: GLMUIThemeExtraIcons glamorousHelp 
 		entitled: 'Help'.
 	self custom:
