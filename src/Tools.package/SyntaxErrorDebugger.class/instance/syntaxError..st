@@ -10,5 +10,3 @@ syntaxError: aSyntaxError
 		location: aSyntaxError location
 		debugSession: (Processor activeProcess newDebugSessionNamed: 'Stack of the Syntax Error' startedAt: aSyntaxError signalerContext)
 		doitFlag: aSyntaxError doitFlag.
-		
-	self category: aSyntaxError category.

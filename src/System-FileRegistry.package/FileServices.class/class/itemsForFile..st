@@ -5,11 +5,14 @@ itemsForFile: fullName
 	| services suffix |
 	suffix := self suffixOf: fullName.
 	services := OrderedCollection new.
-	(PragmaCollector filter: [ :pragma | pragma keyword = 'fileService' ]) reset
+	(PragmaCollector filter: [ :pragma | pragma keyword = 'fileService' ])
+		reset
 		do: [ :each | 
 			services
 				addAll:
 					(each methodClass soleInstance
-						perform: each selector
-						withArguments: {fullName. suffix}) ].
+						perform: each methodSelector
+						withArguments:
+							{fullName.
+							suffix}) ].
 	^ services

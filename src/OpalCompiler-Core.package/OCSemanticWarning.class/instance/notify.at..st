@@ -5,7 +5,6 @@ notify: aString at: location
 	^self requestor 
 		ifNil: [SyntaxErrorNotification
 					inClass: self methodClass 
-					category: self methodClass category
 					withCode: self methodNode source
 					doitFlag: false
 					errorMessage: aString

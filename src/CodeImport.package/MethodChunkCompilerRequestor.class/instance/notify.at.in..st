@@ -5,7 +5,6 @@ notify: message at: location in: code
 	"Should use the new OPalWarnings directly instead of recreating a SyntaxErrorNotification"
 	newSource := SyntaxErrorNotification 
 		inClass: STCommandLineHandler
-		category: nil 
 		withCode: code
 		doitFlag: false
 		errorMessage: message

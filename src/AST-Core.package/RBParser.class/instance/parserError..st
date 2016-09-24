@@ -10,7 +10,6 @@ parserError: aString
 	
 	newSource := SyntaxErrorNotification
 						inClass: Object
-						category: nil
 						withCode: source
 						doitFlag: false
 						errorMessage: errorMessage
