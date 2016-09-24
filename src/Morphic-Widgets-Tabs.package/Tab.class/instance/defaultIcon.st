@@ -1,3 +1,3 @@
 private-icons
 defaultIcon
-	^ Smalltalk ui icons iconNamed: #blankIcon
+	^ self iconNamed: #blankIcon

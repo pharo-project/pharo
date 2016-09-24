@@ -1,4 +1,4 @@
-tests - as class
+*ScriptingExtensions
 testAsClassIfPresent
 	
 	'String' asClassIfPresent: [ :class | 

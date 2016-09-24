@@ -8,7 +8,7 @@ newNewDirectoryButton
 		action: #newDirectory
 		arguments: nil
 		getEnabled: nil
-		labelForm: (Smalltalk ui icons iconNamed: #smallOpenIcon)
+		labelForm: (self iconNamed: #smallOpenIcon)
 		help:
 			'Press to create a new directory within the current directory'
 				translated

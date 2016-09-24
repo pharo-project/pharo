@@ -8,5 +8,5 @@ newDeleteButton
 		action: #deleteFileOrDirectory
 		arguments: nil
 		getEnabled: #hasSelectedFileOrDirectory
-		labelForm: (Smalltalk ui icons iconNamed: #smallDeleteIcon)
+		labelForm: (self iconNamed: #smallDeleteIcon)
 		help: 'Press to delete the selected file or directory' translated

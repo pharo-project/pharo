@@ -10,5 +10,5 @@
 	"name" : "RubLipsumBasicExample",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "Model",
 	"type" : "normal" }

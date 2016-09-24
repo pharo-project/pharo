@@ -5,7 +5,7 @@ pickColor
 	| p c h |
 	h := self activeHand.
 	h
-		showTemporaryCursor: (Smalltalk ui icons iconNamed: #eyedropperIcon)
+		showTemporaryCursor: (self iconNamed: #eyedropperIcon)
 		hotSpotOffset: 6 @ 31.
 	h
 		captureEventsUntil: [ :evt | 

@@ -1,3 +1,3 @@
 defaults
 iconFor: aNode
-	^self iconProvider iconNamed: #arrowUpIcon.
+	^ self iconNamed: #arrowUpIcon.

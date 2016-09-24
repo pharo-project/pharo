@@ -1,4 +1,4 @@
-tests - as class
+*ScriptingExtensions
 testAsClass
 	self 
 		assert: #Symbol asClass

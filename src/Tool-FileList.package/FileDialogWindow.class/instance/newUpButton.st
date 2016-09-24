@@ -8,5 +8,5 @@ newUpButton
 		action: #selectParentDirectory
 		arguments: nil
 		getEnabled: #hasParentDirectory
-		labelForm: (Smalltalk ui icons iconNamed: #smallUndoIcon)
+		labelForm: (self iconNamed: #smallUndoIcon)
 		help: 'Press to switch to the parent of the current directory' translated

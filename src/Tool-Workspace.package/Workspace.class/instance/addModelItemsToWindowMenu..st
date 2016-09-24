@@ -2,9 +2,9 @@ window menu
 addModelItemsToWindowMenu: aMenu
 	aMenu addLine.
 	aMenu add: 'Open...' target: self selector: #openMenuAction.
-	aMenu lastItem icon: (Smalltalk ui icons iconNamed: #smallOpenIcon).
+	aMenu lastItem icon: (self iconNamed: #smallOpenIcon).
 	aMenu add: 'Save as...' target: self selector: #saveAsMenuAction.
-	aMenu lastItem icon: (Smalltalk ui icons iconNamed: #smallSaveAsIcon).
+	aMenu lastItem icon: (self iconNamed: #smallSaveAsIcon).
 	aMenu addLine.
 	aMenu
 		add: 'Encoding'

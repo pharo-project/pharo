@@ -1,4 +1,4 @@
-tests - as class
+*ScriptingExtensions
 testAsClassIfPresent
 	
 	#Symbol asClassIfPresent: [ :class | 

@@ -2,4 +2,4 @@ visual properties
 icon
 	"Answer an icon for the receiver."
 
-	^ Smalltalk ui icons iconNamed: #infoIcon
+	^ self iconNamed: #infoIcon

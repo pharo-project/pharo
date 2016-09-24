@@ -8,5 +8,5 @@ newBoldButtonMorph
 		action: #toggleBold
 		arguments: nil
 		getEnabled: nil
-		labelForm: (Smalltalk ui icons iconNamed: #smallBoldIcon)
+		labelForm: (self iconNamed: #smallBoldIcon)
 		help: 'Toggle bold font' translated

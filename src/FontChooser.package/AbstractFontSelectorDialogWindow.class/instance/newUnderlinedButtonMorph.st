@@ -8,5 +8,5 @@ newUnderlinedButtonMorph
 		action: #toggleUnderlined
 		arguments: nil
 		getEnabled: nil
-		labelForm: (Smalltalk ui icons iconNamed: #smallUnderlineIcon)
+		labelForm: (self iconNamed: #smallUnderlineIcon)
 		help: 'Toggle underlined font' translated

@@ -1,7 +1,7 @@
 tests
 testCreateExistentCategoryFails
 	| categoryToAdd |
-	categoryToAdd := #TestCategory.
+	categoryToAdd := KMCategory named: #TestCategory.
 	
 	self assert: self categoryContainer categories size = 0.
 	self categoryContainer addCategory: categoryToAdd.

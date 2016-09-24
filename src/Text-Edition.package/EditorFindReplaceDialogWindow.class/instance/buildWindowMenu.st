@@ -13,5 +13,5 @@ buildWindowMenu
 	aMenu lastItem icon: self theme windowCloseForm.
 	aMenu addLine.
 	aMenu add: 'About' selector: #showAbout.
-	aMenu lastItem icon: (Smalltalk ui icons iconNamed: #smallHelpIcon).
+	aMenu lastItem icon: (self iconNamed: #smallHelpIcon).
 	^ aMenu
