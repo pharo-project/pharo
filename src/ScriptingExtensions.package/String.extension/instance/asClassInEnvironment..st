@@ -1,4 +1,4 @@
-*System-Support
+*ScriptingExtensions
 asClassInEnvironment: anEnvironment
 	"I return class named after myself from anEnvironment"
 	^ self 

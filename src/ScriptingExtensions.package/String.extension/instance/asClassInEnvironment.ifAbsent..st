@@ -1,4 +1,4 @@
-*System-Support
+*ScriptingExtensions
 asClassInEnvironment: anEnvironment ifAbsent: absentBlock
 	^  anEnvironment 
 			at: self asSymbol 
