@@ -1,24 +1,20 @@
 converting
-substrings: separators 
-	"Answer an array containing the substrings in the receiver separated 
-	by the elements of separators."
-	| result sourceStream substringStream |
-	
-	(separators isString or: [ separators allSatisfy: [ :element | element isCharacter ] ])
-		ifFalse: [ ^ self error: 'separators must be Characters.' ].
-	sourceStream := self readStream.
-	result := OrderedCollection new.
-	substringStream := String new writeStream.
-	[ sourceStream atEnd ] whileFalse: [
-		| char |
-		char := sourceStream next.
-		(separators includes: char)
+substrings: separators
+	"Answer an array of non-empty substrings from the receiver separated by
+	one or more characters from the 'separators' argument collection."
+
+	| substrings substringStart |
+	substrings := (Array new: 10) writeStream.
+	1 to: self size do: [ :i | 
+		| nextChar |
+		nextChar := self at: i.
+		(separators includes: nextChar)
 			ifTrue: [
-				substringStream isEmpty ifFalse: [
-					result add: substringStream contents.
-					substringStream := String new writeStream ] ]
-			ifFalse: [
-				substringStream nextPut: char ] ].
-	substringStream isEmpty ifFalse: [
-		result add: substringStream contents ].
-	^ result asArray
+				substringStart
+					ifNotNil: [
+						substrings nextPut: (self copyFrom: substringStart to: i - 1).
+						substringStart := nil ] ]
+			ifFalse: [ substringStart ifNil: [ substringStart := i ] ] ].
+	substringStart
+		ifNotNil: [ substrings nextPut: (self copyFrom: substringStart to: self size) ].
+	^ substrings contents

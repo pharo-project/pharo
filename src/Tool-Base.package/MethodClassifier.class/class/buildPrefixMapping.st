@@ -1,43 +1,48 @@
 private
 buildPrefixMapping
-	(prefixMapping := Dictionary new)
-		at: 'new' put: 'instance creation';
-		at: 'from' put: 'instance creation';
-		at: 'initialize' put: 'initialization';
-		at: 'set' put: 'initialization';
+	prefixMapping := Dictionary new
+		at: 'accept' put: 'visiting';
+		at: 'accepts' put: 'testing';
+		at: 'add' put: 'adding';
+		at: 'as' put: 'converting';
+		at: 'assert' put: 'asserting';
 		at: 'at' put: 'accessing';
+		at: 'baseline' put: 'baselines';
+		at: 'bench' put: 'benchmarking';
+		at: 'benchmark' put: 'benchmarking';
+		at: 'can' put: 'testing';
+		at: 'compile' put: 'compiling';
+		at: 'copy' put: 'copying';
+		at: 'deny' put: 'asserting';
 		at: 'first' put: 'accessing';
+		at: 'format' put: 'formatting';
+		at: 'from' put: 'instance creation';
+		at: 'has' put: 'testing';
+		at: 'includes' put: 'testing';
+		at: 'index' put: 'accessing';
+		at: 'initialize' put: 'initialization';
+		at: 'is' put: 'testing';
 		at: 'last' put: 'accessing';
-		at: 'total' put: 'accessing';
+		at: 'matches' put: 'testing';
 		at: 'max' put: 'accessing';
 		at: 'maximum' put: 'accessing';
 		at: 'min' put: 'accessing';
 		at: 'minimum' put: 'accessing';
-		at: 'add' put: 'adding';
-		at: 'remove' put: 'removing';
-		at: 'is' put: 'testing';
-		at: 'has' put: 'testing';
-		at: 'includes' put: 'testing';
-		at: 'accepts' put: 'testing';
-		at: 'can' put: 'testing';
-		at: 'matches' put: 'testing';
 		at: 'needs' put: 'testing';
-		at: 'requires' put: 'testing';
+		at: 'new' put: 'instance creation';
+		at: 'parse' put: 'parsing';
 		at: 'print' put: 'printing';
-		at: 'copy' put: 'copying';
-		at: 'as' put: 'converting';
-		at: 'test' put: 'tests';
+		at: 'remove' put: 'removing';
+		at: 'render' put: 'rendering';
+		at: 'requires' put: 'testing';
+		at: 'set' put: 'initialization';
 		at: 'should' put: 'asserting';
 		at: 'shouldnt' put: 'asserting';
-		at: 'assert' put: 'asserting';
-		at: 'deny' put: 'asserting';
-		at: 'bench' put: 'benchmarking';
-		at: 'benchmark' put: 'benchmarking';
-		at: 'accept' put: 'visiting';
-		at: 'visit' put: 'visiting';
 		at: 'signal' put: 'signalling';
-		at: 'parse' put: 'parsing';
-		at: 'compile' put: 'compiling';
 		at: 'sort' put: 'sorting';
-		at: 'format' put: 'formatting';
-		at: 'write' put: 'writing'
+		at: 'test' put: 'tests';
+		at: 'total' put: 'accessing';
+		at: 'version' put: 'versions';
+		at: 'visit' put: 'visiting';
+		at: 'write' put: 'writing';
+		yourself

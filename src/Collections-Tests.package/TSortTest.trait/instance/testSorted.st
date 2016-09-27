@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testSorted
 	| result tmp unsorted |
 	unsorted := self unsortedCollection.
