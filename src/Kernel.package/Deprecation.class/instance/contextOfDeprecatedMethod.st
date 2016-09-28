@@ -1,0 +1,3 @@
+accessing
+contextOfDeprecatedMethod
+	^context

@@ -9,6 +9,6 @@
 		 ],
 	"name" : "FFICallbackTests",
 	"pools" : [
-		 ],
+		"FFITestEnumeration" ],
 	"super" : "TestCase",
 	"type" : "normal" }

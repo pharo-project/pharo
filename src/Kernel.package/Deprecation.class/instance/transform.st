@@ -1,12 +1,11 @@
 handling
 transform
-	| context node rewriteRule aMethod|
+	| node rewriteRule aMethod|
 	self rewriterClass ifNil:[ ^ self signal ].
-	context := thisContext sender sender sender.
-	aMethod := context method.
+	aMethod := self contextOfSender method.
 	"no need to transform doits"
 	aMethod isDoIt ifTrue:[^ self].
-	node := context sourceNodeExecuted.
+	node := self contextOfSender sourceNodeExecuted.
 	rewriteRule := self rewriterClass new 
 		replace: rule key with: rule value.
 	(rewriteRule executeTree: node)

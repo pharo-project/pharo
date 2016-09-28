@@ -3,8 +3,7 @@ deprecated: anExplanationString on: date in: version transformWith: aRule
 	"Automatically tranform the deprecated call"
 	
 	Deprecation new
-		method: thisContext sender method;
-		sendingMethodName: thisContext sender sender method printString;
+		context: thisContext sender;
 		explanation: anExplanationString;
 		date: date;
 		version: version;

@@ -1,3 +1,3 @@
 comparing
 hash
-	^(methodReference ifNil: [explanationString]) hash
+	^(context ifNil: [explanationString]) hash

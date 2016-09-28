@@ -1,3 +1,3 @@
-accessing
+private
 sendingMethodName
-	^sendingMethodName ifNil: ['unknown']
+	^self contextOfSender method printString
