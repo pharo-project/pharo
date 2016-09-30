@@ -3,7 +3,7 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"ExtraWorldList" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		"osWindow",

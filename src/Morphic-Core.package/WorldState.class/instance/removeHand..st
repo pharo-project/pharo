@@ -4,4 +4,5 @@ removeHand: aHandMorph
 
 	(hands includes: aHandMorph) ifFalse: [^self].
 	hands := hands copyWithout: aHandMorph.
+	activeHand == aHandMorph ifTrue: [activeHand := nil].
 	ActiveHand == aHandMorph ifTrue: [ActiveHand := nil].

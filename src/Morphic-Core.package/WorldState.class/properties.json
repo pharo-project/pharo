@@ -25,7 +25,8 @@
 		"lastCycleTime",
 		"alarms",
 		"lastAlarmTime",
-		"menuBuilder" ],
+		"menuBuilder",
+		"activeHand" ],
 	"name" : "WorldState",
 	"pools" : [
 		 ],

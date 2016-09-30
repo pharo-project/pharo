@@ -1,0 +1,3 @@
+private events
+eventQueue
+	^ Sensor
