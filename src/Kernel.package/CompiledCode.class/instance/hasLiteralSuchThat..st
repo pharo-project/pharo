@@ -9,5 +9,6 @@ hasLiteralSuchThat: litBlock
 		lit := self objectAt: index.
 		((litBlock value: lit)
 		or: [lit isArray and: [lit hasLiteralSuchThat: litBlock]]) ifTrue:
-			[^true]].
+			[^true].
+		(lit isMemberOf: CompiledBlock) ifTrue: [ (lit hasLiteralSuchThat: litBlock) ifTrue: [ ^true ] ]].
 	^false

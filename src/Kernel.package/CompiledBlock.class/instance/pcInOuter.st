@@ -1,4 +1,4 @@
-additions
+scanning
 pcInOuter
 	| outer end instructionStream |
 	outer := self outerCode.

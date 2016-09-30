@@ -1,4 +1,4 @@
-additions
+comparing
 sameLiteralsAs: method
 	"Compare my literals to those of method. This is needed to compare compiled methods."
 

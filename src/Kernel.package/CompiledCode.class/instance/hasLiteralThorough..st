@@ -5,9 +5,10 @@ hasLiteralThorough: literal
 
 	(self penultimateLiteral isMethodProperties
 	 and: [self penultimateLiteral hasLiteralThorough: literal]) ifTrue:[^true].
-	2 to: self numLiterals - 1 "exclude superclass + selector/properties"
+	2 to: self numLiterals - 1 "exclude header and methodClass or outerCode"
 	   do:[:index | | lit |
 		(((lit := self objectAt: index) literalEqual: literal)
 		 or: [lit isArray and: [lit hasLiteral: literal]]) ifTrue:
-			[^ true]].
+			[^ true].
+		(lit isMemberOf: CompiledBlock) ifTrue: [ (lit hasLiteralThorough: literal) ifTrue: [ ^true ] ] ].
 	^ false 

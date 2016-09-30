@@ -1,3 +1,3 @@
-additions
+testing
 isTestMethod
 	^ false

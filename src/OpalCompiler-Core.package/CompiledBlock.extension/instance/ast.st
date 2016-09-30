@@ -1,3 +1,3 @@
-additions
-sourceNode
+*OpalCompiler-Core
+ast
 	^ self sourceNodeInOuter
