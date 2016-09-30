@@ -6,7 +6,7 @@ displayResourceFormOn: aForm
 		ifTrue: [ ^ self displayOn: aForm ].
 
 	"We've got no bilinear interpolation. Use WarpBlt instead"
-	(WarpBlt current toForm: aForm)
+	(WarpBlt toForm: aForm)
 		sourceForm: self destRect: aForm boundingBox;
 		combinationRule: 3;
 		cellSize: 2;

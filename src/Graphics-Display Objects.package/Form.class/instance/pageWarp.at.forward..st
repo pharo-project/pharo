@@ -31,7 +31,7 @@ pageWarp: otherImage at: topLeft forward: forward
 			with: pageRect bottomLeft + (0@p y)
 			with: pageRect bottomRight
 			with: pageRect topRight - (0@p y).
-		warp := (WarpBlt current toForm: buffer)
+		warp := (WarpBlt toForm: buffer)
 				clipRect: leafRect;
 				sourceForm: (forward ifTrue: [oldPage] ifFalse: [otherImage]);
 				combinationRule: Form paint.

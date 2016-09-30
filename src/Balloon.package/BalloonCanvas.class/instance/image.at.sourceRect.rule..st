@@ -8,7 +8,7 @@ image: aForm at: aPoint sourceRect: sourceRect rule: rule
 	"dstRect := 0@0 corner: dstRect extent."
 	srcQuad := transform globalPointsToLocal: (dstRect innerCorners).
 	srcQuad := srcQuad collect:[:pt| pt - aPoint].
-	warp := (WarpBlt current toForm: form)
+	warp := (WarpBlt toForm: form)
 			sourceForm: aForm;
 			cellSize: 2;  "installs a new colormap if cellSize > 1"
 			combinationRule: Form over.

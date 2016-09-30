@@ -7,7 +7,7 @@ rotateBy: deg magnify: scale smoothing: cellSize
 	side := 1 + self extent r asInteger.
 	bigSide := (side asPoint * scale) rounded.
 	rot := self blankCopyOf: self boundingBox scaledBy: ( bigSide / self extent ).
-	warp := (WarpBlt current toForm: rot)
+	warp := (WarpBlt toForm: rot)
 		sourceForm: self;
 		colorMap: (self colormapIfNeededFor: rot);
 		cellSize: cellSize;  "installs a new colormap if cellSize > 1"

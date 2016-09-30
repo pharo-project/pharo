@@ -6,7 +6,7 @@ flipBy: direction centerAt: aPoint
 	quad := self boundingBox innerCorners.
 	quad := (direction = #vertical ifTrue: [#(2 1 4 3)] ifFalse: [#(4 3 2 1)])
 		collect: [:i | quad at: i].
-	(WarpBlt current toForm: newForm)
+	(WarpBlt toForm: newForm)
 		sourceForm: self;
 		colorMap: (self colormapIfNeededFor: newForm);
 		combinationRule: 3;

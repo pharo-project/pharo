@@ -3,11 +3,11 @@ instVarIndexFor: instVarName ifAbsent: aBlock
 	"Answer the index of the named instance variable."
 
 	| index |
-	index := self instVarNames indexOf: instVarName ifAbsent: [0].
+	index := self classLayout instVarIndexFor: instVarName ifAbsent: 0.
 	index = 0 ifTrue: 
-		[^self superclass == nil 
-			ifTrue: [aBlock value]
-			ifFalse: [self superclass instVarIndexFor: instVarName ifAbsent: aBlock]].
-	^self superclass == nil 	
-		ifTrue: [index]
-		ifFalse: [index + self superclass instSize]
+		[^self superclass
+			ifNil: [aBlock value]
+			ifNotNil: [self superclass instVarIndexFor: instVarName ifAbsent: aBlock]].
+	^self superclass
+		ifNil: [index]
+		ifNotNil: [index + self superclass instSize]

@@ -8,7 +8,7 @@ rotateBy: direction centerAt: aPoint
 	newForm := self blankCopyOf: self boundingBox scaledBy: scale.
 	quad := self boundingBox innerCorners.
 	rot := #(right pi left) indexOf: direction.
-	(WarpBlt current toForm: newForm)
+	(WarpBlt toForm: newForm)
 		sourceForm: self;
 		colorMap: (self colormapIfNeededFor: newForm);
 		combinationRule: 3;

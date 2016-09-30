@@ -6,7 +6,7 @@ privateWarp: aForm transform: aTransform at: extraOffset sourceRect: sourceRect 
 	globalRect := tfm localBoundsToGlobal: sourceRect.
 	sourceQuad := (tfm sourceQuadFor: globalRect) collect:[:p| p - sourceRect topLeft].
 	extraOffset ifNotNil:[globalRect := globalRect translateBy: extraOffset].
-     warp := (WarpBlt current toForm: port destForm)
+     warp := (WarpBlt toForm: port destForm)
                 combinationRule: Form paint;
                 sourceQuad: sourceQuad destRect: (globalRect origin corner: globalRect corner+(1@1));
                 clipRect: port clipRect.
