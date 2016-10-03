@@ -4,4 +4,5 @@ testSetUp
 
 	self assert: aBlockContext home = contextOfaBlockContext.
 	self assert: aBlockContext receiver = self.
-	self assert: (aBlockContext method isKindOf: CompiledMethod).
+	"Depending on the closure implementation, it's either a compiled block, a compiled method or nil."
+	self assert: (aBlockContext method isNil or: [aBlockContext method isKindOf: CompiledCode]).

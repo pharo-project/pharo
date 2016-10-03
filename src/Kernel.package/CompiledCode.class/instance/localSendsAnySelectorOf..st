@@ -1,5 +1,5 @@
 testing
-sendsAnySelectorOf: aCollection
+localSendsAnySelectorOf: aCollection
 	
 	self literalsDo: [ :lit |
 		(lit isSymbol and: [ aCollection includes: lit ]) 
