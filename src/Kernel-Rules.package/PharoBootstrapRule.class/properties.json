@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		"DependencyChecker" ],
-	"commentStamp" : "YuriyTymchuk 8/6/2016 13:58",
+	"commentStamp" : "ChristopheDemarey 9/30/2016 15:31",
 	"instvars" : [
 		 ],
 	"name" : "PharoBootstrapRule",

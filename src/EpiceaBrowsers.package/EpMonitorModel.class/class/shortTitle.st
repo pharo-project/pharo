@@ -1,4 +1,4 @@
 accessing
 shortTitle
 
-	^ #Monitor
+	^ #'Session Changes'

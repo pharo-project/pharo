@@ -1,0 +1,3 @@
+compatibility - package manifest
+ignoredDependencies
+	^ #()

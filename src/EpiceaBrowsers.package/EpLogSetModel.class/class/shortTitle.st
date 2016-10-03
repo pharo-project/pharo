@@ -1,4 +1,4 @@
 accessing
 shortTitle
 
-	^ #'Log Set'
+	^ #'All Changes'

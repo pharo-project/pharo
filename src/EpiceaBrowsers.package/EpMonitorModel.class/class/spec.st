@@ -6,11 +6,11 @@ spec
 		column 
 			newRow: [ :row |
 				 row 
-					add: #enableMonitorButtonModel width: 95;
+					add: #enableMonitorButtonModel width: 100;
 					add: #activeLogLabelModel width: 75;
 					add: #activeLogTextModel;
 					add: #createActiveLogButtonModel width: self inputTextHeight;
-					add: #logSetButtonModel width: 75;
+					add: #logSetButtonModel width: 95;
 					yourself
 					 ]
 			 height: self inputTextHeight - 4.
