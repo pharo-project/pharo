@@ -1,0 +1,16 @@
+{
+	"category" : "OSWindow-Core-Morphic",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 9/4/2016 22:31",
+	"instvars" : [
+		"display",
+		"closeCallback",
+		"isResizeable" ],
+	"name" : "OSWindowWorldMorph",
+	"pools" : [
+		 ],
+	"super" : "WorldMorph",
+	"type" : "normal" }

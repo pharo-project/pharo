@@ -1,4 +1,4 @@
 accessing structure variables
 Bloss: anObject
 	"This method was automatically generated"
-	handle unsignedByteAt: 30 put: anObject
+	handle unsignedByteAt: 31 put: anObject

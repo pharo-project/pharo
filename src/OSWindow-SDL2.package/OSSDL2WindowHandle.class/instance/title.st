@@ -1,3 +1,3 @@
 accessing
 title
-	^ handle title readString
+	^ handle title

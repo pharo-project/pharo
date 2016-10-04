@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
+	"instvars" : [
+		 ],
+	"name" : "SDL_SysWMinfo_WindowsRTInfo",
+	"pools" : [
+		 ],
+	"super" : "SDL2Structure",
+	"type" : "normal" }

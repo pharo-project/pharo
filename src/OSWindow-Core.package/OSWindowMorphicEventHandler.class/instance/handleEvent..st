@@ -5,7 +5,9 @@ handleEvent: anEvent
 	| morphicEvent |
 	
 	morphicEvent := anEvent accept: self.
-	morphicEvent isMorphicEvent 
-		ifTrue: [ self enqueue: morphicEvent ]
+	morphicEvent isMorphicEvent ifFalse: [ ^ self ].
 	
+	self flag: #todo. "Why this was in a queue who was never called?"
+	"self enqueue: morphicEvent."
+	self dispatchMorphicEvent: morphicEvent
 	

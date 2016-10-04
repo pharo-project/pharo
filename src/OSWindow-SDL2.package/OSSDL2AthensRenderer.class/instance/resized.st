@@ -1,4 +1,4 @@
-initialization
+updating screen
 resized
-	self resetRessources.
+	self resetResources.
 	super resized

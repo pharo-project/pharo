@@ -1,0 +1,1 @@
+I am union inside of SDL_SysWMinfo used to hold platform specific information about a window.

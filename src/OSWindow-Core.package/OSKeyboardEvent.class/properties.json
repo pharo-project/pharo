@@ -4,13 +4,14 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "IgorStasenko 7/30/2014 17:19",
+	"commentStamp" : "RonieSalgado 9/28/2016 22:54",
 	"instvars" : [
 		"scanCode",
 		"symbol",
 		"character",
 		"modifiers",
-		"position" ],
+		"position",
+		"repeat" ],
 	"name" : "OSKeyboardEvent",
 	"pools" : [
 		 ],

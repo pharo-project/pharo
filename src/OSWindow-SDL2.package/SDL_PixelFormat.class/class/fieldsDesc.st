@@ -9,6 +9,7 @@ fieldsDesc
     Uint8 BitsPerPixel;
     Uint8 BytesPerPixel;
     Uint8 pad1;
+	 Uint8 pad2;
     Uint32 Rmask;
     Uint32 Gmask;
     Uint32 Bmask;

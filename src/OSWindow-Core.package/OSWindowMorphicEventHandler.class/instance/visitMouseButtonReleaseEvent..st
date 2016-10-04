@@ -1,8 +1,8 @@
 visiting
 visitMouseButtonReleaseEvent: anEvent
-	anEvent button > 3 ifTrue: [ ^ nil ].
+	anEvent isWheel ifTrue: [ ^ nil ].
 
-	^ MouseButtonEvent basicNew
+	^ MouseButtonEvent new
 		setType: #mouseUp
 		position: anEvent position 
 		which: (self convertButton: anEvent button)

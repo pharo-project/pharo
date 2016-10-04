@@ -1,0 +1,1 @@
+A structure that contains DirectFB specific information about a window. 

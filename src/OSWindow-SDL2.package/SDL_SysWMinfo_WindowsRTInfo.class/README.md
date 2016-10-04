@@ -1,0 +1,1 @@
+A structure that contains WindowsRT specific information about a window. 

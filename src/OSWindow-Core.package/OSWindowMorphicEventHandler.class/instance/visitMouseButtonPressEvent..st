@@ -1,15 +1,15 @@
 visiting
 visitMouseButtonPressEvent: anEvent
-	anEvent button > 3 ifTrue: [ 
+	anEvent isWheel ifTrue: [ 
 		^ MouseWheelEvent new 
 			setType: #mouseWheel
 			position: anEvent position
-			direction: (anEvent button = 4 ifTrue: [#up] ifFalse: [#down])
+			direction: anEvent wheelDirection
 			buttons: (self convertModifiers: anEvent modifiers)
 			hand: self activeHand
 			stamp: Time millisecondClockValue ].
 			
-	^ MouseButtonEvent basicNew
+	^ MouseButtonEvent new
 		setType: #mouseDown 
 		position: anEvent position 
 		which: (self convertButton: anEvent button)

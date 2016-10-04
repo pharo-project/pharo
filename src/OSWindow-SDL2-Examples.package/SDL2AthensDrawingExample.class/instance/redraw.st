@@ -11,8 +11,7 @@ redraw
 						absolute;
 						moveTo: stroke first.
 					stroke do: [ :point | builder lineTo: point ] ].
-			renderer athensSurface
-				drawDuring: [ :canvas | 
+			renderer drawDuring: [ :canvas | 
 					canvas
 						setStrokePaint: Color black;
 						setShape: path;

@@ -1,0 +1,17 @@
+{
+	"category" : "OSWindow-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 5/27/2016 13:47",
+	"instvars" : [
+		"platform",
+		"display",
+		"window",
+		"surface" ],
+	"name" : "OSWindowPlatformSpecificHandle",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -10,7 +10,9 @@
 		"renderer",
 		"pixels",
 		"pitch",
-		"sdlSurface" ],
+		"sdlSurface",
+		"textureExtent",
+		"surfaceForm" ],
 	"name" : "OSSDL2AthensRenderer",
 	"pools" : [
 		"SDL2Constants" ],

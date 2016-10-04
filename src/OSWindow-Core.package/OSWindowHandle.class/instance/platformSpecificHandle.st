@@ -1,0 +1,3 @@
+accessing
+platformSpecificHandle
+	self subclassResponsibility

@@ -1,4 +1,3 @@
-window management
+private
 getFlags
-
-	^handle getFlags.
+	^ handle getFlags

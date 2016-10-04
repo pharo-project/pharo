@@ -1,0 +1,1 @@
+A structure that contains UIKit specific information about a window. 

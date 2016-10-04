@@ -5,6 +5,7 @@ visitKeyUpEvent: event
 	osEvent := OSKeyUpEvent for: osWindow.
 	osEvent scanCode: keysym scancode;
 			symbol: keysym sym;
+			repeat: event repeat;
 			position: self mousePosition.
 			
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.

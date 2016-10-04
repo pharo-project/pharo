@@ -1,11 +1,10 @@
-as yet unclassified
+field definition
 fieldsDesc
 	"
-	self initializeAccessors
+	self rebuildFieldAccessors
 	"
 	^#(
 		SDL_Version version;
 		int subsystem;
-    	ulong display;
-		ulong window;
+		SDL_SysWMinfo_InfoUnion info;
  	)

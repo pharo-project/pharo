@@ -1,0 +1,1 @@
+A structure that contains Window specific information about a window. 

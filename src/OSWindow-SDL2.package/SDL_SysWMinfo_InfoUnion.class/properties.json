@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 5/27/2016 13:19",
+	"instvars" : [
+		 ],
+	"name" : "SDL_SysWMinfo_InfoUnion",
+	"pools" : [
+		 ],
+	"super" : "SDL2Union",
+	"type" : "normal" }

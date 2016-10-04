@@ -1,3 +1,3 @@
 accessing
-position: newPosition
-	handle setPositionX: newPosition x y: newPosition y.
+position: aPoint
+	handle setPositionX: aPoint x asInteger y: aPoint y asInteger

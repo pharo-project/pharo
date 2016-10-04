@@ -1,4 +1,4 @@
 accessing structure variables
 Aloss: anObject
 	"This method was automatically generated"
-	handle unsignedByteAt: 31 put: anObject
+	handle unsignedByteAt: 32 put: anObject

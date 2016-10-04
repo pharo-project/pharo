@@ -1,3 +1,5 @@
 updating
 updateSurface
-	renderer updateAll
+	renderer
+		updateAll;
+		present

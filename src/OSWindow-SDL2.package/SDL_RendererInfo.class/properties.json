@@ -1,0 +1,14 @@
+{
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Uint32_16" ],
+	"commentStamp" : "EstebanLorenzano 6/3/2016 17:10",
+	"instvars" : [
+		 ],
+	"name" : "SDL_RendererInfo",
+	"pools" : [
+		"SDL2Types" ],
+	"super" : "SDL2Structure",
+	"type" : "normal" }

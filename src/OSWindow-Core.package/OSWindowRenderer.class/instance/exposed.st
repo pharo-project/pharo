@@ -1,3 +1,3 @@
 updating screen
 exposed
-	self updateAll
+	self present

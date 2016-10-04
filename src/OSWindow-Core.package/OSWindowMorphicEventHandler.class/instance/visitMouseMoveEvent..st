@@ -1,7 +1,7 @@
 visiting
 visitMouseMoveEvent: anEvent
 	| oldPos |
-	oldPos := morphicWorld activeHand position.
+	oldPos := morphicWorld activeHand ifNil: [ 0@0 ] ifNotNil: [:hand | hand position ].
 
 	^ MouseMoveEvent basicNew
 		setType: #mouseMove 

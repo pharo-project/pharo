@@ -1,4 +1,3 @@
-window management
+private
 getFlags
-
-	^self validHandle getFlags.
+	^ self validHandle getFlags
