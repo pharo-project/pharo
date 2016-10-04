@@ -4,7 +4,7 @@ testNewSpotter
 	self testInstanceCreation.
 	
 	self assert: spotter notNil.
-	self assert: spotter isEmpty.
+	self assert: spotter hasSteps not.
 	self assert: spotter steps isEmpty.
 	self deny: spotter hasMultipleSteps.
 	
@@ -14,5 +14,5 @@ testNewSpotter
 	"self assert: step1 == spotter currentStep"
 	
 	self assert: step1 notNil.
-	self assert: spotter isEmpty.
+	self assert: spotter hasSteps not.
 	self assert: spotter steps isEmpty.

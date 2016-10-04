@@ -8,7 +8,7 @@ gtInspectorGoferReferencesIn: composite
 		icon: [ Smalltalk ui icons iconNamed: #packageIcon ];
 		act: [ :com | 
 			com selection
-				ifNotNilDo: [ :each | 
+				ifNotNil: [ :each | 
 					Gofer new
 						repository: com entity;
 						version: each name;

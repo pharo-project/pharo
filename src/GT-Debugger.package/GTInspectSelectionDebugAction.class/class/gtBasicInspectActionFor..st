@@ -5,6 +5,6 @@ gtBasicInspectActionFor: aDebugger
 	^ (self forDebugger: aDebugger)
 			makeBasicInspect;
 			label: 'Basic inspect it';
-			keyText: 'I'; 
+			keymap: $i meta shift; 
 			order: 16;
 			icon: GLMUIThemeExtraIcons glamorousInspect

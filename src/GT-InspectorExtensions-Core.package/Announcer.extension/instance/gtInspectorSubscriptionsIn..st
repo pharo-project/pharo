@@ -6,7 +6,7 @@ gtInspectorSubscriptionsIn: composite
 		display: [ self subscriptions glmSubscriptions ];
 		when: [ self numberOfSubscriptions isZero not ];
 		column: 'Subscriber' evaluated: [ :each | each subscriber asString ];
-		column: 'Announcement' evaluated: [ :each | each announcementClass name ];
+		column: 'Announcement' evaluated: [ :each | each announcementClass printString ];
 		column: 'Kind' evaluated: [ :each | each class name ];
 		act: [ :table | 
 			self subscriptions reset.
