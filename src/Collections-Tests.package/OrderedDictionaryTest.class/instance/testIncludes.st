@@ -3,7 +3,8 @@ testIncludes
 	| dictionary |
 
 	dictionary := self emptyDictionary.
-	self deny: (self dictionaryValues anySatisfy: [:each | dictionary includes: each]).
+	self orderedAssociations do: [:each |
+		self deny: (dictionary includes: each value).
 
-	dictionary addAll: self dictionaryAssociations.
-	self assert: (self dictionaryValues allSatisfy: [:each | dictionary includes: each]).
+		dictionary add: each.
+		self assert: (dictionary includes: each value)].

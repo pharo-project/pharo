@@ -7,7 +7,7 @@ testHash
 	internalDictionary := self emptyInternalDictionary.
 	otherInternalDictionary := self emptyInternalDictionary.
 	self assert: dictionary hash = otherDictionary hash.
-	self dictionaryAssociations do: [:each |
+	self orderedAssociations do: [:each |
 		dictionary add: each.
 		internalDictionary add: each copy.
 		"if the internal hashes differ after adding to one, the external should too"

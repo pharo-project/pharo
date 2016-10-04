@@ -2,7 +2,7 @@ class building
 layoutChanged: aClass
 	super layoutChanged: aClass.
 	"we check on the slot level as the slot is hidden"
-	(baseSlot isNotNil and: (aClass classLayout hasSlotNamed: baseSlot name)) ifTrue: [
+	(baseSlot notNil and: [aClass classLayout hasSlotNamed: baseSlot name]) ifTrue: [
 		baseSlot := aClass classLayout slotNamed: baseSlot name. "make sure we all use the same baseSlot"
 		self growBaseSlot: aClass.
 		^self. ].

@@ -4,9 +4,10 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "monty 9/7/2016 23:45",
+	"commentStamp" : "monty 10/1/2016 02:03",
 	"instvars" : [
-		"dictionaryAssociations" ],
+		"nonIdentityOrderedAssociations",
+		"identityOrderedAssociations" ],
 	"name" : "OrderedDictionaryTest",
 	"pools" : [
 		 ],

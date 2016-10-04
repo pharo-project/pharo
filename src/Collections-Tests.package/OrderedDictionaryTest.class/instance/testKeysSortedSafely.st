@@ -1,11 +1,14 @@
 tests
 testKeysSortedSafely
+	| dictionary |
+
+	dictionary := self emptyDictionary.
 	self
-		assertSelector: #keysSortedSafely
-		collects: #()
-		from: self emptyDictionary.
-	"The keys are all strings, so the default #sorted implementation is OK."
-	self
-		assertSelector: #keysSortedSafely
-		collects: self dictionaryKeys sorted
-		from: self dictionaryWithAssociations.
+		assertIsArray: dictionary keysSortedSafely
+		withElements: #().
+	self orderedAssociations withIndexDo: [:each :i |
+		dictionary add: each.
+		"The keys are all strings, so the default #sorted implementation is OK."
+		self
+			assertIsArray: dictionary keysSortedSafely
+			withElements: (self orderedKeysFirst: i) sorted].

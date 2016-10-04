@@ -1,5 +1,5 @@
 assertions
-assertRemovedKey: aKey from: aDictionary
+assertKey: aKey wasRemovedfrom: aDictionary
 	self deny: (aDictionary includesKey: aKey).
 	aDictionary keys asArray, aDictionary orderedKeys asArray do: [:each |
 		self deny:

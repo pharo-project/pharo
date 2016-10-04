@@ -1,15 +1,17 @@
 tests
 testRemoveKey
-	| dictionary associationsToRemove |
+	| dictionary |
 
-	dictionary := self dictionaryWithAssociations.
-	self should: [dictionary removeKey: self absentKey] raise: Error.
-	associationsToRemove := self dictionaryAssociations asOrderedCollection.
-	[associationsToRemove notEmpty]
-		whileTrue: [ | removed |
-			removed := associationsToRemove removeFirst.
-			self
-				assert: (dictionary removeKey: removed key) = removed value;
-				should: [dictionary removeKey: removed key] raise: Error;
-				assertRemovedKey: removed key from: dictionary;
-				assert: dictionary keys = (associationsToRemove collect: [:each | each key]) asArray].
+	dictionary := self dictionaryWithOrderedAssociations.
+	self orderedAssociations withIndexDo: [:each :i |
+		self assert: (dictionary removeKey: each key) = each value.
+		self
+			assertKey: each key
+			wasRemovedfrom: dictionary.
+		self
+			assertIsDictionary: dictionary
+			withOrderedAssociations: (self orderedAssociationsAllButFirst: i).
+
+		self
+			should: [dictionary removeKey: each key]
+			raise: Error]

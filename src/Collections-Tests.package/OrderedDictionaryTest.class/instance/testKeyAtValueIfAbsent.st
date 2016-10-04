@@ -2,7 +2,15 @@ tests
 testKeyAtValueIfAbsent
 	| dictionary |
 
-	dictionary := self dictionaryWithSingleAssociation.
-	self
-		assert: (dictionary keyAtValue: self absentValue ifAbsent: [self absentKey]) = self absentKey;
-		assert: (dictionary keyAtValue: self singleValue ifAbsent: [self absentKey]) = self singleKey.
+	dictionary := self emptyDictionary.
+	self orderedAssociations do: [:each |
+		self assert:
+			(dictionary
+				keyAtValue: each value
+				ifAbsent: [self absentKey]) = self absentKey.
+
+		dictionary add: each.
+		self assert:
+			(dictionary
+				keyAtValue: each value
+				ifAbsent: [self fail]) = each key].

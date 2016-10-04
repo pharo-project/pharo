@@ -6,11 +6,11 @@ printElementsOn: aStream
 			aStream nextPutAll: 'size '.
 			self size printOn: aStream]
 		ifFalse: [
-			self associations doWithIndex: [:association :i |
+			self associations withIndexDo: [:each :i |
 				aStream
-					print: association key;
+					print: each key;
 					nextPutAll: '->';
-					print: association value.
+					print: each value.
 				(i < self size)
 					ifTrue: [aStream space]]].
 	aStream nextPut: $).

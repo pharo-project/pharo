@@ -3,19 +3,24 @@ testAddAll
 	| dictionary addedAssociations |
 
 	dictionary := self emptyDictionary.
-	self deny:
-		(self dictionaryAssociations anySatisfy: [:each |
-			dictionary includesAssociation: each]).
+	self orderedAssociations do: [:each |
+		self deny: (dictionary includesAssociation: each)].
 
-	addedAssociations := self dictionaryAssociations.
+	addedAssociations := self orderedAssociations.
 	self assert: (dictionary addAll: addedAssociations) == addedAssociations.
 	self
 		assertIsDictionary: dictionary
-		withAssociations: addedAssociations.
+		withOrderedAssociations: self orderedAssociations.
 
 	"ensure adding the same associations doesn't change the order"
-	addedAssociations := self dictionaryAssociations reversed.
+	addedAssociations := self orderedAssociations reversed.
 	self assert: (dictionary addAll: addedAssociations) == addedAssociations.
 	self
 		assertIsDictionary: dictionary
-		withAssociations: self dictionaryAssociations.
+		withOrderedAssociations: self orderedAssociations.
+
+	addedAssociations := self changedOrderedAssociations.
+	self assert: (dictionary addAll: addedAssociations) == addedAssociations.
+	self
+		assertIsDictionary: dictionary
+		withOrderedAssociations: self changedOrderedAssociations.

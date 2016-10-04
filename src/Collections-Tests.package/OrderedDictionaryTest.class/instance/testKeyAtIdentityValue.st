@@ -1,10 +1,15 @@
 tests
 testKeyAtIdentityValue
-	| dictionary singleValue |
+	| dictionary |
 
-	dictionary := self dictionaryWithSingleAssociation.
-	singleValue := dictionary at: self singleKey.
-	self
-		should: [dictionary keyAtIdentityValue: self absentValue] raise: Error;
-		should: [dictionary keyAtIdentityValue: singleValue copy] raise: Error;
-		assert: (dictionary keyAtIdentityValue: singleValue) = self singleKey.
+	dictionary := self emptyDictionary.
+	self orderedAssociations do: [:each |
+		self
+			should: [dictionary keyAtIdentityValue: each value]
+			raise: Error.
+
+		dictionary add: each.
+		self assert: (dictionary keyAtIdentityValue: each value) = each key.
+		self
+			should: [dictionary keyAtIdentityValue: each value copy]
+			raise: Error].

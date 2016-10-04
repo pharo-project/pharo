@@ -1,14 +1,28 @@
 tests
 testKeysAndValuesRemove
-	| dictionary keys |
+	| dictionary |
 
-	dictionary := self dictionaryWithAssociations.
-	keys := self dictionaryKeys.
-	dictionary keysAndValuesRemove: [:key :value | keys first = key or: [keys third = key]].
-
-	self
-		deny: (dictionary includesKey: keys first);
-		deny: (dictionary includesKey: keys third);
-		assert:
-			(((keys copyWithout: keys first) copyWithout: keys third)
-				allSatisfy: [:each | dictionary includesKey: each]).
+	dictionary := self dictionaryWithOrderedAssociations.
+	self orderedAssociations withIndexDo: [:removedAssociation :i |
+		| unremovedAssociations |
+		unremovedAssociations :=
+			(self orderedAssociationsAllButFirst: i) asOrderedCollection.
+		dictionary keysAndValuesRemove: [:key :value |
+			(self isTestingIdentityDictionary
+				ifTrue: [key == removedAssociation key]
+				ifFalse: [key = removedAssociation key])
+				ifTrue: [
+					self assert: value = removedAssociation value.
+					true]
+				ifFalse: [| unremovedAssociation |
+					unremovedAssociation := unremovedAssociations removeFirst.
+					self isTestingIdentityDictionary
+						ifTrue: [self assert: key == unremovedAssociation key]
+						ifFalse: [self assert: key = unremovedAssociation key].
+					self assert: value = unremovedAssociation value.
+					false]].
+		self assert: unremovedAssociations isEmpty.
+		self
+			assertKey: removedAssociation key
+			wasRemovedfrom: dictionary].
+	self assert: dictionary isEmpty.

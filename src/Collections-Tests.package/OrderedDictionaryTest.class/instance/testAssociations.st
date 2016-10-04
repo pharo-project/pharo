@@ -1,10 +1,13 @@
 tests
 testAssociations
+	| dictionary |
+
+	dictionary := self emptyDictionary.
 	self
-		assertSelector: #associations
-		collects: #()
-		from: self emptyDictionary.
-	self
-		assertSelector: #associations
-		collects: self dictionaryAssociations
-		from: self dictionaryWithAssociations.
+		assertIsArray: dictionary associations
+		withElements: #().
+	self orderedAssociations withIndexDo: [:each :i |
+		dictionary add: each.
+		self
+			assertIsArray: dictionary associations
+			withElements: (self orderedAssociationsFirst: i)].

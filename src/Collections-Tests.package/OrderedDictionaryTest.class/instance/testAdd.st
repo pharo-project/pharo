@@ -1,24 +1,32 @@
 tests
 testAdd
-	| dictionary associationToReplace replacementAssociation |
+	| dictionary |
 
 	dictionary := self emptyDictionary.
-	self
-		deny: (self dictionaryAssociations anySatisfy: [:each | dictionary includesAssociation: each]);
-		assert: (self dictionaryAssociations allSatisfy: [:each | (dictionary add: each) == each]);
-		assert: (self dictionaryAssociations allSatisfy: [:each | dictionary includesAssociation: each]);
-		assert: dictionary associations = self dictionaryAssociations.
+	self orderedAssociations withIndexDo: [:each :i |
+		self
+			deny: (dictionary includesAssociation: each);
+			assert: (dictionary add: each) == each;
+			assert: (dictionary includesAssociation: each).
+		self
+			assertIsDictionary: dictionary
+			withOrderedAssociations: (self orderedAssociationsFirst: i)].
 
-	associationToReplace := self dictionaryAssociations anyOne.
-	replacementAssociation := associationToReplace copy.
-	replacementAssociation value: self newValue.
-	self
-		assert: (dictionary add: replacementAssociation) == replacementAssociation;
-		assert: (dictionary includesAssociation: replacementAssociation);
-		deny: (dictionary includesAssociation: associationToReplace).
-	self
-		assertIsDictionary: dictionary
-		withAssociations: 
-			(self dictionaryAssociations
-				replaceAll: associationToReplace
-				with: replacementAssociation).
+	"ensure adding the same associations doesn't change the order"
+	self orderedAssociations reverseDo: [:each |
+		self assert: (dictionary add: each) == each.
+		self
+			assertIsDictionary: dictionary
+			withOrderedAssociations: self orderedAssociations].
+
+	self changedOrderedAssociations withIndexDo: [:each :i | | old |
+		old := self orderedAssociations at: i.
+		self
+			assert: (dictionary add: each) == each;
+			assert: (dictionary includesAssociation: each);
+			deny: (dictionary includesAssociation: old).
+		self
+			assertIsDictionary: dictionary
+			withOrderedAssociations:
+				(self changedOrderedAssociationsFirst: i),
+				(self orderedAssociationsAllButFirst: i)].

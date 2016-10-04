@@ -1,3 +1,3 @@
 accessing
 internalDictionaryWithAssociations
-	^ self internalDictionaryClass newFrom: self dictionaryAssociations
+	^ self internalDictionaryClass newFrom: self orderedAssociations

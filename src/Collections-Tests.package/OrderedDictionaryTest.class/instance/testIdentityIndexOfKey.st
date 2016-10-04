@@ -2,9 +2,11 @@ tests
 testIdentityIndexOfKey
 	| dictionary |
 
-	dictionary := self dictionaryWithAssociations.
-	dictionary keys withIndexDo: [:each :i |
+	dictionary := self emptyDictionary.
+	self orderedAssociations withIndexDo: [:each :i |
+		self assert: (dictionary identityIndexOfKey: each key) = 0.
+
+		dictionary add: each.
 		self
-			assert: (dictionary identityIndexOfKey: each) = i;
-			assert: (dictionary identityIndexOfKey: each copy) isZero].
-	self assert: (dictionary identityIndexOfKey: self absentKey) isZero.
+			assert: (dictionary identityIndexOfKey: each key) = i;
+			assert: (dictionary identityIndexOfKey: each key copy) = 0].

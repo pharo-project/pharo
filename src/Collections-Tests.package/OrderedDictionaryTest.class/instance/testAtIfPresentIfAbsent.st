@@ -2,17 +2,23 @@ tests
 testAtIfPresentIfAbsent
 	| dictionary |
 
-	dictionary := self dictionaryWithSingleAssociation.
-	self assert:
-		(dictionary
-			at: self singleKey
-			ifPresent: [:value |
-				value = self singleValue
-					ifTrue: [self newValue]
-					ifFalse: [nil]]
-			ifAbsent: [self signalFailure: 'Block should not have been evaluated']) = self newValue.
-	self assert:
-		(dictionary
-			at: self absentKey
-			ifPresent: [self signalFailure: 'Block should not have been evaluated']
-			ifAbsent: [self newValue]) = self newValue.
+	dictionary := self emptyDictionary.
+	self orderedAssociations do: [:each |
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [self fail]
+				ifAbsent: [self absentValue]) = self absentValue.
+
+		dictionary add: each.
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [:value | self newValue -> value]
+				ifAbsent: [self fail]) = (self newValue -> each value).
+		"ensure cull: is used"
+		self assert:
+			(dictionary
+				at: each key
+				ifPresent: [self newValue]
+				ifAbsent: [self fail]) = self newValue].

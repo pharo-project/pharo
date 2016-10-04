@@ -1,17 +1,15 @@
 tests
 testAssociationsSelect
-	| dictionary selectedAssociations rejectedAssociation |
+	| dictionary |
 
-	rejectedAssociation := self dictionaryAssociations anyOne.
-	selectedAssociations := self dictionaryAssociations copyWithout: rejectedAssociation.
-	dictionary :=
-		self dictionaryWithAssociations
-			associationsSelect: [:each | each ~= rejectedAssociation].
-	self
-		assertIsDictionary: dictionary withAssociations: selectedAssociations;
-		deny: (dictionary includesAssociation: rejectedAssociation).
-
-	(dictionary associationsSelect: [:each | true])
-		at: selectedAssociations anyOne key
-		put: self newValue.
-	self assertIsDictionary: dictionary withAssociations: selectedAssociations.
+	dictionary := self dictionaryWithOrderedAssociations.
+	self orderedAssociations do: [:assoc | | selectedAssociations |
+		selectedAssociations := self orderedAssociations copyWithout: assoc.
+		self
+			assertIsDictionary:
+				(dictionary associationsSelect: [:each |
+					selectedAssociations includes: each])
+			copiedFrom: dictionary
+			withOrderedAssociations:
+				(self orderedAssociations select: [:each |
+					selectedAssociations includes: each])].

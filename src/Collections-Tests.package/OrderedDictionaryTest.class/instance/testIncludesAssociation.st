@@ -3,7 +3,12 @@ testIncludesAssociation
 	| dictionary |
 
 	dictionary := self emptyDictionary.
-	self deny: (self dictionaryAssociations anySatisfy: [:each | dictionary includesAssociation: each]).
+	self orderedAssociations do: [:each |
+		self
+			deny: (dictionary includesAssociation: each);
+			deny: (dictionary includesAssociation: each key -> each value).
 
-	dictionary addAll: self dictionaryAssociations.
-	self assert: (self dictionaryAssociations allSatisfy: [:each | dictionary includesAssociation: each])
+		dictionary add: each.
+		self
+			assert: (dictionary includesAssociation: each);
+			assert: (dictionary includesAssociation: each key -> each value)].

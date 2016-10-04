@@ -2,21 +2,15 @@ tests
 testNewFrom
 	| dictionary |
 	
-	dictionary := self dictionaryClass newFrom: self dictionaryAssociations.
+	dictionary := self dictionaryClass newFrom: self orderedAssociations.
 	self
 		assertIsDictionary: dictionary
-		withAssociations: self dictionaryAssociations.
+		withOrderedAssociations: self orderedAssociations.
 	self
 		assertIsDictionary: (self dictionaryClass newFrom: dictionary)
-		withAssociations: self dictionaryAssociations.
+		copiedFrom: dictionary
+		withOrderedAssociations: self orderedAssociations.
 	self
 		assertIsDictionary:
 			(self dictionaryClass newFrom: self internalDictionaryWithAssociations)
-		withUnorderedAssociations: self dictionaryAssociations.
-
-	self
-		assertDictionary: dictionary
-		doesNotEqual:
-			((self dictionaryClass newFrom: dictionary)
-				at: self singleKey put: self newValue;
-				yourself).
+		withUnorderedAssociations: self orderedAssociations.

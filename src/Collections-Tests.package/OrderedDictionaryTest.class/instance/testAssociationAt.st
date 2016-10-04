@@ -2,7 +2,11 @@ tests
 testAssociationAt
 	| dictionary |
 
-	dictionary := self dictionaryWithSingleAssociation.
-	self
-		should: [dictionary associationAt: self absentKey] raise: Error;
-		assert: (dictionary associationAt: self singleKey) = self singleAssociation.
+	dictionary := self emptyDictionary.
+	self orderedAssociations do: [:each |
+		self
+			should: [dictionary associationAt: each key]
+			raise: Error.
+
+		dictionary add: each.
+		self assert: (dictionary associationAt: each key) = each].

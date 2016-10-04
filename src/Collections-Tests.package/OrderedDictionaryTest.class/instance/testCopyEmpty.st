@@ -2,9 +2,12 @@ tests
 testCopyEmpty
 	| dictionary copy |
 
-	dictionary := self dictionaryWithAssociations.
+	dictionary := self dictionaryWithOrderedAssociations.
 	copy := dictionary copyEmpty.
 	self
-		assertDictionary: dictionary doesNotEqual: copy;
-		assert: copy isEmpty;
-		deny: dictionary isEmpty.
+		assertIsDictionary: dictionary
+		withOrderedAssociations: self orderedAssociations.
+	self
+		assertIsDictionary: copy
+		copiedFrom: dictionary
+		withOrderedAssociations: #().

@@ -1,12 +1,15 @@
 tests
 testKeysAndValuesDo
+	| dictionary |
+
+	dictionary := self emptyDictionary.
 	self
-		assertSelector: #keysAndValuesDo:
-		enumerates: #()
-		and: #()
-		from: self emptyDictionary.
-	self
-		assertSelector: #keysAndValuesDo:
-		enumerates: self dictionaryKeys
-		and: self dictionaryValues
-		from: self dictionaryWithAssociations.
+		should: [:block | dictionary keysAndValuesDo: block]
+		enumerate: #()
+		and: #().
+	self orderedAssociations withIndexDo: [:each :i |
+		dictionary add: each.
+		self
+			should: [:block | dictionary keysAndValuesDo: block]
+			enumerate: (self orderedKeysFirst: i)
+			and: (self orderedValuesFirst: i)].

@@ -2,11 +2,15 @@ tests
 testIndexOfKeyIfAbsent
 	| dictionary |
 
-	dictionary := self dictionaryWithAssociations.
-	dictionary keys withIndexDo: [:each :i |
-		self assert: (dictionary indexOfKey: each ifAbsent: [self absentValue]) = i].
+	dictionary := self emptyDictionary.
+	self orderedAssociations withIndexDo: [:each :i |
+		self assert:
+			(dictionary
+				indexOfKey: each key
+				ifAbsent: [self absentValue]) = self absentValue.
 
-	self assert:
-		(dictionary
-			indexOfKey: self absentKey
-			ifAbsent: [self absentValue]) = self absentValue.
+		dictionary add: each.
+		self assert:
+			(dictionary
+				indexOfKey: each key
+				ifAbsent: [self fail]) = i].

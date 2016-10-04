@@ -1,7 +1,9 @@
 testing
 isHealthy
+	"Since this dictionary does no hashing, we consider it healthy
+	if it contains no duplicate keys."
+
 	| uniqueKeys |
-	"ensure there are no duplicate keys"
 	uniqueKeys := self setClass new: self size.
 	keys
 		do: [ :each | 

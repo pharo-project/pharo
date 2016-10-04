@@ -1,21 +1,24 @@
 tests
 testAtPut
-	| dictionary keyToUpdate oldValue |
+	| dictionary |
 
 	dictionary := self emptyDictionary.
-	self assert:
-		(self dictionaryAssociations allSatisfy: [:each |
-			(dictionary at: each key put: each value) = each value]).
-	self assert: dictionary associations = self dictionaryAssociations.
+	self orderedAssociations withIndexDo: [:each :i |
+		self assert:
+			(dictionary
+				at: each key
+				put: each value) = each value.
+		self
+			assertIsDictionary: dictionary
+			withOrderedAssociations: (self orderedAssociationsFirst: i)].
 
-	keyToUpdate := self dictionaryKeys anyOne.
-	oldValue := dictionary at: keyToUpdate.
-	self
-		assert: (dictionary at: keyToUpdate put: self newValue) = self newValue;
-		assert: (dictionary at: keyToUpdate) = self newValue;
-		assert:
-			(dictionary associations =
-				(self dictionaryAssociations collect: [:each |
-					(each value = oldValue)
-						ifTrue: [each key -> self newValue]
-						ifFalse: [each]])).
+	self changedOrderedAssociations withIndexDo: [:each :i |
+		self assert:
+			(dictionary
+				at: each key
+				put: each value) = each value.
+		self
+			assertIsDictionary: dictionary
+			withOrderedAssociations:
+				(self changedOrderedAssociationsFirst: i),
+				(self orderedAssociationsAllButFirst: i)].

@@ -1,18 +1,20 @@
 tests
 testKeyAtIdentityValueIfAbsent
-	| dictionary singleValue |
+	| dictionary |
 
-	dictionary := self dictionaryWithSingleAssociation.
-	singleValue := dictionary at: self singleKey.
-	self assert:
-		(dictionary
-			keyAtIdentityValue: self absentValue
-			ifAbsent: [self absentKey]) = self absentKey.
-	self assert:
-		(dictionary
-			keyAtIdentityValue: singleValue copy
-			ifAbsent: [self absentKey]) = self absentKey.
-	self assert:
-		(dictionary
-			keyAtValue: singleValue
-			ifAbsent: [self absentKey]) = self singleKey.
+	dictionary := self emptyDictionary.
+	self orderedAssociations do: [:each |
+		self assert:
+			(dictionary
+				keyAtIdentityValue: each value
+				ifAbsent: [self absentKey]) = self absentKey.
+
+		dictionary add: each.
+		self assert:
+			(dictionary
+				keyAtIdentityValue: each value
+				ifAbsent: [self fail]) = each key.
+		self assert:
+			(dictionary
+				keyAtIdentityValue: each value copy
+				ifAbsent: [self absentKey]) = self absentKey].
