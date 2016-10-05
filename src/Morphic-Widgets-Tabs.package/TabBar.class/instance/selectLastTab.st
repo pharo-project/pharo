@@ -1,6 +1,5 @@
 protocol
 selectLastTab
-	| tab |
 	
-	tab := tabs lastIfAbsent: [ ^ self ].
-	tab selected: true
+	tabs ifEmpty: [ ^self ].
+	tabs last selected: true
