@@ -4,4 +4,4 @@ primitivePragmaSelectors
 	 Needed for compile and decomple."
 
 	^ (Pragma allNamed: #primitive from: self to: Parser)
-		collect: [ :each | each selector ]
+		collect: [ :each | each methodSelector ]

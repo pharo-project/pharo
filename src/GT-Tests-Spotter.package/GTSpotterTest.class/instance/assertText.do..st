@@ -5,7 +5,7 @@ assertText: aTextualObject do: aBlock
 	self shouldnt: [ result := spotter setText: aTextualObject from: self. ] raise: Error.
 	
 	self assert: result.
-	self deny: spotter isEmpty.
+	self deny: spotter hasSteps not.
 	self deny: spotter steps isEmpty.
 	
 	self shouldnt: [ aBlock value ] raise: Error.
