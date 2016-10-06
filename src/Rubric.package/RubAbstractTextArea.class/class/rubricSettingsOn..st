@@ -4,29 +4,31 @@ rubricSettingsOn: aBuilder
 	(aBuilder group: #Rubric)
 		label: 'Rubric editor';
 		parent: #codeEditing;
-		with: [ 
-					(aBuilder setting: #backgroundColor)
+		with: [ (aBuilder setting: #backgroundColor)
+				target: self;
+				description: 'The default editor background color';
+				label: 'Background'.
+			(aBuilder setting: #textColor)
+				target: self;
+				description: 'The default editor text color';
+				label: 'Text color'.
+			(aBuilder group: #LineNumbers)
+				target: self;
+				label: 'Line numbers';
+				description: 'line numbers settings';
+				with: [ (aBuilder setting: #lineNumbersFont)
 						target: self;
-						description: 'The default editor background color';
-						label: 'Background'.
-					(aBuilder setting: #textColor)
+						description: 'Font used for line numbers';
+						label: 'Line numbers font'.
+					(aBuilder setting: #lineNumbersTextColor)
 						target: self;
-						description: 'The default editor text color';
-						label: 'Text color'.
-					(aBuilder group: #LineNumbers)
+						description: 'Color used for line numbers';
+						label: 'Line numbers color'.
+					(aBuilder setting: #lineNumbersBackgroundColor)
 						target: self;
-						label: 'Line numbers';
-						description: 'line numbers settings';
-						with: [ 
-									(aBuilder setting: #lineNumbersFont)
-										target: self;
-										description: 'Font used for line numbers';
-										label: 'Line numbers font'.
-									(aBuilder setting: #lineNumbersTextColor)
-										target: self;
-										description: 'Color used for line numbers';
-										label: 'Line numbers color'.
-									(aBuilder setting: #lineNumbersBackgroundColor)
-										target: self;
-										description: 'Color used for line numbers background';
-										label: 'Line numbers background color' ] ]
+						description: 'Color used for line numbers background';
+						label: 'Line numbers background color' ].
+			(aBuilder setting: #highlightMessageSend)
+				target: self;
+				description: 'In a Smalltalk text editor, highlight message sends on mouse over with shift key pressed.';
+				label: 'Highlight Message Send' ]

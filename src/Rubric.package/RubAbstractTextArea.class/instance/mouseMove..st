@@ -1,5 +1,6 @@
 event handling
 mouseMove: evt
+   self paragraph move: evt for: model controller: self editor.
 	evt redButtonPressed
 		ifFalse: [ ^ self ].
 	evt shiftPressed

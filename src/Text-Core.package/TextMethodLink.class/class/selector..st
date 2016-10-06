@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 selector: aStringOrSymbol
 	^ self new
 		selector: aStringOrSymbol;

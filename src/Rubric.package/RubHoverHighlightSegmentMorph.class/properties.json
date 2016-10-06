@@ -1,0 +1,14 @@
+{
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 8/10/2016 12:33",
+	"instvars" : [
+		 ],
+	"name" : "RubHoverHighlightSegmentMorph",
+	"pools" : [
+		 ],
+	"super" : "RubTextSegmentMorph",
+	"type" : "normal" }

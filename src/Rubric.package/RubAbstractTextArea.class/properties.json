@@ -6,6 +6,7 @@
 		"BackgroundColor",
 		"CaseSensitiveFinds",
 		"DefaultTextColor",
+		"HighlightMessageSend",
 		"LineNumbersBackgroundColor",
 		"LineNumbersFont",
 		"LineNumbersTextColor",
