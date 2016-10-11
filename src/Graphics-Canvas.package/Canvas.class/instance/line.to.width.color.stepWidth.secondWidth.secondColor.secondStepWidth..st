@@ -5,7 +5,7 @@ line: pt1 to: pt2 width: w1 color: c1 stepWidth: s1 secondWidth: w2 secondColor:
 	colors."
 	| bigSteps offsetPoint dist p1p2Vec deltaBig delta1 delta2 lastPoint bigStep |
 	s1 = 0 & (s2 = 0) ifTrue: [^ self].
-	dist := pt1 dist: pt2.
+	dist := pt1 distanceTo: pt2.
 	dist = 0 ifTrue: [^ self].
 	bigStep := s1 + s2.
 	bigSteps := dist / bigStep.

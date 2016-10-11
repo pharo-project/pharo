@@ -5,7 +5,7 @@ line: pt1 to: pt2 width: width colors: colors dashes: dashes startingOffset: sta
 
 	|dist deltaBig segmentOffset phase segmentLength startPoint distDone endPoint segLens lens l ep|
 	width = 0 ifTrue: [^startingOffset].
-	dist := pt1 dist: pt2.
+	dist := pt1 distanceTo: pt2.
 	dist = 0 ifTrue: [^startingOffset].
 	(dashes allSatisfy: [:d | d = 0]) ifTrue: [^startingOffset].
 	deltaBig := pt2 - pt1.

@@ -15,4 +15,4 @@ onLineFrom: p1 to: p2 within: epsilon
 			((y < (p2 y - epsilon)) or: [y > (p1 y + epsilon)]) ifTrue: [^ false]].
 
 	"it's in the box; is it on the line?"
-	^ (self dist: (self nearestPointAlongLineFrom: p1 to: p2)) <= epsilon
+	^ (self distanceTo: (self nearestPointAlongLineFrom: p1 to: p2)) <= epsilon

@@ -3,7 +3,7 @@ distanceFromLineFormedByFinger: aFingerTracker
 	| otherLast |
 	otherLast := aFingerTracker lastPosition.
 
-	^ lastPosition dist: 
+	^ lastPosition distanceTo: 
 		(lastPosition nearestPointAlongLineFrom: 
 			otherLast + aFingerTracker delta 
 		to:

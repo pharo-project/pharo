@@ -17,7 +17,7 @@ fromHandFreehand: hand
 		
 		evt isMouse ifTrue:[ 
 			pN := evt cursorPoint.
-			(pN dist: poly vertices last) > 3 ifTrue:
+			(pN distanceTo: poly vertices last) > 3 ifTrue:
 				[poly setVertices: (poly vertices copyWith: pN) ].
 			
 			evt anyButtonPressed 

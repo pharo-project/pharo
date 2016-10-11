@@ -1,5 +1,7 @@
 halting
 once
+	"Stop once and only once the execution of the method containing the expression Halt once. If you need to get it stops another time after the first stop, use Halt resetOnce."
+
 	| callingContext senderContext node |
 	<debuggerCompleteToSender>
 	callingContext := (thisContext findContextSuchThat: [ :ctx | 

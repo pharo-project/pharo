@@ -6,7 +6,7 @@ midpoint
 	middle < 2 ifTrue: [ ^ self center ].
 	middle := middle / 2.
 	self lineSegmentsDo: [ :a :b | | dist |
-		dist := (a dist: b).
+		dist := (a distanceTo: b).
 		middle < dist
 			ifTrue: [ ^(a + ((b - a) * (middle / dist))) asIntegerPoint ].
 		middle := middle - dist.

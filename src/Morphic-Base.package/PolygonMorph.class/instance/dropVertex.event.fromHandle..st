@@ -8,10 +8,10 @@ dropVertex: ix event: evt fromHandle: handle
 			and: ["check for too few vertices before deleting. The alternative 
 				is not pretty -wiz"
 				((vertices atWrap: ix - 1)
-						dist: p)
+						distanceTo: p)
 						< 3
 					or: [((vertices atWrap: ix + 1)
-							dist: p)
+							distanceTo: p)
 							< 3]])
 		ifTrue: ["Drag a vertex onto its neighbor means delete"
 				self deleteVertexAt: ix .].

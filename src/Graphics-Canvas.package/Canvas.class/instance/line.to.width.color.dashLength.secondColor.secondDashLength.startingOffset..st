@@ -6,7 +6,7 @@ line: pt1 to: pt2 width: width color: color1 dashLength: s1 secondColor: color2 
 	Returns the sum of the starting offset and the length of this line."
 
 	| dist deltaBig colors nextPhase segmentOffset phase segmentLength startPoint distDone endPoint segLens |
-	dist := pt1 dist: pt2.
+	dist := pt1 distanceTo: pt2.
 	dist = 0 ifTrue: [^startingOffset].
 	s1 = 0 & (s2 = 0) ifTrue: [^startingOffset].
 	deltaBig := pt2 - pt1.

@@ -10,7 +10,7 @@ closestSegmentTo: aPoint
 		(p1 = (self vertices at: vertexIndex + 1))
 			ifTrue: [ vertexIndex := vertexIndex + 1 ].
 		curvePoint := aPoint nearestPointOnLineFrom: p1 to: p2.
-		dist := curvePoint dist: aPoint.
+		dist := curvePoint distanceTo: aPoint.
 		(closestPoint isNil or: [dist < minDist])
 			ifTrue: [closestPoint := curvePoint.
 					minDist := dist.

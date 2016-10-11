@@ -18,7 +18,7 @@ makeUnitPieSegmentWith: point1 and: point2
 	"The second sample will be taken from the curve with coincident control points at the intersection of dir1 and dir2, which simplifies significantly with a little understanding about trigonometry, since the angle formed between mid, pt1 and the intersection is the same as between the center, pt1 and mid."
 	length := mid r.
 	"length is not only the distance from the center of the unit circle but also the sine of the angle between the circle's center, pt1 and mid (since center is at zero and pt1 has unit length). Therefore, to scale dir1 to the intersection with dir2 we can use mid's distance from pt1 and simply divide it by the sine value."
-	scale := (mid dist: pt1).
+	scale := (mid distanceTo: pt1).
 	length > 0.0 ifTrue:[ scale := scale / length].
 	"now sample the cubic bezier (optimized version for coincident control points)"
 	cp1 := pt1 + (dir1 * (scale * 0.75)).

@@ -5,6 +5,6 @@ totalDistanceTravelled
 	sum := 0.
 	move
 		do: [ :position | 
-			sum := sum + position dist: firstPosition.
+			sum := sum + position distanceTo: firstPosition.
 			previous := position ].
 	^ sum

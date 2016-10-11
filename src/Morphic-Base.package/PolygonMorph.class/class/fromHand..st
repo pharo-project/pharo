@@ -24,7 +24,7 @@ fromHand: hand
 					evt anyButtonPressed ] 
 				ifFalse: [ true ] ].
 
-		(oldVerts size > 1 and: [(pN dist: p1) < 5]) 
+		(oldVerts size > 1 and: [(pN distanceTo: p1) < 5]) 
 			ifFalse: [
 				oldVerts := poly vertices.
 				"loop till button will be pressed"

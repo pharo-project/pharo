@@ -8,6 +8,6 @@ measureFor: n
 	measure := 0.
 	1 to: n do: [:i | | p2 | 
 			p2 := self polynomialEval: i / n asFloat.
-			measure := measure + (p2 dist: p1).
+			measure := measure + (p2 distanceTo: p1).
 			p1 := p2].
 	^ measure
