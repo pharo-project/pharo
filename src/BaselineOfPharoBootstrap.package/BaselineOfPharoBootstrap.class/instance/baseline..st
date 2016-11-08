@@ -3,6 +3,7 @@ baseline: spec
 	<baseline>
 
 	spec for: #common do: [
+		spec package: 'Colors'.
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
 		spec package: 'CodeExport'.
@@ -61,6 +62,7 @@ baseline: spec
 		spec package: 'PharoBootstrap-Initialization'.
 
 		spec group: 'minimal' with: #(
+			#Colors
 			#'AST-Core' 
 			#'Announcements-Core' 
 			#CodeExport 
