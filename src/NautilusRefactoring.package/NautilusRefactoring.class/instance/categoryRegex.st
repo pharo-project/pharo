@@ -1,3 +1,3 @@
 rewrite code
 categoryRegex
-	self model sourceCode: self categoryRegexText
+	self model refactorCode: self categoryRegexText

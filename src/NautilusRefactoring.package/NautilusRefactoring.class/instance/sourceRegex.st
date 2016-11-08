@@ -1,3 +1,3 @@
 rewrite code
 sourceRegex
-	self model sourceCode: self sourceRegexText
+	self model refactorCode: self sourceRegexText

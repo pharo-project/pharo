@@ -1,0 +1,14 @@
+{
+	"category" : "Nautilus-Acceptors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 11/5/2016 00:19",
+	"instvars" : [
+		 ],
+	"name" : "CodeRefactoringAcceptor",
+	"pools" : [
+		 ],
+	"super" : "AbstractAcceptor",
+	"type" : "normal" }

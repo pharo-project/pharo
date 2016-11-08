@@ -1,15 +1,17 @@
 classification
 classify: aMethod
-	(self classifyAccessor: aMethod)
-		ifTrue: [ ^ aMethod category ].
-	(self classifyInSuperclassProtocol: aMethod)
-		ifTrue: [ ^ aMethod category ].
 
+	(self classifyAccessor: aMethod)
+		ifTrue: [ ^ aMethod protocol ].
 	(self classifyByKnownPrefix: aMethod)
-		ifTrue: [ ^ aMethod category ].
+		ifTrue: [ ^ aMethod protocol ].
 	(self classifyByKnownKeywordSuffix: aMethod)
-		ifTrue: [ ^ aMethod category ].
-	(self classifyByOtherImplementors: aMethod)
-		ifTrue: [ ^ aMethod category ].
+		ifTrue: [ ^ aMethod protocol ].
 	(self classifyByKnownPragma: aMethod)
-		ifTrue: [ ^ aMethod category ].
+		ifTrue: [ ^ aMethod protocol ].	
+	(self classifyInSuperclassProtocol: aMethod)
+		ifTrue: [ ^ aMethod protocol ].	
+	(self classifyByOtherImplementors: aMethod)
+		ifTrue: [ ^ aMethod protocol ].
+
+
