@@ -1,3 +1,0 @@
-testing
-isParagraphProvider
-	^ true

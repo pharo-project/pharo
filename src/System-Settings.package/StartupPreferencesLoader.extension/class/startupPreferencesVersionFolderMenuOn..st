@@ -9,4 +9,4 @@ startupPreferencesVersionFolderMenuOn: aBuilder
 		parent: #SystemStartup;
 		order: 2;
 		help: 'Open the preferences per version folder';
-		icon: (Smalltalk ui icons iconNamed: #smallOpenIcon)
+		iconName: #smallOpenIcon

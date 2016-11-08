@@ -15,10 +15,10 @@ standardFontsSettingsOn: aBuilder
 				label: 'Default'.
 			(aBuilder setting: #codeFont) 
 				description: 'The standard code font' ;
-				label: 'Code' translated.
+				label: 'Code'.
 			(aBuilder setting: #listFont)
 				description: 'The standard list font' ;
-				label: 'List' translated.
+				label: 'List'.
 			(aBuilder setting: #menuFont)
 				description: 'The standard menu font' ;
 				label: 'Menu' .

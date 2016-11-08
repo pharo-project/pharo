@@ -1,8 +1,8 @@
 menu
 defineCurrentVersionRepositoryButton: aList
 
-	<menu>
+	<menuOrder: 7>
 	aList
 		act: [ :presenter | self defineCurrentVersionRepositoryInMCBrowser ]
-		icon: (self iconNamed: #komitterIcon)
+		iconName: #komitterIcon
 		entitled: 'Define current distribution catalog MC repository'

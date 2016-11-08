@@ -1,0 +1,3 @@
+methods
+equivalentSuperclassMethods
+	^ self identityHash

@@ -1,4 +1,4 @@
-event handling
+as yet unclassified
 handleKeyStroke: anEvent
 	| action |
 	action := self allKeystrokeActions detect: [:a | 

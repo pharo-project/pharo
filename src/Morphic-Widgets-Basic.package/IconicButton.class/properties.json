@@ -8,7 +8,8 @@
 	"instvars" : [
 		"graphicalMorph",
 		"oldBorder",
-		"oldBorderStyle" ],
+		"oldBorderStyle",
+		"mouseOverBorderStyle" ],
 	"name" : "IconicButton",
 	"pools" : [
 		 ],

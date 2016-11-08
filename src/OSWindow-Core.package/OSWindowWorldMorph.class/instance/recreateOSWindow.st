@@ -6,7 +6,7 @@ recreateOSWindow
 	attributes
 		extent: self extent;
 		title: Smalltalk shortImageName;
-		icon: (Smalltalk ui icons iconNamed: #pharoIcon);
+		icon: (self iconNamed: #pharoIcon);
 		resizable: isResizeable.
 	self updateDisplay.
 	driver := self pickMostSuitableWindowDriver.

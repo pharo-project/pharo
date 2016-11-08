@@ -1,3 +1,0 @@
-*Rubric
-isParagraphProvider
-	^ false

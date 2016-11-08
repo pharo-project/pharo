@@ -24,7 +24,7 @@ treeMorph
 				rowMorphGetSelector: #classButton;
 				headerButtonLabel: 'Class'
 					font: nil
-					icon: (Smalltalk ui icons iconNamed: #smallOpenIcon)
+					icon: (self iconNamed: #smallOpenIcon)
 					target: nil
 					actionSelector: nil
 					arguments: #()).
@@ -32,7 +32,7 @@ treeMorph
 				rowMorphGetSelector: #commentText;
 				headerButtonLabel: 'Comments'
 					font: nil
-					icon: (Smalltalk ui icons iconNamed: #smallPrintIcon)
+					icon: (self iconNamed: #smallPrintIcon)
 					target: nil
 					actionSelector: nil
 					arguments: #())};

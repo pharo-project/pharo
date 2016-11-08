@@ -3,7 +3,7 @@ freeTypeSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
 		target: self;
-		icon: (self iconNamed: #smallConfigurationIcon);
+		iconName: #smallConfigurationIcon;
 		type: #Label;
 		label: 'Free type';
 		precondition: [ FT2Library current isNil ];
@@ -14,7 +14,7 @@ freeTypeSettingsOn: aBuilder
 	(aBuilder setting: #loadFt2Library)
 		target: self;
 		dialog: [ self ft2LibraryVersion ];
-		icon: (self iconNamed: #smallConfigurationIcon);
+		iconName: #smallConfigurationIcon;
 		label: 'Use Free type';
 		description:
 			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';
@@ -65,16 +65,15 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 						targetSelector: #current;
 						default: #Light;
 						domainValues:
-							{('Light' translated -> #Light).
-							('Normal' translated -> #Normal).
-							('Full' translated -> #Full).
-							('None' translated -> #None)}.
+							{('Light' -> #Light).
+							('Normal' -> #Normal).
+							('Full' -> #Full).
+							('None' -> #None)}.
 					(aBuilder range: #glyphContrast)
 						target: FreeTypeSettings;
 						targetSelector: #current;
 						label: 'Glyph contrast';
 						description:
-							'Change the contrast level for glyphs. This is an integer between 1 and 100'
-								translated;
+							'Change the contrast level for glyphs. This is an integer between 1 and 100' ;
 						default: 50;
 						range: (0 to: 100 by: 10) ] ]

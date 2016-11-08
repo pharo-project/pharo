@@ -1,4 +1,4 @@
 *Polymorph-Widgets-Themes
 systemIcon
 
-	^ Smalltalk ui icons iconNamed: #morphIcon
+	^ self iconNamed: #morphIcon

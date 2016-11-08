@@ -2,12 +2,12 @@ settings
 growlSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder group: #growl)
-		label: 'Popup notifiaction' translated;  
+		label: 'Popup notifiaction';  
 		parent: #appearance;
-		description: 'All settings concerned with the notifications popup look''n feel' translated;
+		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
 			(aBuilder pickOne: #position)
-				label: 'Popup position' translated;
+				label: 'Popup position';
 				target: self;
 				default: #topRight;
 				order: 1;

@@ -22,5 +22,5 @@ rubricSettingsOn: aBuilder
 						target: self;
 						label: 'Blinking period';
 						description:
-								'Specify the cursor blinking period in milliseconds. If it is set to zero then the cursor will not blink' translated;
+								'Specify the cursor blinking period in milliseconds. If it is set to zero then the cursor will not blink';
 						range: (0 to: 1000) ]

@@ -1,7 +1,7 @@
 building
 refreshButton: aList
-	<menu>
+	<menuOrder: 10>
 	aList
 		act: [ :presenter | self onRefreshFrom: presenter ]
-		icon: (self iconNamed: #glamorousRefresh)
+		iconName: #glamorousRefresh
 		entitled: 'Refresh'

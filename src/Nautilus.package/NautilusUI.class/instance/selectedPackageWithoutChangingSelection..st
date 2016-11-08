@@ -9,4 +9,5 @@ selectedPackageWithoutChangingSelection: aSelection
 	aSelection ifNotNil: [ aSelection registerSelectionTarget: self ].
 	self changed: #browseScopedButtonEnabled.
 	self updateClassView.
-	self updateCategoryAndMethodList
+	self updateCategoryAndMethodList.
+	self commentTextModel setInitialText: self getComments.

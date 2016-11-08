@@ -14,7 +14,7 @@ testModelImplementorsSenders
 	modelImps := model allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
 	self assert: modelImps size - 1 
-				= (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
+				equals: (RBBrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
 	refs := RBBrowserEnvironment new referencesTo: #storeOn:.
 	found := false.
 	model allReferencesTo: #storeOn:
@@ -23,7 +23,6 @@ testModelImplementorsSenders
 			each modelClass = class 
 				ifTrue: [found := true]
 				ifFalse: 
-					[	self flag:#todo. "temporary fix until RBEnvironments are fixed see issue 15287"
-						each modelClass isMeta ifFalse:[self 
-						assert: (refs includesSelector: each selector in: each modelClass realClass)]]].
+					[	self 
+						assert: (refs includesSelector: each selector in: each modelClass realClass)]].
 	self assert: found

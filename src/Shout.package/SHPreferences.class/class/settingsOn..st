@@ -7,7 +7,7 @@ settingsOn: aBuilder
 		parentName: #codeBrowsing;
 		description: 'Syntax Highlighting As You Type: Enable syntax highlighting in browsers, debuggers and workspaces and set patterns style.';
 		selector: #enabled;
-		icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon);
+		iconName: #smallConfigurationIcon;
 		with: [
 			(aBuilder setting: #selectorPatternsStyle) 
 				label: 'Selector Patterns';

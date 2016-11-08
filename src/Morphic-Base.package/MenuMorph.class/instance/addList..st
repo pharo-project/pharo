@@ -11,4 +11,4 @@ addList: aList
 					(tuple size > 2 and: [ tuple third notNil ])
 						ifTrue: [ self balloonTextForLastItem: tuple third translated ].
 					(tuple size > 3 and: [ tuple fourth notNil ])
-						ifTrue: [ self lastItem icon: (Smalltalk ui icons iconNamed: tuple fourth) ] ] ]
+						ifTrue: [ self lastItem icon: (self iconNamed: tuple fourth) ] ] ]

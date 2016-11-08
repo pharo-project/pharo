@@ -1,0 +1,3 @@
+controlling
+resetFailures
+	failedProcesses removeAll

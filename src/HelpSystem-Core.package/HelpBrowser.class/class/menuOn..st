@@ -6,14 +6,14 @@ menuOn: aBuilder
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
-		icon: (self iconNamed: #smallDoIt).
+		iconName: #smallDoIt.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
-		icon: (self iconNamed: #smallPrintIt).
+		iconName: #smallPrintIt.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		icon: (self iconNamed: #smallInspectIt).
+		iconName: #smallInspectIt.

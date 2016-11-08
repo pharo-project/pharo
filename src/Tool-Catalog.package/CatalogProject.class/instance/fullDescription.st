@@ -1,7 +1,8 @@
 accessing
 fullDescription
 	^ String streamContents: [ :stream | 
-		self description 
+		self description
+		   ifNil: [ stream << '<No Description Provided>' ]
 			ifNotNil: [ stream << self description  ].
 		self contactInfo 
 			ifNotNil: [ 

@@ -1,7 +1,7 @@
 menu
 loadConfigurationButton: aList
-	<menu>
+	<menuOrder: 4>
 	aList
 		act: [ :presenter | self onLoadFrom: presenter ]
-		icon: (self iconNamed: #configIcon)
+		iconName: #configIcon
 		entitled: 'Load configuration (do not install project)'

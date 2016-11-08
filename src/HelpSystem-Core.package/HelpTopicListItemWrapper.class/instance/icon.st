@@ -5,5 +5,5 @@ icon
 	item icon notNil
 		ifTrue: [ ^ item icon ].
 	^ item hasSubtopics
-		ifTrue: [ Smalltalk ui icons iconNamed: #bookIcon ]
-		ifFalse: [ Smalltalk ui icons iconNamed: #pageIcon ]
+		ifTrue: [ self iconNamed: #bookIcon ]
+		ifFalse: [ self iconNamed: #pageIcon ]

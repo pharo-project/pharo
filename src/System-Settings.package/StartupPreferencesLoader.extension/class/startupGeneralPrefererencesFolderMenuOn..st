@@ -7,4 +7,4 @@ startupGeneralPrefererencesFolderMenuOn: aBuilder
 		parent: #SystemStartup;
 		order: 3;
 		help: 'Open the folder with general preferences';
-		icon: (Smalltalk ui icons iconNamed: #smallOpenIcon)
+		iconName: #smallOpenIcon

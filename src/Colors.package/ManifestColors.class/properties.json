@@ -1,0 +1,14 @@
+{
+	"category" : "Colors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestColors",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

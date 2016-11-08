@@ -3,4 +3,4 @@ currentWindow
 
 	"Answer the top window or nil"
 	
-	^ #SystemWindow asClassIfPresent: [:systemWindow | systemWindow topWindow]
+	^ self class environment at: #SystemWindow ifPresent: [:systemWindow | systemWindow topWindow]

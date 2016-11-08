@@ -16,7 +16,7 @@ instVarRefactoring: aBuilder
 	(aBuilder item: #'Remove')
 		action: [ target refactor removeInstVarFrom: self ];
 		parent: #'Inst Var Refactoring';
-		icon: (self iconNamed: #removeIcon);
+		iconName: #removeIcon;
 		order: 200;
 		withSeparatorAfter.
 		

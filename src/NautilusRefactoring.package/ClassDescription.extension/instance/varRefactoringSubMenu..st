@@ -16,7 +16,7 @@ varRefactoringSubMenu: aBuilder
 	(aBuilder item: #'Remove')
 		action: [ target refactor removeClassVarFrom: self ];
 		parent: #'Class Var Refactoring';
-		icon: (self iconNamed: #removeIcon);
+		iconName: #removeIcon;
 		order: 200;
 		withSeparatorAfter.
 		

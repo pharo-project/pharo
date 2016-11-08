@@ -2,5 +2,5 @@ settings
 touchScrollSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder group: #scrollGesture)
-		label: 'Scroll' translated;
+		label: 'Scroll';
 		parent: #touchGestures

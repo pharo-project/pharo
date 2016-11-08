@@ -3,7 +3,7 @@ addAttachment
 	| fileSelected |
 	self textModel hasUnacceptedEdits
 		ifTrue: [ self textModel acceptEditsInView ].
-	fileSelected := UIManager default chooseFileMatching: nil.
+	fileSelected := UIManager default chooseFullFileNameMatching: nil.
 	fileSelected ifNil: [ ^ self ].
 	fileSelected
 		writeStreamDo: [ :stream | 

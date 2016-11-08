@@ -1,13 +1,17 @@
 tests
 testCriticsOf
 
-	| rule |
-	rule := RBCompositeLintRule allGoodRules.
+	| rule critiques |
+	rule := ReRuleManager visibleRuleClasses collect: #new.
 	checker 
 		rule: rule;
 		environment: self package asEnvironment;
 		run. 
 	
-	self assert: (checker criticsOf: RBOnlyReadOrWrittenTemporaryRule new) size  = 3.
-	self assert: (( checker criticsOf: RBOnlyReadOrWrittenTemporaryRule new ) anySatisfy: [:each| each = (MFClassB>>#method3)]).
-	self assert: (( checker criticsOf: RBOnlyReadOrWrittenTemporaryRule new) anySatisfy: [:each| each = (MFClassA>>#method)]).
+	critiques := checker criticsOf: GRTemporaryNotReadNorWrittenRule new.
+	
+	self assert: critiques size  = 3.
+	self assert: (critiques anySatisfy: [ :each |
+		each sourceAnchor entity = (MFClassB>>#method3)]).
+	self assert: (critiques anySatisfy: [ :each |
+		each sourceAnchor entity = (MFClassA>>#method)]).

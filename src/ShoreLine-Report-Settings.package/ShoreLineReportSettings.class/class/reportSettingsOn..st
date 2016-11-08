@@ -4,7 +4,7 @@ reportSettingsOn: aBuilder
 
 	(aBuilder group: #shoreLine)
 		parent: #privacy;
-		label: 'ShoreLine Reporter' translated;
+		label: 'ShoreLine Reporter';
 		noOrdering.
 
 	self reportFlagSettingsOn: aBuilder.

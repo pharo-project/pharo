@@ -4,6 +4,6 @@ showErrorsSettingsOn: aBuilder
 	(aBuilder setting: #showErrors)
 		target: self;
 		order: 5;
-		label: 'Show erros (dev. only!)' translated;
+		label: 'Show errors (dev. only!)';
 		description: 'Signal errors that happen during critique-checking (and related). This should be used by developers.';
 		parent: #renraku.

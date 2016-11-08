@@ -1,0 +1,17 @@
+{
+	"category" : "Morphic-Widgets-Tabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"tabs",
+		"selectionHistory",
+		"menuButton",
+		"numberOfSelectedTabs" ],
+	"name" : "TabBarMorph",
+	"pools" : [
+		 ],
+	"super" : "PanelMorph",
+	"type" : "normal" }

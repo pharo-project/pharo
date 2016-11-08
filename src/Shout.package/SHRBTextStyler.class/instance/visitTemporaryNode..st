@@ -1,5 +1,5 @@
 visiting rb nodes
-visitTemporaryNode: aTemporaryNode 
-	self 
-		addStyle: #tempVar
-		forNode: aTemporaryNode
+visitTemporaryNode: aTemporaryNode
+	| methodOrBlockTempStyle |
+	methodOrBlockTempStyle := self methodOrBlockTempStyleFor: aTemporaryNode.
+	self addStyle: methodOrBlockTempStyle forNode: aTemporaryNode

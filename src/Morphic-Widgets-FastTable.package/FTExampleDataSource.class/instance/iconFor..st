@@ -6,24 +6,24 @@ iconFor: index
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
 		ifTrue: [ class hasPassedTest
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #testGreenIcon ].
+				ifTrue: [ ^ self iconNamed: #testGreenIcon ].
 			class hasFailedTest
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #testYellowIcon ].
+				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
 			class hasErrorTest
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #testRedIcon ].
-			^ Smalltalk ui icons iconNamed: #testNotRunIcon ].
+				ifTrue: [ ^ self iconNamed: #testRedIcon ].
+			^ self iconNamed: #testNotRunIcon ].
 	class organization classComment
-		ifEmpty: [ ^ Smalltalk ui icons iconNamed: #uncommentedClassIcon ].
+		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
 	((class
 		includesBehavior: (Smalltalk globals at: #TestCase ifAbsent: [ false ]))
 		and: [ class isAbstract not ])
 		ifTrue: [ class hasPassedTest
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #testGreenIcon ].
+				ifTrue: [ ^ self iconNamed: #testGreenIcon ].
 			class hasFailedTest
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #testYellowIcon ].
+				ifTrue: [ ^ self iconNamed: #testYellowIcon ].
 			class hasErrorTest
-				ifTrue: [ ^ Smalltalk ui icons iconNamed: #testRedIcon ].
-			^ Smalltalk ui icons iconNamed: #testNotRunIcon ].
+				ifTrue: [ ^ self iconNamed: #testRedIcon ].
+			^ self iconNamed: #testNotRunIcon ].
 	class organization classComment
-		ifEmpty: [ ^ Smalltalk ui icons iconNamed: #uncommentedClassIcon ].
+		ifEmpty: [ ^ self iconNamed: #uncommentedClassIcon ].
 	^ class systemIcon

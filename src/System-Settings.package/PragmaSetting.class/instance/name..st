@@ -1,3 +1,3 @@
 accessing
-name: aNameOrBlockOrMessageSend
-	name := aNameOrBlockOrMessageSend
+name: aName
+	name := aName

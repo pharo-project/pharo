@@ -22,7 +22,7 @@ editingSettingsOn: aBuilder
 				description: 'The color of the selection text'.
 			(aBuilder setting: #useSelectionBar)
 				target: TextEditor;
-				label: 'Show the colored bar on the current line' translated;
+				label: 'Show the colored bar on the current line';
 				with: [
 					(aBuilder setting: #selectionBarColor)
 						target: UITheme;
@@ -55,7 +55,7 @@ editingSettingsOn: aBuilder
 			(aBuilder setting: #caseSensitiveFinds) 
 				label: 'Case sensitive search';
 				target: TextEditor;
-		 		description: 'If true, then the "find" command in text will always make its searches in a case-sensitive fashion' translated.
+		 		description: 'If true, then the "find" command in text will always make its searches in a case-sensitive fashion'.
 			(aBuilder setting: #blinkingCursor) 
 				label: 'Blinking text cursor';
 				target: Editor;
@@ -63,7 +63,7 @@ editingSettingsOn: aBuilder
 			(aBuilder setting: #dumbbellCursor) 
 				label: 'Dumbbell-shaped text cursor';
 				target: Editor;
-		 		description: 'When true, the text cursor assumes the shape of a dumbbell, otherwise a vertical bar.' translated.
+		 		description: 'When true, the text cursor assumes the shape of a dumbbell, otherwise a vertical bar.'.
 			(aBuilder setting: #skipOverMultipleSpaces) 
 				label: 'Skip over white space';
 				target: Editor;

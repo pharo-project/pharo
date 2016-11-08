@@ -1,0 +1,3 @@
+private
+classEnvironmentWithAllObjectClasses
+	^ self classEnvironmentWithAll: RBSmalllintTestSuperclassObject withAllSubclasses

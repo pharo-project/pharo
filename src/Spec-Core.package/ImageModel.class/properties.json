@@ -8,7 +8,8 @@
 	"instvars" : [
 		"imageHolder",
 		"action",
-		"actionHolder" ],
+		"actionHolder",
+		"autoScaleHolder" ],
 	"name" : "ImageModel",
 	"pools" : [
 		 ],

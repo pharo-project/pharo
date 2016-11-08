@@ -19,7 +19,7 @@ changesMenu: m
 		enablementSelector: #selectionIsNotNil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (Smalltalk ui icons iconNamed: #smallBackIcon);
+		icon: (self iconNamed: #smallBackIcon);
 		keyText: 'Cmd+c'.
 	menu
 		addToggle: 'Use incoming version' translated
@@ -29,7 +29,7 @@ changesMenu: m
 		enablementSelector: #selectionIsNotNil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (Smalltalk ui icons iconNamed: #smallForwardIcon);
+		icon: (self iconNamed: #smallForwardIcon);
 		keyText: 'Cmd+g'.
 	menu
 		addToggle: 'Mark as conflict' translated
@@ -39,7 +39,7 @@ changesMenu: m
 		enablementSelector: #selectionIsNotNil.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (Smalltalk ui icons iconNamed: #smallCancelIcon);
+		icon: (self iconNamed: #smallCancelIcon);
 		keyText: 'Cmd+x'.
 	menu
 		addToggle: 'All conflicts' translated
@@ -59,6 +59,6 @@ changesMenu: m
 		enablementSelector: #notAllConflictsResolved.
 	menu lastItem
 		font: self theme menuFont;
-		icon: (Smalltalk ui icons iconNamed: #smallRightFlushIcon);
+		icon: (self iconNamed: #smallRightFlushIcon);
 		keyText: 'Cmd+f'.
 	^ menu

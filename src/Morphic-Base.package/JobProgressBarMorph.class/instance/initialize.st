@@ -3,7 +3,7 @@ initialize
 	super initialize.
 	progressBar := ProgressBarMorph new.
 	progressBar hResizing: #spaceFill.
-	button := (Smalltalk ui icons iconNamed: #stopIcon) asMorph.
+	button := (self iconNamed: #stopIcon) asMorph.
 	self extent: 200 @ 20.
 	self
 		color: Color transparent;

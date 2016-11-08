@@ -7,6 +7,6 @@ uiSettingsOn: aBuilder
 		description: 'Settings related to mode without UI';
 		with: [
 			(aBuilder setting: #snapshotErrorImage)
-				label: 'Snapshot before quitting' translated;
+				label: 'Snapshot before quitting' ;
 				target: CommandLineUIManager;
-				description: 'On unhandled exception, save a new version of the image before quitting' translated]
+				description: 'On unhandled exception, save a new version of the image before quitting']

@@ -7,7 +7,7 @@ offerWindowMenu
 	aMenu
 		addLine;
 		add: 'Grab window...' target: self selector: #grabWindow.
-	aMenu lastItem icon: (Smalltalk ui icons iconNamed: #smallWindowIcon).
+	aMenu lastItem icon: (self iconNamed: #smallWindowIcon).
 	self tabGroup page
 		ifNotNil: [ :page | page model addModelItemsToWindowMenu: aMenu ].
 	aMenu popUpEvent: self currentEvent in: self world

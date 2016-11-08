@@ -10,38 +10,38 @@ textEditorMenuOn: aBuilder
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
 	(aBuilder item: #'Do again' translated)
 		keyText: 'j';
 		selector: #again;
-		icon: (Smalltalk ui icons iconNamed: #smallRedoIcon).
+		iconNamed: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
-		icon: (Smalltalk ui icons iconNamed: #smallUndoIcon);
+		iconName: #smallUndoIcon;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		icon: (Smalltalk ui icons iconNamed: #smallCopyIcon).
+		iconName: #smallCopyIcon.
 	(aBuilder item: #Cut translated)
 		keyText: 'x';
 		selector: #cut;
-		icon: (Smalltalk ui icons iconNamed: #smallCutIcon).
+		iconName: #smallCutIcon.
 	(aBuilder item: #Paste translated)
 		keyText: 'v';
 		selector: #paste;
-		icon: (Smalltalk ui icons iconNamed: #smallPasteIcon).
+		iconName: #smallPasteIcon.
 	(aBuilder item: #'Paste...' translated)
 		selector: #pasteRecent;
-		icon: (Smalltalk ui icons iconNamed: #smallCopyIcon);
+		iconName: #smallCopyIcon;
 		withSeparatorAfter.
 	(aBuilder item: #'Set font...' translated)
 		keyText: 'k';
@@ -55,8 +55,8 @@ textEditorMenuOn: aBuilder
 	(aBuilder item: #Accept translated)
 		keyText: 's';
 		selector: #accept;
-		icon: (Smalltalk ui icons iconNamed: #smallOkIcon).
+		iconName: #smallOkIcon.
 	(aBuilder item: #Cancel translated)
 		keyText: 'l';
 		selector: #cancel;
-		icon: (Smalltalk ui icons iconNamed: #smallCancelIcon)
+		iconName: #smallCancelIcon

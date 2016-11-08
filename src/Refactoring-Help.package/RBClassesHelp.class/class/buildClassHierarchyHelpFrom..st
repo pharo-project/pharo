@@ -2,7 +2,7 @@ building
 buildClassHierarchyHelpFrom: aRootClass
 	| topic |
 	topic := HelpTopic named: aRootClass name.
-	topic icon: (self iconNamed: #classIcon).
+	topic iconName: #classIcon.
 	topic contents: aRootClass comment.
 	aRootClass
 		subclassesDo: [ :subclass | topic addSubtopic: (self buildClassHierarchyHelpFrom: subclass) ].

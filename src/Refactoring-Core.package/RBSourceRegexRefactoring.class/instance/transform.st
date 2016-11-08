@@ -8,6 +8,6 @@ transform
 			replacement = original ifFalse: [
 				(self parseMethod: replacement) isNil ifFalse: [
 					protocols := class protocolsFor: selector.
-					(class compiler parseSelector: replacement) = selector
+					(self parseSelector: replacement) = selector
 						ifFalse: [ class removeMethod: selector ].
 					class compile: replacement classified: protocols ] ] ] ]

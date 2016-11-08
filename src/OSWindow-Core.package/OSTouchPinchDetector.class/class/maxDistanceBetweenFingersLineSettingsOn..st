@@ -3,7 +3,7 @@ maxDistanceBetweenFingersLineSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder setting: #maxDistanceBetweenFingersLine)
 		target: self;
-		label: 'Max distance between fingers lines (%)' translated;
+		label: 'Max distance between fingers lines (%)';
 		description:
-				'The maximum distance between the two lines formed by the fingers' translated;
+				'The maximum distance between the two lines formed by the fingers';
 		parent: #pinchGesture

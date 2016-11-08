@@ -20,7 +20,7 @@ registerInterestToAnnouncer: anAnnouncer
 		when:  ProtocolRemoved send: #systemProtocolRemovedActionFrom: to: self.
 		
 	self flag: #hack. "for decoupling MC"
-	#MCWorkingCopy asClassIfPresent: [ 
+	self class environment at: #MCWorkingCopy ifPresent: [ 
 		anAnnouncer weak
 			when: (Smalltalk globals at: #MCWorkingCopyCreated) 
 				send: #updateAfterNewMCPackageRegistred: 

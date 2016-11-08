@@ -8,10 +8,11 @@ duplicateClassWithNewName: aSymbol
 		ifTrue: [ ^ self error: copysName , ' already exists' ].
 	class := self superclass
 		subclass: copysName
+		uses: self traitComposition
 		instanceVariableNames: self instanceVariablesString
 		classVariableNames: self classVariablesString
 		poolDictionaries: self sharedPoolsString
-		package: self package name.
+		package: self category.
 	class classSide
 		instanceVariableNames: self classSide instanceVariablesString.
 	class copyAllCategoriesFrom: self.

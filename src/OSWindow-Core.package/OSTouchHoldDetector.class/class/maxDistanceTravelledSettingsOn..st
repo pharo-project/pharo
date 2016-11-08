@@ -3,7 +3,7 @@ maxDistanceTravelledSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder setting: #maxDistanceTravelled)
 		target: self;
-		label: 'Detection area (%)' translated;
+		label: 'Detection area (%)';
 		description:
-				'The area to consider the finger to be still' translated;
+				'The area to consider the finger to be still';
 		parent: #holdGesture

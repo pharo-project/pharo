@@ -11,7 +11,7 @@ packagesChangesMenu: aBuilder
 				label: 'Changes with...';
 				order: 1295;
 				help: 'Changes';
-				icon: (self iconNamed: #monticelloPackageIcon);
+				iconName: #monticelloPackageIcon;
 				enabledBlock: [ target selectedPackages size < 2 ].
 			mcpackage workingCopy repositoryGroup repositories
 				doWithIndex: [ :repo :index | 

@@ -7,12 +7,12 @@ windowMenuOn: aBuilder
 	(aBuilder item: #Close)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
-		icon: (self iconNamed: #windowCloseForm);
+		iconName: #windowCloseForm;
 		enabledBlock: [ aBuilder model allowedToClose ];
 		withSeparatorAfter.
 	(aBuilder item: #About)
 		action: [ aBuilder model showAbout ];
-		icon: (self iconNamed: #smallHelpIcon);
+		iconName: #smallHelpIcon;
 		withSeparatorAfter.
 	(aBuilder item: #'Change title...')
 		action: [ aBuilder model relabel ];
@@ -41,7 +41,7 @@ windowMenuOn: aBuilder
 		ifFalse: [ #Maximize ].
 	(aBuilder item: maximizeLabel)
 		action: [ aBuilder model expandBoxHit ];
-		icon: self icons windowMaximizeForm.
+		iconName: #windowMaximizeForm.
 	aBuilder model isCollapsed
 		ifFalse: [ (aBuilder item: #'Window color...')
 				action: [ aBuilder model setWindowColor ] ]

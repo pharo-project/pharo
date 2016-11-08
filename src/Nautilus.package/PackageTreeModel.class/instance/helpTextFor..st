@@ -21,9 +21,8 @@ helpTextFor: aRPackage
 							possibleConfigurationNames addLast: stream contents ] ] ].
 	"try longeset match first"
 	possibleConfigurationNames
-		reverseDo: [ :each | 
-			each asSymbol
-				asClassIfPresent: [ :configuration | 
+		reverseDo: [ :each |
+			self class environment at: each asSymbol ifPresent: [ :configuration | 
 					"If the configuration has a catalog description we show it, if not we don't"
 					(configuration respondsTo: #catalogDescription)
 						ifTrue: [ ^ configuration catalogDescription ]

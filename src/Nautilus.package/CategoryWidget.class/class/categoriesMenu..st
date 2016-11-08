@@ -48,7 +48,7 @@ categoriesMenu: aBuilder
 		keyText: 'x' if: Nautilus useOldStyleKeys;
 		action: [ target removeCategories ];
 		order: 1400;
-		icon: (self iconNamed: #removeIcon);
+		iconName: #removeIcon;
 		withSeparatorAfter.
 	
 	(aBuilder item: #'File Out')

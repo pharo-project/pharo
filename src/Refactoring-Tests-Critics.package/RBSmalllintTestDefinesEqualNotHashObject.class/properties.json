@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "monty 10/10/2016 18:03",
+	"instvars" : [
+		 ],
+	"name" : "RBSmalllintTestDefinesEqualNotHashObject",
+	"pools" : [
+		 ],
+	"super" : "RBSmalllintTestSuperclassObject",
+	"type" : "normal" }

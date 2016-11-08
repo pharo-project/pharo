@@ -7,5 +7,4 @@ configureForUnembedding
 			makeBordered;
 			initializeLabelArea;
 			themeChanged;
-			addGrips;
-			hasDropShadow: true]
+			addGrips]

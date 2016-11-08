@@ -1,0 +1,25 @@
+{
+	"category" : "Morphic-Widgets-Tabs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"Icons" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"closeable",
+		"label",
+		"morph",
+		"state",
+		"fadeOut",
+		"retrievingBlock",
+		"closeIcon",
+		"actions",
+		"menu",
+		"retrievingProcess",
+		"retrievingSemaphore",
+		"model" ],
+	"name" : "TabMorph",
+	"pools" : [
+		 ],
+	"super" : "Morph",
+	"type" : "normal" }

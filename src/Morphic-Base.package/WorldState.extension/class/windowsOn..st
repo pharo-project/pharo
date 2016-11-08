@@ -4,14 +4,14 @@ windowsOn: aBuilder
 	(aBuilder item: #Windows)
 		order: 4.0;
 		withSeparatorAfter;
-		icon: (Smalltalk ui icons iconNamed: #smallWindowIcon);
+		iconName: #smallWindowIcon;
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ World collapseAll ];
 				help:
 					'Reduce all open windows to collapsed forms that only show titles'
 						translated.
 			(aBuilder item: #'Expand all windows')
-				icon: (Smalltalk ui icons iconNamed: #expandBoxIcon);
+				iconName: #expandBoxIcon;
 				action: [ World expandAll ];
 				help: 'Expand all collapsed windows back to their expanded forms' translated.
 			(aBuilder item: #'Fit all windows')

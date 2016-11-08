@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "monty 10/11/2016 00:25",
+	"instvars" : [
+		 ],
+	"name" : "RBSmalllintTestClassNotReferencedObject",
+	"pools" : [
+		 ],
+	"super" : "RBSmalllintTestSuperclassObject",
+	"type" : "normal" }

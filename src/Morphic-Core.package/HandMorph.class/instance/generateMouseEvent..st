@@ -3,7 +3,7 @@ generateMouseEvent: evtBuf
 	"Generate the appropriate mouse event for the given raw event buffer"
 
 	| position buttons modifiers type trail stamp oldButtons evtChanged |
-	#KMBuffer asClassIfPresent: [ :kmBuffer | kmBuffer uniqueInstance clearBuffer].
+	self class environment at: #KMBuffer ifPresent: [ :kmBuffer | kmBuffer uniqueInstance clearBuffer].
 	evtBuf first = lastEventBuffer first 
 		ifTrue: 
 			["Workaround for Mac VM bug, *always* generating 3 events on clicks"

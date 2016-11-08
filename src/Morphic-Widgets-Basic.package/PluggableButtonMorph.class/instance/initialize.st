@@ -19,7 +19,7 @@ initialize
 	self
 		layoutInset: (self theme buttonLabelInsetFor: self);
 		extent: 20 @ 15;
-		setProperty: #lastState toValue: false;
+		lastState: false;
 		cornerStyle: (self theme buttonCornerStyleIn: nil).
 	self theme buttonBorderStyleFor: self.
 	self clipSubmorphs: true

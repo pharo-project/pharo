@@ -18,12 +18,12 @@ downloadBasicFile: url to: outputFileName username: username pass: pass
          args := {
           '-L'.
           url}  ].
-    proc := #OSProcess asClass thisOSProcess
+    proc := (self class environment at: #OSProcess) thisOSProcess
         forkJob: '/usr/bin/curl'
         arguments: args
         environment: nil
         descriptors: (Array with: nil with: out with: err).
-     proc ifNil: [ #OSProcess asClass noAccessorAvailable ].
+     proc ifNil: [ (self class environment at: #OSProcess) noAccessorAvailable ].
      [ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ].
      out close.
      err close.

@@ -3,14 +3,14 @@ systemOn: aBuilder
 	<worldMenu>
 	(aBuilder item: #System)
 		order: 3.0;
-		icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon);
+		iconName: #smallConfigurationIcon;
 		with: [ (aBuilder item: #'About...')
 				order: 0;
-				icon: (Smalltalk ui icons iconNamed: #smallLanguageIcon);
+				iconName: #smallLanguageIcon;
 				action: [ Smalltalk aboutThisSystem ].
 			(aBuilder item: #'Software update')
 				order: 2;
-				icon: (Smalltalk ui icons iconNamed: #smallUpdateIcon);
+				iconName: #smallUpdateIcon;
 				precondition: [ self showUpdateOptionInWorldMenu ];
 				action: [ UpdateStreamer new updateFromServer ];
 				help: 'Load latest code updates via the internet';
@@ -30,4 +30,4 @@ systemOn: aBuilder
 				action: [ World resumeAfterStepError ];
 				withSeparatorAfter.
 			(aBuilder item: #'Restore display (r)')
-				action: [ World restoreMorphicDisplay ]]
+				action: [ World restoreMorphicDisplay ] ]

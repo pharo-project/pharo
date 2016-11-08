@@ -1,4 +1,4 @@
-class comment pane
+comment pane
 promptForCancel
 	"Ask for the appropriate action to take when unaccepted contents
 	would be overwritten."

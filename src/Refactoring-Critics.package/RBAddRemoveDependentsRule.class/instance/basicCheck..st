@@ -1,13 +1,17 @@
 running
-basicCheck: aClass 
-	| count |
-	count := 0.
-	((Set withAll: (aClass whichSelectorsReferTo: #addDependent:))
+basicCheck: aClass
+	| addSends removeSends |
+	addSends := 0.
+	removeSends := 0.
+	(aClass whichSelectorsReferTo: #addDependent:) asSet
 		addAll: (aClass whichSelectorsReferTo: #removeDependent:);
-		yourself) do: 
-		[ :sel | 
-		(aClass compiledMethodAt: sel) messages do: 
-			[ :each | 
-			each = #addDependent: ifTrue: [ count := count + 1 ].
-			each = #removeDependent: ifTrue: [ count := count - 1 ] ] ].
-	^ count > 0
+		do: [ :sel | 
+			(aClass compiledMethodAt: sel) ast
+				nodesDo: [ :each | 
+					each isMessage
+						ifTrue: [
+							each selector = #addDependent:
+								ifTrue: [ addSends := addSends + 1 ].
+							each selector = #removeDependent:
+								ifTrue: [ removeSends := removeSends + 1 ] ] ] ].
+	^ addSends > removeSends

@@ -32,7 +32,7 @@ buildMetaMenu: evt
 		argument: evt position.
 	menu add: 'explore' selector: #explore.
 	menu lastItem
-		icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectItIcon).
 	menu addLine.
 	menu add: 'show actions' selector: #showActions.
 	menu addLine.

@@ -2,5 +2,5 @@ settings
 touchHoldSettingsOn: aBuilder
 	<systemsettings>
 	(aBuilder group: #holdGesture)
-		label: 'Hold' translated;
+		label: 'Hold';
 		parent: #touchGestures

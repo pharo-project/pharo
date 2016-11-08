@@ -116,7 +116,7 @@ elementsMenu: aBuilder
 		keyText: 'x' if: Nautilus useOldStyleKeys;
 		action: [ target removeMethods ];
 		order: 1700;
-		icon: (self iconNamed: #removeIcon);
+		iconName: #removeIcon;
 		withSeparatorAfter.
 		
 	(aBuilder item: #'Compare two methods')		 

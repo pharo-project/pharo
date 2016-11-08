@@ -19,41 +19,41 @@ smalltalkEditorMenuOn: aBuilder
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallDoItIcon).
+		iconName: #smallDoItIcon.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallPrintItIcon).
+		iconName: #smallPrintItIcon.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon).
+		iconName: #smallInspectItIcon.
 	(aBuilder item: #'Basic Inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon).
+	 	iconName: #smallInspectItIcon.
 	(aBuilder item: #'Debug it' translated)
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallDebugIcon).
+		iconName: #smallDebugIcon.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		icon: (Smalltalk ui icons iconNamed: #smallDebugIcon);
+		iconName: #smallDebugIcon;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Code search...' translated)
 		selector: #shiftedTextPaneMenuRequest;
 		withSeparatorAfter.
@@ -61,40 +61,40 @@ smalltalkEditorMenuOn: aBuilder
 		keyText: 'j';
 		selector: #again;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallRedoIcon).
+		iconName: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallUndoIcon);
+		iconName: #smallUndoIcon;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallCopyIcon).
+		iconName: #smallCopyIcon.
 	(aBuilder item: #Cut translated)
 		keyText: 'x';
 		selector: #cut;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallCutIcon).
+		iconName: #smallCutIcon.
 	(aBuilder item: #Paste translated)
 		keyText: 'v';
 		selector: #paste;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallPasteIcon).
+		iconName: #smallPasteIcon.
 	(aBuilder item: #'Paste...' translated)
 		selector: #pasteRecent;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallCopyIcon);
+		iconName: #smallCopyIcon;
 		withSeparatorAfter.
 	(aBuilder item: #Accept translated)
 		keyText: 's';
 		selector: #accept;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallOkIcon).
+		iconName: #smallOkIcon.
 	(aBuilder item: #Cancel translated)
 		keyText: 'l';
 		selector: #cancel;
 		help: nil;
-		icon: (Smalltalk ui icons iconNamed: #smallCancelIcon)
+		iconName: #smallCancelIcon

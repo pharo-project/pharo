@@ -8,19 +8,19 @@ quitItemsOn: aBuilder
 				selector: #saveSession;
 				help: 'save the current version of the image on disk';
 				keyText: 'S';
-				icon: (Smalltalk ui icons iconNamed: #smallSaveIcon).
+				iconName: #smallSaveIcon.
 			(aBuilder item: #'Save as...')
 				target: self;
 				selector: #saveAs;
 				help: 'save the current version of the image on disk under a new name.';
-				icon: (Smalltalk ui icons iconNamed: #smallSaveAsIcon).
+				iconName: #smallSaveAsIcon.
 			(aBuilder item: #'Save and quit')
 				target: self;
 				selector: #saveAndQuit;
 				help: 'save the current image on disk, and quit Pharo.';
-				icon: (Smalltalk ui icons iconNamed: #smallQuitIcon).
+				iconName: #smallQuitIcon.
 			(aBuilder item: #Quit)
 				target: self;
 				selector: #quitSession;
 				help: 'quit Pharo.';
-				icon: (Smalltalk ui icons iconNamed: #smallQuitIcon) ]
+				iconName: #smallQuitIcon ]

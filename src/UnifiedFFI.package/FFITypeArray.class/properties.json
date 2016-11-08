@@ -5,7 +5,7 @@
 		"numberOfElements" ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
 	"name" : "FFITypeArray",

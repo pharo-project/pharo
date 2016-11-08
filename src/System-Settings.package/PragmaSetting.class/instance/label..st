@@ -1,3 +1,3 @@
 accessing
-label: aStringOrBlockOrMessageSend
-	label := aStringOrBlockOrMessageSend
+label: aString
+	label := aString

@@ -6,7 +6,9 @@
 		 ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
-		 ],
+		"referencePosition",
+		"originalCenter",
+		"originalAngle" ],
 	"name" : "CircleMorph",
 	"pools" : [
 		 ],

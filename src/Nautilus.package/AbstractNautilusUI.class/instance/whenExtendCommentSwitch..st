@@ -1,4 +1,4 @@
-class comment pane
+comment pane
 whenExtendCommentSwitch: anAnnouncement
 	"when you press the comment button."
 	self fullDisplayedComment

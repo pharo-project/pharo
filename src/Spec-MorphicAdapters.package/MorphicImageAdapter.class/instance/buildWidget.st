@@ -7,7 +7,9 @@ buildWidget
 		getImageSelector: #getImage;
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
-		layout: #center;
+		layout: (self model autoScale 
+				ifTrue: [ #scaledAspect ]
+				ifFalse: [ #center ]);
 		dragEnabled: self dragEnabled;
 		dropEnabled: self dropEnabled;
 		setBalloonText: self help;

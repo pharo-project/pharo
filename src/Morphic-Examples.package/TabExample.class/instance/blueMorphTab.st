@@ -1,7 +1,7 @@
 tabs creation
 blueMorphTab
 	| tab |
-	tab := Tab
+	tab := TabMorph
 		label: 'Blue Morph'
 		icon: (self iconNamed: #smallBackIcon)
 		morph: Morph new.

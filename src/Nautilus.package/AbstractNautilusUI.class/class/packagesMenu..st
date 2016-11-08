@@ -24,7 +24,7 @@ packagesMenu: aBuilder
 		action: [ target removePackages ];
 		order: 1200;
 		help: 'Remove a package';
-		icon: (Smalltalk ui icons iconNamed: #removeIcon).
+		iconName: #removeIcon.
 	(aBuilder item: #'Run tests...')
 		keyText: 'j, p' if: Nautilus useOldStyleKeys not;
 		keyText: 't' if: Nautilus useOldStyleKeys;

@@ -5,7 +5,7 @@ settingsOn: aBuilder
 		target: self;
 		parentName: #codeBrowsing;
 		selector: #enabled;
-		icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon);
+		iconName: #smallConfigurationIcon;
 		description: 'Enable or disable code completion in browsers, debuggers and workspaces.';
 		with: [ 
 					| availableControllers |
@@ -23,7 +23,7 @@ settingsOn: aBuilder
 					(aBuilder setting: #overrideModel)
 						label: 'Complete whole methods'.	
 					(aBuilder setting: #expandPrefixes)
-						label: 'Complete common prefixes using TAB in the suggested completions' translated.
+						label: 'Complete common prefixes using TAB in the suggested completions'.
 					(aBuilder setting: #useEnterToAccept)
 						label: 'Use ENTER to accept a suggested completion';
 						default: self defaultUseEnterToAccept.

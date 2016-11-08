@@ -1,0 +1,27 @@
+{
+	"category" : "Colors",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"BlueShift",
+		"CachedColormaps",
+		"ColorRegistry",
+		"ComponentMask",
+		"ComponentMax",
+		"GrayToIndexMap",
+		"GreenShift",
+		"HalfComponentMask",
+		"IndexedColors",
+		"MaskingMap",
+		"RedShift" ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"rgb",
+		"cachedDepth",
+		"cachedBitPattern",
+		"alpha" ],
+	"name" : "Color",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

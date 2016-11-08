@@ -1,7 +1,7 @@
 building
 build
 	topicToBuild := HelpTopic named: rootToBuildFrom name.
-	topicToBuild icon: (self iconNamed: #pageIcon).
+	topicToBuild iconName: #pageIcon.
 	topicToBuild contents: rootToBuildFrom comment.
 	addMethods
 		ifTrue: [ self buildSubnodesForMethods ].

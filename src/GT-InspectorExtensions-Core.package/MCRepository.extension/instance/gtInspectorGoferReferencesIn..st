@@ -13,5 +13,5 @@ gtInspectorGoferReferencesIn: composite
 						repository: com entity;
 						version: each name;
 						load ] ]
-			icon: (Smalltalk ui icons iconNamed: #downIcon)
+			iconName: #downIcon
 			entitled: 'Load'

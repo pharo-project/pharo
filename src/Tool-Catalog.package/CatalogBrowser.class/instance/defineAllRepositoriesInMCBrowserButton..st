@@ -1,8 +1,8 @@
 menu
 defineAllRepositoriesInMCBrowserButton: aList
 
-	<menu>
+	<menuOrder: 9>
 	aList
 		act: [ :presenter | self defineAllRepositoriesInMCBrowser ]
-		icon: (self iconNamed: #monticelloPackageIcon)
+		iconName: #monticelloPackageIcon
 		entitled: 'Define all distribution catalog MC repositories'

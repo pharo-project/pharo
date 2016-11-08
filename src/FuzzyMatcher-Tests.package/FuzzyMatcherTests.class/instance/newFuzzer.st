@@ -1,0 +1,4 @@
+running
+newFuzzer
+
+	^ fuzzyClass new

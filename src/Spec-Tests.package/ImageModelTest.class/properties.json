@@ -1,0 +1,14 @@
+{
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ImageModelTest",
+	"pools" : [
+		 ],
+	"super" : "SpecTestCase",
+	"type" : "normal" }

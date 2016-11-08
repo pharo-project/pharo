@@ -6,4 +6,4 @@ initialize
 			sessionManagerClass default
 				registerSystemClassNamed: self name
 				atPriority: 60]
-		ifNil: [Smalltalk addToStartUpList: self after: (Smalltalk classNamed: #ShortRunArray)].	
+		ifNil: [Smalltalk addToStartUpList: self after: ShortRunArray].	

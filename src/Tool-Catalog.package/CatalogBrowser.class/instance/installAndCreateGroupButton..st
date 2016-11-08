@@ -1,7 +1,7 @@
 Nautilus groups support
 installAndCreateGroupButton: aList
-	<menu>
+	<menuOrder: 1>
 	aList
 		act: [ :presenter | self onInstallAndCreateGroupFrom: presenter ]
-		icon: (self iconNamed: #publishIcon)
+		iconName: #publishIcon
 		entitled: 'Install stable version and create group'

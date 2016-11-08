@@ -35,7 +35,8 @@
 		"lastColor",
 		"labelMorph",
 		"iconMorph",
-		"iconPosition" ],
+		"iconPosition",
+		"lastState" ],
 	"name" : "PluggableButtonMorph",
 	"pools" : [
 		 ],

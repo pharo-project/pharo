@@ -12,7 +12,7 @@ packagesCommitsMenu: aBuilder
 				label: 'Commit in...';
 				order: 1296;
 				help: 'Commit';
-				icon: (self iconNamed: #monticelloPackageIcon);
+				iconName: #monticelloPackageIcon;
 				enabledBlock: [ target selectedPackages size < 2 ].
 			(group := mcpackage workingCopy repositoryGroup) repositories
 				doWithIndex: [ :repo :index | 

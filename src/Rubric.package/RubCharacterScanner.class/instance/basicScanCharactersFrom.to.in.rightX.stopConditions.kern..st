@@ -41,7 +41,9 @@ basicScanCharactersFrom: startIndex to: stopIndex in: sourceString rightX: right
 				right: nextChar
 				into: widthAndKernedWidth.
 			nextDestX := floatDestX + (widthAndKernedWidth at: 1).
-			nextDestX > rightX ifTrue: [^stops crossedX].
+			"note crossing of right component side, unless we would end up on the first position
+			again (endless loop, if line is to narrow to hold this current character)"
+			nextDestX > rightX ifTrue: [firstDestX ~= destX ifTrue:[ ^stops crossedX]].			
 			floatDestX := floatDestX + kernDelta + (widthAndKernedWidth at: 2).
 			atEndOfRun 
 				ifTrue:[

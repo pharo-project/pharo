@@ -16,5 +16,8 @@ buildEditor
 		font: font;
 		margins: (2 @ 0 corner: 2 @ 1);
 		selectFrom: initialContents size + 1 to: initialContents size.
+
+	"until we have better a rub text editor for text field like components"
+	editor textArea on: PharoShortcuts current findShortcut do:[:x | "nothing, we don't need a search within a floating editor widget"].
 	editor textArea withoutSelectionBar.
 	^ self customizedEditor

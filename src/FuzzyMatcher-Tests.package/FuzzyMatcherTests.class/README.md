@@ -1,0 +1,2 @@
+Tests concerning FuzzyMatcher and FuzzyChar classes. 
+The tests is set up with an anonymous subclass of FuzzyMatcher which implements some utility methods to expose the inner workings of the matching to simplify testing that scoring yields the expected values.  

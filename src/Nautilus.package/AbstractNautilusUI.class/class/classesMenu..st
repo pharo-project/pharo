@@ -12,13 +12,11 @@ classesMenu: aBuilder
 		enabledBlock: [ target selectedClasses size <= 1 ];
 		order: -99;
 		withSeparatorAfter.
-		
 	(aBuilder item: #'Class refs...')
 		keyText: 'b, N' if: Nautilus useOldStyleKeys not;
 		keyText: 'N' if: Nautilus useOldStyleKeys;
-		action: [target browseClassRefs];
-		order: -99.	
-		
+		action: [ target browseClassRefs ];
+		order: -99.
 	(aBuilder item: #'Browse scoped')
 		keyText: 'b, s' if: Nautilus useOldStyleKeys not;
 		keyText: 'B' if: Nautilus useOldStyleKeys;
@@ -26,13 +24,12 @@ classesMenu: aBuilder
 		order: 1000;
 		help: 'Open a browser on a restricted view'.
 	target selectedClass isTrait
-		ifTrue: [ 
-			(aBuilder item: #'Browse users')
+		ifTrue: [ (aBuilder item: #'Browse users')
 				action: [ target restrictedBrowseTraitUsers ];
 				order: 1050 ].
-	(target selectedClasses allSatisfy: [ :each | each isTestCase and: [ each isAbstract not ] ])
-		ifTrue: [ 
-			(aBuilder item: #'Run tests')
+	(target selectedClasses
+		allSatisfy: [ :each | each isTestCase and: [ each isAbstract not ] ])
+		ifTrue: [ (aBuilder item: #'Run tests')
 				keyText: 'j, c' if: Nautilus useOldStyleKeys not;
 				keyText: 't' if: Nautilus useOldStyleKeys;
 				action: [ target runClassTests ];
@@ -60,8 +57,9 @@ classesMenu: aBuilder
 	(aBuilder item: #'Remove...')
 		keyText: 'x, c' if: Nautilus useOldStyleKeys not;
 		keyText: 'x' if: Nautilus useOldStyleKeys;
-		action: [ target removeClassWithRefactoringEngine: target selectedClasses asOrderedCollection ];
-		icon: (Smalltalk ui icons iconNamed: #removeIcon);
+		action: [ target
+				removeClassWithRefactoringEngine: target selectedClasses asOrderedCollection ];
+		iconName: #removeIcon;
 		order: 1700;
 		withSeparatorAfter.
 	(aBuilder item: #'Inspect Methods')

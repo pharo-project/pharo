@@ -7,16 +7,15 @@ menuOn: aBuilder
 
 	<contextMenu>
 	<RubPlainTextMenu>
-	| uitheme |
-	uitheme := Smalltalk ui icons.
+	
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		icon: (uitheme iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		icon: (uitheme iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
@@ -25,38 +24,38 @@ menuOn: aBuilder
 			(aBuilder item: #'Do again' translated)
 				keyText: 'j';
 				selector: #again;
-				icon: (uitheme iconNamed: #smallRedoIcon).
+				iconName: #smallRedoIcon.
 			(aBuilder item: #Undo translated)
 				keyText: 'z';
 				selector: #undo;
-				icon: (uitheme iconNamed: #smallUndoIcon);
+				iconName: #smallUndoIcon;
 				withSeparatorAfter.
 			self fontMenuOn: aBuilder ].
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
-		icon: (uitheme iconNamed: #smallCopyIcon).
+		iconName: #smallCopyIcon.
 	aBuilder model canChangeText
 		ifTrue: [ 
 			(aBuilder item: #Cut translated)
 				keyText: 'x';
 				selector: #cut;
-				icon: (uitheme iconNamed: #smallCutIcon).
+				iconName: #smallCutIcon.
 			(aBuilder item: #Paste translated)
 				keyText: 'v';
 				selector: #paste;
-				icon: (uitheme iconNamed: #smallPasteIcon).
+				iconName: #smallPasteIcon.
 			(aBuilder item: #'Paste...' translated)
 				selector: #pasteRecent;
-				icon: (uitheme iconNamed: #smallCopyIcon);
+				iconName: #smallCopyIcon;
 				withSeparatorAfter.
 			(aBuilder model model notNil and: [ aBuilder model acceptAllowed ])
 				ifTrue: [ 
 					(aBuilder item: #Accept translated)
 						keyText: 's';
 						selector: #accept;
-						icon: (uitheme iconNamed: #smallOkIcon).
+						iconName: #smallOkIcon.
 					(aBuilder item: #Cancel translated)
 						keyText: 'l';
 						selector: #cancel;
-						icon: (uitheme iconNamed: #smallCancelIcon) ] ]
+						iconName: #smallCancelIcon ] ]

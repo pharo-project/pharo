@@ -13,6 +13,6 @@ gtInspectorMorphIn: composite
 				on: Error
 				do: [ IconicListItem
 						text: 'Error drawing Morph'
-						icon: (Smalltalk ui icons iconNamed: #smallWarningIcon) ] ];
+						icon: (self iconNamed: #smallWarningIcon) ] ];
 		act: [ :pres | self exportAsPNG ] entitled: 'Export as PNG';
 		act: [ :pres | self delete ] entitled: 'Delete'

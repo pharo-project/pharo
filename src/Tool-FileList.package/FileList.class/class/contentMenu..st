@@ -6,11 +6,11 @@ contentMenu: aBuilder
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		icon: (self iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
-		icon: (self iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString;
@@ -19,42 +19,42 @@ contentMenu: aBuilder
 	(aBuilder item: #'Do again' translated)
 		keyText: 'j';
 		selector: #again;
-		icon: (self iconNamed: #smallRedoIcon).
+		iconName: #smallRedoIcon.
 	(aBuilder item: #'Undo' translated)
 		keyText: 'z';
 		selector: #undo;
-		icon: (self iconNamed: #smallUndoIcon);
+		iconName: #smallUndoIcon;
 		withSeparatorAfter.
 		
 	(aBuilder item: #'Copy' translated)
 		keyText: 'c';
 		selector: #copySelection;
-		icon: (self iconNamed: #smallCopyIcon).
+		iconName: #smallCopyIcon.
 	(aBuilder item: #'Cut' translated)
 		keyText: 'x';
 		selector: #cut;
-		icon: (self iconNamed: #smallCutIcon).
+		iconName: #smallCutIcon.
 	(aBuilder item: #'Paste' translated)
 		keyText: 'v';
 		selector: #paste;
-		icon: (self iconNamed: #smallPasteIcon).
+		iconName: #smallPasteIcon.
 	(aBuilder item: #'Paste...' translated)
 		selector: #pasteRecent;
-		icon: (self iconNamed: #smallPasteIcon);
+		iconName: #smallPasteIcon;
 		withSeparatorAfter .
 		
 	(aBuilder item: #'Do it' translated)
 		keyText: 'd';
 		selector: #doIt;
-		icon: (self iconNamed: #smallDoItIcon).
+		iconName: #smallDoItIcon.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
-		icon: (self iconNamed: #smallPrintItIcon).
+		iconName: #smallPrintItIcon.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
-		icon: (self iconNamed: #smallInspectItIcon).
+		iconName: #smallInspectItIcon.
 	(aBuilder item: #'FileIn selection' translated)
 		keyText: 'G';
 		selector: #fileItIn;
@@ -63,11 +63,11 @@ contentMenu: aBuilder
 	(aBuilder item: #'Accept' translated)
 		keyText: 's';
 		selector: #accept;
-		icon: (self iconNamed: #smallOkIcon).
+		iconName: #smallOkIcon.
 	(aBuilder item: #'Cancel' translated)
 		keyText: 'l';
 		selector: #cancel;
-		icon: (self iconNamed: #smallCancelIcon);
+		iconName: #smallCancelIcon;
 		withSeparatorAfter.
 		
 	(aBuilder item: #'More...' translated)

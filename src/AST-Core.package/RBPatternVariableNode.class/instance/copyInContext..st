@@ -1,3 +1,5 @@
 matching
-copyInContext: aDictionary 
-	^ (aDictionary at: self) copy
+copyInContext: aDictionary
+	^ (self isList and: [ self isStatement ])
+		ifTrue: [ self copyList: (aDictionary at: self) inContext: aDictionary ]
+		ifFalse: [ (aDictionary at: self) copy ]

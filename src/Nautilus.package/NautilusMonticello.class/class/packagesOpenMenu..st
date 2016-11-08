@@ -10,7 +10,7 @@ packagesOpenMenu: aBuilder
 		label: 'Open...';
 		order: 1297;
 		help: 'Open';
-		icon: (self iconNamed: #monticelloPackageIcon);
+		iconName: #monticelloPackageIcon;
 		enabledBlock: [ target selectedPackages size < 2 ].
 	(group := mcpackage workingCopy repositoryGroup) repositories
 		doWithIndex: [ :repo :index | 

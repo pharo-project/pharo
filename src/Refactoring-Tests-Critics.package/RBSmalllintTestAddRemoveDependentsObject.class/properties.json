@@ -1,0 +1,14 @@
+{
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "monty 10/10/2016 17:33",
+	"instvars" : [
+		 ],
+	"name" : "RBSmalllintTestAddRemoveDependentsObject",
+	"pools" : [
+		 ],
+	"super" : "RBSmalllintTestSuperclassObject",
+	"type" : "normal" }

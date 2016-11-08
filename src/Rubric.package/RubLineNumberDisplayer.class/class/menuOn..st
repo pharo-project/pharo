@@ -10,4 +10,4 @@ menuOn: aBuilder
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
-		icon: (Smalltalk ui icons iconNamed: #smallFindIcon)
+		iconName: #smallFindIcon

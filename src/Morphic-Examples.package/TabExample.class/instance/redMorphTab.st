@@ -1,6 +1,6 @@
 tabs creation
 redMorphTab
-	^ (LockableTab
+	^ (LockableTabMorph
 		label: 'Red Morph'
 		icon: (self iconNamed: #smallBackIcon)
 		morph:

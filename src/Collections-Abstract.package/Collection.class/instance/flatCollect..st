@@ -4,8 +4,4 @@ flatCollect: aBlock
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
 	
-	| stream |
-	self isEmpty ifTrue: [ ^ self copy ].
-	stream := (self species new: 0) writeStream.
-	self do: [ :each | stream nextPutAll: (aBlock value: each) ].
-	^ stream contents
+	^ self flatCollect: aBlock as: self species

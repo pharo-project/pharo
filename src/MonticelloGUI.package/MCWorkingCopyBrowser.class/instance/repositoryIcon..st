@@ -1,3 +1,3 @@
 morphic ui
 repositoryIcon: a
-	^ Smalltalk ui icons iconNamed: #monticelloPackageIcon
+	^ self iconNamed: #monticelloPackageIcon

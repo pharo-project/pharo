@@ -1,10 +1,11 @@
 world menu
 menuCommandOn: aBuilder
 	<worldMenu>
-	(aBuilder item: #'Settings')
+	(aBuilder item: #Settings)
 		parent: #System;
 		order: 1;
-		icon: (self iconNamed: #smallConfigurationIcon);
+		iconName: #smallConfigurationIcon;
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
-		help: 'Opens a SystemSettingBrowser which allows you to alter many system settings'
+		help:
+			'Opens a SystemSettingBrowser which allows you to alter many system settings'

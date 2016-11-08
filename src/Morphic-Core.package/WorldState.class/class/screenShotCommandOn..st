@@ -7,4 +7,4 @@ screenShotCommandOn: aBuilder
 		order: 0.59;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
-		icon: (Smalltalk ui icons iconNamed: #smallScreenshotIcon)
+		iconName: #smallScreenshotIcon

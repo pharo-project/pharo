@@ -36,6 +36,6 @@ groupsMenu: aBuilder
 					(aBuilder item: #'Remove...')
 						keyText: 'x, g' if: Nautilus useOldStyleKeys not;
 						keyText: 'x' if: Nautilus useOldStyleKeys;
-						icon: (Smalltalk ui icons iconNamed: #removeIcon);
+						iconName: #removeIcon;
 						action: [ target removeGroups ];
 						order: 1400 ] ]

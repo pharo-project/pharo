@@ -1,7 +1,7 @@
 world menu
-menuCommandOn: aBuilder 
-	<worldMenu> 
+menuCommandOn: aBuilder
+	<worldMenu>
 	(aBuilder item: #'Help Browser')
 		parent: #Help;
-		action: [self open]; 
-		icon: (self iconNamed: #smallHelpIcon)
+		action: [ self open ];
+		iconName: #smallHelpIcon

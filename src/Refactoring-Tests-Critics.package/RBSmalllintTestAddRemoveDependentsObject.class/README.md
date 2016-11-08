@@ -1,0 +1,1 @@
+This class should trigger the RBAddRemoveDependentsRule critic.

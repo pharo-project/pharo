@@ -2,4 +2,5 @@ running
 tearDown 
 	super tearDown.
 	#(TestClass TestClassOther) 
-		do: [ :each | each asClassIfPresent: #removeFromSystem ]
+		do: [ :each | 
+			self class environment at: each ifPresent: #removeFromSystem ]

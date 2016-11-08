@@ -11,7 +11,7 @@ addExportMenuItems: aMenu hand: aHandMorph
 			aSubMenu add: 'PNG file' selector: #exportAsPNG.
 			aMenu
 				add: 'export...'
-				icon: (Smalltalk ui icons iconNamed: #smallExportIcon)
+				icon: (self iconNamed: #smallExportIcon)
 				subMenu: aSubMenu.
 			aMenu lastItem
-				icon: (Smalltalk ui icons iconNamed: #smallExportIcon) ]
+				icon: (self iconNamed: #smallExportIcon) ]

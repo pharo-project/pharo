@@ -41,4 +41,5 @@ treeMorphFor: tmpTreeModel and: aPresentation
 	tmpTreeMorph chunkSize: aPresentation amountToShow.
 	tmpTreeMorph pageSize: aPresentation amountToShow.
 	tmpTreeMorph vShowScrollBar.
+	tmpTreeMorph hShowScrollBar.
 	^ tmpTreeMorph buildContents

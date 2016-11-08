@@ -2,11 +2,13 @@ tests
 testToDoOf
 
 	| rule |
-	rule := RBCompositeLintRule allGoodRules.
+	rule := ReRuleManager visibleRuleClasses collect: #new.
 	checker
 		rule: rule;
 		environment: self package asEnvironment;
 		run.
-
-	self assert: (( checker toDoOf: RBOnlyReadOrWrittenTemporaryRule new) anySatisfy: [:each| each = (MFClassB>>#method3)]).
-	self deny: (( checker toDoOf: RBOnlyReadOrWrittenTemporaryRule new) anySatisfy: [:each| each = (MFClassB>>#method2)]).
+		
+	self assert: (( checker toDoOf: GRTemporaryNotReadNorWrittenRule new) anySatisfy: [:each|
+		each sourceAnchor entity = (MFClassB>>#method3)]).
+	self deny: (( checker toDoOf: GRTemporaryNotReadNorWrittenRule new) anySatisfy: [:each|
+		each  sourceAnchor entity = (MFClassB>>#method2)]).

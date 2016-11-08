@@ -13,11 +13,11 @@ settingsOn: aBuilder
 		parent: #gt;
 		type: #Directory;
 		target: GTPlayBook;
-		description: 'The path to the local Playground cache that stores all Playground scripts in ph files' translated;
+		description: 'The path to the local Playground cache that stores all Playground scripts in ph files';
 		label: 'Local Playground cache directory'.
 	(aBuilder setting: #stashDirectory)
 		parent: #gt;
 		type: #Directory;
 		target: GTPlayBook;
-		description: 'The path to the local Playground stash that stores all named Playground scripts in ph files' translated;
+		description: 'The path to the local Playground stash that stores all named Playground scripts in ph files';
 		label: 'Local Playground stash directory'

@@ -6,7 +6,7 @@ notifyRepackage: selector method: compiledMethod oldProtocol: oldProtocol newPro
 		ifTrue: [ ^ self ].
 		
 	"This indirection is because we need to abstract RPackage from the kernel"
-	#RPackage asClassIfPresent: [ :rPackageClass | 
+	self class environment at: #RPackage ifPresent: [ :rPackageClass | 
 			newPackage := rPackageClass organizer 
 				packageForProtocol: newProtocol 
 				inClass: self.

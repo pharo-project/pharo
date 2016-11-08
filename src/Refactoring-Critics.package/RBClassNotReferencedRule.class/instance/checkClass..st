@@ -1,6 +1,4 @@
 running
-checkClass: aClass 
-	(self basicCheck: aClass) ifTrue: [
-		result
-			addClass: aClass;
-			addClass: aClass theMetaClass ]
+checkClass: aClass
+	(self basicCheck: aClass)
+		ifTrue: [ result addClassAndMetaClassFor: aClass ]

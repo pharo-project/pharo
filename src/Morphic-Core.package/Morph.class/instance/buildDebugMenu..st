@@ -15,17 +15,17 @@ buildDebugMenu: aHand
 			aMenu addLine ].
 	aMenu add: 'inspect morph' selector: #inspectInMorphic:.
 	aMenu lastItem
-		icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectItIcon).
 	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
 	aMenu lastItem
-		icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectItIcon).
 	self isMorphicModel
 		ifTrue: [ aMenu add: 'inspect model' target: self model selector: #inspect.
 			aMenu lastItem
-				icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon) ].
+				icon: (self iconNamed: #smallInspectItIcon) ].
 	aMenu add: 'explore morph' target: self selector: #explore.
 	aMenu lastItem
-		icon: (Smalltalk ui icons iconNamed: #smallInspectItIcon).
+		icon: (self iconNamed: #smallInspectItIcon).
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'

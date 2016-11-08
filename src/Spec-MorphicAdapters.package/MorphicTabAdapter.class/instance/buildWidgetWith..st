@@ -1,6 +1,6 @@
 factory
 buildWidgetWith: aTabModel
-	^ Tab new
+	^ TabMorph new
 		model: aTabModel;
 		label: aTabModel label;
 		icon: aTabModel icon;

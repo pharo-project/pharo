@@ -1,7 +1,7 @@
 ui
 initWindow
 	| toolbar dock contentMorph |
-	window := (Smalltalk at: #StandardWindow) new.
+	window := StandardWindow new.
 	window model: self.
 	window title: 'Help Browser'.
 	toolbar := window
@@ -12,7 +12,7 @@ initWindow
 				action: #refresh
 				arguments: nil
 				getEnabled: nil
-				labelForm: (Smalltalk ui icons iconNamed: #refreshIcon)
+				labelForm: (self iconNamed: #refreshIcon)
 				help: 'Refresh' translated)}.
 	dock := window newToolDockingBar.
 	dock addMorphBack: toolbar.

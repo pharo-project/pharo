@@ -4,87 +4,86 @@ menuOn: aBuilder
 
 	<contextMenu>
 	<RubSmalltalkCodeMenu>
-	| uitheme |
-	uitheme := Smalltalk ui icons.
 	(aBuilder item: #'Do it' translated)
 		order: 1;
 		keyText: 'd';
 		selector: #doIt;
 		help: nil;
-		icon: (uitheme iconNamed: #smallDoItIcon).
+		iconName: #smallDoItIcon.
 	(aBuilder item: #'Print it' translated)
 		keyText: 'p';
 		selector: #printIt;
 		help: nil;
-		icon: (uitheme iconNamed: #smallPrintItIcon).
+		iconName: #smallPrintItIcon.
 	(aBuilder item: #'Inspect it' translated)
 		keyText: 'i';
 		selector: #inspectIt;
 		help: nil;
-		icon: (uitheme iconNamed: #smallInspectItIcon).
+		iconName: #smallInspectItIcon.
 	(aBuilder item: #'Basic Inspect it' translated)
 		keyText: 'I';
 		selector: #basicInspectIt;
 		help: nil;
-		icon: (uitheme iconNamed: #smallInspectItIcon).
+		iconName: #smallInspectItIcon.
 	(aBuilder item: #'Debug it' translated)
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		icon: (uitheme iconNamed: #smallDebugIcon).
+		iconName: #smallDebugIcon.
 	(aBuilder item: #'Profile it' translated)
 		selector: #tallyIt;
-		icon: (uitheme iconNamed: #smallDebugIcon);
+		iconName: #smallDebugIcon;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
 		selector: #find;
 		help: nil;
-		icon: (uitheme iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	(aBuilder item: #'Find again' translated)
 		keyText: 'g';
 		selector: #findAgain;
 		help: nil;
-		icon: (uitheme iconNamed: #smallFindIcon).
+		iconName: #smallFindIcon.
 	self extendedSearchMenuOn: aBuilder.
 	(aBuilder item: #'Do again' translated)
 		keyText: 'j';
 		selector: #again;
 		help: nil;
-		icon: (uitheme iconNamed: #smallRedoIcon).
+		iconName: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
 		help: nil;
-		icon: (uitheme iconNamed: #smallUndoIcon);
+		iconName: #smallUndoIcon;
 		withSeparatorAfter.
 	(aBuilder item: #Copy translated)
 		keyText: 'c';
 		selector: #copySelection;
 		help: nil;
-		icon: (uitheme iconNamed: #smallCopyIcon).
+		iconName: #smallCopyIcon.
 	(aBuilder item: #Cut translated)
 		keyText: 'x';
 		selector: #cut;
 		help: nil;
-		icon: (uitheme iconNamed: #smallCutIcon).
+		iconName: #smallCutIcon.
 	(aBuilder item: #Paste translated)
 		keyText: 'v';
 		selector: #paste;
 		help: nil;
-		icon: (uitheme iconNamed: #smallPasteIcon).
+		iconName: #smallPasteIcon.
 	(aBuilder item: #'Paste...' translated)
 		selector: #pasteRecent;
 		help: nil;
-		icon: (uitheme iconNamed: #smallCopyIcon);
+		iconName: #smallCopyIcon;
 		withSeparatorAfter.
-	aBuilder model ifNotNil: [:mod | mod model
-		ifNotNil: [ 
-			(aBuilder item: #Accept translated)
-				keyText: 's';
-				selector: #accept;
-				icon: (uitheme iconNamed: #smallOkIcon).
-			(aBuilder item: #Cancel translated)
-				keyText: 'l';
-				selector: #cancel;
-				icon: (uitheme iconNamed: #smallCancelIcon) ]]
+	aBuilder model
+		ifNotNil: [ :mod | 
+			mod model
+				ifNotNil: [ (aBuilder item: #Accept translated)
+						keyText: 's';
+						selector: #accept;
+						iconName: #smallOkIcon.
+					(aBuilder item: #Cancel translated)
+						keyText: 'l';
+						selector: #cancel;
+						iconName: #smallCancelIcon ] ]

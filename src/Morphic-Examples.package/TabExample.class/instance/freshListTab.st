@@ -1,6 +1,6 @@
 tabs creation
 freshListTab
-	^ (Tab
+	^ (TabMorph
 		label: 'Fresh List'
 		icon: nil
 		retrievingBlock: [ 1 second asDelay wait.

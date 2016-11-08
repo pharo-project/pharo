@@ -12,27 +12,27 @@ compoundTaggedTree
 			a tree
 				title: 'Combined Tags';
 				tags: [ :each | 
-					{{(Smalltalk ui icons iconNamed: each asSymbol).
+					{{(self iconNamed: each asSymbol).
 					each asString}} ].
 			a tree
 				title: 'Image Tags';
-				tags: [ :each | {(Smalltalk ui icons iconNamed: each asSymbol)} ].
+				tags: [ :each | {(self iconNamed: each asSymbol)} ].
 			a tree
 				title: 'Combined Tags - Filter by image';
 				tags: [ :each | 
 					{(each == #help
-						ifTrue: [ {(Smalltalk ui icons iconNamed: #smallDeleteIcon).
+						ifTrue: [ {(self iconNamed: #smallDeleteIcon).
 							'no ok'} ]
-						ifFalse: [ {(Smalltalk ui icons iconNamed: #smallOkIcon).
+						ifFalse: [ {(self iconNamed: #smallOkIcon).
 							each asString} ])} ];
 				tagsFilter: [ :each | 
 					{(each == #help
-						ifTrue: [ Smalltalk ui icons iconNamed: #smallDeleteIcon ]
-						ifFalse: [ Smalltalk ui icons iconNamed: #smallOkIcon ])} ].
+						ifTrue: [ self iconNamed: #smallDeleteIcon ]
+						ifFalse: [ self iconNamed: #smallOkIcon ])} ].
 			a tree
 				title: 'Combined Tags - Filter by label';
 				tags: [ :each | 
-					{{(Smalltalk ui icons iconNamed: each asSymbol).
+					{{(self iconNamed: each asSymbol).
 					(each == #help
 						ifTrue: [ 'no ok' ]
 						ifFalse: [ 'ok' ])}} ];

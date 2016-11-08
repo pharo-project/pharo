@@ -9,6 +9,6 @@ packagesCreateMenu: aBuilder
 	(aBuilder item: #'Create a MC package')
 		order: 1297;
 		help: 'Create a MC package corresponding to my name';
-		icon: (self iconNamed: #monticelloPackageIcon);
+		iconName: #monticelloPackageIcon;
 		action: [ self default createMCPackageFor: target selectedPackage ];
 		enabledBlock: [ target selectedPackages size < 2 ]

@@ -34,8 +34,14 @@ terminate
 						"This is an unwind block currently under evaluation"
 						suspendedContext runUntilErrorOrReturnFrom: inner ] ].		
 			ctxt := self popTo: suspendedContext bottomContext.
-			ctxt == suspendedContext bottomContext ifFalse: [
-				self debug: ctxt title: 'Unwind error during termination' ].
+			[ ctxt == suspendedContext bottomContext ] whileFalse: [
+				"There was a problem during termination. Make the user aware of the problem
+				but ensure that the current process will be properly terminated."
+				| stackCopy |
+				stackCopy := ctxt copyStack.
+				[ UnwindError signalIn: stackCopy ] forkNamed: 'Unwind error during termination'.
+				ctxt terminateTo: ctxt sender.
+				ctxt := self popTo: suspendedContext bottomContext ].
 			"The suspendedContext of process that has never run will have 
 			a pc equal to the startpc. #isTerminate would thus answer false
 			even though the process is dead. To prevent that we set the pc

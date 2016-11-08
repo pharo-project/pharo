@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "monty 10/11/2016 00:26",
 	"instvars" : [
 		"temporaryVariable" ],
 	"name" : "RBSmalllintTestObject",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "RBSmalllintTestSuperclassObject",
 	"type" : "normal" }

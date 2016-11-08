@@ -1,7 +1,7 @@
 private
 retrieveCheckIcon
 	^ self selected
-		ifTrue: [ Smalltalk ui icons iconNamed: #checkedBoxIcon ]
+		ifTrue: [ self iconNamed: #checkedBoxIcon ]
 		ifFalse: [ self isPartialMatch
-				ifTrue: [ Smalltalk ui icons iconNamed: #partialCheckedBoxIcon ]
-				ifFalse: [ Smalltalk ui icons iconNamed: #uncheckedBoxIcon ] ]
+				ifTrue: [ self iconNamed: #partialCheckedBoxIcon ]
+				ifFalse: [ self iconNamed: #uncheckedBoxIcon ] ]

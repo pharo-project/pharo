@@ -2,4 +2,4 @@ running
 tearDown 
 	super tearDown.
 	SystemAnnouncer announcer: oldSystemAnnouncer.
-	#TestClass asClassIfPresent: [ :class | class removeFromSystem ].
+	self class environment at: #TestClass ifPresent: [ :class | class removeFromSystem ].

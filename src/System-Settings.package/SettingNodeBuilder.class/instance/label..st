@@ -1,3 +1,3 @@
 public declaration accessing
-label: aStringOrBlockOrMessageSend
-	node item label: aStringOrBlockOrMessageSend.
+label: aString
+	node item label: aString

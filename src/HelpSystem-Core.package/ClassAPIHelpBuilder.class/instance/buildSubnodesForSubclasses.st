@@ -3,7 +3,7 @@ buildSubnodesForSubclasses
 	| topic |
 	rootToBuildFrom subclasses isEmpty
 		ifTrue: [ ^ self ].
-	topicToBuild icon: (self iconNamed: #bookIcon).
+	topicToBuild iconName: #bookIcon.
 	topic := subclassesAsSeparateTopic
 		ifTrue: [ topicToBuild addSubtopic: (HelpTopic named: 'Subclasses') ]
 		ifFalse: [ topicToBuild ].

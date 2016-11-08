@@ -1,0 +1,14 @@
+{
+	"category" : "System-Settings-Rules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 11/3/2016 22:39",
+	"instvars" : [
+		 ],
+	"name" : "SettingDontTranslateDescriptionRule",
+	"pools" : [
+		 ],
+	"super" : "ReNodeRewriteRule",
+	"type" : "normal" }
