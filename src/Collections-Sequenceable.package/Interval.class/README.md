@@ -4,6 +4,9 @@ Description
 --------------------------
 
 I allow to iterate easily on a range of number (for example to manupulate an index) with a define step (by default one by one).
+
+Zero step size is not allowed and will raise an error.
+
 I know at which number I begin, at which number I end and the step.
 
 I work with the Number class. I manipulate some numbers and I can be created from a Number.  

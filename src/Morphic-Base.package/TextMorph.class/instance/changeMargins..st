@@ -14,7 +14,6 @@ changeMargins: evt
 			[:newPoint | handle deleteBalloon.
 			self halo ifNotNil: [:halo | halo addHandles]].
 	aHand attachMorph: handle.
-	handle setProperty: #helpAtCenter toValue: true.
 	handle showBalloon:
 'Move cursor down and to the right
 to increase margin inset.

@@ -3,12 +3,12 @@ baseline: spec
 	<baseline>
 
 	spec for: #common do: [
-		spec package: 'Colors'.
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
 		spec package: 'CodeImportCommandLineHandlers'.
+		spec package: 'Colors'.
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
@@ -62,12 +62,12 @@ baseline: spec
 		spec package: 'PharoBootstrap-Initialization'.
 
 		spec group: 'minimal' with: #(
-			#Colors
 			#'AST-Core' 
 			#'Announcements-Core' 
-			#CodeExport 
-			#CodeImport 
-			#CodeImportCommandLineHandlers 
+			#'CodeExport' 
+			#'CodeImport' 
+			#'CodeImportCommandLineHandlers'
+			#'Colors'
 			#'Collections-Abstract' 
 			#'Collections-Arithmetic' 
 			#'Collections-Atomic' 
@@ -79,25 +79,25 @@ baseline: spec
 			#'Collections-Support' 
 			#'Collections-Unordered' 
 			#'Collections-Weak' 
-			'Compression' 
+			#'Compression' 
 			#'FileSystem-Core' 
 			#'FileSystem-Disk' 
-			#Files 
-			#Jobs 
-			#Kernel 
+			#'Files'
+			#'Jobs' 
+			#'Kernel' 
 			#'Multilingual-Encodings' 
 			#'Multilingual-Languages' 
 			#'Multilingual-TextConversion' 
 			#'Network-UUID' 
-			#NonInteractiveTranscript 
+			#'NonInteractiveTranscript' 
 			#'OpalCompiler-Core' 
 			#'PharoBootstrap-Initialization' 
 			#'RPackage-Core' 
 			#'Random-Core' 
 			#'Ring-Core-Containers' 
 			#'Ring-Core-Kernel' 
-			#RingChunkImporter 
-			#Slot 
+			#'RingChunkImporter' 
+			#'Slot' 
 			#'System-Announcements' 
 			#'System-BasicCommandLineHandler' 
 			#'System-Changes' 
@@ -111,9 +111,9 @@ baseline: spec
 			#'System-SessionManager' 
 			#'System-Sources' 
 			#'System-Support' 
-			#Traits 
-			#Transcript 
-			#UIManager 
+			#'Traits' 
+			#'Transcript' 
+			#'UIManager' 
 			#'Zinc-Character-Encoding-Core' 
 			#'Zinc-Resource-Meta-Core'). 
 	].

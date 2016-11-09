@@ -16,7 +16,8 @@
 		"timeOfMouseDown",
 		"timeOfLastScroll",
 		"nextPageDirection",
-		"currentScrollDelay" ],
+		"currentScrollDelay",
+		"lastPaneColor" ],
 	"name" : "ScrollBar",
 	"pools" : [
 		 ],

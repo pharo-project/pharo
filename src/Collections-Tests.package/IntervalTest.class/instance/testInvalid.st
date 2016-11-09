@@ -10,3 +10,6 @@ testInvalid
 	self assert: (1 to: 1) = #(1).
 	self assert: (1 to: 5 by: 10) = #(1).
 	self assert: (1 to: 0 by: -2) = #(1).
+
+   "zero steps are not allowed"
+	self should: [1 to: 1 by: 0] raise: DomainError.

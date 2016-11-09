@@ -3,7 +3,7 @@ sliderColor: aColor
 	"Change the color of the scrollbar to go with aColor."
 	| buttonColor |
 	super sliderColor: aColor.
-	self setProperty: #lastPaneColor toValue: aColor.
+	self lastPaneColor: aColor.
 	buttonColor := self thumbColor.
 	upButton color: buttonColor.
 	downButton color: buttonColor.
