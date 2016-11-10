@@ -1,0 +1,8 @@
+accessing-method
+selector
+	"API changed: see issue 18233. selector -> methodSelector & keyword -> selector"
+
+	"Answer the selector of the pragma (the selector of its message pattern).
+	 For a pragma defined as <key1: val1 key2: val2> this will answer #key1:key2:."
+
+	^ selector

@@ -7,8 +7,8 @@
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		"method",
-		"keyword",
-		"arguments" ],
+		"arguments",
+		"selector" ],
 	"name" : "Pragma",
 	"pools" : [
 		 ],

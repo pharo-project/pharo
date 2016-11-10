@@ -1,5 +1,5 @@
 comparing
 analogousCodeTo: anObject 
 	^self class == anObject class
-	  and: [keyword == anObject keyword
+	  and: [selector == anObject keyword
 	  and: [arguments = anObject arguments]]

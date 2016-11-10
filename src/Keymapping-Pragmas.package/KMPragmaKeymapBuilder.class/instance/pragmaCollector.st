@@ -5,7 +5,7 @@ pragmaCollector
 	^ pragmaCollector
 		ifNil: [ pragmaCollector := PragmaCollector
 				filter: [ :prg | 
-					(self pragmaKeywords includes: prg keyword)
+					(self pragmaKeywords includes: prg selector)
 						and: [ prg methodSelector numArgs = 1 ] ].
 			(self pragmaKeywords notNil and: [ self pragmaKeywords notEmpty ])
 				ifTrue: [ pragmaCollector reset ].
