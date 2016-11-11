@@ -29,6 +29,6 @@ testClassDescriptionRespectsPolymorphismWithTraitDescription
 		the problem comes from the name of the selector, they are not good names
 	#copyTraitExpresion and #addExclusionOf: have no equivalent in classes"
 	self
-		assertCollection: (TraitDescription localSelectors difference: ClassDescription localSelectors)
+		assertCollection: (TraitDescription localSelectors difference: ClassDescription localSelectors) asSet asArray sort
 		equals:
 			#(#isClassTrait #addExclusionOf: #copyTraitExpression #baseTrait #-  #isBaseTrait #classTrait syntacticallyEquals: instVarNames) asSet asArray sort

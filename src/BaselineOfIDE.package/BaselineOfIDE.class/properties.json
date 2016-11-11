@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfIDE",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PavelKrivanek 11/7/2016 12:40",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfIDE",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }
