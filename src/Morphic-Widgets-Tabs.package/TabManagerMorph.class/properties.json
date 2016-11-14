@@ -11,7 +11,7 @@
 		"contentsWrapper",
 		"processes",
 		"model" ],
-	"name" : "TabManager",
+	"name" : "TabManagerMorph",
 	"pools" : [
 		 ],
 	"super" : "PanelMorph",

@@ -31,5 +31,5 @@ methodWrapper: anItem
 			emphasis := emphasis + 2 ].
 	self model showInstance
 		ifFalse: [ emphasis := emphasis + 1 ].
-	anItem isDeprecated ifTrue: [ emphasis := emphasis + 2r1000 ].	
+	anItem isDeprecated ifTrue: [ emphasis := emphasis + 2r10000 ].	
 	^ result emphasis: emphasis

@@ -14,7 +14,8 @@ compileAMethodFromCategory: aCategory withSource: aString notifying: aController
 	selector ifNil: [ ^ self sourceTextModel hasUnacceptedEdits: true ].
 	method := class methodNamed: selector.
 	self sourceTextModel clearUserEdits.
-	self model classifier classify: method. 
+	category = Protocol unclassified 
+		ifTrue: [ self model classifier classify: method ]. 
 	(self selectedMethod notNil and: [ self selectedClass = class and: [ self selectedMethod selector = selector ] ])
 		ifFalse: [
 			self selectedMethod: method.

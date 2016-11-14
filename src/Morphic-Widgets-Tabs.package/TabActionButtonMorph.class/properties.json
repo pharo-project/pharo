@@ -7,7 +7,7 @@
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		"icon" ],
-	"name" : "TabActionButton",
+	"name" : "TabActionButtonMorph",
 	"pools" : [
 		 ],
 	"super" : "MultistateButtonMorph",
