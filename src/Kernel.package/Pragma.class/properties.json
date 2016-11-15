@@ -8,7 +8,7 @@
 	"instvars" : [
 		"method",
 		"arguments",
-		"selector" ],
+		"keyword" ],
 	"name" : "Pragma",
 	"pools" : [
 		 ],

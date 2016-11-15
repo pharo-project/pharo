@@ -1,4 +1,4 @@
 testing
 hasLiteral: aLiteral
-	^selector == aLiteral 
+	^keyword == aLiteral 
 	   or: [arguments hasLiteral: aLiteral]
