@@ -1,7 +1,6 @@
 initialize
-pragmasForMethod: arg1
-	^ arg1 pragmas
-		collect: [ :arg2 | 
-			RBPragmaNode
-				selector: arg2 methodSelector
-				arguments: (arg2 arguments collect: [ :arg3 | RBLiteralNode value: arg3 ]) ]
+pragmasForMethod: aCompiledMethod
+	^ aCompiledMethod pragmas collect: [ :each |
+		RBPragmaNode 
+			selector: each keyword 
+			arguments: (each arguments collect: [ :arg | RBLiteralNode value: arg ]) ]
