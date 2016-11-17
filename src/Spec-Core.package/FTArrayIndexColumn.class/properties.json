@@ -4,11 +4,13 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "DenisKudryashov 6/24/2016 16:06",
+	"commentStamp" : "PavelKrivanek 11/14/2016 18:43",
 	"instvars" : [
+		"id",
+		"width",
 		"index" ],
 	"name" : "FTArrayIndexColumn",
 	"pools" : [
 		 ],
-	"super" : "FTColumn",
+	"super" : "Object",
 	"type" : "normal" }

@@ -1,5 +1,4 @@
 controlling
-"protocol: controlling"
 send: selector to: aReceiver with: arguments super: superFlag 
 	"Simulate the action of sending a message with selector, selector, and 
 	arguments, args, to receiver. The argument, superFlag, tells whether the 
@@ -10,12 +9,18 @@ send: selector to: aReceiver with: arguments super: superFlag
 			ifTrue: [(self method literalAt: self method numLiterals) value superclass]
 			ifFalse: [self objectClass: aReceiver].
 	aMethod := class lookupSelector: selector.
-	aMethod == nil ifTrue: [ 
-		^ self 
-			send: #doesNotUnderstand:
-			to: aReceiver
-			with: (Array with: (Message selector: selector arguments: arguments))
-			super: superFlag ].
+	aMethod == nil
+		ifTrue: [ ^ self
+				send: #doesNotUnderstand:
+				to: aReceiver
+				with: (Array with: (Message selector: selector arguments: arguments))
+				super: superFlag ].
+	aMethod isCompiledMethod
+		ifFalse: [ ^ self
+				send: #run:with:in:
+				to: aMethod
+				with: (Array with: selector with: arguments with: aReceiver)
+				super: superFlag ].
 	
 	value := self tryPrimitiveFor: aMethod receiver: aReceiver args: arguments.
 

@@ -1,0 +1,1 @@
+I am announced when new class tag is added into package

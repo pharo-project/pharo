@@ -1,15 +1,19 @@
 accessing
-renameTo: aString 
-	| oldName categoryName |
-	
-	oldName := self toCategoryName: self name.
-	categoryName := self toCategoryName: aString. 
+renameTo: newTagName
+	| oldName categoryName tagName |
+	tagName := self name.
+	oldName := self toCategoryName: tagName.
+	categoryName := self toCategoryName: newTagName. 
 	
 	oldName = categoryName ifTrue: [ ^ self ].
 	
-	self basicRenameTo: aString.
+	self basicRenameTo: newTagName.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self classes do: [ :each | each category: categoryName ].
 		self class environment organization 
 			renameCategory: oldName 
-			toBe: categoryName. ].
+			toBe: categoryName].
+	SystemAnnouncer uniqueInstance 
+		classTagRenamed: tagName 
+		inPackage: self package 
+		to: newTagName

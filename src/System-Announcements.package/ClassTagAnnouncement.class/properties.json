@@ -1,0 +1,15 @@
+{
+	"category" : "System-Announcements-System-Packages",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 11/15/2016 18:28",
+	"instvars" : [
+		"package",
+		"tag" ],
+	"name" : "ClassTagAnnouncement",
+	"pools" : [
+		 ],
+	"super" : "SystemAnnouncement",
+	"type" : "normal" }
