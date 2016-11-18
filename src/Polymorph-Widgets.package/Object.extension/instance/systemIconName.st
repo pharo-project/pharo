@@ -1,0 +1,4 @@
+*Polymorph-Widgets
+systemIconName
+
+	^ #classIcon

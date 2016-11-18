@@ -1,0 +1,14 @@
+{
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "DenisKudryashov 11/10/2016 13:08",
+	"instvars" : [
+		"modifiedClass" ],
+	"name" : "ClassModificationApplied",
+	"pools" : [
+		 ],
+	"super" : "ClassAnnouncement",
+	"type" : "normal" }

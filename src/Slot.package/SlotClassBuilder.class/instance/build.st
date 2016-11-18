@@ -41,5 +41,10 @@ build
 	classChange removals do: [ :each | each removingFrom: result].
 	result classLayout slots do: [ :each | each layoutChanged: result]. 
 	
-	
+	"We announce both instance and class sides modification events 
+	according to previous behaviour of #apply method (self apply: classChange and metaChange)"
+	SystemAnnouncer uniqueInstance 
+		classModificationAppliedTo: result instanceSide;
+		classModificationAppliedTo: result classSide.
+		
 	^ result instanceSide
