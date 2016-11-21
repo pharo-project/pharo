@@ -4,7 +4,7 @@ stripComment
 	start := stream position.
 	self step.
 	characterType = #eof
-		ifTrue: [ ^ self scanError: 'Unmatched " in comment.' ].
+		ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 	[ currentCharacter = $" and: [ self step ~= $" ] ]
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].

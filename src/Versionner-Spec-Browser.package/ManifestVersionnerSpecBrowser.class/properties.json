@@ -1,0 +1,14 @@
+{
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "PavelKrivanek 11/17/2016 10:28",
+	"instvars" : [
+		 ],
+	"name" : "ManifestVersionnerSpecBrowser",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

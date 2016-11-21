@@ -1,0 +1,4 @@
+release
+preUnload
+
+	VersionnerSpecBrowser clean.

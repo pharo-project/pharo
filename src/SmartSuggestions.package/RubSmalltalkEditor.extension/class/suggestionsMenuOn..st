@@ -1,5 +1,5 @@
-accessing
-menuOn: aBuilder
+*SmartSuggestions
+suggestionsMenuOn: aBuilder
 	<RubSmalltalkCodeMenu>
 	aBuilder
 		item: 'Suggestions...';

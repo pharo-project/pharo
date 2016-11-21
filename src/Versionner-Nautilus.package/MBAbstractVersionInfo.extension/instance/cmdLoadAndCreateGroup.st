@@ -1,4 +1,4 @@
-*NautilusGroupAutoBuilder
+*Versionner-Nautilus
 cmdLoadAndCreateGroup
 	<command>
 	^ VSLoadAndCreateNautilusGroupCommand
