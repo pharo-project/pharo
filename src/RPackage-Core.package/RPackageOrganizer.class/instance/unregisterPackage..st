@@ -7,6 +7,6 @@ unregisterPackage: aPackage
 		do: [ :extendedClass | self unregisterExtendingPackage: aPackage forClass: extendedClass].
 	aPackage definedClasses 
 		do: [ :definedClass | self unregisterPackage: aPackage forClass: definedClass].
-	self announcer announce: (RPackageUnregistered to: aPackage).
+	SystemAnnouncer uniqueInstance announce: (RPackageUnregistered to: aPackage).
 	
 	^ aPackage

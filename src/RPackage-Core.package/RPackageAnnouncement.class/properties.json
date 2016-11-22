@@ -10,5 +10,5 @@
 	"name" : "RPackageAnnouncement",
 	"pools" : [
 		 ],
-	"super" : "Announcement",
+	"super" : "SystemAnnouncement",
 	"type" : "normal" }

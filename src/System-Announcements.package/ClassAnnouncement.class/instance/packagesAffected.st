@@ -1,0 +1,3 @@
+accessing
+packagesAffected
+	^{self packageAffected}

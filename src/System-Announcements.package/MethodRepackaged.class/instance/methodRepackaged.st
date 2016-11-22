@@ -1,4 +1,4 @@
 accessing
 methodRepackaged
 	
-	^ methodRepackaged
+	^ method

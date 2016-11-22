@@ -12,5 +12,5 @@
 	"name" : "ClassRepackaged",
 	"pools" : [
 		 ],
-	"super" : "SystemAnnouncement",
+	"super" : "ClassAnnouncement",
 	"type" : "normal" }
