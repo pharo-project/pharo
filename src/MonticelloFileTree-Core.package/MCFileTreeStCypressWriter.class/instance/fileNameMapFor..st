@@ -40,7 +40,7 @@ fileNameMapFor: aMethodDefinitionCollection
                 put: (self fileNameForSelector: def selector) ]
             ifFalse: [ 
               "tack on postfix to guarantee  file names are uniique on case insensitive file systems"
-              sortedCol := col sorted: [ :a :b | a name <= b name ].
+              sortedCol := col sorted: [ :a :b | a asString <= b asString ].
               (1 to: sortedCol size) do: [ :index | 
                 | def filename |
                 def := sortedCol at: index.

@@ -1,3 +1,3 @@
-clipboard handling
+*OSWindow-Core
 clipboardText
 	^ self osWindow clipboardText

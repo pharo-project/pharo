@@ -1,4 +1,4 @@
-session management
+*OSWindow-Core
 recreateOSWindow
 	| attributes driver |
 	session := Smalltalk session.

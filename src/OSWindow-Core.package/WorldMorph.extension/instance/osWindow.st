@@ -1,4 +1,4 @@
-accessing
+*OSWindow-Core
 osWindow
 	
 	self checkSession.

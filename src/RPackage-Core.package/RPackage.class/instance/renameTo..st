@@ -12,7 +12,8 @@ renameTo: aSymbol
 
 	oldCategoryNames  := (self classTags collect: #categoryName as: Set) 
 		add: self categoryName;
-		yourself.
+		difference: { newName}.
+	
 	self name: aSymbol.
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
 		self definedClasses do: [ :each | each category: newName, (each category allButFirst: oldName size) ].

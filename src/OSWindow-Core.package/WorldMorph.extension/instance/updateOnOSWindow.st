@@ -1,4 +1,4 @@
-updating screen
+*OSWindow-Core
 updateOnOSWindow
 	"Update this world's display."
 

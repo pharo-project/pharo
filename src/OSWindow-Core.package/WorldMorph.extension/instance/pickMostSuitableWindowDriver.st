@@ -1,4 +1,4 @@
-session management
+*OSWindow-Core
 pickMostSuitableWindowDriver
 	"TODO: check for headless mode"
 	| driver |

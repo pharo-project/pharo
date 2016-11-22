@@ -1,4 +1,4 @@
-updating screen
+*OSWindow-Core
 checkNewWindowSize
 	| newExtent |
 	newExtent := self osWindow extent.
