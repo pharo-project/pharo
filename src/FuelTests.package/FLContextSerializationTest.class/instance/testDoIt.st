@@ -5,7 +5,7 @@ testDoIt
 	I've added the #valueWithin:onTimeout: as a fallback for that."	
 	| context |
 	[
-		[ Smalltalk compiler evaluate: 'self error' ]
+		[ Smalltalk evaluate: 'self error' ]
 			on: Error 
 			do: [:error | context := error signalerContext copyStack ].
 	

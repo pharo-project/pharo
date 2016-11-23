@@ -17,9 +17,9 @@ add: anObject finalizing: postMortemFinalizationTag
 			 ^anObject]].
 	delta := size min: 4096.
 	accessProtect critical:
-		[(weakArray := weakArray copyGrownBy: delta)
+		[(weakArray := weakArray grownBy: delta)
 			 at: size + 1 put: anObject.
-		 (strongArray := strongArray  copyGrownBy: delta)
+		 (strongArray := strongArray  grownBy: delta)
 			at: size put: postMortemFinalizationTag.
 		 firstUnusedIndex := size + 1.
 		 lastUsedIndex := size].
