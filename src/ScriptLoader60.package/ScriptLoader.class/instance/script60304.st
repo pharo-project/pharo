@@ -1,9 +1,9 @@
 pharo - scripts
-script60303
+script60304
 
 	^ 'AST-Core-TheIntegrator.483.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
-Alien-eem.35.mcz
+Alien-PabloTesone.36.mcz
 Announcements-Core-TheIntegrator.78.mcz
 Announcements-Help-TheIntegrator.12.mcz
 Announcements-Tests-Core-TheIntegrator.39.mcz
@@ -66,7 +66,7 @@ Epicea-MartinDias.816.mcz
 EpiceaBrowsers-TheIntegrator.88.mcz
 EpiceaBrowsersTests-TheIntegrator.7.mcz
 EpiceaTests-MartinDias.8.mcz
-FFI-Kernel-TheIntegrator.44.mcz
+FFI-Kernel-EstebanLorenzano.42.mcz
 FFI-Pools-eem.3.mcz
 FileSystem-Core-TheIntegrator.212.mcz
 FileSystem-Disk-TheIntegrator.104.mcz
@@ -86,10 +86,13 @@ FreeType-TheIntegrator.754.mcz
 FreeType-Tests-TheIntegrator.2.mcz
 Fuel-MartinDias.826.mcz
 FuelCommandLineHandler-TheIntegrator.25.mcz
-FuelPlatform-TheIntegrator.64.mcz
-FuelSystem-FileRegistry-EstebanLorenzano.3.mcz
-FuelTests-TheIntegrator.414.mcz
-FuelTools-Debugger-TheIntegrator.13.mcz
+FuelPlatform-TheIntegrator.65.mcz
+FuelPlatform-Core-MaxLeske.2.mcz
+FuelPlatform-Pharo-06-MaxLeske.2.mcz
+FuelPlatform-Pharo-Core-MaxLeske.1.mcz
+FuelSystem-FileRegistry-TheIntegrator.4.mcz
+FuelTests-MartinDias.412.mcz
+FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
 GT-BytecodeDebugger-AndreiChis.33.mcz
@@ -330,10 +333,10 @@ Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.290.mcz
 Spec-PolyWidgets-TheIntegrator.91.mcz
 Spec-SelectEntity-TheIntegrator.13.mcz
-Spec-Tests-TheIntegrator.99.mcz
+Spec-Tests-TheIntegrator.102.mcz
 Spec-Tools-TheIntegrator.371.mcz
 StartupPreferences-TheIntegrator.153.mcz
-System-Announcements-TheIntegrator.134.mcz
+System-Announcements-TheIntegrator.135.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
 System-Caching-TheIntegrator.29.mcz
 System-CachingTests-TheIntegrator.19.mcz
@@ -404,9 +407,9 @@ TxText-Styler-HenrikNergaard.18.mcz
 TxTextTests-Model-SeanDeNigris.29.mcz
 UIManager-TheIntegrator.195.mcz
 Unicode-Initialization-TheIntegrator.15.mcz
-UnifiedFFI-TheIntegrator.81.mcz
-UnifiedFFI-Legacy-TheIntegrator.4.mcz
-UnifiedFFI-Tests-TheIntegrator.36.mcz
+UnifiedFFI-EstebanLorenzano.77.mcz
+UnifiedFFI-Legacy-EstebanLorenzano.3.mcz
+UnifiedFFI-Tests-EstebanLorenzano.35.mcz
 UpdateStreamer-Core-TheIntegrator.34.mcz
 UpdateStreamer-Tests-TheIntegrator.9.mcz
 Versionner-Commit-TheIntegrator.38.mcz

@@ -1,3 +1,4 @@
 running
 tearDown
-testedInstance delete
+	super tearDown.
+	testedInstance delete.

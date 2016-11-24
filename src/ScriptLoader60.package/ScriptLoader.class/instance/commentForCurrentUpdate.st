@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '18330 Fuel still has platform classes in Pharo6 like FLPharo11Platform.
-	https://pharo.fogbugz.com/f/cases/18330
+ ^ '19387 DateModelTest leaves rogue window
+	https://pharo.fogbugz.com/f/cases/19387
 
-19381 KMSingleKeyCombination should be not printed with forced uppercases
-	https://pharo.fogbugz.com/f/cases/19381
+19390 FuelPlatform package should not be there
+	https://pharo.fogbugz.com/f/cases/19390
 
-19382 #add:finalizing: in AlienWeakTable sends unexistent message #copyGrownBy
-	https://pharo.fogbugz.com/f/cases/19382'
+19374 isProvidedByExtension method for MethodAnnouncement
+	https://pharo.fogbugz.com/f/cases/19374'

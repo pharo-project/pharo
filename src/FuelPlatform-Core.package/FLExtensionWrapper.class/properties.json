@@ -1,0 +1,17 @@
+{
+	"category" : "FuelPlatform-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"targetClass",
+		"method",
+		"selector",
+		"isSource" ],
+	"name" : "FLExtensionWrapper",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,3 @@
+testing
+isResponsibleForCurrentPlatform
+	^ self subclassResponsibility
