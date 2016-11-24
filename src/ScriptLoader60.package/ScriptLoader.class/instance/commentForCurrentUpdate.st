@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19295 originAtCenter looks like deadCode
-	https://pharo.fogbugz.com/f/cases/19295
+ ^ '19365 remove dependency of Catalog on Nautilus
+	https://pharo.fogbugz.com/f/cases/19365
 
-19372 MethodFinderTest is dependent>>#testSearchForAccessAtOne is dependent on result order
-	https://pharo.fogbugz.com/f/cases/19372
-
-17771 Empty stderr/stdout files should be deleted on image shutdown
-	https://pharo.fogbugz.com/f/cases/17771'
+19367 testClassRespectsPolymorphismWithTrait does suppose full image
+	https://pharo.fogbugz.com/f/cases/19367'

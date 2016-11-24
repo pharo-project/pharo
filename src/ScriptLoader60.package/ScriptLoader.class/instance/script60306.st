@@ -1,5 +1,5 @@
 pharo - scripts
-script60305
+script60306
 
 	^ 'AST-Core-TheIntegrator.483.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -99,7 +99,7 @@ GT-Debugger-TheIntegrator.360.mcz
 GT-EventRecorder-TheIntegrator.73.mcz
 GT-EventRecorder-Tests-JurajKubelka.37.mcz
 GT-Inspector-AndreiChis.439.mcz
-GT-InspectorExtensions-Core-AndreiChis.234.mcz
+GT-InspectorExtensions-Core-TheIntegrator.236.mcz
 GT-Playground-TheIntegrator.135.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
 GT-Spotter-HenrikNergaard.405.mcz
@@ -151,9 +151,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2454.mcz
+Kernel-TheIntegrator.2456.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.134.mcz
+Kernel-Tests-TheIntegrator.136.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.64.mcz
@@ -223,13 +223,13 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.255.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1319.mcz
-Nautilus-GroupManager-TheIntegrator.23.mcz
-Nautilus-GroupManagerUI-TheIntegrator.43.mcz
-Nautilus-Tests-TheIntegrator.48.mcz
-NautilusCommon-TheIntegrator.322.mcz
-NautilusGroupAutoBuilder-TheIntegrator.19.mcz
-NautilusRefactoring-TheIntegrator.309.mcz
+Nautilus-TheIntegrator.1321.mcz
+Nautilus-GroupManager-TheIntegrator.24.mcz
+Nautilus-GroupManagerUI-TheIntegrator.44.mcz
+Nautilus-Tests-TheIntegrator.49.mcz
+NautilusCommon-TheIntegrator.323.mcz
+NautilusGroupAutoBuilder-TheIntegrator.20.mcz
+NautilusRefactoring-TheIntegrator.310.mcz
 Network-Kernel-TheIntegrator.135.mcz
 Network-MIME-TheIntegrator.73.mcz
 Network-Mail-TheIntegrator.52.mcz
@@ -252,7 +252,7 @@ OpalCompiler-Tests-TheIntegrator.370.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 Polymorph-TaskbarIcons-TheIntegrator.48.mcz
-Polymorph-Widgets-TheIntegrator.1397.mcz
+Polymorph-Widgets-TheIntegrator.1400.mcz
 Polymorph-Widgets-Rules-TheIntegrator.8.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -397,7 +397,7 @@ Tool-TxWorkspace-NicolaiHess.7.mcz
 Tool-Workspace-TheIntegrator.46.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.957.mcz
+Traits-TheIntegrator.959.mcz
 Transcript-TheIntegrator.54.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz

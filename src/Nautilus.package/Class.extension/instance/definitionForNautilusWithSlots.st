@@ -2,6 +2,13 @@
 definitionForNautilusWithSlots
 	"the class definition with a way to specify slots. Shown when the class defines special Slot
 	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"
+
+	<localClassMethod> 
+    "This method is supposed to be local in Class because of a good reason.
+    We use this pragma to test if Class does not contain some accidental 
+    local selectors."
+
+
 	| aStream poolString|
 
 	poolString := self sharedPoolsString.

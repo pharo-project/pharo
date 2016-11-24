@@ -21,20 +21,12 @@ testClassRespectsPolymorphismWithTrait
 		
 	#baseClass and #classClass have their equivalent in Trait, but the problem is the name of the selector, they are bad names.
 	#addInstVarNamed: for traits is implemeted in TraitDescription"
-	self
-		assert: (Class localSelectors difference: Trait localSelectors) asArray sort
-		equals: #(
-			#traitComposition: #setName: #getName #baseClass #basicLocalSelectors 
-			#classClass isClass gtInspectorInstanceVariablesIn: gtInspectorMethodsIn:
-			#basicLocalSelectors: #traitComposition #addInstVarNamed: #newAnonymousSubclass #definitionForNautilus #definitionForNautilusWithSlots 
-			#addSlot: #addClassSlot:
-			) asSet asArray sort.
-		
-	"#classTrait:, #isClassTrait, #classTrait, #isBaseTrait and #baseTrait have their equivalent for classes but with different name.
+
+	self assertCollection: (Class localSelectors difference: Trait localSelectors) sorted
+		equals: ((Pragma allNamed: #localClassMethod in: Class) collect: #methodSelector) sorted.
+
+	"#classTrait:, #isClassTrait, #classTrait and others have their equivalent for classes but with different name.
 	 #initialize is implemented differently for traits, classes have their implentation in Object"
-	self
-		assertCollection: (Trait localSelectors difference: Class localSelectors)
-		equals: #(
-			#classTrait: #isClassTrait #classTrait 
-			#systemIcon #isBaseTrait #initialize #baseTrait name:
-			) asSet.
+	
+	self assertCollection: (Trait localSelectors difference: Class localSelectors) sorted
+		equals: ((Pragma allNamed: #localTraitMethod in: Trait) collect: #methodSelector) sorted.
