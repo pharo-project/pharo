@@ -23,6 +23,10 @@ MCFileTreeGitWriter
 	on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory).
 
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
+
+"add ScriptLoader package itself"
+versions add: (#ScriptLoader60 asPackage mcWorkingCopy ancestry ancestors first name, '.mcz').
+
 versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 [versions do: [ :versionName | | packageName manager |
 	packageName := ($- join: (versionName substrings: '-') allButLast) copyUpTo: $..
