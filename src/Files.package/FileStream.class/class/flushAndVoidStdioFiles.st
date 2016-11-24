@@ -8,4 +8,6 @@ flushAndVoidStdioFiles
 					[ file flush ]
 						on: Error
 						do: [ :ex | "care less" ] ] ] ].
-		self voidStdioFiles ]
+	].
+
+	self voidStdioFiles
