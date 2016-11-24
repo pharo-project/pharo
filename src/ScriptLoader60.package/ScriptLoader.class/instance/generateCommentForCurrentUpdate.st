@@ -1,0 +1,3 @@
+public
+generateCommentForCurrentUpdate
+ ^ self commentForIssues: self getSliceIssuesNumbers
