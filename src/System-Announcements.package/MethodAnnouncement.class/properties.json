@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "CamilleTeruel 9/4/2014 14:33",
 	"instvars" : [
-		"method" ],
+		"method",
+		"methodPackage" ],
 	"name" : "MethodAnnouncement",
 	"pools" : [
 		 ],

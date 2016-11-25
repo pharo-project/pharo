@@ -1,5 +1,5 @@
 pharo - scripts
-script60306
+script60307
 
 	^ 'AST-Core-TheIntegrator.483.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -198,7 +198,7 @@ MonticelloGUI-TheIntegrator.431.mcz
 MonticelloMocks-TheIntegrator.8.mcz
 MonticelloRemoteRepositories-TheIntegrator.18.mcz
 Moose-Algos-Graph-vincentBlondeau.31.mcz
-Morphic-Base-TheIntegrator.590.mcz
+Morphic-Base-TheIntegrator.592.mcz
 Morphic-Core-TheIntegrator.313.mcz
 Morphic-Examples-TheIntegrator.64.mcz
 Morphic-Tests-TheIntegrator.11.mcz
@@ -335,7 +335,7 @@ Spec-SelectEntity-TheIntegrator.13.mcz
 Spec-Tests-TheIntegrator.102.mcz
 Spec-Tools-TheIntegrator.371.mcz
 StartupPreferences-TheIntegrator.153.mcz
-System-Announcements-TheIntegrator.135.mcz
+System-Announcements-TheIntegrator.136.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
 System-Caching-TheIntegrator.29.mcz
 System-CachingTests-TheIntegrator.19.mcz
@@ -369,7 +369,7 @@ System-Support-TheIntegrator.1266.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
 System-VMEvents-TheIntegrator.19.mcz
-Tests-TheIntegrator.783.mcz
+Tests-TheIntegrator.785.mcz
 Text-Core-TheIntegrator.62.mcz
 Text-Diff-TheIntegrator.6.mcz
 Text-Edition-TheIntegrator.126.mcz
@@ -377,7 +377,7 @@ Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
 Tool-Base-TheIntegrator.188.mcz
-Tool-Catalog-TheIntegrator.50.mcz
+Tool-Catalog-PavelKrivanek.51.mcz
 Tool-CriticBrowser-TheIntegrator.61.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.15.mcz
