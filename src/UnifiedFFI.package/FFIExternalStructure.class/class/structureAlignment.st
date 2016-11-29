@@ -1,4 +1,4 @@
 accessing
 structureAlignment
-	externalStructureAlignment ifNil: self rebuildFieldAccessors.
+	externalStructureAlignment ifNil: [ self compileFields: self fields withAccessors: false ].
 	^ externalStructureAlignment
