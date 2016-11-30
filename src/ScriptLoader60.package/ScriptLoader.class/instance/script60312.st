@@ -1,7 +1,7 @@
 pharo - scripts
-script60311
+script60312
 
-	^ 'AST-Core-TheIntegrator.485.mcz
+	^ 'AST-Core-TheIntegrator.483.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
 Alien-eem.35.mcz
 Announcements-Core-TheIntegrator.78.mcz
@@ -114,7 +114,7 @@ Glamour-Announcements-AndreiChis.8.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-TheIntegrator.326.mcz
 Glamour-Examples-TheIntegrator.313.mcz
-Glamour-FastTable-TheIntegrator.62.mcz
+Glamour-FastTable-EstebanLorenzano.62.mcz
 Glamour-Helpers-TudorGirba.40.mcz
 Glamour-Morphic-Brick-TheIntegrator.433.mcz
 Glamour-Morphic-Brick-Tests-JurajKubelka.15.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.255.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1325.mcz
+Nautilus-EstebanLorenzano.1324.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.49.mcz
@@ -247,7 +247,7 @@ OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.210.mcz
 OmbuTests-MartinDias.7.mcz
-OpalCompiler-Core-TheIntegrator.874.mcz
+OpalCompiler-Core-TheIntegrator.872.mcz
 OpalCompiler-Tests-TheIntegrator.370.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
@@ -261,7 +261,7 @@ ProfStef-Tests-TheIntegrator.27.mcz
 QualityAssistant-TheIntegrator.116.mcz
 QualityAssistant-Test-YuriyTymchuk.2.mcz
 QualityAssistantRecording-Uko.28.mcz
-RPackage-Core-TheIntegrator.454.mcz
+RPackage-Core-TheIntegrator.451.mcz
 RPackage-Tests-TheIntegrator.199.mcz
 Random-Core-TheIntegrator.8.mcz
 Random-Tests-TheIntegrator.4.mcz
@@ -407,8 +407,8 @@ TxTextTests-Model-SeanDeNigris.29.mcz
 UIManager-TheIntegrator.195.mcz
 Unicode-Initialization-TheIntegrator.15.mcz
 UnifiedFFI-EstebanLorenzano.82.mcz
-UnifiedFFI-Legacy-TheIntegrator.4.mcz
-UnifiedFFI-Tests-TheIntegrator.36.mcz
+UnifiedFFI-Legacy-EstebanLorenzano.4.mcz
+UnifiedFFI-Tests-EstebanLorenzano.36.mcz
 UpdateStreamer-Core-TheIntegrator.34.mcz
 UpdateStreamer-Tests-TheIntegrator.9.mcz
 Versionner-Commit-TheIntegrator.38.mcz
