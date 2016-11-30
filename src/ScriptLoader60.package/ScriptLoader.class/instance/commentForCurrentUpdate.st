@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19406 integrate UFFI v0.25
-	https://pharo.fogbugz.com/f/cases/19406
+ ^ '19401 New method isExtension for CompiledMethod
+	https://pharo.fogbugz.com/f/cases/19401
 
-19403 Find and replace dialog first field is unreadable in dark theme
-	https://pharo.fogbugz.com/f/cases/19403
+19344 No event about auto deletion of empty protocol when last method is moved from it
+	https://pharo.fogbugz.com/f/cases/19344
 
-17771 Empty stderr/stdout files should be deleted on image shutdown
-	https://pharo.fogbugz.com/f/cases/17771'
+19276 Endless loop with ExecutionDisplayPlugin
+	https://pharo.fogbugz.com/f/cases/19276'

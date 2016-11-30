@@ -1,3 +1,3 @@
-as yet unclassified
+stepping and presenter
 step
-	self color: self color darker.
+	self color: (self color alpha: self nextAlphaStep)
