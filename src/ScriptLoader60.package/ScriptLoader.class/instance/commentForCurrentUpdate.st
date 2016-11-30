@@ -1,9 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19407 FastTable default intercell spacing for glamour is too big
-	https://pharo.fogbugz.com/f/cases/19407
+ ^ '19406 integrate UFFI v0.25
+	https://pharo.fogbugz.com/f/cases/19406
 
-19408 Custom method icon for FFI methods
-	https://pharo.fogbugz.com/f/cases/19408
+19403 Find and replace dialog first field is unreadable in dark theme
+	https://pharo.fogbugz.com/f/cases/19403
 
-'
+17771 Empty stderr/stdout files should be deleted on image shutdown
+	https://pharo.fogbugz.com/f/cases/17771'

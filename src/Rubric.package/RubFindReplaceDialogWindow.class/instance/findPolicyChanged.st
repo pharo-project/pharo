@@ -8,5 +8,5 @@ findPolicyChanged
 	self changed: #replaceText.
 	self changed: #replaceEnabled.
 	self changed: #replaceAllEnabled.
-	self findTextFieldMorph textColor: Color  black.
+	self findTextFieldMorph textColor: self theme textColor
 
