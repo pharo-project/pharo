@@ -1,6 +1,7 @@
-public
-commentForCurrentUpdate
- ^ '19408 Custom method icon for FFI methods
+pharo - updates
+update60311
+	"self new update60311"
+	self withUpdateLog: '19408 Custom method icon for FFI methods
 	https://pharo.fogbugz.com/f/cases/19408
 
 19407 FastTable default intercell spacing for glamour is too big
@@ -13,4 +14,6 @@ commentForCurrentUpdate
 	https://pharo.fogbugz.com/f/cases/19411
 
 19410 improve comment  OCRequestorScope
-	https://pharo.fogbugz.com/f/cases/19410'
+	https://pharo.fogbugz.com/f/cases/19410'.
+	self loadTogether: self script60311 merge: false.
+	self flushCaches.
