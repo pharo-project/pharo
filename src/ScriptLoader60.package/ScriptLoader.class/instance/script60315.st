@@ -1,7 +1,7 @@
 pharo - scripts
-script60314
+script60315
 
-	^ 'AST-Core-TheIntegrator.483.mcz
+	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
 Alien-eem.35.mcz
 Announcements-Core-TheIntegrator.78.mcz
@@ -247,8 +247,8 @@ OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.210.mcz
 OmbuTests-MartinDias.7.mcz
-OpalCompiler-Core-TheIntegrator.872.mcz
-OpalCompiler-Tests-TheIntegrator.370.mcz
+OpalCompiler-Core-TheIntegrator.875.mcz
+OpalCompiler-Tests-TheIntegrator.372.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 Polymorph-TaskbarIcons-TheIntegrator.48.mcz

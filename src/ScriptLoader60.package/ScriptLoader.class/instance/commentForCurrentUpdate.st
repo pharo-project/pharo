@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19401 New method isExtension for CompiledMethod
-	https://pharo.fogbugz.com/f/cases/19401
+ ^ '19411 improve comment RBGlobalNode for class variable
+	https://pharo.fogbugz.com/f/cases/19411
 
-19344 No event about auto deletion of empty protocol when last method is moved from it
-	https://pharo.fogbugz.com/f/cases/19344
+19410 improve comment  OCRequestorScope
+	https://pharo.fogbugz.com/f/cases/19410
 
-19276 Endless loop with ExecutionDisplayPlugin
-	https://pharo.fogbugz.com/f/cases/19276'
+19400 argumentNames returns orderedCollection
+	https://pharo.fogbugz.com/f/cases/19400'
