@@ -1,10 +1,16 @@
 backward compatibility
 classify: selector under: aProtocolName suppressIfDefault: aBoolean
-	| oldProtocol |
-	oldProtocol := self protocolOrganizer protocolOfSelector: selector. 
-	(oldProtocol isNil or: [ oldProtocol name ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ])
+	| oldCategory forceNotify oldProtocols |
+	forceNotify := (self protocolOrganizer includesSelector: selector) not.
+	oldCategory := self categoryOfElement: selector.
+	(forceNotify or: [ oldCategory ~= aProtocolName or: [ aBoolean not or: [ aProtocolName ~= Protocol unclassified ] ] ])
 		ifFalse: [ ^ self ].
-	self protocolOrganizer classify: selector inProtocolNamed: aProtocolName.
-	oldProtocol ifNotNil: [ 
-		aBoolean & oldProtocol canBeRemoved ifTrue: [ self removeProtocol: oldProtocol ].
-		self notifyOfChangedSelector: selector from: oldProtocol name to: aProtocolName ]
+	oldProtocols := self protocolOrganizer protocolsOfSelector: selector.
+	self protocolOrganizer
+		classify: selector
+		inProtocolNamed: aProtocolName.		
+	aBoolean ifTrue: [
+		(oldProtocols 
+			select: #canBeRemoved)
+			do: [:e | self  removeProtocol: e ] ].
+	oldCategory ifNotNil: [ self notifyOfChangedSelector: selector from: oldCategory to: aProtocolName ]

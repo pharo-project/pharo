@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19418 Spec TextModel editor has broken cancel operation after first accept
-	https://pharo.fogbugz.com/f/cases/19418
+ ^ '19409 ClassTagRemoved is not announced when packageTag is removed when it becomes empty after class is moved 
+	https://pharo.fogbugz.com/f/cases/19409
 
-19413 GTInspector/Debugger do not work for large/ toolarge intervals
-	https://pharo.fogbugz.com/f/cases/19413
+19319 Editing methods in filtered MessageBrowser raise error
+	https://pharo.fogbugz.com/f/cases/19319
 
-19420 redu menu item is wrong and not working for rubric
-	https://pharo.fogbugz.com/f/cases/19420'
+19417 Loading new trait methods put them into unclassified category of user classes
+	https://pharo.fogbugz.com/f/cases/19417'

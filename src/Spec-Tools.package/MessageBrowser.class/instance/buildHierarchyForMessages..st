@@ -2,7 +2,7 @@ testing
 buildHierarchyForMessages: messages
 	| result classes |
 	
-	result := IdentityDictionary new.
+	result := Dictionary new.
 	self topologicSort 
 		ifFalse: [ 
 			messages do: [:m | result at: m put: {} ].
