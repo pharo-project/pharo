@@ -1,5 +1,5 @@
 pharo - scripts
-script60315
+script60316
 
 	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -99,12 +99,12 @@ GT-Debugger-TheIntegrator.360.mcz
 GT-EventRecorder-TheIntegrator.73.mcz
 GT-EventRecorder-Tests-JurajKubelka.37.mcz
 GT-Inspector-AndreiChis.439.mcz
-GT-InspectorExtensions-Core-TheIntegrator.236.mcz
+GT-InspectorExtensions-Core-TheIntegrator.238.mcz
 GT-Playground-TheIntegrator.135.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
 GT-Spotter-HenrikNergaard.405.mcz
 GT-Spotter-EventRecorder-JurajKubelka.113.mcz
-GT-SpotterExtensions-Core-StefanReichhart.216.mcz
+GT-SpotterExtensions-Core-TheIntegrator.218.mcz
 GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-StefanReichhart.59.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
@@ -296,7 +296,7 @@ Ring-Tests-Containers-MarcusDenker.18.mcz
 Ring-Tests-Kernel-TheIntegrator.93.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
-Rubric-TheIntegrator.420.mcz
+Rubric-TheIntegrator.422.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.10.mcz
 Rubric-Tests-TheIntegrator.10.mcz
@@ -323,7 +323,7 @@ Slot-TheIntegrator.778.mcz
 Slot-Tests-TheIntegrator.101.mcz
 SmartSuggestions-TheIntegrator.262.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
-Spec-Core-TheIntegrator.533.mcz
+Spec-Core-TheIntegrator.535.mcz
 Spec-Debugger-TheIntegrator.278.mcz
 Spec-Examples-TheIntegrator.129.mcz
 Spec-Help-TheIntegrator.13.mcz

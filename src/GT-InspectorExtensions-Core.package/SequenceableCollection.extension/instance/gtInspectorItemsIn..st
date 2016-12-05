@@ -1,5 +1,6 @@
 *GT-InspectorExtensions-Core
 gtInspectorItemsIn: composite
+	self size > self gtCollectionSizeThreshold ifTrue: [ ^ self ].
 	^ composite table
 		title: 'Items';
 		display: [ :aCollection | [(1 to: self size) collect: [ :index | index -> (self at: index) ]] on:Error do:[#()]];

@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19411 improve comment RBGlobalNode for class variable
-	https://pharo.fogbugz.com/f/cases/19411
+ ^ '19418 Spec TextModel editor has broken cancel operation after first accept
+	https://pharo.fogbugz.com/f/cases/19418
 
-19410 improve comment  OCRequestorScope
-	https://pharo.fogbugz.com/f/cases/19410
+19413 GTInspector/Debugger do not work for large/ toolarge intervals
+	https://pharo.fogbugz.com/f/cases/19413
 
-19400 argumentNames returns orderedCollection
-	https://pharo.fogbugz.com/f/cases/19400'
+19420 redu menu item is wrong and not working for rubric
+	https://pharo.fogbugz.com/f/cases/19420'

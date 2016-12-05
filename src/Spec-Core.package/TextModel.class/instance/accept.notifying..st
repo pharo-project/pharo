@@ -1,14 +1,15 @@
 api
 accept: aText notifying: aNotifyier
-	| accept |
+	| accept newText |
 	
 	accept := actionToPerformHolder value cull: aText cull: aNotifyier.
 	accept == false ifTrue: [ ^ false ].
 	
-	textHolder value: aText.
+	newText := aText copy.
+	textHolder value: newText.
 	
 	"Dummy changed to raise an announcement"
-	actionPerformedHolder value: aText.
+	actionPerformedHolder value: newText.
 	
 	self changed: #clearUserEdits.
 	^ true

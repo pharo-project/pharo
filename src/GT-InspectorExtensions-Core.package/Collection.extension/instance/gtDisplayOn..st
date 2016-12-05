@@ -1,15 +1,12 @@
 *GT-InspectorExtensions-Core
-gtDisplayOn: s
-	self printNameOn: s.
-	s
+gtDisplayOn: stream
+	self printNameOn: stream.
+	stream
 		space;
 		nextPut: $[;
-		nextPutAll: self size asString;
-		nextPutAll:
-				(self size = 1
-						ifTrue: [ ' item' ]
-						ifFalse: [ ' items' ]);
+		print: self size;
+		nextPutAll: (' item' asPluralBasedOn: self size);
 		nextPut: $];
 		space.
-		self printElementsOn: s.
-	
+	self size <= self gtCollectionSizeThreshold 
+		ifTrue: [ self printElementsOn: stream ]

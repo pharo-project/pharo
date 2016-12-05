@@ -45,9 +45,9 @@ menuOn: aBuilder
 		help: nil;
 		iconName: #smallFindIcon.
 	self extendedSearchMenuOn: aBuilder.
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
+	(aBuilder item: #'Redo' translated)
+		keyText: 'Z';
+		selector: #redo;
 		help: nil;
 		iconName: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
