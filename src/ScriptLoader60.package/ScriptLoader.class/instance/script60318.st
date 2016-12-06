@@ -1,5 +1,5 @@
 pharo - scripts
-script60317
+script60318
 
 	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -161,7 +161,7 @@ Keymapping-Pragmas-TheIntegrator.62.mcz
 Keymapping-Settings-StephaneDucasse.83.mcz
 Keymapping-Tests-TheIntegrator.111.mcz
 Keymapping-Tools-Spec-TheIntegrator.32.mcz
-Komitter-TheIntegrator.183.mcz
+Komitter-TheIntegrator.185.mcz
 Manifest-Core-TheIntegrator.249.mcz
 Manifest-Resources-Tests-MarcusDenker.14.mcz
 Manifest-Tests-TheIntegrator.53.mcz
@@ -277,9 +277,9 @@ Refactoring-Tests-Critics-TheIntegrator.54.mcz
 Refactoring-Tests-Environment-TheIntegrator.30.mcz
 ReflectionMirrors-Primitives-TheIntegrator.7.mcz
 ReflectionMirrors-Primitives-Tests-TheIntegrator.2.mcz
-Reflectivity-TheIntegrator.312.mcz
+Reflectivity-TheIntegrator.314.mcz
 Reflectivity-Examples-TheIntegrator.45.mcz
-Reflectivity-Tests-TheIntegrator.209.mcz
+Reflectivity-Tests-TheIntegrator.212.mcz
 Reflectivity-Tools-TheIntegrator.68.mcz
 Reflectivity-Tools-Tests-TheIntegrator.22.mcz
 Regex-Core-TheIntegrator.40.mcz
@@ -397,7 +397,7 @@ Tool-TxWorkspace-NicolaiHess.7.mcz
 Tool-Workspace-TheIntegrator.46.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.959.mcz
+Traits-TheIntegrator.964.mcz
 Transcript-TheIntegrator.54.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz

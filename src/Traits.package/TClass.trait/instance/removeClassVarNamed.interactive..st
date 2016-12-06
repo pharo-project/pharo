@@ -5,26 +5,21 @@ removeClassVarNamed: aString interactive: interactive
     aString is not a class variable or if it is still being used in the code of 
     the class."
 
-	| aSymbol |
+	| aSymbol varUserClass |
 	aSymbol := aString asSymbol.
 	(self classPool includesKey: aSymbol)
 		ifFalse: [ ^ self error: aString , ' is not a class variable' ].
-	self withAllSubclasses
-		do: [ :subclass | 
-			(Array with: subclass with: subclass class)
-				do: [ :classOrMeta | 
-					(classOrMeta whichSelectorsReferTo: (self classPool associationAt: aSymbol)) isEmpty
-						ifFalse: [ 
-							interactive
-								ifFalse: [ 
-									self crTrace: self name , ' (' , aString , ' is Undeclared) '.
-									^ Undeclared declare: aSymbol from: self classPool ]
-								ifTrue: [ 
-									(self
-										confirm:
-											(aString , ' is still used in code of class ' , classOrMeta name , '.\Is it okay to move it to Undeclared?') withCRs)
-										ifTrue: [ ^ Undeclared declare: aSymbol from: self classPool ]
-										ifFalse: [ ^ self ] ] ] ] ].
-	self classPool removeKey: aSymbol.
+	varUserClass := self anyUserOfClassVarNamed: aSymbol.
+	varUserClass notNil & interactive ifTrue: [ 
+		(self	confirm: (aString , ' is still used in code of class ' , varUserClass name , '.\Is it okay to move it to Undeclared?') withCRs)
+			ifFalse: [ ^ self ] ].
+	
+	varUserClass 
+		ifNotNil: [self crTrace: self name , ' (' , aString , ' is Undeclared) '.
+			Undeclared declare: aSymbol from: self classPool]
+		ifNil: [ self classPool removeKey: aSymbol].
+		
 	self classPool isEmpty
-		ifTrue: [ self classPool: nil ]
+		ifTrue: [ self classPool: nil ].
+		
+	SystemAnnouncer uniqueInstance classModificationAppliedTo: self

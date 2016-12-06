@@ -15,4 +15,6 @@ addClassVariable: aGlobal
 	(self classPool includesKey: symbol) ifFalse: 
 		["Pick up any refs in Undeclared"
 		self classPool declareVariable: aGlobal from: Undeclared.
-		SystemAnnouncer uniqueInstance classDefinitionChangedFrom: oldState to: self]
+		SystemAnnouncer uniqueInstance 
+			classDefinitionChangedFrom: oldState to: self;
+			classModificationAppliedTo: self]

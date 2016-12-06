@@ -5,7 +5,7 @@ testConditionWithArgument
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
-		condition: [ :node | node == sendNode ];
+		condition: [ :node | node == sendNode ] arguments: #(#node);
 		arguments: #(#node).
 	sendNode link: link.
 	self assert: sendNode hasMetalinkBefore.

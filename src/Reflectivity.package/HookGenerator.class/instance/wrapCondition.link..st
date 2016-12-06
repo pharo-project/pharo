@@ -3,9 +3,7 @@ wrapCondition: hook link: aLink
 	| linkBlock conditionExpression condSelector condArguments linkConditionArguments|
 	
 	condSelector := aLink condition valueSelector.
-	aLink conditionArguments
-		ifNil: [ linkConditionArguments  := aLink condition argumentNames.  ]
-		ifNotNil: [linkConditionArguments :=  aLink conditionArguments ].
+	linkConditionArguments  := aLink conditionArguments.
 	condArguments := #().
 	
 	(condSelector numArgs > 0) ifTrue: [
