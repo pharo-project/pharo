@@ -1,4 +1,4 @@
-initialize
+initialization
 registerBarActions
 	
 	toolbar 

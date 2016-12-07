@@ -1,5 +1,5 @@
 pharo - scripts
-script60318
+script60319
 
 	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -116,7 +116,7 @@ Glamour-Core-TheIntegrator.326.mcz
 Glamour-Examples-TheIntegrator.313.mcz
 Glamour-FastTable-EstebanLorenzano.62.mcz
 Glamour-Helpers-TudorGirba.40.mcz
-Glamour-Morphic-Brick-TheIntegrator.433.mcz
+Glamour-Morphic-Brick-TheIntegrator.435.mcz
 Glamour-Morphic-Brick-Tests-JurajKubelka.15.mcz
 Glamour-Morphic-Pager-MarcusDenker.111.mcz
 Glamour-Morphic-Renderer-TudorGirba.352.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2462.mcz
+Kernel-TheIntegrator.2464.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.136.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -210,7 +210,7 @@ Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.75.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
 Morphic-Widgets-Scrolling-TheIntegrator.37.mcz
-Morphic-Widgets-Tabs-TheIntegrator.34.mcz
+Morphic-Widgets-Tabs-TheIntegrator.36.mcz
 Morphic-Widgets-Taskbar-TheIntegrator.25.mcz
 Morphic-Widgets-TickList-TheIntegrator.2.mcz
 Morphic-Widgets-Tree-TheIntegrator.64.mcz
@@ -296,7 +296,7 @@ Ring-Tests-Containers-MarcusDenker.18.mcz
 Ring-Tests-Kernel-TheIntegrator.93.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
-Rubric-TheIntegrator.422.mcz
+Rubric-TheIntegrator.423.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.10.mcz
 Rubric-Tests-TheIntegrator.10.mcz

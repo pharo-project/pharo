@@ -1,16 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19425 Stack underflow with meta links on message nodes
-	https://pharo.fogbugz.com/f/cases/19425
+ ^ '19412 SpecDebugger cannot work without Glamour
+	https://pharo.fogbugz.com/f/cases/19412
 
-19284 MetaLink: re-enabling a condition with arguments can not be executed anymore
-	https://pharo.fogbugz.com/f/cases/19284
+19428 Silently ignore loading DelayScheduler setting when its the same as existing
+	https://pharo.fogbugz.com/f/cases/19428
 
-18994 Komitter should stringify the commit message (breaks GitFileTree)
-	https://pharo.fogbugz.com/f/cases/18994
-
-19421 Failing test: WeakAnnouncerTest>>#testNoDeadWeakSubscriptions
-	https://pharo.fogbugz.com/f/cases/19421
-
-19415 classVariableAdd and classVariableRemove not announce ClassModificationApplied event
-	https://pharo.fogbugz.com/f/cases/19415'
+19426 TabsManagerMorph improvements
+	https://pharo.fogbugz.com/f/cases/19426'
