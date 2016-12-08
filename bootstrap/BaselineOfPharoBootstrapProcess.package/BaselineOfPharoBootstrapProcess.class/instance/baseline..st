@@ -24,6 +24,7 @@ baseline: spec
 					repository: 'http://www.smalltalkhub.com/mc/MartinDias/Ficus/main' ].
 
 			spec
-				package: 'ConfigurationOfPharoBootstrap';
+				baseline: 'PharoBootstrap' with: [
+					spec repository: 'filetree://src' ];
 				package: 'Pharo30Bootstrap' with: [ spec requires: #('Espell' 'Ficus' 'Cargo') ].
 			spec group: 'dev' with: #('Pharo30Bootstrap' 'Espell' 'Ficus') ]
