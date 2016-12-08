@@ -26,8 +26,8 @@ IceRepository defaultBackendType: IceLibgitLocalRepository.
 
 Metacello new
 	baseline: 'PharoBootstrapProcess';
-	repository: 'github://guillep/PharoBootstrap';
-	load ] on: Warning do: #resume.
+	repository: 'filetree://bootstrap';
+	load.
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
@@ -38,5 +38,6 @@ architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
 	subdirectory: 'src';
 	espellBackend: ((#EPSimulatorBackend asClass) perform: (#'for', architecture, 'Bit') asSymbol) forBootstrap;
 	bootstrap.
+] on: Warning do: #resume.
 
 Smalltalk snapshot: false andQuit: true.
