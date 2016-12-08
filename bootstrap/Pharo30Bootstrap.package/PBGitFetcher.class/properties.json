@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "PBDefinitionFetcher",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"repository"
+	],
+	"name" : "PBGitFetcher",
+	"type" : "normal"
+}

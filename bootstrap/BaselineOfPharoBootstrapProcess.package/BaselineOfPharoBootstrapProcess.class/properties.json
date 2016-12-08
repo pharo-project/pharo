@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "ChristopheDemarey 6\/30\/2016 15:02",
+	"super" : "BaselineOf",
+	"category" : "BaselineOfPharoBootstrapProcess",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BaselineOfPharoBootstrapProcess",
+	"type" : "normal"
+}

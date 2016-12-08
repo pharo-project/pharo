@@ -1,0 +1,4 @@
+stages
+useClassBuilder
+	
+	useClassBuilder := true

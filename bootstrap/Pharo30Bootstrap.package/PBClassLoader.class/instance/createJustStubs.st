@@ -1,0 +1,4 @@
+stages
+createJustStubs
+
+	shouldInitializeClassPool := false.

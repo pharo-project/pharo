@@ -1,0 +1,1 @@
+Fetch MC definitions from a Cargo load instructions file and a local package source repository

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "ChristopheDemarey 7\/6\/2016 11:32",
+	"super" : "PBDefinitionFetcher",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"group",
+		"version"
+	],
+	"name" : "PBMetacelloFetcher",
+	"type" : "normal"
+}

@@ -1,0 +1,4 @@
+running
+createBehaviorFromDefinition: aRFiDefinition
+
+	^ classLoader createBehaviorFromDefinition: aRFiDefinition
