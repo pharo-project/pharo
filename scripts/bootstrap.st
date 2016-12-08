@@ -17,8 +17,8 @@ addMethod: method
 
 [ Metacello new
 	baseline: 'Iceberg';
-	repository: 'github://npasserini/iceberg';
-	load: 'development'.
+	repository: 'github://npasserini/iceberg:dev-0.4';
+	load.
 
 "After installing Iceberg, we should set the default backend.
 In this way, ci jobs will not be asked for credentials"
