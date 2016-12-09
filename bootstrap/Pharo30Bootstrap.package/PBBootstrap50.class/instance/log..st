@@ -1,4 +1,4 @@
 helpers
-log: aString
+log: aLogStatement
 
-	FileStream stdout nextPutAll: aString;cr.
+	logger log: aLogStatement

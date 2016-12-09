@@ -12,7 +12,9 @@
 		"bootstrapInterpreter",
 		"bootstrapEnvironment",
 		"espellBackend",
-		"definitionFetcher"
+		"definitionFetcher",
+		"statistics",
+		"logger"
 	],
 	"name" : "PBBootstrap50",
 	"type" : "normal"

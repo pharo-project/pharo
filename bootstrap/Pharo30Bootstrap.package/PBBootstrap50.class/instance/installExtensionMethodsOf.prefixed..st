@@ -20,9 +20,4 @@ installExtensionMethodsOf: aPackageDefinition prefixed: aPrefix
 				nextPutAll: methodDefinition selector ].
 		self log: logMessage.
 			
-		self objectSpace interpreter
-			evaluateCode: 'theBehavior addSelectorSilently: selector withMethod: compiledMethod'
-			withTemps: { 
-				'theBehavior' -> behaviorMirror.
-				'selector' -> (methodDefinition selector asLiteralInObjectSpace: objectSpace).
-				'compiledMethod' -> compiledMethod } ]
+		self installMethod: compiledMethod inBehavior: behaviorMirror ]

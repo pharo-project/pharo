@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"methodTimes",
+		"compilationTimes"
+	],
+	"name" : "PBBootstrapStatistics",
+	"type" : "normal"
+}

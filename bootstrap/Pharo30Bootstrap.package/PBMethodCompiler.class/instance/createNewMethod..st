@@ -5,7 +5,10 @@ createNewMethod: aMethodDefinition
 ""	ownerClass := builder behaviorFrom: aMethodDefinition methodClass theNonMetaClass."
 "	aMethodDefinition methodClass isMeta ifTrue: [ ownerClass := ownerClass classSide ].
 "
-	^ builder objectSpace crossCompiler
+	| method timeToCompile |
+	timeToCompile := [ method := builder objectSpace crossCompiler
 		compile: aMethodDefinition sourceCode
 		forClass: aMethodDefinition methodClass
-		inEnvironment: builder
+		inEnvironment: builder] timeToRun.
+	builder statistics addCompilationTime: timeToCompile.
+	^ method
