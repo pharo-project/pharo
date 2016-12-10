@@ -1,13 +1,12 @@
 testing
 buildHierarchyForMessages: messages
 	| result classes |
+	self topologicSort ifFalse: [ 
+		result := IdentityDictionary new.
+		messages do: [:m | result at: m put: {} ].
+		^ result ].
 	
-	result := Dictionary new.
-	self topologicSort 
-		ifFalse: [ 
-			messages do: [:m | result at: m put: {} ].
-			^ result ].
-	
+	result := Dictionary new.	
 	classes := (messages collect: #methodClass) asSet.
 	messages do: [:message || level class |
 		class := message methodClass.

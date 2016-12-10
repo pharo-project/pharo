@@ -1,5 +1,5 @@
 pharo - scripts
-script60321
+script60322
 
 	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -334,7 +334,7 @@ Spec-MorphicAdapters-TheIntegrator.290.mcz
 Spec-PolyWidgets-TheIntegrator.91.mcz
 Spec-SelectEntity-TheIntegrator.13.mcz
 Spec-Tests-TheIntegrator.102.mcz
-Spec-Tools-TheIntegrator.374.mcz
+Spec-Tools-TheIntegrator.377.mcz
 StartupPreferences-TheIntegrator.153.mcz
 System-Announcements-TheIntegrator.136.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
