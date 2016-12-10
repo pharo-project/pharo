@@ -1,0 +1,14 @@
+{
+	"category" : "PharoDocComment",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestPharoDocComment",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

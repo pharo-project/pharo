@@ -1,7 +1,7 @@
-visiting rb nodes
+*PharoDocComment
 visitMethodNode: aMethodNode
 	| link |
-	aMethodNode comments do: [ :comment | self addStyle: #comment from: comment start to: comment stop ].
+	self visitMethodComments: aMethodNode comments.
 	aMethodNode arguments do: [ :argument | self addStyle: #patternArg forNode: argument ].
 	link := TextMethodLink selector: aMethodNode selector.
 	aMethodNode selectorParts

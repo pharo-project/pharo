@@ -1,0 +1,16 @@
+{
+	"category" : "PharoDocComment",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"DocCommentEnabled" ],
+	"commentStamp" : "StephaneDucasse 11/3/2016 13:09",
+	"instvars" : [
+		"sourceNode",
+		"expression",
+		"result" ],
+	"name" : "PharoDocCommentNode",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

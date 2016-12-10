@@ -1,0 +1,3 @@
+accessing
+expressionInterval
+	^ expressionInterval

@@ -1,0 +1,14 @@
+{
+	"category" : "PharoDocComment",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "NicolaiHess 11/1/2016 21:59",
+	"instvars" : [
+		 ],
+	"name" : "DocCommentIconStyler",
+	"pools" : [
+		 ],
+	"super" : "IconStyler",
+	"type" : "normal" }

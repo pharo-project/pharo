@@ -1,0 +1,1 @@
+IconStyler for highlight example expressions in method documents (seee PharoDocCommentNode). Enabled / Disabled by a Setting in group "Code Browsing"

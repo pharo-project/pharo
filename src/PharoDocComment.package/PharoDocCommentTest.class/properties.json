@@ -1,14 +1,14 @@
 {
-	"category" : "OpalCompiler-Tests-FromOld",
+	"category" : "PharoDocComment",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"stream" ],
-	"name" : "MockTranscript",
+		 ],
+	"name" : "PharoDocCommentTest",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "TestCase",
 	"type" : "normal" }

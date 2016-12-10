@@ -10,8 +10,6 @@
 		"errorLocation",
 		"errorSource",
 		"interactive",
-		"originalTranscript",
-		"newTranscript",
 		"text" ],
 	"name" : "OCCompilerTest",
 	"pools" : [

@@ -1,16 +1,27 @@
-test shadowing
+test shadowing2
 testTraitTempShadowing
-
+	
+	| warningCount |
+	
+	warningCount := 0.
+	
 	self initializeErrorMessage.
+	
+	[ 
+			OpalCompiler new 
+				source: self tempTraitShadowingString;
+				class: ArrayTest;
+				failBlock: [self fail.];
+				translate.
+	] 
+	on: OCShadowVariableWarning 
+	do: [ :ex | 
+		warningCount := warningCount + 1.
+		self 
+			assert: ex warningMessage 
+			equals: (self traitTempShadowingWarnings at: warningCount).
+		
+		ex resume
+	].
 
-	OpalCompiler new 
-	source: 'testReplaceFromToWithStartingAt
-	| result  repStart collection replacementCollection firstIndex secondIndex |
-		replacementCollection := 1.';
-	class: ArrayTest;
-	failBlock: [self fail.];
-	translate.
-	self assert: ( newTranscript contents =  '
-ArrayTest>>testReplaceFromToWithStartingAt(replacementCollection is shadowed)
-ArrayTest>>testReplaceFromToWithStartingAt(firstIndex is shadowed)
-ArrayTest>>testReplaceFromToWithStartingAt(secondIndex is shadowed)').
+	self assert: warningCount equals: 3

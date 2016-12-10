@@ -1,3 +1,0 @@
-streaming
-cr 
-	stream cr

@@ -1,4 +1,0 @@
-accessing
-contents
-	^stream contents
-	

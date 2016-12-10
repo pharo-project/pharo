@@ -1,18 +1,17 @@
-test shadowing
+test shadowing2
 testNotInteractiveNoShadowing
 
 	interactive := false.
 	self initializeErrorMessage.
 
-	OpalCompiler new
-		source: 'temp |var2|';
-		class: MockForCompilation;
-		requestor: self;
-		failBlock: [self fail.
-				^nil];
-		translate.
-			
-	self assert: ( newTranscript contents = '').
+	self shouldnt: [ 
+		OpalCompiler new
+			source: 'temp |var2|';
+			class: MockForCompilation;
+			requestor: self;
+			failBlock: [self fail. ^ nil ];
+			translate.
+	] raise: OCShadowVariableWarning.
 	
 
 

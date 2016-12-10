@@ -1,5 +1,5 @@
 pharo - scripts
-script60320
+script60321
 
 	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2464.mcz
+Kernel-TheIntegrator.2466.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.136.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -247,10 +247,11 @@ OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.210.mcz
 OmbuTests-MartinDias.7.mcz
-OpalCompiler-Core-TheIntegrator.875.mcz
-OpalCompiler-Tests-TheIntegrator.372.mcz
+OpalCompiler-Core-TheIntegrator.878.mcz
+OpalCompiler-Tests-TheIntegrator.376.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
+PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-TaskbarIcons-TheIntegrator.48.mcz
 Polymorph-Widgets-TheIntegrator.1400.mcz
 Polymorph-Widgets-Rules-TheIntegrator.8.mcz
@@ -296,9 +297,9 @@ Ring-Tests-Containers-MarcusDenker.18.mcz
 Ring-Tests-Kernel-TheIntegrator.93.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
-Rubric-TheIntegrator.423.mcz
+Rubric-TheIntegrator.424.mcz
 Rubric-Rules-TheIntegrator.6.mcz
-Rubric-Styling-TheIntegrator.10.mcz
+Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
 STON-Core-TheIntegrator.75.mcz
 STON-Tests-SvenVanCaekenberghe.64.mcz
@@ -321,7 +322,7 @@ Shout-TheIntegrator.302.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.778.mcz
 Slot-Tests-TheIntegrator.101.mcz
-SmartSuggestions-TheIntegrator.262.mcz
+SmartSuggestions-TheIntegrator.264.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
 Spec-Core-TheIntegrator.535.mcz
 Spec-Debugger-TheIntegrator.278.mcz

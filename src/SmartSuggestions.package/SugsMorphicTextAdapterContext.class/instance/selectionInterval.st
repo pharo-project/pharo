@@ -1,0 +1,3 @@
+refactoring
+selectionInterval
+	^self selectedInterval 
