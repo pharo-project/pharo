@@ -1,5 +1,5 @@
 pharo - scripts
-script60322
+script60323
 
 	^ 'AST-Core-TheIntegrator.486.mcz
 AST-Tests-Core-TheIntegrator.130.mcz
@@ -248,7 +248,7 @@ OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.210.mcz
 OmbuTests-MartinDias.7.mcz
 OpalCompiler-Core-TheIntegrator.878.mcz
-OpalCompiler-Tests-TheIntegrator.376.mcz
+OpalCompiler-Tests-TheIntegrator.378.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 PharoDocComment-StephaneDucasse.6.mcz
