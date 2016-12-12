@@ -1,7 +1,7 @@
 language: c
 env:
   global:
-  - PHARO_VERSION=50
+  - PHARO_VERSION=60
   matrix:
   - BOOTSTRAP_ARCH=32 BOOTSTRAP_DISTIRBUTION=default
   - BOOTSTRAP_ARCH=64 BOOTSTRAP_DISTIRBUTION=default
@@ -20,7 +20,7 @@ addons:
 install:
  - "wget -O - get.pharo.org/${PHARO_VERSION}+vm | bash"
 # - "./scripts/install-packages.sh"
- 
+
 script:
  - "./pharo Pharo.image ./scripts/bootstrap.st ARCH=${BOOTSTRAP_ARCH}" # ${BOOTSTRAP_DISTIRBUTION}"
  - "zip -r bootstrap bootstrap.image" # boot-packages"
