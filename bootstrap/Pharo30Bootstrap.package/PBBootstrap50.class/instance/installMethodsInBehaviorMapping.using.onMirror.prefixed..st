@@ -5,8 +5,8 @@ installMethodsInBehaviorMapping: aBehaviorMapping using: aMethodBuilder onMirror
 	theClass := (self classNamed: aBehaviorMapping theNonMetaClass name) mirror.
 	aBehaviorMapping isMeta ifTrue: [ theClass := theClass classSide ].
 	newMethods doWithIndex: [ :method :index |
-		PBSubStepFinishedSignal log: [aPrefix, ' - ', index asString, '/', newMethods size asString, ': Installing method ', 
-			aBehaviorMapping name, '>>', method selector ].
+		PBSubStepFinishedSignal log: aPrefix, ' - ', index asString, '/', newMethods size asString, ': Installing method ', 
+			aBehaviorMapping name, '>>', method selector.
 		
 		self installMethod: method inBehavior: theClass.
 	].

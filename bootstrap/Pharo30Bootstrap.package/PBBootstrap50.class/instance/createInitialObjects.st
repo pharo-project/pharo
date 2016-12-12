@@ -83,7 +83,7 @@ createInitialObjects
 			instVarAt: 4
 			put: (ImmediateLayout new).'.
 			
-	PBSubStepFinishedSignal log: 'Class builder ready to create classes'.
+	PBStepFinishedSignal log: 'Class builder ready to create classes'.
 	classLoader useClassBuilder.
 	
 	self checkpoint: 'created_initial_objects'.
