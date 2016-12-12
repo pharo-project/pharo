@@ -11,6 +11,11 @@ baseline: spec
 					versionString: #bleedingEdge;
 					loads: #('client');
 					repository: 'http://smalltalkhub.com/mc/demarey/CargoPackageManager/main/' ];
+			project: 'Beacon'
+				with: [ spec
+					className: #ConfigurationOfBeacon;
+					versionString: #bleedingEdge;
+					repository: 'http://smalltalkhub.com/mc/girba/Beacon/main/' ];
 			project: 'Espell'
 				with: [ spec
 					className: #ConfigurationOfEspell;
@@ -26,5 +31,5 @@ baseline: spec
 			spec
 				baseline: 'PharoBootstrap' with: [
 					spec repository: 'filetree://src' ];
-				package: 'Pharo30Bootstrap' with: [ spec requires: #('Espell' 'Ficus' 'Cargo') ].
+				package: 'Pharo30Bootstrap' with: [ spec requires: #('Espell' 'Ficus' 'Cargo' 'Beacon') ].
 			spec group: 'dev' with: #('Pharo30Bootstrap' 'Espell' 'Ficus') ]
