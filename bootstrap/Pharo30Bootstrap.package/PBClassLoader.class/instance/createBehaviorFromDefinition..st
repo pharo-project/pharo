@@ -19,8 +19,6 @@ createBehaviorFromDefinition: aRFiDefinition
 	
 	aRFiDefinition isBehavior ifTrue: [ 
 		self registerClass: newBehavior asClassMirror named: aRFiDefinition name fullyLoaded: true.
-		FileStream stdout nextPutAll: 'behavior: ',aRFiDefinition name; cr.
 	] ifFalse: [
 		self registerTrait: newBehavior asTraitMirror named: aRFiDefinition name fullyLoaded: true.
-		FileStream stdout nextPutAll: 'trait',aRFiDefinition name; cr.
 	]
