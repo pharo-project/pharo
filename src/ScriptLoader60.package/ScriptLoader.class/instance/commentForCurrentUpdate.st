@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19449 QA v3.2.9 update
-	https://pharo.fogbugz.com/f/cases/19449
+ ^ '19445 Pattern code ArrayNode matching failure
+	https://pharo.fogbugz.com/f/cases/19445
 
-19440 No users of TotalCost and subclasses
-	https://pharo.fogbugz.com/f/cases/19440'
+18935 Rubric warning are not DarkTheme friendly
+	https://pharo.fogbugz.com/f/cases/18935
+
+19455 Testcase for reify receiver for before links
+	https://pharo.fogbugz.com/f/cases/19455'
