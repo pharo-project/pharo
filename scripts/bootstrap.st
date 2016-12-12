@@ -28,6 +28,13 @@ Metacello new
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
 
+"Configure logging"
+(CustomStringStreamBeacon with: FileStream stdout)
+	startFor: PBStepStartedSignal, PBStepFinishedSignal.
+
+(CustomStringStreamBeacon with: 'bootstrap.log' asFileReference writeStream)
+	startFor: PBStepStartedSignal, PBStepFinishedSignal, PBSubStepFinishedSignal.
+
 (#'PBBootstrapSpur50', architecture ,'bit') asSymbol asClass new
 	gitRepositoryUrl: 'git@github.com:guillep/pharo-core.git'
 	location: '.'
