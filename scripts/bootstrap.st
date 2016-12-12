@@ -20,10 +20,6 @@ addMethod: method
 	repository: 'github://npasserini/iceberg:dev-0.4';
 	load.
 
-"After installing Iceberg, we should set the default backend.
-In this way, ci jobs will not be asked for credentials"
-IceRepository defaultBackendType: IceLibgitLocalRepository.
-
 Metacello new
 	baseline: 'PharoBootstrapProcess';
 	repository: 'filetree://bootstrap';
