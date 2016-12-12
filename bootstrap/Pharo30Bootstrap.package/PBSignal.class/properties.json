@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "StringSignal",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PBSignal",
+	"type" : "normal"
+}

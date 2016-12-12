@@ -8,4 +8,5 @@ installMethods
 		"self checkpoint: 'installed_methods_wip'."
 		self installMethodsInBehaviorDefinition: aClassDefinition prefixed: (index printPaddedWith: $0 to: 3), '/' , total asString.
 	].
+	PBStepFinishedSignal log: 'installed_methods'.
 	self checkpoint: 'installed_methods'.

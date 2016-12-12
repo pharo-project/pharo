@@ -7,7 +7,7 @@ createClasses
 		withIndexDo: [ :aClassDefinition :index | | time |
 			time := [self createBehaviorFromDefinition: aClassDefinition.] timeToRun.
 			
-			self log: ((index printPaddedWith: $0 to: 3), '/' , 
+			PBSubStepFinishedSignal log: ((index printPaddedWith: $0 to: 3), '/' , 
 								total asString, ' - ', 
 									time asString ,': Built behavior ', 
 										aClassDefinition name). ].
@@ -16,4 +16,6 @@ createClasses
 	objectSpace interpreter: bootstrapInterpreter.
 	objectSpace backend smalltalkInstance: smalltalkInstance.
 	objectSpace environment: ((EPSystemDictionary withSystemDictionary: objectSpace backend systemDictionary) objectSpace: objectSpace; yourself).
+	
+	PBStepFinishedSignal log: 'Classes created'.
 	self checkpoint: 'created_classes'.

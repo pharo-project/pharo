@@ -56,3 +56,4 @@ initializeImage
 	self reportSizes.
 
 	self writeSnapshot: 'bootstrap.image' ofTransformedImage: espellBackend simulator objectMemory headerFlags: 0 screenSize: 0.
+		PBStepFinishedSignal log: 'Installed extension methods'.

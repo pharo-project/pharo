@@ -1,7 +1,7 @@
 running
 createVMStubs
 
-	self log: 'creating initial Objects needed by the VM'.
+	PBStepStartedSignal log: 'creating initial Objects needed by the VM'.
 	
 	objectSpace backend specialObjectsArray: (objectSpace createObjectWithFormat: (Array format) withSize: 59).
 	self createNil.
@@ -36,4 +36,3 @@ createVMStubs
 	If we do not put it here, the VM will crash.
 	Lots of tests in kernel use it."
 	objectSpace backend pointClass: (self createStubForClassNamed: #Point).
-	self checkpoint: 'created_vm_objects'.
