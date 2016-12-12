@@ -18,6 +18,6 @@ installExtensionMethodsOf: aPackageDefinition prefixed: aPrefix
 				nextPutAll: methodClass name;
 				nextPutAll: '>>';
 				nextPutAll: methodDefinition selector ].
-		self log: logMessage.
+		PBSubStepFinishedSignal log: logMessage.
 			
 		self installMethod: compiledMethod inBehavior: behaviorMirror ]
