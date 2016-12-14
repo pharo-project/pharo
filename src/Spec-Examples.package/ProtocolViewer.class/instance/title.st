@@ -1,4 +1,0 @@
-api
-title
-
-	^ 'Protocol viewer'

@@ -1,4 +1,0 @@
-api
-resetEventSelection
-
-	events resetSelection

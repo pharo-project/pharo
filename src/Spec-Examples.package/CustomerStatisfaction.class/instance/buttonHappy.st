@@ -1,3 +1,0 @@
-accessing
-buttonHappy
-	^ buttonHappy
