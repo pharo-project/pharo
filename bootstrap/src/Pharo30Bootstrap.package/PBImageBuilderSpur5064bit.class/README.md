@@ -1,0 +1,1 @@
+I create pharo images for Spur VMs in 64bit format.

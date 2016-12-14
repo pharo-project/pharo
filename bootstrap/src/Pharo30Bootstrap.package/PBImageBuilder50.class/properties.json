@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "ChristopheDemarey 10\/20\/2015 11:37",
+	"super" : "Object",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"objectSpace",
+		"classLoader",
+		"systemDefinition",
+		"bootstrapInterpreter",
+		"bootstrapEnvironment",
+		"espellBackend",
+		"definitionFetcher",
+		"statistics",
+		"logger"
+	],
+	"name" : "PBImageBuilder50",
+	"type" : "normal"
+}

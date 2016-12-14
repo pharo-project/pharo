@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Pharo30Bootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"architecture",
+		"kernelPackageNames",
+		"imageReference"
+	],
+	"name" : "PBBootstrap",
+	"type" : "normal"
+}
