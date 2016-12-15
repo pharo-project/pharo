@@ -1,5 +1,5 @@
 pharo - scripts
-script60326
+script60327
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2467.mcz
+Kernel-TheIntegrator.2470.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.136.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -278,9 +278,9 @@ Refactoring-Tests-Critics-TheIntegrator.54.mcz
 Refactoring-Tests-Environment-TheIntegrator.30.mcz
 ReflectionMirrors-Primitives-TheIntegrator.7.mcz
 ReflectionMirrors-Primitives-Tests-TheIntegrator.2.mcz
-Reflectivity-TheIntegrator.314.mcz
+Reflectivity-TheIntegrator.318.mcz
 Reflectivity-Examples-TheIntegrator.45.mcz
-Reflectivity-Tests-TheIntegrator.214.mcz
+Reflectivity-Tests-TheIntegrator.218.mcz
 Reflectivity-Tools-TheIntegrator.68.mcz
 Reflectivity-Tools-Tests-TheIntegrator.22.mcz
 Regex-Core-TheIntegrator.40.mcz

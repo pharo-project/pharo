@@ -1,4 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19341 New class and method tags API
-	https://pharo.fogbugz.com/f/cases/19341'
+ ^ '19467 Metalinks: support accessing variables for arguments
+	https://pharo.fogbugz.com/f/cases/19467
+
+19430 Promote DelaySpinScheduler from experimental status (part 1)
+	https://pharo.fogbugz.com/f/cases/19430'

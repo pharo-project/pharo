@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Processes",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "DelaySpinScheduler",
+	"pools" : [
+		 ],
+	"super" : "DelayMicrosecondScheduler",
+	"type" : "normal" }
