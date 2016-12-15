@@ -1,5 +1,5 @@
 pharo - scripts
-script60325
+script60326
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2466.mcz
+Kernel-TheIntegrator.2467.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.136.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -262,7 +262,7 @@ ProfStef-Tests-TheIntegrator.27.mcz
 QualityAssistant-YuriyTymchuk.117.mcz
 QualityAssistant-Test-YuriyTymchuk.2.mcz
 QualityAssistantRecording-Uko.28.mcz
-RPackage-Core-TheIntegrator.456.mcz
+RPackage-Core-TheIntegrator.457.mcz
 RPackage-Tests-TheIntegrator.199.mcz
 Random-Core-TheIntegrator.8.mcz
 Random-Tests-TheIntegrator.4.mcz
@@ -332,6 +332,7 @@ Spec-Inspector-TheIntegrator.283.mcz
 Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.290.mcz
 Spec-PolyWidgets-TheIntegrator.93.mcz
+Spec-SelectEntity-TheIntegrator.14.mcz
 Spec-Tests-TheIntegrator.104.mcz
 Spec-Tools-TheIntegrator.377.mcz
 StartupPreferences-TheIntegrator.153.mcz
@@ -397,7 +398,7 @@ Tool-TxWorkspace-NicolaiHess.7.mcz
 Tool-Workspace-TheIntegrator.46.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.964.mcz
+Traits-TheIntegrator.965.mcz
 Transcript-TheIntegrator.54.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz

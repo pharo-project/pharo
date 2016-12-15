@@ -1,4 +1,0 @@
-api
-entity
-	
-	^ entity value
