@@ -1,13 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19476 LabelModel default color needs to be theme text color (not hardcoded black)
-	https://pharo.fogbugz.com/f/cases/19476
+ ^ '18735 DNU on suggestions shortcut in GTDebugger
+	https://pharo.fogbugz.com/f/cases/18735
 
-19473 empty package Spec-SelectEntity can be unloaded
-	https://pharo.fogbugz.com/f/cases/19473
+19432 Promote DelaySpinScheduler from experimental status (part 2)
+	https://pharo.fogbugz.com/f/cases/19432
 
-19453 NeoUUIDGenerator>>testTwoSameGenerator - intermittent CI failure
-	https://pharo.fogbugz.com/f/cases/19453
-
-19471 classAffected method for MethodAnnouncement to be polymorphic with other system changes
-	https://pharo.fogbugz.com/f/cases/19471'
+19438 Widen tolerance for DelayScheduler timing tests
+	https://pharo.fogbugz.com/f/cases/19438'

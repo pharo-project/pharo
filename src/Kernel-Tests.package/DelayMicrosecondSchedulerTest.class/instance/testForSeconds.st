@@ -13,5 +13,5 @@ testForSeconds
 	postTick := Time millisecondClockValue.
 	
 	actualDuration := postTick - preTick.
-	self assert: actualDuration >= 995.
-	self assert: actualDuration <= 1005.
+	self assert: actualDuration >= 950.
+	self assert: actualDuration <= 1050.

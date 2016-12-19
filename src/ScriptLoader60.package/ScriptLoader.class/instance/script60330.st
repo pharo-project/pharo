@@ -1,5 +1,5 @@
 pharo - scripts
-script60329
+script60330
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -151,9 +151,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2470.mcz
+Kernel-TheIntegrator.2471.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.136.mcz
+Kernel-Tests-TheIntegrator.138.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.64.mcz
@@ -322,7 +322,7 @@ Shout-TheIntegrator.302.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.778.mcz
 Slot-Tests-TheIntegrator.101.mcz
-SmartSuggestions-TheIntegrator.264.mcz
+SmartSuggestions-TheIntegrator.267.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
 Spec-Core-TheIntegrator.537.mcz
 Spec-Debugger-TheIntegrator.278.mcz
@@ -332,7 +332,6 @@ Spec-Inspector-TheIntegrator.283.mcz
 Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.290.mcz
 Spec-PolyWidgets-TheIntegrator.93.mcz
-Spec-SelectEntity-TheIntegrator.14.mcz
 Spec-Tests-TheIntegrator.104.mcz
 Spec-Tools-TheIntegrator.377.mcz
 StartupPreferences-TheIntegrator.153.mcz
