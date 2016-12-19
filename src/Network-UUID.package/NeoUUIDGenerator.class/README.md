@@ -9,7 +9,7 @@ I generate UUIDs similar, in spirit, to those defined in RFC4122, though I use v
 I try to conform to the following aspects:
  - each 'node' (machine, image, instance) should generate unique UUIDs
  - even when generating UUIDs at a very fast rate, they should remain unique
-- be fast and efficient
+ - be fast and efficient
 
 To achieve this goal, I
 - take several aspects into account to generate a unique node ID
@@ -21,7 +21,7 @@ I can generate about 500K UUIDs per second.
 Implementation:
 
 Although a UUID should be seen as totally opaque, here is the concrete way I generate one:
-- the first 8 bytes are the millisecond clock value with the smallest quantity first; this means that the later of these 8 bytes will be identical when generated with small(er) timespans; within the same millisecond, the full first 8 bytes will be identical
+- the first 8 bytes are the microsecond clock value with the smallest quantity first; this means that the later of these 8 bytes will be identical when generated with small(er) timespans; within the same clock resolution interval, the full first 8 bytes will be identical
 - the next 2 bytes represent a counter with safe overflow, held as protected state inside me; after 2*16 this value will repeat; the counter initalizes with a random value
 - the next 2 bytes are simply random, based on the system PRNG, Random
 - the final 4 bytes represent the node ID; the node ID is unique per instance of me, across OS environments where the image might run; the node ID is the MD5 hash of a string that is the concatenation of several elements (see #computeNodeIdentifier)

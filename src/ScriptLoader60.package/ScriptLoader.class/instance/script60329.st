@@ -1,5 +1,5 @@
 pharo - scripts
-script60328
+script60329
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -234,8 +234,8 @@ Network-Kernel-TheIntegrator.135.mcz
 Network-MIME-TheIntegrator.73.mcz
 Network-Mail-TheIntegrator.52.mcz
 Network-Protocols-TheIntegrator.105.mcz
-Network-Tests-TheIntegrator.22.mcz
-Network-UUID-TheIntegrator.54.mcz
+Network-Tests-TheIntegrator.26.mcz
+Network-UUID-TheIntegrator.57.mcz
 Network-Url-TheIntegrator.103.mcz
 NewValueHolder-TheIntegrator.35.mcz
 NodeNavigation-TheIntegrator.55.mcz
@@ -259,7 +259,7 @@ PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
 ProfStef-Help-TheIntegrator.16.mcz
 ProfStef-Tests-TheIntegrator.27.mcz
-QualityAssistant-YuriyTymchuk.117.mcz
+QualityAssistant-YuriyTymchuk.118.mcz
 QualityAssistant-Test-YuriyTymchuk.2.mcz
 QualityAssistantRecording-Uko.28.mcz
 RPackage-Core-TheIntegrator.457.mcz
@@ -324,7 +324,7 @@ Slot-TheIntegrator.778.mcz
 Slot-Tests-TheIntegrator.101.mcz
 SmartSuggestions-TheIntegrator.264.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
-Spec-Core-TheIntegrator.535.mcz
+Spec-Core-TheIntegrator.537.mcz
 Spec-Debugger-TheIntegrator.278.mcz
 Spec-Examples-TheIntegrator.131.mcz
 Spec-Help-TheIntegrator.13.mcz
@@ -336,7 +336,7 @@ Spec-SelectEntity-TheIntegrator.14.mcz
 Spec-Tests-TheIntegrator.104.mcz
 Spec-Tools-TheIntegrator.377.mcz
 StartupPreferences-TheIntegrator.153.mcz
-System-Announcements-TheIntegrator.136.mcz
+System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
 System-Caching-TheIntegrator.29.mcz
 System-CachingTests-TheIntegrator.19.mcz

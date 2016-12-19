@@ -1,4 +1,4 @@
-accessing
+private
 placeFields: uuid
 	"Fill the fields of uuid, effectively generating a new UUID in place, see my class comment"
 	

@@ -1,0 +1,3 @@
+accessing
+classAffected
+	^ self methodOrigin
