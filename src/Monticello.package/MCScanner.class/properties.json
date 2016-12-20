@@ -1,14 +1,13 @@
 {
-	"category" : "Monticello-Chunk Format",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "LaurentLaffont 3/31/2011 21:08",
-	"instvars" : [
-		"stream" ],
-	"name" : "MCScanner",
-	"pools" : [
-		 ],
+	"commentStamp" : "LaurentLaffont 3\/31\/2011 21:08",
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Monticello-Chunk Format",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream"
+	],
+	"name" : "MCScanner",
+	"type" : "normal"
+}

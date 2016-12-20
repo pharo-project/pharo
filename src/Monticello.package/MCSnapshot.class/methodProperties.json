@@ -1,0 +1,15 @@
+{
+	"instance" : {
+		"install" : "ab 7\/6\/2003 23:31",
+		"definitions" : "ab 12\/4\/2002 18:09",
+		"=" : "MarianoMartinezPeck 5\/30\/2012 17:12",
+		"hash" : "ab 7\/10\/2003 01:05",
+		"patchRelativeToBase:" : "ab 7\/7\/2003 00:37",
+		"initializeWithDefinitions:" : "stephaneducasse 2\/4\/2006 20:47",
+		"updatePackage:" : "ab 7\/7\/2003 12:11"
+	},
+	"class" : {
+		"fromDefinitions:" : "ab 7\/6\/2003 23:48",
+		"empty" : "ab 7\/6\/2003 23:48"
+	}
+}

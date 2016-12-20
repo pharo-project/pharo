@@ -1,0 +1,14 @@
+{
+	"instance" : {
+		"source" : "avi 3\/10\/2004 12:40",
+		"source:" : "stephaneducasse 2\/4\/2006 20:47",
+		"addDefinitionsTo:" : "avi 3\/10\/2004 12:40"
+	},
+	"class" : {
+		"forDoit:" : "marcus.denker 11\/10\/2008 10:04",
+		"pattern" : "StephaneDucasse 12\/30\/2012 18:01",
+		"isAbstract" : "avi 3\/10\/2004 12:51",
+		"subclassForDoit:" : "avi 3\/10\/2004 12:30",
+		"concreteSubclasses" : "avi 3\/10\/2004 12:29"
+	}
+}

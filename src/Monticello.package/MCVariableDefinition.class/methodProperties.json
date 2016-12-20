@@ -1,0 +1,19 @@
+{
+	"instance" : {
+		"isPoolImport" : "cwp 7\/7\/2003 23:51",
+		"isOrderDependend" : "bf 8\/29\/2006 11:41",
+		"name" : "cwp 11\/25\/2002 05:57",
+		"=" : "cwp 7\/7\/2003 23:02",
+		"name:" : "stephaneducasse 2\/4\/2006 20:47",
+		"printOn:" : "nk 7\/24\/2003 14:56",
+		"isInstanceVariableDefinition" : "cwp 7\/7\/2003 23:10",
+		"isInstanceVariable" : "cwp 7\/7\/2003 23:31",
+		"hash" : "cwp 7\/7\/2003 23:02",
+		"isClassInstanceVariableDefinition" : "cwp 7\/7\/2003 23:08",
+		"isClassVariable" : "cwp 7\/7\/2003 23:30",
+		"isClassInstanceVariable" : "cwp 7\/7\/2003 23:31"
+	},
+	"class" : {
+		"name:" : "cwp 7\/7\/2003 23:18"
+	}
+}

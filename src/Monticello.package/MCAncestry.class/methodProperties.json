@@ -1,0 +1,23 @@
+{
+	"instance" : {
+		"hasAncestor:" : "jrp 7\/12\/2004 08:16",
+		"commonAncestorWith:" : "stephaneducasse 2\/4\/2006 20:47",
+		"stepChildrenString" : "avi 9\/14\/2004 15:21",
+		"hasAncestor:alreadySeen:" : "jrp 7\/12\/2004 08:16",
+		"ancestorString" : "avi 2\/12\/2004 20:57",
+		"ancestorsDoWhileTrue:" : "bf 12\/22\/2004 21:55",
+		"commonAncestorsWith:" : "stephaneducasse 2\/4\/2006 20:47",
+		"allAncestorsOnPathTo:" : "avi 2\/12\/2004 20:57",
+		"ancestorStringWithout:" : "bp 11\/21\/2010 18:33",
+		"initialize" : "alain.plantec 5\/28\/2009 10:02",
+		"isRelatedTo:" : "avi 2\/12\/2004 20:58",
+		"stepChildren" : "avi 9\/11\/2004 15:08",
+		"breadthFirstAncestors" : "avi 9\/17\/2005 16:03",
+		"breadthFirstAncestorsDo:" : "stephaneducasse 2\/4\/2006 20:47",
+		"ancestors" : "avi 2\/12\/2004 20:57",
+		"withBreadthFirstAncestors" : "avi 9\/17\/2005 16:03",
+		"topologicalAncestors" : "nice 1\/5\/2010 15:59",
+		"allAncestorsDo:" : "avi 2\/12\/2004 20:57"
+	},
+	"class" : { }
+}

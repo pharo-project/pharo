@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:52",
-	"instvars" : [
-		 ],
-	"name" : "MCMockAPoolDictionary",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:52",
 	"super" : "SharedPool",
-	"type" : "normal" }
+	"category" : "Monticello-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCMockAPoolDictionary",
+	"type" : "normal"
+}

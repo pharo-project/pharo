@@ -1,0 +1,13 @@
+{
+	"instance" : {
+		"definitions" : "ab 6\/2\/2003 00:42",
+		"initialize" : "alain.plantec 5\/28\/2009 10:02",
+		"add:" : "StephaneDucasse 5\/6\/2010 08:52",
+		"definitionLike:ifPresent:ifAbsent:" : "stephaneducasse 2\/4\/2006 20:47",
+		"addAll:" : "ab 6\/2\/2003 00:38",
+		"remove:" : "ab 6\/2\/2003 00:40"
+	},
+	"class" : {
+		"definitions:" : "ab 6\/2\/2003 01:29"
+	}
+}

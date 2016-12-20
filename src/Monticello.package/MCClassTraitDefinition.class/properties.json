@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:45",
+	"super" : "MCDefinition",
 	"category" : "Monticello-Modeling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:45",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"baseTrait",
 		"classTraitComposition",
-		"category" ],
+		"category"
+	],
 	"name" : "MCClassTraitDefinition",
-	"pools" : [
-		 ],
-	"super" : "MCDefinition",
-	"type" : "normal" }
+	"type" : "normal"
+}

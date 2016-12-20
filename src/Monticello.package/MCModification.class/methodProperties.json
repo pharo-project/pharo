@@ -1,0 +1,23 @@
+{
+	"instance" : {
+		"targetDefinition" : "ab 6\/1\/2003 13:10",
+		"initializeWithBase:target:" : "stephaneducasse 2\/4\/2006 20:47",
+		"baseDefinition" : "ab 6\/1\/2003 13:10",
+		"isModification" : "cwp 11\/28\/2002 07:23",
+		"targetClass" : "nk 2\/23\/2005 18:18",
+		"modification" : "cwp 11\/27\/2002 09:46",
+		"inverse" : "ab 8\/22\/2003 02:27",
+		"summarySuffixOver:" : "StephaneDucasse 8\/17\/2012 16:30",
+		"definition" : "cwp 11\/28\/2002 06:55",
+		"toSource" : "LucasGiudice 9\/14\/2013 15:02",
+		"isClassPatch" : "nk 2\/25\/2005 17:29",
+		"obsoletion" : "cwp 11\/27\/2002 09:48",
+		"summarySuffix" : "StephaneDucasse 8\/17\/2012 16:30",
+		"fromSource" : "LucasGiudice 9\/14\/2013 15:18",
+		"printAnnotations:on:" : "nk 11\/10\/2003 21:44",
+		"basicApplyTo:" : "StephaneDucasse 6\/24\/2011 14:53"
+	},
+	"class" : {
+		"of:to:" : "cwp 11\/28\/2002 07:19"
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"instance" : {
+		"initializeWithBase:target:" : "BenjaminVanRyseghem 11\/8\/2013 15:41",
+		"operations" : "ab 5\/13\/2003 12:18",
+		"applyTo:" : "ab 5\/24\/2003 16:12",
+		"hasConflict" : "CamilloBruni 9\/28\/2011 17:27",
+		"initializeWithOperations:" : "stephaneducasse 2\/4\/2006 20:47",
+		"isEmpty" : "cwp 6\/9\/2003 11:53"
+	},
+	"class" : {
+		"operations:" : "avi 9\/11\/2004 15:50",
+		"fromBase:target:" : "avi 9\/11\/2004 15:49"
+	}
+}

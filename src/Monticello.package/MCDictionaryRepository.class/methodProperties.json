@@ -1,0 +1,19 @@
+{
+	"instance" : {
+		"versionWithInfo:ifAbsent:" : "ab 8\/16\/2003 18:22",
+		"description" : "ab 7\/26\/2003 02:47",
+		"dictionary:" : "stephaneducasse 2\/4\/2006 20:47",
+		"includesVersionWithInfo:" : "ab 8\/21\/2003 19:49",
+		"sortedVersionInfos" : "stephaneducasse 2\/4\/2006 20:47",
+		"closestAncestorVersionFor:ifNone:" : "GabrielOmarCotelli 12\/3\/2013 17:30",
+		"=" : "ab 8\/21\/2003 12:56",
+		"allVersionInfos" : "ab 8\/20\/2003 21:04",
+		"initialize" : "alain.plantec 5\/28\/2009 10:02",
+		"versionFrom:" : "ChristopheDemarey 7\/3\/2015 16:15",
+		"dictionary" : "ab 7\/26\/2003 02:47",
+		"basicStoreVersion:" : "avi 8\/26\/2004 14:20",
+		"includesVersionNamed:" : "ab 7\/21\/2003 23:39",
+		"description:" : "stephaneducasse 2\/4\/2006 20:47"
+	},
+	"class" : { }
+}

@@ -1,0 +1,12 @@
+{
+	"instance" : {
+		"provisions" : "ab 7\/7\/2003 23:21",
+		"provides:" : "stephaneducasse 2\/4\/2006 20:47",
+		"<=" : "bf 5\/20\/2005 16:15",
+		"requirements" : "ab 7\/7\/2003 23:21",
+		"requires:" : "stephaneducasse 2\/4\/2006 20:47",
+		"name" : "ab 7\/7\/2003 23:21",
+		"name:" : "stephaneducasse 2\/4\/2006 20:47"
+	},
+	"class" : { }
+}

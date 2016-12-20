@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "TorstenBergmann 2\/6\/2014 08:08",
+	"super" : "MCVersion",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/6/2014 08:08",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"base",
-		"patch" ],
+		"patch"
+	],
 	"name" : "MCDiffyVersion",
-	"pools" : [
-		 ],
-	"super" : "MCVersion",
-	"type" : "normal" }
+	"type" : "normal"
+}

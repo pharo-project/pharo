@@ -1,14 +1,13 @@
 {
-	"category" : "Monticello-Storing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:53",
-	"instvars" : [
-		"stream" ],
-	"name" : "MCReader",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:53",
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Monticello-Storing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream"
+	],
+	"name" : "MCReader",
+	"type" : "normal"
+}

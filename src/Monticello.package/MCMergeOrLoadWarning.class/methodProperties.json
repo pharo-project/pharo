@@ -1,0 +1,13 @@
+{
+	"instance" : {
+		"merge" : "CamilloBruni 9\/12\/2013 23:32",
+		"cancel" : "CamilloBruni 9\/12\/2013 23:32",
+		"versions:" : "abc 8\/8\/2011 12:53",
+		"messageText" : "CamilloBruni 1\/16\/2012 17:42",
+		"load" : "CamilloBruni 9\/12\/2013 23:32",
+		"defaultAction" : "abc 8\/8\/2011 12:56"
+	},
+	"class" : {
+		"signalFor:" : "abc 8\/8\/2011 12:50"
+	}
+}

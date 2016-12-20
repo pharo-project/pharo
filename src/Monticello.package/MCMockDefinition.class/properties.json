@@ -1,14 +1,13 @@
 {
-	"category" : "Monticello-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:46",
-	"instvars" : [
-		"token" ],
-	"name" : "MCMockDefinition",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:46",
 	"super" : "MCDefinition",
-	"type" : "normal" }
+	"category" : "Monticello-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"token"
+	],
+	"name" : "MCMockDefinition",
+	"type" : "normal"
+}

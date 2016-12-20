@@ -1,0 +1,16 @@
+{
+	"instance" : {
+		"description" : "ab 7\/7\/2003 23:21",
+		"asString" : "ab 7\/7\/2003 23:21",
+		"token" : "ab 7\/7\/2003 23:21",
+		"=" : "MarianoMartinezPeck 5\/30\/2012 17:12",
+		"token:" : "stephaneducasse 2\/4\/2006 20:47",
+		"hash" : "ab 7\/7\/2003 23:21",
+		"summary" : "ab 7\/7\/2003 23:21",
+		"printString" : "ab 7\/7\/2003 23:21"
+	},
+	"class" : {
+		"token:" : "ab 7\/7\/2003 23:21",
+		"wantsChangeSetLogging" : "cwp 7\/21\/2003 19:46"
+	}
+}

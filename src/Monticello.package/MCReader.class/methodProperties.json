@@ -1,0 +1,14 @@
+{
+	"instance" : {
+		"stream" : "CamilloBruni 4\/24\/2012 15:49",
+		"stream:" : "stephaneducasse 2\/4\/2006 20:47"
+	},
+	"class" : {
+		"on:" : "avi 1\/21\/2004 19:02",
+		"on:name:" : "stephaneducasse 2\/4\/2006 20:47",
+		"isAbstract" : "avi 1\/21\/2004 19:01",
+		"canReadFileNamed:" : "avi 1\/21\/2004 19:00",
+		"readerClassForFileNamed:" : "avi 1\/21\/2004 19:03",
+		"concreteSubclasses" : "avi 1\/21\/2004 19:01"
+	}
+}

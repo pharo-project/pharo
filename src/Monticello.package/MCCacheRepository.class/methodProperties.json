@@ -1,0 +1,29 @@
+{
+	"instance" : {
+		"storeVersion:" : "SeanDeNigris 2\/26\/2015 14:12",
+		"enable" : "CamilloBruni 7\/6\/2012 16:20",
+		"seenFileNames" : "stephaneducasse 2\/4\/2006 20:47",
+		"loadVersionFromFileNamed:" : "CamilloBruni 2\/28\/2012 20:10",
+		"newFileNames" : "avi 1\/22\/2004 18:15",
+		"initialize" : "CamilloBruni 7\/6\/2012 16:20",
+		"disableCacheDuring:" : "CamilloBruni 7\/6\/2012 16:20",
+		"disable" : "CamilloBruni 7\/6\/2012 16:20",
+		"rescan" : "avi 1\/22\/2004 18:29",
+		"versionInfoForFileNamed:" : "CamilloBruni 7\/6\/2012 16:13",
+		"cacheForPackage:" : "stephaneducasse 2\/4\/2006 20:47",
+		"basicStoreVersion:" : "StephaneDucasse 8\/17\/2012 16:22",
+		"versionWithInfo:ifAbsent:" : "CamilloBruni 4\/20\/2012 18:10"
+	},
+	"class" : {
+		"default" : "MarianoMartinezPeck 7\/24\/2012 10:50",
+		"description" : "avi 10\/9\/2003 12:56",
+		"uniqueInstance" : "SeanDeNigris 7\/17\/2012 15:38",
+		"cacheDirectory" : "SeanDeNigris 7\/17\/2012 15:34",
+		"cacheDirectory:" : "SeanDeNigris 7\/17\/2012 15:20",
+		"initialize" : "SeanDeNigris 7\/17\/2012 15:36",
+		"disableCacheDuring:" : "SeanDeNigris 7\/17\/2012 15:34",
+		"resetIfInvalid" : "PavelKrivanek 4\/20\/2016 11:43",
+		"reset" : "PavelKrivanek 4\/20\/2016 11:43",
+		"defaultDirectory" : "EstebanLorenzano 6\/23\/2016 16:42"
+	}
+}

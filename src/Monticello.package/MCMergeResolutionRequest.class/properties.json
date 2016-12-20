@@ -1,14 +1,13 @@
 {
-	"category" : "Monticello-Versioning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:51",
-	"instvars" : [
-		"merger" ],
-	"name" : "MCMergeResolutionRequest",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:51",
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"merger"
+	],
+	"name" : "MCMergeResolutionRequest",
+	"type" : "normal"
+}

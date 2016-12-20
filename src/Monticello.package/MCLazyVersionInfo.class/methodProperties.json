@@ -1,0 +1,17 @@
+{
+	"instance" : {
+		"stepChildren" : "ThierryGoubier 2\/25\/2015 22:39:26",
+		"initialize" : "ThierryGoubier 2\/25\/2015 22:39:26",
+		"species" : "ThierryGoubier 3\/2\/2015 10:58",
+		"setStepChildren:" : "ThierryGoubier 10\/28\/2015 10:37",
+		"setAncestors:" : "ThierryGoubier 10\/28\/2015 10:37",
+		"ancestors" : "ThierryGoubier 3\/2\/2015 11:02",
+		"initializeWithName:id:message:date:time:author:ancestors:stepChildren:" : "ThierryGoubier 4\/15\/2015 09:41",
+		"lazy" : "ThierryGoubier 2\/26\/2015 10:54"
+	},
+	"class" : {
+		"initialize" : "ThierryGoubier 2\/26\/2015 09:44",
+		"install" : "ThierryGoubier 2\/26\/2015 09:42",
+		"from:" : "ThierryGoubier 2\/25\/2015 22:39:26"
+	}
+}

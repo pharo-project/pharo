@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:52",
+	"super" : "MCMock",
 	"category" : "Monticello-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:52",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
 		"provides",
-		"requires" ],
+		"requires"
+	],
 	"name" : "MCMockDependentItem",
-	"pools" : [
-		 ],
-	"super" : "MCMock",
-	"type" : "normal" }
+	"type" : "normal"
+}

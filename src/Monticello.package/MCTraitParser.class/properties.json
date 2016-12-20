@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-Chunk Format",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MCTraitParser",
-	"pools" : [
-		 ],
 	"super" : "MCDoItParser",
-	"type" : "normal" }
+	"category" : "Monticello-Chunk Format",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCTraitParser",
+	"type" : "normal"
+}

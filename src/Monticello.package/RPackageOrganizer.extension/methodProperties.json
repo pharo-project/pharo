@@ -1,0 +1,14 @@
+{
+	"instance" : {
+		"basicInitializeFromMC" : "PavelKrivanek 3\/9\/2016 09:56",
+		"updateAfterNewMCPackageUnregistred:" : "EstebanLorenzano 11\/27\/2013 15:17",
+		"updateAfterNewMCPackageRegistred:" : "EstebanLorenzano 11\/27\/2013 15:17",
+		"isDefinedAsPackageOrSubPackageInMC:" : "EstebanLorenzano 11\/27\/2013 15:14",
+		"initializeFromMC" : "EstebanLorenzano 2\/18\/2014 15:06",
+		"allManagers" : "StephaneDucasse 6\/2\/2012 19:39"
+	},
+	"class" : {
+		"allManagers" : "StephaneDucasse 6\/2\/2012 19:39",
+		"initializeDefaultFromMC" : "EstebanLorenzano 11\/27\/2013 11:02"
+	}
+}

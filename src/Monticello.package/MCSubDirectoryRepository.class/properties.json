@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-Repositories",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "nk 6/11/2004 18:56",
-	"instvars" : [
-		 ],
-	"name" : "MCSubDirectoryRepository",
-	"pools" : [
-		 ],
+	"commentStamp" : "nk 6\/11\/2004 18:56",
 	"super" : "MCDirectoryRepository",
-	"type" : "normal" }
+	"category" : "Monticello-Repositories",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCSubDirectoryRepository",
+	"type" : "normal"
+}

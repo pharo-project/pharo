@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "TorstenBergmann 2\/6\/2014 08:09",
+	"super" : "Notification",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/6/2014 08:09",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"suggestion",
-		"suggestedLogComment" ],
+		"suggestedLogComment"
+	],
 	"name" : "MCVersionNameAndMessageRequest",
-	"pools" : [
-		 ],
-	"super" : "Notification",
-	"type" : "normal" }
+	"type" : "normal"
+}

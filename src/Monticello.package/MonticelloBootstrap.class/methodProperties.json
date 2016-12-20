@@ -1,0 +1,21 @@
+{
+	"instance" : {
+		"localRepository" : "GuillermoPolito 12\/14\/2016 16:59",
+		"bootstrap" : "GuillermoPolito 12\/20\/2016 12:11",
+		"directory:" : "GuillermoPolito 12\/14\/2016 16:57",
+		"loadBootstrapPackages" : "GuillermoPolito 12\/19\/2016 14:44",
+		"loadBootstrapPackagesNamed:" : "GuillermoPolito 12\/19\/2016 14:42",
+		"fileNameForPackageNamed:" : "GuillermoPolito 12\/19\/2016 15:35",
+		"bootstrapVersionsExcept:" : "GuillermoPolito 12\/14\/2016 18:14",
+		"loadPackageVersion:" : "GuillermoPolito 12\/20\/2016 12:11",
+		"loadPackagesNamed:" : "GuillermoPolito 12\/19\/2016 15:37",
+		"loadBootstrapPackageNamed:" : "GuillermoPolito 12\/19\/2016 14:43",
+		"createWorkingCopies" : "GuillermoPolito 12\/20\/2016 12:13",
+		"bootstrapVersionsSatisfying:" : "GuillermoPolito 12\/19\/2016 15:34",
+		"loadPackageNamed:" : "GuillermoPolito 12\/19\/2016 15:36"
+	},
+	"class" : {
+		"inDirectory:" : "GuillermoPolito 12\/14\/2016 16:56",
+		"bootstrapDefault" : "GuillermoPolito 12\/20\/2016 13:09"
+	}
+}

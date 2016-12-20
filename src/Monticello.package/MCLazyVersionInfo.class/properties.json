@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-Versioning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MCLazyVersionInfo",
-	"pools" : [
-		 ],
 	"super" : "MCVersionInfo",
-	"type" : "normal" }
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCLazyVersionInfo",
+	"type" : "normal"
+}

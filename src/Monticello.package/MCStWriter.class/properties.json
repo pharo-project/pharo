@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "LaurentLaffont 3\/31\/2011 21:07",
+	"super" : "MCWriter",
 	"category" : "Monticello-Storing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "LaurentLaffont 3/31/2011 21:07",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"initializers",
-		"writeInitializers" ],
+		"writeInitializers"
+	],
 	"name" : "MCStWriter",
-	"pools" : [
-		 ],
-	"super" : "MCWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

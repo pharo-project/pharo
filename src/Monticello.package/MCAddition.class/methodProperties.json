@@ -1,0 +1,18 @@
+{
+	"instance" : {
+		"isAddition" : "cwp 11\/28\/2002 07:22",
+		"baseDefinition" : "ab 6\/1\/2003 13:09",
+		"intializeWithDefinition:" : "stephaneducasse 2\/4\/2006 20:47",
+		"targetClass" : "nk 2\/23\/2005 18:17",
+		"inverse" : "ab 8\/22\/2003 02:26",
+		"toSource" : "LucasGiudice 9\/14\/2013 15:02",
+		"definition" : "cwp 11\/27\/2002 09:32",
+		"isClassPatch" : "nk 2\/25\/2005 17:28",
+		"fromSource" : "ab 7\/18\/2003 16:45",
+		"targetDefinition" : "ab 6\/1\/2003 13:09",
+		"basicApplyTo:" : "StephaneDucasse 6\/24\/2011 14:53"
+	},
+	"class" : {
+		"of:" : "cwp 11\/27\/2002 10:03"
+	}
+}
