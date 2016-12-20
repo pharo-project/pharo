@@ -5,4 +5,5 @@ createImage
 	
 	(PBImageBuilderSpur50 forArchitecture: architecture)
 		gitRepositoryUrl: 'UNUSED' location: 'UNUSED' subdirectory: 'UNUSED';
-	   bootstrap.
+	 	imageFileReference: imageReference;  
+		bootstrap.

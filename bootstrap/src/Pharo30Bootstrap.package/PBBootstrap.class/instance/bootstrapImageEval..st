@@ -1,4 +1,4 @@
 image-management
 bootstrapImageEval: aString
 	
-	^ self bootstrapImageEval: aString save: false quit: true
+	^ self bootstrapImageEval: aString save: false quit: false

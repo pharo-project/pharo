@@ -14,7 +14,8 @@
 		"espellBackend",
 		"definitionFetcher",
 		"statistics",
-		"logger"
+		"logger",
+		"imageFileReference"
 	],
 	"name" : "PBImageBuilder50",
 	"type" : "normal"

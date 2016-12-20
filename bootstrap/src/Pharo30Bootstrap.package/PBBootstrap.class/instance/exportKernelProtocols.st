@@ -5,9 +5,11 @@ exportKernelProtocols
 	This methods takes all kernel packages from the (filetree) origin repository, reads all methods in these packages and export the their protocols in a single text file with the following format:
 		[className]\tab[class is meta?]\tab[selector]\tab[protocol]."
 		
-	| originRepository |
+	| originRepository protocolsFile |
 	originRepository := self originRepository.
-	'protocols.txt' asFileReference writeStreamDo: [:stream | | versions |
+	protocolsFile := self bootstrapCacheDirectory / 'protocols.txt'.
+	protocolsFile ensureDelete.
+	protocolsFile writeStreamDo: [:stream | | versions |
 		versions := originRepository directory directories sorted.
 		versions
 			select: [ :file | self kernelPackageNames includes: file basenameWithoutExtension ]

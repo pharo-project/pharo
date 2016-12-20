@@ -1,4 +1,4 @@
 accessing
 mczCache
 	
-	^ MCDirectoryRepository new directory: (self bootstrapCacheDirectory / 'mcz-cache') ensureCreateDirectory
+	^ MCDirectoryRepository new directory: (self bootstrapCacheDirectory / 'pharo-local' / 'package-cache') ensureCreateDirectory

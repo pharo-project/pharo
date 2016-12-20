@@ -3,4 +3,5 @@ prepareBootstrap
 	
 	self
 		exportKernelProtocols;
-		exportAllPackagesIntoMcz.
+		exportAllPackagesIntoMcz;
+		exportMonticelloInStFile.
