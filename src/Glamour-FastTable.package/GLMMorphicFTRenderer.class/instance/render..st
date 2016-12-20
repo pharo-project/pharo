@@ -9,5 +9,6 @@ render: aPresentation
 	self installActionsOnModel: tableModel fromPresentation: aPresentation.
 	self installKeystrokeActionsOnMorph: tableMorph fromPresentation: aPresentation.
 	aPresentation selection ifNotNil: [ tableModel announcer suspendAll: self suspendedAnnouncements while: [ tableModel explicitSelection: aPresentation selection ] ].
-	self initializeAnnouncementForDataSource.
+	"No need to initialize the announcements here as setting the data source in a FTTableMorph will do it."
+	"self initializeAnnouncementForDataSource."
 	^ container
