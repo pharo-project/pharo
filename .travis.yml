@@ -21,5 +21,6 @@ install:
 
 script:
  - "./pharo Pharo.image ./bootstrap/scripts/bootstrap.st ARCH=${BOOTSTRAP_ARCH} --quit"
+ - "bash ./bootstrap/scripts/build.sh"
 # - "zip -r bootstrap bootstrap.image" # boot-packages"
 # - "./scripts/dropbox_upload.sh upload bootstrap.zip bootstrap-`git describe`-${BOOTSTRAP_ARCH}-${BOOTSTRAP_DISTIRBUTION}-${TRAVIS_JOB_NUMBER}.zip"
