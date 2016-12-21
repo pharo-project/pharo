@@ -2,7 +2,7 @@ tests
 testForMilliseconds
 	| scheduler delay preTick postTick actualDuration |
 	scheduler := DelayMicrosecondScheduler new.
-	delay := Delay forMilliseconds: 100.
+	delay := Delay forMilliseconds: 1000.
 	scheduler schedule: delay.
 	
 	preTick := Time millisecondClockValue.
@@ -13,5 +13,5 @@ testForMilliseconds
 	postTick := Time millisecondClockValue.
 	
 	actualDuration := postTick - preTick.
-	self assert: actualDuration >= 95.
-	self assert: actualDuration <= 105.
+	self assert: actualDuration >= 950.
+	self assert: actualDuration <= 1050.

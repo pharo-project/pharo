@@ -1,3 +1,0 @@
-accessing
-events
-	^ events

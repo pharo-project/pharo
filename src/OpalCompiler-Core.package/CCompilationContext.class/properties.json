@@ -23,7 +23,8 @@
 		"forSyntaxHighlighting",
 		"semanticAnalyzerClass",
 		"astTransformPlugins",
-		"usesFullBlockClosure" ],
+		"usesFullBlockClosure",
+		"requestorScopeClass" ],
 	"name" : "CCompilationContext",
 	"pools" : [
 		 ],

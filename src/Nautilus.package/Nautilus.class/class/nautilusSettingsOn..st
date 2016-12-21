@@ -20,4 +20,8 @@ nautilusSettingsOn: aBuilder
 						
 					(aBuilder setting: #useOldStyleKeys)
 						label: 'Use old style keys ?';
-						description: 'If true, the browser will use the old style keys (This is highly non-recommended, you will lose a lot of cool access keys)' ] ]
+						description: 'If true, the browser will use the old style keys (This is highly non-recommended, you will lose a lot of cool access keys)'.
+						
+					(aBuilder setting: #inlineCritiques)
+						label: 'Show critiques inline?';
+						description: 'When turned on the quality critiques will be displayed inline in the code area' ] ]

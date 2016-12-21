@@ -1,4 +1,0 @@
-api
-resetProtocolSelection
-
-	protocols resetSelection

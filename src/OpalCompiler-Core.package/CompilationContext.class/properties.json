@@ -23,7 +23,8 @@
 		"forSyntaxHighlighting",
 		"encoderClass",
 		"astTransformPlugins",
-		"usesFullBlockClosure" ],
+		"usesFullBlockClosure",
+		"requestorScopeClass" ],
 	"name" : "CompilationContext",
 	"pools" : [
 		 ],

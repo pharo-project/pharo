@@ -7,9 +7,9 @@ testTwoDifferentGenerator
 	uuid2 := generator2 next.
 	"different UUIDs"
 	self deny: uuid1 = uuid2.
-	"different genertors, different node id"
+	"different generators, different node id"
 	self deny: uuid1 reverse readStream uint32 = uuid2 reverse readStream uint32.
-	"different genertors, similar clock, within 100 milleseconds"
+	"same generators, similar clock, within 100 milliseconds (stored time is in microseconds)"
 	time1 := self timeFromUUID: uuid1.
 	time2 := self timeFromUUID: uuid2.
-	self assert: (time2 - time1) abs < 100
+	self assert: (time2 - time1) abs < (100 * 1000)
