@@ -1,0 +1,6 @@
+private
+diffSeparator
+
+	^ '——————————————————
+	
+'

@@ -1,5 +1,5 @@
 pharo - scripts
-script60333
+script60334
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -109,7 +109,7 @@ GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-StefanReichhart.59.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
 GT-Tests-Spotter-TheIntegrator.27.mcz
-GeneralRules-TheIntegrator.5.mcz
+GeneralRules-TheIntegrator.7.mcz
 Glamour-Announcements-AndreiChis.8.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-TheIntegrator.326.mcz
@@ -378,7 +378,7 @@ Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
 Tool-Base-TheIntegrator.188.mcz
 Tool-Catalog-PavelKrivanek.51.mcz
-Tool-CriticBrowser-TheIntegrator.61.mcz
+Tool-CriticBrowser-TheIntegrator.63.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.15.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
