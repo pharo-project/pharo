@@ -17,6 +17,7 @@ addons:
 
 install:
  - "wget -O - get.pharo.org/${PHARO_VERSION}+vm | bash"
+ - "./pharo Pharo.image ./bootstrap/scripts/prepare_image.st --save --quit"
 # - "./scripts/install-packages.sh"
 
 script:
