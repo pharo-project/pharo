@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19484 BaselineOfMorphic references unexisting class
-	https://pharo.fogbugz.com/f/cases/19484
+ ^ '19479 Typo in name attribute of GRVariableAssignedLiteralRule
+	https://pharo.fogbugz.com/f/cases/19479
 
-19483 Add bootstrap specific code in Monticello
-	https://pharo.fogbugz.com/f/cases/19483'
+19478 Criticsbrowser shows a refactoring class name instead of the text diff
+	https://pharo.fogbugz.com/f/cases/19478
+
+19438 Widen tolerance for DelayScheduler timing tests
+	https://pharo.fogbugz.com/f/cases/19438'
