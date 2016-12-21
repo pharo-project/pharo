@@ -35,12 +35,8 @@ architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
 (CustomStringStreamBeacon with: 'bootstrap.log' asFileReference writeStream)
 	startFor: PBStepStartedSignal, PBStepFinishedSignal, PBSubStepFinishedSignal.
 
-(#'PBBootstrapSpur50', architecture ,'bit') asSymbol asClass new
-	gitRepositoryUrl: 'git@github.com:guillep/pharo-core.git'
-	location: '.'
-	subdirectory: 'src';
-	espellBackend: ((#EPSimulatorBackend asClass) perform: (#'for', architecture, 'Bit') asSymbol) forBootstrap;
-	bootstrap.
-] on: Warning do: #resume.
+(PBBootstrap forArchitecture: architecture)
+	prepareBootstrap;
+	createImage
 
-Smalltalk snapshot: false andQuit: true.
+] on: Warning do: #resume
