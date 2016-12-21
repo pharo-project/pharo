@@ -1,4 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19480 Update Glamour to version 4.27
-	https://pharo.fogbugz.com/f/cases/19480'
+ ^ '19484 BaselineOfMorphic references unexisting class
+	https://pharo.fogbugz.com/f/cases/19484
+
+19483 Add bootstrap specific code in Monticello
+	https://pharo.fogbugz.com/f/cases/19483'

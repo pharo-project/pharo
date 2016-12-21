@@ -58,7 +58,7 @@ postload: loader package: packageSpec
 	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
 	FreeTypeSubPixelAntiAliasedGlyphRenderer FT2Constants FT2Handle GIFReadWriter
 	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
-	JPEGReadStream JPEGReadWriter LongTestCase 
+	JPEGReadStream JPEGReadWriter 
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
 	PNGReadWriter RxMatcher RxParser RxsPredicate
 	SHA1 ShortIntegerArray SimpleEditor
