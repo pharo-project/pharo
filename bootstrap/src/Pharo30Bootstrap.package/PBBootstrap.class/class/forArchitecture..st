@@ -1,6 +1,6 @@
 instance creation
 forArchitecture: architecture
 
-	^ super new;
+	^ super new
 		architecture: architecture;
 		yourself
