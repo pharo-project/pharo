@@ -13,4 +13,6 @@ package-cache/
 iceberg-cache/
 play-cache/
 
+bootstrap-cache/
+
 github--*.zip
