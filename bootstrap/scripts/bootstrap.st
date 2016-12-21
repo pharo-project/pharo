@@ -22,7 +22,7 @@ addMethod: method
 
 Metacello new
 	baseline: 'PharoBootstrapProcess';
-	repository: 'filetree://bootstrap';
+	repository: 'filetree://bootstrap/src';
 	load.
 
 options := CommandLineArguments default.
