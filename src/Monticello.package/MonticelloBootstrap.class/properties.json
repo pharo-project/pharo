@@ -1,0 +1,15 @@
+{
+	"category" : "Monticello-Base",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 12/14/2016 17:36",
+	"instvars" : [
+		"directory",
+		"localRepository" ],
+	"name" : "MonticelloBootstrap",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
