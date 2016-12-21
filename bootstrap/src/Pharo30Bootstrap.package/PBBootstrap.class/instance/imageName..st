@@ -1,4 +1,4 @@
 accessing
 imageName: aString 
 	
-	imageReference := aString asFileReference
+	imageReference := self bootstrapCacheDirectory / aString asFileReference
