@@ -6,8 +6,6 @@ cd bootstrap-cache
 
 #Prepare
 echo "Prepare Bootstrap files"
-rm *.fuel
-rm PharoDebug.log
 unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
 
 #Bootstrap Initialization: Class and RPackage initialization
