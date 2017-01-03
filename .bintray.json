@@ -1,0 +1,17 @@
+{
+    "package": {
+        "name": "Pharo",
+        "repo": "pharo",
+        "subject": "pharo-project",
+        "licenses": ["MIT"]
+    },
+    "version": {
+      "name": "$Rev$",
+      "desc": "Automatic build"
+    },
+    "files": [{
+      "includePattern": "bootstrap-cache/*.zip",
+      "uploadPattern": "$1"
+    }],
+    "publish": true
+}

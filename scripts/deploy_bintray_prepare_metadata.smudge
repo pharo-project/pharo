@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+use POSIX qw(strftime);
+
+$myrev = `git log -n1 --format="%at"`;
+$myrev =~ s/\s+$//m;
+$ENV{'TZ'} = 'UTC';
+$myrev = strftime "%Y%m%d%H%M", gmtime($myrev);
+$myrev =~ s/\s+$//m;
+
+$branch = `git symbolic-ref HEAD 2>/dev/null`;
+$branch =~ s/\s+$//m;
+$branch =~ s/refs\/heads\///;
+
+if ( $branch eq "Cog" || $branch eq "dev" || $branch eq "master" || $branch eq "" ) {
+    $myrev = $myrev;
+} else {
+    $myrev = $myrev . '-' . $branch . '';
+}
+
+if ((defined $ENV{'TRAVIS'}) || (defined $ENV{'APPVEYOR'})) {
+    $url=`git config --get remote.origin.url`;
+} else {
+    $url=`whoami` . '@' . `hostname` . ':' . `PWD=\$(pwd) echo \${PWD##\$HOME/}`;
+}
+$url =~ s/\s+//gm;
+
+$date = `git log --format=%ad -1`;
+$date =~ s/\s+$//m;
+
+while (<STDIN>) {
+    s/\$Date[^\$]*\$/\$Date: $date \$/;
+    s/\$URL[^\$]*\$/\$URL: $url \$/;
+    s/\$Rev[^\$]*\$/\$Rev: $myrev \$/;
+} continue {
+    print or die "-p destination: $!\n";
+}
