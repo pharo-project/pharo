@@ -28,9 +28,9 @@ $date = `git log --format=%ad -1`;
 $date =~ s/\s+$//m;
 
 while (<STDIN>) {
-    s/\$Date[^\$]*\$/\$Date: $date \$/;
+    s/\$Date[^\$]*\$/$date/;
     s/\$URL[^\$]*\$/\$URL: $url \$/;
-    s/\$Rev[^\$]*\$/\$Rev: $myrev \$/;
+    s/\$Rev[^\$]*\$/$myrev;
 } continue {
     print or die "-p destination: $!\n";
 }
