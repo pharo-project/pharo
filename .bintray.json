@@ -6,7 +6,7 @@
         "licenses": ["MIT"]
     },
     "version": {
-      "name": "$Rev$",
+      "name": "$Rev$-$Arch$bit",
       "released": "$Date$",
       "desc": "Automatic build"
     },

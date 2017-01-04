@@ -30,7 +30,7 @@ $date =~ s/\s+$//m;
 while (<STDIN>) {
     s/\$Date[^\$]*\$/$date/;
     s/\$URL[^\$]*\$/\$URL: $url \$/;
-    s/\$Rev[^\$]*\$/$myrev;
+    s/\$Rev[^\$]*\$/$myrev/;
 } continue {
     print or die "-p destination: $!\n";
 }
