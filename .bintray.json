@@ -7,7 +7,6 @@
     },
     "version": {
       "name": "$Rev$-$Arch$bit",
-      "released": "$Date$",
       "desc": "Automatic build"
     },
     "files": [{
