@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19486 TabMorph helper method to prevent blinking when morph retrieval is too fast
-	https://pharo.fogbugz.com/f/cases/19486
+ ^ '19493 Load new FastTable config
+	https://pharo.fogbugz.com/f/cases/19493
 
-19469 Debbuging Super call inside a debugger does not call the super method but the self one.
-	https://pharo.fogbugz.com/f/cases/19469
+19488 STONWriterTests>>#testDictionaryWithComplexKeys is order dependent
+	https://pharo.fogbugz.com/f/cases/19488
 
-19306 taskbarIcon on class side should be defined only in Object class by using taskbarIconName redefined by subclasses 
-	https://pharo.fogbugz.com/f/cases/19306'
+19495 TabMorph should fork morph building in lesser priority than active process
+	https://pharo.fogbugz.com/f/cases/19495'

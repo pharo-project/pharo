@@ -1,5 +1,5 @@
 pharo - scripts
-script60335
+script60336
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -210,7 +210,7 @@ Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.75.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
 Morphic-Widgets-Scrolling-TheIntegrator.37.mcz
-Morphic-Widgets-Tabs-TheIntegrator.38.mcz
+Morphic-Widgets-Tabs-TheIntegrator.39.mcz
 Morphic-Widgets-Taskbar-TheIntegrator.27.mcz
 Morphic-Widgets-TickList-TheIntegrator.2.mcz
 Morphic-Widgets-Tree-TheIntegrator.64.mcz
@@ -302,7 +302,7 @@ Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
 STON-Core-TheIntegrator.75.mcz
-STON-Tests-SvenVanCaekenberghe.64.mcz
+STON-Tests-TheIntegrator.66.mcz
 STON-Text support-TheIntegrator.2.mcz
 SUnit-Core-TheIntegrator.212.mcz
 SUnit-Help-MarcusDenker.9.mcz

@@ -20,10 +20,11 @@ softRetrieveMorph
 			[ true ] whileTrue:[ 
 				i := (i \\ 10)+1.
 				100 milliSeconds asDelay wait.
-				self icon: (self class perform: ('refreshIcon', i asString) asSymbol) ] ] fork.
+				self icon: (self class perform: ('refreshIcon', i asString) asSymbol) ] ] 
+					forkAt: Processor activePriority - 1.
 		"compute time consuming data"
 		self morph: retrievingBlock value ]
 	ensure: [
 		rotating terminate.
 		self icon: oldIcon.
-		retrievingSemaphore signal ] ] fork.
+		retrievingSemaphore signal ] ] forkAt: Processor activePriority -1

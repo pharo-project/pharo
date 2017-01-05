@@ -6,7 +6,7 @@ mouseDown: event
 	needToggleAtMouseUp ifTrue: [ ^ self ].
 	
 	rowIndex := self container rowIndexContainingPoint: event cursorPoint.
-	self selectedRowIndex = rowIndex
+	(self selectedRowIndexes includes: rowIndex)
 		ifFalse: [ self selectRowIndex: rowIndex event: event ]
 		ifTrue: [ needToggleAtMouseUp := true ].	"If the cell is selected we let the mouse up toggle to avoid any problem with the drag and drop"
 	self wantsKeyboardFocus
