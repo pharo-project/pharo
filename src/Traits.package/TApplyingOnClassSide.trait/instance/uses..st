@@ -6,4 +6,5 @@ uses: aTraitCompositionOrArray
 	self assertConsistantCompositionsForNew: newComposition.
 	self setTraitComposition: newComposition.
 	SystemAnnouncer uniqueInstance
-		traitDefinitionChangedFrom: copyOfOldTrait to: self.
+		traitDefinitionChangedFrom: copyOfOldTrait to: self;
+		classModificationAppliedTo: self

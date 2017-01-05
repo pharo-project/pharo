@@ -7,7 +7,8 @@ classAdded: aClass inCategory: aCategory
 	" Update the system's organization "
 	environment organization ifNotNil: [:org | org classify: aClass name under: aCategory].
 	aClass environment: environment.
-	
-	self systemAnnouncer classAdded: aClass inCategory: aCategory.
+
 	" Inform superclass of new subclass "
-	aClass superclass addSubclass: aClass.
+	aClass superclass addSubclass: aClass.	
+		
+	self systemAnnouncer classAdded: aClass inCategory: aCategory

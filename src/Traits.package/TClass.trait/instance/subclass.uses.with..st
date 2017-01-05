@@ -22,12 +22,13 @@ subclass: aName uses: aTraitComposition with: aBlock
 			e.g. an instace variable added."
 			(newClass traitComposition syntacticallyEquals: copyOfOld traitComposition) ifFalse: [ 
 				SystemAnnouncer uniqueInstance 
-					classDefinitionChangedFrom: copyOfOld 
-					to: newClass ].
+					classDefinitionChangedFrom: copyOfOld to: newClass;
+					classModificationAppliedTo: newClass ].
 
 			newClass ]
-		ifAbsent: [
+		ifAbsent: [ | newClass |
 			"Create the class and set the trait composition"
-			aBlock value
-				setTraitComposition: aTraitComposition asTraitComposition;
-				yourself ].
+			newClass := aBlock value.
+			newClass setTraitComposition: aTraitComposition asTraitComposition.
+			SystemAnnouncer uniqueInstance classModificationAppliedTo: newClass.
+			newClass].

@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19493 Load new FastTable config
-	https://pharo.fogbugz.com/f/cases/19493
+ ^ '19491 ClassRemoved announced when it is not removed from superclass subclasses list
+	https://pharo.fogbugz.com/f/cases/19491
 
-19488 STONWriterTests>>#testDictionaryWithComplexKeys is order dependent
-	https://pharo.fogbugz.com/f/cases/19488
+19490 ClassAdded should be announcer after notifying superclass about new subclass
+	https://pharo.fogbugz.com/f/cases/19490
 
-19495 TabMorph should fork morph building in lesser priority than active process
-	https://pharo.fogbugz.com/f/cases/19495'
+19494 ClassModificationApplied is not announced when traitComposition of class or trait is changed
+	https://pharo.fogbugz.com/f/cases/19494'

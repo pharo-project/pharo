@@ -1,5 +1,5 @@
 pharo - scripts
-script60336
+script60337
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -114,7 +114,7 @@ Glamour-Announcements-AndreiChis.8.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-TheIntegrator.326.mcz
 Glamour-Examples-TheIntegrator.313.mcz
-Glamour-FastTable-AndreiChis.63.mcz
+Glamour-FastTable-PabloTesone.60.mcz
 Glamour-Helpers-TudorGirba.40.mcz
 Glamour-Morphic-Brick-AndreiChis.436.mcz
 Glamour-Morphic-Brick-Tests-JurajKubelka.15.mcz
@@ -187,7 +187,7 @@ Metacello-TestsPlatform.squeakCommon-EstebanLorenzano.23.mcz
 Metacello-TestsReference-EstebanLorenzano.22.mcz
 Metacello-ToolBox-TheIntegrator.152.mcz
 Metacello-Tutorial-EstebanLorenzano.28.mcz
-Monticello-TheIntegrator.1166.mcz
+Monticello-TheIntegrator.1167.mcz
 Monticello-OldDataStreamCompatibility-TheIntegrator.10.mcz
 Monticello-Tests-TheIntegrator.40.mcz
 MonticelloConfigurations-TheIntegrator.74.mcz
@@ -205,7 +205,7 @@ Morphic-Tests-TheIntegrator.11.mcz
 Morphic-Widgets-Basic-TheIntegrator.106.mcz
 Morphic-Widgets-ColorPicker-TheIntegrator.23.mcz
 Morphic-Widgets-Extra-TheIntegrator.27.mcz
-Morphic-Widgets-FastTable-NicolaiHess.197.mcz
+Morphic-Widgets-FastTable-NicolaiHess.200.mcz
 Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.75.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
@@ -320,7 +320,7 @@ ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
 Shout-TheIntegrator.302.mcz
 Shout-Tests-TheIntegrator.2.mcz
-Slot-TheIntegrator.778.mcz
+Slot-TheIntegrator.780.mcz
 Slot-Tests-TheIntegrator.101.mcz
 SmartSuggestions-TheIntegrator.267.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
@@ -365,7 +365,7 @@ System-Settings-Rules-TheIntegrator.2.mcz
 System-Settings-Tests-TheIntegrator.13.mcz
 System-Sound-TheIntegrator.20.mcz
 System-Sources-TheIntegrator.67.mcz
-System-Support-TheIntegrator.1266.mcz
+System-Support-TheIntegrator.1269.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
 System-VMEvents-TheIntegrator.19.mcz
@@ -397,7 +397,7 @@ Tool-TxWorkspace-NicolaiHess.7.mcz
 Tool-Workspace-TheIntegrator.48.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.965.mcz
+Traits-TheIntegrator.969.mcz
 Transcript-TheIntegrator.56.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz
@@ -415,7 +415,7 @@ Versionner-Commit-TheIntegrator.38.mcz
 Versionner-Core-Announcements-ChristopheDemarey.6.mcz
 Versionner-Core-Commands-MarcusDenker.65.mcz
 Versionner-Core-DependenciesModel-MarcusDenker.106.mcz
-Versionner-Core-Model-PavelKrivanek.54.mcz
+Versionner-Core-Model-TheIntegrator.56.mcz
 Versionner-Nautilus-TheIntegrator.2.mcz
 Versionner-Spec-Browser-TheIntegrator.209.mcz
 Versionner-Tests-Core-Commands-MarcusDenker.21.mcz
