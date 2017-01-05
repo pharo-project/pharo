@@ -10,7 +10,7 @@
       "desc": "Automatic build"
     },
     "files": [{
-      "includePattern": "bootstrap-cache/*.zip",
+      "includePattern": "bootstrap-cache/(.*).zip",
       "uploadPattern": "$1"
     }],
     "publish": true
