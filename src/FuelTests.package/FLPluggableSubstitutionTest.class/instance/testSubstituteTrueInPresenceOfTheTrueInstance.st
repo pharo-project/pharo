@@ -1,4 +1,4 @@
-running
+tests
 testSubstituteTrueInPresenceOfTheTrueInstance
 	"See issues #209 and #217"
 

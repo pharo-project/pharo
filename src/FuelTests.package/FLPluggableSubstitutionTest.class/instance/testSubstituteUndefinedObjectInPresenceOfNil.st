@@ -1,4 +1,4 @@
-running
+tests
 testSubstituteUndefinedObjectInPresenceOfNil
 	"See issues #209 and #217"
 

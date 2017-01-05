@@ -1,4 +1,4 @@
-running
+tests
 testSubstituteCharacterInPresenceOfSomeCharacter
 	"See issues #209 and #217"
 

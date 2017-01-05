@@ -1,5 +1,5 @@
 pharo - scripts
-script60337
+script60338
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -21,7 +21,7 @@ BaselineOfDisplay-TheIntegrator.4.mcz
 BaselineOfFileTree-ThierryGoubier.15.mcz
 BaselineOfIDE-TheIntegrator.6.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
-BaselineOfMorphic-TheIntegrator.14.mcz
+BaselineOfMorphic-TheIntegrator.17.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
 BaselineOfPharoBootstrap-TheIntegrator.4.mcz
 BaselineOfSUnit-TheIntegrator.4.mcz
@@ -378,7 +378,7 @@ Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
 Tool-Base-TheIntegrator.188.mcz
 Tool-Catalog-PavelKrivanek.51.mcz
-Tool-CriticBrowser-TheIntegrator.64.mcz
+Tool-CriticBrowser-TheIntegrator.65.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.15.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz

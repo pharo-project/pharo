@@ -1,10 +1,13 @@
 public
 commentForCurrentUpdate
- ^ '19491 ClassRemoved announced when it is not removed from superclass subclasses list
-	https://pharo.fogbugz.com/f/cases/19491
+ ^ '19514 ConfigurationOfFuel has no latest FuelTests version
+	https://pharo.fogbugz.com/f/cases/19514
 
-19490 ClassAdded should be announcer after notifying superclass about new subclass
-	https://pharo.fogbugz.com/f/cases/19490
+19421 Failing test: WeakAnnouncerTest>>#testNoDeadWeakSubscriptions
+	https://pharo.fogbugz.com/f/cases/19421
 
-19494 ClassModificationApplied is not announced when traitComposition of class or trait is changed
-	https://pharo.fogbugz.com/f/cases/19494'
+19512 References to Tab -> should be TabMorph
+	https://pharo.fogbugz.com/f/cases/19512
+
+18729 DNU on showing menu in CriticBrowser (code pane)
+	https://pharo.fogbugz.com/f/cases/18729'
