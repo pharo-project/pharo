@@ -1,14 +1,15 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:55",
-	"super" : "MCRepository",
 	"category" : "Monticello-Repositories",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:55",
 	"instvars" : [
 		"description",
-		"dict"
-	],
+		"dict" ],
 	"name" : "MCDictionaryRepository",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCRepository",
+	"type" : "normal" }

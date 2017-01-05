@@ -1,4 +1,4 @@
-menu
+icons
 icon
 	"Answer an icon for the receiver."
 

@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "Error",
 	"category" : "Monticello-Repositories",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
 	"name" : "MCRepositoryError",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

@@ -1,16 +1,17 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:53",
-	"super" : "MCReader",
 	"category" : "Monticello-Storing",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:53",
 	"instvars" : [
 		"package",
 		"info",
 		"definitions",
-		"dependencies"
-	],
+		"dependencies" ],
 	"name" : "MCVersionReader",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCReader",
+	"type" : "normal" }

@@ -1,14 +1,15 @@
 {
-	"commentStamp" : "MartinDias 6\/10\/2015 19:18",
-	"super" : "Announcement",
 	"category" : "Monticello-Announcements",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 6/10/2015 19:18",
 	"instvars" : [
 		"version",
-		"repository"
-	],
+		"repository" ],
 	"name" : "MCVersionSaved",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

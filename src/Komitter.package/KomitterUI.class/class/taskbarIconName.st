@@ -1,0 +1,4 @@
+icons
+taskbarIconName
+
+	^ Komitter taskbarIconName

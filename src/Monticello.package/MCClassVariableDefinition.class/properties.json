@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "MCVariableDefinition",
 	"category" : "Monticello-Modeling",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
 	"name" : "MCClassVariableDefinition",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCVariableDefinition",
+	"type" : "normal" }

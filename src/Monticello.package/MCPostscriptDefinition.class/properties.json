@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:47",
-	"super" : "MCScriptDefinition",
 	"category" : "Monticello-Modeling",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:47",
+	"instvars" : [
+		 ],
 	"name" : "MCPostscriptDefinition",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCScriptDefinition",
+	"type" : "normal" }

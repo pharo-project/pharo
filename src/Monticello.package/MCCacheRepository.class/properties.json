@@ -1,17 +1,16 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "MCDirectoryRepository",
 	"category" : "Monticello-Repositories",
 	"classinstvars" : [
-		"default"
-	],
-	"pools" : [ ],
-	"classvars" : [ ],
+		"default" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		"packageCaches",
 		"seenFiles",
-		"cacheEnabled"
-	],
+		"cacheEnabled" ],
 	"name" : "MCCacheRepository",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCDirectoryRepository",
+	"type" : "normal" }

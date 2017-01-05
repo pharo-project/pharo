@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "LaurentLaffont 3\/31\/2011 21:07",
-	"super" : "MCSnapshotReader",
 	"category" : "Monticello-Storing",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/31/2011 21:07",
+	"instvars" : [
+		 ],
 	"name" : "MCStReader",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCSnapshotReader",
+	"type" : "normal" }

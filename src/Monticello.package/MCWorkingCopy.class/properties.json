@@ -1,16 +1,17 @@
 {
-	"commentStamp" : "StephaneDucasse 4\/29\/2011 20:44",
-	"super" : "MCPackageManager",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "StephaneDucasse 4/29/2011 20:44",
 	"instvars" : [
 		"ancestry",
 		"counter",
 		"repositoryGroup",
-		"requiredPackages"
-	],
+		"requiredPackages" ],
 	"name" : "MCWorkingCopy",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCPackageManager",
+	"type" : "normal" }

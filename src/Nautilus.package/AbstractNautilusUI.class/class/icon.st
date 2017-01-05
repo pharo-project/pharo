@@ -1,3 +1,3 @@
-accessing
+icons
 icon
 	^ self iconNamed: #nautilusIcon 

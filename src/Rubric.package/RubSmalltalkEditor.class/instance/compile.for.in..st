@@ -1,14 +1,15 @@
 do-its
 compile: aStream for: anObject in: evalContext
-	| methodNode  |
-
-	methodNode :=  self class compiler
+	| methodNode methodClass |
+	methodClass := evalContext
+		ifNil: [ anObject class ]
+		ifNotNil: [ evalContext methodClass ].
+	methodNode := self class compiler
 		source: aStream;
-		class: anObject class;
+		class: methodClass;
 		context: evalContext;
 		requestor: self morph;
 		noPattern: true;
-		failBlock:  [ ^nil ];
+		failBlock: [ ^ nil ];
 		translate.
-			
-	^methodNode generateWithSource
+	^ methodNode generateWithSource

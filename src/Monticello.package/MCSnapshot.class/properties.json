@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "Object",
 	"category" : "Monticello-Base",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
-		"definitions"
-	],
+		"definitions" ],
 	"name" : "MCSnapshot",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

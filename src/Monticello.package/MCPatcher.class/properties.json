@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "LaurentLaffont 3\/31\/2011 21:05",
-	"super" : "Object",
 	"category" : "Monticello-Patching",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/31/2011 21:05",
 	"instvars" : [
-		"definitions"
-	],
+		"definitions" ],
 	"name" : "MCPatcher",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "Announcement",
 	"category" : "Monticello-Announcements",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
-		"package"
-	],
+		"package" ],
 	"name" : "MCPackageModified",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

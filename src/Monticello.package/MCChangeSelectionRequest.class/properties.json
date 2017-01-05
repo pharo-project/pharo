@@ -1,14 +1,15 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:45",
-	"super" : "Notification",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:45",
 	"instvars" : [
 		"patch",
-		"label"
-	],
+		"label" ],
 	"name" : "MCChangeSelectionRequest",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Notification",
+	"type" : "normal" }

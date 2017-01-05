@@ -1,4 +1,0 @@
-icon
-taskbarIcon 
-
-	^ AbstractNautilusUI icon

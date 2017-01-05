@@ -1,0 +1,3 @@
+icons
+taskbarIconName
+	^#nautilusIcon 

@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "Object",
 	"category" : "Monticello-Chunk Format",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
-		"source"
-	],
+		"source" ],
 	"name" : "MCDoItParser",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

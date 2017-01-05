@@ -1,15 +1,16 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:55",
-	"super" : "MCRepository",
 	"category" : "Monticello-Repositories",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:55",
 	"instvars" : [
 		"cache",
 		"allFileNames",
-		"cacheFileNames"
-	],
+		"cacheFileNames" ],
 	"name" : "MCFileBasedRepository",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCRepository",
+	"type" : "normal" }

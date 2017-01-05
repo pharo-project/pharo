@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/6\/2014 08:10",
-	"super" : "MCVersionSorter",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/6/2014 08:10",
 	"instvars" : [
-		"target"
-	],
+		"target" ],
 	"name" : "MCFilteredVersionSorter",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCVersionSorter",
+	"type" : "normal" }

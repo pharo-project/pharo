@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19479 Typo in name attribute of GRVariableAssignedLiteralRule
-	https://pharo.fogbugz.com/f/cases/19479
+ ^ '19486 TabMorph helper method to prevent blinking when morph retrieval is too fast
+	https://pharo.fogbugz.com/f/cases/19486
 
-19478 Criticsbrowser shows a refactoring class name instead of the text diff
-	https://pharo.fogbugz.com/f/cases/19478
+19469 Debbuging Super call inside a debugger does not call the super method but the self one.
+	https://pharo.fogbugz.com/f/cases/19469
 
-19438 Widen tolerance for DelayScheduler timing tests
-	https://pharo.fogbugz.com/f/cases/19438'
+19306 taskbarIcon on class side should be defined only in Object class by using taskbarIconName redefined by subclasses 
+	https://pharo.fogbugz.com/f/cases/19306'

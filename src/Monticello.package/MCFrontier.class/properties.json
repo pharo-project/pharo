@@ -1,14 +1,15 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/5\/2014 13:49",
-	"super" : "Object",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:49",
 	"instvars" : [
 		"frontier",
-		"bag"
-	],
+		"bag" ],
 	"name" : "MCFrontier",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

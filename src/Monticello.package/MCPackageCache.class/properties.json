@@ -1,14 +1,15 @@
 {
-	"commentStamp" : "LaurentLaffont 3\/31\/2011 21:06",
-	"super" : "Object",
 	"category" : "Monticello-Repositories",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "LaurentLaffont 3/31/2011 21:06",
 	"instvars" : [
 		"sorter",
-		"fileNames"
-	],
+		"fileNames" ],
 	"name" : "MCPackageCache",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

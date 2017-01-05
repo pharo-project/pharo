@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "MCPatchOperation",
 	"category" : "Monticello-Patching",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
-		"definition"
-	],
+		"definition" ],
 	"name" : "MCRemoval",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCPatchOperation",
+	"type" : "normal" }

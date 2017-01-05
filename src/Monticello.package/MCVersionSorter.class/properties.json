@@ -1,17 +1,18 @@
 {
-	"commentStamp" : "TorstenBergmann 2\/6\/2014 08:10",
-	"super" : "Object",
 	"category" : "Monticello-Versioning",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "TorstenBergmann 2/6/2014 08:10",
 	"instvars" : [
 		"layers",
 		"depthIndex",
 		"depths",
 		"stepparents",
-		"roots"
-	],
+		"roots" ],
 	"name" : "MCVersionSorter",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

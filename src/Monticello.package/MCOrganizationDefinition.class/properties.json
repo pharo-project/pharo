@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "MCDefinition",
 	"category" : "Monticello-Modeling",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
-		"categories"
-	],
+		"categories" ],
 	"name" : "MCOrganizationDefinition",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCDefinition",
+	"type" : "normal" }

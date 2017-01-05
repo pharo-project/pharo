@@ -1,10 +1,10 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "MCDefinition",
 	"category" : "Monticello-Modeling",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		"name",
 		"superclassName",
@@ -14,8 +14,9 @@
 		"comment",
 		"commentStamp",
 		"traitComposition",
-		"classTraitComposition"
-	],
+		"classTraitComposition" ],
 	"name" : "MCClassDefinition",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "MCDefinition",
+	"type" : "normal" }
