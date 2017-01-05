@@ -21,6 +21,8 @@ script:
 - bash ./bootstrap/scripts/build.sh
 before_deploy:
 - sh ./scripts/deploy_bintray_prepare.sh
+after_deploy:
+- sh ./scripts/deploy_bintray_check.sh
 deploy:
   provider: bintray
   file: ".bintray.json"
