@@ -7,7 +7,8 @@ gtInspectorOccurrencesIn: composite
 		column: 'Item' 
 			evaluated: [ :each | GTObjectPrinter new asTruncatedTextFrom: each ];
 		column: 'Occurences' 
-			evaluated: [ :each | self occurrencesOf: each ];
+			evaluated: [ :each | self occurrencesOf: each ]
+			sortedBy: [ :a :b | (self occurrencesOf: a) > (self occurrencesOf: b)];
 		beMultiple;
 		"withSmalltalkSearch;"
 		showOnly: 50;

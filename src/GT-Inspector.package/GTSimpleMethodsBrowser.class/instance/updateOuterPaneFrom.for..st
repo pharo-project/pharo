@@ -23,4 +23,4 @@ updateOuterPaneFrom: text for: method
 					((child first paneNamed: #classes) port: #selection) value: method methodClass.
 					((child first paneNamed: #methods) port: #selection)
 						value:
-							((child first paneNamed: #methods) presentations first displayedValue detect: [ :each | each selector = newMethod ]) ] ]
+							((child first paneNamed: #methods) presentations first displayedValue ifNotNil: [ :v | v detect: [ :each | each selector = newMethod ] ]) ] ]

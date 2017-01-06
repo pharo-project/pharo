@@ -1,1 +1,0 @@
-This presentation offers a means to embed a Spec user interface within Glamour. 
