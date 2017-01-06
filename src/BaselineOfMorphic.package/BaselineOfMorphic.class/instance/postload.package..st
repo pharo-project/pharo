@@ -8,27 +8,27 @@ postload: loader package: packageSpec
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
 	ThemeIcons compile: 'iconSelectors
-	  ^ (self class allSelectors copyWithoutAll: #(systemIcon)) 
+	  ^ (self class allSelectors copyWithoutAll: #(systemIcon))
 	    select: [ :each | ''*Icon'' match: each asString ].'.
 
 	ThemeIcons class compile: 'baseUrl
 		^ ''https://github.com/pharo-project/pharo-icon-packs/archive'' asUrl'.
-		
+
 	ThemeIcons class compile: 'defaultUrl
 		^ self class baseUrl / self name, ''.zip'''.
-		
+
 	UITheme class compile: 'current: aUITheme
 		Current := aUITheme.
 		SystemProgressMorph reset. "reset to use new fill styles"
 		ScrollBar initializeImagesCache. "reset to use new arrows"
 		aUITheme updateWorldDockingBars.
 		World themeChanged.'.
-		
+
 	SystemSettingsPersistence class compile: 'updateSettingNodes
 		[self default updateSettingNodes] ifError: [  ]'.
 
 	TextConstants initialize.
-		
+
 	"Initialize Fuel"
 
 	FLLargeIdentityHashedCollection initialize.
@@ -53,13 +53,13 @@ postload: loader package: packageSpec
 
 	FileStream stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
-	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
-	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem 
-	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
+	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine
+	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
+	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings
 	FreeTypeSubPixelAntiAliasedGlyphRenderer FT2Constants FT2Handle GIFReadWriter
 	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
-	JPEGReadStream JPEGReadWriter 
-	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
+	JPEGReadStream JPEGReadWriter
+	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph
 	PNGReadWriter RxMatcher RxParser RxsPredicate
 	SHA1 ShortIntegerArray SimpleEditor
 	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
@@ -102,4 +102,4 @@ postload: loader package: packageSpec
 		Author reset.
 		MCMethodDefinition initializersEnabled: initializersEnabled.
 
-		UIManager default restoreDisplay. 
+		UIManager default restoreDisplay.
