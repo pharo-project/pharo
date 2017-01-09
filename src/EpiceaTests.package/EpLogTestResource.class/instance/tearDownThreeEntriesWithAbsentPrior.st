@@ -1,4 +1,0 @@
-running
-tearDownThreeEntriesWithAbsentPrior
-
-	EpLogBuilder new release: threeEntriesWithAbsentPrior

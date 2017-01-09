@@ -2,6 +2,6 @@ running
 setUp
 	super setUp.
 	
-	monitor := EpMonitor newWithLog: self newLog.
-	
+	logBuilder := EpTestLogBuilder new.
 	classFactory := ClassFactoryForTestCase new.
+	monitor := EpMonitor newWithLog: logBuilder log.

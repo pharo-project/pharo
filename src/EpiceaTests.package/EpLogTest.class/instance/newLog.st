@@ -1,3 +1,0 @@
-instance-creation
-newLog
-	^ EpLogTestResource current oneTriggerWithFourChildrenLog

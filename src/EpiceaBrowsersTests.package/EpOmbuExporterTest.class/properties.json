@@ -8,7 +8,9 @@
 	"instvars" : [
 		"outputLog",
 		"inputLog1",
-		"inputLog2" ],
+		"inputLog2",
+		"logBuilder1",
+		"logBuilder2" ],
 	"name" : "EpOmbuExporterTest",
 	"pools" : [
 		 ],

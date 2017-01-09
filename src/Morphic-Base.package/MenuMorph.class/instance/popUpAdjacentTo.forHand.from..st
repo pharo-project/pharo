@@ -8,8 +8,12 @@ popUpAdjacentTo: rightOrLeftPoint forHand: hand from: sourceItem
 	self fullBounds.
 self updateColor.
 	"ensure layout is current"
-	selectedOffset := (selectedItem
-				ifNil: [self items first]) position - self position.
+	selectedOffset := selectedItem ifNil: [
+		self items 
+			ifEmpty: [ 0@0 ]
+			ifNotEmpty: [ :col | col first position - self position. ]
+	] ifNotNil: [ selectedItem position - self position ].
+					
 	tryToPlace := [:where :mustFit | | delta | 
 			self position: where - selectedOffset.
 			delta := self fullBoundsInWorld amountToTranslateWithin: sourceItem worldBounds.

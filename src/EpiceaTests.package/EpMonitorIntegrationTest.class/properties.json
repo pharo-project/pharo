@@ -4,10 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "MartinDias 1/6/2017 01:43",
 	"instvars" : [
 		"monitor",
-		"classFactory" ],
+		"classFactory",
+		"logBuilder" ],
 	"name" : "EpMonitorIntegrationTest",
 	"pools" : [
 		 ],

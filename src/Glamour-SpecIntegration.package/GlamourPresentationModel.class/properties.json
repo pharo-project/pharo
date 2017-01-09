@@ -1,0 +1,15 @@
+{
+	"category" : "Glamour-SpecIntegration",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "johanfabry 12/20/2016 12:01",
+	"instvars" : [
+		"presentation",
+		"glmPres" ],
+	"name" : "GlamourPresentationModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

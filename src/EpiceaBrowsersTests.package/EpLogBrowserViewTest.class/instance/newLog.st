@@ -1,3 +1,3 @@
 resources
 newLog
-	^ self subclassResponsibility
+	^ logBuilder oneTriggerWithFourChildrenLog
