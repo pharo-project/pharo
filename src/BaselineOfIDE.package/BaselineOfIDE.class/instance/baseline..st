@@ -152,6 +152,7 @@ baseline: spec
 		spec package: 'Glamour-Rubric-Presentations'.
 		spec package: 'Glamour-Tests-Rubric'.
 		spec package: 'Glamour-FastTable'.
+		spec package: 'Glamour-SpecIntegration'.
 	
 		spec package: 'GT-Inspector'.
 		spec package: 'GT-InspectorExtensions-Core'.
