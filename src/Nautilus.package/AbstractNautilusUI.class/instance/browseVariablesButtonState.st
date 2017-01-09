@@ -1,3 +1,4 @@
-buttons behavior
+button-variables
 browseVariablesButtonState
+
 	^ false

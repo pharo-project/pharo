@@ -1,4 +1,4 @@
-buttons behavior
+button-variables
 browseVariableReferences
 
 	| mainMenu classVarSubMenu |

@@ -1,3 +1,4 @@
-buttons behavior
+button-variables
 browseVariablesButtonAction
+
 	self browseVariableReferences

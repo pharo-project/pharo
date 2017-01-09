@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19529 Mouseover an empty submenu causes UI lockdown
-	https://pharo.fogbugz.com/f/cases/19529
+ ^ '19521 localMethods should be moved to TBehavior where localSelectors methods are defined 
+	https://pharo.fogbugz.com/f/cases/19521
 
-19526 readString should check NULL condition
-	https://pharo.fogbugz.com/f/cases/19526
-
-19520 Epicea: Tests lacking files cleanup
-	https://pharo.fogbugz.com/f/cases/19520'
+19528 Split larger variable entries in the Variables menu into submenus
+	https://pharo.fogbugz.com/f/cases/19528'
