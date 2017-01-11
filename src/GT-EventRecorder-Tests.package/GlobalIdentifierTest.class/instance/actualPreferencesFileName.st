@@ -1,3 +1,3 @@
 accessing
-fileName
+actualPreferencesFileName
 	^ identifier persistenceStrategy fileName

@@ -7,8 +7,9 @@ lookupSelector: selector
 	| lookupClass |
 	lookupClass := self.
 	[lookupClass == nil]
-		whileFalse: 
-			[(lookupClass includesSelector: selector)
-				ifTrue: [^ lookupClass compiledMethodAt: selector].
+		whileFalse: [ 
+			lookupClass methodDict 
+				at: selector
+				ifPresent: [ :method | ^ method ].
 			lookupClass := lookupClass superclass].
 	^ nil

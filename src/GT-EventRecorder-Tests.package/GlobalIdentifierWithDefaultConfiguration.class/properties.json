@@ -4,12 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"instvars" : [
-		"identifier",
-		"preferences" ],
-	"name" : "GlobalIdentifierTest",
+		"oldPreferences" ],
+	"name" : "GlobalIdentifierWithDefaultConfiguration",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "GlobalIdentifierTest",
 	"type" : "normal" }
