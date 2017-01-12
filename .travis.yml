@@ -17,7 +17,7 @@ install:
 - wget -O - get.pharo.org/${PHARO_VERSION}+vm | bash
 - "./pharo Pharo.image ./bootstrap/scripts/prepare_image.st --save --quit"
 script:
-- "./pharo Pharo.image ./bootstrap/scripts/bootstrap.st ARCH=${BOOTSTRAP_ARCH} --quit"
+- "./pharo Pharo.image ./bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --quit"
 - bash ./bootstrap/scripts/build.sh
 before_deploy:
 - sh ./scripts/deploy_bintray_prepare.sh
