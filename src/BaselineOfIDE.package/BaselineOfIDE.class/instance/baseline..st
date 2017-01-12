@@ -1,16 +1,16 @@
 baseline
-baseline: spec 
-    
+baseline: spec
+
 	<baseline>
 
- 	| repository | 
-	
-	repository := 'filetree://./pharo-core/src'.    
-       
+ 	| repository |
+
+	repository := 'filetree://./pharo-core/src'.
+
 	spec for: #common do: [
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
-		
+
 		spec baseline: 'BasicTools' with: [spec repository: repository].
 
 		spec package: 'ReleaseTests'.
@@ -23,7 +23,7 @@ baseline: spec
 		spec package: 'EpiceaTests'.
 		spec package: 'EpiceaBrowsers'.
 		spec package: 'EpiceaBrowsersTests'.
-		
+
 		spec package: 'Shout'.
 		spec package: 'Reflectivity-Tools'.
 		spec package: 'Reflectivity-Examples'.
@@ -31,11 +31,11 @@ baseline: spec
 		spec package: 'Rubric-Styling'.
 
 		spec package: 'FuelTools-Debugger'.
-		
+
 		spec package: 'Deprecated60'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
-		
+
 		spec package: 'Collections-Tests'.
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
@@ -97,26 +97,26 @@ baseline: spec
 		spec package: 'System-SupportTests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
-		
+
 		spec package: 'UpdateStreamer-Tests'.
 		spec package: 'Reflectivity-Tools-Tests'.
 		spec package: 'System-Serial Port'.
-		
+
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-Tests'.
 		spec package: 'Zinc-Tests'.
 
-		spec package: 'Zodiac-Tests'.	
-		spec package: 'Zodiac-Extra'.	
-		spec package: 'Zinc-Zodiac'.	
-		spec package: 'Zinc-Resource-Meta-FileSystem'.	
-			
-		spec package: 'Gofer-UI'.	
-		spec package: 'Tools-Test'.	
-		spec package: 'Metacello-GitBasedRepository'.	
-		spec package: 'WorldMenuHelp'.	
-		spec package: 'WriteBarrierTests'.	
-		spec package: 'SUnit-Rules'.	
+		spec package: 'Zodiac-Tests'.
+		spec package: 'Zodiac-Extra'.
+		spec package: 'Zinc-Zodiac'.
+		spec package: 'Zinc-Resource-Meta-FileSystem'.
+
+		spec package: 'Gofer-UI'.
+		spec package: 'Tools-Test'.
+		spec package: 'Metacello-GitBasedRepository'.
+		spec package: 'WorldMenuHelp'.
+		spec package: 'WriteBarrierTests'.
+		spec package: 'SUnit-Rules'.
 
 		spec package: 'BaselineOfMetacello'.
 		spec package: 'Metacello-Bitbucket'.
@@ -153,7 +153,7 @@ baseline: spec
 		spec package: 'Glamour-Tests-Rubric'.
 		spec package: 'Glamour-FastTable'.
 		spec package: 'Glamour-SpecIntegration'.
-	
+
 		spec package: 'GT-Inspector'.
 		spec package: 'GT-InspectorExtensions-Core'.
 		spec package: 'GT-Tests-Inspector'.
@@ -193,7 +193,7 @@ baseline: spec
 		spec package: 'ShoreLine-Report-Core'.
 		spec package: 'ShoreLine-Report-UI'.
 		spec package: 'ShoreLine-Report-Settings'.
-		
+
 		spec package: 'Versionner-Core-Model'.
 		spec package: 'Versionner-Core-Commands'.
 		spec package: 'Versionner-Core-Announcements'.
@@ -224,7 +224,7 @@ baseline: spec
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
 		spec package: 'SmartSuggestions-Tests'.
-		
+
 		spec package: 'MonticelloMocks'.
 		spec package: 'NodeNavigation'.
 		spec package: 'OpalTools'.
