@@ -10,13 +10,14 @@ This source code repository serves also for bootstrapping the latest version of 
 ```
 [ Metacello new
 	baseline: 'Iceberg';
-	repository: 'github://npasserini/iceberg';
-	load: 'development'.
+	repository: 'github://npasserini/iceberg:dev-0.4';
+	load.
 
 Metacello new
 	baseline: 'PharoBootstrapProcess';
-	repository: 'github://guillep/PharoBootstrap';
-	load ] on: Warning do: #resume.
+	repository: 'filetree://bootstrap/src';
+	load.
+] on: Warning do: #resume
 	
 #PBBootstrapSpur5032bit asClass new
 	gitRepositoryUrl: 'git@github.com:guillep/pharo-core.git'
