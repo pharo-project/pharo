@@ -19,12 +19,17 @@ Metacello new
 	load.
 ] on: Warning do: #resume
 	
-#PBBootstrapSpur5032bit asClass new
-	gitRepositoryUrl: 'git@github.com:guillep/pharo-core.git'
-	location: '.'
-	subdirectory: 'src';
-	espellBackend: #EPSimulatorBackend asClass for32Bit forBootstrap;
-	bootstrap
+(PBBootstrap forArchitecture: '32' "or '64'")
+	prepareBootstrap;
+	createImage
+```
+
+This will generate a new image file named `bootstrap.image` in directory bootstrap-cache.
+
+You should afterwards execute:
+
+```bash
+$ ./bootstrap/scripts/build.sh
 ```
 
 ## File format
