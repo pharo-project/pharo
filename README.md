@@ -4,10 +4,11 @@ This repository contains a mirror of the packages part of the [Pharo language](h
 
 ## Automated Builds
 
-This repository is periodically built in travis and its results uploaded to travis. 
+This repository is periodically built in travis and its results uploaded to travis.
 
 [![Build Status](https://travis-ci.org/guillep/pharo-core.svg?branch=master)](https://travis-ci.org/guillep/pharo-core)
-[![Download Latest Nightly Build](https://api.bintray.com/packages/pharo-project/pharo/Pharo/images/download.svg) ](https://bintray.com/pharo-project/pharo/Pharo/_latestVersion)
+[![Latest Nightly Build-32bit](https://api.bintray.com/packages/pharo-project/pharo/Pharo32bit/images/download.svg) ](https://bintray.com/pharo-project/pharo/Pharo32bit/_latestVersion)
+[![Latest Nightly Build-64bit](https://api.bintray.com/packages/pharo-project/pharo/Pharo64bit/images/download.svg) ](https://bintray.com/pharo-project/pharo/Pharo64bit/_latestVersion)
 
 You can also programatically load the latest nightly build using the link:
 
@@ -27,7 +28,7 @@ Metacello new
 	repository: 'filetree://bootstrap/src';
 	load.
 ] on: Warning do: #resume
-	
+
 (PBBootstrap forArchitecture: '32' "or '64'")
 	prepareBootstrap;
 	createImage
