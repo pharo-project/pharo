@@ -121,5 +121,5 @@ zip metacello$SUFFIX.zip metacello.*
 echo "[Pharo] Reloading rest of packages"
 sudo ./vm/pharo -vm-display-null metacello.image save Pharo
 ln -s .. pharo-core #Required for the correct work of metacello baselines
-sudo ./vm/pharo -vm-display-null Pharo.image eval "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+sudo ./vm/pharo -vm-display-null Pharo.image eval "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load" --save --quit
 zip Pharo$SUFFIX.zip Pharo.*
