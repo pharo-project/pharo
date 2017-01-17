@@ -1,5 +1,4 @@
 language: c
-sudo: required
 env:
   global:
   - PHARO_VERSION=60
