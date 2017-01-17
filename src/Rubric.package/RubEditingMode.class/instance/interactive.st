@@ -1,3 +1,4 @@
 accessing
 interactive
-	^ false
+
+	^ true

@@ -10,20 +10,26 @@ This source code repository serves also for bootstrapping the latest version of 
 ```
 [ Metacello new
 	baseline: 'Iceberg';
-	repository: 'github://npasserini/iceberg';
-	load: 'development'.
+	repository: 'github://npasserini/iceberg:dev-0.4';
+	load.
 
 Metacello new
 	baseline: 'PharoBootstrapProcess';
-	repository: 'github://guillep/PharoBootstrap';
-	load ] on: Warning do: #resume.
+	repository: 'filetree://bootstrap/src';
+	load.
+] on: Warning do: #resume
 	
-#PBBootstrapSpur5032bit asClass new
-	gitRepositoryUrl: 'git@github.com:guillep/pharo-core.git'
-	location: '.'
-	subdirectory: 'src';
-	espellBackend: #EPSimulatorBackend asClass for32Bit forBootstrap;
-	bootstrap
+(PBBootstrap forArchitecture: '32' "or '64'")
+	prepareBootstrap;
+	createImage
+```
+
+This will generate a new image file named `bootstrap.image` in directory bootstrap-cache.
+
+You should afterwards execute:
+
+```bash
+$ ./bootstrap/scripts/build.sh
 ```
 
 ## File format

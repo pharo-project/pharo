@@ -1,10 +1,10 @@
 pharo - scripts
-script60343
+script60344
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
 Alien-eem.35.mcz
-Announcements-Core-TheIntegrator.78.mcz
+Announcements-Core-TheIntegrator.80.mcz
 Announcements-Help-TheIntegrator.12.mcz
 Announcements-Tests-Core-TheIntegrator.39.mcz
 Athens-Balloon-MarcusDenker.20.mcz
@@ -152,7 +152,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2471.mcz
+Kernel-TheIntegrator.2473.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.138.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -163,7 +163,7 @@ Keymapping-Settings-StephaneDucasse.83.mcz
 Keymapping-Tests-TheIntegrator.111.mcz
 Keymapping-Tools-Spec-TheIntegrator.32.mcz
 Komitter-TheIntegrator.186.mcz
-Manifest-Core-TheIntegrator.249.mcz
+Manifest-Core-TheIntegrator.252.mcz
 Manifest-Resources-Tests-MarcusDenker.14.mcz
 Manifest-Tests-TheIntegrator.53.mcz
 MenuRegistration-TheIntegrator.93.mcz
@@ -211,7 +211,7 @@ Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.75.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
 Morphic-Widgets-Scrolling-TheIntegrator.37.mcz
-Morphic-Widgets-Tabs-TheIntegrator.39.mcz
+Morphic-Widgets-Tabs-TheIntegrator.43.mcz
 Morphic-Widgets-Taskbar-TheIntegrator.27.mcz
 Morphic-Widgets-TickList-TheIntegrator.2.mcz
 Morphic-Widgets-Tree-TheIntegrator.64.mcz
@@ -298,7 +298,7 @@ Ring-Tests-Containers-MarcusDenker.18.mcz
 Ring-Tests-Kernel-TheIntegrator.93.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
-Rubric-TheIntegrator.428.mcz
+Rubric-TheIntegrator.430.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz

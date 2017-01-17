@@ -2,7 +2,11 @@ accessing
 manifestOf: elem
 
 	| packageName |
-	packageName := self packageNameOf: elem.
+	
+	packageName := elem package 
+		ifNil: [ ^ nil ] 
+		ifNotNil: [ :pkg | pkg name ].
+
 	manifestClass := self class allManifestClasses 
 		detect: [ :each | each category = packageName  ]
 		ifNone: [ nil ].
