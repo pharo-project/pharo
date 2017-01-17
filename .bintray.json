@@ -1,6 +1,6 @@
 {
     "package": {
-        "name": "Pharo",
+        "name": "Pharo$Arch$bit",
         "repo": "pharo",
         "subject": "pharo-project",
         "licenses": ["MIT"]
