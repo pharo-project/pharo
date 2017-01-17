@@ -2,9 +2,18 @@
 
 This repository contains a mirror of the packages part of the [Pharo language](http://pharo.org/). Pharo is a pure object-oriented programming language and a powerful environment, focused on simplicity and immediate feedback (think IDE and OS rolled into one).
 
-## Bootstrapping Pharo from sources
+## Automated Builds
+
+This repository is periodically built in travis and its results uploaded to travis. 
 
 [![Build Status](https://travis-ci.org/guillep/pharo-core.svg?branch=master)](https://travis-ci.org/guillep/pharo-core)
+[![Download Latest Nightly Build](https://api.bintray.com/packages/pharo-project/pharo/Pharo/images/download.svg) ](https://bintray.com/pharo-project/pharo/Pharo/_latestVersion)
+
+You can also programatically load the latest nightly build using the link:
+
+	https://bintray.com/pharo-project/pharo/Pharo/_latestVersion
+
+## Bootstrapping Pharo from sources
 
 This source code repository serves also for bootstrapping the latest version of the [Pharo language](http://pharo.org/). The script in *scripts/bootstrap.st* serves for this purpose. For more information about bootstrapping, refer to [guillep/PharoBootstrap](https://github.com/guillep/PharoBootstrap).
 ```
