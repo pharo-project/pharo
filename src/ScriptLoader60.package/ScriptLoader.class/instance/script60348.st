@@ -1,5 +1,5 @@
 pharo - scripts
-script60347
+script60348
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -95,7 +95,7 @@ FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
 GT-BytecodeDebugger-AndreiChis.33.mcz
-GT-Debugger-TheIntegrator.363.mcz
+GT-Debugger-TheIntegrator.364.mcz
 GT-EventRecorder-AndreiChis.74.mcz
 GT-EventRecorder-Tests-TheIntegrator.39.mcz
 GT-Inspector-TheIntegrator.444.mcz
@@ -109,12 +109,12 @@ GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-StefanReichhart.59.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
 GT-Tests-Spotter-TheIntegrator.27.mcz
-GeneralRules-TheIntegrator.7.mcz
+GeneralRules-TheIntegrator.9.mcz
 Glamour-Announcements-AndreiChis.8.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-JurajKubelka.327.mcz
-Glamour-Examples-JurajKubelka.315.mcz
-Glamour-FastTable-JurajKubelka.64.mcz
+Glamour-Examples-TheIntegrator.317.mcz
+Glamour-FastTable-TheIntegrator.66.mcz
 Glamour-Helpers-TudorGirba.40.mcz
 Glamour-Morphic-Brick-AndreiChis.436.mcz
 Glamour-Morphic-Brick-Tests-JurajKubelka.15.mcz
@@ -122,7 +122,7 @@ Glamour-Morphic-Pager-MarcusDenker.111.mcz
 Glamour-Morphic-Renderer-TudorGirba.352.mcz
 Glamour-Morphic-Theme-TheIntegrator.229.mcz
 Glamour-Morphic-Widgets-TheIntegrator.203.mcz
-Glamour-Presentations-JurajKubelka.187.mcz
+Glamour-Presentations-TheIntegrator.189.mcz
 Glamour-Rubric-Presentations-TheIntegrator.58.mcz
 Glamour-SpecIntegration-TheIntegrator.6.mcz
 Glamour-Tests-Core-PavelKrivanek.113.mcz
@@ -165,7 +165,7 @@ Keymapping-Tools-Spec-TheIntegrator.32.mcz
 Komitter-TheIntegrator.186.mcz
 Manifest-Core-TheIntegrator.252.mcz
 Manifest-Resources-Tests-MarcusDenker.14.mcz
-Manifest-Tests-TheIntegrator.53.mcz
+Manifest-Tests-TheIntegrator.55.mcz
 MenuRegistration-TheIntegrator.93.mcz
 MessageBrowserRefactoringAddition-StephaneDucasse.2.mcz
 Metacello-Base-EstebanLorenzano.126.mcz
@@ -270,7 +270,7 @@ Random-Tests-TheIntegrator.4.mcz
 RecentSubmissions-TheIntegrator.246.mcz
 Refactoring-Changes-TheIntegrator.70.mcz
 Refactoring-Core-TheIntegrator.335.mcz
-Refactoring-Critics-TheIntegrator.293.mcz
+Refactoring-Critics-TheIntegrator.296.mcz
 Refactoring-Environment-TheIntegrator.88.mcz
 Refactoring-Help-TheIntegrator.7.mcz
 Refactoring-Tests-Changes-TheIntegrator.40.mcz
