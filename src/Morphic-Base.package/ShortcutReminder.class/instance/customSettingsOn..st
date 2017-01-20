@@ -30,7 +30,7 @@ customSettingsOn: aBuilder
 		order: 6;
 		target: self; 
       label: 'Notification limit' ;
-		description: 'Set the limit of how many notifactions per menu entry one should be reminded about. Setting the value to -1 means that it will allways remind you' ;
+		description: 'Set the limit of how many notifications per menu entry one should be reminded about. Setting the value to -1 means that it will allways remind you' ;
 		default: self defaultLimit;
 		range: (-1 to: 100).
 		

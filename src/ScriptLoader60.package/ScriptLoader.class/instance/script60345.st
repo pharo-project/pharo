@@ -1,5 +1,5 @@
 pharo - scripts
-script60344
+script60345
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -98,8 +98,8 @@ GT-BytecodeDebugger-AndreiChis.33.mcz
 GT-Debugger-TheIntegrator.361.mcz
 GT-EventRecorder-AndreiChis.74.mcz
 GT-EventRecorder-Tests-TheIntegrator.39.mcz
-GT-Inspector-JurajKubelka.442.mcz
-GT-InspectorExtensions-Core-AndreiChis.240.mcz
+GT-Inspector-TheIntegrator.444.mcz
+GT-InspectorExtensions-Core-TheIntegrator.241.mcz
 GT-Playground-TheIntegrator.137.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
 GT-Spotter-PavelKrivanek.407.mcz
@@ -124,7 +124,7 @@ Glamour-Morphic-Theme-TheIntegrator.229.mcz
 Glamour-Morphic-Widgets-TudorGirba.201.mcz
 Glamour-Presentations-JurajKubelka.187.mcz
 Glamour-Rubric-Presentations-TheIntegrator.58.mcz
-Glamour-SpecIntegration-JurajKubelka.4.mcz
+Glamour-SpecIntegration-TheIntegrator.6.mcz
 Glamour-Tests-Core-PavelKrivanek.113.mcz
 Glamour-Tests-Morphic-TudorGirba.137.mcz
 Glamour-Tests-Resources-AndreiChis.5.mcz
@@ -140,7 +140,7 @@ Graphics-Primitives-TheIntegrator.197.mcz
 Graphics-Shapes-TheIntegrator.4.mcz
 Graphics-Tests-TheIntegrator.85.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
-Growl-TheIntegrator.45.mcz
+Growl-TheIntegrator.47.mcz
 HelpSystem-Core-TheIntegrator.167.mcz
 HelpSystem-Tests-TheIntegrator.32.mcz
 Hiedra-MartinDias.145.mcz
@@ -199,7 +199,7 @@ MonticelloGUI-TheIntegrator.432.mcz
 MonticelloMocks-TheIntegrator.8.mcz
 MonticelloRemoteRepositories-TheIntegrator.18.mcz
 Moose-Algos-Graph-vincentBlondeau.31.mcz
-Morphic-Base-TheIntegrator.595.mcz
+Morphic-Base-TheIntegrator.598.mcz
 Morphic-Core-TheIntegrator.313.mcz
 Morphic-Examples-TheIntegrator.64.mcz
 Morphic-Tests-TheIntegrator.11.mcz
@@ -224,10 +224,10 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.255.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1332.mcz
+Nautilus-TheIntegrator.1334.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
-Nautilus-Tests-TheIntegrator.49.mcz
+Nautilus-Tests-TheIntegrator.52.mcz
 NautilusCommon-TheIntegrator.323.mcz
 NautilusGroupAutoBuilder-TheIntegrator.20.mcz
 NautilusRefactoring-TheIntegrator.310.mcz
@@ -248,7 +248,7 @@ OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.210.mcz
 OmbuTests-MartinDias.7.mcz
-OpalCompiler-Core-TheIntegrator.880.mcz
+OpalCompiler-Core-TheIntegrator.882.mcz
 OpalCompiler-Tests-TheIntegrator.378.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz

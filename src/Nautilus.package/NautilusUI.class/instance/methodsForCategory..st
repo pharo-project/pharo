@@ -1,11 +1,10 @@
 widget method
-methodsForCategory: aCategory 
-	| methds class env |
-	
+methodsForCategory: aCategory
+	| methods class env |
 	class := self selectedClass.
 	class ifNil: [ ^ #() ].
 	env := self browsedEnvironment.
-	methds := env isSystem
-		ifTrue: [ self methodsInSystemEnvironmentForCategory: aCategory  in: class ]
-		ifFalse: [ self methodsInARestrictedEnvironment: env forCategory: aCategory  in: class ].
-	^ methds sort: [:a :b | a selector < b selector ].
+	methods := env isSystem
+		ifTrue: [ self methodsInSystemEnvironmentForCategory: aCategory in: class ]
+		ifFalse: [ self methodsInARestrictedEnvironment: env forCategory: aCategory in: class ].
+	^ methods sort: self methodSortBlock.

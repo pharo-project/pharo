@@ -4,7 +4,7 @@
 		 ],
 	"classvars" : [
 		"OptimizedMessages" ],
-	"commentStamp" : "ajh 3/24/2003 22:19",
+	"commentStamp" : "NicolaiHess 1/15/2017 22:45",
 	"instvars" : [
 		"methodBuilder",
 		"effectTranslator",
