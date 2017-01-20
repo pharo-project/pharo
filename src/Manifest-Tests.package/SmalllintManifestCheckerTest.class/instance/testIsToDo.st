@@ -8,6 +8,6 @@ testIsToDo
 		environment: self package asEnvironment;
 		run.
 	
-	self assert: (checker isToDo:  (MFClassB>>#method3) forRuleId: (GRTemporaryNotReadNorWrittenRule uniqueIdentifierName) versionId:  1).
-	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (GRTemporaryNotReadNorWrittenRule uniqueIdentifierName) versionId:  1).
+	self assert: (checker isToDo:  (MFClassB>>#method3) forRuleId: (GRTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
+	self deny: (checker isToDo:  (MFClassB>>#method2) forRuleId: (GRTemporaryNeitherReadNorWrittenRule uniqueIdentifierName) versionId:  1).
 

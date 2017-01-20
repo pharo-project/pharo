@@ -8,7 +8,7 @@ testToDoOf
 		environment: self package asEnvironment;
 		run.
 		
-	self assert: (( checker toDoOf: GRTemporaryNotReadNorWrittenRule new) anySatisfy: [:each|
+	self assert: (( checker toDoOf: GRTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each sourceAnchor entity = (MFClassB>>#method3)]).
-	self deny: (( checker toDoOf: GRTemporaryNotReadNorWrittenRule new) anySatisfy: [:each|
+	self deny: (( checker toDoOf: GRTemporaryNeitherReadNorWrittenRule new) anySatisfy: [:each|
 		each  sourceAnchor entity = (MFClassB>>#method2)]).

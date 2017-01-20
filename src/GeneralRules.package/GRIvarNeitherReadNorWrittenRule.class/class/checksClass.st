@@ -1,0 +1,3 @@
+testing-interest
+checksClass
+	^ true

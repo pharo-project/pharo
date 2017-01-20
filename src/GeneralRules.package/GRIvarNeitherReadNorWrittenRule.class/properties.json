@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "YuriyTymchuk 9/5/2016 13:52",
+	"commentStamp" : "YuriyTymchuk 1/12/2017 08:45",
 	"instvars" : [
 		 ],
-	"name" : "GRTemporaryNotReadNorWrittenRule",
+	"name" : "GRIvarNeitherReadNorWrittenRule",
 	"pools" : [
 		 ],
-	"super" : "ReNodeBasedRule",
+	"super" : "ReAbstractRule",
 	"type" : "normal" }

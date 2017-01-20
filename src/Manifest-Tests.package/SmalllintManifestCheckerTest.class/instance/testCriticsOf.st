@@ -8,7 +8,7 @@ testCriticsOf
 		environment: self package asEnvironment;
 		run. 
 	
-	critiques := checker criticsOf: GRTemporaryNotReadNorWrittenRule new.
+	critiques := checker criticsOf: GRTemporaryNeitherReadNorWrittenRule new.
 	
 	self assert: critiques size  = 3.
 	self assert: (critiques anySatisfy: [ :each |
