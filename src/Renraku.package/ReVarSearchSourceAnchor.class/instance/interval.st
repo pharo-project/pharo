@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 interval
 	^ super interval allButLast 

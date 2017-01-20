@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 searchString
 	^ sourceEntity instVarNames last = super searchString
 		ifTrue:  [ super searchString, '''' ]
