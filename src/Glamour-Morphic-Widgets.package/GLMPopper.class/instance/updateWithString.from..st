@@ -7,6 +7,10 @@ updateWithString: string from: aMorph
 			self delete.
 			aMorph textArea removeHighlightSegment.
 			aMorph takeKeyboardFocus ];
+		on: PharoShortcuts current cancelShortcut do: [ 
+			self delete.
+			aMorph textArea editor cancel.
+			aMorph takeKeyboardFocus ];
 		on: Character backspace do: [ 
 			self delete.
 			aMorph textArea removeHighlightSegment.
