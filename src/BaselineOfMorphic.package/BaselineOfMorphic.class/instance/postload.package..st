@@ -7,15 +7,6 @@ postload: loader package: packageSpec
 
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
-	ThemeIcons compile: 'iconSelectors
-	  ^ (self class allSelectors copyWithoutAll: #(systemIcon)) 
-	    select: [ :each | ''*Icon'' match: each asString ].'.
-
-	ThemeIcons class compile: 'baseUrl
-		^ ''https://github.com/pharo-project/pharo-icon-packs/archive'' asUrl'.
-		
-	ThemeIcons class compile: 'defaultUrl
-		^ self class baseUrl / self name, ''.zip'''.
 		
 	UITheme class compile: 'current: aUITheme
 		Current := aUITheme.
