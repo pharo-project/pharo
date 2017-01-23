@@ -1,16 +1,24 @@
 actions
 postload: loader package: packageSpec
 
-	| initializersEnabled |
+	| initializersEnabled repo gofer |
 
 	Author fullName: self class name.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 
 	MCMethodDefinition initializersEnabled: false.
-	Gofer it smalltalkhubUser: 'Pharo' project: 'Pharo60'; package: 'Compiler';  load.
-	Gofer it smalltalkhubUser: 'Pharo' project: 'Pharo60'; package: 'RPackage-Tests';  load.	
-	MCMethodDefinition initializersEnabled: true.
+	
+	repo := MCFileTreeRepository new
+	directory: './pharo-core/src' asFileReference;
+	yourself.
+		
+	gofer := Gofer it repository: repo.
+	gofer package: #'Compiler'.
+	gofer package: #'RPackage-Tests'.
+	gofer load.
+	
+	MCMethodDefinition initializersEnabled: initializersEnabled.
 
 	(Smalltalk at: #ParseNode) initialize.
 	(Smalltalk at: #Scanner) initialize.
@@ -23,7 +31,8 @@ postload: loader package: packageSpec
 	Smalltalk cleanOutUndeclared. 
 	Smalltalk fixObsoleteReferences.
 	
-	EpLostChangesDetector class compile: 'startUp: isImageStarting'.
+	self class environment at: #EpLostChangesDetector ifPresent: [:aClass |
+	  aClass class compile: 'startUp: isImageStarting'. ].
 	
 	Author reset.
 

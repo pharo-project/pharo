@@ -1,16 +1,20 @@
 actions
 additionalInitialization
 
-	 Smalltalk tools register: GTGenericStackDebugger as: #debugger.
+	self class environment at: #GTGenericStackDebugger ifPresent: [
+	  Smalltalk tools register: GTGenericStackDebugger as: #debugger.
+	  Smalltalk tools registeredDebuggersWithRanks.
+	  Smalltalk tools debuggers add: ((self class environment at: #GTGenericStackDebugger)->3).
+	  Smalltalk tools debuggers add: ((self class environment at: #GTSUnitDebugger)->70).
+	  Smalltalk tools debuggers add: ((self class environment at: #GTBytecodeDebugger)->5).].
 
-	Smalltalk tools registeredDebuggersWithRanks.
-	Smalltalk tools debuggers add: (GTGenericStackDebugger->3).
-	Smalltalk tools debuggers add: (GTSUnitDebugger->70).
-	Smalltalk tools debuggers add: (GTBytecodeDebugger->5).
+	  
+	self class environment at: #GTPlayground ifPresent: [:playground | 
+	  Smalltalk tools register: playground as: #workspace.].
+	self class environment at: #GTInspector ifPresent: [:inspector | 
+	  Smalltalk tools register: inspector as: #inspector.].
 
-	Smalltalk tools register: GTPlayground as: #workspace.
-	Smalltalk tools register: GTInspector as: #inspector.
-	Smalltalk tools register: ExternalChangesBrowser as: #changeList.
+	  Smalltalk tools register: ExternalChangesBrowser as: #changeList.
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
@@ -31,7 +35,8 @@ additionalInitialization
 	GrowlMorph position: #bottomLeft.
 	ShortcutReminder enabled: true.
 
-	QASettings nautilusPlugin: true.
+	self class environment at: #QASettings ifPresent: [:qaSettings |
+	  qaSettings nautilusPlugin: true].
 
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
