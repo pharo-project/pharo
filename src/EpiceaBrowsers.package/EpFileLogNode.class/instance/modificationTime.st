@@ -1,0 +1,4 @@
+accessing
+modificationTime
+
+	^ directoryEntry modificationTime

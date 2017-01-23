@@ -1,4 +1,0 @@
-accessing widgets
-directoryTextModel
-
-	^ directoryTextModel

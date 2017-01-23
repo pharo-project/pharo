@@ -1,0 +1,14 @@
+{
+	"category" : "Ombu-Strategies",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/21/2017 16:06",
+	"instvars" : [
+		 ],
+	"name" : "OmSuffixAfterDotStrategy",
+	"pools" : [
+		 ],
+	"super" : "OmSessionStoreNamingStrategy",
+	"type" : "normal" }

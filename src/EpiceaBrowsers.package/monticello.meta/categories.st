@@ -5,5 +5,4 @@ SystemOrganization addCategory: 'EpiceaBrowsers-Integration'!
 SystemOrganization addCategory: 'EpiceaBrowsers-Log'!
 SystemOrganization addCategory: 'EpiceaBrowsers-Log-Items'!
 SystemOrganization addCategory: 'EpiceaBrowsers-Log-Visitors'!
-SystemOrganization addCategory: 'EpiceaBrowsers-LogSet'!
-SystemOrganization addCategory: 'EpiceaBrowsers-Monitor'!
+SystemOrganization addCategory: 'EpiceaBrowsers-Unified'!

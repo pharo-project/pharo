@@ -1,6 +1,7 @@
 {
 	"category" : "Ombu-Stores",
 	"classinstvars" : [
+		"storeNameStrategy",
 		"defaultBaseLocator" ],
 	"classvars" : [
 		 ],
@@ -10,7 +11,8 @@
 		"currentImagePathString",
 		"currentStore",
 		"alternativeStore",
-		"baseLocator" ],
+		"baseLocator",
+		"announcer" ],
 	"name" : "OmSessionStore",
 	"pools" : [
 		 ],

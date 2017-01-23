@@ -1,0 +1,3 @@
+accessing
+referencedGlobalNameIfEmptyLog: anObject
+	referencedGlobalNameIfEmptyLog := anObject

@@ -1,4 +1,4 @@
 accessing
 modificationTime
 
-	^ directoryEntry modificationTime
+	^ self subclassResponsibility

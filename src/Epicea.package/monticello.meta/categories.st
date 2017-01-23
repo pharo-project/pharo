@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #Epicea!
+SystemOrganization addCategory: 'Epicea-Announcements'!
 SystemOrganization addCategory: 'Epicea-Filters'!
 SystemOrganization addCategory: 'Epicea-Log'!
 SystemOrganization addCategory: 'Epicea-Model'!

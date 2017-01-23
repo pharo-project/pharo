@@ -1,3 +1,0 @@
-accessing
-logSetButtonModel
-	^ logSetButtonModel

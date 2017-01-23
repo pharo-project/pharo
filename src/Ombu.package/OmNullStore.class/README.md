@@ -1,0 +1,1 @@
+I represent the null OmStore (Null Object design pattern).

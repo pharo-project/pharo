@@ -1,4 +1,0 @@
-accessing
-shortTitle
-
-	^ #'All Changes'

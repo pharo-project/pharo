@@ -1,0 +1,14 @@
+{
+	"category" : "Epicea-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/20/2017 02:59",
+	"instvars" : [
+		 ],
+	"name" : "EpMonitorStateUpdated",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

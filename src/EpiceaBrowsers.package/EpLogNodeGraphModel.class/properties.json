@@ -1,0 +1,22 @@
+{
+	"category" : "EpiceaBrowsers-Unified",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/14/2016 02:38",
+	"instvars" : [
+		"refreshButtonModel",
+		"directory",
+		"hiedraRulerController",
+		"selectDirectoryButtonModel",
+		"logNodesTreeModel",
+		"directoryTextModel",
+		"enableMonitorButtonModel",
+		"createLogButtonModel",
+		"monitor" ],
+	"name" : "EpLogNodeGraphModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

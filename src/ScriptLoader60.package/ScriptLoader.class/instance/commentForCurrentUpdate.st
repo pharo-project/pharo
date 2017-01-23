@@ -1,4 +1,4 @@
 public
 commentForCurrentUpdate
- ^ '19556 Glamour version 4.31
-	https://pharo.fogbugz.com/f/cases/19556'
+ ^ '19534 Unify Epicea UIs
+	https://pharo.fogbugz.com/f/cases/19534'

@@ -1,0 +1,4 @@
+refreshing
+cleanEntryContentModel
+
+	self refreshEntryContentModelWith: #()

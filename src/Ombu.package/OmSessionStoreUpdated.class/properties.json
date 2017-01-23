@@ -1,0 +1,14 @@
+{
+	"category" : "Ombu-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/19/2017 01:12",
+	"instvars" : [
+		 ],
+	"name" : "OmSessionStoreUpdated",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

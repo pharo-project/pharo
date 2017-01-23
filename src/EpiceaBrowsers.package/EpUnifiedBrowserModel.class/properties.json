@@ -1,0 +1,16 @@
+{
+	"category" : "EpiceaBrowsers-Unified",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 8/13/2016 17:13",
+	"instvars" : [
+		"logModel",
+		"logNodesModel",
+		"monitorLog" ],
+	"name" : "EpUnifiedBrowserModel",
+	"pools" : [
+		 ],
+	"super" : "ComposableModel",
+	"type" : "normal" }

@@ -11,7 +11,8 @@
 		"testAnnouncer",
 		"entryReferenceByEvent",
 		"jobAnnouncer",
-		"debug" ],
+		"debug",
+		"announcer" ],
 	"name" : "EpMonitor",
 	"pools" : [
 		 ],

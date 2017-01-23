@@ -1,0 +1,14 @@
+{
+	"category" : "OmbuTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "OmRandomSuffixStrategyTest",
+	"pools" : [
+		 ],
+	"super" : "OmSessionStoreNameStrategyTest",
+	"type" : "normal" }

@@ -6,4 +6,5 @@ resetWithStoreNamed: newName
 	currentStore := 
 		OmFileStore 
 			newNamed: newName 
-			inDirectory: self directory ensureCreateDirectory
+			inDirectory: self directory ensureCreateDirectory.
+	self announcer announce: OmSessionStoreUpdated new.
