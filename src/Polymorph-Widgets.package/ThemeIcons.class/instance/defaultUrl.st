@@ -1,3 +1,3 @@
 private
 defaultUrl
-	^ self class baseUrl / self name
+	^ self class baseUrl / (self name, '.zip')

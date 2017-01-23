@@ -7,7 +7,7 @@ postload: loader package: packageSpec
 
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
-		
+
 	UITheme class compile: 'current: aUITheme
 		Current := aUITheme.
 		SystemProgressMorph reset. "reset to use new fill styles"
