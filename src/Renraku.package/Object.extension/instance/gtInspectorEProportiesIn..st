@@ -3,21 +3,26 @@ gtInspectorEProportiesIn: composite
 	"This provides a list of all external properties"
 
 	<gtInspectorPresentationOrder: 20>
-	| eProperties |
+	| eProperties ePropLazy |
+	
+	ReSettings inspectorPluggin ifFalse: [ ^ self ].
+	
+	ePropLazy := [
+		eProperties ifNil: [ eProperties := self externalProperties ] ].
+	
 	composite list
-		when:
-				[ ReSettings inspectorPluggin and: [ (eProperties := self externalProperties) notEmpty ] ];
-		title: [ eProperties size asString , (' property' asPluralBasedOn: eProperties) ];
+		when: [ ePropLazy value notEmpty ];
+		title: [ ePropLazy value size asString, (' property' asPluralBasedOn: ePropLazy value) ];
 		titleIcon: [ CircleMorph new
 				extent: 16 @ 16;
 				borderWidth: 0;
 				color: Color red darker darker;
 				addMorphCentered:
-					(eProperties size asStringMorph
+					(ePropLazy value size asStringMorph
 						color: Color white;
 						emphasis: 1;
 						yourself);
 				iconOrThumbnail ];
-		display: [ self externalProperties ];
+		display: [ ePropLazy value ];
 		icon: #icon;
 		format: #title

@@ -11,7 +11,8 @@ critiques
 	rules
 		reject: [ :rule |
 			manifest isNotNil and:
-			[ builder bansRule: rule for: self ] ]
+			[ (builder bansRule: rule for: self) or:
+			[  builder bansRule: rule for: self package ] ] ]
 		thenDo: [ :rule |
 			[ rule resetResult.
 			  rule

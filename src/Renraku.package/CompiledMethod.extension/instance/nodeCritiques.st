@@ -12,7 +12,8 @@ nodeCritiques
 		reject: [ :rule |
 			manifest isNotNil and:
 			[ (builder bansRule: rule for: self) or:
-			[  builder bansRule: rule for: self methodClass ] ] ].
+			[ (builder bansRule: rule for: self methodClass) or:
+			[  builder bansRule: rule for: self package ] ] ] ].
 		
 	self ast 	nodesDo: [ :node |
 			rules do: [ :rule |
