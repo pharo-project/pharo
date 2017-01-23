@@ -15,7 +15,7 @@ morphWithCustomInteraction
 								morph: [ :morphPresentation | 
 									| button |
 									(button := SimpleButtonMorph new)
-										when: #mouseUp send: #value to: [ morphPresentation selection: 'You just clicked' ];
+										on: #mouseUp send: #value to: [ morphPresentation selection: 'You just clicked' ];
 										label: 'I am a button. Please click me';
 										yourself ] ].
 			tabulator transmit

@@ -1,0 +1,4 @@
+tests
+testInitializeBlockSetsTextSelectionForMethodPresentation
+	
+	self checkInitializeBlockSetsTextSelectionForPresentation: #pharoMethod
