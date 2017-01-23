@@ -87,10 +87,17 @@ cd bootstrap-cache
 
 #Prepare
 echo "Prepare Bootstrap files"
-unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
 cp bootstrap.image core.image
 ../bootstrap/scripts/download_vm.sh
 
+echo "Prepare fonts"
+unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
+
+echo "Prepare icons"
+mkdir icon-packs
+cd icon-packs
+wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
+cd ..
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
