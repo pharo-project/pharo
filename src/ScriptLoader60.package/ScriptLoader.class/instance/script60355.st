@@ -1,5 +1,5 @@
 pharo - scripts
-script60354
+script60355
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -95,7 +95,7 @@ FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
 GT-BytecodeDebugger-AndreiChis.33.mcz
-GT-Debugger-TheIntegrator.367.mcz
+GT-Debugger-TheIntegrator.368.mcz
 GT-EventRecorder-AndreiChis.74.mcz
 GT-EventRecorder-Tests-TheIntegrator.39.mcz
 GT-Inspector-TheIntegrator.444.mcz
@@ -305,7 +305,7 @@ Rubric-Tests-TheIntegrator.10.mcz
 STON-Core-TheIntegrator.75.mcz
 STON-Tests-TheIntegrator.66.mcz
 STON-Text support-TheIntegrator.2.mcz
-SUnit-Core-TheIntegrator.215.mcz
+SUnit-Core-TheIntegrator.216.mcz
 SUnit-Help-MarcusDenker.9.mcz
 SUnit-Rules-TheIntegrator.3.mcz
 SUnit-Tests-TheIntegrator.62.mcz
@@ -398,7 +398,7 @@ Tool-TxWorkspace-NicolaiHess.7.mcz
 Tool-Workspace-TheIntegrator.48.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.978.mcz
+Traits-TheIntegrator.979.mcz
 Transcript-TheIntegrator.56.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz

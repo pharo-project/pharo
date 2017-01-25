@@ -3,7 +3,7 @@ open
 	| window |
 	window := super open.
 	
-	(Smalltalk hasClassNamed: #GTDebuggerEventCollector) ifTrue: [ 
-		#GTDebuggerEventCollector asClass new collectDataFrom: self ].
+	self class environment at: #GTDebuggerEventCollector ifPresent: [ :eventCollector | 
+		eventCollector new collectDataFrom: self ].
 		
 	^ window.
