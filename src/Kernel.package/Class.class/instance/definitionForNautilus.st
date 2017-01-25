@@ -1,4 +1,4 @@
-*Nautilus
+accessing
 definitionForNautilus
 	"Answer a String that defines the receiver."
 

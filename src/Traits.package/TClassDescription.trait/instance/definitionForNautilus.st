@@ -1,4 +1,4 @@
-*Nautilus
+accessing
 definitionForNautilus
 
 	^ self definition

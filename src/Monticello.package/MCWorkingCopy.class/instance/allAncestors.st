@@ -1,4 +1,4 @@
-*GT-SpotterExtensions-Core-private
+accessing
 allAncestors
 	^ self versionInfo 
 		ifNotNil: [ :versionInfo | versionInfo allAncestors ]

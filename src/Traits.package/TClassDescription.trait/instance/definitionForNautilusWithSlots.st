@@ -1,4 +1,4 @@
-*Nautilus
+accessing
 definitionForNautilusWithSlots
 
 	^ self definition

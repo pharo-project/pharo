@@ -1,4 +1,4 @@
-*Nautilus
+accessing
 definitionForNautilusWithSlots
 	"the class definition with a way to specify slots. Shown when the class defines special Slot
 	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"

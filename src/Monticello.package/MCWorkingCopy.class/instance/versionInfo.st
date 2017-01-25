@@ -1,4 +1,4 @@
-*GT-SpotterExtensions-Core-private
+accessing
 versionInfo
 	^ self ancestors 
 		ifNotEmpty: [ :list | list first ] 

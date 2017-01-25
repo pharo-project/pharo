@@ -1,4 +1,4 @@
-*GT-Debugger
+accessing
 outerMostContext
 	^ self outerContext 
 		ifNil: [ self ]

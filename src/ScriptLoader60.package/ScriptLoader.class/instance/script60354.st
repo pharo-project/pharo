@@ -1,5 +1,5 @@
 pharo - scripts
-script60353
+script60354
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -95,7 +95,7 @@ FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
 GT-BytecodeDebugger-AndreiChis.33.mcz
-GT-Debugger-TheIntegrator.364.mcz
+GT-Debugger-TheIntegrator.367.mcz
 GT-EventRecorder-AndreiChis.74.mcz
 GT-EventRecorder-Tests-TheIntegrator.39.mcz
 GT-Inspector-TheIntegrator.444.mcz
@@ -104,7 +104,7 @@ GT-Playground-TheIntegrator.137.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
 GT-Spotter-PavelKrivanek.407.mcz
 GT-Spotter-EventRecorder-JurajKubelka.113.mcz
-GT-SpotterExtensions-Core-AndreiChis.219.mcz
+GT-SpotterExtensions-Core-TheIntegrator.221.mcz
 GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-StefanReichhart.59.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
@@ -152,7 +152,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2476.mcz
+Kernel-TheIntegrator.2479.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.138.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -188,7 +188,7 @@ Metacello-TestsPlatform.squeakCommon-EstebanLorenzano.23.mcz
 Metacello-TestsReference-EstebanLorenzano.22.mcz
 Metacello-ToolBox-TheIntegrator.152.mcz
 Metacello-Tutorial-EstebanLorenzano.28.mcz
-Monticello-TheIntegrator.1167.mcz
+Monticello-TheIntegrator.1169.mcz
 Monticello-OldDataStreamCompatibility-TheIntegrator.10.mcz
 Monticello-Tests-TheIntegrator.40.mcz
 MonticelloConfigurations-TheIntegrator.74.mcz
@@ -224,11 +224,11 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.255.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1334.mcz
+Nautilus-TheIntegrator.1337.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
-NautilusCommon-TheIntegrator.323.mcz
+NautilusCommon-TheIntegrator.325.mcz
 NautilusGroupAutoBuilder-TheIntegrator.20.mcz
 NautilusRefactoring-TheIntegrator.310.mcz
 Network-Kernel-TheIntegrator.135.mcz
@@ -305,7 +305,7 @@ Rubric-Tests-TheIntegrator.10.mcz
 STON-Core-TheIntegrator.75.mcz
 STON-Tests-TheIntegrator.66.mcz
 STON-Text support-TheIntegrator.2.mcz
-SUnit-Core-TheIntegrator.212.mcz
+SUnit-Core-TheIntegrator.215.mcz
 SUnit-Help-MarcusDenker.9.mcz
 SUnit-Rules-TheIntegrator.3.mcz
 SUnit-Tests-TheIntegrator.62.mcz
@@ -398,7 +398,7 @@ Tool-TxWorkspace-NicolaiHess.7.mcz
 Tool-Workspace-TheIntegrator.48.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.974.mcz
+Traits-TheIntegrator.978.mcz
 Transcript-TheIntegrator.56.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz

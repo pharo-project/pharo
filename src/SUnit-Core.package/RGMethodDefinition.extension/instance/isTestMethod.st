@@ -1,11 +1,13 @@
-utilities
-isTestMethod: aMethodOrMethodDefinition
+*SUnit-Core
+isTestMethod
+	"Is the receiver a TestCase test method?"
+
 	| selectorString |
-	aMethodOrMethodDefinition methodClass isTestCase
+	self methodClass isTestCase
 		ifFalse: [ ^ false ].
-	aMethodOrMethodDefinition numArgs isZero
+	self numArgs isZero
 		ifFalse: [ ^ false ].
-	selectorString := aMethodOrMethodDefinition selector asString.
+	selectorString := self selector asString.
 
 	"for some reason unary selectors starting with 'should' are supposed
 	to be treated as test methods"
