@@ -1,0 +1,4 @@
+*Epicea
+isEpiceaCache
+
+	^ description isNil

@@ -13,10 +13,6 @@ asMorph
 	"add a small gap"
 	morphs add: EpMorphFactory default smallGap.
 
-	"add author"
-	self authorString ifNotEmpty: [ :authorString |
-		morphs add: (EpMorphFactory default secondaryStringFor: authorString) ].
-
 	"add time"
 	self timeString ifNotEmpty: [ :timeString |
 		morphs add: (EpMorphFactory default secondaryStringFor: timeString) ].
