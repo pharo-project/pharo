@@ -33,7 +33,9 @@ postload: loader package: packageSpec
 	
 	self class environment at: #EpLostChangesDetector ifPresent: [:aClass |
 	  aClass class compile: 'startUp: isImageStarting'. ].
-	
+
+	EpMonitor current enable.
+		
 	Author reset.
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.

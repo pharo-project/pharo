@@ -1,5 +1,5 @@
 pharo - scripts
-script60356
+script60357
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -19,7 +19,7 @@ Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.6.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
 BaselineOfFileTree-ThierryGoubier.15.mcz
-BaselineOfIDE-TheIntegrator.11.mcz
+BaselineOfIDE-TheIntegrator.13.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.19.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -62,10 +62,10 @@ Deprecated60-TheIntegrator.14.mcz
 EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
-Epicea-MartinDias.819.mcz
-EpiceaBrowsers-MartinDias.103.mcz
-EpiceaBrowsersTests-MartinDias.8.mcz
-EpiceaTests-MartinDias.10.mcz
+Epicea-MartinDias.821.mcz
+EpiceaBrowsers-MartinDias.104.mcz
+EpiceaBrowsersTests-TheIntegrator.9.mcz
+EpiceaTests-TheIntegrator.11.mcz
 FFI-Kernel-EstebanLorenzano.42.mcz
 FFI-Pools-eem.3.mcz
 FileSystem-Core-TheIntegrator.212.mcz
@@ -246,7 +246,7 @@ OSWindow-SDL2-RonieSalgado.106.mcz
 OSWindow-SDL2-Examples-TheIntegrator.16.mcz
 OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
-Ombu-MartinDias.224.mcz
+Ombu-MartinDias.225.mcz
 OmbuTests-MartinDias.14.mcz
 OpalCompiler-Core-TheIntegrator.882.mcz
 OpalCompiler-Tests-TheIntegrator.378.mcz

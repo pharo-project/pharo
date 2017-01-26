@@ -7,7 +7,7 @@
 	"commentStamp" : "MartinDias 1/20/2017 13:27",
 	"instvars" : [
 		"theLog",
-		"referencedGlobalNameIfEmptyLog" ],
+		"headReference" ],
 	"name" : "EpMonitorLogNode",
 	"pools" : [
 		 ],
