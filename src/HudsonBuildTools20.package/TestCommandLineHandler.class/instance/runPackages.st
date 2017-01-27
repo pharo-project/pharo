@@ -15,4 +15,4 @@ runPackages
 		and: [ results anySatisfy: #hasErrors ])
 		ifTrue: [^ self exitFailure: 'Tests do not pass!' ].
 	
-	self exitSuccess
+	Smalltalk snapshot: false andQuit: true.

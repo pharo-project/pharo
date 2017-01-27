@@ -1,5 +1,5 @@
 pharo - scripts
-script60358
+script60359
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -146,7 +146,7 @@ HelpSystem-Tests-TheIntegrator.32.mcz
 Hiedra-MartinDias.145.mcz
 HiedraTests-MartinDias.2.mcz
 HowToContributeHelp-TheIntegrator.4.mcz
-HudsonBuildTools20-TheIntegrator.98.mcz
+HudsonBuildTools20-TheIntegrator.100.mcz
 ImportingResource-Help-TheIntegrator.6.mcz
 IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
