@@ -1,4 +1,4 @@
 private-handle registry
-register: anFT2Handle
-
-	self registry add: anFT2Handle.
+register: aHandle
+	(self registry includes: aHandle) ifTrue: [ ^ self ]. 
+	self registry add: aHandle

@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19601 [Epicea] Epicea monitor is off by default
-	https://pharo.fogbugz.com/f/cases/19601
+ ^ '19315 Freetype2 primitive failed [error 2][unknown file format]
+	https://pharo.fogbugz.com/f/cases/19315
 
-19600 [Epicea] OmNullReference shuld provide #globalName
-	https://pharo.fogbugz.com/f/cases/19600'
+19610 NEC has unacceptable performance when selectors == false
+	https://pharo.fogbugz.com/f/cases/19610
+
+18232 Breakpoints cannot be toggled in Nautilus method pane
+	https://pharo.fogbugz.com/f/cases/18232'

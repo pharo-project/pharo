@@ -1,5 +1,5 @@
 pharo - scripts
-script60357
+script60358
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -63,9 +63,9 @@ EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
 Epicea-MartinDias.821.mcz
-EpiceaBrowsers-MartinDias.104.mcz
-EpiceaBrowsersTests-TheIntegrator.9.mcz
-EpiceaTests-TheIntegrator.11.mcz
+EpiceaBrowsers-MartinDias.105.mcz
+EpiceaBrowsersTests-MartinDias.8.mcz
+EpiceaTests-MartinDias.10.mcz
 FFI-Kernel-EstebanLorenzano.42.mcz
 FFI-Pools-eem.3.mcz
 FileSystem-Core-TheIntegrator.212.mcz
@@ -82,7 +82,7 @@ Flashback-Decompiler-Tests-TheIntegrator.97.mcz
 FontChooser-TheIntegrator.24.mcz
 FontInfrastructure-TheIntegrator.18.mcz
 FontInfrastructure-Tests-TheIntegrator.2.mcz
-FreeType-TheIntegrator.754.mcz
+FreeType-TheIntegrator.756.mcz
 FreeType-Tests-TheIntegrator.2.mcz
 Fuel-MartinDias.826.mcz
 FuelCommandLineHandler-TheIntegrator.25.mcz
@@ -222,9 +222,9 @@ Multilingual-OtherLanguages-TheIntegrator.22.mcz
 Multilingual-Tests-TheIntegrator.46.mcz
 Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
-NECompletion-TheIntegrator.255.mcz
+NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1337.mcz
+Nautilus-TheIntegrator.1339.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
