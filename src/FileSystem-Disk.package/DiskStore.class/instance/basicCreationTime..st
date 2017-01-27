@@ -1,4 +1,7 @@
 private
-basicCreationTime: anEntry
-	" the entry contains the seconds since the squeak epoch in local time"
-	^  (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
+basicCreationTime: anEntry 
+	self 
+		deprecated: 'Use basicCreationTimeOf: instead'
+		on: 	'3 May 2016' 
+		in: 'Pharo-5.0-50746-'.
+	^ self basicCreationTimeOf: anEntry 

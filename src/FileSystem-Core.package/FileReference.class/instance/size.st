@@ -1,3 +1,3 @@
 accessing
 size
-	^ filesystem size: path
+	^ filesystem sizeOf: path

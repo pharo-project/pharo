@@ -1,5 +1,5 @@
 pharo - scripts
-script60361
+script60362
 
 	^ 'AST-Core-TheIntegrator.489.mcz
 AST-Tests-Core-TheIntegrator.132.mcz
@@ -68,9 +68,9 @@ EpiceaBrowsersTests-MartinDias.8.mcz
 EpiceaTests-MartinDias.10.mcz
 FFI-Kernel-EstebanLorenzano.42.mcz
 FFI-Pools-eem.3.mcz
-FileSystem-Core-TheIntegrator.215.mcz
-FileSystem-Disk-TheIntegrator.104.mcz
-FileSystem-Memory-TheIntegrator.59.mcz
+FileSystem-Core-TheIntegrator.216.mcz
+FileSystem-Disk-TheIntegrator.106.mcz
+FileSystem-Memory-TheIntegrator.61.mcz
 FileSystem-Tests-Core-TheIntegrator.101.mcz
 FileSystem-Tests-Disk-StephaneDucasse.25.mcz
 FileSystem-Tests-Memory-TheIntegrator.8.mcz
@@ -109,7 +109,7 @@ GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-StefanReichhart.59.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
 GT-Tests-Spotter-TheIntegrator.27.mcz
-GeneralRules-TheIntegrator.9.mcz
+GeneralRules-TheIntegrator.11.mcz
 Glamour-Announcements-AndreiChis.8.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-JurajKubelka.327.mcz
@@ -136,7 +136,7 @@ Graphics-Canvas-TheIntegrator.14.mcz
 Graphics-Display Objects-TheIntegrator.183.mcz
 Graphics-Files-TheIntegrator.78.mcz
 Graphics-Fonts-TheIntegrator.109.mcz
-Graphics-Primitives-TheIntegrator.197.mcz
+Graphics-Primitives-TheIntegrator.199.mcz
 Graphics-Shapes-TheIntegrator.4.mcz
 Graphics-Tests-TheIntegrator.85.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
@@ -152,9 +152,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2479.mcz
+Kernel-TheIntegrator.2481.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.138.mcz
+Kernel-Tests-TheIntegrator.140.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.64.mcz
@@ -270,7 +270,7 @@ Random-Tests-TheIntegrator.4.mcz
 RecentSubmissions-TheIntegrator.246.mcz
 Refactoring-Changes-TheIntegrator.70.mcz
 Refactoring-Core-TheIntegrator.335.mcz
-Refactoring-Critics-TheIntegrator.296.mcz
+Refactoring-Critics-TheIntegrator.298.mcz
 Refactoring-Environment-TheIntegrator.88.mcz
 Refactoring-Help-TheIntegrator.7.mcz
 Refactoring-Tests-Changes-TheIntegrator.40.mcz
@@ -424,7 +424,7 @@ Versionner-Tests-Core-DependenciesModel-ChristopheDemarey.46.mcz
 Versionner-Tests-Core-Model-ChristopheDemarey.33.mcz
 Versionner-Tests-Resources-MarcusDenker.18.mcz
 WorldMenuHelp-TheIntegrator.2.mcz
-WriteBarrierTests-TheIntegrator.9.mcz
+WriteBarrierTests-TheIntegrator.12.mcz
 Zinc-Character-Encoding-Core-TheIntegrator.48.mcz
 Zinc-Character-Encoding-Tests-SvenVanCaekenberghe.27.mcz
 Zinc-FileSystem-SvenVanCaekenberghe.12.mcz

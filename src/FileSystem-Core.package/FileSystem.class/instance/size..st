@@ -1,5 +1,7 @@
 public
-size: aResolvable
-	"Resolve the argument and return the size for this file or directory "
-
-	^ store size: (self resolve: aResolvable)
+size: aResolvable 
+	self 
+		deprecated: 'Use sizeOf: instead'
+		on: 	'3 May 2016' 
+		in: 'Pharo-5.0-50746-'.
+	^ self sizeOf: aResolvable 

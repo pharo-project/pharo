@@ -1,0 +1,14 @@
+{
+	"category" : "GeneralRules",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "YuriyTymchuk 1/27/2017 11:19",
+	"instvars" : [
+		 ],
+	"name" : "GRUndeclaredVariableRule",
+	"pools" : [
+		 ],
+	"super" : "ReNodeBasedRule",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBera 1/27/2017 13:17",
+	"instvars" : [
+		"instVar1" ],
+	"name" : "SimulationMock",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

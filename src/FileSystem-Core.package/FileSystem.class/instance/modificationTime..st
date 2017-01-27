@@ -1,6 +1,5 @@
 public
 modificationTime: aResolvable
-	"Resolve the argument, and answer true if the result refers
-	to a directory, false if it refers to a file or doesn't exist."
+	"Returns the date of the last modification of aResolvable"
 
-	^ store modificationTime: (self resolve: aResolvable)
+	^ store modificationTimeOf: (self resolve: aResolvable)

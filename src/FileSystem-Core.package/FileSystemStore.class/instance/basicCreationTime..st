@@ -1,5 +1,7 @@
 abstract
-basicCreationTime: aNode
-	"Used to decide whether the low-level representation (node / entry) from the store is a readable
-	file or a directory whose contents can be listed."
-	self subclassResponsibility 
+basicCreationTime: aNode 
+	self 
+		deprecated: 'Use basicCreationTimeOf: instead'
+		on: 	'3 May 2016' 
+		in: 'Pharo-5.0-50746-'.
+	^ self basicCreationTimeOf: aNode 
