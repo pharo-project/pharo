@@ -1,4 +1,4 @@
 public
 commentForCurrentUpdate
- ^ '19588 TestCommandLineHandler should not call exitSuccess
-	https://pharo.fogbugz.com/f/cases/19588'
+ ^ '19568 Socket local host/port has incorrect guard
+	https://pharo.fogbugz.com/f/cases/19568'
