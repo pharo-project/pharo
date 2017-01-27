@@ -7,7 +7,7 @@
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
-	"name" : "MethodConstTests",
+	"name" : "MethodConstantTests",
 	"pools" : [
 		 ],
 	"super" : "TestCase",

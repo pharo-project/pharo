@@ -1,4 +1,4 @@
 tests
 constFromBlock: aBlock
 
-	^aBlock asMethodConst 
+	^aBlock asMethodConstant 
