@@ -5,19 +5,19 @@ baseline: spec
 	spec for: #common do: [
 		spec blessing: #baseline.
 		spec
-			project: 'Cargo'
+"			project: 'Cargo'
 				with: [ spec
 					className: #ConfigurationOfCargo;
 					versionString: #bleedingEdge;
 					loads: #('client');
-					repository: 'http://smalltalkhub.com/mc/demarey/CargoPackageManager/main/' ];
+					repository: 'http://smalltalkhub.com/mc/demarey/CargoPackageManager/main/' ];"
 			project: 'Beacon'
 				with: [ spec
 					className: #ConfigurationOfBeacon;
 					versionString: #bleedingEdge;
 					repository: 'http://smalltalkhub.com/mc/girba/Beacon/main/' ];
-			baseline: 'OSSubprocess'
-				with: [ spec repository: 'github://marianopeck/OSSubprocess:master/repository' ];
+"			baseline: 'OSSubprocess'
+				with: [ spec repository: 'github://marianopeck/OSSubprocess:master/repository' ];"
 			project: 'Espell'
 				with: [ spec
 					className: #ConfigurationOfEspell;
@@ -26,12 +26,8 @@ baseline: spec
 			project: 'Ficus'
 				with: [ spec
 					className: #ConfigurationOfFicus;
-					versionString: '0.3.5';
+					versionString: '0.3.6';
 					loads: #('mini');
-					repository: 'http://www.smalltalkhub.com/mc/MartinDias/Ficus/main' ].
-
-			spec
-				baseline: 'PharoBootstrap' with: [
-					spec repository: 'filetree://src' ];
-				package: 'Pharo30Bootstrap' with: [ spec requires: #('Espell' 'Ficus' 'Cargo' 'Beacon') ].
-			spec group: 'dev' with: #('Pharo30Bootstrap' 'Espell' 'Ficus') ]
+					repository: 'http://www.smalltalkhub.com/mc/MartinDias/Ficus/main' ];
+			package: 'Pharo30Bootstrap' with: [ spec requires: #('Espell' 'Ficus'" 'Cargo'" 'Beacon') ].
+		spec group: 'dev' with: #('Pharo30Bootstrap' 'Espell' 'Ficus') ]
