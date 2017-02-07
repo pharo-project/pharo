@@ -13,13 +13,13 @@ addons:
     - libssl1.0.0:i386
     - libfreetype6:i386
 install:
-- echo "travis_fold:start:Installing Monkey"
+- echo "travis_fold:start:Installing-Monkey"
 - git clone https://github.com/pavel-krivanek/pharo-monkey.git
 - cd pharo-monkey
 - git checkout "modularised-scripts"
 - bash ./scripts/build.sh
 - cd ..
-- echo "travis_fold:start:Installing Monkey"
+- echo "travis_fold:start:Installing-Monkey"
 
 script:
 - ./pharo-monkey/target/monkey --travis build
