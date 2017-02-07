@@ -4,7 +4,6 @@ env:
   - PHARO_VERSION=60
   matrix:
   - BOOTSTRAP_ARCH=32
-  - BOOTSTRAP_ARCH=64
 addons:
   apt:
     packages:
@@ -14,15 +13,21 @@ addons:
     - libssl1.0.0:i386
     - libfreetype6:i386
 install:
-- wget -O - get.pharo.org/${PHARO_VERSION}+vm | bash
-- "./pharo Pharo.image ./bootstrap/scripts/prepare_image.st --save --quit"
+- git clone https://github.com/pavel-krivanek/pharo-monkey.git
+- cd pharo-monkey
+- git checkout "modularised-scripts"
+- bash ./scripts/build.sh
+- cd ..
+
 script:
-- "./pharo Pharo.image ./bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --quit"
-- bash ./bootstrap/scripts/build.sh
+- ./pharo-monkey/target/monkey --travis build
+
 before_deploy:
 - sh ./scripts/deploy_bintray_prepare.sh
+
 after_deploy:
 - sh ./scripts/deploy_bintray_check.sh
+
 deploy:
   provider: bintray
   file: ".bintray.json"
