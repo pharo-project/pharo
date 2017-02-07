@@ -19,7 +19,7 @@ install:
 - git checkout "modularised-scripts"
 - bash ./scripts/build.sh
 - cd ..
-- echo "travis_fold:start:Finished Installing Monkey"
+- echo "travis_fold:start:Installing Monkey"
 
 script:
 - ./pharo-monkey/target/monkey --travis build
