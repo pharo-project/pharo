@@ -1,4 +1,4 @@
-actions
+*GT-EventRecorder
 obfuscateIfNecessary: anObject
 	^ Privacy sendEntityNames
 			ifTrue: [ anObject ]

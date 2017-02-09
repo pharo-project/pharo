@@ -9,5 +9,5 @@ buildInstanceButton
 		menu: nil)
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
-		helpText: 'Show the class side';
+		helpText: (self instanceButtonHelpTextFor: self instanceButtonState);
 		yourself

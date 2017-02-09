@@ -1,5 +1,5 @@
 pharo - scripts
-script60383
+script60384
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.6.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.15.mcz
+BaselineOfIDE-TheIntegrator.17.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.19.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -95,8 +95,8 @@ FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
 GT-BytecodeDebugger-AndreiChis.33.mcz
 GT-Debugger-TheIntegrator.368.mcz
-GT-EventRecorder-AndreiChis.74.mcz
-GT-EventRecorder-Tests-TheIntegrator.39.mcz
+GT-EventRecorder-TheIntegrator.77.mcz
+GT-EventRecorder-Tests-TheIntegrator.40.mcz
 GT-Inspector-TheIntegrator.444.mcz
 GT-InspectorExtensions-Core-AndreiChis.245.mcz
 GT-Playground-AndreiChis.140.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2486.mcz
+Kernel-TheIntegrator.2487.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.145.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1345.mcz
+Nautilus-TheIntegrator.1347.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
@@ -350,6 +350,7 @@ System-Finalization-TheIntegrator.44.mcz
 System-Hashing-TheIntegrator.52.mcz
 System-History-EstebanLorenzano.7.mcz
 System-History-Tests-EstebanLorenzano.3.mcz
+System-Identification-TheIntegrator.3.mcz
 System-Installers-TheIntegrator.44.mcz
 System-Localization-TheIntegrator.108.mcz
 System-Localization-Tests-TheIntegrator.8.mcz

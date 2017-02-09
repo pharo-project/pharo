@@ -1,5 +1,5 @@
 {
-	"category" : "GT-EventRecorder-Identifier",
+	"category" : "System-Identification",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -7,7 +7,7 @@
 	"commentStamp" : "JurajKubelka 10/30/2015 16:55",
 	"instvars" : [
 		 ],
-	"name" : "GlobalIdentifierFuelPersistence",
+	"name" : "GlobalIdentifierStonPersistence",
 	"pools" : [
 		 ],
 	"super" : "GlobalIdentifierPersistence",

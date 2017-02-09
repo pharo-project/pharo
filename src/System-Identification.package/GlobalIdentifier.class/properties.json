@@ -1,5 +1,5 @@
 {
-	"category" : "GT-EventRecorder-Identifier",
+	"category" : "System-Identification",
 	"classinstvars" : [
 		"uniqueInstance" ],
 	"classvars" : [
