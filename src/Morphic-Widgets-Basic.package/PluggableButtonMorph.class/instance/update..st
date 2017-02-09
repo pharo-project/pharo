@@ -14,7 +14,7 @@ update: aParameter
 		or: [ getStateSelector isNil and: [aParameter == #onOffColor]])
 		ifTrue: [
 			self color: self colorToUse.
-			self setProperty: #lastState toValue: state].
+			self lastState: state].
 	aParameter == getEnabledSelector ifTrue: [^self enabled: (model perform: getEnabledSelector)].
 	getColorSelector ifNotNil: [ | cc |
 		color = (cc := model perform: getColorSelector) 

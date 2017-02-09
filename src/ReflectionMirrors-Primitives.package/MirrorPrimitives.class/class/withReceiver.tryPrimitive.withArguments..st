@@ -4,4 +4,4 @@ withReceiver: receiver tryPrimitive: number withArguments: args
 	execute primitives"
 
 	<primitive: 118 error: code >
-	^ Context primitiveFailTokenFor: code.	
+	^self primitiveFailed

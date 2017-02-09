@@ -5,7 +5,7 @@ verifyJumpWithSelector: selector
 	normalStackp := (guineaPig perform: selector) stackPtr.
 	guineaPig beReadOnlyObject.
 	[ readOnlyStackp := (guineaPig perform: selector) stackPtr ]
-		on: NoModificationError 
+		on: ModificationForbidden 
 		do: [ :ex | ex resume ].
 	self assert: normalStackp = readOnlyStackp.
 	

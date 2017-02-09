@@ -14,7 +14,6 @@ testComplexIsSelfEvaluating
 	(Float halfPi).
 	(4 / 5).
 	(Float infinity negated).
-	(Color red).
 	(1 @ 2).
 	(0 @ 0 extent: 1 @ 1).
 	('hola' -> 0).

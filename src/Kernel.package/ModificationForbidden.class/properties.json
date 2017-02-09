@@ -1,0 +1,17 @@
+{
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "ClementBera 1/27/2017 13:48",
+	"instvars" : [
+		"object",
+		"fieldIndex",
+		"newValue",
+		"retrySelector" ],
+	"name" : "ModificationForbidden",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

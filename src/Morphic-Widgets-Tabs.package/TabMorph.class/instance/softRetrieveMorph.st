@@ -12,11 +12,11 @@ softRetrieveMorph
 				ifFalse: [ ^ self ] ].
 	
 	oldIcon := self icon ifNotNil: [ :i | i form ].
-	retrievingProcess := [ [ | newMorph |
-		"set rotating icon"
-		UIManager default defer: [self icon: self class refreshIcon1].
+	retrievingProcess := [ [
 		rotating := [ | i newIcon |
 			i := 1.
+			20 milliSeconds asDelay wait.
+			UIManager default defer: [self icon: self class refreshIcon1].
 			[ true ] whileTrue:[ 
 				i := (i \\ 10)+1.
 				100 milliSeconds asDelay wait.
@@ -25,10 +25,11 @@ softRetrieveMorph
 					self icon: newIcon ] ]] 
 					forkAt: Processor activePriority - 1.
 		"compute time consuming data"
-		newMorph := retrievingBlock value.
+		morph := retrievingBlock value.
+		retrievingSemaphore signal.
 		UIManager default defer: [
-			self morph: newMorph.
-			retrievingSemaphore signal ]]
+			self triggerEvent: #tabRefreshed with: self.
+			self icon: oldIcon]]
 	ensure: [
 		rotating terminate.
 		UIManager default defer: [self icon: oldIcon]

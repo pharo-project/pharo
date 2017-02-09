@@ -5,7 +5,7 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 	matcher
 		answer: false;
 		matches: aString , ' := ``@object'
-			do: [ :aNode :answer | answer or: [ aNode isUsed ] ].
+			do: [ :aNode :answer | answer or: [ aNode isUsed and: [ aNode methodNode selector ~= aString] ] ].
 	definingClass := isClassVar 
 		ifTrue: [ aClass theNonMetaClass ]
 		ifFalse: [ aClass ].

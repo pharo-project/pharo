@@ -1,3 +1,7 @@
 *GT-InspectorExtensions-Core
 gtDisplayOn: stream
-	^ stream nextPutAll: self name asString
+	super gtDisplayOn: stream.
+	^ stream
+		nextPut: $(;
+		nextPutAll: self name asString;
+		nextPut: $)

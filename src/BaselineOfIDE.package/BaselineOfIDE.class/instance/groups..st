@@ -16,7 +16,6 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
-	'Tool-TxWorkspace'  "dependent on 'Athens-Group'"
 ).		
 
 spec group: 'Epicea-Core-Group' with: #(
@@ -386,7 +385,6 @@ spec group: 'TxText-Core-Group' with: #(
 	'TxText-Model'
 	'TxText-Athens'
 	'TxText-Styler'
-	'Tool-TxWorkspace'	"standalone"
 ).		
 spec group: 'TxText-Tests-Group' with: #(
 	'TxText-AthensTests'

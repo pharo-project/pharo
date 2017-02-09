@@ -1,0 +1,5 @@
+mapping
+sourceNodeExecuted
+
+	^ self sourceNode
+	

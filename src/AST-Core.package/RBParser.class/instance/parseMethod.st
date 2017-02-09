@@ -1,12 +1,12 @@
 private-parsing
 parseMethod
-	| methodNode | 
+	| methodNode sequenceNode | 
 	methodNode := self parseMessagePattern.
 	self parsePragmas.
 	self addCommentsTo: methodNode.
 	
-	methodNode body: self sequenceNodeClass new.
-	(self parseStatements: true into: methodNode body).
-	
+	sequenceNode:=  self sequenceNodeClass new.
+	(self parseStatements: true into: sequenceNode).
+methodNode body: sequenceNode .	
 	pragmas ifNotNil: [ methodNode pragmas: pragmas ].
 	^methodNode

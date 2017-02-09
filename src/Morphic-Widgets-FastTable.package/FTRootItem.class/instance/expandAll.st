@@ -1,3 +1,3 @@
 expanding-collapsing
 expandAll
-	children do: #expandAll displayingProgress: [ :each | 'Expanding ' , each printString ] every: 200
+	children do: #expandAll

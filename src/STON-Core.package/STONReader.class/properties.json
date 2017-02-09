@@ -4,14 +4,13 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "SvenVanCaekenberghe 4/26/2015 23:49",
+	"commentStamp" : "SvenVanCaekenberghe 10/24/2016 10:29",
 	"instvars" : [
 		"readStream",
 		"objects",
 		"classes",
 		"unresolvedReferences",
 		"stringStream",
-		"allowComplexMapKeys",
 		"acceptUnknownClasses",
 		"newLine",
 		"convertNewLines" ],

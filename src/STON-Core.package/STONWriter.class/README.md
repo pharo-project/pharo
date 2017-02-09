@@ -23,3 +23,5 @@ Customization options are:
  - keepNewLines <Boolean> default is false
 	if true, any newline sequence CR, LF or CRLF inside strings or symbols will not be escaped 
 	but will be written as the newline EOF convention
+	
+Note that in default STON mode I only use the following named character escapes: \b \t \n \f \' and \\ while in JSON mode \' is replaced by \"

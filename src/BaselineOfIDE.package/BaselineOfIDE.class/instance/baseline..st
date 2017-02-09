@@ -284,7 +284,6 @@ baseline: spec
 		spec package: 'System-SupportTests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
-		spec package: 'Tool-TxWorkspace'.
 		spec package: 'Tools-Test'.	
 		spec package: 'TxText-AthensTests'.
 		spec package: 'TxTextTests-Model'.

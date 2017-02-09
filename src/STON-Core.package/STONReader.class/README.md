@@ -4,9 +4,6 @@ This parser is backwards compatible with standard JSON.
 
 Customization options are:
 
-- allowComplexMapKeys <Boolean> default is false
-	if true, any object is allowed as map key
-	if false, only strings, symbols and numbers are allowed as map keys
 - acceptUnknownClasses <Boolean> default is false
 	if true, unknown class names are allowed, the standard #mapClass (Dictionary) is instanciated and the class name is added under #classNameKey (#className)
 	if false, unknown class names result in a NotFound error

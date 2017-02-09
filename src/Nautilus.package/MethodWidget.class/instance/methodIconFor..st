@@ -14,7 +14,7 @@ methodIconFor: aMethod
 					^ methodIcon asIcon ].
 			^ methodIcon. ].
 
-	actions := AbstractMethodIconAction allSubclasses collect: [:class | class for: aMethod in: self model ].
+	actions := AbstractMethodIconAction allSubclasses collect: [:class | class for: aMethod in: NautilusUI ].
 	actions sort: [:a :b | a actionOrder < b actionOrder ].
 	action := actions 
 		detect: [:each | each isActionHandled ]. 

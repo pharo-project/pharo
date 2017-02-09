@@ -9,7 +9,7 @@ initializeButtons
 	buttonAddPackage := self newButton
 		help: 'Add package to the current analysis';
 		label: 'Add packages';
-		icon: (self iconNamed: #addIcon).
+		icon: (Smalltalk ui icons iconNamed: #addIcon).
 	buttonRemovePackage := self newButton
 		help: 'Remove package to the current analysis';
 		label: 'Remove packages';

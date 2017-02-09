@@ -5,4 +5,4 @@ handlesEncoding: string
 	although that is not completely correct. 
 	To get maximum efficiency, it remains an option."
 	
-	^ false
+	^ (self canonicalEncodingIdentifier: string) = 'null'

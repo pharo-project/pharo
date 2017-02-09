@@ -1,3 +1,3 @@
 scripting
 custom: aPresentation
-	^ self add: (aPresentation sourceContext: thisContext sender)
+	^ self add: aPresentation "sourceContext: thisContext sender"

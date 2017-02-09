@@ -4,8 +4,6 @@ parseMapDo: block
 	(self matchChar: $}) ifTrue: [ ^ self ]. "short cut for empty maps"
 	[ readStream atEnd ] whileFalse: [ | name value |
 		name := self parseSimpleValue.
-		(self isValidPropertyNameType: name)
-			ifFalse: [ self error: 'unexpected property name type' ].
 		self expectChar: $:.
 		value := self parseValue.
 		block value: name value: value.

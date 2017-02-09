@@ -6,6 +6,6 @@ rowMorphForItem: anItem
 	rowElements add: (self buttonFor: anItem).
 	(self glamourPresentation icon cull: anItem data) ifNotNil: [ :icon | rowElements add: icon asMorph ].
 	rowElements
-		add: (self glamourPresentation formatedDisplayValueOf: anItem data) asMorph;
+		add: (self glamourPresentation formatedDisplayValueOf: anItem data) asMorph asReadOnlyMorph;
 		addAll: (self tagMorphsFrom: self glamourPresentation for: anItem data).
 	^ Smalltalk ui theme newRowIn: World for: rowElements

@@ -1,0 +1,14 @@
+{
+	"category" : "Compression-Tests-Streams",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "ZipExtensionTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

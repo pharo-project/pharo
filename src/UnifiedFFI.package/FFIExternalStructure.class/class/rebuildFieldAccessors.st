@@ -1,6 +1,7 @@
 private
 rebuildFieldAccessors
-	"compatibility method"
-	self 
-		compileFields: self fields 
-		withAccessors: true
+    "compatibility method"
+    Author useAuthor: 'UFFIGenerator' during: [ 
+        self 
+            compileFields: self fields 
+            withAccessors: true]

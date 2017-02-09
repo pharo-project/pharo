@@ -8,7 +8,7 @@ selection: ann
 				announce:
 					(GLMTreeMorphSelectionChanged new
 						selectionValue:
-								(selection size = 1
+								((selection size = 1 and: [ self glamourPresentation isSingle ])
 										ifTrue: [ selection first ]
 										ifFalse: [ selection ]);
 						selectionPathValue: selection;

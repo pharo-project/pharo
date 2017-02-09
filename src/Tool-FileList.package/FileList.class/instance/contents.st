@@ -1,11 +1,11 @@
-private
+accessing
 contents
 	"Answer the contents of the file, reading it first if needed."
 	"Possible brevityState values:
 		FileList,
 		fullFile, briefFile, needToGetFull, needToGetBrief,
 		fullHex, briefHex, needToGetFullHex, needToGetBriefHex"
-	
+
 	self reference isReadable 
 		ifFalse: [ ^ 'cannot read {1}' translated format: { reference }].
 	(listIndex = 0) | (brevityState == #FileList) ifTrue: [^ self defaultContents].  "no file selected"

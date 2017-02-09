@@ -1,3 +1,3 @@
 accessing
 id
-	^ id
+	^ id ifNil: [ id := UUID new ]
