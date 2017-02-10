@@ -13,4 +13,6 @@ fileOut: epiceaEntries
 		exportedReference := outputLog addEntryWith: anEvent tags: [ :tags |  ].
 		
 		map at: originalReference put: exportedReference.
-		]
+		].
+	
+	outputLog store flush.

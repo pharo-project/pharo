@@ -1,4 +1,4 @@
 accessing
 storeNameStrategy
 
-	^ self class storeNameStrategy
+	^ storeNameStrategy ifNil: [ self class storeNameStrategy ]

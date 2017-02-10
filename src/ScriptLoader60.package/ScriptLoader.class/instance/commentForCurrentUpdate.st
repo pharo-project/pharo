@@ -1,10 +1,13 @@
 public
 commentForCurrentUpdate
- ^ '19312 haltIf: should use recursionstopper
-	https://pharo.fogbugz.com/f/cases/19312
+ ^ '19670 The tree widget for FastTable jumps to the selected element when expanding or collapsing a node
+	https://pharo.fogbugz.com/f/cases/19670
 
-18722 GlobalIdentifier used for system settings persistence
-	https://pharo.fogbugz.com/f/cases/18722
+19630 Epicea Lost Changes Detector: MNU OmNullReference>>globalName
+	https://pharo.fogbugz.com/f/cases/19630
 
-19659 Tooltips of the class button does not changed
-	https://pharo.fogbugz.com/f/cases/19659'
+19674 Remove UUIDGenerator and rename NeoUUIDGenerator to UUIDGenerator
+	https://pharo.fogbugz.com/f/cases/19674
+
+19681 #signalerContext should use #method, not #methodNode
+	https://pharo.fogbugz.com/f/cases/19681'

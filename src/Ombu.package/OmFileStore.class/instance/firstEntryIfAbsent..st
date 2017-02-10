@@ -1,9 +1,6 @@
-enumerating
+accessing
 firstEntryIfAbsent: absentBlock
 
-	^ self fileReference exists 
-		ifFalse: absentBlock
-		ifTrue: [
-			[ self nextEntryFromPosition: 0 ] 
-				on: Error 
-				do: absentBlock ]
+	^ [ super firstEntryIfAbsent: absentBlock ] 
+			on: Error 
+			do: absentBlock

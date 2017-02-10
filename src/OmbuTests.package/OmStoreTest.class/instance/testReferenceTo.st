@@ -4,7 +4,8 @@ testReferenceTo
 	
 	store newEntry: anEntry.
 	
-	aReference := store referenceTo: anEntry.
-	
-	self assert: (aReference isKindOf: OmReference).
-	self deny: aReference isNull.
+	self beforeAndAfterFlushStore: [
+		aReference := store referenceTo: anEntry.
+
+		self assert: (aReference isKindOf: OmReference).
+		self deny: aReference isNull ]

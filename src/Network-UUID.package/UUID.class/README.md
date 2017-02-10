@@ -1,6 +1,12 @@
-A class to generate UUID
-by John M McIntosh johnmci@smalltalkconsulting.com
+I am UUID.
+I am a ByteArray.
 
-See http://www.webdav.org/specs/draft-leach-uuids-guids-01.txt
+An RFC4122 Universally Unique Identifier (UUID) is an opaque 128-bit number that can be used for identification purposes. Concretely, a UUID is a 16 element byte array.
 
-If a plugin does not exist then we generate a UUID version 4 type GUUID
+The intent of UUIDs is to enable distributed systems to uniquely identify information without significant central coordination. In this context the word unique should be taken to mean "practically unique" rather than "guaranteed unique".
+
+Usage:
+
+	UUID new.
+
+See UUIDGenerator for extensive documentation on how UUIDs are actually generated.

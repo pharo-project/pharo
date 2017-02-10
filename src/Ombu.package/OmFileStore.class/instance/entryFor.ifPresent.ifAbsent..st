@@ -4,7 +4,13 @@ entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure
 	(aReference globalName = self globalName)
 		ifFalse: [ ^ absentBlockClosure value ].
 
-	^ entryPositionsByLocalName 
+	^ self entryByLocalName
 		at: aReference localName
-		ifPresent: [ :position | presentBlockClosure value: (self nextEntryFromPosition: position) ]
-		ifAbsent: [ absentBlockClosure value ]
+		ifPresent: presentBlockClosure
+		ifAbsentOrNil: [
+			self
+				readEntryForLocalName: aReference localName
+				ifPresent: [ :entry |
+					self entryByLocalName at: aReference localName put: entry.
+					presentBlockClosure value: entry ] 
+				ifAbsent: absentBlockClosure ]

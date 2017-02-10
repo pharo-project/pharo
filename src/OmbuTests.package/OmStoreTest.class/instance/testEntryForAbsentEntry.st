@@ -1,15 +1,18 @@
 tests
 testEntryForAbsentEntry
-	| isPresent |
+	| isPresent isAbsent |
 	anEntry := OmEntry content: 42.
 	
 	store newEntry: anEntry.
-	
-	aReference := store referenceTo: anEntry.
-	
-	otherStore 
-		entryFor: aReference 
-		ifPresent: [ :e | isPresent := true ] 
-		ifAbsent: [ isPresent := false ].
 
-	self deny: isPresent.
+	self beforeAndAfterFlushStore: [
+		isPresent := false.
+		isAbsent := false.	
+
+		otherStore 
+			entryFor: (store referenceTo: anEntry)
+			ifPresent: [ :e | isPresent := true ] 
+			ifAbsent: [ isAbsent := true ].
+
+		self deny: isPresent.
+		self assert: isAbsent ]

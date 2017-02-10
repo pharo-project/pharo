@@ -1,0 +1,15 @@
+{
+	"category" : "Ombu-Stores",
+	"classinstvars" : [
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 2/7/2017 11:44",
+	"instvars" : [
+		"nullStore",
+		"storeByPath" ],
+	"name" : "OmStoreFactory",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

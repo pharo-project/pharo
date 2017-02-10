@@ -8,11 +8,11 @@ askFileNameAndFileOut: entries in: aDirectory
 
 	fileNameOrNil ifNil: [ ^ self ].
 
-	outputLog := 
-		EpLog newWithStore: 
-			(OmFileStore 
-				named: fileNameOrNil 
-				inDirectory: aDirectory).
+	(OmFileStore existsStoreNamed: fileNameOrNil inDirectory: aDirectory)
+		ifTrue: [ ^ self inform: 'File already exists' ].
+
+	outputLog := EpLog newWithStore: 
+		(OmStoreFactory current named: fileNameOrNil inDirectory: aDirectory).
 
 	self new 
 		outputLog: outputLog;

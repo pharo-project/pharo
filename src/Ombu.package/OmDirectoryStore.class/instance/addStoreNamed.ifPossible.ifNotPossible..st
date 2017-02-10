@@ -2,13 +2,13 @@ private
 addStoreNamed: aGlobalName ifPossible: possibleBlockClosure ifNotPossible: notPossibleBlockClosure 
 
 	| fileReference |
-	fileReference := directoryFileReference / (aGlobalName, OmFileStore defaultFileSuffix).
+	fileReference := OmFileStore fileReferenceForStoreNamed: aGlobalName inDirectory: directoryFileReference.
 	
 	^ fileReference exists 
 		ifFalse: notPossibleBlockClosure
 		ifTrue: [ 
 			| aStore |
-			aStore := (OmFileStore 
+			aStore := (OmStoreFactory current
 				named: aGlobalName
 				inDirectory: directoryFileReference)
 				refresh;

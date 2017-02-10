@@ -1,0 +1,18 @@
+{
+	"category" : "Ombu-Common",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "MartinDias 1/31/2017 03:11",
+	"instvars" : [
+		"process",
+		"lastSchedule",
+		"duration",
+		"selector",
+		"object" ],
+	"name" : "OmDeferrer",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,3 +1,5 @@
-accessors and mutators
+accessing
 randomGenerator
-	^randomGenerator
+	"Return the Random generator that I use"
+	
+	^ random

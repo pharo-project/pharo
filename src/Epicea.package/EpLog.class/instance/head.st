@@ -1,4 +1,4 @@
 accessing
 head
 
-	^ self entryFor: headReference
+	^ self entryFor: self headReference

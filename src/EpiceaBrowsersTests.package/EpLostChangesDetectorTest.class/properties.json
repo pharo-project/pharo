@@ -1,0 +1,14 @@
+{
+	"category" : "EpiceaBrowsersTests-Core",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"detector" ],
+	"name" : "EpLostChangesDetectorTest",
+	"pools" : [
+		 ],
+	"super" : "EpEnabledIntegrationTest",
+	"type" : "normal" }

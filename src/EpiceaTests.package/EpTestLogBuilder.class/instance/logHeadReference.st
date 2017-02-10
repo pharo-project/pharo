@@ -1,3 +1,3 @@
 accessing
 logHeadReference
-	^ log headReference
+	^ self log headReference

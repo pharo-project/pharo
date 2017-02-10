@@ -1,0 +1,4 @@
+accessing
+defaultDirectory
+
+	^ OmSessionStore defaultBaseLocator asFileReference

@@ -12,7 +12,10 @@
 		"currentStore",
 		"alternativeStore",
 		"baseLocator",
-		"announcer" ],
+		"announcer",
+		"writingDeferDuration",
+		"headReference",
+		"storeNameStrategy" ],
 	"name" : "OmSessionStore",
 	"pools" : [
 		 ],

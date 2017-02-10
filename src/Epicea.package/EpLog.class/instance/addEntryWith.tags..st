@@ -6,14 +6,11 @@ addEntryWith: anEvent tags: blockClosureForCustomTags
 
 	"add tags"
 	newEntry tags 
-		at: self class priorReferenceKey put: headReference;
+		at: self class priorReferenceKey put: self headReference;
 		in: blockClosureForCustomTags.
 
 	"write the new entry"
 	store newEntry: newEntry.
-
-	"set the new entry as parent"
-	headReference := store referenceTo: newEntry.
 
 	"update caches with the new entry"
 	self cacheEntry: newEntry.

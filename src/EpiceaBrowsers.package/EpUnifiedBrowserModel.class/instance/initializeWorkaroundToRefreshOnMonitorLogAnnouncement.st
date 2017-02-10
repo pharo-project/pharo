@@ -3,12 +3,16 @@ initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 
 	self flag: #todo. "Fix"
 	monitorLog := EpMonitor current log.
+	refreshDeferrer := OmDeferrer 
+		send: #refreshIfMonitorLogSelected
+		to: self
+		after: 500 milliSeconds.
 
 	monitorLog announcer weak
 		when: EpEntryAdded
-		send: #refreshIfMonitorLogSelected
-		to: self.
+		send: #schedule
+		to: refreshDeferrer.
 
 	self whenWindowChanged: [ :windowModel | 
 		windowModel whenClosedDo: [ 
-			monitorLog announcer unsubscribe: self ] ].
+			monitorLog announcer unsubscribe: refreshDeferrer ] ].

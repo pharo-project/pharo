@@ -1,0 +1,1 @@
+An OmNullStoreTest is a test class for testing the behavior of OmNullStore

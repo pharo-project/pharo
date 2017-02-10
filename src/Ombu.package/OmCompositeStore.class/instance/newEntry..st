@@ -1,4 +1,4 @@
 writing
 newEntry: anEntry
 
-	^ self shouldNotImplement 
+	self shouldNotImplement 

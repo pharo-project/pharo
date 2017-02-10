@@ -1,29 +1,22 @@
 writing
 newEntry: anEntry
 
-	| newReference localName |
-	"Before writing, tag the entry with an identifier"
-	localName := (entryCount + 1) asString.
-	newReference := 
-		OmReference 
-			globalName: globalName
-			localName: localName.
-	anEntry tags 
-		at: self selfReferenceKey 
-		put: newReference.
+	self critical: [
+		| newReference localName |
+		entryCount := entryCount + 1.
 
-	"Write, and update only if success."		
-	self 
-		writeEntry: anEntry 
-		ifSuccess: [ :position |
-			"cache entry"
-			entryPositionsByLocalName
-				at: localName
-				put: position.
+		"Build new entry"
+		localName := entryCount asString.
+		newReference := self referenceToLocalName: localName.
+		anEntry tags at: self selfReferenceKey put: newReference.
 
-			"cache entry count"
-			entryCount := entryCount + 1.
-			
-			"update head"
-			headReference := newReference. 
-			].
+		"Update head"
+		headReference := newReference.
+
+		"Cache (weak)"
+		self entryByLocalName at: localName put: anEntry.
+
+		"Defer write"
+		self entryBuffer addLast: anEntry -> localName.
+		self writingDeferrer schedule.
+		]

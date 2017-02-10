@@ -1,10 +1,10 @@
 tests
 testEntriesDo
-	| entries |
-	1 to: 7 do: [ :each |
-		store newEntry: (OmEntry content: each) ].
+	1 to: 7 do: [ :each | store newEntry: (OmEntry content: each) ].
 
-	entries := OrderedCollection new.
-	store entriesDo: [ :entry | entries add: entry ].
-	
-	self assert: (entries collect: #content) equals: (1 to: 7) asOrderedCollection
+	self beforeAndAfterFlushStore: [
+		| contents |
+		contents := Array streamContents: [ :stream | 
+			store entriesDo: [ :entry | stream nextPut: entry content ] ].
+
+		self assert: contents equals: (1 to: 7) asArray ]

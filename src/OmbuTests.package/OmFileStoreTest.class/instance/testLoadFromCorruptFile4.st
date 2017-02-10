@@ -5,7 +5,8 @@ testLoadFromCorruptFile4
 	| loadedStore |
 	store newEntry: (OmEntry content: 41).
 	store newEntry: (OmEntry content: 42).
-
+	store flush.
+	
 	"Override first characters"
 	store fileReference writeStreamDo: [ :stream | 
 		stream 

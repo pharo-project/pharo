@@ -1,12 +1,13 @@
 building
 logEvent: anEvent triggerReference: triggerReference
-	log 
+	self log 
 		addEntryWith: anEvent 
 		tags: [ :tags |
-			tags at: EpLog authorKey put: 'CoolAuthor'.
+			tags at: EpLog authorKey put: 'TestAuthor'.
 			tags at: EpLog timeKey put: DateAndTime now.
 						
 			triggerReference isNull ifFalse: [
 				tags 
 					at: EpLog triggererReferenceKey
-					put: triggerReference ] ]
+					put: triggerReference ] ].
+	self log store flush.

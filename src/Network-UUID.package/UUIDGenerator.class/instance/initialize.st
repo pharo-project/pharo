@@ -1,6 +1,7 @@
-initialization
+initialize
 initialize
 	super initialize.
-	self setupRandom.
-	semaphoreForGenerator := Semaphore forMutualExclusion.
-	
+	random := Random new.
+	lock := Semaphore forMutualExclusion.
+	node := self computeNodeIdentifier.
+	counter := self nextRandom16
