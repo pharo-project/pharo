@@ -21,7 +21,7 @@ readContentsHex: brevity
 		hexData := s contents].
 	
 	^ contents := ((size > 5000) & brevity
-		ifTrue: ['{3}
+		ifTrue: ['{1}
 ------------------------------------------
 ... end of the first 5000 characters.' translated format: {hexData}]
 		ifFalse: [hexData]).
