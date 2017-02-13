@@ -1,6 +1,6 @@
 instance creation
 fromString36: aString
-	"Decode the UUID from a base 36 string using 0-9 and lowercase a-z.
+	"Decode a UUID from a base 36 string using 0-9 and lowercase a-z.
 	This is the shortest representation still being able to work as
 	filenames etc since it does not depend on case nor characters
 	that might cause problems."

@@ -13,7 +13,7 @@ page3
 			contents: ''First subsection''.		
 		sub2 := HelpTopic 		     
 			title: ''My second subtopic''
-			 icon: (HelpIcons iconNamed: #packageIcon)
+			iconName: #packageIcon
 			contents: ''Second subsection''.		
 		root 
 			addSubtopic: sub1; 

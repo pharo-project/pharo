@@ -1,5 +1,5 @@
 pharo - scripts
-script60386
+script60387
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -140,7 +140,7 @@ Graphics-Shapes-TheIntegrator.4.mcz
 Graphics-Tests-TheIntegrator.85.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
 Growl-TheIntegrator.47.mcz
-HelpSystem-Core-TheIntegrator.167.mcz
+HelpSystem-Core-TheIntegrator.170.mcz
 HelpSystem-Tests-TheIntegrator.32.mcz
 Hiedra-MartinDias.145.mcz
 HiedraTests-MartinDias.2.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2488.mcz
+Kernel-TheIntegrator.2490.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.145.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -210,7 +210,7 @@ Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.79.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
 Morphic-Widgets-Scrolling-TheIntegrator.37.mcz
-Morphic-Widgets-Tabs-TheIntegrator.45.mcz
+Morphic-Widgets-Tabs-TheIntegrator.47.mcz
 Morphic-Widgets-Taskbar-TheIntegrator.27.mcz
 Morphic-Widgets-TickList-TheIntegrator.2.mcz
 Morphic-Widgets-Tree-TheIntegrator.64.mcz
@@ -235,7 +235,7 @@ Network-MIME-TheIntegrator.73.mcz
 Network-Mail-TheIntegrator.52.mcz
 Network-Protocols-TheIntegrator.105.mcz
 Network-Tests-TheIntegrator.28.mcz
-Network-UUID-TheIntegrator.61.mcz
+Network-UUID-TheIntegrator.63.mcz
 Network-Url-TheIntegrator.103.mcz
 NewValueHolder-TheIntegrator.35.mcz
 NodeNavigation-TheIntegrator.55.mcz
@@ -370,7 +370,7 @@ System-Support-TheIntegrator.1269.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
 System-VMEvents-TheIntegrator.19.mcz
-Tests-TheIntegrator.785.mcz
+Tests-TheIntegrator.787.mcz
 Text-Core-TheIntegrator.64.mcz
 Text-Diff-TheIntegrator.6.mcz
 Text-Edition-TheIntegrator.126.mcz

@@ -23,7 +23,7 @@ softRetrieveMorph
 				newIcon := (self class perform: ('refreshIcon', i asString) asSymbol).
 				UIManager default defer: [
 					self icon: newIcon ] ]] 
-					forkAt: Processor activePriority - 1.
+					forkAt: Processor activePriority + 1.
 		"compute time consuming data"
 		morph := retrievingBlock value.
 		retrievingSemaphore signal.
@@ -33,4 +33,4 @@ softRetrieveMorph
 	ensure: [
 		rotating terminate.
 		UIManager default defer: [self icon: oldIcon]
-	] ] forkAt: Processor activePriority -1
+	] ] forkAt: Processor activePriority - 2

@@ -1,4 +1,4 @@
-converting
+private
 printHexAt: index to: aStream
 	| map v |
 	map := '0123456789abcdef'.
