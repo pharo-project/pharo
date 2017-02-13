@@ -13,6 +13,14 @@ This repository is periodically built in travis and its results uploaded to trav
 You can also programatically load the latest nightly build using the link:
 
 	https://bintray.com/pharo-project/pharo/Pharo/_latestVersion
+	
+There you will find 32 and 64 bit images. Each version contains the following generated artifacts:
+
+- core: Just the initialized core. Has the compiler, IO/files, command line handlers. No network here.
+- monticello-bootstrap: core + basic monticello packages. This one has bootstrapped MCWorkingCopies also. Allows loading mcz packages from disk only.
+- monticello: monticello-bootstrap + network + monticello network repositories.
+- metacello: monticello + metacello
+- Pharo: metacello + the rest of pharo reloaded
 
 ## Bootstrapping Pharo from sources
 
