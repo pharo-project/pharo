@@ -5,8 +5,8 @@ testProtocol
 
 	| okCm notOkCm |
 	okCm := Point>>#distanceTo: .
-	self assert: (SourceFiles sourcedDataAt: okCm sourcePointer) =   
- 'Point methodsFor: ''point functions'' stamp: ''StephaneDucasse 11/10/2015 18:24'''	.
+	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:   
+ 'Point methodsFor: ''point functions''').
 	self assert: (SourceFiles protocolAt: okCm sourcePointer) = 'point functions'.
 	
 	notOkCm := Behavior >> #superclass.

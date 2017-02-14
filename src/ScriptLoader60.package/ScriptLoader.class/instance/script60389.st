@@ -1,5 +1,5 @@
 pharo - scripts
-script60388
+script60389
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -281,7 +281,7 @@ ReflectionMirrors-Primitives-Tests-TheIntegrator.4.mcz
 Reflectivity-TheIntegrator.320.mcz
 Reflectivity-Examples-TheIntegrator.46.mcz
 Reflectivity-Tests-TheIntegrator.219.mcz
-Reflectivity-Tools-TheIntegrator.69.mcz
+Reflectivity-Tools-TheIntegrator.71.mcz
 Reflectivity-Tools-Tests-TheIntegrator.24.mcz
 Regex-Core-TheIntegrator.40.mcz
 Regex-Help-MarcusDenker.5.mcz
@@ -322,7 +322,7 @@ Shout-TheIntegrator.302.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.780.mcz
 Slot-Tests-TheIntegrator.101.mcz
-SmartSuggestions-TheIntegrator.267.mcz
+SmartSuggestions-TheIntegrator.269.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
 Spec-Core-TheIntegrator.537.mcz
 Spec-Debugger-TheIntegrator.280.mcz
@@ -370,7 +370,7 @@ System-Support-TheIntegrator.1269.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
 System-VMEvents-TheIntegrator.19.mcz
-Tests-TheIntegrator.787.mcz
+Tests-TheIntegrator.788.mcz
 Text-Core-TheIntegrator.64.mcz
 Text-Diff-TheIntegrator.6.mcz
 Text-Edition-TheIntegrator.126.mcz
