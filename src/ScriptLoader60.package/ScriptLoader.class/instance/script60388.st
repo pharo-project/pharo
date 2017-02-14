@@ -1,5 +1,5 @@
 pharo - scripts
-script60387
+script60388
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -95,7 +95,7 @@ FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
 GT-BytecodeDebugger-AndreiChis.33.mcz
 GT-Debugger-TheIntegrator.368.mcz
-GT-EventRecorder-TheIntegrator.77.mcz
+GT-EventRecorder-TheIntegrator.79.mcz
 GT-EventRecorder-Tests-TheIntegrator.40.mcz
 GT-Inspector-TheIntegrator.444.mcz
 GT-InspectorExtensions-Core-AndreiChis.245.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1347.mcz
+Nautilus-TheIntegrator.1349.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
@@ -235,7 +235,7 @@ Network-MIME-TheIntegrator.73.mcz
 Network-Mail-TheIntegrator.52.mcz
 Network-Protocols-TheIntegrator.105.mcz
 Network-Tests-TheIntegrator.28.mcz
-Network-UUID-TheIntegrator.63.mcz
+Network-UUID-TheIntegrator.64.mcz
 Network-Url-TheIntegrator.103.mcz
 NewValueHolder-TheIntegrator.35.mcz
 NodeNavigation-TheIntegrator.55.mcz
@@ -377,7 +377,7 @@ Text-Edition-TheIntegrator.126.mcz
 Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
-Tool-Base-TheIntegrator.188.mcz
+Tool-Base-TheIntegrator.190.mcz
 Tool-Catalog-TheIntegrator.53.mcz
 Tool-CriticBrowser-TheIntegrator.65.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
