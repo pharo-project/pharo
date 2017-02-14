@@ -9,5 +9,5 @@ buildBrowseScopedButton
 		hResizing: #spaceFill;
 		vResizing: #shrinkWrap;
 		enabled: self selectedPackage notNil;
-		helpText: 'Browse scoped the selected packages';
+		helpText: 'Browse the selected packaged in a scoped context: analysis tools such as ''Senders of...'', ''Implementors of...'', ''Class refs...'', etc. are limited to the package';
 		yourself

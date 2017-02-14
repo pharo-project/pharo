@@ -1,5 +1,5 @@
 pharo - scripts
-script60389
+script60390
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1349.mcz
+Nautilus-TheIntegrator.1351.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
@@ -427,7 +427,7 @@ WriteBarrierTests-TheIntegrator.18.mcz
 Zinc-Character-Encoding-Core-SvenVanCaekenberghe.46.mcz
 Zinc-Character-Encoding-Tests-SvenVanCaekenberghe.29.mcz
 Zinc-FileSystem-SvenVanCaekenberghe.12.mcz
-Zinc-HTTP-SvenVanCaekenberghe.453.mcz
+Zinc-HTTP-TheIntegrator.455.mcz
 Zinc-Resource-Meta-Core-SvenVanCaekenberghe.61.mcz
 Zinc-Resource-Meta-FileSystem-SvenVanCaekenberghe.8.mcz
 Zinc-Resource-Meta-Tests-SvenVanCaekenberghe.37.mcz
