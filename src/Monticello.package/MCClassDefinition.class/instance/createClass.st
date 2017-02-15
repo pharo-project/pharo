@@ -1,6 +1,10 @@
 installing
 createClass
 	| superClass |
+
+	"Ignore Context because of troubles with class migration on bootstrapped image. Temporary solution."
+	name = #Context ifTrue: [^ self].
+	
 	superClass := superclassName == #nil ifFalse:
 						[ Smalltalk globals at: superclassName ].
 	^[PharoClassInstaller make: [ :builder | 

@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19707 remove Object>>#name hack in the BaselineOfIDE
-	https://pharo.fogbugz.com/f/cases/19707
+ ^ '19710 Monticello should ignore the class definition of Context
+	https://pharo.fogbugz.com/f/cases/19710
 
-19706 remove MBConfigurationInfoTest>>#testInitialization
-	https://pharo.fogbugz.com/f/cases/19706
+19711 RPackage should not strongly depend on Monticello
+	https://pharo.fogbugz.com/f/cases/19711
 
-19704 [Memory leak] Clipboard can produce memory leaks
-	https://pharo.fogbugz.com/f/cases/19704'
+19709 add example ComputedSlot
+	https://pharo.fogbugz.com/f/cases/19709'
