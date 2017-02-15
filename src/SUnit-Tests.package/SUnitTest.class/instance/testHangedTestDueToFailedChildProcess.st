@@ -1,9 +1,9 @@
 testing
-testFailedChildProcessTest
+testHangedTestDueToFailedChildProcess
 
 	| case result |
 	DefaultExecutionEnvironment beActive.
-	case := self class selector: #failedChildProcessTest.	
+	case := self class selector: #hangedTestDueToFailedChildProcess.	
 	result := case run.
 
 	self
@@ -11,5 +11,6 @@ testFailedChildProcessTest
 		runCount: 1
 		passed: 0
 		failed: 0
-		errors: 1.		
+		errors: 1.
+		
 	self assertTerminatedFailedChildProcessesFor: case

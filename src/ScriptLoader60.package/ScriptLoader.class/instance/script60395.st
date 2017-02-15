@@ -1,5 +1,5 @@
 pharo - scripts
-script60394
+script60395
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -304,10 +304,10 @@ Rubric-Tests-TheIntegrator.10.mcz
 STON-Core-SvenVanCaekenberghe.82.mcz
 STON-Tests-SvenVanCaekenberghe.71.mcz
 STON-Text support-TheIntegrator.2.mcz
-SUnit-Core-TheIntegrator.216.mcz
+SUnit-Core-TheIntegrator.219.mcz
 SUnit-Help-MarcusDenker.9.mcz
 SUnit-Rules-TheIntegrator.3.mcz
-SUnit-Tests-TheIntegrator.62.mcz
+SUnit-Tests-TheIntegrator.64.mcz
 SUnit-UI-TheIntegrator.153.mcz
 SUnit-UITesting-TheIntegrator.34.mcz
 ScriptLoader-Tests-TheIntegrator.4.mcz
