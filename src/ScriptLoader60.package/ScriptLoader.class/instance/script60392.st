@@ -1,5 +1,5 @@
 pharo - scripts
-script60391
+script60392
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.6.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.17.mcz
+BaselineOfIDE-TheIntegrator.19.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.19.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -341,7 +341,7 @@ System-Caching-TheIntegrator.29.mcz
 System-CachingTests-TheIntegrator.19.mcz
 System-Changes-TheIntegrator.305.mcz
 System-Changes-FileServices-TheIntegrator.4.mcz
-System-Clipboard-TheIntegrator.40.mcz
+System-Clipboard-TheIntegrator.42.mcz
 System-CommandLine-TheIntegrator.181.mcz
 System-CommandLine-TextSupport-TheIntegrator.6.mcz
 System-CommandLineHandler-TheIntegrator.24.mcz
@@ -371,7 +371,7 @@ System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
 System-VMEvents-TheIntegrator.19.mcz
 Tests-TheIntegrator.788.mcz
-Text-Core-TheIntegrator.64.mcz
+Text-Core-TheIntegrator.66.mcz
 Text-Diff-TheIntegrator.6.mcz
 Text-Edition-TheIntegrator.126.mcz
 Text-Edition-Tests-EstebanLorenzano.3.mcz
@@ -420,7 +420,7 @@ Versionner-Nautilus-TheIntegrator.2.mcz
 Versionner-Spec-Browser-TheIntegrator.209.mcz
 Versionner-Tests-Core-Commands-MarcusDenker.21.mcz
 Versionner-Tests-Core-DependenciesModel-ChristopheDemarey.46.mcz
-Versionner-Tests-Core-Model-ChristopheDemarey.33.mcz
+Versionner-Tests-Core-Model-TheIntegrator.35.mcz
 Versionner-Tests-Resources-MarcusDenker.18.mcz
 WorldMenuHelp-TheIntegrator.2.mcz
 WriteBarrierTests-TheIntegrator.18.mcz
