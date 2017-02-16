@@ -1,5 +1,5 @@
 pharo - scripts
-script60395
+script60396
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -153,7 +153,7 @@ Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
 Kernel-TheIntegrator.2490.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.147.mcz
+Kernel-Tests-TheIntegrator.149.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.64.mcz
@@ -185,7 +185,7 @@ Metacello-TestsMCCore-EstebanLorenzano.8.mcz
 Metacello-TestsMCResources-EstebanLorenzano.33.mcz
 Metacello-TestsPlatform.squeakCommon-EstebanLorenzano.23.mcz
 Metacello-TestsReference-EstebanLorenzano.22.mcz
-Metacello-ToolBox-TheIntegrator.152.mcz
+Metacello-ToolBox-TheIntegrator.154.mcz
 Metacello-Tutorial-EstebanLorenzano.28.mcz
 Monticello-TheIntegrator.1173.mcz
 Monticello-OldDataStreamCompatibility-TheIntegrator.10.mcz
@@ -320,7 +320,7 @@ ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
 Shout-TheIntegrator.302.mcz
 Shout-Tests-TheIntegrator.2.mcz
-Slot-TheIntegrator.784.mcz
+Slot-TheIntegrator.785.mcz
 Slot-Tests-TheIntegrator.101.mcz
 SmartSuggestions-TheIntegrator.269.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
