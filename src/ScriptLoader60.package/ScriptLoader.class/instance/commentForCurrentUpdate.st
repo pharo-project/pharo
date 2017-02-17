@@ -1,4 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19721 fix #name send in Slot tests
-	https://pharo.fogbugz.com/f/cases/19721'
+ ^ '19723 Nuke SequenceableCollection>>#checkedAt:
+	https://pharo.fogbugz.com/f/cases/19723
+
+19722 Move setMultipleSelection to FTTableMorph
+	https://pharo.fogbugz.com/f/cases/19722'
