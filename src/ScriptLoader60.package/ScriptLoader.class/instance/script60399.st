@@ -1,5 +1,5 @@
 pharo - scripts
-script60398
+script60399
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -321,7 +321,7 @@ ShoreLine-Report-UI-TheIntegrator.19.mcz
 Shout-TheIntegrator.302.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.785.mcz
-Slot-Tests-TheIntegrator.101.mcz
+Slot-Tests-TheIntegrator.103.mcz
 SmartSuggestions-TheIntegrator.269.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
 Spec-Core-TheIntegrator.539.mcz
