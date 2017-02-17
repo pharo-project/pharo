@@ -8,4 +8,4 @@ testSetUp
 	self assert: (aMethodContext method isKindOf: CompiledMethod).
 	self assert: aMethodContext method = aCompiledMethod.
 	self assert: aMethodContext methodNode selector = #rightCenter.
-	self assert: aMethodContext client printString = 'MethodContextTest>>#testSetUp'.
+	self assert: aMethodContext client printString = 'ContextTest>>#testSetUp'.

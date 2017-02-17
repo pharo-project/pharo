@@ -10,7 +10,7 @@
 		"aReceiver",
 		"aMethodContext",
 		"aSender" ],
-	"name" : "MethodContextTest",
+	"name" : "ContextTest",
 	"pools" : [
 		 ],
 	"super" : "TestCase",
