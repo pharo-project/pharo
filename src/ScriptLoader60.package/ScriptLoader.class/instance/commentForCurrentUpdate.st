@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19716 The method Pragma>>#selector called from MetacelloToolBox
-	https://pharo.fogbugz.com/f/cases/19716
+ ^ '19715 FastTableModel: Cant enable multiple selection
+	https://pharo.fogbugz.com/f/cases/19715
 
-19713 improve #testObjectFormatInstSize
-	https://pharo.fogbugz.com/f/cases/19713'
+19211 sometimes I can not open changesort: receiver of endswith is nil
+	https://pharo.fogbugz.com/f/cases/19211
+
+19718 Give Random an option to initialize its seed from /dev/random
+	https://pharo.fogbugz.com/f/cases/19718'
