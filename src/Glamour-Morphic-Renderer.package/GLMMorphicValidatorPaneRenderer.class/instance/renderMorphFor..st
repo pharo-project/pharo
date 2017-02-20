@@ -7,4 +7,5 @@ renderMorphFor: aPane
 			fullFrame: (LayoutFrame fractions: (0 @ 0 corner: 1 @ 0.90));
 		addMorph:  (self buttonRowFrom: self buttons)
 			fullFrame: (LayoutFrame fractions: (0 @ 0.93 corner: 1 @ 1));
-		adoptPaneColor: paneMorph paneColor
+		"adoptPaneColor: paneMorph paneColor"
+		yourself

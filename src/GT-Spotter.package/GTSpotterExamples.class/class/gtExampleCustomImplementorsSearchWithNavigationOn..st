@@ -5,7 +5,7 @@ gtExampleCustomImplementorsSearchWithNavigationOn: aSpotter
 	<description: 'A spotter for searching through the implementors of a method that 
 	overrides properties of the search step and enables the Collection 
 	processor for items (to allow dive in).'>
-	<depends: #gtExampleOnCompliedMethod>
+	<dependsOn: #gtExampleOnCompliedMethod>
 	
 	^ aSpotter
 		processorsFilter: (GTSpotterMethodListProcessorFilter new 

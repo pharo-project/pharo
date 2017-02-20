@@ -1,5 +1,7 @@
 pager-api
 pushPane: aMorph
 	"pushes a pane to the end with smooth scroll animation"
-	self pagerModel pushPane: aMorph smooth: true.
+	| isSmooth |
 	
+	isSmooth := self pagerModel size >= self pagerModel numberOfVisiblePages.
+	self pagerModel pushPane: aMorph smooth: isSmooth

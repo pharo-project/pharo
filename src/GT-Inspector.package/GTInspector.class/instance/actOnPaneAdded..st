@@ -1,5 +1,6 @@
 callbacks
-actOnPaneAdded: ann
-
-	self panes size > 1 ifTrue: [ 
-		(self panes before: self panes last) updateToolbar "announce: (GLMPresentationToolbarUpdated new presentation: ann presentation)" ]
+actOnPaneAdded: anAnnouncement
+	
+	"Update toolbar of a pane before the last (added) pane if there is one"
+	(self panes atLast: 2 ifAbsent: [ ^ self ])
+		updateToolbar

@@ -7,5 +7,5 @@ testOneTabWithActions
 		to: #one;
 		andShow: [ :a | a list act: #inspect entitled: 'Inspect' ].
 	window := browser openOn: 42.
-	self assert: self compositeMorph class equals: PanelMorph.
+	self assert: self compositeMorph class equals: GLMPanelMorph.
 	self assert: self compositeMorph submorphs size equals: 2

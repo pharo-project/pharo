@@ -1,13 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19488 STONWriterTests>>#testDictionaryWithComplexKeys is order dependent
-	https://pharo.fogbugz.com/f/cases/19488
+ ^ '18915 Kernel depends on Reflectivity
+	https://pharo.fogbugz.com/f/cases/18915
 
-18584 DNU on showing menu in PointerExplorer
-	https://pharo.fogbugz.com/f/cases/18584
+19654 Tooltips with description of the over and through debugger buttons actions
+	https://pharo.fogbugz.com/f/cases/19654
 
-18459 FileList calls unimplemented method allRegisteredServices
-	https://pharo.fogbugz.com/f/cases/18459
-
-18724 DNU EyeTreeInspector workspace pane context menu
-	https://pharo.fogbugz.com/f/cases/18724'
+19724 Inspecting socket can produce PrimitiveFailed
+	https://pharo.fogbugz.com/f/cases/19724'

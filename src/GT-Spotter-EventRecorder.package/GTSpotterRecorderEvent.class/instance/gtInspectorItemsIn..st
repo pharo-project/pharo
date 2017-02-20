@@ -11,9 +11,9 @@ gtInspectorItemsIn: composite
 						ifTrue: [ each value collectWithIndex: [:x :i | i -> x ] ]
 						ifFalse: [ #() ] ] ];
 		column: 'Key' 
-			evaluated: [:each | GTObjectPrinter new asTruncatedTextFrom: each key ];
+			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each key ];
 		column: 'Value' 
-			evaluated: [:each | GTObjectPrinter new asTruncatedTextFrom: each value ];
+			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each value ];
 		beMultiple;
 		send: [ :selection | 
 			(selection notNil and: [ selection size = 1 ]) 

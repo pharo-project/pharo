@@ -1,0 +1,3 @@
+testing
+shouldDisplayPresentationCreatedBy: aCollection 
+	^ true

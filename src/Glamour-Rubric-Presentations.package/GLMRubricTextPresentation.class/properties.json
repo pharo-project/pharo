@@ -12,7 +12,8 @@
 		"tabWidth",
 		"withColumns",
 		"textSegments",
-		"primarySelectionInterval" ],
+		"primarySelectionInterval",
+		"withGhostText" ],
 	"name" : "GLMRubricTextPresentation",
 	"pools" : [
 		 ],

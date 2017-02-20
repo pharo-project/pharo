@@ -1,0 +1,1 @@
+I model the  `self` variable. This the value of this variable is always the host object. 

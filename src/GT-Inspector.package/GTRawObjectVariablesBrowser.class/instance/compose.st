@@ -12,7 +12,7 @@ compose
 		browser transmit 
 			from: #variables; 
 			toOutsidePort: #selection; 
-			transformed: [:assoc | assoc ifNotNil: [assoc value]].
+			transformed: [ :aNode | aNode ifNotNil: [aNode value]].
 		browser transmit 
 			from: #evaluator; 
 			toOutsidePort: #selection ]

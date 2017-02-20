@@ -2,13 +2,15 @@
 	"category" : "Glamour-FastTable-Model",
 	"classinstvars" : [
 		 ],
+	"classtraitcomposition" : "TGLMFastTableColumnsRenderer classTrait",
 	"classvars" : [
 		 ],
-	"commentStamp" : "CyrilFerlicot 11/10/2015 11:54",
+	"commentStamp" : "AndreiChis 2/6/2017 14:39",
 	"instvars" : [
 		"columnToSortBy" ],
 	"name" : "GLMFastTableDataSource",
 	"pools" : [
 		 ],
 	"super" : "GLMFastListDataSource",
+	"traitcomposition" : "TGLMFastTableColumnsRenderer",
 	"type" : "normal" }

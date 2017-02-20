@@ -4,7 +4,7 @@ newColumnWith: aCollectionOfMorphElements
 	<lint: 'Utility methods' rationale: 'defined here to facilate the use of the library' author: 'cyrille.delaunay'>
 	
 	|answer|
-	answer := PanelMorph new
+	answer := GLMPanelMorph new
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		fillStyle: Color transparent; "non pane color tracking"

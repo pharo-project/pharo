@@ -8,6 +8,7 @@
 	"instvars" : [
 		"action",
 		"title",
+		"help",
 		"keymap",
 		"position",
 		"category",

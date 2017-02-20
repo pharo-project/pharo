@@ -1,3 +1,3 @@
 accessing
 panes
-	^ self first panes
+	^ self browser panes
