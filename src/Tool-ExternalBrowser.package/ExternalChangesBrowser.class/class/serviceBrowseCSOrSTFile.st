@@ -8,4 +8,4 @@ serviceBrowseCSOrSTFile
 		selector: #openOnStream:
 		description: 'Open a changelist tool on this file'
 		buttonLabel: 'Changes')
-		argumentGetter: [ :stream | stream readOnlyStream ]
+		argumentGetter: [ :stream | stream readStream ]

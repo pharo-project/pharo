@@ -10,7 +10,6 @@ reference: dir
 	tmpReference isReadable 
 		ifFalse: [ ^ self inform: ('Cannot read {1}' translated format: { tmpReference})].
 	reference := tmpReference.
-	sortMode ifNil: [sortMode := #date].
 	
 	volumeList := ((Array with: '[]'), reference pathSegments)  
 				withIndexCollect: [:each :i | ( String new: i-1 withAll: $ ), each].

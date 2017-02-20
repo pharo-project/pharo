@@ -1,5 +1,5 @@
 pharo - scripts
-script60400
+script60401
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -302,7 +302,7 @@ Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
 STON-Core-SvenVanCaekenberghe.82.mcz
-STON-Tests-SvenVanCaekenberghe.71.mcz
+STON-Tests-TheIntegrator.73.mcz
 STON-Text support-TheIntegrator.2.mcz
 SUnit-Core-TheIntegrator.219.mcz
 SUnit-Help-MarcusDenker.9.mcz
@@ -328,7 +328,7 @@ Spec-Core-TheIntegrator.539.mcz
 Spec-Debugger-TheIntegrator.280.mcz
 Spec-Examples-TheIntegrator.131.mcz
 Spec-Help-TheIntegrator.13.mcz
-Spec-Inspector-TheIntegrator.285.mcz
+Spec-Inspector-TheIntegrator.289.mcz
 Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.292.mcz
 Spec-PolyWidgets-TheIntegrator.93.mcz
@@ -385,8 +385,8 @@ Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
 Tool-DependencyAnalyser-UI-ChristopheDemarey.54.mcz
 Tool-Diff-TheIntegrator.47.mcz
-Tool-ExternalBrowser-TheIntegrator.55.mcz
-Tool-FileList-TheIntegrator.90.mcz
+Tool-ExternalBrowser-TheIntegrator.57.mcz
+Tool-FileList-TheIntegrator.92.mcz
 Tool-FileList-Tests-EstebanLorenzano.3.mcz
 Tool-Finder-TheIntegrator.78.mcz
 Tool-ImageCleaner-TheIntegrator.19.mcz
