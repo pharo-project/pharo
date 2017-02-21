@@ -23,6 +23,9 @@ install:
 
 script:
 - ./pharo-monkey/target/monkey --travis build
+- cd build/output
+- ./pharo --nodisplay Pharo.image test --no-xterm --fail-on-failure ".*"
+- cd ..
 
 before_deploy:
 - sh ./scripts/deploy_bintray_prepare.sh
