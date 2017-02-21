@@ -1,4 +1,4 @@
-*Unicode-Initialization
+initialization
 parseCompositionMappingFrom: stream
 "
 	self parseCompositionMapping

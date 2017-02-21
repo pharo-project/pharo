@@ -1,5 +1,5 @@
 pharo - scripts
-script60405
+script60406
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2492.mcz
+Kernel-TheIntegrator.2493.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.152.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -253,7 +253,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-TaskbarIcons-TheIntegrator.48.mcz
-Polymorph-Widgets-TheIntegrator.1415.mcz
+Polymorph-Widgets-TheIntegrator.1416.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -297,7 +297,7 @@ Ring-Tests-Containers-MarcusDenker.18.mcz
 Ring-Tests-Kernel-TheIntegrator.93.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
-Rubric-TheIntegrator.435.mcz
+Rubric-TheIntegrator.436.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
@@ -398,7 +398,7 @@ Tool-Transcript-TheIntegrator.25.mcz
 Tool-Workspace-TheIntegrator.48.mcz
 Tools-TheIntegrator.1530.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.979.mcz
+Traits-TheIntegrator.981.mcz
 Transcript-TheIntegrator.56.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz
@@ -406,7 +406,7 @@ TxText-Model-MarcusDenker.67.mcz
 TxText-Styler-HenrikNergaard.18.mcz
 TxTextTests-Model-SeanDeNigris.29.mcz
 UIManager-TheIntegrator.195.mcz
-Unicode-Initialization-TheIntegrator.15.mcz
+Unicode-Initialization-TheIntegrator.17.mcz
 UnifiedFFI-TheIntegrator.85.mcz
 UnifiedFFI-Legacy-TheIntegrator.4.mcz
 UnifiedFFI-Tests-TheIntegrator.36.mcz
