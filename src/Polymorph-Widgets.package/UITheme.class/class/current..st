@@ -6,11 +6,20 @@ current: aUITheme
 	SystemProgressMorph reset. "reset to use new fill styles"
 	ScrollBar initializeImagesCache. "reset to use new arrows"
 
-	SHPreferences setStyleTable: aUITheme shStyleTable.
-	PolymorphSystemSettings desktopColor: aUITheme desktopColor.
-	NECPreferences backgroundColor: aUITheme windowColor. 
-	Paragraph insertionPointColor: aUITheme caretColor.
-	BalloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor.
-	aUITheme updateWorldDockingBars.
+	self class environment at: #SHPreferences ifPresent: [:shPreferences |
+		shPreferences setStyleTable: aUITheme shStyleTable. ].
+
+	self class environment at: #PolymorphSystemSettings ifPresent: [:polymorphSystemSettings |
+		polymorphSystemSettings desktopColor: aUITheme desktopColor. ].
 	
+	self class environment at: #NECPreferences ifPresent: [:necPreferences |
+		necPreferences backgroundColor: aUITheme windowColor.  ].
+
+	self class environment at: #Paragraph ifPresent: [:paragraph |
+		paragraph insertionPointColor: aUITheme caretColor.  ].
+
+	self class environment at: #BalloonMorph ifPresent: [:balloonMorph |
+		balloonMorph setBalloonColorTo: aUITheme balloonBackgroundColor. ].
+
+	aUITheme updateWorldDockingBars.
 	World themeChanged.

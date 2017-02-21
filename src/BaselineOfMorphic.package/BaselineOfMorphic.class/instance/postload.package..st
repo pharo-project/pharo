@@ -8,13 +8,6 @@ postload: loader package: packageSpec
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
 
-	UITheme class compile: 'current: aUITheme
-		Current := aUITheme.
-		SystemProgressMorph reset. "reset to use new fill styles"
-		ScrollBar initializeImagesCache. "reset to use new arrows"
-		aUITheme updateWorldDockingBars.
-		World themeChanged.'.
-		
 	SystemSettingsPersistence class compile: 'updateSettingNodes
 		[self default updateSettingNodes] ifError: [  ]'.
 

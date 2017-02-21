@@ -1,5 +1,5 @@
 pharo - scripts
-script60404
+script60405
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -20,7 +20,7 @@ BaselineOfBasicTools-TheIntegrator.6.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
 BaselineOfIDE-TheIntegrator.22.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
-BaselineOfMorphic-TheIntegrator.19.mcz
+BaselineOfMorphic-TheIntegrator.21.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
 BaselineOfPharoBootstrap-TheIntegrator.4.mcz
 BaselineOfSUnit-TheIntegrator.4.mcz
@@ -253,7 +253,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-TaskbarIcons-TheIntegrator.48.mcz
-Polymorph-Widgets-TheIntegrator.1411.mcz
+Polymorph-Widgets-TheIntegrator.1415.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -297,7 +297,7 @@ Ring-Tests-Containers-MarcusDenker.18.mcz
 Ring-Tests-Kernel-TheIntegrator.93.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
-Rubric-TheIntegrator.433.mcz
+Rubric-TheIntegrator.435.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
@@ -318,7 +318,7 @@ Settings-System-TheIntegrator.43.mcz
 ShoreLine-Report-Core-TommasoDalSasso.11.mcz
 ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
-Shout-TheIntegrator.302.mcz
+Shout-TheIntegrator.304.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.785.mcz
 Slot-Tests-TheIntegrator.103.mcz
@@ -335,7 +335,7 @@ Spec-PolyWidgets-TheIntegrator.93.mcz
 Spec-Tests-TheIntegrator.104.mcz
 Spec-Tools-TheIntegrator.382.mcz
 StartupPreferences-TheIntegrator.153.mcz
-SublimishTheme-TheIntegrator.9.mcz
+SublimishTheme-TheIntegrator.11.mcz
 System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
 System-Caching-TheIntegrator.29.mcz

@@ -1,10 +1,13 @@
 public
 commentForCurrentUpdate
- ^ '18915 Kernel depends on Reflectivity
-	https://pharo.fogbugz.com/f/cases/18915
+ ^ '19730 RubPrimarySelectionMorph>>#selectionColor does not respect theme style
+	https://pharo.fogbugz.com/f/cases/19730
 
-19654 Tooltips with description of the over and through debugger buttons actions
-	https://pharo.fogbugz.com/f/cases/19654
+19735 Desktop color issue in the bootstrapped image
+	https://pharo.fogbugz.com/f/cases/19735
 
-19724 Inspecting socket can produce PrimitiveFailed
-	https://pharo.fogbugz.com/f/cases/19724'
+19658 Red in Dark Theme is plain bad
+	https://pharo.fogbugz.com/f/cases/19658
+
+19734 Sublimish theme menu text selection should be not black
+	https://pharo.fogbugz.com/f/cases/19734'
