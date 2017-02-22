@@ -99,11 +99,13 @@ cd icon-packs
 wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
 cd ..
 
+ln -s .. pharo-core #Required for the correct work of metacello baselines and unicode initialization
+
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
 ./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
 ./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
-#./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
+./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip core$SUFFIX.zip core.image
 
 #Bootstrap Monticello Part 1: Core and Local repositories
@@ -128,6 +130,5 @@ zip metacello$SUFFIX.zip metacello.*
 
 echo "[Pharo] Reloading rest of packages"
 ./vm/pharo -vm-display-null metacello.image save Pharo
-ln -s .. pharo-core #Required for the correct work of metacello baselines
 ./vm/pharo -vm-display-null Pharo.image eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
 zip Pharo$SUFFIX.zip Pharo.*
