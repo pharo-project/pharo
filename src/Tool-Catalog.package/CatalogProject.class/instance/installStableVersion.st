@@ -1,6 +1,7 @@
 installing
 installStableVersion 
-	Gofer it 
-		url: self repositoryUrl;
-		configurationOf: self name;
-		loadStable
+	  Metacello new
+		repository: self repositoryUrl, '/',self name;
+		configuration: self name;
+		version: #'stable';
+		load

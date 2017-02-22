@@ -1,11 +1,15 @@
 transforming
 extractMethod
-	| parseTree isSequence extractCode subtree newCode |
+	| parseTree isSequence extractCode subtree newCode errorMessage |
 	extractCode := self getExtractedSource.
 	extractedParseTree := RBParser parseExpression: extractCode
-				onError: [:string :pos | self refactoringError: 'Invalid source to extract - ', string].
+				onError: [:string :pos :parser |  errorMessage := string. parser parseErrorNode: string ].
 	extractedParseTree isNil 
-		ifTrue: [self refactoringError: 'Invalid source to extract'].
+		ifTrue: [self refactoringFailure: 'Invalid source to extract'].
+		
+	extractedParseTree isFaulty
+		ifTrue: [self refactoringFailure: 'Invalid source to extract - ', errorMessage.].
+		
 	(extractedParseTree isSequence 
 		and: [extractedParseTree statements isEmpty]) 
 			ifTrue: [self refactoringError: 'Select some code to extract'].

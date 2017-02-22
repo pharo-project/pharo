@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19731 secondary selection color should be not modified
-	https://pharo.fogbugz.com/f/cases/19731
+ ^ '19736 Catalog should use Metacello API instead of Gofer for Configuration installation
+	https://pharo.fogbugz.com/f/cases/19736
 
-19538 When replacing a slot in class by WeakSlot, it fails to migrate existing instances
-	https://pharo.fogbugz.com/f/cases/19538
-
-19603 composition mapping should be initialized on bootstrapped image
-	https://pharo.fogbugz.com/f/cases/19603'
+19446 Extract Method is broken
+	https://pharo.fogbugz.com/f/cases/19446'
