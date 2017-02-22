@@ -213,7 +213,6 @@ spec group: 'Shout-Group' with: #(
 
 spec group: 'MetacelloExtras-Core' with: #(
 	'BaselineOfMetacello'
-	'BaselineOfFileTree'
 	'Metacello-GitBasedRepository'	
 	'Metacello-Bitbucket'	
 	"'Metacello-GitHub'"
@@ -237,7 +236,7 @@ spec group: 'Refactoring-Rules-Group' with: #(
 	'System-Support-Rules'
 	'Rubric-Rules'
 ).
-spec group: 'Refactoring-Tests' with: #(
+spec group: 'Refactoring-Tests-Group' with: #(
 	'Refactoring-Tests-Core'		"'Kernel-Tests' depend on it, cleanup needed!"
 	'Refactoring-Tests-Changes'
 	'Refactoring-Tests-Critics'
@@ -249,7 +248,7 @@ spec group: 'Refactoring-Help-Group' with: #(
 ).
 spec group: 'Refactoring-Group' with: #(
 	'Refactoring-Rules-Group'
-	'Refactoring-Tests-Core'
+	'Refactoring-Tests-Group'
 	'Refactoring-Help-Group' 
 ).
 

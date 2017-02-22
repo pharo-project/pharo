@@ -1,7 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19736 Catalog should use Metacello API instead of Gofer for Configuration installation
-	https://pharo.fogbugz.com/f/cases/19736
+ ^ '19743 Fix Refactoring-Tests-Group in BaselineOfIDE
+	https://pharo.fogbugz.com/f/cases/19743
 
-19446 Extract Method is broken
-	https://pharo.fogbugz.com/f/cases/19446'
+19744 integrate PharoBootstrap-Initialization
+	https://pharo.fogbugz.com/f/cases/19744'
