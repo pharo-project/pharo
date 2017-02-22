@@ -103,6 +103,7 @@ cd ..
 echo "[Core] Class and RPackage initialization"
 ./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
 ./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
+./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip core$SUFFIX.zip core.image
 
 #Bootstrap Monticello Part 1: Core and Local repositories
