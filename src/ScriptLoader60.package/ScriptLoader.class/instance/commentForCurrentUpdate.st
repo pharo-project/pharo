@@ -1,7 +1,4 @@
 public
 commentForCurrentUpdate
- ^ '19743 Fix Refactoring-Tests-Group in BaselineOfIDE
-	https://pharo.fogbugz.com/f/cases/19743
-
-19744 integrate PharoBootstrap-Initialization
-	https://pharo.fogbugz.com/f/cases/19744'
+ ^ '19748 new VMs allow enabling of WriteBarrierTests
+	https://pharo.fogbugz.com/f/cases/19748'

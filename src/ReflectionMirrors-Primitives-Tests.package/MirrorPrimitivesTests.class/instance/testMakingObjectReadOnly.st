@@ -1,6 +1,5 @@
 tests-write barrier
 testMakingObjectReadOnly
-	<expectedFailure>
 	| point |
 	point := 10@20.
 	MirrorPrimitives makeObject: point readOnly: true.
