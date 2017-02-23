@@ -99,7 +99,8 @@ cd icon-packs
 wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
 cd ..
 
-ln -s .. pharo-core #Required for the correct work of metacello baselines and unicode initialization
+#Required for the correct work of metacello baselines and unicode initialization
+ln -s .. pharo-core 
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
