@@ -1,5 +1,5 @@
 pharo - scripts
-script60410
+script60411
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -54,7 +54,7 @@ ConfigurationCommandLineHandler-Core-TheIntegrator.29.mcz
 ConfigurationCommandLineHandler-Tests-MarcusDenker.11.mcz
 ContributingToTheCatalogHelp-TheIntegrator.9.mcz
 Debugger-Tests-TheIntegrator.4.mcz
-DebuggerActions-TheIntegrator.89.mcz
+DebuggerActions-TheIntegrator.90.mcz
 DebuggerFilters-TheIntegrator.9.mcz
 DebuggerModel-TheIntegrator.130.mcz
 Deprecated60-TheIntegrator.18.mcz
@@ -341,7 +341,7 @@ System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
 System-Caching-TheIntegrator.29.mcz
 System-CachingTests-TheIntegrator.19.mcz
-System-Changes-TheIntegrator.307.mcz
+System-Changes-TheIntegrator.309.mcz
 System-Changes-FileServices-TheIntegrator.4.mcz
 System-Clipboard-TheIntegrator.42.mcz
 System-CommandLine-TheIntegrator.181.mcz
@@ -380,7 +380,7 @@ Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
 Tool-Base-TheIntegrator.190.mcz
-Tool-Catalog-TheIntegrator.55.mcz
+Tool-Catalog-TheIntegrator.57.mcz
 Tool-CriticBrowser-TheIntegrator.65.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
