@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "FFI_i386",
+	"pools" : [
+		 ],
+	"super" : "FFIArchitecture",
+	"type" : "normal" }

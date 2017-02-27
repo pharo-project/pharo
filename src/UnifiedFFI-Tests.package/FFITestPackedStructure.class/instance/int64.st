@@ -1,4 +1,4 @@
 accessing structure variables
 int64
 	"This method was automatically generated"
-	^handle signedLongLongAt: 20
+	^handle signedLongLongAt: OFFSET_INT64

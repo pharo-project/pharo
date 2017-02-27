@@ -1,4 +1,4 @@
-as yet unclassified
+compiling
 compileSpec 
 	"This will compile the structure spec into something ExternalStructure can understand"
 	^ fields values 

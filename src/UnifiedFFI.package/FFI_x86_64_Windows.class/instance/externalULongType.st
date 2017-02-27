@@ -1,0 +1,3 @@
+types
+externalULongType
+	^ ExternalType ulong

@@ -6,5 +6,6 @@ initialize
 	GCMallocedAliens ifNil:
 		[GCMallocedAliens := AlienWeakTable newForOwner: self].
 	WordSize := Smalltalk wordSize.
+	lifoCallbackSemaphore := Semaphore new.
 	self ensureInSpecialObjectsArray.
 	self ensureNotifiedAtStartup

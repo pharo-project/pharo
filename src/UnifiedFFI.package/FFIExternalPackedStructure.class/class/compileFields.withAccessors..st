@@ -6,8 +6,9 @@ compileFields: specArray withAccessors: defineBoolean
 	offset := 0.	
 	externalStructureAlignment := self packedStructureAlignment.
 	fieldSpec fieldsAndTypesDo: [ :fieldName :type | 
+		self defineFieldOffset: fieldName value: offset + 1.  
 		(defineBoolean and: [ fieldName isSymbol ]) ifTrue: [ 
-			self defineFieldAccessorsFor: fieldName startingAt: offset + 1 type: type ]. 
+			self defineFieldAccessorsFor: fieldName type: type ]. 
 		offset := offset + type typeSize.
 	].
 	offset := offset alignedTo: externalStructureAlignment.

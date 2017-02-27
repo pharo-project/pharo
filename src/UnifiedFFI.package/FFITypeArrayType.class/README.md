@@ -1,0 +1,1 @@
+I define the type for FFITypeArray objects.

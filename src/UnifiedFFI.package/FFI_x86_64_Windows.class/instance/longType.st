@@ -1,0 +1,3 @@
+types
+longType
+	^ FFIInt32

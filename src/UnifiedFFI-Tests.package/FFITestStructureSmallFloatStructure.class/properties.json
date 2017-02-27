@@ -1,0 +1,17 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"OFFSET_W",
+		"OFFSET_X",
+		"OFFSET_Y",
+		"OFFSET_Z" ],
+	"commentStamp" : "RonieSalgado 2/14/2017 01:57",
+	"instvars" : [
+		 ],
+	"name" : "FFITestStructureSmallFloatStructure",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalStructure",
+	"type" : "normal" }

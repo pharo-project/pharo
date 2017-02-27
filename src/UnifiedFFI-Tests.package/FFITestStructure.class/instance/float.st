@@ -1,4 +1,4 @@
 accessing structure variables
 float
 	"This method was automatically generated"
-	^handle floatAt: 9
+	^handle floatAt: OFFSET_FLOAT

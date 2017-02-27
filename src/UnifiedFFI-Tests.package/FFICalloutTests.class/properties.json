@@ -7,7 +7,7 @@
 		"TYPEVAR" ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"architecture" ],
 	"name" : "FFICalloutTests",
 	"pools" : [
 		 ],

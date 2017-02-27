@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"architecture" ],
 	"name" : "FFIExternalStructureFieldParserTests",
 	"pools" : [
 		 ],

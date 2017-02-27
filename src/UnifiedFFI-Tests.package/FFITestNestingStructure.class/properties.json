@@ -3,7 +3,9 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_NESTED",
+		"OFFSET_ONE",
+		"OFFSET_TWO" ],
 	"commentStamp" : "",
 	"instvars" : [
 		 ],

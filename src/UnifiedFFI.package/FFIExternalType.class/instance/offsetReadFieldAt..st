@@ -1,0 +1,3 @@
+emitting code
+offsetReadFieldAt: offsetVariableName
+	^ self externalTypeWithArity offsetReadFieldAt: offsetVariableName

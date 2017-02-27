@@ -1,4 +1,4 @@
 accessing structure variables
 short
 	"This method was automatically generated"
-	^handle signedShortAt: 2
+	^handle signedShortAt: OFFSET_SHORT

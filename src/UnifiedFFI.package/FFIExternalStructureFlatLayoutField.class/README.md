@@ -1,0 +1,1 @@
+I represent a field in a structure layout. I am used for computing which fields present in a structure are passed in registers, and which are not.

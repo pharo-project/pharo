@@ -13,3 +13,6 @@ When Aliens are used as parameters in FFI calls then all are "passed by value", 
 Class Variables:
 GCMallocedAliens <AlienWeakTable of <Alien -> Integer>> - weak collection of malloced aliens, used to free malloced memory of Aliens allocated with newGC:
 LoadedLibraries <Dictionary of <String -> Alien>> - library name to library handle map
+
+Class instance variables
+lifoCallbackSemaphore <Semaphore> - The lifoCallbackSemaphore queues callbacks which cannot return because they are not the most recent callback.  Callback return must be last-in-first-out (LIFO) to avoid scrambling the C stack.  See Alien class>>invokeCallbackContext:.

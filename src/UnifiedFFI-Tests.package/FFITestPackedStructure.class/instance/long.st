@@ -1,4 +1,4 @@
 accessing structure variables
 long
 	"This method was automatically generated"
-	^handle signedLongAt: 4
+	^handle platformLongAt: OFFSET_LONG

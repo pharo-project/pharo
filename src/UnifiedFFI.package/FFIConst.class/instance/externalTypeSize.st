@@ -1,3 +1,3 @@
 accessing
 externalTypeSize
-	^ externalType externalTypeSize
+	^ externalType byteSize

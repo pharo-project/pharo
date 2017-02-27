@@ -4,4 +4,5 @@ initialize
 	Callback abi caseOf: {
 	['IA32']		->	[self initializeX86].
 	['ARM32']	->	[self initializeARM32].
-	['X64']		->	[self initializeX64] }
+	['X64']		->	[self initializeX64].
+	['X64Win64']	->	[self initializeX64Win64] }

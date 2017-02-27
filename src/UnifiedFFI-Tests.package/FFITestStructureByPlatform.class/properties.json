@@ -1,0 +1,15 @@
+{
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"OFFSET_LONG",
+		"OFFSET_POINTER" ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "FFITestStructureByPlatform",
+	"pools" : [
+		 ],
+	"super" : "FFIExternalStructure",
+	"type" : "normal" }

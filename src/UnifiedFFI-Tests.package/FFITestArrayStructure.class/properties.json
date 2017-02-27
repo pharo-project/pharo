@@ -4,7 +4,9 @@
 		 ],
 	"classvars" : [
 		"Byte10",
-		"Char5" ],
+		"Char5",
+		"OFFSET_BYTE10",
+		"OFFSET_CHAR5" ],
 	"commentStamp" : "",
 	"instvars" : [
 		 ],
