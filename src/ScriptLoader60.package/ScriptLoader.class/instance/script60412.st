@@ -1,5 +1,5 @@
 pharo - scripts
-script60411
+script60412
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -8,7 +8,7 @@ Announcements-Core-TheIntegrator.82.mcz
 Announcements-Help-TheIntegrator.12.mcz
 Announcements-Tests-Core-TheIntegrator.39.mcz
 Athens-Balloon-MarcusDenker.20.mcz
-Athens-Cairo-TheIntegrator.126.mcz
+Athens-Cairo-TheIntegrator.128.mcz
 Athens-CairoPools-NicolaiHess.14.mcz
 Athens-Core-AliakseiSyrel.57.mcz
 Athens-Examples-TheIntegrator.47.mcz
@@ -161,7 +161,7 @@ Keymapping-Pragmas-TheIntegrator.62.mcz
 Keymapping-Settings-StephaneDucasse.83.mcz
 Keymapping-Tests-TheIntegrator.111.mcz
 Keymapping-Tools-Spec-TheIntegrator.32.mcz
-Komitter-TheIntegrator.186.mcz
+Komitter-TheIntegrator.188.mcz
 Manifest-Core-TheIntegrator.252.mcz
 Manifest-Resources-Tests-MarcusDenker.14.mcz
 Manifest-Tests-TheIntegrator.55.mcz
@@ -229,7 +229,7 @@ Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
 NautilusCommon-TheIntegrator.325.mcz
 NautilusGroupAutoBuilder-TheIntegrator.20.mcz
-NautilusRefactoring-TheIntegrator.310.mcz
+NautilusRefactoring-TheIntegrator.312.mcz
 Network-Kernel-TheIntegrator.136.mcz
 Network-MIME-TheIntegrator.73.mcz
 Network-Mail-TheIntegrator.52.mcz
@@ -326,7 +326,7 @@ Slot-Tests-TheIntegrator.103.mcz
 SmartSuggestions-TheIntegrator.269.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
 Spec-Core-TheIntegrator.539.mcz
-Spec-Debugger-TheIntegrator.282.mcz
+Spec-Debugger-TheIntegrator.284.mcz
 Spec-Examples-TheIntegrator.131.mcz
 Spec-Help-TheIntegrator.13.mcz
 Spec-Inspector-TheIntegrator.289.mcz
