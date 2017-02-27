@@ -23,7 +23,10 @@ baseline: spec
 		spec package: 'FontInfrastructure'.
 		spec package: 'FreeType'.
 		spec package: 'Fuel'.
-		spec package: 'FuelPlatform'.
+		spec package: 'FuelPlatform-Core'.
+		spec package: 'FuelPlatform-Pharo-Core'.
+		spec package: 'FuelPlatform-Pharo-06'.
+	
 		spec package: 'FuelCommandLineHandler'.
 		spec package: 'FuelSystem-FileRegistry'.
 

@@ -12,11 +12,15 @@ spec group: 'Optional-Group' with: #(
 
 	'STON-Text support'	"standalone?"
 	'System-CommandLine-TextSupport'	"standalone?"
-	'NodeNavigation'	"standalone?"
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
-).		
+).	
+	
+spec group: 'NodeNavigation-Group' with: #(
+	'NodeNavigation'	"standalone?"
+	'NodeNavigation-Tests'	
+).					
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens-Group' "dependency of Hiedra"
@@ -517,6 +521,7 @@ spec group: #default with: #(
 	'Catalog-Group'
 	'Epicea-Group'
 	'Optional-Group'
+	'NodeNavigation-Group'
 	'Versionner-Group'
 	'General-Tests-Group'
 	'Themes-Group'

@@ -243,6 +243,7 @@ baseline: spec
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NECompletion-Tests'.
 		spec package: 'Nautilus-Tests'.
+		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'Pharo-Help'.

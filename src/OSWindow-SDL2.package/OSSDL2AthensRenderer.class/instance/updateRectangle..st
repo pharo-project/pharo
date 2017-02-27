@@ -13,7 +13,7 @@ updateRectangle: aRectangle
 		pitch := pitchHolder signedLongAt: 1.
 	] ensure: [ pitchHolder free ].
 
-	externalForm := ExternalForm extent: textureExtent depth: 32 bits: pixels.
+	externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
 	[
 		self primitiveUpdateRectangle: intersection externalForm: externalForm
 	] ensure: [

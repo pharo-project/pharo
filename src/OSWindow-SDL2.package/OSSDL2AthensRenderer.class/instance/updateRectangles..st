@@ -12,7 +12,7 @@ updateRectangles: allDamage
 	] ensure: [ pitchHolder free ].
 	
 	[
-		externalForm := ExternalForm extent: textureExtent depth: 32 bits: pixels.
+		externalForm := OSSDL2ExternalForm extent: textureExtent depth: 32 bits: pixels.
 		allDamage do: [ :rectangle |
 			intersection := rectangle
 				intersect: (0 @ 0 corner: window extent)
