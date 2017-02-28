@@ -30,6 +30,8 @@ additionalInitialization
 	FreeTypeSystemSettings loadFt2Library: true.
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
+	
+	CatalogSettings displayCatalogProjectsInSpotter: false.
 
 	RealEstateAgent usedStrategy: #cascadeFor:initialExtent:world:.
 	GrowlMorph position: #bottomLeft.

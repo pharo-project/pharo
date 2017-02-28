@@ -1,5 +1,5 @@
 pharo - scripts
-script60415
+script60416
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.6.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.29.mcz
+BaselineOfIDE-TheIntegrator.32.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.23.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -252,7 +252,7 @@ OpalCompiler-Core-TheIntegrator.885.mcz
 OpalCompiler-Tests-TheIntegrator.378.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
-PharoBootstrap-Initialization-TheIntegrator.2.mcz
+PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-TaskbarIcons-TheIntegrator.48.mcz
 Polymorph-Widgets-TheIntegrator.1416.mcz

@@ -1,13 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19763 TabManagerMorph do not respect multipleContents mode when tabs are built in background
-	https://pharo.fogbugz.com/f/cases/19763
+ ^ '19732 Reenable Catalog loading in Spotter and fix confusing/hidden setting for it
+	https://pharo.fogbugz.com/f/cases/19732
 
-19762 Optimize small Dictionary and Set creation
-	https://pharo.fogbugz.com/f/cases/19762
+19769 BaselineOfIDE needs update
+	https://pharo.fogbugz.com/f/cases/19769
 
-19459 add #empty instance creation method
-	https://pharo.fogbugz.com/f/cases/19459
-
-19502 Starting Pharo creates a .ston file in appdata directory
-	https://pharo.fogbugz.com/f/cases/19502'
+19771 remove debugging "Alive" report during the bootstrap initialization
+	https://pharo.fogbugz.com/f/cases/19771'

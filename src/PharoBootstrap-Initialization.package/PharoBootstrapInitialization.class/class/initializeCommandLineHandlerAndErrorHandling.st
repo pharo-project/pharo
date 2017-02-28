@@ -72,5 +72,4 @@ Unicode classPool at: #Cn put: 0.
 	Smalltalk openSourceFiles.
 	
 	BasicCommandLineHandler new activate. "BasicCommandLineHandler startUp:"
-	UIManager default inform: 'Alive!'.
 	Processor terminateActive.
