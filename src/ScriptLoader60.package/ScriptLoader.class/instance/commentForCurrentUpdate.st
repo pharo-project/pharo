@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19732 Reenable Catalog loading in Spotter and fix confusing/hidden setting for it
-	https://pharo.fogbugz.com/f/cases/19732
+ ^ '19770 FFIExternalStructurePlatformTests>>#testStructureHasCorrectOffsets32bits is failing on the bootstrapped image
+	https://pharo.fogbugz.com/f/cases/19770
 
-19769 BaselineOfIDE needs update
-	https://pharo.fogbugz.com/f/cases/19769
-
-19771 remove debugging "Alive" report during the bootstrap initialization
-	https://pharo.fogbugz.com/f/cases/19771'
+19761 Debugger wrong temp var value after multiple step through block
+	https://pharo.fogbugz.com/f/cases/19761'
