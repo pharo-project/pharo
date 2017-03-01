@@ -1,5 +1,5 @@
 pharo - scripts
-script60419
+script60420
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,13 +18,13 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.6.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.32.mcz
+BaselineOfIDE-TheIntegrator.34.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.27.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
 BaselineOfPharoBootstrap-TheIntegrator.4.mcz
 BaselineOfSUnit-TheIntegrator.4.mcz
-BaselineOfUI-TheIntegrator.6.mcz
+BaselineOfUI-TheIntegrator.9.mcz
 BaselineOfUnifiedFFI-TheIntegrator.4.mcz
 BlueInk-Core-TheIntegrator.29.mcz
 BlueInk-Extras-TheIntegrator.12.mcz
@@ -198,7 +198,7 @@ MonticelloGUI-TheIntegrator.432.mcz
 MonticelloMocks-TheIntegrator.8.mcz
 MonticelloRemoteRepositories-TheIntegrator.18.mcz
 Moose-Algos-Graph-VincentBlondeau.33.mcz
-Morphic-Base-TheIntegrator.600.mcz
+Morphic-Base-TheIntegrator.602.mcz
 Morphic-Core-TheIntegrator.313.mcz
 Morphic-Examples-TheIntegrator.64.mcz
 Morphic-Tests-TheIntegrator.11.mcz
@@ -389,7 +389,7 @@ Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
 Tool-DependencyAnalyser-UI-ChristopheDemarey.54.mcz
 Tool-Diff-TheIntegrator.47.mcz
 Tool-ExternalBrowser-TheIntegrator.57.mcz
-Tool-FileList-TheIntegrator.94.mcz
+Tool-FileList-TheIntegrator.96.mcz
 Tool-FileList-Tests-EstebanLorenzano.3.mcz
 Tool-Finder-TheIntegrator.78.mcz
 Tool-ImageCleaner-TheIntegrator.19.mcz
@@ -409,9 +409,9 @@ TxText-Styler-HenrikNergaard.18.mcz
 TxTextTests-Model-SeanDeNigris.29.mcz
 UIManager-TheIntegrator.195.mcz
 Unicode-Initialization-TheIntegrator.17.mcz
-UnifiedFFI-EstebanLorenzano.90.mcz
+UnifiedFFI-EstebanLorenzano.93.mcz
 UnifiedFFI-Legacy-EstebanLorenzano.3.mcz
-UnifiedFFI-Tests-TheIntegrator.43.mcz
+UnifiedFFI-Tests-EstebanLorenzano.41.mcz
 UpdateStreamer-Core-TheIntegrator.34.mcz
 UpdateStreamer-Tests-TheIntegrator.9.mcz
 Versionner-Commit-TheIntegrator.38.mcz

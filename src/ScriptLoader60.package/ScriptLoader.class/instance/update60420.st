@@ -1,6 +1,7 @@
-public
-commentForCurrentUpdate
- ^ '19777 BaselineOfUI compiles own version of RubScrolledTextMorph>>#font:
+pharo - updates
+update60420
+	"self new update60420"
+	self withUpdateLog: '19777 BaselineOfUI compiles own version of RubScrolledTextMorph>>#font:
 	https://pharo.fogbugz.com/f/cases/19777
 
 19772 BaselineOfIDE compiles own version of EpLostChangesDetector>>#startUp:
@@ -13,4 +14,6 @@ commentForCurrentUpdate
 	https://pharo.fogbugz.com/f/cases/18871
 
 19774 BaselineOfUI is compiling own version of Pragma>>#methodSelector
-	https://pharo.fogbugz.com/f/cases/19774'
+	https://pharo.fogbugz.com/f/cases/19774'.
+	self loadTogether: self script60420 merge: false.
+	self flushCaches.

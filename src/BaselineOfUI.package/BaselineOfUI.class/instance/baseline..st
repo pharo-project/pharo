@@ -8,7 +8,6 @@ baseline: spec
 	repository := 'filetree://./pharo-core/src'.    
        
 	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
 		spec baseline: 'Morphic' with: [spec repository: repository].
