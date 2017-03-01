@@ -17,8 +17,6 @@ cleanUpAfterMorphicInitialization
 	Smalltalk globals flushClassNameCache.
 	ScrollBar initializeImagesCache.
 
-	NaturalLanguageTranslator classPool at: #AllKnownPhrases put: nil.
-
 	3 timesRepeat: [ 
 		Smalltalk garbageCollect.
 	 	Symbol compactSymbolTable ].
