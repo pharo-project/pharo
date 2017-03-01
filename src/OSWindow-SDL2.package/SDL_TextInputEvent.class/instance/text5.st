@@ -1,4 +1,4 @@
 accessing structure variables
 text5
 	"This method was automatically generated"
-	^handle unsignedCharAt: 18
+	^handle unsignedCharAt: OFFSET_TEXT5

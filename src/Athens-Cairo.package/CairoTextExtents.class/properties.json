@@ -3,7 +3,12 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_HEIGHT",
+		"OFFSET_WIDTH",
+		"OFFSET_X_ADVANCE",
+		"OFFSET_X_BEARING",
+		"OFFSET_Y_ADVANCE",
+		"OFFSET_Y_BEARING" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],

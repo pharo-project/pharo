@@ -1,4 +1,4 @@
 accessing structure variables
 userdata
 	"This method was automatically generated"
-	^ExternalData fromHandle: (handle pointerAt: 25) type: ExternalType void asPointerType
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_USERDATA) type: ExternalType void asPointerType

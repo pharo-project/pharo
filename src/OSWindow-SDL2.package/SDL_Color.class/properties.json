@@ -3,7 +3,10 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_A",
+		"OFFSET_B",
+		"OFFSET_G",
+		"OFFSET_R" ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
 	"instvars" : [
 		 ],

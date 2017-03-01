@@ -1,5 +1,4 @@
 emitting code
 readFieldAt: byteOffset
-	self error: 'TODO'.
 	^ String streamContents: [ :stream | 
-		stream << '^' << self objectClass name << ' forAddress: (handle unsignedLongAt: ' << byteOffset asString << ')' ]
+		stream << '^' << self objectClass name << ' forAddress: ((handle pointerAt: ' << byteOffset asString << ') asInteger)' ]

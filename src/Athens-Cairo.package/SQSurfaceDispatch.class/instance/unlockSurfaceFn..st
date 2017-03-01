@@ -1,5 +1,7 @@
 accessing structure variables
-unlockSurfaceFn: anObject
+unlockSurfaceFn: aCallback
 	"This method was automatically generated"
-	unlockSurfaceFn := anObject. "Ensure it's not gced"
-	handle unsignedLongAt: 17 put: anObject thunk address
+	unlockSurfaceFn := aCallback.
+	handle 
+		pointerAt: OFFSET_UNLOCKSURFACEFN 
+		put: (ExternalAddress fromAddress: aCallback thunk address)

@@ -1,4 +1,4 @@
 accessing structure variables
 file
 	"This method was automatically generated"
-	^ExternalData fromHandle: (handle pointerAt: 9) type: ExternalType char asPointerType
+	^ExternalData fromHandle: (handle pointerAt: OFFSET_FILE) type: ExternalType char asPointerType

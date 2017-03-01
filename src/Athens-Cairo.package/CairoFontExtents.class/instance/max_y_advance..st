@@ -1,4 +1,4 @@
 accessing structure variables
 max_y_advance: anObject
 	"This method was automatically generated"
-	handle doubleAt: 33 put: anObject
+	handle doubleAt: OFFSET_MAX_Y_ADVANCE put: anObject

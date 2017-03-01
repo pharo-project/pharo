@@ -1,4 +1,4 @@
 accessing structure variables
 sx
 	"This method was automatically generated"
-	^handle doubleAt: 1
+	^handle doubleAt: OFFSET_SX

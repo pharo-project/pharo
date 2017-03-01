@@ -1,4 +1,4 @@
 accessing structure variables
 subsystem
 	"This method was automatically generated"
-	^handle signedLongAt: 5
+	^handle signedLongAt: OFFSET_SUBSYSTEM

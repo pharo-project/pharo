@@ -4,7 +4,12 @@
 		 ],
 	"classtraitcomposition" : "TCairoLibrary classTrait",
 	"classvars" : [
-		 ],
+		"OFFSET_SHX",
+		"OFFSET_SHY",
+		"OFFSET_SX",
+		"OFFSET_SY",
+		"OFFSET_X",
+		"OFFSET_Y" ],
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],

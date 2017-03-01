@@ -3,7 +3,9 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_DISPLAY",
+		"OFFSET_SHELL_SURFACE",
+		"OFFSET_SURFACE" ],
 	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
 	"instvars" : [
 		 ],

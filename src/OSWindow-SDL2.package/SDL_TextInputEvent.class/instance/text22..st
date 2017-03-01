@@ -1,4 +1,4 @@
 accessing structure variables
 text22: anObject
 	"This method was automatically generated"
-	handle unsignedCharAt: 35 put: anObject
+	handle unsignedCharAt: OFFSET_TEXT22 put: anObject

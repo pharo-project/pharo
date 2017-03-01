@@ -1,4 +1,4 @@
 accessing structure variables
 y
 	"This method was automatically generated"
-	^handle signedLongAt: 25
+	^handle signedLongAt: OFFSET_Y

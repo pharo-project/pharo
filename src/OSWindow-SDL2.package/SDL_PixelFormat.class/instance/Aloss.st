@@ -1,4 +1,4 @@
 accessing structure variables
 Aloss
 	"This method was automatically generated"
-	^handle unsignedByteAt: 32
+	^handle unsignedByteAt: OFFSET_ALOSS

@@ -1,4 +1,4 @@
 accessing structure variables
 Rloss
 	"This method was automatically generated"
-	^handle unsignedByteAt: 29
+	^handle unsignedByteAt: OFFSET_RLOSS

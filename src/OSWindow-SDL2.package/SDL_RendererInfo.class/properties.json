@@ -3,6 +3,12 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
+		"OFFSET_FLAGS",
+		"OFFSET_MAX_TEXTURE_HEIGHT",
+		"OFFSET_MAX_TEXTURE_WIDTH",
+		"OFFSET_NAME",
+		"OFFSET_NUM_TEXTURE_FORMATS",
+		"OFFSET_TEXTURE_FORMATS",
 		"Uint32_16" ],
 	"commentStamp" : "EstebanLorenzano 6/3/2016 17:10",
 	"instvars" : [

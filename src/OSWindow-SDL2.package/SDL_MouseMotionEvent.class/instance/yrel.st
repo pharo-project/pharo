@@ -1,4 +1,4 @@
 accessing structure variables
 yrel
 	"This method was automatically generated"
-	^handle signedLongAt: 33
+	^handle signedLongAt: OFFSET_YREL

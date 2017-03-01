@@ -3,11 +3,16 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_GETSURFACEFORMATFN",
+		"OFFSET_LOCKSURFACEFN",
+		"OFFSET_MAJORVERSION",
+		"OFFSET_MINORVERSION",
+		"OFFSET_SHOWSURFACEFN",
+		"OFFSET_UNLOCKSURFACEFN" ],
 	"commentStamp" : "IgorStasenko 12/30/2011 12:35",
 	"instvars" : [
 		"getSurfaceFormatFn",
-		"lookSurfaceFn",
+		"lockSurfaceFn",
 		"showSurfaceFn",
 		"unlockSurfaceFn" ],
 	"name" : "SQSurfaceDispatch",

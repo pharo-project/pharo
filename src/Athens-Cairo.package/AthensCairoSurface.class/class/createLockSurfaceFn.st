@@ -1,8 +1,7 @@
 surface plugin callbacks
 createLockSurfaceFn
-
 	"
-	int lockSurface(int handle, int *pitch, int x, int y, int w, int h);
+	int lockSurface(sqIntptr_t handle, int *pitch, int x, int y, int w, int h);
 		Lock the bits of the surface.
 		Return a pointer to the actual surface bits, or NULL on failure.
 		If successful, store the pitch of the surface (e.g., the bytes
@@ -35,7 +34,7 @@ createLockSurfaceFn
 	"
 
 	^ FFICallback 
-		signature: #(int (int handle, int *pitch, int x, int y, int w, int h))
+		signature: #(void * (void *handle, int *pitch, int x, int y, int w, int h))
 		block: [ :handle :pitch :x :y :w :h |
 			pitch signedLongAt: 1 put: (self get_stride: handle).
 			self get_data: handle ]

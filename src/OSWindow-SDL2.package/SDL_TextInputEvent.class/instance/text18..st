@@ -1,4 +1,4 @@
 accessing structure variables
 text18: anObject
 	"This method was automatically generated"
-	handle unsignedCharAt: 31 put: anObject
+	handle unsignedCharAt: OFFSET_TEXT18 put: anObject
