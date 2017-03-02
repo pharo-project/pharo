@@ -1,16 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19777 BaselineOfUI compiles own version of RubScrolledTextMorph>>#font:
-	https://pharo.fogbugz.com/f/cases/19777
+ ^ '19779 BaselineOfMorphic compiles own version of SystemSettingsPersistence class>>#updateSettingNodes
+	https://pharo.fogbugz.com/f/cases/19779
 
-19772 BaselineOfIDE compiles own version of EpLostChangesDetector>>#startUp:
-	https://pharo.fogbugz.com/f/cases/19772
+19784 code loss when cancelling during save
+	https://pharo.fogbugz.com/f/cases/19784
 
-18784 FileList selected directory entry is not cleared after selecting a new directory
-	https://pharo.fogbugz.com/f/cases/18784
-
-18871 DNU after showing about box of QA annotation question mark icon
-	https://pharo.fogbugz.com/f/cases/18871
-
-19774 BaselineOfUI is compiling own version of Pragma>>#methodSelector
-	https://pharo.fogbugz.com/f/cases/19774'
+19776 BaselineOfMorphic and BaselineOfUI both specify Polymorph-TaskbarIcons
+	https://pharo.fogbugz.com/f/cases/19776'

@@ -33,7 +33,6 @@ baseline: spec
 		spec package: 'Spec-Tools'.
 
 		spec package: 'Morphic-Widgets-Tree'.
-		spec package: 'Polymorph-TaskbarIcons'.
 
 		spec package: 'Keymapping-Core'.
 		spec package: 'Keymapping-KeyCombinations'.

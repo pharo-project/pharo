@@ -55,7 +55,6 @@ baseline: spec
 
 		spec package: 'NewValueHolder'.
 
-		spec package: 'Polymorph-TaskbarIcons'.
 		spec package: 'Polymorph-Widgets'.
 
 		spec package: 'Settings-Graphics'.
