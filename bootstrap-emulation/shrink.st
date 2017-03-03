@@ -121,7 +121,8 @@ FileStream stdout nextPutAll: 'Shrinking...'; lf.!
     
     SystemAnnouncer uniqueInstance unsubscribe: EpMonitor current.
     Job jobAnnouncer unsubscribe: EpMonitor current.
-    
+    SystemAnnouncer uniqueInstance unsubscribe: Breakpoint.
+       
     KMRepository reset.
     KMPragmaKeymapBuilder release.
     PragmaCollector allInstances do: [:pc | pc announcer subscriptions reset].
