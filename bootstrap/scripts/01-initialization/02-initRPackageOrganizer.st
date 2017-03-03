@@ -33,7 +33,7 @@ RPackageOrganizer default basicInitializeFromPackagesList: #(
     'System-Sources'  'Traits' 'Transcript' 'UIManager'
     'Zinc-Character-Encoding-Core' 'Zinc-Resource-Meta-Core' 'NonInteractiveTranscript'
     'System-SessionManager'
-    'PharoBootstrap-Initialization' 'Colors'
+    'PharoBootstrap-Initialization' 'Colors' 'Compression'
 ).
 
 RPackageOrganizer registerInterestToSystemAnnouncement.
