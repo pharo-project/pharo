@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19717 FileSystem workingDirectory wrong after image moved to a new folder
-	https://pharo.fogbugz.com/f/cases/19717
+ ^ '19788 sometimes external structures does not initialise properly OFFSET fields before use
+	https://pharo.fogbugz.com/f/cases/19788
 
-18578 MetacelloValidationError(MetacelloValidationIssue) printOn: rasies Warning #name
-	https://pharo.fogbugz.com/f/cases/18578'
+19221 Rub Find And Replace can not search for "?"
+	https://pharo.fogbugz.com/f/cases/19221
+
+19789 CI tests often fail on Windows
+	https://pharo.fogbugz.com/f/cases/19789'

@@ -6,5 +6,5 @@ extent: aPoint
 				ifTrue: [ 
 					(bounds notNil and: [ bounds width = aPoint x ])
 						ifTrue: [ ^ self ].
-					super extent: ((self paragraph extentFromClientBottomRight: aPoint) max: self minimumExtent).
+					super extent: ((self paragraph withoutDecorator extentFromClientBottomRight: aPoint) max: self minimumExtent).
 					self recomputeSelection ] ]
