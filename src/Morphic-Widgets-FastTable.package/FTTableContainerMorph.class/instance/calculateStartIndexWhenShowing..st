@@ -3,4 +3,11 @@ calculateStartIndexWhenShowing: visibleRows
 	"Answer the first row to show when showing visibleRows rows. 
 	 This works in case we are exceeding the available rows to show"
 
-	^ self owner showIndex max: 1
+	| currentIndex startIndex |
+	currentIndex := self owner showIndex.
+	currentIndex + visibleRows > self owner numberOfRows ifTrue: [ 
+		currentIndex := self owner numberOfRows - visibleRows + 2].
+	startIndex := currentIndex max: 1.
+	self owner basicMoveShowIndexTo: startIndex.
+	^startIndex
+	

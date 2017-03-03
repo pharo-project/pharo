@@ -1,0 +1,15 @@
+{
+	"category" : "Reflectivity-Tools-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"previousBreakpoints",
+		"cls" ],
+	"name" : "BreakpointTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
