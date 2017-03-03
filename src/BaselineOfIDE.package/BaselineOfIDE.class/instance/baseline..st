@@ -201,6 +201,10 @@ baseline: spec
 		spec package: 'ConfigurationOfGTPlaygroundCore'.
 		spec package: 'ConfigurationOfGTInspectorCore'.	"
 		
+		"SortFunctions (standalone)"
+		spec package: 'SortFunctions-Core'.
+		spec package: 'SortFunctions-Tests'.
+
 		"standalone packages"
 		spec package: 'Announcements-Help'.
 		spec package: 'Announcements-Tests-Core'.

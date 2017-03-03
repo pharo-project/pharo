@@ -270,6 +270,11 @@ spec group: 'Catalog-Group' with: #(
 	'Catalog-Help-Group'
 ).
 
+spec group: 'SortFunctions-Group' with: #(
+	'SortFunctions-Core'
+	'SortFunctions-Tests'
+).
+
 spec group: 'QualityAssistant-Core-Group' with: #(
 	"'Manifest-Tests' 'Polymorph-Widgets-Rules' depend on it, needs cleanup"
 	'Manifest-Core-Group' "dependency"
@@ -526,6 +531,8 @@ spec group: #default with: #(
 	'Versionner-Group'
 	'General-Tests-Group'
 	'Themes-Group'
+	
+	'SortFunctions-Group'	
 	
 	'BaselineOfPharoBootstrap'
 ).

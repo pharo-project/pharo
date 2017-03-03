@@ -1,0 +1,4 @@
+testing
+hasUndefinedDirection
+
+	^undefinedDirection notNil
