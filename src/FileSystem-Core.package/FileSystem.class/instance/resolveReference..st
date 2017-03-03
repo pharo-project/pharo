@@ -1,4 +1,4 @@
 navigating
 resolveReference: aReference
 	^ aReference fileSystem = self ifTrue:
-		[workingDirectory resolvePath: aReference path]
+		[self workingDirectoryPath resolvePath: aReference path]

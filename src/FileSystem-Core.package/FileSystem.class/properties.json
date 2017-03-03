@@ -4,9 +4,8 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "ChristopheDemarey 3/3/2017 11:40",
 	"instvars" : [
-		"workingDirectory",
 		"store" ],
 	"name" : "FileSystem",
 	"pools" : [

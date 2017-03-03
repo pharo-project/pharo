@@ -6,4 +6,4 @@ resolvePath: aPath
 		> cd b
 		The shell will attempt to make /a/b/c/b the current directory. "
 
-	^ workingDirectory resolve: aPath
+	^ self workingDirectoryPath resolve: aPath
