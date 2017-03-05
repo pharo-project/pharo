@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '18207 Breakpoints still held after a method/class with breakpoints is removed 
-	https://pharo.fogbugz.com/f/cases/18207
+ ^ '19796 Remove duplicate code from SublimishTheme
+	https://pharo.fogbugz.com/f/cases/19796
 
-19669 FastTable jumps to the selected element when its resized
-	https://pharo.fogbugz.com/f/cases/19669
+18785 FileList: filter field does not show the actual filter
+	https://pharo.fogbugz.com/f/cases/18785
 
-19775 Bootstrapped image does not contain class comment of the Context class
-	https://pharo.fogbugz.com/f/cases/19775'
+19795 Fix PackageTasksPlugin
+	https://pharo.fogbugz.com/f/cases/19795'

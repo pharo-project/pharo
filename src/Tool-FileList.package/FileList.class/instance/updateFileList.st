@@ -9,6 +9,7 @@ updateFileList
 	contents := ''.
 	self changed: #volumeListIndex.
 	self changed: #list.
+	self changed: #pattern.
 	self grid deselectAll.
 	self grid updateList.
 	self updateButtonRow

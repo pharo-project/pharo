@@ -7,6 +7,7 @@ morphicPatternPane
 	^ SearchMorph new
 		model: self;
 		setIndexSelector: #pattern:;
+		getIndexSelector: #pattern;		
 		searchList: self class searchList;
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
