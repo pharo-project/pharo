@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19796 Remove duplicate code from SublimishTheme
-	https://pharo.fogbugz.com/f/cases/19796
+ ^ '19793 SHTextStylerST80 always parser code as method if workspace is nil
+	https://pharo.fogbugz.com/f/cases/19793
 
-18785 FileList: filter field does not show the actual filter
-	https://pharo.fogbugz.com/f/cases/18785
-
-19795 Fix PackageTasksPlugin
-	https://pharo.fogbugz.com/f/cases/19795'
+19797 Add access methods in PharoCommonTools instead of using DNU
+	https://pharo.fogbugz.com/f/cases/19797'

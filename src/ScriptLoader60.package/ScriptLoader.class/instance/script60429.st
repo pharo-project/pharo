@@ -1,5 +1,5 @@
 pharo - scripts
-script60428
+script60429
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -319,7 +319,7 @@ Settings-System-TheIntegrator.43.mcz
 ShoreLine-Report-Core-TommasoDalSasso.11.mcz
 ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
-Shout-TheIntegrator.304.mcz
+Shout-TheIntegrator.306.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.785.mcz
 Slot-Tests-TheIntegrator.103.mcz
@@ -381,7 +381,7 @@ Text-Edition-TheIntegrator.126.mcz
 Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
-Tool-Base-TheIntegrator.190.mcz
+Tool-Base-TheIntegrator.192.mcz
 Tool-Catalog-TheIntegrator.57.mcz
 Tool-CriticBrowser-TheIntegrator.65.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
