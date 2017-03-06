@@ -1,5 +1,5 @@
 pharo - scripts
-script60429
+script60431
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -101,13 +101,13 @@ GT-Inspector-AndreiChis.454.mcz
 GT-InspectorExtensions-Core-TheIntegrator.252.mcz
 GT-Playground-AndreiChis.140.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
-GT-Spotter-AndreiChis.409.mcz
+GT-Spotter-TheIntegrator.411.mcz
 GT-Spotter-EventRecorder-AndreiChis.114.mcz
 GT-SpotterExtensions-Core-TheIntegrator.222.mcz
 GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-StefanReichhart.59.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
-GT-Tests-Spotter-VincentBlondeau.28.mcz
+GT-Tests-Spotter-TheIntegrator.30.mcz
 GeneralRules-TheIntegrator.11.mcz
 Glamour-Announcements-AndreiChis.8.mcz
 Glamour-Browsers-AndreiChis.112.mcz
@@ -254,13 +254,13 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1416.mcz
+Polymorph-Widgets-TheIntegrator.1418.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
 ProfStef-Help-TheIntegrator.16.mcz
 ProfStef-Tests-TheIntegrator.27.mcz
-QualityAssistant-YuriyTymchuk.118.mcz
+QualityAssistant-TheIntegrator.120.mcz
 QualityAssistant-Test-YuriyTymchuk.2.mcz
 QualityAssistantRecording-Uko.28.mcz
 RPackage-Core-TheIntegrator.464.mcz
@@ -295,7 +295,7 @@ Ring-Core-Containers-TheIntegrator.45.mcz
 Ring-Core-Kernel-TheIntegrator.248.mcz
 Ring-Monticello-TheIntegrator.43.mcz
 Ring-Tests-Containers-MarcusDenker.18.mcz
-Ring-Tests-Kernel-TheIntegrator.93.mcz
+Ring-Tests-Kernel-TheIntegrator.95.mcz
 Ring-Tests-Monticello-MarcusDenker.19.mcz
 RingChunkImporter-TheIntegrator.8.mcz
 Rubric-TheIntegrator.441.mcz
@@ -319,7 +319,7 @@ Settings-System-TheIntegrator.43.mcz
 ShoreLine-Report-Core-TommasoDalSasso.11.mcz
 ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
-Shout-TheIntegrator.306.mcz
+Shout-TheIntegrator.307.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.785.mcz
 Slot-Tests-TheIntegrator.103.mcz

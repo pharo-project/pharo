@@ -1,3 +1,3 @@
 accessing
 pointerAlignment
-	^ OSPlatform current ffiAlignment
+	^ OSPlatform current ffiPointerAlignment

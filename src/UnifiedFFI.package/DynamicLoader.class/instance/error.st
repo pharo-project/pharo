@@ -1,0 +1,3 @@
+misc
+error
+	^ self subclassResponsibility

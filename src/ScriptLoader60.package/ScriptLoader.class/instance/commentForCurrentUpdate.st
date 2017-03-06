@@ -1,7 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19793 SHTextStylerST80 always parser code as method if workspace is nil
-	https://pharo.fogbugz.com/f/cases/19793
+ ^ '19805 LibC>>loadLibrary: works just in macOS (no win or linux)
+	https://pharo.fogbugz.com/f/cases/19805
 
-19797 Add access methods in PharoCommonTools instead of using DNU
-	https://pharo.fogbugz.com/f/cases/19797'
+18472 GTSpotter settings are unusable
+	https://pharo.fogbugz.com/f/cases/18472'
