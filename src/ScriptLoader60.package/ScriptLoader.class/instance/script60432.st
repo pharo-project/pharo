@@ -1,5 +1,5 @@
 pharo - scripts
-script60431
+script60432
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -189,7 +189,7 @@ Metacello-ToolBox-TheIntegrator.154.mcz
 Metacello-Tutorial-EstebanLorenzano.28.mcz
 Monticello-TheIntegrator.1175.mcz
 Monticello-OldDataStreamCompatibility-TheIntegrator.10.mcz
-Monticello-Tests-TheIntegrator.40.mcz
+Monticello-Tests-TheIntegrator.42.mcz
 MonticelloConfigurations-TheIntegrator.74.mcz
 MonticelloFileServices-TheIntegrator.8.mcz
 MonticelloFileTree-Core-TheIntegrator.147.mcz
@@ -382,7 +382,7 @@ Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
 Tool-Base-TheIntegrator.192.mcz
-Tool-Catalog-TheIntegrator.57.mcz
+Tool-Catalog-TheIntegrator.59.mcz
 Tool-CriticBrowser-TheIntegrator.65.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
@@ -410,9 +410,9 @@ TxText-Styler-HenrikNergaard.18.mcz
 TxTextTests-Model-SeanDeNigris.29.mcz
 UIManager-TheIntegrator.195.mcz
 Unicode-Initialization-TheIntegrator.17.mcz
-UnifiedFFI-EstebanLorenzano.94.mcz
-UnifiedFFI-Legacy-EstebanLorenzano.3.mcz
-UnifiedFFI-Tests-EstebanLorenzano.41.mcz
+UnifiedFFI-EstebanLorenzano.96.mcz
+UnifiedFFI-Legacy-TheIntegrator.4.mcz
+UnifiedFFI-Tests-TheIntegrator.42.mcz
 UpdateStreamer-Core-TheIntegrator.34.mcz
 UpdateStreamer-Tests-TheIntegrator.9.mcz
 Versionner-Commit-TheIntegrator.38.mcz

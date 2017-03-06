@@ -1,5 +1,5 @@
 misc
 loadLibrary: path flag: flag
-	^ self uniqueInstance 
+	^ self forCurrentPlatform 
 		loadLibrary: path 
 		flag: flag

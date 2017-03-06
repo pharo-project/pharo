@@ -1,3 +1,3 @@
 misc
-error
+lastError
 	^ self ffiCall: #(String dlerror(void))

@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19805 LibC>>loadLibrary: works just in macOS (no win or linux)
-	https://pharo.fogbugz.com/f/cases/19805
+ ^ '19808 add timeout and cache per session to catalog
+	https://pharo.fogbugz.com/f/cases/19808
 
-18472 GTSpotter settings are unusable
-	https://pharo.fogbugz.com/f/cases/18472'
+19803 MCSTWriterTest>>#testMethodDefinitionWithBangs failing on bootstrapped image
+	https://pharo.fogbugz.com/f/cases/19803
+
+19811 some methods are wrong in DynamicLoader
+	https://pharo.fogbugz.com/f/cases/19811'
