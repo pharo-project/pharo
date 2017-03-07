@@ -1,0 +1,14 @@
+{
+	"category" : "Glamour-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 2/27/2017 10:21",
+	"instvars" : [
+		"presentation" ],
+	"name" : "GLMPresentationRefreshRequest",
+	"pools" : [
+		 ],
+	"super" : "Announcement",
+	"type" : "normal" }

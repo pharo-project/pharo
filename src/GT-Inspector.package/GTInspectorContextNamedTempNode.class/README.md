@@ -1,0 +1,1 @@
+I am a variable node for representing a  temporary  variable stored in a  Context object that has a name attached. This includes  local variables and method parameters.

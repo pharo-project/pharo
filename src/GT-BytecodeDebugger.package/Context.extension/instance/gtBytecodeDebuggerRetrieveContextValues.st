@@ -1,28 +1,47 @@
 *GT-BytecodeDebugger
 gtBytecodeDebuggerRetrieveContextValues
-	|fieldList displayedTemp context slotsSize|
+	|fieldList displayedTemp slotsSize tempNames |
 
 	fieldList := OrderedCollection new.
-	context := self.
-	context == nil ifTrue: [^('_thisContext' -> nil) asOrderedCollection].
-	fieldList
-		add: ('_self' ->  context receiver);
-		add: ('_thisContext' ->  context).
-	
 	displayedTemp := OrderedCollection new.
-	context stackPtr to: 1 by: -1 do: [ :index ||key|
-		key := (index-1) asString.
-		(index <= context tempNames size) ifTrue: [ 
-			key := key, ' [', (context tempNames at: index) asString, ']'.
-			displayedTemp add: (context tempNames at: index) ].
-		fieldList add: (key -> (context at: index)) ].
-	(context tempNames copy asOrderedCollection removeAll: displayedTemp; yourself) ifNotEmpty: [ :uninitializedTemps |
-		uninitializedTemps do: [ :each |
-			fieldList add: ('- [', each, ']') -> nil ] ].
-	slotsSize := context receiver class allSlots size.
-	fieldList 
-		addAll: ((context receiver class allSlots reverse) collect: [:slot ||name| 
-			name := slot name.
-			('rcv', (slotsSize := slotsSize - 1) asString, ' [', name , ']') -> (slot read: context receiver) ]).
+	tempNames := self tempNames.
 	
-	^ fieldList
+	self stackPtr to: 1 by: -1 do: [ :tempIndex ||tempNode|
+		fieldList add:
+			(tempIndex <= tempNames size
+				ifTrue: [ 
+					displayedTemp add: (tempNames at: tempIndex).
+					tempNode := GTInspectorContextNamedTempNode 
+						hostObject: self 
+						tempName: (tempNames at: tempIndex) 
+						tempIndex: tempIndex.
+					GTInspectorWrapperNode 
+						hostObject: tempNode
+						label: (tempIndex - 1) asString, ' [', (tempNames at: tempIndex), ']'  ]
+				ifFalse: [
+					 tempNode := GTInspectorContextIndexedTempNode hostObject: self tempIndex: tempIndex.
+					 GTInspectorWrapperNode 
+					 	hostObject: tempNode
+						label: (tempIndex - 1) asString ]) ].
+	
+	(tempNames copy asOrderedCollection removeAll: displayedTemp; yourself) ifNotEmpty: [ :uninitializedTemps |
+		uninitializedTemps do: [ :each |
+			GTInspectorDynamicNode hostObject: self label: ('- [', each, ']') value: nil ] ].
+	
+	fieldList addAll: (self gtDebuggerDoItBindings collect: [:aBinding |
+		(GTInspectorDynamicNode hostObject: self label: aBinding key value: aBinding value)
+			variableTag: 'temp';
+			yourself ]).
+	
+	slotsSize := self receiver class allSlots size.
+	fieldList 
+		addAll: ((self receiver class allSlots reverse) collect: [:slot ||slotNode|
+			slotNode :=  GTInspectorSlotNode hostObject: self receiver slot: slot.
+			GTInspectorWrapperNode 
+				hostObject: slotNode
+				label: ('rcv', (slotsSize := slotsSize - 1) asString, ' [', slot name , ']')  ]).
+	
+	^ fieldList asOrderedCollection 
+		addFirst: (GTInspectorSelfNode hostObject: self receiver);
+		addLast: (GTInspectorDynamicNode hostObject: self label: 'thisContext' value: self);
+		yourself

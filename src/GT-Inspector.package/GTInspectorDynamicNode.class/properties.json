@@ -7,7 +7,8 @@
 	"commentStamp" : "AndreiChis 2/20/2017 11:45",
 	"instvars" : [
 		"label",
-		"value" ],
+		"value",
+		"tag" ],
 	"name" : "GTInspectorDynamicNode",
 	"pools" : [
 		 ],

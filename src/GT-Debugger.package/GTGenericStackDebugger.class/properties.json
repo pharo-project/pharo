@@ -10,7 +10,7 @@
 		"LogFileName" ],
 	"commentStamp" : "AndreiChis 12/30/2015 11:06",
 	"instvars" : [
-		"selectedVariableName" ],
+		"cache" ],
 	"name" : "GTGenericStackDebugger",
 	"pools" : [
 		 ],

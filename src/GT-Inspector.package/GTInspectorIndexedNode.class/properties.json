@@ -4,10 +4,9 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "AndreiChis 2/20/2017 11:41",
+	"commentStamp" : "AndreiChis 2/27/2017 11:19",
 	"instvars" : [
-		"index",
-		"value" ],
+		"index" ],
 	"name" : "GTInspectorIndexedNode",
 	"pools" : [
 		 ],

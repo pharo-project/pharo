@@ -4,4 +4,4 @@ childrenNodesFor: aVariablesBrowser
 	Note: by default we dispatch to browser and let it perform collection"
 	<return: #Collection of: #GTInspectorVariableNode>
 
-	^ aVariablesBrowser variableNodesFor: self value
+	^ aVariablesBrowser childrenVariableNodesForNode: self

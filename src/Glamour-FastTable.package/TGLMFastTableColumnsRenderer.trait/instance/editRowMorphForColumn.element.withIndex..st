@@ -1,21 +1,21 @@
 rendering
 editRowMorphForColumn: glamourColumn element: element withIndex: aRowIndex 
-	| brick |
+	| rowMorph |
+
+	rowMorph := self viewRowMorphForColumn: glamourColumn element: element withIndex: aRowIndex.
+	"rowMorph hResizing: #spaceFill.
+	rowMorph
+		on: #mouseDown
+		send: #value:
+		to: [ :event | 
+			event shiftPressed ifTrue: [
+				GLMEditorPopupBrick new
+					closer: (GLMPopupBrickCloser new
+						predicate: GLMPopupBrickOutisideClickPredicate new;
+						predicate: GLMPopupBrickEscPredicate new;
+						yourself);
+					textModel: (self valueFor: element withIndex: aRowIndex in: glamourColumn);
+					openOn: rowMorph ]
+				ifFalse: [ event wasHandled: false ] ]."
 	
-	(brick := GLMEditableLabelBrick new)
-		cancelOnEscape;
-		cancelOnFocusLost;
-		text: (self valueFor: element in: glamourColumn);
-		hSpaceFill;
-		with: [ :b | b editBrick rubricBackgroundColor: b themer rubricBackgroundColor ];
-		when: #onSingleClicked do: [ :event :b | b isReadMode ifTrue: [ self table selectRowIndex: aRowIndex ] ];
-		when: #onAccepted do: [ 
-			glamourColumn modifiedBlock
-				cull: brick text
-				cull: element
-				cull: self glamourPresentation ];
-		yourself.
-			
-	^ brick asMorph
-		hSpaceFill;
-		vShrinkWrap
+	^ rowMorph

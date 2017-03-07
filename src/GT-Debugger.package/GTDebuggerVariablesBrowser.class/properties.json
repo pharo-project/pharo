@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 11:06",
 	"instvars" : [
-		"debugger" ],
+		"debugger",
+		"cachedVariables" ],
 	"name" : "GTDebuggerVariablesBrowser",
 	"pools" : [
 		 ],

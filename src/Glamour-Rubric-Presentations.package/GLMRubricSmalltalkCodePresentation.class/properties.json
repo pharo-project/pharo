@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "AndreiChis 10/1/2014 13:48",
 	"instvars" : [
-		"highlightSmalltalkContext" ],
+		"highlightSmalltalkContext",
+		"variableBindingsBlock" ],
 	"name" : "GLMRubricSmalltalkCodePresentation",
 	"pools" : [
 		 ],

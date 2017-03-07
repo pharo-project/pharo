@@ -1,0 +1,3 @@
+accessing
+inspectorActionsForNode
+	^ self hostObject inspectorActionsForNode

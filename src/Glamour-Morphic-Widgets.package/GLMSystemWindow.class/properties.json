@@ -6,7 +6,8 @@
 		 ],
 	"commentStamp" : "TudorGirba 1/27/2011 22:09",
 	"instvars" : [
-		"toolbarBox" ],
+		"toolbarBox",
+		"hasInitialStep" ],
 	"name" : "GLMSystemWindow",
 	"pools" : [
 		 ],

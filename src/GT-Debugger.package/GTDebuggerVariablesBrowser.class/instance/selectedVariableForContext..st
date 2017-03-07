@@ -1,8 +1,5 @@
-building
+accessing
 selectedVariableForContext: aContext 
-	|variablesMappings|
-	
-	variablesMappings := self variablesFromContext: aContext.
-	^ variablesMappings 
+	^ (self variablesFromContext: aContext) 
 		detect: [ :each | each key = self debugger selectedVariableName ] 
-		ifNone: [ variablesMappings detect: [ :each | each key = 'self' ] ifNone: [ nil ] ]
+		ifNone: [ cachedVariables detect: [ :each | each key = 'self' ] ifNone: [ nil ] ]

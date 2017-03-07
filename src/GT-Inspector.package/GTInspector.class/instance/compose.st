@@ -26,4 +26,10 @@ compose
 							startOn: x ] ] ].
 			
 	self browser when: GLMPaneAdded send: #actOnPaneAdded: to: self.
-	self browser when: GLMPaneRemoved send: #actOnPaneRemoved: to: self
+	self browser when: GLMPaneRemoved send: #actOnPaneRemoved: to: self.
+	
+	self class isStepRefreshEnabled ifTrue: [ 
+		self wantsAutomaticRefresh: true.
+		self wantsSteps: true.
+		self stepTime: self class stepRefreshRate ].
+	

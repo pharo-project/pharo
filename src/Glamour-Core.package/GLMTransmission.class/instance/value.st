@@ -7,4 +7,6 @@ value
 		ifFalse: [ GLMMultiValue withAll: (self originReferences collect: [:each | each value]) ].
 	^ self transformation isNil 
 		ifTrue: [ originalValue ] 
-		ifFalse: [ self transformation glamourValue: originalValue ]
+		ifFalse: [ self transformation glamourValue: (
+			originalValue asGlamorousMultiValue, 
+			self origins asGlamorousMultiValue) ]

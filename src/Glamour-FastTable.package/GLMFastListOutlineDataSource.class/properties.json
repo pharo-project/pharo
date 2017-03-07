@@ -9,7 +9,8 @@
 	"instvars" : [
 		"announcer",
 		"glamourPresentation",
-		"tagsToFilterBy" ],
+		"tagsToFilterBy",
+		"dataCache" ],
 	"name" : "GLMFastListOutlineDataSource",
 	"pools" : [
 		 ],
