@@ -1,5 +1,5 @@
 pharo - scripts
-script60434
+script60435
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -16,7 +16,7 @@ Athens-Morphic-TheIntegrator.69.mcz
 Athens-Text-HenrikNergaard.17.mcz
 Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
-BaselineOfBasicTools-TheIntegrator.6.mcz
+BaselineOfBasicTools-TheIntegrator.8.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
 BaselineOfIDE-TheIntegrator.38.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
@@ -178,12 +178,12 @@ Metacello-PharoCommonPlatform-TheIntegrator.26.mcz
 Metacello-Platform-TheIntegrator.5.mcz
 Metacello-ProfStef-TheIntegrator.22.mcz
 Metacello-Reference-EstebanLorenzano.38.mcz
-Metacello-TestsCommonMC.pharo20-EstebanLorenzano.7.mcz
+Metacello-TestsCommonMC-TheIntegrator.9.mcz
 Metacello-TestsCore-EstebanLorenzano.41.mcz
 Metacello-TestsMC-EstebanLorenzano.405.mcz
 Metacello-TestsMCCore-EstebanLorenzano.8.mcz
 Metacello-TestsMCResources-EstebanLorenzano.33.mcz
-Metacello-TestsPlatform.squeakCommon-EstebanLorenzano.23.mcz
+Metacello-TestsPlatform-TheIntegrator.25.mcz
 Metacello-TestsReference-EstebanLorenzano.22.mcz
 Metacello-ToolBox-TheIntegrator.154.mcz
 Metacello-Tutorial-EstebanLorenzano.28.mcz
@@ -307,7 +307,7 @@ STON-Tests-TheIntegrator.73.mcz
 STON-Text support-TheIntegrator.2.mcz
 SUnit-Core-TheIntegrator.219.mcz
 SUnit-Help-MarcusDenker.9.mcz
-SUnit-Rules-TheIntegrator.3.mcz
+SUnit-Rules-TheIntegrator.5.mcz
 SUnit-Tests-TheIntegrator.64.mcz
 SUnit-UI-TheIntegrator.153.mcz
 SUnit-UITesting-TheIntegrator.34.mcz
@@ -338,7 +338,6 @@ Spec-PolyWidgets-TheIntegrator.93.mcz
 Spec-Tests-TheIntegrator.104.mcz
 Spec-Tools-TheIntegrator.382.mcz
 StartupPreferences-TheIntegrator.153.mcz
-SublimishTheme-TheIntegrator.13.mcz
 System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
 System-Caching-TheIntegrator.29.mcz

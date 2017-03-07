@@ -10,5 +10,5 @@
 	"name" : "AssertEqualSignIntoAssertEquals",
 	"pools" : [
 		 ],
-	"super" : "RBTransformationRule",
+	"super" : "ReNodeRewriteRule",
 	"type" : "normal" }
