@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19808 add timeout and cache per session to catalog
-	https://pharo.fogbugz.com/f/cases/19808
+ ^ '19809 Failing test: WeakAnnouncerTest>>#testNoDeadWeakSubscriptions
+	https://pharo.fogbugz.com/f/cases/19809
 
-19803 MCSTWriterTest>>#testMethodDefinitionWithBangs failing on bootstrapped image
-	https://pharo.fogbugz.com/f/cases/19803
+19799 Nautilus rebuilds the package view twice when adding a new protocol
+	https://pharo.fogbugz.com/f/cases/19799
 
-19811 some methods are wrong in DynamicLoader
-	https://pharo.fogbugz.com/f/cases/19811'
+19810 Non weak announcements in the SystemAnnouncer
+	https://pharo.fogbugz.com/f/cases/19810'

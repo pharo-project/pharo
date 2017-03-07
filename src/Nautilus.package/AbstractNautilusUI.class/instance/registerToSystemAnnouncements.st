@@ -21,6 +21,4 @@ registerToSystemAnnouncements
 		when: MethodModified send: #methodModified: to: self;
 		when: MethodRecategorized send: #methodRecategorized: to: self;
 		when: MethodRemoved send: #methodRemoved: to: self;
-		when: ProtocolAdded send: #classReorganized: to: self;
-		when: ProtocolRemoved send: #classReorganized: to: self;
 		when: MetalinkChanged send: #metaLinkModified: to: self.
