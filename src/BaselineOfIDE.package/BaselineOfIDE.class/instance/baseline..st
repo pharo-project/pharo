@@ -278,7 +278,6 @@ baseline: spec
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
-		spec package: 'SublimishTheme'.
 		spec package: 'System-CachingTests'.
 		spec package: 'System-History-Tests'.
 		spec package: 'System-Localization-Tests'.
