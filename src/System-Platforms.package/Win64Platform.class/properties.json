@@ -7,7 +7,7 @@
 	"commentStamp" : "EstebanLorenzano 3/6/2017 17:16",
 	"instvars" : [
 		 ],
-	"name" : "Win32Platform",
+	"name" : "Win64Platform",
 	"pools" : [
 		 ],
 	"super" : "WinPlatform",

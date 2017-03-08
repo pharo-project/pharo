@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "EstebanLorenzano 3/6/2017 17:16",
+	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
-	"name" : "Win32Platform",
+	"name" : "WinPlatform",
 	"pools" : [
 		 ],
-	"super" : "WinPlatform",
+	"super" : "OSPlatform",
 	"type" : "normal" }

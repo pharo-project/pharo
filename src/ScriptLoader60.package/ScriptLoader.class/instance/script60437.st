@@ -1,5 +1,5 @@
 pharo - scripts
-script60436
+script60437
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.8.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.38.mcz
+BaselineOfIDE-TheIntegrator.40.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.30.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -93,36 +93,36 @@ FuelTests-MaxLeske.415.mcz
 FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.18.mcz
 FuzzyMatcher-Tests-TheIntegrator.5.mcz
-GT-BytecodeDebugger-AndreiChis.33.mcz
-GT-Debugger-TheIntegrator.370.mcz
+GT-BytecodeDebugger-AndreiChis.36.mcz
+GT-Debugger-AndreiChis.379.mcz
 GT-EventRecorder-AndreiChis.80.mcz
 GT-EventRecorder-Tests-TheIntegrator.40.mcz
-GT-Inspector-AndreiChis.454.mcz
-GT-InspectorExtensions-Core-TheIntegrator.252.mcz
-GT-Playground-AndreiChis.140.mcz
+GT-Inspector-AndreiChis.465.mcz
+GT-InspectorExtensions-Core-AndreiChis.256.mcz
+GT-Playground-AndreiChis.145.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
 GT-Spotter-TheIntegrator.411.mcz
 GT-Spotter-EventRecorder-AndreiChis.114.mcz
 GT-SpotterExtensions-Core-TheIntegrator.222.mcz
 GT-Tests-Debugger-AndreiChis.14.mcz
-GT-Tests-Inspector-StefanReichhart.59.mcz
+GT-Tests-Inspector-AndreiChis.60.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
 GT-Tests-Spotter-TheIntegrator.30.mcz
 GeneralRules-TheIntegrator.11.mcz
-Glamour-Announcements-AndreiChis.8.mcz
+Glamour-Announcements-AndreiChis.11.mcz
 Glamour-Browsers-AndreiChis.112.mcz
-Glamour-Core-TheIntegrator.330.mcz
+Glamour-Core-TheIntegrator.336.mcz
 Glamour-Examples-AndreiChis.319.mcz
-Glamour-FastTable-AndreiChis.75.mcz
+Glamour-FastTable-AndreiChis.80.mcz
 Glamour-Helpers-TudorGirba.40.mcz
-Glamour-Morphic-Brick-AndreiChis.438.mcz
+Glamour-Morphic-Brick-AndreiChis.439.mcz
 Glamour-Morphic-Brick-Tests-JurajKubelka.15.mcz
 Glamour-Morphic-Pager-AndreiChis.114.mcz
-Glamour-Morphic-Renderer-TheIntegrator.358.mcz
+Glamour-Morphic-Renderer-AndreiChis.360.mcz
 Glamour-Morphic-Theme-TheIntegrator.229.mcz
-Glamour-Morphic-Widgets-AliakseiSyrel.205.mcz
+Glamour-Morphic-Widgets-AndreiChis.207.mcz
 Glamour-Presentations-AndreiChis.190.mcz
-Glamour-Rubric-Presentations-JurajKubelka.60.mcz
+Glamour-Rubric-Presentations-AndreiChis.61.mcz
 Glamour-SpecIntegration-TheIntegrator.6.mcz
 Glamour-Tests-Core-PavelKrivanek.113.mcz
 Glamour-Tests-Morphic-AndreiChis.138.mcz
@@ -156,7 +156,7 @@ Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.154.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
-Keymapping-KeyCombinations-TheIntegrator.64.mcz
+Keymapping-KeyCombinations-TheIntegrator.66.mcz
 Keymapping-Pragmas-TheIntegrator.62.mcz
 Keymapping-Settings-StephaneDucasse.83.mcz
 Keymapping-Tests-TheIntegrator.111.mcz
@@ -360,7 +360,7 @@ System-Localization-Tests-TheIntegrator.8.mcz
 System-Model-TheIntegrator.13.mcz
 System-OSEnvironments-TheIntegrator.33.mcz
 System-Object Events-TheIntegrator.28.mcz
-System-Platforms-TheIntegrator.81.mcz
+System-Platforms-TheIntegrator.85.mcz
 System-Serial Port-StephaneDucasse.23.mcz
 System-SessionManager-TheIntegrator.38.mcz
 System-SessionManager-Tests-ChristopheDemarey.9.mcz
@@ -368,7 +368,7 @@ System-Settings-TheIntegrator.370.mcz
 System-Settings-Rules-TheIntegrator.2.mcz
 System-Settings-Tests-TheIntegrator.13.mcz
 System-Sound-TheIntegrator.20.mcz
-System-Sources-TheIntegrator.67.mcz
+System-Sources-TheIntegrator.69.mcz
 System-Support-TheIntegrator.1269.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
@@ -409,9 +409,9 @@ TxText-Styler-HenrikNergaard.18.mcz
 TxTextTests-Model-SeanDeNigris.29.mcz
 UIManager-TheIntegrator.195.mcz
 Unicode-Initialization-TheIntegrator.17.mcz
-UnifiedFFI-EstebanLorenzano.97.mcz
-UnifiedFFI-Legacy-EstebanLorenzano.3.mcz
-UnifiedFFI-Tests-EstebanLorenzano.41.mcz
+UnifiedFFI-TheIntegrator.99.mcz
+UnifiedFFI-Legacy-TheIntegrator.4.mcz
+UnifiedFFI-Tests-TheIntegrator.42.mcz
 UpdateStreamer-Core-TheIntegrator.34.mcz
 UpdateStreamer-Tests-TheIntegrator.9.mcz
 Versionner-Commit-TheIntegrator.38.mcz

@@ -10,3 +10,13 @@ preload: loader package: packageSpec
 	classVariableNames: ''
 	package: 'Renraku-Rules'.
 	
+	(self class environment at: #ReAbstractRule) subclass: #ReNodeBasedRule
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'Renraku-Rules'.
+
+	(self class environment at: #ReNodeBasedRule) subclass: #ReNodeRewriteRule
+	instanceVariableNames: 'matches'
+	classVariableNames: ''
+	package: 'Renraku-Rules'.
+	

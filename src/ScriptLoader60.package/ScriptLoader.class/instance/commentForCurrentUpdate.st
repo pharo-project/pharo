@@ -1,4 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19812 GTools 3.36
-	https://pharo.fogbugz.com/f/cases/19812'
+ ^ '19814 OSPlatform current needs to differentiate 32 and 64 bits
+	https://pharo.fogbugz.com/f/cases/19814
+
+19821 loading of the BaselineOfIDE is broken
+	https://pharo.fogbugz.com/f/cases/19821'
