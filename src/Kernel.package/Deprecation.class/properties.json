@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "md 8/11/2016 16:28",
+	"super" : "Warning",
 	"category" : "Kernel-Exceptions",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Log",
 		"RaiseWarning",
-		"ShowWarning" ],
-	"commentStamp" : "md 8/11/2016 16:28",
+		"ShowWarning"
+	],
 	"instvars" : [
 		"context",
 		"explanationString",
 		"deprecationDate",
 		"versionString",
-		"rule" ],
+		"rule"
+	],
 	"name" : "Deprecation",
-	"pools" : [
-		 ],
-	"super" : "Warning",
-	"type" : "normal" }
+	"type" : "normal"
+}

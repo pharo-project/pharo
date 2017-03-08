@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 2/9/2017 10:25",
-	"instvars" : [
-		 ],
-	"name" : "LocalRecursionStopper",
-	"pools" : [
-		 ],
 	"super" : "ProcessLocalVariable",
-	"type" : "normal" }
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LocalRecursionStopper",
+	"type" : "normal"
+}

@@ -1,14 +1,15 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "HenrikNergaard 6/29/2016 19:37",
-	"instvars" : [
-		"activeMethods" ],
-	"name" : "RecursionStopper",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
+	"instvars" : [
+		"activeMethods"
+	],
+	"name" : "RecursionStopper",
+	"type" : "normal"
+}

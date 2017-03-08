@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "InstructionStream",
 	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"PrimitiveFailToken",
 		"QuickStep",
 		"SpecialPrimitiveSimulators",
-		"TryNamedPrimitiveTemplateMethod" ],
-	"commentStamp" : "<historical>",
+		"TryNamedPrimitiveTemplateMethod"
+	],
 	"instvars" : [
 		"stackp",
 		"method",
 		"closureOrNil",
-		"receiver" ],
+		"receiver"
+	],
 	"name" : "Context",
-	"pools" : [
-		 ],
-	"super" : "InstructionStream",
-	"type" : "variable" }
+	"type" : "variable"
+}

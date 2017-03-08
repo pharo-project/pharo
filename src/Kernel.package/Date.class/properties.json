@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Date",
-	"pools" : [
-		"ChronologyConstants" ],
 	"super" : "Timespan",
-	"type" : "normal" }
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ChronologyConstants"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Date",
+	"type" : "normal"
+}

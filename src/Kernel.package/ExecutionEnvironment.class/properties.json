@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 8/29/2016 15:58",
-	"instvars" : [
-		 ],
-	"name" : "ExecutionEnvironment",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ExecutionEnvironment",
+	"type" : "normal"
+}

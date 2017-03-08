@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "DenisKudryashov 5/24/2016 17:20",
+	"super" : "Object",
 	"category" : "Kernel-Processes",
 	"classinstvars" : [
-		"soleInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "DenisKudryashov 5/24/2016 17:20",
+		"soleInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"index" ],
+		"index"
+	],
 	"name" : "ProcessSpecificVariable",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

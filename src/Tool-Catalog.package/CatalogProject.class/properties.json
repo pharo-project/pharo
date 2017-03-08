@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "StephaneDucasse 8/16/2015 11:17",
+	"super" : "Object",
 	"category" : "Tool-Catalog-Base",
 	"classinstvars" : [
-		"repositoryURLToNameMappings" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "StephaneDucasse 8/16/2015 11:17",
+		"repositoryURLToNameMappings"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
 		"packageName",
 		"repositoryUrl",
 		"description",
 		"keywords",
-		"contactInfo" ],
+		"contactInfo"
+	],
 	"name" : "CatalogProject",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,16 @@
 {
-	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"SpecialConstants" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Kernel-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"SpecialConstants"
+	],
 	"instvars" : [
 		"sender",
-		"pc" ],
+		"pc"
+	],
 	"name" : "InstructionStream",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

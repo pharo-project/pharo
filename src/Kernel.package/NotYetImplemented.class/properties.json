@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "NotYetImplemented",
-	"pools" : [
-		 ],
 	"super" : "SelectorException",
-	"type" : "normal" }
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NotYetImplemented",
+	"type" : "normal"
+}

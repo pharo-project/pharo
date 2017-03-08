@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NS 4/13/2004 16:51",
+	"super" : "Delay",
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"monitor",
-		"queue" ],
+		"queue"
+	],
 	"name" : "MonitorDelay",
-	"pools" : [
-		 ],
-	"super" : "Delay",
-	"type" : "normal" }
+	"type" : "normal"
+}

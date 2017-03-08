@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "ar 4/9/2005 22:35",
+	"super" : "Magnitude",
 	"category" : "Kernel-BasicObjects",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CharacterTable",
-		"DigitValues" ],
-	"commentStamp" : "ar 4/9/2005 22:35",
-	"instvars" : [
-		 ],
+		"DigitValues"
+	],
+	"instvars" : [ ],
 	"name" : "Character",
-	"pools" : [
-		 ],
-	"super" : "Magnitude",
-	"type" : "immediate" }
+	"type" : "immediate"
+}

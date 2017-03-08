@@ -3,7 +3,7 @@ retrieveProjects
 	^ ZnClient new
 		systemPolicy;
 		beOneShot;
-		timeout: 1;
+		timeout: 0;
 		setAcceptEncodingGzip;
 		accept: 'text/json';
 		url: CatalogSettings catalogSourceURL;

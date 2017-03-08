@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Numbers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "eem 11/25/2014 07:54",
-	"instvars" : [
-		 ],
-	"name" : "SmallFloat64",
-	"pools" : [
-		 ],
 	"super" : "Float",
-	"type" : "immediate" }
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SmallFloat64",
+	"type" : "immediate"
+}

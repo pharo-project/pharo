@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "marcus.denker 6/5/2009 11:24",
-	"instvars" : [
-		 ],
-	"name" : "Year",
-	"pools" : [
-		 ],
 	"super" : "Timespan",
-	"type" : "normal" }
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Year",
+	"type" : "normal"
+}

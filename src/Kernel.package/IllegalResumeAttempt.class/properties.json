@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "IllegalResumeAttempt",
-	"pools" : [
-		 ],
 	"super" : "Exception",
-	"type" : "normal" }
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IllegalResumeAttempt",
+	"type" : "normal"
+}

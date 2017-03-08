@@ -1,16 +1,15 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:12",
+	"super" : "PanelMorph",
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"labelMorph",
 		"buttonMorph",
-		"expanded" ],
+		"expanded"
+	],
 	"name" : "ExpanderTitleMorph",
-	"pools" : [
-		 ],
-	"super" : "PanelMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

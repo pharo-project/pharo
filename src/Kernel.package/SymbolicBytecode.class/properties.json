@@ -1,17 +1,16 @@
 {
-	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 10/13/2014 15:54",
+	"super" : "Object",
+	"category" : "Kernel-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"description",
 		"method",
 		"offset",
-		"bytes" ],
+		"bytes"
+	],
 	"name" : "SymbolicBytecode",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

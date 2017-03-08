@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "VeronicaUquillas 6/11/2010 14:51",
+	"super" : "Number",
 	"category" : "Kernel-Numbers",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"E",
 		"Epsilon",
@@ -19,12 +21,9 @@
 		"RadiansPerDegree",
 		"Sqrt2",
 		"ThreePi",
-		"Twopi" ],
-	"commentStamp" : "VeronicaUquillas 6/11/2010 14:51",
-	"instvars" : [
-		 ],
+		"Twopi"
+	],
+	"instvars" : [ ],
 	"name" : "Float",
-	"pools" : [
-		 ],
-	"super" : "Number",
-	"type" : "normal" }
+	"type" : "normal"
+}

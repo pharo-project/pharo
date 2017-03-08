@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 4/21/2011 12:35",
-	"instvars" : [
-		 ],
-	"name" : "SubclassResponsibility",
-	"pools" : [
-		 ],
 	"super" : "SelectorException",
-	"type" : "normal" }
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SubclassResponsibility",
+	"type" : "normal"
+}

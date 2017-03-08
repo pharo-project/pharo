@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Integer",
 	"category" : "Kernel-Numbers",
 	"classinstvars" : [
 		"minVal",
-		"maxVal" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"maxVal"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "SmallInteger",
-	"pools" : [
-		 ],
-	"super" : "Integer",
-	"type" : "immediate" }
+	"type" : "immediate"
+}

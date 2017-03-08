@@ -1,16 +1,13 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TEasilyThemed classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "gvc 5/18/2007 13:32",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "ComposableMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "gvc 5/18/2007 13:32",
 	"super" : "MorphicModel",
 	"traitcomposition" : "TEasilyThemed",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Polymorph-Widgets"
+}
