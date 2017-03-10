@@ -3,11 +3,6 @@ schedule
 	lastSchedule := DateAndTime now.
 
 	process ifNil: [ 
-		process := [ 
-			"Loop until enough time passed since last #schedule"
-			[ DateAndTime now < (lastSchedule + duration) ]
-				whileTrue: [ duration wait ].
-			
-			"Execute deferred action (if not flushed before) and clean up"
-			self flush.
-		] fork ]
+		"Deferrer can be activated during tests which intercept any forked processes.
+		To prevent it we should ensure here that message process is running out of tests environment"
+		DefaultExecutionEnvironment beActiveDuring: [ self runMessageProcess ]]

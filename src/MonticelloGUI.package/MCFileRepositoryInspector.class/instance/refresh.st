@@ -15,6 +15,7 @@ refresh
 							(ancestor versionNumber < aVersionArray third
 								or: [ ancestor versionNumber = aVersionArray third and: [ ancestor author ~= aVersionArray second ] ])
 								ifTrue: [ newer add: ancestor name ] ] ] ].
+					
 	self
 		packageListUpdate;
 		changed: #versionList

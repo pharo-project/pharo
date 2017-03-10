@@ -1,4 +1,4 @@
-*tool-criticBrowser
+testing
 isComposite
 
 	^ false

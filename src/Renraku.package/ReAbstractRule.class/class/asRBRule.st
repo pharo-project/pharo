@@ -1,4 +1,4 @@
-*Refactoring-Critics
+conversion
 asRBRule
 
 	^ self new asRBRule

@@ -1,4 +1,4 @@
-*Refactoring-Critics
+conversion
 asRBRule
 
 	^ RBRenrakuWrapperLintRule new: self

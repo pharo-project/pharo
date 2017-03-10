@@ -1,3 +1,9 @@
 morph creation
 scrollBarDownButtonBoundsFor: aScrollbar
-	^ aScrollbar innerBounds bottomRight - aScrollbar buttonExtent extent: aScrollbar buttonExtent
+	
+	| extent position |
+	
+	extent := aScrollbar buttonExtent.
+	position := aScrollbar innerBounds bottomLeft - (0@extent y).	
+
+	^ position extent: extent
