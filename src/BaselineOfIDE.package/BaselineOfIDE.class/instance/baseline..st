@@ -269,6 +269,7 @@ baseline: spec
 		spec package: 'Ring-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
+		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'ScriptLoader-Tests'.

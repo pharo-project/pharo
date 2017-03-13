@@ -1,13 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19786 MonticelloFileTree-Core package exported to Git contains a strange extension
-	https://pharo.fogbugz.com/f/cases/19786
+ ^ '19822 ScriptingExtensions tests must be standalone
+	https://pharo.fogbugz.com/f/cases/19822
 
-19825 circular dependency between Renraku and Refactoring-Critics
-	https://pharo.fogbugz.com/f/cases/19825
-
-19824 fix #scrollBarDownButtonBoundsFor: calculation
-	https://pharo.fogbugz.com/f/cases/19824
-
-19819 Epicea browser doesnt refresh when tests produce code changes
-	https://pharo.fogbugz.com/f/cases/19819'
+19809 Failing test: WeakAnnouncerTest>>#testNoDeadWeakSubscriptions
+	https://pharo.fogbugz.com/f/cases/19809'

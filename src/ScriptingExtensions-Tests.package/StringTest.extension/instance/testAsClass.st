@@ -1,4 +1,4 @@
-*ScriptingExtensions
+*ScriptingExtensions-Tests
 testAsClass
 	self 
 		assert: 'String' asClass

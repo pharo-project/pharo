@@ -1,4 +1,4 @@
-*ScriptingExtensions
+*ScriptingExtensions-Tests
 testAsClassIfAbsent
 
 	self 

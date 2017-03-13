@@ -81,6 +81,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Regex-Tests-Core'
 	'Ring-Tests-Monticello'
 	'Rubric-Tests'
+	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
 	'Slot-Tests'

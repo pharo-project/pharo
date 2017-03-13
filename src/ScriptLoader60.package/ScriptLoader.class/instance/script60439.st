@@ -1,5 +1,5 @@
 pharo - scripts
-script60438
+script60439
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.8.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.44.mcz
+BaselineOfIDE-TheIntegrator.46.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.30.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -312,7 +312,8 @@ SUnit-Tests-TheIntegrator.64.mcz
 SUnit-UI-TheIntegrator.153.mcz
 SUnit-UITesting-TheIntegrator.34.mcz
 ScriptLoader-Tests-TheIntegrator.4.mcz
-ScriptingExtensions-TheIntegrator.4.mcz
+ScriptingExtensions-TheIntegrator.6.mcz
+ScriptingExtensions-Tests-TheIntegrator.3.mcz
 Settings-Graphics-TheIntegrator.34.mcz
 Settings-Polymorph-TheIntegrator.98.mcz
 Settings-System-TheIntegrator.43.mcz
