@@ -1,5 +1,5 @@
 pharo - scripts
-script60439
+script60440
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -192,9 +192,9 @@ Monticello-OldDataStreamCompatibility-TheIntegrator.10.mcz
 Monticello-Tests-TheIntegrator.42.mcz
 MonticelloConfigurations-TheIntegrator.74.mcz
 MonticelloFileServices-TheIntegrator.8.mcz
-MonticelloFileTree-Core-TheIntegrator.149.mcz
+MonticelloFileTree-Core-TheIntegrator.151.mcz
 MonticelloFileTree-FileSystem-Utilities-TheIntegrator.33.mcz
-MonticelloGUI-TheIntegrator.434.mcz
+MonticelloGUI-TheIntegrator.436.mcz
 MonticelloMocks-TheIntegrator.8.mcz
 MonticelloRemoteRepositories-TheIntegrator.18.mcz
 Moose-Algos-Graph-VincentBlondeau.33.mcz
@@ -254,7 +254,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1420.mcz
+Polymorph-Widgets-TheIntegrator.1422.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -382,7 +382,7 @@ Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
 Tool-Base-TheIntegrator.192.mcz
-Tool-Catalog-TheIntegrator.59.mcz
+Tool-Catalog-TheIntegrator.61.mcz
 Tool-CriticBrowser-TheIntegrator.67.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
