@@ -28,6 +28,6 @@ versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 			manager repositoryGroup addRepository: pharoRepo.
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
 			('src' asFileReference / packageName , '.package') ensureDeleteAll.
-			MCFileTreeGitWriter
+			IceMetadatalessFileTreeWriter
 				fileOut: version
 				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] ] on: Warning do: #resume.
