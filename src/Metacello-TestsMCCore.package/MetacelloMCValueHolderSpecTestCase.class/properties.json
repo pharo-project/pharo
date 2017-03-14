@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-TestsMCCore",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloMCValueHolderSpecTestCase",
-	"pools" : [
-		 ],
 	"super" : "MetacelloValueHolderSpecTestCase",
-	"type" : "normal" }
+	"category" : "Metacello-TestsMCCore",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloMCValueHolderSpecTestCase",
+	"type" : "normal"
+}

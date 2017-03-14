@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 6/3/2015 09:58",
-	"instvars" : [
-		 ],
-	"name" : "MethodIsScriptAction",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodIconAction",
-	"type" : "normal" }
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodIsScriptAction",
+	"type" : "normal"
+}

@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "TorstenBergmann 2/20/2014 16:23",
+	"super" : "MCDirectoryRepository",
 	"category" : "MonticelloFileTree-Core",
 	"classinstvars" : [
 		"defaultPackageExtension",
-		"defaultPropertyFileExtension" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/20/2014 16:23",
+		"defaultPropertyFileExtension"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"readonly",
-		"repositoryProperties" ],
+		"repositoryProperties"
+	],
 	"name" : "MCFileTreeRepository",
-	"pools" : [
-		 ],
-	"super" : "MCDirectoryRepository",
-	"type" : "normal" }
+	"type" : "normal"
+}

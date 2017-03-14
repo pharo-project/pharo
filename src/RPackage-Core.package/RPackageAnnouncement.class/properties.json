@@ -1,14 +1,13 @@
 {
-	"category" : "RPackage-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:55",
-	"instvars" : [
-		"package" ],
-	"name" : "RPackageAnnouncement",
-	"pools" : [
-		 ],
 	"super" : "SystemAnnouncement",
-	"type" : "normal" }
+	"category" : "RPackage-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"package"
+	],
+	"name" : "RPackageAnnouncement",
+	"type" : "normal"
+}

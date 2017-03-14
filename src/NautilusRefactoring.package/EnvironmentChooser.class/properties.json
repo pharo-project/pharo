@@ -1,19 +1,18 @@
 {
-	"category" : "NautilusRefactoring-Utilities",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "NautilusRefactoring-Utilities",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"enableGlobal",
 		"enableCustom",
 		"labelView",
 		"environmentsView",
 		"environmentsHolder",
-		"environmentHolder" ],
+		"environmentHolder"
+	],
 	"name" : "EnvironmentChooser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

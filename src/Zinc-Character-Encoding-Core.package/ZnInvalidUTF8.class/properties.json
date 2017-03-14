@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-Character-Encoding-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ZnInvalidUTF8",
-	"pools" : [
-		 ],
 	"super" : "ZnCharacterEncodingError",
-	"type" : "normal" }
+	"category" : "Zinc-Character-Encoding-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnInvalidUTF8",
+	"type" : "normal"
+}

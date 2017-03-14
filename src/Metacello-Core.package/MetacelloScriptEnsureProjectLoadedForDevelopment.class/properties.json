@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloScriptEnsureProjectLoadedForDevelopment",
-	"pools" : [
-		 ],
 	"super" : "MetacelloScriptNotification",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloScriptEnsureProjectLoadedForDevelopment",
+	"type" : "normal"
+}

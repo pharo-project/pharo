@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "MartinDias 6/24/2015 15:07",
+	"super" : "Object",
 	"category" : "Jobs-Base",
 	"classinstvars" : [
-		"jobAnnouncer" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "MartinDias 6/24/2015 15:07",
+		"jobAnnouncer"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"block",
 		"currentValue",
@@ -14,9 +16,8 @@
 		"children",
 		"isRunning",
 		"parent",
-		"process" ],
+		"process"
+	],
 	"name" : "Job",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

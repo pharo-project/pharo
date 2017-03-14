@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "AndreiChis 12/30/2015 11:06",
+	"super" : "GTMoldableDebugger",
 	"category" : "GT-Debugger-UI",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"AlwaysOpenFullDebugger",
 		"ErrorRecursion",
 		"FilterCommonMessageSends",
 		"LogDebuggerStackToFile",
-		"LogFileName" ],
-	"commentStamp" : "AndreiChis 12/30/2015 11:06",
+		"LogFileName"
+	],
 	"instvars" : [
-		"cache" ],
+		"cache"
+	],
 	"name" : "GTGenericStackDebugger",
-	"pools" : [
-		 ],
-	"super" : "GTMoldableDebugger",
-	"type" : "normal" }
+	"type" : "normal"
+}

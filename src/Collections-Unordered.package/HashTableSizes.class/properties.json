@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "monty 2/27/2017 10:57",
+	"super" : "Object",
 	"category" : "Collections-Unordered",
 	"classinstvars" : [
 		"sizes",
-		"smallSizesLookupTable" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "monty 2/27/2017 10:57",
+		"smallSizesLookupTable"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"candidate",
 		"goodPrimes",
 		"primesToAvoid",
-		"valuesNotToDivide" ],
+		"valuesNotToDivide"
+	],
 	"name" : "HashTableSizes",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

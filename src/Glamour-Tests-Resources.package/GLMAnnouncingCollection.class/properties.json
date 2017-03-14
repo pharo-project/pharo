@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Tests-Resources",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"collection" ],
-	"name" : "GLMAnnouncingCollection",
-	"pools" : [
-		 ],
 	"super" : "Announcer",
-	"type" : "normal" }
+	"category" : "Glamour-Tests-Resources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"collection"
+	],
+	"name" : "GLMAnnouncingCollection",
+	"type" : "normal"
+}

@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "NECompletion-OCompletion",
 	"classinstvars" : [
 		"classTable",
-		"table" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"table"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"table",
-		"numberofEntries" ],
+		"numberofEntries"
+	],
 	"name" : "NOCCompletionTable",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

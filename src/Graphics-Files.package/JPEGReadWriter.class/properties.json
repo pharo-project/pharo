@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ImageReadWriter",
 	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ConstBits",
 		"DCTK1",
@@ -37,8 +39,8 @@
 		"Pass2Div",
 		"QTableScaleFactor",
 		"QuantizationTableSize",
-		"SampleOffset" ],
-	"commentStamp" : "<historical>",
+		"SampleOffset"
+	],
 	"instvars" : [
 		"width",
 		"height",
@@ -68,9 +70,8 @@
 		"al",
 		"sosSeen",
 		"residuals",
-		"ditherMask" ],
+		"ditherMask"
+	],
 	"name" : "JPEGReadWriter",
-	"pools" : [
-		 ],
-	"super" : "ImageReadWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

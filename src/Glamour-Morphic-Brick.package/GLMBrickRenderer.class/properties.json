@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 10/17/2014 10:33",
-	"instvars" : [
-		 ],
-	"name" : "GLMBrickRenderer",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMBrickRenderer",
+	"type" : "normal"
+}

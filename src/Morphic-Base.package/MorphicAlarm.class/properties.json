@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Base-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 3/4/2011 22:45",
+	"super" : "MessageSend",
+	"category" : "Morphic-Base-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scheduledTime",
-		"numArgs" ],
+		"numArgs"
+	],
 	"name" : "MorphicAlarm",
-	"pools" : [
-		 ],
-	"super" : "MessageSend",
-	"type" : "normal" }
+	"type" : "normal"
+}

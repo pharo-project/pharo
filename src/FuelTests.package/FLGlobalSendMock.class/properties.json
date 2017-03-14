@@ -1,14 +1,13 @@
 {
-	"category" : "FuelTests-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:21",
-	"instvars" : [
-		"contents" ],
-	"name" : "FLGlobalSendMock",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "FuelTests-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"contents"
+	],
+	"name" : "FLGlobalSendMock",
+	"type" : "normal"
+}

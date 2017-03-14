@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "SharedPool",
 	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GZipAsciiFlag",
 		"GZipCommentFlag",
@@ -11,12 +13,9 @@
 		"GZipExtraField",
 		"GZipMagic",
 		"GZipNameFlag",
-		"GZipReservedFlags" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"GZipReservedFlags"
+	],
+	"instvars" : [ ],
 	"name" : "GZipConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

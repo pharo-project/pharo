@@ -1,17 +1,16 @@
 {
-	"category" : "QualityAssistant",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 8/21/2015 12:13",
+	"super" : "BorderedMorph",
+	"category" : "QualityAssistant",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"positive",
 		"negative",
 		"text",
-		"critique" ],
+		"critique"
+	],
 	"name" : "QAFeedbackMorph",
-	"pools" : [
-		 ],
-	"super" : "BorderedMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

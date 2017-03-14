@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "tg 5/24/2010 17:00",
+	"super" : "Object",
 	"category" : "Glamour-Helpers",
 	"classinstvars" : [
 		"nullInstance",
-		"instance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "tg 5/24/2010 17:00",
-	"instvars" : [
-		 ],
+		"instance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "GLMLogger",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

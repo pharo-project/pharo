@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Clusters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/29/2011 19:20",
-	"instvars" : [
-		 ],
-	"name" : "FLCluster",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLCluster",
+	"type" : "normal"
+}

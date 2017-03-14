@@ -1,15 +1,14 @@
 {
-	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"baselineRegistry",
-		"configurationRegistry" ],
+		"configurationRegistry"
+	],
 	"name" : "MetacelloProjectRegistry",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

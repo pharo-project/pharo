@@ -1,14 +1,11 @@
 {
-	"category" : "Hiedra-Rendering",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "HiDirectLinkRenderer",
-	"pools" : [
-		 ],
 	"super" : "HiLinkRenderer",
-	"type" : "normal" }
+	"category" : "Hiedra-Rendering",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HiDirectLinkRenderer",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "GT-Spotter-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMFoundationBrick",
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"focusedMorph",
 		"breadcrumbBrick",
@@ -12,9 +12,8 @@
 		"spotterModel",
 		"autoHide",
 		"privacyAgreementNotificationBrick",
-		"processorKeyBindings" ],
+		"processorKeyBindings"
+	],
 	"name" : "GTSpotterMorph",
-	"pools" : [
-		 ],
-	"super" : "GLMFoundationBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

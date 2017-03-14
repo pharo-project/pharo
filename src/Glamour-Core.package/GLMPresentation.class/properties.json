@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DamienCassou 7/19/2011 21:14",
+	"super" : "GLMLoggedObject",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pane",
 		"title",
@@ -34,9 +34,8 @@
 		"wantsSteps",
 		"stepTime",
 		"stepCondition",
-		"wantsAutomaticRefresh" ],
+		"wantsAutomaticRefresh"
+	],
 	"name" : "GLMPresentation",
-	"pools" : [
-		 ],
-	"super" : "GLMLoggedObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

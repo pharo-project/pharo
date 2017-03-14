@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Acceptors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ClassDefinitionAcceptor",
-	"pools" : [
-		 ],
 	"super" : "AbstractAcceptor",
-	"type" : "normal" }
+	"category" : "Nautilus-Acceptors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ClassDefinitionAcceptor",
+	"type" : "normal"
+}

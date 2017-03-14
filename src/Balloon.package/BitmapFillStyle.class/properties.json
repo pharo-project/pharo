@@ -1,15 +1,14 @@
 {
-	"category" : "Balloon-Fills",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "OrientedFillStyle",
+	"category" : "Balloon-Fills",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"form",
-		"tileFlag" ],
+		"tileFlag"
+	],
 	"name" : "BitmapFillStyle",
-	"pools" : [
-		 ],
-	"super" : "OrientedFillStyle",
-	"type" : "normal" }
+	"type" : "normal"
+}

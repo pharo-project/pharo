@@ -1,14 +1,11 @@
 {
-	"category" : "Jobs-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 6/24/2015 13:52",
-	"instvars" : [
-		 ],
-	"name" : "CurrentJob",
-	"pools" : [
-		 ],
 	"super" : "DynamicVariable",
-	"type" : "normal" }
+	"category" : "Jobs-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CurrentJob",
+	"type" : "normal"
+}

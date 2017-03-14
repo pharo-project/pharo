@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Theme",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMActionBrickThemer",
-	"pools" : [
-		 ],
 	"super" : "GLMBrickThemer",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Theme",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMActionBrickThemer",
+	"type" : "normal"
+}

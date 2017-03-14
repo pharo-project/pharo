@@ -1,15 +1,14 @@
 {
-	"category" : "Versionner-Commit",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Versionner-Commit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"configurationClass",
-		"commitVersion" ],
+		"commitVersion"
+	],
 	"name" : "VSUnloadUnit",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

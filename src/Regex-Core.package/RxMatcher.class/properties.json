@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "Tbn 11/12/2010 23:13",
+	"super" : "Object",
 	"category" : "Regex-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Cr",
-		"Lf" ],
-	"commentStamp" : "Tbn 11/12/2010 23:13",
+		"Lf"
+	],
 	"instvars" : [
 		"matcher",
 		"ignoreCase",
@@ -13,9 +15,8 @@
 		"stream",
 		"markerPositions",
 		"markerCount",
-		"lastResult" ],
+		"lastResult"
+	],
 	"name" : "RxMatcher",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

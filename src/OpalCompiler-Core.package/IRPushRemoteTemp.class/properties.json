@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBer 10/14/2014 14:48",
-	"instvars" : [
-		 ],
-	"name" : "IRPushRemoteTemp",
-	"pools" : [
-		 ],
 	"super" : "IRRemoteTempAccess",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IRPushRemoteTemp",
+	"type" : "normal"
+}

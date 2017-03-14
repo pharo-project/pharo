@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Browsers-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 2/4/2011 21:24",
+	"super" : "Announcement",
+	"category" : "Glamour-Browsers-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pane",
 		"browser",
-		"position" ],
+		"position"
+	],
 	"name" : "GLMPaneAnnouncement",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

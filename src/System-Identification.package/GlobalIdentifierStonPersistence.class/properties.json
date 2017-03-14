@@ -1,14 +1,11 @@
 {
-	"category" : "System-Identification",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/30/2015 16:55",
-	"instvars" : [
-		 ],
-	"name" : "GlobalIdentifierStonPersistence",
-	"pools" : [
-		 ],
 	"super" : "GlobalIdentifierPersistence",
-	"type" : "normal" }
+	"category" : "System-Identification",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlobalIdentifierStonPersistence",
+	"type" : "normal"
+}

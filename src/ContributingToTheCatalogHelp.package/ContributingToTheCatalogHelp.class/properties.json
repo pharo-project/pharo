@@ -1,14 +1,11 @@
 {
-	"category" : "ContributingToTheCatalogHelp",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/21/2015 20:28",
-	"instvars" : [
-		 ],
-	"name" : "ContributingToTheCatalogHelp",
-	"pools" : [
-		 ],
 	"super" : "CustomHelp",
-	"type" : "normal" }
+	"category" : "ContributingToTheCatalogHelp",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ContributingToTheCatalogHelp",
+	"type" : "normal"
+}

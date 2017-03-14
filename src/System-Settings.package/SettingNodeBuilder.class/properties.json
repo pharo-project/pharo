@@ -1,15 +1,14 @@
 {
-	"category" : "System-Settings-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:35",
+	"super" : "Object",
+	"category" : "System-Settings-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"node",
-		"builder" ],
+		"builder"
+	],
 	"name" : "SettingNodeBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,12 +1,14 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ImageReadWriter",
 	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Extension",
 		"ImageSeparator",
-		"Terminator" ],
-	"commentStamp" : "<historical>",
+		"Terminator"
+	],
 	"instvars" : [
 		"width",
 		"height",
@@ -32,9 +34,8 @@
 		"localColorTable",
 		"delay",
 		"loopCount",
-		"offset" ],
+		"offset"
+	],
 	"name" : "GIFReadWriter",
-	"pools" : [
-		 ],
-	"super" : "ImageReadWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

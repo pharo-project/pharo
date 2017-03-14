@@ -1,14 +1,13 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"nodesToVisit" ],
-	"name" : "MalHal",
-	"pools" : [
-		 ],
 	"super" : "MalTarjan",
-	"type" : "normal" }
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nodesToVisit"
+	],
+	"name" : "MalHal",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Renraku-Critiques",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/7/2016 09:21",
+	"super" : "ReAbstractCritique",
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"oldNode",
-		"newNode" ],
+		"newNode"
+	],
 	"name" : "ReReplaceNodeCritique",
-	"pools" : [
-		 ],
-	"super" : "ReAbstractCritique",
-	"type" : "normal" }
+	"type" : "normal"
+}

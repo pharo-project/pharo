@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 7/14/2011 22:07",
-	"instvars" : [
-		 ],
-	"name" : "GLMSmalltalkEditor",
-	"pools" : [
-		 ],
 	"super" : "SmalltalkEditor",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMSmalltalkEditor",
+	"type" : "normal"
+}

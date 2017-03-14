@@ -1,14 +1,13 @@
 {
-	"category" : "AST-Core-Matching",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 8/9/2005 14:56",
-	"instvars" : [
-		"replaceTree" ],
-	"name" : "RBStringReplaceRule",
-	"pools" : [
-		 ],
 	"super" : "RBReplaceRule",
-	"type" : "normal" }
+	"category" : "AST-Core-Matching",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"replaceTree"
+	],
+	"name" : "RBStringReplaceRule",
+	"type" : "normal"
+}

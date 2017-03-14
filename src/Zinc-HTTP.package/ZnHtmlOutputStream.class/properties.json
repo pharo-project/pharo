@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Streaming",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 11/30/2015 22:06",
-	"instvars" : [
-		"stream" ],
-	"name" : "ZnHtmlOutputStream",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Streaming",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream"
+	],
+	"name" : "ZnHtmlOutputStream",
+	"type" : "normal"
+}

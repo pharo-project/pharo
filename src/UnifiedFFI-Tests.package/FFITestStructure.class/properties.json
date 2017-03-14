@@ -1,19 +1,18 @@
 {
+	"commentStamp" : "",
+	"super" : "FFIExternalStructure",
 	"category" : "UnifiedFFI-Tests",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_BYTE",
 		"OFFSET_DOUBLE",
 		"OFFSET_FLOAT",
 		"OFFSET_INT64",
 		"OFFSET_LONG",
-		"OFFSET_SHORT" ],
-	"commentStamp" : "",
-	"instvars" : [
-		 ],
+		"OFFSET_SHORT"
+	],
+	"instvars" : [ ],
 	"name" : "FFITestStructure",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalStructure",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "System-Hashing-MD5",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ul 3/3/2008 23:40",
-	"instvars" : [
-		"state" ],
-	"name" : "MD5",
-	"pools" : [
-		 ],
 	"super" : "HashFunction",
-	"type" : "normal" }
+	"category" : "System-Hashing-MD5",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"state"
+	],
+	"name" : "MD5",
+	"type" : "normal"
+}

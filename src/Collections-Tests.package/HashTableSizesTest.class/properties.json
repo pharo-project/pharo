@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "HashTableSizesTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HashTableSizesTest",
+	"type" : "normal"
+}

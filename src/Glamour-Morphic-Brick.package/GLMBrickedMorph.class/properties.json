@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 1/7/2015 23:25",
-	"instvars" : [
-		 ],
-	"name" : "GLMBrickedMorph",
-	"pools" : [
-		 ],
 	"super" : "Morph",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMBrickedMorph",
+	"type" : "normal"
+}

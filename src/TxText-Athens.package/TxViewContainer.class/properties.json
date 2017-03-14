@@ -1,16 +1,15 @@
 {
-	"category" : "TxText-Athens-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SeanDeNigris 4/27/2015 09:59",
+	"super" : "Morph",
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"view",
 		"decorators",
-		"model" ],
+		"model"
+	],
 	"name" : "TxViewContainer",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

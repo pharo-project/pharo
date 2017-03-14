@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:17",
+	"super" : "Object",
+	"category" : "Athens-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"children",
 		"box",
@@ -14,9 +14,8 @@
 		"childsHeight",
 		"originX",
 		"originY",
-		"color" ],
+		"color"
+	],
 	"name" : "AthensSimpleTreeNode",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

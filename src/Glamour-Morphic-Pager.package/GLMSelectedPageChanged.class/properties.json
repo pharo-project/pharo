@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Pager-Announcement",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMSelectedPageChanged",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Pager-Announcement",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMSelectedPageChanged",
+	"type" : "normal"
+}

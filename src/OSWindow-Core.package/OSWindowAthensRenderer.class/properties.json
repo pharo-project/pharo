@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Matthieu 5/28/2015 11:59",
+	"super" : "OSWindowRenderer",
+	"category" : "OSWindow-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"athensSurface",
-		"session" ],
+		"session"
+	],
 	"name" : "OSWindowAthensRenderer",
-	"pools" : [
-		 ],
-	"super" : "OSWindowRenderer",
-	"type" : "normal" }
+	"type" : "normal"
+}

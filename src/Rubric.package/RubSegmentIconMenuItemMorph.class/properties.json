@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"segment" ],
-	"name" : "RubSegmentIconMenuItemMorph",
-	"pools" : [
-		 ],
 	"super" : "ToggleMenuItemMorph",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"segment"
+	],
+	"name" : "RubSegmentIconMenuItemMorph",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 10/9/2014 17:29",
-	"instvars" : [
-		 ],
-	"name" : "InvalidPackageName",
-	"pools" : [
-		 ],
 	"super" : "ClassBuilderWarning",
-	"type" : "normal" }
+	"category" : "Slot-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "InvalidPackageName",
+	"type" : "normal"
+}

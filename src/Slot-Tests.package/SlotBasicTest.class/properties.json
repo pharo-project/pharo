@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "SlotBasicTest",
-	"pools" : [
-		 ],
 	"super" : "SlotSilentTest",
-	"type" : "normal" }
+	"category" : "Slot-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SlotBasicTest",
+	"type" : "normal"
+}

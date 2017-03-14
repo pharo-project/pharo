@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Tests-Memory",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:49",
-	"instvars" : [
-		 ],
-	"name" : "MemoryHandleTest",
-	"pools" : [
-		 ],
 	"super" : "FileSystemHandleTest",
-	"type" : "normal" }
+	"category" : "FileSystem-Tests-Memory",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MemoryHandleTest",
+	"type" : "normal"
+}

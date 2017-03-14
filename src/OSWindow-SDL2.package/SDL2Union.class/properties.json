@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 5/27/2016 12:57",
-	"instvars" : [
-		 ],
-	"name" : "SDL2Union",
+	"super" : "FFIExternalUnion",
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [ ],
 	"pools" : [
 		"SDL2Constants",
-		"SDL2Types" ],
-	"super" : "FFIExternalUnion",
-	"type" : "normal" }
+		"SDL2Types"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SDL2Union",
+	"type" : "normal"
+}

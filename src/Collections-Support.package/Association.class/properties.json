@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 2/13/2010 15:13",
-	"instvars" : [
-		"value" ],
-	"name" : "Association",
-	"pools" : [
-		 ],
 	"super" : "LookupKey",
-	"type" : "normal" }
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"value"
+	],
+	"name" : "Association",
+	"type" : "normal"
+}

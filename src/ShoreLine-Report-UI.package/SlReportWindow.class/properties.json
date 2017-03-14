@@ -1,10 +1,10 @@
 {
-	"category" : "ShoreLine-Report-UI-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TommasoDalSasso 2/24/2014 11:26",
+	"super" : "ComposableModel",
+	"category" : "ShoreLine-Report-UI-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"reporter",
 		"report",
@@ -13,9 +13,8 @@
 		"stack",
 		"sendButton",
 		"autoSubmit",
-		"help" ],
+		"help"
+	],
 	"name" : "SlReportWindow",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

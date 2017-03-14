@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultHostName",
 		"HaveNetwork",
@@ -10,12 +12,9 @@
 		"ResolverMutex",
 		"ResolverReady",
 		"ResolverSemaphore",
-		"ResolverUninitialized" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"ResolverUninitialized"
+	],
+	"instvars" : [ ],
 	"name" : "NetNameResolver",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

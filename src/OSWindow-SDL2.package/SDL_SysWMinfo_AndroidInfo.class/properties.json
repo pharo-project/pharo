@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "RonieSalgado 5/27/2016 13:17",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_SURFACE",
-		"OFFSET_WINDOW" ],
-	"commentStamp" : "RonieSalgado 5/27/2016 13:17",
-	"instvars" : [
-		 ],
+		"OFFSET_WINDOW"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_SysWMinfo_AndroidInfo",
-	"pools" : [
-		 ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "FileSystem-Memory",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"root" ],
-	"name" : "MemoryStore",
-	"pools" : [
-		 ],
 	"super" : "FileSystemStore",
-	"type" : "normal" }
+	"category" : "FileSystem-Memory",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"root"
+	],
+	"name" : "MemoryStore",
+	"type" : "normal"
+}

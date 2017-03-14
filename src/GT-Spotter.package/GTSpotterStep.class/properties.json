@@ -1,10 +1,10 @@
 {
-	"category" : "GT-Spotter-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 11/26/2014 15:13",
+	"super" : "Object",
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"announcer",
 		"processors",
@@ -16,9 +16,8 @@
 		"asyncTask",
 		"spotter",
 		"lastSearchContext",
-		"event" ],
+		"event"
+	],
 	"name" : "GTSpotterStep",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

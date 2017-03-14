@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:36",
-	"instvars" : [
-		 ],
-	"name" : "WeakOrderedCollectionTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakOrderedCollectionTest",
+	"type" : "normal"
+}

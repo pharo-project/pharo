@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MimeConverter",
 	"category" : "Network-MIME",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"FromCharTable",
-		"ToCharTable" ],
-	"commentStamp" : "<historical>",
+		"ToCharTable"
+	],
 	"instvars" : [
-		"multiLine" ],
+		"multiLine"
+	],
 	"name" : "Base64MimeConverter",
-	"pools" : [
-		 ],
-	"super" : "MimeConverter",
-	"type" : "normal" }
+	"type" : "normal"
+}

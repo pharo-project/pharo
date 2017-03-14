@@ -9,9 +9,9 @@ writePropertiesFile
     writeInDirectoryName: '.'
     fileName: ''
     extension: '.filetree'
-    visit: [ properties writeCypressJsonOn: fileStream ].
+    visit: [ STON put: properties asJsonOnStreamPretty: fileStream ].
   self
     writeInDirectoryName: '.'
     fileName: 'properties'
     extension: self propertyFileExtension
-    visit: [ Dictionary new writeCypressJsonOn: fileStream ]
+    visit: [ STON put: (Dictionary new) asJsonOnStreamPretty: fileStream ]

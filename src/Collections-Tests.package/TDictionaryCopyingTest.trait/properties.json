@@ -1,6 +1,7 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classtraitcomposition" : "TCloneTest classTrait",
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:33",
-	"name" : "TDictionaryCopyingTest",
-	"traitcomposition" : "TCloneTest" }
+	"traitcomposition" : "TCloneTest",
+	"classtraitcomposition" : "TCloneTest classTrait",
+	"category" : "Collections-Tests-Unordered",
+	"name" : "TDictionaryCopyingTest"
+}

@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Multilingual-Languages",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ClipboardInterpreterClass",
 		"Current",
 		"FileNameConverter",
 		"InputInterpreterClass",
 		"KnownEnvironments",
-		"SystemConverter" ],
-	"commentStamp" : "<historical>",
+		"SystemConverter"
+	],
 	"instvars" : [
-		"id" ],
+		"id"
+	],
 	"name" : "LanguageEnvironment",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

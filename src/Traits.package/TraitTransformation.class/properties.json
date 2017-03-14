@@ -1,16 +1,15 @@
 {
-	"category" : "Traits-Composition",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TComposingDescription classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "apb 8/25/2005 11:54",
+	"classvars" : [ ],
 	"instvars" : [
-		"subject" ],
+		"subject"
+	],
 	"name" : "TraitTransformation",
-	"pools" : [
-		 ],
+	"commentStamp" : "apb 8/25/2005 11:54",
 	"super" : "Object",
 	"traitcomposition" : "TComposingDescription",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Traits-Composition"
+}

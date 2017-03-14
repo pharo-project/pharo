@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "TudorGirba 10/22/2014 07:37",
+	"super" : "GLMCompositePresentation",
 	"category" : "GT-Playground",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"GTPlaygroundEnabledStatus",
 		"PreferredExtent",
-		"RememberPreferredExtent" ],
-	"commentStamp" : "TudorGirba 10/22/2014 07:37",
-	"instvars" : [
-		 ],
+		"RememberPreferredExtent"
+	],
+	"instvars" : [ ],
 	"name" : "GTPlayground",
-	"pools" : [
-		 ],
-	"super" : "GLMCompositePresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

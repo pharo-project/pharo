@@ -1,17 +1,16 @@
 {
-	"category" : "GT-Spotter-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMInteractableBrick",
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"labelBrick",
 		"triangleBrick",
 		"stepModel",
-		"isTriangleVisible" ],
+		"isTriangleVisible"
+	],
 	"name" : "GTSpotterStepBreadcrumbItem",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

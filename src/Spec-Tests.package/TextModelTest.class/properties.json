@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Tests-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TextModelTest",
-	"pools" : [
-		 ],
 	"super" : "SpecTestCase",
-	"type" : "normal" }
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextModelTest",
+	"type" : "normal"
+}

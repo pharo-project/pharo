@@ -1,14 +1,11 @@
 {
-	"category" : "IssueTracking",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SeanDeNigris 5/7/2015 13:52",
-	"instvars" : [
-		 ],
-	"name" : "NullPharoIssue",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "IssueTracking",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NullPharoIssue",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-FastTable-Presentations",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGLMScriptingAPITablePresentation classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 2/6/2017 14:28",
+	"classvars" : [ ],
 	"instvars" : [
-		"columns" ],
+		"columns"
+	],
 	"name" : "GLMFastTreeTablePresentation",
-	"pools" : [
-		 ],
+	"commentStamp" : "AndreiChis 2/6/2017 14:28",
 	"super" : "GLMFastTreePresentation",
 	"traitcomposition" : "TGLMScriptingAPITablePresentation",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-FastTable-Presentations"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloConflictingProjectError",
-	"pools" : [
-		 ],
 	"super" : "MetacelloScriptingError",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloConflictingProjectError",
+	"type" : "normal"
+}

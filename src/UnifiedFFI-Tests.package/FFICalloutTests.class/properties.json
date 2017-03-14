@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "",
+	"super" : "TestCase",
 	"category" : "UnifiedFFI-Tests",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CLASSVAR",
-		"TYPEVAR" ],
-	"commentStamp" : "",
+		"TYPEVAR"
+	],
 	"instvars" : [
-		"architecture" ],
+		"architecture"
+	],
 	"name" : "FFICalloutTests",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

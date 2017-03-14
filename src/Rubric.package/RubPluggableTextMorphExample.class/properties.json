@@ -1,11 +1,6 @@
 {
-	"category" : "Rubric-Editing-Widgets-Examples",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TViewModel classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AlainPlantec 5/13/2015 16:18",
+	"classvars" : [ ],
 	"instvars" : [
 		"selection",
 		"scrollValue",
@@ -13,10 +8,14 @@
 		"classIsMeta",
 		"selectedClassName",
 		"selectedMethodName",
-		"enabled" ],
+		"enabled"
+	],
 	"name" : "RubPluggableTextMorphExample",
-	"pools" : [
-		 ],
+	"commentStamp" : "AlainPlantec 5/13/2015 16:18",
 	"super" : "Model",
 	"traitcomposition" : "TViewModel",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Rubric-Editing-Widgets-Examples"
+}

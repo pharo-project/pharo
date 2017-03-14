@@ -1,15 +1,14 @@
 {
-	"category" : "Monticello-Storing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/6/2014 08:08",
+	"super" : "MCWriter",
+	"category" : "Monticello-Storing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"zip",
-		"infoWriter" ],
+		"infoWriter"
+	],
 	"name" : "MCMczWriter",
-	"pools" : [
-		 ],
-	"super" : "MCWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

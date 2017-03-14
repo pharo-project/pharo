@@ -1,10 +1,17 @@
 {
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:11",
+	"super" : "Object",
 	"category" : "FreeType-Settings",
 	"classinstvars" : [
-		"current" ],
+		"current"
+	],
+	"pools" : [
+		"FT2Constants",
+		"FreeTypeCacheConstants"
+	],
 	"classvars" : [
-		"UpdateFontsAtImageStartup" ],
-	"commentStamp" : "TorstenBergmann 2/4/2014 22:11",
+		"UpdateFontsAtImageStartup"
+	],
 	"instvars" : [
 		"gamma",
 		"hinting",
@@ -18,10 +25,8 @@
 		"subPixelFilters",
 		"forceNonSubPixelCount",
 		"gammaTable",
-		"gammaInverseTable" ],
+		"gammaInverseTable"
+	],
 	"name" : "FreeTypeSettings",
-	"pools" : [
-		"FT2Constants",
-		"FreeTypeCacheConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

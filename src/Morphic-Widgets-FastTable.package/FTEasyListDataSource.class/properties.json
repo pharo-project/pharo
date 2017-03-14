@@ -1,17 +1,16 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Easy",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 6/3/2015 15:02",
+	"super" : "FTSimpleDataSource",
+	"category" : "Morphic-Widgets-FastTable-Easy",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"displayBlock",
 		"iconBlock",
 		"menuBlock",
-		"header" ],
+		"header"
+	],
 	"name" : "FTEasyListDataSource",
-	"pools" : [
-		 ],
-	"super" : "FTSimpleDataSource",
-	"type" : "normal" }
+	"type" : "normal"
+}

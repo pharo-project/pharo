@@ -1,14 +1,11 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FLTraitSerializationTest",
-	"pools" : [
-		 ],
 	"super" : "FLSerializationTest",
-	"type" : "normal" }
+	"category" : "FuelTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLTraitSerializationTest",
+	"type" : "normal"
+}

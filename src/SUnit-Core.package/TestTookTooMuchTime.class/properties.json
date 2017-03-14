@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 8/30/2016 17:03",
-	"instvars" : [
-		 ],
-	"name" : "TestTookTooMuchTime",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "SUnit-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TestTookTooMuchTime",
+	"type" : "normal"
+}

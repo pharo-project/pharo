@@ -1,16 +1,15 @@
 {
-	"category" : "GT-Tests-Debugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "GT-Tests-Debugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"session",
 		"window",
-		"debugger" ],
+		"debugger"
+	],
 	"name" : "GTDebuggerSmokeTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

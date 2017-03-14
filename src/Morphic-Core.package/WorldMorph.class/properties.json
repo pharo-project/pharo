@@ -1,15 +1,16 @@
 {
-	"category" : "Morphic-Core-Worlds",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ExtraWorldList" ],
 	"commentStamp" : "<historical>",
+	"super" : "PasteUpMorph",
+	"category" : "Morphic-Core-Worlds",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ExtraWorldList"
+	],
 	"instvars" : [
 		"osWindow",
-		"session" ],
+		"session"
+	],
 	"name" : "WorldMorph",
-	"pools" : [
-		 ],
-	"super" : "PasteUpMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Layouts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMLinearLayout",
-	"pools" : [
-		 ],
 	"super" : "LayoutPolicy",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMLinearLayout",
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "GT-Spotter-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMInteractableBrick",
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"listBrick",
 		"titleBrick",
 		"stepModel",
-		"category" ],
+		"category"
+	],
 	"name" : "GTSpotterCategoryBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

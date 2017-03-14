@@ -1,14 +1,13 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"url" ],
-	"name" : "TextURL",
-	"pools" : [
-		 ],
 	"super" : "TextAction",
-	"type" : "normal" }
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"url"
+	],
+	"name" : "TextURL",
+	"type" : "normal"
+}

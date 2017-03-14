@@ -1,14 +1,11 @@
 {
-	"category" : "EpiceaBrowsers-Log-Visitors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 10/27/2014 18:00",
-	"instvars" : [
-		 ],
-	"name" : "EpOldStateVisitor",
-	"pools" : [
-		 ],
 	"super" : "EpContentStringVisitor",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-Log-Visitors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpOldStateVisitor",
+	"type" : "normal"
+}

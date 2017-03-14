@@ -1,15 +1,18 @@
 {
-	"category" : "Refactoring-Tests-Core-Data",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Foo1" ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [
+		"Foo1"
+	],
 	"instvars" : [
 		"name",
-		"foo1" ],
+		"foo1"
+	],
 	"name" : "RBLintRuleTest",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

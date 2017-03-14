@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Tests-Layouts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 17:07",
-	"instvars" : [
-		 ],
-	"name" : "LayoutFrameTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Morphic-Tests-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LayoutFrameTest",
+	"type" : "normal"
+}

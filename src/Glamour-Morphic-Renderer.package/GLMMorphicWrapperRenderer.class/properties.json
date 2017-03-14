@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"container" ],
-	"name" : "GLMMorphicWrapperRenderer",
-	"pools" : [
-		 ],
 	"super" : "GLMMorphicBrowserRenderer",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"container"
+	],
+	"name" : "GLMMorphicWrapperRenderer",
+	"type" : "normal"
+}

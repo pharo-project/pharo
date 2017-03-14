@@ -1,14 +1,11 @@
 {
-	"category" : "Announcements-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 3/12/2011 21:37",
-	"instvars" : [
-		 ],
-	"name" : "LegacyWeakSubscription",
-	"pools" : [
-		 ],
 	"super" : "WeakAnnouncementSubscription",
-	"type" : "weak" }
+	"category" : "Announcements-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LegacyWeakSubscription",
+	"type" : "weak"
+}

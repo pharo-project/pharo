@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ls 6/25/2005 13:48",
+	"super" : "Stream",
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"monitor",
-		"items" ],
+		"items"
+	],
 	"name" : "SharedQueue",
-	"pools" : [
-		 ],
-	"super" : "Stream",
-	"type" : "normal" }
+	"type" : "normal"
+}

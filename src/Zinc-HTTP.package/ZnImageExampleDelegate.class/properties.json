@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Client-Server",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"image" ],
-	"name" : "ZnImageExampleDelegate",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"image"
+	],
+	"name" : "ZnImageExampleDelegate",
+	"type" : "normal"
+}

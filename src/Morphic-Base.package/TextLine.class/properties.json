@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Base-Text Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"left",
 		"right",
@@ -14,9 +16,8 @@
 		"lastIndex",
 		"internalSpaces",
 		"paddingWidth",
-		"baseline" ],
+		"baseline"
+	],
 	"name" : "TextLine",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

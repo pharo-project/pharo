@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mcamp 10/1/2015 11:44",
-	"instvars" : [
-		 ],
-	"name" : "ReflectivitySourceCodeAgroupation",
-	"pools" : [
-		 ],
 	"super" : "Morph",
-	"type" : "normal" }
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReflectivitySourceCodeAgroupation",
+	"type" : "normal"
+}

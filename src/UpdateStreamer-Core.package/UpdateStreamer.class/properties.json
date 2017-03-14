@@ -1,19 +1,20 @@
 {
-	"category" : "UpdateStreamer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UpdateDownloader" ],
 	"commentStamp" : "StephaneDucasse 9/1/2010 21:59",
+	"super" : "Object",
+	"category" : "UpdateStreamer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UpdateDownloader"
+	],
 	"instvars" : [
 		"applyChanges",
 		"silent",
 		"upToNumber",
 		"path",
 		"pharoServer",
-		"updatesListFileName" ],
+		"updatesListFileName"
+	],
 	"name" : "UpdateStreamer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

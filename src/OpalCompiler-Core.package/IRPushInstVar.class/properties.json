@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBer 10/14/2014 14:47",
-	"instvars" : [
-		 ],
-	"name" : "IRPushInstVar",
-	"pools" : [
-		 ],
 	"super" : "IRInstVarAccess",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IRPushInstVar",
+	"type" : "normal"
+}

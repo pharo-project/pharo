@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Windows-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 10/17/2015 15:56",
-	"instvars" : [
-		 ],
-	"name" : "WindowDeActivated",
-	"pools" : [
-		 ],
 	"super" : "WindowAnnouncement",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Windows-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WindowDeActivated",
+	"type" : "normal"
+}

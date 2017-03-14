@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:26",
+	"super" : "SimpleButtonMorph",
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
-		"icon" ],
+		"icon"
+	],
 	"name" : "MorphTreeColumnButton",
-	"pools" : [
-		 ],
-	"super" : "SimpleButtonMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

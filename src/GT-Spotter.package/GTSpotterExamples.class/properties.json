@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 9/24/2015 19:54",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterExamples",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterExamples",
+	"type" : "normal"
+}

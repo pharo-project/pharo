@@ -1,14 +1,13 @@
 {
-	"category" : "GT-EventRecorder-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 11/16/2015 19:59",
-	"instvars" : [
-		"weakHolder" ],
-	"name" : "GTEventRegistry",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"weakHolder"
+	],
+	"name" : "GTEventRegistry",
+	"type" : "normal"
+}

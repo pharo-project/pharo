@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ArrayedCollection",
 	"category" : "Collections-Strings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"AsciiOrder",
 		"CSLineEnders",
@@ -13,12 +15,9 @@
 		"LowercasingTable",
 		"Tokenish",
 		"TypeTable",
-		"UppercasingTable" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"UppercasingTable"
+	],
+	"instvars" : [ ],
 	"name" : "String",
-	"pools" : [
-		 ],
-	"super" : "ArrayedCollection",
-	"type" : "normal" }
+	"type" : "normal"
+}

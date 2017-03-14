@@ -1,7 +1,11 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
 	"classvars" : [
 		"Bfp",
 		"BtpLong",
@@ -46,13 +50,12 @@
 		"StdSelectors",
 		"StdVariables",
 		"Store",
-		"StorePop" ],
-	"commentStamp" : "<historical>",
+		"StorePop"
+	],
 	"instvars" : [
 		"comment",
-		"pc" ],
+		"pc"
+	],
 	"name" : "ParseNode",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

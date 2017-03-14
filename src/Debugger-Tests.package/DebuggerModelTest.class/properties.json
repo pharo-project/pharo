@@ -1,16 +1,15 @@
 {
-	"category" : "Debugger-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:44",
+	"super" : "TestCase",
+	"category" : "Debugger-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"session",
 		"process",
-		"context" ],
+		"context"
+	],
 	"name" : "DebuggerModelTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

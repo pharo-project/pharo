@@ -1,14 +1,13 @@
 {
-	"category" : "System-Announcements-System-Classes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cyrilledelaunay 1/18/2011 15:03",
-	"instvars" : [
-		"classReorganized" ],
-	"name" : "ClassReorganized",
-	"pools" : [
-		 ],
 	"super" : "ClassAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"classReorganized"
+	],
+	"name" : "ClassReorganized",
+	"type" : "normal"
+}

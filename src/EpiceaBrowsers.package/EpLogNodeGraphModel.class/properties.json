@@ -1,10 +1,10 @@
 {
-	"category" : "EpiceaBrowsers-Unified",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/14/2016 02:38",
+	"super" : "ComposableModel",
+	"category" : "EpiceaBrowsers-Unified",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"refreshButtonModel",
 		"directory",
@@ -14,9 +14,8 @@
 		"directoryTextModel",
 		"enableMonitorButtonModel",
 		"createLogButtonModel",
-		"monitor" ],
+		"monitor"
+	],
 	"name" : "EpLogNodeGraphModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

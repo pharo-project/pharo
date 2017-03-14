@@ -1,17 +1,16 @@
 {
-	"category" : "MonticelloRemoteRepositories",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "MCFileBasedRepository",
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"location",
 		"user",
 		"password",
-		"readerCache" ],
+		"readerCache"
+	],
 	"name" : "MCHttpRepository",
-	"pools" : [
-		 ],
-	"super" : "MCFileBasedRepository",
-	"type" : "normal" }
+	"type" : "normal"
+}

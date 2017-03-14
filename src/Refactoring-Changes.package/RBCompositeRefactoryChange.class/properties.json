@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 9/9/2016 19:59",
-	"instvars" : [
-		"changes" ],
-	"name" : "RBCompositeRefactoryChange",
-	"pools" : [
-		 ],
 	"super" : "RBRefactoryChange",
-	"type" : "normal" }
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"changes"
+	],
+	"name" : "RBCompositeRefactoryChange",
+	"type" : "normal"
+}

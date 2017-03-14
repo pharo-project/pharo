@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Errors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FLObjectNotFound",
-	"pools" : [
-		 ],
 	"super" : "FLSerializationError",
-	"type" : "normal" }
+	"category" : "Fuel-Errors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLObjectNotFound",
+	"type" : "normal"
+}

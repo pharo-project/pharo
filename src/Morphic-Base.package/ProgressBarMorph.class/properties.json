@@ -1,22 +1,23 @@
 {
-	"category" : "Morphic-Base-ProgressBar",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
 	"classvars" : [
 		"DefaultHeight",
-		"DefaultWidth" ],
-	"commentStamp" : "<historical>",
+		"DefaultWidth"
+	],
 	"instvars" : [
 		"start",
 		"end",
 		"value",
 		"height",
 		"width",
-		"cachedWidth" ],
+		"cachedWidth"
+	],
 	"name" : "ProgressBarMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "BorderedMorph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Base-ProgressBar"
+}

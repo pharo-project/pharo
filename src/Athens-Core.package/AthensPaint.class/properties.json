@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Core-Paints",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensPaint",
-	"pools" : [
-		 ],
 	"super" : "AthensAbstractPaint",
-	"type" : "normal" }
+	"category" : "Athens-Core-Paints",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensPaint",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Slot-Examples-Associations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JanVanDeSandt 2/27/2015 11:26",
+	"super" : "InstanceVariableSlot",
+	"category" : "Slot-Examples-Associations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"targetClass",
 		"inverseName",
-		"inverseSlot" ],
+		"inverseSlot"
+	],
 	"name" : "RelationSlot",
-	"pools" : [
-		 ],
-	"super" : "InstanceVariableSlot",
-	"type" : "normal" }
+	"type" : "normal"
+}

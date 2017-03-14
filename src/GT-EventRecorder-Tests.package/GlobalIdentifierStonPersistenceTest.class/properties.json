@@ -1,14 +1,11 @@
 {
-	"category" : "GT-EventRecorder-Tests-Identifier",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GlobalIdentifierStonPersistenceTest",
-	"pools" : [
-		 ],
 	"super" : "GlobalIdentifierPersistenceTest",
-	"type" : "normal" }
+	"category" : "GT-EventRecorder-Tests-Identifier",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlobalIdentifierStonPersistenceTest",
+	"type" : "normal"
+}

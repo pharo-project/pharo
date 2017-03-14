@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Core-Implementation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cwp 11/18/2009 12:32",
-	"instvars" : [
-		 ],
-	"name" : "CollectVisitor",
-	"pools" : [
-		 ],
 	"super" : "AbstractEnumerationVisitor",
-	"type" : "normal" }
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CollectVisitor",
+	"type" : "normal"
+}

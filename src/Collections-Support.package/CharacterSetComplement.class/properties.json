@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 8/31/2008 14:53",
+	"super" : "Collection",
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"absent",
-		"byteArrayMapCache" ],
+		"byteArrayMapCache"
+	],
 	"name" : "CharacterSetComplement",
-	"pools" : [
-		 ],
-	"super" : "Collection",
-	"type" : "normal" }
+	"type" : "normal"
+}

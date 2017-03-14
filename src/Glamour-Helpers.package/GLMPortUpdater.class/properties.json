@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Helpers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Glamour-Helpers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"portSymbol",
-		"valueBlock" ],
+		"valueBlock"
+	],
 	"name" : "GLMPortUpdater",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:19",
-	"instvars" : [
-		"surface" ],
-	"name" : "CurveWorkshop",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Athens-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"surface"
+	],
+	"name" : "CurveWorkshop",
+	"type" : "normal"
+}

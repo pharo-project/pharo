@@ -1,10 +1,12 @@
 {
-	"category" : "Text-Edition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Singleton" ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 12:21",
+	"super" : "Model",
+	"category" : "Text-Edition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Singleton"
+	],
 	"instvars" : [
 		"findText",
 		"replaceText",
@@ -13,9 +15,8 @@
 		"wrapAround",
 		"searchBackwards",
 		"findStartIndex",
-		"isRegex" ],
+		"isRegex"
+	],
 	"name" : "FindReplaceService",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Versionner-Tests-Core-Commands",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Versionner-Tests-Core-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classFactory",
 		"project",
-		"cmd" ],
+		"cmd"
+	],
 	"name" : "VSReleaseDevelopmentVersionCommandTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

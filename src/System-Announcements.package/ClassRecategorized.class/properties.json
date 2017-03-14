@@ -1,16 +1,15 @@
 {
-	"category" : "System-Announcements-System-Classes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cyrilledelaunay 1/18/2011 10:42",
+	"super" : "ClassAnnouncement",
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"newCategory",
 		"oldCategory",
-		"classRecategorized" ],
+		"classRecategorized"
+	],
 	"name" : "ClassRecategorized",
-	"pools" : [
-		 ],
-	"super" : "ClassAnnouncement",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"columnWidths" ],
-	"name" : "MulticolumnLazyListMorph",
-	"pools" : [
-		 ],
 	"super" : "LazyListMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"columnWidths"
+	],
+	"name" : "MulticolumnLazyListMorph",
+	"type" : "normal"
+}

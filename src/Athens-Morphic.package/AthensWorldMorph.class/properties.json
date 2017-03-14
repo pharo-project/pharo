@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 1/4/2015 18:32",
-	"instvars" : [
-		 ],
-	"name" : "AthensWorldMorph",
-	"pools" : [
-		 ],
 	"super" : "WorldMorph",
-	"type" : "normal" }
+	"category" : "Athens-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensWorldMorph",
+	"type" : "normal"
+}

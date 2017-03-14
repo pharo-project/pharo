@@ -1,17 +1,18 @@
 {
-	"category" : "Collections-Tests-Stack",
-	"classinstvars" : [
-		"testSize" ],
 	"classtraitcomposition" : "TEmptyTest classTrait + TCloneTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/20/2014 15:31",
+	"classvars" : [ ],
 	"instvars" : [
 		"empty",
-		"nonEmpty" ],
+		"nonEmpty"
+	],
 	"name" : "StackTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:31",
 	"super" : "TestCase",
 	"traitcomposition" : "TEmptyTest - {#testIfNotEmptyifEmpty. #testIfEmpty. #testNotEmpty} + (TCloneTest - {#testCopyNonEmpty})",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [
+		"testSize"
+	],
+	"pools" : [ ],
+	"category" : "Collections-Tests-Stack"
+}

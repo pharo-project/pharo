@@ -1,14 +1,13 @@
 {
-	"category" : "Compiler-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:21",
-	"instvars" : [
-		"nextJumpIsAroundBlock" ],
-	"name" : "BlockStartLocator",
-	"pools" : [
-		 ],
 	"super" : "InstructionClient",
-	"type" : "normal" }
+	"category" : "Compiler-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nextJumpIsAroundBlock"
+	],
+	"name" : "BlockStartLocator",
+	"type" : "normal"
+}

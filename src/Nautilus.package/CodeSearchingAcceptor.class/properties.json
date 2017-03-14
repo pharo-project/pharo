@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Acceptors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/30/2014 22:28",
-	"instvars" : [
-		 ],
-	"name" : "CodeSearchingAcceptor",
-	"pools" : [
-		 ],
 	"super" : "AbstractAcceptor",
-	"type" : "normal" }
+	"category" : "Nautilus-Acceptors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CodeSearchingAcceptor",
+	"type" : "normal"
+}

@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "TorstenBergmann 1/31/2014 12:19",
+	"super" : "SharedPool",
 	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BS",
 		"BS2",
@@ -85,12 +87,9 @@
 		"RightMarginTab",
 		"Space",
 		"Tab",
-		"TextSharedInformation" ],
-	"commentStamp" : "TorstenBergmann 1/31/2014 12:19",
-	"instvars" : [
-		 ],
+		"TextSharedInformation"
+	],
+	"instvars" : [ ],
 	"name" : "TextConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

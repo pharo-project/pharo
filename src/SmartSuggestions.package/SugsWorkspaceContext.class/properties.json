@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Menu",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 1/23/2016 23:44",
-	"instvars" : [
-		 ],
-	"name" : "SugsWorkspaceContext",
-	"pools" : [
-		 ],
 	"super" : "SugsAbstractContext",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsWorkspaceContext",
+	"type" : "normal"
+}

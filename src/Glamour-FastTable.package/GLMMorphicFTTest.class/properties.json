@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-FastTable-Morphic-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMMorphicFTTest",
-	"pools" : [
-		 ],
 	"super" : "GLMMorphicTest",
-	"type" : "normal" }
+	"category" : "Glamour-FastTable-Morphic-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMMorphicFTTest",
+	"type" : "normal"
+}

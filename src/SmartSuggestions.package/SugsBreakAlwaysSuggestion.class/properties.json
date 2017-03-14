@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Suggestion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 11/17/2015 15:51",
-	"instvars" : [
-		 ],
-	"name" : "SugsBreakAlwaysSuggestion",
-	"pools" : [
-		 ],
 	"super" : "SugsBreakpointSuggestion",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsBreakAlwaysSuggestion",
+	"type" : "normal"
+}

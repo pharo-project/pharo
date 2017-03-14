@@ -1,14 +1,11 @@
 {
-	"category" : "HelpSystem-Core-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 3/8/2010 09:30",
-	"instvars" : [
-		 ],
-	"name" : "HelpTopicListItemWrapper",
-	"pools" : [
-		 ],
 	"super" : "PluggableListItemWrapper",
-	"type" : "normal" }
+	"category" : "HelpSystem-Core-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HelpTopicListItemWrapper",
+	"type" : "normal"
+}

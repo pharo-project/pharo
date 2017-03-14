@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Graphics-Primitives",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CachedFontColorMaps",
-		"ColorConvertingMaps" ],
-	"commentStamp" : "<historical>",
+		"ColorConvertingMaps"
+	],
 	"instvars" : [
 		"destForm",
 		"sourceForm",
@@ -21,9 +23,8 @@
 		"clipY",
 		"clipWidth",
 		"clipHeight",
-		"colorMap" ],
+		"colorMap"
+	],
 	"name" : "BitBlt",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

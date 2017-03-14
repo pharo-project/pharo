@@ -1,14 +1,13 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:25",
-	"instvars" : [
-		"byteArray" ],
-	"name" : "FLInMemoryBasicSerializationTest",
-	"pools" : [
-		 ],
 	"super" : "FLBasicSerializationTest",
-	"type" : "normal" }
+	"category" : "FuelTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"byteArray"
+	],
+	"name" : "FLInMemoryBasicSerializationTest",
+	"type" : "normal"
+}

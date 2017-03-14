@@ -1,19 +1,18 @@
 {
-	"category" : "Balloon-Geometry",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Balloon-Geometry",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"points",
 		"leftFills",
 		"rightFills",
 		"lineWidths",
 		"lineFills",
-		"fillStyles" ],
+		"fillStyles"
+	],
 	"name" : "CompressedBoundaryShape",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

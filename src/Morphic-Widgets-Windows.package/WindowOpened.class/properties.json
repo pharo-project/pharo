@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Windows-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 4/25/2015 23:17",
-	"instvars" : [
-		 ],
-	"name" : "WindowOpened",
-	"pools" : [
-		 ],
 	"super" : "WindowAnnouncement",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Windows-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WindowOpened",
+	"type" : "normal"
+}

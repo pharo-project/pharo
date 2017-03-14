@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TestFailure",
-	"pools" : [
-		 ],
 	"super" : "Exception",
-	"type" : "normal" }
+	"category" : "SUnit-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TestFailure",
+	"type" : "normal"
+}

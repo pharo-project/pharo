@@ -1,14 +1,15 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"MinDistanceBeforeDetection" ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:11",
-	"instvars" : [
-		"minDistBeforeDetection" ],
-	"name" : "OSTouchGestureNeedingThresholdDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchStateGestureDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"MinDistanceBeforeDetection"
+	],
+	"instvars" : [
+		"minDistBeforeDetection"
+	],
+	"name" : "OSTouchGestureNeedingThresholdDetector",
+	"type" : "normal"
+}

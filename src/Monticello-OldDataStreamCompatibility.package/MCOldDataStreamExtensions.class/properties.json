@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-OldDataStreamCompatibility",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PabloTesone 8/20/2015 11:52",
-	"instvars" : [
-		 ],
-	"name" : "MCOldDataStreamExtensions",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Monticello-OldDataStreamCompatibility",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCOldDataStreamExtensions",
+	"type" : "normal"
+}

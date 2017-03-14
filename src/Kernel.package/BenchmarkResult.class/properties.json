@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/18/2015 17:10",
+	"super" : "Object",
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"iterations",
-		"elapsedTime" ],
+		"elapsedTime"
+	],
 	"name" : "BenchmarkResult",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

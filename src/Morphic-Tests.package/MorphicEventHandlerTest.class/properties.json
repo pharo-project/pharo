@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Tests-Event",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"morph" ],
-	"name" : "MorphicEventHandlerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Morphic-Tests-Event",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"morph"
+	],
+	"name" : "MorphicEventHandlerTest",
+	"type" : "normal"
+}

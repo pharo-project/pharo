@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:25",
-	"instvars" : [
-		 ],
-	"name" : "SDL2Example",
+	"super" : "Object",
+	"category" : "OSWindow-SDL2-Examples-Examples",
+	"classinstvars" : [ ],
 	"pools" : [
 		"SDL2Constants",
-		"SDL2Types" ],
-	"super" : "Object",
-	"type" : "normal" }
+		"SDL2Types"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SDL2Example",
+	"type" : "normal"
+}

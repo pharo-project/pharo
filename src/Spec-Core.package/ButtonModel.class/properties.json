@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 6/30/2016 09:59",
+	"super" : "AbstractWidgetModel",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"actionHolder",
 		"labelHolder",
@@ -14,9 +14,8 @@
 		"askBeforeChangingHolder",
 		"iconHolder",
 		"menuHolder",
-		"shortcutHolder" ],
+		"shortcutHolder"
+	],
 	"name" : "ButtonModel",
-	"pools" : [
-		 ],
-	"super" : "AbstractWidgetModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

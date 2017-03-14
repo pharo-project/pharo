@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Base-ProgressBar",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Morphic-Base-ProgressBar",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"clickClient",
 		"clickState",
@@ -17,9 +17,8 @@
 		"dblClickTimeoutSelector",
 		"dragSelector",
 		"dragThreshold",
-		"localStamp" ],
+		"localStamp"
+	],
 	"name" : "MouseClickState",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

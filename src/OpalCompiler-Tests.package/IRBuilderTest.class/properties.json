@@ -1,14 +1,15 @@
 {
-	"category" : "OpalCompiler-Tests-IR",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"TestToPush" ],
 	"commentStamp" : "",
-	"instvars" : [
-		"testIvar" ],
-	"name" : "IRBuilderTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-IR",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"TestToPush"
+	],
+	"instvars" : [
+		"testIvar"
+	],
+	"name" : "IRBuilderTest",
+	"type" : "normal"
+}

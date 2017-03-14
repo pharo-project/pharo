@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Form",
 	"category" : "Graphics-Display Objects",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DeferringUpdates",
 		"DisplayChangeSignature",
 		"LastScreenModeSelected",
-		"ScreenSave" ],
-	"commentStamp" : "<historical>",
+		"ScreenSave"
+	],
 	"instvars" : [
 		"clippingBox",
-		"extraRegions" ],
+		"extraRegions"
+	],
 	"name" : "DisplayScreen",
-	"pools" : [
-		 ],
-	"super" : "Form",
-	"type" : "normal" }
+	"type" : "normal"
+}

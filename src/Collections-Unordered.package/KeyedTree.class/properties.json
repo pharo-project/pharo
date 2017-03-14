@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "KeyedTree",
-	"pools" : [
-		 ],
 	"super" : "Dictionary",
-	"type" : "normal" }
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "KeyedTree",
+	"type" : "normal"
+}

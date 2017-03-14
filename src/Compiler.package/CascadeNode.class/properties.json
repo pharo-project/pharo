@@ -1,15 +1,14 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ParseNode",
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"receiver",
-		"messages" ],
+		"messages"
+	],
 	"name" : "CascadeNode",
-	"pools" : [
-		 ],
-	"super" : "ParseNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

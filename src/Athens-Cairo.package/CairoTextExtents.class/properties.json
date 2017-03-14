@@ -1,19 +1,18 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalStructure",
 	"category" : "Athens-Cairo-Text",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_HEIGHT",
 		"OFFSET_WIDTH",
 		"OFFSET_X_ADVANCE",
 		"OFFSET_X_BEARING",
 		"OFFSET_Y_ADVANCE",
-		"OFFSET_Y_BEARING" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"OFFSET_Y_BEARING"
+	],
+	"instvars" : [ ],
 	"name" : "CairoTextExtents",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalStructure",
-	"type" : "normal" }
+	"type" : "normal"
+}

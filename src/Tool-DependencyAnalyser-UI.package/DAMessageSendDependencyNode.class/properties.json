@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 8/17/2015 16:24",
-	"instvars" : [
-		"sentMessages" ],
-	"name" : "DAMessageSendDependencyNode",
-	"pools" : [
-		 ],
 	"super" : "DAMessageSendNode",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"sentMessages"
+	],
+	"name" : "DAMessageSendDependencyNode",
+	"type" : "normal"
+}

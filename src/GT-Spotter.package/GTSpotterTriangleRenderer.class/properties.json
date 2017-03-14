@@ -1,16 +1,15 @@
 {
-	"category" : "GT-Spotter-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMBrickRenderer",
+	"category" : "GT-Spotter-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"orientation",
 		"border",
-		"borderColor" ],
+		"borderColor"
+	],
 	"name" : "GTSpotterTriangleRenderer",
-	"pools" : [
-		 ],
-	"super" : "GLMBrickRenderer",
-	"type" : "normal" }
+	"type" : "normal"
+}

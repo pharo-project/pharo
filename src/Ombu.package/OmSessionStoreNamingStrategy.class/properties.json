@@ -1,14 +1,11 @@
 {
-	"category" : "Ombu-Strategies",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/21/2017 01:29",
-	"instvars" : [
-		 ],
-	"name" : "OmSessionStoreNamingStrategy",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Ombu-Strategies",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OmSessionStoreNamingStrategy",
+	"type" : "normal"
+}

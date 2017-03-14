@@ -1,18 +1,17 @@
 {
-	"category" : "Morphic-Base-Text Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 2/21/2011 17:43",
+	"super" : "TextMorph",
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"editView",
 		"acceptOnCR",
 		"autoAccept",
 		"acceptOnFocusChange",
-		"selectionColor" ],
+		"selectionColor"
+	],
 	"name" : "TextMorphForEditView",
-	"pools" : [
-		 ],
-	"super" : "TextMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

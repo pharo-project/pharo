@@ -1,12 +1,14 @@
 {
+	"commentStamp" : "MarcusDenker 6/24/2014 10:13",
+	"super" : "Link",
 	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"InheritablePSKeys",
 		"PSKeys",
-		"PSKeysSema" ],
-	"commentStamp" : "MarcusDenker 6/24/2014 10:13",
+		"PSKeysSema"
+	],
 	"instvars" : [
 		"suspendedContext",
 		"priority",
@@ -14,9 +16,8 @@
 		"name",
 		"env",
 		"effectiveProcess",
-		"terminating" ],
+		"terminating"
+	],
 	"name" : "Process",
-	"pools" : [
-		 ],
-	"super" : "Link",
-	"type" : "normal" }
+	"type" : "normal"
+}

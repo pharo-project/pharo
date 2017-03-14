@@ -1,19 +1,18 @@
 {
-	"category" : "Keymapping-Settings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "BorderedMorph",
+	"category" : "Keymapping-Settings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"focused",
 		"keystrokes",
 		"keymapSetting",
 		"labelMorph",
 		"initialShortcut",
-		"edited" ],
+		"edited"
+	],
 	"name" : "KMCatcherMorph",
-	"pools" : [
-		 ],
-	"super" : "BorderedMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

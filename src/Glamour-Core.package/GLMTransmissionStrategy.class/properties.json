@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 2/20/2010 14:45",
-	"instvars" : [
-		"transmission" ],
-	"name" : "GLMTransmissionStrategy",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"transmission"
+	],
+	"name" : "GLMTransmissionStrategy",
+	"type" : "normal"
+}

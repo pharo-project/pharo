@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AbstractTimeZone",
-	"pools" : [
-		"ChronologyConstants" ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ChronologyConstants"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AbstractTimeZone",
+	"type" : "normal"
+}

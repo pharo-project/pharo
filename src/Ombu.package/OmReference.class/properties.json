@@ -1,15 +1,14 @@
 {
-	"category" : "Ombu-Entries",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 4/14/2014 23:27",
+	"super" : "OmAbstractReference",
+	"category" : "Ombu-Entries",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"localName",
-		"globalName" ],
+		"globalName"
+	],
 	"name" : "OmReference",
-	"pools" : [
-		 ],
-	"super" : "OmAbstractReference",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "Shout-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 9/20/2011 21:15",
+	"super" : "Model",
+	"category" : "Shout-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"code",
 		"className",
 		"selector",
-		"classIsMeta" ],
+		"classIsMeta"
+	],
 	"name" : "SHMethodEditingMode",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

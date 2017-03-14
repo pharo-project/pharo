@@ -1,18 +1,17 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 6/3/2015 16:00",
+	"super" : "RubScrolledTextSideRuler",
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"lineAnnotation",
 		"row",
 		"wrappingPolicyMorph",
 		"lineNumbersDisplayMorph",
-		"extendCommentPolicyMorph" ],
+		"extendCommentPolicyMorph"
+	],
 	"name" : "RubCommentAnnotationDisplayer",
-	"pools" : [
-		 ],
-	"super" : "RubScrolledTextSideRuler",
-	"type" : "normal" }
+	"type" : "normal"
+}

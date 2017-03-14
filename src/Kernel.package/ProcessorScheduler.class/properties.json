@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BackgroundProcess",
 		"HighIOPriority",
@@ -11,13 +13,12 @@
 		"TimingPriority",
 		"UserBackgroundPriority",
 		"UserInterruptPriority",
-		"UserSchedulingPriority" ],
-	"commentStamp" : "<historical>",
+		"UserSchedulingPriority"
+	],
 	"instvars" : [
 		"quiescentProcessLists",
-		"activeProcess" ],
+		"activeProcess"
+	],
 	"name" : "ProcessorScheduler",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Refactoring-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RBRefactoringBrowserTest",
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"objectClass",
 		"newClass",
-		"messageNodeClass" ],
+		"messageNodeClass"
+	],
 	"name" : "RBClassTest",
-	"pools" : [
-		 ],
-	"super" : "RBRefactoringBrowserTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

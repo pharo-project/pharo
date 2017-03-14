@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-HTTP-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 11:04",
+	"super" : "ZnEntity",
+	"category" : "Zinc-HTTP-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fields",
-		"representation" ],
+		"representation"
+	],
 	"name" : "ZnApplicationFormUrlEncodedEntity",
-	"pools" : [
-		 ],
-	"super" : "ZnEntity",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,12 +1,16 @@
 {
+	"commentStamp" : "BenjaminVanRyseghem 9/17/2010 00:20",
+	"super" : "DialogWindow",
 	"category" : "Tool-Finder",
 	"classinstvars" : [
 		"alreadySearchedSelectedItemsListMaxSize",
-		"alreadySearchedUnselectedItemsListMaxSize" ],
+		"alreadySearchedUnselectedItemsListMaxSize"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"AlreadySearchedSelectedItemsList",
-		"AlreadySearchedUnselectedItemsList" ],
-	"commentStamp" : "BenjaminVanRyseghem 9/17/2010 00:20",
+		"AlreadySearchedUnselectedItemsList"
+	],
 	"instvars" : [
 		"dialogItemsChooser",
 		"selectedItems",
@@ -21,9 +25,8 @@
 		"selectedSelectionIndex",
 		"selectedSelectionList",
 		"unselectedSelectionList",
-		"unselectedSelectionIndex" ],
+		"unselectedSelectionIndex"
+	],
 	"name" : "DialogItemsChooserUI",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

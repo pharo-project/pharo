@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Numbers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 6/11/2010 14:04",
+	"super" : "Number",
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"numerator",
-		"denominator" ],
+		"denominator"
+	],
 	"name" : "Fraction",
-	"pools" : [
-		 ],
-	"super" : "Number",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,18 +1,17 @@
 {
-	"category" : "Morphic-Widgets-Basic",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "StephaneDucasse 7/16/2014 22:25",
+	"classvars" : [ ],
 	"instvars" : [
 		"icon",
 		"morph",
-		"originalObject" ],
+		"originalObject"
+	],
 	"name" : "IconicListItem",
-	"pools" : [
-		 ],
+	"commentStamp" : "StephaneDucasse 7/16/2014 22:25",
 	"super" : "BorderedMorph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Widgets-Basic"
+}

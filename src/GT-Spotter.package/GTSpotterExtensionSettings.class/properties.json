@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "TudorGirba 1/21/2016 22:55",
+	"super" : "Object",
 	"category" : "GT-Spotter-Model",
 	"classinstvars" : [
-		"disabledExtensions" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TudorGirba 1/21/2016 22:55",
-	"instvars" : [
-		 ],
+		"disabledExtensions"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "GTSpotterExtensionSettings",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

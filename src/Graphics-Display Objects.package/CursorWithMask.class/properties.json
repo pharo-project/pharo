@@ -1,14 +1,13 @@
 {
-	"category" : "Graphics-Display Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"maskForm" ],
-	"name" : "CursorWithMask",
-	"pools" : [
-		 ],
 	"super" : "Cursor",
-	"type" : "normal" }
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"maskForm"
+	],
+	"name" : "CursorWithMask",
+	"type" : "normal"
+}

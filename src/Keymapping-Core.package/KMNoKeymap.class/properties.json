@@ -1,14 +1,11 @@
 {
-	"category" : "Keymapping-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 2/24/2011 23:43",
-	"instvars" : [
-		 ],
-	"name" : "KMNoKeymap",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Keymapping-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "KMNoKeymap",
+	"type" : "normal"
+}

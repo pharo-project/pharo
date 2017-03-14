@@ -1,16 +1,17 @@
 {
-	"category" : "Refactoring-Tests-Core-Data",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"RecursiveSelfRule" ],
 	"commentStamp" : "",
+	"super" : "RBFooLintRuleTest",
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"RecursiveSelfRule"
+	],
 	"instvars" : [
 		"rewriteRule",
 		"builder",
-		"class" ],
+		"class"
+	],
 	"name" : "RBTransformationRuleTest",
-	"pools" : [
-		 ],
-	"super" : "RBFooLintRuleTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

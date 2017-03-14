@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/6/2016 14:10",
-	"instvars" : [
-		"hasPermutedArguments" ],
-	"name" : "RBRenameMethodRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBChangeMethodNameRefactoring",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hasPermutedArguments"
+	],
+	"name" : "RBRenameMethodRefactoring",
+	"type" : "normal"
+}

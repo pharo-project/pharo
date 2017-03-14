@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Core-Utilities",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mjr 8/20/2003 13:28",
-	"instvars" : [
-		 ],
-	"name" : "BadEqualer",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "SUnit-Core-Utilities",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BadEqualer",
+	"type" : "normal"
+}

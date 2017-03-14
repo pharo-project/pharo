@@ -1,15 +1,14 @@
 {
-	"category" : "Monticello-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MCTestCase",
+	"category" : "Monticello-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
-		"writer" ],
+		"writer"
+	],
 	"name" : "MCStWriterTest",
-	"pools" : [
-		 ],
-	"super" : "MCTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

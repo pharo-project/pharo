@@ -1,16 +1,15 @@
 {
-	"category" : "ProfStef-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 7/10/2015 14:55",
+	"super" : "Object",
+	"category" : "ProfStef-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"shoutMorph",
 		"window",
-		"sourceTextModel" ],
+		"sourceTextModel"
+	],
 	"name" : "LessonView",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

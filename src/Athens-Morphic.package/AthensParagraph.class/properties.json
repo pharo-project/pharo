@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Athens-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"text",
 		"textStyle",
@@ -12,9 +12,8 @@
 		"lines",
 		"positionWhenComposed",
 		"selectionStart",
-		"selectionStop" ],
+		"selectionStop"
+	],
 	"name" : "AthensParagraph",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

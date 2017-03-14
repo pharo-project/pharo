@@ -1,18 +1,21 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:21",
+	"super" : "OSWindowDriver",
 	"category" : "OSWindow-SDL2",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"SDL2Constants"
+	],
 	"classvars" : [
 		"EventLoopProcess",
 		"JoystickMap",
-		"WindowMap" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:21",
+		"WindowMap"
+	],
 	"instvars" : [
 		"inputSemaphore",
 		"eventQueue",
-		"globalListeners" ],
+		"globalListeners"
+	],
 	"name" : "OSSDL2Driver",
-	"pools" : [
-		"SDL2Constants" ],
-	"super" : "OSWindowDriver",
-	"type" : "normal" }
+	"type" : "normal"
+}

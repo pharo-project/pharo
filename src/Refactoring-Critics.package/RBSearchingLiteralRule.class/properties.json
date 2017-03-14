@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-ParseTreeRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 23:05",
-	"instvars" : [
-		 ],
-	"name" : "RBSearchingLiteralRule",
-	"pools" : [
-		 ],
 	"super" : "RBParseTreeLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-ParseTreeRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBSearchingLiteralRule",
+	"type" : "normal"
+}

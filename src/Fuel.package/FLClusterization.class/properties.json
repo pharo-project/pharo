@@ -1,10 +1,10 @@
 {
-	"category" : "Fuel-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/29/2011 19:12",
+	"super" : "Object",
+	"category" : "Fuel-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"baselevelBucket",
 		"substitutionsBucket",
@@ -12,9 +12,8 @@
 		"metalevelInstanceSideBucket",
 		"metalevelClassSideBucket",
 		"primitivesBucket",
-		"postBaselevelBucket" ],
+		"postBaselevelBucket"
+	],
 	"name" : "FLClusterization",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

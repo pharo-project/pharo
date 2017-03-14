@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "MerwanOuddane 8/25/2015 15:48",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_MAJOR",
 		"OFFSET_MINOR",
-		"OFFSET_PATCH" ],
-	"commentStamp" : "MerwanOuddane 8/25/2015 15:48",
-	"instvars" : [
-		 ],
+		"OFFSET_PATCH"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_Version",
-	"pools" : [
-		 ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

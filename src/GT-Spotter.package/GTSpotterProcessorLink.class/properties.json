@@ -1,16 +1,15 @@
 {
-	"category" : "GT-Spotter-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "DoubleLink",
+	"category" : "GT-Spotter-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"headLink",
 		"tailLink",
-		"size" ],
+		"size"
+	],
 	"name" : "GTSpotterProcessorLink",
-	"pools" : [
-		 ],
-	"super" : "DoubleLink",
-	"type" : "normal" }
+	"type" : "normal"
+}

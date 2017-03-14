@@ -1,16 +1,15 @@
 {
-	"category" : "Graphics-Fonts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tak 12/22/2004 01:45",
+	"super" : "AbstractFont",
+	"category" : "Graphics-Fonts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"baseFont",
 		"substitutionCharacter",
-		"displaySelector" ],
+		"displaySelector"
+	],
 	"name" : "FixedFaceFont",
-	"pools" : [
-		 ],
-	"super" : "AbstractFont",
-	"type" : "normal" }
+	"type" : "normal"
+}

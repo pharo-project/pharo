@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-DependencyAnalyser-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 7/31/2014 12:06",
-	"instvars" : [
-		"superclass" ],
-	"name" : "DAInheritanceDependency",
-	"pools" : [
-		 ],
 	"super" : "DADependencyFromClass",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"superclass"
+	],
+	"name" : "DAInheritanceDependency",
+	"type" : "normal"
+}

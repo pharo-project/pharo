@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MD5",
 	"category" : "System-Hashing-MD5",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ABCDTable",
 		"IndexTable",
 		"ShiftTable",
-		"SinTable" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"SinTable"
+	],
+	"instvars" : [ ],
 	"name" : "MD5NonPrimitive",
-	"pools" : [
-		 ],
-	"super" : "MD5",
-	"type" : "normal" }
+	"type" : "normal"
+}

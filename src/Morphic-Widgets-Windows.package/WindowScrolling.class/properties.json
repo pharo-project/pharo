@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Windows-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 4/25/2015 23:18",
-	"instvars" : [
-		"step" ],
-	"name" : "WindowScrolling",
-	"pools" : [
-		 ],
 	"super" : "WindowAnnouncement",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Windows-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"step"
+	],
+	"name" : "WindowScrolling",
+	"type" : "normal"
+}

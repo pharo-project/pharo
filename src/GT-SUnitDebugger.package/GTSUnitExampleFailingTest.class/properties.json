@@ -1,14 +1,11 @@
 {
-	"category" : "GT-SUnitDebugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 10:39",
-	"instvars" : [
-		 ],
-	"name" : "GTSUnitExampleFailingTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "GT-SUnitDebugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSUnitExampleFailingTest",
+	"type" : "normal"
+}

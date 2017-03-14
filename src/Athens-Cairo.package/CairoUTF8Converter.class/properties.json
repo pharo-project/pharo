@@ -1,18 +1,17 @@
 {
-	"category" : "Athens-Cairo-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"buffer",
 		"len",
 		"asm",
 		"encoder",
-		"bs" ],
+		"bs"
+	],
 	"name" : "CairoUTF8Converter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

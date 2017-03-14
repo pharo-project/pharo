@@ -1,14 +1,11 @@
 {
-	"category" : "JobsTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:39",
-	"instvars" : [
-		 ],
-	"name" : "JobTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "JobsTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "JobTest",
+	"type" : "normal"
+}

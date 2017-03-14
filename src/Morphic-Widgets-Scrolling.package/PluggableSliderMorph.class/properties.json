@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-Scrolling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 7/16/2007 13:57",
+	"super" : "Slider",
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"getValueSelector",
 		"getEnabledSelector",
@@ -13,9 +13,8 @@
 		"max",
 		"quantum",
 		"getLabelSelector",
-		"label" ],
+		"label"
+	],
 	"name" : "PluggableSliderMorph",
-	"pools" : [
-		 ],
-	"super" : "Slider",
-	"type" : "normal" }
+	"type" : "normal"
+}

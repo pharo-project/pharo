@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-MorphicAdapters-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenjaminVanRyseghem 4/24/2014 16:44",
-	"instvars" : [
-		"model" ],
-	"name" : "SpecTransferMorph",
-	"pools" : [
-		 ],
 	"super" : "TransferMorph",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"model"
+	],
+	"name" : "SpecTransferMorph",
+	"type" : "normal"
+}

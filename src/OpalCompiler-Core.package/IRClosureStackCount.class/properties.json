@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Core-Bytecode",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/17/2015 23:57",
-	"instvars" : [
-		"numMethodTempVars" ],
-	"name" : "IRClosureStackCount",
-	"pools" : [
-		 ],
 	"super" : "IRStackCount",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Bytecode",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"numMethodTempVars"
+	],
+	"name" : "IRClosureStackCount",
+	"type" : "normal"
+}

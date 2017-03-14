@@ -1,17 +1,16 @@
 {
-	"category" : "TxText-AthensTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TxAthensLayoutTest",
+	"category" : "TxText-AthensTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"isPaintSet",
 		"drawnShapes",
 		"interval",
-		"renderer" ],
+		"renderer"
+	],
 	"name" : "TxHighlightRendererTest",
-	"pools" : [
-		 ],
-	"super" : "TxAthensLayoutTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

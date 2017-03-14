@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Logging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 6/16/2014 15:15",
-	"instvars" : [
-		"description" ],
-	"name" : "ZnServerStoppedEvent",
-	"pools" : [
-		 ],
 	"super" : "ZnServerLogEvent",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"description"
+	],
+	"name" : "ZnServerStoppedEvent",
+	"type" : "normal"
+}

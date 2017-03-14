@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Tests-Core-DependenciesModel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MTModelComparatorTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Versionner-Tests-Core-DependenciesModel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MTModelComparatorTest",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Files-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:37",
-	"instvars" : [
-		"readOnly" ],
-	"name" : "FileDoesNotExistException",
-	"pools" : [
-		 ],
 	"super" : "FileException",
-	"type" : "normal" }
+	"category" : "Files-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"readOnly"
+	],
+	"name" : "FileDoesNotExistException",
+	"type" : "normal"
+}

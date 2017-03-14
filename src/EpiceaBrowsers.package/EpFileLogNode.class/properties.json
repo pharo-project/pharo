@@ -1,16 +1,15 @@
 {
-	"category" : "EpiceaBrowsers-Unified",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/20/2017 13:24",
+	"super" : "EpLogNode",
+	"category" : "EpiceaBrowsers-Unified",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"globalName",
 		"directoryEntry",
-		"log" ],
+		"log"
+	],
 	"name" : "EpFileLogNode",
-	"pools" : [
-		 ],
-	"super" : "EpLogNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

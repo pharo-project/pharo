@@ -1,15 +1,16 @@
 {
-	"category" : "Morphic-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UIProcess" ],
 	"commentStamp" : "PavelKrivanek 7/20/2014 15:00",
+	"super" : "DummyUIManager",
+	"category" : "Morphic-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UIProcess"
+	],
 	"instvars" : [
 		"interactiveParser",
-		"activeTranscript" ],
+		"activeTranscript"
+	],
 	"name" : "MorphicCoreUIManager",
-	"pools" : [
-		 ],
-	"super" : "DummyUIManager",
-	"type" : "normal" }
+	"type" : "normal"
+}

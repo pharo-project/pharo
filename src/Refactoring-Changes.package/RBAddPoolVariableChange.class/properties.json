@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 9/9/2016 20:40",
-	"instvars" : [
-		 ],
-	"name" : "RBAddPoolVariableChange",
-	"pools" : [
-		 ],
 	"super" : "RBRefactoryVariableChange",
-	"type" : "normal" }
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBAddPoolVariableChange",
+	"type" : "normal"
+}

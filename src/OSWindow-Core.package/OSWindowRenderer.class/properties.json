@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:01",
+	"super" : "Object",
+	"category" : "OSWindow-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"window",
-		"lastExposeTime" ],
+		"lastExposeTime"
+	],
 	"name" : "OSWindowRenderer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

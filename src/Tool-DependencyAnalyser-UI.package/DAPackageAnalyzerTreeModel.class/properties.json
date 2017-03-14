@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 6/12/2014 15:49",
+	"super" : "DAPackageTreeModel",
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"systemCycles",
 		"packageLabel",
@@ -18,9 +18,8 @@
 		"buttonReverseAnalysis",
 		"buttonSave",
 		"buttonMakeDiff",
-		"relationGraph" ],
+		"relationGraph"
+	],
 	"name" : "DAPackageAnalyzerTreeModel",
-	"pools" : [
-		 ],
-	"super" : "DAPackageTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

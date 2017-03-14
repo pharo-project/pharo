@@ -1,14 +1,11 @@
 {
-	"category" : "Tests-Files",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "FileStreamTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Tests-Files",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FileStreamTest",
+	"type" : "normal"
+}

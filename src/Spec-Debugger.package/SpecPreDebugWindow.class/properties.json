@@ -1,16 +1,15 @@
 {
-	"category" : "Spec-Debugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "DynamicComposableModel",
+	"category" : "Spec-Debugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"debugger",
 		"title",
-		"message" ],
+		"message"
+	],
 	"name" : "SpecPreDebugWindow",
-	"pools" : [
-		 ],
-	"super" : "DynamicComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

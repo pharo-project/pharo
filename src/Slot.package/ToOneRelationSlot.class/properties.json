@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Examples-Associations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JanVanDeSandt 2/27/2015 11:26",
-	"instvars" : [
-		 ],
-	"name" : "ToOneRelationSlot",
-	"pools" : [
-		 ],
 	"super" : "RelationSlot",
-	"type" : "normal" }
+	"category" : "Slot-Examples-Associations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ToOneRelationSlot",
+	"type" : "normal"
+}

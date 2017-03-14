@@ -1,16 +1,15 @@
 {
-	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/8/2016 13:22",
+	"super" : "SequenceableCollection",
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"start",
 		"stop",
-		"step" ],
+		"step"
+	],
 	"name" : "Interval",
-	"pools" : [
-		 ],
-	"super" : "SequenceableCollection",
-	"type" : "normal" }
+	"type" : "normal"
+}

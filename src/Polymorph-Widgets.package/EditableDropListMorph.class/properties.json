@@ -1,15 +1,14 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 3/31/2011 21:04",
+	"super" : "DropListMorph",
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"addToListSel",
-		"content" ],
+		"content"
+	],
 	"name" : "EditableDropListMorph",
-	"pools" : [
-		 ],
-	"super" : "DropListMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

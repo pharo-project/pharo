@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Deprecated",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "dkh 5/30/2012 13:50",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloBaseConfiguration",
-	"pools" : [
-		 ],
 	"super" : "ConfigurationOf",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloBaseConfiguration",
+	"type" : "normal"
+}

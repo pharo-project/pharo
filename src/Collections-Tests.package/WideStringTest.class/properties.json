@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Strings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "WideStringTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Strings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WideStringTest",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Ombu-Stores",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"stores" ],
-	"name" : "OmCompositeStore",
-	"pools" : [
-		 ],
 	"super" : "OmStore",
-	"type" : "normal" }
+	"category" : "Ombu-Stores",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stores"
+	],
+	"name" : "OmCompositeStore",
+	"type" : "normal"
+}

@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "AndreiChis 3/12/2015 00:01",
+	"super" : "GLMAnnouncer",
 	"category" : "Glamour-Core",
 	"classinstvars" : [
-		"logger" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 3/12/2015 00:01",
+		"logger"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"logger" ],
+		"logger"
+	],
 	"name" : "GLMLoggedObject",
-	"pools" : [
-		 ],
-	"super" : "GLMAnnouncer",
-	"type" : "normal" }
+	"type" : "normal"
+}

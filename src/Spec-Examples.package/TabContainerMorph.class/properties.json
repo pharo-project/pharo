@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Examples-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "PanelMorph",
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"container",
-		"tab" ],
+		"tab"
+	],
 	"name" : "TabContainerMorph",
-	"pools" : [
-		 ],
-	"super" : "PanelMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

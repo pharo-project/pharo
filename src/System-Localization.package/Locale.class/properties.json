@@ -1,7 +1,11 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "System-Localization-Locales",
 	"classinstvars" : [
-		"localeAnnouncer" ],
+		"localeAnnouncer"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"Activated",
 		"Current",
@@ -9,8 +13,8 @@
 		"KnownLocales",
 		"LanguageSymbols",
 		"LocaleChangeListeners",
-		"PlatformEncodings" ],
-	"commentStamp" : "<historical>",
+		"PlatformEncodings"
+	],
 	"instvars" : [
 		"id",
 		"shortDate",
@@ -23,9 +27,8 @@
 		"measurement",
 		"offsetLocalToUTC",
 		"offsetVMToUTC",
-		"dstActive" ],
+		"dstActive"
+	],
 	"name" : "Locale",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

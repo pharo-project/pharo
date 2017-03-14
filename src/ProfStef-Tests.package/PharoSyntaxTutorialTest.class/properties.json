@@ -1,16 +1,13 @@
 {
-	"category" : "ProfStef-Tests",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TTutorialTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "CamilloBruni 2/22/2014 18:58",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "PharoSyntaxTutorialTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "CamilloBruni 2/22/2014 18:58",
 	"super" : "TestCase",
 	"traitcomposition" : "TTutorialTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "ProfStef-Tests"
+}

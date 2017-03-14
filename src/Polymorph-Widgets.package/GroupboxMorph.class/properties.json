@@ -1,16 +1,15 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:36",
+	"super" : "MorphicModel",
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"contentMorph",
 		"labelMorph",
-		"getContentSelector" ],
+		"getContentSelector"
+	],
 	"name" : "GroupboxMorph",
-	"pools" : [
-		 ],
-	"super" : "MorphicModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

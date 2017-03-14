@@ -1,14 +1,15 @@
 {
-	"category" : "TxText-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "SeanDeNigris 4/25/2015 13:35",
-	"instvars" : [
-		"filter" ],
-	"name" : "TxActionAttribute",
-	"pools" : [
-		 ],
 	"super" : "TxAttribute",
-	"type" : "normal" }
+	"category" : "TxText-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
+	"instvars" : [
+		"filter"
+	],
+	"name" : "TxActionAttribute",
+	"type" : "normal"
+}

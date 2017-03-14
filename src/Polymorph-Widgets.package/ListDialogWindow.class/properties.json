@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MessageDialogWindow",
 	"category" : "Polymorph-Widgets-Windows",
 	"classinstvars" : [
-		"searchList" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"searchList"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pattern",
 		"list",
@@ -16,9 +18,8 @@
 		"listCreationProcess",
 		"displayBlock",
 		"browseBlock",
-		"acceptNewEntry" ],
+		"acceptNewEntry"
+	],
 	"name" : "ListDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "MessageDialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

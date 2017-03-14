@@ -1,15 +1,14 @@
 {
-	"category" : "Epicea-Filters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/20/2014 11:58",
+	"super" : "EpFilter",
+	"category" : "Epicea-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"condition",
-		"title" ],
+		"title"
+	],
 	"name" : "EpPluggableFilter",
-	"pools" : [
-		 ],
-	"super" : "EpFilter",
-	"type" : "normal" }
+	"type" : "normal"
+}

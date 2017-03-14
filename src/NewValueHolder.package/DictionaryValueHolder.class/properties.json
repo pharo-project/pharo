@@ -1,14 +1,11 @@
 {
-	"category" : "NewValueHolder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenjaminVanRyseghem 1/23/2014 15:18",
-	"instvars" : [
-		 ],
-	"name" : "DictionaryValueHolder",
-	"pools" : [
-		 ],
 	"super" : "NewValueHolder",
-	"type" : "normal" }
+	"category" : "NewValueHolder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DictionaryValueHolder",
+	"type" : "normal"
+}

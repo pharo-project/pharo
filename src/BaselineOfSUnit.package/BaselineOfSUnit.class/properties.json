@@ -1,14 +1,11 @@
 {
-	"category" : "BaselineOfSUnit",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PavelKrivanek 11/7/2016 12:07",
-	"instvars" : [
-		 ],
-	"name" : "BaselineOfSUnit",
-	"pools" : [
-		 ],
 	"super" : "BaselineOf",
-	"type" : "normal" }
+	"category" : "BaselineOfSUnit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BaselineOfSUnit",
+	"type" : "normal"
+}

@@ -1,4 +1,5 @@
 {
-	"category" : "Glamour-Morphic-Brick-Theme",
+	"name" : "GLMBrickTextStyle",
 	"commentStamp" : "AliakseiSyrel 3/17/2015 22:47",
-	"name" : "GLMBrickTextStyle" }
+	"category" : "Glamour-Morphic-Brick-Theme"
+}

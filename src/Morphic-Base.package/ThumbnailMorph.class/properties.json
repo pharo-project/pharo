@@ -1,22 +1,23 @@
 {
-	"category" : "Morphic-Base-Basic",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
 	"classvars" : [
 		"EccentricityThreshhold",
 		"RecursionDepth",
-		"RecursionMax" ],
-	"commentStamp" : "sw 1/6/2005 03:47",
+		"RecursionMax"
+	],
 	"instvars" : [
 		"objectToView",
 		"viewSelector",
 		"lastSketchForm",
 		"lastFormShown",
-		"drawTime" ],
+		"drawTime"
+	],
 	"name" : "ThumbnailMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "sw 1/6/2005 03:47",
 	"super" : "BorderedMorph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Base-Basic"
+}

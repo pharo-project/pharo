@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "monty 6/12/2015 17:22",
-	"instvars" : [
-		 ],
-	"name" : "RBUnaryAccessingMethodWithoutReturnRule",
-	"pools" : [
-		 ],
 	"super" : "RBBlockLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBUnaryAccessingMethodWithoutReturnRule",
+	"type" : "normal"
+}

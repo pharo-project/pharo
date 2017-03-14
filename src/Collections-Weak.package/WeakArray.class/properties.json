@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Array",
 	"category" : "Collections-Weak",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"FinalizationDependents",
 		"FinalizationLock",
 		"FinalizationProcess",
-		"FinalizationSemaphore" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"FinalizationSemaphore"
+	],
+	"instvars" : [ ],
 	"name" : "WeakArray",
-	"pools" : [
-		 ],
-	"super" : "Array",
-	"type" : "weak" }
+	"type" : "weak"
+}

@@ -1,15 +1,16 @@
 {
-	"category" : "Polymorph-Widgets-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"AutoAccept" ],
 	"commentStamp" : "gvc 5/18/2007 11:16",
+	"super" : "MessageDialogWindow",
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"AutoAccept"
+	],
 	"instvars" : [
 		"entryText",
-		"textEditorMorph" ],
+		"textEditorMorph"
+	],
 	"name" : "TextEditorDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "MessageDialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PavelKrivanek 2/15/2017 11:51",
-	"instvars" : [
-		"block" ],
-	"name" : "ComputedSlot",
-	"pools" : [
-		 ],
 	"super" : "Slot",
-	"type" : "normal" }
+	"category" : "Slot-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"block"
+	],
+	"name" : "ComputedSlot",
+	"type" : "normal"
+}

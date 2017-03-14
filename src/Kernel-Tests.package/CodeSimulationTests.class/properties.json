@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Tests-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"log" ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:31",
-	"instvars" : [
-		 ],
-	"name" : "CodeSimulationTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"log"
+	],
+	"instvars" : [ ],
+	"name" : "CodeSimulationTests",
+	"type" : "normal"
+}

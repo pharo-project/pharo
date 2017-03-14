@@ -1,16 +1,15 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RBProgramNodeVisitor",
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scope",
 		"blockcounter",
-		"compilationContext" ],
+		"compilationContext"
+	],
 	"name" : "OCASTSemanticAnalyzer",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

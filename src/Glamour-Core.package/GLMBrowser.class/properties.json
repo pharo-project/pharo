@@ -1,17 +1,16 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 2/4/2011 17:50",
+	"super" : "GLMPresentation",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"transmissions",
 		"panes",
 		"initialExtent",
-		"watcherPane" ],
+		"watcherPane"
+	],
 	"name" : "GLMBrowser",
-	"pools" : [
-		 ],
-	"super" : "GLMPresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

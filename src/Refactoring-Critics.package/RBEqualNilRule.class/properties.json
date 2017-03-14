@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-TransformationRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/26/2015 14:42",
-	"instvars" : [
-		 ],
-	"name" : "RBEqualNilRule",
-	"pools" : [
-		 ],
 	"super" : "RBTransformationRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBEqualNilRule",
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "Morphic-Widgets-Taskbar",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 11:20",
+	"super" : "Object",
+	"category" : "Morphic-Widgets-Taskbar",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"morph",
 		"state",
 		"label",
-		"icon" ],
+		"icon"
+	],
 	"name" : "TaskbarTask",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

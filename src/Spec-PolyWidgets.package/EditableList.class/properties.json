@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-ListAndTree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"title",
 		"list",
@@ -15,9 +15,8 @@
 		"topButton",
 		"bottomButton",
 		"addItemBlock",
-		"okBlock" ],
+		"okBlock"
+	],
 	"name" : "EditableList",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

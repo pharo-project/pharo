@@ -1,14 +1,13 @@
 {
-	"category" : "System-History-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"historyList" ],
-	"name" : "HistoryIteratorTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "System-History-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"historyList"
+	],
+	"name" : "HistoryIteratorTest",
+	"type" : "normal"
+}

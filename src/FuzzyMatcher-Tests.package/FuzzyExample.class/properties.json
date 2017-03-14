@@ -1,19 +1,18 @@
 {
-	"category" : "FuzzyMatcher-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 6/25/2016 14:38",
+	"super" : "Object",
+	"category" : "FuzzyMatcher-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textModel",
 		"dataSource",
 		"elements",
 		"matchedElements",
 		"pattern",
-		"stringMorph" ],
+		"stringMorph"
+	],
 	"name" : "FuzzyExample",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

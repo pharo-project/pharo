@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/28/2016 14:49",
-	"instvars" : [
-		"manager" ],
-	"name" : "TabsExample",
-	"pools" : [
-		 ],
 	"super" : "ComposableModel",
-	"type" : "normal" }
+	"category" : "Spec-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"manager"
+	],
+	"name" : "TabsExample",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OmbuTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "OmDirectoryStoreTest",
-	"pools" : [
-		 ],
 	"super" : "OmStoreTest",
-	"type" : "normal" }
+	"category" : "OmbuTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OmDirectoryStoreTest",
+	"type" : "normal"
+}

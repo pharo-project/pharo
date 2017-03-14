@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"excessSignals" ],
-	"name" : "Semaphore",
-	"pools" : [
-		 ],
 	"super" : "LinkedList",
-	"type" : "normal" }
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"excessSignals"
+	],
+	"name" : "Semaphore",
+	"type" : "normal"
+}

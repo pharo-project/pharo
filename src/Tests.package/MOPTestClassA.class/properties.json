@@ -1,16 +1,13 @@
 {
-	"category" : "Tests-Traits-MOP",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "Trait3 classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "MOPTestClassA",
-	"pools" : [
-		 ],
+	"commentStamp" : "",
 	"super" : "Object",
 	"traitcomposition" : "Trait3",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Tests-Traits-MOP"
+}

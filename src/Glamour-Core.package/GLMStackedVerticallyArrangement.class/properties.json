@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMStackedVerticallyArrangement",
-	"pools" : [
-		 ],
 	"super" : "GLMCompositeArrangement",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMStackedVerticallyArrangement",
+	"type" : "normal"
+}

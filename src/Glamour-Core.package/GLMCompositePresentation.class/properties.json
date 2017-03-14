@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 2/20/2010 14:51",
+	"super" : "GLMPresentation",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"presentations",
-		"arrangement" ],
+		"arrangement"
+	],
 	"name" : "GLMCompositePresentation",
-	"pools" : [
-		 ],
-	"super" : "GLMPresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

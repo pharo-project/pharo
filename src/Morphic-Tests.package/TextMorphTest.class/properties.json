@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Tests-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TextMorphTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Morphic-Tests-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextMorphTest",
+	"type" : "normal"
+}

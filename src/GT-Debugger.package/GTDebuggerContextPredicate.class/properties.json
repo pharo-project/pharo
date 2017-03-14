@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Debugger-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 10:17",
-	"instvars" : [
-		"result" ],
-	"name" : "GTDebuggerContextPredicate",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"result"
+	],
+	"name" : "GTDebuggerContextPredicate",
+	"type" : "normal"
+}

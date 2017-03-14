@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-Resource-Meta-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 10/24/2014 15:13",
+	"super" : "Object",
+	"category" : "Zinc-Resource-Meta-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"url",
-		"argument" ],
+		"argument"
+	],
 	"name" : "ZnUrlOperation",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

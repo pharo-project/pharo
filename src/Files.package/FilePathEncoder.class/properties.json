@@ -1,14 +1,11 @@
 {
-	"category" : "Files-Directories",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "yo 10/19/2004 21:36",
-	"instvars" : [
-		 ],
-	"name" : "FilePathEncoder",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Files-Directories",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FilePathEncoder",
+	"type" : "normal"
+}

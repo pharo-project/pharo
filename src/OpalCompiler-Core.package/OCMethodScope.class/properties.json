@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "OCMethodScope",
-	"pools" : [
-		 ],
 	"super" : "OCAbstractMethodScope",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCMethodScope",
+	"type" : "normal"
+}

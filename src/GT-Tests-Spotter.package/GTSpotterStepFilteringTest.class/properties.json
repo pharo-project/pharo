@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Tests-Spotter-Scripting",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterStepFilteringTest",
-	"pools" : [
-		 ],
 	"super" : "GTSpotterStepTest",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter-Scripting",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterStepFilteringTest",
+	"type" : "normal"
+}

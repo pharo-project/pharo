@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Tests-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tlk 1/6/2004 17:55",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"restoredStartDay",
-		"restoredTimeZone" ],
+		"restoredTimeZone"
+	],
 	"name" : "YearMonthWeekTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

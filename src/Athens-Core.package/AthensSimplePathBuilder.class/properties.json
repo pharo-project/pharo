@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Core-Paths",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AthensPathBuilder",
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"absolute",
 		"open",
@@ -14,9 +14,8 @@
 		"xMax",
 		"yMax",
 		"pathStart",
-		"lastSegment" ],
+		"lastSegment"
+	],
 	"name" : "AthensSimplePathBuilder",
-	"pools" : [
-		 ],
-	"super" : "AthensPathBuilder",
-	"type" : "normal" }
+	"type" : "normal"
+}

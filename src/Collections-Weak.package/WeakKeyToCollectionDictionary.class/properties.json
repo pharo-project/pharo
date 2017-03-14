@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "WeakKeyToCollectionDictionary",
-	"pools" : [
-		 ],
 	"super" : "WeakIdentityKeyDictionary",
-	"type" : "normal" }
+	"category" : "Collections-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakKeyToCollectionDictionary",
+	"type" : "normal"
+}

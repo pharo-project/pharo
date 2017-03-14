@@ -1,16 +1,15 @@
 {
-	"category" : "OpalCompiler-Tests-FromOld",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:25",
+	"super" : "Object",
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"text",
 		"selectionStart",
-		"selectionEnd" ],
+		"selectionEnd"
+	],
 	"name" : "MockSourceEditor",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Announcement",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"start",
 		"end",
-		"selectedText" ],
+		"selectedText"
+	],
 	"name" : "GLMSelectedTextChanged",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

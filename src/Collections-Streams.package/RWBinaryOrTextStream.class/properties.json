@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"isBinary" ],
-	"name" : "RWBinaryOrTextStream",
-	"pools" : [
-		 ],
 	"super" : "ReadWriteStream",
-	"type" : "normal" }
+	"category" : "Collections-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"isBinary"
+	],
+	"name" : "RWBinaryOrTextStream",
+	"type" : "normal"
+}

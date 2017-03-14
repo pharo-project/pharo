@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Tests-Spotter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"window" ],
-	"name" : "GTSpotterSmokeTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"window"
+	],
+	"name" : "GTSpotterSmokeTest",
+	"type" : "normal"
+}

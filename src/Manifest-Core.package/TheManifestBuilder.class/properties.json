@@ -1,14 +1,13 @@
 {
-	"category" : "Manifest-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 1/6/2014 20:52",
-	"instvars" : [
-		"manifestClass" ],
-	"name" : "TheManifestBuilder",
-	"pools" : [
-		 ],
 	"super" : "AbstractTool",
-	"type" : "normal" }
+	"category" : "Manifest-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"manifestClass"
+	],
+	"name" : "TheManifestBuilder",
+	"type" : "normal"
+}

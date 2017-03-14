@@ -1,15 +1,14 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 6/27/2016 11:11",
+	"super" : "IRInstruction",
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"compiledBlock",
-		"copiedValues" ],
+		"copiedValues"
+	],
 	"name" : "IRPushFullClosure",
-	"pools" : [
-		 ],
-	"super" : "IRInstruction",
-	"type" : "normal" }
+	"type" : "normal"
+}

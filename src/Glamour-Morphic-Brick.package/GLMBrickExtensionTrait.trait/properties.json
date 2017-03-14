@@ -1,4 +1,5 @@
 {
-	"category" : "Glamour-Morphic-Brick-Traits",
+	"name" : "GLMBrickExtensionTrait",
 	"commentStamp" : "AliakseiSyrel 1/30/2015 10:47",
-	"name" : "GLMBrickExtensionTrait" }
+	"category" : "Glamour-Morphic-Brick-Traits"
+}

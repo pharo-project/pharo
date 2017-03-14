@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Athens-Editor",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 8/26/2014 13:13",
-	"instvars" : [
-		"text" ],
-	"name" : "TxInsertOperation",
-	"pools" : [
-		 ],
 	"super" : "TxEditorOperation",
-	"type" : "normal" }
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"text"
+	],
+	"name" : "TxInsertOperation",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Multilingual-TextConverterOtherLanguages",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"FromTable" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ISO88597TextConverter",
-	"pools" : [
-		 ],
 	"super" : "ByteTextConverter",
-	"type" : "normal" }
+	"category" : "Multilingual-TextConverterOtherLanguages",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"FromTable"
+	],
+	"instvars" : [ ],
+	"name" : "ISO88597TextConverter",
+	"type" : "normal"
+}

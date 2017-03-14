@@ -1,15 +1,14 @@
 {
-	"category" : "Metacello-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "dkh 7/28/2012 20:04",
+	"super" : "Object",
+	"category" : "Metacello-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"executorSpec",
-		"statements" ],
+		"statements"
+	],
 	"name" : "Metacello",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

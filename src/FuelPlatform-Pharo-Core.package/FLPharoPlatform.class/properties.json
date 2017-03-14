@@ -1,14 +1,11 @@
 {
-	"category" : "FuelPlatform-Pharo-Core-FuelPlatform-Pharo-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "FLPharoPlatform",
-	"pools" : [
-		 ],
 	"super" : "FLPlatform",
-	"type" : "normal" }
+	"category" : "FuelPlatform-Pharo-Core-FuelPlatform-Pharo-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLPharoPlatform",
+	"type" : "normal"
+}

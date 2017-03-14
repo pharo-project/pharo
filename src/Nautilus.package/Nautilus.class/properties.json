@@ -1,16 +1,20 @@
 {
+	"commentStamp" : "StephaneDucasse 9/5/2015 22:00",
+	"super" : "Object",
 	"category" : "Nautilus",
 	"classinstvars" : [
 		"groups",
 		"methodGroup",
 		"useOldStyleKeys",
 		"showSourceCodeAnnotation",
-		"inlineCritiques" ],
+		"inlineCritiques"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"MethodClassifierClass",
 		"PluginClasses",
-		"SortHierarchically" ],
-	"commentStamp" : "StephaneDucasse 9/5/2015 22:00",
+		"SortHierarchically"
+	],
 	"instvars" : [
 		"announcer",
 		"browsedEnvironment",
@@ -27,9 +31,8 @@
 		"showInstance",
 		"showHierarchy",
 		"ui",
-		"methodClassifier" ],
+		"methodClassifier"
+	],
 	"name" : "Nautilus",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

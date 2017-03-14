@@ -1,14 +1,13 @@
 {
-	"category" : "SUnit-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:16",
-	"instvars" : [
-		"factory" ],
-	"name" : "ClassFactoryWithOrganizationTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "SUnit-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"factory"
+	],
+	"name" : "ClassFactoryWithOrganizationTest",
+	"type" : "normal"
+}

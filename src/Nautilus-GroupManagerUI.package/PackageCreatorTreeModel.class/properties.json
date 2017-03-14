@@ -1,15 +1,14 @@
 {
-	"category" : "Nautilus-GroupManagerUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/19/2015 18:44",
+	"super" : "FilteredMorphTreeModel",
+	"category" : "Nautilus-GroupManagerUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"groups",
-		"selectedElements" ],
+		"selectedElements"
+	],
 	"name" : "PackageCreatorTreeModel",
-	"pools" : [
-		 ],
-	"super" : "FilteredMorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

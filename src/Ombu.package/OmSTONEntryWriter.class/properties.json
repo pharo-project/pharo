@@ -1,14 +1,13 @@
 {
-	"category" : "Ombu-Persistence",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 16:11",
-	"instvars" : [
-		"writer" ],
-	"name" : "OmSTONEntryWriter",
-	"pools" : [
-		 ],
 	"super" : "OmEntryWriter",
-	"type" : "normal" }
+	"category" : "Ombu-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"writer"
+	],
+	"name" : "OmSTONEntryWriter",
+	"type" : "normal"
+}

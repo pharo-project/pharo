@@ -1,19 +1,18 @@
 {
-	"category" : "Glamour-FastTable-Model",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGLMFastTable classTrait + TGLMFastTableTag classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "CyrilFerlicot 11/10/2015 11:59",
+	"classvars" : [ ],
 	"instvars" : [
 		"glamourPresentation",
 		"announcer",
 		"tagsToFilterBy",
-		"dataCache" ],
+		"dataCache"
+	],
 	"name" : "GLMFastListDataSource",
-	"pools" : [
-		 ],
+	"commentStamp" : "CyrilFerlicot 11/10/2015 11:59",
 	"super" : "FTSimpleDataSource",
 	"traitcomposition" : "TGLMFastTable + TGLMFastTableTag",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-FastTable-Model"
+}

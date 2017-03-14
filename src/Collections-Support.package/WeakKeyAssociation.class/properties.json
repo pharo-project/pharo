@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mvl 3/11/2007 20:04",
-	"instvars" : [
-		"value" ],
-	"name" : "WeakKeyAssociation",
-	"pools" : [
-		 ],
 	"super" : "Magnitude",
-	"type" : "weak" }
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"value"
+	],
+	"name" : "WeakKeyAssociation",
+	"type" : "weak"
+}

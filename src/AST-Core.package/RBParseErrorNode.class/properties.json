@@ -1,16 +1,15 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/2/2016 14:15",
+	"super" : "RBValueNode",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"errorMessage",
 		"value",
-		"start" ],
+		"start"
+	],
 	"name" : "RBParseErrorNode",
-	"pools" : [
-		 ],
-	"super" : "RBValueNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

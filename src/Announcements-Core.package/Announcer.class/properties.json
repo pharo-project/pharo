@@ -1,14 +1,13 @@
 {
-	"category" : "Announcements-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 3/3/2017 10:17",
-	"instvars" : [
-		"registry" ],
-	"name" : "Announcer",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Announcements-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"registry"
+	],
+	"name" : "Announcer",
+	"type" : "normal"
+}

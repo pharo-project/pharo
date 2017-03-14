@@ -1,16 +1,15 @@
 {
-	"category" : "Fuel-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/6/2012 16:04",
+	"super" : "Object",
+	"category" : "Fuel-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"sourceClassName",
 		"variables",
-		"targetClass" ],
+		"targetClass"
+	],
 	"name" : "FLMigration",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

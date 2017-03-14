@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensTextMorph",
-	"pools" : [
-		 ],
 	"super" : "TextMorphForEditView",
-	"type" : "normal" }
+	"category" : "Athens-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensTextMorph",
+	"type" : "normal"
+}

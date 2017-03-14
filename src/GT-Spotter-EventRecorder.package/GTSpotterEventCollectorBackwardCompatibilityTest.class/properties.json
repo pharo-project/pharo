@@ -1,15 +1,14 @@
 {
-	"category" : "GT-Spotter-EventRecorder-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "GT-Spotter-EventRecorder-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"unpacking",
-		"checkedEvents" ],
+		"checkedEvents"
+	],
 	"name" : "GTSpotterEventCollectorBackwardCompatibilityTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

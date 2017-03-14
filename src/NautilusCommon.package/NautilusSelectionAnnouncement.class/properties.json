@@ -1,17 +1,16 @@
 {
-	"category" : "NautilusCommon-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 9/13/2015 18:56",
+	"super" : "Announcement",
+	"category" : "NautilusCommon-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"package",
 		"class",
 		"protocol",
-		"method" ],
+		"method"
+	],
 	"name" : "NautilusSelectionAnnouncement",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

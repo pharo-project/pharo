@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Strings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:29",
-	"instvars" : [
-		 ],
-	"name" : "ByteSymbolTest",
-	"pools" : [
-		 ],
 	"super" : "SymbolTest",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Strings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ByteSymbolTest",
+	"type" : "normal"
+}

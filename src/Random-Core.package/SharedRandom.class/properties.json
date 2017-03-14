@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "SvenVanCaekenberghe 2/16/2017 17:02",
+	"super" : "Random",
 	"category" : "Random-Core",
 	"classinstvars" : [
-		"global" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "SvenVanCaekenberghe 2/16/2017 17:02",
+		"global"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"mutex" ],
+		"mutex"
+	],
 	"name" : "SharedRandom",
-	"pools" : [
-		 ],
-	"super" : "Random",
-	"type" : "normal" }
+	"type" : "normal"
+}

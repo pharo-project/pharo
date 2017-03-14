@@ -1,17 +1,16 @@
 {
-	"category" : "NECompletion-View",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Morph",
+	"category" : "NECompletion-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"title",
 		"description",
 		"arrowPosition",
-		"label" ],
+		"label"
+	],
 	"name" : "NECDetailMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

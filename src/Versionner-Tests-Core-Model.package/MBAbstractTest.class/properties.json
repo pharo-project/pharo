@@ -1,14 +1,13 @@
 {
-	"category" : "Versionner-Tests-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 14:13",
-	"instvars" : [
-		"configuration" ],
-	"name" : "MBAbstractTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Versionner-Tests-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"configuration"
+	],
+	"name" : "MBAbstractTest",
+	"type" : "normal"
+}

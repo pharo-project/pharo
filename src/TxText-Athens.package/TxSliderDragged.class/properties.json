@@ -1,15 +1,14 @@
 {
-	"category" : "TxText-Athens-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TxSliderAnnouncement",
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"oldPosition",
-		"newPosition" ],
+		"newPosition"
+	],
 	"name" : "TxSliderDragged",
-	"pools" : [
-		 ],
-	"super" : "TxSliderAnnouncement",
-	"type" : "normal" }
+	"type" : "normal"
+}

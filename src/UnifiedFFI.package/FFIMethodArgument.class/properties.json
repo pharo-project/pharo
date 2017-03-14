@@ -1,15 +1,14 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FFIFunctionArgument",
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"index",
-		"argName" ],
+		"argName"
+	],
 	"name" : "FFIMethodArgument",
-	"pools" : [
-		 ],
-	"super" : "FFIFunctionArgument",
-	"type" : "normal" }
+	"type" : "normal"
+}

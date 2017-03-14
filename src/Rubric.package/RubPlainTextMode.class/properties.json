@@ -1,14 +1,11 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 12:59",
-	"instvars" : [
-		 ],
-	"name" : "RubPlainTextMode",
-	"pools" : [
-		 ],
 	"super" : "RubEditingMode",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RubPlainTextMode",
+	"type" : "normal"
+}

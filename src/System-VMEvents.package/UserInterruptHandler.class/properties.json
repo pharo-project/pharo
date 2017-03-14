@@ -1,14 +1,17 @@
 {
-	"category" : "System-VMEvents",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"CmdDotEnabled" ],
 	"commentStamp" : "michael.rueger 4/22/2009 12:01",
-	"instvars" : [
-		"interruptKey" ],
-	"name" : "UserInterruptHandler",
-	"pools" : [
-		"EventSensorConstants" ],
 	"super" : "InputEventHandler",
-	"type" : "normal" }
+	"category" : "System-VMEvents",
+	"classinstvars" : [ ],
+	"pools" : [
+		"EventSensorConstants"
+	],
+	"classvars" : [
+		"CmdDotEnabled"
+	],
+	"instvars" : [
+		"interruptKey"
+	],
+	"name" : "UserInterruptHandler",
+	"type" : "normal"
+}

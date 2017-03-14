@@ -1,14 +1,13 @@
 {
-	"category" : "Renraku-Rules-Rewrite",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/6/2016 23:16",
-	"instvars" : [
-		"block" ],
-	"name" : "ReRewriteBlockWrapper",
-	"pools" : [
-		 ],
 	"super" : "ReRewriteWrapper",
-	"type" : "normal" }
+	"category" : "Renraku-Rules-Rewrite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"block"
+	],
+	"name" : "ReRewriteBlockWrapper",
+	"type" : "normal"
+}

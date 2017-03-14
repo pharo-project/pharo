@@ -1,16 +1,17 @@
 {
-	"category" : "NautilusRefactoring",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"PromptOnRefactoring" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "NautilusRefactoring",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"PromptOnRefactoring"
+	],
 	"instvars" : [
 		"environment",
 		"model",
-		"promptOnRefactoring" ],
+		"promptOnRefactoring"
+	],
 	"name" : "NautilusRefactoring",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

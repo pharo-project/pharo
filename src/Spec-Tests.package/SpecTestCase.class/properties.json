@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Tests-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/28/2016 11:10",
+	"super" : "TestCase",
+	"category" : "Spec-Tests-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"window",
-		"testedInstance" ],
+		"testedInstance"
+	],
 	"name" : "SpecTestCase",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

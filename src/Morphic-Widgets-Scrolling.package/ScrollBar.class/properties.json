@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Slider",
 	"category" : "Morphic-Widgets-Scrolling",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ArrowImagesCache",
-		"BoxesImagesCache" ],
-	"commentStamp" : "<historical>",
+		"BoxesImagesCache"
+	],
 	"instvars" : [
 		"upButton",
 		"downButton",
@@ -17,9 +19,8 @@
 		"timeOfLastScroll",
 		"nextPageDirection",
 		"currentScrollDelay",
-		"lastPaneColor" ],
+		"lastPaneColor"
+	],
 	"name" : "ScrollBar",
-	"pools" : [
-		 ],
-	"super" : "Slider",
-	"type" : "normal" }
+	"type" : "normal"
+}

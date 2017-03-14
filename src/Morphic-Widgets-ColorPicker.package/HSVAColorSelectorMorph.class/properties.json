@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Widgets-ColorPicker",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:55",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-ColorPicker",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"hsvMorph",
-		"aMorph" ],
+		"aMorph"
+	],
 	"name" : "HSVAColorSelectorMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

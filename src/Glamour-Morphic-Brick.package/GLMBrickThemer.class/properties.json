@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Brick-Theme",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "GLMBrickScrollpaneStyle classTrait + GLMBrickRubricStyle classTrait + GLMBrickWindowStyle classTrait + GLMBrickButtonStyle classTrait + GLMBrickCheckBoxStyle classTrait + GLMBrickTextStyle classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AliakseiSyrel 3/17/2015 23:01",
+	"classvars" : [ ],
 	"instvars" : [
-		"modules" ],
+		"modules"
+	],
 	"name" : "GLMBrickThemer",
-	"pools" : [
-		 ],
+	"commentStamp" : "AliakseiSyrel 3/17/2015 23:01",
 	"super" : "Object",
 	"traitcomposition" : "GLMBrickScrollpaneStyle + GLMBrickRubricStyle + GLMBrickWindowStyle + GLMBrickButtonStyle + GLMBrickCheckBoxStyle + GLMBrickTextStyle",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-Morphic-Brick-Theme"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 4/10/2016 02:23",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowGenericRendererDrawingExample",
-	"pools" : [
-		 ],
 	"super" : "OSWindowGenericRendererExample",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Examples-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowGenericRendererDrawingExample",
+	"type" : "normal"
+}

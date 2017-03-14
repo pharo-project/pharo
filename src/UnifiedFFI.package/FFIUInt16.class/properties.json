@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI-Types",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FFIUInt16",
-	"pools" : [
-		 ],
 	"super" : "FFIIntegerType",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFIUInt16",
+	"type" : "normal"
+}

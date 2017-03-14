@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "LaurentLaffont 3/15/2011 20:48",
+	"super" : "SharedPool",
 	"category" : "System-VMEvents",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BlueButtonBit",
 		"CommandKeyBit",
@@ -23,12 +25,9 @@
 		"WindowEventIconise",
 		"WindowEventMetricChange",
 		"WindowEventPaint",
-		"YellowButtonBit" ],
-	"commentStamp" : "LaurentLaffont 3/15/2011 20:48",
-	"instvars" : [
-		 ],
+		"YellowButtonBit"
+	],
+	"instvars" : [ ],
 	"name" : "EventSensorConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

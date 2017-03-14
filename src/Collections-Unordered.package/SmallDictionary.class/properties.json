@@ -1,16 +1,15 @@
 {
-	"category" : "Collections-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "monty 9/6/2016 20:38",
+	"super" : "Collection",
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keys",
 		"values",
-		"size" ],
+		"size"
+	],
 	"name" : "SmallDictionary",
-	"pools" : [
-		 ],
-	"super" : "Collection",
-	"type" : "normal" }
+	"type" : "normal"
+}

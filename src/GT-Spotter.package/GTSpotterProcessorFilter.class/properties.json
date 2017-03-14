@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 9/24/2015 18:16",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterProcessorFilter",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterProcessorFilter",
+	"type" : "normal"
+}

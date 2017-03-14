@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "AlainPlantec 11/2/2010 18:23",
+	"super" : "Object",
 	"category" : "Text-Edition",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BlinkingCursor",
 		"CmdKeysInText",
 		"DumbbellCursor",
-		"SkipOverMultipleSpaces" ],
-	"commentStamp" : "AlainPlantec 11/2/2010 18:23",
+		"SkipOverMultipleSpaces"
+	],
 	"instvars" : [
 		"morph",
-		"selectionShowing" ],
+		"selectionShowing"
+	],
 	"name" : "Editor",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

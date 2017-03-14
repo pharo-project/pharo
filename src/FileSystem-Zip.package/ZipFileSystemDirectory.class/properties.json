@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Zip",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MaxLeske 9/27/2014 07:52",
-	"instvars" : [
-		 ],
-	"name" : "ZipFileSystemDirectory",
-	"pools" : [
-		 ],
 	"super" : "MemoryFileSystemDirectory",
-	"type" : "normal" }
+	"category" : "FileSystem-Zip",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZipFileSystemDirectory",
+	"type" : "normal"
+}

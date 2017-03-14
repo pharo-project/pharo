@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Spotter-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"category" ],
-	"name" : "GTSpotterAnnouncement",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"category"
+	],
+	"name" : "GTSpotterAnnouncement",
+	"type" : "normal"
+}

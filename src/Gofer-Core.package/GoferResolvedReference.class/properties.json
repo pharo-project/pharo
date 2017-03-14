@@ -1,14 +1,13 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "lr 1/30/2010 14:38",
-	"instvars" : [
-		"repository" ],
-	"name" : "GoferResolvedReference",
-	"pools" : [
-		 ],
 	"super" : "GoferVersionReference",
-	"type" : "normal" }
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"repository"
+	],
+	"name" : "GoferResolvedReference",
+	"type" : "normal"
+}

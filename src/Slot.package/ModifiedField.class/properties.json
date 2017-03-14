@@ -1,15 +1,14 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractFieldModification",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"newSlot",
-		"originalSlot" ],
+		"originalSlot"
+	],
 	"name" : "ModifiedField",
-	"pools" : [
-		 ],
-	"super" : "AbstractFieldModification",
-	"type" : "normal" }
+	"type" : "normal"
+}

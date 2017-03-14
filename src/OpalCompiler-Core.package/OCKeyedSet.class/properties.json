@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Core-Extras",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"keyBlock" ],
-	"name" : "OCKeyedSet",
-	"pools" : [
-		 ],
 	"super" : "Set",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Extras",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"keyBlock"
+	],
+	"name" : "OCKeyedSet",
+	"type" : "normal"
+}

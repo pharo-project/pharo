@@ -1,14 +1,11 @@
 {
-	"category" : "GT-SpotterExtensions-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTFilterImplementor",
-	"pools" : [
-		 ],
 	"super" : "GTFilterSubstring",
-	"type" : "normal" }
+	"category" : "GT-SpotterExtensions-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTFilterImplementor",
+	"type" : "normal"
+}

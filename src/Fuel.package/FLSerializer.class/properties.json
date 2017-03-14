@@ -1,19 +1,18 @@
 {
-	"category" : "Fuel-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/29/2011 19:10",
+	"super" : "Object",
+	"category" : "Fuel-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"analyzer",
 		"serializationFactory",
 		"signature",
 		"version",
 		"stream",
-		"header" ],
+		"header"
+	],
 	"name" : "FLSerializer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

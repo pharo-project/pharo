@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Browsers-Other",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DamienCassou 7/26/2011 19:10",
-	"instvars" : [
-		"rootPane" ],
-	"name" : "GLMExpander",
-	"pools" : [
-		 ],
 	"super" : "GLMImplicitBrowser",
-	"type" : "normal" }
+	"category" : "Glamour-Browsers-Other",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"rootPane"
+	],
+	"name" : "GLMExpander",
+	"type" : "normal"
+}

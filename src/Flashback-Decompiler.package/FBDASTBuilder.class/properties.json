@@ -1,14 +1,13 @@
 {
-	"category" : "Flashback-Decompiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 6/19/2015 14:52",
-	"instvars" : [
-		"methodClass" ],
-	"name" : "FBDASTBuilder",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Flashback-Decompiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"methodClass"
+	],
+	"name" : "FBDASTBuilder",
+	"type" : "normal"
+}

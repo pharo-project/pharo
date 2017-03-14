@@ -1,14 +1,13 @@
 {
-	"category" : "UnifiedFFI-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"architecture" ],
-	"name" : "FFIExternalStructureFieldParserTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"architecture"
+	],
+	"name" : "FFIExternalStructureFieldParserTests",
+	"type" : "normal"
+}

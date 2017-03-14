@@ -1,19 +1,18 @@
 {
-	"category" : "Balloon-Simulation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Balloon-Simulation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"index",
 		"xValue",
 		"yValue",
 		"zValue",
 		"lines",
-		"source" ],
+		"source"
+	],
 	"name" : "BalloonEdgeData",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

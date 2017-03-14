@@ -1,18 +1,17 @@
 {
-	"category" : "EpiceaBrowsers-Log",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "EpLogBrowserView",
+	"category" : "EpiceaBrowsers-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"rootItems",
 		"lastRefreshedHeadReference",
 		"lastRefreshedFilter",
 		"entryItemByEntryReferenceCache",
-		"desiredNumberOfItems" ],
+		"desiredNumberOfItems"
+	],
 	"name" : "EpPriorView",
-	"pools" : [
-		 ],
-	"super" : "EpLogBrowserView",
-	"type" : "normal" }
+	"type" : "normal"
+}

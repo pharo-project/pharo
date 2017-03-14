@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Core-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:19",
-	"instvars" : [
-		"newSource" ],
-	"name" : "ReparseAfterSourceEditing",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newSource"
+	],
+	"name" : "ReparseAfterSourceEditing",
+	"type" : "normal"
+}

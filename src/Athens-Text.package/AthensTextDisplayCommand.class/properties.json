@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/6/2012 16:20",
-	"instvars" : [
-		"next" ],
-	"name" : "AthensTextDisplayCommand",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"next"
+	],
+	"name" : "AthensTextDisplayCommand",
+	"type" : "normal"
+}

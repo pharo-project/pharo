@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "monty 8/22/2016 07:22",
-	"instvars" : [
-		 ],
-	"name" : "NautilusUtilsTestStubTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Nautilus-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NautilusUtilsTestStubTest",
+	"type" : "normal"
+}

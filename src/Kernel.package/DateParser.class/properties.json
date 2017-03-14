@@ -1,10 +1,10 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"inputStream",
 		"pattern",
@@ -13,9 +13,8 @@
 		"year",
 		"month",
 		"day",
-		"invalidPattern" ],
+		"invalidPattern"
+	],
 	"name" : "DateParser",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Komitter-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ImageMorph",
+	"category" : "Komitter-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"images",
-		"currentImageIndex" ],
+		"currentImageIndex"
+	],
 	"name" : "LoadingMorph",
-	"pools" : [
-		 ],
-	"super" : "ImageMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

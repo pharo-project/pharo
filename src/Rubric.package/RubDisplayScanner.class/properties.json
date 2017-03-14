@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-TextScanning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RubCharacterScanner",
+	"category" : "Rubric-TextScanning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"bitBlt",
 		"lineY",
@@ -15,9 +15,8 @@
 		"lineHeight",
 		"morphicOffset",
 		"ignoreColorChanges",
-		"defaultTextColor" ],
+		"defaultTextColor"
+	],
 	"name" : "RubDisplayScanner",
-	"pools" : [
-		 ],
-	"super" : "RubCharacterScanner",
-	"type" : "normal" }
+	"type" : "normal"
+}

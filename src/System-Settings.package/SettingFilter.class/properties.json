@@ -1,14 +1,11 @@
 {
-	"category" : "System-Settings-Filter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "alain.plantec 4/8/2009 12:51",
-	"instvars" : [
-		 ],
-	"name" : "SettingFilter",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Settings-Filter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SettingFilter",
+	"type" : "normal"
+}

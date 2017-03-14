@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FFISelfArgument",
-	"pools" : [
-		 ],
 	"super" : "FFIFunctionArgument",
-	"type" : "normal" }
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFISelfArgument",
+	"type" : "normal"
+}

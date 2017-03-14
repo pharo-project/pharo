@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenjaminVanRyseghem 4/24/2014 16:44",
+	"super" : "AbstractWidgetModel",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"passenger",
-		"source" ],
+		"source"
+	],
 	"name" : "TransferModel",
-	"pools" : [
-		 ],
-	"super" : "AbstractWidgetModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

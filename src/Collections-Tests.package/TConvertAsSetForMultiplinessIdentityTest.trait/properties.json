@@ -1,6 +1,7 @@
 {
-	"category" : "Collections-Tests-Abstract",
-	"classtraitcomposition" : "TConvertAsSetForMultiplinessTest classTrait",
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:32",
-	"name" : "TConvertAsSetForMultiplinessIdentityTest",
-	"traitcomposition" : "TConvertAsSetForMultiplinessTest" }
+	"traitcomposition" : "TConvertAsSetForMultiplinessTest",
+	"classtraitcomposition" : "TConvertAsSetForMultiplinessTest classTrait",
+	"category" : "Collections-Tests-Abstract",
+	"name" : "TConvertAsSetForMultiplinessIdentityTest"
+}

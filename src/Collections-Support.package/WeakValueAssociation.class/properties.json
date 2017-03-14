@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "WeakValueAssociation",
-	"pools" : [
-		 ],
 	"super" : "LookupKey",
-	"type" : "weak" }
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakValueAssociation",
+	"type" : "weak"
+}

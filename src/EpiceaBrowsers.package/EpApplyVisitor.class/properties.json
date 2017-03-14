@@ -1,16 +1,13 @@
 {
-	"category" : "EpiceaBrowsers-Log-Visitors",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "EpTEventVisitor classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "MartinDias 10/27/2014 18:03",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "EpApplyVisitor",
-	"pools" : [
-		 ],
+	"commentStamp" : "MartinDias 10/27/2014 18:03",
 	"super" : "EpLogBrowserOperationVisitor",
 	"traitcomposition" : "EpTEventVisitor",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "EpiceaBrowsers-Log-Visitors"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:11",
-	"instvars" : [
-		"modeActivated" ],
-	"name" : "OSTouchStateGestureDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchGestureDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"modeActivated"
+	],
+	"name" : "OSTouchStateGestureDetector",
+	"type" : "normal"
+}

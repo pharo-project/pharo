@@ -1,11 +1,6 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TEnableOnHaloMenu classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "gvc 5/23/2007 14:12",
+	"classvars" : [ ],
 	"instvars" : [
 		"contentMorph",
 		"listMorph",
@@ -19,10 +14,14 @@
 		"enabled",
 		"useSelectionIndex",
 		"wrapSelector",
-		"defaultContents" ],
+		"defaultContents"
+	],
 	"name" : "DropListMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "gvc 5/23/2007 14:12",
 	"super" : "MorphicModel",
 	"traitcomposition" : "TEnableOnHaloMenu",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Polymorph-Widgets"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Versionner-Commit",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Error",
+	"category" : "Versionner-Commit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"projectName",
-		"issues" ],
+		"issues"
+	],
 	"name" : "VSCommitProjectValidationError",
-	"pools" : [
-		 ],
-	"super" : "Error",
-	"type" : "normal" }
+	"type" : "normal"
+}

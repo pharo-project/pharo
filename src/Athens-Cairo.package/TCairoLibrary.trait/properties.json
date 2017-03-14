@@ -1,4 +1,5 @@
 {
-	"category" : "Athens-Cairo",
+	"name" : "TCairoLibrary",
 	"commentStamp" : "<historical>",
-	"name" : "TCairoLibrary" }
+	"category" : "Athens-Cairo"
+}

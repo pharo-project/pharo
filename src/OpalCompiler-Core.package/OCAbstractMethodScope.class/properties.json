@@ -1,18 +1,17 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "OCAbstractScope",
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"thisContextVar",
 		"tempVars",
 		"copiedVars",
 		"tempVector",
-		"id" ],
+		"id"
+	],
 	"name" : "OCAbstractMethodScope",
-	"pools" : [
-		 ],
-	"super" : "OCAbstractScope",
-	"type" : "normal" }
+	"type" : "normal"
+}

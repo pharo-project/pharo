@@ -1,14 +1,11 @@
 {
-	"category" : "Renraku-Critiques",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 9/2/2016 22:37",
-	"instvars" : [
-		 ],
-	"name" : "ReStringBasedCritic",
-	"pools" : [
-		 ],
 	"super" : "ReStringBasedCritique",
-	"type" : "normal" }
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReStringBasedCritic",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 12/18/2015 16:46",
-	"instvars" : [
-		 ],
-	"name" : "OCArgumentVariable",
-	"pools" : [
-		 ],
 	"super" : "OCTempVariable",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCArgumentVariable",
+	"type" : "normal"
+}

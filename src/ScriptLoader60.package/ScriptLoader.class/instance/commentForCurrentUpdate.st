@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19834 Error in horizontal scrollbar
-	https://pharo.fogbugz.com/f/cases/19834
+ ^ '19826 Off by one error in FTTableContainerMorph>>#calculateStartIndexWhenShowing:
+	https://pharo.fogbugz.com/f/cases/19826
 
-19831 catalog refresh retrieves an empty collection
-	https://pharo.fogbugz.com/f/cases/19831
-
-19823 exported source of the package MonticelloFileTree-Core in pharo-core repository contains strange extension
-	https://pharo.fogbugz.com/f/cases/19823'
+19828 Class side methods + hierarchy selection eats the selected class. 
+	https://pharo.fogbugz.com/f/cases/19828'

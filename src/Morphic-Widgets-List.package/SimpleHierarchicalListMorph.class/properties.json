@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "MarcusDenker 12/12/2009 07:36",
+	"super" : "ScrollPane",
 	"category" : "Morphic-Widgets-List",
 	"classinstvars" : [
 		"expandedForm",
-		"notExpandedForm" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "MarcusDenker 12/12/2009 07:36",
+		"notExpandedForm"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selectedMorph",
 		"getListSelector",
@@ -20,9 +22,8 @@
 		"lastSelection",
 		"lastKeystrokeTime",
 		"lastKeystrokes",
-		"searchedElement" ],
+		"searchedElement"
+	],
 	"name" : "SimpleHierarchicalListMorph",
-	"pools" : [
-		 ],
-	"super" : "ScrollPane",
-	"type" : "normal" }
+	"type" : "normal"
+}

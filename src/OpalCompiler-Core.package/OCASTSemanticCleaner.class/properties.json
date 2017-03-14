@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 2/10/2016 16:41",
-	"instvars" : [
-		 ],
-	"name" : "OCASTSemanticCleaner",
-	"pools" : [
-		 ],
 	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCASTSemanticCleaner",
+	"type" : "normal"
+}

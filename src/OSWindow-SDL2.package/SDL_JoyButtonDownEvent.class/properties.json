@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 10/12/2014 17:41",
-	"instvars" : [
-		 ],
-	"name" : "SDL_JoyButtonDownEvent",
-	"pools" : [
-		 ],
 	"super" : "SDL_JoyButtonEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SDL_JoyButtonDownEvent",
+	"type" : "normal"
+}

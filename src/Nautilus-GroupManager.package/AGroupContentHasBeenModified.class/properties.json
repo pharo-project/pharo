@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-GroupManager-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/9/2015 14:13",
-	"instvars" : [
-		 ],
-	"name" : "AGroupContentHasBeenModified",
-	"pools" : [
-		 ],
 	"super" : "AbstractGroupAnnouncement",
-	"type" : "normal" }
+	"category" : "Nautilus-GroupManager-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AGroupContentHasBeenModified",
+	"type" : "normal"
+}

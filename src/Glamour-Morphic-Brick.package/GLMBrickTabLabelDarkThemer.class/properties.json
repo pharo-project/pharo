@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Theme",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 3/21/2015 19:44",
-	"instvars" : [
-		 ],
-	"name" : "GLMBrickTabLabelDarkThemer",
-	"pools" : [
-		 ],
 	"super" : "GLMBrickTabLabelThemer",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Theme",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMBrickTabLabelDarkThemer",
+	"type" : "normal"
+}

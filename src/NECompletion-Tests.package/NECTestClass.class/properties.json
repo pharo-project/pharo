@@ -1,10 +1,12 @@
 {
-	"category" : "NECompletion-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ClassVar" ],
 	"commentStamp" : "<historical>",
+	"super" : "NECTestSuperClass",
+	"category" : "NECompletion-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ClassVar"
+	],
 	"instvars" : [
 		"third",
 		"fourth",
@@ -22,9 +24,8 @@
 		"constantNil",
 		"globalVarKeyword",
 		"globalVarKeyword2",
-		"constantLargeInteger" ],
+		"constantLargeInteger"
+	],
 	"name" : "NECTestClass",
-	"pools" : [
-		 ],
-	"super" : "NECTestSuperClass",
-	"type" : "normal" }
+	"type" : "normal"
+}

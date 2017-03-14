@@ -1,14 +1,13 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:31",
-	"instvars" : [
-		"cacheReferences" ],
-	"name" : "GoferSynchronize",
-	"pools" : [
-		 ],
 	"super" : "GoferOperation",
-	"type" : "normal" }
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"cacheReferences"
+	],
+	"name" : "GoferSynchronize",
+	"type" : "normal"
+}

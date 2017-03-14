@@ -1,14 +1,11 @@
 {
-	"category" : "Gofer-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:33",
-	"instvars" : [
-		 ],
-	"name" : "GoferBrowseRemoteChanges",
-	"pools" : [
-		 ],
 	"super" : "GoferRemoteChanges",
-	"type" : "normal" }
+	"category" : "Gofer-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GoferBrowseRemoteChanges",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:00",
+	"super" : "Object",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"hasFocus",
 		"undoManager",
@@ -14,9 +14,8 @@
 		"startOfTyping",
 		"previousInterval",
 		"scrollPivot",
-		"textArea" ],
+		"textArea"
+	],
 	"name" : "RubEditingState",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

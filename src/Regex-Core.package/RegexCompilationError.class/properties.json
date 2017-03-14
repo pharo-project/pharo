@@ -1,14 +1,11 @@
 {
-	"category" : "Regex-Core-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Tbn 11/12/2010 22:38",
-	"instvars" : [
-		 ],
-	"name" : "RegexCompilationError",
-	"pools" : [
-		 ],
 	"super" : "RegexError",
-	"type" : "normal" }
+	"category" : "Regex-Core-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RegexCompilationError",
+	"type" : "normal"
+}

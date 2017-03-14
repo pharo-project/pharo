@@ -1,16 +1,15 @@
 {
 	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		 ],
-	"classtraitcomposition" : "TSortable classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "VincentBlondeau 4/1/2016 18:10",
+	"classvars" : [ ],
 	"instvars" : [
 		"firstLink",
-		"lastLink" ],
+		"lastLink"
+	],
 	"name" : "LinkedList",
-	"pools" : [
-		 ],
+	"commentStamp" : "VincentBlondeau 4/1/2016 18:10",
 	"super" : "SequenceableCollection",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classtraitcomposition" : "TSortable classTrait"
+}

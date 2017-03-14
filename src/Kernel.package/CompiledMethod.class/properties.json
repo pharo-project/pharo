@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 5/23/2016 11:05",
-	"instvars" : [
-		 ],
-	"name" : "CompiledMethod",
-	"pools" : [
-		 ],
 	"super" : "CompiledCode",
-	"type" : "compiledMethod" }
+	"category" : "Kernel-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CompiledMethod",
+	"type" : "compiledMethod"
+}

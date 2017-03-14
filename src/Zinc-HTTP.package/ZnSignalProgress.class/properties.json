@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Variables",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ZnSignalProgress",
-	"pools" : [
-		 ],
 	"super" : "DynamicVariable",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Variables",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnSignalProgress",
+	"type" : "normal"
+}

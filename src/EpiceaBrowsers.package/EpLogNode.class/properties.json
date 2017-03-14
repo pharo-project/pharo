@@ -1,14 +1,13 @@
 {
-	"category" : "EpiceaBrowsers-Unified",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/20/2017 13:24",
-	"instvars" : [
-		"referencedNodes" ],
-	"name" : "EpLogNode",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-Unified",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"referencedNodes"
+	],
+	"name" : "EpLogNode",
+	"type" : "normal"
+}

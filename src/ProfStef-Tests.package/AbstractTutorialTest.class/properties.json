@@ -1,14 +1,11 @@
 {
-	"category" : "ProfStef-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:51",
-	"instvars" : [
-		 ],
-	"name" : "AbstractTutorialTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "ProfStef-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AbstractTutorialTest",
+	"type" : "normal"
+}

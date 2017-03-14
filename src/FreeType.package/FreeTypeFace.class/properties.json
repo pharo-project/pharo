@@ -1,18 +1,17 @@
 {
-	"category" : "FreeType-Fonts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 22:06",
+	"super" : "FT2Face",
+	"category" : "FreeType-Fonts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"filename",
 		"index",
 		"fileContentsExternalMemory",
 		"hasKerning",
-		"session" ],
+		"session"
+	],
 	"name" : "FreeTypeFace",
-	"pools" : [
-		 ],
-	"super" : "FT2Face",
-	"type" : "normal" }
+	"type" : "normal"
+}

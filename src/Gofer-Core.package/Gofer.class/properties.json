@@ -1,18 +1,17 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "lr 1/30/2010 14:42",
+	"super" : "Object",
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"references",
 		"repositories",
 		"errorBlock",
 		"packageCacheRepository",
-		"resolvedReferencesCache" ],
+		"resolvedReferencesCache"
+	],
 	"name" : "Gofer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

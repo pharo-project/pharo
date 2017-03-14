@@ -1,10 +1,10 @@
 {
-	"category" : "Refactoring-Critics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"class",
 		"selector",
@@ -16,9 +16,8 @@
 		"compiledMethod",
 		"selfMessages",
 		"superMessages",
-		"messages" ],
+		"messages"
+	],
 	"name" : "RBSmalllintContext",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

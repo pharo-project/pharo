@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 1/5/2010 22:18",
-	"instvars" : [
-		"port" ],
-	"name" : "GLMPortReference",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"port"
+	],
+	"name" : "GLMPortReference",
+	"type" : "normal"
+}

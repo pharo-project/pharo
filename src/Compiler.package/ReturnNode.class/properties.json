@@ -1,14 +1,13 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"expr" ],
-	"name" : "ReturnNode",
-	"pools" : [
-		 ],
 	"super" : "ParseNode",
-	"type" : "normal" }
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"expr"
+	],
+	"name" : "ReturnNode",
+	"type" : "normal"
+}

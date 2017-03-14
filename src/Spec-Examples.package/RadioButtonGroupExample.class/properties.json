@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Examples-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/28/2016 14:30",
+	"super" : "ComposableModel",
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"button1",
 		"button2",
@@ -12,9 +12,8 @@
 		"container",
 		"morph1",
 		"morph2",
-		"morph3" ],
+		"morph3"
+	],
 	"name" : "RadioButtonGroupExample",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

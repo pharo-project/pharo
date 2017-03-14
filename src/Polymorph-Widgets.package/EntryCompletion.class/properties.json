@@ -1,18 +1,17 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 11/29/2010 10:58",
+	"super" : "Object",
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"dataSourceBlock",
 		"filterBlock",
 		"chooseBlock",
 		"chooser",
-		"previousToken" ],
+		"previousToken"
+	],
 	"name" : "EntryCompletion",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

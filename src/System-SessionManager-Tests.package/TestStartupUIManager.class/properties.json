@@ -1,14 +1,13 @@
 {
-	"category" : "System-SessionManager-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 10/13/2015 09:38",
-	"instvars" : [
-		"sessionManager" ],
-	"name" : "TestStartupUIManager",
-	"pools" : [
-		 ],
 	"super" : "StartupUIManager",
-	"type" : "normal" }
+	"category" : "System-SessionManager-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"sessionManager"
+	],
+	"name" : "TestStartupUIManager",
+	"type" : "normal"
+}

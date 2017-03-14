@@ -1,16 +1,15 @@
 {
-	"category" : "Collections-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Stream",
+	"category" : "Collections-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"binary",
 		"position",
-		"lastElement" ],
+		"lastElement"
+	],
 	"name" : "NullStream",
-	"pools" : [
-		 ],
-	"super" : "Stream",
-	"type" : "normal" }
+	"type" : "normal"
+}

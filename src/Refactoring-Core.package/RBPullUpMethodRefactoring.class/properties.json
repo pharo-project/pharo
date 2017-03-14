@@ -1,15 +1,14 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/6/2016 13:46",
+	"super" : "RBMethodRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"removeDuplicates",
-		"selectors" ],
+		"selectors"
+	],
 	"name" : "RBPullUpMethodRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBMethodRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "AST-Core-Matching",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"tree" ],
-	"name" : "RBParseTreeRewriter",
-	"pools" : [
-		 ],
 	"super" : "RBParseTreeSearcher",
-	"type" : "normal" }
+	"category" : "AST-Core-Matching",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"tree"
+	],
+	"name" : "RBParseTreeRewriter",
+	"type" : "normal"
+}

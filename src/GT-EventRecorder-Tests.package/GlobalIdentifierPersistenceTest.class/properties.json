@@ -1,15 +1,14 @@
 {
-	"category" : "GT-EventRecorder-Tests-Identifier",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "TestCase",
+	"category" : "GT-EventRecorder-Tests-Identifier",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"preferences",
-		"persistence" ],
+		"persistence"
+	],
 	"name" : "GlobalIdentifierPersistenceTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

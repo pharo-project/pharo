@@ -1,14 +1,13 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:35",
-	"instvars" : [
-		"message" ],
-	"name" : "GoferCommit",
-	"pools" : [
-		 ],
 	"super" : "GoferWorking",
-	"type" : "normal" }
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"message"
+	],
+	"name" : "GoferCommit",
+	"type" : "normal"
+}

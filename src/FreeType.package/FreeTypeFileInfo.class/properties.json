@@ -1,18 +1,17 @@
 {
-	"category" : "FreeType-FontManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 22:10",
+	"super" : "FreeTypeFileInfoAbstract",
+	"category" : "FreeType-FontManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"absoluteOrRelativePath",
 		"absolutePath",
 		"locationType",
 		"modificationTime",
-		"fileSize" ],
+		"fileSize"
+	],
 	"name" : "FreeTypeFileInfo",
-	"pools" : [
-		 ],
-	"super" : "FreeTypeFileInfoAbstract",
-	"type" : "normal" }
+	"type" : "normal"
+}

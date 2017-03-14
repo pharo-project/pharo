@@ -1,13 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
 	"category" : "Spec-Debugger",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"AlwaysOpenFullDebugger",
 		"ErrorRecursion",
 		"FilterCommonMessageSends",
-		"LogDebuggerStackToFile" ],
-	"commentStamp" : "<historical>",
+		"LogDebuggerStackToFile"
+	],
 	"instvars" : [
 		"sessionHolder",
 		"labelHolder",
@@ -16,9 +18,8 @@
 		"toolbar",
 		"contextInspector",
 		"receiverInspector",
-		"browsedEnvironment" ],
+		"browsedEnvironment"
+	],
 	"name" : "SpecDebugger",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,18 +1,17 @@
 {
-	"category" : "Komitter-Models",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/24/2015 19:09",
+	"super" : "Object",
+	"category" : "Komitter-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"added",
 		"modified",
 		"removed",
 		"selected",
-		"expanded" ],
+		"expanded"
+	],
 	"name" : "KomitObject",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

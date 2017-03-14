@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Pager-Announcement",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"buttonModel" ],
-	"name" : "GLMPagerButtonAnnouncement",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Pager-Announcement",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"buttonModel"
+	],
+	"name" : "GLMPagerButtonAnnouncement",
+	"type" : "normal"
+}

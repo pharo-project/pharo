@@ -1,14 +1,11 @@
 {
-	"category" : "Flashback-Decompiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "KevinLanvin 7/3/2015 15:41",
-	"instvars" : [
-		 ],
-	"name" : "FBDOptimizedMessagesRewriter",
-	"pools" : [
-		 ],
 	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"category" : "Flashback-Decompiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FBDOptimizedMessagesRewriter",
+	"type" : "normal"
+}

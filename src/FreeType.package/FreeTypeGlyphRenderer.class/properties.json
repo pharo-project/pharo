@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "tween 4/4/2007 09:48",
+	"super" : "Object",
 	"category" : "FreeType-GlyphRendering",
 	"classinstvars" : [
-		"current" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "tween 4/4/2007 09:48",
-	"instvars" : [
-		 ],
-	"name" : "FreeTypeGlyphRenderer",
+		"current"
+	],
 	"pools" : [
-		"FT2Constants" ],
-	"super" : "Object",
-	"type" : "normal" }
+		"FT2Constants"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FreeTypeGlyphRenderer",
+	"type" : "normal"
+}

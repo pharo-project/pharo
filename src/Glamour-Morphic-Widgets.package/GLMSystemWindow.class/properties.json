@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/27/2011 22:09",
+	"super" : "StandardWindow",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"toolbarBox",
-		"hasInitialStep" ],
+		"hasInitialStep"
+	],
 	"name" : "GLMSystemWindow",
-	"pools" : [
-		 ],
-	"super" : "StandardWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

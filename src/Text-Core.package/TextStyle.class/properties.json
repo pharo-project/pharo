@@ -1,10 +1,14 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Text-Core",
 	"classinstvars" : [
-		"notifier" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"notifier"
+	],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"fontArray",
 		"lineGrid",
@@ -16,9 +20,8 @@
 		"tabsArray",
 		"marginTabsArray",
 		"leading",
-		"defaultFontIndex" ],
+		"defaultFontIndex"
+	],
 	"name" : "TextStyle",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

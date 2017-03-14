@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "Tbn 11/12/2010 23:15",
+	"super" : "RxsNode",
 	"category" : "Regex-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"EscapedLetterSelectors",
-		"NamedClassSelectors" ],
-	"commentStamp" : "Tbn 11/12/2010 23:15",
+		"NamedClassSelectors"
+	],
 	"instvars" : [
 		"predicate",
-		"negation" ],
+		"negation"
+	],
 	"name" : "RxsPredicate",
-	"pools" : [
-		 ],
-	"super" : "RxsNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 2/20/2010 14:52",
-	"instvars" : [
-		 ],
-	"name" : "GLMReplacePresentationsStrategy",
-	"pools" : [
-		 ],
 	"super" : "GLMPresentStrategy",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMReplacePresentationsStrategy",
+	"type" : "normal"
+}

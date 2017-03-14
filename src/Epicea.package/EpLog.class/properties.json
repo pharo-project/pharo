@@ -1,17 +1,16 @@
 {
-	"category" : "Epicea-Log",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Epicea-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"announcer",
 		"headReference",
 		"commentByEntryReference",
-		"store" ],
+		"store"
+	],
 	"name" : "EpLog",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

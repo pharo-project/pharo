@@ -1,14 +1,13 @@
 {
-	"category" : "GT-EventRecorder-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/13/2015 23:01",
-	"instvars" : [
-		"migrations" ],
-	"name" : "GTFuelPacking",
-	"pools" : [
-		 ],
 	"super" : "GTEventPacking",
-	"type" : "normal" }
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"migrations"
+	],
+	"name" : "GTFuelPacking",
+	"type" : "normal"
+}

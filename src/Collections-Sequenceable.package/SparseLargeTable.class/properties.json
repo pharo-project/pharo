@@ -1,17 +1,16 @@
 {
-	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ArrayedCollection",
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"base",
 		"size",
 		"chunkSize",
-		"defaultValue" ],
+		"defaultValue"
+	],
 	"name" : "SparseLargeTable",
-	"pools" : [
-		 ],
-	"super" : "ArrayedCollection",
-	"type" : "variable" }
+	"type" : "variable"
+}

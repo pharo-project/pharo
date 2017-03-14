@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RubSegmentMorph",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textArea",
 		"firstIndex",
@@ -12,9 +12,8 @@
 		"icon",
 		"iconBlock",
 		"label",
-		"changeable" ],
+		"changeable"
+	],
 	"name" : "RubTextSegmentMorph",
-	"pools" : [
-		 ],
-	"super" : "RubSegmentMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

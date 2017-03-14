@@ -1,16 +1,15 @@
 {
-	"category" : "EpiceaTests-Integration",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/6/2017 01:43",
+	"super" : "TestCase",
+	"category" : "EpiceaTests-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"monitor",
 		"classFactory",
-		"logBuilder" ],
+		"logBuilder"
+	],
 	"name" : "EpMonitorIntegrationTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,18 +1,17 @@
 {
-	"category" : "AST-Core-Pattern",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 8/9/2005 14:59",
+	"super" : "RBVariableNode",
+	"category" : "AST-Core-Pattern",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"recurseInto",
 		"isList",
 		"isLiteral",
 		"isStatement",
-		"isAnything" ],
+		"isAnything"
+	],
 	"name" : "RBPatternVariableNode",
-	"pools" : [
-		 ],
-	"super" : "RBVariableNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

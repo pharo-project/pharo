@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 10/3/2014 21:25",
-	"instvars" : [
-		 ],
-	"name" : "OCStoreIntoReadOnlyVariableError",
-	"pools" : [
-		 ],
 	"super" : "OCSemanticError",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCStoreIntoReadOnlyVariableError",
+	"type" : "normal"
+}

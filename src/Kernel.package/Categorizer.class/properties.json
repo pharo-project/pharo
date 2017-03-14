@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "StephaneDucasse 5/9/2010 20:11",
+	"super" : "Object",
 	"category" : "Kernel-Classes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Default",
-		"NullCategory" ],
-	"commentStamp" : "StephaneDucasse 5/9/2010 20:11",
+		"NullCategory"
+	],
 	"instvars" : [
 		"categoryArray",
 		"categoryStops",
-		"elementArray" ],
+		"elementArray"
+	],
 	"name" : "Categorizer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

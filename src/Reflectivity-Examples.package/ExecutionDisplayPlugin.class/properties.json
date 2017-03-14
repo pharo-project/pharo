@@ -1,15 +1,14 @@
 {
-	"category" : "Reflectivity-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mcamp 10/2/2015 11:26",
+	"super" : "AbstractNautilusPlugin",
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"morph",
-		"link" ],
+		"link"
+	],
 	"name" : "ExecutionDisplayPlugin",
-	"pools" : [
-		 ],
-	"super" : "AbstractNautilusPlugin",
-	"type" : "normal" }
+	"type" : "normal"
+}

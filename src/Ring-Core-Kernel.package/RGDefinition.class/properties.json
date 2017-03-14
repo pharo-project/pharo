@@ -1,15 +1,14 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 9/30/2014 10:03",
+	"super" : "Object",
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"annotations",
-		"name" ],
+		"name"
+	],
 	"name" : "RGDefinition",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

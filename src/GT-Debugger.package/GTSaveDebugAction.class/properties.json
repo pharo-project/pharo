@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/10/2016 23:39",
-	"instvars" : [
-		 ],
-	"name" : "GTSaveDebugAction",
-	"pools" : [
-		 ],
 	"super" : "GTCodeDebugAction",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSaveDebugAction",
+	"type" : "normal"
+}

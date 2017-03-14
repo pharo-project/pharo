@@ -1,14 +1,13 @@
 {
-	"category" : "FuelPlatform-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Current" ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "FLPlatform",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "FuelPlatform-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Current"
+	],
+	"instvars" : [ ],
+	"name" : "FLPlatform",
+	"type" : "normal"
+}

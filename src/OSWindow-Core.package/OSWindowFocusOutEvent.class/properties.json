@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:32",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowFocusOutEvent",
-	"pools" : [
-		 ],
 	"super" : "OSWindowEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowFocusOutEvent",
+	"type" : "normal"
+}

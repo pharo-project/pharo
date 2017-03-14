@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Tests-Debugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTGenericStackDebuggerUITest",
-	"pools" : [
-		 ],
 	"super" : "GLMMorphicTest",
-	"type" : "normal" }
+	"category" : "GT-Tests-Debugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTGenericStackDebuggerUITest",
+	"type" : "normal"
+}

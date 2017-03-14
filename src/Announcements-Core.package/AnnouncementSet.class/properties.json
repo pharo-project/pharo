@@ -1,14 +1,11 @@
 {
-	"category" : "Announcements-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AnnouncementSet",
-	"pools" : [
-		 ],
 	"super" : "Set",
-	"type" : "normal" }
+	"category" : "Announcements-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AnnouncementSet",
+	"type" : "normal"
+}

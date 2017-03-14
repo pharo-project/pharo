@@ -1,15 +1,14 @@
 {
-	"category" : "Versionner-Spec-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 1/17/2014 16:28",
+	"super" : "Object",
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"remotesUI",
-		"packageName" ],
+		"packageName"
+	],
 	"name" : "VersionnerRepositoriesManager",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

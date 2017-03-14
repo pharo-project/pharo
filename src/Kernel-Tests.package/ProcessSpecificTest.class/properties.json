@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Tests-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mvl 3/13/2007 13:52",
-	"instvars" : [
-		 ],
-	"name" : "ProcessSpecificTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ProcessSpecificTest",
+	"type" : "normal"
+}

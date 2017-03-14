@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 4/8/2003 12:50",
-	"instvars" : [
-		"bingo" ],
-	"name" : "InstVarRefLocator",
-	"pools" : [
-		 ],
 	"super" : "InstructionClient",
-	"type" : "normal" }
+	"category" : "Kernel-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"bingo"
+	],
+	"name" : "InstVarRefLocator",
+	"type" : "normal"
+}

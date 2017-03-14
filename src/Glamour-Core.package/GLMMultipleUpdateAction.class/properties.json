@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/7/2011 07:31",
-	"instvars" : [
-		 ],
-	"name" : "GLMMultipleUpdateAction",
-	"pools" : [
-		 ],
 	"super" : "GLMUpdateAction",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMMultipleUpdateAction",
+	"type" : "normal"
+}

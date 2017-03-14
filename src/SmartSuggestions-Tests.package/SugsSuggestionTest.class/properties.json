@@ -1,14 +1,13 @@
 {
-	"category" : "SmartSuggestions-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:42",
-	"instvars" : [
-		"emptyClass" ],
-	"name" : "SugsSuggestionTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"emptyClass"
+	],
+	"name" : "SugsSuggestionTest",
+	"type" : "normal"
+}

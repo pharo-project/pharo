@@ -1,16 +1,15 @@
 {
-	"category" : "NautilusCommon-Plugin",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractPackageSelectedPlugin",
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tasks",
 		"index",
-		"panel" ],
+		"panel"
+	],
 	"name" : "PackageTasksPlugin",
-	"pools" : [
-		 ],
-	"super" : "AbstractPackageSelectedPlugin",
-	"type" : "normal" }
+	"type" : "normal"
+}

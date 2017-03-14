@@ -1,15 +1,14 @@
 {
-	"category" : "FileSystem-Memory",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "MemoryFileSystemEntry",
+	"category" : "FileSystem-Memory",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"bytes",
-		"size" ],
+		"size"
+	],
 	"name" : "MemoryFileSystemFile",
-	"pools" : [
-		 ],
-	"super" : "MemoryFileSystemEntry",
-	"type" : "normal" }
+	"type" : "normal"
+}

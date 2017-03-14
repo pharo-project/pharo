@@ -1,10 +1,10 @@
 {
-	"category" : "Versionner-Spec-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"allVersionsCheckBox",
 		"configuration",
@@ -18,9 +18,8 @@
 		"versionDescription",
 		"versionList",
 		"versionsLabel",
-		"versionDescriptionLabel" ],
+		"versionDescriptionLabel"
+	],
 	"name" : "VersionnerProjectBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

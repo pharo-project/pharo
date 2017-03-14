@@ -1,14 +1,13 @@
 {
-	"category" : "AST-Core-Pattern",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 8/9/2005 14:56",
-	"instvars" : [
-		"valueBlock" ],
-	"name" : "RBPatternBlockNode",
-	"pools" : [
-		 ],
 	"super" : "RBBlockNode",
-	"type" : "normal" }
+	"category" : "AST-Core-Pattern",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"valueBlock"
+	],
+	"name" : "RBPatternBlockNode",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-DependencyAnalyser-Test-Data",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "DASomeClass",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-Test-Data",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DASomeClass",
+	"type" : "normal"
+}

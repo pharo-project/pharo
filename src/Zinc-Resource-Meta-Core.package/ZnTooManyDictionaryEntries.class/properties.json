@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-Resource-Meta-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 1/2/2012 19:22",
-	"instvars" : [
-		"limit" ],
-	"name" : "ZnTooManyDictionaryEntries",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Zinc-Resource-Meta-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"limit"
+	],
+	"name" : "ZnTooManyDictionaryEntries",
+	"type" : "normal"
+}

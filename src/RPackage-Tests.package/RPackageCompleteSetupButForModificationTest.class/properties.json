@@ -1,10 +1,10 @@
 {
-	"category" : "RPackage-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:59",
+	"super" : "RPackageIncrementalTest",
+	"category" : "RPackage-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"p1",
 		"p2",
@@ -13,9 +13,8 @@
 		"b1",
 		"a2",
 		"a3",
-		"b2" ],
+		"b2"
+	],
 	"name" : "RPackageCompleteSetupButForModificationTest",
-	"pools" : [
-		 ],
-	"super" : "RPackageIncrementalTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

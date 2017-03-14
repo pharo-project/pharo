@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 2/4/2011 20:41",
+	"super" : "GLMFormatedPresentation",
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"searchBlock",
 		"filterBlock",
@@ -19,9 +19,8 @@
 		"allowDropOnItemBlock",
 		"allowItemDragBlock",
 		"transformDraggedItemBlock",
-		"allowsRecursiveSearch" ],
+		"allowsRecursiveSearch"
+	],
 	"name" : "GLMListingPresentation",
-	"pools" : [
-		 ],
-	"super" : "GLMFormatedPresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

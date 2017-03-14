@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/20/2014 10:08",
-	"instvars" : [
-		 ],
-	"name" : "GLMExamplesBrowser",
-	"pools" : [
-		 ],
 	"super" : "GLMCompositePresentation",
-	"type" : "normal" }
+	"category" : "Glamour-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMExamplesBrowser",
+	"type" : "normal"
+}

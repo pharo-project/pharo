@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Base-Menus",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"SubMenuMarker" ],
 	"commentStamp" : "StephaneDucasse 4/22/2012 16:43",
+	"super" : "StringMorph",
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"SubMenuMarker"
+	],
 	"instvars" : [
 		"isEnabled",
 		"subMenu",
@@ -12,9 +14,8 @@
 		"target",
 		"selector",
 		"arguments",
-		"icon" ],
+		"icon"
+	],
 	"name" : "MenuItemMorph",
-	"pools" : [
-		 ],
-	"super" : "StringMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

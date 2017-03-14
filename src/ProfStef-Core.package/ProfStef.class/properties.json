@@ -1,15 +1,16 @@
 {
-	"category" : "ProfStef-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Instance" ],
 	"commentStamp" : "StephaneDucasse 7/28/2015 17:20",
+	"super" : "Model",
+	"category" : "ProfStef-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Instance"
+	],
 	"instvars" : [
 		"lessonView",
-		"player" ],
+		"player"
+	],
 	"name" : "ProfStef",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

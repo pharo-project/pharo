@@ -1,10 +1,10 @@
 {
-	"category" : "FontChooser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 1/1/2010 18:00",
+	"super" : "Model",
+	"category" : "FontChooser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"title",
 		"selectedFontIndex",
@@ -19,9 +19,8 @@
 		"weightValue",
 		"slantValue",
 		"stretchValue",
-		"pointSizeList" ],
+		"pointSizeList"
+	],
 	"name" : "FontChooser",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

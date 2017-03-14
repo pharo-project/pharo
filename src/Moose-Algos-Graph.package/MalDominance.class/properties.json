@@ -1,14 +1,11 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MalDominance",
-	"pools" : [
-		 ],
 	"super" : "MalGraphAlgorithm",
-	"type" : "normal" }
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MalDominance",
+	"type" : "normal"
+}

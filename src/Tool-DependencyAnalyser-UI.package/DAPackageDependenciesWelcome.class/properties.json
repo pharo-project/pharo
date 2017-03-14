@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 7/21/2014 11:03",
+	"super" : "ComposableModel",
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"packageLabel",
 		"packageChosenLabel",
@@ -15,9 +15,8 @@
 		"buttonRemovePackage",
 		"buttonAddAll",
 		"buttonRemoveAll",
-		"textPackageField" ],
+		"textPackageField"
+	],
 	"name" : "DAPackageDependenciesWelcome",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

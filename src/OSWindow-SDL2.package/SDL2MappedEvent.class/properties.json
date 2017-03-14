@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:43",
-	"instvars" : [
-		 ],
-	"name" : "SDL2MappedEvent",
-	"pools" : [
-		 ],
 	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SDL2MappedEvent",
+	"type" : "normal"
+}

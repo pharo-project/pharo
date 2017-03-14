@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "GLMBoundPort",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pane",
-		"value" ],
+		"value"
+	],
 	"name" : "GLMPanePort",
-	"pools" : [
-		 ],
-	"super" : "GLMBoundPort",
-	"type" : "normal" }
+	"type" : "normal"
+}

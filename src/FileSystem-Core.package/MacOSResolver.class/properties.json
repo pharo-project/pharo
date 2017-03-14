@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Core-Implementation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cwp 11/18/2009 11:57",
-	"instvars" : [
-		 ],
-	"name" : "MacOSResolver",
-	"pools" : [
-		 ],
 	"super" : "PlatformResolver",
-	"type" : "normal" }
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MacOSResolver",
+	"type" : "normal"
+}

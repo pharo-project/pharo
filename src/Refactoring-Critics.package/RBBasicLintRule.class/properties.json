@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Critics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"result" ],
-	"name" : "RBBasicLintRule",
-	"pools" : [
-		 ],
 	"super" : "RBLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"result"
+	],
+	"name" : "RBBasicLintRule",
+	"type" : "normal"
+}

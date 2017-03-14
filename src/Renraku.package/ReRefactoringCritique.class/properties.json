@@ -1,15 +1,14 @@
 {
-	"category" : "Renraku-Critiques",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/10/2016 15:43",
+	"super" : "ReAbstractCritique",
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"refactoring",
-		"alreadyExecuted" ],
+		"alreadyExecuted"
+	],
 	"name" : "ReRefactoringCritique",
-	"pools" : [
-		 ],
-	"super" : "ReAbstractCritique",
-	"type" : "normal" }
+	"type" : "normal"
+}

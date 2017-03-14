@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-ParseTreeRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 21:30",
-	"instvars" : [
-		 ],
-	"name" : "RBEqualNotUsedRule",
-	"pools" : [
-		 ],
 	"super" : "RBParseTreeLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-ParseTreeRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBEqualNotUsedRule",
+	"type" : "normal"
+}

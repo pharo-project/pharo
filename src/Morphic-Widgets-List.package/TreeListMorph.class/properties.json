@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-List",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 6/23/2014 16:48",
-	"instvars" : [
-		"font" ],
-	"name" : "TreeListMorph",
-	"pools" : [
-		 ],
 	"super" : "SimpleHierarchicalListMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-List",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"font"
+	],
+	"name" : "TreeListMorph",
+	"type" : "normal"
+}

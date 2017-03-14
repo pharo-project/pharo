@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SeanDeNigris 5/19/2015 13:04",
-	"instvars" : [
-		"position" ],
-	"name" : "TxTextCursor",
-	"pools" : [
-		 ],
 	"super" : "TxBasicTextPosition",
-	"type" : "normal" }
+	"category" : "TxText-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"position"
+	],
+	"name" : "TxTextCursor",
+	"type" : "normal"
+}

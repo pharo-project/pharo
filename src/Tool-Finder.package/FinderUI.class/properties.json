@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MorphTreeModel",
 	"category" : "Tool-Finder",
 	"classinstvars" : [
-		"searchedTextListMaxSize" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"searchedTextListMaxSize"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"finder",
 		"forceSearch",
@@ -12,9 +14,8 @@
 		"sourceTextArea",
 		"useRegExCheckbox",
 		"searchedTextList",
-		"sourceTextModel" ],
+		"sourceTextModel"
+	],
 	"name" : "FinderUI",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

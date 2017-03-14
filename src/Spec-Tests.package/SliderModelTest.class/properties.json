@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Tests-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "SliderModelTest",
-	"pools" : [
-		 ],
 	"super" : "SpecTestCase",
-	"type" : "normal" }
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SliderModelTest",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 21:35",
+	"super" : "RBClassRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"parent",
-		"subclasses" ],
+		"subclasses"
+	],
 	"name" : "RBChildrenToSiblingsRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBClassRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

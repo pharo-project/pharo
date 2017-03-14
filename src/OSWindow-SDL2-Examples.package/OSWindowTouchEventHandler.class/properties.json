@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 8/24/2015 17:49",
-	"instvars" : [
-		"touchExample" ],
-	"name" : "OSWindowTouchEventHandler",
-	"pools" : [
-		 ],
 	"super" : "OSWindowEventVisitor",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Examples-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"touchExample"
+	],
+	"name" : "OSWindowTouchEventHandler",
+	"type" : "normal"
+}

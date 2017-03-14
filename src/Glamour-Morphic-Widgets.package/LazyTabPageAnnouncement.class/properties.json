@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Announcement",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"page",
 		"tabs",
-		"pageIndex" ],
+		"pageIndex"
+	],
 	"name" : "LazyTabPageAnnouncement",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

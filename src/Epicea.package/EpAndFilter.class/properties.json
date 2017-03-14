@@ -1,14 +1,13 @@
 {
-	"category" : "Epicea-Filters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LucasGodoy 10/10/2014 17:18",
-	"instvars" : [
-		"subFilters" ],
-	"name" : "EpAndFilter",
-	"pools" : [
-		 ],
 	"super" : "EpFilter",
-	"type" : "normal" }
+	"category" : "Epicea-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"subFilters"
+	],
+	"name" : "EpAndFilter",
+	"type" : "normal"
+}

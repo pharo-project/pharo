@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "InvalidGlobalName",
-	"pools" : [
-		 ],
 	"super" : "ClassBuilderWarning",
-	"type" : "normal" }
+	"category" : "Slot-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "InvalidGlobalName",
+	"type" : "normal"
+}

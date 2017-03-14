@@ -1,16 +1,15 @@
 {
-	"category" : "GT-Spotter-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMBrick",
+	"category" : "GT-Spotter-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"headerBrick",
 		"dropDownBrick",
-		"spotterModel" ],
+		"spotterModel"
+	],
 	"name" : "GTSpotterContentsBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

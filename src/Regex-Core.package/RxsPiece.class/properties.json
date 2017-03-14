@@ -1,16 +1,15 @@
 {
-	"category" : "Regex-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RxsNode",
+	"category" : "Regex-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"atom",
 		"min",
-		"max" ],
+		"max"
+	],
 	"name" : "RxsPiece",
-	"pools" : [
-		 ],
-	"super" : "RxsNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

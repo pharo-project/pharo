@@ -1,10 +1,10 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ParseNode",
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selectorOrFalse",
 		"precedence",
@@ -16,9 +16,8 @@
 		"properties",
 		"sourceText",
 		"locationCounter",
-		"localsPool" ],
+		"localsPool"
+	],
 	"name" : "MethodNode",
-	"pools" : [
-		 ],
-	"super" : "ParseNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

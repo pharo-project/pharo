@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "TorstenBergmann 2/5/2014 13:56",
+	"super" : "Object",
 	"category" : "MonticelloRemoteRepositories",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 13:56",
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"registry" ],
+		"registry"
+	],
 	"name" : "MCServerRegistry",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

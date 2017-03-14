@@ -1,15 +1,14 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RubScrolledTextExtraSurface",
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ghostText",
-		"textColor" ],
+		"textColor"
+	],
 	"name" : "RubGhostTextDisplayer",
-	"pools" : [
-		 ],
-	"super" : "RubScrolledTextExtraSurface",
-	"type" : "normal" }
+	"type" : "normal"
+}

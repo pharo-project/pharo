@@ -1,14 +1,13 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:08",
-	"instvars" : [
-		"value" ],
-	"name" : "RGGlobalVariableDefinition",
-	"pools" : [
-		 ],
 	"super" : "RGGlobalDefinition",
-	"type" : "normal" }
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"value"
+	],
+	"name" : "RGGlobalVariableDefinition",
+	"type" : "normal"
+}

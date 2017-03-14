@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Tests-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/28/2016 11:15",
-	"instvars" : [
-		"list" ],
-	"name" : "TestingComposableModel",
-	"pools" : [
-		 ],
 	"super" : "ComposableModel",
-	"type" : "normal" }
+	"category" : "Spec-Tests-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"list"
+	],
+	"name" : "TestingComposableModel",
+	"type" : "normal"
+}

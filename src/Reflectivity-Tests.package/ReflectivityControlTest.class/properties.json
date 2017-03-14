@@ -1,15 +1,14 @@
 {
-	"category" : "Reflectivity-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 3/1/2015 18:23",
+	"super" : "TestCase",
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tag",
-		"link" ],
+		"link"
+	],
 	"name" : "ReflectivityControlTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

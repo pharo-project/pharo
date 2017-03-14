@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Helpers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 12/19/2009 00:16",
-	"instvars" : [
-		 ],
-	"name" : "GLMMultiValue",
-	"pools" : [
-		 ],
 	"super" : "OrderedCollection",
-	"type" : "variable" }
+	"category" : "Glamour-Helpers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMMultiValue",
+	"type" : "variable"
+}

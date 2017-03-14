@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-TransformationRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/15/2015 15:34",
-	"instvars" : [
-		 ],
-	"name" : "RBRuleIfNotEmptyDo",
-	"pools" : [
-		 ],
 	"super" : "RBTransformationRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBRuleIfNotEmptyDo",
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "Monticello-Merging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "MCMerger",
+	"category" : "Monticello-Merging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"index",
 		"operations",
 		"provisions",
-		"redundantAdds" ],
+		"redundantAdds"
+	],
 	"name" : "MCThreeWayMerger",
-	"pools" : [
-		 ],
-	"super" : "MCMerger",
-	"type" : "normal" }
+	"type" : "normal"
+}

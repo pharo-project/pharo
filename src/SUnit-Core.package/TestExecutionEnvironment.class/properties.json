@@ -1,10 +1,10 @@
 {
-	"category" : "SUnit-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 8/30/2016 17:01",
+	"super" : "ExecutionEnvironment",
+	"category" : "SUnit-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"watchDogProcess",
 		"watchDogSemaphore",
@@ -12,9 +12,8 @@
 		"maxTimeForTest",
 		"forkedProcesses",
 		"failedProcesses",
-		"testCompleted" ],
+		"testCompleted"
+	],
 	"name" : "TestExecutionEnvironment",
-	"pools" : [
-		 ],
-	"super" : "ExecutionEnvironment",
-	"type" : "normal" }
+	"type" : "normal"
+}

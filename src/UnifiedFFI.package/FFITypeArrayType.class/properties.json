@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI-Types",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FFITypeArrayType",
-	"pools" : [
-		 ],
 	"super" : "FFIExternalArrayType",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFITypeArrayType",
+	"type" : "normal"
+}

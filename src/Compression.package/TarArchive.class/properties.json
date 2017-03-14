@@ -1,14 +1,11 @@
 {
-	"category" : "Compression-Archives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TarArchive",
-	"pools" : [
-		 ],
 	"super" : "Archive",
-	"type" : "normal" }
+	"category" : "Compression-Archives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TarArchive",
+	"type" : "normal"
+}

@@ -1,10 +1,12 @@
 {
-	"category" : "System-SessionManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "ChristopheDemarey 10/2/2015 15:21",
+	"super" : "Object",
+	"category" : "System-SessionManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
 	"instvars" : [
 		"currentSession",
 		"categories",
@@ -12,9 +14,8 @@
 		"toolsCategory",
 		"networkCategory",
 		"systemCategory",
-		"userCategory" ],
+		"userCategory"
+	],
 	"name" : "SessionManager",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

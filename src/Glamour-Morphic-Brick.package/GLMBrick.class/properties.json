@@ -1,17 +1,16 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Core",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "GLMBrickPropertiesTrait classTrait + GLMBrickLayoutTrait classTrait + GLMBrickStructureTrait classTrait + GLMBrickGeometryTrait classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AliakseiSyrel 3/22/2015 11:34",
+	"classvars" : [ ],
 	"instvars" : [
 		"brickBounds",
-		"brickApi" ],
+		"brickApi"
+	],
 	"name" : "GLMBrick",
-	"pools" : [
-		 ],
+	"commentStamp" : "AliakseiSyrel 3/22/2015 11:34",
 	"super" : "GLMBrickedMorph",
 	"traitcomposition" : "GLMBrickPropertiesTrait + GLMBrickLayoutTrait + GLMBrickStructureTrait + (GLMBrickGeometryTrait - {#privateBounds:})",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-Morphic-Brick-Widgets-Core"
+}

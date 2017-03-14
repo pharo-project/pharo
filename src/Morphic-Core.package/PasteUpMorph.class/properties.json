@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "BorderedMorph",
 	"category" : "Morphic-Core-Worlds",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ShouldSwapMenuOpenerButtons",
 		"WindowEventHandler",
-		"WorldAnnouncer" ],
-	"commentStamp" : "<historical>",
+		"WorldAnnouncer"
+	],
 	"instvars" : [
 		"backgroundMorph",
 		"worldState",
-		"griddingOn" ],
+		"griddingOn"
+	],
 	"name" : "PasteUpMorph",
-	"pools" : [
-		 ],
-	"super" : "BorderedMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

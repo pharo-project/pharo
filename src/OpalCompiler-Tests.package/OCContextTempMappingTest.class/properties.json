@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Tests-FromOld",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 4/10/2015 10:50",
-	"instvars" : [
-		 ],
-	"name" : "OCContextTempMappingTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCContextTempMappingTest",
+	"type" : "normal"
+}

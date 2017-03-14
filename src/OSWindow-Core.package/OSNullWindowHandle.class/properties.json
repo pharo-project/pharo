@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 16:41",
-	"instvars" : [
-		"attributes" ],
-	"name" : "OSNullWindowHandle",
-	"pools" : [
-		 ],
 	"super" : "OSWindowHandle",
-	"type" : "normal" }
+	"category" : "OSWindow-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"attributes"
+	],
+	"name" : "OSNullWindowHandle",
+	"type" : "normal"
+}

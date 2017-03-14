@@ -1,15 +1,14 @@
 {
-	"category" : "Traits-Composition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Traits-Composition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
-		"locatedMethods" ],
+		"locatedMethods"
+	],
 	"name" : "TraitMethodDescription",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,7 +1,11 @@
 {
+	"commentStamp" : "EstebanLorenzano 6/3/2016 17:10",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"SDL2Types"
+	],
 	"classvars" : [
 		"OFFSET_FLAGS",
 		"OFFSET_MAX_TEXTURE_HEIGHT",
@@ -9,12 +13,9 @@
 		"OFFSET_NAME",
 		"OFFSET_NUM_TEXTURE_FORMATS",
 		"OFFSET_TEXTURE_FORMATS",
-		"Uint32_16" ],
-	"commentStamp" : "EstebanLorenzano 6/3/2016 17:10",
-	"instvars" : [
-		 ],
+		"Uint32_16"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_RendererInfo",
-	"pools" : [
-		"SDL2Types" ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Gesture",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 4/6/2015 18:28",
+	"super" : "SDL2TouchExample",
+	"category" : "OSWindow-SDL2-Examples-Gesture",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"circleCenter",
-		"circleSize" ],
+		"circleSize"
+	],
 	"name" : "SDL2TouchGestureExample",
-	"pools" : [
-		 ],
-	"super" : "SDL2TouchExample",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MethodRecompileStrategy",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodUpdateStrategy",
-	"type" : "normal" }
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodRecompileStrategy",
+	"type" : "normal"
+}

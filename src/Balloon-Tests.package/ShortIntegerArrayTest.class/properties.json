@@ -1,14 +1,13 @@
 {
-	"category" : "Balloon-Tests-Collections",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 3/25/2011 15:07",
-	"instvars" : [
-		"shortIntegerArray" ],
-	"name" : "ShortIntegerArrayTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Balloon-Tests-Collections",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"shortIntegerArray"
+	],
+	"name" : "ShortIntegerArrayTest",
+	"type" : "normal"
+}

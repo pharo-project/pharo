@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "GuillermoPolito 3/4/2015 16:01",
+	"super" : "Object",
 	"category" : "System-CommandLine",
 	"classinstvars" : [
 		"stdoutTerminalInstance",
-		"stderrTerminalInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "GuillermoPolito 3/4/2015 16:01",
+		"stderrTerminalInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"termcap",
 		"outStream",
 		"currentBackground",
 		"currentColor",
 		"light",
-		"blink" ],
+		"blink"
+	],
 	"name" : "VTermOutputDriver",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

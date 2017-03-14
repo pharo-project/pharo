@@ -1,10 +1,12 @@
 {
-	"category" : "Tool-Workspace",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"LastContents" ],
 	"commentStamp" : "StephaneDucasse 6/20/2015 10:09",
+	"super" : "Model",
+	"category" : "Tool-Workspace",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"LastContents"
+	],
 	"instvars" : [
 		"textModel",
 		"bindings",
@@ -12,9 +14,8 @@
 		"fileName",
 		"lineEnding",
 		"encoding",
-		"textView" ],
+		"textView"
+	],
 	"name" : "Workspace",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

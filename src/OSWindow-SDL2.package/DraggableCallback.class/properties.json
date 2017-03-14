@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Matthieu 5/28/2015 14:52",
-	"instvars" : [
-		 ],
-	"name" : "DraggableCallback",
-	"pools" : [
-		"SDL2Constants" ],
 	"super" : "FFICallback",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [ ],
+	"pools" : [
+		"SDL2Constants"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DraggableCallback",
+	"type" : "normal"
+}

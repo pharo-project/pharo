@@ -1,14 +1,11 @@
 {
-	"category" : "EpiceaTests-Integration",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "EpAnnouncementsTest",
-	"pools" : [
-		 ],
 	"super" : "EpMonitorIntegrationTest",
-	"type" : "normal" }
+	"category" : "EpiceaTests-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpAnnouncementsTest",
+	"type" : "normal"
+}

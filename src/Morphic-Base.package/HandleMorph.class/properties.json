@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Base-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "EllipseMorph",
+	"category" : "Morphic-Base-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pointBlock",
-		"lastPointBlock" ],
+		"lastPointBlock"
+	],
 	"name" : "HandleMorph",
-	"pools" : [
-		 ],
-	"super" : "EllipseMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

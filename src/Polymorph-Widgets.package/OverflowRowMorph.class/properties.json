@@ -1,16 +1,15 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 1/12/2010 13:32",
+	"super" : "PanelMorph",
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"baseMorphs",
 		"moreButton",
-		"moreMorph" ],
+		"moreMorph"
+	],
 	"name" : "OverflowRowMorph",
-	"pools" : [
-		 ],
-	"super" : "PanelMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

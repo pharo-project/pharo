@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloLookupBaselineSpecForEnsureLoad",
-	"pools" : [
-		 ],
 	"super" : "MetacelloScriptProjectSpecNotification",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloLookupBaselineSpecForEnsureLoad",
+	"type" : "normal"
+}

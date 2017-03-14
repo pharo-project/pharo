@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "ExpanderMorphExpanded",
-	"pools" : [
-		 ],
 	"super" : "ExpanderMorphAnnouncement",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ExpanderMorphExpanded",
+	"type" : "normal"
+}

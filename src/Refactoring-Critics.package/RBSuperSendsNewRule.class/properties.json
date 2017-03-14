@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 20:22",
-	"instvars" : [
-		"matcher" ],
-	"name" : "RBSuperSendsNewRule",
-	"pools" : [
-		 ],
 	"super" : "RBBlockLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"matcher"
+	],
+	"name" : "RBSuperSendsNewRule",
+	"type" : "normal"
+}

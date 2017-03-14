@@ -1,14 +1,11 @@
 {
-	"category" : "TxText-Athens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TxTabDisplayCommand",
-	"pools" : [
-		 ],
 	"super" : "TxCharacterSpanDisplayCommand",
-	"type" : "normal" }
+	"category" : "TxText-Athens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxTabDisplayCommand",
+	"type" : "normal"
+}

@@ -1,4 +1,5 @@
 {
-	"category" : "Glamour-FastTable-Model",
+	"name" : "TGLMFastTable",
 	"commentStamp" : "CyrilFerlicot 11/10/2015 11:45",
-	"name" : "TGLMFastTable" }
+	"category" : "Glamour-FastTable-Model"
+}

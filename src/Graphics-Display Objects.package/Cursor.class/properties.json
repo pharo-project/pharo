@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Form",
 	"category" : "Graphics-Display Objects",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BlankCursor",
 		"BottomLeftCursor",
@@ -30,12 +32,9 @@
 		"WaitCursor",
 		"WebLinkCursor",
 		"WriteCursor",
-		"XeqCursor" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"XeqCursor"
+	],
+	"instvars" : [ ],
 	"name" : "Cursor",
-	"pools" : [
-		 ],
-	"super" : "Form",
-	"type" : "normal" }
+	"type" : "normal"
+}

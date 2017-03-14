@@ -1,18 +1,17 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 3/19/2015 15:22",
+	"super" : "GLMInteractableBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"labelBrick",
 		"editBrick",
 		"borderAnimation",
 		"cancelOnEscape",
-		"cancelOnFocusLost" ],
+		"cancelOnFocusLost"
+	],
 	"name" : "GLMEditableLabelBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

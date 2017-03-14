@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI-Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 5/4/2016 13:37",
-	"instvars" : [
-		 ],
-	"name" : "FFIExternalPackedStructure",
-	"pools" : [
-		 ],
 	"super" : "FFIExternalStructure",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFIExternalPackedStructure",
+	"type" : "normal"
+}

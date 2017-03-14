@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Tests-FromOld",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "OCArrayLiteralTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCArrayLiteralTest",
+	"type" : "normal"
+}

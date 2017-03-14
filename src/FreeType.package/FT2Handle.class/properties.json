@@ -1,16 +1,19 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "FreeType-Base",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"FT2Constants"
+	],
 	"classvars" : [
 		"DestroyMutex",
 		"Registry",
-		"Session" ],
-	"commentStamp" : "<historical>",
+		"Session"
+	],
 	"instvars" : [
-		"handle" ],
+		"handle"
+	],
 	"name" : "FT2Handle",
-	"pools" : [
-		"FT2Constants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "SUnit-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "TestCase",
+	"category" : "SUnit-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"hasRun",
 		"hasSetup",
-		"hasRanOnce" ],
+		"hasRanOnce"
+	],
 	"name" : "SUnitTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

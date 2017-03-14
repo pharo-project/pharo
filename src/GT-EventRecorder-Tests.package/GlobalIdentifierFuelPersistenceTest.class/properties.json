@@ -1,14 +1,11 @@
 {
-	"category" : "GT-EventRecorder-Tests-Identifier",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GlobalIdentifierFuelPersistenceTest",
-	"pools" : [
-		 ],
 	"super" : "GlobalIdentifierPersistenceTest",
-	"type" : "normal" }
+	"category" : "GT-EventRecorder-Tests-Identifier",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlobalIdentifierFuelPersistenceTest",
+	"type" : "normal"
+}

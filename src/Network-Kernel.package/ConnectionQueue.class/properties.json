@@ -1,19 +1,18 @@
 {
-	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Network-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"portNumber",
 		"maxQueueLength",
 		"connections",
 		"accessSema",
 		"socket",
-		"process" ],
+		"process"
+	],
 	"name" : "ConnectionQueue",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

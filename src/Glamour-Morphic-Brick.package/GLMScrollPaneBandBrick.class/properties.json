@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Scrollpane",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 2/18/2015 14:01",
+	"super" : "GLMBandBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-Scrollpane",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"asyncTask",
 		"scrollpane",
-		"shouldLayoutMorphs" ],
+		"shouldLayoutMorphs"
+	],
 	"name" : "GLMScrollPaneBandBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMBandBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

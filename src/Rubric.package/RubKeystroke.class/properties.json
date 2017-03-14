@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 11:03",
-	"instvars" : [
-		"event" ],
-	"name" : "RubKeystroke",
-	"pools" : [
-		 ],
 	"super" : "RubMorphAnnouncement",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"event"
+	],
+	"name" : "RubKeystroke",
+	"type" : "normal"
+}

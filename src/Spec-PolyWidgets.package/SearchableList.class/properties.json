@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-ListAndTree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"listModel",
-		"searchModel" ],
+		"searchModel"
+	],
 	"name" : "SearchableList",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

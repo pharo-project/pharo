@@ -1,19 +1,18 @@
 {
-	"category" : "Athens-Core-Matrices",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AthensTransform",
+	"category" : "Athens-Core-Matrices",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"sx",
 		"shx",
 		"x",
 		"shy",
 		"sy",
-		"y" ],
+		"y"
+	],
 	"name" : "AthensAffineTransform",
-	"pools" : [
-		 ],
-	"super" : "AthensTransform",
-	"type" : "normal" }
+	"type" : "normal"
+}

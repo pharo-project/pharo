@@ -1,10 +1,10 @@
 {
-	"category" : "GT-Tests-Spotter-Scripting",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "GT-Tests-Spotter-Scripting",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"spotter",
 		"currentStep",
@@ -12,9 +12,8 @@
 		"currentProcessor",
 		"currentCandidate",
 		"currentContext",
-		"previousContext" ],
+		"previousContext"
+	],
 	"name" : "GTSpotterStepTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

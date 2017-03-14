@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ZnServer",
 	"category" : "Zinc-HTTP-Client-Server",
 	"classinstvars" : [
-		"Default" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"Default"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"process",
 		"serverSocket",
-		"logLevel" ],
+		"logLevel"
+	],
 	"name" : "ZnSingleThreadedServer",
-	"pools" : [
-		 ],
-	"super" : "ZnServer",
-	"type" : "normal" }
+	"type" : "normal"
+}

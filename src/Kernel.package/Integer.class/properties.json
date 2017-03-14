@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Numbers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Integer",
-	"pools" : [
-		 ],
 	"super" : "Number",
-	"type" : "normal" }
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Integer",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Encoders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "OpalEncoder",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Encoders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OpalEncoder",
+	"type" : "normal"
+}

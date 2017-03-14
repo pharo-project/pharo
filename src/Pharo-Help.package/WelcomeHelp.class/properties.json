@@ -1,14 +1,11 @@
 {
-	"category" : "Pharo-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "WelcomeHelp",
-	"pools" : [
-		 ],
 	"super" : "CustomHelp",
-	"type" : "normal" }
+	"category" : "Pharo-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WelcomeHelp",
+	"type" : "normal"
+}

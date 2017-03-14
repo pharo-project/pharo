@@ -1,14 +1,11 @@
 {
-	"category" : "STON-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "STONMapWriter",
-	"pools" : [
-		 ],
 	"super" : "STONStreamWriter",
-	"type" : "normal" }
+	"category" : "STON-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "STONMapWriter",
+	"type" : "normal"
+}

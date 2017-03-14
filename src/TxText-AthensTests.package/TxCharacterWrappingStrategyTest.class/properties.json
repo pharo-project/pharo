@@ -1,14 +1,11 @@
 {
-	"category" : "TxText-AthensTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TxCharacterWrappingStrategyTest",
-	"pools" : [
-		 ],
 	"super" : "TxLayoutStrategyTest",
-	"type" : "normal" }
+	"category" : "TxText-AthensTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxCharacterWrappingStrategyTest",
+	"type" : "normal"
+}

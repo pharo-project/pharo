@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Base-Text Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "StringMorphEditor",
-	"pools" : [
-		 ],
 	"super" : "TextMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "StringMorphEditor",
+	"type" : "normal"
+}

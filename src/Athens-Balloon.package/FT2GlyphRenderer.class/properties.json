@@ -1,10 +1,12 @@
 {
-	"category" : "Athens-Balloon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "GlyphRenderer",
+	"category" : "Athens-Balloon",
+	"classinstvars" : [ ],
+	"pools" : [
+		"FT2Constants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"pixelSize",
 		"form",
@@ -21,9 +23,8 @@
 		"descend",
 		"origin",
 		"currentColor",
-		"hAdvance" ],
+		"hAdvance"
+	],
 	"name" : "FT2GlyphRenderer",
-	"pools" : [
-		"FT2Constants" ],
-	"super" : "GlyphRenderer",
-	"type" : "normal" }
+	"type" : "normal"
+}

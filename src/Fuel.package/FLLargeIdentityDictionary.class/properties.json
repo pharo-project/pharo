@@ -1,15 +1,14 @@
 {
-	"category" : "Fuel-Collections",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FLLargeIdentityHashedCollection",
+	"category" : "Fuel-Collections",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keys",
-		"values" ],
+		"values"
+	],
 	"name" : "FLLargeIdentityDictionary",
-	"pools" : [
-		 ],
-	"super" : "FLLargeIdentityHashedCollection",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:20",
-	"instvars" : [
-		 ],
-	"name" : "AthensTextRenderTest",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensTextRenderTest",
+	"type" : "normal"
+}

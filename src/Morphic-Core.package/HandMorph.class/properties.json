@@ -1,7 +1,11 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Morph",
 	"category" : "Morphic-Core-Kernel",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"EventSensorConstants"
+	],
 	"classvars" : [
 		"DoubleClickTime",
 		"EventSource",
@@ -9,8 +13,8 @@
 		"NormalCursor",
 		"PasteBuffer",
 		"ShowEvents",
-		"UpperHandLimit" ],
-	"commentStamp" : "<historical>",
+		"UpperHandLimit"
+	],
 	"instvars" : [
 		"mouseFocus",
 		"keyboardFocus",
@@ -35,9 +39,8 @@
 		"eventSource",
 		"lastSystemEvent",
 		"captureBlock",
-		"recentModifiers" ],
+		"recentModifiers"
+	],
 	"name" : "HandMorph",
-	"pools" : [
-		"EventSensorConstants" ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

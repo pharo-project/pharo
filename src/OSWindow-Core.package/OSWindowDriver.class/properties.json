@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 16:33",
+	"super" : "Object",
 	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Current",
-		"Session" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 16:33",
-	"instvars" : [
-		 ],
+		"Session"
+	],
+	"instvars" : [ ],
 	"name" : "OSWindowDriver",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

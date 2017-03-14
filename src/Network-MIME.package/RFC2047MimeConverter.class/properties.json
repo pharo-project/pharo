@@ -1,14 +1,11 @@
 {
-	"category" : "Network-MIME",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "RFC2047MimeConverter",
-	"pools" : [
-		 ],
 	"super" : "QuotedPrintableMimeConverter",
-	"type" : "normal" }
+	"category" : "Network-MIME",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RFC2047MimeConverter",
+	"type" : "normal"
+}

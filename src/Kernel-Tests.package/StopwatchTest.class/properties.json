@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Tests-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:45",
+	"super" : "ClassTestCase",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"aStopwatch",
-		"aDelay" ],
+		"aDelay"
+	],
 	"name" : "StopwatchTest",
-	"pools" : [
-		 ],
-	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

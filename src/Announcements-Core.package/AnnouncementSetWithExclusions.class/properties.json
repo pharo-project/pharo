@@ -1,14 +1,13 @@
 {
-	"category" : "Announcements-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 8/4/2016 15:17",
-	"instvars" : [
-		"exclusions" ],
-	"name" : "AnnouncementSetWithExclusions",
-	"pools" : [
-		 ],
 	"super" : "AnnouncementSet",
-	"type" : "normal" }
+	"category" : "Announcements-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"exclusions"
+	],
+	"name" : "AnnouncementSetWithExclusions",
+	"type" : "normal"
+}

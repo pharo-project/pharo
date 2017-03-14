@@ -1,17 +1,16 @@
 {
-	"category" : "Zodiac-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 5/18/2011 11:50",
+	"super" : "ZdcOptimizedSocketStream",
+	"category" : "Zodiac-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"sslSession",
 		"in",
 		"out",
-		"connecting" ],
+		"connecting"
+	],
 	"name" : "ZdcSecureSocketStream",
-	"pools" : [
-		 ],
-	"super" : "ZdcOptimizedSocketStream",
-	"type" : "normal" }
+	"type" : "normal"
+}

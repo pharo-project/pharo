@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 5/12/2003 18:12",
-	"instvars" : [
-		 ],
-	"name" : "NetworkError",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Network-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NetworkError",
+	"type" : "normal"
+}

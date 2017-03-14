@@ -1,14 +1,13 @@
 {
-	"category" : "Komitter-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"silent" ],
-	"name" : "KomitNode",
-	"pools" : [
-		 ],
 	"super" : "TreeNodeModel",
-	"type" : "normal" }
+	"category" : "Komitter-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"silent"
+	],
+	"name" : "KomitNode",
+	"type" : "normal"
+}

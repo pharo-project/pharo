@@ -1,14 +1,11 @@
 {
-	"category" : "Alien-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "eem 9/7/2016 18:34",
-	"instvars" : [
-		 ],
-	"name" : "VMCallbackContext64",
-	"pools" : [
-		 ],
 	"super" : "Alien",
-	"type" : "bytes" }
+	"category" : "Alien-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VMCallbackContext64",
+	"type" : "bytes"
+}

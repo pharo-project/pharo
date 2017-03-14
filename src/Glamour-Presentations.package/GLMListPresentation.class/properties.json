@@ -1,17 +1,16 @@
 {
-	"category" : "Glamour-Presentations",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "GLMTBlockTags classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 10/3/2014 18:28",
+	"classvars" : [ ],
 	"instvars" : [
 		"tagsBlock",
-		"tagsFilterBlock" ],
+		"tagsFilterBlock"
+	],
 	"name" : "GLMListPresentation",
-	"pools" : [
-		 ],
+	"commentStamp" : "AndreiChis 10/3/2014 18:28",
 	"super" : "GLMListingPresentation",
 	"traitcomposition" : "GLMTBlockTags",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-Presentations"
+}

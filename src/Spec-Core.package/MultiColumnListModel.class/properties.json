@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MultiColumnListModel",
-	"pools" : [
-		 ],
 	"super" : "ListModel",
-	"type" : "normal" }
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MultiColumnListModel",
+	"type" : "normal"
+}

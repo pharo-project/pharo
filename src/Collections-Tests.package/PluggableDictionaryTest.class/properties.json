@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:21",
-	"instvars" : [
-		 ],
-	"name" : "PluggableDictionaryTest",
-	"pools" : [
-		 ],
 	"super" : "DictionaryTest",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PluggableDictionaryTest",
+	"type" : "normal"
+}

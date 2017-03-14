@@ -1,19 +1,20 @@
 {
-	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		"sortBlock" ],
 	"classtraitcomposition" : "TSortable classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "StephaneDucasse 10/2/2010 17:42",
+	"classvars" : [ ],
 	"instvars" : [
 		"array",
 		"tally",
 		"sortBlock",
-		"indexUpdateBlock" ],
+		"indexUpdateBlock"
+	],
 	"name" : "Heap",
-	"pools" : [
-		 ],
+	"commentStamp" : "StephaneDucasse 10/2/2010 17:42",
 	"super" : "Collection",
 	"traitcomposition" : "TSortable",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [
+		"sortBlock"
+	],
+	"pools" : [ ],
+	"category" : "Collections-Sequenceable"
+}

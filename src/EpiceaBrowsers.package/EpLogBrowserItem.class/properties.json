@@ -1,14 +1,13 @@
 {
-	"category" : "EpiceaBrowsers-Log-Items",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"browser" ],
-	"name" : "EpLogBrowserItem",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-Log-Items",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"browser"
+	],
+	"name" : "EpLogBrowserItem",
+	"type" : "normal"
+}

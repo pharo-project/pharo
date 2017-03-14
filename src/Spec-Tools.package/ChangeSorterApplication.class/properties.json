@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Tools-ChangeSorter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Spec-Tools-ChangeSorter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
 		"changesListModel",
@@ -14,9 +14,8 @@
 		"prettyPrint",
 		"showDiff",
 		"prettyButton",
-		"diffButton" ],
+		"diffButton"
+	],
 	"name" : "ChangeSorterApplication",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Network-Tests-UUID",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 7/10/2016 13:56",
-	"instvars" : [
-		"generator" ],
-	"name" : "UUIDGeneratorTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Network-Tests-UUID",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"generator"
+	],
+	"name" : "UUIDGeneratorTests",
+	"type" : "normal"
+}

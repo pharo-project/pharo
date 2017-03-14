@@ -1,19 +1,18 @@
 {
-	"category" : "Morphic-Widgets-Scrolling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MorphicModel",
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"slider",
 		"value",
 		"setValueSelector",
 		"sliderShadow",
 		"sliderColor",
-		"descending" ],
+		"descending"
+	],
 	"name" : "Slider",
-	"pools" : [
-		 ],
-	"super" : "MorphicModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/21/2016 23:01",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterSettingsProcessorFilter",
-	"pools" : [
-		 ],
 	"super" : "GTSpotterProcessorFilter",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterSettingsProcessorFilter",
+	"type" : "normal"
+}

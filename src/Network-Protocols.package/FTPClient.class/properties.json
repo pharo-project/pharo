@@ -1,14 +1,13 @@
 {
-	"category" : "Network-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 5/12/2003 17:55",
-	"instvars" : [
-		"dataSocket" ],
-	"name" : "FTPClient",
-	"pools" : [
-		 ],
 	"super" : "TelnetProtocolClient",
-	"type" : "normal" }
+	"category" : "Network-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dataSocket"
+	],
+	"name" : "FTPClient",
+	"type" : "normal"
+}

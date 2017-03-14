@@ -1,15 +1,14 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/8/2016 11:15",
+	"super" : "Object",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"contents",
-		"start" ],
+		"start"
+	],
 	"name" : "RBComment",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

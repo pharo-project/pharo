@@ -1,14 +1,11 @@
 {
-	"category" : "RPackage-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:01",
-	"instvars" : [
-		 ],
-	"name" : "TestRPackagePrequisites",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "RPackage-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TestRPackagePrequisites",
+	"type" : "normal"
+}

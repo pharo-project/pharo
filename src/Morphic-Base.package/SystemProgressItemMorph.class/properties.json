@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Morph",
 	"category" : "Morphic-Base-ProgressBar",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BarHeight",
-		"BarWidth" ],
-	"commentStamp" : "<historical>",
+		"BarWidth"
+	],
 	"instvars" : [
 		"bar",
 		"labelMorph",
@@ -14,9 +16,8 @@
 		"hasResult",
 		"startValue",
 		"endValue",
-		"lastRefresh" ],
+		"lastRefresh"
+	],
 	"name" : "SystemProgressItemMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

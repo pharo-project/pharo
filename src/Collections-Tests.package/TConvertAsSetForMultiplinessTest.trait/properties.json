@@ -1,4 +1,5 @@
 {
-	"category" : "Collections-Tests-Abstract",
+	"name" : "TConvertAsSetForMultiplinessTest",
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:32",
-	"name" : "TConvertAsSetForMultiplinessTest" }
+	"category" : "Collections-Tests-Abstract"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Metacello-MC-Loaders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MetacelloFetchingMCSpecLoader",
+	"category" : "Metacello-MC-Loaders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"afterLoads",
 		"beforeLoads",
-		"evalDoits" ],
+		"evalDoits"
+	],
 	"name" : "MetacelloNullRecordingMCSpecLoader",
-	"pools" : [
-		 ],
-	"super" : "MetacelloFetchingMCSpecLoader",
-	"type" : "normal" }
+	"type" : "normal"
+}

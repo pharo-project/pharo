@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Brick-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 10/17/2014 10:32",
+	"super" : "Morph",
+	"category" : "Glamour-Morphic-Brick-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"brickRoot",
 		"vResizing",
-		"hResizing" ],
+		"hResizing"
+	],
 	"name" : "GLMFoundationBrick",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

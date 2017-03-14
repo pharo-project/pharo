@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"paints" ],
-	"name" : "AthensCompositePaint",
-	"pools" : [
-		 ],
 	"super" : "AthensPaint",
-	"type" : "normal" }
+	"category" : "Athens-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"paints"
+	],
+	"name" : "AthensCompositePaint",
+	"type" : "normal"
+}

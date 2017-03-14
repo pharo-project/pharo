@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Pager-Glamour",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 6/28/2014 21:19",
-	"instvars" : [
-		 ],
-	"name" : "GLMMorphicPagerRenderer",
-	"pools" : [
-		 ],
 	"super" : "GLMMorphicFinderRenderer",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Pager-Glamour",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMMorphicPagerRenderer",
+	"type" : "normal"
+}

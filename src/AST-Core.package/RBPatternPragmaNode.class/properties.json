@@ -1,14 +1,13 @@
 {
-	"category" : "AST-Core-Pattern",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/2/2016 15:01",
-	"instvars" : [
-		"isList" ],
-	"name" : "RBPatternPragmaNode",
-	"pools" : [
-		 ],
 	"super" : "RBPragmaNode",
-	"type" : "normal" }
+	"category" : "AST-Core-Pattern",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"isList"
+	],
+	"name" : "RBPatternPragmaNode",
+	"type" : "normal"
+}

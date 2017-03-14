@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Abstract",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2011 22:22",
+	"super" : "Collection",
+	"category" : "Collections-Abstract",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tally",
-		"array" ],
+		"array"
+	],
 	"name" : "HashedCollection",
-	"pools" : [
-		 ],
-	"super" : "Collection",
-	"type" : "normal" }
+	"type" : "normal"
+}

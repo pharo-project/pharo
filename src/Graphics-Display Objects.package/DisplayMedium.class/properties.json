@@ -1,14 +1,13 @@
 {
-	"category" : "Graphics-Display Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"HighLightBitmaps" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "DisplayMedium",
-	"pools" : [
-		 ],
 	"super" : "DisplayObject",
-	"type" : "normal" }
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"HighLightBitmaps"
+	],
+	"instvars" : [ ],
+	"name" : "DisplayMedium",
+	"type" : "normal"
+}

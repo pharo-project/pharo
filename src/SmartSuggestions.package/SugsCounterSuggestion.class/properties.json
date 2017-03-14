@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Suggestion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 6/21/2016 15:21",
-	"instvars" : [
-		 ],
-	"name" : "SugsCounterSuggestion",
-	"pools" : [
-		 ],
 	"super" : "SugsSuggestion",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsCounterSuggestion",
+	"type" : "normal"
+}

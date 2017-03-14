@@ -1,14 +1,13 @@
 {
-	"category" : "Tests-System-Hashing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"hash" ],
-	"name" : "SHA1Test",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Tests-System-Hashing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hash"
+	],
+	"name" : "SHA1Test",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Tests-Core-DependenciesModel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MTDevelopmentWorkfowTestWithXMLParser",
-	"pools" : [
-		 ],
 	"super" : "MTDevelopmentWorkfowTest",
-	"type" : "normal" }
+	"category" : "Versionner-Tests-Core-DependenciesModel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MTDevelopmentWorkfowTestWithXMLParser",
+	"type" : "normal"
+}

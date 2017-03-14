@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "AlainPlantec 2/15/2011 21:42",
+	"super" : "TextAttribute",
 	"category" : "Text-Edition",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"FindReplaceSelection",
 		"PrimarySelection",
-		"SecondarySelection" ],
-	"commentStamp" : "AlainPlantec 2/15/2011 21:42",
+		"SecondarySelection"
+	],
 	"instvars" : [
-		"colorBlock" ],
+		"colorBlock"
+	],
 	"name" : "TextSelectionColor",
-	"pools" : [
-		 ],
-	"super" : "TextAttribute",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ajh 5/23/2003 11:08",
+	"super" : "Object",
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"sourceNode",
 		"startSequence",
@@ -15,9 +15,8 @@
 		"additionalLiterals",
 		"compiledMethod",
 		"compilationContext",
-		"irPrimitive" ],
+		"irPrimitive"
+	],
 	"name" : "IRMethod",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

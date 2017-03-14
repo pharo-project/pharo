@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/11/2014 10:10",
-	"instvars" : [
-		"scope" ],
-	"name" : "OCASTClosureAnalyzer",
-	"pools" : [
-		 ],
 	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"scope"
+	],
+	"name" : "OCASTClosureAnalyzer",
+	"type" : "normal"
+}

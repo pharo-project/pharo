@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Tests-Bytecode",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"a" ],
-	"name" : "OCBytecodeGeneratorTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-Bytecode",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"a"
+	],
+	"name" : "OCBytecodeGeneratorTest",
+	"type" : "normal"
+}

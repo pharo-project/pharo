@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Cairo",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensCairoPDFSurface",
-	"pools" : [
-		 ],
 	"super" : "AthensCairoSurface",
-	"type" : "normal" }
+	"category" : "Athens-Cairo",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensCairoPDFSurface",
+	"type" : "normal"
+}

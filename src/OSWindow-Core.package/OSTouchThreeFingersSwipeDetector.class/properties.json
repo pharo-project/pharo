@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:19",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchThreeFingersSwipeDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchSwipeDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchThreeFingersSwipeDetector",
+	"type" : "normal"
+}

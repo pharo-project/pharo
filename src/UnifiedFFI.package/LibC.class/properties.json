@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI-Libraries",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "LibC",
-	"pools" : [
-		 ],
 	"super" : "FFILibrary",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Libraries",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LibC",
+	"type" : "normal"
+}

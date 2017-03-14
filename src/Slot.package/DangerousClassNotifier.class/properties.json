@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "BenComan 2/18/2014 01:44",
+	"super" : "Object",
 	"category" : "Slot-ClassBuilder",
 	"classinstvars" : [
-		"enabled" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "BenComan 2/18/2014 01:44",
-	"instvars" : [
-		 ],
+		"enabled"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "DangerousClassNotifier",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,18 +1,17 @@
 {
-	"category" : "Morphic-Widgets-ColorPicker",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TEnableOnHaloMenu classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "gvc 5/18/2007 13:45",
+	"classvars" : [ ],
 	"instvars" : [
 		"setColorSelector",
 		"enabled",
-		"getEnabledSelector" ],
+		"getEnabledSelector"
+	],
 	"name" : "ColorChooserMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "gvc 5/18/2007 13:45",
 	"super" : "ColorPresenterMorph",
 	"traitcomposition" : "TEnableOnHaloMenu",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Widgets-ColorPicker"
+}

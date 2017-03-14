@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractWidgetModel",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"children",
 		"content",
@@ -19,9 +19,8 @@
 		"mouseDownAction",
 		"hasContentToShow",
 		"isExpanded",
-		"hasChildren" ],
+		"hasChildren"
+	],
 	"name" : "TreeNodeModel",
-	"pools" : [
-		 ],
-	"super" : "AbstractWidgetModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

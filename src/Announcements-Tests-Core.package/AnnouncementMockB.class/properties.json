@@ -1,14 +1,13 @@
 {
-	"category" : "Announcements-Tests-Core-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Tbn 11/12/2010 10:54",
-	"instvars" : [
-		"parameter" ],
-	"name" : "AnnouncementMockB",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Announcements-Tests-Core-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"parameter"
+	],
+	"name" : "AnnouncementMockB",
+	"type" : "normal"
+}

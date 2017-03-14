@@ -1,14 +1,11 @@
 {
-	"category" : "StartupPreferences",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MaxLeske 4/30/2016 10:14",
-	"instvars" : [
-		 ],
-	"name" : "StartupPreferencesLoadingError",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "StartupPreferences",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "StartupPreferencesLoadingError",
+	"type" : "normal"
+}

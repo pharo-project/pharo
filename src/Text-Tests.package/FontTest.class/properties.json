@@ -1,14 +1,11 @@
 {
-	"category" : "Text-Tests-Fonts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tak 3/11/2005 14:31",
-	"instvars" : [
-		 ],
-	"name" : "FontTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Text-Tests-Fonts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FontTest",
+	"type" : "normal"
+}

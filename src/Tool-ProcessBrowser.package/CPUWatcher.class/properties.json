@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "VeronicaUquillas 6/11/2010 12:47",
+	"super" : "Model",
 	"category" : "Tool-ProcessBrowser",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CpuWatcherEnabled",
-		"CurrentCPUWatcher" ],
-	"commentStamp" : "VeronicaUquillas 6/11/2010 12:47",
+		"CurrentCPUWatcher"
+	],
 	"instvars" : [
 		"tally",
 		"watcher",
-		"threshold" ],
+		"threshold"
+	],
 	"name" : "CPUWatcher",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

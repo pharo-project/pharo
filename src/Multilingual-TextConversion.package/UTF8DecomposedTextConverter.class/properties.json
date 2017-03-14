@@ -1,14 +1,13 @@
 {
-	"category" : "Multilingual-TextConversion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "michael.rueger 3/2/2009 13:51",
-	"instvars" : [
-		"combinedChar" ],
-	"name" : "UTF8DecomposedTextConverter",
-	"pools" : [
-		 ],
 	"super" : "UTF8TextConverter",
-	"type" : "normal" }
+	"category" : "Multilingual-TextConversion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"combinedChar"
+	],
+	"name" : "UTF8DecomposedTextConverter",
+	"type" : "normal"
+}

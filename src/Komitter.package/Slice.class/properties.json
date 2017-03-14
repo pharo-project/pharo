@@ -1,14 +1,11 @@
 {
-	"category" : "Komitter-Models",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Slice",
-	"pools" : [
-		 ],
 	"super" : "KomitableObject",
-	"type" : "normal" }
+	"category" : "Komitter-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Slice",
+	"type" : "normal"
+}

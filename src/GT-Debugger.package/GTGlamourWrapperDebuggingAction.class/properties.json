@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 1/11/2016 16:05",
-	"instvars" : [
-		"glamourAction" ],
-	"name" : "GTGlamourWrapperDebuggingAction",
-	"pools" : [
-		 ],
 	"super" : "DebugAction",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"glamourAction"
+	],
+	"name" : "GTGlamourWrapperDebuggingAction",
+	"type" : "normal"
+}

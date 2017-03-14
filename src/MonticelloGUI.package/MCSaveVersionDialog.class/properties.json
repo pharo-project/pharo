@@ -1,15 +1,16 @@
 {
-	"category" : "MonticelloGUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"PreviousMessages" ],
 	"commentStamp" : "ab 9/8/2009 08:24",
+	"super" : "MCTool",
+	"category" : "MonticelloGUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"PreviousMessages"
+	],
 	"instvars" : [
 		"name",
-		"message" ],
+		"message"
+	],
 	"name" : "MCSaveVersionDialog",
-	"pools" : [
-		 ],
-	"super" : "MCTool",
-	"type" : "normal" }
+	"type" : "normal"
+}

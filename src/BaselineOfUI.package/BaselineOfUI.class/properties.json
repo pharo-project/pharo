@@ -1,14 +1,11 @@
 {
-	"category" : "BaselineOfUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PavelKrivanek 11/7/2016 12:34",
-	"instvars" : [
-		 ],
-	"name" : "BaselineOfUI",
-	"pools" : [
-		 ],
 	"super" : "BaselineOf",
-	"type" : "normal" }
+	"category" : "BaselineOfUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BaselineOfUI",
+	"type" : "normal"
+}

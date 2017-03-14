@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Display Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 15:40",
-	"instvars" : [
-		 ],
-	"name" : "ColorArray",
-	"pools" : [
-		 ],
 	"super" : "ArrayedCollection",
-	"type" : "words" }
+	"category" : "Graphics-Display Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ColorArray",
+	"type" : "words"
+}

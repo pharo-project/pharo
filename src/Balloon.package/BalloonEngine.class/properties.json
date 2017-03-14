@@ -1,15 +1,19 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Balloon-Engine",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"BalloonEngineConstants"
+	],
 	"classvars" : [
 		"BezierStats",
 		"BufferCache",
 		"CacheProtect",
 		"Counts",
 		"Debug",
-		"Times" ],
-	"commentStamp" : "<historical>",
+		"Times"
+	],
 	"instvars" : [
 		"workBuffer",
 		"span",
@@ -22,9 +26,8 @@
 		"edgeTransform",
 		"colorTransform",
 		"deferred",
-		"postFlushNeeded" ],
+		"postFlushNeeded"
+	],
 	"name" : "BalloonEngine",
-	"pools" : [
-		"BalloonEngineConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

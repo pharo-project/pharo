@@ -1,15 +1,14 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 3/24/2015 17:59",
+	"super" : "MalGraphAlgorithm",
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"sortedElements",
-		"verticesWithNoIncomingEdge" ],
+		"verticesWithNoIncomingEdge"
+	],
 	"name" : "MalTopologicalSorting",
-	"pools" : [
-		 ],
-	"super" : "MalGraphAlgorithm",
-	"type" : "normal" }
+	"type" : "normal"
+}

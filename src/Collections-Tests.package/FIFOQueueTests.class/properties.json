@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Tests-Atomic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:29",
-	"instvars" : [
-		"count" ],
-	"name" : "FIFOQueueTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Atomic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"count"
+	],
+	"name" : "FIFOQueueTests",
+	"type" : "normal"
+}

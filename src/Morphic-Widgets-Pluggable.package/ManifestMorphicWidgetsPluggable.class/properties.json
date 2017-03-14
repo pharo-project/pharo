@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ManifestMorphicWidgetsPluggable",
-	"pools" : [
-		 ],
 	"super" : "PackageManifest",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ManifestMorphicWidgetsPluggable",
+	"type" : "normal"
+}

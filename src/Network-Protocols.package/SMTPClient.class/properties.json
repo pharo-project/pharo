@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 2/21/2002 16:57",
-	"instvars" : [
-		 ],
-	"name" : "SMTPClient",
-	"pools" : [
-		 ],
 	"super" : "TelnetProtocolClient",
-	"type" : "normal" }
+	"category" : "Network-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SMTPClient",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "AST-Core-Parser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "RBPatternScanner",
-	"pools" : [
-		 ],
 	"super" : "RBScanner",
-	"type" : "normal" }
+	"category" : "AST-Core-Parser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBPatternScanner",
+	"type" : "normal"
+}

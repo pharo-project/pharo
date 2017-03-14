@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-PolyWidgets-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/22/2016 17:01",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"methodHolder",
 		"browseModel",
@@ -13,9 +13,8 @@
 		"versionModel",
 		"dropListModel",
 		"model",
-		"usersModel" ],
+		"usersModel"
+	],
 	"name" : "MethodToolbar",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

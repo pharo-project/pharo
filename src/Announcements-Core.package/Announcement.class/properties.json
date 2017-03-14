@@ -1,14 +1,11 @@
 {
-	"category" : "Announcements-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VincentBlondeau 1/27/2017 14:52",
-	"instvars" : [
-		 ],
-	"name" : "Announcement",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Announcements-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Announcement",
+	"type" : "normal"
+}

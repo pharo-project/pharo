@@ -1,15 +1,14 @@
 {
-	"category" : "Tool-DependencyAnalyser-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 9/4/2015 14:26",
+	"super" : "Warning",
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"package",
-		"dependency" ],
+		"dependency"
+	],
 	"name" : "PotentialOutDatedDependencyWarning",
-	"pools" : [
-		 ],
-	"super" : "Warning",
-	"type" : "normal" }
+	"type" : "normal"
+}

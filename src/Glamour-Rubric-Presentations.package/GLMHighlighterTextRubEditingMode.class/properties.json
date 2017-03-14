@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Rubric-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/23/2017 14:41",
-	"instvars" : [
-		"stylerDecorator" ],
-	"name" : "GLMHighlighterTextRubEditingMode",
-	"pools" : [
-		 ],
 	"super" : "RubEditingMode",
-	"type" : "normal" }
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stylerDecorator"
+	],
+	"name" : "GLMHighlighterTextRubEditingMode",
+	"type" : "normal"
+}

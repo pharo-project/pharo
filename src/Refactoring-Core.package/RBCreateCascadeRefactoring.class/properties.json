@@ -1,19 +1,18 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/6/2016 14:22",
+	"super" : "RBMethodRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"selectedInterval",
 		"parseTree",
 		"sequenceNode",
 		"statementNodes",
-		"transformedNode" ],
+		"transformedNode"
+	],
 	"name" : "RBCreateCascadeRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBMethodRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Keymapping-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Announcement",
+	"category" : "Keymapping-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"event",
-		"source" ],
+		"source"
+	],
 	"name" : "KMPartialMatch",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

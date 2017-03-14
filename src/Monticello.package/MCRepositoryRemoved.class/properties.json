@@ -1,14 +1,13 @@
 {
-	"category" : "Monticello-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/4/2015 23:56",
-	"instvars" : [
-		"repository" ],
-	"name" : "MCRepositoryRemoved",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Monticello-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"repository"
+	],
+	"name" : "MCRepositoryRemoved",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Metacello-Reference",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"project" ],
-	"name" : "MetacelloReferenceConfig",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Metacello-Reference",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"project"
+	],
+	"name" : "MetacelloReferenceConfig",
+	"type" : "normal"
+}

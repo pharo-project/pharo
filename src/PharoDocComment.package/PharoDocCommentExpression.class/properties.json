@@ -1,15 +1,14 @@
 {
-	"category" : "PharoDocComment",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/1/2016 21:45",
+	"super" : "Object",
+	"category" : "PharoDocComment",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"expressionInterval",
-		"source" ],
+		"source"
+	],
 	"name" : "PharoDocCommentExpression",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,19 +1,18 @@
 {
-	"category" : "Komitter-Models",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Komitter-Models",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"author",
 		"entities",
 		"message",
 		"timestamp",
 		"remote",
-		"unselectedEntities" ],
+		"unselectedEntities"
+	],
 	"name" : "KomitableObject",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

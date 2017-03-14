@@ -1,19 +1,18 @@
 {
-	"category" : "Rubric-Editing-Widgets-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Model",
+	"category" : "Rubric-Editing-Widgets-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textModel",
 		"code",
 		"className",
 		"selector",
 		"classIsMeta",
-		"announcer" ],
+		"announcer"
+	],
 	"name" : "RubMethodEditingExample",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

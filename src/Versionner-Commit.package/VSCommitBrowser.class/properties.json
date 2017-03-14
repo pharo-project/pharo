@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Model",
 	"category" : "Versionner-Commit-UI",
 	"classinstvars" : [
-		"commentCache" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"commentCache"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"unit",
-		"window" ],
+		"window"
+	],
 	"name" : "VSCommitBrowser",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

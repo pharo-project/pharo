@@ -1,14 +1,13 @@
 {
-	"category" : "Metacello-Core-Specs",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"projectReference" ],
-	"name" : "MetacelloProjectReferenceSpec",
-	"pools" : [
-		 ],
 	"super" : "MetacelloAbstractPackageSpec",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Specs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"projectReference"
+	],
+	"name" : "MetacelloProjectReferenceSpec",
+	"type" : "normal"
+}

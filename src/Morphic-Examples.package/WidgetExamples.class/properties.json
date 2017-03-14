@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Examples-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 11/15/2015 14:11",
-	"instvars" : [
-		 ],
-	"name" : "WidgetExamples",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Morphic-Examples-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WidgetExamples",
+	"type" : "normal"
+}

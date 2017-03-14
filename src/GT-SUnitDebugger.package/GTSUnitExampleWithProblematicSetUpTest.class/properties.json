@@ -1,14 +1,11 @@
 {
-	"category" : "GT-SUnitDebugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 2/15/2016 13:40",
-	"instvars" : [
-		 ],
-	"name" : "GTSUnitExampleWithProblematicSetUpTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "GT-SUnitDebugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSUnitExampleWithProblematicSetUpTest",
+	"type" : "normal"
+}

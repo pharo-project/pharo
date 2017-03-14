@@ -1,19 +1,18 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "efc 8/6/2005 11:34",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"listItems",
 		"font",
 		"selectedRow",
 		"selectedRows",
 		"listSource",
-		"maxWidth" ],
+		"maxWidth"
+	],
 	"name" : "LazyListMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,11 +1,6 @@
 {
-	"category" : "Morphic-Widgets-Basic",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TEnableOnHaloMenu classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "gvc 5/18/2007 13:47",
+	"classvars" : [ ],
 	"instvars" : [
 		"buttonMorph",
 		"labelMorph",
@@ -14,10 +9,14 @@
 		"getStateSelector",
 		"enabled",
 		"getEnabledSelector",
-		"labelClickable" ],
+		"labelClickable"
+	],
 	"name" : "CheckboxMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "gvc 5/18/2007 13:47",
 	"super" : "MorphicModel",
 	"traitcomposition" : "TEnableOnHaloMenu",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Widgets-Basic"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 10/5/2015 15:27",
+	"super" : "RubScrolledTextMorph",
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"askBeforeDiscardingEdits",
-		"getEnabledSelector" ],
+		"getEnabledSelector"
+	],
 	"name" : "RubPluggableTextMorph",
-	"pools" : [
-		 ],
-	"super" : "RubScrolledTextMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

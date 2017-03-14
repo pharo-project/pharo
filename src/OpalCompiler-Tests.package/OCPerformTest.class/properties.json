@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Tests-FromOld",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikSperreJohansen 5/19/2010 02:33",
-	"instvars" : [
-		 ],
-	"name" : "OCPerformTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCPerformTest",
+	"type" : "normal"
+}

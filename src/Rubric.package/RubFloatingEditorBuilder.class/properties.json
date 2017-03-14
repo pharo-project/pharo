@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 6/30/2015 12:55",
+	"super" : "Object",
+	"category" : "Rubric-Editing-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"editor",
 		"announcer",
@@ -13,9 +13,8 @@
 		"initialContents",
 		"font",
 		"customizeValuable",
-		"escapeBlock" ],
+		"escapeBlock"
+	],
 	"name" : "RubFloatingEditorBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

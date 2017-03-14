@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "brp 3/12/2004 14:34",
+	"super" : "SharedPool",
 	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DayNames",
 		"DaysInMonth",
@@ -12,12 +14,9 @@
 		"SecondsInDay",
 		"SecondsInHour",
 		"SecondsInMinute",
-		"SqueakEpoch" ],
-	"commentStamp" : "brp 3/12/2004 14:34",
-	"instvars" : [
-		 ],
+		"SqueakEpoch"
+	],
+	"instvars" : [ ],
 	"name" : "ChronologyConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "UIManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ProgressBarEnabled" ],
 	"commentStamp" : "LaurentLaffont 2/23/2011 20:16",
-	"instvars" : [
-		 ],
-	"name" : "DummyUIManager",
-	"pools" : [
-		 ],
 	"super" : "UIManager",
-	"type" : "normal" }
+	"category" : "UIManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ProgressBarEnabled"
+	],
+	"instvars" : [ ],
+	"name" : "DummyUIManager",
+	"type" : "normal"
+}

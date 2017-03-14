@@ -1,15 +1,14 @@
 {
-	"category" : "OpalCompiler-Tests-FromOld",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "OpalCompiler-Tests-FromOld",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"text",
-		"currentCompiler" ],
+		"currentCompiler"
+	],
 	"name" : "OCCompilerExceptionsTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Graphics-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 18:32",
+	"super" : "Object",
+	"category" : "Graphics-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"x",
 		"y",
@@ -14,9 +14,8 @@
 		"bSquared",
 		"d1",
 		"d2",
-		"inFirstRegion" ],
+		"inFirstRegion"
+	],
 	"name" : "EllipseMidpointTracer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

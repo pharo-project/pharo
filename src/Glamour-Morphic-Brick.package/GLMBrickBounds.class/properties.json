@@ -1,13 +1,15 @@
 {
+	"commentStamp" : "",
+	"super" : "Object",
 	"category" : "Glamour-Morphic-Brick-Utils",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Bottom",
 		"Left",
 		"Right",
-		"Top" ],
-	"commentStamp" : "",
+		"Top"
+	],
 	"instvars" : [
 		"bounds",
 		"innerBounds",
@@ -15,9 +17,8 @@
 		"widthState",
 		"heightState",
 		"margin",
-		"padding" ],
+		"padding"
+	],
 	"name" : "GLMBrickBounds",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Spec-Inspector-Element",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TInspectorActions classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
-		"host" ],
+		"host"
+	],
 	"name" : "AbstractEyeElement",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "Model",
 	"traitcomposition" : "TInspectorActions",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Spec-Inspector-Element"
+}

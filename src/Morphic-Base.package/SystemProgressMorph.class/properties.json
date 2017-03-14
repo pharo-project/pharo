@@ -1,18 +1,21 @@
 {
-	"category" : "Morphic-Base-ProgressBar",
-	"classinstvars" : [
-		"horizontalPosition",
-		"verticalPosition" ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
 	"classvars" : [
-		"UniqueInstance" ],
-	"commentStamp" : "<historical>",
+		"UniqueInstance"
+	],
 	"instvars" : [
 		"lock",
-		"lastRefresh" ],
+		"lastRefresh"
+	],
 	"name" : "SystemProgressMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "BorderedMorph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [
+		"horizontalPosition",
+		"verticalPosition"
+	],
+	"pools" : [ ],
+	"category" : "Morphic-Base-ProgressBar"
+}

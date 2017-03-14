@@ -1,14 +1,13 @@
 {
-	"category" : "EpiceaBrowsers-Log",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"browser" ],
-	"name" : "EpSelection",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"browser"
+	],
+	"name" : "EpSelection",
+	"type" : "normal"
+}

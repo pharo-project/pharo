@@ -1,14 +1,13 @@
 {
-	"category" : "EpiceaBrowsers-Log",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 5/27/2014 11:59",
-	"instvars" : [
-		"items" ],
-	"name" : "EpSorterView",
-	"pools" : [
-		 ],
 	"super" : "EpLogBrowserView",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"items"
+	],
+	"name" : "EpSorterView",
+	"type" : "normal"
+}

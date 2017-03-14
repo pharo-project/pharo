@@ -1,21 +1,20 @@
 {
-	"category" : "Morphic-Widgets-Basic-Buttons",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "StephaneDucasse 8/8/2010 17:34",
+	"classvars" : [ ],
 	"instvars" : [
 		"target",
 		"actionSelector",
 		"arguments",
 		"actWhen",
 		"oldColor",
-		"label" ],
+		"label"
+	],
 	"name" : "SimpleButtonMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "StephaneDucasse 8/8/2010 17:34",
 	"super" : "BorderedMorph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Widgets-Basic-Buttons"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Rubric-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 9/2/2014 16:39",
+	"super" : "GLMRubricTextPresentation",
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"editingMode",
-		"font" ],
+		"font"
+	],
 	"name" : "GLMRubricHighlightedTextPresentation",
-	"pools" : [
-		 ],
-	"super" : "GLMRubricTextPresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,20 +1,19 @@
 {
-	"category" : "Transcript",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TTranscript classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:39",
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"accessSemaphore",
 		"deferredClear",
 		"deferredEndEntry",
-		"stepContents" ],
+		"stepContents"
+	],
 	"name" : "ThreadSafeTranscript",
-	"pools" : [
-		 ],
+	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:39",
 	"super" : "Model",
 	"traitcomposition" : "TTranscript",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Transcript"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Tests-Classes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:31",
+	"super" : "ClassTestCase",
+	"category" : "Kernel-Tests-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"className",
-		"renamedName" ],
+		"renamedName"
+	],
 	"name" : "ClassTest",
-	"pools" : [
-		 ],
-	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

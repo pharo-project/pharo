@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Morphic-Pager-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glamour-Morphic-Pager-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"numberOfVisiblePages",
 		"announcer",
@@ -21,9 +21,8 @@
 		"scrollToRightTask",
 		"isNotificationsAllowed",
 		"scrollingDelay",
-		"minimumPageNumberForScrollbar" ],
+		"minimumPageNumberForScrollbar"
+	],
 	"name" : "GLMPagerModel",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

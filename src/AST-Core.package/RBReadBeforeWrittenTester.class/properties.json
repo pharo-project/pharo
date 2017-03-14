@@ -1,16 +1,15 @@
 {
-	"category" : "AST-Core-Visitors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RBProgramNodeVisitor",
+	"category" : "AST-Core-Visitors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"read",
 		"checkNewTemps",
-		"scopeStack" ],
+		"scopeStack"
+	],
 	"name" : "RBReadBeforeWrittenTester",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

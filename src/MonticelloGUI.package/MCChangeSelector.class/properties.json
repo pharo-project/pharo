@@ -1,14 +1,13 @@
 {
-	"category" : "MonticelloGUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:52",
-	"instvars" : [
-		"kept" ],
-	"name" : "MCChangeSelector",
-	"pools" : [
-		 ],
 	"super" : "MCPatchBrowser",
-	"type" : "normal" }
+	"category" : "MonticelloGUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"kept"
+	],
+	"name" : "MCChangeSelector",
+	"type" : "normal"
+}

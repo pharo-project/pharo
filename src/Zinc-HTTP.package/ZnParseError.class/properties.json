@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/28/2011 14:13",
-	"instvars" : [
-		 ],
-	"name" : "ZnParseError",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnParseError",
+	"type" : "normal"
+}

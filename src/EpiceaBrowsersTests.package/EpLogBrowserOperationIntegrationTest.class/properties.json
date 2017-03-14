@@ -1,14 +1,11 @@
 {
-	"category" : "EpiceaBrowsersTests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "EpLogBrowserOperationIntegrationTest",
-	"pools" : [
-		 ],
 	"super" : "EpEnabledIntegrationTest",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsersTests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpLogBrowserOperationIntegrationTest",
+	"type" : "normal"
+}

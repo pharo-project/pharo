@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/1/2014 13:35",
-	"instvars" : [
-		 ],
-	"name" : "GLMPopperNotificationStrategy",
-	"pools" : [
-		 ],
 	"super" : "RubNotificationStrategy",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMPopperNotificationStrategy",
+	"type" : "normal"
+}

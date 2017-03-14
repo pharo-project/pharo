@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Atomic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/28/2011 15:32",
+	"super" : "AtomicCollection",
+	"category" : "Collections-Atomic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tail",
-		"dummy" ],
+		"dummy"
+	],
 	"name" : "WaitfreeQueue",
-	"pools" : [
-		 ],
-	"super" : "AtomicCollection",
-	"type" : "normal" }
+	"type" : "normal"
+}

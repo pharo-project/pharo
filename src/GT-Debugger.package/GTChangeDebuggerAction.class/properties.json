@@ -1,15 +1,14 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 11:24",
+	"super" : "DebugAction",
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"debuggerClass",
-		"newDebugger" ],
+		"newDebugger"
+	],
 	"name" : "GTChangeDebuggerAction",
-	"pools" : [
-		 ],
-	"super" : "DebugAction",
-	"type" : "normal" }
+	"type" : "normal"
+}

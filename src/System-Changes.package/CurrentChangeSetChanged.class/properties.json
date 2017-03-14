@@ -1,15 +1,14 @@
 {
-	"category" : "System-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:28",
+	"super" : "Announcement",
+	"category" : "System-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"new",
-		"old" ],
+		"old"
+	],
 	"name" : "CurrentChangeSetChanged",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

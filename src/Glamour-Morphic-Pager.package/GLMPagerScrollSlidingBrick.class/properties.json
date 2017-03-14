@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Morphic-Pager-Brick",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMInteractableBrick",
+	"category" : "Glamour-Morphic-Pager-Brick",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"startDragX",
 		"isResizing",
@@ -13,9 +13,8 @@
 		"isRightResizing",
 		"isLeftResizing",
 		"pagerModel",
-		"leftPosition" ],
+		"leftPosition"
+	],
 	"name" : "GLMPagerScrollSlidingBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

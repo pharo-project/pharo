@@ -1,16 +1,15 @@
 {
-	"category" : "Slot-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ClassBuilderWarning",
+	"category" : "Slot-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"newSlot",
 		"oldSlot",
-		"host" ],
+		"host"
+	],
 	"name" : "DuplicatedSlotName",
-	"pools" : [
-		 ],
-	"super" : "ClassBuilderWarning",
-	"type" : "normal" }
+	"type" : "normal"
+}

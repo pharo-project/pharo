@@ -1,10 +1,10 @@
 {
-	"category" : "EpiceaBrowsers-Log",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/14/2016 01:55",
+	"super" : "ComposableModel",
+	"category" : "EpiceaBrowsers-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"log",
 		"view",
@@ -16,9 +16,8 @@
 		"itemsModel",
 		"commentsLog",
 		"commitLog",
-		"andFilter" ],
+		"andFilter"
+	],
 	"name" : "EpLogBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

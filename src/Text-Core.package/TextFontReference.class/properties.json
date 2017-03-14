@@ -1,14 +1,13 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"font" ],
-	"name" : "TextFontReference",
-	"pools" : [
-		 ],
 	"super" : "TextFontChange",
-	"type" : "normal" }
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"font"
+	],
+	"name" : "TextFontReference",
+	"type" : "normal"
+}

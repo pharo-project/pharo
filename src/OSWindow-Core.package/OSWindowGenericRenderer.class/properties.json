@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 4/10/2016 02:05",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowGenericRenderer",
-	"pools" : [
-		 ],
 	"super" : "OSWindowRenderer",
-	"type" : "normal" }
+	"category" : "OSWindow-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowGenericRenderer",
+	"type" : "normal"
+}

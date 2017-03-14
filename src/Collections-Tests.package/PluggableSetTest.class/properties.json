@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:28",
-	"instvars" : [
-		 ],
-	"name" : "PluggableSetTest",
-	"pools" : [
-		 ],
 	"super" : "SetTest",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PluggableSetTest",
+	"type" : "normal"
+}

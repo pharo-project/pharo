@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Canvas",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "PluggableCanvas",
-	"pools" : [
-		 ],
 	"super" : "Canvas",
-	"type" : "normal" }
+	"category" : "Graphics-Canvas",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PluggableCanvas",
+	"type" : "normal"
+}

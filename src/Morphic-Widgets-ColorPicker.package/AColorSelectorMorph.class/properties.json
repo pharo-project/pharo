@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-ColorPicker",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:52",
-	"instvars" : [
-		 ],
-	"name" : "AColorSelectorMorph",
-	"pools" : [
-		 ],
 	"super" : "BracketSliderMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-ColorPicker",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AColorSelectorMorph",
+	"type" : "normal"
+}

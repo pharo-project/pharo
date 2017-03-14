@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Warning",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Warning",
+	"type" : "normal"
+}

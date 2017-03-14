@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"nautilus" ],
-	"name" : "NautilusTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Nautilus-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nautilus"
+	],
+	"name" : "NautilusTest",
+	"type" : "normal"
+}

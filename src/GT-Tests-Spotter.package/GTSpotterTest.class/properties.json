@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Tests-Spotter-Scripting",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"spotter" ],
-	"name" : "GTSpotterTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter-Scripting",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"spotter"
+	],
+	"name" : "GTSpotterTest",
+	"type" : "normal"
+}

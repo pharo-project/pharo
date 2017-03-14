@@ -1,4 +1,6 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "NECompletion-Model",
 	"classinstvars" : [
 		"enabled",
@@ -15,14 +17,11 @@
 		"spaceAfterCompletion",
 		"smartCharactersWithSingleSpace",
 		"smartCharactersWithDoubleSpace",
-		"overrideModel" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"overrideModel"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "NECPreferences",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 10/20/2011 10:14",
+	"super" : "Object",
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"text",
 		"font",
@@ -13,9 +13,8 @@
 		"color",
 		"advance",
 		"maxAscent",
-		"currentLine" ],
+		"currentLine"
+	],
 	"name" : "AthensTextRenderer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

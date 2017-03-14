@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-Profilers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Tool-Profilers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"semaphore",
 		"ticks",
@@ -15,9 +15,8 @@
 		"totalTime",
 		"startTime",
 		"ticksPerMSec",
-		"totalTicks" ],
+		"totalTicks"
+	],
 	"name" : "AndreasSystemProfiler",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

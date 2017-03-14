@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:39",
+	"super" : "SharedPool",
 	"category" : "Kernel-Tests-Classes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Author",
-		"VariableInPoolDefiner2" ],
-	"commentStamp" : "TorstenBergmann 2/5/2014 08:39",
-	"instvars" : [
-		 ],
+		"VariableInPoolDefiner2"
+	],
+	"instvars" : [ ],
 	"name" : "PoolDefiner2",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

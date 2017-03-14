@@ -1,17 +1,16 @@
 {
-	"category" : "Spec-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/19/2016 11:19",
+	"super" : "TextModel",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ghostText",
 		"acceptOnCR",
 		"entryCompletion",
-		"isEncrypted" ],
+		"isEncrypted"
+	],
 	"name" : "TextInputFieldModel",
-	"pools" : [
-		 ],
-	"super" : "TextModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "",
+	"super" : "Model",
 	"category" : "Refactoring-Tests-Core-Data",
 	"classinstvars" : [
-		"notUsed" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+		"notUsed"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"rewriteRule",
 		"builder",
-		"class" ],
+		"class"
+	],
 	"name" : "RBClassToRename",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

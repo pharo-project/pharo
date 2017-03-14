@@ -1,15 +1,14 @@
 {
-	"category" : "Monticello-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MCTestCase",
+	"category" : "Monticello-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"expected",
-		"diff" ],
+		"diff"
+	],
 	"name" : "MCMczInstallerTest",
-	"pools" : [
-		 ],
-	"super" : "MCTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

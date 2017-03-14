@@ -1,14 +1,11 @@
 {
-	"category" : "QualityAssistant",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 6/21/2016 20:54",
-	"instvars" : [
-		 ],
-	"name" : "QARubMenuItemMorph",
-	"pools" : [
-		 ],
 	"super" : "Morph",
-	"type" : "normal" }
+	"category" : "QualityAssistant",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "QARubMenuItemMorph",
+	"type" : "normal"
+}

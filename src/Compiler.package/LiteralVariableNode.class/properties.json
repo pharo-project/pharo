@@ -1,14 +1,13 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:19",
-	"instvars" : [
-		"writeNode" ],
-	"name" : "LiteralVariableNode",
-	"pools" : [
-		 ],
 	"super" : "VariableNode",
-	"type" : "normal" }
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"writeNode"
+	],
+	"name" : "LiteralVariableNode",
+	"type" : "normal"
+}

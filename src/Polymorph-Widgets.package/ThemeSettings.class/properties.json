@@ -1,10 +1,10 @@
 {
-	"category" : "Polymorph-Widgets-Themes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 10:23",
+	"super" : "Model",
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"windowColor",
 		"selectionColor",
@@ -37,9 +37,8 @@
 		"menuSelectionTextColor",
 		"selectionTextColor",
 		"secondarySelectionTextColor",
-		"findReplaceSelectionTextColor" ],
+		"findReplaceSelectionTextColor"
+	],
 	"name" : "ThemeSettings",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

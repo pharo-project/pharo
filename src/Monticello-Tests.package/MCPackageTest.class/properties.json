@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MCPackageTest",
-	"pools" : [
-		 ],
 	"super" : "MCTestCase",
-	"type" : "normal" }
+	"category" : "Monticello-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCPackageTest",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Zinc-HTTP-Streaming",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 1/18/2011 11:01",
+	"super" : "Stream",
+	"category" : "Zinc-HTTP-Streaming",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"chunk",
@@ -13,9 +13,8 @@
 		"atEnd",
 		"totalSize",
 		"chunkCount",
-		"extraHeaders" ],
+		"extraHeaders"
+	],
 	"name" : "ZnChunkedReadStream",
-	"pools" : [
-		 ],
-	"super" : "Stream",
-	"type" : "normal" }
+	"type" : "normal"
+}

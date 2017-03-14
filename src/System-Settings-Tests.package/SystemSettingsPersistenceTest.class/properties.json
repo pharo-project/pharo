@@ -1,16 +1,15 @@
 {
-	"category" : "System-Settings-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "TestCase",
+	"category" : "System-Settings-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"systemSettings",
 		"memory",
-		"preferences" ],
+		"preferences"
+	],
 	"name" : "SystemSettingsPersistenceTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

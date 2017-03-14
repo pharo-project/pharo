@@ -1,5 +1,5 @@
 pharo - scripts
-script60440
+script60441
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -205,7 +205,7 @@ Morphic-Tests-TheIntegrator.11.mcz
 Morphic-Widgets-Basic-TheIntegrator.108.mcz
 Morphic-Widgets-ColorPicker-TheIntegrator.23.mcz
 Morphic-Widgets-Extra-TheIntegrator.27.mcz
-Morphic-Widgets-FastTable-TheIntegrator.213.mcz
+Morphic-Widgets-FastTable-TheIntegrator.216.mcz
 Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.79.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1357.mcz
+Nautilus-TheIntegrator.1360.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz

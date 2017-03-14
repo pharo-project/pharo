@@ -1,19 +1,18 @@
 {
-	"category" : "Tool-ExternalBrowser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 6/6/2015 10:28",
+	"super" : "ComposableModel",
+	"category" : "Tool-ExternalBrowser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"changes",
 		"codePane",
 		"changeSet",
 		"selectAllButton",
 		"deselectAllButton",
-		"fileInSelectedButton" ],
+		"fileInSelectedButton"
+	],
 	"name" : "ExternalChangesBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

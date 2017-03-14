@@ -1,14 +1,11 @@
 {
-	"category" : "RPackage-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 5/15/2010 20:21",
-	"instvars" : [
-		 ],
-	"name" : "RPackageIncrementalTest",
-	"pools" : [
-		 ],
 	"super" : "RPackageTestCase",
-	"type" : "normal" }
+	"category" : "RPackage-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RPackageIncrementalTest",
+	"type" : "normal"
+}

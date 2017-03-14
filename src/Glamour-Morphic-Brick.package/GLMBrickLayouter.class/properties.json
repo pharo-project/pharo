@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "AliakseiSyrel 1/28/2015 13:09",
+	"super" : "Object",
 	"category" : "Glamour-Morphic-Brick-Layouts-Utils",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "AliakseiSyrel 1/28/2015 13:09",
-	"instvars" : [
-		 ],
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "GLMBrickLayouter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

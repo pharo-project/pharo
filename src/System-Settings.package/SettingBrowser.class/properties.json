@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MorphTreeModel",
 	"category" : "System-Settings-Browser",
 	"classinstvars" : [
 		"searchedTextList",
-		"regexpSearch" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"regexpSearch"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"viewedPackages",
 		"roots",
 		"status",
 		"searchedText",
-		"treeHolder" ],
+		"treeHolder"
+	],
 	"name" : "SettingBrowser",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Refactoring-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 9/9/2016 20:01",
+	"super" : "RBRefactoryChange",
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"className",
-		"isMeta" ],
+		"isMeta"
+	],
 	"name" : "RBRefactoryClassChange",
-	"pools" : [
-		 ],
-	"super" : "RBRefactoryChange",
-	"type" : "normal" }
+	"type" : "normal"
+}

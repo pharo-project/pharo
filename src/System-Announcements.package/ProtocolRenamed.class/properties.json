@@ -1,14 +1,13 @@
 {
-	"category" : "System-Announcements-System-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 11/15/2016 11:51",
-	"instvars" : [
-		"newProtocolName" ],
-	"name" : "ProtocolRenamed",
-	"pools" : [
-		 ],
 	"super" : "ProtocolAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newProtocolName"
+	],
+	"name" : "ProtocolRenamed",
+	"type" : "normal"
+}

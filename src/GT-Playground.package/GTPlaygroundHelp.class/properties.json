@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Playground",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/21/2016 16:51",
-	"instvars" : [
-		 ],
-	"name" : "GTPlaygroundHelp",
-	"pools" : [
-		 ],
 	"super" : "CustomHelp",
-	"type" : "normal" }
+	"category" : "GT-Playground",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTPlaygroundHelp",
+	"type" : "normal"
+}

@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "NECompletion-View",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
 		"menuMorph",
 		"editor",
 		"context",
 		"inverseMapping",
-		"completionDelay" ],
+		"completionDelay"
+	],
 	"name" : "NECController",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

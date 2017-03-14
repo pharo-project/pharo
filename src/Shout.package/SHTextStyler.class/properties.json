@@ -1,18 +1,17 @@
 {
-	"category" : "Shout-Styling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2011 22:28",
+	"super" : "Object",
+	"category" : "Shout-Styling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"backgroundProcess",
 		"text",
 		"monitor",
 		"view",
-		"stylingEnabled" ],
+		"stylingEnabled"
+	],
 	"name" : "SHTextStyler",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

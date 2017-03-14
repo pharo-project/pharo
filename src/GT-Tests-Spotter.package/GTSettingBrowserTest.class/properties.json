@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Tests-Spotter-SettingBrowser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTSettingBrowserTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter-SettingBrowser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSettingBrowserTest",
+	"type" : "normal"
+}

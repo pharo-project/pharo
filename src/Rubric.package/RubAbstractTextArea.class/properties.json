@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "AlainPlantec 5/15/2015 10:44",
+	"super" : "Morph",
 	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BackgroundColor",
 		"CaseSensitiveFinds",
@@ -10,8 +12,8 @@
 		"LineNumbersBackgroundColor",
 		"LineNumbersFont",
 		"LineNumbersTextColor",
-		"WalkAlongDisplayedLine" ],
-	"commentStamp" : "AlainPlantec 5/15/2015 10:44",
+		"WalkAlongDisplayedLine"
+	],
 	"instvars" : [
 		"model",
 		"paragraph",
@@ -27,9 +29,8 @@
 		"cursor",
 		"segments",
 		"getMenuPolicy",
-		"mouseDownPoint" ],
+		"mouseDownPoint"
+	],
 	"name" : "RubAbstractTextArea",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 4/14/2015 10:00",
+	"super" : "Object",
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fingerId",
 		"deviceId",
@@ -13,9 +13,8 @@
 		"timestamp",
 		"move",
 		"firstPosition",
-		"lastPosition" ],
+		"lastPosition"
+	],
 	"name" : "OSTouchFingerTracker",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

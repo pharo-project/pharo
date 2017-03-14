@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ar 2/12/2005 04:38",
+	"super" : "SimpleHierarchicalListMorph",
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"roots",
 		"selectedWrapper",
@@ -17,9 +17,8 @@
 		"getHelpSelector",
 		"dropItemSelector",
 		"wantsDropSelector",
-		"dragItemSelector" ],
+		"dragItemSelector"
+	],
 	"name" : "PluggableTreeMorph",
-	"pools" : [
-		 ],
-	"super" : "SimpleHierarchicalListMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

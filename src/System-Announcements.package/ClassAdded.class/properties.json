@@ -1,15 +1,14 @@
 {
-	"category" : "System-Announcements-System-Classes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cyrilledelaunay 1/18/2011 11:56",
+	"super" : "ClassAnnouncement",
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classAdded",
-		"classCategory" ],
+		"classCategory"
+	],
 	"name" : "ClassAdded",
-	"pools" : [
-		 ],
-	"super" : "ClassAnnouncement",
-	"type" : "normal" }
+	"type" : "normal"
+}

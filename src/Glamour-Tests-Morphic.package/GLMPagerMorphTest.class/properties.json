@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Tests-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Glamour-Tests-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pagerModel",
 		"pagerMorph",
-		"window" ],
+		"window"
+	],
 	"name" : "GLMPagerMorphTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

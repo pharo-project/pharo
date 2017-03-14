@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Base-Borders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 9/23/2008 11:56",
-	"instvars" : [
-		"fillStyle" ],
-	"name" : "FillStyleBorder",
-	"pools" : [
-		 ],
 	"super" : "SimpleBorder",
-	"type" : "normal" }
+	"category" : "Morphic-Base-Borders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fillStyle"
+	],
+	"name" : "FillStyleBorder",
+	"type" : "normal"
+}

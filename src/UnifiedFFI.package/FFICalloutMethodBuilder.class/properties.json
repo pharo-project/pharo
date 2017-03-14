@@ -1,19 +1,18 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"calloutAPI",
 		"requestor",
 		"sender",
 		"signature",
 		"module",
-		"functionResolutionStrategies" ],
+		"functionResolutionStrategies"
+	],
 	"name" : "FFICalloutMethodBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

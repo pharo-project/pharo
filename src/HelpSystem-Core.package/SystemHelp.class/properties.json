@@ -1,14 +1,11 @@
 {
-	"category" : "HelpSystem-Core-Utilities",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 4/30/2010 15:33",
-	"instvars" : [
-		 ],
-	"name" : "SystemHelp",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "HelpSystem-Core-Utilities",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SystemHelp",
+	"type" : "normal"
+}

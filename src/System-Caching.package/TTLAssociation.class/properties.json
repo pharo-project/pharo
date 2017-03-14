@@ -1,14 +1,13 @@
 {
-	"category" : "System-Caching",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/9/2015 15:23",
-	"instvars" : [
-		"timestamp" ],
-	"name" : "TTLAssociation",
-	"pools" : [
-		 ],
 	"super" : "Association",
-	"type" : "normal" }
+	"category" : "System-Caching",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"timestamp"
+	],
+	"name" : "TTLAssociation",
+	"type" : "normal"
+}

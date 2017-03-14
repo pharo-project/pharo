@@ -1,14 +1,13 @@
 {
-	"category" : "Fuel-Clusters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarianoMartinezPeck 10/23/2011 14:39",
-	"instvars" : [
-		"globalSends" ],
-	"name" : "FLGlobalSendCluster",
-	"pools" : [
-		 ],
 	"super" : "FLGlobalCluster",
-	"type" : "normal" }
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"globalSends"
+	],
+	"name" : "FLGlobalSendCluster",
+	"type" : "normal"
+}

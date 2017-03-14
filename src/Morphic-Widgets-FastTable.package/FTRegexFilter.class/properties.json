@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Functions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 6/24/2016 16:09",
-	"instvars" : [
-		"regex" ],
-	"name" : "FTRegexFilter",
-	"pools" : [
-		 ],
 	"super" : "FTFilter",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable-Functions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"regex"
+	],
+	"name" : "FTRegexFilter",
+	"type" : "normal"
+}

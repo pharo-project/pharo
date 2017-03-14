@@ -1,17 +1,16 @@
 {
-	"category" : "Network-MIME",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Network-MIME",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"type",
 		"contents",
 		"contentStream",
-		"uri" ],
+		"uri"
+	],
 	"name" : "MIMEDocument",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

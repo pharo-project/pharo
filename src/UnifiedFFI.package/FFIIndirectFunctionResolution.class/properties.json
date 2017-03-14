@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 4/22/2016 14:48",
-	"instvars" : [
-		 ],
-	"name" : "FFIIndirectFunctionResolution",
-	"pools" : [
-		 ],
 	"super" : "FFIFunctionResolutionStrategy",
-	"type" : "normal" }
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFIIndirectFunctionResolution",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Nautilus-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 6/3/2015 13:55",
+	"super" : "Object",
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"method",
 		"browser",
-		"icon" ],
+		"icon"
+	],
 	"name" : "AbstractMethodIconAction",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

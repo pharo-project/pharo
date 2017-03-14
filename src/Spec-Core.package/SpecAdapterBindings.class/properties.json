@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"bindings" ],
-	"name" : "SpecAdapterBindings",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Spec-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"bindings"
+	],
+	"name" : "SpecAdapterBindings",
+	"type" : "normal"
+}

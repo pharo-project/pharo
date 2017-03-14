@@ -1,14 +1,15 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"alignment" ],
-	"name" : "TextAlignment",
-	"pools" : [
-		"TextConstants" ],
 	"super" : "TextAttribute",
-	"type" : "normal" }
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"alignment"
+	],
+	"name" : "TextAlignment",
+	"type" : "normal"
+}

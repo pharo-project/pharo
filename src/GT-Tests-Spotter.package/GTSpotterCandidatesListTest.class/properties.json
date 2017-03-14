@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Tests-Spotter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"candidates" ],
-	"name" : "GTSpotterCandidatesListTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"candidates"
+	],
+	"name" : "GTSpotterCandidatesListTest",
+	"type" : "normal"
+}

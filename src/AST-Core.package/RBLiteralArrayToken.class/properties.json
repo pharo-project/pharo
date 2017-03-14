@@ -1,14 +1,11 @@
 {
-	"category" : "AST-Core-Tokens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/22/2016 15:47",
-	"instvars" : [
-		 ],
-	"name" : "RBLiteralArrayToken",
-	"pools" : [
-		 ],
 	"super" : "RBValueToken",
-	"type" : "normal" }
+	"category" : "AST-Core-Tokens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBLiteralArrayToken",
+	"type" : "normal"
+}

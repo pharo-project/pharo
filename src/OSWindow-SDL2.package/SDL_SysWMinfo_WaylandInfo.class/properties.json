@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_DISPLAY",
 		"OFFSET_SHELL_SURFACE",
-		"OFFSET_SURFACE" ],
-	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
-	"instvars" : [
-		 ],
+		"OFFSET_SURFACE"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_SysWMinfo_WaylandInfo",
-	"pools" : [
-		 ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

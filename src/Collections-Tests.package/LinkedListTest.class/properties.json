@@ -1,11 +1,6 @@
 {
-	"category" : "Collections-Tests-Sequenceable",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAddTest classTrait + TEmptyTest classTrait + TIterateTest classTrait + TIterateSequencedReadableTest classTrait + TPrintTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TConvertTest classTrait + TCopyPartOfSequenceable classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopyTest classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TRemoveTest classTrait + TSetArithmetic classTrait + TIncludesWithIdentityCheckTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesTest classTrait + TSortTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "mk 8/3/2005 11:55",
+	"classvars" : [ ],
 	"instvars" : [
 		"nextLink",
 		"n",
@@ -27,10 +22,14 @@
 		"collection5Elements",
 		"collectResult",
 		"unsortedCollection",
-		"sortedCollection" ],
+		"sortedCollection"
+	],
 	"name" : "LinkedListTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "mk 8/3/2005 11:55",
 	"super" : "TestCase",
 	"traitcomposition" : "TAddTest - {#testTAddWithOccurences. #testTAddTwice. #testTWriteTwice} + TEmptyTest + TIterateTest + TIterateSequencedReadableTest + TPrintTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + TSequencedElementAccessTest + TSubCollectionAccess + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod}) + (TCopySequenceableSameContents - {#testSortBy. #integerCollection}) + TCopySequenceableWithOrWithoutSpecificElements + TCopyTest + (TCopySequenceableWithReplacement - {#testCopyReplaceAllWithManyOccurence. #collectionWith2TimeSubcollection}) + TBeginsEndsWith + TRemoveTest + TSetArithmetic + TIncludesWithIdentityCheckTest + TStructuralEqualityTest + TOccurrencesTest + TSortTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Collections-Tests-Sequenceable"
+}

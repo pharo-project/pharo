@@ -1,14 +1,13 @@
 {
-	"category" : "NECompletion-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"prefValueCase" ],
-	"name" : "NECUntypedModelTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "NECompletion-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"prefValueCase"
+	],
+	"name" : "NECUntypedModelTest",
+	"type" : "normal"
+}

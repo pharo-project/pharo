@@ -1,14 +1,13 @@
 {
-	"category" : "System-Settings-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"settingBrowser" ],
-	"name" : "SettingBrowserTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "System-Settings-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"settingBrowser"
+	],
+	"name" : "SettingBrowserTest",
+	"type" : "normal"
+}

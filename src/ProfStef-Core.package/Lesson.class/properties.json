@@ -1,15 +1,14 @@
 {
-	"category" : "ProfStef-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 1/15/2010 10:25",
+	"super" : "Object",
+	"category" : "ProfStef-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"title",
-		"lesson" ],
+		"lesson"
+	],
 	"name" : "Lesson",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

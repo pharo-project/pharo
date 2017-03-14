@@ -1,16 +1,15 @@
 {
-	"category" : "Kernel-Messaging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tlk 5/5/2006 12:39",
+	"super" : "Object",
+	"category" : "Kernel-Messaging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"shouldBeNil",
-		"arguments" ],
+		"arguments"
+	],
 	"name" : "WeakMessageSend",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "weak" }
+	"type" : "weak"
+}

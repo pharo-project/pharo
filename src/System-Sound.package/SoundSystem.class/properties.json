@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "System-Sound",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Current",
 		"SoundEnabled",
-		"SoundQuickStart" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"SoundQuickStart"
+	],
+	"instvars" : [ ],
 	"name" : "SoundSystem",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

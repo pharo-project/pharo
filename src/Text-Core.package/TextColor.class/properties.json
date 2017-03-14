@@ -1,14 +1,13 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"color" ],
-	"name" : "TextColor",
-	"pools" : [
-		 ],
 	"super" : "TextAttribute",
-	"type" : "normal" }
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"color"
+	],
+	"name" : "TextColor",
+	"type" : "normal"
+}

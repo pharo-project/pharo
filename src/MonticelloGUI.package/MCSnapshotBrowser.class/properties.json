@@ -1,18 +1,17 @@
 {
-	"category" : "MonticelloGUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:52",
+	"super" : "MCCodeTool",
+	"category" : "MonticelloGUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"categorySelection",
 		"classSelection",
 		"protocolSelection",
 		"methodSelection",
-		"switch" ],
+		"switch"
+	],
 	"name" : "MCSnapshotBrowser",
-	"pools" : [
-		 ],
-	"super" : "MCCodeTool",
-	"type" : "normal" }
+	"type" : "normal"
+}

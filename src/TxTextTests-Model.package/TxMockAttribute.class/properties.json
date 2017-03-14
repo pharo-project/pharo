@@ -1,14 +1,11 @@
 {
-	"category" : "TxTextTests-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 10/21/2014 17:20",
-	"instvars" : [
-		 ],
-	"name" : "TxMockAttribute",
-	"pools" : [
-		 ],
 	"super" : "TxAttribute",
-	"type" : "normal" }
+	"category" : "TxTextTests-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxMockAttribute",
+	"type" : "normal"
+}

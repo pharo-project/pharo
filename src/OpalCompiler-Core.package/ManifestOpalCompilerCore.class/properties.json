@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/11/2014 10:13",
-	"instvars" : [
-		 ],
-	"name" : "ManifestOpalCompilerCore",
-	"pools" : [
-		 ],
 	"super" : "PackageManifest",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ManifestOpalCompilerCore",
+	"type" : "normal"
+}

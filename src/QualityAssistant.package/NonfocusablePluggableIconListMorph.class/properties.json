@@ -1,14 +1,11 @@
 {
-	"category" : "QualityAssistant",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 5/6/2015 17:44",
-	"instvars" : [
-		 ],
-	"name" : "NonfocusablePluggableIconListMorph",
-	"pools" : [
-		 ],
 	"super" : "PluggableIconListMorph",
-	"type" : "normal" }
+	"category" : "QualityAssistant",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NonfocusablePluggableIconListMorph",
+	"type" : "normal"
+}

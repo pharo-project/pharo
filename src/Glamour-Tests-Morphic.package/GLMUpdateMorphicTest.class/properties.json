@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Tests-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMMorphicTest",
+	"category" : "Glamour-Tests-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"announcer",
 		"entity",
@@ -14,9 +14,8 @@
 		"tableMorph",
 		"listLabelMorph",
 		"unupdatedListMorph",
-		"labelMorph" ],
+		"labelMorph"
+	],
 	"name" : "GLMUpdateMorphicTest",
-	"pools" : [
-		 ],
-	"super" : "GLMMorphicTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

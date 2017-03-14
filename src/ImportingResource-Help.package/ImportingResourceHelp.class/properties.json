@@ -1,14 +1,11 @@
 {
-	"category" : "ImportingResource-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "ImportingResourceHelp",
-	"pools" : [
-		 ],
 	"super" : "CustomHelp",
-	"type" : "normal" }
+	"category" : "ImportingResource-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ImportingResourceHelp",
+	"type" : "normal"
+}

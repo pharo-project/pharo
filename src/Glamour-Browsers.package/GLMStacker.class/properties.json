@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Browsers-Other",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GLMStacker",
-	"pools" : [
-		 ],
 	"super" : "GLMExplicitBrowser",
-	"type" : "normal" }
+	"category" : "Glamour-Browsers-Other",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMStacker",
+	"type" : "normal"
+}

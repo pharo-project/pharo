@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "SharedPool",
 	"category" : "FreeType-Base",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"LoadCropBitmap",
 		"LoadDefault",
@@ -37,12 +39,9 @@
 		"RenderModeMono",
 		"RenderModeNormal",
 		"StyleFlagBold",
-		"StyleFlagItalic" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"StyleFlagItalic"
+	],
+	"instvars" : [ ],
 	"name" : "FT2Constants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

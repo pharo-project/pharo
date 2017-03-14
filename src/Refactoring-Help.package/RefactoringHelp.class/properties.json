@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 7/27/2016 21:14",
-	"instvars" : [
-		 ],
-	"name" : "RefactoringHelp",
-	"pools" : [
-		 ],
 	"super" : "CustomHelp",
-	"type" : "normal" }
+	"category" : "Refactoring-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RefactoringHelp",
+	"type" : "normal"
+}

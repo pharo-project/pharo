@@ -1,14 +1,11 @@
 {
-	"category" : "NodeNavigation-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "NNavDirectionParent",
-	"pools" : [
-		 ],
 	"super" : "NNavDirection",
-	"type" : "normal" }
+	"category" : "NodeNavigation-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NNavDirectionParent",
+	"type" : "normal"
+}

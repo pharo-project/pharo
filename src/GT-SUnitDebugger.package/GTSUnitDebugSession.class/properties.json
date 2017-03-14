@@ -1,18 +1,17 @@
 {
-	"category" : "GT-SUnitDebugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 10:44",
+	"super" : "DebugSession",
+	"category" : "GT-SUnitDebugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"assertionContext",
 		"expectedResult",
 		"actualResult",
 		"testContext",
-		"assertionCallerContext" ],
+		"assertionCallerContext"
+	],
 	"name" : "GTSUnitDebugSession",
-	"pools" : [
-		 ],
-	"super" : "DebugSession",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "TorstenBergmann 2/3/2014 23:26",
+	"super" : "FLSerializationTest",
 	"category" : "FuelTests",
 	"classinstvars" : [
-		"interval" ],
+		"interval"
+	],
+	"pools" : [ ],
 	"classvars" : [
-		"ClassVariableForTesting" ],
-	"commentStamp" : "TorstenBergmann 2/3/2014 23:26",
-	"instvars" : [
-		 ],
+		"ClassVariableForTesting"
+	],
+	"instvars" : [ ],
 	"name" : "FLBlockClosureSerializationTest",
-	"pools" : [
-		 ],
-	"super" : "FLSerializationTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

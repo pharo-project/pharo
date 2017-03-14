@@ -1,10 +1,10 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/2/2016 13:37",
+	"super" : "RBValueNode",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"left",
 		"right",
@@ -12,9 +12,8 @@
 		"arguments",
 		"bar",
 		"body",
-		"scope" ],
+		"scope"
+	],
 	"name" : "RBBlockNode",
-	"pools" : [
-		 ],
-	"super" : "RBValueNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

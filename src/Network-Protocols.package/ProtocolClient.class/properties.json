@@ -1,18 +1,17 @@
 {
-	"category" : "Network-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gk 12/13/2005 00:34",
+	"super" : "Object",
+	"category" : "Network-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"connectInfo",
 		"lastResponse",
 		"pendingResponses",
-		"progressObservers" ],
+		"progressObservers"
+	],
 	"name" : "ProtocolClient",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

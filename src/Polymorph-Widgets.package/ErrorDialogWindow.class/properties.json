@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 14:51",
-	"instvars" : [
-		 ],
-	"name" : "ErrorDialogWindow",
-	"pools" : [
-		 ],
 	"super" : "MessageDialogWindow",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ErrorDialogWindow",
+	"type" : "normal"
+}

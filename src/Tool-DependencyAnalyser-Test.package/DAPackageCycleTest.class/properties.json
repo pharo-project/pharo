@@ -1,17 +1,16 @@
 {
-	"category" : "Tool-DependencyAnalyser-Test",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Tool-DependencyAnalyser-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"aPDPackageCycle",
 		"packageA",
 		"packageB",
-		"packageC" ],
+		"packageC"
+	],
 	"name" : "DAPackageCycleTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-GroupManager-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:10",
-	"instvars" : [
-		 ],
-	"name" : "AGroupHasBeenRenamed",
-	"pools" : [
-		 ],
 	"super" : "AbstractGroupAnnouncement",
-	"type" : "normal" }
+	"category" : "Nautilus-GroupManager-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AGroupHasBeenRenamed",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Core-Worlds",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "dgd 4/5/2004 19:07",
-	"instvars" : [
-		 ],
-	"name" : "DefaultExternalDropHandler",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Morphic-Core-Worlds",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DefaultExternalDropHandler",
+	"type" : "normal"
+}

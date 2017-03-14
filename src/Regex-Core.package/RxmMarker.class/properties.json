@@ -1,14 +1,13 @@
 {
-	"category" : "Regex-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Tbn 11/12/2010 23:14",
-	"instvars" : [
-		"index" ],
-	"name" : "RxmMarker",
-	"pools" : [
-		 ],
 	"super" : "RxmLink",
-	"type" : "normal" }
+	"category" : "Regex-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"index"
+	],
+	"name" : "RxmMarker",
+	"type" : "normal"
+}

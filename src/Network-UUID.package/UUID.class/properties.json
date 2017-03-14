@@ -1,14 +1,11 @@
 {
-	"category" : "Network-UUID",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/12/2017 10:27",
-	"instvars" : [
-		 ],
-	"name" : "UUID",
-	"pools" : [
-		 ],
 	"super" : "ByteArray",
-	"type" : "bytes" }
+	"category" : "Network-UUID",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UUID",
+	"type" : "bytes"
+}

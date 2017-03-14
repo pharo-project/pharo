@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/20/2016 22:10",
-	"instvars" : [
-		 ],
-	"name" : "ExecutionDisplayMorph",
-	"pools" : [
-		 ],
 	"super" : "BorderedMorph",
-	"type" : "normal" }
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ExecutionDisplayMorph",
+	"type" : "normal"
+}

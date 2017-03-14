@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgnacioSniechowski 2/25/2015 08:32",
-	"instvars" : [
-		 ],
-	"name" : "SpecExamples",
-	"pools" : [
-		 ],
 	"super" : "SpecHelpTopics",
-	"type" : "normal" }
+	"category" : "Spec-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecExamples",
+	"type" : "normal"
+}

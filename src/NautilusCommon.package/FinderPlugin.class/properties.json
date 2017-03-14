@@ -1,15 +1,14 @@
 {
-	"category" : "NautilusCommon-Plugin",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractNautilusPlugin",
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"finder",
-		"finderui" ],
+		"finderui"
+	],
 	"name" : "FinderPlugin",
-	"pools" : [
-		 ],
-	"super" : "AbstractNautilusPlugin",
-	"type" : "normal" }
+	"type" : "normal"
+}

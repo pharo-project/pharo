@@ -1,14 +1,13 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 7/26/2011 14:02",
-	"instvars" : [
-		"parent" ],
-	"name" : "RGElementDefinition",
-	"pools" : [
-		 ],
 	"super" : "RGDefinition",
-	"type" : "normal" }
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"parent"
+	],
+	"name" : "RGElementDefinition",
+	"type" : "normal"
+}

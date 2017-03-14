@@ -1,14 +1,13 @@
 {
-	"category" : "FuzzyMatcher-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 6/11/2016 19:43",
-	"instvars" : [
-		"fuzzyClass" ],
-	"name" : "FuzzyMatcherTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "FuzzyMatcher-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fuzzyClass"
+	],
+	"name" : "FuzzyMatcherTests",
+	"type" : "normal"
+}

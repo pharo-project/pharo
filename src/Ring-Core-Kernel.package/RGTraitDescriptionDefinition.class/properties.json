@@ -1,14 +1,13 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 4/19/2011 16:02",
-	"instvars" : [
-		"users" ],
-	"name" : "RGTraitDescriptionDefinition",
-	"pools" : [
-		 ],
 	"super" : "RGBehaviorDefinition",
-	"type" : "normal" }
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"users"
+	],
+	"name" : "RGTraitDescriptionDefinition",
+	"type" : "normal"
+}

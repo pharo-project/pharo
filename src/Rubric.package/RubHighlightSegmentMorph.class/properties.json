@@ -1,14 +1,11 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 1/12/2015 17:14",
-	"instvars" : [
-		 ],
-	"name" : "RubHighlightSegmentMorph",
-	"pools" : [
-		 ],
 	"super" : "RubTextSegmentMorph",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RubHighlightSegmentMorph",
+	"type" : "normal"
+}
