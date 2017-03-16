@@ -1,4 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19839 add support for signedByteAt:signedByteAt:put:
-	https://pharo.fogbugz.com/f/cases/19839'
+ ^ '19844 remove some trivial duplicated code from TabsExample>>#open
+	https://pharo.fogbugz.com/f/cases/19844
+
+19845 add printOn: to ReflectiveMethod
+	https://pharo.fogbugz.com/f/cases/19845
+
+19846 Make spotter work with ReflectiveMethods.
+	https://pharo.fogbugz.com/f/cases/19846'

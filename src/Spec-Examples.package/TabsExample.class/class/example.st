@@ -1,3 +1,3 @@
 examples
 example
-	^ self new openWithSpec
+	^ self open
