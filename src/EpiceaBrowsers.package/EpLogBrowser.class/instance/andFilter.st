@@ -1,4 +1,0 @@
-accessing filters
-andFilter
-
-	^ andFilter

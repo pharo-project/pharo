@@ -1,4 +1,0 @@
-accessing
-headReference
-
-	^ compositeStore headReference

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "MartinDias 2/21/2017 16:48",
+	"super" : "EpEnabledIntegrationTest",
+	"category" : "EpiceaBrowsersTests-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpLogBrowserOperationFactoryTest",
+	"type" : "normal"
+}

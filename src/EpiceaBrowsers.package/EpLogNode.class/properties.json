@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "MartinDias 1/20/2017 13:24",
 	"super" : "Object",
-	"category" : "EpiceaBrowsers-Unified",
+	"category" : "EpiceaBrowsers-UI-Graph",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

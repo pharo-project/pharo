@@ -1,3 +1,0 @@
-accessing
-entries
-	^ self subclassResponsibility

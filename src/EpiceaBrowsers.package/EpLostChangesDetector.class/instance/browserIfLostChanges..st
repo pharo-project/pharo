@@ -9,7 +9,7 @@ browserIfLostChanges: aBlock
 	freshLog headReference = lastKnowHeadReferenceOrNil ifTrue: [ ^ self ]. "No lost events"
 
 	"Then, there are lost events"
-	browser := EpLogBrowser newWithLog: freshLog.
+	browser := EpLogBrowserModel newWithLog: freshLog.
 
 	"Hide known events... i.e. show only lost events"
 	lastKnowHeadReferenceOrNil isNull ifFalse: [
@@ -26,4 +26,4 @@ browserIfLostChanges: aBlock
 		refresh;
 		title: 'Epicea - Lost Changes Detected'.
 		
-	aBlock value: browser.
+	browser filteredEntries ifNotEmpty: [ aBlock value: browser ].

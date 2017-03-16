@@ -1,3 +1,3 @@
 operations
 browseItem 
-	entry content accept: EpBrowseVisitor new
+	self eventAccept: EpBrowseVisitor new

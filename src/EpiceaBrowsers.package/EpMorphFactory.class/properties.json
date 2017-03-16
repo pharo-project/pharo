@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "MartinDias 8/11/2016 23:03",
 	"super" : "Object",
-	"category" : "EpiceaBrowsers-Common",
+	"category" : "EpiceaBrowsers-UI-Common",
 	"classinstvars" : [
 		"defaultInstance"
 	],

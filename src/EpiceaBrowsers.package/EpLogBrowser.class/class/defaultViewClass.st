@@ -1,4 +1,0 @@
-accessing
-defaultViewClass
-
-	^ EpPriorView

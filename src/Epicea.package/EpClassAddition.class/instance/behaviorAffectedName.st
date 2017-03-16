@@ -1,4 +1,4 @@
 accessing
 behaviorAffectedName
 
-	^ self classAffectedName 
+	^ class name

@@ -1,5 +1,6 @@
 accessing
 addEntryWith: anEvent tags: blockClosureForCustomTags
+	"Add an event with the specified tags"
 
 	| newEntry |
 	newEntry := OmEntry content: anEvent.

@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "MartinDias 8/13/2016 17:13",
 	"super" : "ComposableModel",
-	"category" : "EpiceaBrowsers-Unified",
+	"category" : "EpiceaBrowsers-UI-Unified",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

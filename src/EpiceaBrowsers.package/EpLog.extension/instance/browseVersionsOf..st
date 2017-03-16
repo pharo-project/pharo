@@ -2,7 +2,7 @@
 browseVersionsOf: aMethod
 	"Browse all versions of aMethod from my head."
 	
-	^ (EpLogBrowser newWithLog: self)
+	^ (EpLogBrowserModel newWithLog: self)
 			addFilter: (EpPluggableFilter isMethod: aMethod);
 			refresh;
-			open
+			openWithSpec

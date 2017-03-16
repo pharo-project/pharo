@@ -1,4 +1,0 @@
-accessing
-instanceVariableNamesOfClassAffected
-
-	^ class instVarNames 

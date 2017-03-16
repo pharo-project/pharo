@@ -3,9 +3,7 @@ initializePresenter
 
 	super initializePresenter.
 	
-	logModel viewClass: EpLogBrowser defaultViewClass.
-	
-	logNodesModel logNodesTreeModel 
+	logNodesModel logNodesTreeModel
 		whenSelectedItemChanged: [ :items | self refreshWithLogSelected: items ].
 		
 	self initializeRefreshOnSessionUpdate.

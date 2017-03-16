@@ -8,8 +8,10 @@ testBasicExport
 		outputLog: outputLog;
 		fileOut: selection.
 	
-	outputResult := (outputLog entries collect: [ :each | each content ]) asSet.
+	outputResult := outputLog events.
 	
-	self assert: outputLog entries size equals: selection size.
-	self assert: outputResult equals: (selection collect: [ :each | each content ]) asSet
+	self assert: outputResult size equals: selection size.
+	self 
+		assert: outputResult asSet 
+		equals: (selection collect: [ :each | each content ]) asSet
 		

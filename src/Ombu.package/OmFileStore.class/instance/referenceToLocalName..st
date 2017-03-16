@@ -1,4 +1,5 @@
-refreshing
+accessing
 referenceToLocalName: aString
 
-	^ OmReference globalName: globalName localName: aString
+	self flag: #fix. "Remove this method (moved to superclass)"
+	^ OmReference globalName: self globalName localName: aString

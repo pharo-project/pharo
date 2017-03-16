@@ -1,4 +1,0 @@
-accessing
-nameOfTraitAdded
-
-	^ trait name

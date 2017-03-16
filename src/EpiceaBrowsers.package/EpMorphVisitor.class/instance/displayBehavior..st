@@ -1,4 +1,4 @@
 private
 displayBehavior: aString 
 
-	^ { EpMorphFactory default emphasizedStringFor: aString }
+	^ { self morphFactory emphasizedStringFor: aString }

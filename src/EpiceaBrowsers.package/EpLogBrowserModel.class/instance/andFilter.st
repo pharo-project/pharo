@@ -1,0 +1,4 @@
+accessing
+andFilter
+
+	^ andFilter

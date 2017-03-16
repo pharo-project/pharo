@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "EpEnabledIntegrationTest",
-	"category" : "EpiceaBrowsersTests-Core",
+	"category" : "EpiceaBrowsersTests-Integration",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

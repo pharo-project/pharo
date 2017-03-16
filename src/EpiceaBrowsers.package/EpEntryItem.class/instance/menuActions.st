@@ -1,4 +1,4 @@
-populating browser
+private
 menuActions
 
-	^ (entry content accept: EpMenuActionsVisitor new), self defaultMenuActions.
+	^ (self eventAccept: EpMenuActionsVisitor new), self defaultMenuActions.

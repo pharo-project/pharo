@@ -1,3 +1,3 @@
 visitor
 visitTraitRemoved: aTraitRemoval
-	environment removeClassNamed: aTraitRemoval traitAffectedName
+	environment removeClassNamed: aTraitRemoval behaviorAffectedName

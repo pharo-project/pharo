@@ -1,1 +1,0 @@
-I show an editable list of entries.

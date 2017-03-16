@@ -9,5 +9,5 @@
 	"type" : "normal",
 	"classinstvars" : [ ],
 	"pools" : [ ],
-	"category" : "EpiceaBrowsers-Log-Visitors"
+	"category" : "EpiceaBrowsers-Visitors"
 }

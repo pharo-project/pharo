@@ -1,4 +1,0 @@
-accessing
-newCategoryOfTraitAffected
-
-	^ newTrait category

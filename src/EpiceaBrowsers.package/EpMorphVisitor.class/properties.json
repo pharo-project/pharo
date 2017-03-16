@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "MartinDias 10/27/2014 17:59",
 	"super" : "EpEntryContentVisitor",
-	"category" : "EpiceaBrowsers-Log-Visitors",
+	"category" : "EpiceaBrowsers-Visitors",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

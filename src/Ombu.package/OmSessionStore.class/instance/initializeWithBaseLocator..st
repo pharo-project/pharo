@@ -7,8 +7,6 @@ initializeWithBaseLocator: aDirectoryFileLocator
 	self store. "Force initialization"
 	headReference := self store headReference.
 	
-	alternativeStore := OmDirectoryStore in: baseLocator.
-	
 	self subscribeToSnapshotDone.
 	
 	

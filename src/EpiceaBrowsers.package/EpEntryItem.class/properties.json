@@ -1,11 +1,12 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "EpLogBrowserItem",
-	"category" : "EpiceaBrowsers-Log-Items",
+	"super" : "Model",
+	"category" : "EpiceaBrowsers-UI-Log",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
+		"browser",
 		"entry",
 		"triggerItems"
 	],
