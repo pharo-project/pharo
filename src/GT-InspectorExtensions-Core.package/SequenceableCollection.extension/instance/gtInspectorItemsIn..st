@@ -3,7 +3,6 @@ gtInspectorItemsIn: composite
 	^ composite fastTable
 		title: 'Items';
 		display: [ self ];
-		useCache;
 		beMultiple;
 		enableElementIndex;
 		wantsAutomaticRefresh: true;

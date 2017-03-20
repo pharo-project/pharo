@@ -1,5 +1,5 @@
 pharo - scripts
-script60447
+script60448
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -98,12 +98,12 @@ GT-Debugger-AndreiChis.379.mcz
 GT-EventRecorder-AndreiChis.80.mcz
 GT-EventRecorder-Tests-TheIntegrator.40.mcz
 GT-Inspector-AndreiChis.465.mcz
-GT-InspectorExtensions-Core-AndreiChis.256.mcz
+GT-InspectorExtensions-Core-TheIntegrator.258.mcz
 GT-Playground-AndreiChis.145.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
 GT-Spotter-TheIntegrator.411.mcz
 GT-Spotter-EventRecorder-AndreiChis.114.mcz
-GT-SpotterExtensions-Core-TheIntegrator.222.mcz
+GT-SpotterExtensions-Core-TheIntegrator.224.mcz
 GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-AndreiChis.60.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
@@ -229,7 +229,7 @@ Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
 NautilusCommon-TheIntegrator.327.mcz
 NautilusGroupAutoBuilder-TheIntegrator.20.mcz
-NautilusRefactoring-TheIntegrator.312.mcz
+NautilusRefactoring-TheIntegrator.315.mcz
 Network-Kernel-TheIntegrator.136.mcz
 Network-MIME-TheIntegrator.73.mcz
 Network-Mail-TheIntegrator.52.mcz
