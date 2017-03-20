@@ -1,6 +1,6 @@
 private
 hookFor: aLink
-	| receiver hook |
+	| receiver hook arguments |
 	
 	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^RBSequenceNode new ].
 	
@@ -11,10 +11,12 @@ hookFor: aLink
 				ifTrue: [RFLiteralVariableNode value: aLink metaObject]
 				ifFalse: [RBMessageNode receiver: (RFLiteralVariableNode value: aLink)
 											 selector: #metaObject ]].
+	arguments := self generateArguments: aLink.
+	
 	hook := RFMessageNode 
 		receiver: receiver
 		selector: aLink selector 
-		arguments: (aLink arguments collect: [: each | self genReification: each for: aLink]).
+		arguments: arguments.
 	
 	(self hasOption: #optionOneShot for: aLink) ifTrue: [
 			hook := RBSequenceNode statements: {
