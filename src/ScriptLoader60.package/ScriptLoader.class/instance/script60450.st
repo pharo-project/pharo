@@ -1,5 +1,5 @@
 pharo - scripts
-script60449
+script60450
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -389,7 +389,7 @@ Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
 Tool-DependencyAnalyser-UI-ChristopheDemarey.54.mcz
 Tool-Diff-TheIntegrator.47.mcz
-Tool-ExternalBrowser-TheIntegrator.57.mcz
+Tool-ExternalBrowser-TheIntegrator.59.mcz
 Tool-FileList-TheIntegrator.99.mcz
 Tool-FileList-Tests-EstebanLorenzano.3.mcz
 Tool-Finder-TheIntegrator.78.mcz
