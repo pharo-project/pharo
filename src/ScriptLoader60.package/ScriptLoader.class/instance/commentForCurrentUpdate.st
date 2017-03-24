@@ -1,4 +1,4 @@
 public
 commentForCurrentUpdate
- ^ '19859 Fix FileList services (readStream to readOnlyStream)
-	https://pharo.fogbugz.com/f/cases/19859'
+ ^ '19863  RBMoveMethodToClassRefactoring reset method protocol
+	https://pharo.fogbugz.com/f/cases/19863'
