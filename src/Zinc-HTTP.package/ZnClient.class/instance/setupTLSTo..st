@@ -9,6 +9,11 @@ setupTLSTo: url
 			response isSuccess ifFalse: [ self error: 'Failed to CONNECT to proxy for TLS/SSL' ].
 			connection := ZnNetworkingUtils secureSocketStreamOn: connection socket.
 			request := originalRequest ].
-	self certificate ifNotNil: [ :certificate | 
-		connection sslSession certificateName: certificate ].
+	
+	connection sslSession certificateName: self certificate.
+	
+	[ connection sslSession serverName: url host ] 
+		on: PrimitiveFailed 
+		do: [ :error | "log it?" ].
+		
 	connection connect

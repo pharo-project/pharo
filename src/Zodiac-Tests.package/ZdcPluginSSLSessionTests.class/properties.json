@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "HenrikNergaard 3/27/2017 09:23",
+	"super" : "TestCase",
+	"category" : "Zodiac-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"session"
+	],
+	"name" : "ZdcPluginSSLSessionTests",
+	"type" : "normal"
+}

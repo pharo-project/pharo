@@ -1,5 +1,5 @@
 pharo - scripts
-script60451
+script60452
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -269,7 +269,7 @@ Random-Core-TheIntegrator.10.mcz
 Random-Tests-TheIntegrator.6.mcz
 RecentSubmissions-TheIntegrator.246.mcz
 Refactoring-Changes-TheIntegrator.70.mcz
-Refactoring-Core-TheIntegrator.341.mcz
+Refactoring-Core-TheIntegrator.343.mcz
 Refactoring-Critics-TheIntegrator.300.mcz
 Refactoring-Environment-TheIntegrator.88.mcz
 Refactoring-Help-TheIntegrator.7.mcz
@@ -388,7 +388,7 @@ Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
 Tool-DependencyAnalyser-UI-ChristopheDemarey.54.mcz
-Tool-Diff-TheIntegrator.47.mcz
+Tool-Diff-TheIntegrator.49.mcz
 Tool-ExternalBrowser-TheIntegrator.59.mcz
 Tool-FileList-TheIntegrator.99.mcz
 Tool-FileList-Tests-EstebanLorenzano.3.mcz
@@ -429,15 +429,15 @@ Versionner-Tests-Resources-MarcusDenker.18.mcz
 WorldMenuHelp-TheIntegrator.2.mcz
 WriteBarrierTests-TheIntegrator.20.mcz
 Zinc-Character-Encoding-Core-SvenVanCaekenberghe.46.mcz
-Zinc-Character-Encoding-Tests-SvenVanCaekenberghe.29.mcz
+Zinc-Character-Encoding-Tests-TheIntegrator.31.mcz
 Zinc-FileSystem-TheIntegrator.15.mcz
-Zinc-HTTP-TheIntegrator.455.mcz
+Zinc-HTTP-TheIntegrator.459.mcz
 Zinc-Resource-Meta-Core-SvenVanCaekenberghe.61.mcz
 Zinc-Resource-Meta-FileSystem-SvenVanCaekenberghe.8.mcz
 Zinc-Resource-Meta-Tests-SvenVanCaekenberghe.37.mcz
 Zinc-Tests-SvenVanCaekenberghe.238.mcz
-Zinc-Zodiac-SvenVanCaekenberghe.36.mcz
-Zodiac-Core-SvenVanCaekenberghe.42.mcz
+Zinc-Zodiac-TheIntegrator.38.mcz
+Zodiac-Core-TheIntegrator.46.mcz
 Zodiac-Extra-StephaneDucasse.10.mcz
-Zodiac-Tests-SvenVanCaekenberghe.13.mcz'
+Zodiac-Tests-TheIntegrator.15.mcz'
 findTokens: String lf , String cr
