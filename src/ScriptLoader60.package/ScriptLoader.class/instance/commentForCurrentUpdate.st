@@ -1,13 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19874 URL in ZnCharacterEncoderTests>>#testByteEncoderFromUrl  must be changed
-	https://pharo.fogbugz.com/f/cases/19874
+ ^ '19873 Breakpoint method icon is fail when breakpoint set on ast node
+	https://pharo.fogbugz.com/f/cases/19873
 
-19868 RBMoveMethodToClassRefactoring not works with class side methods
-	https://pharo.fogbugz.com/f/cases/19868
+19871 TabMorph could fail if it removed too fast while content is buiding in background
+	https://pharo.fogbugz.com/f/cases/19871
 
-19862 Evaluating code in a diff morph raise an error
-	https://pharo.fogbugz.com/f/cases/19862
-
-19864 Add support for Server Name Indication (SNI) to Zodiac/SSLPlugin
-	https://pharo.fogbugz.com/f/cases/19864'
+19876 Improve FuzzyMatcher
+	https://pharo.fogbugz.com/f/cases/19876'

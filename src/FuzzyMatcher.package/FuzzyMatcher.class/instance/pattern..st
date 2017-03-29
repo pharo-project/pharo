@@ -1,5 +1,5 @@
-initialization
-setPattern: aString
+accessing
+pattern: aString
 
 	pattern := aString.
 	lowercasePattern := pattern asLowercase.

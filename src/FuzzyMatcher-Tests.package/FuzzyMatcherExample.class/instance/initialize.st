@@ -18,6 +18,9 @@ initialize
 		yourself.
 				
 	textModel := RubScrolledTextModel new.
-	textModel announcer when: RubEditsStateChangedInModel send: #textChanged to: self.
-	stringMorph := '' asStringMorph.
-	stringMorph font: (LogicalFont familyName: self defaultFontFamiliyName pointSize: 16)
+	textModel announcer when: RubEditsStateChangedInModel 
+		send: #update to: self.
+	
+	stringMorph := StringMorph contents: '' font: self aquireFont
+		
+	

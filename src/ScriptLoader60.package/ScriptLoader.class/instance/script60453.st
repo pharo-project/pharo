@@ -1,5 +1,5 @@
 pharo - scripts
-script60452
+script60453
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -91,8 +91,8 @@ FuelPlatform-Pharo-Core-MaxLeske.1.mcz
 FuelSystem-FileRegistry-TheIntegrator.4.mcz
 FuelTests-MaxLeske.415.mcz
 FuelTools-Debugger-MaxLeske.14.mcz
-FuzzyMatcher-TheIntegrator.18.mcz
-FuzzyMatcher-Tests-TheIntegrator.5.mcz
+FuzzyMatcher-TheIntegrator.20.mcz
+FuzzyMatcher-Tests-TheIntegrator.8.mcz
 GT-BytecodeDebugger-AndreiChis.36.mcz
 GT-Debugger-AndreiChis.379.mcz
 GT-EventRecorder-AndreiChis.80.mcz
@@ -210,7 +210,7 @@ Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.79.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
 Morphic-Widgets-Scrolling-TheIntegrator.37.mcz
-Morphic-Widgets-Tabs-TheIntegrator.50.mcz
+Morphic-Widgets-Tabs-TheIntegrator.52.mcz
 Morphic-Widgets-Taskbar-TheIntegrator.27.mcz
 Morphic-Widgets-TickList-TheIntegrator.2.mcz
 Morphic-Widgets-Tree-TheIntegrator.66.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1362.mcz
+Nautilus-TheIntegrator.1364.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
@@ -279,11 +279,11 @@ Refactoring-Tests-Critics-TheIntegrator.54.mcz
 Refactoring-Tests-Environment-TheIntegrator.30.mcz
 ReflectionMirrors-Primitives-TheIntegrator.9.mcz
 ReflectionMirrors-Primitives-Tests-TheIntegrator.6.mcz
-Reflectivity-TheIntegrator.333.mcz
-Reflectivity-Examples-TheIntegrator.50.mcz
-Reflectivity-Tests-TheIntegrator.227.mcz
-Reflectivity-Tools-TheIntegrator.76.mcz
-Reflectivity-Tools-Tests-TheIntegrator.29.mcz
+Reflectivity-TheIntegrator.335.mcz
+Reflectivity-Examples-TheIntegrator.51.mcz
+Reflectivity-Tests-TheIntegrator.228.mcz
+Reflectivity-Tools-TheIntegrator.77.mcz
+Reflectivity-Tools-Tests-TheIntegrator.30.mcz
 Regex-Core-TheIntegrator.40.mcz
 Regex-Help-MarcusDenker.5.mcz
 Regex-Tests-Core-TheIntegrator.11.mcz

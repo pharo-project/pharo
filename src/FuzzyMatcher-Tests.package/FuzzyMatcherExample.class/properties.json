@@ -13,6 +13,6 @@
 		"pattern",
 		"stringMorph"
 	],
-	"name" : "FuzzyExample",
+	"name" : "FuzzyMatcherExample",
 	"type" : "normal"
 }

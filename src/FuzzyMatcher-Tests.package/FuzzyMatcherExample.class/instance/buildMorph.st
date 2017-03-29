@@ -9,7 +9,7 @@ buildMorph
 		yourself.
 	
 	textModel := textModel newTextField
-		textFont: (LogicalFont familyName: self defaultFontFamiliyName pointSize: 16);
+		textFont: self aquireFont;
 		hResizing: #spaceFill;
 		yourself.
 		

@@ -1,4 +1,4 @@
-opening
-setPattern: aString
+accessing
+pattern: aString
 
 	textModel setText: aString.
