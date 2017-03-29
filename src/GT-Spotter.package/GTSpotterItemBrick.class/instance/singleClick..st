@@ -1,4 +1,4 @@
-event handling
+morphic - events
 singleClick: evt
 
-	self stepModel selected: self candidateLink dueTo: #singleClick
+	self stepModel select: self candidateLink dueTo: #singleClick

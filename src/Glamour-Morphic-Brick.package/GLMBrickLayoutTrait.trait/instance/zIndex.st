@@ -1,4 +1,4 @@
 brick-layout-properties
 zIndex
 
-	^ self layout zIndex
+	^ self layout zIndex brickValue: self

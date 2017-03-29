@@ -1,4 +1,4 @@
-event handling
-doubleClick: evt
+morphic - events
+doubleClick: anEvent
 
 	self stepModel actDueTo: #doubleClick

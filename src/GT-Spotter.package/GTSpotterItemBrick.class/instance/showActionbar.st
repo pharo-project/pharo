@@ -1,7 +1,6 @@
 actions
 showActionbar
+	self shouldShowActionbar
+		ifFalse: [ ^ self ].
 
-	self actionbarBrick hasStepModel
-		ifFalse: [ self actionbarBrick stepModel: self stepModel ].
-	
 	self actionbarBrick visible: true

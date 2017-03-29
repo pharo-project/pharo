@@ -4,4 +4,4 @@ hasCandidates
 	false otherwise"
 	<return: #Boolean>
 	
-	^ self candidates isEmpty not
+	^ self candidates isNotEmpty

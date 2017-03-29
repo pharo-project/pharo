@@ -1,0 +1,1 @@
+I am a special renderer of non-rectangular but polygon bricks

@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "AliakseiSyrel 3/21/2015 19:45",
 	"super" : "GLMBrickThemerModule",
-	"category" : "Glamour-Morphic-Brick-Theme",
+	"category" : "Glamour-Morphic-Brick-Widgets-UI-Popup-Themer",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

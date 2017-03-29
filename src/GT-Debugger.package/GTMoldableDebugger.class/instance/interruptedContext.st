@@ -1,4 +1,4 @@
 accessing context
 interruptedContext
 
-	^ self session context
+	^ self session interruptedContext

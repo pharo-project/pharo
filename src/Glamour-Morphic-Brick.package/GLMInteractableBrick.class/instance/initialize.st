@@ -6,6 +6,4 @@ initialize
 	isPressed := false.
 	isSelected := false.
 	
-	self renderer: GLMInteractableBrickRenderer new.
-	
 	self disable.

@@ -1,10 +1,15 @@
 private-shadow
 leftShadowOf: aBrick on: aCanvas
-	|gradient width|
+	| gradient width origin offset |
+	
 	width := aBrick shadowWidth.
+	offset := (width negated @ width) / 2.0.
+	origin := aBrick brickBounds topLeft + offset + aBrick shadowOffset.
+
 	"draw left shadow"
 	gradient := (self shadowGradientFor: aBrick)
-		origin: aBrick brickBounds leftCenter + (width@0);
-		direction: (width@0)negated;
+		origin: origin - offset + (width / 2.0 @ 0);
+		direction: (width @ 0) negated;
 		yourself.
-	aCanvas fillRectangle: ((aBrick brickBounds origin + (0@width)) corner: (aBrick brickBounds origin + (width@width negated) + (0@ aBrick brickBounds height))) fillStyle: gradient.
+
+	aCanvas fillRectangle: (origin extent: width @ (aBrick height - width)) fillStyle: gradient.

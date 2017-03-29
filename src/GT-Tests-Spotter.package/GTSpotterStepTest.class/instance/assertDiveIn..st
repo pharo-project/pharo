@@ -13,7 +13,7 @@ assertDiveIn: aSelector
 	self assert: link processor == currentProcessor.
 
 	" set the selection - like the UI would do "
-	self shouldnt: [ spotter currentStep selected: link ] raise: Error.
+	self shouldnt: [ spotter currentStep select: link ] raise: Error.
 	self assert: spotter currentStep selected == link.
 	
 	" perform the dive operation - like the UI would do "

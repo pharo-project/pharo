@@ -10,20 +10,18 @@ drawSubmorphsOn: aCanvas
 	area width = 0 | (area height = 0) ifTrue: [ 
 			"draw nothing"
 			^ self ].
-	
+
 	zIndexedBricks := OrderedCollection new.
 	
 	self subbricks
 		do: [ :each | 
 			| intersection canvas globalBounds |
-			each ifNotNil: [ self flag: 'fix nil case'.
-			globalBounds := each isBrick
-				ifTrue: [ each globalBounds ]
-				ifFalse: [ each fullBounds ].
-				
+			each ifNotNil: [
+			globalBounds := each globalClippingBounds.
+
 			(area intersects: globalBounds) ifTrue: [
 				| zIndex |
-				zIndex := each layoutProperties zIndex.
+				zIndex := each layoutProperties zIndex brickValue: each.
 				zIndex = 1 ifTrue: [
 					"immediately draw ones with the lowest possible z-index.
 					With this approach performance doesn't degrade"
@@ -33,16 +31,13 @@ drawSubmorphsOn: aCanvas
 					"if z-index is not 1 we add it to collection, in order to sort and draw as second attempt"
 				ifFalse: [ zIndexedBricks add: each ] ] ] ].
 		
-		"z-index drawing section"
-		zIndexedBricks sort: [ :first :second | first layoutProperties zIndex < second layoutProperties zIndex ].
+		zIndexedBricks sort: [ :first :second | (first layoutProperties zIndex brickValue: first) < (second layoutProperties zIndex brickValue: second) ].
 		
 		zIndexedBricks do: [ :each |
 			| intersection canvas globalBounds |
-			each ifNotNil: [ self flag: 'fix nil case'.
-			globalBounds := each isBrick
-				ifTrue: [ each globalBounds ]
-				ifFalse: [ each fullBounds ].
-				
+			each ifNotNil: [
+			globalBounds := each globalClippingBounds.
+
 			intersection := area intersect: globalBounds ifNone: (0 @ 0 extent: 0 @ 0).
 			canvas := aCanvas copyClipRect: intersection.
 			each fullDrawOn: canvas ] ]

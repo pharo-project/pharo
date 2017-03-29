@@ -1,0 +1,3 @@
+protocol
+takeKeyboardFocus
+	self rubric takeKeyboardFocus

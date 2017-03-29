@@ -1,4 +1,4 @@
-initialization
+popup - listeners
 unsubscribeListeners
 
-	self activeHand removeEventListener: self
+	self removeCloserListener

@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "",
+	"commentStamp" : "AliakseiSyrel 3/5/2017 16:54",
 	"super" : "GLMInteractableBrick",
 	"category" : "GT-Spotter-UI",
 	"classinstvars" : [ ],
@@ -8,9 +8,9 @@
 	"instvars" : [
 		"iconBrick",
 		"labelBrick",
+		"actionbarBrick",
 		"stepModel",
-		"candidateLink",
-		"actionbarBrick"
+		"candidateLink"
 	],
 	"name" : "GTSpotterItemBrick",
 	"type" : "normal"

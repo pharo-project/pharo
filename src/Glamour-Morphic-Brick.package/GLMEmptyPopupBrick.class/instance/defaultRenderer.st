@@ -1,0 +1,3 @@
+initialization
+defaultRenderer
+	^ GLMBrickAreaRenderer new

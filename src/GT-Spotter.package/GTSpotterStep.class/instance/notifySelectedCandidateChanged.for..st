@@ -1,7 +1,11 @@
 notifying
-notifySelectedCandidateChanged: aDoubleLink for: anEventType
-	|candidate|
+notifySelectedCandidateChanged: aCandidateLink for: anEventType
+	| aCandidate |
 	
-	candidate := aDoubleLink ifNotNil: [ :o | o value ].
-	self announcer announce: (GTSpotterSelectedCandidateChanged new selected: candidate).
-	self spotter notifyCandidateSelected: candidate for: anEventType
+	self
+		assert: [ aCandidateLink isNotNil ]
+		description: [ 'aCandidateLink must not be nil' ].
+
+	aCandidate := aCandidateLink candidate.
+	self announcer announce: (GTSpotterSelectedCandidateChanged new select: aCandidate).
+	self spotter notifyCandidateSelected: aCandidate for: anEventType
