@@ -88,7 +88,8 @@ newSpecialObjectsArray
 							#'insufficient C memory' #'not found' #'bad method'
 							#'internal error in named primitive machinery'
 							#'object may move' #'resource limit exceeded'
-							#'object is pinned' #'primitive write beyond end of object').
+							#'object is pinned' #'primitive write beyond end of object'
+							#'object moved' #'object not pinned' #'callback error').
 	"53 to 55 are for Alien"
 	newArray at: 53 put: (self at: #Alien ifAbsent: []).
 	newArray at: 54 put: #invokeCallbackContext:. "use invokeCallback:stack:registers:jmpbuf: for old Alien callbacks."

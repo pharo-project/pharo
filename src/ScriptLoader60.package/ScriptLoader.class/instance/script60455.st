@@ -1,5 +1,5 @@
 pharo - scripts
-script60454
+script60455
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -94,31 +94,31 @@ FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.20.mcz
 FuzzyMatcher-Tests-TheIntegrator.8.mcz
 GT-BytecodeDebugger-AndreiChis.36.mcz
-GT-Debugger-AndreiChis.379.mcz
+GT-Debugger-AndreiChis.380.mcz
 GT-EventRecorder-AndreiChis.80.mcz
 GT-EventRecorder-Tests-TheIntegrator.40.mcz
-GT-Inspector-AndreiChis.465.mcz
-GT-InspectorExtensions-Core-TheIntegrator.258.mcz
-GT-Playground-AndreiChis.145.mcz
+GT-Inspector-AliakseiSyrel.466.mcz
+GT-InspectorExtensions-Core-AndreiChis.259.mcz
+GT-Playground-AliakseiSyrel.146.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
-GT-Spotter-TheIntegrator.411.mcz
+GT-Spotter-AliakseiSyrel.412.mcz
 GT-Spotter-EventRecorder-AndreiChis.114.mcz
 GT-SpotterExtensions-Core-TheIntegrator.224.mcz
 GT-Tests-Debugger-AndreiChis.14.mcz
 GT-Tests-Inspector-AndreiChis.60.mcz
 GT-Tests-Playground-StefanReichhart.4.mcz
-GT-Tests-Spotter-TheIntegrator.30.mcz
+GT-Tests-Spotter-AndreiChis.31.mcz
 GeneralRules-TheIntegrator.11.mcz
 Glamour-Announcements-AndreiChis.11.mcz
 Glamour-Browsers-AndreiChis.112.mcz
-Glamour-Core-TheIntegrator.336.mcz
+Glamour-Core-AndreiChis.338.mcz
 Glamour-Examples-AndreiChis.319.mcz
-Glamour-FastTable-AndreiChis.80.mcz
+Glamour-FastTable-AliakseiSyrel.82.mcz
 Glamour-Helpers-TudorGirba.40.mcz
-Glamour-Morphic-Brick-AndreiChis.439.mcz
-Glamour-Morphic-Brick-Tests-JurajKubelka.15.mcz
+Glamour-Morphic-Brick-AndreiChis.446.mcz
+Glamour-Morphic-Brick-Tests-TheIntegrator.16.mcz
 Glamour-Morphic-Pager-AndreiChis.114.mcz
-Glamour-Morphic-Renderer-AndreiChis.360.mcz
+Glamour-Morphic-Renderer-AndreiChis.361.mcz
 Glamour-Morphic-Theme-TheIntegrator.231.mcz
 Glamour-Morphic-Widgets-AndreiChis.207.mcz
 Glamour-Presentations-AndreiChis.190.mcz
@@ -135,7 +135,7 @@ Graphics-Canvas-TheIntegrator.14.mcz
 Graphics-Display Objects-TheIntegrator.188.mcz
 Graphics-Files-TheIntegrator.78.mcz
 Graphics-Fonts-TheIntegrator.109.mcz
-Graphics-Primitives-TheIntegrator.199.mcz
+Graphics-Primitives-TheIntegrator.201.mcz
 Graphics-Shapes-TheIntegrator.4.mcz
 Graphics-Tests-TheIntegrator.85.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
@@ -151,9 +151,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2493.mcz
+Kernel-TheIntegrator.2496.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.154.mcz
+Kernel-Tests-TheIntegrator.157.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.66.mcz
@@ -269,7 +269,7 @@ Random-Core-TheIntegrator.10.mcz
 Random-Tests-TheIntegrator.6.mcz
 RecentSubmissions-TheIntegrator.246.mcz
 Refactoring-Changes-TheIntegrator.70.mcz
-Refactoring-Core-TheIntegrator.343.mcz
+Refactoring-Core-TheIntegrator.345.mcz
 Refactoring-Critics-TheIntegrator.300.mcz
 Refactoring-Environment-TheIntegrator.88.mcz
 Refactoring-Help-TheIntegrator.7.mcz
@@ -302,8 +302,8 @@ Rubric-TheIntegrator.441.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
-STON-Core-SvenVanCaekenberghe.82.mcz
-STON-Tests-TheIntegrator.73.mcz
+STON-Core-TheIntegrator.84.mcz
+STON-Tests-TheIntegrator.75.mcz
 STON-Text support-TheIntegrator.2.mcz
 SUnit-Core-TheIntegrator.219.mcz
 SUnit-Help-MarcusDenker.9.mcz
@@ -370,7 +370,7 @@ System-Settings-Rules-TheIntegrator.2.mcz
 System-Settings-Tests-TheIntegrator.13.mcz
 System-Sound-TheIntegrator.20.mcz
 System-Sources-TheIntegrator.69.mcz
-System-Support-TheIntegrator.1269.mcz
+System-Support-TheIntegrator.1271.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.5.mcz
 System-VMEvents-TheIntegrator.19.mcz
