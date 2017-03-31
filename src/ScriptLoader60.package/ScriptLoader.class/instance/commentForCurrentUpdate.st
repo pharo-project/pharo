@@ -1,13 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19882 copyBits fails when showing Athens surface
-	https://pharo.fogbugz.com/f/cases/19882
+ ^ '19888 FastTable should not reset highlighting rows when selection is changed
+	https://pharo.fogbugz.com/f/cases/19888
 
-19885 STON cannot read classes with underscore in their name
-	https://pharo.fogbugz.com/f/cases/19885
-
-19879 Accessors for instance and class variable rename refactoring
-	https://pharo.fogbugz.com/f/cases/19879
-
-19881 add Time >> #hour:minute:second:nano: constructor
-	https://pharo.fogbugz.com/f/cases/19881'
+19887 cairo surface does not need to set lock/show surface callbacks 
+	https://pharo.fogbugz.com/f/cases/19887'

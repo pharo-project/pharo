@@ -9,6 +9,7 @@ createUnlockSurfaceFn
 		surface is unmodified all arguments are set to zero.
 
 	"
-	^ FFICallback 
+	^ nil
+	"^ FFICallback 
 		signature: #(int (void *handle, int x, int y, int w, int h))
-		block: [ :handle :x :y :w :h | 0 "Do nothing" ]
+		block: [ :handle :x :y :w :h | 0 ""Do nothing"" ]"

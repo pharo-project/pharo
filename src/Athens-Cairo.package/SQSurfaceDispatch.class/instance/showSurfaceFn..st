@@ -1,7 +1,9 @@
 accessing structure variables
-showSurfaceFn: aCallback
+showSurfaceFn: aCallbackOrNil
 	"This method was automatically generated"
-	showSurfaceFn := aCallback.
+	showSurfaceFn := aCallbackOrNil.
 	handle 
 		pointerAt: OFFSET_SHOWSURFACEFN 
-		put: (ExternalAddress fromAddress: aCallback thunk address)
+		put: (aCallbackOrNil 
+			ifNotNil: [ ExternalAddress fromAddress: aCallbackOrNil thunk address ]
+			ifNil: [ ExternalAddress null ])
