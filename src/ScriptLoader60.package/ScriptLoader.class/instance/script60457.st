@@ -1,5 +1,5 @@
 pharo - scripts
-script60456
+script60457
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -41,7 +41,7 @@ Collections-Native-TheIntegrator.19.mcz
 Collections-Sequenceable-TheIntegrator.261.mcz
 Collections-Stack-TheIntegrator.10.mcz
 Collections-Streams-TheIntegrator.192.mcz
-Collections-Strings-TheIntegrator.447.mcz
+Collections-Strings-TheIntegrator.449.mcz
 Collections-Support-TheIntegrator.67.mcz
 Collections-Tests-TheIntegrator.101.mcz
 Collections-Unordered-TheIntegrator.248.mcz
@@ -337,7 +337,7 @@ Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.292.mcz
 Spec-PolyWidgets-TheIntegrator.93.mcz
 Spec-Tests-TheIntegrator.104.mcz
-Spec-Tools-TheIntegrator.382.mcz
+Spec-Tools-TheIntegrator.384.mcz
 StartupPreferences-TheIntegrator.153.mcz
 System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.18.mcz
@@ -365,9 +365,9 @@ System-Platforms-TheIntegrator.85.mcz
 System-Serial Port-StephaneDucasse.23.mcz
 System-SessionManager-TheIntegrator.38.mcz
 System-SessionManager-Tests-ChristopheDemarey.9.mcz
-System-Settings-TheIntegrator.370.mcz
+System-Settings-TheIntegrator.372.mcz
 System-Settings-Rules-TheIntegrator.2.mcz
-System-Settings-Tests-TheIntegrator.13.mcz
+System-Settings-Tests-TheIntegrator.15.mcz
 System-Sound-TheIntegrator.20.mcz
 System-Sources-TheIntegrator.69.mcz
 System-Support-TheIntegrator.1271.mcz

@@ -1,7 +1,13 @@
 public
 commentForCurrentUpdate
- ^ '19888 FastTable should not reset highlighting rows when selection is changed
-	https://pharo.fogbugz.com/f/cases/19888
+ ^ '19892 Socket problem with LatestVM
+	https://pharo.fogbugz.com/f/cases/19892
 
-19887 cairo surface does not need to set lock/show surface callbacks 
-	https://pharo.fogbugz.com/f/cases/19887'
+19870 Removing a method using Nautilus while it is present in a message browser raises #ast was sent to nil
+	https://pharo.fogbugz.com/f/cases/19870
+
+19860 MC generates duplicated trait methods
+	https://pharo.fogbugz.com/f/cases/19860
+
+19899 SettingBrowser>>choosePackagesIn: is not documented at all
+	https://pharo.fogbugz.com/f/cases/19899'

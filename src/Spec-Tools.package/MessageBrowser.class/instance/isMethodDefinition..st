@@ -4,7 +4,9 @@ isMethodDefinition: anItem
 	 Some operations are only valid for compiled methods or ring object that are a method definitions"
 
 	anItem ifNil: [ ^ false ].
-	(anItem isRingObject and: [ anItem isMethod not ])
-		ifTrue: [ ^ false ].
+	
+	^ (anItem isRingObject and: [ anItem isMethod not 
+		or: [ anItem compiledMethod isNotNil ] ]
+	)
 	"assume it is a compiled method or ring method definition"
-	^ true
+
