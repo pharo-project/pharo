@@ -8,8 +8,8 @@ deflateBlock
 		blockStart := 0].
 
 	[blockPosition < position] whileTrue:[
-		(position + MaxMatch > writeLimit)
-			ifTrue:[lastIndex := writeLimit - MaxMatch]
+		(position + MaxMatch + 1 > writeLimit)
+			ifTrue:[lastIndex := writeLimit - MaxMatch - 1]
 			ifFalse:[lastIndex := position].
 		flushNeeded := self deflateBlock: lastIndex-1
 							chainLength: self hashChainLength

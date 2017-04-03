@@ -33,7 +33,7 @@ decompressBlock: llTable with: dTable
 				^self].
 			collection 
 					replaceFrom: readLimit+1 
-					to: readLimit + length + 1 
+					to: readLimit + length
 					with: collection 
 					startingAt: readLimit - distance + 1.
 			readLimit := readLimit + length.

@@ -1,13 +1,13 @@
 public
 commentForCurrentUpdate
- ^ '19892 Socket problem with LatestVM
-	https://pharo.fogbugz.com/f/cases/19892
+ ^ '19898 CompiledMethod package detection logic has bug when same selector is defined on instance and class side
+	https://pharo.fogbugz.com/f/cases/19898
 
-19870 Removing a method using Nautilus while it is present in a message browser raises #ast was sent to nil
-	https://pharo.fogbugz.com/f/cases/19870
+19886 Add a popup in case the title of a window is too large
+	https://pharo.fogbugz.com/f/cases/19886
 
-19860 MC generates duplicated trait methods
-	https://pharo.fogbugz.com/f/cases/19860
+19905 ZlibPlugin reads past the zipCollection boundary
+	https://pharo.fogbugz.com/f/cases/19905
 
-19899 SettingBrowser>>choosePackagesIn: is not documented at all
-	https://pharo.fogbugz.com/f/cases/19899'
+19900 Better ProcessTest about ensure processing
+	https://pharo.fogbugz.com/f/cases/19900'

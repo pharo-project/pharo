@@ -16,8 +16,15 @@ extent: aPoint
 		ifTrue: [collapsedFrame := self bounds]
 		ifFalse: [fullFrame := self bounds].
 	(self isCollapsed or: [label isNil]) "shrink the label if insufficient space"
-		ifFalse: [label minWidth: nil.
+		ifFalse: [
+				label minWidth: nil.
 				label fitContents.
+
+				"Add a tooltip on the label with the full content in case there is not enough space"
+				(label width > (bounds width - labelWidgetAllowance))
+					ifTrue: [ label setBalloonText: label contents ]
+					ifFalse: [ label setBalloonText: nil ].
+
 				w := (label width min: bounds width - labelWidgetAllowance).
 				label setWidth: w; minWidth: w.
 				label align: label bounds topCenter with: bounds topCenter + (0@borderWidth).
