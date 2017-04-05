@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "<historical>",
+	"commentStamp" : "MarcusDenker 4/3/2017 10:31",
 	"super" : "AbstractCompiler",
 	"category" : "OpalCompiler-Core-FrontEnd",
 	"classinstvars" : [ ],

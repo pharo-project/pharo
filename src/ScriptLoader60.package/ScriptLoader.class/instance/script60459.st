@@ -1,5 +1,5 @@
 pharo - scripts
-script60458
+script60459
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -61,7 +61,7 @@ Deprecated60-TheIntegrator.18.mcz
 EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
-Epicea-MartinDias.837.mcz
+Epicea-TheIntegrator.839.mcz
 EpiceaBrowsers-MartinDias.143.mcz
 EpiceaBrowsersTests-MartinDias.17.mcz
 EpiceaTests-MartinDias.19.mcz
@@ -248,7 +248,7 @@ OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.261.mcz
 OmbuTests-MartinDias.27.mcz
-OpalCompiler-Core-TheIntegrator.887.mcz
+OpalCompiler-Core-TheIntegrator.889.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.34.mcz
