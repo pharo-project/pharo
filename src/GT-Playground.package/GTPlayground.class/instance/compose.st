@@ -9,6 +9,15 @@ compose
 				each title = 'Overview' ] ] ] ] 
 		icon: GLMUIThemeExtraIcons glamorousHelp 
 		entitled: 'Help'.
+		
+	self act: [ :b | 
+			SettingBrowser new 
+				changePackageSet: { (RPackageOrganizer default packageNamed: 'GT-Playground') }; 
+				open; 
+				expandAll ] 
+		icon: (Smalltalk ui icons iconNamed: #smallCogInitialState)
+		entitled: 'Global Setting'.
+		
 	self custom:
 			(GTInspector new
 				noTitle; 
