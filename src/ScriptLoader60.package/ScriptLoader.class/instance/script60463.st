@@ -1,5 +1,5 @@
 pharo - scripts
-script60462
+script60463
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -340,7 +340,7 @@ Spec-Tests-TheIntegrator.107.mcz
 Spec-Tools-TheIntegrator.384.mcz
 StartupPreferences-TheIntegrator.153.mcz
 System-Announcements-TheIntegrator.138.mcz
-System-BasicCommandLineHandler-TheIntegrator.18.mcz
+System-BasicCommandLineHandler-TheIntegrator.21.mcz
 System-Caching-TheIntegrator.29.mcz
 System-CachingTests-TheIntegrator.19.mcz
 System-Changes-TheIntegrator.309.mcz

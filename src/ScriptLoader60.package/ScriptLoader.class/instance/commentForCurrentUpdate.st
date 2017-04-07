@@ -1,4 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19921 allow CairoLibrary to find x86_64 bits libcairo when needed (linux)
-	https://pharo.fogbugz.com/f/cases/19921'
+ ^ '19923 QA v3.3.1
+	https://pharo.fogbugz.com/f/cases/19923
+
+19922 System-BasicCommandLineHandler calls name method
+	https://pharo.fogbugz.com/f/cases/19922'
