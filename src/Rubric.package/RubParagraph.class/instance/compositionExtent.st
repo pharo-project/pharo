@@ -5,5 +5,5 @@ compositionExtent
 	2.  wrapped is false -- grow in 2D as nexessary."
 
 	^ (self wrapped
-		ifTrue: [ self container width @ SmallInteger maxVal ]
-		ifFalse: [ SmallInteger maxVal @ SmallInteger maxVal ]) max: self minimumCompositionExtent
+		ifTrue: [ self container width @ RubAbstractTextArea defaultMaxExtent ]
+		ifFalse: [ RubAbstractTextArea defaultMaxExtent @ RubAbstractTextArea defaultMaxExtent ]) max: self minimumCompositionExtent
