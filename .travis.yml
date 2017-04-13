@@ -1,19 +1,17 @@
 language: c
 
 matrix:
-  global:
-    - PHARO_VERSION=60
   include:
     - os: linux
-      env: JOB=test BOOTSTRAP_ARCH=32
+      env: JOB=test BOOTSTRAP_ARCH=32 PHARO_VERSION=60
     - os: linux
-      env: JOB=test BOOTSTRAP_ARCH=64
+      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60
     - os: osx
-      env: JOB=test BOOTSTRAP_ARCH=32
+      env: JOB=test BOOTSTRAP_ARCH=32 PHARO_VERSION=60
     - os: osx
-      env: JOB=test BOOTSTRAP_ARCH=64
-    - env: JOB=bootstrap BOOTSTRAP_ARCH=32
-    - env: JOB=bootstrap BOOTSTRAP_ARCH=64
+      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60
+    - env: JOB=bootstrap BOOTSTRAP_ARCH=32 PHARO_VERSION=60
+    - env: JOB=bootstrap BOOTSTRAP_ARCH=64 PHARO_VERSION=60
 
 addons:
   apt:
