@@ -1,6 +1,8 @@
 language: c
 
 matrix:
+  global:
+    - PHARO_VERSION=60
   include:
     - os: linux
       env: JOB=test BOOTSTRAP_ARCH=32
