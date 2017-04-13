@@ -4,7 +4,7 @@ mkdir vm
 cd vm
 echo `pwd`
 
-if [ ${BOOTSTRAP_ARCH} = 64]; then
+if [ ${BOOTSTRAP_ARCH} = "64" ]; then
 	ARCHFLAG=64/
 fi
 
