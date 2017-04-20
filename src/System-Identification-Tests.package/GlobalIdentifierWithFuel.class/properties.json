@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GlobalIdentifierTest",
+	"category" : "System-Identification-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlobalIdentifierWithFuel",
+	"type" : "normal"
+}

@@ -1,6 +1,7 @@
 load and saving
 load: existingDictionary
 	"It loads stored information into existingDictionary."
+	self isEnabled ifFalse: [ ^ self ].
 	self preferences exists ifFalse: [
 		"This is a new computer, so we define new computer UUID.
 		User still has to agree about sending data if it is not has been done yet."

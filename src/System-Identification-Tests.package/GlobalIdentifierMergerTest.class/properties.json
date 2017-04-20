@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "TestCase",
+	"category" : "System-Identification-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"existing",
+		"stored",
+		"merger"
+	],
+	"name" : "GlobalIdentifierMergerTest",
+	"type" : "normal"
+}

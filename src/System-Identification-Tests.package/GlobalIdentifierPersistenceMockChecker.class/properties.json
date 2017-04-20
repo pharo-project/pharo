@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "JurajKubelka 4/17/2017 09:40",
+	"super" : "Object",
+	"category" : "System-Identification-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"answer"
+	],
+	"name" : "GlobalIdentifierPersistenceMockChecker",
+	"type" : "normal"
+}
