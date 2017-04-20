@@ -2,6 +2,8 @@
 
 set -o errexit
 
+echo "WARNING: This script is deprecated. Please use export.sh"
+
 function show_help {
   echo
   "Pharo Export Script
