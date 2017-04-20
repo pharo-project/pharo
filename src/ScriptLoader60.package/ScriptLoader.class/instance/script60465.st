@@ -1,5 +1,5 @@
 pharo - scripts
-script60464
+script60465
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -113,7 +113,7 @@ Glamour-Announcements-AndreiChis.11.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-AndreiChis.338.mcz
 Glamour-Examples-AndreiChis.319.mcz
-Glamour-FastTable-AliakseiSyrel.82.mcz
+Glamour-FastTable-TheIntegrator.85.mcz
 Glamour-Helpers-TudorGirba.40.mcz
 Glamour-Morphic-Brick-AndreiChis.446.mcz
 Glamour-Morphic-Brick-Tests-TheIntegrator.16.mcz
@@ -151,7 +151,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2499.mcz
+Kernel-TheIntegrator.2501.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.162.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -251,7 +251,7 @@ OmbuTests-MartinDias.27.mcz
 OpalCompiler-Core-TheIntegrator.890.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
-Pharo-Help-TheIntegrator.34.mcz
+Pharo-Help-TheIntegrator.36.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-Widgets-TheIntegrator.1424.mcz

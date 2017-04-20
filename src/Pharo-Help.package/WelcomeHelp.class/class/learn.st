@@ -2,19 +2,22 @@ pages
 learn
 	^ HelpTopic 
 		title: 'Learn Pharo Smalltalk'
-		contents: 'You can learn Pharo by highlighting the next line and selecting [Do it] from the context menu:
+		contents: (self heading: 'Learn Pharo Smalltalk'), 		
+'You can learn Pharo by clicking on the following expression: 
+	
+', (self doItFrom: 'ProfStef go.'), 
 
-ProfStef go.
+(self subheading: 'MOOC'), 
+'Pharo has also an excellent MOOC (Massive Open Online Course). You can find more information here: 
 
-Pharo has also an excellent MOOC (Massive Open Online Course). You can find more information here: 
+', (self url: 'http://mooc.pharo.org'), 
 
-http://mooc.pharo.org
+(self subheading: 'Books'), 
+'There are also several free Pharo books that can be download here: 
 
-There are also several free Pharo books that can be download here: 
-
-http://books.pharo.org
+', (self url: 'http://books.pharo.org'), '
 
 A very interesting starting point would be looking into the "Updated Pharo by Example" free book. It is still a work in progress, but most of it is already done. You can find the book here: 
 
-https://github.com/SquareBracketAssociates/UpdatedPharoByExample
+', (self url: 'https://github.com/SquareBracketAssociates/UpdatedPharoByExample'), '
 '
