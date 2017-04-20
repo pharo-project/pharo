@@ -5,6 +5,11 @@ language: c
 git:
   depth: 1
 
+cache:
+  directories:
+    - github-cache
+	- pharo-local
+
 matrix:
   include:
     - os: linux
