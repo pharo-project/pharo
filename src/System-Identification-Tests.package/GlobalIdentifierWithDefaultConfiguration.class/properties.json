@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "GlobalIdentifierTest",
+	"category" : "System-Identification-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"oldPreferences"
+	],
+	"name" : "GlobalIdentifierWithDefaultConfiguration",
+	"type" : "normal"
+}

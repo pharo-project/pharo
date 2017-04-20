@@ -1,16 +1,16 @@
 public
 commentForCurrentUpdate
- ^ '19932 WelcomeHelp for Pharo 6 update
-	https://pharo.fogbugz.com/f/cases/19932
+ ^ '19935 Versionner tags are unreadable in the dark theme
+	https://pharo.fogbugz.com/f/cases/19935
 
-19934 change default theme to DarkTheme
-	https://pharo.fogbugz.com/f/cases/19934
+19938 Traits methods flattened
+	https://pharo.fogbugz.com/f/cases/19938
 
-19933 Remove ConfigurationOfMooseAlgos from the image.
-	https://pharo.fogbugz.com/f/cases/19933
+19809 Failing test: WeakAnnouncerTest>>#testNoDeadWeakSubscriptions
+	https://pharo.fogbugz.com/f/cases/19809
 
-19929 Comment guard to warn debugging top most process context
-	https://pharo.fogbugz.com/f/cases/19929
+19951 StringMorph imageForm shows a white rectangle in DarkTheme
+	https://pharo.fogbugz.com/f/cases/19951
 
-19926 Glamour Fast Table selection menu item actions does not work together with a filter
-	https://pharo.fogbugz.com/f/cases/19926'
+19944 Server deployment is broken due to GlobalIdentifier
+	https://pharo.fogbugz.com/f/cases/19944'

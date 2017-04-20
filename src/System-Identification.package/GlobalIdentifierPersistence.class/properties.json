@@ -7,7 +7,8 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"preferences",
-		"previousPersistence"
+		"previousPersistence",
+		"checker"
 	],
 	"name" : "GlobalIdentifierPersistence",
 	"type" : "normal"

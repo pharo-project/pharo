@@ -1,0 +1,3 @@
+instance creation
+newFalseChecker
+	^ GlobalIdentifierPersistenceMockChecker new
