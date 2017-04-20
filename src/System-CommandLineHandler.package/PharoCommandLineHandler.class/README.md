@@ -1,4 +1,4 @@
-Usage: [--no-preferences|--preference-file=<FILE>][<subcommand>] [--help] [--copyright] [--version] [--list] [ --no-quit ]
+Usage: [<subcommand>] [--help] [--copyright] [--version] [--list] [ --no-quit ]
 	--help       print this help message
 	--copyright  print the copyrights
 	--version    print the version for the image and the vm
@@ -7,7 +7,7 @@ Usage: [--no-preferences|--preference-file=<FILE>][<subcommand>] [--help] [--cop
 	<subcommand> a valid subcommand in --list
 	
 	Preference File Modification:
-	--preference-file   load the preferences from the given <FILE>
+	--preferences-file   load the preferences from the given <FILE>
 	--no-default-preferences    do not load any preferences from the default locations
 	
 Documentation:

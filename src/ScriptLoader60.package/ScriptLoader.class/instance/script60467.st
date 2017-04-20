@@ -1,5 +1,5 @@
 pharo - scripts
-script60466
+script60467
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -161,7 +161,7 @@ Keymapping-Pragmas-TheIntegrator.62.mcz
 Keymapping-Settings-StephaneDucasse.83.mcz
 Keymapping-Tests-TheIntegrator.111.mcz
 Keymapping-Tools-Spec-TheIntegrator.32.mcz
-Komitter-TheIntegrator.188.mcz
+Komitter-TheIntegrator.190.mcz
 Manifest-Core-TheIntegrator.252.mcz
 Manifest-Resources-Tests-MarcusDenker.14.mcz
 Manifest-Tests-TheIntegrator.55.mcz
@@ -254,7 +254,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.36.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1424.mcz
+Polymorph-Widgets-TheIntegrator.1426.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -337,7 +337,7 @@ Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.292.mcz
 Spec-PolyWidgets-TheIntegrator.93.mcz
 Spec-Tests-TheIntegrator.107.mcz
-Spec-Tools-TheIntegrator.384.mcz
+Spec-Tools-TheIntegrator.386.mcz
 StartupPreferences-TheIntegrator.153.mcz
 System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.21.mcz
@@ -348,7 +348,7 @@ System-Changes-FileServices-TheIntegrator.4.mcz
 System-Clipboard-TheIntegrator.42.mcz
 System-CommandLine-TheIntegrator.181.mcz
 System-CommandLine-TextSupport-TheIntegrator.6.mcz
-System-CommandLineHandler-TheIntegrator.24.mcz
+System-CommandLineHandler-TheIntegrator.26.mcz
 System-FileRegistry-TheIntegrator.53.mcz
 System-Finalization-TheIntegrator.44.mcz
 System-Hashing-TheIntegrator.52.mcz

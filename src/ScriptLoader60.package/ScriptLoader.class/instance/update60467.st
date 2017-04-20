@@ -1,6 +1,7 @@
-public
-commentForCurrentUpdate
- ^ '19943 Error while browsing a comment un MessageBrowser
+pharo - updates
+update60467
+	"self new update60467"
+	self withUpdateLog: '19943 Error while browsing a comment un MessageBrowser
 	https://pharo.fogbugz.com/f/cases/19943
 
 19945 PharoCommandLineHandler class comments incorrect
@@ -10,4 +11,6 @@ commentForCurrentUpdate
 	https://pharo.fogbugz.com/f/cases/19954
 
 19941 Dark Theme - overlapped title bars need to be distinctive
-	https://pharo.fogbugz.com/f/cases/19941'
+	https://pharo.fogbugz.com/f/cases/19941'.
+	self loadTogether: self script60467 merge: false.
+	self flushCaches.
