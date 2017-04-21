@@ -22,6 +22,11 @@ matrix:
 #      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60
     - env: JOB=bootstrap BOOTSTRAP_ARCH=32 PHARO_VERSION=60
     - env: JOB=bootstrap BOOTSTRAP_ARCH=64 PHARO_VERSION=60
+  allow_failures:
+    - os: linux
+      env: JOB=test BOOTSTRAP_ARCH=32 PHARO_VERSION=60
+    - os: linux
+      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60
 
 addons:
   apt:
