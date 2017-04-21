@@ -45,8 +45,8 @@ install:
 - "./pharo Pharo.image ./bootstrap/scripts/prepare_image.st --save --quit"
 
 script:
-- "./pharo Pharo.image ./bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --quit > /dev/null"
-- bash ./bootstrap/scripts/build.sh > /dev/null
+- ./pharo Pharo.image ./bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --quit
+- bash ./bootstrap/scripts/build.sh
 - if [[ ${JOB} == "test" ]]; then ./bootstrap-cache/vm/pharo bootstrap-cache/Pharo.image test --no-xterm --fail-on-failure ".*"; fi
 
 before_deploy:
