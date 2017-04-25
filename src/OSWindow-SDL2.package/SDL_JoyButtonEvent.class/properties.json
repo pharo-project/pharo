@@ -3,7 +3,13 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_BUTTON",
+		"OFFSET_PADDING1",
+		"OFFSET_PADDING2",
+		"OFFSET_STATE",
+		"OFFSET_TIMESTAMP",
+		"OFFSET_TYPE",
+		"OFFSET_WHICH" ],
 	"commentStamp" : "RonieSalgado 10/12/2014 17:41",
 	"instvars" : [
 		 ],

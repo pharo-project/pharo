@@ -10,14 +10,18 @@ spec group: 'Mandatory-Group' with: #(
 spec group: 'Optional-Group' with: #(
 	'Athens-Group' "dependency"
 
+	'PharoDocComment'	"standalone"
 	'STON-Text support'	"standalone?"
 	'System-CommandLine-TextSupport'	"standalone?"
-	'NodeNavigation'	"standalone?"
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
-	'Tool-TxWorkspace'  "dependent on 'Athens-Group'"
-).		
+).	
+	
+spec group: 'NodeNavigation-Group' with: #(
+	'NodeNavigation'	"standalone?"
+	'NodeNavigation-Tests'	
+).					
 
 spec group: 'Epicea-Core-Group' with: #(
 	'Athens-Group' "dependency of Hiedra"
@@ -77,6 +81,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Regex-Tests-Core'
 	'Ring-Tests-Monticello'
 	'Rubric-Tests'
+	'ScriptingExtensions-Tests'
 	'STON-Tests'
 	'SUnit-Tests'
 	'Slot-Tests'
@@ -214,7 +219,6 @@ spec group: 'Shout-Group' with: #(
 
 spec group: 'MetacelloExtras-Core' with: #(
 	'BaselineOfMetacello'
-	'BaselineOfFileTree'
 	'Metacello-GitBasedRepository'	
 	'Metacello-Bitbucket'	
 	"'Metacello-GitHub'"
@@ -238,7 +242,7 @@ spec group: 'Refactoring-Rules-Group' with: #(
 	'System-Support-Rules'
 	'Rubric-Rules'
 ).
-spec group: 'Refactoring-Tests' with: #(
+spec group: 'Refactoring-Tests-Group' with: #(
 	'Refactoring-Tests-Core'		"'Kernel-Tests' depend on it, cleanup needed!"
 	'Refactoring-Tests-Changes'
 	'Refactoring-Tests-Critics'
@@ -250,7 +254,7 @@ spec group: 'Refactoring-Help-Group' with: #(
 ).
 spec group: 'Refactoring-Group' with: #(
 	'Refactoring-Rules-Group'
-	'Refactoring-Tests-Core'
+	'Refactoring-Tests-Group'
 	'Refactoring-Help-Group' 
 ).
 
@@ -265,6 +269,11 @@ spec group: 'Catalog-Help-Group' with: #(
 spec group: 'Catalog-Group' with: #(
 	'Catalog-Core-Group'
 	'Catalog-Help-Group'
+).
+
+spec group: 'SortFunctions-Group' with: #(
+	'SortFunctions-Core'
+	'SortFunctions-Tests'
 ).
 
 spec group: 'QualityAssistant-Core-Group' with: #(
@@ -323,13 +332,14 @@ spec group: 'Glamour-Group' with: #(
 ).
 
 spec group: 'GT-Core-Group' with: #(
-	'SmartSuggestions-Core-Group' "dependency"
+	'SmartSuggestions-Group' "dependency"
 	'Glamour-Core-Group'	"dependency"
 	"'Morphic-Core' 'System-Settings' is dependent on this group, needs clenup"
 	'OpalTools'
 	'GT-Inspector'
 	'GT-InspectorExtensions-Core'
 	'GT-Playground'
+	'System-Identification'
 	'GT-EventRecorder'
 	'GT-Spotter'
 	'GT-SpotterExtensions-Core'
@@ -386,7 +396,6 @@ spec group: 'TxText-Core-Group' with: #(
 	'TxText-Model'
 	'TxText-Athens'
 	'TxText-Styler'
-	'Tool-TxWorkspace'	"standalone"
 ).		
 spec group: 'TxText-Tests-Group' with: #(
 	'TxText-AthensTests'
@@ -463,7 +472,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
 
-
 spec group: 'GT&QA-Group' with: #(
 	'GeneralRules'		"depends on QA, needs cleanup"
 	'Kernel-Rules'		"depends on QA, DependencyAnalyzer, needs cleanup"
@@ -516,6 +524,11 @@ spec group: #default with: #(
 	'Catalog-Group'
 	'Epicea-Group'
 	'Optional-Group'
+	'NodeNavigation-Group'
 	'Versionner-Group'
 	'General-Tests-Group'
+	
+	'SortFunctions-Group'	
+	
+	'BaselineOfPharoBootstrap'
 ).

@@ -9,6 +9,7 @@ themeChanged
 	self buttonMorph extent: self buttonExtent.
 	self buttonMorph cornerStyle: self cornerStyle.
 	self buttonMorph label: self buttonLabel.
-	self listMorph theme: self theme.
 	self updateContentColor: nil.
-	super themeChanged.
+	self listMorph themeChanged.
+	super themeChanged.	
+	

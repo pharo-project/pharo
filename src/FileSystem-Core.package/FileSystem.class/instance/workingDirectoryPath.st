@@ -1,3 +1,3 @@
 accessing
 workingDirectoryPath
-	^ workingDirectory
+	^ store defaultWorkingDirectory

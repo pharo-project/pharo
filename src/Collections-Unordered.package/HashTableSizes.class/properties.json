@@ -1,10 +1,11 @@
 {
 	"category" : "Collections-Unordered",
 	"classinstvars" : [
-		"sizes" ],
+		"sizes",
+		"smallSizesLookupTable" ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "MartinMcClure 3/18/2010 21:44",
+	"commentStamp" : "monty 2/27/2017 10:57",
 	"instvars" : [
 		"candidate",
 		"goodPrimes",

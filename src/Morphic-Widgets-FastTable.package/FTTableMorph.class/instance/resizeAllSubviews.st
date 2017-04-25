@@ -6,7 +6,8 @@ resizeAllSubviews
 	self recalculateVerticalScrollBar.
 	self resizeContainer.
 	self resizeColumns.
-	self resetPosition.
-	self ensureVisibleFirstSelection.
+	self container setNeedsRefreshExposedRows.
+	self container updateExposedRows.
+	self verticalScrollBar value: (self rowIndexToVerticalScrollBarValue: showIndex).
 	function isExplicite
 		ifTrue: [ function resizeWidget ]

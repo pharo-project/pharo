@@ -5,4 +5,5 @@ testEntriesCount
 	store newEntry: (OmEntry content: 42).
 	store newEntry: (OmEntry content: 43).
 	
-	self assert: store entriesCount equals: 2.
+	self beforeAndAfterFlushStore: [
+		self assert: store entriesCount equals: 2 ].

@@ -7,7 +7,7 @@ printOn: aStream
 		nextPutAll: ', property = #';
 		nextPutAll: self property;
 		nextPutAll: ', oldValue = ';
-		nextPutAll: self oldValue asString;
+		nextPutAll: self oldValue gtDisplayString;
 		nextPutAll: ', value = ';
-		nextPutAll: self value asString;
+		nextPutAll: self value gtDisplayString;
 		nextPutAll: ')'

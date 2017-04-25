@@ -18,6 +18,7 @@ render: aRenderable
 						bottomRightOffset: 0@ bottomOffset).
 	self setPotentialBackgroundColorFor: aRenderable.
 	aRenderable when: GLMPresentationUpdated send: #actOnPresentationUpdated: to: self.
+	aRenderable when: GLMPresentationToolbarUpdated send: #actOnPresentationToolbarUpdated: to: self.
 	aRenderable when: GLMWindowRequest send: #actOnWindowRequest: to: window.
 	aRenderable watcherPane notNil
 		ifTrue: [ GLMMorphicWatcherRenderer render: aRenderable watcherPane from: self renderer ].

@@ -1,0 +1,2 @@
+MetacelloValidationIssue is an abstract class that has information related to a warning or error from a validating  Metacello configuration. 
+Subclasses must implement #label and define if the spesific validation is a warning, criticalWarning, or an error.

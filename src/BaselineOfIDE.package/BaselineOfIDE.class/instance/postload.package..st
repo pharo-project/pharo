@@ -31,9 +31,6 @@ postload: loader package: packageSpec
 	Smalltalk cleanOutUndeclared. 
 	Smalltalk fixObsoleteReferences.
 	
-	self class environment at: #EpLostChangesDetector ifPresent: [:aClass |
-	  aClass class compile: 'startUp: isImageStarting'. ].
-
 	EpMonitor current enable.
 		
 	Author reset.

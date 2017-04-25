@@ -1,3 +1,0 @@
-setup
-expectedFailures
-	^ #(#testMutateVariableObject #testSetIsReadOnlyFailure #testBasicProxyReadOnly #testBasicProxyWritable #testSetIsReadOnlyImmediate #testBasicReadOnly #testSetIsReadOnlyImmediateProxy #testBasicWritable #testSetIsReadOnlySuccessProxy #testSetIsReadOnlySuccess #testMutateIVObject #testSetIsReadOnlyFailureProxy)

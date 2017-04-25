@@ -1,31 +1,26 @@
 private building
 variablesIn: composite
 	^ composite fastTable
-		showOnly: 50;
-		shouldValidate: false;
-		allowsRecursiveSearch: false;
-		display: [ :context | self variablesFromContext: context ];
+		useCache;
+		display: [ :aContext | self variablesFromContext: aContext. ];
 		column: 'Type'
 			evaluated: [ '' ]
 			width: 75
-			tags: [ :assoc :context |
-				self tagsForVariable: assoc key from: context ]
-			sortedBy: [ :x :y | 
-				self 
-					compareVariableTypeOf: x key
-					withVariable: y key
-					in: ((self presentations first paneNamed: #variables) port: #entity) value];
+			tags: [ :aNode  | { aNode variableTag } ]
+			sortedBy: [ :x :y |  x variableTag < y  variableTag ];
 		column: 'Variable' 
-			evaluated: [:assoc | 
-			[ Text fromString: assoc key asString ]
-					on: Error
-					do: [ Text string: 'error printing' attribute: TextColor red ] ]
+			evaluated: [ :aNode | GTObjectPrinter asNonTruncatedTextFrom: aNode key ]
 			width: 175;
-		column: 'Value' evaluated: [:assoc | 
-			[ Text fromString: (assoc value printString contractTo: 50) ]
-					on: Error
-					do: [ Text string: 'error printing' attribute: TextColor red ] ];
-		"send: #value;"
+		column: 'Value' 
+			evaluated: [ :aNode | | rawValue displayValue |
+				[ rawValue := aNode rawValue. ] 
+					on: Error 
+					do: [ displayValue := Text string: aNode errorMessage attribute: TextColor red ].
+				displayValue ifNil: [ GTObjectPrinter asTruncatedTextFrom: rawValue ] ];
+		dynamicActionsOnSelection: [ :presentation |
+			(presentation rawSelection isKindOf: GTInspectorVariableNode) 
+				ifTrue: [presentation rawSelection inspectorActionsForNode ]
+				ifFalse: [ #() ] ];
 		morphicSelectionAct: [:list | list selection value browse ] 
 			icon: GLMUIThemeExtraIcons glamorousBrowse 
 			on: $b 
@@ -36,4 +31,4 @@ variablesIn: composite
 			entitled: 'Inspect';
 		onChangeOfPort: #rawSelection 
 			act: [ :aPresentation | 
-				self debugger selectedVariableName: aPresentation rawSelection key ]
+				self debugger selectedVariableName: aPresentation rawSelection key ] 

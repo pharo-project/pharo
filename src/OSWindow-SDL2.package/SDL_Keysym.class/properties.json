@@ -3,7 +3,10 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_MOD",
+		"OFFSET_SCANCODE",
+		"OFFSET_SYM",
+		"OFFSET_UNUSED" ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
 	"instvars" : [
 		 ],

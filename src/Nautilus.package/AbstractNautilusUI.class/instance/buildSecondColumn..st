@@ -5,8 +5,10 @@ buildSecondColumn: aWindow
 	buttons := PanelMorph new.
 	buttons
 		changeProportionalLayout;
-		addMorph: self buildHierarchyButton fullFrame: ((0 @ 0 corner: 0.33 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize);
-		addMorph: self buildInstanceButton fullFrame: ((0.33 @ 0 corner: 0.67 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize);
+		addMorph: self buildHierarchyButton fullFrame: ((0 @ 0 corner: 0.33 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize).
+	instanceButtonWidget := self buildInstanceButton.
+	buttons
+		addMorph: instanceButtonWidget fullFrame: ((0.33 @ 0 corner: 0.67 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize);
 		addMorph: self buildCommentButton fullFrame: ((0.67 @ 0 corner: 1 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize);
 		hResizing: #spaceFill;
 		vResizing: #rigid;

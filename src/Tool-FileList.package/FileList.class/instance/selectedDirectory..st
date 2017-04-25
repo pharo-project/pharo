@@ -1,6 +1,7 @@
 private
 selectedDirectory: aFileDirectoryWrapper
 	| file |
+
 	file := aFileDirectoryWrapper withoutListWrapper.
 	file ifNil: [ 
 		brevityState := #FileList.
@@ -11,5 +12,7 @@ selectedDirectory: aFileDirectoryWrapper
 	brevityState := #FileList.
 	"self addPath: path."
 	self changed: #fileList.
+	self changed: #fileListIndex.
 	self changed: #contents.
 	self changed: #selectedDirectory.
+	self changedContents

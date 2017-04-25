@@ -1,4 +1,4 @@
 tests - proxy
 testBasicProxyReadOnly
 	self alwaysReadOnlyObjects do: [ :each |
-		self assert: (self mirror isReadOnlyObject: each) equals: true ]
+		self assert: (MirrorPrimitives isObjectReadOnly: each) equals: true ]

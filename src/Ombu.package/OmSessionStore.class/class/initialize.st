@@ -1,4 +1,6 @@
 initialization
 initialize
-
-	SessionManager default registerToolClassNamed: self name
+	"
+	self initialize
+	"
+	SessionManager default registerUserClassNamed: self name

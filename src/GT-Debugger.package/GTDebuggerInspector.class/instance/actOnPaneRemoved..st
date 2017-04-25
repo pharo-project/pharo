@@ -1,6 +1,6 @@
 callbacks
-actOnPaneRemoved: ann
+actOnPaneRemoved: anAnnouncement
 
-	self first panes last presentations first updateToolbar.
+	self panes last presentations first updateToolbar.
 	self notifyPaneRemoved ifTrue: [ 
-		self debugger announce: ann ]
+		self debugger announce: anAnnouncement ]

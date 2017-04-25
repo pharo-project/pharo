@@ -9,7 +9,7 @@ createRootItem
 			children := OrderedCollection new.
 			fullRoot children
 				do: [ :item | (self matchingTag: item) ifNotNil: [ :itemNew | children add: itemNew ] ]
-				displayingProgress: [ :each | 'Looking inside ' , each name ].
+				displayingProgress: [ :each | 'Looking inside ' , each printString ].
 			FTRootItem new
 				dataSource: self;
 				children: children asArray;

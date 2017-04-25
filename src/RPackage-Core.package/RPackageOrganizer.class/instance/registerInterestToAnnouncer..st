@@ -22,9 +22,9 @@ registerInterestToAnnouncer: anAnnouncer
 	self flag: #hack. "for decoupling MC"
 	self class environment at: #MCWorkingCopy ifPresent: [ 
 		anAnnouncer weak
-			when: (Smalltalk globals at: #MCWorkingCopyCreated) 
+			when: (self class environment at: #MCWorkingCopyCreated) 
 				send: #updateAfterNewMCPackageRegistred: 
 				to: self;
-			when: (Smalltalk globals at: #MCWorkingCopyDeleted) 
+			when: (self class environment at: #MCWorkingCopyDeleted) 
 				send: #updateAfterNewMCPackageUnregistred: 
 				to: self	].

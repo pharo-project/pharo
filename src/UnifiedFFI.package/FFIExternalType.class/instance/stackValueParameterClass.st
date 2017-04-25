@@ -1,0 +1,3 @@
+stack parameter classification
+stackValueParameterClass
+	self subclassResponsibility

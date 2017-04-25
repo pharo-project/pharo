@@ -1,4 +1,4 @@
 accessing structure variables
 Gloss
 	"This method was automatically generated"
-	^handle unsignedByteAt: 30
+	^handle unsignedByteAt: OFFSET_GLOSS

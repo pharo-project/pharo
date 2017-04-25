@@ -1,5 +1,5 @@
 testing
-testAddInstanceVariableAddsNewChangeRecord
+testAddInstanceVariableAddsNewChangeRecord 
 	"Changing the class category for a class should result in a change
 	record being updated in the current change set."
 
@@ -7,7 +7,7 @@ testAddInstanceVariableAddsNewChangeRecord
 	no change records pertaining to it in the change set."
 
 	self deny: (Smalltalk hasClassNamed: 'JunkClass').
-	self assert: (ChangeSet current changeRecorderFor: (Smalltalk globals classNamed: #JunkClass)) thisName = nil.	"Remove bogus change records created as side effect of preceding assert"
+	self assert: (ChangeSet current changeRecorderFor: (Smalltalk globals classNamed: #JunkClass)) thisName = 'nil'.	"Remove bogus change records created as side effect of preceding assert"
 	ChangeSet current removeClassChanges: 'nil'.	"Define a class and save its definition"
 	Object
 		subclass: #JunkClass

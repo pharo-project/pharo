@@ -1,0 +1,3 @@
+default abi
+returnSingleFloatsAsDoubles
+	^ false

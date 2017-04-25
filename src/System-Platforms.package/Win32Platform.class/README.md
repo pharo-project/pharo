@@ -1,4 +1,5 @@
-I am a an object representing a Windows platform. Use myself to access platform specific features.
+I am a an object representing a Windows platform (32bits). 
+Use myself to access platform specific features.
 
 Please keep me polymorphic to the the other platform objects.
 

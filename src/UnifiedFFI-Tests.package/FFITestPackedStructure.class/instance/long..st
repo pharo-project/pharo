@@ -1,4 +1,4 @@
 accessing structure variables
 long: anObject
 	"This method was automatically generated"
-	handle signedLongAt: 4 put: anObject
+	^handle platformLongAt: OFFSET_LONG put: anObject

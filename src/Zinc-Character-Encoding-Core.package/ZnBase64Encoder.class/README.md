@@ -4,7 +4,12 @@ Base64 encoding is a technique to encode binary data as a string of characters t
 
 The most commonly used alphabet is 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'. One or two equal signs (= or ==) are used for padding.
 
-The encoded data can optionally be broken into lines. Characters not part of the alphabet are considered as white space and are ignored.
+  ZnBase64Encoder new encode: #[0 1 2 3 4 5].
+  ZnBase64Encoder new encode: #[10 20]
+  ZnBase64Encoder new decode: 'BQQDAgEA'.
+  ZnBase64Encoder new decode: 'FAo='.
+
+The encoded data can optionally be broken into lines. Characters not part of the alphabet are considered as white space and are ignored when inbetween groups of 4 characters.
 
 My #encode: method works from ByteArray to String, while my #decode: method works from String to ByteArray.
 

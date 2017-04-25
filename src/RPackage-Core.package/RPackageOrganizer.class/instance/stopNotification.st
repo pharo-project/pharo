@@ -5,4 +5,6 @@ stopNotification
 	"pay attention that we can break the system using this method"
 	
 	SystemAnnouncer uniqueInstance unsubscribe: self.
-	MCWorkingCopy removeDependent: self.
+	
+	self class environment at: #MCWorkingCopy ifPresent: [:wc | 
+		wc removeDependent: self].

@@ -5,10 +5,10 @@ runTestCase: aTestCase
 	testCompleted := false.
 	watchDogSemaphore signal. "signal about new test case"
 
-	[[aTestCase runCase] ensure: [
+	[[self runTestCaseSafelly: aTestCase] ensure: [
 		testCompleted := true.
 		watchDogSemaphore signal]. "signal that test case completes".
 	
 	self checkForkedProcesses] ifCurtailed: [
 		forkedProcesses removeAll.
-		failedProcesses removeAll].
+		failedProcesses removeAll]

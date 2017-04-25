@@ -32,8 +32,8 @@ initializeTypeAliases
 		byte 				uint8
 		short 				int16
 		ushort 			uint16
-		long 				int32
-		ulong 				uint32
+		long 				FFILong
+		ulong 				FFIULong
 		longlong 			int64
 		ulonglong 		uint64
 		uint 				uint32

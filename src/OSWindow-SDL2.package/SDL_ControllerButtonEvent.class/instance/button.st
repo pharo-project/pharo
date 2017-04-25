@@ -1,4 +1,4 @@
 accessing structure variables
 button
 	"This method was automatically generated"
-	^handle unsignedByteAt: 13
+	^handle unsignedByteAt: OFFSET_BUTTON

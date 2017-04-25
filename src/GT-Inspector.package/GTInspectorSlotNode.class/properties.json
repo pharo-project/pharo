@@ -1,0 +1,14 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 2/27/2017 11:20",
+	"instvars" : [
+		"slot" ],
+	"name" : "GTInspectorSlotNode",
+	"pools" : [
+		 ],
+	"super" : "GTInspectorVariableNode",
+	"type" : "normal" }

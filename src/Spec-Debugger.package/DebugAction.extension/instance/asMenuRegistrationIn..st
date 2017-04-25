@@ -1,9 +1,9 @@
 *spec-debugger
 asMenuRegistrationIn: aBuilder
 	| item |
-	
 	item := (aBuilder item: self specId)
 		label: self label, (self keyText ifNil: [ '' ] ifNotNil: [ '  (', self keyText, ')' ] );
+		setBalloonText: self help;
 		icon: self icon;
 		enabled: self enabled;
 		order: self order asFloat;

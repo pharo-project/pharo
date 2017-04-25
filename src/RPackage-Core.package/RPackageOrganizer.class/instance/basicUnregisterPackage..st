@@ -5,6 +5,9 @@ basicUnregisterPackage: aPackage
 	packages
 		removeKey: aPackage name asSymbol
 		ifAbsent: [ self reportExtraRemovalOf: aPackage ].
+
 	"unregister also mc package"
-	aPackage mcPackage 
-		ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ].
+	self flag: #hack. "for decoupling MC"
+	self class environment at: #MCWorkingCopy ifPresent: [ 
+		aPackage mcPackage 
+			ifNotNil: [ :mcPackage | mcPackage workingCopy unregister ]].

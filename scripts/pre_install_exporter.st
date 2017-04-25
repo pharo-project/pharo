@@ -1,6 +1,4 @@
 Metacello new
-  baseline: 'Iceberg';
-  repository: 'github://npasserini/iceberg';
+  baseline: 'IceMetadatalessFileTreeWriter';
+  repository: 'github://pavel-krivanek/IceMetadatalessFileTreeWriter';
   load.
-  
-IceRepository defaultBackendType: IceLibgitLocalRepository.  

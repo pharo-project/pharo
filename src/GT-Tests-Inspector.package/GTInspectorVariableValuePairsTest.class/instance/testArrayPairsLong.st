@@ -1,9 +1,11 @@
 object
 testArrayPairsLong
-	| pairs |
+		| limit pairs |
 	
-	pairs := (1 to: 100) asArray gtInspectorVariableValuePairs.
-	self assert: pairs size = 42.
+	limit := 3*GTInspector indexableDisplayLimit.
+	pairs := (1 to: limit) asArray gtInspectorVariableValuePairs.
+	self assert: pairs size = (2*GTInspector indexableDisplayLimit).
 	(pairs collect: #key) allSatisfy: [ :e | (pairs at: e) = e ].
 	
-	self assert: ((pairs collect: #key) = ((1 to: 21) asOrderedCollection addAll: (80 to: 100) asOrderedCollection; yourself)).
+	self assert: ((pairs collect: #key) = ((1 to: GTInspector indexableDisplayLimit ) asOrderedCollection 
+		addAll: (limit - GTInspector indexableDisplayLimit + 1 to: limit) asOrderedCollection; yourself)).

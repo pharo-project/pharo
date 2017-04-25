@@ -1,0 +1,3 @@
+settings
+disableStepRefresh
+	self setEnabledStepRefreshStatus: false

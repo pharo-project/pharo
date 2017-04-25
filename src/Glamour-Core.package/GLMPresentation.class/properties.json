@@ -33,7 +33,8 @@
 		"portChangeActions",
 		"wantsSteps",
 		"stepTime",
-		"stepCondition" ],
+		"stepCondition",
+		"wantsAutomaticRefresh" ],
 	"name" : "GLMPresentation",
 	"pools" : [
 		 ],

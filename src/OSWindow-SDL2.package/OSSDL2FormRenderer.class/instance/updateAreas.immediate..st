@@ -13,7 +13,7 @@ updateAreas: allDamage immediate: forceToScreen
 	
 	updateUnion := nil.
 	[
-		externalForm := ExternalForm extent: extent depth: 32 bits: pixels.
+		externalForm := OSSDL2ExternalForm extent: extent depth: 32 bits: pixels.
 		allDamage do: [ :rectangle |
 			intersection := rectangle
 				intersect: (0 @ 0 corner: window extent)

@@ -18,6 +18,6 @@ computeSecondarySelectionShapesFrom: topLeft to: bottomRight
 				vertices: (self verticesFrom: r first to: r last + 1)
 				firstIndex: r first
 				lastIndex: r last + 1
-				color: (RubTextSelectionColor secondarySelection backgroundColor alpha: 0.6)
+				color: (RubTextSelectionColor secondarySelection backgroundColor)
 				borderWidth: 0
 				borderColor: RubTextSelectionColor secondarySelection backgroundColor muchDarker]

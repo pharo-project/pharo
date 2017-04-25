@@ -1,4 +1,4 @@
 accessing structure variables
 version
 	"This method was automatically generated"
-	^handle unsignedLongAt: 9
+	^handle unsignedLongAt: OFFSET_VERSION

@@ -1,4 +1,4 @@
 accessing structure variables
 nested
 	"This method was automatically generated"
-	^FFITestArrayStructure fromHandle: (handle referenceStructAt: 1 length: 16)
+	^FFITestArrayStructure fromHandle: (handle referenceStructAt: OFFSET_NESTED length: 15)

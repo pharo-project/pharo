@@ -8,7 +8,6 @@ baseline: spec
 	repository := 'filetree://./pharo-core/src'.    
        
 	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 		
 		spec baseline: 'BasicTools' with: [spec repository: repository].
@@ -68,7 +67,6 @@ baseline: spec
 		spec package: 'Zinc-Zodiac'.	
 			
 		spec package: 'Metacello-GitBasedRepository'.	
-		spec package: 'SUnit-Rules'.	
 
 		spec package: 'BaselineOfMetacello'.
 		spec package: 'Metacello-Bitbucket'.		
@@ -81,9 +79,6 @@ baseline: spec
 		spec package: 'Metacello-TestsReference'.	"standalone"
 
 		spec package: 'RPackage-Tests'.
-
-
-		spec package: 'BaselineOfFileTree'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -108,6 +103,7 @@ baseline: spec
 
 		spec package: 'GT-Playground'.
 
+		spec package: 'System-Identification'.
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
@@ -124,6 +120,7 @@ baseline: spec
 		spec package: 'Renraku'.
 		spec package: 'QualityAssistant'.
 		spec package: 'QualityAssistantRecording'.
+		spec package: 'SUnit-Rules'.	
 
 		spec package: 'Moose-Algos-Graph'.
 		spec package: 'Tool-DependencyAnalyser'.
@@ -203,6 +200,10 @@ baseline: spec
 		spec package: 'ConfigurationOfGTPlaygroundCore'.
 		spec package: 'ConfigurationOfGTInspectorCore'.	"
 		
+		"SortFunctions (standalone)"
+		spec package: 'SortFunctions-Core'.
+		spec package: 'SortFunctions-Tests'.
+
 		"standalone packages"
 		spec package: 'Announcements-Help'.
 		spec package: 'Announcements-Tests-Core'.
@@ -245,9 +246,11 @@ baseline: spec
 		spec package: 'Multilingual-Tests'.
 		spec package: 'NECompletion-Tests'.
 		spec package: 'Nautilus-Tests'.
+		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
 		spec package: 'Pharo-Help'.
+		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
 		spec package: 'ProfStef-Tests'.
 		spec package: 'QualityAssistant-Test'.
@@ -266,6 +269,7 @@ baseline: spec
 		spec package: 'Ring-Tests-Monticello'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
+		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'ScriptLoader-Tests'.
@@ -284,7 +288,6 @@ baseline: spec
 		spec package: 'System-SupportTests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
-		spec package: 'Tool-TxWorkspace'.
 		spec package: 'Tools-Test'.	
 		spec package: 'TxText-AthensTests'.
 		spec package: 'TxTextTests-Model'.
@@ -295,5 +298,7 @@ baseline: spec
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
 
-	      self groups: spec.
+		spec package: 'BaselineOfPharoBootstrap'.
+
+      self groups: spec.
 	].

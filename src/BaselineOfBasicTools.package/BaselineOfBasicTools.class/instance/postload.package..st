@@ -7,11 +7,6 @@ postload: loader package: packageSpec
 	Smalltalk tools register: TestRunner as: #testRunner.
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	
-	"reload icons because of new tools" 
- 	gofer := Gofer it smalltalkhubUser: 'Pharo' project: 'Pharo60'.
-   gofer package: #'Polymorph-TaskbarIcons'.
-   gofer load.	
-
 	BIConfigurableFormatter initialize.
 	
 	Smalltalk garbageCollect.

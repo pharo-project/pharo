@@ -21,4 +21,14 @@ I also implement optimized bulk operations:
 #next:putAll:startingAt:toStream:
 #readInto:startingAt:count:fromStream:
 
+Additionally, I can encode Integer code points to a binary stream as well as read Integer code points from a binary stream. This is in a sense a more fundamental operation that avoids instanciating Character objects.
+
+#nextCodePointFromStream:
+#nextPutCodePoint:toStream:
+#encodedByteCountForCodePoint:
+
+#decodeAsCodePoints:
+#encodeCodePoints:
+#encodedByteCountForCodePoints:
+
 Part of Zinc HTTP Components.

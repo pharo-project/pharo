@@ -1,4 +1,4 @@
 accessing
 defaultLabel
 
-	^ 'Copy to clipboard'
+	^ 'Copy Stack to Clipboard'

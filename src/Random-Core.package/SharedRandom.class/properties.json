@@ -4,7 +4,7 @@
 		"global" ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "BenComan 9/24/2015 23:15",
+	"commentStamp" : "SvenVanCaekenberghe 2/16/2017 17:02",
 	"instvars" : [
 		"mutex" ],
 	"name" : "SharedRandom",

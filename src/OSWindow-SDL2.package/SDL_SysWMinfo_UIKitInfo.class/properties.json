@@ -3,7 +3,10 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_COLORBUFFER",
+		"OFFSET_FRAMEBUFFER",
+		"OFFSET_RESOLVEFRAMEBUFFER",
+		"OFFSET_WINDOW" ],
 	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
 	"instvars" : [
 		 ],

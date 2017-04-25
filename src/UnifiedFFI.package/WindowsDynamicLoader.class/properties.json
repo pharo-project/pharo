@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI-Libraries",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "WindowsDynamicLoader",
+	"pools" : [
+		 ],
+	"super" : "DynamicLoader",
+	"type" : "normal" }

@@ -6,13 +6,13 @@
 		"ABI",
 		"FlushThunkToCallbackMap",
 		"ThunkToCallbackMap" ],
-	"commentStamp" : "eem 6/17/2016 19:44",
+	"commentStamp" : "eem 9/7/2016 18:45",
 	"instvars" : [
 		"block",
 		"thunk",
-		"argsProxyClass",
 		"evaluator",
-		"numEvaluatorArgs" ],
+		"numEvaluatorArgs",
+		"argsProxyClass" ],
 	"name" : "Callback",
 	"pools" : [
 		 ],

@@ -5,12 +5,7 @@ attemptToAssign: value withIndex: index
 	performed, do it manually here in the call back with instVarAt:put:.
 	This method has to return *no* value by jumping to the context's sender"
 	
-	NoModificationError new
-		object: self;
-		index: index;
-		value: value;
-		selector: #instVarAt:put: ;
-		signal.
+	(ModificationForbidden for: self atInstVar: index with: value)	signal.
 
 	thisContext sender jump
 	"CAN'T REACH"

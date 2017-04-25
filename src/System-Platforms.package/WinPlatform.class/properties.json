@@ -1,0 +1,14 @@
+{
+	"category" : "System-Platforms",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "WinPlatform",
+	"pools" : [
+		 ],
+	"super" : "OSPlatform",
+	"type" : "normal" }

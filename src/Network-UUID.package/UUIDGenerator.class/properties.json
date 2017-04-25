@@ -4,17 +4,12 @@
 		 ],
 	"classvars" : [
 		"Default" ],
-	"commentStamp" : "<historical>",
+	"commentStamp" : "SvenVanCaekenberghe 12/11/2016 16:58",
 	"instvars" : [
-		"timeLow",
-		"timeMid",
-		"timeHiAndVersion",
-		"clockSeqHiAndReserved",
-		"clockSeqLow",
 		"node",
-		"randomCounter",
-		"randomGenerator",
-		"semaphoreForGenerator" ],
+		"random",
+		"counter",
+		"lock" ],
 	"name" : "UUIDGenerator",
 	"pools" : [
 		 ],

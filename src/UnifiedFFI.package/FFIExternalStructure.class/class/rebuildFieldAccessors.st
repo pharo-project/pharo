@@ -1,6 +1,6 @@
 private
 rebuildFieldAccessors
-	"compatibility method"
+	self removeAllOffsetVariables. 
 	self 
 		compileFields: self fields 
 		withAccessors: true

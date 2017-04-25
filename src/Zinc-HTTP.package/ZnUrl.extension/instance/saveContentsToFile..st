@@ -1,4 +1,4 @@
-*Zinc-HTTP
+*zinc-http
 saveContentsToFile: aFilename
 	"Download and return a fileReference to the resource that I refer to.
 

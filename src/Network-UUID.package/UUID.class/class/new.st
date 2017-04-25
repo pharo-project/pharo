@@ -1,3 +1,5 @@
 instance creation
 new
-	^(self new: 16)
+	"Create and return a new UUID"
+	
+	^ (self new: 16)

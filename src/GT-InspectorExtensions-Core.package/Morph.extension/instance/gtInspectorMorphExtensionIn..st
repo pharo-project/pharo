@@ -8,9 +8,9 @@ gtInspectorMorphExtensionIn: composite
 		display: [ self extension gtInspectorVariableValuePairs asSortedCollection ];
 		when: [ extension notNil ];
 		column: 'Variable' 
-			evaluated: [:assoc | GTObjectPrinter new asNonTruncatedTextFrom: assoc key ];
+			evaluated: [:assoc | GTObjectPrinter asNonTruncatedTextFrom: assoc key ];
 		column: 'Value' 
-			evaluated: [:assoc | GTObjectPrinter new asTruncatedTextFrom: assoc value ];
+			evaluated: [:assoc | GTObjectPrinter asTruncatedTextFrom: assoc value ];
 		send: #value;
 		morphicSelectionAct: [:list | list selection value browse ] 
 			icon: GLMUIThemeExtraIcons glamorousBrowse 

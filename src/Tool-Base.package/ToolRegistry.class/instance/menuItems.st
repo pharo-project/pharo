@@ -5,7 +5,7 @@ menuItems
 	^#(
 		('System Browser' 			#openClassBrowser)
 		-
-		('Workspace'				#openWorkspace)
+		('Playground'				#openWorkspace)
 		('Transcript' 				#openTranscript)
 		('File Browser'				#openFileList)
 		-

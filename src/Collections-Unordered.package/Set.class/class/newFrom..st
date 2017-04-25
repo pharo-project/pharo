@@ -1,5 +1,5 @@
 instance creation
-newFrom: aCollection 
+newFrom: aCollection
 	"Answer an instance of me containing the same elements as aCollection."
 	| newCollection |
 	newCollection := self new: aCollection size.

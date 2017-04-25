@@ -3,7 +3,12 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_TIMESTAMP",
+		"OFFSET_TYPE",
+		"OFFSET_WHICH",
+		"OFFSET_WINDOWID",
+		"OFFSET_X",
+		"OFFSET_Y" ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
 	"instvars" : [
 		 ],

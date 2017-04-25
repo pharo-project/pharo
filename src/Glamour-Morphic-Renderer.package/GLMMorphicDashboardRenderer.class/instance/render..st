@@ -1,7 +1,7 @@
 private
 render: aBrowser
 	| container |
-	container := PanelMorph new.
+	container := GLMPanelMorph new.
 	container
 		fillStyle: Color transparent;
 		changeProportionalLayout;

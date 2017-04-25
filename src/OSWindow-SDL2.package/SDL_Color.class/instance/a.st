@@ -1,4 +1,4 @@
 accessing structure variables
 a
 	"This method was automatically generated"
-	^handle unsignedByteAt: 4
+	^handle unsignedByteAt: OFFSET_A

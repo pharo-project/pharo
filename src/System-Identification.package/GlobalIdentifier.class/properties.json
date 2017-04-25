@@ -1,0 +1,15 @@
+{
+	"category" : "System-Identification",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 10/12/2015 23:13",
+	"instvars" : [
+		"persistenceStrategy",
+		"persistedInformation" ],
+	"name" : "GlobalIdentifier",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

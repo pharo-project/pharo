@@ -6,7 +6,7 @@
 		 ],
 	"commentStamp" : "DenisKudryashov 5/27/2016 17:17",
 	"instvars" : [
-		 ],
+		"monitorLog" ],
 	"name" : "EpLostChangesDetector",
 	"pools" : [
 		 ],

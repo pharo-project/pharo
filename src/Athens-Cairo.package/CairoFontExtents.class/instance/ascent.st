@@ -1,4 +1,4 @@
 accessing structure variables
 ascent
 	"This method was automatically generated"
-	^handle doubleAt: 1
+	^handle doubleAt: OFFSET_ASCENT

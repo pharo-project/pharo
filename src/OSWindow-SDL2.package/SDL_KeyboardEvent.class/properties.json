@@ -3,7 +3,14 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_KEYSYM",
+		"OFFSET_PADDING2",
+		"OFFSET_PADDING3",
+		"OFFSET_REPEAT",
+		"OFFSET_STATE",
+		"OFFSET_TIMESTAMP",
+		"OFFSET_TYPE",
+		"OFFSET_WINDOWID" ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:43",
 	"instvars" : [
 		 ],

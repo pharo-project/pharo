@@ -1,6 +1,6 @@
 building
 classesIn: a
-	^ a list
+	^ a fastList
 		display: [ :object | 
 			| all |
 			all := OrderedCollection new.

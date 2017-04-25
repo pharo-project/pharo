@@ -6,4 +6,6 @@ methodCodeWidgetIn: composite forContext: aContext
 		format: [ aContext sourceCode ];
 		smalltalkClass: [  aContext methodClass ];
 		doItReceiver: [ aContext receiver ];
-		doItContext: [  aContext ]
+		doItContext: [  aContext ];
+		with: [ :codePresentation | 
+			self installBindingsForDoItIn: codePresentation from: aContext ]

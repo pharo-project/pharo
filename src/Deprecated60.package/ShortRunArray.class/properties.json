@@ -1,0 +1,14 @@
+{
+	"category" : "Deprecated60",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "Marcus 2/14/2017 14:40",
+	"instvars" : [
+		 ],
+	"name" : "ShortRunArray",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

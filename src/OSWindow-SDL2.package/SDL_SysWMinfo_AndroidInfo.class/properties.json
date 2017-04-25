@@ -3,7 +3,8 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_SURFACE",
+		"OFFSET_WINDOW" ],
 	"commentStamp" : "RonieSalgado 5/27/2016 13:17",
 	"instvars" : [
 		 ],

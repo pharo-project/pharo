@@ -8,16 +8,6 @@ postload: loader package: packageSpec
 	Smalltalk cleanOutUndeclared.
 	Author fullName: self class name.
 
-	UITheme class compile: 'current: aUITheme
-		Current := aUITheme.
-		SystemProgressMorph reset. "reset to use new fill styles"
-		ScrollBar initializeImagesCache. "reset to use new arrows"
-		aUITheme updateWorldDockingBars.
-		World themeChanged.'.
-		
-	SystemSettingsPersistence class compile: 'updateSettingNodes
-		[self default updateSettingNodes] ifError: [  ]'.
-
 	TextConstants initialize.
 		
 	"Initialize Fuel"
@@ -29,10 +19,8 @@ postload: loader package: packageSpec
 
 	FileStream stdout nextPutAll: Smalltalk ui asString; lf.
 
-	'recompiling all image because of fuel traits?' logCr.
-	SparseLargeTable recompile.
-	'recompiling finished' logCr.
-
+	SparseLargeTable recompile. 
+	
 	dejavu := FLMaterializer materializeFromFileNamed: 'BitmapDejaVuSans.fuel'.
 
 	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejavu.
@@ -85,12 +73,11 @@ postload: loader package: packageSpec
 	#(#AbstractFont #BalloonMorph #CP1253TextConverter #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GB2312 #GradientFillStyle #GreekEnvironment #ISO88597TextConverter #IconicButton #JISX0208 #JapaneseEnvironment #KOI8RTextConverter #KSX1001 #KoreanEnvironment #LogicalFont #LucidaGrandeRegular #OSEnvironment #RussianEnvironment #ScrollBar #SimplifiedChineseEnvironment "#SourceCodeProRegular #SourceSansProRegular" #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
 		 (Smalltalk globals at: each) initialize. ].
 
-		array := Smalltalk specialObjectsArray copy.
-		array at: 5 put: Bitmap.
-		Smalltalk specialObjectsArray becomeForward: array.
+	array := Smalltalk specialObjectsArray copy.
+	array at: 5 put: Bitmap.
+	Smalltalk specialObjectsArray becomeForward: array.
 
+	Author reset.
+	MCMethodDefinition initializersEnabled: initializersEnabled.
 
-		Author reset.
-		MCMethodDefinition initializersEnabled: initializersEnabled.
-
-		UIManager default restoreDisplay. 
+	UIManager default restoreDisplay. 

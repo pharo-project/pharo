@@ -2,9 +2,11 @@ tests
 testReferenceDependenciesFrom
 	| aRelationGraph |
 	aRelationGraph := DAPackageRelationGraph new.
-	aRelationGraph
+	[ aRelationGraph
 		computeStaticDependencies: aPackage;
-		combineDependencies: aPackage.
+		combineDependencies: aPackage ]
+	on: PotentialOutDatedDependencyWarning
+	do: [ :ex | ex resume "ignore" ].
 	self
 		assert:
 			((aPackage referenceDependenciesFrom: Collection) allSatisfy: [ :dependency | dependency isReferenceDependency ]).

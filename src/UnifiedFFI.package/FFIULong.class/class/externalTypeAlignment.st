@@ -1,0 +1,3 @@
+accessing
+externalTypeAlignment
+	^ OSPlatform current ffiLongAlignment

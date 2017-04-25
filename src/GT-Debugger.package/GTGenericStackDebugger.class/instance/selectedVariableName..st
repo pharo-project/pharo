@@ -1,3 +1,3 @@
 accessing
 selectedVariableName: anObject
-	selectedVariableName := anObject
+	self cache at: #selectedVariableName put: anObject

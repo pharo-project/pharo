@@ -3,4 +3,7 @@ appendVariableBinding: anAssociationList
 
 	anAssociationList ifNotNil: [
 		anAssociationList do: [ :anAssociation | 
-			self variableBindings add: (WorkspaceVariable key: anAssociation key value: anAssociation value) ] ]
+			self variableBindings add: 
+				((anAssociation class = WorkspaceVariable) 
+					ifTrue: [ anAssociation ] 
+					ifFalse: [ (WorkspaceVariable key: anAssociation key value: anAssociation value) ]) ] ]

@@ -1,0 +1,14 @@
+{
+	"category" : "UnifiedFFI",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "RonieSalgado 2/13/2017 21:12",
+	"instvars" : [
+		 ],
+	"name" : "FFI_x86_64_SystemV",
+	"pools" : [
+		 ],
+	"super" : "FFI_x86_64",
+	"type" : "normal" }

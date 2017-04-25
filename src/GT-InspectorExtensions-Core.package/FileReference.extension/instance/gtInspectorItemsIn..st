@@ -1,7 +1,7 @@
 *GT-InspectorExtensions-Core
 gtInspectorItemsIn: composite
 	<gtInspectorPresentationOrder: 0>
-	^ composite table 
+	^ composite fastTable 
 		title: 'Items';
 		display: [ 
 			| children |

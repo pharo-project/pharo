@@ -3,7 +3,15 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_DATA1",
+		"OFFSET_DATA2",
+		"OFFSET_EVENT",
+		"OFFSET_PADDING1",
+		"OFFSET_PADDING2",
+		"OFFSET_PADDING3",
+		"OFFSET_TIMESTAMP",
+		"OFFSET_TYPE",
+		"OFFSET_WINDOWID" ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
 	"instvars" : [
 		 ],

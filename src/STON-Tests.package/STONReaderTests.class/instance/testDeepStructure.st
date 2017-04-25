@@ -5,7 +5,7 @@ testDeepStructure
 	holder := Array with: 42.
 	deepest := Array with: holder.
 	structure := deepest.
-	64 * 1024 timesRepeat: [ structure := Array with: structure ].
+	1 * 1024 timesRepeat: [ structure := Array with: structure ].
 	structure := Array with: holder with: structure.
 	writer := STON writer optimizeForLargeStructures.
 	ston := String streamContents: [ :out | (writer on: out) nextPut: structure ].

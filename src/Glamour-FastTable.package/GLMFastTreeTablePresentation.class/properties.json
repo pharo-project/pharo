@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-FastTable-Presentations",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGLMScriptingAPITablePresentation classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 2/6/2017 14:28",
+	"instvars" : [
+		"columns" ],
+	"name" : "GLMFastTreeTablePresentation",
+	"pools" : [
+		 ],
+	"super" : "GLMFastTreePresentation",
+	"traitcomposition" : "TGLMScriptingAPITablePresentation",
+	"type" : "normal" }

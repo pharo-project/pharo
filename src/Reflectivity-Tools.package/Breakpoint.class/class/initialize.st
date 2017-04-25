@@ -1,3 +1,4 @@
-class initialization
+initialization
 initialize
-	AllBreakpoints := OrderedCollection new
+	AllBreakpoints := OrderedCollection new.
+	self registerInsterestToSystemAnnouncement 

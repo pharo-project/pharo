@@ -18,7 +18,7 @@ You can also define an icon for the specific page:
      secondPage
      	    ^HelpTopic
 	           title: ''Second Page'' 
-    	           icon: (HelpIcons iconNamed: #packageIcon)
+    	           iconName: #packageIcon
                  contents: ''More to come''
 
 

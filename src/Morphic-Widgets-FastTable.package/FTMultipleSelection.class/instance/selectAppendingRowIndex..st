@@ -1,5 +1,10 @@
 private
 selectAppendingRowIndex: rowIndex
-	self 
-		selectRowIndexes: rowIndex 
-		previous: self table selectedRowIndexes
+	| currentSelection newSelection |
+	currentSelection := self table selectedRowIndexes.
+	
+	newSelection := (currentSelection includes: rowIndex)
+		ifTrue: [ currentSelection copyWithout: rowIndex ]
+		ifFalse: [ currentSelection copyWithFirst: rowIndex].
+		
+	self table selectRowIndexes: newSelection

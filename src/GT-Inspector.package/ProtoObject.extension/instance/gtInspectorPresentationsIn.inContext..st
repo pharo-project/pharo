@@ -10,5 +10,5 @@ gtInspectorPresentationsIn: composite inContext: aGTInspector
 		from: self class
 		to: ProtoObject
 		sortedUsing: [ :x :y | (x argumentAt: 1) < (y argumentAt: 1) ].
-	pragmas := pragmas select: [ :aPragma | aGTInspector shouldDisplayPresentationCreateBy: aPragma method ].
+	pragmas := pragmas select: [ :aPragma | aGTInspector shouldDisplayPresentationCreatedBy: aPragma method ].
 	self gtInspectorPresentationsFromPragmas: pragmas In: composite inContext: aGTInspector

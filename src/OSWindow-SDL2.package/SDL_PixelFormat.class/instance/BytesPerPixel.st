@@ -1,4 +1,4 @@
 accessing structure variables
 BytesPerPixel
 	"This method was automatically generated"
-	^handle unsignedByteAt: 10
+	^handle unsignedByteAt: OFFSET_BYTESPERPIXEL

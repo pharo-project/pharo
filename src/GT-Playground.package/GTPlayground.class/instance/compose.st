@@ -13,8 +13,15 @@ compose
 			(GTInspector new
 				noTitle; 
 				noActions;
+				wantsAutomaticRefresh: true;
 				showFirst: [ :composite |
 					self codeIn: composite ];
 				yourself);
 		when: GLMBrowserClosing do: [ :ann |
-			self actOnBrowserClosing: ann ]
+			self actOnBrowserClosing: ann ].
+	
+	GTInspector isStepRefreshEnabled ifTrue: [
+		self wantsAutomaticRefresh: true.
+		self wantsSteps: true.
+		self stepTime: GTInspector stepRefreshRate ]
+	

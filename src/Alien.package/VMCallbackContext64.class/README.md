@@ -1,4 +1,4 @@
-A VMCallbackContext64 is anAlien for the 64-bit version of VMCallbackContext (defined in the VMMaker package), a struct that maintains all the necessary context for a callback.
+A VMCallbackContext64 is an Alien for the 64-bit version of VMCallbackContext (defined in the VMMaker package), a struct that maintains all the necessary context for a callback.
 
 typedef struct {
     void *thunkp;

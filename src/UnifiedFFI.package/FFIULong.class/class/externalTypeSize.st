@@ -1,0 +1,3 @@
+accessing
+externalTypeSize
+	^ FFIArchitecture forCurrentArchitecture longTypeSize

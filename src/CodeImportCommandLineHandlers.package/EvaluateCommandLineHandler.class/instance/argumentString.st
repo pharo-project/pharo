@@ -3,7 +3,7 @@ argumentString
 	| arguments skipArguments |
 	
 	"Now this is ugly... Coral would be nice here! Basically we strip skipArguments if, and only if they appear at the beginning of arguments"
-	skipArguments := #( '--no-quit' '--save' '-e').
+	skipArguments := #( '--no-quit' '--save' '-e' '--evaluate').
 
 	arguments := (skipArguments includes: self arguments first)
 		ifFalse: [ self arguments ]

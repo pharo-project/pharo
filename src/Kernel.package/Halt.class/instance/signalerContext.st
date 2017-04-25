@@ -5,6 +5,4 @@ signalerContext
 	^ signalContext findContextSuchThat: [ :context |
 		(context receiver == self 
 		or: [ (context receiver == self class) 
-		or: [ context methodNode hasPragmaNamed: #debuggerCompleteToSender ]]) not ]
-
-"aContext methodNode pragmaNamed: #debuggerCompleteToSender ifPresent: [ ^ self completeTo: aContext sender ]"
+		or: [ context method hasPragmaNamed: #debuggerCompleteToSender ]]) not ]

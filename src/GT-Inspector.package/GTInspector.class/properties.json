@@ -3,10 +3,13 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
+		"EnabledStepRefreshStatus",
 		"GTInspectorEnabledStatus",
 		"GTNumberOfInspectorPanes",
+		"IndexableDisplayLimit",
 		"PreferredExtent",
-		"RememberPreferredExtent" ],
+		"RememberPreferredExtent",
+		"StepRefreshRate" ],
 	"commentStamp" : "TudorGirba 8/21/2011 16:57",
 	"instvars" : [
 		"presentationFilter" ],

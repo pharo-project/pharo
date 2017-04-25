@@ -9,7 +9,8 @@
 		"previousRanks",
 		"currentRank",
 		"rootNodes",
-		"leafNodes" ],
+		"leafNodes",
+		"maxIterations" ],
 	"name" : "MalLongestPath",
 	"pools" : [
 		 ],

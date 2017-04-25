@@ -1,4 +1,0 @@
-*tool-criticBrowser
-isComposite
-
-	^ false

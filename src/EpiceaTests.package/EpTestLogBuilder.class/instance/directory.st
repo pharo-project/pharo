@@ -1,4 +1,4 @@
 accessing
 directory
 
-	^ directory ifNil: [ FileSystem workingDirectory / 'epicea-tests' ]
+	^ directory ifNil: [ directory := self newDirectory ]

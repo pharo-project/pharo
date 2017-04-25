@@ -5,10 +5,11 @@
 	"classvars" : [
 		"STONCharacters",
 		"STONSimpleSymbolCharacters" ],
-	"commentStamp" : "SvenVanCaekenberghe 7/2/2015 15:28",
+	"commentStamp" : "SvenVanCaekenberghe 1/31/2017 23:27",
 	"instvars" : [
 		"writeStream",
 		"prettyPrint",
+		"stonCharacters",
 		"newLine",
 		"asciiOnly",
 		"jsonMode",

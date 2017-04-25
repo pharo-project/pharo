@@ -7,4 +7,5 @@ setFileStream: aStream
 	brevityState := #needToGetBrief.
 	self changed: #fileList.
 	self changed: #contents.
+	self changed: #pattern.
 	self changed: #selectedDirectory.

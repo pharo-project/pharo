@@ -21,7 +21,8 @@
 		"sourceCodeSelectionInterval",
 		"sourceTextModel",
 		"methodClassifier",
-		"commentTextModel" ],
+		"commentTextModel",
+		"instanceButtonWidget" ],
 	"name" : "AbstractNautilusUI",
 	"pools" : [
 		 ],

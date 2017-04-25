@@ -1,3 +1,3 @@
 accessing
 externalTypeAlignment
-	^ OSPlatform current ffiAlignment
+	^ OSPlatform current ffiFloat64Alignment

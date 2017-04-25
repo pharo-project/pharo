@@ -5,7 +5,6 @@ refresh
 	currentFilter := self andFilter.
 	entryItemByEntryReferenceCache := Dictionary new.
 
-	self flag: #todo. "FIX FIX FIX"
 	(lastRefreshedHeadReference ~= currentHeadReference
 		or: [ lastRefreshedFilter ~= currentFilter ])
 		ifFalse: [ ^ self ].

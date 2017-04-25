@@ -1,4 +1,4 @@
-A VMCallbackContext32 is anAlien for the 32-bit version of VMCallbackContext (defined in the VMMaker package), a struct that maintains all the necessary context for a callback.
+A VMCallbackContext32 is an Alien for the 32-bit version of VMCallbackContext (defined in the VMMaker package), a struct that maintains all the necessary context for a callback.
 
 typedef struct {
     void *thunkp;

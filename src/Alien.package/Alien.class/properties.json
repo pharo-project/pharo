@@ -1,13 +1,13 @@
 {
 	"category" : "Alien-Core",
 	"classinstvars" : [
-		 ],
+		"lifoCallbackSemaphore" ],
 	"classvars" : [
 		"GCMallocedAliens",
 		"LoadedLibraries",
 		"ProcessIoEvents",
 		"WordSize" ],
-	"commentStamp" : "John M McIntosh 11/23/2008 12:45",
+	"commentStamp" : "eem 9/7/2016 18:34",
 	"instvars" : [
 		 ],
 	"name" : "Alien",

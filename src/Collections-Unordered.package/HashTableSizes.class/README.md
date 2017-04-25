@@ -13,6 +13,6 @@ An integer is not "good" as a hash table size if it is any of:
 
 See Andres Valloud's hashing book, and Knuth TAOCP vol. 3.
 
-This class caches a table of selected good primes within the positive SmallInteger range. When this table must be rebuilt, it uses an instance to compute the table. Primes are selected to keep the table fairly small, with approximately five entries per power of two.
+This class caches a primary table of selected good primes within the positive SmallInteger range. When this table must be rebuilt, it uses an instance to compute the table. Primes are selected to keep the table fairly small, with approximately five entries per power of two. It is ordered, and is binary searched to find the closest good size >= the requested size.
 
-The cached table is ordered, and is searched with a binary search to find the closest good size >= the requested size.
+This class caches a second table built from the first to support faster direct lookup of primes for requested sizes in the range of 0 to "self maxSmallSize".

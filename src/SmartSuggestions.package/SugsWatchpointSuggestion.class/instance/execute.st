@@ -4,9 +4,5 @@ execute
 	context hasUnacceptedEdits ifTrue: [ ^context sourceTextArea acceptEdits].
 	
 	context selectedNode hasWatchpoint
-		ifFalse: [
-			(UIManager default request: 'Name for Watchpoint') ifNotNil: [:tagname | 
-				Watchpoint in: context selectedNode named: tagname
-			]
-		]
+		ifFalse: [ Watchpoint in: context selectedNode ]
 		ifTrue: [ Watchpoint removeFrom: context selectedNode]

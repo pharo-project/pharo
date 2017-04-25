@@ -1,4 +1,0 @@
-*Epicea
-isEpiceaCache
-
-	^ true

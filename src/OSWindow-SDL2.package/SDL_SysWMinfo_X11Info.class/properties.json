@@ -3,7 +3,8 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"OFFSET_DISPLAY",
+		"OFFSET_WINDOW" ],
 	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
 	"instvars" : [
 		 ],

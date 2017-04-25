@@ -1,0 +1,16 @@
+{
+	"category" : "GT-Inspector",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 2/20/2017 11:45",
+	"instvars" : [
+		"label",
+		"value",
+		"tag" ],
+	"name" : "GTInspectorDynamicNode",
+	"pools" : [
+		 ],
+	"super" : "GTInspectorVariableNode",
+	"type" : "normal" }

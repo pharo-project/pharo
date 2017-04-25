@@ -1,4 +1,4 @@
 accessing
 headReference
 
-	^ headReference
+	^ store headReference

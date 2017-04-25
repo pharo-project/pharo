@@ -1,0 +1,3 @@
+scripting
+hideHeader
+	self explicitRequirement

@@ -1,0 +1,15 @@
+{
+	"category" : "OmbuTests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"count",
+		"deferrer" ],
+	"name" : "OmDeferrerTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

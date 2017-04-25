@@ -9,6 +9,7 @@
 	"instvars" : [
 		"classOrMetaClass",
 		"workspace",
+		"isForWorkspace",
 		"font",
 		"parser",
 		"environment",

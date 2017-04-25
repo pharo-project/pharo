@@ -6,7 +6,7 @@
 		"AccessProtect",
 		"AllocatedThunks",
 		"ExecutablePages" ],
-	"commentStamp" : "eem 12/21/2007 15:53",
+	"commentStamp" : "eem 9/7/2016 18:36",
 	"instvars" : [
 		 ],
 	"name" : "FFICallbackThunk",

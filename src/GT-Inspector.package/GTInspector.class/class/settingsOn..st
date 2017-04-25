@@ -15,4 +15,10 @@ settingsOn: aBuilder
 				getSelector: #isGTInspectorEnabled;
 				setSelector: #setGTInspectorEnabledStatus:; 
 				label: 'GTInspector';
-		 		description: 'Enable or disable the GTInspector.'.]
+		 		description: 'Enable or disable the GTInspector.'.
+			(aBuilder setting: #EnabledStepRefreshStatus)
+				target: self;
+				getSelector: #isStepRefreshEnabled;
+				setSelector: #setEnabledStepRefreshStatus:; 
+				label: 'GTInspector Step Refresh';
+		 		description: 'Enable or disable the automatic refresh in GTInspector that uses a busy update loop (based on the stepping mechanism from Morphic).']

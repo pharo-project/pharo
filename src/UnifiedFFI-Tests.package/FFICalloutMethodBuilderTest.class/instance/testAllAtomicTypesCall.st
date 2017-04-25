@@ -22,12 +22,12 @@ testAllAtomicTypesCall
 		ExternalType char. 
 		ExternalType double. 
 		ExternalType float.
-		ExternalType long.
+		architecture externalLongType.
 		ExternalType signedLongLong. 
 		ExternalType sbyte.
 		"schar and sbyte are the same size, and NB retrieves sbyte instead :("
 		ExternalType sbyte. 
 		ExternalType short. 
-		ExternalType ulong. 
+		architecture externalULongType. 
 		ExternalType unsignedLongLong. 
 		ExternalType ushort }

@@ -1,0 +1,1 @@
+I provide a facade to create and reuse OmStore hierarchy instances.

@@ -1,0 +1,4 @@
+accessing
+help
+
+	^ self defaultHelp

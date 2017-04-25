@@ -1,4 +1,4 @@
 accessing structure variables
 refcount
 	"This method was automatically generated"
-	^handle signedLongAt: 37
+	^handle signedLongAt: OFFSET_REFCOUNT

@@ -1,7 +1,7 @@
 data
 expectedMethodDefinitionWithBangs
 	^ '
-!MCStWriterTest methodsFor: ''testing'' stamp: ''GuillermoPolito 8/24/2012 12:57''!
+!MCStWriterTest methodsFor: ''testing'' stamp: ''''!
 methodWithBangs
 	^ ''
 	^ ReadStream on: 

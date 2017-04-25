@@ -1,4 +1,0 @@
-testing
-isOutdated
-
-	^ currentStore isOutdated

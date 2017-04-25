@@ -1,4 +1,6 @@
-instance creation
+accessing
 default
-	Default ifNil: [self generateDefault].
-	^Default
+	"Return the default UUID generator.
+	Sharing an instance is more efficient and correct."
+	
+	^ Default ifNil: [ Default := self new ]

@@ -4,6 +4,7 @@ testNewEntry
 	
 	store newEntry: anEntry.
 	
-	self 
-		assert: (store entries collect: #content as: Array)
-		equals: #(42)
+	self beforeAndAfterFlushStore: [
+		self 
+			assert: (store entries collect: #content as: Array)
+			equals: #(42) ]

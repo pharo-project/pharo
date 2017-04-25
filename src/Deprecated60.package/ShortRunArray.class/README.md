@@ -1,0 +1,1 @@
+This class is just here so that we do not have a Undeclared in initialize of ExternalObject. To be fixed in Pharo7

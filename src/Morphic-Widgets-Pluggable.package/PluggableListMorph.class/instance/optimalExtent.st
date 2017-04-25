@@ -1,3 +1,5 @@
 geometry
 optimalExtent
-	^ self listMorph optimalExtent + (self borderWidth * 2) + self scrollBarThickness
+	"Answer the extent of the list morph."
+
+	^self listMorph extent + (self borderWidth * 2) + self scrollBarThickness

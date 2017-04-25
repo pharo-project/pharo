@@ -1,9 +1,13 @@
 tests
 testNoDeadSubscriptions
 
+	| dead |
+
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 	
-	self deny: (
-		(SystemAnnouncer uniqueInstance subscriptions instVarNamed: #subscriptions) anySatisfy: [ :sub | 
-		sub subscriber isNil ]
-	)
+	dead := SystemAnnouncer uniqueInstance 
+		subscriptions subscriptions select: [ :sub | 
+			sub subscriber isNil 
+		].
+	
+	self assert: dead asArray equals: #()

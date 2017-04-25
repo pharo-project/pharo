@@ -12,4 +12,5 @@ computeStep
 							currentRank add: node.
 							node pathWeight: (node previousNodes max: [ :maxNode | maxNode pathWeight ]) + 1 ] ].
 			previousRanks addAll: currentRank.
+			maxIterations := maxIterations -1.
 			self computeStep ]

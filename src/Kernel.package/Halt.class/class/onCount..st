@@ -3,6 +3,9 @@ onCount: anInteger
 	"Halt on the anInteger-th time through"
 	<debuggerCompleteToSender>	
 	| callingContext node | 
+	"if the compiler is not loaded, we fall back on the standard halt "
+	self environment at: #OpalCompiler ifAbsent: [ ^self now ].
+	
 	callingContext := thisContext sender sender.
 	node := callingContext sourceNodeExecuted.
 	(node hasProperty: #haltCount) ifFalse: [

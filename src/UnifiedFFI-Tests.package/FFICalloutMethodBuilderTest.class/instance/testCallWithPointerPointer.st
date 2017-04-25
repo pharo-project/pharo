@@ -15,4 +15,4 @@ testCallWithPointerPointer
 	self assert: result isCompiledMethod.
 	self assert: result primitive = 0.
 	self assert: result literals first name = 'method1'.
-	self assert: result literals first argTypes last = ExternalType long asPointerType. 
+	self assert: result literals first argTypes last = architecture externalLongType asPointerType. 

@@ -6,7 +6,6 @@
 		 ],
 	"commentStamp" : "MartinDias 8/27/2016 19:50",
 	"instvars" : [
-		"filteredEntriesCount",
 		"olderFilteredEntry",
 		"entryReference" ],
 	"name" : "EpLogHeaderItem",

@@ -14,14 +14,15 @@ next: numberOfDesiredItems from: initialEntryReference
 			result add: (self newFetchMoreItemFor: nextEntryReference in: rootItems).
 			^ result ]. "Enough items"
 
-		item := self log
-			entryFor: nextEntryReference
-			ifPresent: [ :anEntry | 
-				self 
-					filter: anEntry 
-					ifAccepted: [ self newEntryItemFor: anEntry ]
-					ifNotAccepted: [ self newFilteredItemFor: anEntry ] ]
-			ifAbsent: [ ^ result ]. "Not found then can't continue"
+		item := [
+			self
+				newItemFor: nextEntryReference
+				ifAbsent: [ ^ result ] "Entry should belong to other log => stop here"
+			] 	on: OmFileStoreReadingError 
+				do: [
+					"Reading error => stop here"
+					self inform: 'Epicea: Reading error at ', nextEntryReference asString.
+					^ result ].
 
 		"Combine item if possible"
 		result addLast: 

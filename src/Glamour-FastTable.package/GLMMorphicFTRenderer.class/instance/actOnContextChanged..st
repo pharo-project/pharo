@@ -1,4 +1,4 @@
-rendering
+callbacks
 actOnContextChanged: anAnnouncement 
 	anAnnouncement property = #selection ifTrue: [ 
 		tableModel announcer 

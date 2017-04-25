@@ -1,0 +1,1 @@
+We subclass panel morph to improve performance of pane color adaptation and reduce amount of layouts by checking if panel is in the world or not

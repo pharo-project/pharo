@@ -2,6 +2,6 @@ initialization
 initialize
 	super initialize.
 
-	self rewriteRule
+	self
 		replace: 'self should: [ ``@object1 ]'
 		with: 'self assert: ``@object1'

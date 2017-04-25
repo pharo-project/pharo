@@ -1,4 +1,4 @@
-An instance of FFICallbackReturnValue specifies a return value to be passed to a callback callee.  It is intended to have overlaid the following struct:
+Obsolete support for old-style callbacks.  An instance of FFICallbackReturnValue specifies a return value to be passed to a callback callee.  It is intended to have overlaid the following struct:
 /*
  * Returning values from callbacks is done through a CallBackReturnSpec
  * which contains a type tag and values.  It is designed to be overlaid upon

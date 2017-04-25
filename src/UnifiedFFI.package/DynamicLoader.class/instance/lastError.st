@@ -1,0 +1,3 @@
+misc
+lastError
+	^ self subclassResponsibility

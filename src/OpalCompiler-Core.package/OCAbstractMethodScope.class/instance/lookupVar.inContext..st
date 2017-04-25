@@ -5,6 +5,6 @@ lookupVar: name inContext: aContext
 	| variable theValue |
 	variable := self
 		variableNamed: name
-		ifAbsent: [ ^ self outerScopeLookupVar: name inContext: aContext ].
+		ifAbsent: [ 	^self outerScopeLookupVar: name inContext: aContext].
 	theValue := variable readFromContext: aContext scope: self.
 	^ theValue

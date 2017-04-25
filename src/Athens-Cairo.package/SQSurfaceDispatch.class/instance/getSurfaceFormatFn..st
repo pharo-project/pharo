@@ -1,5 +1,7 @@
 accessing structure variables
-getSurfaceFormatFn: anObject
+getSurfaceFormatFn: aCallback
 	"This method was automatically generated"
-	getSurfaceFormatFn := anObject. "Ensure it's not gced"
-	handle unsignedLongAt: 9 put: anObject thunk address
+	getSurfaceFormatFn := aCallback.
+	handle 
+		pointerAt: OFFSET_GETSURFACEFORMATFN 
+		put: (ExternalAddress fromAddress: aCallback thunk address)

@@ -1,18 +1,19 @@
 *GT-InspectorExtensions-Core
 gtInspectorItemsIn: composite
-	^ (composite table)
+	^ (composite fastTable)
 		title: 'Items';
+		useCache;
 		display: [ self associations ];
-		children: [ :each | 
+		"children: [ :each | 
 			(each value isDictionary) 
 				ifTrue: [ each value associations ] 
 				ifFalse: [ (each value isArray and: [ each value allSatisfy: #isDictionary ])
 						ifTrue: [ each value collectWithIndex: [:x :i | i -> x ] ]
-						ifFalse: [ #() ] ] ];
+						ifFalse: [ #() ] ] ];"
 		column: 'Key' 
-			evaluated: [:each | GTObjectPrinter new asTruncatedTextFrom: each key ];
+			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each key ];
 		column: 'Value' 
-			evaluated: [:each | GTObjectPrinter new asTruncatedTextFrom: each value ];
+			evaluated: [:each | GTObjectPrinter asTruncatedTextFrom: each value ];
 		selectionAct: [ :table |
 			table rawSelection do: [ :assoc | self removeKey: assoc key ].
 			table update ]
@@ -21,12 +22,12 @@ gtInspectorItemsIn: composite
 			entitled: 'Open key'
 			with: [ :table | (table rawSelection collect: #key) gtInspectorInterestingObject ];
 		beMultiple;
-		withSmalltalkSearch;
 		send: [ :selection | 
 			selection isNil 
 			ifTrue:[nil]
 			ifFalse:[ (selection size = 1) 
 				ifTrue: [ selection anyOne value ] 
-				ifFalse: [ selection collect: #value ] ]];
+				ifFalse: [ selection collect: #value ] ]]
+		"withSmalltalkSearch;
 		showOnly: 50;
-		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'
+		helpMessage: 'Quick selection field. Given your INPUT, it executes: self select: [:each | INPUT ]'"

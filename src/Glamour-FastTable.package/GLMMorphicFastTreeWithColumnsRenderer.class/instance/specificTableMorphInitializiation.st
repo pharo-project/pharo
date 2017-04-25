@@ -1,0 +1,5 @@
+initialization
+specificTableMorphInitializiation
+	self specificTableMorphColumnsInitialization.
+	super specificTableMorphInitializiation.
+	

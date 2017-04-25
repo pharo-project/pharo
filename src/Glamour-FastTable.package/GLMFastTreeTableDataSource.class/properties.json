@@ -1,0 +1,16 @@
+{
+	"category" : "Glamour-FastTable-Model",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TGLMFastTableColumnsRenderer classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "AndreiChis 2/6/2017 14:44",
+	"instvars" : [
+		"columnToSortBy" ],
+	"name" : "GLMFastTreeTableDataSource",
+	"pools" : [
+		 ],
+	"super" : "GLMFastTreeDataSource",
+	"traitcomposition" : "TGLMFastTableColumnsRenderer",
+	"type" : "normal" }

@@ -9,4 +9,5 @@ someNonBinaryMimeTypes
 		'application/xslt+xml' 
 		'image/svg+xml' 
 		'application/SGML' 
-		'model/x3d+xml')
+		'model/x3d+xml'
+		'application/csv')

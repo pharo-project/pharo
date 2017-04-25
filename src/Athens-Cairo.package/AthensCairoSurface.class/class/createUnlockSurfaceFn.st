@@ -1,8 +1,7 @@
 surface plugin callbacks
 createUnlockSurfaceFn
-
 	"
-		int unlockSurface(int handle, int x, int y, int w, int h);
+		int unlockSurface(sqIntptr_t handle, int x, int y, int w, int h);
 		Unlock the bits of a (possibly modified) surface after BitBlt completed.
 		The return value is ignored.
 
@@ -11,5 +10,5 @@ createUnlockSurfaceFn
 
 	"
 	^ FFICallback 
-		signature: #(int (int handle, int x, int y, int w, int h))
+		signature: #(int (void *handle, int x, int y, int w, int h))
 		block: [ :handle :x :y :w :h | 0 "Do nothing" ]

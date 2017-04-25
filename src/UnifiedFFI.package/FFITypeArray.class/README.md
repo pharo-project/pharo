@@ -1,5 +1,5 @@
-I represent someking of constant type arrays . 
-My Main purpose is being used into structures.
+I represent somekind of constant type arrays . 
+My main purpose is being used into structures.
 
 For example, a structure like this: 
 

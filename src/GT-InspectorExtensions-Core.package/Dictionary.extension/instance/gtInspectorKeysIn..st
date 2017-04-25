@@ -2,6 +2,7 @@
 gtInspectorKeysIn: composite
 	<gtInspectorPresentationOrder: 1>
 
-	^ composite list
+	^ composite fastList
 		title: 'Keys';
+		useCache;
 		display: [ self keys ]

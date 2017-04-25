@@ -1,4 +1,4 @@
 accessing structure variables
 width: anObject
 	"This method was automatically generated"
-	handle doubleAt: 17 put: anObject
+	handle doubleAt: OFFSET_WIDTH put: anObject

@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+set -o errexit
 
 PWD="$( dirname $(readlink -f $0) )"
 git checkout master

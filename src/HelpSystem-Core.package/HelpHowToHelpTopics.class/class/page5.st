@@ -11,7 +11,7 @@ topic := HelpTopic named: ''Last week on Squeak IRC''.
 	day := (Date today subtractDays: index) printFormat: #(3 2 1 $. 1 2 2).
 	url := ''http://tunes.org/~nef/logs/squeak/'' , day.
 	sub := HelpTopic 
-			title: day contents: (HTTPLoader default retrieveContentsFor: url) contents.
+			title: day contents: (ZnEasy get: url) contents.
 	topic addSubtopic: sub.
 ].
 HelpBrowser openOn: topic

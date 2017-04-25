@@ -15,7 +15,7 @@ updateRectangle: rectangle
 	] ensure: [ pitchHolder free ].
 	
 	[
-		externalForm := ExternalForm extent: extent depth: 32 bits: pixels.
+		externalForm := OSSDL2ExternalForm extent: extent depth: 32 bits: pixels.
 		self primitiveUpdateRectangle: intersection externalForm: externalForm
 	] ensure: [
 		texture unlock.

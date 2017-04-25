@@ -18,7 +18,7 @@ testAddingMethods
 							^lastIndex - firstIndex + 1'.
 	
 	self assert: (newClass hasMethods).
-	self assert: (newClass selectors = #(sort size)).
+	self assert: (newClass selectors asSet = #(sort size) asSet).
 	self assert: (newClass includesSelector: #sort).
 	self assert: ((newClass methodNamed: #sort) = newMethod).
 	self assert: (newClass methods size = 2).

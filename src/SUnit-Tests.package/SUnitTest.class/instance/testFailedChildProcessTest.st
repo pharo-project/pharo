@@ -1,7 +1,7 @@
 testing
 testFailedChildProcessTest
 
-	| case result failedProcesses |
+	| case result |
 	DefaultExecutionEnvironment beActive.
 	case := self class selector: #failedChildProcessTest.	
 	result := case run.
@@ -11,8 +11,5 @@ testFailedChildProcessTest
 		runCount: 1
 		passed: 0
 		failed: 0
-		errors: 1.
-		
-	failedProcesses := Process allInstances 
-		select: [: each | each name = #failedChildProcessTest].
-	self assert: (failedProcesses allSatisfy: #isTerminated) 
+		errors: 1.		
+	self assertTerminatedFailedChildProcessesFor: case

@@ -13,11 +13,11 @@ darkStyleTable
  ^ #(
 			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])" 
 			(default 								white)
-			(invalid 								red)
-			(excessCode 							red)
+			(invalid 								'FF8A80')
+			(excessCode 							'FF8A80')
 			
 			(comment 								'7D8C93')
-			(unfinishedComment 				red)
+			(unfinishedComment 				'FF8A80')
 			
 			(#'$' 									('E38C1E' lighter))
 			(character 							('E38C1E' lighter))
@@ -29,7 +29,7 @@ darkStyleTable
 			(literalArray 						white)
 			(string 								('E38C1E'))
 												
-			(unfinishedString 					red normal)
+			(unfinishedString 					'FF8A80' normal)
 			(assignment 							nil bold)
 			(ansiAssignment 					nil bold)
 										
@@ -72,10 +72,10 @@ darkStyleTable
 			(incompleteBinary 					'E8E2B7' italic) 
 			(incompleteUnary 					'E8E2B7' italic)
 				
-			(undefinedIdentifier 				red)						
-			(undefinedKeyword 					red)
-			(undefinedBinary 					red) 
-			(undefinedUnary 					red) 
+			(undefinedIdentifier 				'FF8A80')						
+			(undefinedKeyword 					'FF8A80')
+			(undefinedBinary 					'FF8A80') 
+			(undefinedUnary 					'FF8A80') 
 			
 			(patternKeyword 					nil bold)
 			(patternBinary 						nil bold)
@@ -87,8 +87,8 @@ darkStyleTable
 			(rightParenthesis1 				(green muchLighter))
 			(leftParenthesis2 					(magenta muchLighter))
 			(rightParenthesis2 				(magenta muchLighter))
-			(leftParenthesis3 					(red muchLighter))
-			(rightParenthesis3 				(red muchLighter))
+			(leftParenthesis3 					('FF8A80' muchLighter))
+			(rightParenthesis3 				('FF8A80' muchLighter))
 			(leftParenthesis4 					(green lighter))
 			(rightParenthesis4 				(green lighter))
 			(leftParenthesis5 					(orange lighter))

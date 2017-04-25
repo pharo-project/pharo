@@ -1,8 +1,3 @@
-Gofer it
-	smalltalkhubUser: 'Pharo' project: 'Bootstrap';
-	package: 'PharoBootstrap-Initialization';
-	load.
-
 zodiacRepo := MCHttpRepository
 	location: 'http://mc.stfx.eu/Zodiac'
 	user: ''
@@ -16,11 +11,6 @@ pharoRepo := MCHttpRepository
 MCWorkingCopy allManagers
 	select: [ :m | m packageName beginsWith: 'Zodiac' ]
 	thenDo: [ :m | m repositoryGroup addRepository: zodiacRepo ].
-
-bootInitPackageManager := (MCWorkingCopy hasPackageNamed: 'PharoBootstrap-Initialization').
-MCFileTreeGitWriter
-	fileOut: (bootInitPackageManager repositoryGroup versionWithInfo: bootInitPackageManager ancestors first)
-	on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory).
 
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
 
@@ -38,6 +28,6 @@ versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 			manager repositoryGroup addRepository: pharoRepo.
 			version := manager repositoryGroup versionWithInfo: manager ancestors first.
 			('src' asFileReference / packageName , '.package') ensureDeleteAll.
-			MCFileTreeGitWriter
+			IceMetadatalessFileTreeWriter
 				fileOut: version
 				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] ] on: Warning do: #resume.

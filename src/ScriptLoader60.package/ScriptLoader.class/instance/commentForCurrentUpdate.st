@@ -1,13 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '17351 Bitmap should have a class initialization
-	https://pharo.fogbugz.com/f/cases/17351
+ ^ '19834 Error in horizontal scrollbar
+	https://pharo.fogbugz.com/f/cases/19834
 
-18157 ModificationTime creationTime size
-	https://pharo.fogbugz.com/f/cases/18157
+19831 catalog refresh retrieves an empty collection
+	https://pharo.fogbugz.com/f/cases/19831
 
-19613 Problem with read-only objects
-	https://pharo.fogbugz.com/f/cases/19613
-
-19537 "Variable used, but not defined anywhere" critique false positive with some slots
-	https://pharo.fogbugz.com/f/cases/19537'
+19823 exported source of the package MonticelloFileTree-Core in pharo-core repository contains strange extension
+	https://pharo.fogbugz.com/f/cases/19823'

@@ -1,0 +1,14 @@
+{
+	"category" : "Komitter-Models",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "KomitFtpRemote",
+	"pools" : [
+		 ],
+	"super" : "KomitRemote",
+	"type" : "normal" }

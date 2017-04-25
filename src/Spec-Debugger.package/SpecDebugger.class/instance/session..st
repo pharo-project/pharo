@@ -2,4 +2,4 @@ accessing
 session: aSession
 
 	sessionHolder value: aSession.
-	self label: aSession name
+	self label: aSession asString

@@ -9,6 +9,9 @@ debug: aStream
 		ifFalse:
 			[receiver := context := nil].
 	method := self compile: aStream for: receiver in: context.
+	
+	method isReturnSpecial ifTrue:[ self inform:'Nothing to debug, the expression is optimized'. ^self.].
+	
 	method notNil ifTrue: [
 		self debug: method receiver: receiver in: context ].
 	

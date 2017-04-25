@@ -1,4 +1,4 @@
 accessing structure variables
 index
 	"This method was automatically generated"
-	^handle unsignedLongAt: 1
+	^handle platformUnsignedLongAt: OFFSET_INDEX

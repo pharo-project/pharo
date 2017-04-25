@@ -8,7 +8,6 @@ baseline: spec
 	repository := 'filetree://./pharo-core/src'.    
        
 	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 
 		spec baseline: 'Morphic' with: [spec repository: repository].
@@ -32,10 +31,8 @@ baseline: spec
 		spec package: 'Spec-MorphicAdapters'.
 		spec package: 'Spec-PolyWidgets'.
 		spec package: 'Spec-Tools'.
-		spec package: 'Spec-SelectEntity'.
 
 		spec package: 'Morphic-Widgets-Tree'.
-		spec package: 'Polymorph-TaskbarIcons'.
 
 		spec package: 'Keymapping-Core'.
 		spec package: 'Keymapping-KeyCombinations'.

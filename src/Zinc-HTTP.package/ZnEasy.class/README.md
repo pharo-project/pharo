@@ -8,7 +8,7 @@ For most requests, I return a response object.
 
 For a couple of message, I return an image Form.
 
-	ZnEasy getPng: 'http://www.pharo-project.org/images/pharo.png'.
+	ZnEasy getPng: 'http://pharo.org/files/pharo.png'.
 
 For my implementation I use ZnClient, a full featured HTTP client.
 

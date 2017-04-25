@@ -6,6 +6,7 @@ packageSelected: anAnnouncement
 	package
 		ifNil: [ tasks removeAll ]
 		ifNotNil: [ tasks := (self systemNavigation allCallsOn: #flag:) 
-									select: [ :m | package includesMethod: m selector ofClass: m methodClass ] ].
+				select: [ :m | package includesMethod: m selector ofClass: m methodClass ] ].
 	
-	self changed: #tasks.
+	index := 0.	
+	self changed: #tasks

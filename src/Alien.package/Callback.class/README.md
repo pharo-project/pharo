@@ -8,14 +8,14 @@ and passed through the FFI by passing their pointer, e.g.
 
 	self qui: data ck: data size so: 8 rt: cb pointer
 
-When the callback is made, the system arranges that the block is invoked with the arguments as defined by the signature, and the result of the block passed back, again as defined by the signature.
+When the callback is made, the system arranges that the block is invoked with the arguments as defined by the signature, and the result of the block passed back, again as defined by the signature.  See methods in the signatures protocol in subclasses of Callback for signature methods that decode the C stack and registers to invoke a callback with parsed arguments.  See Callback>>valueInContext: and subclass implementations for the evaluation of the signature method that invokes the callback block with correctly parsed arguments.  See Alien class>>invokeCallbackContext: for the entry-point for callbacks into the system from the VM.
 
 Instance Variables:
 block <BlockClosure> - The Smalltalk code to be run in response to external code invoking the callback.
 thunk <FFICallbackThunk> - the wrapper around the machine-code thunk that initiates the callback and whose address should be passed to C
-argsProxyClass <Alien subclass> - legacy; unused; the wrapper around the thunk's incomming stack pointer, used to extract arguments from the stack.
-evaluator <Symbol> - the selector of the marshalling method to use
+evaluator <Symbol> - the selector of the marshalling method to use; see methods in the signatures protocol in subclasses of Callback.
 numEvaluatorArgs <Integer> - the arity of evaluator
+argsProxyClass <Alien subclass> - legacy; unused; the wrapper around the thunk's incoming stack pointer, used to extract arguments from the stack.
 
 Class Variables:
 ThunkToCallbackMap <Dictionary of: thunkAddress <Integer> -> callback <Callback>> - used to lookup the Callback associated with a specific thunk address on callback.  See FFICallbackThunk.

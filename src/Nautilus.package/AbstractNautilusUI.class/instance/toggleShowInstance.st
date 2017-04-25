@@ -5,3 +5,4 @@ toggleShowInstance
 	self changed: #instanceButtonState.
 	self categoryWidget label: self categoriesLabel.
 	self methodWidget label: self methodsLabel.
+	instanceButtonWidget helpText: (self instanceButtonHelpTextFor: self instanceButtonState).
