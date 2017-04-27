@@ -1,5 +1,5 @@
 pharo - scripts
-script60467
+script60468
 
 	^ 'AST-Core-TheIntegrator.492.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -119,8 +119,8 @@ Glamour-Morphic-Brick-AndreiChis.446.mcz
 Glamour-Morphic-Brick-Tests-TheIntegrator.16.mcz
 Glamour-Morphic-Pager-AndreiChis.114.mcz
 Glamour-Morphic-Renderer-AndreiChis.361.mcz
-Glamour-Morphic-Theme-TheIntegrator.231.mcz
-Glamour-Morphic-Widgets-AndreiChis.207.mcz
+Glamour-Morphic-Theme-TheIntegrator.233.mcz
+Glamour-Morphic-Widgets-TheIntegrator.209.mcz
 Glamour-Presentations-AndreiChis.190.mcz
 Glamour-Rubric-Presentations-AndreiChis.61.mcz
 Glamour-SpecIntegration-TheIntegrator.6.mcz
@@ -254,7 +254,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.36.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1426.mcz
+Polymorph-Widgets-TheIntegrator.1429.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -404,6 +404,7 @@ Tools-TheIntegrator.1532.mcz
 Tools-Test-TheIntegrator.26.mcz
 Traits-TheIntegrator.984.mcz
 Transcript-TheIntegrator.56.mcz
+TravisIntegrationHelp-TheIntegrator.2.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz
 TxText-Model-MarcusDenker.67.mcz
