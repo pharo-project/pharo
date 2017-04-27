@@ -1,5 +1,6 @@
 visitor
-visitCategoryRename: aPackageRenamed
+visitCategoryRename: aChange
+
 	environment organization
-		renameCategory: aPackageRenamed oldCategoryName
-		toBe: aPackageRenamed newCategoryName
+		renameCategory: aChange oldCategoryName
+		toBe: aChange newCategoryName

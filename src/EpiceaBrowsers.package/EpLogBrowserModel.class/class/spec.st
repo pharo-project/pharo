@@ -4,6 +4,8 @@ spec
 
 	^ SpecLayout composed newColumn: [:column |
 		column 
-			add: #itemsModel origin: 0@0 corner: 1@0.7;
+			add: #itemsModel origin: 0@0 corner: 1@0.6;
 			addSplitter;
-			newRow: #tabManagerModel origin: 0@0.7 corner: 1@1].
+			add: #toolbarModel height: self toolbarHeight;
+			add: #entryContentModel origin: 0@0.6 corner: 1@1;
+			yourself ].

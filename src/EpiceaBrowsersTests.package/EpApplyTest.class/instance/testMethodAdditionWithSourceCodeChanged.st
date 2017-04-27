@@ -1,13 +1,13 @@
 tests
 testMethodAdditionWithSourceCodeChanged
 
-	| aClass anEntry |
+	| aClass |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42'.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 
 	aClass compile: 'fortyTwo ^nil'.
 	
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^nil'.
-	self apply: { anEntry }.
+	self applyInputEntry.
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.

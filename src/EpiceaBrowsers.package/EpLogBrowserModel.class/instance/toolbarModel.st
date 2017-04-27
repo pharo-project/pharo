@@ -1,0 +1,3 @@
+accessing widgets
+toolbarModel
+	^ toolbarModel

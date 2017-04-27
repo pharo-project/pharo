@@ -6,9 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"theLog",
 		"entries",
-		"errorHandlerBlock"
+		"errorHandlerBlock",
+		"logBrowserModel"
 	],
 	"name" : "EpLogBrowserOperationFactory",
 	"type" : "normal"

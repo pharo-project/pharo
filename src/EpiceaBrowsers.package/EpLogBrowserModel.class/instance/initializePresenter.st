@@ -1,8 +1,10 @@
 initialization
 initializePresenter
 
-	super initializePresenter.	
+	super initializePresenter.
 
-	self initializeFiltersModel.
 	self initializeItemsModel.
-	self initializeTabs.
+	self initializeToolbarModel.
+	self initializeEntryContentModel.
+	
+	self beHistoryMode.

@@ -1,13 +1,15 @@
 tests
 testClassRemoval
 
-	| aClass className anEntry |
+	| aClass className category |
 	aClass := classFactory newClass.
 	className := aClass name.
+	category := aClass category.
 	aClass removeFromSystem.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 
-	self assert: (anEntry content isKindOf: EpClassRemoval).
+	self assert: (inputEntry content isKindOf: EpClassRemoval).
 	self deny: (self class environment hasClassNamed: className).
-	self revert: { anEntry }.
+	self revertInputEntry.
 	self assert: (self class environment hasClassNamed: className).
+	self assert: (self class environment classNamed: className) category equals: category.

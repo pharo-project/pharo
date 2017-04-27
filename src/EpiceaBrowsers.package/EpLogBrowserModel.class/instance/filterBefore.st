@@ -1,4 +1,4 @@
-menu - operations
+menu - filters
 filterBefore
 
 	self selectedEntryItems ifNotEmpty: [ :items |

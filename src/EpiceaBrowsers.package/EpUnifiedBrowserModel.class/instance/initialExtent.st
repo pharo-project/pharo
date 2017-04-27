@@ -1,3 +1,3 @@
 api
 initialExtent 
-	^ 850 @ 700
+	^ 950 @ 650

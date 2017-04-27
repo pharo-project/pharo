@@ -1,12 +1,12 @@
 tests
 testMethodModification
 
-	| aClass anEntry |
+	| aClass |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42'.
 	aClass compile: 'fortyTwo ^nil'.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 	
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^nil'.
-	self revert: { anEntry }.
+	self revertInputEntry.
 	self assert: (aClass>>#fortyTwo) sourceCode equals: 'fortyTwo ^42'.

@@ -16,7 +16,8 @@
 		"entryByLocalName",
 		"mustRefresh",
 		"entryBuffer",
-		"lock"
+		"lock",
+		"lastStreamPosition"
 	],
 	"name" : "OmFileStore",
 	"type" : "normal"

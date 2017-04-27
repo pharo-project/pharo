@@ -1,5 +1,7 @@
 accessing
 headReference
-	"Answer a reference to the last entry added to this store."
+	"Answer a reference to the last entry added to this store, or OmNullReference uniqueInstance when empty."
 
-	^ self referenceTo: entries last
+	^ entries
+		ifEmpty: [ OmNullReference uniqueInstance ]
+		ifNotEmpty: [ self referenceTo: entries last ]

@@ -7,18 +7,16 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"log",
-		"tabManagerModel",
 		"entryContentModel",
-		"entryContentTabModel",
-		"filtersModel",
-		"filtersTabModel",
 		"itemsModel",
+		"toolbarModel",
 		"andFilter",
 		"selectionDeferrer",
 		"cachedLogEntries",
 		"commentsLog",
 		"monitor",
-		"cachedItems"
+		"cachedItems",
+		"showEntryItemMenu"
 	],
 	"name" : "EpLogBrowserModel",
 	"type" : "normal"

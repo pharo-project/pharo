@@ -1,4 +1,4 @@
-menu - operations
+menu - filters
 filterAllChangesToSelection
 
 	| changes |

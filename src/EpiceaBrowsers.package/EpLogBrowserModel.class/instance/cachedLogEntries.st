@@ -5,4 +5,8 @@ cachedLogEntries
 
 	^ (cachedLogEntries isNotNil and: [ cachedLogEntries size = log entriesCount ])
 		ifTrue: [ cachedLogEntries ]
-		ifFalse: [ cachedLogEntries := log entries reversed ]
+		ifFalse: [
+			'Reading log'
+				displayProgressFrom: 0 to: 1 
+				during: [ cachedLogEntries := log entries reversed ]
+			]

@@ -1,4 +1,0 @@
-accessing
-shortTitle
-
-	^ #'Code Changes'

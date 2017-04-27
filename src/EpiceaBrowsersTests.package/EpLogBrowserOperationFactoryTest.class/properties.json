@@ -5,7 +5,10 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
+	"instvars" : [
+		"inputEntry",
+		"inputEntries"
+	],
 	"name" : "EpLogBrowserOperationFactoryTest",
 	"type" : "normal"
 }

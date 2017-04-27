@@ -1,3 +1,3 @@
 accessing
-entries: anObject
-	entries := anObject
+entries: aCollection
+	entries := aCollection

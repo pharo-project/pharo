@@ -1,4 +1,4 @@
-menu - operations
+accessing
 removeAllFilters
 
 	andFilter := EpAndFilter withAll: #().

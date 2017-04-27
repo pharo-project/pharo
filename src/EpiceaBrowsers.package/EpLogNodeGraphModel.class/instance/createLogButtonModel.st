@@ -1,3 +1,0 @@
-accessing
-createLogButtonModel
-	^ createLogButtonModel

@@ -1,3 +1,0 @@
-visitor
-visitTraitAddition: aTraitCreation
-	environment removeClassNamed: aTraitCreation behaviorAffectedName

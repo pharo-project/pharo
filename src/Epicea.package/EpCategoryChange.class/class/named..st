@@ -1,6 +1,4 @@
 instance creation
 named: aName
 
-	^ self basicNew 
-		initializeNamed: aName;
-		yourself
+	^ self named: aName packageName: (self packageNameFromCategoryName: aName)

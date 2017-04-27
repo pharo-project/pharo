@@ -1,3 +1,3 @@
 accessing
-errorHandlerBlock: anObject
-	errorHandlerBlock := anObject
+errorHandlerBlock: aBlock
+	errorHandlerBlock := aBlock

@@ -1,14 +1,14 @@
 tests
 testClassAdditionWithCategoryChanged
 
-	| aClass anEntry aCategory anotherCategory |
+	| aClass aCategory anotherCategory |
 	aClass := classFactory newClass.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 
 	aCategory := aClass category.
 	anotherCategory := aCategory, '2'.
 	aClass category: anotherCategory.
 	
 	self assert: aClass category equals: anotherCategory.
-	self apply: { anEntry }.
+	self applyInputEntry.
 	self assert: aClass category equals: aCategory

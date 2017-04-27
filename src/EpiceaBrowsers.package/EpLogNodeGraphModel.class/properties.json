@@ -12,9 +12,9 @@
 		"selectDirectoryButtonModel",
 		"logNodesTreeModel",
 		"directoryTextModel",
-		"enableMonitorButtonModel",
-		"createLogButtonModel",
-		"monitor"
+		"monitor",
+		"openSettingsButtonModel",
+		"hiedraCheckBoxModel"
 	],
 	"name" : "EpLogNodeGraphModel",
 	"type" : "normal"

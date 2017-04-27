@@ -1,11 +1,11 @@
 {
-	"classtraitcomposition" : "EpTEventVisitor classTrait",
+	"classtraitcomposition" : "EpTCodeChangeVisitor classTrait",
 	"classvars" : [ ],
 	"instvars" : [ ],
 	"name" : "EpApplyVisitor",
 	"commentStamp" : "MartinDias 10/27/2014 18:03",
 	"super" : "EpLogBrowserOperationVisitor",
-	"traitcomposition" : "EpTEventVisitor",
+	"traitcomposition" : "EpTCodeChangeVisitor",
 	"type" : "normal",
 	"classinstvars" : [ ],
 	"pools" : [ ],

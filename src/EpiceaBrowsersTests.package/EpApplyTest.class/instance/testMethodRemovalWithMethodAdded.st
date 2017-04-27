@@ -1,15 +1,15 @@
 tests
 testMethodRemovalWithMethodAdded
 
-	| aClass anEntry |
+	| aClass |
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42' classified: 'number'.
 	aClass removeSelector: #fortyTwo.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 
 	aClass compile: 'fortyTwo ^42' classified: 'number'.
 
-	self assert: (anEntry content isKindOf: EpMethodRemoval).
+	self assert: (inputEntry content isKindOf: EpMethodRemoval).
 	self assert: (aClass includesSelector: #fortyTwo).
-	self apply: { anEntry }.
+	self applyInputEntry.
 	self deny: (aClass includesSelector: #fortyTwo).

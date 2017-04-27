@@ -1,0 +1,4 @@
+resources
+aStoreName
+
+	^ 'aTestGlobalName'

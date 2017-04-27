@@ -1,16 +1,16 @@
 tests
 testClassModificationWithClassRemoved
 
-	| aClass anEntry className |
+	| aClass className |
 	aClass := classFactory newClass.
 	className := aClass name.
 	aClass addInstVarNamed: #x.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 	
 	aClass removeFromSystem.
 	
-	self assert: (anEntry content isKindOf: EpClassModification).
+	self assert: (inputEntry content isKindOf: EpClassModification).
 	self deny: (self class environment hasClassNamed: className).
-	self apply: { anEntry }.
+	self applyInputEntry.
 	self assert: (self class environment hasClassNamed: className).
 	self assert: aClass instVarNames equals: #(x).

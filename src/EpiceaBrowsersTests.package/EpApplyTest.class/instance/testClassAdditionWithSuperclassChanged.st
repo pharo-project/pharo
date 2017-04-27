@@ -1,12 +1,12 @@
 tests
 testClassAdditionWithSuperclassChanged
 
-	| aClass anEntry |
+	| aClass |
 	aClass := classFactory newClass.
-	anEntry := monitor log head.
+	self setHeadAsInputEntry.
 	
 	aClass superclass: Array.
 	
 	self assert: aClass superclass equals: Array.
-	self apply: { anEntry }.
+	self applyInputEntry.
 	self assert: aClass superclass equals: Object

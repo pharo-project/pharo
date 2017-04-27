@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "LucasGodoy 10/10/2014 17:18",
+	"super" : "EpFilter",
+	"category" : "EpiceaBrowsers-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"subFilters"
+	],
+	"name" : "EpAndFilter",
+	"type" : "normal"
+}

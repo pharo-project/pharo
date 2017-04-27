@@ -1,3 +1,4 @@
 accessing
 oldCategoryName
-	^ oldCategoryName.
+
+	^ oldCategoryName
