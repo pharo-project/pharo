@@ -1,5 +1,6 @@
 formatting
 subheading: aString
+	"Return Text object with subheading formating attributes."
 
 	| text font color |
 	

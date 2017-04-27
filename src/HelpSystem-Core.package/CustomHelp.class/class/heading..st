@@ -1,5 +1,6 @@
 formatting
 heading: aString
+	"Return Text object with heading formating attributes."
 
 	| font color |
 	
