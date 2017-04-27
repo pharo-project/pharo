@@ -1,5 +1,5 @@
 pharo - scripts
-script60471
+script60472
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -20,7 +20,7 @@ BaselineOfBasicTools-TheIntegrator.8.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
 BaselineOfIDE-TheIntegrator.46.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
-BaselineOfMorphic-TheIntegrator.30.mcz
+BaselineOfMorphic-TheIntegrator.32.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
 BaselineOfPharoBootstrap-TheIntegrator.4.mcz
 BaselineOfSUnit-TheIntegrator.4.mcz
@@ -61,10 +61,10 @@ Deprecated60-TheIntegrator.18.mcz
 EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
-Epicea-TheIntegrator.839.mcz
-EpiceaBrowsers-MartinDias.143.mcz
-EpiceaBrowsersTests-MartinDias.17.mcz
-EpiceaTests-MartinDias.19.mcz
+Epicea-MartinDias.853.mcz
+EpiceaBrowsers-MartinDias.177.mcz
+EpiceaBrowsersTests-MartinDias.30.mcz
+EpiceaTests-MartinDias.24.mcz
 FFI-Kernel-EstebanLorenzano.45.mcz
 FFI-Pools-eem.3.mcz
 FileSystem-Core-TheIntegrator.220.mcz
@@ -142,7 +142,7 @@ Graphics-Transformations-TheIntegrator.17.mcz
 Growl-TheIntegrator.47.mcz
 HelpSystem-Core-TheIntegrator.172.mcz
 HelpSystem-Tests-TheIntegrator.32.mcz
-Hiedra-MartinDias.145.mcz
+Hiedra-MartinDias.146.mcz
 HiedraTests-MartinDias.2.mcz
 HowToContributeHelp-TheIntegrator.4.mcz
 HudsonBuildTools20-TheIntegrator.100.mcz
@@ -246,8 +246,8 @@ OSWindow-SDL2-TheIntegrator.110.mcz
 OSWindow-SDL2-Examples-TheIntegrator.16.mcz
 OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
-Ombu-MartinDias.261.mcz
-OmbuTests-MartinDias.27.mcz
+Ombu-MartinDias.274.mcz
+OmbuTests-MartinDias.33.mcz
 OpalCompiler-Core-TheIntegrator.890.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
@@ -310,7 +310,7 @@ SUnit-Help-MarcusDenker.9.mcz
 SUnit-Rules-TheIntegrator.5.mcz
 SUnit-Tests-TheIntegrator.64.mcz
 SUnit-UI-TheIntegrator.153.mcz
-SUnit-UITesting-TheIntegrator.34.mcz
+SUnit-UITesting-TheIntegrator.36.mcz
 ScriptLoader-Tests-TheIntegrator.4.mcz
 ScriptingExtensions-TheIntegrator.6.mcz
 ScriptingExtensions-Tests-TheIntegrator.3.mcz
@@ -364,7 +364,7 @@ System-OSEnvironments-TheIntegrator.33.mcz
 System-Object Events-TheIntegrator.28.mcz
 System-Platforms-TheIntegrator.85.mcz
 System-Serial Port-StephaneDucasse.23.mcz
-System-SessionManager-TheIntegrator.38.mcz
+System-SessionManager-TheIntegrator.41.mcz
 System-SessionManager-Tests-ChristopheDemarey.9.mcz
 System-Settings-TheIntegrator.372.mcz
 System-Settings-Rules-TheIntegrator.2.mcz
@@ -378,7 +378,7 @@ System-VMEvents-TheIntegrator.19.mcz
 Tests-TheIntegrator.794.mcz
 Text-Core-TheIntegrator.66.mcz
 Text-Diff-TheIntegrator.6.mcz
-Text-Edition-TheIntegrator.126.mcz
+Text-Edition-TheIntegrator.128.mcz
 Text-Edition-Tests-EstebanLorenzano.3.mcz
 Text-Scanning-TheIntegrator.33.mcz
 Text-Tests-TheIntegrator.10.mcz
