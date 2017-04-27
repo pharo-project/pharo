@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Brick-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"window" ],
-	"name" : "GLMScrollListBrickTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"window"
+	],
+	"name" : "GLMScrollListBrickTest",
+	"type" : "normal"
+}

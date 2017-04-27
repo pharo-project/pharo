@@ -1,17 +1,16 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "lr 12/9/2009 22:50",
+	"super" : "GoferReference",
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"package",
 		"author",
 		"branch",
-		"versionNumber" ],
+		"versionNumber"
+	],
 	"name" : "GoferVersionReference",
-	"pools" : [
-		 ],
-	"super" : "GoferReference",
-	"type" : "normal" }
+	"type" : "normal"
+}

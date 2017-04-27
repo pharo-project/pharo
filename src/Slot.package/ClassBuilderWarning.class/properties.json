@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ClassBuilderWarning",
-	"pools" : [
-		 ],
 	"super" : "Warning",
-	"type" : "normal" }
+	"category" : "Slot-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ClassBuilderWarning",
+	"type" : "normal"
+}

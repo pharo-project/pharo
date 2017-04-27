@@ -1,4 +1,4 @@
 accessing
-fileReferenceForStoreNamed: aName inDirectory: baseDirectoryFileReference
+fileReferenceForStoreNamed: aGlobalName inDirectory: baseDirectoryFileReference
 
-	^ baseDirectoryFileReference / (aName, self defaultFileSuffix)
+	^ baseDirectoryFileReference / (aGlobalName, self defaultFileSuffix)

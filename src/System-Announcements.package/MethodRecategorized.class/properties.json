@@ -1,14 +1,13 @@
 {
-	"category" : "System-Announcements-System-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cyrilledelaunay 1/18/2011 15:03",
-	"instvars" : [
-		"oldProtocol" ],
-	"name" : "MethodRecategorized",
-	"pools" : [
-		 ],
 	"super" : "MethodAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"oldProtocol"
+	],
+	"name" : "MethodRecategorized",
+	"type" : "normal"
+}

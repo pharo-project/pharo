@@ -6,7 +6,7 @@ initializeTextMorph
 		beWrapped;
 		textFont: self theme textFont;
 		textColor: self theme textColor;
-		backgroundColor: Color paleRed.
+		backgroundColor: self theme errorPopperBackgroundColor.
 	self
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;

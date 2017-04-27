@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 7/11/2014 11:45",
-	"instvars" : [
-		 ],
-	"name" : "DAInheritanceDependencyNode",
-	"pools" : [
-		 ],
 	"super" : "DAClassNode",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DAInheritanceDependencyNode",
+	"type" : "normal"
+}

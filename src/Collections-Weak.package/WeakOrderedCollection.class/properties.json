@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "WeakOrderedCollection",
-	"pools" : [
-		 ],
 	"super" : "OrderedCollection",
-	"type" : "normal" }
+	"category" : "Collections-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakOrderedCollection",
+	"type" : "normal"
+}

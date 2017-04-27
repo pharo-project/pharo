@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Tests-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"testClass" ],
-	"name" : "FloatReferencesRuleTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"testClass"
+	],
+	"name" : "FloatReferencesRuleTest",
+	"type" : "normal"
+}

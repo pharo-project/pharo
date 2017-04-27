@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Members",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloMergeMemberSpec",
-	"pools" : [
-		 ],
 	"super" : "MetacelloMemberSpec",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Members",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloMergeMemberSpec",
+	"type" : "normal"
+}

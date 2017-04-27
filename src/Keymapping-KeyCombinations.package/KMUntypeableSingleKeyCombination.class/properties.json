@@ -1,15 +1,14 @@
 {
-	"category" : "Keymapping-KeyCombinations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "KMSingleKeyCombination",
+	"category" : "Keymapping-KeyCombinations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"symbol",
-		"name" ],
+		"name"
+	],
 	"name" : "KMUntypeableSingleKeyCombination",
-	"pools" : [
-		 ],
-	"super" : "KMSingleKeyCombination",
-	"type" : "normal" }
+	"type" : "normal"
+}

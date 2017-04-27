@@ -1,14 +1,11 @@
 {
-	"category" : "GT-EventRecorder-Tests-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTStonPackingTest",
-	"pools" : [
-		 ],
 	"super" : "GTEventPackingTest",
-	"type" : "normal" }
+	"category" : "GT-EventRecorder-Tests-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTStonPackingTest",
+	"type" : "normal"
+}

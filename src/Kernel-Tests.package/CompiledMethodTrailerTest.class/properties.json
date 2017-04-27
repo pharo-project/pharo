@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Tests-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:32",
-	"instvars" : [
-		 ],
-	"name" : "CompiledMethodTrailerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CompiledMethodTrailerTest",
+	"type" : "normal"
+}

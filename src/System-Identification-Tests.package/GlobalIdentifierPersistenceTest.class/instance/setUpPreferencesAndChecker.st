@@ -1,0 +1,3 @@
+running
+setUpPreferencesAndChecker
+	self subclassResponsibility

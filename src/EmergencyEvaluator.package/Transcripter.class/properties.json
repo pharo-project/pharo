@@ -1,15 +1,18 @@
 {
-	"category" : "EmergencyEvaluator",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Icon" ],
 	"commentStamp" : "StephaneDucasse 11/19/2011 16:48",
+	"super" : "ReadWriteStream",
+	"category" : "EmergencyEvaluator",
+	"classinstvars" : [ ],
+	"pools" : [
+		"EventSensorConstants"
+	],
+	"classvars" : [
+		"Icon"
+	],
 	"instvars" : [
 		"frame",
-		"para" ],
+		"para"
+	],
 	"name" : "Transcripter",
-	"pools" : [
-		"EventSensorConstants" ],
-	"super" : "ReadWriteStream",
-	"type" : "normal" }
+	"type" : "normal"
+}

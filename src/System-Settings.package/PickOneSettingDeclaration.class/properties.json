@@ -1,14 +1,11 @@
 {
-	"category" : "System-Settings-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 1/3/2011 10:53",
-	"instvars" : [
-		 ],
-	"name" : "PickOneSettingDeclaration",
-	"pools" : [
-		 ],
 	"super" : "MultipleSettingDeclaration",
-	"type" : "normal" }
+	"category" : "System-Settings-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PickOneSettingDeclaration",
+	"type" : "normal"
+}

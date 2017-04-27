@@ -1,18 +1,21 @@
 {
+	"commentStamp" : "HenrikNergaard 11/15/2015 14:11",
+	"super" : "Model",
 	"category" : "Polymorph-Widgets-Themes",
 	"classinstvars" : [
-		"defaultSettings" ],
+		"defaultSettings"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"Builder",
-		"Current" ],
-	"commentStamp" : "HenrikNergaard 11/15/2015 14:11",
+		"Current"
+	],
 	"instvars" : [
 		"settings",
 		"forms",
 		"soundTheme",
-		"focusIndicator" ],
+		"focusIndicator"
+	],
 	"name" : "UITheme",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

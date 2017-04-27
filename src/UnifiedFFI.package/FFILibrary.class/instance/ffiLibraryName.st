@@ -1,3 +1,3 @@
-as yet unclassified
+library path
 ffiLibraryName
 	^ self moduleName

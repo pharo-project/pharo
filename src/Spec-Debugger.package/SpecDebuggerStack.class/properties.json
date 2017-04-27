@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
 	"category" : "Spec-Debugger",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DoItFilterEnabled",
 		"FilterDictionary",
 		"KCFilterEnabled",
 		"LinkSelectorFilterEnabled",
-		"NilSelectorsFilterEnabled" ],
-	"commentStamp" : "<historical>",
+		"NilSelectorsFilterEnabled"
+	],
 	"instvars" : [
 		"sessionHolder",
 		"listWidget",
-		"actionsCache" ],
+		"actionsCache"
+	],
 	"name" : "SpecDebuggerStack",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

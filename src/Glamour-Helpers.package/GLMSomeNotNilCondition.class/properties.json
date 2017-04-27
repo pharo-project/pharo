@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Helpers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 3/11/2015 23:59",
-	"instvars" : [
-		 ],
-	"name" : "GLMSomeNotNilCondition",
-	"pools" : [
-		 ],
 	"super" : "GLMCondition",
-	"type" : "normal" }
+	"category" : "Glamour-Helpers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMSomeNotNilCondition",
+	"type" : "normal"
+}

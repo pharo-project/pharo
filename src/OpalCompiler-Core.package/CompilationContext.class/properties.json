@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "OpalCompiler-Core-FrontEnd",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BytecodeBackend",
-		"UsesFullBlockClosure" ],
-	"commentStamp" : "<historical>",
+		"UsesFullBlockClosure"
+	],
 	"instvars" : [
 		"requestor",
 		"failBlock",
@@ -24,9 +26,8 @@
 		"encoderClass",
 		"astTransformPlugins",
 		"usesFullBlockClosure",
-		"requestorScopeClass" ],
+		"requestorScopeClass"
+	],
 	"name" : "CompilationContext",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

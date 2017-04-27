@@ -1,19 +1,18 @@
 {
-	"category" : "Debugger-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:30",
+	"super" : "TestCase",
+	"category" : "Debugger-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"context",
 		"process",
 		"session",
 		"nilContext",
 		"otherProcess",
-		"otherSession" ],
+		"otherSession"
+	],
 	"name" : "FilterTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

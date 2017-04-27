@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 3/31/2016 17:03",
-	"instvars" : [
-		 ],
-	"name" : "AssertEqualSignIntoAssertEquals",
-	"pools" : [
-		 ],
 	"super" : "ReNodeRewriteRule",
-	"type" : "normal" }
+	"category" : "SUnit-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AssertEqualSignIntoAssertEquals",
+	"type" : "normal"
+}

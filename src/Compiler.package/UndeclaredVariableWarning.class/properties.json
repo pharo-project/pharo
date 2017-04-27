@@ -1,16 +1,15 @@
 {
-	"category" : "Compiler-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:16",
+	"super" : "Warning",
+	"category" : "Compiler-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
 		"selector",
-		"class" ],
+		"class"
+	],
 	"name" : "UndeclaredVariableWarning",
-	"pools" : [
-		 ],
-	"super" : "Warning",
-	"type" : "normal" }
+	"type" : "normal"
+}

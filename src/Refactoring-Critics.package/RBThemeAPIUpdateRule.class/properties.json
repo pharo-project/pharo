@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-TransformationRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 18:46",
-	"instvars" : [
-		 ],
-	"name" : "RBThemeAPIUpdateRule",
-	"pools" : [
-		 ],
 	"super" : "RBTransformationRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBThemeAPIUpdateRule",
+	"type" : "normal"
+}

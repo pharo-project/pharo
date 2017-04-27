@@ -1,14 +1,13 @@
 {
-	"category" : "System-Settings-Persistence-Ston-StoredSettings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 6/20/2015 19:36",
-	"instvars" : [
-		"realValue" ],
-	"name" : "StoredSetting",
-	"pools" : [
-		 ],
 	"super" : "AbstractStoredSetting",
-	"type" : "normal" }
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"realValue"
+	],
+	"name" : "StoredSetting",
+	"type" : "normal"
+}

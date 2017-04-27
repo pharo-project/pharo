@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-TransformationRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 18:49",
-	"instvars" : [
-		 ],
-	"name" : "RBUnderscoreAssignmentRule",
-	"pools" : [
-		 ],
 	"super" : "RBTransformationRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBUnderscoreAssignmentRule",
+	"type" : "normal"
+}

@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "",
+	"super" : "SharedPool",
 	"category" : "FFI-Pools",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"FFIAtomicTypeMask",
 		"FFIAtomicTypeShift",
@@ -47,12 +49,9 @@
 		"FFITypeUnsignedInt",
 		"FFITypeUnsignedLongLong",
 		"FFITypeUnsignedShort",
-		"FFITypeVoid" ],
-	"commentStamp" : "",
-	"instvars" : [
-		 ],
+		"FFITypeVoid"
+	],
+	"instvars" : [ ],
 	"name" : "FFIConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

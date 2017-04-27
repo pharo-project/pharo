@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Disk",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cwp 11/18/2009 13:02",
-	"instvars" : [
-		 ],
-	"name" : "FilePluginPrims",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "FileSystem-Disk",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FilePluginPrims",
+	"type" : "normal"
+}

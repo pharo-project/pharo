@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 12/1/2014 13:35",
-	"instvars" : [
-		 ],
-	"name" : "RBExplicitRequirementMethodsRule",
-	"pools" : [
-		 ],
 	"super" : "RBBlockLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBExplicitRequirementMethodsRule",
+	"type" : "normal"
+}

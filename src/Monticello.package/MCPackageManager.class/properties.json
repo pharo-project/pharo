@@ -1,15 +1,18 @@
 {
+	"commentStamp" : "StephaneDucasse 4/29/2011 20:42",
+	"super" : "Model",
 	"category" : "Monticello-Versioning",
 	"classinstvars" : [
-		"registry" ],
+		"registry"
+	],
+	"pools" : [ ],
 	"classvars" : [
-		"PrivateAnnouncer" ],
-	"commentStamp" : "StephaneDucasse 4/29/2011 20:42",
+		"PrivateAnnouncer"
+	],
 	"instvars" : [
 		"package",
-		"modified" ],
+		"modified"
+	],
 	"name" : "MCPackageManager",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

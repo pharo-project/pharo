@@ -1,3 +1,0 @@
-accessing
-filteredEntriesCount
-	^ filteredEntriesCount

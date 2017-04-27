@@ -1,15 +1,14 @@
 {
-	"category" : "TxText-Athens-Editor",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 8/26/2014 13:13",
+	"super" : "TxEditorOperation",
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selection",
-		"deletedPortion" ],
+		"deletedPortion"
+	],
 	"name" : "TxDeleteOperation",
-	"pools" : [
-		 ],
-	"super" : "TxEditorOperation",
-	"type" : "normal" }
+	"type" : "normal"
+}

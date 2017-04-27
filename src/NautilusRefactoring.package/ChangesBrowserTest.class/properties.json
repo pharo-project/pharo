@@ -1,14 +1,13 @@
 {
-	"category" : "NautilusRefactoring-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"browser" ],
-	"name" : "ChangesBrowserTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "NautilusRefactoring-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"browser"
+	],
+	"name" : "ChangesBrowserTest",
+	"type" : "normal"
+}

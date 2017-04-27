@@ -1,17 +1,16 @@
 {
-	"category" : "System-History",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 12/14/2010 23:40",
+	"super" : "Object",
+	"category" : "System-History",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"index",
 		"plugged",
 		"recorder",
-		"maxSize" ],
+		"maxSize"
+	],
 	"name" : "HistoryIterator",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

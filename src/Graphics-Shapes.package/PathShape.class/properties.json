@@ -1,15 +1,14 @@
 {
-	"category" : "Graphics-Shapes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 3/31/2011 21:05",
+	"super" : "Shape",
+	"category" : "Graphics-Shapes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"bounds",
-		"vertices" ],
+		"vertices"
+	],
 	"name" : "PathShape",
-	"pools" : [
-		 ],
-	"super" : "Shape",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,15 @@
 {
-	"category" : "System-Object Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ActionMaps" ],
 	"commentStamp" : "tlk 5/7/2006 20:01",
-	"instvars" : [
-		"actionMap" ],
-	"name" : "EventManager",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Object Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ActionMaps"
+	],
+	"instvars" : [
+		"actionMap"
+	],
+	"name" : "EventManager",
+	"type" : "normal"
+}

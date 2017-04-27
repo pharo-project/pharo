@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-Catalog-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 8/16/2015 11:18",
-	"instvars" : [
-		"provider" ],
-	"name" : "CatalogBrowser",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Tool-Catalog-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"provider"
+	],
+	"name" : "CatalogBrowser",
+	"type" : "normal"
+}

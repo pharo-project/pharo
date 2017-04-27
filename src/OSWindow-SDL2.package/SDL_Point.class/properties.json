@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_X",
-		"OFFSET_Y" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
-	"instvars" : [
-		 ],
+		"OFFSET_Y"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_Point",
-	"pools" : [
-		 ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

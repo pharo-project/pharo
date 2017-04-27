@@ -1,14 +1,13 @@
 {
-	"category" : "System-Localization-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/16/2014 15:25",
-	"instvars" : [
-		"previousRegistered" ],
-	"name" : "NaturalLanguageTranslatorTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "System-Localization-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"previousRegistered"
+	],
+	"name" : "NaturalLanguageTranslatorTest",
+	"type" : "normal"
+}

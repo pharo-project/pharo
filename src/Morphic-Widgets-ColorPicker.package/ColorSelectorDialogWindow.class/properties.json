@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Widgets-ColorPicker",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:35",
+	"super" : "DialogWindow",
+	"category" : "Morphic-Widgets-ColorPicker",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selectedColor",
-		"hsvaMorph" ],
+		"hsvaMorph"
+	],
 	"name" : "ColorSelectorDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

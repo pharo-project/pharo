@@ -1,10 +1,10 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"installer",
 		"oldClasses",
@@ -21,9 +21,8 @@
 		"sharedPoolsString",
 		"sharedVariables",
 		"comment",
-		"commentStamp" ],
+		"commentStamp"
+	],
 	"name" : "SlotClassBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

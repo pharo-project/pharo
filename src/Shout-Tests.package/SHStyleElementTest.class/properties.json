@@ -1,14 +1,13 @@
 {
-	"category" : "Shout-Tests-Styling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlexandreBergel 9/30/2011 15:22",
-	"instvars" : [
-		"element" ],
-	"name" : "SHStyleElementTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Shout-Tests-Styling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"element"
+	],
+	"name" : "SHStyleElementTest",
+	"type" : "normal"
+}

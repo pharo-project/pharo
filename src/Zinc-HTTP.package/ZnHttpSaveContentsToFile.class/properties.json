@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Client-Server",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 6/25/2014 17:36",
-	"instvars" : [
-		 ],
-	"name" : "ZnHttpSaveContentsToFile",
-	"pools" : [
-		 ],
 	"super" : "ZnUrlOperation",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnHttpSaveContentsToFile",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Rubric-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RubAbstractTextAreaTest",
+	"category" : "Rubric-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"area",
 		"position",
-		"event" ],
+		"event"
+	],
 	"name" : "RubEditingAreaTest",
-	"pools" : [
-		 ],
-	"super" : "RubAbstractTextAreaTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

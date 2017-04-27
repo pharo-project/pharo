@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ParseNode",
 	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"MacroEmitters",
 		"MacroPrinters",
@@ -9,8 +11,8 @@
 		"MacroSizers",
 		"MacroTransformers",
 		"StdTypers",
-		"ThenFlag" ],
-	"commentStamp" : "<historical>",
+		"ThenFlag"
+	],
 	"instvars" : [
 		"receiver",
 		"selector",
@@ -21,9 +23,8 @@
 		"equalNode",
 		"caseErrorNode",
 		"originalSelector",
-		"originalArguments" ],
+		"originalArguments"
+	],
 	"name" : "MessageNode",
-	"pools" : [
-		 ],
-	"super" : "ParseNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

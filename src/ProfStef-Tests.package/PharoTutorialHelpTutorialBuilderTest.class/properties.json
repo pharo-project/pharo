@@ -1,14 +1,11 @@
 {
-	"category" : "ProfStef-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CamilloBruni 2/22/2014 18:58",
-	"instvars" : [
-		 ],
-	"name" : "PharoTutorialHelpTutorialBuilderTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "ProfStef-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoTutorialHelpTutorialBuilderTest",
+	"type" : "normal"
+}

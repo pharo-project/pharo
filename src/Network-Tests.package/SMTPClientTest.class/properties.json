@@ -1,15 +1,14 @@
 {
-	"category" : "Network-Tests-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 10:11",
+	"super" : "TestCase",
+	"category" : "Network-Tests-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"smtp",
-		"socket" ],
+		"socket"
+	],
 	"name" : "SMTPClientTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Menu",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 2/11/2016 12:07",
-	"instvars" : [
-		 ],
-	"name" : "SugsSyntaxErrorDebuggerContext",
-	"pools" : [
-		 ],
 	"super" : "SugsAbstractContext",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsSyntaxErrorDebuggerContext",
+	"type" : "normal"
+}

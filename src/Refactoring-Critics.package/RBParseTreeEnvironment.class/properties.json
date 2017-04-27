@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Critics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"matcher" ],
-	"name" : "RBParseTreeEnvironment",
-	"pools" : [
-		 ],
 	"super" : "RBSelectorEnvironment",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"matcher"
+	],
+	"name" : "RBParseTreeEnvironment",
+	"type" : "normal"
+}

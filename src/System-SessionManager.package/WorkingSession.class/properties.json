@@ -1,17 +1,16 @@
 {
-	"category" : "System-SessionManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 10/12/2015 16:03",
+	"super" : "Object",
+	"category" : "System-SessionManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"manager",
 		"deferredStartupActions",
 		"id",
-		"creationTime" ],
+		"creationTime"
+	],
 	"name" : "WorkingSession",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

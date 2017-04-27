@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Tests-Spotter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"objects" ],
-	"name" : "GTSpotterStreamMock",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"objects"
+	],
+	"name" : "GTSpotterStreamMock",
+	"type" : "normal"
+}

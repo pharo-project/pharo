@@ -1,12 +1,14 @@
 {
+	"commentStamp" : "AndreiChis 7/30/2015 17:33",
+	"super" : "Object",
 	"category" : "GT-Spotter-Model",
 	"classinstvars" : [
 		"history",
 		"isPreviewVisible",
-		"wasOpened" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 7/30/2015 17:33",
+		"wasOpened"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"foundationOrigin",
 		"steps",
@@ -18,9 +20,8 @@
 		"isShiftPressed",
 		"exceptionHandler",
 		"history",
-		"processorsFilter" ],
+		"processorsFilter"
+	],
 	"name" : "GTSpotter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "EpiceaBrowsers-Integration",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "EpOmbuFileReaderService",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpOmbuFileReaderService",
+	"type" : "normal"
+}

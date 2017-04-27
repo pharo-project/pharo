@@ -1,4 +1,6 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Model",
 	"category" : "SmartSuggestions-Suggestion",
 	"classinstvars" : [
 		"collectorForInstancesVariable",
@@ -12,14 +14,11 @@
 		"collectorForLiteral",
 		"collectorForAll",
 		"collectorForAssignment",
-		"collectorForBlock" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"collectorForBlock"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "SugsSuggestionFactory",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

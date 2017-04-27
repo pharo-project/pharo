@@ -1,10 +1,10 @@
 {
-	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 6/11/2010 14:38",
+	"super" : "Object",
+	"category" : "Network-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"recentlyRead",
 		"socket",
@@ -17,9 +17,8 @@
 		"autoFlush",
 		"bufferSize",
 		"binary",
-		"shouldSignal" ],
+		"shouldSignal"
+	],
 	"name" : "SocketStream",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:22",
-	"instvars" : [
-		"button" ],
-	"name" : "OSMouseButtonEvent",
-	"pools" : [
-		 ],
 	"super" : "OSMouseEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"button"
+	],
+	"name" : "OSMouseButtonEvent",
+	"type" : "normal"
+}

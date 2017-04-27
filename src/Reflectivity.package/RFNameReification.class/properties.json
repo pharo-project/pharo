@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Links",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 6/9/2015 10:34",
-	"instvars" : [
-		 ],
-	"name" : "RFNameReification",
-	"pools" : [
-		 ],
 	"super" : "RFReification",
-	"type" : "normal" }
+	"category" : "Reflectivity-Links",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RFNameReification",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "AST-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:53",
-	"instvars" : [
-		"node" ],
-	"name" : "RBProgramNodeTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "AST-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"node"
+	],
+	"name" : "RBProgramNodeTest",
+	"type" : "normal"
+}

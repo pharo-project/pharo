@@ -1,10 +1,10 @@
 {
-	"category" : "FreeType-FontManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 22:08",
+	"super" : "FontFamilyMemberAbstract",
+	"category" : "FreeType-FontManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fileInfo",
 		"stretchName",
@@ -13,9 +13,8 @@
 		"weightValue",
 		"slantName",
 		"slantValue",
-		"simulated" ],
+		"simulated"
+	],
 	"name" : "FreeTypeFontFamilyMember",
-	"pools" : [
-		 ],
-	"super" : "FontFamilyMemberAbstract",
-	"type" : "normal" }
+	"type" : "normal"
+}

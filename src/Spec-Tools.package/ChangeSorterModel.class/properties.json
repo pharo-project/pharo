@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Tools-ChangeSorter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ChangeSorterModel",
-	"pools" : [
-		 ],
 	"super" : "AbstractTool",
-	"type" : "normal" }
+	"category" : "Spec-Tools-ChangeSorter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ChangeSorterModel",
+	"type" : "normal"
+}

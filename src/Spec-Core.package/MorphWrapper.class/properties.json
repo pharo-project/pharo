@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Core-Widgets-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"layout",
-		"morph" ],
+		"morph"
+	],
 	"name" : "MorphWrapper",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

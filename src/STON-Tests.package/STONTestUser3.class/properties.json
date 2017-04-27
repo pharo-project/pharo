@@ -1,14 +1,11 @@
 {
-	"category" : "STON-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "STONTestUser3",
-	"pools" : [
-		 ],
 	"super" : "STONTestUser",
-	"type" : "normal" }
+	"category" : "STON-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "STONTestUser3",
+	"type" : "normal"
+}

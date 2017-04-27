@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Tests-Numbers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:36",
-	"instvars" : [
-		 ],
-	"name" : "FractionTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Numbers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FractionTest",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "System-Sources",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "System-Sources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"files",
 		"readOnlyQueue",
-		"flushChanges" ],
+		"flushChanges"
+	],
 	"name" : "SourceFileArray",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

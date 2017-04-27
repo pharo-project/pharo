@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "YuriyTymchuk 4/16/2015 14:48",
+	"super" : "Morph",
 	"category" : "QualityAssistant",
 	"classinstvars" : [
-		"wasOpenedBefore" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "YuriyTymchuk 4/16/2015 14:48",
+		"wasOpenedBefore"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"listMorph",
 		"progressMorph",
@@ -12,9 +14,8 @@
 		"pluginDelegate",
 		"updateTask",
 		"showPrivacyMorph",
-		"critiques" ],
+		"critiques"
+	],
 	"name" : "QANautilusPluginMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

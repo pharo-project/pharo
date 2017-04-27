@@ -1,18 +1,17 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:24",
+	"super" : "TestCase",
+	"category" : "FuelTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"serializer",
 		"materializer",
 		"classFactory",
 		"streamFactory",
-		"traits" ],
+		"traits"
+	],
 	"name" : "FLSerializationTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

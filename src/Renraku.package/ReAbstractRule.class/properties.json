@@ -1,14 +1,11 @@
 {
-	"category" : "Renraku-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/12/2016 14:56",
-	"instvars" : [
-		 ],
-	"name" : "ReAbstractRule",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Renraku-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReAbstractRule",
+	"type" : "normal"
+}

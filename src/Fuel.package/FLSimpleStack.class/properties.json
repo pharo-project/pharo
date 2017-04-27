@@ -1,15 +1,14 @@
 {
-	"category" : "Fuel-Collections",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarianoMartinezPeck 6/5/2011 12:29",
+	"super" : "Object",
+	"category" : "Fuel-Collections",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"array",
-		"slotIndex" ],
+		"slotIndex"
+	],
 	"name" : "FLSimpleStack",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

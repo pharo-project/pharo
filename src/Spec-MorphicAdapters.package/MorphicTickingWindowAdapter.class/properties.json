@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-MorphicAdapters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 3/7/2014 10:55",
-	"instvars" : [
-		 ],
-	"name" : "MorphicTickingWindowAdapter",
-	"pools" : [
-		 ],
 	"super" : "MorphicWindowAdapter",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphicTickingWindowAdapter",
+	"type" : "normal"
+}

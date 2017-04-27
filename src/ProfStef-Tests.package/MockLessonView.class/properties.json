@@ -1,15 +1,14 @@
 {
-	"category" : "ProfStef-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:48",
+	"super" : "Object",
+	"category" : "ProfStef-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"lesson",
-		"title" ],
+		"title"
+	],
 	"name" : "MockLessonView",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

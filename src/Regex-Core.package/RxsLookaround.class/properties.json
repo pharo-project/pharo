@@ -1,15 +1,14 @@
 {
-	"category" : "Regex-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RxsNode",
+	"category" : "Regex-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"piece",
-		"positive" ],
+		"positive"
+	],
 	"name" : "RxsLookaround",
-	"pools" : [
-		 ],
-	"super" : "RxsNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "EmbeddedFreeType",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "LucidaGrandeRegular",
-	"pools" : [
-		 ],
 	"super" : "EmbeddedFreeTypeFontFontDescription",
-	"type" : "normal" }
+	"category" : "EmbeddedFreeType",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LucidaGrandeRegular",
+	"type" : "normal"
+}

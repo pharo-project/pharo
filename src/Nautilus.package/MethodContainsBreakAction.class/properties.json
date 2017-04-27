@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 11/15/2015 16:56",
-	"instvars" : [
-		 ],
-	"name" : "MethodContainsBreakAction",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodIconAction",
-	"type" : "normal" }
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodContainsBreakAction",
+	"type" : "normal"
+}

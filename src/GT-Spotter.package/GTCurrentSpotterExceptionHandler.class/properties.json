@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTCurrentSpotterExceptionHandler",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTCurrentSpotterExceptionHandler",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Base-Layouts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "LayoutProperties",
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"cellInset",
 		"cellPositioning",
@@ -18,9 +18,8 @@
 		"wrapCentering",
 		"wrapDirection",
 		"minCellSize",
-		"maxCellSize" ],
+		"maxCellSize"
+	],
 	"name" : "TableLayoutProperties",
-	"pools" : [
-		 ],
-	"super" : "LayoutProperties",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Files-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 6/5/2015 11:06",
-	"instvars" : [
-		"peekBuffer" ],
-	"name" : "StdioStream",
-	"pools" : [
-		 ],
 	"super" : "AbstractBinaryFileStream",
-	"type" : "normal" }
+	"category" : "Files-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"peekBuffer"
+	],
+	"name" : "StdioStream",
+	"type" : "normal"
+}

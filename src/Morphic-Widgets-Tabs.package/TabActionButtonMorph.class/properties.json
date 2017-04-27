@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Tabs-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"icon" ],
-	"name" : "TabActionButtonMorph",
-	"pools" : [
-		 ],
 	"super" : "MultistateButtonMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tabs-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"icon"
+	],
+	"name" : "TabActionButtonMorph",
+	"type" : "normal"
+}

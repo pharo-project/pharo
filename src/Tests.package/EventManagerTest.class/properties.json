@@ -1,16 +1,15 @@
 {
-	"category" : "Tests-Object Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "ClassTestCase",
+	"category" : "Tests-Object Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"eventSource",
 		"eventListener",
-		"succeeded" ],
+		"succeeded"
+	],
 	"name" : "EventManagerTest",
-	"pools" : [
-		 ],
-	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Joystick",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 4/10/2016 03:27",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowJoystickExampleEventHandler",
-	"pools" : [
-		 ],
 	"super" : "OSWindowGenericRendererExampleEventHandler",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Examples-Joystick",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowJoystickExampleEventHandler",
+	"type" : "normal"
+}

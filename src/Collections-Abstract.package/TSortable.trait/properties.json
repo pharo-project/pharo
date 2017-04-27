@@ -1,4 +1,5 @@
 {
-	"category" : "Collections-Abstract",
+	"name" : "TSortable",
 	"commentStamp" : "<historical>",
-	"name" : "TSortable" }
+	"category" : "Collections-Abstract"
+}

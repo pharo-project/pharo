@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "StephaneDucasse 11/24/2015 18:55",
+	"super" : "KomitObject",
 	"category" : "Komitter-Models",
 	"classinstvars" : [
-		"classes" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "StephaneDucasse 11/24/2015 18:55",
+		"classes"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"operations",
 		"trackedClass",
 		"definition",
 		"methods",
-		"definitions" ],
+		"definitions"
+	],
 	"name" : "KomitClass",
-	"pools" : [
-		 ],
-	"super" : "KomitObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

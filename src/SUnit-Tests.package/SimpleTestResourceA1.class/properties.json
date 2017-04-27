@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:13",
-	"instvars" : [
-		 ],
-	"name" : "SimpleTestResourceA1",
-	"pools" : [
-		 ],
 	"super" : "SimpleTestResource",
-	"type" : "normal" }
+	"category" : "SUnit-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SimpleTestResourceA1",
+	"type" : "normal"
+}

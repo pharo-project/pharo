@@ -1,14 +1,13 @@
 {
-	"category" : "SUnit-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:15",
-	"instvars" : [
-		"stream" ],
-	"name" : "SUnitExtensionsTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "SUnit-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream"
+	],
+	"name" : "SUnitExtensionsTest",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "NECompletion-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"model" ],
-	"name" : "NECOverrideModelTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "NECompletion-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"model"
+	],
+	"name" : "NECOverrideModelTest",
+	"type" : "normal"
+}

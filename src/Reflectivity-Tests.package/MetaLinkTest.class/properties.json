@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 3/1/2015 18:23",
-	"instvars" : [
-		 ],
-	"name" : "MetaLinkTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetaLinkTest",
+	"type" : "normal"
+}

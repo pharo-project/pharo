@@ -1,14 +1,11 @@
 {
-	"category" : "Ring-Tests-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 9/16/2014 23:54",
-	"instvars" : [
-		 ],
-	"name" : "RGMetaclassDefinitionTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Ring-Tests-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RGMetaclassDefinitionTest",
+	"type" : "normal"
+}

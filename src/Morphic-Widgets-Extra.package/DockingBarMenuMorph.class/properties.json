@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Extra",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"activatorDockingBar" ],
-	"name" : "DockingBarMenuMorph",
-	"pools" : [
-		 ],
 	"super" : "MenuMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Extra",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"activatorDockingBar"
+	],
+	"name" : "DockingBarMenuMorph",
+	"type" : "normal"
+}

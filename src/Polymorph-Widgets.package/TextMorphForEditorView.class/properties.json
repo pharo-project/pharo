@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GaryChambers 4/24/2012 14:20",
-	"instvars" : [
-		 ],
-	"name" : "TextMorphForEditorView",
-	"pools" : [
-		 ],
 	"super" : "TextMorphForEditView",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextMorphForEditorView",
+	"type" : "normal"
+}

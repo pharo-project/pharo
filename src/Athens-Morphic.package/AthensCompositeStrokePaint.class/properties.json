@@ -1,15 +1,14 @@
 {
-	"category" : "Athens-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AthensPaint",
+	"category" : "Athens-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"strokePaints",
-		"withInset" ],
+		"withInset"
+	],
 	"name" : "AthensCompositeStrokePaint",
-	"pools" : [
-		 ],
-	"super" : "AthensPaint",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 11/30/2016 14:25",
-	"instvars" : [
-		 ],
-	"name" : "RBGlobalNode",
-	"pools" : [
-		 ],
 	"super" : "RBVariableNode",
-	"type" : "normal" }
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBGlobalNode",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Examples-MorphTreeWidget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:56",
-	"instvars" : [
-		 ],
-	"name" : "ClassListNodeExample",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeNodeModel",
-	"type" : "normal" }
+	"category" : "Morphic-Examples-MorphTreeWidget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ClassListNodeExample",
+	"type" : "normal"
+}

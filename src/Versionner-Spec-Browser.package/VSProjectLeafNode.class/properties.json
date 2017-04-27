@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Spec-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "VSProjectLeafNode",
-	"pools" : [
-		 ],
 	"super" : "VSProjectNode",
-	"type" : "normal" }
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VSProjectLeafNode",
+	"type" : "normal"
+}

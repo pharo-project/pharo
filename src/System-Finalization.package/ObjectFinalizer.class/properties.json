@@ -1,14 +1,11 @@
 {
-	"category" : "System-Finalization",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "jcg 4/27/2010 01:01",
-	"instvars" : [
-		 ],
-	"name" : "ObjectFinalizer",
-	"pools" : [
-		 ],
 	"super" : "MessageSend",
-	"type" : "normal" }
+	"category" : "System-Finalization",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ObjectFinalizer",
+	"type" : "normal"
+}

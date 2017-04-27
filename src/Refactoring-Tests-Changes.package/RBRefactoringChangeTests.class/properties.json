@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Tests-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"changes" ],
-	"name" : "RBRefactoringChangeTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Refactoring-Tests-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"changes"
+	],
+	"name" : "RBRefactoringChangeTests",
+	"type" : "normal"
+}

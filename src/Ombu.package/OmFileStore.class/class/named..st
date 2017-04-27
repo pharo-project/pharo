@@ -1,5 +1,5 @@
 instance creation
-named: aName
+named: aGlobalName
 	^ self 
-		named: aName
+		named: aGlobalName
 		inDirectory: FileSystem memory

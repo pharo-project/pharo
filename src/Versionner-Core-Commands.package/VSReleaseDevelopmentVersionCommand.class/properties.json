@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Core-Commands",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "VSReleaseDevelopmentVersionCommand",
-	"pools" : [
-		 ],
 	"super" : "VSDevCycleCommand",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VSReleaseDevelopmentVersionCommand",
+	"type" : "normal"
+}

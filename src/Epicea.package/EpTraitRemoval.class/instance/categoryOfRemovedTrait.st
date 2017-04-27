@@ -1,4 +1,0 @@
-accessing
-categoryOfRemovedTrait
-
-	^ trait category 

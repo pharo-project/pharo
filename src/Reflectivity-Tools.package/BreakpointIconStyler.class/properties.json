@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Tools-Breakpoints",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mcamp 11/17/2015 11:57",
-	"instvars" : [
-		 ],
-	"name" : "BreakpointIconStyler",
-	"pools" : [
-		 ],
 	"super" : "IconStyler",
-	"type" : "normal" }
+	"category" : "Reflectivity-Tools-Breakpoints",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BreakpointIconStyler",
+	"type" : "normal"
+}

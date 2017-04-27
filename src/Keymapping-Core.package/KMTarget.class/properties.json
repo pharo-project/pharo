@@ -1,18 +1,17 @@
 {
-	"category" : "Keymapping-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 2/24/2011 23:44",
+	"super" : "Object",
+	"category" : "Keymapping-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"realTarget",
 		"morph",
 		"targetSelector",
 		"directKeymaps",
-		"perInstanceCategories" ],
+		"perInstanceCategories"
+	],
 	"name" : "KMTarget",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

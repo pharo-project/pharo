@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Compiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 6/17/2015 15:01",
-	"instvars" : [
-		 ],
-	"name" : "RFStoreIntoTempNode",
-	"pools" : [
-		 ],
 	"super" : "RBVariableNode",
-	"type" : "normal" }
+	"category" : "Reflectivity-Compiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RFStoreIntoTempNode",
+	"type" : "normal"
+}

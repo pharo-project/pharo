@@ -1,19 +1,22 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "System-Changes",
 	"classinstvars" : [
-		"current" ],
+		"current"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"AllChangeSets",
 		"DefaultChangeSetDirectoryName",
-		"MustCheckForSlips" ],
-	"commentStamp" : "<historical>",
+		"MustCheckForSlips"
+	],
 	"instvars" : [
 		"name",
 		"preamble",
 		"postscript",
-		"changeRecords" ],
+		"changeRecords"
+	],
 	"name" : "ChangeSet",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

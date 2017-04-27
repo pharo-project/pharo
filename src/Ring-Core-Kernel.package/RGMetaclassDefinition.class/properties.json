@@ -1,14 +1,13 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 4/19/2011 16:05",
-	"instvars" : [
-		"baseClass" ],
-	"name" : "RGMetaclassDefinition",
-	"pools" : [
-		 ],
 	"super" : "RGClassDescriptionDefinition",
-	"type" : "normal" }
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"baseClass"
+	],
+	"name" : "RGMetaclassDefinition",
+	"type" : "normal"
+}

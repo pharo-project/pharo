@@ -1,15 +1,14 @@
 {
-	"category" : "Graphics-Tests-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Graphics-Tests-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"emptyRectangle",
-		"rectangle1" ],
+		"rectangle1"
+	],
 	"name" : "RectangleTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:43",
-	"instvars" : [
-		 ],
-	"name" : "MorphDropListMorph",
-	"pools" : [
-		 ],
 	"super" : "DropListMorph",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphDropListMorph",
+	"type" : "normal"
+}

@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "AlignmentMorph",
 	"category" : "Morphic-Base-Menus",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CloseBoxImage",
-		"PushPinImage" ],
-	"commentStamp" : "<historical>",
+		"PushPinImage"
+	],
 	"instvars" : [
 		"defaultTarget",
 		"selectedItem",
 		"stayUp",
 		"popUpOwner",
 		"activeSubMenu",
-		"titleMorph" ],
+		"titleMorph"
+	],
 	"name" : "MenuMorph",
-	"pools" : [
-		 ],
-	"super" : "AlignmentMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

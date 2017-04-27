@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Tools-Breakpoints",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 6/29/2016 14:35",
-	"instvars" : [
-		 ],
-	"name" : "FlagIconStyler",
-	"pools" : [
-		 ],
 	"super" : "IconStyler",
-	"type" : "normal" }
+	"category" : "Reflectivity-Tools-Breakpoints",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FlagIconStyler",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "OpalCompiler-Core-Bytecode",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 1/27/2015 13:07",
+	"super" : "Object",
+	"category" : "OpalCompiler-Core-Bytecode",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"encoder",
 		"seqOrder",
@@ -29,9 +29,8 @@
 		"forceLongForm",
 		"primNumber",
 		"encoderClass",
-		"inBlock" ],
+		"inBlock"
+	],
 	"name" : "IRBytecodeGenerator",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

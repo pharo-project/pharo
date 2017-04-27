@@ -9,7 +9,7 @@ packageProperties
                         readStreamDo: [ :fileStream | 
                             | jsonObject structureVersion |
                             [ 
-                            (jsonObject := MCFileTreeJsonParser parseStream: fileStream) isFloat
+                            (jsonObject := STON fromStream: fileStream) isFloat
                                 ifTrue: [ 
                                     "
 							0.0 - original structure

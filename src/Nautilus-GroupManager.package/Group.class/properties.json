@@ -1,17 +1,16 @@
 {
-	"category" : "Nautilus-GroupManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/6/2015 11:03",
+	"super" : "Object",
+	"category" : "Nautilus-GroupManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
 		"readOnly",
 		"removable",
-		"isFillable" ],
+		"isFillable"
+	],
 	"name" : "Group",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

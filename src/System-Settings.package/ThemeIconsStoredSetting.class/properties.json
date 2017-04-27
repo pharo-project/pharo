@@ -1,15 +1,14 @@
 {
-	"category" : "System-Settings-Persistence-Ston-StoredSettings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/8/2015 10:35",
+	"super" : "AbstractStoredSetting",
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
-		"url" ],
+		"url"
+	],
 	"name" : "ThemeIconsStoredSetting",
-	"pools" : [
-		 ],
-	"super" : "AbstractStoredSetting",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Slot-Tests-Associations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JanVanDeSandt 2/27/2015 11:27",
+	"super" : "Object",
+	"category" : "Slot-Tests-Associations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"#name",
 		"#directedMovies => ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie",
-		"#actedInMovies => ToManyRelationSlot inverse: #actors inClass: #SlotExampleMovie" ],
+		"#actedInMovies => ToManyRelationSlot inverse: #actors inClass: #SlotExampleMovie"
+	],
 	"name" : "SlotExamplePerson",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

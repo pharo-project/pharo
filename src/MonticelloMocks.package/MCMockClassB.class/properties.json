@@ -1,14 +1,19 @@
 {
+	"commentStamp" : "",
+	"super" : "MCMock",
 	"category" : "MonticelloMocks",
 	"classinstvars" : [
-		"ciVar" ],
-	"classvars" : [
-		"CVar" ],
-	"commentStamp" : "",
-	"instvars" : [
-		"ivarb" ],
-	"name" : "MCMockClassB",
+		"ciVar"
+	],
 	"pools" : [
-		"MCMockAPoolDictionary" ],
-	"super" : "MCMock",
-	"type" : "normal" }
+		"MCMockAPoolDictionary"
+	],
+	"classvars" : [
+		"CVar"
+	],
+	"instvars" : [
+		"ivarb"
+	],
+	"name" : "MCMockClassB",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:47",
+	"super" : "EpCodeChange",
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classCategoryName",
-		"affectedPackageName" ],
+		"affectedPackageName"
+	],
 	"name" : "EpCategoryChange",
-	"pools" : [
-		 ],
-	"super" : "EpCodeChange",
-	"type" : "normal" }
+	"type" : "normal"
+}

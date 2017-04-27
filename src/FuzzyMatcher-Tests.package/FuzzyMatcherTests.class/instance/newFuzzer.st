@@ -1,4 +1,0 @@
-running
-newFuzzer
-
-	^ fuzzyClass new

@@ -1,7 +1,4 @@
 visitor
-visitTraitModification: aTraitModification
+visitTraitModification: aChange
 
-	Trait 
-		named: aTraitModification newTrait name
-		uses: aTraitModification newTrait traitComposition
-		category: aTraitModification newTrait category
+	self compiler evaluate: aChange newTrait definitionSource

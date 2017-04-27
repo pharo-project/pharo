@@ -1,18 +1,17 @@
 {
-	"category" : "Spec-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractWidgetModel",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
 		"initialExtent",
 		"title",
 		"isClosedHolder",
-		"isResizeable" ],
+		"isResizeable"
+	],
 	"name" : "WindowModel",
-	"pools" : [
-		 ],
-	"super" : "AbstractWidgetModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

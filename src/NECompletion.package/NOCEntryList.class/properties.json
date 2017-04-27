@@ -1,16 +1,15 @@
 {
-	"category" : "NECompletion-OCompletion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "NECompletion-OCompletion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"size",
 		"entries",
-		"entryHead" ],
+		"entryHead"
+	],
 	"name" : "NOCEntryList",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

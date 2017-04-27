@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Tests-Core-DependenciesModel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MTDependantProjectTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Versionner-Tests-Core-DependenciesModel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MTDependantProjectTest",
+	"type" : "normal"
+}

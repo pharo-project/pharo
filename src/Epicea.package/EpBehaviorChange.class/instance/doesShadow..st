@@ -1,5 +1,0 @@
-testing
-doesShadow: aCodeChange 
-	
-	^ aCodeChange class = self class and: [ 
-		aCodeChange behaviorAffectedName = self behaviorAffectedName ]

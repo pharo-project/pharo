@@ -1,14 +1,13 @@
 {
-	"category" : "SUnit-Core-Extensions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 5/4/2011 21:25",
-	"instvars" : [
-		"organization" ],
-	"name" : "ClassFactoryWithOrganization",
-	"pools" : [
-		 ],
 	"super" : "ClassFactoryForTestCase",
-	"type" : "normal" }
+	"category" : "SUnit-Core-Extensions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"organization"
+	],
+	"name" : "ClassFactoryWithOrganization",
+	"type" : "normal"
+}

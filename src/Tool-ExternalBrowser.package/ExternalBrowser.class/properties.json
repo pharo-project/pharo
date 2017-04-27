@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-ExternalBrowser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 5/29/2015 13:37",
+	"super" : "ComposableModel",
+	"category" : "Tool-ExternalBrowser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classes",
 		"packages",
@@ -12,9 +12,8 @@
 		"selectors",
 		"method",
 		"showClassSide",
-		"model" ],
+		"model"
+	],
 	"name" : "ExternalBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

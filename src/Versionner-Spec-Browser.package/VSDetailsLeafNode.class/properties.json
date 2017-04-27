@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Spec-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 2/21/2014 17:41",
-	"instvars" : [
-		 ],
-	"name" : "VSDetailsLeafNode",
-	"pools" : [
-		 ],
 	"super" : "TreeNodeModel",
-	"type" : "normal" }
+	"category" : "Versionner-Spec-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VSDetailsLeafNode",
+	"type" : "normal"
+}

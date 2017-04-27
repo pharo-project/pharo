@@ -1,14 +1,15 @@
 {
-	"category" : "Athens-Cairo-Paints",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"fileName" ],
-	"name" : "CairoPNGPaint",
-	"pools" : [
-		"AthensCairoDefs" ],
 	"super" : "AthensAbstractPaint",
-	"type" : "normal" }
+	"category" : "Athens-Cairo-Paints",
+	"classinstvars" : [ ],
+	"pools" : [
+		"AthensCairoDefs"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"fileName"
+	],
+	"name" : "CairoPNGPaint",
+	"type" : "normal"
+}

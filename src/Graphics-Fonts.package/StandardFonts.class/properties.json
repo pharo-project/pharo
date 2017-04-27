@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "LaurentLaffont 2/10/2011 18:19",
+	"super" : "Object",
 	"category" : "Graphics-Fonts",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
 	"classvars" : [
 		"ButtonFont",
 		"CodeFont",
 		"HaloFont",
 		"ListFont",
 		"MenuFont",
-		"WindowTitleFont" ],
-	"commentStamp" : "LaurentLaffont 2/10/2011 18:19",
-	"instvars" : [
-		 ],
+		"WindowTitleFont"
+	],
+	"instvars" : [ ],
 	"name" : "StandardFonts",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

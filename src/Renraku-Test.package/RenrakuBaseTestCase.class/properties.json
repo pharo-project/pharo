@@ -1,14 +1,13 @@
 {
-	"category" : "Renraku-Test",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 6/14/2016 13:48",
-	"instvars" : [
-		"testPackage" ],
-	"name" : "RenrakuBaseTestCase",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Renraku-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"testPackage"
+	],
+	"name" : "RenrakuBaseTestCase",
+	"type" : "normal"
+}

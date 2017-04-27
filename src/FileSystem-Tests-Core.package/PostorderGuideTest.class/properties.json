@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:43",
-	"instvars" : [
-		 ],
-	"name" : "PostorderGuideTest",
-	"pools" : [
-		 ],
 	"super" : "GuideTest",
-	"type" : "normal" }
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PostorderGuideTest",
+	"type" : "normal"
+}

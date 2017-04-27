@@ -1,15 +1,14 @@
 {
-	"category" : "ProfStef-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 1/21/2010 20:34",
+	"super" : "Object",
+	"category" : "ProfStef-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tutorialPosition",
-		"tutorial" ],
+		"tutorial"
+	],
 	"name" : "TutorialPlayer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-FastTable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 3/25/2016 18:01",
-	"instvars" : [
-		"indentation" ],
-	"name" : "FTIndentedCellMorph",
-	"pools" : [
-		 ],
 	"super" : "FTCellMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"indentation"
+	],
+	"name" : "FTIndentedCellMorph",
+	"type" : "normal"
+}

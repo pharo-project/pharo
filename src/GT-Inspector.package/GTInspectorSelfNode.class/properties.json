@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Inspector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 2/20/2017 11:39",
-	"instvars" : [
-		 ],
-	"name" : "GTInspectorSelfNode",
-	"pools" : [
-		 ],
 	"super" : "GTInspectorVariableNode",
-	"type" : "normal" }
+	"category" : "GT-Inspector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTInspectorSelfNode",
+	"type" : "normal"
+}

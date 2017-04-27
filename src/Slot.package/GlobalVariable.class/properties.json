@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Variables",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 7/18/2014 10:02",
-	"instvars" : [
-		 ],
-	"name" : "GlobalVariable",
-	"pools" : [
-		 ],
 	"super" : "LiteralVariable",
-	"type" : "normal" }
+	"category" : "Slot-Variables",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlobalVariable",
+	"type" : "normal"
+}

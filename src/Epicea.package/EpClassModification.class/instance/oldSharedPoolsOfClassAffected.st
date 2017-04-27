@@ -1,4 +1,0 @@
-accessing
-oldSharedPoolsOfClassAffected
-
-	^ oldClass sharedPoolNames 

@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "IgorStasenko 5/1/2011 21:50",
+	"super" : "AthensPathConverter",
 	"category" : "Athens-Core-Paths",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CollinearityEps",
 		"CurveAngleTolerance",
-		"DistanceEps" ],
-	"commentStamp" : "IgorStasenko 5/1/2011 21:50",
+		"DistanceEps"
+	],
 	"instvars" : [
 		"distanceTolerance",
-		"angleTolerance" ],
+		"angleTolerance"
+	],
 	"name" : "AthensBezierConverter",
-	"pools" : [
-		 ],
-	"super" : "AthensPathConverter",
-	"type" : "normal" }
+	"type" : "normal"
+}

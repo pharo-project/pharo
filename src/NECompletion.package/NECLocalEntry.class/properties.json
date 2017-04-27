@@ -1,14 +1,11 @@
 {
-	"category" : "NECompletion-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "NECLocalEntry",
-	"pools" : [
-		 ],
 	"super" : "NECEntry",
-	"type" : "normal" }
+	"category" : "NECompletion-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NECLocalEntry",
+	"type" : "normal"
+}

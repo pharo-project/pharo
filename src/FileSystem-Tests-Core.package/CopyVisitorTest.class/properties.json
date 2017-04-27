@@ -1,15 +1,14 @@
 {
-	"category" : "FileSystem-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:39",
+	"super" : "FileSystemTreeTest",
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"source",
-		"dest" ],
+		"dest"
+	],
 	"name" : "CopyVisitorTest",
-	"pools" : [
-		 ],
-	"super" : "FileSystemTreeTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

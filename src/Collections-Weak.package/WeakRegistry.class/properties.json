@@ -1,16 +1,17 @@
 {
-	"category" : "Collections-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "Igor.Stasenko 3/8/2010 23:04",
+	"super" : "Collection",
+	"category" : "Collections-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
 	"instvars" : [
 		"list",
 		"valueDictionary",
-		"sema" ],
+		"sema"
+	],
 	"name" : "WeakRegistry",
-	"pools" : [
-		 ],
-	"super" : "Collection",
-	"type" : "normal" }
+	"type" : "normal"
+}

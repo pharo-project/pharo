@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Inspector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"tree" ],
-	"name" : "EyeTreeInspector",
-	"pools" : [
-		 ],
 	"super" : "EyeAbstractInspector",
-	"type" : "normal" }
+	"category" : "Spec-Inspector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"tree"
+	],
+	"name" : "EyeTreeInspector",
+	"type" : "normal"
+}

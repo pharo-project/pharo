@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterBreadcrumbSeparatorRenderer",
-	"pools" : [
-		 ],
 	"super" : "GLMBrickRenderer",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterBreadcrumbSeparatorRenderer",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"fields" ],
-	"name" : "FFIExternalStructureFieldSpec",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fields"
+	],
+	"name" : "FFIExternalStructureFieldSpec",
+	"type" : "normal"
+}

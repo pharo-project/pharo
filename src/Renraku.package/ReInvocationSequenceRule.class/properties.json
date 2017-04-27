@@ -1,15 +1,14 @@
 {
-	"category" : "Renraku-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 3/4/2016 15:27",
+	"super" : "ReAbstractRule",
+	"category" : "Renraku-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"preConditions",
-		"postConditions" ],
+		"postConditions"
+	],
 	"name" : "ReInvocationSequenceRule",
-	"pools" : [
-		 ],
-	"super" : "ReAbstractRule",
-	"type" : "normal" }
+	"type" : "normal"
+}

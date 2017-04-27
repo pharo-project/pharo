@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Client-Server",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ZnReadEvalPrintDelegate",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnReadEvalPrintDelegate",
+	"type" : "normal"
+}

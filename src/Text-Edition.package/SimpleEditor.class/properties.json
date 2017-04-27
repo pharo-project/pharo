@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Editor",
 	"category" : "Text-Edition",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CmdActions",
-		"ShiftCmdActions" ],
-	"commentStamp" : "<historical>",
+		"ShiftCmdActions"
+	],
 	"instvars" : [
 		"string",
 		"pointIndex",
 		"markIndex",
-		"beginTypeInIndex" ],
+		"beginTypeInIndex"
+	],
 	"name" : "SimpleEditor",
-	"pools" : [
-		 ],
-	"super" : "Editor",
-	"type" : "normal" }
+	"type" : "normal"
+}

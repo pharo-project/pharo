@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Tests-Disk",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:49",
-	"instvars" : [
-		 ],
-	"name" : "FileHandleTest",
-	"pools" : [
-		 ],
 	"super" : "FileSystemHandleTest",
-	"type" : "normal" }
+	"category" : "FileSystem-Tests-Disk",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FileHandleTest",
+	"type" : "normal"
+}

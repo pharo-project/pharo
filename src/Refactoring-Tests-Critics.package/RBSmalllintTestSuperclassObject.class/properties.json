@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Tests-Critics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "monty 10/11/2016 00:24",
-	"instvars" : [
-		 ],
-	"name" : "RBSmalllintTestSuperclassObject",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Refactoring-Tests-Critics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBSmalllintTestSuperclassObject",
+	"type" : "normal"
+}

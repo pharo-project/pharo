@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/28/2016 13:26",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-ListAndTree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"defaultValueHolder",
 		"labelClickableHolder",
@@ -14,9 +14,8 @@
 		"associationsItemToWrapper",
 		"associationsWrapperToItem",
 		"associationsIndexToWrapper",
-		"blockToPerformOnWrappers" ],
+		"blockToPerformOnWrappers"
+	],
 	"name" : "PickListModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

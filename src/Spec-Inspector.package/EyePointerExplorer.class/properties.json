@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Inspector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/5/2014 16:11",
-	"instvars" : [
-		"onlyStrong" ],
-	"name" : "EyePointerExplorer",
-	"pools" : [
-		 ],
 	"super" : "EyeTreeInspector",
-	"type" : "normal" }
+	"category" : "Spec-Inspector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"onlyStrong"
+	],
+	"name" : "EyePointerExplorer",
+	"type" : "normal"
+}

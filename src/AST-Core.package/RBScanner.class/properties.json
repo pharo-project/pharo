@@ -1,12 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "AST-Core-Parser",
 	"classinstvars" : [
-		"classificationTable" ],
+		"classificationTable"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"CascadePatternCharacter",
 		"KeywordPatternCharacter",
-		"PatternVariableCharacter" ],
-	"commentStamp" : "<historical>",
+		"PatternVariableCharacter"
+	],
 	"instvars" : [
 		"stream",
 		"buffer",
@@ -15,9 +19,8 @@
 		"characterType",
 		"classificationTable",
 		"comments",
-		"errorBlock" ],
+		"errorBlock"
+	],
 	"name" : "RBScanner",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

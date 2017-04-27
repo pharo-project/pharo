@@ -1,14 +1,13 @@
 {
-	"category" : "FreeType-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 22:06",
-	"instvars" : [
-		"bytes" ],
-	"name" : "FreeTypeExternalMemory",
-	"pools" : [
-		 ],
 	"super" : "FT2Handle",
-	"type" : "normal" }
+	"category" : "FreeType-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"bytes"
+	],
+	"name" : "FreeTypeExternalMemory",
+	"type" : "normal"
+}

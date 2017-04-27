@@ -1,15 +1,14 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RBLiteralNode",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"isByteArray",
-		"contents" ],
+		"contents"
+	],
 	"name" : "RBLiteralArrayNode",
-	"pools" : [
-		 ],
-	"super" : "RBLiteralNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,4 +1,0 @@
-accessing
-classAffectedName
-
-	^ classRemoved name

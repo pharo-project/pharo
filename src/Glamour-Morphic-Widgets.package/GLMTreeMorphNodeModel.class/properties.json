@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MorphTreeNodeModel",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"contents",
 		"containerTree",
-		"onSelection" ],
+		"onSelection"
+	],
 	"name" : "GLMTreeMorphNodeModel",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeNodeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 12:18",
+	"super" : "TextLink",
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"browseSenders",
-		"sourceNode" ],
+		"sourceNode"
+	],
 	"name" : "TextMethodLink",
-	"pools" : [
-		 ],
-	"super" : "TextLink",
-	"type" : "normal" }
+	"type" : "normal"
+}

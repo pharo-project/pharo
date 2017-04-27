@@ -1,15 +1,14 @@
 {
-	"category" : "Reflectivity-Tools-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "TestCase",
+	"category" : "Reflectivity-Tools-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"previousBreakpoints",
-		"cls" ],
+		"cls"
+	],
 	"name" : "BreakpointTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

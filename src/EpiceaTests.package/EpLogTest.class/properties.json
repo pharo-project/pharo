@@ -1,15 +1,14 @@
 {
-	"category" : "EpiceaTests-Log",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "EpiceaTests-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"log",
-		"logBuilder" ],
+		"logBuilder"
+	],
 	"name" : "EpLogTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

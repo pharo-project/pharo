@@ -1,16 +1,15 @@
 {
-	"category" : "Metacello-MC-Loaders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Metacello-MC-Loaders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"dataMap",
 		"versionInfoMap",
-		"packageNameMap" ],
+		"packageNameMap"
+	],
 	"name" : "MetacelloLoadData",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

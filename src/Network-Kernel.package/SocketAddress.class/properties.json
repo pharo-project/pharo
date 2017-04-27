@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "SocketAddress",
-	"pools" : [
-		 ],
 	"super" : "ByteArray",
-	"type" : "bytes" }
+	"category" : "Network-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SocketAddress",
+	"type" : "bytes"
+}

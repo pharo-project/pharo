@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_COLORBUFFER",
 		"OFFSET_FRAMEBUFFER",
 		"OFFSET_RESOLVEFRAMEBUFFER",
-		"OFFSET_WINDOW" ],
-	"commentStamp" : "RonieSalgado 5/27/2016 13:18",
-	"instvars" : [
-		 ],
+		"OFFSET_WINDOW"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_SysWMinfo_UIKitInfo",
-	"pools" : [
-		 ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

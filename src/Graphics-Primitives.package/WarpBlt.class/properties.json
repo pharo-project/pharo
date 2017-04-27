@@ -1,10 +1,10 @@
 {
-	"category" : "Graphics-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "BitBlt",
+	"category" : "Graphics-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"p1x",
 		"p1y",
@@ -19,9 +19,8 @@
 		"p4y",
 		"p4z",
 		"cellSize",
-		"sourceRGBmap" ],
+		"sourceRGBmap"
+	],
 	"name" : "WarpBlt",
-	"pools" : [
-		 ],
-	"super" : "BitBlt",
-	"type" : "normal" }
+	"type" : "normal"
+}

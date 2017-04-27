@@ -1,14 +1,13 @@
 {
-	"category" : "ShoreLine-Report-UI-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TommasoDalSasso 10/6/2014 18:42",
-	"instvars" : [
-		"enabled" ],
-	"name" : "SlReportPreDebugAction",
-	"pools" : [
-		 ],
 	"super" : "PreDebugAction",
-	"type" : "normal" }
+	"category" : "ShoreLine-Report-UI-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"enabled"
+	],
+	"name" : "SlReportPreDebugAction",
+	"type" : "normal"
+}

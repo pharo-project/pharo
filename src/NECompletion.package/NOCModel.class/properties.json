@@ -1,18 +1,17 @@
 {
-	"category" : "NECompletion-OCompletion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "NECUntypedModel",
+	"category" : "NECompletion-OCompletion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"table",
 		"expand",
 		"context",
 		"nextModel",
-		"classTable" ],
+		"classTable"
+	],
 	"name" : "NOCModel",
-	"pools" : [
-		 ],
-	"super" : "NECUntypedModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "MartinDias 4/17/2017 16:51",
+	"super" : "EpFilter",
+	"category" : "EpiceaBrowsers-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"logBrowserModel"
+	],
+	"name" : "EpLatestCodeChangeFilter",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets-Themes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Pharo3Theme",
-	"pools" : [
-		 ],
 	"super" : "UIThemeWatery",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Pharo3Theme",
+	"type" : "normal"
+}

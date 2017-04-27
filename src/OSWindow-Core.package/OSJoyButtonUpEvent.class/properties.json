@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 10/12/2014 17:49",
-	"instvars" : [
-		 ],
-	"name" : "OSJoyButtonUpEvent",
-	"pools" : [
-		 ],
 	"super" : "OSJoyButtonEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSJoyButtonUpEvent",
+	"type" : "normal"
+}

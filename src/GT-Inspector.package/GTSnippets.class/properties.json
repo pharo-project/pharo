@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "GT-Inspector",
 	"classinstvars" : [
-		"instance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"instance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"instance",
-		"snippets" ],
+		"snippets"
+	],
 	"name" : "GTSnippets",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

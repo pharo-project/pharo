@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 12:56",
-	"instvars" : [
-		"expressions" ],
-	"name" : "RBInlineParameterRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBRemoveParameterRefactoring",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"expressions"
+	],
+	"name" : "RBInlineParameterRefactoring",
+	"type" : "normal"
+}

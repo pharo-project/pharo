@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 2/4/2011 20:29",
-	"instvars" : [
-		"value" ],
-	"name" : "GLMSimplePort",
-	"pools" : [
-		 ],
 	"super" : "GLMPort",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"value"
+	],
+	"name" : "GLMSimplePort",
+	"type" : "normal"
+}

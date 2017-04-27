@@ -1,14 +1,11 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "RubScrolledTextExtraSurface",
-	"pools" : [
-		 ],
 	"super" : "RubScrolledTextExtra",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RubScrolledTextExtraSurface",
+	"type" : "normal"
+}

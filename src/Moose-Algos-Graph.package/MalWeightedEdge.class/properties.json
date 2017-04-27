@@ -1,14 +1,13 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"weight" ],
-	"name" : "MalWeightedEdge",
-	"pools" : [
-		 ],
 	"super" : "MalGraphEdge",
-	"type" : "normal" }
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"weight"
+	],
+	"name" : "MalWeightedEdge",
+	"type" : "normal"
+}

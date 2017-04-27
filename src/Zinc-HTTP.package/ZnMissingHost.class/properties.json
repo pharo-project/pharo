@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 8/11/2011 19:37",
-	"instvars" : [
-		 ],
-	"name" : "ZnMissingHost",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnMissingHost",
+	"type" : "normal"
+}

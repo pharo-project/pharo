@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ImageNotStoredSignal",
-		"MagicNumberErrorSignal" ],
-	"commentStamp" : "<historical>",
+		"MagicNumberErrorSignal"
+	],
 	"instvars" : [
-		"stream" ],
+		"stream"
+	],
 	"name" : "ImageReadWriter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

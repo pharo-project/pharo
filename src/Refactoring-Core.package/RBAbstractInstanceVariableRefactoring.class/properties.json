@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 19:53",
-	"instvars" : [
-		"accessorsRefactoring" ],
-	"name" : "RBAbstractInstanceVariableRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBVariableRefactoring",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"accessorsRefactoring"
+	],
+	"name" : "RBAbstractInstanceVariableRefactoring",
+	"type" : "normal"
+}

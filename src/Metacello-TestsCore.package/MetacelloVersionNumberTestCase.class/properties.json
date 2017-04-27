@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-TestsCore",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloVersionNumberTestCase",
-	"pools" : [
-		 ],
 	"super" : "MetacelloCommonVersionNumberTestCase",
-	"type" : "normal" }
+	"category" : "Metacello-TestsCore",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloVersionNumberTestCase",
+	"type" : "normal"
+}

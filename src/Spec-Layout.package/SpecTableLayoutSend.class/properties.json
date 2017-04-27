@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "webwarrior 6/9/2014 19:37",
-	"instvars" : [
-		 ],
-	"name" : "SpecTableLayoutSend",
-	"pools" : [
-		 ],
 	"super" : "AbstractSpecLayoutAction",
-	"type" : "normal" }
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecTableLayoutSend",
+	"type" : "normal"
+}

@@ -2,4 +2,5 @@ brick-properties-events
 onThemerChanged
 	super onThemerChanged.
 	
-	self subbricks do: [ :each | self themer spotterThemer itemActionButtonWidgetStyleFor: each ]
+	self themer spotterThemer itemActionbarStyleFor: self.
+	self subbricks do: [ :aBrick | self themer spotterThemer itemActionButtonWidgetStyleFor: aBrick ]

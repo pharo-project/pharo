@@ -1,15 +1,14 @@
 {
-	"category" : "GT-Tests-Playground",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "GT-Tests-Playground",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"playground",
-		"window" ],
+		"window"
+	],
 	"name" : "GTPlaygroundBasicTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

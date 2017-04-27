@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "ClementBera 1/27/2015 13:10",
+	"super" : "Object",
 	"category" : "OpalCompiler-Core-FrontEnd",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BytecodeBackend",
-		"UsesFullBlockClosure" ],
-	"commentStamp" : "ClementBera 1/27/2015 13:10",
+		"UsesFullBlockClosure"
+	],
 	"instvars" : [
 		"astTranslatorClass",
 		"bytecodeGeneratorClass",
@@ -24,9 +26,8 @@
 		"semanticAnalyzerClass",
 		"astTransformPlugins",
 		"usesFullBlockClosure",
-		"requestorScopeClass" ],
+		"requestorScopeClass"
+	],
 	"name" : "CCompilationContext",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

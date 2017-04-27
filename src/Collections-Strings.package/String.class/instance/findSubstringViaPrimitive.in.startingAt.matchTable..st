@@ -6,15 +6,15 @@ findSubstringViaPrimitive: key in: body startingAt: start matchTable: matchTable
 	| index |
 	<primitive: 'primitiveFindSubstring' module: 'MiscPrimitivePlugin'>
 	<var: #key declareC: 'unsigned char *key'>
-	<var: #body  declareC: 'unsigned char *body'>
+	<var: #body declareC: 'unsigned char *body'>
 	<var: #matchTable declareC: 'unsigned char *matchTable'>
-	
+
 	key size = 0 ifTrue: [^ 0].
-	start to: body size - key size + 1 do:
+	(start max: 1) to: body size - key size + 1 do:
 		[:startIndex |
 		index := 1.
-			[(matchTable at: (body at: startIndex+index-1) asciiValue + 1)
-				= (matchTable at: (key at: index) asciiValue + 1)]
+			[(matchTable at: (body basicAt: startIndex+index-1) + 1)
+				= (matchTable at: (key basicAt: index) + 1)]
 				whileTrue:
 				[index = key size ifTrue: [^ startIndex].
 				index := index+1]].

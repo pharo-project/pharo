@@ -1,14 +1,11 @@
 {
-	"category" : "HelpSystem-Core-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:17",
-	"instvars" : [
-		 ],
-	"name" : "PackageAPIHelpBuilder",
-	"pools" : [
-		 ],
 	"super" : "HelpBuilder",
-	"type" : "normal" }
+	"category" : "HelpSystem-Core-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PackageAPIHelpBuilder",
+	"type" : "normal"
+}

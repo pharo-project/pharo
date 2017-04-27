@@ -1,18 +1,17 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/2/2016 13:32",
+	"super" : "RBProgramNode",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"keywordsPositions",
 		"arguments",
 		"left",
-		"right" ],
+		"right"
+	],
 	"name" : "RBPragmaNode",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

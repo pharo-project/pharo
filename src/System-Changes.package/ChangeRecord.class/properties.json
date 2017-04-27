@@ -1,10 +1,10 @@
 {
-	"category" : "System-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "System-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"file",
 		"position",
@@ -12,9 +12,8 @@
 		"class",
 		"category",
 		"meta",
-		"stamp" ],
+		"stamp"
+	],
 	"name" : "ChangeRecord",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

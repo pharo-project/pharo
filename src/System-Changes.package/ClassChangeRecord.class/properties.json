@@ -1,18 +1,17 @@
 {
-	"category" : "System-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "System-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"changeTypes",
 		"priorDefinition",
 		"thisName",
 		"priorName",
-		"methodChanges" ],
+		"methodChanges"
+	],
 	"name" : "ClassChangeRecord",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

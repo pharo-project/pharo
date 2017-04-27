@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SeanDeNigris 5/19/2015 12:27",
-	"instvars" : [
-		"position" ],
-	"name" : "TxCharacterStream",
-	"pools" : [
-		 ],
 	"super" : "Stream",
-	"type" : "normal" }
+	"category" : "TxText-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"position"
+	],
+	"name" : "TxCharacterStream",
+	"type" : "normal"
+}

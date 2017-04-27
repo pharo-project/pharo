@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 12/6/2010 12:47",
-	"instvars" : [
-		"nonces" ],
-	"name" : "ZnDigestAuthenticator",
-	"pools" : [
-		 ],
 	"super" : "ZnBasicAuthenticator",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nonces"
+	],
+	"name" : "ZnDigestAuthenticator",
+	"type" : "normal"
+}

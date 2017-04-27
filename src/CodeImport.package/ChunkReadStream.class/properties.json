@@ -1,14 +1,13 @@
 {
-	"category" : "CodeImport",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 6/12/2015 09:56",
-	"instvars" : [
-		"nextChar" ],
-	"name" : "ChunkReadStream",
-	"pools" : [
-		 ],
 	"super" : "DecoratorStream",
-	"type" : "normal" }
+	"category" : "CodeImport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nextChar"
+	],
+	"name" : "ChunkReadStream",
+	"type" : "normal"
+}

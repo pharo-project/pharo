@@ -1,15 +1,14 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/6/2012 16:17",
+	"super" : "AthensTextDisplayCommand",
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"start",
-		"stop" ],
+		"stop"
+	],
 	"name" : "AthensCharacterSpan",
-	"pools" : [
-		 ],
-	"super" : "AthensTextDisplayCommand",
-	"type" : "normal" }
+	"type" : "normal"
+}

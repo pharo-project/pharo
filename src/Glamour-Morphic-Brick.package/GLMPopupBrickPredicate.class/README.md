@@ -1,0 +1,1 @@
+I am a predicate that defines a boolean function used to decide whether an opener or closer should perform their actions

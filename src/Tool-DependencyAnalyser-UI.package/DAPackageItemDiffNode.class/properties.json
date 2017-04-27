@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 8/8/2014 17:51",
-	"instvars" : [
-		 ],
-	"name" : "DAPackageItemDiffNode",
-	"pools" : [
-		 ],
 	"super" : "TreeNodeModel",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DAPackageItemDiffNode",
+	"type" : "normal"
+}

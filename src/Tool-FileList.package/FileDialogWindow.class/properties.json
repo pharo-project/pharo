@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-FileList",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 7/6/2014 14:56",
+	"super" : "DialogWindow",
+	"category" : "Tool-FileList",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"directoryTreeMorph",
 		"fileListMorph",
@@ -21,9 +21,8 @@
 		"entryCache",
 		"entryCacheDirectory",
 		"previewType",
-		"previewMorph" ],
+		"previewMorph"
+	],
 	"name" : "FileDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

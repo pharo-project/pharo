@@ -1,16 +1,17 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"CalloutAPIClass" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"CalloutAPIClass"
+	],
 	"instvars" : [
 		"context",
 		"options",
-		"callingConvention" ],
+		"callingConvention"
+	],
 	"name" : "FFICalloutAPI",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

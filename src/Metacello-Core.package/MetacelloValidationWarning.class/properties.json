@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Validation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloValidationWarning",
-	"pools" : [
-		 ],
 	"super" : "MetacelloValidationIssue",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Validation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloValidationWarning",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "System-OSEnvironments",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "UnixEnvironment",
-	"pools" : [
-		 ],
 	"super" : "OSEnvironment",
-	"type" : "normal" }
+	"category" : "System-OSEnvironments",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UnixEnvironment",
+	"type" : "normal"
+}

@@ -1,10 +1,12 @@
 {
-	"category" : "System-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Current" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "System-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Current"
+	],
 	"instvars" : [
 		"version",
 		"date",
@@ -13,9 +15,8 @@
 		"type",
 		"major",
 		"minor",
-		"suffix" ],
+		"suffix"
+	],
 	"name" : "SystemVersion",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

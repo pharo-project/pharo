@@ -1,16 +1,15 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:24",
+	"super" : "OSEvent",
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"text",
 		"modifiers",
-		"position" ],
+		"position"
+	],
 	"name" : "OSTextInputEvent",
-	"pools" : [
-		 ],
-	"super" : "OSEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

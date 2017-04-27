@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "PSMCOrganizationChangeWrapper",
-	"pools" : [
-		 ],
 	"super" : "PSMCPatchOperationWrapper",
-	"type" : "normal" }
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PSMCOrganizationChangeWrapper",
+	"type" : "normal"
+}

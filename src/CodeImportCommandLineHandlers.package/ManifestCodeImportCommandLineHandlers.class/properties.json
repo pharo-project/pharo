@@ -1,14 +1,11 @@
 {
-	"category" : "CodeImportCommandLineHandlers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ManifestCodeImportCommandLineHandlers",
-	"pools" : [
-		 ],
 	"super" : "PackageManifest",
-	"type" : "normal" }
+	"category" : "CodeImportCommandLineHandlers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ManifestCodeImportCommandLineHandlers",
+	"type" : "normal"
+}

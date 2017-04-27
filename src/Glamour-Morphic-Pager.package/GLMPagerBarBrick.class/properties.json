@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Pager-Brick",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMBrick",
+	"category" : "Glamour-Morphic-Pager-Brick",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"buttonsBrick",
 		"pagerModel",
-		"sliderBrick" ],
+		"sliderBrick"
+	],
 	"name" : "GLMPagerBarBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

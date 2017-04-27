@@ -1,16 +1,15 @@
 {
-	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 5/4/2011 21:27",
+	"super" : "GIFReadWriter",
+	"category" : "Graphics-Files",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"forms",
 		"delays",
-		"comments" ],
+		"comments"
+	],
 	"name" : "AnimatedGIFReadWriter",
-	"pools" : [
-		 ],
-	"super" : "GIFReadWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Tests-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 7/7/2010 23:43",
-	"instvars" : [
-		 ],
-	"name" : "PointTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Graphics-Tests-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PointTest",
+	"type" : "normal"
+}

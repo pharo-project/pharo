@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"contents" ],
-	"name" : "Bag",
-	"pools" : [
-		 ],
 	"super" : "Collection",
-	"type" : "normal" }
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"contents"
+	],
+	"name" : "Bag",
+	"type" : "normal"
+}

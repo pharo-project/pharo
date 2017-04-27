@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-FastTable-DataSource",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 5/12/2015 13:50",
-	"instvars" : [
-		"elements" ],
-	"name" : "FTSimpleDataSource",
-	"pools" : [
-		 ],
 	"super" : "FTDataSource",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable-DataSource",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"elements"
+	],
+	"name" : "FTSimpleDataSource",
+	"type" : "normal"
+}

@@ -1,19 +1,18 @@
 {
-	"category" : "Morphic-Widgets-Basic-Buttons",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 10/21/2008 13:27",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"enabled",
 		"active",
 		"over",
 		"down",
 		"stateMap",
-		"upAction" ],
+		"upAction"
+	],
 	"name" : "MultistateButtonMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

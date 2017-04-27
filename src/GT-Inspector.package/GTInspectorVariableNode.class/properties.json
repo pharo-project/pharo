@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Inspector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 2/27/2017 11:19",
-	"instvars" : [
-		"hostObject" ],
-	"name" : "GTInspectorVariableNode",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-Inspector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hostObject"
+	],
+	"name" : "GTInspectorVariableNode",
+	"type" : "normal"
+}

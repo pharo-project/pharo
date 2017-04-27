@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Cairo-Quartz",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensQuartzSurface",
-	"pools" : [
-		 ],
 	"super" : "AthensCairoSurface",
-	"type" : "normal" }
+	"category" : "Athens-Cairo-Quartz",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensQuartzSurface",
+	"type" : "normal"
+}

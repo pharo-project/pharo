@@ -1,18 +1,17 @@
 {
-	"category" : "Keymapping-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 12/14/2010 21:33",
+	"super" : "Object",
+	"category" : "Keymapping-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"action",
 		"name",
 		"shortcut",
 		"defaultShortcut",
-		"description" ],
+		"description"
+	],
 	"name" : "KMKeymap",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

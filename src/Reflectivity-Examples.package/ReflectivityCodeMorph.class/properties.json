@@ -1,15 +1,14 @@
 {
-	"category" : "Reflectivity-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mcamp 10/1/2015 11:24",
+	"super" : "Morph",
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textModel",
-		"compiledMethod" ],
+		"compiledMethod"
+	],
 	"name" : "ReflectivityCodeMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

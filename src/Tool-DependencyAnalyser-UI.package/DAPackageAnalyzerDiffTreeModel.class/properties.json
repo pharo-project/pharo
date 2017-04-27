@@ -1,15 +1,14 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 8/7/2014 18:26",
+	"super" : "ComposableModel",
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"treeDiff",
-		"packageRelationGraphDiff" ],
+		"packageRelationGraphDiff"
+	],
 	"name" : "DAPackageAnalyzerDiffTreeModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

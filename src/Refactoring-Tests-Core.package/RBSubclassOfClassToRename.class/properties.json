@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Tests-Core-Data",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"rewriteRule1" ],
-	"name" : "RBSubclassOfClassToRename",
-	"pools" : [
-		 ],
 	"super" : "RBClassToRename",
-	"type" : "normal" }
+	"category" : "Refactoring-Tests-Core-Data",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"rewriteRule1"
+	],
+	"name" : "RBSubclassOfClassToRename",
+	"type" : "normal"
+}

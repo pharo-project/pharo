@@ -1,15 +1,14 @@
 {
-	"category" : "Regex-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RxmLink",
+	"category" : "Regex-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"lookahead",
-		"positive" ],
+		"positive"
+	],
 	"name" : "RxmLookahaed",
-	"pools" : [
-		 ],
-	"super" : "RxmLink",
-	"type" : "normal" }
+	"type" : "normal"
+}

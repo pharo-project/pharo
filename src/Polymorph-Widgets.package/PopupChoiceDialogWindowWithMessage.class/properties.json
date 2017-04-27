@@ -1,17 +1,16 @@
 {
-	"category" : "Polymorph-Widgets-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 3/4/2011 22:43",
+	"super" : "PopupChoiceDialogWindow",
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textMorph",
 		"iconMorph",
 		"textFont",
-		"message" ],
+		"message"
+	],
 	"name" : "PopupChoiceDialogWindowWithMessage",
-	"pools" : [
-		 ],
-	"super" : "PopupChoiceDialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

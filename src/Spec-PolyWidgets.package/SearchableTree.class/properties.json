@@ -1,18 +1,17 @@
 {
-	"category" : "Spec-PolyWidgets-ListAndTree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-ListAndTree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"inputField",
 		"roots",
 		"tree",
 		"label",
-		"button" ],
+		"button"
+	],
 	"name" : "SearchableTree",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

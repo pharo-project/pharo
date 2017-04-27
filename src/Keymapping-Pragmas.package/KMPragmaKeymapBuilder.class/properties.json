@@ -1,16 +1,17 @@
 {
-	"category" : "Keymapping-Pragmas",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UniqueInstace" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Keymapping-Pragmas",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UniqueInstace"
+	],
 	"instvars" : [
 		"pragmaKeywords",
 		"model",
-		"pragmaCollector" ],
+		"pragmaCollector"
+	],
 	"name" : "KMPragmaKeymapBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

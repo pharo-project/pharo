@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMMorphicWidgetRenderer",
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"container",
 		"paneMorph",
-		"buttons" ],
+		"buttons"
+	],
 	"name" : "GLMMorphicValidatorPaneRenderer",
-	"pools" : [
-		 ],
-	"super" : "GLMMorphicWidgetRenderer",
-	"type" : "normal" }
+	"type" : "normal"
+}

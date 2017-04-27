@@ -1,17 +1,20 @@
 {
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
+	"super" : "Object",
 	"category" : "FreeType-Cache",
 	"classinstvars" : [
-		"current" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
+		"current"
+	],
+	"pools" : [
+		"FreeTypeCacheConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"maximumSize",
 		"used",
 		"fontTable",
-		"fifo" ],
+		"fifo"
+	],
 	"name" : "FreeTypeCache",
-	"pools" : [
-		"FreeTypeCacheConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Tools-Test-PointerFinder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:46",
-	"instvars" : [
-		 ],
-	"name" : "PointerFinderTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Tools-Test-PointerFinder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PointerFinderTest",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Manifest-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/19/2014 08:34",
-	"instvars" : [
-		"checker" ],
-	"name" : "SmalllintManifestCheckerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Manifest-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"checker"
+	],
+	"name" : "SmalllintManifestCheckerTest",
+	"type" : "normal"
+}

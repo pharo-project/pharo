@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets-Themes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 10:29",
-	"instvars" : [
-		 ],
-	"name" : "NullSound",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets-Themes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NullSound",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Suggestion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "SugsRemoveMethod",
-	"pools" : [
-		 ],
 	"super" : "SugsSuggestion",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsRemoveMethod",
+	"type" : "normal"
+}

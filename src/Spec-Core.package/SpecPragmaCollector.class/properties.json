@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "PragmaCollector",
 	"category" : "Spec-Core-Support",
 	"classinstvars" : [
-		"behavior" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"behavior"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"behavior" ],
+		"behavior"
+	],
 	"name" : "SpecPragmaCollector",
-	"pools" : [
-		 ],
-	"super" : "PragmaCollector",
-	"type" : "normal" }
+	"type" : "normal"
+}

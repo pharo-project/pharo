@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "",
+	"super" : "MCGitBasedNetworkRepository",
 	"category" : "Metacello-GitHub",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CacheDirectory",
 		"DownloadCache",
-		"ETagsCache" ],
-	"commentStamp" : "",
-	"instvars" : [
-		 ],
+		"ETagsCache"
+	],
+	"instvars" : [ ],
 	"name" : "MCGitHubRepository",
-	"pools" : [
-		 ],
-	"super" : "MCGitBasedNetworkRepository",
-	"type" : "normal" }
+	"type" : "normal"
+}

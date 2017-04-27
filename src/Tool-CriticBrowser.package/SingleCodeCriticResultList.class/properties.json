@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
 	"category" : "Tool-CriticBrowser",
 	"classinstvars" : [
-		"icons" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"icons"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"rule",
 		"criticsModel",
@@ -12,9 +14,8 @@
 		"sourceCodeModel",
 		"textInputFieldModel",
 		"cache",
-		"thread" ],
+		"thread"
+	],
 	"name" : "SingleCodeCriticResultList",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:29",
-	"instvars" : [
-		 ],
-	"name" : "MorphTreeTransformMorph",
-	"pools" : [
-		 ],
 	"super" : "TransformMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphTreeTransformMorph",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MorphTreeModel",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"roots",
-		"glamourExpander" ],
+		"glamourExpander"
+	],
 	"name" : "GLMExpanderTreeMorphModel",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

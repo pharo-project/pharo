@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "jeanbaptistearnaud 2/26/2015 21:24",
+	"super" : "SDL2MappedEvent",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_DX",
 		"OFFSET_DY",
@@ -11,12 +13,9 @@
 		"OFFSET_TOUCHID",
 		"OFFSET_TYPE",
 		"OFFSET_X",
-		"OFFSET_Y" ],
-	"commentStamp" : "jeanbaptistearnaud 2/26/2015 21:24",
-	"instvars" : [
-		 ],
+		"OFFSET_Y"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_TouchFingerEvent",
-	"pools" : [
-		 ],
-	"super" : "SDL2MappedEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

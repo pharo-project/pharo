@@ -1,4 +1,0 @@
-accessing
-viewItems
-
-	^ view rootItems

@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-Finder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FinderPragmaNode",
-	"pools" : [
-		 ],
 	"super" : "FinderNode",
-	"type" : "normal" }
+	"category" : "Tool-Finder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FinderPragmaNode",
+	"type" : "normal"
+}

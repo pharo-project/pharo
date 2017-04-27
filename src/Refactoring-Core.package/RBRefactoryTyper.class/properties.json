@@ -1,10 +1,10 @@
 {
-	"category" : "Refactoring-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/22/2016 13:57",
+	"super" : "Object",
+	"category" : "Refactoring-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
 		"class",
@@ -13,9 +13,8 @@
 		"variableMessages",
 		"backpointers",
 		"methodName",
-		"selectorLookup" ],
+		"selectorLookup"
+	],
 	"name" : "RBRefactoryTyper",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

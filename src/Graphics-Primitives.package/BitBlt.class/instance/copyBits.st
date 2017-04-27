@@ -20,7 +20,9 @@ copyBits
 	29	rgbMin: sourceWord bitInvert32 with: destinationWord
 "
 	"Check for compressed source, destination or halftone forms"
-	<primitive: 'primitiveCopyBits' module: 'BitBltPlugin'>
+	<primitive: 'primitiveCopyBits' module: 'BitBltPlugin' error: ec>
+	ec == #'object moved' ifTrue:
+		[ ^self copyBits ].
 	(combinationRule between: 30 and: 31) ifTrue: 
 		[ "No alpha specified -- re-run with alpha = 1.0"
 		^ self copyBitsTranslucent: 255 ].

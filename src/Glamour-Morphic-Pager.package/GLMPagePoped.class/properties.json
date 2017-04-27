@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Pager-Announcement",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"smooth" ],
-	"name" : "GLMPagePoped",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Pager-Announcement",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"smooth"
+	],
+	"name" : "GLMPagePoped",
+	"type" : "normal"
+}

@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "MartinDias 4/6/2017 16:08",
+	"super" : "ComposableModel",
+	"category" : "EpiceaBrowsers-UI-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"filtersButtonModel",
+		"logBrowserModel",
+		"statusLabelModel"
+	],
+	"name" : "EpLogBrowserToolbarModel",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/6/2012 16:16",
+	"super" : "AthensTextDisplayCommand",
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"color",
 		"start",
-		"width" ],
+		"width"
+	],
 	"name" : "AthensBackgroundChange",
-	"pools" : [
-		 ],
-	"super" : "AthensTextDisplayCommand",
-	"type" : "normal" }
+	"type" : "normal"
+}

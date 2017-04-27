@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/10/2016 23:38",
-	"instvars" : [
-		 ],
-	"name" : "GTClearEditorDebugAction",
-	"pools" : [
-		 ],
 	"super" : "DebugAction",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTClearEditorDebugAction",
+	"type" : "normal"
+}

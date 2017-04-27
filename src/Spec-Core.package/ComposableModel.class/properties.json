@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/19/2016 16:31",
+	"super" : "Model",
+	"category" : "Spec-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"focusOrder",
 		"owner",
@@ -19,9 +19,8 @@
 		"windowIcon",
 		"aboutText",
 		"askOkToClose",
-		"titleHolder" ],
+		"titleHolder"
+	],
 	"name" : "ComposableModel",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,0 +1,1 @@
+I'm a log whose entries can have an arbitrary order and origin.

@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ByteLayout",
-	"pools" : [
-		 ],
 	"super" : "BitsLayout",
-	"type" : "normal" }
+	"category" : "Slot-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ByteLayout",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-HTTP-Client-Server",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 6/9/2015 15:36",
+	"super" : "Object",
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"prefixMap",
-		"byteArray" ],
+		"byteArray"
+	],
 	"name" : "ZnDefaultServerDelegate",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

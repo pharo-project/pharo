@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 9/4/2016 21:04",
-	"instvars" : [
-		"display" ],
-	"name" : "OSWindowWorldState",
-	"pools" : [
-		 ],
 	"super" : "WorldState",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"display"
+	],
+	"name" : "OSWindowWorldState",
+	"type" : "normal"
+}

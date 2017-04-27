@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "AndreiChis 10/12/2015 23:13",
+	"super" : "Object",
 	"category" : "System-Identification",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 10/12/2015 23:13",
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"persistenceStrategy",
-		"persistedInformation" ],
+		"persistedInformation"
+	],
 	"name" : "GlobalIdentifier",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "ShoreLine-Report-Settings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TommasoDalSasso 6/11/2014 17:29",
-	"instvars" : [
-		 ],
-	"name" : "ShoreLineReportSettings",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "ShoreLine-Report-Settings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShoreLineReportSettings",
+	"type" : "normal"
+}

@@ -1,3 +1,0 @@
-accessing
-commentsLog
-	^ commentsLog

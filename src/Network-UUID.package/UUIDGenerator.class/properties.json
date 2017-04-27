@@ -1,17 +1,18 @@
 {
-	"category" : "Network-UUID",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "SvenVanCaekenberghe 12/11/2016 16:58",
+	"super" : "Object",
+	"category" : "Network-UUID",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
 	"instvars" : [
 		"node",
 		"random",
 		"counter",
-		"lock" ],
+		"lock"
+	],
 	"name" : "UUIDGenerator",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

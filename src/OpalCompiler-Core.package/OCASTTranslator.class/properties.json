@@ -1,16 +1,17 @@
 {
-	"category" : "OpalCompiler-Core-Translator",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"OptimizedMessages" ],
 	"commentStamp" : "NicolaiHess 1/15/2017 22:45",
+	"super" : "RBProgramNodeVisitor",
+	"category" : "OpalCompiler-Core-Translator",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OptimizedMessages"
+	],
 	"instvars" : [
 		"methodBuilder",
 		"effectTranslator",
-		"valueTranslator" ],
+		"valueTranslator"
+	],
 	"name" : "OCASTTranslator",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

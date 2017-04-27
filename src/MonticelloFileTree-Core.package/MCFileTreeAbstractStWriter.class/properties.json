@@ -1,17 +1,16 @@
 {
-	"category" : "MonticelloFileTree-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:56",
+	"super" : "MCWriter",
+	"category" : "MonticelloFileTree-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stWriter",
 		"initializers",
 		"orderedClassNames",
-		"orderedTraitNames" ],
+		"orderedTraitNames"
+	],
 	"name" : "MCFileTreeAbstractStWriter",
-	"pools" : [
-		 ],
-	"super" : "MCWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

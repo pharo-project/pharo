@@ -6,7 +6,8 @@ refreshWithLogSelected: item
 		ifNil: [ EpLog newNull ]
 		ifNotNil: [ item log ].
 	
-	logModel 
-		log: freshLog; 
+	logModel
+		theLog: freshLog;
+		removeAllFilters;
 		refresh;
 		cleanEntryContentModel.

@@ -1,14 +1,11 @@
 {
-	"category" : "System-Sources",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CamilloBruni 2/23/2014 20:30",
-	"instvars" : [
-		 ],
-	"name" : "PharoSourcesCondenser",
-	"pools" : [
-		 ],
 	"super" : "PharoChangesCondenser",
-	"type" : "normal" }
+	"category" : "System-Sources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoSourcesCondenser",
+	"type" : "normal"
+}

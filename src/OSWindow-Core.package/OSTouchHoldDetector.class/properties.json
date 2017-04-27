@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "MerwanOuddane 7/22/2015 16:08",
+	"super" : "OSTouchPunctualGestureDetector",
 	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"MaxDistanceTravelled",
-		"WaitingTime" ],
-	"commentStamp" : "MerwanOuddane 7/22/2015 16:08",
+		"WaitingTime"
+	],
 	"instvars" : [
 		"waitingTime",
 		"maxDistanceTravelled",
-		"process" ],
+		"process"
+	],
 	"name" : "OSTouchHoldDetector",
-	"pools" : [
-		 ],
-	"super" : "OSTouchPunctualGestureDetector",
-	"type" : "normal" }
+	"type" : "normal"
+}

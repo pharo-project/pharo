@@ -1,0 +1,4 @@
+accessing
+event
+
+	^ entry content

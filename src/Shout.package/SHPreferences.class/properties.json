@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "TorstenBergmann 2/12/2014 23:23",
+	"super" : "Object",
 	"category" : "Shout-Styling",
 	"classinstvars" : [
-		"enabled" ],
+		"enabled"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"CustomStyleTable",
-		"Groups" ],
-	"commentStamp" : "TorstenBergmann 2/12/2014 23:23",
-	"instvars" : [
-		 ],
+		"Groups"
+	],
+	"instvars" : [ ],
 	"name" : "SHPreferences",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

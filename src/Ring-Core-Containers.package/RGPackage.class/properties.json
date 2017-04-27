@@ -1,14 +1,13 @@
 {
-	"category" : "Ring-Core-Containers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 4/20/2011 17:18",
-	"instvars" : [
-		"package" ],
-	"name" : "RGPackage",
-	"pools" : [
-		 ],
 	"super" : "RGContainer",
-	"type" : "normal" }
+	"category" : "Ring-Core-Containers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"package"
+	],
+	"name" : "RGPackage",
+	"type" : "normal"
+}

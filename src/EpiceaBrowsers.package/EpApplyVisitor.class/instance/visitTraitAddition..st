@@ -1,4 +1,4 @@
 visitor
-visitTraitAddition: aTraitCreation
-	self compiler 
-		evaluate: aTraitCreation traitAdded definitionSource
+visitTraitAddition: aChange
+
+	self compiler evaluate: aChange traitAdded definitionSource

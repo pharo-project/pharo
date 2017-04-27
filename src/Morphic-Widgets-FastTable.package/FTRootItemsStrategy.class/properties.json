@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CyrilFerlicot 11/2/2015 11:34",
-	"instvars" : [
-		 ],
-	"name" : "FTRootItemsStrategy",
-	"pools" : [
-		 ],
 	"super" : "FTTreeFunctionStrategy",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FTRootItemsStrategy",
+	"type" : "normal"
+}

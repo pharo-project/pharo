@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "PavelKrivanek 5/18/2016 14:16",
+	"super" : "Object",
 	"category" : "StartupPreferences",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"AllowStartupScript",
-		"UniqueInstance" ],
-	"commentStamp" : "PavelKrivanek 5/18/2016 14:16",
+		"UniqueInstance"
+	],
 	"instvars" : [
 		"errors",
-		"actions" ],
+		"actions"
+	],
 	"name" : "StartupPreferencesLoader",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

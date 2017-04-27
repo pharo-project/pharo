@@ -1,17 +1,16 @@
 {
-	"category" : "CodeImport",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "CodeImport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"readStream",
 		"codeDeclarations",
 		"parserClass",
-		"requestor" ],
+		"requestor"
+	],
 	"name" : "CodeImporter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

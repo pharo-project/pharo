@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Core-Commands",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "VSLoadCommand",
-	"pools" : [
-		 ],
 	"super" : "VSVersionCommand",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VSLoadCommand",
+	"type" : "normal"
+}

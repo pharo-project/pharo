@@ -1,14 +1,13 @@
 {
-	"category" : "Random-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:43",
-	"instvars" : [
-		"gen" ],
-	"name" : "RandomTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Random-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"gen"
+	],
+	"name" : "RandomTest",
+	"type" : "normal"
+}

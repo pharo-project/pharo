@@ -1,19 +1,20 @@
 {
-	"category" : "Athens-Cairo",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TCairoLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "IgorStasenko 12/20/2011 15:58",
+	"classvars" : [ ],
 	"instvars" : [
 		"handle",
 		"pathTransform",
 		"paintTransform",
-		"currentClipRect" ],
+		"currentClipRect"
+	],
 	"name" : "AthensCairoCanvas",
-	"pools" : [
-		"AthensCairoDefs" ],
+	"commentStamp" : "IgorStasenko 12/20/2011 15:58",
 	"super" : "AthensCanvas",
 	"traitcomposition" : "TCairoLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [
+		"AthensCairoDefs"
+	],
+	"category" : "Athens-Cairo"
+}

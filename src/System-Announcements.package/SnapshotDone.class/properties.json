@@ -1,14 +1,13 @@
 {
-	"category" : "System-Announcements-System-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"isNewImage" ],
-	"name" : "SnapshotDone",
-	"pools" : [
-		 ],
 	"super" : "SystemAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"isNewImage"
+	],
+	"name" : "SnapshotDone",
+	"type" : "normal"
+}

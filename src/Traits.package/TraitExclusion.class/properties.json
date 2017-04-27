@@ -1,14 +1,13 @@
 {
-	"category" : "Traits-Composition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"exclusions" ],
-	"name" : "TraitExclusion",
-	"pools" : [
-		 ],
 	"super" : "TraitTransformation",
-	"type" : "normal" }
+	"category" : "Traits-Composition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"exclusions"
+	],
+	"name" : "TraitExclusion",
+	"type" : "normal"
+}

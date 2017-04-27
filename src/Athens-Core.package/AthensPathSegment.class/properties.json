@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Core-Paths",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"next" ],
-	"name" : "AthensPathSegment",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"next"
+	],
+	"name" : "AthensPathSegment",
+	"type" : "normal"
+}

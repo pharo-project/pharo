@@ -5,7 +5,7 @@ showHierarchy: aBoolean
 	(selectedClass := self selectedClass) ifNil: [ ^ self ]. "Since the double clic comes after a simple clic and simple clic deselects selected item, we are forced to have this guard. A alternative would be to change the simple clic but the side effects are too big"
 	self resetClassesListSelection.
 	self resetClassesList.
-	self classWidget showHierarchy: aBoolean forClass: selectedClass. 
+	self classWidget showHierarchy: aBoolean forClass: selectedClass theNonMetaClass.
 
 	"If showPackages false(Hierarchy)-->true(Flat) then selected package needs to synch to that of selected class"
 	self packageWidget enabled: aBoolean not.

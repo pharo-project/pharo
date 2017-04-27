@@ -1,14 +1,13 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"evalBlock" ],
-	"name" : "PluggableTextAttribute",
-	"pools" : [
-		 ],
 	"super" : "TextAction",
-	"type" : "normal" }
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"evalBlock"
+	],
+	"name" : "PluggableTextAttribute",
+	"type" : "normal"
+}

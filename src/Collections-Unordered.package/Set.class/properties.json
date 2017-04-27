@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Set",
-	"pools" : [
-		 ],
 	"super" : "HashedCollection",
-	"type" : "normal" }
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Set",
+	"type" : "normal"
+}

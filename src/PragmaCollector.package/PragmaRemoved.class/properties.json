@@ -1,14 +1,11 @@
 {
-	"category" : "PragmaCollector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "alain.plantec 10/20/2009 11:33",
-	"instvars" : [
-		 ],
-	"name" : "PragmaRemoved",
-	"pools" : [
-		 ],
 	"super" : "PragmaAnnouncement",
-	"type" : "normal" }
+	"category" : "PragmaCollector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PragmaRemoved",
+	"type" : "normal"
+}

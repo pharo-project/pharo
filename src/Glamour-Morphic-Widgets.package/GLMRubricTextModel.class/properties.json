@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMMorphicModel",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"primarySelectionInterval",
-		"hasUnacceptedEdits" ],
+		"hasUnacceptedEdits"
+	],
 	"name" : "GLMRubricTextModel",
-	"pools" : [
-		 ],
-	"super" : "GLMMorphicModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

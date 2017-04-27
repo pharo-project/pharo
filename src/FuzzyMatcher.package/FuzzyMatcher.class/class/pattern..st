@@ -1,4 +1,4 @@
 construction
 pattern: aString
 
-	^self new setPattern: aString
+	^self new pattern: aString

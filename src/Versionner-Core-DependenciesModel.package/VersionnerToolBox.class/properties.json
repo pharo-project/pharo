@@ -1,14 +1,13 @@
 {
-	"category" : "Versionner-Core-DependenciesModel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 2/21/2014 13:50",
-	"instvars" : [
-		"metacelloToolBox" ],
-	"name" : "VersionnerToolBox",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Versionner-Core-DependenciesModel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"metacelloToolBox"
+	],
+	"name" : "VersionnerToolBox",
+	"type" : "normal"
+}

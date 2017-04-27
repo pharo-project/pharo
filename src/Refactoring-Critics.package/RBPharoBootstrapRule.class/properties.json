@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Critics-ArchitectureRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 9/23/2015 08:44",
-	"instvars" : [
-		"renrakuRule" ],
-	"name" : "RBPharoBootstrapRule",
-	"pools" : [
-		 ],
 	"super" : "RBArchitectureLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-ArchitectureRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"renrakuRule"
+	],
+	"name" : "RBPharoBootstrapRule",
+	"type" : "normal"
+}

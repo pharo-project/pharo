@@ -1,10 +1,12 @@
 {
-	"category" : "FreeType-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "FreeType-Base",
+	"classinstvars" : [ ],
+	"pools" : [
+		"FT2Constants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"face",
 		"linearHorizontalAdvance",
@@ -22,9 +24,8 @@
 		"vBearingX",
 		"vBearingY",
 		"vAdvance",
-		"outline" ],
+		"outline"
+	],
 	"name" : "FT2GlyphSlot",
-	"pools" : [
-		"FT2Constants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

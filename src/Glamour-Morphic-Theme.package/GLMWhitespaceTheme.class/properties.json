@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Theme",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GLMWhitespaceTheme",
-	"pools" : [
-		 ],
 	"super" : "UIThemeWatery",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Theme",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMWhitespaceTheme",
+	"type" : "normal"
+}

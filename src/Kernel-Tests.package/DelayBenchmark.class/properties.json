@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "BenComan 10/26/2014 11:54",
+	"super" : "Object",
 	"category" : "Kernel-Tests-Processes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"EnterCount",
 		"ExitCount",
-		"Running" ],
-	"commentStamp" : "BenComan 10/26/2014 11:54",
-	"instvars" : [
-		 ],
+		"Running"
+	],
+	"instvars" : [ ],
 	"name" : "DelayBenchmark",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

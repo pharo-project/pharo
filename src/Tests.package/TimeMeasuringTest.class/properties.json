@@ -1,15 +1,14 @@
 {
-	"category" : "Tests-Traits",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Tests-Traits",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"realTime",
-		"shouldProfile" ],
+		"shouldProfile"
+	],
 	"name" : "TimeMeasuringTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Versionner-Commit",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 4/23/2015 15:48",
-	"instvars" : [
-		"package" ],
-	"name" : "VSCommitPackageAction",
-	"pools" : [
-		 ],
 	"super" : "VSCommitAction",
-	"type" : "normal" }
+	"category" : "Versionner-Commit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"package"
+	],
+	"name" : "VSCommitPackageAction",
+	"type" : "normal"
+}

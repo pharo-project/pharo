@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI-Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 6/24/2016 14:07",
-	"instvars" : [
-		 ],
-	"name" : "FFIConstantHandle",
-	"pools" : [
-		 ],
 	"super" : "FFIExternalReference",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFIConstantHandle",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "michael.rueger 1/27/2009 18:00",
+	"super" : "TextConverter",
 	"category" : "Multilingual-TextConversion",
 	"classinstvars" : [
 		"byteToUnicode",
-		"unicodeToByte" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "michael.rueger 1/27/2009 18:00",
-	"instvars" : [
-		 ],
+		"unicodeToByte"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "ByteTextConverter",
-	"pools" : [
-		 ],
-	"super" : "TextConverter",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "MartinDias 4/16/2014 14:14",
+	"super" : "OmStore",
 	"category" : "Ombu-Stores",
 	"classinstvars" : [
 		"storeNameStrategy",
-		"defaultBaseLocator" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "MartinDias 4/16/2014 14:14",
+		"defaultBaseLocator"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"currentSession",
 		"currentImagePathString",
@@ -15,9 +17,8 @@
 		"announcer",
 		"writingDeferDuration",
 		"headReference",
-		"storeNameStrategy" ],
+		"storeNameStrategy"
+	],
 	"name" : "OmSessionStore",
-	"pools" : [
-		 ],
-	"super" : "OmStore",
-	"type" : "normal" }
+	"type" : "normal"
+}

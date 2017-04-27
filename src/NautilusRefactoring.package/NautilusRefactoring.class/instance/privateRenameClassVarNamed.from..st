@@ -1,7 +1,8 @@
 private-class var
 privateRenameClassVarNamed: variable from: aClass
+
 	^ RBRenameClassVariableRefactoring
 		model: environment
 		rename: variable
-		to: (self request: 'Enter the new variable name :' initialAnswer: variable) asSymbol
+		to: (self request: self newVariableRequestText initialAnswer: variable) asSymbol
 		in: aClass

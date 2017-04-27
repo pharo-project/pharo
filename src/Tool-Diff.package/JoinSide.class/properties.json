@@ -1,19 +1,18 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"range",
 		"offset",
 		"lineRange",
 		"highlights",
 		"color",
-		"text" ],
+		"text"
+	],
 	"name" : "JoinSide",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

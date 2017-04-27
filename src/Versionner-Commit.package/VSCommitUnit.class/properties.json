@@ -1,10 +1,10 @@
 {
-	"category" : "Versionner-Commit",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 4/27/2015 19:42",
+	"super" : "Object",
+	"category" : "Versionner-Commit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"configurationClass",
 		"comment",
@@ -12,9 +12,8 @@
 		"commitVersion",
 		"commitStrategy",
 		"projectActions",
-		"packageActions" ],
+		"packageActions"
+	],
 	"name" : "VSCommitUnit",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

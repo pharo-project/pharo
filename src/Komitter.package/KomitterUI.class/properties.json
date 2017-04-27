@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
 	"category" : "Komitter-UI",
 	"classinstvars" : [
-		"manageRemotesIcon" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"manageRemotesIcon"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"author",
 		"authorName",
@@ -18,9 +20,8 @@
 		"model",
 		"previousMessages",
 		"canCommit",
-		"manageRemotes" ],
+		"manageRemotes"
+	],
 	"name" : "KomitterUI",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

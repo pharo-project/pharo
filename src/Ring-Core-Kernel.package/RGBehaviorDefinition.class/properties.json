@@ -1,16 +1,15 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 5/9/2011 14:30",
+	"super" : "RGGlobalDefinition",
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"superclass",
 		"methods",
-		"protocols" ],
+		"protocols"
+	],
 	"name" : "RGBehaviorDefinition",
-	"pools" : [
-		 ],
-	"super" : "RGGlobalDefinition",
-	"type" : "normal" }
+	"type" : "normal"
+}

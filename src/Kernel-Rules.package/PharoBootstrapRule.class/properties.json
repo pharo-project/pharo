@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"DependencyChecker" ],
 	"commentStamp" : "ChristopheDemarey 9/30/2016 15:31",
-	"instvars" : [
-		 ],
-	"name" : "PharoBootstrapRule",
-	"pools" : [
-		 ],
 	"super" : "ReAbstractRule",
-	"type" : "normal" }
+	"category" : "Kernel-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"DependencyChecker"
+	],
+	"instvars" : [ ],
+	"name" : "PharoBootstrapRule",
+	"type" : "normal"
+}

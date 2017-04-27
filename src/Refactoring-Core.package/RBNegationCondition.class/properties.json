@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Core-Conditions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/19/2016 16:43",
-	"instvars" : [
-		"condition" ],
-	"name" : "RBNegationCondition",
-	"pools" : [
-		 ],
 	"super" : "RBAbstractCondition",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Conditions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"condition"
+	],
+	"name" : "RBNegationCondition",
+	"type" : "normal"
+}

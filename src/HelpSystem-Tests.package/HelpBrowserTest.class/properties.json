@@ -1,14 +1,11 @@
 {
-	"category" : "HelpSystem-Tests-Core-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:18",
-	"instvars" : [
-		 ],
-	"name" : "HelpBrowserTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "HelpSystem-Tests-Core-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HelpBrowserTest",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/2/2016 13:27",
+	"super" : "RBProgramNode",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scope",
 		"selector",
@@ -15,9 +15,8 @@
 		"pragmas",
 		"replacements",
 		"nodeReplacements",
-		"compilationContext" ],
+		"compilationContext"
+	],
 	"name" : "RBMethodNode",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

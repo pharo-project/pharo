@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-VM",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 18:01",
-	"instvars" : [
-		 ],
-	"name" : "OSVMFormRenderer",
-	"pools" : [
-		 ],
 	"super" : "OSWindowFormRenderer",
-	"type" : "normal" }
+	"category" : "OSWindow-VM",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSVMFormRenderer",
+	"type" : "normal"
+}

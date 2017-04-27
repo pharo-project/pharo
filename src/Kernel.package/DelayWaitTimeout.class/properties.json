@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Delay",
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"process",
-		"expired" ],
+		"expired"
+	],
 	"name" : "DelayWaitTimeout",
-	"pools" : [
-		 ],
-	"super" : "Delay",
-	"type" : "normal" }
+	"type" : "normal"
+}

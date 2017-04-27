@@ -1,4 +1,0 @@
-accessing
-newCategoryOfClassAffected
-
-	^ newClass category 

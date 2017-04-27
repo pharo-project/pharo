@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:30",
-	"instvars" : [
-		 ],
-	"name" : "PluggableMorphListMorph",
-	"pools" : [
-		 ],
 	"super" : "PluggableListMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PluggableMorphListMorph",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-FastTable-PluggableAdaptor",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FTDataSource",
+	"category" : "Morphic-Widgets-FastTable-PluggableAdaptor",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
 		"getListSelector",
@@ -14,9 +14,8 @@
 		"getListSizeSelector",
 		"getMenuSelector",
 		"dropItemSelector",
-		"wantsDropSelector" ],
+		"wantsDropSelector"
+	],
 	"name" : "FTPluggableIconListMorphAdaptorDataSource",
-	"pools" : [
-		 ],
-	"super" : "FTDataSource",
-	"type" : "normal" }
+	"type" : "normal"
+}

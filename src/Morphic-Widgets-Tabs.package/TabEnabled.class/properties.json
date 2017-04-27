@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Tabs-States",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TabEnabled",
-	"pools" : [
-		 ],
 	"super" : "TabState",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tabs-States",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TabEnabled",
+	"type" : "normal"
+}

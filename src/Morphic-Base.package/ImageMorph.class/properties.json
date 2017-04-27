@@ -1,16 +1,17 @@
 {
-	"category" : "Morphic-Base-Basic",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
 	"classvars" : [
-		"DefaultForm" ],
-	"commentStamp" : "efc 3/7/2003 17:48",
+		"DefaultForm"
+	],
 	"instvars" : [
-		"image" ],
+		"image"
+	],
 	"name" : "ImageMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "efc 3/7/2003 17:48",
 	"super" : "Morph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Base-Basic"
+}

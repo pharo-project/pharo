@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"testMethod" ],
-	"name" : "MethodWithCorrespondingTestAction",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodIconAction",
-	"type" : "normal" }
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"testMethod"
+	],
+	"name" : "MethodWithCorrespondingTestAction",
+	"type" : "normal"
+}

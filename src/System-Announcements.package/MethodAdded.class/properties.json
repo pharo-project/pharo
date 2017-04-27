@@ -1,14 +1,11 @@
 {
-	"category" : "System-Announcements-System-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cyrilledelaunay 1/18/2011 13:06",
-	"instvars" : [
-		 ],
-	"name" : "MethodAdded",
-	"pools" : [
-		 ],
 	"super" : "MethodAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodAdded",
+	"type" : "normal"
+}

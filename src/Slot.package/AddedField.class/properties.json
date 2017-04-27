@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"newSlot" ],
-	"name" : "AddedField",
-	"pools" : [
-		 ],
 	"super" : "AbstractFieldModification",
-	"type" : "normal" }
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newSlot"
+	],
+	"name" : "AddedField",
+	"type" : "normal"
+}

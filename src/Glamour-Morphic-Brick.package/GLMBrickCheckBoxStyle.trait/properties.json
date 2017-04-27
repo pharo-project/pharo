@@ -1,4 +1,5 @@
 {
-	"category" : "Glamour-Morphic-Brick-Theme",
+	"name" : "GLMBrickCheckBoxStyle",
 	"commentStamp" : "AliakseiSyrel 3/17/2015 22:55",
-	"name" : "GLMBrickCheckBoxStyle" }
+	"category" : "Glamour-Morphic-Brick-Theme"
+}

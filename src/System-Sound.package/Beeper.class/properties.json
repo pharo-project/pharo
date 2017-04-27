@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "gk 2/26/2004 22:44",
+	"super" : "Object",
 	"category" : "System-Sound",
 	"classinstvars" : [
-		"default" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "gk 2/26/2004 22:44",
-	"instvars" : [
-		 ],
+		"default"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "Beeper",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

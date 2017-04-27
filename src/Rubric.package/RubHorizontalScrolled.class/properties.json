@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 11:01",
-	"instvars" : [
-		"scrollValue" ],
-	"name" : "RubHorizontalScrolled",
-	"pools" : [
-		 ],
 	"super" : "RubMorphAnnouncement",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"scrollValue"
+	],
+	"name" : "RubHorizontalScrolled",
+	"type" : "normal"
+}

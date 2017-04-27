@@ -1,14 +1,11 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "LiteralNode",
-	"pools" : [
-		 ],
 	"super" : "LeafNode",
-	"type" : "normal" }
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LiteralNode",
+	"type" : "normal"
+}

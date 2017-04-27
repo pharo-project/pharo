@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 11/20/2007 00:35",
-	"instvars" : [
-		 ],
-	"name" : "CharacterSetTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CharacterSetTest",
+	"type" : "normal"
+}

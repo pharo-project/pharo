@@ -1,14 +1,11 @@
 {
-	"category" : "TxTextTests-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TxCharacterSpanTests",
-	"pools" : [
-		 ],
 	"super" : "TxSpanTestCase",
-	"type" : "normal" }
+	"category" : "TxTextTests-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxCharacterSpanTests",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Gofer-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:30",
-	"instvars" : [
-		"gofer" ],
-	"name" : "GoferTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Gofer-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"gofer"
+	],
+	"name" : "GoferTest",
+	"type" : "normal"
+}

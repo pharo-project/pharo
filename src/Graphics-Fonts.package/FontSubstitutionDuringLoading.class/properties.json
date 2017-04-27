@@ -1,15 +1,14 @@
 {
-	"category" : "Graphics-Fonts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Notification",
+	"category" : "Graphics-Fonts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"familyName",
-		"pixelSize" ],
+		"pixelSize"
+	],
 	"name" : "FontSubstitutionDuringLoading",
-	"pools" : [
-		 ],
-	"super" : "Notification",
-	"type" : "normal" }
+	"type" : "normal"
+}

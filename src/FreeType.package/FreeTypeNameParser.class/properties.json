@@ -1,14 +1,16 @@
 {
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:11",
+	"super" : "Object",
 	"category" : "FreeType-FontManager",
 	"classinstvars" : [
 		"weightNames",
 		"stretchNames",
 		"obliqueNames",
 		"normalNames",
-		"italicNames" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/4/2014 22:11",
+		"italicNames"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"combinedName",
 		"familyNameIn",
@@ -23,9 +25,8 @@
 		"italicFlag",
 		"boldFlag",
 		"extractedWeightValue",
-		"extractedStretchValue" ],
+		"extractedStretchValue"
+	],
 	"name" : "FreeTypeNameParser",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Core-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 6/28/2016 10:08",
+	"super" : "AbstractWidgetModel",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tabSelectedActionHolder",
 		"labelHolder",
@@ -14,9 +14,8 @@
 		"menuHolder",
 		"actionsHolder",
 		"closeableHolder",
-		"selectedHolder" ],
+		"selectedHolder"
+	],
 	"name" : "TabModel",
-	"pools" : [
-		 ],
-	"super" : "AbstractWidgetModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

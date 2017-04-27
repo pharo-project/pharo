@@ -1,14 +1,13 @@
 {
-	"category" : "Flashback-Decompiler-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"decompiler" ],
-	"name" : "FBDDecompilerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Flashback-Decompiler-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"decompiler"
+	],
+	"name" : "FBDDecompilerTest",
+	"type" : "normal"
+}

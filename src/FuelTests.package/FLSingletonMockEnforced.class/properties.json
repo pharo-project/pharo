@@ -1,14 +1,11 @@
 {
-	"category" : "FuelTests-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:29",
-	"instvars" : [
-		 ],
-	"name" : "FLSingletonMockEnforced",
-	"pools" : [
-		 ],
 	"super" : "FLSingletonMock",
-	"type" : "normal" }
+	"category" : "FuelTests-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLSingletonMockEnforced",
+	"type" : "normal"
+}

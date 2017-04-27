@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "lr 10/5/2010 16:17",
-	"instvars" : [
-		 ],
-	"name" : "RBRefactoringWarning",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBRefactoringWarning",
+	"type" : "normal"
+}

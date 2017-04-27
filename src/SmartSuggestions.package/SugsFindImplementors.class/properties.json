@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Suggestion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "SugsFindImplementors",
-	"pools" : [
-		 ],
 	"super" : "SugsSuggestion",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Suggestion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsFindImplementors",
+	"type" : "normal"
+}

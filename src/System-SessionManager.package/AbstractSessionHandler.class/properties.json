@@ -1,14 +1,11 @@
 {
-	"category" : "System-SessionManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 10/2/2015 11:03",
-	"instvars" : [
-		 ],
-	"name" : "AbstractSessionHandler",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-SessionManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AbstractSessionHandler",
+	"type" : "normal"
+}

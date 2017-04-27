@@ -1,18 +1,17 @@
 {
-	"category" : "Glamour-Browsers-Tabulator",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glamour-Browsers-Tabulator",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"children",
 		"span",
 		"id",
 		"browser",
-		"size" ],
+		"size"
+	],
 	"name" : "GLMCustomCell",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

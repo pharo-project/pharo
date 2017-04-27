@@ -1,14 +1,11 @@
 {
-	"category" : "Compiler-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "EncoderForV3",
-	"pools" : [
-		 ],
 	"super" : "BytecodeEncoder",
-	"type" : "normal" }
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EncoderForV3",
+	"type" : "normal"
+}

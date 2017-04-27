@@ -1,17 +1,16 @@
 {
-	"category" : "Kernel-Tests-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:32",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"aDateAndTime",
 		"aDuration",
 		"aTimeZone",
-		"localTimeZoneToRestore" ],
+		"localTimeZoneToRestore"
+	],
 	"name" : "DateAndTimeDosEpochTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

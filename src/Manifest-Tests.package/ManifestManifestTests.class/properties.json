@@ -1,14 +1,11 @@
 {
-	"category" : "Manifest-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/19/2014 08:33",
-	"instvars" : [
-		 ],
-	"name" : "ManifestManifestTests",
-	"pools" : [
-		 ],
 	"super" : "PackageManifest",
-	"type" : "normal" }
+	"category" : "Manifest-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ManifestManifestTests",
+	"type" : "normal"
+}

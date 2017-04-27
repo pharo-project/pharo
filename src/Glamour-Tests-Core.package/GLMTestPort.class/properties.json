@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"seenTransmissions" ],
-	"name" : "GLMTestPort",
-	"pools" : [
-		 ],
 	"super" : "GLMPanePort",
-	"type" : "normal" }
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"seenTransmissions"
+	],
+	"name" : "GLMTestPort",
+	"type" : "normal"
+}

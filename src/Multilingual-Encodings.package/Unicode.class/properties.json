@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "yo 10/19/2004 20:44",
+	"super" : "EncodedCharSet",
 	"category" : "Multilingual-Encodings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Cc",
 		"Cf",
@@ -37,12 +39,9 @@
 		"ToUpper",
 		"Zl",
 		"Zp",
-		"Zs" ],
-	"commentStamp" : "yo 10/19/2004 20:44",
-	"instvars" : [
-		 ],
+		"Zs"
+	],
+	"instvars" : [ ],
 	"name" : "Unicode",
-	"pools" : [
-		 ],
-	"super" : "EncodedCharSet",
-	"type" : "normal" }
+	"type" : "normal"
+}

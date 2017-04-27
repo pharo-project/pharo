@@ -1,14 +1,11 @@
 {
-	"category" : "Tests-Traits",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TraitCompositionTest",
-	"pools" : [
-		 ],
 	"super" : "TraitsTestCase",
-	"type" : "normal" }
+	"category" : "Tests-Traits",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TraitCompositionTest",
+	"type" : "normal"
+}

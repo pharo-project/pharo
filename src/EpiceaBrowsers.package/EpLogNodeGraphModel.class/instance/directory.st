@@ -2,4 +2,4 @@ accessing
 directory
 
 	^ directory ifNil: [ 
-		directory := EpMonitor current sessionStore baseLocator ]
+		directory := self monitor sessionStore baseLocator ]

@@ -1,18 +1,17 @@
 {
-	"category" : "Shout-Styling",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TRBProgramNodeVisitor classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
 		"charAttr",
 		"parentheseLevel",
-		"bracketLevel" ],
+		"bracketLevel"
+	],
 	"name" : "SHRBTextStyler",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "SHTextStylerST80",
 	"traitcomposition" : "TRBProgramNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Shout-Styling"
+}

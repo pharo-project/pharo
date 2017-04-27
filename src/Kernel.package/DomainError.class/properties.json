@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ArithmeticError",
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"from",
-		"to" ],
+		"to"
+	],
 	"name" : "DomainError",
-	"pools" : [
-		 ],
-	"super" : "ArithmeticError",
-	"type" : "normal" }
+	"type" : "normal"
+}

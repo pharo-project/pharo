@@ -1,16 +1,15 @@
 {
-	"category" : "Shout-Styling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:23",
+	"super" : "Object",
+	"category" : "Shout-Styling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tokens",
 		"color",
-		"emphasis" ],
+		"emphasis"
+	],
 	"name" : "SHStyleElement",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

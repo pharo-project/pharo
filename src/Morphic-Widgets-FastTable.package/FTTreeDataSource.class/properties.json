@@ -1,17 +1,18 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"SearchStrategies" ],
 	"commentStamp" : "CyrilFerlicot 11/2/2015 14:33",
+	"super" : "FTDataSource",
+	"category" : "Morphic-Widgets-FastTable-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"SearchStrategies"
+	],
 	"instvars" : [
 		"childrenBlock",
 		"rootItem",
 		"maxDepth",
-		"searchStrategy" ],
+		"searchStrategy"
+	],
 	"name" : "FTTreeDataSource",
-	"pools" : [
-		 ],
-	"super" : "FTDataSource",
-	"type" : "normal" }
+	"type" : "normal"
+}

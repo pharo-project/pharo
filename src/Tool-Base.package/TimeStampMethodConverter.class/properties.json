@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TimeStampMethodConverter",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodConverter",
-	"type" : "normal" }
+	"category" : "Tool-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TimeStampMethodConverter",
+	"type" : "normal"
+}

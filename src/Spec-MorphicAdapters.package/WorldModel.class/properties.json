@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-MorphicAdapters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/25/2016 21:39",
-	"instvars" : [
-		"widget" ],
-	"name" : "WorldModel",
-	"pools" : [
-		 ],
 	"super" : "WindowModel",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"widget"
+	],
+	"name" : "WorldModel",
+	"type" : "normal"
+}

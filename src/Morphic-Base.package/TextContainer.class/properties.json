@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Base-Text Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"OuterMargin" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OuterMargin"
+	],
 	"instvars" : [
 		"textMorph",
 		"shadowForm",
@@ -12,9 +14,8 @@
 		"minWidth",
 		"rectangleCache",
 		"fillsOwner",
-		"avoidsOcclusions" ],
+		"avoidsOcclusions"
+	],
 	"name" : "TextContainer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

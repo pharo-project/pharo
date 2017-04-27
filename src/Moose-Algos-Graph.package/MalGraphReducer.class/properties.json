@@ -1,15 +1,14 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 3/24/2015 16:50",
+	"super" : "MalGraphAlgorithm",
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"circuits",
-		"circuitNodes" ],
+		"circuitNodes"
+	],
 	"name" : "MalGraphReducer",
-	"pools" : [
-		 ],
-	"super" : "MalGraphAlgorithm",
-	"type" : "normal" }
+	"type" : "normal"
+}

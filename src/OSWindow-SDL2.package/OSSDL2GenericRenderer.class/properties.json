@@ -1,14 +1,15 @@
 {
-	"category" : "OSWindow-SDL2",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 4/10/2016 02:42",
-	"instvars" : [
-		"renderer" ],
-	"name" : "OSSDL2GenericRenderer",
-	"pools" : [
-		"SDL2Constants" ],
 	"super" : "OSWindowGenericRenderer",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2",
+	"classinstvars" : [ ],
+	"pools" : [
+		"SDL2Constants"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"renderer"
+	],
+	"name" : "OSSDL2GenericRenderer",
+	"type" : "normal"
+}

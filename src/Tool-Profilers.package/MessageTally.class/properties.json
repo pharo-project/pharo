@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "StephaneDucasse 9/27/2009 10:42",
+	"super" : "Magnitude",
 	"category" : "Tool-Profilers",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultPollPeriod",
-		"Timer" ],
-	"commentStamp" : "StephaneDucasse 9/27/2009 10:42",
+		"Timer"
+	],
 	"instvars" : [
 		"class",
 		"method",
@@ -18,9 +20,8 @@
 		"maxClassNameSize",
 		"maxClassPlusSelectorSize",
 		"maxTabs",
-		"reportOtherProcesses" ],
+		"reportOtherProcesses"
+	],
 	"name" : "MessageTally",
-	"pools" : [
-		 ],
-	"super" : "Magnitude",
-	"type" : "normal" }
+	"type" : "normal"
+}

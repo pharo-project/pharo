@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Inspector-Element",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/5/2014 10:38",
-	"instvars" : [
-		"wrapped" ],
-	"name" : "EyePointerWrapper",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"wrapped"
+	],
+	"name" : "EyePointerWrapper",
+	"type" : "normal"
+}

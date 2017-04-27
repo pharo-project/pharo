@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Base-Borders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:46",
-	"instvars" : [
-		"margin" ],
-	"name" : "MarginBorder",
-	"pools" : [
-		 ],
 	"super" : "SimpleBorder",
-	"type" : "normal" }
+	"category" : "Morphic-Base-Borders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"margin"
+	],
+	"name" : "MarginBorder",
+	"type" : "normal"
+}

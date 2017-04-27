@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-PharoCommonPlatform",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloPharoCommonPlatform",
-	"pools" : [
-		 ],
 	"super" : "MetacelloPlatform",
-	"type" : "normal" }
+	"category" : "Metacello-PharoCommonPlatform",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloPharoCommonPlatform",
+	"type" : "normal"
+}

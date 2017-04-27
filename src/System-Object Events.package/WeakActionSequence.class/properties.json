@@ -1,14 +1,11 @@
 {
-	"category" : "System-Object Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:46",
-	"instvars" : [
-		 ],
-	"name" : "WeakActionSequence",
-	"pools" : [
-		 ],
 	"super" : "Array",
-	"type" : "variable" }
+	"category" : "System-Object Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakActionSequence",
+	"type" : "variable"
+}

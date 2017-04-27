@@ -1,15 +1,14 @@
 {
-	"category" : "ProfStef-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:52",
+	"super" : "TestCase",
+	"category" : "ProfStef-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"prof",
-		"mockView" ],
+		"mockView"
+	],
 	"name" : "PharoTutorialTestNavigation",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

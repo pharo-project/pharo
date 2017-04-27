@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 12/10/2009 19:17",
+	"super" : "Collection",
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"map",
-		"byteArrayMap" ],
+		"byteArrayMap"
+	],
 	"name" : "WideCharacterSet",
-	"pools" : [
-		 ],
-	"super" : "Collection",
-	"type" : "normal" }
+	"type" : "normal"
+}

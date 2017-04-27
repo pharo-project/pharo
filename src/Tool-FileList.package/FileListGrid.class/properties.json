@@ -1,15 +1,14 @@
 {
-	"category" : "Tool-FileList",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:43",
+	"super" : "MorphTreeModel",
+	"category" : "Tool-FileList",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"parent",
-		"treeMorph" ],
+		"treeMorph"
+	],
 	"name" : "FileListGrid",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

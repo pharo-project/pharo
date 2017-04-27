@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-FastTable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CyrilFerlicot 10/26/2015 11:29",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"container",
 		"verticalScrollBar",
@@ -23,9 +23,8 @@
 		"allowsDeselection",
 		"needToggleAtMouseUp",
 		"function",
-		"resizable" ],
+		"resizable"
+	],
 	"name" : "FTTableMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

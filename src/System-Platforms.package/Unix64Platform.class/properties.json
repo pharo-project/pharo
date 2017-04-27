@@ -1,14 +1,11 @@
 {
-	"category" : "System-Platforms",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 3/6/2017 17:15",
-	"instvars" : [
-		 ],
-	"name" : "Unix64Platform",
-	"pools" : [
-		 ],
 	"super" : "UnixPlatform",
-	"type" : "normal" }
+	"category" : "System-Platforms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Unix64Platform",
+	"type" : "normal"
+}

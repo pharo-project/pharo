@@ -1,19 +1,18 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/11/2014 10:15",
+	"super" : "IRJump",
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"numArgs",
 		"blockSequence",
 		"tempMap",
 		"copiedValues",
 		"lastBlockSequence",
-		"arguments" ],
+		"arguments"
+	],
 	"name" : "IRPushClosureCopy",
-	"pools" : [
-		 ],
-	"super" : "IRJump",
-	"type" : "normal" }
+	"type" : "normal"
+}

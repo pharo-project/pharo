@@ -1,14 +1,13 @@
 {
-	"category" : "Versionner-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 14:12",
-	"instvars" : [
-		"currentVersion" ],
-	"name" : "MBProjectInfo",
-	"pools" : [
-		 ],
 	"super" : "MBAbstractPackageInfo",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"currentVersion"
+	],
+	"name" : "MBProjectInfo",
+	"type" : "normal"
+}

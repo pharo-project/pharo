@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-FastTable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 5/15/2015 12:08",
-	"instvars" : [
-		 ],
-	"name" : "FTRowLayout",
-	"pools" : [
-		 ],
 	"super" : "RowLayout",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FTRowLayout",
+	"type" : "normal"
+}

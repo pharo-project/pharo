@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus-GroupManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"groups" ],
-	"name" : "GroupHolder",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Nautilus-GroupManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"groups"
+	],
+	"name" : "GroupHolder",
+	"type" : "normal"
+}

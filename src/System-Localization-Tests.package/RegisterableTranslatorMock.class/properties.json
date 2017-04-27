@@ -1,14 +1,13 @@
 {
-	"category" : "System-Localization-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/16/2014 15:16",
-	"instvars" : [
-		"translations" ],
-	"name" : "RegisterableTranslatorMock",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Localization-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"translations"
+	],
+	"name" : "RegisterableTranslatorMock",
+	"type" : "normal"
+}

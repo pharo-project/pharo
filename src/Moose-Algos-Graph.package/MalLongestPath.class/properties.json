@@ -1,18 +1,17 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VincentBlondeau 7/25/2014 15:48",
+	"super" : "MalGraphAlgorithm",
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"previousRanks",
 		"currentRank",
 		"rootNodes",
 		"leafNodes",
-		"maxIterations" ],
+		"maxIterations"
+	],
 	"name" : "MalLongestPath",
-	"pools" : [
-		 ],
-	"super" : "MalGraphAlgorithm",
-	"type" : "normal" }
+	"type" : "normal"
+}

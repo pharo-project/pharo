@@ -1,17 +1,16 @@
 {
-	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "InstructionClient",
+	"category" : "Kernel-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stackPointer",
 		"scanner",
 		"blockEnd",
-		"joinOffsets" ],
+		"joinOffsets"
+	],
 	"name" : "BlockLocalTempCounter",
-	"pools" : [
-		 ],
-	"super" : "InstructionClient",
-	"type" : "normal" }
+	"type" : "normal"
+}

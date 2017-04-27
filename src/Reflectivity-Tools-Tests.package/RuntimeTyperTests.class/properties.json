@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Tools-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/12/2016 15:30",
-	"instvars" : [
-		 ],
-	"name" : "RuntimeTyperTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Reflectivity-Tools-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RuntimeTyperTests",
+	"type" : "normal"
+}

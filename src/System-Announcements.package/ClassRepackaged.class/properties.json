@@ -1,16 +1,15 @@
 {
-	"category" : "System-Announcements-System-Packages",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:56",
+	"super" : "ClassAnnouncement",
+	"category" : "System-Announcements-System-Packages",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classRepackaged",
 		"newPackage",
-		"oldPackage" ],
+		"oldPackage"
+	],
 	"name" : "ClassRepackaged",
-	"pools" : [
-		 ],
-	"super" : "ClassAnnouncement",
-	"type" : "normal" }
+	"type" : "normal"
+}

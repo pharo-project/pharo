@@ -1,18 +1,17 @@
 {
-	"category" : "Spec-Inspector",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TInspectorActions classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
 		"object",
 		"customMenuActions",
-		"text" ],
+		"text"
+	],
 	"name" : "EyeAbstractInspector",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "ComposableModel",
 	"traitcomposition" : "TInspectorActions",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Spec-Inspector"
+}

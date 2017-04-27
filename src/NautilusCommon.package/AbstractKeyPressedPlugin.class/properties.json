@@ -1,14 +1,11 @@
 {
-	"category" : "NautilusCommon-Plugin",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 10/30/2014 07:36",
-	"instvars" : [
-		 ],
-	"name" : "AbstractKeyPressedPlugin",
-	"pools" : [
-		 ],
 	"super" : "AbstractNautilusPlugin",
-	"type" : "normal" }
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AbstractKeyPressedPlugin",
+	"type" : "normal"
+}

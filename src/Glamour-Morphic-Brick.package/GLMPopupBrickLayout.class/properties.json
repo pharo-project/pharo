@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "AliakseiSyrel 3/4/2017 20:25",
+	"super" : "Object",
+	"category" : "Glamour-Morphic-Brick-Widgets-UI-Popup",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMPopupBrickLayout",
+	"type" : "normal"
+}

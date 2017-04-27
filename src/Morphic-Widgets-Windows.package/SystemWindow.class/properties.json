@@ -1,13 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MorphicModel",
 	"category" : "Morphic-Widgets-Windows-Widgets",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CloseBoxImage",
 		"CollapseBoxImage",
 		"FullscreenMargin",
-		"TopWindow" ],
-	"commentStamp" : "<historical>",
+		"TopWindow"
+	],
 	"instvars" : [
 		"labelString",
 		"stripes",
@@ -26,9 +28,8 @@
 		"expandBox",
 		"embeddable",
 		"menuBuilder",
-		"isResizeable" ],
+		"isResizeable"
+	],
 	"name" : "SystemWindow",
-	"pools" : [
-		 ],
-	"super" : "MorphicModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

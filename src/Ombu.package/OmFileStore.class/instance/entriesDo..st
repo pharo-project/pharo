@@ -4,8 +4,12 @@ entriesDo: aBlockClosure
 
 	self fileReference exists ifTrue: [
 		self readEntriesWith: [:readStream | 
+			| reader |
+			reader := self newEntryReader.
+			reader stream: readStream.
 			[ readStream atEnd ] whileFalse: [
-				(self entryReader nextEntryFrom: readStream) in: aBlockClosure ] ] ].
+				aBlockClosure value: reader nextEntry ] ] ].
 
 	"Finally, the entries still not written"
-	self entryBufferDo: [:entryAndLocalName | aBlockClosure value: entryAndLocalName key ].
+	self entryBufferDo: [:entryAndLocalName | 
+		aBlockClosure value: entryAndLocalName key ].

@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "InstanceModification",
-	"pools" : [
-		 ],
 	"super" : "AbstractModification",
-	"type" : "normal" }
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "InstanceModification",
+	"type" : "normal"
+}

@@ -1,7 +1,6 @@
 initialization
 initializeWorkaroundToRefreshOnMonitorLogAnnouncement
 
-	self flag: #todo. "Fix"
 	monitorLog := EpMonitor current log.
 	refreshDeferrer := OmDeferrer 
 		send: #refreshIfMonitorLogSelected

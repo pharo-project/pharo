@@ -1,17 +1,16 @@
 {
-	"category" : "TxText-Athens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TxDisplayCommand",
+	"category" : "TxText-Athens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"span",
 		"start",
 		"stop",
-		"advance" ],
+		"advance"
+	],
 	"name" : "TxCharacterSpanDisplayCommand",
-	"pools" : [
-		 ],
-	"super" : "TxDisplayCommand",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "NECompletion-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"controller" ],
-	"name" : "NECControllerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "NECompletion-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"controller"
+	],
+	"name" : "NECControllerTest",
+	"type" : "normal"
+}

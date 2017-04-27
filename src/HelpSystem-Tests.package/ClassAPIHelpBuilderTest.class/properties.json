@@ -1,14 +1,11 @@
 {
-	"category" : "HelpSystem-Tests-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:18",
-	"instvars" : [
-		 ],
-	"name" : "ClassAPIHelpBuilderTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "HelpSystem-Tests-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ClassAPIHelpBuilderTest",
+	"type" : "normal"
+}

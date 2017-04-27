@@ -1,14 +1,13 @@
 {
-	"category" : "Reflectivity-Tools-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mcamp 11/19/2015 16:29",
-	"instvars" : [
-		"foo" ],
-	"name" : "WPDummy",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Reflectivity-Tools-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"foo"
+	],
+	"name" : "WPDummy",
+	"type" : "normal"
+}

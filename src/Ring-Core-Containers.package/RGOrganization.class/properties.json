@@ -1,14 +1,11 @@
 {
-	"category" : "Ring-Core-Containers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:06",
-	"instvars" : [
-		 ],
-	"name" : "RGOrganization",
-	"pools" : [
-		 ],
 	"super" : "RGAbstractContainer",
-	"type" : "normal" }
+	"category" : "Ring-Core-Containers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RGOrganization",
+	"type" : "normal"
+}

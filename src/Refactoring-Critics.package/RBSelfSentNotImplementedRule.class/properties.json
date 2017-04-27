@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 2/25/2016 16:04",
-	"instvars" : [
-		 ],
-	"name" : "RBSelfSentNotImplementedRule",
-	"pools" : [
-		 ],
 	"super" : "RBBlockLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBSelfSentNotImplementedRule",
+	"type" : "normal"
+}

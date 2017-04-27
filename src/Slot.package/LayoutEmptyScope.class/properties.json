@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "LayoutAbstractScope",
 	"category" : "Slot-Layout",
 	"classinstvars" : [
-		"instance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"instance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "LayoutEmptyScope",
-	"pools" : [
-		 ],
-	"super" : "LayoutAbstractScope",
-	"type" : "normal" }
+	"type" : "normal"
+}

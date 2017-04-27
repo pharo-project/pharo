@@ -1,5 +1,7 @@
 user interface
 choosePackagesIn: aWindow 
+	"Method called when one presses the 'Choose packages' buttong.
+	This button restrict the set of setting to be considered. By selecting one or more packages, only the setting of these packages are displayed."
 	| result list |
 	list := MorphTreeModel new
 				beCheckList;

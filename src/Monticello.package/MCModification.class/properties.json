@@ -1,15 +1,14 @@
 {
-	"category" : "Monticello-Patching",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "MCPatchOperation",
+	"category" : "Monticello-Patching",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"obsoletion",
-		"modification" ],
+		"modification"
+	],
 	"name" : "MCModification",
-	"pools" : [
-		 ],
-	"super" : "MCPatchOperation",
-	"type" : "normal" }
+	"type" : "normal"
+}

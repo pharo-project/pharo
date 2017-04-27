@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/28/2011 14:15",
-	"instvars" : [
-		"limit" ],
-	"name" : "ZnLineTooLong",
-	"pools" : [
-		 ],
 	"super" : "ZnParseError",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"limit"
+	],
+	"name" : "ZnLineTooLong",
+	"type" : "normal"
+}

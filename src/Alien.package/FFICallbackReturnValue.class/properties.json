@@ -1,14 +1,11 @@
 {
-	"category" : "Alien-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "eem 9/7/2016 18:35",
-	"instvars" : [
-		 ],
-	"name" : "FFICallbackReturnValue",
-	"pools" : [
-		 ],
 	"super" : "Alien",
-	"type" : "bytes" }
+	"category" : "Alien-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFICallbackReturnValue",
+	"type" : "bytes"
+}

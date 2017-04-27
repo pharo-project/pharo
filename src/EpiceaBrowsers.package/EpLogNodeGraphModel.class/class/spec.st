@@ -3,14 +3,14 @@ spec
 	<spec: #default>
 
 	^ SpecLayout composed newColumn: [:column |
+		column add: #logNodesTreeModel.
+
 		column 
 			newRow: [ :row |
 				 row 
-					add: #enableMonitorButtonModel;
-					add: #createLogButtonModel width: self inputTextHeight;
-					add: #selectDirectoryButtonModel width: self inputTextHeight;
-					add: #refreshButtonModel width: self inputTextHeight ]
-			 height: self inputTextHeight - 4.
-
-		column
-			add: #logNodesTreeModel ].
+					add: #hiedraCheckBoxModel;
+					add: #refreshButtonModel" width: self inputTextHeight";
+					add: #selectDirectoryButtonModel" width: self inputTextHeight";
+					add: #openSettingsButtonModel;
+					yourself ]
+			 height: self buttonHeight - 4 ].

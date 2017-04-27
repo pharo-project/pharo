@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Examples-MorphTreeWidget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:55",
-	"instvars" : [
-		"rootClass" ],
-	"name" : "SimplestPaginatedClassListExample",
-	"pools" : [
-		 ],
 	"super" : "PaginatedMorphTreeModel",
-	"type" : "normal" }
+	"category" : "Morphic-Examples-MorphTreeWidget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"rootClass"
+	],
+	"name" : "SimplestPaginatedClassListExample",
+	"type" : "normal"
+}

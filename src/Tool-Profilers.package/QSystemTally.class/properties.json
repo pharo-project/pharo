@@ -1,18 +1,17 @@
 {
-	"category" : "Tool-Profilers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Link",
+	"category" : "Tool-Profilers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"class",
 		"method",
 		"receivers",
 		"tally",
-		"senders" ],
+		"senders"
+	],
 	"name" : "QSystemTally",
-	"pools" : [
-		 ],
-	"super" : "Link",
-	"type" : "normal" }
+	"type" : "normal"
+}

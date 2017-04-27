@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 12/16/2010 22:38",
-	"instvars" : [
-		 ],
-	"name" : "SUnitTutorial",
-	"pools" : [
-		 ],
 	"super" : "SUnitHelp",
-	"type" : "normal" }
+	"category" : "SUnit-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SUnitTutorial",
+	"type" : "normal"
+}

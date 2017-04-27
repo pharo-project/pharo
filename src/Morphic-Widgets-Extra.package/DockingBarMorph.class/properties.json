@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-Extra",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 3/4/2011 22:42",
+	"super" : "AlignmentMorph",
+	"category" : "Morphic-Widgets-Extra",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"originalColor",
 		"gradientRamp",
@@ -12,9 +12,8 @@
 		"avoidVisibleBordersAtEdge",
 		"autoGradient",
 		"selectedItem",
-		"activeSubMenu" ],
+		"activeSubMenu"
+	],
 	"name" : "DockingBarMorph",
-	"pools" : [
-		 ],
-	"super" : "AlignmentMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

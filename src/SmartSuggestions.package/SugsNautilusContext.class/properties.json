@@ -1,14 +1,11 @@
 {
-	"category" : "SmartSuggestions-Menu",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "SugsNautilusContext",
-	"pools" : [
-		 ],
 	"super" : "SugsAbstractContext",
-	"type" : "normal" }
+	"category" : "SmartSuggestions-Menu",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SugsNautilusContext",
+	"type" : "normal"
+}

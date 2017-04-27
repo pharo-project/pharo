@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "OpalCompiler-Core-FrontEnd",
 	"classinstvars" : [
-		"CompileWithErrors" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"CompileWithErrors"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "AbstractCompiler",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Nautilus",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 10/4/2015 19:20",
+	"super" : "Object",
+	"category" : "Nautilus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"element",
-		"indent" ],
+		"indent"
+	],
 	"name" : "SortHierarchicallyIndentNode",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

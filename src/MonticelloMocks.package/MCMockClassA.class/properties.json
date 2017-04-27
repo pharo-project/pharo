@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "cwp 8/10/2003 16:43",
+	"super" : "MCMock",
 	"category" : "MonticelloMocks",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CVar",
-		"InitializationOrder" ],
-	"commentStamp" : "cwp 8/10/2003 16:43",
+		"InitializationOrder"
+	],
 	"instvars" : [
-		"ivar" ],
+		"ivar"
+	],
 	"name" : "MCMockClassA",
-	"pools" : [
-		 ],
-	"super" : "MCMock",
-	"type" : "normal" }
+	"type" : "normal"
+}

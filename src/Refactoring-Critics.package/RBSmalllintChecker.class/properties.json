@@ -1,17 +1,16 @@
 {
-	"category" : "Refactoring-Critics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Refactoring-Critics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"rule",
 		"environment",
 		"context",
-		"methodBlock" ],
+		"methodBlock"
+	],
 	"name" : "RBSmalllintChecker",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

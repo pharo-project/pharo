@@ -1,18 +1,17 @@
 {
-	"category" : "Nautilus-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Nautilus-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"nautilus",
 		"lastValue",
 		"compiledMethod",
 		"expectedMethodCategory",
-		"expectedCompiledMethod" ],
+		"expectedCompiledMethod"
+	],
 	"name" : "PackageTreeNautilusTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

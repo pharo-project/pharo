@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "RonieSalgado 10/12/2014 17:41",
+	"super" : "SDL2MappedEvent",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_AXIS",
 		"OFFSET_PADDING1",
@@ -11,12 +13,9 @@
 		"OFFSET_TIMESTAMP",
 		"OFFSET_TYPE",
 		"OFFSET_VALUE",
-		"OFFSET_WHICH" ],
-	"commentStamp" : "RonieSalgado 10/12/2014 17:41",
-	"instvars" : [
-		 ],
+		"OFFSET_WHICH"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_JoyAxisEvent",
-	"pools" : [
-		 ],
-	"super" : "SDL2MappedEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

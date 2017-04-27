@@ -1,17 +1,16 @@
 {
 	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		 ],
-	"classtraitcomposition" : "TSortable classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "NicolaiHess 5/25/2016 21:36",
+	"classvars" : [ ],
 	"instvars" : [
 		"array",
 		"firstIndex",
-		"lastIndex" ],
+		"lastIndex"
+	],
 	"name" : "OrderedCollection",
-	"pools" : [
-		 ],
+	"commentStamp" : "NicolaiHess 5/25/2016 21:36",
 	"super" : "SequenceableCollection",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classtraitcomposition" : "TSortable classTrait"
+}

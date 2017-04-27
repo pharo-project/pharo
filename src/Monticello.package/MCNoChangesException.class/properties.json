@@ -1,14 +1,11 @@
 {
-	"category" : "Monticello-Versioning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 13:53",
-	"instvars" : [
-		 ],
-	"name" : "MCNoChangesException",
-	"pools" : [
-		 ],
 	"super" : "Exception",
-	"type" : "normal" }
+	"category" : "Monticello-Versioning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCNoChangesException",
+	"type" : "normal"
+}

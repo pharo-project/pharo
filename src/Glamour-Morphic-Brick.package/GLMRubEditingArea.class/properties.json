@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "RubEditingArea",
+	"category" : "Glamour-Morphic-Brick-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMRubEditingArea",
+	"type" : "normal"
+}

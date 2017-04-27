@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 18:29",
-	"instvars" : [
-		 ],
-	"name" : "MouseEvent",
-	"pools" : [
-		 ],
 	"super" : "UserInputEvent",
-	"type" : "normal" }
+	"category" : "Morphic-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MouseEvent",
+	"type" : "normal"
+}

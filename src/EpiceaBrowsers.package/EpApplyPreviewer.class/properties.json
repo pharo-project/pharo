@@ -1,0 +1,17 @@
+{
+	"classtraitcomposition" : "EpTCodeChangeVisitor classTrait",
+	"classvars" : [ ],
+	"instvars" : [
+		"environment",
+		"logBrowserModel",
+		"sourceEntries"
+	],
+	"name" : "EpApplyPreviewer",
+	"commentStamp" : "MartinDias 4/14/2017 15:15",
+	"super" : "Object",
+	"traitcomposition" : "EpTCodeChangeVisitor",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "EpiceaBrowsers-Visitors"
+}

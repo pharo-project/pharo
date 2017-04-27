@@ -1,16 +1,15 @@
 {
-	"category" : "TxText-Athens-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TxViewDecoratorMorph",
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"vertical",
 		"scrollbar",
-		"autohide" ],
+		"autohide"
+	],
 	"name" : "TxScrollbarDecorator",
-	"pools" : [
-		 ],
-	"super" : "TxViewDecoratorMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

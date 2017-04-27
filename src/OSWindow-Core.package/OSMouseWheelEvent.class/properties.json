@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:23",
+	"super" : "OSMouseEvent",
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scrollHorizontal",
-		"scrollVertical" ],
+		"scrollVertical"
+	],
 	"name" : "OSMouseWheelEvent",
-	"pools" : [
-		 ],
-	"super" : "OSMouseEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

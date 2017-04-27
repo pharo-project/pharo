@@ -1,10 +1,10 @@
 {
-	"category" : "CodeImport",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "CodeImport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"readStream",
 		"parsedDeclarations",
@@ -13,9 +13,8 @@
 		"classTraitSelector",
 		"commentStampSelector",
 		"methodsForSelector",
-		"reorganizeSelector" ],
+		"reorganizeSelector"
+	],
 	"name" : "ChunkFileFormatParser",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

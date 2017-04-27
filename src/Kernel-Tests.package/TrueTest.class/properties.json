@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Tests-Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:49",
-	"instvars" : [
-		 ],
-	"name" : "TrueTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TrueTest",
+	"type" : "normal"
+}

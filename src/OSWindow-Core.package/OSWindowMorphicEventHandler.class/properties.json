@@ -1,15 +1,18 @@
 {
-	"category" : "OSWindow-Core-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"SymbolCharacterMapping" ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:46",
+	"super" : "OSWindowEventVisitor",
+	"category" : "OSWindow-Core-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [
+		"OSKeySymbols"
+	],
+	"classvars" : [
+		"SymbolCharacterMapping"
+	],
 	"instvars" : [
 		"morphicWorld",
-		"eventQueue" ],
+		"eventQueue"
+	],
 	"name" : "OSWindowMorphicEventHandler",
-	"pools" : [
-		"OSKeySymbols" ],
-	"super" : "OSWindowEventVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

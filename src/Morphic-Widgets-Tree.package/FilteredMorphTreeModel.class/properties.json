@@ -1,17 +1,16 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 6/19/2015 09:18",
+	"super" : "MorphTreeModel",
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"patternModel",
 		"ghostString",
 		"initialRootItems",
-		"autoAccept" ],
+		"autoAccept"
+	],
 	"name" : "FilteredMorphTreeModel",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

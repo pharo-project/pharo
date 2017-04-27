@@ -1,10 +1,10 @@
 {
-	"category" : "WriteBarrierTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "WriteBarrierTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"var1",
 		"var2",
@@ -15,9 +15,8 @@
 		"var7",
 		"var8",
 		"var9",
-		"var10" ],
+		"var10"
+	],
 	"name" : "WriteBarrierStub",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

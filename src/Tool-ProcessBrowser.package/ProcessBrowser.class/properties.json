@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Model",
 	"category" : "Tool-ProcessBrowser",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"SuspendedProcesses",
-		"WellKnownProcesses" ],
-	"commentStamp" : "<historical>",
+		"WellKnownProcesses"
+	],
 	"instvars" : [
 		"selectedProcess",
 		"selectedContext",
@@ -22,9 +24,8 @@
 		"lastUpdate",
 		"startedCPUWatcher",
 		"keyEventsDict",
-		"textModel" ],
+		"textModel"
+	],
 	"name" : "ProcessBrowser",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Native",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FloatArray",
-	"pools" : [
-		 ],
 	"super" : "ArrayedCollection",
-	"type" : "words" }
+	"category" : "Collections-Native",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FloatArray",
+	"type" : "words"
+}

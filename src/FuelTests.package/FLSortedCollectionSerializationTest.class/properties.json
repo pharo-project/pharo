@@ -1,14 +1,15 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ClassVariableForTesting" ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:30",
-	"instvars" : [
-		"instanceVariableForTesting" ],
-	"name" : "FLSortedCollectionSerializationTest",
-	"pools" : [
-		 ],
 	"super" : "FLSerializationTest",
-	"type" : "normal" }
+	"category" : "FuelTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ClassVariableForTesting"
+	],
+	"instvars" : [
+		"instanceVariableForTesting"
+	],
+	"name" : "FLSortedCollectionSerializationTest",
+	"type" : "normal"
+}

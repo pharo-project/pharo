@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 7/2/2015 23:18",
-	"instvars" : [
-		"response" ],
-	"name" : "ZnRespond",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"response"
+	],
+	"name" : "ZnRespond",
+	"type" : "normal"
+}

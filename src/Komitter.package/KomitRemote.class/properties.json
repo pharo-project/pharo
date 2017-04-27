@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Model",
 	"category" : "Komitter-Models",
 	"classinstvars" : [
-		"icon" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"icon"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"remote" ],
+		"remote"
+	],
 	"name" : "KomitRemote",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

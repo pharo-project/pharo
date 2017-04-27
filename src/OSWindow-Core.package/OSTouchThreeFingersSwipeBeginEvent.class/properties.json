@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 5/11/2015 15:18",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchThreeFingersSwipeBeginEvent",
-	"pools" : [
-		 ],
 	"super" : "OSTouchThreeFingersSwipeEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchThreeFingersSwipeBeginEvent",
+	"type" : "normal"
+}

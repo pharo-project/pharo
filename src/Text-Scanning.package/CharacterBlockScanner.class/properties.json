@@ -1,18 +1,17 @@
 {
-	"category" : "Text-Scanning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 10/6/2013 22:04",
+	"super" : "CharacterScanner",
+	"category" : "Text-Scanning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"characterPoint",
 		"characterIndex",
 		"nextLeftMargin",
 		"specialWidth",
-		"lastCharacterWidth" ],
+		"lastCharacterWidth"
+	],
 	"name" : "CharacterBlockScanner",
-	"pools" : [
-		 ],
-	"super" : "CharacterScanner",
-	"type" : "normal" }
+	"type" : "normal"
+}

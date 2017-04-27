@@ -1,4 +1,5 @@
 {
-	"category" : "Collections-Tests-Abstract",
+	"name" : "TSetArithmetic",
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:35",
-	"name" : "TSetArithmetic" }
+	"category" : "Collections-Tests-Abstract"
+}

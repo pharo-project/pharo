@@ -1,16 +1,17 @@
 {
-	"category" : "Zodiac-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Current" ],
 	"commentStamp" : "SvenVanCaekenberghe 5/6/2015 21:39",
+	"super" : "Object",
+	"category" : "Zodiac-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Current"
+	],
 	"instvars" : [
 		"limit",
 		"resources",
-		"access" ],
+		"access"
+	],
 	"name" : "ZdcByteArrayManager",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

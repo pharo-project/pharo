@@ -1,14 +1,13 @@
 {
-	"category" : "Versionner-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"project" ],
-	"name" : "MTProjectModelChanged",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"project"
+	],
+	"name" : "MTProjectModelChanged",
+	"type" : "normal"
+}

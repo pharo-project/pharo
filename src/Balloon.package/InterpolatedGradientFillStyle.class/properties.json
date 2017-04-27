@@ -1,14 +1,11 @@
 {
-	"category" : "Balloon-Fills",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:49",
-	"instvars" : [
-		 ],
-	"name" : "InterpolatedGradientFillStyle",
-	"pools" : [
-		 ],
 	"super" : "GradientFillStyle",
-	"type" : "normal" }
+	"category" : "Balloon-Fills",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "InterpolatedGradientFillStyle",
+	"type" : "normal"
+}

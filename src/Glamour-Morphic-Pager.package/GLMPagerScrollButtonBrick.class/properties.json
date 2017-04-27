@@ -1,17 +1,16 @@
 {
-	"category" : "Glamour-Morphic-Pager-Brick",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMInteractableBrick",
+	"category" : "Glamour-Morphic-Pager-Brick",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"checkedIcon",
 		"checkedFocusedIcon",
 		"focused",
-		"index" ],
+		"index"
+	],
 	"name" : "GLMPagerScrollButtonBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

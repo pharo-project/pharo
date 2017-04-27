@@ -1,7 +1,11 @@
 {
+	"commentStamp" : "efc 2/26/2003 20:01",
+	"super" : "Object",
 	"category" : "Morphic-Core-Kernel",
 	"classinstvars" : [
-		"announcer" ],
+		"announcer"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"CmdGesturesEnabled",
 		"CycleHalosBothDirections",
@@ -9,17 +13,16 @@
 		"EmptyArray",
 		"EventDispatcher",
 		"HalosEnabled",
-		"ShortcutsHandler" ],
-	"commentStamp" : "efc 2/26/2003 20:01",
+		"ShortcutsHandler"
+	],
 	"instvars" : [
 		"bounds",
 		"owner",
 		"submorphs",
 		"fullBounds",
 		"color",
-		"extension" ],
+		"extension"
+	],
 	"name" : "Morph",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

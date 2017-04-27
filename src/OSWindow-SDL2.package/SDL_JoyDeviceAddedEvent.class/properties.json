@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 4/10/2016 01:48",
-	"instvars" : [
-		 ],
-	"name" : "SDL_JoyDeviceAddedEvent",
-	"pools" : [
-		 ],
 	"super" : "SDL_JoyDeviceEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SDL_JoyDeviceAddedEvent",
+	"type" : "normal"
+}

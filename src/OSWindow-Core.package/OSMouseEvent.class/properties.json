@@ -1,16 +1,15 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:39",
+	"super" : "OSEvent",
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"position",
 		"delta",
-		"modifiers" ],
+		"modifiers"
+	],
 	"name" : "OSMouseEvent",
-	"pools" : [
-		 ],
-	"super" : "OSEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

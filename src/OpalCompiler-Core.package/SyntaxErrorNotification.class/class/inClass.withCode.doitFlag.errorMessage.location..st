@@ -1,8 +1,11 @@
 exceptionInstantiator
 inClass: aClass withCode: codeString doitFlag: doitFlag errorMessage: errorString location: location
-	^ (self new
+	| sourceCode |
+	sourceCode := (self new
 		setClass: aClass
 		code: codeString
 		doitFlag: doitFlag
 		errorMessage: errorString
-		location: location) signal
+		location: location) signal.
+	sourceCode ifNil: [ (OCAbortCompilation sourceCode: sourceCode) signal ].
+	^ sourceCode

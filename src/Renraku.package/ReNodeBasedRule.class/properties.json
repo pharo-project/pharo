@@ -1,14 +1,11 @@
 {
-	"category" : "Renraku-Rules-Rewrite",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/6/2016 19:09",
-	"instvars" : [
-		 ],
-	"name" : "ReNodeBasedRule",
-	"pools" : [
-		 ],
 	"super" : "ReAbstractRule",
-	"type" : "normal" }
+	"category" : "Renraku-Rules-Rewrite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReNodeBasedRule",
+	"type" : "normal"
+}

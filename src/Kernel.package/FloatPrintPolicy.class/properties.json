@@ -1,14 +1,13 @@
 {
-	"category" : "Kernel-Numbers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"default" ],
-	"name" : "FloatPrintPolicy",
-	"pools" : [
-		 ],
 	"super" : "DynamicVariable",
-	"type" : "normal" }
+	"category" : "Kernel-Numbers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"default"
+	],
+	"name" : "FloatPrintPolicy",
+	"type" : "normal"
+}

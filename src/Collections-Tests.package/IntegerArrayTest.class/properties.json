@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Arrayed",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:29",
-	"instvars" : [
-		 ],
-	"name" : "IntegerArrayTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Arrayed",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IntegerArrayTest",
+	"type" : "normal"
+}

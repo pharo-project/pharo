@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "PluginBasedJPEGReadWriter",
-	"pools" : [
-		 ],
 	"super" : "ImageReadWriter",
-	"type" : "normal" }
+	"category" : "Graphics-Files",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PluginBasedJPEGReadWriter",
+	"type" : "normal"
+}

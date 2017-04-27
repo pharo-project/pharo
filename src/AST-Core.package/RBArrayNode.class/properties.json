@@ -1,17 +1,16 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "RBValueNode",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"left",
 		"right",
 		"statements",
-		"periods" ],
+		"periods"
+	],
 	"name" : "RBArrayNode",
-	"pools" : [
-		 ],
-	"super" : "RBValueNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

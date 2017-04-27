@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"previouslyIn" ],
-	"name" : "RubTextSegmentIconDisplayer",
-	"pools" : [
-		 ],
 	"super" : "RubScrolledTextSideRuler",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"previouslyIn"
+	],
+	"name" : "RubTextSegmentIconDisplayer",
+	"type" : "normal"
+}

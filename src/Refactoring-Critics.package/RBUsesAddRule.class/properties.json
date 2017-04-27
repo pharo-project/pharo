@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-ParseTreeRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 22:52",
-	"instvars" : [
-		 ],
-	"name" : "RBUsesAddRule",
-	"pools" : [
-		 ],
 	"super" : "RBParseTreeLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-ParseTreeRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBUsesAddRule",
+	"type" : "normal"
+}

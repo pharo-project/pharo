@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "EphemeronLayout",
-	"pools" : [
-		 ],
 	"super" : "PointerLayout",
-	"type" : "normal" }
+	"category" : "Slot-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EphemeronLayout",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ScrollPane",
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"list",
 		"getListSelector",
@@ -41,9 +41,8 @@
 		"selectionColor",
 		"selectionColorToUse",
 		"enabled",
-		"getEnabledSelector" ],
+		"getEnabledSelector"
+	],
 	"name" : "PluggableListMorph",
-	"pools" : [
-		 ],
-	"super" : "ScrollPane",
-	"type" : "normal" }
+	"type" : "normal"
+}

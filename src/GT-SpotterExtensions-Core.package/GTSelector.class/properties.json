@@ -1,15 +1,14 @@
 {
-	"category" : "GT-SpotterExtensions-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/11/2016 00:14",
+	"super" : "Object",
+	"category" : "GT-SpotterExtensions-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
-		"methods" ],
+		"methods"
+	],
 	"name" : "GTSelector",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

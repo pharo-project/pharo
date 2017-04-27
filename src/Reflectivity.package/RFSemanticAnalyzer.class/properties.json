@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Compiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 5/24/2015 11:29",
-	"instvars" : [
-		 ],
-	"name" : "RFSemanticAnalyzer",
-	"pools" : [
-		 ],
 	"super" : "OCASTSemanticAnalyzer",
-	"type" : "normal" }
+	"category" : "Reflectivity-Compiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RFSemanticAnalyzer",
+	"type" : "normal"
+}

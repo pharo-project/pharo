@@ -1,16 +1,15 @@
 {
-	"category" : "Morphic-Examples-Tabs",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Model",
+	"category" : "Morphic-Examples-Tabs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"manager",
 		"listModel",
-		"window" ],
+		"window"
+	],
 	"name" : "TabExample",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

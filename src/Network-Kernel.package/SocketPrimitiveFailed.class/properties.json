@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:59",
-	"instvars" : [
-		 ],
-	"name" : "SocketPrimitiveFailed",
-	"pools" : [
-		 ],
 	"super" : "NetworkError",
-	"type" : "normal" }
+	"category" : "Network-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SocketPrimitiveFailed",
+	"type" : "normal"
+}

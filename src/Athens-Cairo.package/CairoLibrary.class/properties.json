@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Cairo",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "CairoLibrary",
-	"pools" : [
-		 ],
 	"super" : "FFILibrary",
-	"type" : "normal" }
+	"category" : "Athens-Cairo",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CairoLibrary",
+	"type" : "normal"
+}

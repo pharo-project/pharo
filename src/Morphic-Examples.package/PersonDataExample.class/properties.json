@@ -1,17 +1,16 @@
 {
-	"category" : "Morphic-Examples-MorphTreeWidget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:52",
+	"super" : "Object",
+	"category" : "Morphic-Examples-MorphTreeWidget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"firstName",
 		"secondName",
 		"age",
-		"married" ],
+		"married"
+	],
 	"name" : "PersonDataExample",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

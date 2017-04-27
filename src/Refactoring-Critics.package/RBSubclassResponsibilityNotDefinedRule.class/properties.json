@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 20:24",
-	"instvars" : [
-		 ],
-	"name" : "RBSubclassResponsibilityNotDefinedRule",
-	"pools" : [
-		 ],
 	"super" : "RBBlockLintRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBSubclassResponsibilityNotDefinedRule",
+	"type" : "normal"
+}

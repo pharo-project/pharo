@@ -1,16 +1,15 @@
 {
-	"category" : "OpalCompiler-Core-Bytecode",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "IRBuilder",
+	"category" : "OpalCompiler-Core-Bytecode",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"temps",
 		"remoteTemps",
-		"closureCopiedValues" ],
+		"closureCopiedValues"
+	],
 	"name" : "IRReconstructor",
-	"pools" : [
-		 ],
-	"super" : "IRBuilder",
-	"type" : "normal" }
+	"type" : "normal"
+}

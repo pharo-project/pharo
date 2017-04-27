@@ -1,14 +1,13 @@
 {
-	"category" : "Graphics-Transformations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:28",
-	"instvars" : [
-		 ],
-	"name" : "IdentityTransform",
-	"pools" : [
-		 ],
 	"super" : "DisplayTransform",
-	"type" : "normal" }
+	"category" : "Graphics-Transformations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
+	"instvars" : [ ],
+	"name" : "IdentityTransform",
+	"type" : "normal"
+}

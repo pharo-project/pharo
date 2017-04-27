@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "MartinDias 3/30/2017 20:54",
+	"super" : "ComposableModel",
+	"category" : "EpiceaBrowsers-UI-Dashboard",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"enableMonitorButtonModel",
+		"createLogButtonModel",
+		"monitor",
+		"openSettingsButtonModel",
+		"currentSessionInfoModel"
+	],
+	"name" : "EpDashboardModel",
+	"type" : "normal"
+}

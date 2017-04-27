@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Encoders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 6/10/2016 10:47",
-	"instvars" : [
-		 ],
-	"name" : "OpalEncoderForV3",
-	"pools" : [
-		 ],
 	"super" : "OpalBytecodeEncoder",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Encoders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OpalEncoderForV3",
+	"type" : "normal"
+}

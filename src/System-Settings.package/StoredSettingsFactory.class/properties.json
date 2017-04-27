@@ -1,15 +1,14 @@
 {
-	"category" : "System-Settings-Persistence-Ston-StoredSettings-Builder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/1/2015 14:23",
+	"super" : "Object",
+	"category" : "System-Settings-Persistence-Ston-StoredSettings-Builder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"storedSetting",
-		"storedSettings" ],
+		"storedSettings"
+	],
 	"name" : "StoredSettingsFactory",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

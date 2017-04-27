@@ -1,17 +1,16 @@
 {
-	"category" : "NautilusRefactoring-Utilities",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "NautilusRefactoring-Utilities",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tree",
 		"searchField",
 		"searchPattern",
-		"updateProcess" ],
+		"updateProcess"
+	],
 	"name" : "PackageAndClassChooser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

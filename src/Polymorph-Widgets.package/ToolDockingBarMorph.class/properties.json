@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 10:20",
-	"instvars" : [
-		 ],
-	"name" : "ToolDockingBarMorph",
-	"pools" : [
-		 ],
 	"super" : "DockingBarMorph",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ToolDockingBarMorph",
+	"type" : "normal"
+}

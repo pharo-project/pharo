@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Athens-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"layoutView" ],
-	"name" : "TxLayoutViewMorph",
-	"pools" : [
-		 ],
 	"super" : "TxBasicViewMorph",
-	"type" : "normal" }
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"layoutView"
+	],
+	"name" : "TxLayoutViewMorph",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Monticello-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"workingCopy" ],
-	"name" : "MCChangeNotificationTest",
-	"pools" : [
-		 ],
 	"super" : "MCTestCase",
-	"type" : "normal" }
+	"category" : "Monticello-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"workingCopy"
+	],
+	"name" : "MCChangeNotificationTest",
+	"type" : "normal"
+}

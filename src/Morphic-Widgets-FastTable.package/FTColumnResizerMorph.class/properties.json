@@ -1,18 +1,17 @@
 {
-	"category" : "Morphic-Widgets-FastTable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractResizerMorph",
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"traceMorph",
 		"oldColor",
 		"container",
 		"leftColumn",
-		"rightColumn" ],
+		"rightColumn"
+	],
 	"name" : "FTColumnResizerMorph",
-	"pools" : [
-		 ],
-	"super" : "AbstractResizerMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

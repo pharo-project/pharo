@@ -1,4 +1,4 @@
 brick-popup
 borderWidth
 
-	^ 2
+	^ 1

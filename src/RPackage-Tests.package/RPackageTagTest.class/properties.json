@@ -1,14 +1,11 @@
 {
-	"category" : "RPackage-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:00",
-	"instvars" : [
-		 ],
-	"name" : "RPackageTagTest",
-	"pools" : [
-		 ],
 	"super" : "RPackageTestCase",
-	"type" : "normal" }
+	"category" : "RPackage-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RPackageTagTest",
+	"type" : "normal"
+}

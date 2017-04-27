@@ -1,16 +1,15 @@
 {
-	"category" : "GT-Spotter-Filters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 7/17/2015 13:48",
+	"super" : "Object",
+	"category" : "GT-Spotter-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"context",
 		"filteredItems",
-		"streamed" ],
+		"streamed"
+	],
 	"name" : "GTFilter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

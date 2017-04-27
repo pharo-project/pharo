@@ -1,18 +1,17 @@
 {
+	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
+	"super" : "SharedPool",
 	"category" : "FreeType-Cache",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"FreeTypeCacheGlyph",
 		"FreeTypeCacheGlyphLCD",
 		"FreeTypeCacheGlyphMono",
 		"FreeTypeCacheLinearWidth",
-		"FreeTypeCacheWidth" ],
-	"commentStamp" : "TorstenBergmann 2/4/2014 22:09",
-	"instvars" : [
-		 ],
+		"FreeTypeCacheWidth"
+	],
+	"instvars" : [ ],
 	"name" : "FreeTypeCacheConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

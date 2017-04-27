@@ -1,14 +1,11 @@
 {
-	"category" : "MonticelloRemoteRepositories",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MCSqueaksourceRepository",
-	"pools" : [
-		 ],
 	"super" : "MCHttpRepository",
-	"type" : "normal" }
+	"category" : "MonticelloRemoteRepositories",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCSqueaksourceRepository",
+	"type" : "normal"
+}

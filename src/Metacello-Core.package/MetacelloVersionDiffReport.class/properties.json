@@ -1,19 +1,18 @@
 {
-	"category" : "Metacello-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Metacello-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"additions",
 		"configuration",
 		"modifications",
 		"removals",
 		"from",
-		"to" ],
+		"to"
+	],
 	"name" : "MetacelloVersionDiffReport",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

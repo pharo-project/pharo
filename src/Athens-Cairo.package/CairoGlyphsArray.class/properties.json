@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Cairo-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"allocatedByCairo" ],
-	"name" : "CairoGlyphsArray",
-	"pools" : [
-		 ],
 	"super" : "FFIExternalArray",
-	"type" : "normal" }
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"allocatedByCairo"
+	],
+	"name" : "CairoGlyphsArray",
+	"type" : "normal"
+}

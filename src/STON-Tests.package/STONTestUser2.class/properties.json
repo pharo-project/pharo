@@ -1,14 +1,11 @@
 {
-	"category" : "STON-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/10/2012 20:20",
-	"instvars" : [
-		 ],
-	"name" : "STONTestUser2",
-	"pools" : [
-		 ],
 	"super" : "STONTestUser",
-	"type" : "normal" }
+	"category" : "STON-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "STONTestUser2",
+	"type" : "normal"
+}

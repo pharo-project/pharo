@@ -1,14 +1,11 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:28",
-	"instvars" : [
-		 ],
-	"name" : "FLHashedCollectionSerializationTest",
-	"pools" : [
-		 ],
 	"super" : "FLSerializationTest",
-	"type" : "normal" }
+	"category" : "FuelTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLHashedCollectionSerializationTest",
+	"type" : "normal"
+}

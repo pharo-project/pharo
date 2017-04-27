@@ -1,14 +1,13 @@
 {
-	"category" : "Metacello-MC-Directives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"loadDirectives" ],
-	"name" : "MetacelloVersionLoadDirective",
-	"pools" : [
-		 ],
 	"super" : "MetacelloDirective",
-	"type" : "normal" }
+	"category" : "Metacello-MC-Directives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"loadDirectives"
+	],
+	"name" : "MetacelloVersionLoadDirective",
+	"type" : "normal"
+}

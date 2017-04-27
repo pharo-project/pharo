@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"TestVariable" ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "ClassVariableTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Slot-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"TestVariable"
+	],
+	"instvars" : [ ],
+	"name" : "ClassVariableTest",
+	"type" : "normal"
+}

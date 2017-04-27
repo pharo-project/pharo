@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "JurajKubelka 10/13/2015 22:36",
+	"super" : "Object",
 	"category" : "GT-EventRecorder-Core",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "JurajKubelka 10/13/2015 22:36",
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"collectors",
 		"delivery",
 		"packing",
 		"privacy",
-		"announcer" ],
+		"announcer"
+	],
 	"name" : "GTEventRecorder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

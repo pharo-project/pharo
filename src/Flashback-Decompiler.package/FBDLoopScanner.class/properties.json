@@ -1,17 +1,16 @@
 {
-	"category" : "Flashback-Decompiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 6/19/2015 14:49",
+	"super" : "InstructionClient",
+	"category" : "Flashback-Decompiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"instructionStream",
 		"branchTargets",
 		"loops",
-		"currentPC" ],
+		"currentPC"
+	],
 	"name" : "FBDLoopScanner",
-	"pools" : [
-		 ],
-	"super" : "InstructionClient",
-	"type" : "normal" }
+	"type" : "normal"
+}

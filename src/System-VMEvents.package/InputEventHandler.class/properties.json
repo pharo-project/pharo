@@ -1,14 +1,15 @@
 {
-	"category" : "System-VMEvents",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "michael.rueger 4/22/2009 11:56",
-	"instvars" : [
-		"eventFetcher" ],
-	"name" : "InputEventHandler",
-	"pools" : [
-		"EventSensorConstants" ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-VMEvents",
+	"classinstvars" : [ ],
+	"pools" : [
+		"EventSensorConstants"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"eventFetcher"
+	],
+	"name" : "InputEventHandler",
+	"type" : "normal"
+}

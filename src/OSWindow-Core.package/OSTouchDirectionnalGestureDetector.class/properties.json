@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:13",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchDirectionnalGestureDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchGestureNeedingThresholdDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchDirectionnalGestureDetector",
+	"type" : "normal"
+}

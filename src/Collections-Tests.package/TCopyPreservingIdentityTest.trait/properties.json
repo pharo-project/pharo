@@ -1,4 +1,5 @@
 {
-	"category" : "Collections-Tests-Abstract",
+	"name" : "TCopyPreservingIdentityTest",
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:33",
-	"name" : "TCopyPreservingIdentityTest" }
+	"category" : "Collections-Tests-Abstract"
+}

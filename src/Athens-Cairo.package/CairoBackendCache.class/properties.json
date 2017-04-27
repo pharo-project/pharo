@@ -1,15 +1,18 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Athens-Cairo",
 	"classinstvars" : [
 		"soleInstance",
-		"session" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		"cache" ],
-	"name" : "CairoBackendCache",
+		"session"
+	],
 	"pools" : [
-		"AthensCairoDefs" ],
-	"super" : "Object",
-	"type" : "normal" }
+		"AthensCairoDefs"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"cache"
+	],
+	"name" : "CairoBackendCache",
+	"type" : "normal"
+}

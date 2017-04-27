@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Presentations-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 5/6/2014 17:55",
-	"instvars" : [
-		 ],
-	"name" : "GLMProfileSelection",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Glamour-Presentations-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMProfileSelection",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/13/2015 12:57",
-	"instvars" : [
-		 ],
-	"name" : "GlobalForTesting",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Reflectivity-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GlobalForTesting",
+	"type" : "normal"
+}

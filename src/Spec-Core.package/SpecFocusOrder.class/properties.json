@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 6/30/2016 16:42",
-	"instvars" : [
-		"presenters" ],
-	"name" : "SpecFocusOrder",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"presenters"
+	],
+	"name" : "SpecFocusOrder",
+	"type" : "normal"
+}

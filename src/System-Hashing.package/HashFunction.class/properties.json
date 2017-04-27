@@ -1,14 +1,11 @@
 {
-	"category" : "System-Hashing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:15",
-	"instvars" : [
-		 ],
-	"name" : "HashFunction",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Hashing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HashFunction",
+	"type" : "normal"
+}

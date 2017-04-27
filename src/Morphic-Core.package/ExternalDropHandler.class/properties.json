@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "TorstenBergmann 1/31/2014 10:29",
+	"super" : "Object",
 	"category" : "Morphic-Core-Worlds",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultHandler",
-		"RegisteredHandlers" ],
-	"commentStamp" : "TorstenBergmann 1/31/2014 10:29",
+		"RegisteredHandlers"
+	],
 	"instvars" : [
 		"action",
 		"type",
-		"extension" ],
+		"extension"
+	],
 	"name" : "ExternalDropHandler",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

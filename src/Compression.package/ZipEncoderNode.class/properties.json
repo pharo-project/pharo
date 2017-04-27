@@ -1,10 +1,10 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"value",
 		"frequency",
@@ -13,9 +13,8 @@
 		"code",
 		"parent",
 		"left",
-		"right" ],
+		"right"
+	],
 	"name" : "ZipEncoderNode",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

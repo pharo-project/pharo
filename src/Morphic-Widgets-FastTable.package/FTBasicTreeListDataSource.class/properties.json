@@ -1,18 +1,17 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Tree-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 3/27/2016 14:25",
+	"super" : "FTDataSource",
+	"category" : "Morphic-Widgets-FastTable-Tree-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"childrenBlock",
 		"displayBlock",
 		"sortingBlock",
 		"availableRows",
-		"rootItems" ],
+		"rootItems"
+	],
 	"name" : "FTBasicTreeListDataSource",
-	"pools" : [
-		 ],
-	"super" : "FTDataSource",
-	"type" : "normal" }
+	"type" : "normal"
+}

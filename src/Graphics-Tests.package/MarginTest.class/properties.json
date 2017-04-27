@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Tests-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 7/28/2016 20:07",
-	"instvars" : [
-		 ],
-	"name" : "MarginTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Graphics-Tests-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MarginTest",
+	"type" : "normal"
+}

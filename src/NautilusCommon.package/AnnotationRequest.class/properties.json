@@ -1,16 +1,15 @@
 {
-	"category" : "NautilusCommon-Plugin",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 11/24/2015 14:10",
+	"super" : "Object",
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"separator",
 		"annotationRequests",
-		"method" ],
+		"method"
+	],
 	"name" : "AnnotationRequest",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

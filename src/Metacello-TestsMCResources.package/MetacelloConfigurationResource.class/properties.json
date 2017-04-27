@@ -1,14 +1,15 @@
 {
-	"category" : "Metacello-TestsMCResources",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ProjectAttributes" ],
 	"commentStamp" : "",
-	"instvars" : [
-		"monticelloRepository" ],
-	"name" : "MetacelloConfigurationResource",
-	"pools" : [
-		 ],
 	"super" : "TestResource",
-	"type" : "normal" }
+	"category" : "Metacello-TestsMCResources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ProjectAttributes"
+	],
+	"instvars" : [
+		"monticelloRepository"
+	],
+	"name" : "MetacelloConfigurationResource",
+	"type" : "normal"
+}

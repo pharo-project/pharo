@@ -1,0 +1,1 @@
+I am a MOCK equivalent for GlobalIdentifierPersistenceChecker, userful for testing behavior.

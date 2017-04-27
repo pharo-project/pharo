@@ -1,18 +1,17 @@
 {
-	"category" : "UnifiedFFI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 2/14/2017 01:33",
+	"super" : "Object",
+	"category" : "UnifiedFFI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fields",
 		"size",
 		"alignment",
 		"integerRegisterCount",
-		"floatRegisterCount" ],
+		"floatRegisterCount"
+	],
 	"name" : "FFIExternalStructureFlatLayout",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

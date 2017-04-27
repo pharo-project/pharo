@@ -4,4 +4,4 @@ certificateName: aString
 	OpenSSL: The name is the full path to a .pem file.
 	WinSSL: The name is matched against the 'subject' of a certificate in the cert store"
 
-	^ self primitiveSSL: handle setStringProperty: 1 toValue: (aString ifNil: [ ' ' ])
+	^ self primitiveSSL: handle setStringProperty: 1 toValue: (aString ifNil: [ '' ])

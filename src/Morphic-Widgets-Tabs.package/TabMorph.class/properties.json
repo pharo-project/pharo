@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Widgets-Tabs",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Icons" ],
 	"commentStamp" : "<historical>",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-Tabs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Icons"
+	],
 	"instvars" : [
 		"closeable",
 		"label",
@@ -17,9 +19,8 @@
 		"menu",
 		"retrievingProcess",
 		"retrievingSemaphore",
-		"model" ],
+		"model"
+	],
 	"name" : "TabMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

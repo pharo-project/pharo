@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 3/22/2015 11:38",
+	"super" : "GLMBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"normalImage",
 		"pressedImage",
@@ -19,9 +19,8 @@
 		"isPressed",
 		"isChecked",
 		"isEnabled",
-		"isDoubleClickEnabled" ],
+		"isDoubleClickEnabled"
+	],
 	"name" : "GLMInteractableBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

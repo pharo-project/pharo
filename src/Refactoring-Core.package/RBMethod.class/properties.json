@@ -1,17 +1,16 @@
 {
-	"category" : "Refactoring-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/18/2016 23:52",
+	"super" : "Object",
+	"category" : "Refactoring-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"class",
 		"compiledMethod",
 		"source",
-		"selector" ],
+		"selector"
+	],
 	"name" : "RBMethod",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

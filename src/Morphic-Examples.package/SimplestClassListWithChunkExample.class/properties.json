@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Examples-MorphTreeWidget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 1/30/2010 09:16",
-	"instvars" : [
-		 ],
-	"name" : "SimplestClassListWithChunkExample",
-	"pools" : [
-		 ],
 	"super" : "SimplestPaginatedClassListExample",
-	"type" : "normal" }
+	"category" : "Morphic-Examples-MorphTreeWidget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SimplestClassListWithChunkExample",
+	"type" : "normal"
+}

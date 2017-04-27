@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "AndreiChis 5/27/2014 19:59",
+	"super" : "ImageMorph",
 	"category" : "Glamour-Morphic-Pager-Morphic",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 5/27/2014 19:59",
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"thumbnail",
-		"position" ],
+		"position"
+	],
 	"name" : "GLMPagerPanePreviewMorph",
-	"pools" : [
-		 ],
-	"super" : "ImageMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

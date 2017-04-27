@@ -1,15 +1,14 @@
 {
-	"category" : "Text-Edition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 11/29/2010 10:47",
+	"super" : "IdentifierChooserMorph",
+	"category" : "Text-Edition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"prefix",
-		"requestorPos" ],
+		"requestorPos"
+	],
 	"name" : "SelectorChooserMorph",
-	"pools" : [
-		 ],
-	"super" : "IdentifierChooserMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

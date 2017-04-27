@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-TransformationRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 17:38",
-	"instvars" : [
-		 ],
-	"name" : "RBBetweenAndRule",
-	"pools" : [
-		 ],
 	"super" : "RBTransformationRule",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-TransformationRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBBetweenAndRule",
+	"type" : "normal"
+}

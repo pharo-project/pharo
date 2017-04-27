@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Tests-Disk",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:48",
-	"instvars" : [
-		 ],
-	"name" : "WindowsStoreTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "FileSystem-Tests-Disk",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WindowsStoreTest",
+	"type" : "normal"
+}

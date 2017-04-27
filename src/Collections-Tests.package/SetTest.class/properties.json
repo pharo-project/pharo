@@ -1,11 +1,6 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAddForUniquenessTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TRemoveTest classTrait + TGrowableTest classTrait + TStructuralEqualityTest classTrait + TPrintTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TConcatenationEqualElementsRemovedTest classTrait + TOccurrencesTest classTrait + TCreationWithTest classTrait + TSetArithmetic classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
 		"full",
 		"empty",
@@ -17,10 +12,14 @@
 		"nonEmpty1element",
 		"withoutEqualElements",
 		"collection5Elements",
-		"collectionWith3Elements" ],
+		"collectionWith3Elements"
+	],
 	"name" : "SetTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "CollectionRootTest",
 	"traitcomposition" : "TAddForUniquenessTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TRemoveTest + TGrowableTest + TStructuralEqualityTest + TPrintTest + TAsStringCommaAndDelimiterTest + TConvertTest + TConvertAsSortedTest + TConcatenationEqualElementsRemovedTest + TOccurrencesTest + (TCreationWithTest - {#testOfSize. #collectionClass}) + (TSetArithmetic - {#collectionClass})",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Collections-Tests-Unordered"
+}

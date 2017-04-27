@@ -1,14 +1,11 @@
 {
-	"category" : "QualityAssistant",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 10/20/2015 11:57",
-	"instvars" : [
-		 ],
-	"name" : "QASettings",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "QualityAssistant",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "QASettings",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "UIManager-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Notification",
+	"category" : "UIManager-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"amount",
 		"done",
-		"extra" ],
+		"extra"
+	],
 	"name" : "ProgressNotification",
-	"pools" : [
-		 ],
-	"super" : "Notification",
-	"type" : "normal" }
+	"type" : "normal"
+}

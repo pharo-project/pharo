@@ -1,14 +1,11 @@
 {
-	"category" : "Tests-System",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "SystemDictionaryTest",
-	"pools" : [
-		 ],
 	"super" : "DictionaryTest",
-	"type" : "normal" }
+	"category" : "Tests-System",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SystemDictionaryTest",
+	"type" : "normal"
+}

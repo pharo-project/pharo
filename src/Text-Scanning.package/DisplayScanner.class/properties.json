@@ -1,10 +1,10 @@
 {
-	"category" : "Text-Scanning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 10/11/2013 23:45",
+	"super" : "CharacterScanner",
+	"category" : "Text-Scanning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"lineY",
 		"foregroundColor",
@@ -14,9 +14,8 @@
 		"morphicOffset",
 		"ignoreColorChanges",
 		"lastDisplayableIndex",
-		"stopConditionsMustBeReset" ],
+		"stopConditionsMustBeReset"
+	],
 	"name" : "DisplayScanner",
-	"pools" : [
-		 ],
-	"super" : "CharacterScanner",
-	"type" : "normal" }
+	"type" : "normal"
+}

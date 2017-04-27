@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 10:23",
-	"instvars" : [
-		"configurationBlock" ],
-	"name" : "RubConfigurationChange",
-	"pools" : [
-		 ],
 	"super" : "RubAnnouncement",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"configurationBlock"
+	],
+	"name" : "RubConfigurationChange",
+	"type" : "normal"
+}

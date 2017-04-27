@@ -1,14 +1,11 @@
 {
-	"category" : "Tests-Files",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "dtl 12/22/2009 23:10",
-	"instvars" : [
-		 ],
-	"name" : "SourceFileArrayTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Tests-Files",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SourceFileArrayTest",
+	"type" : "normal"
+}

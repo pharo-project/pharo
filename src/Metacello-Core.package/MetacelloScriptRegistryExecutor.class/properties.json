@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloScriptRegistryExecutor",
-	"pools" : [
-		 ],
 	"super" : "MetacelloScriptExecutor",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloScriptRegistryExecutor",
+	"type" : "normal"
+}

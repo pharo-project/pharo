@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "",
+	"super" : "MCFileTreeRepository",
 	"category" : "Metacello-GitBasedRepository",
 	"classinstvars" : [
 		"repoCacheDirectory",
 		"repoDownloadCache",
 		"siteUsername",
-		"sitePassword" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+		"sitePassword"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"projectPath",
 		"projectVersion",
 		"repoPath",
-		"projectVersionPattern" ],
+		"projectVersionPattern"
+	],
 	"name" : "MCGitBasedNetworkRepository",
-	"pools" : [
-		 ],
-	"super" : "MCFileTreeRepository",
-	"type" : "normal" }
+	"type" : "normal"
+}

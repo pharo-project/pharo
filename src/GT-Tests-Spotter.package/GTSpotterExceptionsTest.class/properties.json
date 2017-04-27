@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "",
+	"super" : "TestCase",
 	"category" : "GT-Tests-Spotter-Exceptions",
 	"classinstvars" : [
 		"exceptions",
-		"fatals" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+		"fatals"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"spotter" ],
+		"spotter"
+	],
 	"name" : "GTSpotterExceptionsTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

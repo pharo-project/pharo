@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/6/2016 13:00",
-	"instvars" : [
-		 ],
-	"name" : "RBRealizeClassRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBClassRefactoring",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBRealizeClassRefactoring",
+	"type" : "normal"
+}

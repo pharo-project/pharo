@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 8/3/2014 13:37",
-	"instvars" : [
-		 ],
-	"name" : "DAReverseDependentPackageNode",
-	"pools" : [
-		 ],
 	"super" : "DAAbstractPackageNode",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DAReverseDependentPackageNode",
+	"type" : "normal"
+}

@@ -1,19 +1,18 @@
 {
-	"category" : "GT-Playground",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 10/22/2014 07:52",
+	"super" : "Object",
+	"category" : "GT-Playground",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"title",
 		"content",
 		"creationTime",
 		"modificationTime",
 		"publishedUrl",
-		"persistenceStrategies" ],
+		"persistenceStrategies"
+	],
 	"name" : "GTPlayPage",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

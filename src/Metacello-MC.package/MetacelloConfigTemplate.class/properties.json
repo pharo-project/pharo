@@ -1,14 +1,15 @@
 {
-	"category" : "Metacello-MC-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"LastVersionLoad" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"project" ],
-	"name" : "MetacelloConfigTemplate",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Metacello-MC-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"LastVersionLoad"
+	],
+	"instvars" : [
+		"project"
+	],
+	"name" : "MetacelloConfigTemplate",
+	"type" : "normal"
+}

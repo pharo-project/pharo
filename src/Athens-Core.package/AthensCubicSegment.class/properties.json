@@ -1,16 +1,15 @@
 {
-	"category" : "Athens-Core-Paths",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 3/7/2012 13:32",
+	"super" : "AthensPathSegment",
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"via1",
 		"via2",
-		"to" ],
+		"to"
+	],
 	"name" : "AthensCubicSegment",
-	"pools" : [
-		 ],
-	"super" : "AthensPathSegment",
-	"type" : "normal" }
+	"type" : "normal"
+}

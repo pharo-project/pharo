@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "System-BasicCommandLineHandler",
 	"classinstvars" : [
-		"singleton" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"singleton"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"arguments" ],
+		"arguments"
+	],
 	"name" : "CommandLineArguments",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

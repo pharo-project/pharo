@@ -5,7 +5,7 @@ calculateStartIndexWhenShowing: visibleRows
 
 	| currentIndex startIndex |
 	currentIndex := self owner showIndex.
-	currentIndex + visibleRows > self owner numberOfRows ifTrue: [ 
+	currentIndex + visibleRows - 1 > self owner numberOfRows ifTrue: [ 
 		currentIndex := self owner numberOfRows - visibleRows + 2].
 	startIndex := currentIndex max: 1.
 	self owner basicMoveShowIndexTo: startIndex.

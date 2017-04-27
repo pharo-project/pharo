@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Widgets-ColorPicker",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 8/8/2007 14:36",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-ColorPicker",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selectedColor",
-		"locationMorph" ],
+		"locationMorph"
+	],
 	"name" : "SVColorSelectorMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

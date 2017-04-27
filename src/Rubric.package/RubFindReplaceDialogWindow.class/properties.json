@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:31",
+	"super" : "DialogWindow",
 	"category" : "Rubric-Editing-FindReplaceService",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Finds",
-		"Replacements" ],
-	"commentStamp" : "FranckWarlouzet 7/29/2015 13:31",
+		"Replacements"
+	],
 	"instvars" : [
-		"findTextField" ],
+		"findTextField"
+	],
 	"name" : "RubFindReplaceDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "InflateStream",
 	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DistanceMap",
 		"FixedDistTable",
 		"FixedLitTable",
-		"LiteralLengthMap" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"LiteralLengthMap"
+	],
+	"instvars" : [ ],
 	"name" : "FastInflateStream",
-	"pools" : [
-		 ],
-	"super" : "InflateStream",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Alien-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"nonPointerObject" ],
-	"name" : "UnsafeAlien",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Alien-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nonPointerObject"
+	],
+	"name" : "UnsafeAlien",
+	"type" : "normal"
+}

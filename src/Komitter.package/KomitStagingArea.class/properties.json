@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Komitter-Models",
 	"classinstvars" : [
-		"current" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"current"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"packages",
-		"filterBlock" ],
+		"filterBlock"
+	],
 	"name" : "KomitStagingArea",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

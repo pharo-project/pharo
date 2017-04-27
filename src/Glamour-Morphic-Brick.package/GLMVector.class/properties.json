@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Glamour-Morphic-Brick-Utils-Geometry",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"East",
+		"North",
+		"South",
+		"West"
+	],
+	"instvars" : [
+		"direction",
+		"length",
+		"next",
+		"previous"
+	],
+	"name" : "GLMVector",
+	"type" : "normal"
+}

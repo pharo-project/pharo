@@ -1,16 +1,15 @@
 {
-	"category" : "Spec-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/28/2016 14:27",
+	"super" : "ComposableModel",
+	"category" : "Spec-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"boolean",
 		"button",
-		"bottom" ],
+		"bottom"
+	],
 	"name" : "DynamicWidgetChange",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

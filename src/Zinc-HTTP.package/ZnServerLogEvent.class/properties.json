@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-HTTP-Logging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 6/12/2014 15:27",
+	"super" : "ZnLogEvent",
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"serverId",
-		"processId" ],
+		"processId"
+	],
 	"name" : "ZnServerLogEvent",
-	"pools" : [
-		 ],
-	"super" : "ZnLogEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

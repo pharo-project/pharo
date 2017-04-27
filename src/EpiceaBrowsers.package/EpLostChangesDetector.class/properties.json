@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "DenisKudryashov 5/27/2016 17:17",
+	"super" : "Object",
 	"category" : "EpiceaBrowsers-Integration",
 	"classinstvars" : [
-		"enabled" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "DenisKudryashov 5/27/2016 17:17",
+		"enabled"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"monitorLog" ],
+		"monitorLog"
+	],
 	"name" : "EpLostChangesDetector",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

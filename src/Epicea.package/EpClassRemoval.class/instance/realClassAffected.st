@@ -1,4 +1,0 @@
-accessing
-realClassAffected
-
-	^ classRemoved realClass

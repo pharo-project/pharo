@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Rubric-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/30/2015 14:16",
-	"instvars" : [
-		 ],
-	"name" : "GLMPharoScriptPresentation",
-	"pools" : [
-		 ],
 	"super" : "GLMRubricSmalltalkCodePresentation",
-	"type" : "normal" }
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMPharoScriptPresentation",
+	"type" : "normal"
+}

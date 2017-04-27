@@ -1,16 +1,15 @@
 {
-	"category" : "System-Settings-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "alain.plantec 4/20/2009 21:42",
+	"super" : "MorphTreeNodeModel",
+	"category" : "System-Settings-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"parentName",
 		"pragma",
-		"contents" ],
+		"contents"
+	],
 	"name" : "SettingNode",
-	"pools" : [
-		 ],
-	"super" : "MorphTreeNodeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

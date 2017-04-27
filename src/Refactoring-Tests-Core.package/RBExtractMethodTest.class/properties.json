@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "RBExtractMethodTest",
-	"pools" : [
-		 ],
 	"super" : "RBRefactoringTest",
-	"type" : "normal" }
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBExtractMethodTest",
+	"type" : "normal"
+}

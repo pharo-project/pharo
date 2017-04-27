@@ -1,11 +1,6 @@
 {
-	"category" : "Morphic-Base-Basic",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAbleToRotate classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "MarcusDenker 2/14/2010 22:24",
+	"classvars" : [ ],
 	"instvars" : [
 		"textStyle",
 		"text",
@@ -17,10 +12,14 @@
 		"successor",
 		"backgroundColor",
 		"margins",
-		"defaultColor" ],
+		"defaultColor"
+	],
 	"name" : "TextMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "MarcusDenker 2/14/2010 22:24",
 	"super" : "BorderedMorph",
 	"traitcomposition" : "TAbleToRotate",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Base-Basic"
+}

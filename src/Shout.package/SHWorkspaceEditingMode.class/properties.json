@@ -1,14 +1,13 @@
 {
-	"category" : "Shout-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 9/20/2011 17:13",
-	"instvars" : [
-		"code" ],
-	"name" : "SHWorkspaceEditingMode",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Shout-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"code"
+	],
+	"name" : "SHWorkspaceEditingMode",
+	"type" : "normal"
+}

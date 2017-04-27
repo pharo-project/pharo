@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"lazyIncrement" ],
-	"name" : "LazyMorphTreeMorph",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"lazyIncrement"
+	],
+	"name" : "LazyMorphTreeMorph",
+	"type" : "normal"
+}

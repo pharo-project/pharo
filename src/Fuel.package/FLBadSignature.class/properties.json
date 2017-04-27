@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Errors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarianoMartinezPeck 10/23/2011 14:32",
-	"instvars" : [
-		 ],
-	"name" : "FLBadSignature",
-	"pools" : [
-		 ],
 	"super" : "FLMaterializationError",
-	"type" : "normal" }
+	"category" : "Fuel-Errors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLBadSignature",
+	"type" : "normal"
+}

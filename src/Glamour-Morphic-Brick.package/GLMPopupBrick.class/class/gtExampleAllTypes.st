@@ -6,9 +6,8 @@ gtExampleAllTypes
 	^ GLMBrick new
 		hShrinkWrap;
 		vShrinkWrap;
-		addBrickBack: (self createButton: [ :b | self new openFor: b ]);
-		addBrickBack: (self createButton: [ :b | self new beHelp; openFor: b ]);
-		addBrickBack: (self createButton: [ :b | self new beError; openFor: b ]);
-		addBrickBack: (self createButton: [ :b | self new beSuccess; openFor: b ]);
-		marginTop: 35;
+		addBrickBack: (self createButton: [ :b | self new beUpward; openOn: b ]);
+		addBrickBack: (self createButton: [ :b | self new beUpward; beHelp; openOn: b ]);
+		addBrickBack: (self createButton: [ :b | self new beUpward; beError; openOn: b ]);
+		addBrickBack: (self createButton: [ :b | self new beUpward; beSuccess; openOn: b ]);
 		yourself

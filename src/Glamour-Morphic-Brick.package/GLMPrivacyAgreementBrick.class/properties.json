@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"messageBrick",
-		"settingsButtonBrick" ],
+		"settingsButtonBrick"
+	],
 	"name" : "GLMPrivacyAgreementBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

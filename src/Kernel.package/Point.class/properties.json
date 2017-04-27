@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-BasicObjects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/8/2015 21:20",
+	"super" : "Object",
+	"category" : "Kernel-BasicObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"x",
-		"y" ],
+		"y"
+	],
 	"name" : "Point",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Epicea-Monitor",
 	"classinstvars" : [
-		"current" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"current"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"systemAnnouncer",
 		"log",
 		"testAnnouncer",
 		"entryReferenceByEvent",
 		"jobAnnouncer",
-		"announcer" ],
+		"announcer"
+	],
 	"name" : "EpMonitor",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

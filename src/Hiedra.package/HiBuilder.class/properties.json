@@ -1,14 +1,11 @@
 {
-	"category" : "Hiedra-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 3/17/2016 23:56",
-	"instvars" : [
-		 ],
-	"name" : "HiBuilder",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Hiedra-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HiBuilder",
+	"type" : "normal"
+}

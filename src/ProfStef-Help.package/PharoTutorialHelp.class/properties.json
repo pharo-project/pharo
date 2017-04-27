@@ -1,14 +1,11 @@
 {
-	"category" : "ProfStef-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CamilloBruni 2/22/2014 18:59",
-	"instvars" : [
-		 ],
-	"name" : "PharoTutorialHelp",
-	"pools" : [
-		 ],
 	"super" : "CustomHelp",
-	"type" : "normal" }
+	"category" : "ProfStef-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoTutorialHelp",
+	"type" : "normal"
+}

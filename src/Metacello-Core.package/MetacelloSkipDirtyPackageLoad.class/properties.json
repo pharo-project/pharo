@@ -1,14 +1,13 @@
 {
-	"category" : "Metacello-Core-Exceptions-Notifications",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"packageSpec" ],
-	"name" : "MetacelloSkipDirtyPackageLoad",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Exceptions-Notifications",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"packageSpec"
+	],
+	"name" : "MetacelloSkipDirtyPackageLoad",
+	"type" : "normal"
+}

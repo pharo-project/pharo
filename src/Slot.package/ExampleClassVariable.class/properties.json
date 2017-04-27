@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 3/4/2015 18:00",
-	"instvars" : [
-		"state" ],
-	"name" : "ExampleClassVariable",
-	"pools" : [
-		 ],
 	"super" : "LiteralVariable",
-	"type" : "normal" }
+	"category" : "Slot-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"state"
+	],
+	"name" : "ExampleClassVariable",
+	"type" : "normal"
+}

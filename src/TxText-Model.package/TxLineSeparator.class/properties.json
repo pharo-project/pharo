@@ -1,14 +1,11 @@
 {
-	"category" : "TxText-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SeanDeNigris 4/25/2015 14:20",
-	"instvars" : [
-		 ],
-	"name" : "TxLineSeparator",
-	"pools" : [
-		 ],
 	"super" : "TxSpanWithStyle",
-	"type" : "normal" }
+	"category" : "TxText-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxLineSeparator",
+	"type" : "normal"
+}

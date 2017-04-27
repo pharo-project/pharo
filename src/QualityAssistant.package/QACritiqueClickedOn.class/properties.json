@@ -1,14 +1,11 @@
 {
-	"category" : "QualityAssistant-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 2/10/2016 11:50",
-	"instvars" : [
-		 ],
-	"name" : "QACritiqueClickedOn",
-	"pools" : [
-		 ],
 	"super" : "ReSingleCritiqueEvent",
-	"type" : "normal" }
+	"category" : "QualityAssistant-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "QACritiqueClickedOn",
+	"type" : "normal"
+}

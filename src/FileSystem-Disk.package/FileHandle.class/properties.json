@@ -1,14 +1,15 @@
 {
-	"category" : "FileSystem-Disk",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Registry" ],
 	"commentStamp" : "cwp 11/18/2009 13:02",
-	"instvars" : [
-		"id" ],
-	"name" : "FileHandle",
-	"pools" : [
-		 ],
 	"super" : "FileSystemHandle",
-	"type" : "normal" }
+	"category" : "FileSystem-Disk",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Registry"
+	],
+	"instvars" : [
+		"id"
+	],
+	"name" : "FileHandle",
+	"type" : "normal"
+}

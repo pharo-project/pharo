@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:20",
+	"super" : "Object",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"lines",
 		"maxRightX",
@@ -30,9 +30,8 @@
 		"prevText",
 		"prevContainer",
 		"emphasisHere",
-		"cursorWidth" ],
+		"cursorWidth"
+	],
 	"name" : "RubTextComposer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

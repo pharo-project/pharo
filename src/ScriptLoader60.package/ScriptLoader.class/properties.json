@@ -1,21 +1,24 @@
 {
+	"commentStamp" : "StephaneDucasse 5/30/2014 09:00",
+	"super" : "Loader",
 	"category" : "ScriptLoader60",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
 	"classvars" : [
 		"CheckImageInSyncWithUpdate",
 		"CurrentMajorVersionNumber",
 		"CurrentScriptVersionNumber",
 		"CurrentUpdateVersionNumber",
 		"CurrentlyIntegratingChanges",
-		"Repository" ],
-	"commentStamp" : "StephaneDucasse 5/30/2014 09:00",
+		"Repository"
+	],
 	"instvars" : [
 		"repository",
 		"inboxRepository",
-		"repositoryTaskForces" ],
+		"repositoryTaskForces"
+	],
 	"name" : "ScriptLoader",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Loader",
-	"type" : "normal" }
+	"type" : "normal"
+}

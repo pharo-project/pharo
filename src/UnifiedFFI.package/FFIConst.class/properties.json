@@ -1,15 +1,14 @@
 {
-	"category" : "UnifiedFFI-Types",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "FFIExternalType",
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"value",
-		"externalType" ],
+		"externalType"
+	],
 	"name" : "FFIConst",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalType",
-	"type" : "normal" }
+	"type" : "normal"
+}

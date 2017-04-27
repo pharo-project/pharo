@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DamienCassou 7/19/2011 16:53",
+	"super" : "GLMLoggedObject",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"context",
 		"destination",
@@ -12,9 +12,8 @@
 		"origins",
 		"transmissionStrategy",
 		"transformation",
-		"condition" ],
+		"condition"
+	],
 	"name" : "GLMTransmission",
-	"pools" : [
-		 ],
-	"super" : "GLMLoggedObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

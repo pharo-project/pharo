@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Inspector-Element",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "IndexedEyeElement",
-	"pools" : [
-		 ],
 	"super" : "BasicIndexedEyeElement",
-	"type" : "normal" }
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IndexedEyeElement",
+	"type" : "normal"
+}

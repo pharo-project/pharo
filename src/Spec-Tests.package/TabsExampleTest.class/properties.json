@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Tests-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TabsExampleTest",
-	"pools" : [
-		 ],
 	"super" : "SpecTestCase",
-	"type" : "normal" }
+	"category" : "Spec-Tests-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TabsExampleTest",
+	"type" : "normal"
+}

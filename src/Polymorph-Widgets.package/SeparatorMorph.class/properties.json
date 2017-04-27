@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 6/4/2007 14:13",
-	"instvars" : [
-		 ],
-	"name" : "SeparatorMorph",
-	"pools" : [
-		 ],
 	"super" : "PanelMorph",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SeparatorMorph",
+	"type" : "normal"
+}

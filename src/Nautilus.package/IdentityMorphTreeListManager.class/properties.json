@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-MorphTreeWidget-Extension",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "IdentityMorphTreeListManager",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeListManager",
-	"type" : "normal" }
+	"category" : "Nautilus-MorphTreeWidget-Extension",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IdentityMorphTreeListManager",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Phlow",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"textBrick" ],
-	"name" : "GLMPhlowTextBrick",
-	"pools" : [
-		 ],
 	"super" : "GLMPhlowBrick",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Widgets-Phlow",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"textBrick"
+	],
+	"name" : "GLMPhlowTextBrick",
+	"type" : "normal"
+}

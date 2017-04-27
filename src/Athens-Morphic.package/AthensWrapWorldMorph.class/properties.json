@@ -1,15 +1,14 @@
 {
-	"category" : "Athens-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 1/4/2015 18:35",
+	"super" : "AthensWrapMorph",
+	"category" : "Athens-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"worldmorph",
-		"wrappedWorldDisplay" ],
+		"wrappedWorldDisplay"
+	],
 	"name" : "AthensWrapWorldMorph",
-	"pools" : [
-		 ],
-	"super" : "AthensWrapMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Tests-Bugs",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "wiz 1/3/2007 13:57",
-	"instvars" : [
-		"cases" ],
-	"name" : "MorphicUIBugTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Morphic-Tests-Bugs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"cases"
+	],
+	"name" : "MorphicUIBugTest",
+	"type" : "normal"
+}

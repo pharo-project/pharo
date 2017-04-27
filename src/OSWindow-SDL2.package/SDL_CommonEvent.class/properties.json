@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:43",
+	"super" : "SDL2MappedEvent",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_TIMESTAMP",
-		"OFFSET_TYPE" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:43",
-	"instvars" : [
-		 ],
+		"OFFSET_TYPE"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_CommonEvent",
-	"pools" : [
-		 ],
-	"super" : "SDL2MappedEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

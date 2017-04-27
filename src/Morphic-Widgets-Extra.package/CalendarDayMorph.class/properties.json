@@ -1,17 +1,16 @@
 {
-	"category" : "Morphic-Widgets-Extra",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Morphic-Widgets-Extra",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"date",
 		"bounds",
 		"owner",
-		"highlighted" ],
+		"highlighted"
+	],
 	"name" : "CalendarDayMorph",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

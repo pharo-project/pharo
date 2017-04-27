@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Tests-Source",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 5/9/2015 12:06",
-	"instvars" : [
-		 ],
-	"name" : "OCCompileWithFailureTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-Source",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCCompileWithFailureTest",
+	"type" : "normal"
+}

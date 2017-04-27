@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikSperreJohansen 10/18/2009 15:57",
-	"instvars" : [
-		"value" ],
-	"name" : "ValueLink",
-	"pools" : [
-		 ],
 	"super" : "Link",
-	"type" : "normal" }
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"value"
+	],
+	"name" : "ValueLink",
+	"type" : "normal"
+}

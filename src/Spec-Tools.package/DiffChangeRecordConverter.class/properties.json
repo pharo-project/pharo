@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Tools-VersionBrowser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "DiffChangeRecordConverter",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodReferenceConverter",
-	"type" : "normal" }
+	"category" : "Spec-Tools-VersionBrowser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DiffChangeRecordConverter",
+	"type" : "normal"
+}

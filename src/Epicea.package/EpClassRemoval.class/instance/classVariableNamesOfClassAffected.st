@@ -1,4 +1,0 @@
-accessing
-classVariableNamesOfClassAffected
-
-	^ classRemoved classVarNames

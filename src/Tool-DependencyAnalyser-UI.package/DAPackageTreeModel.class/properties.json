@@ -1,18 +1,17 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 7/11/2014 14:47",
+	"super" : "ComposableModel",
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tree",
 		"packageTreeNautilus",
 		"buttonRefresh",
 		"packageTreeNautilusUI",
-		"open" ],
+		"open"
+	],
 	"name" : "DAPackageTreeModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

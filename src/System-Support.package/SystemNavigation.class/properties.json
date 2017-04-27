@@ -1,14 +1,13 @@
 {
-	"category" : "System-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LucFabresse 10/10/2010 19:54",
-	"instvars" : [
-		"environment" ],
-	"name" : "SystemNavigation",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"environment"
+	],
+	"name" : "SystemNavigation",
+	"type" : "normal"
+}

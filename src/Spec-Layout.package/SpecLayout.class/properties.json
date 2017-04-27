@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"type",
 		"commands",
@@ -16,9 +16,8 @@
 		"numberOfProportionals",
 		"lastFractionIndex",
 		"autoFractionComputation",
-		"size" ],
+		"size"
+	],
 	"name" : "SpecLayout",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

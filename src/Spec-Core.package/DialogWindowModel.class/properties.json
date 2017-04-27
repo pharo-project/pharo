@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "WindowModel",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"contents",
-		"toolbar" ],
+		"toolbar"
+	],
 	"name" : "DialogWindowModel",
-	"pools" : [
-		 ],
-	"super" : "WindowModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

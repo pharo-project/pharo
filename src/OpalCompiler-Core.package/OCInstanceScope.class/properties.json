@@ -1,16 +1,15 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/11/2014 10:18",
+	"super" : "OCAbstractScope",
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"vars",
 		"selfVar",
-		"superVar" ],
+		"superVar"
+	],
 	"name" : "OCInstanceScope",
-	"pools" : [
-		 ],
-	"super" : "OCAbstractScope",
-	"type" : "normal" }
+	"type" : "normal"
+}

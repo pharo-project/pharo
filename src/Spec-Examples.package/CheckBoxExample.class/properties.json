@@ -1,10 +1,10 @@
 {
-	"category" : "Spec-Examples-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/26/2016 15:50",
+	"super" : "ComposableModel",
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"button1",
 		"button2",
@@ -12,9 +12,8 @@
 		"container",
 		"morph1",
 		"morph2",
-		"morph3" ],
+		"morph3"
+	],
 	"name" : "CheckBoxExample",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

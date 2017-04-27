@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "dkh 7/12/2012 14:48",
+	"super" : "Object",
 	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultRepositoryDescription",
-		"DefaultVersionString" ],
-	"commentStamp" : "dkh 7/12/2012 14:48",
+		"DefaultVersionString"
+	],
 	"instvars" : [
 		"root",
 		"projectSpec",
-		"options" ],
+		"options"
+	],
 	"name" : "MetacelloScriptEngine",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Theme",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 4/4/2015 17:02",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterWidgetDarkThemer",
-	"pools" : [
-		 ],
 	"super" : "GTSpotterWidgetThemer",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Theme",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterWidgetDarkThemer",
+	"type" : "normal"
+}

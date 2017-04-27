@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Base-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"CopyPlusIcon" ],
 	"commentStamp" : "nk 6/16/2003 16:52",
+	"super" : "Morph",
+	"category" : "Morphic-Base-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"CopyPlusIcon"
+	],
 	"instvars" : [
 		"transferType",
 		"passenger",
@@ -13,9 +15,8 @@
 		"dropNotifyRecipient",
 		"accepted",
 		"copy",
-		"dragHand" ],
+		"dragHand"
+	],
 	"name" : "TransferMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,7 +1,9 @@
 generic
 rowWithAll: someMophs
-	^ PanelMorph new
+
+	^ Morph new
 		changeTableLayout;
+		color: Color transparent;
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap;
 		listDirection: #leftToRight;

@@ -1,15 +1,14 @@
 {
-	"category" : "System-Settings-Persistence-Ston-StoredSettings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/1/2015 14:39",
+	"super" : "AbstractStoredSetting",
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"origin",
-		"pathSegments" ],
+		"pathSegments"
+	],
 	"name" : "FileLocatorStoredSetting",
-	"pools" : [
-		 ],
-	"super" : "AbstractStoredSetting",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "JurajKubelka 8/23/2014 12:55",
+	"super" : "FontProviderAbstract",
 	"category" : "FreeType-FontManager",
 	"classinstvars" : [
-		"current" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "JurajKubelka 8/23/2014 12:55",
+		"current"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fileInfos",
 		"fileInfoCache",
 		"tempFileInfos",
 		"families",
 		"tempFamilies",
-		"fontInstallers" ],
+		"fontInstallers"
+	],
 	"name" : "FreeTypeFontProvider",
-	"pools" : [
-		 ],
-	"super" : "FontProviderAbstract",
-	"type" : "normal" }
+	"type" : "normal"
+}

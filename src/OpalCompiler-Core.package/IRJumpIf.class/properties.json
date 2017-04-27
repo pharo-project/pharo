@@ -1,15 +1,14 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ajh 3/24/2003 23:56",
+	"super" : "IRJump",
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"boolean",
-		"otherwise" ],
+		"otherwise"
+	],
 	"name" : "IRJumpIf",
-	"pools" : [
-		 ],
-	"super" : "IRJump",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Flashback-Decompiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "KevinLanvin 7/21/2015 13:35",
-	"instvars" : [
-		 ],
-	"name" : "CannotDecompileNativeBoostCalls",
-	"pools" : [
-		 ],
 	"super" : "Exception",
-	"type" : "normal" }
+	"category" : "Flashback-Decompiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CannotDecompileNativeBoostCalls",
+	"type" : "normal"
+}

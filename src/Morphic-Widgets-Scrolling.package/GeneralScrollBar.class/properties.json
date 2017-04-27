@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Scrolling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:01",
-	"instvars" : [
-		"showState" ],
-	"name" : "GeneralScrollBar",
-	"pools" : [
-		 ],
 	"super" : "ScrollBar",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"showState"
+	],
+	"name" : "GeneralScrollBar",
+	"type" : "normal"
+}

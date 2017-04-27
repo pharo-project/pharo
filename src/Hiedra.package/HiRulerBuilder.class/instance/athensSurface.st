@@ -1,9 +1,6 @@
 building
 athensSurface
 	| athensSurface ruler |
-	self flag: #todo. "Merge HiRuler and HiRulerBuidler?"
-	
-	
 	ruler := HiRuler new
 		values: values;
 		linkBuilders: linkBuilders;
@@ -12,7 +9,7 @@ athensSurface
 
 	"FIX: it's (ruler numberOfColumns + 1) because of the left margin"
 	athensSurface := AthensCairoSurface extent: 
-		(ruler numberOfColumns + 1 * self columnSize) @ (self numberOfRows * self rowSize).
+		((ruler numberOfColumns + 1) * self columnSize) @ (self numberOfRows * self rowSize).
 		
 	athensSurface drawDuring: [ :athensCanvas | 
 

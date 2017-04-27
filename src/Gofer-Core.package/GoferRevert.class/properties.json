@@ -1,14 +1,11 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:36",
-	"instvars" : [
-		 ],
-	"name" : "GoferRevert",
-	"pools" : [
-		 ],
 	"super" : "GoferUpdate",
-	"type" : "normal" }
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GoferRevert",
+	"type" : "normal"
+}

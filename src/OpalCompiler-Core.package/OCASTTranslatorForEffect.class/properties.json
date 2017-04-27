@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Translator",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ajh 3/24/2003 22:20",
-	"instvars" : [
-		 ],
-	"name" : "OCASTTranslatorForEffect",
-	"pools" : [
-		 ],
 	"super" : "OCASTTranslator",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Translator",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCASTTranslatorForEffect",
+	"type" : "normal"
+}

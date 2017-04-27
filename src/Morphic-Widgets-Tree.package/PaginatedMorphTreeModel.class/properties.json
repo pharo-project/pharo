@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Tree-Pagination",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:20",
-	"instvars" : [
-		"pageSize" ],
-	"name" : "PaginatedMorphTreeModel",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tree-Pagination",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"pageSize"
+	],
+	"name" : "PaginatedMorphTreeModel",
+	"type" : "normal"
+}

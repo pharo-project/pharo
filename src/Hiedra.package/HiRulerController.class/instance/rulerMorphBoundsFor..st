@@ -6,4 +6,4 @@ rulerMorphBoundsFor: aNode
 	
 	nodeIndex := self indexOfNode: aNode.
 
-	^ 0 @ (nodeIndex - 1 * rulerBuilder rowSize) corner: rulerForm width @ ((nodeIndex * rulerBuilder rowSize))
+	^ 0 @ ((nodeIndex - 1) * rulerBuilder rowSize) corner: rulerForm width @ (nodeIndex * rulerBuilder rowSize)

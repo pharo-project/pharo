@@ -1,14 +1,13 @@
 {
-	"category" : "Tests-System",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"FooValue1" ],
 	"commentStamp" : "NicoPaez 10/17/2010 14:44",
-	"instvars" : [
-		 ],
-	"name" : "FooSharedPool",
-	"pools" : [
-		 ],
 	"super" : "SharedPool",
-	"type" : "normal" }
+	"category" : "Tests-System",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"FooValue1"
+	],
+	"instvars" : [ ],
+	"name" : "FooSharedPool",
+	"type" : "normal"
+}

@@ -1,16 +1,17 @@
 {
-	"category" : "RecentSubmissions-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UniqueInstance" ],
 	"commentStamp" : "BenjaminVanRyseghem 11/29/2010 11:31",
+	"super" : "Model",
+	"category" : "RecentSubmissions-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UniqueInstance"
+	],
 	"instvars" : [
 		"methodReferenceList",
 		"lastEntry",
-		"maxListSize" ],
+		"maxListSize"
+	],
 	"name" : "RecentMessageList",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

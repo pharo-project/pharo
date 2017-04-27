@@ -1,16 +1,15 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"bitLengths",
 		"codes",
-		"maxCode" ],
+		"maxCode"
+	],
 	"name" : "ZipEncoderTree",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

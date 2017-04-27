@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:18",
-	"instvars" : [
-		 ],
-	"name" : "AthensBalloonSurfaceExamples",
-	"pools" : [
-		 ],
 	"super" : "AthensSurfaceExamples",
-	"type" : "normal" }
+	"category" : "Athens-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensBalloonSurfaceExamples",
+	"type" : "normal"
+}

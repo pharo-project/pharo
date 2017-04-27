@@ -1,15 +1,14 @@
 {
-	"category" : "Network-MIME",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Network-MIME",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"mainValue",
-		"parameters" ],
+		"parameters"
+	],
 	"name" : "MIMEHeaderValue",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

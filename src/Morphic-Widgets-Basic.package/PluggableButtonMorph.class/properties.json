@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Widgets-Basic-Buttons",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UseGradientLook" ],
 	"commentStamp" : "<historical>",
+	"super" : "AlignmentMorph",
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UseGradientLook"
+	],
 	"instvars" : [
 		"model",
 		"label",
@@ -36,9 +38,8 @@
 		"labelMorph",
 		"iconMorph",
 		"iconPosition",
-		"lastState" ],
+		"lastState"
+	],
 	"name" : "PluggableButtonMorph",
-	"pools" : [
-		 ],
-	"super" : "AlignmentMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

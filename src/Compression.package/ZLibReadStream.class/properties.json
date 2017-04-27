@@ -1,14 +1,11 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:03",
-	"instvars" : [
-		 ],
-	"name" : "ZLibReadStream",
-	"pools" : [
-		 ],
 	"super" : "FastInflateStream",
-	"type" : "normal" }
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZLibReadStream",
+	"type" : "normal"
+}

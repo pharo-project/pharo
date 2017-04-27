@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-MorphicAdapters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MorphicTreeNodeAdapter",
-	"pools" : [
-		 ],
 	"super" : "AbstractMorphicAdapter",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphicTreeNodeAdapter",
+	"type" : "normal"
+}

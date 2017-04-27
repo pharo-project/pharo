@@ -1,14 +1,11 @@
 {
-	"category" : "OpalTools",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 10/16/2014 11:28",
-	"instvars" : [
-		 ],
-	"name" : "GTBytecodeBrowser",
-	"pools" : [
-		 ],
 	"super" : "GLMCompositePresentation",
-	"type" : "normal" }
+	"category" : "OpalTools",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTBytecodeBrowser",
+	"type" : "normal"
+}

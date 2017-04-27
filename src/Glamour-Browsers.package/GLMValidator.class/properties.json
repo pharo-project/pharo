@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Browsers-Other",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMImplicitBrowser",
+	"category" : "Glamour-Browsers-Other",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"buttonActions",
-		"specificAnnouncementActions" ],
+		"specificAnnouncementActions"
+	],
 	"name" : "GLMValidator",
-	"pools" : [
-		 ],
-	"super" : "GLMImplicitBrowser",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Versionner-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "MBAbstractInfoList",
+	"category" : "Versionner-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"configurationRoot",
 		"branch",
@@ -13,9 +13,8 @@
 		"baselines",
 		"versions",
 		"workingCopy",
-		"trimVersionLists" ],
+		"trimVersionLists"
+	],
 	"name" : "MBConfigurationInfo",
-	"pools" : [
-		 ],
-	"super" : "MBAbstractInfoList",
-	"type" : "normal" }
+	"type" : "normal"
+}

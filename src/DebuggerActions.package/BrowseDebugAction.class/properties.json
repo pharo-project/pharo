@@ -1,14 +1,11 @@
 {
-	"category" : "DebuggerActions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "BrowseDebugAction",
-	"pools" : [
-		 ],
 	"super" : "MessageSendDebugAction",
-	"type" : "normal" }
+	"category" : "DebuggerActions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BrowseDebugAction",
+	"type" : "normal"
+}

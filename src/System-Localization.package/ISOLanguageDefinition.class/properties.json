@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "StephaneDucasse 9/13/2014 21:04",
+	"super" : "Object",
 	"category" : "System-Localization-Utilities",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ISO2Countries",
 		"ISO2Table",
 		"ISO3Countries",
-		"ISO3Table" ],
-	"commentStamp" : "StephaneDucasse 9/13/2014 21:04",
+		"ISO3Table"
+	],
 	"instvars" : [
 		"iso3",
 		"iso2",
 		"iso3Alternate",
-		"language" ],
+		"language"
+	],
 	"name" : "ISOLanguageDefinition",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

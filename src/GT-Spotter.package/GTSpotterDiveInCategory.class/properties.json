@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Spotter-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"eventType" ],
-	"name" : "GTSpotterDiveInCategory",
-	"pools" : [
-		 ],
 	"super" : "GTSpotterAnnouncement",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"eventType"
+	],
+	"name" : "GTSpotterDiveInCategory",
+	"type" : "normal"
+}

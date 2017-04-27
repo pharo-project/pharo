@@ -1,16 +1,15 @@
 {
-	"category" : "FuzzyMatcher",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 10/18/2016 16:20",
+	"super" : "Object",
+	"category" : "FuzzyMatcher",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"pattern",
 		"lowercasePattern",
-		"indexes" ],
+		"indexes"
+	],
 	"name" : "FuzzyMatcher",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

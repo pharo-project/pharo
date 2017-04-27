@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "JurajKubelka 4/10/2017 11:42",
+	"super" : "FTFilter",
+	"category" : "Glamour-FastTable-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"filterBlock"
+	],
+	"name" : "GLMFilterBlock",
+	"type" : "normal"
+}

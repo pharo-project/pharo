@@ -1,15 +1,14 @@
 {
-	"category" : "TxText-Styler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 10/21/2014 16:20",
+	"super" : "Object",
+	"category" : "TxText-Styler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"styles",
-		"text" ],
+		"text"
+	],
 	"name" : "TxTextStyler",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

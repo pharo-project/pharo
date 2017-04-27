@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Examples-Wrapper",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/27/2016 10:55",
+	"super" : "Object",
+	"category" : "Spec-Examples-Wrapper",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ui",
-		"object" ],
+		"object"
+	],
 	"name" : "DynamicSpecExample",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 5/6/2011 10:54",
+	"super" : "RGElementDefinition",
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"content",
-		"stamp" ],
+		"stamp"
+	],
 	"name" : "RGCommentDefinition",
-	"pools" : [
-		 ],
-	"super" : "RGElementDefinition",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Widgets-Scrolling",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Announcement",
+	"category" : "Morphic-Widgets-Scrolling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"step",
-		"scrollPane" ],
+		"scrollPane"
+	],
 	"name" : "PaneScrolling",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

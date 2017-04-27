@@ -1,15 +1,14 @@
 {
-	"category" : "Monticello-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StefanReichhart 12/4/2015 22:01",
+	"super" : "Announcement",
+	"category" : "Monticello-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"versionLoader",
-		"label" ],
+		"label"
+	],
 	"name" : "MCVersionLoaderStopped",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

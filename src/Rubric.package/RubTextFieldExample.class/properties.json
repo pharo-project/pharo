@@ -1,15 +1,14 @@
 {
-	"category" : "Rubric-Editing-Widgets-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Rubric-Editing-Widgets-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"string",
-		"announcer" ],
+		"announcer"
+	],
 	"name" : "RubTextFieldExample",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

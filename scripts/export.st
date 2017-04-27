@@ -1,3 +1,5 @@
+| zodiacRepo pharoRepo mosseAlgosRepo versions | 
+
 zodiacRepo := MCHttpRepository
 	location: 'http://mc.stfx.eu/Zodiac'
 	user: ''
@@ -7,10 +9,19 @@ pharoRepo := MCHttpRepository
 	location: 'http://smalltalkhub.com/mc/Pharo/Pharo60/main'
 	user: ''
 	password: ''.
+	
+mooseAlgosRepo :=  MCHttpRepository
+	location: 'http://smalltalkhub.com/mc/Moose/MooseAlgos/main/'
+	user: ''
+	password: ''.
 
 MCWorkingCopy allManagers
 	select: [ :m | m packageName beginsWith: 'Zodiac' ]
 	thenDo: [ :m | m repositoryGroup addRepository: zodiacRepo ].
+
+MCWorkingCopy allManagers
+	select: [ :m | m packageName beginsWith: 'Moose' ]
+	thenDo: [ :m | m repositoryGroup addRepository: mooseAlgosRepo ].
 
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
 

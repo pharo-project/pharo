@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Code",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 12:56",
-	"instvars" : [
-		"classOrMetaclass" ],
-	"name" : "RubSmalltalkCodeMode",
-	"pools" : [
-		 ],
 	"super" : "RubAbstractSmalltalkMode",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Code",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"classOrMetaclass"
+	],
+	"name" : "RubSmalltalkCodeMode",
+	"type" : "normal"
+}

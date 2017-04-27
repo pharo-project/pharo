@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AnonymousClassInstaller",
-	"pools" : [
-		 ],
 	"super" : "AbstractClassInstaller",
-	"type" : "normal" }
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AnonymousClassInstaller",
+	"type" : "normal"
+}

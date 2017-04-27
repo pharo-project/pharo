@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Browsers-Dashboard",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"panesLayouts" ],
-	"name" : "GLMDashboard",
-	"pools" : [
-		 ],
 	"super" : "GLMExplicitBrowser",
-	"type" : "normal" }
+	"category" : "Glamour-Browsers-Dashboard",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"panesLayouts"
+	],
+	"name" : "GLMDashboard",
+	"type" : "normal"
+}

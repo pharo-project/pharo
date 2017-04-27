@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 12/19/2009 00:12",
+	"super" : "GLMLoggedObject",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"port",
 		"oldValue",
-		"transmissionContext" ],
+		"transmissionContext"
+	],
 	"name" : "GLMPortEvent",
-	"pools" : [
-		 ],
-	"super" : "GLMLoggedObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

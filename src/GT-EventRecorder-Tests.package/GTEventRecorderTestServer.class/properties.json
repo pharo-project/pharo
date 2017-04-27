@@ -1,15 +1,14 @@
 {
-	"category" : "GT-EventRecorder-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 11/15/2015 17:50",
+	"super" : "Object",
+	"category" : "GT-EventRecorder-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"server",
-		"url" ],
+		"url"
+	],
 	"name" : "GTEventRecorderTestServer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

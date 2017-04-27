@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Strings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "yo 10/19/2004 22:34",
-	"instvars" : [
-		 ],
-	"name" : "WideString",
-	"pools" : [
-		 ],
 	"super" : "String",
-	"type" : "words" }
+	"category" : "Collections-Strings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WideString",
+	"type" : "words"
+}

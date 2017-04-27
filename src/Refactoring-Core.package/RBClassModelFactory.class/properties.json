@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "StephaneDucasse 9/8/2016 09:58",
+	"super" : "Object",
 	"category" : "Refactoring-Core-Model",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"RBclass",
 		"RBmetaclass",
 		"RBmethod",
-		"RBnamespace" ],
-	"commentStamp" : "StephaneDucasse 9/8/2016 09:58",
-	"instvars" : [
-		 ],
+		"RBnamespace"
+	],
+	"instvars" : [ ],
 	"name" : "RBClassModelFactory",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

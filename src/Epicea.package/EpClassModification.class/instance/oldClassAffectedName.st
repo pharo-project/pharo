@@ -1,4 +1,0 @@
-accessing
-oldClassAffectedName
-
-	^ oldClass name

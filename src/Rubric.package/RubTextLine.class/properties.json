@@ -1,10 +1,12 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:23",
+	"super" : "Object",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"left",
 		"right",
@@ -17,9 +19,8 @@
 		"baseline",
 		"actualWidth",
 		"lineNumber",
-		"stopCondition" ],
+		"stopCondition"
+	],
 	"name" : "RubTextLine",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

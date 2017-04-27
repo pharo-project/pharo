@@ -1,16 +1,15 @@
 {
-	"category" : "Network-Mail",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Network-Mail",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tokens",
 		"addresses",
-		"curAddrTokens" ],
+		"curAddrTokens"
+	],
 	"name" : "MailAddressParser",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

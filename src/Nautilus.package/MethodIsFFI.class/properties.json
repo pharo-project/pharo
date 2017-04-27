@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 11/29/2016 19:35",
-	"instvars" : [
-		 ],
-	"name" : "MethodIsFFI",
-	"pools" : [
-		 ],
 	"super" : "AbstractMethodIconAction",
-	"type" : "normal" }
+	"category" : "Nautilus-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodIsFFI",
+	"type" : "normal"
+}

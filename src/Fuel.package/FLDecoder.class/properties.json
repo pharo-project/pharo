@@ -1,10 +1,10 @@
 {
-	"category" : "Fuel-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/6/2012 16:08",
+	"super" : "Object",
+	"category" : "Fuel-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"objects",
@@ -12,9 +12,8 @@
 		"indexStream",
 		"migrations",
 		"objectsWriteStream",
-		"globalEnvironment" ],
+		"globalEnvironment"
+	],
 	"name" : "FLDecoder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

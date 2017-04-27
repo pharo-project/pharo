@@ -1,19 +1,18 @@
 {
+	"commentStamp" : "MarcusDenker 4/3/2017 10:31",
+	"super" : "AbstractCompiler",
 	"category" : "OpalCompiler-Core-FrontEnd",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ast",
 		"source",
 		"context",
 		"receiver",
 		"compilationContext",
-		"compilationContextClass" ],
+		"compilationContextClass"
+	],
 	"name" : "OpalCompiler",
-	"pools" : [
-		 ],
-	"super" : "AbstractCompiler",
-	"type" : "normal" }
+	"type" : "normal"
+}

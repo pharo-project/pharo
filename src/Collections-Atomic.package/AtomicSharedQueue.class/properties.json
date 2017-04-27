@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Atomic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/28/2011 15:33",
-	"instvars" : [
-		"availSema" ],
-	"name" : "AtomicSharedQueue",
-	"pools" : [
-		 ],
 	"super" : "WaitfreeQueue",
-	"type" : "normal" }
+	"category" : "Collections-Atomic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"availSema"
+	],
+	"name" : "AtomicSharedQueue",
+	"type" : "normal"
+}

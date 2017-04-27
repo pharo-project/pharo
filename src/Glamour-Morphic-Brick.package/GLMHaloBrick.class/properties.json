@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMHaloBrick",
-	"pools" : [
-		 ],
 	"super" : "HaloMorph",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMHaloBrick",
+	"type" : "normal"
+}

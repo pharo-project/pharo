@@ -1,14 +1,11 @@
 {
-	"category" : "NautilusCommon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "monty 8/25/2016 06:07",
-	"instvars" : [
-		 ],
-	"name" : "NautilusUtils",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "NautilusCommon",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NautilusUtils",
+	"type" : "normal"
+}

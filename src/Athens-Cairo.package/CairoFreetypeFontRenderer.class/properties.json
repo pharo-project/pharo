@@ -1,11 +1,6 @@
 {
-	"category" : "Athens-Cairo-Text",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TCairoLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "SeanDeNigris 4/4/2014 13:33",
+	"classvars" : [ ],
 	"instvars" : [
 		"font",
 		"surface",
@@ -15,10 +10,16 @@
 		"originalFont",
 		"cache",
 		"fontExtents",
-		"glyphExtents" ],
+		"glyphExtents"
+	],
 	"name" : "CairoFreetypeFontRenderer",
-	"pools" : [
-		"AthensCairoDefs" ],
+	"commentStamp" : "SeanDeNigris 4/4/2014 13:33",
 	"super" : "Object",
 	"traitcomposition" : "TCairoLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [
+		"AthensCairoDefs"
+	],
+	"category" : "Athens-Cairo-Text"
+}

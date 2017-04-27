@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GLMBasicExamples",
-	"pools" : [
-		 ],
 	"super" : "GLMExamples",
-	"type" : "normal" }
+	"category" : "Glamour-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMBasicExamples",
+	"type" : "normal"
+}

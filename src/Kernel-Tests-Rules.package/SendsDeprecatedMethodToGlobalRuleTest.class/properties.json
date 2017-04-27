@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Tests-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"testClass",
-		"globalName" ],
+		"globalName"
+	],
 	"name" : "SendsDeprecatedMethodToGlobalRuleTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

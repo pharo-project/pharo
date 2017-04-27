@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/10/2016 23:41",
-	"instvars" : [
-		 ],
-	"name" : "GTRunToSelectionDebugAction",
-	"pools" : [
-		 ],
 	"super" : "RunToSelectionDebugAction",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTRunToSelectionDebugAction",
+	"type" : "normal"
+}

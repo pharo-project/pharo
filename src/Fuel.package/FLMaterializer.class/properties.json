@@ -1,18 +1,17 @@
 {
-	"category" : "Fuel-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/29/2011 19:06",
+	"super" : "Object",
+	"category" : "Fuel-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"materializationFactory",
 		"signature",
 		"version",
 		"migrations",
-		"globalEnvironment" ],
+		"globalEnvironment"
+	],
 	"name" : "FLMaterializer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

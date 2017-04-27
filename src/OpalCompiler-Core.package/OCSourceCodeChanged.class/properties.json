@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Core-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenComan 3/6/2014 02:40",
-	"instvars" : [
-		"newSourceCode" ],
-	"name" : "OCSourceCodeChanged",
-	"pools" : [
-		 ],
 	"super" : "Notification",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newSourceCode"
+	],
+	"name" : "OCSourceCodeChanged",
+	"type" : "normal"
+}

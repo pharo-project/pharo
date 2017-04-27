@@ -1,10 +1,10 @@
 {
-	"category" : "Zinc-Resource-Meta-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/5/2015 00:00",
+	"super" : "Object",
+	"category" : "Zinc-Resource-Meta-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scheme",
 		"host",
@@ -13,9 +13,8 @@
 		"query",
 		"fragment",
 		"username",
-		"password" ],
+		"password"
+	],
 	"name" : "ZnUrl",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "DebuggerActions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "DebuggerActions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"label",
 		"order",
@@ -15,9 +15,8 @@
 		"needsValidation",
 		"needsUpdate",
 		"needsSeparatorAfter",
-		"actionSelector" ],
+		"actionSelector"
+	],
 	"name" : "DebugAction",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

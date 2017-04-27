@@ -1,14 +1,13 @@
 {
-	"category" : "FileSystem-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:38",
-	"instvars" : [
-		"locator" ],
-	"name" : "FileLocatorTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"locator"
+	],
+	"name" : "FileLocatorTest",
+	"type" : "normal"
+}

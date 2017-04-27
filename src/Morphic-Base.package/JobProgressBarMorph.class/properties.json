@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Morph",
 	"category" : "Morphic-Base-ProgressBar",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BarHeight",
-		"BarWidth" ],
-	"commentStamp" : "<historical>",
+		"BarWidth"
+	],
 	"instvars" : [
 		"button",
-		"progressBar" ],
+		"progressBar"
+	],
 	"name" : "JobProgressBarMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

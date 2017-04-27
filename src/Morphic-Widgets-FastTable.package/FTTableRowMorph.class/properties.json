@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-FastTable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"selectionColor" ],
-	"name" : "FTTableRowMorph",
-	"pools" : [
-		 ],
 	"super" : "Morph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"selectionColor"
+	],
+	"name" : "FTTableRowMorph",
+	"type" : "normal"
+}

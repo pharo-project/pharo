@@ -1,16 +1,15 @@
 {
-	"category" : "IssueTracking-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "IssueTracking-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"issue",
 		"issueNumber",
-		"madeUpTitleString" ],
+		"madeUpTitleString"
+	],
 	"name" : "PharoIssueTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

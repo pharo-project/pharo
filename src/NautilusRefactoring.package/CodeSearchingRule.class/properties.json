@@ -1,14 +1,11 @@
 {
-	"category" : "NautilusRefactoring",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 11/30/2014 22:27",
-	"instvars" : [
-		 ],
-	"name" : "CodeSearchingRule",
-	"pools" : [
-		 ],
 	"super" : "RBParseTreeLintRule",
-	"type" : "normal" }
+	"category" : "NautilusRefactoring",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CodeSearchingRule",
+	"type" : "normal"
+}

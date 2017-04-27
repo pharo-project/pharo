@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 14:04",
-	"instvars" : [
-		 ],
-	"name" : "MBAnnouncement",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MBAnnouncement",
+	"type" : "normal"
+}

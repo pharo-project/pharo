@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Spotter-Exceptions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTSpotterDebuggingExceptionHandler",
-	"pools" : [
-		 ],
 	"super" : "GTSpotterExceptionHandler",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpotterDebuggingExceptionHandler",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "EpiceaTests-Integration",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"aClass" ],
-	"name" : "EpCodeChangeIntegrationTest",
-	"pools" : [
-		 ],
 	"super" : "EpEnabledIntegrationTest",
-	"type" : "normal" }
+	"category" : "EpiceaTests-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"aClass"
+	],
+	"name" : "EpCodeChangeIntegrationTest",
+	"type" : "normal"
+}

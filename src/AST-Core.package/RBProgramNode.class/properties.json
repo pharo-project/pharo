@@ -1,15 +1,16 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"FormatterClass" ],
 	"commentStamp" : "NicolaiHess 8/2/2016 14:48",
+	"super" : "Object",
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"FormatterClass"
+	],
 	"instvars" : [
 		"parent",
-		"properties" ],
+		"properties"
+	],
 	"name" : "RBProgramNode",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

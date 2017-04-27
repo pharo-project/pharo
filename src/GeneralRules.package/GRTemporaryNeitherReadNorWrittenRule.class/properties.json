@@ -1,14 +1,11 @@
 {
-	"category" : "GeneralRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 9/5/2016 13:52",
-	"instvars" : [
-		 ],
-	"name" : "GRTemporaryNeitherReadNorWrittenRule",
-	"pools" : [
-		 ],
 	"super" : "ReNodeBasedRule",
-	"type" : "normal" }
+	"category" : "GeneralRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GRTemporaryNeitherReadNorWrittenRule",
+	"type" : "normal"
+}

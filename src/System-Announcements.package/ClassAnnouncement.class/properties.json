@@ -1,14 +1,11 @@
 {
-	"category" : "System-Announcements-System-Classes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenjaminVanRyseghem 1/23/2014 11:53",
-	"instvars" : [
-		 ],
-	"name" : "ClassAnnouncement",
-	"pools" : [
-		 ],
 	"super" : "SystemAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ClassAnnouncement",
+	"type" : "normal"
+}

@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "StephaneDucasse 11/29/2011 22:23",
+	"super" : "Object",
 	"category" : "MonticelloConfigurations",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultLog",
-		"UpgradeIsMerge" ],
-	"commentStamp" : "StephaneDucasse 11/29/2011 22:23",
+		"UpgradeIsMerge"
+	],
 	"instvars" : [
 		"name",
 		"dependencies",
 		"repositories",
-		"log" ],
+		"log"
+	],
 	"name" : "MCConfiguration",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

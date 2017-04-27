@@ -1,10 +1,10 @@
 {
-	"category" : "OpalCompiler-Core-IR-Manipulation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "OpalCompiler-Core-IR-Manipulation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ir",
 		"currentScope",
@@ -12,9 +12,8 @@
 		"jumpAheadStacks",
 		"currentSequence",
 		"sourceMapNodes",
-		"sourceMapByteIndex" ],
+		"sourceMapByteIndex"
+	],
 	"name" : "IRBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

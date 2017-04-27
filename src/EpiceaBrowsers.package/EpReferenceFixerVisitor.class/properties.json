@@ -1,16 +1,15 @@
 {
-	"category" : "EpiceaBrowsers-Exporter",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "EpTEventVisitor classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "MartinDias 5/27/2014 14:29",
+	"classvars" : [ ],
 	"instvars" : [
-		"referencesMap" ],
+		"referencesMap"
+	],
 	"name" : "EpReferenceFixerVisitor",
-	"pools" : [
-		 ],
+	"commentStamp" : "MartinDias 5/27/2014 14:29",
 	"super" : "Object",
 	"traitcomposition" : "EpTEventVisitor",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "EpiceaBrowsers-Exporter"
+}

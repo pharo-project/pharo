@@ -1,14 +1,11 @@
 {
-	"category" : "Multilingual-Languages",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Latin1Environment",
-	"pools" : [
-		 ],
 	"super" : "LanguageEnvironment",
-	"type" : "normal" }
+	"category" : "Multilingual-Languages",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Latin1Environment",
+	"type" : "normal"
+}

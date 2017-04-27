@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-CriticBrowser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"criticModel",
 		"rulesModel",
@@ -14,9 +14,8 @@
 		"removeTestCase",
 		"cache",
 		"resetButton",
-		"logButton" ],
+		"logButton"
+	],
 	"name" : "CriticBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

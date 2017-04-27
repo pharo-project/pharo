@@ -1,26 +1,17 @@
 tests
 testEmptyPattern
 
-	| fuzzy score |
+	| matcher |
 	
-	
-	fuzzy := self newFuzzer.
+	matcher := self newMatcher.
 	
 	self
-	assert: fuzzy pattern isEmpty; 
-	assert: (fuzzy matches: '');
-	assert: (fuzzy matches: 'abc');
-	assert: (fuzzy matches: '   ').
 	
-	score := nil.
-	fuzzy match: '' ifScored: [ :s | score := s ].	
-	self assert: score == 0.
-	
-	score := nil.
-	fuzzy match: 'abc' ifScored: [ :s | score := s ].	
-	self assert: score == 0.
-	
-	score := nil.
-	fuzzy match: '   ' ifScored: [ :s | score := s ].
-	self assert: score == 0.
+		assert: matcher pattern isEmpty; 
+		
+		assert: matcher scoreFor: '' 		equals: 0;
+		assert: matcher scoreFor: 'abc' 	equals: 0;
+		assert: matcher scoreFor: '   ' 	equals: 0.
+			
+			
 	

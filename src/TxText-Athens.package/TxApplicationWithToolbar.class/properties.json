@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Athens-Spec",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 4/18/2014 15:21",
-	"instvars" : [
-		"text" ],
-	"name" : "TxApplicationWithToolbar",
-	"pools" : [
-		 ],
 	"super" : "ComposableModel",
-	"type" : "normal" }
+	"category" : "TxText-Athens-Spec",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"text"
+	],
+	"name" : "TxApplicationWithToolbar",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Strings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ByteSymbol",
-	"pools" : [
-		 ],
 	"super" : "Symbol",
-	"type" : "bytes" }
+	"category" : "Collections-Strings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ByteSymbol",
+	"type" : "bytes"
+}

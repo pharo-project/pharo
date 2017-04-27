@@ -1,10 +1,12 @@
 {
-	"category" : "FreeType-Tests-cache",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 22:12",
+	"super" : "TestCase",
+	"category" : "FreeType-Tests-cache",
+	"classinstvars" : [ ],
+	"pools" : [
+		"FreeTypeCacheConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"cache",
 		"cache1K",
@@ -14,9 +16,8 @@
 		"font1ZGlyph",
 		"font1YGlyph",
 		"font2",
-		"font3" ],
+		"font3"
+	],
 	"name" : "FreeTypeCacheTest",
-	"pools" : [
-		"FreeTypeCacheConstants" ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

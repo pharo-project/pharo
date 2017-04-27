@@ -1,14 +1,11 @@
 {
-	"category" : "Pharo-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 5/24/2016 14:16",
-	"instvars" : [
-		 ],
-	"name" : "PharoEnvironmentHelp",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Pharo-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoEnvironmentHelp",
+	"type" : "normal"
+}

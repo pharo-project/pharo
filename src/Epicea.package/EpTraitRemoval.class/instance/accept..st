@@ -1,4 +1,4 @@
 visitor
 accept: aVisitor
 
-	^ aVisitor visitTraitRemoved: self 
+	^ aVisitor visitTraitRemoval: self 

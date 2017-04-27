@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 10:48",
-	"instvars" : [
-		"previousBounds" ],
-	"name" : "RubBoundsChanged",
-	"pools" : [
-		 ],
 	"super" : "RubMorphAnnouncement",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"previousBounds"
+	],
+	"name" : "RubBoundsChanged",
+	"type" : "normal"
+}

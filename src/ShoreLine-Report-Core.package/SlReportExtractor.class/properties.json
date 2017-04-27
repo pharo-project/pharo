@@ -1,14 +1,13 @@
 {
-	"category" : "ShoreLine-Report-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TommasoDalSasso 3/6/2014 09:55",
-	"instvars" : [
-		"debugger" ],
-	"name" : "SlReportExtractor",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "ShoreLine-Report-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"debugger"
+	],
+	"name" : "SlReportExtractor",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Variables",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 7/2/2015 22:44",
-	"instvars" : [
-		 ],
-	"name" : "ZnCurrentServer",
-	"pools" : [
-		 ],
 	"super" : "DynamicVariable",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Variables",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnCurrentServer",
+	"type" : "normal"
+}

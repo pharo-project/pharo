@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-BasicObjects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 8/8/2010 18:13",
+	"super" : "Object",
+	"category" : "Kernel-BasicObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"origin",
-		"corner" ],
+		"corner"
+	],
 	"name" : "Rectangle",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

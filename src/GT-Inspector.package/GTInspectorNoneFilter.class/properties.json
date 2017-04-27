@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Inspector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 2/9/2017 00:16",
-	"instvars" : [
-		 ],
-	"name" : "GTInspectorNoneFilter",
-	"pools" : [
-		 ],
 	"super" : "GTInspectorPresentationFilter",
-	"type" : "normal" }
+	"category" : "GT-Inspector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTInspectorNoneFilter",
+	"type" : "normal"
+}

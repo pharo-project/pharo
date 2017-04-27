@@ -1,16 +1,15 @@
 {
-	"category" : "Versionner-Tests-Core-Commands",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MBAbstractTest",
+	"category" : "Versionner-Tests-Core-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"gofer",
 		"authorName",
-		"tearDownPackages" ],
+		"tearDownPackages"
+	],
 	"name" : "MBCommandTests",
-	"pools" : [
-		 ],
-	"super" : "MBAbstractTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

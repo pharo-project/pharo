@@ -1,15 +1,14 @@
 {
-	"category" : "Rubric-Editing-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "IdentifierChooserMorph",
+	"category" : "Rubric-Editing-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"prefix",
-		"requestorPos" ],
+		"requestorPos"
+	],
 	"name" : "RubSelectorChooserMorph",
-	"pools" : [
-		 ],
-	"super" : "IdentifierChooserMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Kernel-Tests-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:49",
+	"super" : "ClassTestCase",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"timespan",
 		"aTimespan",
@@ -16,9 +16,8 @@
 		"dec31",
 		"jan01",
 		"jan08",
-		"localTimeZoneToRestore" ],
+		"localTimeZoneToRestore"
+	],
 	"name" : "TimespanTest",
-	"pools" : [
-		 ],
-	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

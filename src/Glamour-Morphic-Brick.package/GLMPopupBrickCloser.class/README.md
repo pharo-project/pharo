@@ -1,0 +1,1 @@
+I am a popup closer responsible for closing a popup if any of my predicates are activated as the result of an event

@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Logging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 7/1/2015 16:34",
-	"instvars" : [
-		"combined" ],
-	"name" : "ZnCommonLogFormat",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"combined"
+	],
+	"name" : "ZnCommonLogFormat",
+	"type" : "normal"
+}

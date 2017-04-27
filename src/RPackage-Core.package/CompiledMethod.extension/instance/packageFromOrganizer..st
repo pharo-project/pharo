@@ -6,8 +6,10 @@ packageFromOrganizer: anRPackageOrganizer
 	If the method is in no package, returns nil by now"
 	self flag: 'TODO: use anRPackageOrganizer, or better delegate to anRPackageOrganizer'.
 	originSelector := self originMethod selector.
+	
 	^self origin packages 
 		detect: [ :each | 
-			(each includesSelector: originSelector ofClassName: self origin theNonMetaClass originalName) 
-			or: [ each includesSelector: originSelector ofMetaclassName: self origin theNonMetaClass originalName]] 
+			self origin isMeta
+				ifFalse: [ each includesSelector: originSelector ofClassName: self origin theNonMetaClass originalName]
+				ifTrue: [ each includesSelector: originSelector ofMetaclassName: self origin theNonMetaClass originalName]] 
 		ifNone: [ nil ]

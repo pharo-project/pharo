@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "ls 7/10/2003 19:30",
+	"super" : "Object",
 	"category" : "Morphic-Core-Worlds",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CanSurrenderToOS",
 		"DebugShowDamage",
@@ -12,8 +14,8 @@
 		"LastCycleTime",
 		"MinCycleLapse",
 		"ServerMode",
-		"ShowUpdateOptionInWorldMenu" ],
-	"commentStamp" : "ls 7/10/2003 19:30",
+		"ShowUpdateOptionInWorldMenu"
+	],
 	"instvars" : [
 		"hands",
 		"viewBox",
@@ -26,9 +28,8 @@
 		"alarms",
 		"lastAlarmTime",
 		"menuBuilder",
-		"activeHand" ],
+		"activeHand"
+	],
 	"name" : "WorldState",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

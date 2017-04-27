@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 5/11/2015 15:12",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchTwoFingersPinchEvent",
-	"pools" : [
-		 ],
 	"super" : "OSTouchPinchEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchTwoFingersPinchEvent",
+	"type" : "normal"
+}

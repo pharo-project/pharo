@@ -1,15 +1,16 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "marcus.denker 6/5/2009 11:27",
+	"super" : "Magnitude",
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ChronologyConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"nanos",
-		"seconds" ],
+		"seconds"
+	],
 	"name" : "Duration",
-	"pools" : [
-		"ChronologyConstants" ],
-	"super" : "Magnitude",
-	"type" : "normal" }
+	"type" : "normal"
+}

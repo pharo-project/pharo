@@ -1,14 +1,13 @@
 {
-	"category" : "System-Settings-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:34",
-	"instvars" : [
-		"script" ],
-	"name" : "SystemSettingLauncher",
-	"pools" : [
-		 ],
 	"super" : "PragmaSetting",
-	"type" : "normal" }
+	"category" : "System-Settings-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"script"
+	],
+	"name" : "SystemSettingLauncher",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "TudorGirba 2/4/2011 20:22",
+	"super" : "GLMLoggedObject",
 	"category" : "Glamour-Core",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TudorGirba 2/4/2011 20:22",
-	"instvars" : [
-		 ],
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "GLMNoBrowser",
-	"pools" : [
-		 ],
-	"super" : "GLMLoggedObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

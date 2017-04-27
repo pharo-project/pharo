@@ -1,14 +1,11 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "RBThisContextNode",
-	"pools" : [
-		 ],
 	"super" : "RBVariableNode",
-	"type" : "normal" }
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBThisContextNode",
+	"type" : "normal"
+}

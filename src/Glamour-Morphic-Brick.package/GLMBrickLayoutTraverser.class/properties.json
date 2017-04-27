@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Layouts-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMBrickLayoutTraverser",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Layouts-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMBrickLayoutTraverser",
+	"type" : "normal"
+}

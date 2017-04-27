@@ -1,16 +1,15 @@
 {
-	"category" : "Balloon-Engine",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Balloon-Engine",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"transform",
 		"colorTransform",
-		"aaLevel" ],
+		"aaLevel"
+	],
 	"name" : "BalloonState",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

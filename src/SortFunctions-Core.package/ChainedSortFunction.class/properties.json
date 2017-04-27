@@ -1,14 +1,13 @@
 {
-	"category" : "SortFunctions-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 3/13/2014 22:25",
-	"instvars" : [
-		"next" ],
-	"name" : "ChainedSortFunction",
-	"pools" : [
-		 ],
 	"super" : "SortFunction",
-	"type" : "normal" }
+	"category" : "SortFunctions-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"next"
+	],
+	"name" : "ChainedSortFunction",
+	"type" : "normal"
+}

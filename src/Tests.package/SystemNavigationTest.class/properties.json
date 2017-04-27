@@ -1,16 +1,15 @@
 {
-	"category" : "Tests-System",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LucFabresse 10/24/2010 20:26",
+	"super" : "TestCase",
+	"category" : "Tests-System",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classFactory",
 		"navigator",
-		"oldSystemAnnouncer" ],
+		"oldSystemAnnouncer"
+	],
 	"name" : "SystemNavigationTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

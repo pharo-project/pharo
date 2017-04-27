@@ -1,14 +1,11 @@
 {
-	"category" : "Multilingual-TextConversion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MacRomanTextConverter",
-	"pools" : [
-		 ],
 	"super" : "ByteTextConverter",
-	"type" : "normal" }
+	"category" : "Multilingual-TextConversion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MacRomanTextConverter",
+	"type" : "normal"
+}

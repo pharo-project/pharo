@@ -1,14 +1,11 @@
 {
-	"category" : "Shout-Tests-Parsing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:22",
-	"instvars" : [
-		 ],
-	"name" : "SHParserST80Test",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Shout-Tests-Parsing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SHParserST80Test",
+	"type" : "normal"
+}

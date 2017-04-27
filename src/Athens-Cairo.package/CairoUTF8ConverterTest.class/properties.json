@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Cairo-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"encoder" ],
-	"name" : "CairoUTF8ConverterTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Athens-Cairo-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"encoder"
+	],
+	"name" : "CairoUTF8ConverterTest",
+	"type" : "normal"
+}

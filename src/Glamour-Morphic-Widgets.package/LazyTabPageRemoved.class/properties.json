@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"newIndex" ],
-	"name" : "LazyTabPageRemoved",
-	"pools" : [
-		 ],
 	"super" : "LazyTabPageAnnouncement",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newIndex"
+	],
+	"name" : "LazyTabPageRemoved",
+	"type" : "normal"
+}

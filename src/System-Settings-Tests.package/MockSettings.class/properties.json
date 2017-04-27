@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "JurajKubelka 10/1/2015 14:43",
+	"super" : "Object",
 	"category" : "System-Settings-Tests",
 	"classinstvars" : [
 		"cacheDirectory",
 		"booleanMockSetting",
 		"rangeSetting",
-		"defaultDirectoryName" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "JurajKubelka 10/1/2015 14:43",
-	"instvars" : [
-		 ],
+		"defaultDirectoryName"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "MockSettings",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

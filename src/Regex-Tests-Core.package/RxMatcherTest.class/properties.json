@@ -1,14 +1,11 @@
 {
-	"category" : "Regex-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Tbn 11/12/2010 22:31",
-	"instvars" : [
-		 ],
-	"name" : "RxMatcherTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Regex-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RxMatcherTest",
+	"type" : "normal"
+}

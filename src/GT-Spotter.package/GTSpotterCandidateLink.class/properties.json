@@ -1,16 +1,15 @@
 {
-	"category" : "GT-Spotter-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "DoubleLink",
+	"category" : "GT-Spotter-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"processorLink",
 		"weight",
-		"renderingProcessorLink" ],
+		"renderingProcessorLink"
+	],
 	"name" : "GTSpotterCandidateLink",
-	"pools" : [
-		 ],
-	"super" : "DoubleLink",
-	"type" : "normal" }
+	"type" : "normal"
+}

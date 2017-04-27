@@ -1,18 +1,17 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Joystick",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 4/10/2016 03:23",
+	"super" : "OSWindowGenericRendererExample",
+	"category" : "OSWindow-SDL2-Examples-Joystick",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"characterPosition",
 		"characterVelocity",
 		"lastSimulationTime",
 		"currentTime",
-		"bullets" ],
+		"bullets"
+	],
 	"name" : "OSWindowJoystickExample",
-	"pools" : [
-		 ],
-	"super" : "OSWindowGenericRendererExample",
-	"type" : "normal" }
+	"type" : "normal"
+}

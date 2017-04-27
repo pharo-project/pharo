@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "BorderedMorph",
 	"category" : "Morphic-Base-Kernel",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"KeyboardFocusOnMouseDown",
-		"MouseOverForKeyboardFocus" ],
-	"commentStamp" : "<historical>",
+		"MouseOverForKeyboardFocus"
+	],
 	"instvars" : [
-		"model" ],
+		"model"
+	],
 	"name" : "MorphicModel",
-	"pools" : [
-		 ],
-	"super" : "BorderedMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,19 +1,18 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 9/28/2016 22:54",
+	"super" : "OSEvent",
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scanCode",
 		"symbol",
 		"character",
 		"modifiers",
 		"position",
-		"repeat" ],
+		"repeat"
+	],
 	"name" : "OSKeyboardEvent",
-	"pools" : [
-		 ],
-	"super" : "OSEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

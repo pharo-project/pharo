@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "AbstractLayout",
 	"category" : "Slot-Layout",
 	"classinstvars" : [
-		"instance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"instance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "EmptyLayout",
-	"pools" : [
-		 ],
-	"super" : "AbstractLayout",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:28",
-	"instvars" : [
-		"selectedNodePath" ],
-	"name" : "MorphTreeMorphSingleSelection",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeMorphSelection",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"selectedNodePath"
+	],
+	"name" : "MorphTreeMorphSingleSelection",
+	"type" : "normal"
+}

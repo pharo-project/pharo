@@ -1,17 +1,16 @@
 {
-	"category" : "Tool-Workspace",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 7/4/2015 23:17",
+	"super" : "RubScrolledTextSideRuler",
+	"category" : "Tool-Workspace",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"row",
 		"wrappingPolicyMorph",
 		"editingModeMorph",
-		"lineNumbersDisplayMorph" ],
+		"lineNumbersDisplayMorph"
+	],
 	"name" : "RubWorkspaceBar",
-	"pools" : [
-		 ],
-	"super" : "RubScrolledTextSideRuler",
-	"type" : "normal" }
+	"type" : "normal"
+}

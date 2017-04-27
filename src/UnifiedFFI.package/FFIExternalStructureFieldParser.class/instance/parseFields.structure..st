@@ -10,9 +10,11 @@ parseFields: fields structure: structClass
 	[ stream atEnd ] whileFalse: [ | arity |
 		type := generator resolveType: stream next. 
 		arity := 0.
-		[stream peek = #* ] whileTrue: [
-			arity := arity + 1.
-			stream next ].
+		[stream peek beginsWith: '*' ] whileTrue: [
+			stream next do: [ :eachStar | 
+				eachStar = $* 
+					ifTrue: [ arity := arity + 1 ]
+					ifFalse: [ self error: 'I cannot parse structure.' ] ] ].
 		type pointerArity: arity.
 		stream peek ~= #';' ifTrue: [
 			fieldName := stream next.

@@ -1,14 +1,11 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:07",
-	"instvars" : [
-		 ],
-	"name" : "RGInstanceVariableDefinition",
-	"pools" : [
-		 ],
 	"super" : "RGVariableDefinition",
-	"type" : "normal" }
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RGInstanceVariableDefinition",
+	"type" : "normal"
+}

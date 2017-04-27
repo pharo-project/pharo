@@ -1,8 +1,8 @@
 tests
 testEquality
 	self 
-		assert: EpPluggableFilter behaviorFilter
-		equals: EpPluggableFilter behaviorFilter.
+		assert: EpPluggableFilter methodFilter
+		equals: EpPluggableFilter methodFilter.
 	
 	self 
 		assert: (EpOrFilter withAll: EpPluggableFilter allFilters)

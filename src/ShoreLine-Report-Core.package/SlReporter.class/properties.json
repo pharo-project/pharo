@@ -1,4 +1,6 @@
 {
+	"commentStamp" : "TommasoDalSasso 2/26/2014 15:16",
+	"super" : "Object",
 	"category" : "ShoreLine-Report-Core",
 	"classinstvars" : [
 		"enabled",
@@ -6,16 +8,15 @@
 		"port",
 		"autoSubmit",
 		"showNotification",
-		"showSummary" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TommasoDalSasso 2/26/2014 15:16",
+		"showSummary"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"path",
 		"client",
-		"extractor" ],
+		"extractor"
+	],
 	"name" : "SlReporter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

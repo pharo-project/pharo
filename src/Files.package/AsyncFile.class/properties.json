@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "HenrikSperreJohansen 2/16/2012 11:40",
+	"super" : "Object",
 	"category" : "Files-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Busy",
-		"ErrorCode" ],
-	"commentStamp" : "HenrikSperreJohansen 2/16/2012 11:40",
+		"ErrorCode"
+	],
 	"instvars" : [
 		"name",
 		"writeable",
 		"semaphore",
-		"fileHandle" ],
+		"fileHandle"
+	],
 	"name" : "AsyncFile",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

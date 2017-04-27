@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Functions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "DenisKudryashov 6/24/2016 16:10",
-	"instvars" : [
-		 ],
-	"name" : "FTSubstringFilter",
-	"pools" : [
-		 ],
 	"super" : "FTFilter",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable-Functions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FTSubstringFilter",
+	"type" : "normal"
+}

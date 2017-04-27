@@ -1,21 +1,22 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "AthensPathSegmentConverter",
 	"category" : "Athens-Core-PathsGeometry",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CollinearityEps",
 		"CurveAngleToleranceEpsilon",
 		"CurveCollinearityEpsilon",
 		"CurveDistanceEpsilon",
-		"SubdivisionLimit" ],
-	"commentStamp" : "<historical>",
+		"SubdivisionLimit"
+	],
 	"instvars" : [
 		"transform",
 		"inverseTransform",
 		"lengthTolerance",
-		"lengthToleranceSquared" ],
+		"lengthToleranceSquared"
+	],
 	"name" : "AthensCurveFlattener",
-	"pools" : [
-		 ],
-	"super" : "AthensPathSegmentConverter",
-	"type" : "normal" }
+	"type" : "normal"
+}
