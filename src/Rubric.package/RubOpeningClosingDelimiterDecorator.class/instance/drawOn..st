@@ -18,4 +18,4 @@ drawOn: aCanvas
 	rect privateSetCorner: rect corner + (1 @ 1).
 	rect privateSetOrigin: rect origin + (-1 @ 0).
 	aCanvas fillRectangle: rect color: RubTextSelectionColor oppositeDelimiterSelection backgroundColor.
-	aCanvas frameRectangle: rect color: Color black
+	aCanvas frameRectangle: rect color: RubTextSelectionColor oppositeDelimiterSelection textColor

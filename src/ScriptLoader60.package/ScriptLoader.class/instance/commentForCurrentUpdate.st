@@ -1,13 +1,13 @@
 public
 commentForCurrentUpdate
- ^ '19992 Use assert:equals: in simulateKeyStroke tests
-	https://pharo.fogbugz.com/f/cases/19992
+ ^ '19968 Class rename do not mark extending packages dirty
+	https://pharo.fogbugz.com/f/cases/19968
 
-19463 Improve SessionManager class comment
-	https://pharo.fogbugz.com/f/cases/19463
+19987 Bad highlight for matching parentheses with dark theme
+	https://pharo.fogbugz.com/f/cases/19987
 
-19983 activate the Dark theme by default in the bootstrapped image
-	https://pharo.fogbugz.com/f/cases/19983
+19995 Fix typo in testIsNativeSSLPluginPresent
+	https://pharo.fogbugz.com/f/cases/19995
 
-19991 Use of deprecated name method in TextEditor>>changeStyle
-	https://pharo.fogbugz.com/f/cases/19991'
+19996 Cleanup FFIConstants
+	https://pharo.fogbugz.com/f/cases/19996'
