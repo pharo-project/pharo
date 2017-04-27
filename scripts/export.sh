@@ -57,8 +57,8 @@ wget --quiet -O - get.pharo.org/vm60 | bash
 wget http://files.pharo.org/image/60/${VERSION}.zip
 unzip ${VERSION}.zip
 rm ${VERSION}.zip
-mv Pharo-${VERSION}.image Pharo.image
-mv Pharo-${VERSION}.changes Pharo.changes
+find . -type f -name "*.image" -exec mv {} Pharo.image \;
+find . -type f -name "*.changes" -exec mv {} Pharo.changes \;
 VERSION=`./pharo Pharo.image eval SystemVersion current highestUpdate`
 
 echo "GOT ${VERSION}!"
