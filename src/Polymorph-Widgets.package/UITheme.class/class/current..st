@@ -23,3 +23,4 @@ current: aUITheme
 
 	aUITheme updateWorldDockingBars.
 	World themeChanged.
+	(SystemWindow allSubInstances select:[:e | e owner isNil]) do:#themeChanged.

@@ -2,7 +2,9 @@ pages
 step04
 	^ HelpTopic 
 		title: 'Step 04 - Define .smalltalk.ston'
-		contents: 'In your Git repository you will need to add two files, .smalltalk.ston and .travis.yml (yes, with a period at the begining).
+		contents: 
+		(self heading: 'Step 04 - Define .smalltalk.ston'),
+		'In your Git repository you will need to add two files, .smalltalk.ston and .travis.yml (yes, with a period at the begining).
 		
 #configuration is the name of your project. Travis will look for ConfigurationOfRoassal2 in that case
 #repository where the configuration is kept

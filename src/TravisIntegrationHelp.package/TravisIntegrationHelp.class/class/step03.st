@@ -2,7 +2,9 @@ pages
 step03
 	^ HelpTopic 
 		title: 'Step 03 - Account on Travis-ci.org'
-		contents: '* Go to http://travis-ci.org
+		contents: 
+		(self heading: 'Step 03 - Account on Travis-ci.org'),
+		'* Go to http://travis-ci.org
 * connect to it using your GitHub account
 * You can add a repository (click on the + button on the left hand side, next to ''My Repositories''
 * Select the repository you would like to have a build for. If you also be part of an organization you belong to. Move the switch to enable the repository

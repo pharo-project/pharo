@@ -1,7 +1,7 @@
 pharo - scripts
-script60469
+script60470
 
-	^ 'AST-Core-TheIntegrator.492.mcz
+	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
 Alien-RonieSalgado.40.mcz
 Announcements-Core-TheIntegrator.84.mcz
@@ -254,7 +254,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.38.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1429.mcz
+Polymorph-Widgets-TheIntegrator.1430.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.83.mcz
@@ -404,7 +404,7 @@ Tools-TheIntegrator.1532.mcz
 Tools-Test-TheIntegrator.26.mcz
 Traits-TheIntegrator.984.mcz
 Transcript-TheIntegrator.56.mcz
-TravisIntegrationHelp-TheIntegrator.2.mcz
+TravisIntegrationHelp-TheIntegrator.5.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz
 TxText-Model-MarcusDenker.67.mcz

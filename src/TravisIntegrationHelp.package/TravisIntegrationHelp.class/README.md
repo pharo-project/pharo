@@ -1,0 +1,1 @@
+Help for getting Travis running with Pharo.

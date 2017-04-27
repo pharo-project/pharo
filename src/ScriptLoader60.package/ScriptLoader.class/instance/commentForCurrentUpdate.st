@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19960 Comments in changed code in Diff tool
-	https://pharo.fogbugz.com/f/cases/19960
+ ^ '19958 Find and Replace dialog uses black text color in dark theme
+	https://pharo.fogbugz.com/f/cases/19958
 
-19962 Watery theme is broken because SimpleButtonMorph does not understand isDefault
-	https://pharo.fogbugz.com/f/cases/19962
+19963 Improvement of TravisIntegrationHelp
+	https://pharo.fogbugz.com/f/cases/19963
 
-19970 Formatting methods recently introduced for WelcomeHelp should be accessible to all Help classes
-	https://pharo.fogbugz.com/f/cases/19970'
+19977 Menu failure on right click in code pane when coming from MessageBrowser
+	https://pharo.fogbugz.com/f/cases/19977'
