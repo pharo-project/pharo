@@ -1,4 +1,4 @@
-style table
+attributes
 attributeArrayForColor: aColorOrNil emphasis: anEmphasisSymbolOrArrayorNil font: aTextStyleOrFontOrNil 
 
 	| emphArray answer |	

@@ -1,4 +1,4 @@
-style table
+attributes
 attributesFor: aSymbol pixelHeight: aNumber 
 	^ (self textAttributesByPixelHeight
 		at: aNumber
