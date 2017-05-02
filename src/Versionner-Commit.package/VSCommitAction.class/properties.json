@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "EstebanLorenzano 4/23/2015 15:48",
-	"super" : "Model",
+	"super" : "Object",
 	"category" : "Versionner-Commit",
 	"classinstvars" : [ ],
 	"pools" : [ ],

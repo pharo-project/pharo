@@ -1,5 +1,5 @@
 pharo - scripts
-script60476
+script60477
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -322,8 +322,8 @@ ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
 Shout-TheIntegrator.311.mcz
 Shout-Tests-TheIntegrator.2.mcz
-Slot-TheIntegrator.785.mcz
-Slot-Tests-TheIntegrator.103.mcz
+Slot-TheIntegrator.788.mcz
+Slot-Tests-TheIntegrator.105.mcz
 SmartSuggestions-TheIntegrator.269.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
 SortFunctions-Core-TheIntegrator.7.mcz
@@ -364,7 +364,7 @@ System-OSEnvironments-TheIntegrator.33.mcz
 System-Object Events-TheIntegrator.28.mcz
 System-Platforms-TheIntegrator.85.mcz
 System-Serial Port-StephaneDucasse.23.mcz
-System-SessionManager-TheIntegrator.41.mcz
+System-SessionManager-TheIntegrator.43.mcz
 System-SessionManager-Tests-ChristopheDemarey.9.mcz
 System-Settings-TheIntegrator.374.mcz
 System-Settings-Rules-TheIntegrator.2.mcz

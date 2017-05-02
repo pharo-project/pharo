@@ -1,3 +1,3 @@
 *Versionner-Commit-UI
 icon
-	^ self iconNamed: #config
+	^ Smalltalk ui icons iconNamed: #config

@@ -14,19 +14,19 @@ buildBrowser
 				title: 'Dirty packages';
 				display: [ self unit allActions ];
 				act: [ :presenter | 
-						self configure.
-						presenter pane browser update ]
-					iconName: #smallConfigurationIcon
+					self configure.
+					presenter pane browser update ]
+					icon: (Smalltalk ui icons iconNamed: #smallConfigurationIcon)
 					entitled: 'Configure commit options';
 				act: [ :presenter | 
 					self refresh.
 					presenter pane browser update ]
-					iconName: #glamorousRefresh
+					icon: (Smalltalk ui icons iconNamed: #glamorousRefresh)
 					entitled: 'Refresh';
 				act: [ :presenter | 
 					self commit.
 					presenter pane browser update ]
-					iconName: #smallDoItIcon
+					icon: (Smalltalk ui icons iconNamed: #smallDoItIcon)
 					entitled: 'Commit';
 				selectionAct: [ :presenter | self actionBrowse: presenter selection ]
 					on: $b

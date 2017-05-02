@@ -1,13 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '19985 SourceFileArray should be encoding independent when read preamble of methods 
-	https://pharo.fogbugz.com/f/cases/19985
+ ^ '19909 Versionner reset modifications of first opened project when user opens another project in addition
+	https://pharo.fogbugz.com/f/cases/19909
 
-20003 useExternalPackages mentions Pharo 5.0 although in Pharo 6.0
-	https://pharo.fogbugz.com/f/cases/20003
+19981 Class side slot initialization does not work
+	https://pharo.fogbugz.com/f/cases/19981
 
-20000 HelpBrowser should open real browser when "WebBrowser" is loaded
-	https://pharo.fogbugz.com/f/cases/20000
-
-19998 Settings Syntax highlighting "set to default" crashes the image
-	https://pharo.fogbugz.com/f/cases/19998'
+20004 SnapshotDone should be after all startup actions
+	https://pharo.fogbugz.com/f/cases/20004'
