@@ -1,5 +1,5 @@
 pharo - scripts
-script60474
+script60475
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -29,7 +29,7 @@ BaselineOfUnifiedFFI-TheIntegrator.4.mcz
 BlueInk-Core-TheIntegrator.29.mcz
 BlueInk-Extras-TheIntegrator.12.mcz
 BlueInk-Tests-TheIntegrator.12.mcz
-CodeExport-TheIntegrator.19.mcz
+CodeExport-TheIntegrator.21.mcz
 CodeImport-TheIntegrator.90.mcz
 CodeImportCommandLineHandlers-TheIntegrator.15.mcz
 Collections-Abstract-TheIntegrator.343.mcz
@@ -112,7 +112,7 @@ GeneralRules-TheIntegrator.11.mcz
 Glamour-Announcements-AndreiChis.11.mcz
 Glamour-Browsers-AndreiChis.112.mcz
 Glamour-Core-AndreiChis.338.mcz
-Glamour-Examples-AndreiChis.319.mcz
+Glamour-Examples-TheIntegrator.321.mcz
 Glamour-FastTable-TheIntegrator.85.mcz
 Glamour-Helpers-TudorGirba.40.mcz
 Glamour-Morphic-Brick-AndreiChis.446.mcz
@@ -140,7 +140,7 @@ Graphics-Shapes-TheIntegrator.4.mcz
 Graphics-Tests-TheIntegrator.85.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
 Growl-TheIntegrator.47.mcz
-HelpSystem-Core-TheIntegrator.172.mcz
+HelpSystem-Core-TheIntegrator.174.mcz
 HelpSystem-Tests-TheIntegrator.32.mcz
 Hiedra-MartinDias.146.mcz
 HiedraTests-MartinDias.2.mcz
@@ -151,9 +151,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2503.mcz
+Kernel-TheIntegrator.2504.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.162.mcz
+Kernel-Tests-TheIntegrator.164.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.66.mcz
@@ -187,18 +187,18 @@ Metacello-TestsPlatform-TheIntegrator.25.mcz
 Metacello-TestsReference-EstebanLorenzano.22.mcz
 Metacello-ToolBox-TheIntegrator.154.mcz
 Metacello-Tutorial-EstebanLorenzano.28.mcz
-Monticello-TheIntegrator.1177.mcz
-Monticello-OldDataStreamCompatibility-TheIntegrator.10.mcz
-Monticello-Tests-TheIntegrator.42.mcz
-MonticelloConfigurations-TheIntegrator.74.mcz
-MonticelloFileServices-TheIntegrator.8.mcz
-MonticelloFileTree-Core-TheIntegrator.151.mcz
-MonticelloFileTree-FileSystem-Utilities-TheIntegrator.33.mcz
-MonticelloGUI-TheIntegrator.436.mcz
-MonticelloMocks-TheIntegrator.8.mcz
-MonticelloRemoteRepositories-TheIntegrator.18.mcz
+Monticello-TheIntegrator.1178.mcz
+Monticello-OldDataStreamCompatibility-TheIntegrator.11.mcz
+Monticello-Tests-TheIntegrator.43.mcz
+MonticelloConfigurations-TheIntegrator.75.mcz
+MonticelloFileServices-TheIntegrator.9.mcz
+MonticelloFileTree-Core-TheIntegrator.152.mcz
+MonticelloFileTree-FileSystem-Utilities-TheIntegrator.34.mcz
+MonticelloGUI-TheIntegrator.437.mcz
+MonticelloMocks-TheIntegrator.9.mcz
+MonticelloRemoteRepositories-TheIntegrator.19.mcz
 Moose-Algos-Graph-VincentBlondeau.33.mcz
-Morphic-Base-TheIntegrator.611.mcz
+Morphic-Base-TheIntegrator.613.mcz
 Morphic-Core-TheIntegrator.313.mcz
 Morphic-Examples-TheIntegrator.64.mcz
 Morphic-Tests-TheIntegrator.11.mcz
@@ -257,8 +257,8 @@ PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-Widgets-TheIntegrator.1430.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
-ProfStef-Core-TheIntegrator.83.mcz
-ProfStef-Help-TheIntegrator.16.mcz
+ProfStef-Core-TheIntegrator.85.mcz
+ProfStef-Help-TheIntegrator.18.mcz
 ProfStef-Tests-TheIntegrator.27.mcz
 QualityAssistant-YuriyTymchuk.117.mcz
 QualityAssistant-Test-YuriyTymchuk.2.mcz
@@ -373,7 +373,7 @@ System-Sound-TheIntegrator.20.mcz
 System-Sources-TheIntegrator.69.mcz
 System-Support-TheIntegrator.1274.mcz
 System-Support-Rules-TheIntegrator.2.mcz
-System-SupportTests-TheIntegrator.5.mcz
+System-SupportTests-TheIntegrator.7.mcz
 System-VMEvents-TheIntegrator.19.mcz
 Tests-TheIntegrator.794.mcz
 Text-Core-TheIntegrator.66.mcz
@@ -402,7 +402,7 @@ Tool-Transcript-TheIntegrator.25.mcz
 Tool-Workspace-TheIntegrator.48.mcz
 Tools-TheIntegrator.1532.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.984.mcz
+Traits-TheIntegrator.986.mcz
 Transcript-TheIntegrator.56.mcz
 TravisIntegrationHelp-TheIntegrator.5.mcz
 TxText-Athens-EstebanLorenzano.58.mcz

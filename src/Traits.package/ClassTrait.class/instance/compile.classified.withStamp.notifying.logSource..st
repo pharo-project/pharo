@@ -1,6 +1,11 @@
 compiling
 compile: text classified: category withStamp: changeStamp notifying: requestor logSource: logSource
 	
+	<localClassTraitMethod> 
+    "This method is supposed to be local in ClassTrait because of a good reason.
+    We use this pragma to test if ClassTrait does not contain some accidental 
+    local selectors."
+
 	| classSideUsersOfBaseTrait message |
 	
 	classSideUsersOfBaseTrait := self baseTrait traitUsers select: [:each | each isClassSide].
