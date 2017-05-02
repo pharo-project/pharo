@@ -2,7 +2,7 @@ pages
 useExternalPackages
 	^ HelpTopic 
 		title: 'Use external packages'
-		contents: (self heading: 'Use external packages'), 'Pharo 5.0 already comes pre-loaded with a rich set of packages that you can use to explore the system and develop your own applications. However there is also a huge library of user contributed projects that you can also load using the "Catalog Browser". To open it click on the following expression:
+		contents: (self heading: 'Use external packages'), 'Pharo already comes pre-loaded with a rich set of packages that you can use to explore the system and develop your own applications. However there is also a huge library of user contributed projects that you can also load using the "Catalog Browser". To open it click on the following expression:
 		
 ', (self doItFrom: 'CatalogBrowser open.'), '
 

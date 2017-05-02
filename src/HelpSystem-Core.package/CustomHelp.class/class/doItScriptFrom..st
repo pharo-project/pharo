@@ -6,7 +6,7 @@ doItScriptFrom: aString
 
 	| color text clipboard run |
 	color := Color fromHexString: 'aa5693'.
-	aString size = 0 ifTrue: [ ^ self ].
+	aString ifEmpty: [ self errorEmptyString ].
 	text := aString asText
 		addAttribute: (TextColor new color: color);
 		yourself.

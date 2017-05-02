@@ -1,16 +1,23 @@
 formatting
 url: aString
 	"Return Text object with copy aString to the clipboard after mouse click."
-	| color |
+	| color clickBlock |
+	
+	aString ifEmpty: [ self errorEmptyString ].
 	
 	color := Color fromHexString: '2176B3'.
+	
+	clickBlock := [ 
+		self environment 
+			at: #WebBrowser 
+			ifPresent: [ :browserClass | browserClass openOn: aString ]
+			ifAbsent: [ 
+				Clipboard clipboardText: aString.
+				self inform: 'The URL has been pasted into your clipboard'.
+			]
+	].
 
-	aString size = 0 ifTrue: [^self].
-	^ aString asText
-		addAttribute: (TextAction new actOnClickBlock: [
-				Clipboard clipboardText: aString. 
-				self inform: 'The URL has been pasted into your clipboard']) 
-			from: 1
-			to: aString size;
-		addAttribute: (TextColor new color: color) from: 1 to: aString size;
+	^ aString asText 
+		addAttribute: (	TextAction new actOnClickBlock: clickBlock);
+		addAttribute: (TextColor new color: color);
 		yourself

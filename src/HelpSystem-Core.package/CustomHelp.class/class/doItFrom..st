@@ -6,7 +6,7 @@ doItFrom: aString
 	
 	color := Color fromHexString: 'aa5693'.
 
-	aString size = 0 ifTrue: [^self].
+	aString ifEmpty: [ self errorEmptyString ].
 	^ aString asText
 		addAttribute: (TextAction new actOnClickBlock: [
 				Smalltalk compiler evaluate: aString]; yourself) 
