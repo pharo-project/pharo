@@ -1,10 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '20011 OSEnvironment>>getEnv: needs to use a primitive
-	https://pharo.fogbugz.com/f/cases/20011
+ ^ '19986 STON do not support WideSymbols
+	https://pharo.fogbugz.com/f/cases/19986
 
-19936 The code presentation in the Meta tab cuts the scrollbar at the bottom
-	https://pharo.fogbugz.com/f/cases/19936
+20013 WelcomeHelp for Pharo 6
+	https://pharo.fogbugz.com/f/cases/20013
 
-19897 Problem with presentations containing tabulators in the inspector from the debugger
-	https://pharo.fogbugz.com/f/cases/19897'
+19979 Revert gray comments color and fix colors in DiffMorph
+	https://pharo.fogbugz.com/f/cases/19979'

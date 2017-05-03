@@ -5,7 +5,7 @@ url: aString
 	
 	aString ifEmpty: [ self errorEmptyString ].
 	
-	color := Color fromHexString: '2176B3'.
+	color := Color fromHexString: '3196D3'.
 	
 	clickBlock := [ 
 		self environment 

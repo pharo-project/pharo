@@ -45,7 +45,7 @@ createHighlightsFrom: srcPara to: dstPara
 						addHighlightsFrom: sb
 						to: eb
 						to: d
-						color: (Color green alpha: 0.3) ].
+						color: self additionHighlightColor ].
 			c first key = #remove
 				ifTrue: [ 
 					i := si.
@@ -56,4 +56,4 @@ createHighlightsFrom: srcPara to: dstPara
 						addHighlightsFrom: sb
 						to: eb
 						to: s
-						color: (Color red alpha: 0.3) ] ]
+						color: self removalHighlightColor ] ]

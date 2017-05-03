@@ -1,5 +1,5 @@
 pharo - scripts
-script60479
+script60480
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -140,7 +140,7 @@ Graphics-Shapes-TheIntegrator.4.mcz
 Graphics-Tests-TheIntegrator.85.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
 Growl-TheIntegrator.47.mcz
-HelpSystem-Core-TheIntegrator.176.mcz
+HelpSystem-Core-TheIntegrator.178.mcz
 HelpSystem-Tests-TheIntegrator.32.mcz
 Hiedra-MartinDias.146.mcz
 HiedraTests-MartinDias.2.mcz
@@ -251,10 +251,10 @@ OmbuTests-MartinDias.33.mcz
 OpalCompiler-Core-TheIntegrator.890.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
-Pharo-Help-TheIntegrator.40.mcz
+Pharo-Help-TheIntegrator.43.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1430.mcz
+Polymorph-Widgets-TheIntegrator.1434.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.85.mcz
@@ -302,8 +302,8 @@ Rubric-TheIntegrator.448.mcz
 Rubric-Rules-TheIntegrator.6.mcz
 Rubric-Styling-TheIntegrator.11.mcz
 Rubric-Tests-TheIntegrator.10.mcz
-STON-Core-TheIntegrator.84.mcz
-STON-Tests-TheIntegrator.75.mcz
+STON-Core-TheIntegrator.86.mcz
+STON-Tests-TheIntegrator.77.mcz
 STON-Text support-TheIntegrator.2.mcz
 SUnit-Core-TheIntegrator.219.mcz
 SUnit-Help-MarcusDenker.9.mcz
@@ -320,7 +320,7 @@ Settings-System-TheIntegrator.43.mcz
 ShoreLine-Report-Core-TommasoDalSasso.11.mcz
 ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
-Shout-TheIntegrator.311.mcz
+Shout-TheIntegrator.313.mcz
 Shout-Tests-TheIntegrator.2.mcz
 Slot-TheIntegrator.788.mcz
 Slot-Tests-TheIntegrator.105.mcz
@@ -389,7 +389,7 @@ Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
 Tool-DependencyAnalyser-Test-TheIntegrator.18.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
 Tool-DependencyAnalyser-UI-ChristopheDemarey.54.mcz
-Tool-Diff-TheIntegrator.49.mcz
+Tool-Diff-TheIntegrator.52.mcz
 Tool-ExternalBrowser-TheIntegrator.59.mcz
 Tool-FileList-TheIntegrator.99.mcz
 Tool-FileList-Tests-EstebanLorenzano.3.mcz

@@ -12,7 +12,9 @@
 		"borderColor",
 		"type",
 		"width",
-		"shape"
+		"shape",
+		"additionHighlightColor",
+		"removalHighlightColor"
 	],
 	"name" : "JoinSection",
 	"type" : "normal"

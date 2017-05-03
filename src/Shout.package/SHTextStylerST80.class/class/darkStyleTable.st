@@ -16,7 +16,7 @@ darkStyleTable
 			(invalid 								'FF8A80')
 			(excessCode 							'FF8A80')
 			
-			(comment 								'C390D4')
+			(comment 								'7D8C93')
 			(unfinishedComment 				'FF8A80')
 			
 			(#'$' 									('E38C1E' lighter))
