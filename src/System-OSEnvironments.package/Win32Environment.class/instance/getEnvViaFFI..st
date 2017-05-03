@@ -1,5 +1,5 @@
 private
-getEnv: aVariableName
+getEnvViaFFI: aVariableName
 	| valueSize buffer |
 	valueSize := self getEnvSize: aVariableName.
 	valueSize = 0 

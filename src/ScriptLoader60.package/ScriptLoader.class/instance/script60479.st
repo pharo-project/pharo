@@ -1,5 +1,5 @@
 pharo - scripts
-script60477
+script60479
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -94,10 +94,10 @@ FuelTools-Debugger-MaxLeske.14.mcz
 FuzzyMatcher-TheIntegrator.20.mcz
 FuzzyMatcher-Tests-TheIntegrator.8.mcz
 GT-BytecodeDebugger-AndreiChis.36.mcz
-GT-Debugger-AndreiChis.380.mcz
+GT-Debugger-TheIntegrator.383.mcz
 GT-EventRecorder-TheIntegrator.81.mcz
 GT-EventRecorder-Tests-TheIntegrator.42.mcz
-GT-Inspector-AliakseiSyrel.466.mcz
+GT-Inspector-TheIntegrator.468.mcz
 GT-InspectorExtensions-Core-AndreiChis.259.mcz
 GT-Playground-TheIntegrator.148.mcz
 GT-SUnitDebugger-TudorGirba.39.mcz
@@ -360,7 +360,7 @@ System-Installers-TheIntegrator.44.mcz
 System-Localization-TheIntegrator.108.mcz
 System-Localization-Tests-TheIntegrator.8.mcz
 System-Model-TheIntegrator.13.mcz
-System-OSEnvironments-TheIntegrator.33.mcz
+System-OSEnvironments-TheIntegrator.35.mcz
 System-Object Events-TheIntegrator.28.mcz
 System-Platforms-TheIntegrator.85.mcz
 System-Serial Port-StephaneDucasse.23.mcz
@@ -386,7 +386,7 @@ Tool-Base-TheIntegrator.195.mcz
 Tool-Catalog-TheIntegrator.61.mcz
 Tool-CriticBrowser-TheIntegrator.67.mcz
 Tool-DependencyAnalyser-ChristopheDemarey.31.mcz
-Tool-DependencyAnalyser-Test-ChristopheDemarey.16.mcz
+Tool-DependencyAnalyser-Test-TheIntegrator.18.mcz
 Tool-DependencyAnalyser-Test-Data-ChristopheDemarey.2.mcz
 Tool-DependencyAnalyser-UI-ChristopheDemarey.54.mcz
 Tool-Diff-TheIntegrator.49.mcz
@@ -417,16 +417,16 @@ UnifiedFFI-Legacy-TheIntegrator.4.mcz
 UnifiedFFI-Tests-TheIntegrator.42.mcz
 UpdateStreamer-Core-TheIntegrator.34.mcz
 UpdateStreamer-Tests-TheIntegrator.9.mcz
-Versionner-Commit-TheIntegrator.38.mcz
+Versionner-Commit-TheIntegrator.34.mcz
 Versionner-Core-Announcements-ChristopheDemarey.6.mcz
 Versionner-Core-Commands-MarcusDenker.65.mcz
 Versionner-Core-DependenciesModel-MarcusDenker.106.mcz
-Versionner-Core-Model-TheIntegrator.56.mcz
-Versionner-Nautilus-TheIntegrator.2.mcz
-Versionner-Spec-Browser-TheIntegrator.211.mcz
+Versionner-Core-Model-PabloTesone.57.mcz
+Versionner-Nautilus-PavelKrivanek.1.mcz
+Versionner-Spec-Browser-PabloTesone.212.mcz
 Versionner-Tests-Core-Commands-MarcusDenker.21.mcz
 Versionner-Tests-Core-DependenciesModel-ChristopheDemarey.46.mcz
-Versionner-Tests-Core-Model-TheIntegrator.35.mcz
+Versionner-Tests-Core-Model-ChristopheDemarey.33.mcz
 Versionner-Tests-Resources-MarcusDenker.18.mcz
 WorldMenuHelp-TheIntegrator.2.mcz
 WriteBarrierTests-TheIntegrator.20.mcz
