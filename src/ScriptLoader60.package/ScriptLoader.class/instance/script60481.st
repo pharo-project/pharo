@@ -1,5 +1,5 @@
 pharo - scripts
-script60480
+script60481
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -198,7 +198,7 @@ MonticelloGUI-TheIntegrator.437.mcz
 MonticelloMocks-TheIntegrator.9.mcz
 MonticelloRemoteRepositories-TheIntegrator.19.mcz
 Moose-Algos-Graph-VincentBlondeau.33.mcz
-Morphic-Base-TheIntegrator.613.mcz
+Morphic-Base-TheIntegrator.615.mcz
 Morphic-Core-TheIntegrator.313.mcz
 Morphic-Examples-TheIntegrator.64.mcz
 Morphic-Tests-TheIntegrator.11.mcz
@@ -210,7 +210,7 @@ Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.79.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
 Morphic-Widgets-Scrolling-TheIntegrator.37.mcz
-Morphic-Widgets-Tabs-TheIntegrator.52.mcz
+Morphic-Widgets-Tabs-TheIntegrator.54.mcz
 Morphic-Widgets-Taskbar-TheIntegrator.27.mcz
 Morphic-Widgets-TickList-TheIntegrator.2.mcz
 Morphic-Widgets-Tree-TheIntegrator.66.mcz
@@ -223,7 +223,7 @@ Multilingual-TextConversion-TheIntegrator.83.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
-Nautilus-TheIntegrator.1364.mcz
+Nautilus-TheIntegrator.1366.mcz
 Nautilus-GroupManager-TheIntegrator.24.mcz
 Nautilus-GroupManagerUI-TheIntegrator.44.mcz
 Nautilus-Tests-TheIntegrator.52.mcz
@@ -254,7 +254,7 @@ OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.43.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
-Polymorph-Widgets-TheIntegrator.1434.mcz
+Polymorph-Widgets-TheIntegrator.1435.mcz
 Polymorph-Widgets-Rules-TheIntegrator.11.mcz
 PragmaCollector-TheIntegrator.18.mcz
 ProfStef-Core-TheIntegrator.85.mcz
@@ -263,7 +263,7 @@ ProfStef-Tests-TheIntegrator.27.mcz
 QualityAssistant-YuriyTymchuk.117.mcz
 QualityAssistant-Test-YuriyTymchuk.2.mcz
 QualityAssistantRecording-Uko.28.mcz
-RPackage-Core-TheIntegrator.468.mcz
+RPackage-Core-TheIntegrator.470.mcz
 RPackage-Tests-TheIntegrator.199.mcz
 Random-Core-TheIntegrator.10.mcz
 Random-Tests-TheIntegrator.6.mcz
