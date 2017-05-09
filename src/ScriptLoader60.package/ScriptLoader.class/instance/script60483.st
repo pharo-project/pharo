@@ -1,5 +1,5 @@
 pharo - scripts
-script60482
+script60483
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -57,7 +57,7 @@ Debugger-Tests-TheIntegrator.6.mcz
 DebuggerActions-TheIntegrator.92.mcz
 DebuggerFilters-TheIntegrator.9.mcz
 DebuggerModel-TheIntegrator.130.mcz
-Deprecated60-TheIntegrator.20.mcz
+Deprecated60-TheIntegrator.22.mcz
 EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
@@ -151,9 +151,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2506.mcz
+Kernel-TheIntegrator.2508.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.166.mcz
+Kernel-Tests-TheIntegrator.168.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.66.mcz
@@ -205,7 +205,7 @@ Morphic-Tests-TheIntegrator.11.mcz
 Morphic-Widgets-Basic-TheIntegrator.110.mcz
 Morphic-Widgets-ColorPicker-TheIntegrator.23.mcz
 Morphic-Widgets-Extra-TheIntegrator.30.mcz
-Morphic-Widgets-FastTable-TheIntegrator.221.mcz
+Morphic-Widgets-FastTable-TheIntegrator.222.mcz
 Morphic-Widgets-List-TheIntegrator.23.mcz
 Morphic-Widgets-Pluggable-TheIntegrator.79.mcz
 Morphic-Widgets-PolyTabs-TheIntegrator.8.mcz
@@ -308,7 +308,7 @@ STON-Text support-TheIntegrator.2.mcz
 SUnit-Core-TheIntegrator.221.mcz
 SUnit-Help-MarcusDenker.9.mcz
 SUnit-Rules-TheIntegrator.5.mcz
-SUnit-Tests-TheIntegrator.66.mcz
+SUnit-Tests-TheIntegrator.68.mcz
 SUnit-UI-TheIntegrator.153.mcz
 SUnit-UITesting-TheIntegrator.36.mcz
 ScriptLoader-Tests-TheIntegrator.4.mcz

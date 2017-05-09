@@ -1,7 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '20010 Deprecated methods should be placed in the Deprecated60 package
-	https://pharo.fogbugz.com/f/cases/20010
+ ^ '20023 #isDeprecated does not cover all deprecation messsages
+	https://pharo.fogbugz.com/f/cases/20023
 
-20021 fix for #instead: stack needs to be cleaned
-	https://pharo.fogbugz.com/f/cases/20021'
+19920 FTTableMorph implicit filter isnt working properly with the escape keystroke
+	https://pharo.fogbugz.com/f/cases/19920'
