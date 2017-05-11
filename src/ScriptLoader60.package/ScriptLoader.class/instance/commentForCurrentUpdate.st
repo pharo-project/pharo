@@ -1,13 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '20035 UDPSocketEchoTest testEcho fails on Mac
-	https://pharo.fogbugz.com/f/cases/20035
+ ^ '20047 in Versioner (or Komitter), RemotesManager needs to list just remotes
+	https://pharo.fogbugz.com/f/cases/20047
 
-20036 WindowAnnouncementTest is failing on mac
-	https://pharo.fogbugz.com/f/cases/20036
-
-20038 GLMPharoScriptMorphicTest and GLMTextMorphicTest are failing on Mac CI
-	https://pharo.fogbugz.com/f/cases/20038
-
-20032 RF: compile access to #node as LiteralVariable
-	https://pharo.fogbugz.com/f/cases/20032'
+20005  Epicea: Integrate release 8.2.2
+	https://pharo.fogbugz.com/f/cases/20005'

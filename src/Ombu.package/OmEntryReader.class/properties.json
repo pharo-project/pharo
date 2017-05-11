@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"stream"
+		"stream",
+		"store"
 	],
 	"name" : "OmEntryReader",
 	"type" : "normal"

@@ -16,7 +16,6 @@ subscribeToSystemAnnouncer
 		ClassRenamed -> #classRenamed:.
 		ClassCommented -> #classCommented:.
 		MethodRecategorized -> #methodRecategorized:.
-		SnapshotDone -> #snapshotDone:. 
 		MCVersionSaved	-> #monticelloVersionSaved:.
 		
 	} do: [ :pair |

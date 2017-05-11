@@ -6,7 +6,3 @@ initializeWithBaseLocator: aDirectoryFileLocator
 	baseLocator := aDirectoryFileLocator.
 	self store. "Force initialization"
 	headReference := self store headReference.
-	
-	self subscribeToSnapshotDone.
-	
-	

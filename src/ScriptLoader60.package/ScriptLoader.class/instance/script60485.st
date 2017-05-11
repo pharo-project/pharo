@@ -1,5 +1,5 @@
 pharo - scripts
-script60484
+script60485
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -161,7 +161,7 @@ Keymapping-Pragmas-TheIntegrator.62.mcz
 Keymapping-Settings-StephaneDucasse.83.mcz
 Keymapping-Tests-TheIntegrator.111.mcz
 Keymapping-Tools-Spec-TheIntegrator.32.mcz
-Komitter-TheIntegrator.190.mcz
+Komitter-TheIntegrator.192.mcz
 Manifest-Core-TheIntegrator.252.mcz
 Manifest-Resources-Tests-MarcusDenker.14.mcz
 Manifest-Tests-TheIntegrator.55.mcz

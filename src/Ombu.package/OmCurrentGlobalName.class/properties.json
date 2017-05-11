@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "MartinDias 4/25/2017 21:13",
+	"super" : "DynamicVariable",
+	"category" : "Ombu-Persistence",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OmCurrentGlobalName",
+	"type" : "normal"
+}

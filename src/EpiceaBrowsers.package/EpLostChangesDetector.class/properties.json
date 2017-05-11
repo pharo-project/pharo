@@ -8,7 +8,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"monitorLog"
+		"hasLostChanges",
+		"lastSessionFileStore"
 	],
 	"name" : "EpLostChangesDetector",
 	"type" : "normal"

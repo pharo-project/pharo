@@ -1,6 +1,9 @@
 reading
 nextEntry
 
-	^ self stonReader
-		reset;
-		next
+	^ OmCurrentGlobalName
+		value: store globalName
+		during: [
+			self stonReader
+				reset;
+				next ]

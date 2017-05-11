@@ -1,9 +1,12 @@
 writing
 on: aStream nextEntryPut: anEntry 
 
-	writer 
-		reset;
-		on: aStream;
-		nextPut: anEntry.
+	OmCurrentGlobalName
+		value: store globalName
+		during: [
+			writer 
+				reset;
+				on: aStream;
+				nextPut: anEntry.
 
-	aStream cr;cr.
+			aStream cr;cr ]

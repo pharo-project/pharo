@@ -1,6 +1,8 @@
 visitor
 visitClassModification: aModifiedClassChange
-	self compiler evaluate: aModifiedClassChange newClass definitionSource.
+	self compiler
+		evaluate: aModifiedClassChange newClass definitionSource;
+		evaluate: aModifiedClassChange newClass theMetaClass definitionSource.
 		
 	self flag: #todo. "Workaround to issue 16836 in fogbugz."
 	self

@@ -1,8 +1,8 @@
 private
 buildRoots
 	^ MCRepositoryGroup default repositories
-		select: [ :each | each isCache not ]
-		thenCollect: [ :each || remote  |			
+		select: [ :each | (each isCache not) and: [ each isRemote ] ]
+		thenCollect: [ :each | | remote  |			
 			remote := each koRemote.
 			TreeNodeModel new
 				content: remote;

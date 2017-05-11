@@ -5,14 +5,23 @@ behaviorRemoved: aClassRemovedAnnoucement
 	| classRemoved |
 	classRemoved := aClassRemovedAnnoucement classRemoved asEpiceaRingDefinition.
 
+	"Fix class name (remove AnObsolete prefix)"
 	classRemoved definitionSource: 
 		(classRemoved definitionSource
 			copyReplaceAll: aClassRemovedAnnoucement classRemoved name printString
 			with: aClassRemovedAnnoucement classRemoved originalName printString).
+
+	"Fix class name in the metaclass"
+	classRemoved theMetaClass definitionSource: 
+		(classRemoved theMetaClass definitionSource
+			copyReplaceAll: aClassRemovedAnnoucement classRemoved name
+			with: aClassRemovedAnnoucement classRemoved originalName).
+
+	"Fix category"
 	classRemoved definitionSource: 
 		(classRemoved definitionSource
-			copyReplaceAll: 'Unclassified' printString
-			with: aClassRemovedAnnoucement categoryName printString).
+			copyReplaceAll: 'category: ', 'Unclassified' printString
+			with: 'category: ', aClassRemovedAnnoucement categoryName printString).
 
 	classRemoved name: aClassRemovedAnnoucement classRemoved originalName.
 	classRemoved category: aClassRemovedAnnoucement categoryName.
