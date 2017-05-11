@@ -1,5 +1,5 @@
 pharo - scripts
-script60483
+script60484
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -125,7 +125,7 @@ Glamour-Presentations-AndreiChis.190.mcz
 Glamour-Rubric-Presentations-AndreiChis.61.mcz
 Glamour-SpecIntegration-TheIntegrator.6.mcz
 Glamour-Tests-Core-PavelKrivanek.113.mcz
-Glamour-Tests-Morphic-AndreiChis.138.mcz
+Glamour-Tests-Morphic-TheIntegrator.140.mcz
 Glamour-Tests-Resources-AndreiChis.5.mcz
 Glamour-Tests-Rubric-AndreiChis.36.mcz
 Gofer-Core-TheIntegrator.237.mcz
@@ -201,7 +201,7 @@ Moose-Algos-Graph-VincentBlondeau.33.mcz
 Morphic-Base-TheIntegrator.615.mcz
 Morphic-Core-TheIntegrator.313.mcz
 Morphic-Examples-TheIntegrator.64.mcz
-Morphic-Tests-TheIntegrator.11.mcz
+Morphic-Tests-TheIntegrator.13.mcz
 Morphic-Widgets-Basic-TheIntegrator.110.mcz
 Morphic-Widgets-ColorPicker-TheIntegrator.23.mcz
 Morphic-Widgets-Extra-TheIntegrator.30.mcz
@@ -230,7 +230,7 @@ Nautilus-Tests-TheIntegrator.52.mcz
 NautilusCommon-TheIntegrator.327.mcz
 NautilusGroupAutoBuilder-TheIntegrator.20.mcz
 NautilusRefactoring-TheIntegrator.315.mcz
-Network-Kernel-TheIntegrator.136.mcz
+Network-Kernel-TheIntegrator.138.mcz
 Network-MIME-TheIntegrator.75.mcz
 Network-Mail-TheIntegrator.52.mcz
 Network-Protocols-TheIntegrator.105.mcz
@@ -279,7 +279,7 @@ Refactoring-Tests-Critics-TheIntegrator.54.mcz
 Refactoring-Tests-Environment-TheIntegrator.30.mcz
 ReflectionMirrors-Primitives-TheIntegrator.9.mcz
 ReflectionMirrors-Primitives-Tests-TheIntegrator.6.mcz
-Reflectivity-TheIntegrator.337.mcz
+Reflectivity-TheIntegrator.339.mcz
 Reflectivity-Examples-TheIntegrator.51.mcz
 Reflectivity-Tests-TheIntegrator.228.mcz
 Reflectivity-Tools-TheIntegrator.79.mcz
