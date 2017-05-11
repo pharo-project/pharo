@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:21",
-	"instvars" : [
-		"font" ],
-	"name" : "GlyphRenderer",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"font"
+	],
+	"name" : "GlyphRenderer",
+	"type" : "normal"
+}

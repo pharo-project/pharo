@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 6/12/2015 12:17",
-	"instvars" : [
-		"decoratedStream" ],
-	"name" : "DecoratorStream",
-	"pools" : [
-		 ],
 	"super" : "Stream",
-	"type" : "normal" }
+	"category" : "Collections-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"decoratedStream"
+	],
+	"name" : "DecoratorStream",
+	"type" : "normal"
+}

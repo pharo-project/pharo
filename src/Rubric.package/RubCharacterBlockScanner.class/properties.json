@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-TextScanning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RubCharacterScanner",
+	"category" : "Rubric-TextScanning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"characterPoint",
 		"characterIndex",
@@ -12,9 +12,8 @@
 		"lastCharacterExtent",
 		"lastSpaceOrTabExtent",
 		"nextLeftMargin",
-		"specialWidth" ],
+		"specialWidth"
+	],
 	"name" : "RubCharacterBlockScanner",
-	"pools" : [
-		 ],
-	"super" : "RubCharacterScanner",
-	"type" : "normal" }
+	"type" : "normal"
+}

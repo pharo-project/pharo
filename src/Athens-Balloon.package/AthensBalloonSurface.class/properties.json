@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Balloon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AthensSurface",
+	"category" : "Athens-Balloon",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"form",
 		"mask",
@@ -14,9 +14,8 @@
 		"imageTransform",
 		"fillTransform",
 		"strokeTransform",
-		"engine" ],
+		"engine"
+	],
 	"name" : "AthensBalloonSurface",
-	"pools" : [
-		 ],
-	"super" : "AthensSurface",
-	"type" : "normal" }
+	"type" : "normal"
+}

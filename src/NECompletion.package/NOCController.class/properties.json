@@ -1,14 +1,11 @@
 {
-	"category" : "NECompletion-OCompletion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "NOCController",
-	"pools" : [
-		 ],
 	"super" : "NECController",
-	"type" : "normal" }
+	"category" : "NECompletion-OCompletion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NOCController",
+	"type" : "normal"
+}

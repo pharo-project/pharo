@@ -1,10 +1,10 @@
 {
-	"category" : "SUnit-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "SUnit-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"errorListModel",
 		"debugButton",
@@ -14,9 +14,8 @@
 		"timeStamp",
 		"timeStampLabel",
 		"imageVersion",
-		"imageVersionLabel" ],
+		"imageVersionLabel"
+	],
 	"name" : "TestReviver",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

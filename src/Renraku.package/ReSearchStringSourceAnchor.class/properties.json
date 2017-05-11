@@ -1,14 +1,13 @@
 {
-	"category" : "Renraku-SourceAnchors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/10/2016 13:00",
-	"instvars" : [
-		"searchString" ],
-	"name" : "ReSearchStringSourceAnchor",
-	"pools" : [
-		 ],
 	"super" : "ReSourceAnchor",
-	"type" : "normal" }
+	"category" : "Renraku-SourceAnchors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"searchString"
+	],
+	"name" : "ReSearchStringSourceAnchor",
+	"type" : "normal"
+}

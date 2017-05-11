@@ -1,18 +1,17 @@
 {
-	"category" : "Spec-Examples-Wrapper",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/27/2016 11:02",
+	"super" : "ComposableModel",
+	"category" : "Spec-Examples-Wrapper",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"label",
 		"check",
 		"input",
 		"button",
-		"textToReset" ],
+		"textToReset"
+	],
 	"name" : "OpenOnStringExample",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

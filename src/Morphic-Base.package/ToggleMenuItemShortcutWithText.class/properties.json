@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Base-Menus",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ToggleMenuItemShortcutWithText",
-	"pools" : [
-		 ],
 	"super" : "ToggleMenuItemShortcut",
-	"type" : "normal" }
+	"category" : "Morphic-Base-Menus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ToggleMenuItemShortcutWithText",
+	"type" : "normal"
+}

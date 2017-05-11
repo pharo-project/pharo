@@ -1,14 +1,11 @@
 {
-	"category" : "STON-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "STONLargeWriteReadTests",
-	"pools" : [
-		 ],
 	"super" : "STONWriteReadTests",
-	"type" : "normal" }
+	"category" : "STON-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "STONLargeWriteReadTests",
+	"type" : "normal"
+}

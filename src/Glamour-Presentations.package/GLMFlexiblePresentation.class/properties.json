@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GLMFlexiblePresentation",
-	"pools" : [
-		 ],
 	"super" : "GLMPresentation",
-	"type" : "normal" }
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMFlexiblePresentation",
+	"type" : "normal"
+}

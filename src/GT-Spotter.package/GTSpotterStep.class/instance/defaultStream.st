@@ -1,3 +1,3 @@
-accessing-defaults
+accessing - defaults
 defaultStream
 	^ GTSpotterUIThreadStream new

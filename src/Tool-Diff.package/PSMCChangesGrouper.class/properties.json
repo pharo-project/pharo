@@ -1,18 +1,17 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 8/21/2014 17:09",
+	"super" : "Object",
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"nonClassChanges",
 		"classes",
 		"model",
 		"currentOperation",
-		"classChanges" ],
+		"classChanges"
+	],
 	"name" : "PSMCChangesGrouper",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

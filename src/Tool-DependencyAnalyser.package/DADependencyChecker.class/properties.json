@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-DependencyAnalyser-Report",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 9/1/2015 11:48",
-	"instvars" : [
-		"report" ],
-	"name" : "DADependencyChecker",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-Report",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"report"
+	],
+	"name" : "DADependencyChecker",
+	"type" : "normal"
+}

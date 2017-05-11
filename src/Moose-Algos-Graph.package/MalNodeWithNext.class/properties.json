@@ -1,14 +1,13 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 3/26/2015 11:49",
-	"instvars" : [
-		"nextNodes" ],
-	"name" : "MalNodeWithNext",
-	"pools" : [
-		 ],
 	"super" : "MalGraphNode",
-	"type" : "normal" }
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nextNodes"
+	],
+	"name" : "MalNodeWithNext",
+	"type" : "normal"
+}

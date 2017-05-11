@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "StephanEggermont 9/5/2014 12:12",
+	"super" : "TextMorph",
 	"category" : "Growl",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultBackgroundColor",
-		"Position" ],
-	"commentStamp" : "StephanEggermont 9/5/2014 12:12",
+		"Position"
+	],
 	"instvars" : [
 		"dismissHandle",
 		"vanishTime",
@@ -16,9 +18,8 @@
 		"labelAttr",
 		"contentsAttr",
 		"labelColor",
-		"contentsColor" ],
+		"contentsColor"
+	],
 	"name" : "GrowlMorph",
-	"pools" : [
-		 ],
-	"super" : "TextMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

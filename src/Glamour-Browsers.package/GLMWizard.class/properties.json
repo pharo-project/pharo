@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Browsers-Wizards",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 3/10/2015 22:01",
+	"super" : "GLMImplicitBrowser",
+	"category" : "Glamour-Browsers-Wizards",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"wizardSize",
 		"steps",
@@ -20,9 +20,8 @@
 		"externalPreviousButtonAction",
 		"externalTerminateButtonAction",
 		"stepsDictionary",
-		"stepsAndPanes" ],
+		"stepsAndPanes"
+	],
 	"name" : "GLMWizard",
-	"pools" : [
-		 ],
-	"super" : "GLMImplicitBrowser",
-	"type" : "normal" }
+	"type" : "normal"
+}

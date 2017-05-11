@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:04",
-	"instvars" : [
-		"form" ],
-	"name" : "OSWindowFormRenderer",
-	"pools" : [
-		 ],
 	"super" : "OSWindowRenderer",
-	"type" : "normal" }
+	"category" : "OSWindow-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"form"
+	],
+	"name" : "OSWindowFormRenderer",
+	"type" : "normal"
+}

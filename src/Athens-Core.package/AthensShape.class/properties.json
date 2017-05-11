@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensShape",
-	"pools" : [
-		 ],
 	"super" : "AthensAbstractShape",
-	"type" : "normal" }
+	"category" : "Athens-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensShape",
+	"type" : "normal"
+}

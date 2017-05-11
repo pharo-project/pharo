@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-Profilers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TimeProfilerNode",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeNodeModel",
-	"type" : "normal" }
+	"category" : "Tool-Profilers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TimeProfilerNode",
+	"type" : "normal"
+}

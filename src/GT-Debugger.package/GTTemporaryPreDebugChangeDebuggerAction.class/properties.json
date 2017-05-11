@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/10/2016 23:45",
-	"instvars" : [
-		"preDebugWindow" ],
-	"name" : "GTTemporaryPreDebugChangeDebuggerAction",
-	"pools" : [
-		 ],
 	"super" : "DebugAction",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"preDebugWindow"
+	],
+	"name" : "GTTemporaryPreDebugChangeDebuggerAction",
+	"type" : "normal"
+}

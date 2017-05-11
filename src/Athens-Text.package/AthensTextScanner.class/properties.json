@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/6/2012 16:22",
+	"super" : "Object",
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"paragraph",
 		"text",
@@ -15,9 +15,8 @@
 		"currentColor",
 		"textStyle",
 		"currentStrip",
-		"currentBackground" ],
+		"currentBackground"
+	],
 	"name" : "AthensTextScanner",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

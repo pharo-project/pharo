@@ -1,17 +1,16 @@
 {
-	"category" : "Zinc-HTTP-Streaming",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 9/27/2010 17:31",
+	"super" : "Object",
+	"category" : "Zinc-HTTP-Streaming",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"buffer",
 		"position",
-		"limit" ],
+		"limit"
+	],
 	"name" : "ZnLineReader",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

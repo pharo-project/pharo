@@ -1,14 +1,13 @@
 {
-	"category" : "Network-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 5/12/2003 18:05",
-	"instvars" : [
-		"protocolInstance" ],
-	"name" : "ProtocolClientError",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Network-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"protocolInstance"
+	],
+	"name" : "ProtocolClientError",
+	"type" : "normal"
+}

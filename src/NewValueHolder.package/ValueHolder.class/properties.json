@@ -1,14 +1,13 @@
 {
-	"category" : "NewValueHolder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:43",
-	"instvars" : [
-		"contents" ],
-	"name" : "ValueHolder",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "NewValueHolder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"contents"
+	],
+	"name" : "ValueHolder",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "GZipReadStream",
-	"pools" : [
-		"GZipConstants" ],
 	"super" : "FastInflateStream",
-	"type" : "normal" }
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [
+		"GZipConstants"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GZipReadStream",
+	"type" : "normal"
+}

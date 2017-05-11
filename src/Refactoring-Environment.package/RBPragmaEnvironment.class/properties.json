@@ -1,15 +1,14 @@
 {
-	"category" : "Refactoring-Environment",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 4/27/2015 21:23",
+	"super" : "RBBrowserEnvironmentWrapper",
+	"category" : "Refactoring-Environment",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keywords",
-		"condition" ],
+		"condition"
+	],
 	"name" : "RBPragmaEnvironment",
-	"pools" : [
-		 ],
-	"super" : "RBBrowserEnvironmentWrapper",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Metacello-Core-Scripts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"operationString" ],
-	"name" : "MetacelloAllowLockedProjectChange",
-	"pools" : [
-		 ],
 	"super" : "MetacelloResolveProjectUpgrade",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Scripts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"operationString"
+	],
+	"name" : "MetacelloAllowLockedProjectChange",
+	"type" : "normal"
+}

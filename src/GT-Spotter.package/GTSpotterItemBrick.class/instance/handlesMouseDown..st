@@ -1,3 +1,3 @@
-event handling
+morphic - events
 handlesMouseDown: evt
 	^ true

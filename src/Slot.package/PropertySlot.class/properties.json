@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 2/7/2015 11:32",
-	"instvars" : [
-		"baseSlot" ],
-	"name" : "PropertySlot",
-	"pools" : [
-		 ],
 	"super" : "Slot",
-	"type" : "normal" }
+	"category" : "Slot-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"baseSlot"
+	],
+	"name" : "PropertySlot",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"seenTransmissions" ],
-	"name" : "GLMTestPane",
-	"pools" : [
-		 ],
 	"super" : "GLMPane",
-	"type" : "normal" }
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"seenTransmissions"
+	],
+	"name" : "GLMTestPane",
+	"type" : "normal"
+}

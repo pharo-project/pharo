@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"addedSlots" ],
-	"name" : "MethodModification",
-	"pools" : [
-		 ],
 	"super" : "AbstractModification",
-	"type" : "normal" }
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"addedSlots"
+	],
+	"name" : "MethodModification",
+	"type" : "normal"
+}

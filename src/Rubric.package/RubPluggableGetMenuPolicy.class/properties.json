@@ -1,15 +1,14 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:02",
+	"super" : "RubGetMenuPolicy",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"getMenuSelector",
-		"menuProvider" ],
+		"menuProvider"
+	],
 	"name" : "RubPluggableGetMenuPolicy",
-	"pools" : [
-		 ],
-	"super" : "RubGetMenuPolicy",
-	"type" : "normal" }
+	"type" : "normal"
+}

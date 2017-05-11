@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "MartinDias 2/7/2017 11:44",
+	"super" : "Object",
 	"category" : "Ombu-Stores",
 	"classinstvars" : [
-		"current" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "MartinDias 2/7/2017 11:44",
+		"current"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"nullStore",
-		"storeByPath" ],
+		"storeByPath"
+	],
 	"name" : "OmStoreFactory",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

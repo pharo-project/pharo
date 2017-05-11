@@ -1,14 +1,13 @@
 {
-	"category" : "UnifiedFFI-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"TIME_T_PTR" ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "FFIExternalValueHolderTests",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"TIME_T_PTR"
+	],
+	"instvars" : [ ],
+	"name" : "FFIExternalValueHolderTests",
+	"type" : "normal"
+}

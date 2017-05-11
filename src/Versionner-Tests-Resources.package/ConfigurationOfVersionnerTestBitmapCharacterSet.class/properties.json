@@ -1,14 +1,15 @@
 {
-	"category" : "Versionner-Tests-Resources",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"LastVersionLoad" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"project" ],
-	"name" : "ConfigurationOfVersionnerTestBitmapCharacterSet",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Versionner-Tests-Resources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"LastVersionLoad"
+	],
+	"instvars" : [
+		"project"
+	],
+	"name" : "ConfigurationOfVersionnerTestBitmapCharacterSet",
+	"type" : "normal"
+}

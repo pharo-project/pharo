@@ -1,14 +1,13 @@
 {
-	"category" : "Network-Tests-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"message" ],
-	"name" : "Base64MimeConverterTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Network-Tests-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"message"
+	],
+	"name" : "Base64MimeConverterTest",
+	"type" : "normal"
+}

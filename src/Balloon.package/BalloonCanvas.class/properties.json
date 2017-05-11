@@ -1,18 +1,17 @@
 {
-	"category" : "Balloon-Canvas",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FormCanvas",
+	"category" : "Balloon-Canvas",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"transform",
 		"colorTransform",
 		"engine",
 		"aaLevel",
-		"deferred" ],
+		"deferred"
+	],
 	"name" : "BalloonCanvas",
-	"pools" : [
-		 ],
-	"super" : "FormCanvas",
-	"type" : "normal" }
+	"type" : "normal"
+}

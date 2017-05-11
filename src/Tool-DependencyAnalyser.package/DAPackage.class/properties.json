@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-DependencyAnalyser-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 8/1/2014 14:25",
+	"super" : "Object",
+	"category" : "Tool-DependencyAnalyser-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"dependencies",
 		"included",
@@ -13,9 +13,8 @@
 		"tarjanLowLink",
 		"bfsParent",
 		"seen",
-		"rPackageSet" ],
+		"rPackageSet"
+	],
 	"name" : "DAPackage",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

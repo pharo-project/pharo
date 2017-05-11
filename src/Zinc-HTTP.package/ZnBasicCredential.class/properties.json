@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-HTTP-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 12/6/2010 12:58",
+	"super" : "ZnCredential",
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"username",
-		"password" ],
+		"password"
+	],
 	"name" : "ZnBasicCredential",
-	"pools" : [
-		 ],
-	"super" : "ZnCredential",
-	"type" : "normal" }
+	"type" : "normal"
+}

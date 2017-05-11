@@ -1,10 +1,10 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ParseNode",
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"arguments",
 		"statements",
@@ -20,9 +20,8 @@
 		"remoteTempNode",
 		"copiedValues",
 		"closureCreationNode",
-		"startOfLastStatement" ],
+		"startOfLastStatement"
+	],
 	"name" : "BlockNode",
-	"pools" : [
-		 ],
-	"super" : "ParseNode",
-	"type" : "normal" }
+	"type" : "normal"
+}

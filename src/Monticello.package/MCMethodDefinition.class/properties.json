@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "MCDefinition",
 	"category" : "Monticello-Modeling",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Definitions",
-		"InitializersEnabled" ],
-	"commentStamp" : "<historical>",
+		"InitializersEnabled"
+	],
 	"instvars" : [
 		"classIsMeta",
 		"source",
 		"category",
 		"selector",
 		"className",
-		"timeStamp" ],
+		"timeStamp"
+	],
 	"name" : "MCMethodDefinition",
-	"pools" : [
-		 ],
-	"super" : "MCDefinition",
-	"type" : "normal" }
+	"type" : "normal"
+}

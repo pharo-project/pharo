@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Rubric-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/1/2014 13:52",
-	"instvars" : [
-		 ],
-	"name" : "GLMPharoMethodPresentation",
-	"pools" : [
-		 ],
 	"super" : "GLMRubricSmalltalkCodePresentation",
-	"type" : "normal" }
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMPharoMethodPresentation",
+	"type" : "normal"
+}

@@ -1,14 +1,15 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"MinDistToBorder" ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:17",
-	"instvars" : [
-		"minDistToBorder" ],
-	"name" : "OSTouchSwipeDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchOneDirectionGestureDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"MinDistToBorder"
+	],
+	"instvars" : [
+		"minDistToBorder"
+	],
+	"name" : "OSTouchSwipeDetector",
+	"type" : "normal"
+}

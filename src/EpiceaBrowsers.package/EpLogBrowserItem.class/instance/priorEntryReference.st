@@ -1,3 +1,0 @@
-accessing
-priorEntryReference
-	^ self subclassResponsibility

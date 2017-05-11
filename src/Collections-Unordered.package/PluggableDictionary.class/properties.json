@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "monty 10/14/2015 07:16",
+	"super" : "Dictionary",
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"hashBlock",
-		"equalBlock" ],
+		"equalBlock"
+	],
 	"name" : "PluggableDictionary",
-	"pools" : [
-		 ],
-	"super" : "Dictionary",
-	"type" : "normal" }
+	"type" : "normal"
+}

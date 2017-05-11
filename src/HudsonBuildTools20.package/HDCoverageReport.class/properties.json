@@ -1,16 +1,15 @@
 {
-	"category" : "HudsonBuildTools20",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
+	"super" : "HDTestReport",
+	"category" : "HudsonBuildTools20",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"packages",
 		"wrappers",
-		"covered" ],
+		"covered"
+	],
 	"name" : "HDCoverageReport",
-	"pools" : [
-		 ],
-	"super" : "HDTestReport",
-	"type" : "normal" }
+	"type" : "normal"
+}

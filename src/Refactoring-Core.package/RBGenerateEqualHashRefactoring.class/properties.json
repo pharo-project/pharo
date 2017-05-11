@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 21:35",
-	"instvars" : [
-		"variables" ],
-	"name" : "RBGenerateEqualHashRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBClassRefactoring",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"variables"
+	],
+	"name" : "RBGenerateEqualHashRefactoring",
+	"type" : "normal"
+}

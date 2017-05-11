@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 16:38",
+	"super" : "Object",
 	"category" : "OSWindow-Core-OpenGL",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultAlphaSize",
 		"DefaultBlueSize",
@@ -13,8 +15,8 @@
 		"DefaultProfileType",
 		"DefaultRedSize",
 		"DefaultStencilSize",
-		"DefaultSwapControl" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 16:38",
+		"DefaultSwapControl"
+	],
 	"instvars" : [
 		"redSize",
 		"blueSize",
@@ -26,9 +28,8 @@
 		"stencilSize",
 		"minorVersion",
 		"majorVersion",
-		"profileType" ],
+		"profileType"
+	],
 	"name" : "OSWindowGLAttributes",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

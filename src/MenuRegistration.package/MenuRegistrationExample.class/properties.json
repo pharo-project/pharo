@@ -1,14 +1,11 @@
 {
-	"category" : "MenuRegistration-example",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 2/17/2010 01:10",
-	"instvars" : [
-		 ],
-	"name" : "MenuRegistrationExample",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "MenuRegistration-example",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MenuRegistrationExample",
+	"type" : "normal"
+}

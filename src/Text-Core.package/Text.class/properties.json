@@ -1,15 +1,16 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ArrayedCollection",
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"string",
-		"runs" ],
+		"runs"
+	],
 	"name" : "Text",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "ArrayedCollection",
-	"type" : "normal" }
+	"type" : "normal"
+}

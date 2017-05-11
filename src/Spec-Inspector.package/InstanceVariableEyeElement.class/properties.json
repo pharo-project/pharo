@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Inspector-Element",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"instVarName" ],
-	"name" : "InstanceVariableEyeElement",
-	"pools" : [
-		 ],
 	"super" : "AbstractEyeElement",
-	"type" : "normal" }
+	"category" : "Spec-Inspector-Element",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"instVarName"
+	],
+	"name" : "InstanceVariableEyeElement",
+	"type" : "normal"
+}

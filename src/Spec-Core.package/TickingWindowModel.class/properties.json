@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 3/7/2014 10:45",
-	"instvars" : [
-		 ],
-	"name" : "TickingWindowModel",
-	"pools" : [
-		 ],
 	"super" : "WindowModel",
-	"type" : "normal" }
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TickingWindowModel",
+	"type" : "normal"
+}

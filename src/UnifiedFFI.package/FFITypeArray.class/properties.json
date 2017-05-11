@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "EstebanLorenzano 2/16/2017 16:37",
+	"super" : "FFIExternalArray",
 	"category" : "UnifiedFFI-Types",
 	"classinstvars" : [
 		"type",
-		"numberOfElements" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "EstebanLorenzano 2/16/2017 16:37",
-	"instvars" : [
-		 ],
+		"numberOfElements"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "FFITypeArray",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalArray",
-	"type" : "normal" }
+	"type" : "normal"
+}

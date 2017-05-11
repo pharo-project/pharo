@@ -1,0 +1,3 @@
+initialization
+north
+	direction := North

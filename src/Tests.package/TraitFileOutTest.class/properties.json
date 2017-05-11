@@ -1,19 +1,18 @@
 {
-	"category" : "Tests-Traits",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TraitsTestCase",
+	"category" : "Tests-Traits",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ca",
 		"cb",
 		"ta",
 		"tb",
 		"tc",
-		"td" ],
+		"td"
+	],
 	"name" : "TraitFileOutTest",
-	"pools" : [
-		 ],
-	"super" : "TraitsTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

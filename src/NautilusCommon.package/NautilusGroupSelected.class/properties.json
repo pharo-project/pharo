@@ -1,14 +1,13 @@
 {
-	"category" : "NautilusCommon-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"group" ],
-	"name" : "NautilusGroupSelected",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "NautilusCommon-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"group"
+	],
+	"name" : "NautilusGroupSelected",
+	"type" : "normal"
+}

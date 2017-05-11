@@ -1,3 +1,3 @@
 *Versionner-Commit-UI
 icon
-	^ self iconNamed: #packageIcon
+	^ Smalltalk ui icons iconNamed: #packageIcon

@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchActionPointerUpEvent",
-	"pools" : [
-		 ],
 	"super" : "OSTouchActionPointerEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchActionPointerUpEvent",
+	"type" : "normal"
+}

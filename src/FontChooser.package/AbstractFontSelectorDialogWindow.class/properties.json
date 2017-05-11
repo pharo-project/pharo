@@ -1,10 +1,10 @@
 {
-	"category" : "FontChooser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:04",
+	"super" : "DialogWindow",
+	"category" : "FontChooser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fontFamilies",
 		"selectedFont",
@@ -15,9 +15,8 @@
 		"isItalic",
 		"isUnderlined",
 		"isStruckOut",
-		"previewText" ],
+		"previewText"
+	],
 	"name" : "AbstractFontSelectorDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

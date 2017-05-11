@@ -1,4 +1,5 @@
 {
-	"category" : "Traits-Kernel-Traits",
+	"name" : "TApplyingOnClassSide",
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:36",
-	"name" : "TApplyingOnClassSide" }
+	"category" : "Traits-Kernel-Traits"
+}

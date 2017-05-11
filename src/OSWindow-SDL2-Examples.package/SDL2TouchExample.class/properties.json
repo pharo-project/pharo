@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-SDL2-Examples-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 8/21/2015 14:06",
+	"super" : "SDL2AthensExample",
+	"category" : "OSWindow-SDL2-Examples-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"circle",
-		"moveToDraw" ],
+		"moveToDraw"
+	],
 	"name" : "SDL2TouchExample",
-	"pools" : [
-		 ],
-	"super" : "SDL2AthensExample",
-	"type" : "normal" }
+	"type" : "normal"
+}

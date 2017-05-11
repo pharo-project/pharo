@@ -1,14 +1,11 @@
 {
-	"category" : "Gofer-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:36",
-	"instvars" : [
-		 ],
-	"name" : "GoferApiTest",
-	"pools" : [
-		 ],
 	"super" : "GoferTest",
-	"type" : "normal" }
+	"category" : "Gofer-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GoferApiTest",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-SpecIntegration",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/3/2014 18:25",
-	"instvars" : [
-		 ],
-	"name" : "GLMSpecPresentation",
-	"pools" : [
-		 ],
 	"super" : "GLMPresentation",
-	"type" : "normal" }
+	"category" : "Glamour-SpecIntegration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMSpecPresentation",
+	"type" : "normal"
+}

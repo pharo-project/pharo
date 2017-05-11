@@ -1,15 +1,14 @@
 {
-	"category" : "GT-SpotterExtensions-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 11/16/2014 12:57",
+	"super" : "Object",
+	"category" : "GT-SpotterExtensions-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keyword",
-		"pragmas" ],
+		"pragmas"
+	],
 	"name" : "PragmaType",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

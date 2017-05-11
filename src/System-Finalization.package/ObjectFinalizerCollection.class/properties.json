@@ -1,14 +1,11 @@
 {
-	"category" : "System-Finalization",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ul 2/26/2010 14:23",
-	"instvars" : [
-		 ],
-	"name" : "ObjectFinalizerCollection",
-	"pools" : [
-		 ],
 	"super" : "OrderedCollection",
-	"type" : "normal" }
+	"category" : "System-Finalization",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ObjectFinalizerCollection",
+	"type" : "normal"
+}

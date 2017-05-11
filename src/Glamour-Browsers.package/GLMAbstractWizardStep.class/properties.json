@@ -1,18 +1,17 @@
 {
-	"category" : "Glamour-Browsers-Wizards",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 3/10/2015 22:00",
+	"super" : "Object",
+	"category" : "Glamour-Browsers-Wizards",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
 		"presentationBlock",
 		"previousStep",
 		"numberOfDisplay",
-		"input" ],
+		"input"
+	],
 	"name" : "GLMAbstractWizardStep",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

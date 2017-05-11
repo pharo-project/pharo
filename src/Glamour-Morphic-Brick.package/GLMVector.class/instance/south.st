@@ -1,0 +1,3 @@
+initialization
+south
+	direction := South

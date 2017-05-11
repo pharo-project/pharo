@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "FFIExternalStructure",
 	"category" : "Athens-Cairo-Text",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_INDEX",
 		"OFFSET_X",
-		"OFFSET_Y" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"OFFSET_Y"
+	],
+	"instvars" : [ ],
 	"name" : "CairoGlyph",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalStructure",
-	"type" : "normal" }
+	"type" : "normal"
+}

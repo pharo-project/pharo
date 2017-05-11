@@ -1,10 +1,10 @@
 {
-	"category" : "Slot-ClassBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AbstractClassModification",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"superclass",
 		"additions",
@@ -15,9 +15,8 @@
 		"copies",
 		"traitComposition",
 		"classVariables",
-		"sharedPools" ],
+		"sharedPools"
+	],
 	"name" : "ClassModification",
-	"pools" : [
-		 ],
-	"super" : "AbstractClassModification",
-	"type" : "normal" }
+	"type" : "normal"
+}

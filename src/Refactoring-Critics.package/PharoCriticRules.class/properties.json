@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Critics-DefaultRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 9/24/2015 14:58",
-	"instvars" : [
-		 ],
-	"name" : "PharoCriticRules",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Refactoring-Critics-DefaultRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoCriticRules",
+	"type" : "normal"
+}

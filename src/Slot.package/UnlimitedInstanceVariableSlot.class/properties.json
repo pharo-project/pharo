@@ -1,16 +1,15 @@
 {
-	"category" : "Slot-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 7/17/2015 14:07",
+	"super" : "Slot",
+	"category" : "Slot-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"baseSlot",
 		"offset",
-		"baseSlotSize" ],
+		"baseSlotSize"
+	],
 	"name" : "UnlimitedInstanceVariableSlot",
-	"pools" : [
-		 ],
-	"super" : "Slot",
-	"type" : "normal" }
+	"type" : "normal"
+}

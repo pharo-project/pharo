@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Multilingual-TextConversion",
 	"classinstvars" : [
 		"latin1Map",
-		"latin1Encodings" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"latin1Encodings"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"latin1Map",
-		"latin1Encodings" ],
+		"latin1Encodings"
+	],
 	"name" : "TextConverter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

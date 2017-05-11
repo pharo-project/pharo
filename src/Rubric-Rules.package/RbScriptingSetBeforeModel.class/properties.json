@@ -1,14 +1,11 @@
 {
-	"category" : "Rubric-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 2/25/2016 16:59",
-	"instvars" : [
-		 ],
-	"name" : "RbScriptingSetBeforeModel",
-	"pools" : [
-		 ],
 	"super" : "ReInvocationSequenceRule",
-	"type" : "normal" }
+	"category" : "Rubric-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RbScriptingSetBeforeModel",
+	"type" : "normal"
+}

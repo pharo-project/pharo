@@ -1,16 +1,15 @@
 {
-	"category" : "Refactoring-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RBRefactoringBrowserTest",
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"manager",
 		"changeSet",
-		"model" ],
+		"model"
+	],
 	"name" : "RBRefactoringTest",
-	"pools" : [
-		 ],
-	"super" : "RBRefactoringBrowserTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 2/11/2014 20:14",
-	"instvars" : [
-		"printString" ],
-	"name" : "EpUnknownRefactoring",
-	"pools" : [
-		 ],
 	"super" : "EpRefactoring",
-	"type" : "normal" }
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"printString"
+	],
+	"name" : "EpUnknownRefactoring",
+	"type" : "normal"
+}

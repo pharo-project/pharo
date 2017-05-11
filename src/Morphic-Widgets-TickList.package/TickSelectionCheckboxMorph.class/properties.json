@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-TickList",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"index" ],
-	"name" : "TickSelectionCheckboxMorph",
-	"pools" : [
-		 ],
 	"super" : "CheckboxMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-TickList",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"index"
+	],
+	"name" : "TickSelectionCheckboxMorph",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "NautilusCommon-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 6/1/2015 16:11",
-	"instvars" : [
-		 ],
-	"name" : "NautilusExtendCommentSwitch",
-	"pools" : [
-		 ],
 	"super" : "NautilusBooleanAnnouncement",
-	"type" : "normal" }
+	"category" : "NautilusCommon-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NautilusExtendCommentSwitch",
+	"type" : "normal"
+}

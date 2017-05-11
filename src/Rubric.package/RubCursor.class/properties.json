@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "FranckWarlouzet 7/29/2015 12:55",
+	"super" : "Morph",
 	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultColor",
 		"DefaultWidth",
 		"FixedColor",
-		"Period" ],
-	"commentStamp" : "FranckWarlouzet 7/29/2015 12:55",
+		"Period"
+	],
 	"instvars" : [
 		"stayVisible",
 		"invisibleCursorColor",
 		"visibleCursorColor",
-		"period" ],
+		"period"
+	],
 	"name" : "RubCursor",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

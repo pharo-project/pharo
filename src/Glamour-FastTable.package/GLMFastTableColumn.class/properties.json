@@ -1,17 +1,16 @@
 {
-	"category" : "Glamour-FastTable-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FTColumn",
+	"category" : "Glamour-FastTable-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"glamourColumn",
 		"target",
 		"selector",
-		"arguments" ],
+		"arguments"
+	],
 	"name" : "GLMFastTableColumn",
-	"pools" : [
-		 ],
-	"super" : "FTColumn",
-	"type" : "normal" }
+	"type" : "normal"
+}

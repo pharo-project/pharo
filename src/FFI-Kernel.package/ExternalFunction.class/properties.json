@@ -1,15 +1,18 @@
 {
-	"category" : "FFI-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"FFIErrorMessages" ],
 	"commentStamp" : "<historical>",
+	"super" : "ExternalObject",
+	"category" : "FFI-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [
+		"FFIConstants"
+	],
+	"classvars" : [
+		"FFIErrorMessages"
+	],
 	"instvars" : [
 		"flags",
-		"argTypes" ],
+		"argTypes"
+	],
 	"name" : "ExternalFunction",
-	"pools" : [
-		"FFIConstants" ],
-	"super" : "ExternalObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -3,6 +3,12 @@ testExplicitAcceptDoesNotAffectTextPort
 	| composite textMorph |
 	composite := GLMCompositePresentation new with: [ :a | a text display: '123' ].
 	window := composite openOn: 4.
+
+	window position: 0@0.
+	window extent > Display extent ifTrue: [ 
+		"ignore test if the display size is too small and we can not simulate events properly"
+		^ self ].
+
 	textMorph := self find: RubScrolledTextMorph in: window.
 	self simulateOnlyOneClickOn: textMorph.
 	self simulateKeyStrokes: '4'.

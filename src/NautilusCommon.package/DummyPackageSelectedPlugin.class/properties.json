@@ -1,14 +1,13 @@
 {
-	"category" : "NautilusCommon-Plugin-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 10/30/2014 08:21",
-	"instvars" : [
-		"morph" ],
-	"name" : "DummyPackageSelectedPlugin",
-	"pools" : [
-		 ],
 	"super" : "AbstractPackageSelectedPlugin",
-	"type" : "normal" }
+	"category" : "NautilusCommon-Plugin-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"morph"
+	],
+	"name" : "DummyPackageSelectedPlugin",
+	"type" : "normal"
+}

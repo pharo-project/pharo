@@ -1,4 +1,4 @@
-as yet unclassified
+adding
 addHighlightsFrom: srcBlock to: dstBlock to: aCollection color: aColor
 	"Add the highlights required for the given character blocks
 	of a paragraph. May be up to three highlights depending

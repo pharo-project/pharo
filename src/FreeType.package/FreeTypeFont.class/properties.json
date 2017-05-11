@@ -1,10 +1,13 @@
 {
-	"category" : "FreeType-Fonts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 22:10",
+	"super" : "AbstractFont",
+	"category" : "FreeType-Fonts",
+	"classinstvars" : [ ],
+	"pools" : [
+		"FT2Constants",
+		"FreeTypeCacheConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"face",
 		"pointSize",
@@ -15,10 +18,8 @@
 		"cachedAscent",
 		"cachedDescent",
 		"subPixelPositioned",
-		"symbolFont" ],
+		"symbolFont"
+	],
 	"name" : "FreeTypeFont",
-	"pools" : [
-		"FT2Constants",
-		"FreeTypeCacheConstants" ],
-	"super" : "AbstractFont",
-	"type" : "normal" }
+	"type" : "normal"
+}

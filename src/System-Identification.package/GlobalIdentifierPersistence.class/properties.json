@@ -1,15 +1,15 @@
 {
-	"category" : "System-Identification",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/30/2015 16:53",
+	"super" : "Object",
+	"category" : "System-Identification",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"preferences",
-		"previousPersistence" ],
+		"previousPersistence",
+		"checker"
+	],
 	"name" : "GlobalIdentifierPersistence",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

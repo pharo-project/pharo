@@ -1,0 +1,4 @@
+private
+morphFactory
+
+	^ EpMorphFactory default

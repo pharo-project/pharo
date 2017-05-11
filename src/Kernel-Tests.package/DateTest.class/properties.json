@@ -1,18 +1,17 @@
 {
-	"category" : "Kernel-Tests-Chronology",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TDateTimeTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "brp 7/26/2003 16:58",
+	"classvars" : [ ],
 	"instvars" : [
 		"aTime",
 		"january23rd2004",
-		"june2nd1973" ],
+		"june2nd1973"
+	],
 	"name" : "DateTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "brp 7/26/2003 16:58",
 	"super" : "ClassTestCase",
 	"traitcomposition" : "TDateTimeTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Kernel-Tests-Chronology"
+}

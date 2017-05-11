@@ -1,4 +1,4 @@
 empty-text
 emptyTextFontSize
 
-	^ 13
+	^ Smalltalk ui theme textFont pointSize

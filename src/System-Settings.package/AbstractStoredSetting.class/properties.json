@@ -1,14 +1,13 @@
 {
-	"category" : "System-Settings-Persistence-Ston-StoredSettings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/1/2015 14:37",
-	"instvars" : [
-		"settingNodeIdentifier" ],
-	"name" : "AbstractStoredSetting",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Settings-Persistence-Ston-StoredSettings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"settingNodeIdentifier"
+	],
+	"name" : "AbstractStoredSetting",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Balloon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 3/29/2011 01:04",
-	"instvars" : [
-		"currentFill" ],
-	"name" : "AthensBalloonEngine",
-	"pools" : [
-		 ],
 	"super" : "BalloonEngine",
-	"type" : "normal" }
+	"category" : "Athens-Balloon",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"currentFill"
+	],
+	"name" : "AthensBalloonEngine",
+	"type" : "normal"
+}

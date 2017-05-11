@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Cairo-Paints",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensCairoPatternSurfacePaint",
-	"pools" : [
-		"AthensCairoDefs" ],
 	"super" : "AthensCairoPatternPaint",
-	"type" : "normal" }
+	"category" : "Athens-Cairo-Paints",
+	"classinstvars" : [ ],
+	"pools" : [
+		"AthensCairoDefs"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensCairoPatternSurfacePaint",
+	"type" : "normal"
+}

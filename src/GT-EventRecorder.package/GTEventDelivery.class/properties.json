@@ -1,10 +1,10 @@
 {
-	"category" : "GT-EventRecorder-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/13/2015 00:35",
+	"super" : "Object",
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"mutex",
 		"process",
@@ -12,9 +12,8 @@
 		"permission",
 		"recorder",
 		"queue",
-		"preSuspendingAction" ],
+		"preSuspendingAction"
+	],
 	"name" : "GTEventDelivery",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

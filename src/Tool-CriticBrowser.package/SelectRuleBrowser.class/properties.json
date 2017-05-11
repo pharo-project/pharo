@@ -1,16 +1,15 @@
 {
-	"category" : "Tool-CriticBrowser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "SelectBrowser",
+	"category" : "Tool-CriticBrowser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"environment",
 		"removeTestCase",
-		"selectedRules" ],
+		"selectedRules"
+	],
 	"name" : "SelectRuleBrowser",
-	"pools" : [
-		 ],
-	"super" : "SelectBrowser",
-	"type" : "normal" }
+	"type" : "normal"
+}

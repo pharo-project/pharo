@@ -1,19 +1,18 @@
 {
-	"category" : "Alien-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Alien-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"accessProtect",
 		"firstUnusedIndex",
 		"lastUsedIndex",
 		"weakArray",
 		"strongArray",
-		"owner" ],
+		"owner"
+	],
 	"name" : "AlienWeakTable",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

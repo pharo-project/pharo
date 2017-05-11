@@ -1,15 +1,14 @@
 {
-	"category" : "Text-Scanning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nice 10/12/2013 01:36",
+	"super" : "DisplayScanner",
+	"category" : "Text-Scanning",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"bitBlt",
-		"fillBlt" ],
+		"fillBlt"
+	],
 	"name" : "BitBltDisplayScanner",
-	"pools" : [
-		 ],
-	"super" : "DisplayScanner",
-	"type" : "normal" }
+	"type" : "normal"
+}

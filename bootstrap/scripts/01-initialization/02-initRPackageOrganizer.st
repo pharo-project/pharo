@@ -1,17 +1,14 @@
 'protocols.txt' asFileReference readStreamDo: [:stream |
-  [stream atEnd] whileFalse: [
-    | line |
+  [stream atEnd] whileFalse: [ | line items selector |
     line := stream upTo: Character cr.
-      items := line findTokens: String tab.
-  class := (items second = 'true') 
-    ifTrue: [(Smalltalk classOrTraitNamed: items first) theMetaClass]
-    ifFalse: [Smalltalk classOrTraitNamed: items first].
-  selector := items third asSymbol.
+    items := line findTokens: String tab.
+    class := (items second = 'true') 
+      ifTrue: [(Smalltalk classOrTraitNamed: items first) theMetaClass]
+      ifFalse: [Smalltalk classOrTraitNamed: items first].
+    selector := items third asSymbol.
 
-  (class localSelectors includes: selector)
-    ifTrue: [class organization classify: selector under: items fourth]
-    ifFalse: []..
-
+    (class localSelectors includes: selector)
+      ifTrue: [class organization classify: selector under: items fourth].
 ]].
 
 

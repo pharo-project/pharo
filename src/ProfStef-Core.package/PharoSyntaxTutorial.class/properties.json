@@ -1,14 +1,11 @@
 {
-	"category" : "ProfStef-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CamilloBruni 2/22/2014 19:04",
-	"instvars" : [
-		 ],
-	"name" : "PharoSyntaxTutorial",
-	"pools" : [
-		 ],
 	"super" : "AbstractTutorial",
-	"type" : "normal" }
+	"category" : "ProfStef-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoSyntaxTutorial",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "System-Announcements-System-Classes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cyrilledelaunay 1/18/2011 11:43",
+	"super" : "ClassAnnouncement",
+	"category" : "System-Announcements-System-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"categoryName",
 		"classRemoved",
-		"ownerPackage" ],
+		"ownerPackage"
+	],
 	"name" : "ClassRemoved",
-	"pools" : [
-		 ],
-	"super" : "ClassAnnouncement",
-	"type" : "normal" }
+	"type" : "normal"
+}

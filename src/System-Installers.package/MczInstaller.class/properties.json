@@ -1,15 +1,16 @@
 {
-	"category" : "System-Installers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Versions" ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:14",
+	"super" : "Object",
+	"category" : "System-Installers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Versions"
+	],
 	"instvars" : [
 		"stream",
-		"zip" ],
+		"zip"
+	],
 	"name" : "MczInstaller",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

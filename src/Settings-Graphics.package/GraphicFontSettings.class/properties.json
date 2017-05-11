@@ -1,14 +1,11 @@
 {
-	"category" : "Settings-Graphics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:27",
-	"instvars" : [
-		 ],
-	"name" : "GraphicFontSettings",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Settings-Graphics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GraphicFontSettings",
+	"type" : "normal"
+}

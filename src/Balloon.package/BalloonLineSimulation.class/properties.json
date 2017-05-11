@@ -1,10 +1,10 @@
 {
-	"category" : "Balloon-Simulation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Balloon-Simulation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"start",
 		"end",
@@ -12,9 +12,8 @@
 		"xDirection",
 		"error",
 		"errorAdjUp",
-		"errorAdjDown" ],
+		"errorAdjDown"
+	],
 	"name" : "BalloonLineSimulation",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

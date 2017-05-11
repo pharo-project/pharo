@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Athens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SeanDeNigris 4/25/2015 22:44",
-	"instvars" : [
-		"rightMargin" ],
-	"name" : "TxAthensCharacterWrappingStrategy",
-	"pools" : [
-		 ],
 	"super" : "TxAthensLayoutStrategy",
-	"type" : "normal" }
+	"category" : "TxText-Athens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"rightMargin"
+	],
+	"name" : "TxAthensCharacterWrappingStrategy",
+	"type" : "normal"
+}

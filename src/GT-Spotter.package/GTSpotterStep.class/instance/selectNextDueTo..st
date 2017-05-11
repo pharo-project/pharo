@@ -1,4 +1,4 @@
 selecting
 selectNextDueTo: anEventType
 	
-	self selected: self selected next dueTo: anEventType
+	self select: self selected next dueTo: anEventType

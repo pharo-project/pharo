@@ -1,15 +1,16 @@
 {
-	"category" : "UIManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"SnapshotErrorImage" ],
 	"commentStamp" : "<historical>",
+	"super" : "UIManager",
+	"category" : "UIManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"SnapshotErrorImage"
+	],
 	"instvars" : [
 		"doNotQuitOnRestart",
-		"uiManager" ],
+		"uiManager"
+	],
 	"name" : "CommandLineUIManager",
-	"pools" : [
-		 ],
-	"super" : "UIManager",
-	"type" : "normal" }
+	"type" : "normal"
+}

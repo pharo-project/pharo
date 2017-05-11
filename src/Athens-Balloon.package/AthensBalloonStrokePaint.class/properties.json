@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Balloon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensBalloonStrokePaint",
-	"pools" : [
-		 ],
 	"super" : "AthensStrokePaint",
-	"type" : "normal" }
+	"category" : "Athens-Balloon",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensBalloonStrokePaint",
+	"type" : "normal"
+}

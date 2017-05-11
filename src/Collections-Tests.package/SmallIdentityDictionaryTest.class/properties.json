@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:22",
-	"instvars" : [
-		 ],
-	"name" : "SmallIdentityDictionaryTest",
-	"pools" : [
-		 ],
 	"super" : "SmallDictionaryTest",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SmallIdentityDictionaryTest",
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2014 20:21",
+	"super" : "RBBlockLintRule",
+	"category" : "Refactoring-Critics-BlockRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"matcher",
 		"varName",
-		"vars" ],
+		"vars"
+	],
 	"name" : "RBTempVarOverridesInstVarRule",
-	"pools" : [
-		 ],
-	"super" : "RBBlockLintRule",
-	"type" : "normal" }
+	"type" : "normal"
+}

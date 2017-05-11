@@ -1,16 +1,17 @@
 {
-	"category" : "Files-Deprecated",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Registry" ],
 	"commentStamp" : "ul 12/6/2009 05:13",
+	"super" : "FileStream",
+	"category" : "Files-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Registry"
+	],
 	"instvars" : [
 		"name",
 		"fileID",
-		"buffer1" ],
+		"buffer1"
+	],
 	"name" : "StandardFileStream",
-	"pools" : [
-		 ],
-	"super" : "FileStream",
-	"type" : "normal" }
+	"type" : "normal"
+}

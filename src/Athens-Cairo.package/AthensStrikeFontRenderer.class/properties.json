@@ -1,15 +1,14 @@
 {
-	"category" : "Athens-Cairo-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 7/6/2014 18:39",
+	"super" : "Object",
+	"category" : "Athens-Cairo-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"font",
-		"canvas" ],
+		"canvas"
+	],
 	"name" : "AthensStrikeFontRenderer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

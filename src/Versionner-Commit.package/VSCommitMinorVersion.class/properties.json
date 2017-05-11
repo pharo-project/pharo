@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Commit",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "VSCommitMinorVersion",
-	"pools" : [
-		 ],
 	"super" : "VSCommitVersion",
-	"type" : "normal" }
+	"category" : "Versionner-Commit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VSCommitMinorVersion",
+	"type" : "normal"
+}

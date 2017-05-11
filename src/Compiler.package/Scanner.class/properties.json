@@ -1,10 +1,12 @@
 {
-	"category" : "Compiler-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"DoItCharacter" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"DoItCharacter"
+	],
 	"instvars" : [
 		"source",
 		"mark",
@@ -14,9 +16,8 @@
 		"tokenType",
 		"currentComment",
 		"buffer",
-		"typeTable" ],
+		"typeTable"
+	],
 	"name" : "Scanner",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

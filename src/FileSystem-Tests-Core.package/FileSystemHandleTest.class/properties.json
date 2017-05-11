@@ -1,16 +1,15 @@
 {
-	"category" : "FileSystem-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 11:35",
+	"super" : "TestCase",
+	"category" : "FileSystem-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"filesystem",
 		"handle",
-		"reference" ],
+		"reference"
+	],
 	"name" : "FileSystemHandleTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

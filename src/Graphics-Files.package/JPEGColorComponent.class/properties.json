@@ -1,10 +1,10 @@
 {
-	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Graphics-Files",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"currentX",
 		"currentY",
@@ -20,9 +20,8 @@
 		"id",
 		"qTableIndex",
 		"dcTableIndex",
-		"acTableIndex" ],
+		"acTableIndex"
+	],
 	"name" : "JPEGColorComponent",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

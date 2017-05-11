@@ -1,14 +1,13 @@
 {
-	"category" : "FileSystem-Core-Public",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 3/3/2017 11:40",
-	"instvars" : [
-		"store" ],
-	"name" : "FileSystem",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "FileSystem-Core-Public",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"store"
+	],
+	"name" : "FileSystem",
+	"type" : "normal"
+}

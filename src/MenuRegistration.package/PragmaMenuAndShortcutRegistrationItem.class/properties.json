@@ -1,10 +1,10 @@
 {
-	"category" : "MenuRegistration-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "MenuRegistration-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"item",
 		"action",
@@ -27,9 +27,8 @@
 		"default",
 		"category",
 		"shortcutName",
-		"keyText" ],
+		"keyText"
+	],
 	"name" : "PragmaMenuAndShortcutRegistrationItem",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

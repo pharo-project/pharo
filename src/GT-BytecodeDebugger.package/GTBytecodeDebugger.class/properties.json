@@ -1,14 +1,11 @@
 {
-	"category" : "GT-BytecodeDebugger-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 10:49",
-	"instvars" : [
-		 ],
-	"name" : "GTBytecodeDebugger",
-	"pools" : [
-		 ],
 	"super" : "GTGenericStackDebugger",
-	"type" : "normal" }
+	"category" : "GT-BytecodeDebugger-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTBytecodeDebugger",
+	"type" : "normal"
+}

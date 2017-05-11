@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Tests-Numbers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:37",
-	"instvars" : [
-		 ],
-	"name" : "IntegerDigitLogicTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Numbers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IntegerDigitLogicTest",
+	"type" : "normal"
+}

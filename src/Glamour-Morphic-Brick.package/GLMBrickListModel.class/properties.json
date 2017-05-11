@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Brick-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 12/6/2014 20:15",
+	"super" : "GLMBrickAbstractModel",
+	"category" : "Glamour-Morphic-Brick-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"origin",
 		"countLogic",
-		"morphLogic" ],
+		"morphLogic"
+	],
 	"name" : "GLMBrickListModel",
-	"pools" : [
-		 ],
-	"super" : "GLMBrickAbstractModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

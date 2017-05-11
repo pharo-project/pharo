@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-Character-Encoding-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ZnCharacterReadStream",
-	"pools" : [
-		 ],
 	"super" : "ZnEncodedReadStream",
-	"type" : "normal" }
+	"category" : "Zinc-Character-Encoding-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnCharacterReadStream",
+	"type" : "normal"
+}

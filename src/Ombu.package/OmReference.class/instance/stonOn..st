@@ -4,6 +4,8 @@ stonOn: stonWriter
 	stonWriter 
 		writeObject: self 
 		streamShortList: [ :array |
-			array 
-				add: self globalName; 
-				add: self localName ]
+			"Optimization: only write globalName if it belongs to a 'remote' store"
+			OmCurrentGlobalName value = self globalName
+				ifFalse: [ array add: self globalName ].
+
+			array add: self localName ]

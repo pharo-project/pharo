@@ -1,17 +1,16 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 3/24/2015 12:33",
+	"super" : "MalNodeWithNext",
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"index",
 		"lowlink",
 		"inStack",
-		"cycleNodes" ],
+		"cycleNodes"
+	],
 	"name" : "MalTarjanNode",
-	"pools" : [
-		 ],
-	"super" : "MalNodeWithNext",
-	"type" : "normal" }
+	"type" : "normal"
+}

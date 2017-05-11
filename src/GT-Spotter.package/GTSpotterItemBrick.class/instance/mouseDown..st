@@ -1,4 +1,4 @@
-event handling
+morphic - events
 mouseDown: evt
 	|selectors|
 	

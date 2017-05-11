@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Base-Text Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fontNumber",
 		"textColor",
@@ -12,9 +12,8 @@
 		"alignment",
 		"actualFont",
 		"indent",
-		"kern" ],
+		"kern"
+	],
 	"name" : "StringMorphAttributeScanner",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

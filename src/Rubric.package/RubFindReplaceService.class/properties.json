@@ -1,10 +1,12 @@
 {
-	"category" : "Rubric-Editing-FindReplaceService",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Singleton" ],
 	"commentStamp" : "StephaneDucasse 6/13/2015 14:25",
+	"super" : "Model",
+	"category" : "Rubric-Editing-FindReplaceService",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Singleton"
+	],
 	"instvars" : [
 		"findText",
 		"replaceText",
@@ -15,9 +17,8 @@
 		"findStartIndex",
 		"isRegex",
 		"dialog",
-		"textAreaHolder" ],
+		"textAreaHolder"
+	],
 	"name" : "RubFindReplaceService",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,18 +1,17 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Scrollpane",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 1/30/2015 11:06",
+	"super" : "GLMBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-Scrollpane",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"band",
 		"lastScrollTimeStamp",
 		"scrollPosition",
 		"verticalScrollbar",
-		"velocity" ],
+		"velocity"
+	],
 	"name" : "GLMScrollPaneBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

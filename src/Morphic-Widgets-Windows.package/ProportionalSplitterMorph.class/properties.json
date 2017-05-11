@@ -1,18 +1,19 @@
 {
-	"category" : "Morphic-Widgets-Windows-Resizing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ShowHandles" ],
 	"commentStamp" : "jmv 1/29/2006 17:16",
+	"super" : "AbstractResizerMorph",
+	"category" : "Morphic-Widgets-Windows-Resizing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ShowHandles"
+	],
 	"instvars" : [
 		"leftOrTop",
 		"rightOrBottom",
 		"splitsTopAndBottom",
 		"oldColor",
-		"traceMorph" ],
+		"traceMorph"
+	],
 	"name" : "ProportionalSplitterMorph",
-	"pools" : [
-		 ],
-	"super" : "AbstractResizerMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

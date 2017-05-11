@@ -1,11 +1,15 @@
 private-shadow
 topShadowOf: aBrick on: aCanvas
-	|gradient width|
+	| gradient width origin offset |
+
 	width := aBrick shadowWidth.
+	offset := (width @ width negated) / 2.0.
+	origin := aBrick brickBounds topLeft + offset + aBrick shadowOffset.
+
 	"draw top shadow"
 	gradient := (self shadowGradientFor: aBrick)
-		origin: aBrick brickBounds topCenter + (0@width);
-		direction: (0@width)negated;
+		origin: origin - offset + (0 @ (width / 2.0));
+		direction: (0 @ width) negated;
 		yourself.
 		
-	aCanvas fillRectangle: ((aBrick brickBounds origin + (width@0)) corner: (aBrick brickBounds origin - (width@0) + (aBrick brickBounds width @ width))) fillStyle: gradient.
+	aCanvas fillRectangle: (origin extent: (aBrick width - width) @ width) fillStyle: gradient.

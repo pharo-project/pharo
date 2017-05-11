@@ -1,4 +1,4 @@
-accessing-dynamic
+accessing - dynamic
 previousStep
 	"Return a spotter step before me which must exist,
 	otherwise behavior is undefined."

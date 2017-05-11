@@ -1,18 +1,20 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+	"commentStamp" : "AliakseiSyrel 2/28/2017 08:56",
+	"super" : "GLMInteractableBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-UI-Popup",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"anchorBrick",
 		"triggerBrick",
 		"contentBrick",
-		"contentLogic",
-		"isHideUnhover" ],
+		"popupLayout",
+		"closer",
+		"padding",
+		"inset",
+		"spacing"
+	],
 	"name" : "GLMEmptyPopupBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

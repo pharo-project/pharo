@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Objects",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ProtoObject",
-	"pools" : [
-		 ],
 	"super" : "nil",
-	"type" : "normal" }
+	"category" : "Kernel-Objects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ProtoObject",
+	"type" : "normal"
+}

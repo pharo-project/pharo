@@ -1,14 +1,11 @@
 {
-	"category" : "GT-EventRecorder-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/13/2015 23:01",
-	"instvars" : [
-		 ],
-	"name" : "GTStonPacking",
-	"pools" : [
-		 ],
 	"super" : "GTEventPacking",
-	"type" : "normal" }
+	"category" : "GT-EventRecorder-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTStonPacking",
+	"type" : "normal"
+}

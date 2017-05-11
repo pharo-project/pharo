@@ -1,14 +1,11 @@
 {
-	"category" : "FileSystem-Core-Implementation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "cwp 11/18/2009 11:56",
-	"instvars" : [
-		 ],
-	"name" : "PlatformResolver",
-	"pools" : [
-		 ],
 	"super" : "FileSystemResolver",
-	"type" : "normal" }
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PlatformResolver",
+	"type" : "normal"
+}

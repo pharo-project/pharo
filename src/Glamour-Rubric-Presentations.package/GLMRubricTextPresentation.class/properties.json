@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Rubric-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/1/2014 13:48",
+	"super" : "GLMTextualPresentation",
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"withLineNumbers",
 		"withAnnotation",
@@ -13,9 +13,8 @@
 		"withColumns",
 		"textSegments",
 		"primarySelectionInterval",
-		"withGhostText" ],
+		"withGhostText"
+	],
 	"name" : "GLMRubricTextPresentation",
-	"pools" : [
-		 ],
-	"super" : "GLMTextualPresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

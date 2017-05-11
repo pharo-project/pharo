@@ -1,3 +1,0 @@
-converting
-asMorph
-	^ self subclassResponsibility 

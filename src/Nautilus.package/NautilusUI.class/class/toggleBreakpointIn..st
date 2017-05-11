@@ -4,7 +4,8 @@ toggleBreakpointIn: aMethod
 
 	aMethod ifNil: [ ^ self ].
 	aMethod hasBreakpoint
-		ifTrue: [ Breakpoint removeFrom: aMethod ast]
+		ifTrue: [ 
+				aMethod ast nodesWithLinks do:[:link | Breakpoint removeFrom: link ]]
 		ifFalse: [ Breakpoint new node: aMethod ast; always; install].
 		
 	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol

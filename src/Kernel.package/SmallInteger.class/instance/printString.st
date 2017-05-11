@@ -1,7 +1,9 @@
 printing
 printString
 	"Highly optimized version for base 10
-	and that we know it is a SmallInteger."
+	and that we know it is a SmallInteger.
+	Don't follow this example. It breaks the
+	rule that printOn: is where strings are usually built."
 	
 	| integer next result len |
 	self = 0 ifTrue: [^'0'].

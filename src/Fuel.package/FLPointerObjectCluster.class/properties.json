@@ -1,14 +1,13 @@
 {
-	"category" : "Fuel-Clusters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/1/2011 03:00",
-	"instvars" : [
-		"variablesMapping" ],
-	"name" : "FLPointerObjectCluster",
-	"pools" : [
-		 ],
 	"super" : "FLObjectCluster",
-	"type" : "normal" }
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"variablesMapping"
+	],
+	"name" : "FLPointerObjectCluster",
+	"type" : "normal"
+}

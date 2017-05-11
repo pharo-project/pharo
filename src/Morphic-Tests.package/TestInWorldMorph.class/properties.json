@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Tests-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "sd 6/5/2005 10:25",
+	"super" : "Morph",
+	"category" : "Morphic-Tests-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"intoWorldCount",
-		"outOfWorldCount" ],
+		"outOfWorldCount"
+	],
 	"name" : "TestInWorldMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

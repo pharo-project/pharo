@@ -1,9 +1,7 @@
-opening
+popup - opening dispatch
 openAbove: aRectangle
 	"aRectangle must be in global coordinates"
-	^ self asBrickedMorph
-		vShrinkWrap;
-		hShrinkWrap;
-		bounds: ((aRectangle origin - (0@self contentBrick height) + (0@self themer popupThemer borderWidth)) extent: self extent);
-		openInWorld
+	| anOrigin |
 	
+	anOrigin := aRectangle origin - (0 @ self contentBrick height) - ( 0 @ self inset top).
+	^ self openAt: anOrigin

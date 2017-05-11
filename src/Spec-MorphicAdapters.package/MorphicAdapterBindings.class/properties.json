@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-MorphicAdapters-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MorphicAdapterBindings",
-	"pools" : [
-		 ],
 	"super" : "SpecAdapterBindings",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphicAdapterBindings",
+	"type" : "normal"
+}

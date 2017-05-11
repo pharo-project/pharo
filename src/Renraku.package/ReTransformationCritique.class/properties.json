@@ -1,14 +1,13 @@
 {
-	"category" : "Renraku-Critiques",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 7/10/2016 15:40",
-	"instvars" : [
-		"newTree" ],
-	"name" : "ReTransformationCritique",
-	"pools" : [
-		 ],
 	"super" : "ReAbstractCritique",
-	"type" : "normal" }
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newTree"
+	],
+	"name" : "ReTransformationCritique",
+	"type" : "normal"
+}

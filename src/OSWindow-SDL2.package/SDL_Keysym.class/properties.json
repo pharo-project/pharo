@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
+	"super" : "SDL2Structure",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_MOD",
 		"OFFSET_SCANCODE",
 		"OFFSET_SYM",
-		"OFFSET_UNUSED" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
-	"instvars" : [
-		 ],
+		"OFFSET_UNUSED"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_Keysym",
-	"pools" : [
-		 ],
-	"super" : "SDL2Structure",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "alain.plantec 9/8/2009 15:22",
+	"super" : "PaginatedMorphTreeModel",
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"roots",
 		"glamourPresentation",
@@ -17,9 +17,8 @@
 		"amountToFilterBy",
 		"defaultPageSize",
 		"columnToSortBy",
-		"stopStepping" ],
+		"stopStepping"
+	],
 	"name" : "GLMTreeMorphModel",
-	"pools" : [
-		 ],
-	"super" : "PaginatedMorphTreeModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

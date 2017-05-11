@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "VariableLayout",
-	"pools" : [
-		 ],
 	"super" : "PointerLayout",
-	"type" : "normal" }
+	"category" : "Slot-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VariableLayout",
+	"type" : "normal"
+}

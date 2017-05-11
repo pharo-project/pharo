@@ -1,14 +1,11 @@
 {
-	"category" : "GeneralRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 1/12/2017 08:45",
-	"instvars" : [
-		 ],
-	"name" : "GRIvarNeitherReadNorWrittenRule",
-	"pools" : [
-		 ],
 	"super" : "ReAbstractRule",
-	"type" : "normal" }
+	"category" : "GeneralRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GRIvarNeitherReadNorWrittenRule",
+	"type" : "normal"
+}

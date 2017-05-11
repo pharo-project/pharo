@@ -1,16 +1,13 @@
 {
-	"category" : "Spec-MorphicAdapters",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TViewModel classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "MorphicTextAdapter",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "AbstractMorphicAdapter",
 	"traitcomposition" : "TViewModel",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Spec-MorphicAdapters"
+}

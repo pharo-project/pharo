@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Tests-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:38",
-	"instvars" : [
-		 ],
-	"name" : "MyTestError",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Kernel-Tests-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MyTestError",
+	"type" : "normal"
+}

@@ -1,3 +1,0 @@
-accessing
-rootItems
-	^ self subclassResponsibility

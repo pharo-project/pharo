@@ -1,14 +1,13 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:36",
-	"instvars" : [
-		"side" ],
-	"name" : "RubScrolledTextSideRuler",
-	"pools" : [
-		 ],
 	"super" : "RubScrolledTextExtra",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"side"
+	],
+	"name" : "RubScrolledTextSideRuler",
+	"type" : "normal"
+}

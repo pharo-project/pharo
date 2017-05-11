@@ -1,14 +1,11 @@
 {
-	"category" : "FontChooser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 4/15/2011 20:19",
-	"instvars" : [
-		 ],
-	"name" : "FreeTypeFontSelectorDialogWindow",
-	"pools" : [
-		 ],
 	"super" : "AbstractFontSelectorDialogWindow",
-	"type" : "normal" }
+	"category" : "FontChooser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FreeTypeFontSelectorDialogWindow",
+	"type" : "normal"
+}

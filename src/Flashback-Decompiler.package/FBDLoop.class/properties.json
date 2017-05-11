@@ -1,14 +1,13 @@
 {
-	"category" : "Flashback-Decompiler",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 6/19/2015 15:11",
-	"instvars" : [
-		"backjump" ],
-	"name" : "FBDLoop",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Flashback-Decompiler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"backjump"
+	],
+	"name" : "FBDLoop",
+	"type" : "normal"
+}

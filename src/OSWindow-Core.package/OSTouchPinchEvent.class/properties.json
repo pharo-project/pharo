@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 4/2/2015 15:02",
-	"instvars" : [
-		"dDist" ],
-	"name" : "OSTouchPinchEvent",
-	"pools" : [
-		 ],
 	"super" : "OSTouchComplexEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dDist"
+	],
+	"name" : "OSTouchPinchEvent",
+	"type" : "normal"
+}

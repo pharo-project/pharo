@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "AlainPlantec 1/7/2010 22:41",
+	"super" : "Object",
 	"category" : "Polymorph-Widgets-Themes",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Current",
-		"UseThemeSounds" ],
-	"commentStamp" : "AlainPlantec 1/7/2010 22:41",
+		"UseThemeSounds"
+	],
 	"instvars" : [
-		"sounds" ],
+		"sounds"
+	],
 	"name" : "SoundTheme",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

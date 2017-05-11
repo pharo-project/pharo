@@ -1,16 +1,17 @@
 {
-	"category" : "Spec-Tools-Monticello",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Order" ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Spec-Tools-Monticello",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Order"
+	],
 	"instvars" : [
 		"repositories",
 		"workingCopies",
-		"order" ],
+		"order"
+	],
 	"name" : "MonticelloRepositoryBrowser",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

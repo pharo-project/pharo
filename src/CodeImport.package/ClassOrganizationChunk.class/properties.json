@@ -1,14 +1,11 @@
 {
-	"category" : "CodeImport",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ClassOrganizationChunk",
-	"pools" : [
-		 ],
 	"super" : "BehaviorOwnedChunk",
-	"type" : "normal" }
+	"category" : "CodeImport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ClassOrganizationChunk",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 17:38",
+	"super" : "Morph",
+	"category" : "Athens-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"surface",
 		"animations",
@@ -13,9 +13,8 @@
 		"scale",
 		"frame",
 		"pharoLogo",
-		"esugBallon" ],
+		"esugBallon"
+	],
 	"name" : "AthensDemoMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

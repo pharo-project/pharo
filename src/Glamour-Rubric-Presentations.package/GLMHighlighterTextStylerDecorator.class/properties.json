@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Rubric-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RubParagraphDecorator",
+	"category" : "Glamour-Rubric-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"text",
-		"styler" ],
+		"styler"
+	],
 	"name" : "GLMHighlighterTextStylerDecorator",
-	"pools" : [
-		 ],
-	"super" : "RubParagraphDecorator",
-	"type" : "normal" }
+	"type" : "normal"
+}

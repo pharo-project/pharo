@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-HTTP-Logging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 6/16/2014 13:58",
+	"super" : "ZnClientLogEvent",
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"address",
-		"port" ],
+		"port"
+	],
 	"name" : "ZnClientConnectionClosedEvent",
-	"pools" : [
-		 ],
-	"super" : "ZnClientLogEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

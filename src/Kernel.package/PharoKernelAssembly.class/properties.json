@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "PharoKernelAssembly",
-	"pools" : [
-		 ],
 	"super" : "AssemblyManifest",
-	"type" : "normal" }
+	"category" : "Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PharoKernelAssembly",
+	"type" : "normal"
+}

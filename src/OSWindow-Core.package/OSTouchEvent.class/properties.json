@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "jeanbaptistearnaud 2/26/2015 17:12",
+	"super" : "OSEvent",
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"deviceId",
-		"timestamp" ],
+		"timestamp"
+	],
 	"name" : "OSTouchEvent",
-	"pools" : [
-		 ],
-	"super" : "OSEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

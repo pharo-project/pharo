@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"ivarForTesting" ],
-	"name" : "SlotTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Slot-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"ivarForTesting"
+	],
+	"name" : "SlotTest",
+	"type" : "normal"
+}

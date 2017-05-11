@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:41",
+	"super" : "OSWindowEvent",
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"width",
-		"height" ],
+		"height"
+	],
 	"name" : "OSWindowResizeEvent",
-	"pools" : [
-		 ],
-	"super" : "OSWindowEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

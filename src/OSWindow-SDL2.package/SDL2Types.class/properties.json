@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:45",
+	"super" : "SharedPool",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Int16",
 		"Int32",
@@ -18,12 +20,9 @@
 		"Uint16",
 		"Uint32",
 		"Uint64",
-		"Uint8" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:45",
-	"instvars" : [
-		 ],
+		"Uint8"
+	],
+	"instvars" : [ ],
 	"name" : "SDL2Types",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

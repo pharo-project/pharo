@@ -1,16 +1,13 @@
 {
-	"category" : "SUnit-Core-Kernel",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAssertable classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "TestAsserter",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "Object",
 	"traitcomposition" : "TAssertable - {#executeShould:inScopeOf:withDescriptionContaining:. #skipUnless:}",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "SUnit-Core-Kernel"
+}

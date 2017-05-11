@@ -1,19 +1,18 @@
 {
-	"category" : "Spec-Examples-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/26/2016 15:50",
+	"super" : "ComposableModel",
+	"category" : "Spec-Examples-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"container",
 		"morph1",
 		"morph2",
 		"morph3",
 		"uniformDropList",
-		"heterogeneousDropList" ],
+		"heterogeneousDropList"
+	],
 	"name" : "DropListExample",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

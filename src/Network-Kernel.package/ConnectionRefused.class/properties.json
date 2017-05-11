@@ -1,15 +1,14 @@
 {
-	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 5/12/2003 18:14",
+	"super" : "NetworkError",
+	"category" : "Network-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"host",
-		"port" ],
+		"port"
+	],
 	"name" : "ConnectionRefused",
-	"pools" : [
-		 ],
-	"super" : "NetworkError",
-	"type" : "normal" }
+	"type" : "normal"
+}

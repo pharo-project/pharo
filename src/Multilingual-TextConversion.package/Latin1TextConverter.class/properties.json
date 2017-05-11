@@ -1,14 +1,11 @@
 {
-	"category" : "Multilingual-TextConversion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Latin1TextConverter",
-	"pools" : [
-		 ],
 	"super" : "ByteTextConverter",
-	"type" : "normal" }
+	"category" : "Multilingual-TextConversion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Latin1TextConverter",
+	"type" : "normal"
+}

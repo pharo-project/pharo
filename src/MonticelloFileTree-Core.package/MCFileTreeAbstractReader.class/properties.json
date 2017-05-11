@@ -1,15 +1,14 @@
 {
-	"category" : "MonticelloFileTree-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:54",
+	"super" : "MCMczReader",
+	"category" : "MonticelloFileTree-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"packageDirectory",
-		"packageProperties" ],
+		"packageProperties"
+	],
 	"name" : "MCFileTreeAbstractReader",
-	"pools" : [
-		 ],
-	"super" : "MCMczReader",
-	"type" : "normal" }
+	"type" : "normal"
+}

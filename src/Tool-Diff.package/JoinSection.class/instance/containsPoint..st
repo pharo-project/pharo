@@ -1,4 +1,4 @@
-as yet unclassified
+testing
 containsPoint: aPoint
 	"Answer whether the receiver contains the given point."
 

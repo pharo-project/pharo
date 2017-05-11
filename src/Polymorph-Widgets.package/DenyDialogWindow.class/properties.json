@@ -1,14 +1,11 @@
 {
-	"category" : "Polymorph-Widgets-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:27",
-	"instvars" : [
-		 ],
-	"name" : "DenyDialogWindow",
-	"pools" : [
-		 ],
 	"super" : "MessageDialogWindow",
-	"type" : "normal" }
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DenyDialogWindow",
+	"type" : "normal"
+}

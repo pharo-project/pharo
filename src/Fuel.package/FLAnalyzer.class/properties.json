@@ -1,10 +1,10 @@
 {
-	"category" : "Fuel-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/29/2011 19:15",
+	"super" : "Object",
+	"category" : "Fuel-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"internalClasses",
 		"pluggableSubstitutions",
@@ -14,9 +14,8 @@
 		"globalSymbols",
 		"internalMethods",
 		"globalMappers",
-		"globalEnvironment" ],
+		"globalEnvironment"
+	],
 	"name" : "FLAnalyzer",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

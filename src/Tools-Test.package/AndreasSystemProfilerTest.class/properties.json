@@ -1,14 +1,13 @@
 {
-	"category" : "Tools-Test-Profilers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:45",
-	"instvars" : [
-		"tally" ],
-	"name" : "AndreasSystemProfilerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Tools-Test-Profilers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"tally"
+	],
+	"name" : "AndreasSystemProfilerTest",
+	"type" : "normal"
+}

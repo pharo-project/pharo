@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "RPackage-Core",
 	"classinstvars" : [
 		"cacheActive",
-		"cachePackages" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"cachePackages"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"packageName",
 		"packages",
@@ -16,9 +18,8 @@
 		"classesAndMetaClasses",
 		"extensionClasses",
 		"systemCategories",
-		"overriddenMethods" ],
+		"overriddenMethods"
+	],
 	"name" : "RPackageSet",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

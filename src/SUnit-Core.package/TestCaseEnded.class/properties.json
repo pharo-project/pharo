@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 4/26/2011 09:55",
-	"instvars" : [
-		 ],
-	"name" : "TestCaseEnded",
-	"pools" : [
-		 ],
 	"super" : "TestCaseAnnouncement",
-	"type" : "normal" }
+	"category" : "SUnit-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TestCaseEnded",
+	"type" : "normal"
+}

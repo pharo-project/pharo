@@ -1,10 +1,14 @@
 {
+	"commentStamp" : "StephaneDucasse 3/28/2010 20:44",
+	"super" : "Model",
 	"category" : "Tool-FileList",
 	"classinstvars" : [
-		"searchList" ],
+		"searchList"
+	],
+	"pools" : [ ],
 	"classvars" : [
-		"FileReaderRegistry" ],
-	"commentStamp" : "StephaneDucasse 3/28/2010 20:44",
+		"FileReaderRegistry"
+	],
 	"instvars" : [
 		"reference",
 		"volumeList",
@@ -23,9 +27,8 @@
 		"sortBlock",
 		"baseLabel",
 		"configuredServices",
-		"sourceTextModel" ],
+		"sourceTextModel"
+	],
 	"name" : "FileList",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

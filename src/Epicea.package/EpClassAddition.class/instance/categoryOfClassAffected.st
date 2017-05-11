@@ -1,4 +1,0 @@
-accessing
-categoryOfClassAffected
-
-	^ class category

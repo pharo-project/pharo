@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "MartinDias 3/13/2017 23:55",
+	"super" : "EpAbstractLog",
+	"category" : "Epicea-Log",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"entries"
+	],
+	"name" : "EpSorterLog",
+	"type" : "normal"
+}

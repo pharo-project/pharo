@@ -1,14 +1,13 @@
 {
-	"category" : "Refactoring-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "lr 10/5/2010 16:17",
-	"instvars" : [
-		"actionBlock" ],
-	"name" : "RBRefactoringError",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"actionBlock"
+	],
+	"name" : "RBRefactoringError",
+	"type" : "normal"
+}

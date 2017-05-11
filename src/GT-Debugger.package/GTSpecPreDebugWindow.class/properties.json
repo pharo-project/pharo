@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Debugger-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 2/18/2016 11:43",
-	"instvars" : [
-		 ],
-	"name" : "GTSpecPreDebugWindow",
-	"pools" : [
-		 ],
 	"super" : "SpecPreDebugWindow",
-	"type" : "normal" }
+	"category" : "GT-Debugger-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSpecPreDebugWindow",
+	"type" : "normal"
+}

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "GLMDirection",
+	"category" : "Glamour-Morphic-Brick-Utils-Geometry",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMSouthDirection",
+	"type" : "normal"
+}

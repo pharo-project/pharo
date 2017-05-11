@@ -1,14 +1,13 @@
 {
-	"category" : "DebuggerActions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"preDebugWindow" ],
-	"name" : "PreDebugAction",
-	"pools" : [
-		 ],
 	"super" : "MessageSendDebugAction",
-	"type" : "normal" }
+	"category" : "DebuggerActions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"preDebugWindow"
+	],
+	"name" : "PreDebugAction",
+	"type" : "normal"
+}

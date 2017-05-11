@@ -1,15 +1,14 @@
 {
-	"category" : "Zinc-HTTP-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 9/30/2010 15:37",
+	"super" : "Object",
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"credentials",
-		"realm" ],
+		"realm"
+	],
 	"name" : "ZnBasicAuthenticator",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

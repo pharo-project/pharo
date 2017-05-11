@@ -1,20 +1,21 @@
 {
+	"commentStamp" : "HenrikNergaard 1/17/2016 00:17",
+	"super" : "Object",
 	"category" : "Morphic-Base-Menus",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultReminder",
-		"Enabled" ],
-	"commentStamp" : "HenrikNergaard 1/17/2016 00:17",
+		"Enabled"
+	],
 	"instvars" : [
 		"limit",
 		"size",
 		"position",
 		"countDict",
 		"backgroundColor",
-		"textColor" ],
+		"textColor"
+	],
 	"name" : "ShortcutReminder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

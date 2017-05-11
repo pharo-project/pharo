@@ -1,16 +1,15 @@
 {
-	"category" : "Morphic-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "UserInputEvent",
+	"category" : "Morphic-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keyValue",
 		"charCode",
-		"scanCode" ],
+		"scanCode"
+	],
 	"name" : "KeyboardEvent",
-	"pools" : [
-		 ],
-	"super" : "UserInputEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

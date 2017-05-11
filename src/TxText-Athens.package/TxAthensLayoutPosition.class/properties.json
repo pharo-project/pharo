@@ -1,19 +1,18 @@
 {
-	"category" : "TxText-Athens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "TxText-Athens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textPosition",
 		"layout",
 		"line",
 		"lineTopOffset",
 		"horizontalOffset",
-		"command" ],
+		"command"
+	],
 	"name" : "TxAthensLayoutPosition",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

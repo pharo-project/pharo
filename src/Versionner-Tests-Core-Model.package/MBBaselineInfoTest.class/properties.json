@@ -1,15 +1,14 @@
 {
-	"category" : "Versionner-Tests-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 14:19",
+	"super" : "MBAbstractVersionInfoTest",
+	"category" : "Versionner-Tests-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"info",
-		"browser" ],
+		"browser"
+	],
 	"name" : "MBBaselineInfoTest",
-	"pools" : [
-		 ],
-	"super" : "MBAbstractVersionInfoTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

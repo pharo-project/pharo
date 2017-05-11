@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Tests-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 10:13",
-	"instvars" : [
-		 ],
-	"name" : "HTTPEncodingTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Network-Tests-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HTTPEncodingTest",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Hiedra-Spec",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 7/8/2015 14:59",
+	"super" : "Morph",
+	"category" : "Hiedra-Spec",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"model",
-		"key" ],
+		"key"
+	],
 	"name" : "HiRulerLazyMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

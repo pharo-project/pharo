@@ -1,10 +1,10 @@
 {
-	"category" : "Shout-Parsing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2011 22:27",
+	"super" : "Object",
+	"category" : "Shout-Parsing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classOrMetaClass",
 		"source",
@@ -21,9 +21,8 @@
 		"bracketDepth",
 		"ranges",
 		"environment",
-		"isMethod" ],
+		"isMethod"
+	],
 	"name" : "SHParserST80",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

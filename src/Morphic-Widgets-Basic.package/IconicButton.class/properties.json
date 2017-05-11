@@ -1,17 +1,18 @@
 {
-	"category" : "Morphic-Widgets-Basic-Buttons",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"DefaultGraphics" ],
 	"commentStamp" : "<historical>",
+	"super" : "SimpleButtonMorph",
+	"category" : "Morphic-Widgets-Basic-Buttons",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"DefaultGraphics"
+	],
 	"instvars" : [
 		"graphicalMorph",
 		"oldBorder",
 		"oldBorderStyle",
-		"mouseOverBorderStyle" ],
+		"mouseOverBorderStyle"
+	],
 	"name" : "IconicButton",
-	"pools" : [
-		 ],
-	"super" : "SimpleButtonMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

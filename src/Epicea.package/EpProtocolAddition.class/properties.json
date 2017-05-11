@@ -1,14 +1,11 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:45",
-	"instvars" : [
-		 ],
-	"name" : "EpProtocolAddition",
-	"pools" : [
-		 ],
 	"super" : "EpProtocolChange",
-	"type" : "normal" }
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpProtocolAddition",
+	"type" : "normal"
+}

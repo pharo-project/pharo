@@ -1,21 +1,20 @@
 {
-	"category" : "Athens-Cairo-Paints",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TCairoLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
 		"r",
 		"g",
 		"b",
 		"a",
 		"origin",
-		"extent" ],
+		"extent"
+	],
 	"name" : "AthensCairoSolidPaint",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "AthensPaint",
 	"traitcomposition" : "TCairoLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Athens-Cairo-Paints"
+}

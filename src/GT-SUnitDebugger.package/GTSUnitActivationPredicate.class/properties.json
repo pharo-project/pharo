@@ -1,14 +1,11 @@
 {
-	"category" : "GT-SUnitDebugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 10:47",
-	"instvars" : [
-		 ],
-	"name" : "GTSUnitActivationPredicate",
-	"pools" : [
-		 ],
 	"super" : "GTDebuggerContextPredicate",
-	"type" : "normal" }
+	"category" : "GT-SUnitDebugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSUnitActivationPredicate",
+	"type" : "normal"
+}

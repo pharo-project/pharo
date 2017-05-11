@@ -1,15 +1,14 @@
 {
-	"category" : "Fuel-Clusters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FLCluster",
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"objects",
-		"references" ],
+		"references"
+	],
 	"name" : "FLIteratingCluster",
-	"pools" : [
-		 ],
-	"super" : "FLCluster",
-	"type" : "normal" }
+	"type" : "normal"
+}

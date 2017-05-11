@@ -1,15 +1,14 @@
 {
-	"category" : "Rubric-Editing-Code",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:22",
+	"super" : "RubTextEditor",
+	"category" : "Rubric-Editing-Code",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selectorChooser",
-		"notificationStrategy" ],
+		"notificationStrategy"
+	],
 	"name" : "RubSmalltalkEditor",
-	"pools" : [
-		 ],
-	"super" : "RubTextEditor",
-	"type" : "normal" }
+	"type" : "normal"
+}

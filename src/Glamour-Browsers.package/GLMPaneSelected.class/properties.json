@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Browsers-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 3/10/2015 21:59",
-	"instvars" : [
-		 ],
-	"name" : "GLMPaneSelected",
-	"pools" : [
-		 ],
 	"super" : "GLMPaneAnnouncement",
-	"type" : "normal" }
+	"category" : "Glamour-Browsers-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMPaneSelected",
+	"type" : "normal"
+}

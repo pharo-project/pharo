@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "yo 10/19/2004 19:08",
+	"super" : "Object",
 	"category" : "Multilingual-Encodings",
 	"classinstvars" : [
 		"compoundTextSequence",
-		"UcsTable" ],
+		"UcsTable"
+	],
+	"pools" : [ ],
 	"classvars" : [
-		"EncodedCharSets" ],
-	"commentStamp" : "yo 10/19/2004 19:08",
-	"instvars" : [
-		 ],
+		"EncodedCharSets"
+	],
+	"instvars" : [ ],
 	"name" : "EncodedCharSet",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

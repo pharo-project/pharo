@@ -1,14 +1,11 @@
 {
-	"category" : "Text-Edition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "SmalltalkEditor",
-	"pools" : [
-		 ],
 	"super" : "TextEditor",
-	"type" : "normal" }
+	"category" : "Text-Edition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SmalltalkEditor",
+	"type" : "normal"
+}

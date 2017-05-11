@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 9/25/2015 11:08",
-	"instvars" : [
-		 ],
-	"name" : "HookGeneratorForVariables",
-	"pools" : [
-		 ],
 	"super" : "HookGenerator",
-	"type" : "normal" }
+	"category" : "Reflectivity-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HookGeneratorForVariables",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "HelpSystem-Core-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 2/12/2010 14:54",
+	"super" : "Model",
+	"category" : "HelpSystem-Core-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"topicToBuild",
-		"rootToBuildFrom" ],
+		"rootToBuildFrom"
+	],
 	"name" : "HelpBuilder",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

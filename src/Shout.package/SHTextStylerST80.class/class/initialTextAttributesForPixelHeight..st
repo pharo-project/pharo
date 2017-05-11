@@ -1,4 +1,4 @@
-style table
+attributes
 initialTextAttributesForPixelHeight: aNumber 
 	| d |
 	d := IdentityDictionary new.

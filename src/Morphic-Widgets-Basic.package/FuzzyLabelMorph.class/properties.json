@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Widgets-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 13:16",
+	"super" : "LabelMorph",
+	"category" : "Morphic-Widgets-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"offset",
-		"alpha" ],
+		"alpha"
+	],
 	"name" : "FuzzyLabelMorph",
-	"pools" : [
-		 ],
-	"super" : "LabelMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

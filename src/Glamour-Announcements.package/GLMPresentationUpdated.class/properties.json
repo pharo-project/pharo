@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 2/20/2010 14:54",
-	"instvars" : [
-		"presentation" ],
-	"name" : "GLMPresentationUpdated",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Glamour-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"presentation"
+	],
+	"name" : "GLMPresentationUpdated",
+	"type" : "normal"
+}

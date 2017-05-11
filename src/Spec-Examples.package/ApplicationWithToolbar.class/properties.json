@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/26/2016 14:58",
+	"super" : "ComposableModel",
+	"category" : "Spec-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"menu",
-		"text" ],
+		"text"
+	],
 	"name" : "ApplicationWithToolbar",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

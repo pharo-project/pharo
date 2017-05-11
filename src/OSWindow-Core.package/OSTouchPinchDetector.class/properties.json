@@ -1,15 +1,16 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"MaxDistanceBetweenFingersLine" ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:24",
+	"super" : "OSTouchDirectionnalGestureDetector",
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"MaxDistanceBetweenFingersLine"
+	],
 	"instvars" : [
 		"maxDistanceBetweenFingersLine",
-		"fingersDistanceFromCenter" ],
+		"fingersDistanceFromCenter"
+	],
 	"name" : "OSTouchPinchDetector",
-	"pools" : [
-		 ],
-	"super" : "OSTouchDirectionnalGestureDetector",
-	"type" : "normal" }
+	"type" : "normal"
+}

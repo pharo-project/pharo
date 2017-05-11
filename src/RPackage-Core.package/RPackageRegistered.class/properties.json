@@ -1,14 +1,11 @@
 {
-	"category" : "RPackage-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "RPackageRegistered",
-	"pools" : [
-		 ],
 	"super" : "RPackageAnnouncement",
-	"type" : "normal" }
+	"category" : "RPackage-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RPackageRegistered",
+	"type" : "normal"
+}

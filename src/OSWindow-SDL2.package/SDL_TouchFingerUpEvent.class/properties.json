@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "jeanbaptistearnaud 2/26/2015 21:24",
-	"instvars" : [
-		 ],
-	"name" : "SDL_TouchFingerUpEvent",
-	"pools" : [
-		 ],
 	"super" : "SDL_TouchFingerEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-SDL2-Bindings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SDL_TouchFingerUpEvent",
+	"type" : "normal"
+}

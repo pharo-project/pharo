@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-Morphic-Renderer-Spotter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Notification",
+	"category" : "Glamour-Morphic-Renderer-Spotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"requests",
 		"prompt",
-		"default" ],
+		"default"
+	],
 	"name" : "GLMSpotterRequest",
-	"pools" : [
-		 ],
-	"super" : "Notification",
-	"type" : "normal" }
+	"type" : "normal"
+}

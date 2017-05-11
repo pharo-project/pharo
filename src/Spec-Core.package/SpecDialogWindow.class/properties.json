@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Core-Widgets-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "DialogWindow",
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"specWidget",
-		"toolbar" ],
+		"toolbar"
+	],
 	"name" : "SpecDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

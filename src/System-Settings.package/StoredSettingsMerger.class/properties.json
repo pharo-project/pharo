@@ -1,14 +1,13 @@
 {
-	"category" : "System-Settings-Persistence-Ston-StoredSettings-Builder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 10/1/2015 14:29",
-	"instvars" : [
-		"storedSettings" ],
-	"name" : "StoredSettingsMerger",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Settings-Persistence-Ston-StoredSettings-Builder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"storedSettings"
+	],
+	"name" : "StoredSettingsMerger",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Bitmap",
-	"pools" : [
-		 ],
 	"super" : "ArrayedCollection",
-	"type" : "words" }
+	"category" : "Graphics-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Bitmap",
+	"type" : "words"
+}

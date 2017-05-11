@@ -1,16 +1,13 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "FLTGlobalClassOrTraitSerializationTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "FLGlobalTraitSerializationTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "FLTraitSerializationTest",
 	"traitcomposition" : "FLTGlobalClassOrTraitSerializationTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "FuelTests"
+}

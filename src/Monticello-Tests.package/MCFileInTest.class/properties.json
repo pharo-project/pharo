@@ -1,16 +1,15 @@
 {
-	"category" : "Monticello-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MCTestCase",
+	"category" : "Monticello-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"expected",
-		"diff" ],
+		"diff"
+	],
 	"name" : "MCFileInTest",
-	"pools" : [
-		 ],
-	"super" : "MCTestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

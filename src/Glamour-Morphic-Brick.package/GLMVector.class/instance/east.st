@@ -1,0 +1,3 @@
+initialization
+east
+	direction := East

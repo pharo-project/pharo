@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-Resource-Meta-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 2/28/2011 15:23",
-	"instvars" : [
-		"port" ],
-	"name" : "ZnPortNotANumber",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "Zinc-Resource-Meta-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"port"
+	],
+	"name" : "ZnPortNotANumber",
+	"type" : "normal"
+}

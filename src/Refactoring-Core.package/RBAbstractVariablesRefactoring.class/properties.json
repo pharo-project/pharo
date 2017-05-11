@@ -1,10 +1,10 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 00:59",
+	"super" : "RBRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"tree",
 		"fromClass",
@@ -13,9 +13,8 @@
 		"classVarReaders",
 		"classVarWriters",
 		"toClasses",
-		"ignore" ],
+		"ignore"
+	],
 	"name" : "RBAbstractVariablesRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

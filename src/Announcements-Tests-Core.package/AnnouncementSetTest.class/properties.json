@@ -1,14 +1,11 @@
 {
-	"category" : "Announcements-Tests-Core-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:16",
-	"instvars" : [
-		 ],
-	"name" : "AnnouncementSetTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Announcements-Tests-Core-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AnnouncementSetTest",
+	"type" : "normal"
+}

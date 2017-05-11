@@ -1,14 +1,11 @@
 {
-	"category" : "FontInfrastructure",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tween 3/14/2007 22:59",
-	"instvars" : [
-		 ],
-	"name" : "FontProviderAbstract",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "FontInfrastructure",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FontProviderAbstract",
+	"type" : "normal"
+}

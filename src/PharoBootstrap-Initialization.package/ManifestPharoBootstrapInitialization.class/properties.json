@@ -1,14 +1,11 @@
 {
-	"category" : "PharoBootstrap-Initialization",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ManifestPharoBootstrapInitialization",
-	"pools" : [
-		 ],
 	"super" : "PackageManifest",
-	"type" : "normal" }
+	"category" : "PharoBootstrap-Initialization",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ManifestPharoBootstrapInitialization",
+	"type" : "normal"
+}

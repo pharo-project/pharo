@@ -16,38 +16,14 @@ testMetaclassAndTraitClassRespectsPolymorphismRules
 	environment postCopy -> the implementation for ClassTrait is in TBehavior
 	veryDeepCopyWith: -> the implementation for ClassTraits is in Object
 	fileOutOn: fileOutOn:initializing: -> the implementation for ClassTraits is in TClassDescription"
-	self
-		assert:
-			(Metaclass localSelectors difference: ClassTrait localSelectors) sorted
-				equals:
-					{#baseClass.
-					#basicLocalSelectors:.
-					#basicLocalSelectors.
-					#classClass.
-					#isClass.
-					#environment.
-					#fileOutOn:.
-					#fileOutOn:initializing:.
-					#postCopy.
-					#newAnonymousSubclass.
-					#traitComposition.
-					#traitComposition:.
-					#veryDeepCopyWith:.
-					#addSlot:} asSet asArray sort.	"initializeWithBaseTrait: asMCDefinition -> has no equivalent in classes
+
+	self assertCollection: (Metaclass localSelectors difference: ClassTrait localSelectors) sorted
+		equals: ((Pragma allNamed: #localMetaclassMethod in: Metaclass) collect: #methodSelector) sorted.
+
+	"initializeWithBaseTrait: asMCDefinition -> has no equivalent in classes
 	baseTrait isClassTrait classTrait baseTrait isBaseTrait classTrait: -> they have their equivalent for Metaclasses
 	compile:classified:withStamp:notifying:logSource: -> the implementation for Metaclasses is in TClassDescription
 	copy -> the implementation for Metaclasses is in Object"
-	self
-		assert:
-			(ClassTrait localSelectors difference: Metaclass localSelectors)
-				=
-					{#initializeWithBaseTrait:.
-					#asMCDefinition.
-					#baseTrait:.
-					#isClassTrait.
-					#classTrait.
-					#baseTrait.
-					#compile:classified:withStamp:notifying:logSource:.
-					#isBaseTrait.
-					#copy.
-					#classTrait:} asSet
+
+	self assertCollection: (ClassTrait localSelectors difference: Metaclass localSelectors) sorted
+		equals: ((Pragma allNamed: #localClassTraitMethod in: ClassTrait) collect: #methodSelector) sorted.

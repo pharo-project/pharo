@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FernandoOlivero 4/18/2012 13:59",
-	"instvars" : [
-		 ],
-	"name" : "AthensCairoSurfaceExamples",
-	"pools" : [
-		 ],
 	"super" : "AthensSurfaceExamples",
-	"type" : "normal" }
+	"category" : "Athens-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensCairoSurfaceExamples",
+	"type" : "normal"
+}

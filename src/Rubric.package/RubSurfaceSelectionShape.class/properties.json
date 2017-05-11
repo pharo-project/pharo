@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"color",
 		"borderColor",
@@ -12,9 +12,8 @@
 		"firstIndex",
 		"lastIndex",
 		"tag",
-		"vertices" ],
+		"vertices"
+	],
 	"name" : "RubSurfaceSelectionShape",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 4/8/2015 14:22",
+	"super" : "OSTouchComplexEvent",
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"dDist",
-		"direction" ],
+		"direction"
+	],
 	"name" : "OSTouchSwipeEvent",
-	"pools" : [
-		 ],
-	"super" : "OSTouchComplexEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

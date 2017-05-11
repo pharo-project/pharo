@@ -1,14 +1,11 @@
 {
-	"category" : "Compiler-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:21",
-	"instvars" : [
-		 ],
-	"name" : "LiteralDictionaryTest",
-	"pools" : [
-		 ],
 	"super" : "DictionaryTest",
-	"type" : "normal" }
+	"category" : "Compiler-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LiteralDictionaryTest",
+	"type" : "normal"
+}

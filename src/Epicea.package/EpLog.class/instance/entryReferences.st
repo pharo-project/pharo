@@ -1,0 +1,4 @@
+accessing
+entryReferences
+	
+	^ store entryReferences

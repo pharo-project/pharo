@@ -1,14 +1,13 @@
 {
-	"category" : "System-Localization-Translations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Current" ],
 	"commentStamp" : "TorstenBergmann 9/16/2014 14:49",
-	"instvars" : [
-		 ],
-	"name" : "NaturalLanguageTranslator",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "System-Localization-Translations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Current"
+	],
+	"instvars" : [ ],
+	"name" : "NaturalLanguageTranslator",
+	"type" : "normal"
+}

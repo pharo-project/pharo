@@ -1,18 +1,19 @@
 {
-	"category" : "HelpSystem-Core-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"DefaultHelpBrowser" ],
 	"commentStamp" : "tbn 3/8/2010 09:33",
+	"super" : "Model",
+	"category" : "HelpSystem-Core-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"DefaultHelpBrowser"
+	],
 	"instvars" : [
 		"rootTopic",
 		"window",
 		"treeMorph",
 		"helpTopicCache",
-		"sourceTextModel" ],
+		"sourceTextModel"
+	],
 	"name" : "HelpBrowser",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

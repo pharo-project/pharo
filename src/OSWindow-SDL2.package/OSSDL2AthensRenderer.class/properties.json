@@ -1,10 +1,12 @@
 {
-	"category" : "OSWindow-SDL2",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Matthieu 5/28/2015 12:10",
+	"super" : "OSWindowAthensRenderer",
+	"category" : "OSWindow-SDL2",
+	"classinstvars" : [ ],
+	"pools" : [
+		"SDL2Constants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"texture",
 		"renderer",
@@ -12,9 +14,8 @@
 		"pitch",
 		"sdlSurface",
 		"textureExtent",
-		"surfaceForm" ],
+		"surfaceForm"
+	],
 	"name" : "OSSDL2AthensRenderer",
-	"pools" : [
-		"SDL2Constants" ],
-	"super" : "OSWindowAthensRenderer",
-	"type" : "normal" }
+	"type" : "normal"
+}

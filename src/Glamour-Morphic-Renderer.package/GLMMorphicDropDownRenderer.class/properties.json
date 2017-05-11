@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Morphic-Renderer",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "GLMMorphicBrowserRenderer",
+	"category" : "Glamour-Morphic-Renderer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"listModel",
-		"dropDownMorph" ],
+		"dropDownMorph"
+	],
 	"name" : "GLMMorphicDropDownRenderer",
-	"pools" : [
-		 ],
-	"super" : "GLMMorphicBrowserRenderer",
-	"type" : "normal" }
+	"type" : "normal"
+}

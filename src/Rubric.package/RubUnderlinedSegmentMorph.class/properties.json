@@ -1,16 +1,15 @@
 {
-	"category" : "Rubric-Editing-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "RubTextSegmentMorph",
+	"category" : "Rubric-Editing-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"underlineColor",
 		"straight",
-		"underlineShape" ],
+		"underlineShape"
+	],
 	"name" : "RubUnderlinedSegmentMorph",
-	"pools" : [
-		 ],
-	"super" : "RubTextSegmentMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

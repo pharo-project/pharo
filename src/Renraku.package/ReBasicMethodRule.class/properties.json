@@ -1,14 +1,11 @@
 {
-	"category" : "Renraku-Deprecated",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 1/18/2016 17:04",
-	"instvars" : [
-		 ],
-	"name" : "ReBasicMethodRule",
-	"pools" : [
-		 ],
 	"super" : "ReAbstractRule",
-	"type" : "normal" }
+	"category" : "Renraku-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReBasicMethodRule",
+	"type" : "normal"
+}

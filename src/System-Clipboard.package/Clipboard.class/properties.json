@@ -1,15 +1,16 @@
 {
-	"category" : "System-Clipboard",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "AlainPlantec 1/15/2010 11:42",
+	"super" : "Object",
+	"category" : "System-Clipboard",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
 	"instvars" : [
 		"contents",
-		"recent" ],
+		"recent"
+	],
 	"name" : "Clipboard",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

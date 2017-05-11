@@ -1,14 +1,11 @@
 {
-	"category" : "Tests-UUID",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 10:12",
-	"instvars" : [
-		 ],
-	"name" : "UUIDTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Tests-UUID",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UUIDTest",
+	"type" : "normal"
+}

@@ -1,16 +1,17 @@
 {
-	"category" : "Text-Scanning",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 5/18/2010 16:00",
+	"super" : "Rectangle",
+	"category" : "Text-Scanning",
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"stringIndex",
 		"text",
-		"textLine" ],
+		"textLine"
+	],
 	"name" : "CharacterBlock",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Rectangle",
-	"type" : "normal" }
+	"type" : "normal"
+}

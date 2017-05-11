@@ -1,14 +1,11 @@
 {
-	"category" : "Renraku-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 8/23/2015 13:42",
-	"instvars" : [
-		 ],
-	"name" : "ReEntityCriticized",
-	"pools" : [
-		 ],
 	"super" : "ReMultipleCritiquesEvent",
-	"type" : "normal" }
+	"category" : "Renraku-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReEntityCriticized",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RonieSalgado 9/9/2016 18:08",
-	"instvars" : [
-		"toolbarBox" ],
-	"name" : "GLMOSWindowWorldMorph",
-	"pools" : [
-		 ],
 	"super" : "OSWindowWorldMorphWithModel",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"toolbarBox"
+	],
+	"name" : "GLMOSWindowWorldMorph",
+	"type" : "normal"
+}

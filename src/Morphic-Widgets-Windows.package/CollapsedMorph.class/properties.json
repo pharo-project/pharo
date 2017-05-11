@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-Windows-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "HenrikNergaard 10/30/2015 20:15",
-	"instvars" : [
-		"uncollapsedMorph" ],
-	"name" : "CollapsedMorph",
-	"pools" : [
-		 ],
 	"super" : "SystemWindow",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Windows-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"uncollapsedMorph"
+	],
+	"name" : "CollapsedMorph",
+	"type" : "normal"
+}

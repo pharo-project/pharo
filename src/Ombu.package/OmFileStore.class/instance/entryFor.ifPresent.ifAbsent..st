@@ -1,8 +1,8 @@
 accessing
 entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure
 
-	(aReference globalName = self globalName)
-		ifFalse: [ ^ absentBlockClosure value ].
+	(aReference isNull or: [ aReference globalName ~= self globalName])
+		ifTrue: [ ^ absentBlockClosure value ].
 
 	^ self entryByLocalName
 		at: aReference localName

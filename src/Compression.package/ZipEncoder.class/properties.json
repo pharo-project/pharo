@@ -1,16 +1,17 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:04",
+	"super" : "WriteStream",
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ZipConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"bitBuffer",
 		"bitPosition",
-		"encodedStream" ],
+		"encodedStream"
+	],
 	"name" : "ZipEncoder",
-	"pools" : [
-		"ZipConstants" ],
-	"super" : "WriteStream",
-	"type" : "normal" }
+	"type" : "normal"
+}

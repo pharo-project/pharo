@@ -1,14 +1,11 @@
 {
-	"category" : "BaselineOfPharoBootstrap",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PavelKrivanek 11/7/2016 15:56",
-	"instvars" : [
-		 ],
-	"name" : "BaselineOfPharoBootstrap",
-	"pools" : [
-		 ],
 	"super" : "BaselineOf",
-	"type" : "normal" }
+	"category" : "BaselineOfPharoBootstrap",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BaselineOfPharoBootstrap",
+	"type" : "normal"
+}

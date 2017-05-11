@@ -1,18 +1,17 @@
 {
-	"category" : "OpalCompiler-Core-IR-Manipulation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBer 10/14/2014 13:34",
+	"super" : "IRVisitor",
+	"category" : "OpalCompiler-Core-IR-Manipulation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"gen",
 		"currentScope",
 		"trailer",
 		"tempVectorStack",
-		"compilationContext" ],
+		"compilationContext"
+	],
 	"name" : "IRTranslatorV2",
-	"pools" : [
-		 ],
-	"super" : "IRVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

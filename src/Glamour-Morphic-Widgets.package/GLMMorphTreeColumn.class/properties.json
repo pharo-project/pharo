@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"glamourColumn" ],
-	"name" : "GLMMorphTreeColumn",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeColumn",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"glamourColumn"
+	],
+	"name" : "GLMMorphTreeColumn",
+	"type" : "normal"
+}

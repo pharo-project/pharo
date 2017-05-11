@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "",
+	"super" : "Object",
 	"category" : "Slot-Variables",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"PersistentTemps",
-		"Properties" ],
-	"commentStamp" : "",
+		"Properties"
+	],
 	"instvars" : [
 		"name",
 		"method",
-		"startpc" ],
+		"startpc"
+	],
 	"name" : "TemporaryVariable",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

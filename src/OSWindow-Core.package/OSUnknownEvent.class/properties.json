@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:25",
-	"instvars" : [
-		"data" ],
-	"name" : "OSUnknownEvent",
-	"pools" : [
-		 ],
 	"super" : "OSEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"data"
+	],
+	"name" : "OSUnknownEvent",
+	"type" : "normal"
+}

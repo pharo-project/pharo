@@ -1,14 +1,11 @@
 {
-	"category" : "UnifiedFFI-Types",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 9/2/2015 18:00",
-	"instvars" : [
-		 ],
-	"name" : "FFIFloat16",
-	"pools" : [
-		 ],
 	"super" : "FFIFloatType",
-	"type" : "normal" }
+	"category" : "UnifiedFFI-Types",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FFIFloat16",
+	"type" : "normal"
+}

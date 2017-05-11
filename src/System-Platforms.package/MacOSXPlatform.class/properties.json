@@ -1,14 +1,11 @@
 {
-	"category" : "System-Platforms",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MacOSXPlatform",
-	"pools" : [
-		 ],
 	"super" : "MacOSPlatform",
-	"type" : "normal" }
+	"category" : "System-Platforms",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MacOSXPlatform",
+	"type" : "normal"
+}

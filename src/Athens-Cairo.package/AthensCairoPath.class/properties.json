@@ -1,16 +1,13 @@
 {
-	"category" : "Athens-Cairo-Paths",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TCairoLibrary classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "AthensCairoPath",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "FFIExternalObject",
 	"traitcomposition" : "TCairoLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Athens-Cairo-Paths"
+}

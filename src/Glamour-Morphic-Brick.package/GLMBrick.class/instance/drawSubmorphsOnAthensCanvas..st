@@ -23,7 +23,7 @@ drawSubmorphsOnAthensCanvas: anAthensCanvas
 				
 			(area intersects: globalBounds) ifTrue: [
 				| zIndex |
-				zIndex := each layoutProperties zIndex.
+				zIndex := each layoutProperties zIndex brickValue: each.
 				zIndex = 1 ifTrue: [
 					"immediately draw ones with the lowest possible z-index.
 					With this approach performance doesn't degrade"
@@ -33,7 +33,7 @@ drawSubmorphsOnAthensCanvas: anAthensCanvas
 				ifFalse: [ zIndexedBricks add: each ] ] ] ].
 		
 		"z-index drawing section"
-		zIndexedBricks sort: [ :first :second | first layoutProperties zIndex < second layoutProperties zIndex ].
+		zIndexedBricks sort: [ :first :second | (first layoutProperties zIndex brickValue: first) < (second layoutProperties zIndex brickValue: second) ].
 		
 		zIndexedBricks do: [ :each |
 			| intersection globalBounds |

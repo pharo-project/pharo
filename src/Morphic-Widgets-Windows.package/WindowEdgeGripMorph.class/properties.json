@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Windows-Resizing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 9/23/2008 11:47",
-	"instvars" : [
-		 ],
-	"name" : "WindowEdgeGripMorph",
-	"pools" : [
-		 ],
 	"super" : "EdgeGripMorph",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Windows-Resizing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WindowEdgeGripMorph",
+	"type" : "normal"
+}

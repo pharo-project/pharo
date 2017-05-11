@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "SharedPool",
 	"category" : "Compression-Archives",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CentralDirectoryFileHeaderSignature",
 		"CompressionDeflated",
@@ -22,12 +24,9 @@
 		"FileAttrib",
 		"IfaBinaryFile",
 		"IfaTextFile",
-		"LocalFileHeaderSignature" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"LocalFileHeaderSignature"
+	],
+	"instvars" : [ ],
 	"name" : "ZipFileConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

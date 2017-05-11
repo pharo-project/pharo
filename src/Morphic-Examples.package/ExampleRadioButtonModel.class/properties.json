@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Examples-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 9/23/2008 11:58",
-	"instvars" : [
-		"option" ],
-	"name" : "ExampleRadioButtonModel",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Morphic-Examples-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"option"
+	],
+	"name" : "ExampleRadioButtonModel",
+	"type" : "normal"
+}

@@ -1,18 +1,17 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:20",
+	"super" : "BagTest",
+	"category" : "Collections-Tests-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"equalNotIdenticalElement",
 		"elementToCopy",
 		"identityBagNonEmptyNoDuplicate5Elements",
 		"elementAlreadyIncluded",
-		"identityBagWithoutElement" ],
+		"identityBagWithoutElement"
+	],
 	"name" : "IdentityBagTest",
-	"pools" : [
-		 ],
-	"super" : "BagTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

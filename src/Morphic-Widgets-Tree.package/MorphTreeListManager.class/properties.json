@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:30",
+	"super" : "Object",
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keystrokeActionSelector",
 		"multipleSelection",
@@ -24,9 +24,8 @@
 		"autoTargetMorph",
 		"selectedMorphList",
 		"removeOnlyLastSelected",
-		"doubleClickSelector" ],
+		"doubleClickSelector"
+	],
 	"name" : "MorphTreeListManager",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

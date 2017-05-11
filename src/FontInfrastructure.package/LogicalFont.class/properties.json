@@ -1,10 +1,12 @@
 {
+	"commentStamp" : "LaurentLaffont 6/8/2011 22:20",
+	"super" : "AbstractFont",
 	"category" : "FontInfrastructure",
 	"classinstvars" : [
-		"all" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "LaurentLaffont 6/8/2011 22:20",
+		"all"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"realFont",
 		"emphasis",
@@ -17,9 +19,8 @@
 		"derivatives",
 		"boldDerivative",
 		"italicDerivative",
-		"boldItalicDerivative" ],
+		"boldItalicDerivative"
+	],
 	"name" : "LogicalFont",
-	"pools" : [
-		 ],
-	"super" : "AbstractFont",
-	"type" : "normal" }
+	"type" : "normal"
+}

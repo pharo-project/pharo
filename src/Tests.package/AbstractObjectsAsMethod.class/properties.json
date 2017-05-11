@@ -1,14 +1,11 @@
 {
-	"category" : "Tests-ObjectsAsMethods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "AbstractObjectsAsMethod",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Tests-ObjectsAsMethods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AbstractObjectsAsMethod",
+	"type" : "normal"
+}

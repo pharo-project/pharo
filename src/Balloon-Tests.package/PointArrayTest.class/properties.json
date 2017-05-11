@@ -1,14 +1,13 @@
 {
-	"category" : "Balloon-Tests-Collections",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 3/25/2011 15:06",
-	"instvars" : [
-		"pointArray" ],
-	"name" : "PointArrayTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Balloon-Tests-Collections",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"pointArray"
+	],
+	"name" : "PointArrayTest",
+	"type" : "normal"
+}

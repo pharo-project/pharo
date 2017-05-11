@@ -1,10 +1,10 @@
 {
-	"category" : "SUnit-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Model",
+	"category" : "SUnit-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"classes",
 		"classIndex",
@@ -21,9 +21,8 @@
 		"packages",
 		"packagesSelected",
 		"packagePattern",
-		"packageIndex" ],
+		"packageIndex"
+	],
 	"name" : "TestRunner",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

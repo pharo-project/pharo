@@ -15,9 +15,9 @@ variablesIn: composite
 					on: Error 
 					do: [ displayValue := Text string: aNode errorMessage attribute: TextColor red ].
 				displayValue ifNil: [ GTObjectPrinter asTruncatedTextFrom: rawValue ] ]
-			"modified: [:newValue :editedNode :curentPresentation | 
+			modified: [ :newValue :editedNode :curentPresentation | 
 				self updateVariableNode: editedNode basedOn: newValue.
-				curentPresentation requestRefresh ]";
+				curentPresentation requestRefresh ];
 		morphicSelectionAct: [:list | list selection value browse ] 
 			icon: GLMUIThemeExtraIcons glamorousBrowse 
 			on: $b 

@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "OCUndeclaredVariableWarning",
-	"pools" : [
-		 ],
 	"super" : "OCSemanticWarning",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OCUndeclaredVariableWarning",
+	"type" : "normal"
+}

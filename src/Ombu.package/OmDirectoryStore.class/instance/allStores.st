@@ -1,4 +1,0 @@
-accessing
-allStores
-
-	^ compositeStore allStores

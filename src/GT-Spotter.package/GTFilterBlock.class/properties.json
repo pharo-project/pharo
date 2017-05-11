@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Spotter-Filters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"matcher" ],
-	"name" : "GTFilterBlock",
-	"pools" : [
-		 ],
 	"super" : "GTUnorderedFilter",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"matcher"
+	],
+	"name" : "GTFilterBlock",
+	"type" : "normal"
+}

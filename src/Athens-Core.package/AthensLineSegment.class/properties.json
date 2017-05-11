@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Core-Paths",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"point" ],
-	"name" : "AthensLineSegment",
-	"pools" : [
-		 ],
 	"super" : "AthensPathSegment",
-	"type" : "normal" }
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"point"
+	],
+	"name" : "AthensLineSegment",
+	"type" : "normal"
+}

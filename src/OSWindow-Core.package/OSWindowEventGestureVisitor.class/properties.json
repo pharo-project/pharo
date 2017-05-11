@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 7/23/2015 10:56",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowEventGestureVisitor",
-	"pools" : [
-		 ],
 	"super" : "OSWindowEventVisitor",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowEventGestureVisitor",
+	"type" : "normal"
+}

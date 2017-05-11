@@ -1,15 +1,14 @@
 {
-	"category" : "AST-Core-Tokens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 8/9/2005 14:52",
+	"super" : "RBValueToken",
+	"category" : "AST-Core-Tokens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stopPosition",
-		"source" ],
+		"source"
+	],
 	"name" : "RBLiteralToken",
-	"pools" : [
-		 ],
-	"super" : "RBValueToken",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "Kernel-Tests-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBera 1/27/2017 13:23",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"aCompiledMethod",
 		"aReceiver",
 		"aMethodContext",
-		"aSender" ],
+		"aSender"
+	],
 	"name" : "ContextTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

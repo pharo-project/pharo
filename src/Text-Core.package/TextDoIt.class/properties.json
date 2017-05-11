@@ -1,14 +1,13 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 12:16",
-	"instvars" : [
-		"evalString" ],
-	"name" : "TextDoIt",
-	"pools" : [
-		 ],
 	"super" : "TextAction",
-	"type" : "normal" }
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"evalString"
+	],
+	"name" : "TextDoIt",
+	"type" : "normal"
+}

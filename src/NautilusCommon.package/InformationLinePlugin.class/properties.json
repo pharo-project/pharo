@@ -1,14 +1,13 @@
 {
-	"category" : "NautilusCommon-Plugin",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Stef 7/8/2015 10:33",
-	"instvars" : [
-		"morph" ],
-	"name" : "InformationLinePlugin",
-	"pools" : [
-		 ],
 	"super" : "AbstractNautilusPlugin",
-	"type" : "normal" }
+	"category" : "NautilusCommon-Plugin",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"morph"
+	],
+	"name" : "InformationLinePlugin",
+	"type" : "normal"
+}

@@ -1,17 +1,20 @@
 {
-	"category" : "System-VMEvents",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"ButtonDecodeTable" ],
 	"commentStamp" : "michael.rueger 4/22/2009 11:59",
+	"super" : "InputEventHandler",
+	"category" : "System-VMEvents",
+	"classinstvars" : [ ],
+	"pools" : [
+		"EventSensorConstants"
+	],
+	"classvars" : [
+		"ButtonDecodeTable"
+	],
 	"instvars" : [
 		"eventQueue",
 		"modifiers",
 		"mouseButtons",
-		"mousePosition" ],
+		"mousePosition"
+	],
 	"name" : "InputEventSensor",
-	"pools" : [
-		"EventSensorConstants" ],
-	"super" : "InputEventHandler",
-	"type" : "normal" }
+	"type" : "normal"
+}

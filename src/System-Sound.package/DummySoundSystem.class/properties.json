@@ -1,14 +1,11 @@
 {
-	"category" : "System-Sound",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "DummySoundSystem",
-	"pools" : [
-		 ],
 	"super" : "SoundSystem",
-	"type" : "normal" }
+	"category" : "System-Sound",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DummySoundSystem",
+	"type" : "normal"
+}

@@ -21,4 +21,4 @@ writeClassDefinition: definition
     properties at: 'classinstvars' put: definition classInstVarNames asArray.
     properties at: 'type' put: definition type asString.
     properties at: 'commentStamp' put: definition commentStamp.
-    properties writeCypressJsonOn: fileStream
+    STON put: properties asJsonOnStreamPretty: fileStream

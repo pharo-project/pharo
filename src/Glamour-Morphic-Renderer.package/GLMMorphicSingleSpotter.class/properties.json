@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Morphic-Renderer-Spotter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "DialogWindow",
+	"category" : "Glamour-Morphic-Renderer-Spotter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textMorph",
 		"text",
@@ -13,9 +13,8 @@
 		"listLabels",
 		"listIndex",
 		"answer",
-		"parent" ],
+		"parent"
+	],
 	"name" : "GLMMorphicSingleSpotter",
-	"pools" : [
-		 ],
-	"super" : "DialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

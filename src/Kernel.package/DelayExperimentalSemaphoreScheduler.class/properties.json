@@ -1,15 +1,14 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenComan 3/25/2015 22:17",
+	"super" : "DelayMicrosecondScheduler",
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"scheduledDelayIsNil",
-		"finishedDelayIsNil" ],
+		"finishedDelayIsNil"
+	],
 	"name" : "DelayExperimentalSemaphoreScheduler",
-	"pools" : [
-		 ],
-	"super" : "DelayMicrosecondScheduler",
-	"type" : "normal" }
+	"type" : "normal"
+}

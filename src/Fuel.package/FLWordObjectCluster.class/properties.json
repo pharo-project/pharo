@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Clusters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarianoMartinezPeck 9/6/2011 22:50",
-	"instvars" : [
-		 ],
-	"name" : "FLWordObjectCluster",
-	"pools" : [
-		 ],
 	"super" : "FLBitsObjectCluster",
-	"type" : "normal" }
+	"category" : "Fuel-Clusters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLWordObjectCluster",
+	"type" : "normal"
+}

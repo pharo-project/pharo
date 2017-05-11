@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "PackageTreeTagSelection",
-	"pools" : [
-		 ],
 	"super" : "PackageTreePackageSelection",
-	"type" : "normal" }
+	"category" : "Nautilus-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PackageTreeTagSelection",
+	"type" : "normal"
+}

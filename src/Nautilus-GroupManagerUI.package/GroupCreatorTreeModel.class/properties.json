@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus-GroupManagerUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:13",
-	"instvars" : [
-		"model" ],
-	"name" : "GroupCreatorTreeModel",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"category" : "Nautilus-GroupManagerUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"model"
+	],
+	"name" : "GroupCreatorTreeModel",
+	"type" : "normal"
+}

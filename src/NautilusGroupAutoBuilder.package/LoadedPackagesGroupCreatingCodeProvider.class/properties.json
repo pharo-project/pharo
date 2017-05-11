@@ -1,14 +1,11 @@
 {
-	"category" : "NautilusGroupAutoBuilder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 8/13/2015 16:00",
-	"instvars" : [
-		 ],
-	"name" : "LoadedPackagesGroupCreatingCodeProvider",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "NautilusGroupAutoBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LoadedPackagesGroupCreatingCodeProvider",
+	"type" : "normal"
+}

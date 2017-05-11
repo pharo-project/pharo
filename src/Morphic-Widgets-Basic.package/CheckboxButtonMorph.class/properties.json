@@ -1,19 +1,18 @@
 {
-	"category" : "Morphic-Widgets-Basic-Buttons",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TEnableOnHaloMenu classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "gvc 5/23/2007 12:19",
+	"classvars" : [ ],
 	"instvars" : [
 		"repressedImage",
 		"enabled",
 		"isRadioButton",
-		"images" ],
+		"images"
+	],
 	"name" : "CheckboxButtonMorph",
-	"pools" : [
-		 ],
+	"commentStamp" : "gvc 5/23/2007 12:19",
 	"super" : "ThreePhaseButtonMorph",
 	"traitcomposition" : "TEnableOnHaloMenu",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Morphic-Widgets-Basic-Buttons"
+}

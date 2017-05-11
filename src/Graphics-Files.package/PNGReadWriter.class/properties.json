@@ -1,15 +1,17 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "ImageReadWriter",
 	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BPP",
 		"BlockHeight",
 		"BlockWidth",
 		"Debugging",
 		"StandardColors",
-		"StandardSwizzleMaps" ],
-	"commentStamp" : "<historical>",
+		"StandardSwizzleMaps"
+	],
 	"instvars" : [
 		"chunk",
 		"form",
@@ -31,9 +33,8 @@
 		"transparentPixelValue",
 		"filtersSeen",
 		"cachedDecoderMap",
-		"bigEndian" ],
+		"bigEndian"
+	],
 	"name" : "PNGReadWriter",
-	"pools" : [
-		 ],
-	"super" : "ImageReadWriter",
-	"type" : "normal" }
+	"type" : "normal"
+}

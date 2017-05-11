@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"allowJoinClicks" ],
-	"name" : "MergeDiffMorph",
-	"pools" : [
-		 ],
 	"super" : "DiffMorph",
-	"type" : "normal" }
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"allowJoinClicks"
+	],
+	"name" : "MergeDiffMorph",
+	"type" : "normal"
+}

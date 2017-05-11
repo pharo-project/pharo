@@ -1,5 +1,5 @@
 accessing
-hintText: anObject
-	hintText := anObject.
-	
+hintText: aBrick
+	hintText := aBrick.
+
 	self hintBrick ifNotNil: [ self hintBrick text: self hintText ]

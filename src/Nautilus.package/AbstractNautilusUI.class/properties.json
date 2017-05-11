@@ -1,12 +1,14 @@
 {
+	"commentStamp" : "FranckWarlouzet 6/17/2015 10:37",
+	"super" : "AbstractTool",
 	"category" : "Nautilus",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"NextFocusKey",
 		"PackagesIconsCache",
-		"PreviousFocusKey" ],
-	"commentStamp" : "FranckWarlouzet 6/17/2015 10:37",
+		"PreviousFocusKey"
+	],
 	"instvars" : [
 		"model",
 		"window",
@@ -22,9 +24,8 @@
 		"sourceTextModel",
 		"methodClassifier",
 		"commentTextModel",
-		"instanceButtonWidget" ],
+		"instanceButtonWidget"
+	],
 	"name" : "AbstractNautilusUI",
-	"pools" : [
-		 ],
-	"super" : "AbstractTool",
-	"type" : "normal" }
+	"type" : "normal"
+}

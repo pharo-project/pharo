@@ -1,10 +1,10 @@
 {
-	"category" : "System-Hashing-Checksums",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Checksum",
+	"category" : "System-Hashing-Checksums",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"width",
 		"polynome",
@@ -17,9 +17,8 @@
 		"shouldReflectInput",
 		"message",
 		"runMethodSelector",
-		"lowestByteShift" ],
+		"lowestByteShift"
+	],
 	"name" : "CRC",
-	"pools" : [
-		 ],
-	"super" : "Checksum",
-	"type" : "normal" }
+	"type" : "normal"
+}

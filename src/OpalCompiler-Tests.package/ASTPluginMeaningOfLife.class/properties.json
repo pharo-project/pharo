@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Tests-Plugins",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 2/28/2015 15:54",
-	"instvars" : [
-		 ],
-	"name" : "ASTPluginMeaningOfLife",
-	"pools" : [
-		 ],
 	"super" : "OCCompilerASTPlugin",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-Plugins",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ASTPluginMeaningOfLife",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Tools-Test-Debugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 1/8/2016 15:52",
-	"instvars" : [
-		 ],
-	"name" : "SpecDebuggerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Tools-Test-Debugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecDebuggerTest",
+	"type" : "normal"
+}

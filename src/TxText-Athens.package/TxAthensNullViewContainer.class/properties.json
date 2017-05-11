@@ -1,14 +1,11 @@
 {
-	"category" : "TxText-Athens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 9/18/2014 17:39",
-	"instvars" : [
-		 ],
-	"name" : "TxAthensNullViewContainer",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "TxText-Athens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxAthensNullViewContainer",
+	"type" : "normal"
+}

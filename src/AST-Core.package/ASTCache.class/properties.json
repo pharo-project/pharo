@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "WeakIdentityKeyDictionary",
 	"category" : "AST-Core-Parser",
 	"classinstvars" : [
-		"default" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"default"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "ASTCache",
-	"pools" : [
-		 ],
-	"super" : "WeakIdentityKeyDictionary",
-	"type" : "normal" }
+	"type" : "normal"
+}

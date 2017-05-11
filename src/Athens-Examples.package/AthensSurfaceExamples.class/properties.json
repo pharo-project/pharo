@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 1/17/2012 16:42",
-	"instvars" : [
-		"renderBlock" ],
-	"name" : "AthensSurfaceExamples",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Athens-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"renderBlock"
+	],
+	"name" : "AthensSurfaceExamples",
+	"type" : "normal"
+}

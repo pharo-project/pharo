@@ -1,17 +1,16 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/6/2016 14:30",
+	"super" : "RBMethodRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"sourceInterval",
 		"selector",
 		"newVariableName",
-		"parseTree" ],
+		"parseTree"
+	],
 	"name" : "RBExtractToTemporaryRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBMethodRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

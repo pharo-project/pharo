@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Widgets-Tree-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:25",
-	"instvars" : [
-		 ],
-	"name" : "MorphTreeAnnounce",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-Tree-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphTreeAnnounce",
+	"type" : "normal"
+}

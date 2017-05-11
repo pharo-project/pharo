@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "",
+	"super" : "Object",
 	"category" : "Glamour-Morphic-Brick-Utils",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Bottom",
 		"Left",
 		"Right",
-		"Top" ],
-	"commentStamp" : "",
+		"Top"
+	],
 	"instvars" : [
 		"width",
-		"color" ],
+		"color"
+	],
 	"name" : "GLMBrickBorder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

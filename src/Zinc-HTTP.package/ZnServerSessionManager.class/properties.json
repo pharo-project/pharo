@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-HTTP-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"sessions" ],
-	"name" : "ZnServerSessionManager",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"sessions"
+	],
+	"name" : "ZnServerSessionManager",
+	"type" : "normal"
+}

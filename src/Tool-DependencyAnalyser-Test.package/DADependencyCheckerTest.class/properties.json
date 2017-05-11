@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-DependencyAnalyser-Test",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"checker" ],
-	"name" : "DADependencyCheckerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"checker"
+	],
+	"name" : "DADependencyCheckerTest",
+	"type" : "normal"
+}

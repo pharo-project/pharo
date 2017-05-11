@@ -1,14 +1,11 @@
 {
-	"category" : "AST-Core-Tokens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "md 8/9/2005 14:51",
-	"instvars" : [
-		 ],
-	"name" : "RBBinarySelectorToken",
-	"pools" : [
-		 ],
 	"super" : "RBValueToken",
-	"type" : "normal" }
+	"category" : "AST-Core-Tokens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBBinarySelectorToken",
+	"type" : "normal"
+}

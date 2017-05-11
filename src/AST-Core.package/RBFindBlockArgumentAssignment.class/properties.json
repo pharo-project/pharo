@@ -1,15 +1,14 @@
 {
-	"category" : "AST-Core-Visitors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/23/2014 21:19",
+	"super" : "RBProgramNodeVisitor",
+	"category" : "AST-Core-Visitors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"arguments",
-		"argumentAssignments" ],
+		"argumentAssignments"
+	],
 	"name" : "RBFindBlockArgumentAssignment",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

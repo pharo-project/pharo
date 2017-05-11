@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Unordered",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CyrilFerlicot 11/1/2015 02:45",
-	"instvars" : [
-		 ],
-	"name" : "Dictionary",
-	"pools" : [
-		 ],
 	"super" : "HashedCollection",
-	"type" : "normal" }
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Dictionary",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Tests-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"finalizationAction" ],
-	"name" : "MockFinalizerAction",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"finalizationAction"
+	],
+	"name" : "MockFinalizerAction",
+	"type" : "normal"
+}

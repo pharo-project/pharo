@@ -1,18 +1,19 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "PolygonMorph",
 	"category" : "Morphic-Base-Widgets",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BalloonColor",
-		"BalloonFont" ],
-	"commentStamp" : "<historical>",
+		"BalloonFont"
+	],
 	"instvars" : [
 		"target",
 		"offsetFromTarget",
 		"balloonOwner",
-		"balloonColor" ],
+		"balloonColor"
+	],
 	"name" : "BalloonMorph",
-	"pools" : [
-		 ],
-	"super" : "PolygonMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

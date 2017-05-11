@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"hierarchy" ],
-	"name" : "SortHierarchically",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Nautilus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hierarchy"
+	],
+	"name" : "SortHierarchically",
+	"type" : "normal"
+}

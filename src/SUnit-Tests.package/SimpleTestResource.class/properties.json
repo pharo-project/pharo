@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "TorstenBergmann 2/12/2014 23:13",
+	"super" : "TestResource",
 	"category" : "SUnit-Tests-Core",
 	"classinstvars" : [
-		"preventAvailability" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/12/2014 23:13",
+		"preventAvailability"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"runningState",
 		"hasRun",
-		"hasSetup" ],
+		"hasSetup"
+	],
 	"name" : "SimpleTestResource",
-	"pools" : [
-		 ],
-	"super" : "TestResource",
-	"type" : "normal" }
+	"type" : "normal"
+}

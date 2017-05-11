@@ -1,11 +1,6 @@
 {
-	"category" : "Kernel-Classes",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TClass classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+	"classvars" : [ ],
 	"instvars" : [
 		"subclasses",
 		"name",
@@ -14,10 +9,14 @@
 		"environment",
 		"category",
 		"traitComposition",
-		"localSelectors" ],
+		"localSelectors"
+	],
 	"name" : "Class",
-	"pools" : [
-		 ],
+	"commentStamp" : "<historical>",
 	"super" : "ClassDescription",
 	"traitcomposition" : "TClass",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Kernel-Classes"
+}

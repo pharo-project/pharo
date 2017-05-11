@@ -1,14 +1,13 @@
 {
-	"category" : "Slot-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"compactClassIndex" ],
-	"name" : "ObjectLayout",
-	"pools" : [
-		 ],
 	"super" : "AbstractLayout",
-	"type" : "normal" }
+	"category" : "Slot-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"compactClassIndex"
+	],
+	"name" : "ObjectLayout",
+	"type" : "normal"
+}

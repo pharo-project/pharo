@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMTreeBrick",
-	"pools" : [
-		 ],
 	"super" : "GLMBandBrick",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Widgets-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMTreeBrick",
+	"type" : "normal"
+}

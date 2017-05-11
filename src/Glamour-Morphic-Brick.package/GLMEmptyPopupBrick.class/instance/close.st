@@ -1,4 +1,6 @@
-opening
+popup - opening
 close
-
-	self foundationBrick delete
+	"Close popup and remove it from the world"
+	
+	self foundationBrick delete.
+	self onClosed

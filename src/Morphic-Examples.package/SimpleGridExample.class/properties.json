@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Examples-MorphTreeWidget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 2/1/2010 11:58",
-	"instvars" : [
-		 ],
-	"name" : "SimpleGridExample",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"category" : "Morphic-Examples-MorphTreeWidget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SimpleGridExample",
+	"type" : "normal"
+}

@@ -3,8 +3,10 @@
 mkdir vm
 cd vm
 echo `pwd`
-wget http://files.pharo.org/vm/pharo-spur${BOOTSTRAP_ARCH}/linux/latest.zip
-unzip latest.zip
-wget http://files.pharo.org/sources/PharoV50.sources.zip
-unzip PharoV50.sources.zip
+
+if [ ${BOOTSTRAP_ARCH} = "64" ]; then
+	ARCHFLAG=64/
+fi
+
+wget -O- get.pharo.org/${ARCHFLAG}vm60 | bash
 cd ..

@@ -1,14 +1,11 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:37",
-	"instvars" : [
-		 ],
-	"name" : "RubLineNumberDisplayer",
-	"pools" : [
-		 ],
 	"super" : "RubScrolledTextSideRuler",
-	"type" : "normal" }
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RubLineNumberDisplayer",
+	"type" : "normal"
+}

@@ -10,8 +10,12 @@ specificTableMorphInitializiation
 		ifTrue: [ tableMorph enableSearch ].
 	presentation isFilterable
 		ifTrue: [ presentation needActionButton
-				ifTrue: [ tableMorph enableFilterWithAction: presentation actionBlock named: presentation actionName ]
-				ifFalse: [ tableMorph enableFilter ] ].
+			ifTrue: [ tableMorph 
+				enableFilterWithAction: presentation actionBlock named: presentation actionName ]
+			ifFalse: [ 
+				presentation hasFilterBlock 
+					ifTrue: [ tableMorph enableFilter: (GLMFilterBlock block: presentation filterBlock) ]
+					ifFalse: [ tableMorph enableFilter ] ] ].
 	(presentation isFilterable or: [ presentation isSearchable ])
 		ifFalse: [ tableMorph disableFunction ]
 		ifTrue: [ tableMorph explicitFunction ]

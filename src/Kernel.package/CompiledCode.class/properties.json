@@ -1,17 +1,16 @@
 {
+	"commentStamp" : "ClementBera 5/23/2016 11:00",
+	"super" : "ByteArray",
 	"category" : "Kernel-Methods",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"LargeFrame",
 		"PrimaryBytecodeSetEncoderClass",
 		"SecondaryBytecodeSetEncoderClass",
-		"SmallFrame" ],
-	"commentStamp" : "ClementBera 5/23/2016 11:00",
-	"instvars" : [
-		 ],
+		"SmallFrame"
+	],
+	"instvars" : [ ],
 	"name" : "CompiledCode",
-	"pools" : [
-		 ],
-	"super" : "ByteArray",
-	"type" : "compiledMethod" }
+	"type" : "compiledMethod"
+}

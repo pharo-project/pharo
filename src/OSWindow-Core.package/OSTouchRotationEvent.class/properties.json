@@ -1,14 +1,13 @@
 {
-	"category" : "OSWindow-Core-Events-Touch",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 4/8/2015 14:27",
-	"instvars" : [
-		"dTheta" ],
-	"name" : "OSTouchRotationEvent",
-	"pools" : [
-		 ],
 	"super" : "OSTouchComplexEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events-Touch",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dTheta"
+	],
+	"name" : "OSTouchRotationEvent",
+	"type" : "normal"
+}

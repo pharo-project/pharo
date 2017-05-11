@@ -5,6 +5,7 @@ testScrolling
 	"
 	| myMorph pane t |
 	window := SystemWindow labelled: 'foo'.
+	window extent: 300@200.
 	myMorph := Morph new.
 	myMorph extent: 10000000000@1000000000.
 	pane := ScrollPane new.

@@ -1,19 +1,20 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Stream",
 	"category" : "Network-Mail",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CSNonAtom",
 		"CSNonSeparators",
 		"CSParens",
-		"CSSpecials" ],
-	"commentStamp" : "<historical>",
+		"CSSpecials"
+	],
 	"instvars" : [
 		"cachedToken",
 		"text",
-		"pos" ],
+		"pos"
+	],
 	"name" : "MailAddressTokenizer",
-	"pools" : [
-		 ],
-	"super" : "Stream",
-	"type" : "normal" }
+	"type" : "normal"
+}

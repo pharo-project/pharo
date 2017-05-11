@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "StephaneDucasse 11/24/2015 19:16",
+	"super" : "Model",
 	"category" : "Komitter-Models",
 	"classinstvars" : [
-		"lastMessage" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "StephaneDucasse 11/24/2015 19:16",
+		"lastMessage"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stagingArea",
 		"lastCommit",
-		"view" ],
+		"view"
+	],
 	"name" : "Komitter",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

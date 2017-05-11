@@ -1,3 +1,4 @@
 accessing
 behaviorAffectedName
-	^ self behaviorAffected ifNotNil:#name
+
+	^ self behaviorAffected ifNotNil: #name

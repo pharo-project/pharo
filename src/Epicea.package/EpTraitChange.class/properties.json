@@ -1,14 +1,11 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:46",
-	"instvars" : [
-		 ],
-	"name" : "EpTraitChange",
-	"pools" : [
-		 ],
 	"super" : "EpBehaviorChange",
-	"type" : "normal" }
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpTraitChange",
+	"type" : "normal"
+}

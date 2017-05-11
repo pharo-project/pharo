@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Tests-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:22",
+	"super" : "DictionaryTest",
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"keys",
-		"dict" ],
+		"dict"
+	],
 	"name" : "WeakKeyDictionaryTest",
-	"pools" : [
-		 ],
-	"super" : "DictionaryTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

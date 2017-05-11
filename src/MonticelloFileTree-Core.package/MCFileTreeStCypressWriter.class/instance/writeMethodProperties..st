@@ -11,4 +11,4 @@ writeMethodProperties: classMethodDefinitions
             (methodDefinition classIsMeta
                 ifTrue: [ classMethodsMap ]
                 ifFalse: [ instanceMethodMap ]) at: methodDefinition selector asString put: methodDefinition timeStamp ].
-    properties writeCypressJsonOn: fileStream
+    STON put: properties asJsonOnStreamPretty: fileStream

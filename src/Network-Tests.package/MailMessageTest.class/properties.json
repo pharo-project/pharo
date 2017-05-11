@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Tests-Mail",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 10:12",
-	"instvars" : [
-		 ],
-	"name" : "MailMessageTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Network-Tests-Mail",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MailMessageTest",
+	"type" : "normal"
+}

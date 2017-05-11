@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-SpecIntegration",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 1/18/2017 16:34",
+	"super" : "ComposableModel",
+	"category" : "Glamour-SpecIntegration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"presentation",
-		"glmPres" ],
+		"glmPres"
+	],
 	"name" : "GlamourPresentationModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

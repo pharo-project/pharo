@@ -1,10 +1,14 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"VerboseLevel" ],
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:03",
+	"super" : "DeflateStream",
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ZipConstants"
+	],
+	"classvars" : [
+		"VerboseLevel"
+	],
 	"instvars" : [
 		"literals",
 		"distances",
@@ -15,9 +19,8 @@
 		"encoder",
 		"crc",
 		"crcPosition",
-		"bytesWritten" ],
+		"bytesWritten"
+	],
 	"name" : "ZipWriteStream",
-	"pools" : [
-		"ZipConstants" ],
-	"super" : "DeflateStream",
-	"type" : "normal" }
+	"type" : "normal"
+}

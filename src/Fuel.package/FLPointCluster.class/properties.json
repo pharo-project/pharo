@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Clusters-Optionals",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarianoMartinezPeck 9/8/2011 22:33",
-	"instvars" : [
-		 ],
-	"name" : "FLPointCluster",
-	"pools" : [
-		 ],
 	"super" : "FLOptimizedObjectCluster",
-	"type" : "normal" }
+	"category" : "Fuel-Clusters-Optionals",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLPointCluster",
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mvl 3/18/2007 08:48",
+	"super" : "Dictionary",
+	"category" : "Collections-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"expired",
-		"finalizer" ],
+		"finalizer"
+	],
 	"name" : "WeakKeyDictionary",
-	"pools" : [
-		 ],
-	"super" : "Dictionary",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-List",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 1/7/2010 22:16",
+	"super" : "StringMorph",
+	"category" : "Morphic-Widgets-List",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"indentLevel",
 		"isExpanded",
@@ -12,9 +12,8 @@
 		"firstChild",
 		"container",
 		"nextSibling",
-		"icon" ],
+		"icon"
+	],
 	"name" : "IndentingListItemMorph",
-	"pools" : [
-		 ],
-	"super" : "StringMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

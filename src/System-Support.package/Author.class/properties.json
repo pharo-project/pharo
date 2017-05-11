@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "MiguelCoba 7/25/2009 01:09",
+	"super" : "Object",
 	"category" : "System-Support",
 	"classinstvars" : [
-		"uniqueInstance" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "MiguelCoba 7/25/2009 01:09",
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"fullName" ],
+		"fullName"
+	],
 	"name" : "Author",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

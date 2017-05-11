@@ -1,15 +1,14 @@
 {
-	"category" : "Tests-SystemChangeNotification",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Tests-SystemChangeNotification",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"oldSystemAnnouncer",
-		"factory" ],
+		"factory"
+	],
 	"name" : "SystemAnnouncerTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

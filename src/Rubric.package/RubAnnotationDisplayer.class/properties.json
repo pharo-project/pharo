@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:37",
+	"super" : "RubScrolledTextSideRuler",
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"lineAnnotation",
 		"row",
@@ -12,9 +12,8 @@
 		"editingModeMorph",
 		"tabWidthMorph",
 		"columnDisplayMorph",
-		"lineNumbersDisplayMorph" ],
+		"lineNumbersDisplayMorph"
+	],
 	"name" : "RubAnnotationDisplayer",
-	"pools" : [
-		 ],
-	"super" : "RubScrolledTextSideRuler",
-	"type" : "normal" }
+	"type" : "normal"
+}

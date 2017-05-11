@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Widgets-Popper",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/1/2014 13:24",
-	"instvars" : [
-		"inspectButton" ],
-	"name" : "GLMPrintPopper",
-	"pools" : [
-		 ],
 	"super" : "GLMPopper",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Widgets-Popper",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"inspectButton"
+	],
+	"name" : "GLMPrintPopper",
+	"type" : "normal"
+}

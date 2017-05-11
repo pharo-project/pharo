@@ -1,16 +1,15 @@
 {
-	"category" : "System-Settings-Browser",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:32",
+	"super" : "Object",
+	"category" : "System-Settings-Browser",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"nodeList",
 		"currentParent",
-		"currentPragma" ],
+		"currentPragma"
+	],
 	"name" : "SettingTreeBuilder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

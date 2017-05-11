@@ -1,4 +1,5 @@
 {
-	"category" : "Collections-Tests-Abstract",
+	"name" : "TAddForIdentityCollectionsTest",
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:32",
-	"name" : "TAddForIdentityCollectionsTest" }
+	"category" : "Collections-Tests-Abstract"
+}

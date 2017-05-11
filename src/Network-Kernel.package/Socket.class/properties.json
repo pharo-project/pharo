@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "VeronicaUquillas 6/11/2010 13:03",
+	"super" : "Object",
 	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Connected",
 		"DeadServer",
@@ -13,15 +15,14 @@
 		"ThisEndClosed",
 		"UDPSocketType",
 		"Unconnected",
-		"WaitingForConnection" ],
-	"commentStamp" : "VeronicaUquillas 6/11/2010 13:03",
+		"WaitingForConnection"
+	],
 	"instvars" : [
 		"semaphore",
 		"socketHandle",
 		"readSemaphore",
-		"writeSemaphore" ],
+		"writeSemaphore"
+	],
 	"name" : "Socket",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

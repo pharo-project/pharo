@@ -1,16 +1,15 @@
 {
-	"category" : "Spec-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "OkToolbar",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"cancelButton",
 		"cancelAction",
-		"cancelled" ],
+		"cancelled"
+	],
 	"name" : "OkCancelToolbar",
-	"pools" : [
-		 ],
-	"super" : "OkToolbar",
-	"type" : "normal" }
+	"type" : "normal"
+}

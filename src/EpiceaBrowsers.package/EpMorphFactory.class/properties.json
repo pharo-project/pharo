@@ -1,14 +1,13 @@
 {
-	"category" : "EpiceaBrowsers-Common",
-	"classinstvars" : [
-		"defaultInstance" ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/11/2016 23:03",
-	"instvars" : [
-		 ],
-	"name" : "EpMorphFactory",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "EpiceaBrowsers-UI-Common",
+	"classinstvars" : [
+		"defaultInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpMorphFactory",
+	"type" : "normal"
+}

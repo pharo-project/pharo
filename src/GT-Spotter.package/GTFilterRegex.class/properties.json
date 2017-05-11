@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Spotter-Filters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"regex" ],
-	"name" : "GTFilterRegex",
-	"pools" : [
-		 ],
 	"super" : "GTUnorderedFilter",
-	"type" : "normal" }
+	"category" : "GT-Spotter-Filters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"regex"
+	],
+	"name" : "GTFilterRegex",
+	"type" : "normal"
+}

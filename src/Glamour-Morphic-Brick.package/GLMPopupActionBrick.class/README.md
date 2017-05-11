@@ -1,0 +1,1 @@
+I am a special popup brick designed to work with GLMPopupAction

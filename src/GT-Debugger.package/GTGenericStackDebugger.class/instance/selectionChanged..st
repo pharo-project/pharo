@@ -4,7 +4,8 @@ selectionChanged: aContext
 	aContext isNotNil ifTrue: [ self announce: (GTGenericStackDebuggerSelectionChanged forDebugger: self) ].
 
 	UIManager default defer: [ 
-		(self browser paneNamed: #stack) presentations updateToolbar ].
+		self session ifNotNil: [
+			(self browser paneNamed: #stack) presentations updateToolbar ] ].
 	
 	self class enableStackColoring ifFalse: [ ^ self ].  
 

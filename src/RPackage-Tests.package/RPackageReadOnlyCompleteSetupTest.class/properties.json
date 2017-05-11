@@ -1,10 +1,10 @@
 {
-	"category" : "RPackage-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 4/13/2011 17:10",
+	"super" : "RPackageIncrementalTest",
+	"category" : "RPackage-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"p1",
 		"p2",
@@ -14,9 +14,8 @@
 		"a2",
 		"a3",
 		"b2",
-		"p4" ],
+		"p4"
+	],
 	"name" : "RPackageReadOnlyCompleteSetupTest",
-	"pools" : [
-		 ],
-	"super" : "RPackageIncrementalTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

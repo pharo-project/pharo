@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Tests-AST",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"instVar" ],
-	"name" : "OCCleanBockTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Tests-AST",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"instVar"
+	],
+	"name" : "OCCleanBockTest",
+	"type" : "normal"
+}

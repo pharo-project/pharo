@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 10/2/2015 10:58",
-	"instvars" : [
-		 ],
-	"name" : "MorphSlot",
-	"pools" : [
-		 ],
 	"super" : "IndexedSlot",
-	"type" : "normal" }
+	"category" : "Slot-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphSlot",
+	"type" : "normal"
+}

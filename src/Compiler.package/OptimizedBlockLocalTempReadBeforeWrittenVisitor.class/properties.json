@@ -1,16 +1,15 @@
 {
-	"category" : "Compiler-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2011 22:25",
+	"super" : "ParseNodeVisitor",
+	"category" : "Compiler-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"inOptimizedBlock",
 		"readBeforeWritten",
-		"written" ],
+		"written"
+	],
 	"name" : "OptimizedBlockLocalTempReadBeforeWrittenVisitor",
-	"pools" : [
-		 ],
-	"super" : "ParseNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

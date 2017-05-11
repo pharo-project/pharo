@@ -1,11 +1,6 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TAddTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TConvertTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TRemoveForMultiplenessTest classTrait + TPrintTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TConcatenationTest classTrait + TStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/20/2014 15:20",
+	"classvars" : [ ],
 	"instvars" : [
 		"empty",
 		"nonEmpty",
@@ -20,10 +15,14 @@
 		"elementNotIn",
 		"collectionWithCharacters",
 		"otherCollectionWithoutEqualElements",
-		"collectionWithoutNilMoreThan5" ],
+		"collectionWithoutNilMoreThan5"
+	],
 	"name" : "BagTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:20",
 	"super" : "CollectionRootTest",
 	"traitcomposition" : "TAddTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TSetArithmetic + TConvertTest + TAsStringCommaAndDelimiterTest + TRemoveForMultiplenessTest + TPrintTest + TConvertAsSortedTest + TConvertAsSetForMultiplinessTest + TConcatenationTest + TStructuralEqualityTest + (TCreationWithTest - {#testOfSize}) + TOccurrencesForMultiplinessTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Collections-Tests-Unordered"
+}

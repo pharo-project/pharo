@@ -1,4 +1,0 @@
-accessing
-categoryOfClassAffected
-
-	^ classRemoved category

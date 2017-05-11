@@ -1,15 +1,14 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "MalGraphAlgorithm",
+	"category" : "Moose-Algos-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"nodeClass",
-		"edgeClass" ],
+		"edgeClass"
+	],
 	"name" : "MalGraphStructure",
-	"pools" : [
-		 ],
-	"super" : "MalGraphAlgorithm",
-	"type" : "normal" }
+	"type" : "normal"
+}

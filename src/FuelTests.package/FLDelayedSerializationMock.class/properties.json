@@ -1,14 +1,11 @@
 {
-	"category" : "FuelTests-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "FLDelayedSerializationMock",
-	"pools" : [
-		 ],
 	"super" : "FLSerialization",
-	"type" : "normal" }
+	"category" : "FuelTests-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLDelayedSerializationMock",
+	"type" : "normal"
+}

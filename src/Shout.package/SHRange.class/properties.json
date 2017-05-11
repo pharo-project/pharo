@@ -1,16 +1,15 @@
 {
-	"category" : "Shout-Parsing",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 11/29/2011 22:28",
+	"super" : "Object",
+	"category" : "Shout-Parsing",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"start",
 		"end",
-		"type" ],
+		"type"
+	],
 	"name" : "SHRange",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

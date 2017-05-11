@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "gvc 5/18/2007 12:39",
+	"super" : "PluggableTextMorph",
+	"category" : "Morphic-Widgets-Pluggable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"converter",
 		"ghostText",
@@ -12,9 +12,8 @@
 		"entryCompletion",
 		"endRow",
 		"textMorphClass",
-		"textFont" ],
+		"textFont"
+	],
 	"name" : "PluggableTextFieldMorph",
-	"pools" : [
-		 ],
-	"super" : "PluggableTextMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

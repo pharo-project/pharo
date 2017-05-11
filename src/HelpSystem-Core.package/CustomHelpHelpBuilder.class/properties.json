@@ -1,14 +1,11 @@
 {
-	"category" : "HelpSystem-Core-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 3/29/2010 13:30",
-	"instvars" : [
-		 ],
-	"name" : "CustomHelpHelpBuilder",
-	"pools" : [
-		 ],
 	"super" : "HelpBuilder",
-	"type" : "normal" }
+	"category" : "HelpSystem-Core-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CustomHelpHelpBuilder",
+	"type" : "normal"
+}

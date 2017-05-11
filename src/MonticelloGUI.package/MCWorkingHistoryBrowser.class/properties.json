@@ -1,14 +1,11 @@
 {
-	"category" : "MonticelloGUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:53",
-	"instvars" : [
-		 ],
-	"name" : "MCWorkingHistoryBrowser",
-	"pools" : [
-		 ],
 	"super" : "MCVersionHistoryBrowser",
-	"type" : "normal" }
+	"category" : "MonticelloGUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCWorkingHistoryBrowser",
+	"type" : "normal"
+}

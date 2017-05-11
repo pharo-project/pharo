@@ -1,15 +1,14 @@
 {
-	"category" : "GT-Debugger-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RogerStebler 3/15/2016 14:07",
+	"super" : "Announcement",
+	"category" : "GT-Debugger-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"debugger",
-		"newContext" ],
+		"newContext"
+	],
 	"name" : "GTGenericStackDebuggerSelectionChanged",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

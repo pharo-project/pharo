@@ -1,14 +1,13 @@
 {
-	"category" : "AST-Core-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"parentheses" ],
-	"name" : "RBValueNode",
-	"pools" : [
-		 ],
 	"super" : "RBProgramNode",
-	"type" : "normal" }
+	"category" : "AST-Core-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"parentheses"
+	],
+	"name" : "RBValueNode",
+	"type" : "normal"
+}

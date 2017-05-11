@@ -1,14 +1,11 @@
 {
-	"category" : "Nautilus-GroupManagerUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:13",
-	"instvars" : [
-		 ],
-	"name" : "GroupNode",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeNodeModel",
-	"type" : "normal" }
+	"category" : "Nautilus-GroupManagerUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GroupNode",
+	"type" : "normal"
+}

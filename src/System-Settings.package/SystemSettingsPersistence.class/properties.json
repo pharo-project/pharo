@@ -1,15 +1,16 @@
 {
+	"commentStamp" : "JurajKubelka 10/5/2015 22:02",
+	"super" : "Object",
 	"category" : "System-Settings-Persistence-Ston-Core",
 	"classinstvars" : [
-		"lastSettingsComputerID" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "JurajKubelka 10/5/2015 22:02",
+		"lastSettingsComputerID"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"fileReference",
-		"settingTree" ],
+		"settingTree"
+	],
 	"name" : "SystemSettingsPersistence",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

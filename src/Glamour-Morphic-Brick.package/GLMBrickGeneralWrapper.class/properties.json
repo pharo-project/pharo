@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Morphic-Brick-Layouts-Utils",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"brick" ],
-	"name" : "GLMBrickGeneralWrapper",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Layouts-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"brick"
+	],
+	"name" : "GLMBrickGeneralWrapper",
+	"type" : "normal"
+}

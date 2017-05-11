@@ -1,14 +1,13 @@
 {
-	"category" : "Metacello-MC-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"loaderPolicy" ],
-	"name" : "MetacelloMCVersion",
-	"pools" : [
-		 ],
 	"super" : "MetacelloVersion",
-	"type" : "normal" }
+	"category" : "Metacello-MC-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"loaderPolicy"
+	],
+	"name" : "MetacelloMCVersion",
+	"type" : "normal"
+}

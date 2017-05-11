@@ -1,10 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '19834 Error in horizontal scrollbar
-	https://pharo.fogbugz.com/f/cases/19834
+ ^ '20047 in Versioner (or Komitter), RemotesManager needs to list just remotes
+	https://pharo.fogbugz.com/f/cases/20047
 
-19831 catalog refresh retrieves an empty collection
-	https://pharo.fogbugz.com/f/cases/19831
-
-19823 exported source of the package MonticelloFileTree-Core in pharo-core repository contains strange extension
-	https://pharo.fogbugz.com/f/cases/19823'
+20005  Epicea: Integrate release 8.2.2
+	https://pharo.fogbugz.com/f/cases/20005'

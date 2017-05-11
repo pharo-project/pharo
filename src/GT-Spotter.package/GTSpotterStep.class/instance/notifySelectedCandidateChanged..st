@@ -1,4 +1,4 @@
 notifying
 notifySelectedCandidateChanged: aDoubleLink
 	
-	^ self notifySelectedCandidateChanged: aDoubleLink for: #unknown
+	self notifySelectedCandidateChanged: aDoubleLink for: #unknown

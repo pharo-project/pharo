@@ -1,16 +1,15 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 15:19",
+	"super" : "EpRefactoring",
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"newName",
 		"oldName",
-		"affectedClassName" ],
+		"affectedClassName"
+	],
 	"name" : "EpRenameInstanceVariableRefactoring",
-	"pools" : [
-		 ],
-	"super" : "EpRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,15 @@
 {
-	"category" : "Graphics-Transformations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "DisplayTransform",
+	"category" : "Graphics-Transformations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"offset",
 		"angle",
-		"scale" ],
+		"scale"
+	],
 	"name" : "MorphicTransform",
-	"pools" : [
-		 ],
-	"super" : "DisplayTransform",
-	"type" : "normal" }
+	"type" : "normal"
+}

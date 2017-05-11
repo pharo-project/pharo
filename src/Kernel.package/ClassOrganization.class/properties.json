@@ -1,17 +1,16 @@
 {
-	"category" : "Kernel-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Kernel-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"comment",
 		"commentStamp",
 		"protocolOrganizer",
-		"organizedClass" ],
+		"organizedClass"
+	],
 	"name" : "ClassOrganization",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

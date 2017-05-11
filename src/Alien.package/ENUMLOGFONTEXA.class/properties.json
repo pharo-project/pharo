@@ -1,14 +1,11 @@
 {
-	"category" : "Alien-Win32",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "eem 11/28/2007 14:31",
-	"instvars" : [
-		 ],
-	"name" : "ENUMLOGFONTEXA",
-	"pools" : [
-		 ],
 	"super" : "LOGFONTA",
-	"type" : "bytes" }
+	"category" : "Alien-Win32",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ENUMLOGFONTEXA",
+	"type" : "bytes"
+}

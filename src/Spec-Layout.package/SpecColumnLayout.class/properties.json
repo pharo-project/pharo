@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"height" ],
-	"name" : "SpecColumnLayout",
-	"pools" : [
-		 ],
 	"super" : "SpecLayout",
-	"type" : "normal" }
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"height"
+	],
+	"name" : "SpecColumnLayout",
+	"type" : "normal"
+}

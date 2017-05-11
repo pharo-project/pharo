@@ -1,16 +1,15 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableMorph",
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"patchMorph",
 		"codeMorph",
-		"merged" ],
+		"merged"
+	],
 	"name" : "PSMCMergeMorph",
-	"pools" : [
-		 ],
-	"super" : "ComposableMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

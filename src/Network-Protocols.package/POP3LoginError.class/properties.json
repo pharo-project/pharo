@@ -1,14 +1,11 @@
 {
-	"category" : "Network-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 5/12/2003 17:58",
-	"instvars" : [
-		 ],
-	"name" : "POP3LoginError",
-	"pools" : [
-		 ],
 	"super" : "ProtocolClientError",
-	"type" : "normal" }
+	"category" : "Network-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "POP3LoginError",
+	"type" : "normal"
+}

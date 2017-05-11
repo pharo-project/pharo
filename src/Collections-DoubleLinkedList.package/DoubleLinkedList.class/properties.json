@@ -1,15 +1,14 @@
 {
-	"category" : "Collections-DoubleLinkedList",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 5/26/2015 15:32",
+	"super" : "Object",
+	"category" : "Collections-DoubleLinkedList",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"head",
-		"tail" ],
+		"tail"
+	],
 	"name" : "DoubleLinkedList",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "FuelTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "FLBinaryFileStreamSerializationTest",
-	"pools" : [
-		 ],
 	"super" : "FLBasicSerializationTest",
-	"type" : "normal" }
+	"category" : "FuelTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLBinaryFileStreamSerializationTest",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Balloon-Collections",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"LastSaveOrder" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ShortIntegerArray",
-	"pools" : [
-		 ],
 	"super" : "ArrayedCollection",
-	"type" : "words" }
+	"category" : "Balloon-Collections",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"LastSaveOrder"
+	],
+	"instvars" : [ ],
+	"name" : "ShortIntegerArray",
+	"type" : "words"
+}

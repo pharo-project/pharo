@@ -1,14 +1,11 @@
 {
-	"category" : "NautilusCommon-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "NautilusShowPackagesChanged",
-	"pools" : [
-		 ],
 	"super" : "NautilusBooleanAnnouncement",
-	"type" : "normal" }
+	"category" : "NautilusCommon-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NautilusShowPackagesChanged",
+	"type" : "normal"
+}

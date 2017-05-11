@@ -1,15 +1,14 @@
 {
-	"category" : "Refactoring-Core-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/22/2016 11:56",
+	"super" : "Model",
+	"category" : "Refactoring-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
-		"arguments" ],
+		"arguments"
+	],
 	"name" : "RBMethodName",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

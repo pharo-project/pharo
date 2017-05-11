@@ -1,16 +1,15 @@
 {
-	"category" : "SUnit-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 4/26/2011 09:54",
+	"super" : "Announcement",
+	"category" : "SUnit-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"testCase",
 		"testSelector",
-		"testResult" ],
+		"testResult"
+	],
 	"name" : "TestCaseAnnouncement",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:55",
-	"instvars" : [
-		 ],
-	"name" : "EpSessionSnapshot",
-	"pools" : [
-		 ],
 	"super" : "EpSessionEvent",
-	"type" : "normal" }
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpSessionSnapshot",
+	"type" : "normal"
+}

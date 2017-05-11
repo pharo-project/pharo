@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ComposableMorph",
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"prettyPrint",
 		"contextClass",
@@ -20,9 +20,8 @@
 		"showOptions",
 		"showOnlySource",
 		"sourceTextModel",
-		"destTextModel" ],
+		"destTextModel"
+	],
 	"name" : "DiffMorph",
-	"pools" : [
-		 ],
-	"super" : "ComposableMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

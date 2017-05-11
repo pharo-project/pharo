@@ -1,14 +1,13 @@
 {
-	"category" : "Traits-Composition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"aliases" ],
-	"name" : "TraitAlias",
-	"pools" : [
-		 ],
 	"super" : "TraitTransformation",
-	"type" : "normal" }
+	"category" : "Traits-Composition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"aliases"
+	],
+	"name" : "TraitAlias",
+	"type" : "normal"
+}

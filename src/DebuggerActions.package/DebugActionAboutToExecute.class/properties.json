@@ -1,14 +1,13 @@
 {
-	"category" : "DebuggerActions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RogerStebler 3/5/2016 14:18",
-	"instvars" : [
-		"debuggingAction" ],
-	"name" : "DebugActionAboutToExecute",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "DebuggerActions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"debuggingAction"
+	],
+	"name" : "DebugActionAboutToExecute",
+	"type" : "normal"
+}

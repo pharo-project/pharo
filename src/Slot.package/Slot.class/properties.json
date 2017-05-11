@@ -1,15 +1,18 @@
 {
+	"commentStamp" : "JurajKubelka 3/4/2015 20:09",
+	"super" : "Object",
 	"category" : "Slot-Variables",
 	"classinstvars" : [
-		"slotClassDefinition" ],
+		"slotClassDefinition"
+	],
+	"pools" : [ ],
 	"classvars" : [
-		"Properties" ],
-	"commentStamp" : "JurajKubelka 3/4/2015 20:09",
+		"Properties"
+	],
 	"instvars" : [
 		"index",
-		"name" ],
+		"name"
+	],
 	"name" : "Slot",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

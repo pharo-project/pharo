@@ -1,14 +1,13 @@
 {
-	"category" : "Network-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mir 5/12/2003 18:06",
-	"instvars" : [
-		"responseCode" ],
-	"name" : "TelnetProtocolClient",
-	"pools" : [
-		 ],
 	"super" : "ProtocolClient",
-	"type" : "normal" }
+	"category" : "Network-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"responseCode"
+	],
+	"name" : "TelnetProtocolClient",
+	"type" : "normal"
+}

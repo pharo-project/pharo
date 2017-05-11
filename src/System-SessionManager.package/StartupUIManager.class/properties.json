@@ -1,14 +1,11 @@
 {
-	"category" : "System-SessionManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "StartupUIManager",
-	"pools" : [
-		 ],
 	"super" : "NonInteractiveUIManager",
-	"type" : "normal" }
+	"category" : "System-SessionManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "StartupUIManager",
+	"type" : "normal"
+}

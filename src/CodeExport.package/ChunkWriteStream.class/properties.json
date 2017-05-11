@@ -1,14 +1,11 @@
 {
-	"category" : "CodeExport",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 6/12/2015 10:04",
-	"instvars" : [
-		 ],
-	"name" : "ChunkWriteStream",
-	"pools" : [
-		 ],
 	"super" : "DecoratorStream",
-	"type" : "normal" }
+	"category" : "CodeExport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ChunkWriteStream",
+	"type" : "normal"
+}

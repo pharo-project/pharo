@@ -1,14 +1,13 @@
 {
-	"category" : "FreeType-Settings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"LoadFT2Library" ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 23:27",
-	"instvars" : [
-		 ],
-	"name" : "FreeTypeSystemSettings",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "FreeType-Settings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"LoadFT2Library"
+	],
+	"instvars" : [ ],
+	"name" : "FreeTypeSystemSettings",
+	"type" : "normal"
+}

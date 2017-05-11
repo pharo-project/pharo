@@ -1,15 +1,14 @@
 {
-	"category" : "System-Localization-Locales",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 10:08",
+	"super" : "Object",
+	"category" : "System-Localization-Locales",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"isoLanguage",
-		"isoCountry" ],
+		"isoCountry"
+	],
 	"name" : "LocaleID",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

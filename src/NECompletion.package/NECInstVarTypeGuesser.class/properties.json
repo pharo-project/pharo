@@ -1,14 +1,13 @@
 {
-	"category" : "NECompletion-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"varIndex" ],
-	"name" : "NECInstVarTypeGuesser",
-	"pools" : [
-		 ],
 	"super" : "NECVarTypeGuesser",
-	"type" : "normal" }
+	"category" : "NECompletion-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"varIndex"
+	],
+	"name" : "NECInstVarTypeGuesser",
+	"type" : "normal"
+}

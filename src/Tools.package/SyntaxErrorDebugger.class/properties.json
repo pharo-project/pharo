@@ -1,10 +1,10 @@
 {
-	"category" : "Tools-Debugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Tools-Debugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"contents",
 		"class",
@@ -16,9 +16,8 @@
 		"location",
 		"error",
 		"announcer",
-		"syntaxError" ],
+		"syntaxError"
+	],
 	"name" : "SyntaxErrorDebugger",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

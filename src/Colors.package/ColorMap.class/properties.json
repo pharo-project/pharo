@@ -1,16 +1,15 @@
 {
-	"category" : "Colors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 5/4/2011 21:28",
+	"super" : "Object",
+	"category" : "Colors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"shifts",
 		"masks",
-		"colors" ],
+		"colors"
+	],
 	"name" : "ColorMap",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

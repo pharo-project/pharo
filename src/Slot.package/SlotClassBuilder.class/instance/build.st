@@ -40,6 +40,10 @@ build
 	classChange changes do: [ :each | each changingIn: result ].
 	classChange removals do: [ :each | each removingFrom: result].
 	result classLayout slots do: [ :each | each layoutChanged: result]. 
+
+	metaChange additions do: [ :each | each installingIn: result].
+	metaChange changes do: [ :each | each changingIn: result ].
+	metaChange removals do: [ :each | each removingFrom: result].
 	
 	"We announce both instance and class sides modification events 
 	according to previous behaviour of #apply method (self apply: classChange and metaChange)"

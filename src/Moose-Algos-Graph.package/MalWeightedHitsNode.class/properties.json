@@ -1,17 +1,16 @@
 {
-	"category" : "Moose-Algos-Graph",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "MalTEdgeNode classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+	"classvars" : [ ],
 	"instvars" : [
 		"nextEdges",
-		"previousEdges" ],
+		"previousEdges"
+	],
 	"name" : "MalWeightedHitsNode",
-	"pools" : [
-		 ],
+	"commentStamp" : "",
 	"super" : "MalHitsNode",
 	"traitcomposition" : "MalTEdgeNode",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Moose-Algos-Graph"
+}

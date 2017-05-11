@@ -1,7 +1,4 @@
 {
-	"category" : "Athens-Cairo-Transforms",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TCairoLibrary classTrait",
 	"classvars" : [
 		"OFFSET_SHX",
@@ -9,13 +6,17 @@
 		"OFFSET_SX",
 		"OFFSET_SY",
 		"OFFSET_X",
-		"OFFSET_Y" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"OFFSET_Y"
+	],
+	"instvars" : [ ],
 	"name" : "AthensCairoMatrix",
-	"pools" : [
-		"AthensCairoDefs" ],
+	"commentStamp" : "<historical>",
 	"super" : "FFIExternalStructure",
 	"traitcomposition" : "TCairoLibrary",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [
+		"AthensCairoDefs"
+	],
+	"category" : "Athens-Cairo-Transforms"
+}

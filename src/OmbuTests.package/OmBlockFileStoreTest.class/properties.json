@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "OmFileStoreTest",
+	"category" : "OmbuTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OmBlockFileStoreTest",
+	"type" : "normal"
+}

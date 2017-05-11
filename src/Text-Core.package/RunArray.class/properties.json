@@ -1,18 +1,17 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "SequenceableCollection",
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"runs",
 		"values",
 		"lastIndex",
 		"lastRun",
-		"lastOffset" ],
+		"lastOffset"
+	],
 	"name" : "RunArray",
-	"pools" : [
-		 ],
-	"super" : "SequenceableCollection",
-	"type" : "normal" }
+	"type" : "normal"
+}

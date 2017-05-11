@@ -1,18 +1,17 @@
 {
-	"category" : "FreeType-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "FreeType-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"height",
 		"width",
 		"size",
 		"xPpEm",
-		"yPpEm" ],
+		"yPpEm"
+	],
 	"name" : "FT2BitmapSize",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

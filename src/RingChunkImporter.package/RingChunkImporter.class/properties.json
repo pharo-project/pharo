@@ -1,15 +1,14 @@
 {
-	"category" : "RingChunkImporter",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 6/1/2015 10:23",
+	"super" : "Object",
+	"category" : "RingChunkImporter",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"package",
-		"doIts" ],
+		"doIts"
+	],
 	"name" : "RingChunkImporter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

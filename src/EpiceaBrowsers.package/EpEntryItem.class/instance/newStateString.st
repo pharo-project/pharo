@@ -1,4 +1,4 @@
-populating browser
+private
 newStateString
 
-	^ entry content accept: EpNewStateVisitor new
+	^ self eventAccept: EpNewStateVisitor new

@@ -1,6 +1,7 @@
 {
-	"category" : "Tests-Traits-MOP",
-	"classtraitcomposition" : "Trait2 classTrait",
 	"commentStamp" : "",
-	"name" : "Trait3",
-	"traitcomposition" : "Trait2" }
+	"traitcomposition" : "Trait2",
+	"classtraitcomposition" : "Trait2 classTrait",
+	"category" : "Tests-Traits-MOP",
+	"name" : "Trait3"
+}

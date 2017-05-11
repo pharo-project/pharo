@@ -1,14 +1,13 @@
 {
-	"category" : "Zinc-Character-Encoding-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 1/26/2016 10:20",
-	"instvars" : [
-		"peeked" ],
-	"name" : "ZnEncodedReadStream",
-	"pools" : [
-		 ],
 	"super" : "ZnEncodedStream",
-	"type" : "normal" }
+	"category" : "Zinc-Character-Encoding-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"peeked"
+	],
+	"name" : "ZnEncodedReadStream",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "System-Hashing-Checksums",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "Adler32",
-	"pools" : [
-		 ],
 	"super" : "Checksum",
-	"type" : "normal" }
+	"category" : "System-Hashing-Checksums",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Adler32",
+	"type" : "normal"
+}

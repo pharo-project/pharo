@@ -1,10 +1,10 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 2/15/2011 11:03",
+	"super" : "GLMLoggedObject",
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"browser",
 		"name",
@@ -12,9 +12,8 @@
 		"ports",
 		"lastActivePresentation",
 		"allowedToNotePresentationsChanged",
-		"cachedMatchingPresentations" ],
+		"cachedMatchingPresentations"
+	],
 	"name" : "GLMPane",
-	"pools" : [
-		 ],
-	"super" : "GLMLoggedObject",
-	"type" : "normal" }
+	"type" : "normal"
+}

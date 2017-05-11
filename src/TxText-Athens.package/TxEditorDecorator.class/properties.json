@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Athens-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"editor" ],
-	"name" : "TxEditorDecorator",
-	"pools" : [
-		 ],
 	"super" : "TxViewDecoratorMorph",
-	"type" : "normal" }
+	"category" : "TxText-Athens-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"editor"
+	],
+	"name" : "TxEditorDecorator",
+	"type" : "normal"
+}

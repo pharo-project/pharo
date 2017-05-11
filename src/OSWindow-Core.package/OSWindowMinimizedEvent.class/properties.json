@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 6/3/2015 15:16",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowMinimizedEvent",
-	"pools" : [
-		 ],
 	"super" : "OSWindowEvent",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Events",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowMinimizedEvent",
+	"type" : "normal"
+}

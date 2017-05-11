@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"wasTransmited" ],
-	"name" : "GLMMockSimpleTransmission",
-	"pools" : [
-		 ],
 	"super" : "GLMTransmission",
-	"type" : "normal" }
+	"category" : "Glamour-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"wasTransmited"
+	],
+	"name" : "GLMMockSimpleTransmission",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Athens-Core-Paths",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "AthensCWArcSegment",
-	"pools" : [
-		 ],
 	"super" : "AthensArcSegment",
-	"type" : "normal" }
+	"category" : "Athens-Core-Paths",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AthensCWArcSegment",
+	"type" : "normal"
+}

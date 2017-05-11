@@ -1,14 +1,13 @@
 {
-	"category" : "Traits-Composition",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"transformations" ],
-	"name" : "TraitComposition",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "Traits-Composition",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"transformations"
+	],
+	"name" : "TraitComposition",
+	"type" : "normal"
+}

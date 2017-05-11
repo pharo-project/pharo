@@ -1,15 +1,14 @@
 {
-	"category" : "Tool-Catalog-CommandLine",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "EstebanLorenzano 7/15/2015 15:41",
+	"super" : "CommandLineHandler",
+	"category" : "Tool-Catalog-CommandLine",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"version",
-		"projectName" ],
+		"projectName"
+	],
 	"name" : "CatalogCommandLineHandler",
-	"pools" : [
-		 ],
-	"super" : "CommandLineHandler",
-	"type" : "normal" }
+	"type" : "normal"
+}

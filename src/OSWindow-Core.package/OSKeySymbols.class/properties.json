@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "RonieSalgado 5/15/2014 23:22",
+	"super" : "SharedPool",
 	"category" : "OSWindow-Core-Events",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OSK_0",
 		"OSK_1",
@@ -238,12 +240,9 @@
 		"OSK_w",
 		"OSK_x",
 		"OSK_y",
-		"OSK_z" ],
-	"commentStamp" : "RonieSalgado 5/15/2014 23:22",
-	"instvars" : [
-		 ],
+		"OSK_z"
+	],
+	"instvars" : [ ],
 	"name" : "OSKeySymbols",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

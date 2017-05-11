@@ -9,8 +9,11 @@ SystemOrganization addCategory: 'Glamour-Morphic-Brick-Renderer'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Theme'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Traits'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Utils'!
+SystemOrganization addCategory: 'Glamour-Morphic-Brick-Utils-Geometry'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-Basic'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-Core'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-Phlow'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-Scrollpane'!
 SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-UI'!
+SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-UI-Popup'!
+SystemOrganization addCategory: 'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'!

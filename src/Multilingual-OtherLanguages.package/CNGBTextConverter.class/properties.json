@@ -1,14 +1,11 @@
 {
-	"category" : "Multilingual-OtherLanguages",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "CNGBTextConverter",
-	"pools" : [
-		 ],
 	"super" : "EUCTextConverter",
-	"type" : "normal" }
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CNGBTextConverter",
+	"type" : "normal"
+}

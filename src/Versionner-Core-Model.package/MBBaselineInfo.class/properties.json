@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MBBaselineInfo",
-	"pools" : [
-		 ],
 	"super" : "MBAbstractVersionInfo",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MBBaselineInfo",
+	"type" : "normal"
+}

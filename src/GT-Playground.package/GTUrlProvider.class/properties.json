@@ -1,14 +1,15 @@
 {
+	"commentStamp" : "TudorGirba 10/22/2014 07:50",
+	"super" : "Object",
 	"category" : "GT-Playground",
 	"classinstvars" : [
-		"urlProvider" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "TudorGirba 10/22/2014 07:50",
+		"urlProvider"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
-		"urlProvider" ],
+		"urlProvider"
+	],
 	"name" : "GTUrlProvider",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

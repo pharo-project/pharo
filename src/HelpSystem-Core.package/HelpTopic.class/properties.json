@@ -1,19 +1,18 @@
 {
-	"category" : "HelpSystem-Core-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tbn 3/29/2010 14:53",
+	"super" : "Object",
+	"category" : "HelpSystem-Core-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"title",
 		"key",
 		"icon",
 		"contents",
 		"subtopics",
-		"owner" ],
+		"owner"
+	],
 	"name" : "HelpTopic",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

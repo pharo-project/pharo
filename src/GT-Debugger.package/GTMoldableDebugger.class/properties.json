@@ -1,18 +1,17 @@
 {
-	"category" : "GT-Debugger-UI",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "GTBrowsingActions classTrait",
 	"classvars" : [
 		"EnableDebuggerWindowDistinctColor",
 		"EnableStackColoring",
-		"GTDebuggerEnabledStatus" ],
-	"commentStamp" : "AndreiChis 12/30/2015 11:06",
-	"instvars" : [
-		 ],
+		"GTDebuggerEnabledStatus"
+	],
+	"instvars" : [ ],
 	"name" : "GTMoldableDebugger",
-	"pools" : [
-		 ],
+	"commentStamp" : "AndreiChis 12/30/2015 11:06",
 	"super" : "GLMCompositePresentation",
 	"traitcomposition" : "GTBrowsingActions",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "GT-Debugger-UI"
+}

@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "SvenVanCaekenberghe 1/31/2017 23:27",
+	"super" : "Object",
 	"category" : "STON-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"STONCharacters",
-		"STONSimpleSymbolCharacters" ],
-	"commentStamp" : "SvenVanCaekenberghe 1/31/2017 23:27",
+		"STONSimpleSymbolCharacters"
+	],
 	"instvars" : [
 		"writeStream",
 		"prettyPrint",
@@ -16,9 +18,8 @@
 		"keepNewLines",
 		"referencePolicy",
 		"level",
-		"objects" ],
+		"objects"
+	],
 	"name" : "STONWriter",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

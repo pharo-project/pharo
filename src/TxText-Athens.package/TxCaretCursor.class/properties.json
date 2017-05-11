@@ -1,14 +1,11 @@
 {
-	"category" : "TxText-Athens-Editor",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TxCaretCursor",
-	"pools" : [
-		 ],
 	"super" : "TxAthensCursor",
-	"type" : "normal" }
+	"category" : "TxText-Athens-Editor",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TxCaretCursor",
+	"type" : "normal"
+}

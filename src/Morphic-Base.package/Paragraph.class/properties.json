@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Base-Text Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"InsertionPointColor" ],
 	"commentStamp" : "AlainPlantec 9/15/2011 16:13",
+	"super" : "Object",
+	"category" : "Morphic-Base-Text Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"InsertionPointColor"
+	],
 	"instvars" : [
 		"text",
 		"textStyle",
@@ -24,9 +26,8 @@
 		"secondarySelection",
 		"extraSelectionBlocks",
 		"refreshExtraSelection",
-		"composer" ],
+		"composer"
+	],
 	"name" : "Paragraph",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

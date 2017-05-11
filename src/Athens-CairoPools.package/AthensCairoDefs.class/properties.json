@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:22",
+	"super" : "SharedPool",
 	"category" : "Athens-CairoPools",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CAIRO_ANTIALIAS_BEST",
 		"CAIRO_ANTIALIAS_DEFAULT",
@@ -125,12 +127,9 @@
 		"cairo_status_t",
 		"cairo_surface_t",
 		"cairo_t",
-		"cairo_text_extents_t" ],
-	"commentStamp" : "TorstenBergmann 2/12/2014 22:22",
-	"instvars" : [
-		 ],
+		"cairo_text_extents_t"
+	],
+	"instvars" : [ ],
 	"name" : "AthensCairoDefs",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

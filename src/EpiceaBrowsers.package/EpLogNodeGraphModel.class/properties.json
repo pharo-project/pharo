@@ -1,10 +1,10 @@
 {
-	"category" : "EpiceaBrowsers-Unified",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 8/14/2016 02:38",
+	"super" : "ComposableModel",
+	"category" : "EpiceaBrowsers-UI-Graph",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"refreshButtonModel",
 		"directory",
@@ -12,11 +12,10 @@
 		"selectDirectoryButtonModel",
 		"logNodesTreeModel",
 		"directoryTextModel",
-		"enableMonitorButtonModel",
-		"createLogButtonModel",
-		"monitor" ],
+		"monitor",
+		"openSettingsButtonModel",
+		"hiedraCheckBoxModel"
+	],
 	"name" : "EpLogNodeGraphModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

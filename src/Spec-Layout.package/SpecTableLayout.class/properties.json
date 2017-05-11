@@ -1,16 +1,15 @@
 {
-	"category" : "Spec-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "webwarrior 6/9/2014 16:02",
+	"super" : "Object",
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"commands",
 		"selector",
-		"layoutProperties" ],
+		"layoutProperties"
+	],
 	"name" : "SpecTableLayout",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

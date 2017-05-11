@@ -1,14 +1,11 @@
 {
-	"category" : "GeneralRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 9/7/2016 14:43",
-	"instvars" : [
-		 ],
-	"name" : "GRClassVariableCapitalizationRule",
-	"pools" : [
-		 ],
 	"super" : "ReAbstractRule",
-	"type" : "normal" }
+	"category" : "GeneralRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GRClassVariableCapitalizationRule",
+	"type" : "normal"
+}

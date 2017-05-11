@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:24",
+	"super" : "SharedPool",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"KMOD_ALT",
 		"KMOD_CAPS",
@@ -462,12 +464,9 @@
 		"SDL_WINDOW_MOUSE_FOCUS",
 		"SDL_WINDOW_OPENGL",
 		"SDL_WINDOW_RESIZABLE",
-		"SDL_WINDOW_SHOWN" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:24",
-	"instvars" : [
-		 ],
+		"SDL_WINDOW_SHOWN"
+	],
+	"instvars" : [ ],
 	"name" : "SDL2Constants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

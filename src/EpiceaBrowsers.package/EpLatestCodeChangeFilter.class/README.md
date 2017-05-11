@@ -1,0 +1,1 @@
+This filter only accepts code changes that are latest, i.e. that aren't overridden by other changes in the log more recently.

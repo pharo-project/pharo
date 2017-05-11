@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/8/2015 16:54",
-	"instvars" : [
-		"model" ],
-	"name" : "PackageTreeModel",
-	"pools" : [
-		 ],
 	"super" : "MorphTreeModel",
-	"type" : "normal" }
+	"category" : "Nautilus-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"model"
+	],
+	"name" : "PackageTreeModel",
+	"type" : "normal"
+}

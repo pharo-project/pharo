@@ -1,10 +1,10 @@
 {
-	"category" : "GT-EventRecorder-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "GT-EventRecorder-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"recorder",
 		"server",
@@ -17,9 +17,8 @@
 		"collector1",
 		"collector2",
 		"event3",
-		"event4" ],
+		"event4"
+	],
 	"name" : "GTEventRecorderTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

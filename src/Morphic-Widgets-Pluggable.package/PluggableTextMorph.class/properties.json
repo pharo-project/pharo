@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "",
+	"super" : "ScrollPane",
 	"category" : "Morphic-Widgets-Pluggable",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ShowTextEditingState",
-		"StylingClass" ],
-	"commentStamp" : "",
+		"StylingClass"
+	],
 	"instvars" : [
 		"textMorph",
 		"getTextSelector",
@@ -28,9 +30,8 @@
 		"alwaysAccept",
 		"changedAction",
 		"doubleClickSelector",
-		"setSelectionSelector" ],
+		"setSelectionSelector"
+	],
 	"name" : "PluggableTextMorph",
-	"pools" : [
-		 ],
-	"super" : "ScrollPane",
-	"type" : "normal" }
+	"type" : "normal"
+}

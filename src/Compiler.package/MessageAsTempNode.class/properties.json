@@ -1,14 +1,11 @@
 {
-	"category" : "Compiler-ParseNodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MessageAsTempNode",
-	"pools" : [
-		 ],
 	"super" : "MessageNode",
-	"type" : "normal" }
+	"category" : "Compiler-ParseNodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MessageAsTempNode",
+	"type" : "normal"
+}

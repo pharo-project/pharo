@@ -1,14 +1,11 @@
 {
-	"category" : "Graphics-Tests-Primitives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ar 7/21/2007 21:39",
-	"instvars" : [
-		 ],
-	"name" : "FormTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Graphics-Tests-Primitives",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FormTest",
+	"type" : "normal"
+}

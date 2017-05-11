@@ -1,15 +1,14 @@
 {
-	"category" : "QualityAssistant",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 3/17/2015 17:33",
+	"super" : "AbstractNautilusPlugin",
+	"category" : "QualityAssistant",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"morph",
-		"currentEntity" ],
+		"currentEntity"
+	],
 	"name" : "QANautilusPlugin",
-	"pools" : [
-		 ],
-	"super" : "AbstractNautilusPlugin",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tg 9/20/2009 14:25",
+	"super" : "GLMPresentation",
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"presentationTransformation",
-		"cachedPresentation" ],
+		"cachedPresentation"
+	],
 	"name" : "GLMDynamicPresentation",
-	"pools" : [
-		 ],
-	"super" : "GLMPresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

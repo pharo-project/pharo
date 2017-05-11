@@ -1,16 +1,15 @@
 {
-	"category" : "NewValueHolder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "PeterUhnak 3/5/2016 11:16",
+	"super" : "Object",
+	"category" : "NewValueHolder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"announcer",
 		"lock",
-		"value" ],
+		"value"
+	],
 	"name" : "NewValueHolder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

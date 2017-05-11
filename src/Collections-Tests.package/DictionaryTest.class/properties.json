@@ -1,12 +1,6 @@
 {
-	"category" : "Collections-Tests-Unordered",
-	"classinstvars" : [
-		"testToto",
-		"pt1" ],
 	"classtraitcomposition" : "TIncludesTest classTrait + TDictionaryAddingTest classTrait + TDictionaryComparingTest classTrait + TDictionaryCopyingTest classTrait + TDictionaryEnumeratingTest classTrait + TDictionaryPrintingTest classTrait + TDictionaryRemovingTest classTrait + TPutBasicTest classTrait + TAsStringCommaAndDelimiterTest classTrait + TPrintTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TDictionaryIncludesWithIdentityCheckTest classTrait + TDictionaryValueAccessTest classTrait + TDictionaryKeysValuesAssociationsAccess classTrait + TDictionaryKeyAccessTest classTrait + TDictionaryAssociationAccessTest classTrait + TStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "TorstenBergmann 2/20/2014 15:20",
+	"classvars" : [ ],
 	"instvars" : [
 		"emptyDict",
 		"nonEmptyDict",
@@ -22,10 +16,17 @@
 		"dictionaryNotIncluded",
 		"nonEmptyWithFloat",
 		"dictionaryWithDuplicateValues",
-		"duplicateValue" ],
+		"duplicateValue"
+	],
 	"name" : "DictionaryTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "TorstenBergmann 2/20/2014 15:20",
 	"super" : "CollectionRootTest",
 	"traitcomposition" : "TIncludesTest + TDictionaryAddingTest + TDictionaryComparingTest + TDictionaryCopyingTest + TDictionaryEnumeratingTest + (TDictionaryPrintingTest - {#testPrintElementsOn. #testStoreOn}) + TDictionaryRemovingTest + (TPutBasicTest - {#testAtPutOutOfBounds}) + TAsStringCommaAndDelimiterTest + TPrintTest + TConvertTest + TConvertAsSortedTest + (TCopyTest - {#testCopyEmptyWithout. #testCopyNonEmptyWithout. #testCopyNonEmptyWithoutNotIncluded}) + TSetArithmetic + TDictionaryIncludesWithIdentityCheckTest + TDictionaryValueAccessTest + TDictionaryKeysValuesAssociationsAccess + TDictionaryKeyAccessTest + TDictionaryAssociationAccessTest + TStructuralEqualityTest + TOccurrencesForMultiplinessTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [
+		"testToto",
+		"pt1"
+	],
+	"pools" : [ ],
+	"category" : "Collections-Tests-Unordered"
+}

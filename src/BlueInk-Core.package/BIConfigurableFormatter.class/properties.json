@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "StephaneDucasse 3/31/2015 16:12",
+	"super" : "RBProgramNodeVisitor",
 	"category" : "BlueInk-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultPrettyPrintContext",
-		"FormatAsYouReadPolicy" ],
-	"commentStamp" : "StephaneDucasse 3/31/2015 16:12",
+		"FormatAsYouReadPolicy"
+	],
 	"instvars" : [
 		"codeStream",
 		"indent",
@@ -13,9 +15,8 @@
 		"originalSource",
 		"lineStart",
 		"context",
-		"isInCascadeNode" ],
+		"isInCascadeNode"
+	],
 	"name" : "BIConfigurableFormatter",
-	"pools" : [
-		 ],
-	"super" : "RBProgramNodeVisitor",
-	"type" : "normal" }
+	"type" : "normal"
+}

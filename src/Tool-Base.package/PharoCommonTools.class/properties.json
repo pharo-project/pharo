@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 12/18/2014 09:15",
-	"instvars" : [
-		"recentTools" ],
-	"name" : "PharoCommonTools",
-	"pools" : [
-		 ],
 	"super" : "ToolRegistry",
-	"type" : "normal" }
+	"category" : "Tool-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"recentTools"
+	],
+	"name" : "PharoCommonTools",
+	"type" : "normal"
+}

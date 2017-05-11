@@ -1,10 +1,10 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/29/2015 13:39",
+	"super" : "Morph",
+	"category" : "Rubric-Editing-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"hasEditingConflicts",
 		"hasUnacceptedEdits",
@@ -17,9 +17,8 @@
 		"scrollPane",
 		"rulers",
 		"enabled",
-		"highlights" ],
+		"highlights"
+	],
 	"name" : "RubScrolledTextMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

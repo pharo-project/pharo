@@ -1,17 +1,16 @@
 {
-	"category" : "Morphic-Widgets-Tree",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 9/5/2014 15:29",
+	"super" : "AbstractResizerMorph",
+	"category" : "Morphic-Widgets-Tree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"traceMorph",
 		"oldColor",
 		"index",
-		"container" ],
+		"container"
+	],
 	"name" : "MorphTreeResizerMorph",
-	"pools" : [
-		 ],
-	"super" : "AbstractResizerMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

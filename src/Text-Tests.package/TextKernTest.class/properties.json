@@ -1,14 +1,11 @@
 {
-	"category" : "Text-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 1/31/2014 12:25",
-	"instvars" : [
-		 ],
-	"name" : "TextKernTest",
-	"pools" : [
-		 ],
 	"super" : "HashAndEqualsTestCase",
-	"type" : "normal" }
+	"category" : "Text-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextKernTest",
+	"type" : "normal"
+}

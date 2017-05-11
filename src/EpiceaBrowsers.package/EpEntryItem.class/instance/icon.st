@@ -1,3 +1,4 @@
-populating browser
+private
 icon
-	^ entry content accept: EpIconVisitor new
+
+	^ self eventAccept: EpIconVisitor new

@@ -1,4 +1,0 @@
-accessing
-classAffectedName
-
-	^ class name

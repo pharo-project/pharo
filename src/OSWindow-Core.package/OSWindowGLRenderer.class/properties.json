@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-OpenGL",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 7/30/2014 17:48",
-	"instvars" : [
-		 ],
-	"name" : "OSWindowGLRenderer",
-	"pools" : [
-		 ],
 	"super" : "OSWindowRenderer",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-OpenGL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSWindowGLRenderer",
+	"type" : "normal"
+}

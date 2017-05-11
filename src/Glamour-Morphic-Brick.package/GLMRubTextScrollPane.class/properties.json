@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Morphic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GLMRubTextScrollPane",
-	"pools" : [
-		 ],
 	"super" : "RubTextScrollPane",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Morphic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMRubTextScrollPane",
+	"type" : "normal"
+}

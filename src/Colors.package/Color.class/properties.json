@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Colors",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BlueShift",
 		"CachedColormaps",
@@ -13,15 +15,14 @@
 		"HalfComponentMask",
 		"IndexedColors",
 		"MaskingMap",
-		"RedShift" ],
-	"commentStamp" : "<historical>",
+		"RedShift"
+	],
 	"instvars" : [
 		"rgb",
 		"cachedDepth",
 		"cachedBitPattern",
-		"alpha" ],
+		"alpha"
+	],
 	"name" : "Color",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

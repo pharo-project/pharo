@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-MorphicAdapters-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"currentIcon" ],
-	"name" : "SpecDropListMorph",
-	"pools" : [
-		 ],
 	"super" : "DropListMorph",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"currentIcon"
+	],
+	"name" : "SpecDropListMorph",
+	"type" : "normal"
+}

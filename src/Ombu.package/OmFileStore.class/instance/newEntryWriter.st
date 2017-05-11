@@ -1,4 +1,4 @@
 private
 newEntryWriter
 
-	^ OmSTONEntryWriter new
+	^ OmSTONEntryWriter newForStore: self

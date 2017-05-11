@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-Finder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BenjaminVanRyseghem 9/15/2010 11:17",
+	"super" : "Object",
+	"category" : "Tool-Finder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"searchingString",
 		"selectedMethod",
@@ -13,9 +13,8 @@
 		"currentSearchMode",
 		"environment",
 		"resultDictionary",
-		"useRegEx" ],
+		"useRegEx"
+	],
 	"name" : "Finder",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "Kernel-Tests-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "tlk 1/6/2004 17:54",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"aDateAndTime",
 		"aDuration",
 		"aTimeZone",
-		"localTimeZoneToRestore" ],
+		"localTimeZoneToRestore"
+	],
 	"name" : "DateAndTimeLeapTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

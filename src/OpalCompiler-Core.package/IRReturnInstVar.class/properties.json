@@ -1,14 +1,13 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBer 10/14/2014 15:23",
-	"instvars" : [
-		"index" ],
-	"name" : "IRReturnInstVar",
-	"pools" : [
-		 ],
 	"super" : "IRReturn",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"index"
+	],
+	"name" : "IRReturnInstVar",
+	"type" : "normal"
+}

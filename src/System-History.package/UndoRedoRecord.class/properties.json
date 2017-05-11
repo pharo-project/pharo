@@ -1,15 +1,14 @@
 {
-	"category" : "System-History",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 12/14/2010 23:26",
+	"super" : "HistoryLeaf",
+	"category" : "System-History",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"redoMessage",
-		"undoMessage" ],
+		"undoMessage"
+	],
 	"name" : "UndoRedoRecord",
-	"pools" : [
-		 ],
-	"super" : "HistoryLeaf",
-	"type" : "normal" }
+	"type" : "normal"
+}

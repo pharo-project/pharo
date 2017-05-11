@@ -1,14 +1,13 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 7/8/2015 09:56",
-	"instvars" : [
-		"messageSendAnalysis" ],
-	"name" : "DAPotentialDependenciesNode",
-	"pools" : [
-		 ],
 	"super" : "DADependentPackageNode",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"messageSendAnalysis"
+	],
+	"name" : "DAPotentialDependenciesNode",
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Athens-Core-PathsGeometry",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Athens-Core-PathsGeometry",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"x1",
 		"y1",
@@ -13,9 +13,8 @@
 		"x3",
 		"y3",
 		"x4",
-		"y4" ],
+		"y4"
+	],
 	"name" : "AthensCubicBezier",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

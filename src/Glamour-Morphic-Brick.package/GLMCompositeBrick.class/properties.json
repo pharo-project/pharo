@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Phlow",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 1/30/2015 10:13",
-	"instvars" : [
-		 ],
-	"name" : "GLMCompositeBrick",
-	"pools" : [
-		 ],
 	"super" : "GLMBrick",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Widgets-Phlow",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMCompositeBrick",
+	"type" : "normal"
+}

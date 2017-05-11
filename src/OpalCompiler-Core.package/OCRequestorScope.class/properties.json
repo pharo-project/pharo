@@ -1,15 +1,14 @@
 {
-	"category" : "OpalCompiler-Core-Semantics",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 11/30/2016 14:10",
+	"super" : "OCAbstractScope",
+	"category" : "OpalCompiler-Core-Semantics",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"requestor",
-		"compilationContext" ],
+		"compilationContext"
+	],
 	"name" : "OCRequestorScope",
-	"pools" : [
-		 ],
-	"super" : "OCAbstractScope",
-	"type" : "normal" }
+	"type" : "normal"
+}

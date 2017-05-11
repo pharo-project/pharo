@@ -1,4 +1,4 @@
-populating browser
+private
 oldStateString
 
 	^ entry content accept: EpOldStateVisitor new

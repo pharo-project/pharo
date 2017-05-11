@@ -1,19 +1,18 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 15:58",
+	"super" : "RBMethodRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"variable",
 		"moveToClasses",
 		"parseTree",
 		"hasOnlySelfReturns",
-		"selfVariableName" ],
+		"selfVariableName"
+	],
 	"name" : "RBMoveMethodRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBMethodRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

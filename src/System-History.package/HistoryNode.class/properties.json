@@ -1,15 +1,14 @@
 {
-	"category" : "System-History",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 12/15/2010 00:04",
+	"super" : "HistoryLeaf",
+	"category" : "System-History",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"history",
-		"opened" ],
+		"opened"
+	],
 	"name" : "HistoryNode",
-	"pools" : [
-		 ],
-	"super" : "HistoryLeaf",
-	"type" : "normal" }
+	"type" : "normal"
+}

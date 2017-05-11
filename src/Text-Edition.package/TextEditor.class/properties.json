@@ -1,20 +1,23 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Editor",
 	"category" : "Text-Edition",
 	"classinstvars" : [
 		"cmdActions",
-		"shiftCmdActions" ],
+		"shiftCmdActions"
+	],
+	"pools" : [ ],
 	"classvars" : [
 		"CaseSensitiveFinds",
 		"UseFindReplaceSelection",
 		"UseSecondarySelection",
 		"UseSelectionBar",
-		"WalkAlongDisplayedLine" ],
-	"commentStamp" : "<historical>",
+		"WalkAlongDisplayedLine"
+	],
 	"instvars" : [
 		"model",
-		"editingState" ],
+		"editingState"
+	],
 	"name" : "TextEditor",
-	"pools" : [
-		 ],
-	"super" : "Editor",
-	"type" : "normal" }
+	"type" : "normal"
+}

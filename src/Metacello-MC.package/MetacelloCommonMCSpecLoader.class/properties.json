@@ -1,16 +1,17 @@
 {
-	"category" : "Metacello-MC-Loaders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"RetryPackageResolution" ],
 	"commentStamp" : "",
+	"super" : "MetacelloSpecLoader",
+	"category" : "Metacello-MC-Loaders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"RetryPackageResolution"
+	],
 	"instvars" : [
 		"operator",
 		"loaderPolicy",
-		"disablePackageCache" ],
+		"disablePackageCache"
+	],
 	"name" : "MetacelloCommonMCSpecLoader",
-	"pools" : [
-		 ],
-	"super" : "MetacelloSpecLoader",
-	"type" : "normal" }
+	"type" : "normal"
+}

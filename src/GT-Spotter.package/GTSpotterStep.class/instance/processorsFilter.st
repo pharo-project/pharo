@@ -1,4 +1,4 @@
-accessing-dynamic
+accessing - dynamic
 processorsFilter
 
 	^ self spotter processorsFilter

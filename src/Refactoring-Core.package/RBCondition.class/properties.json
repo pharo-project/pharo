@@ -1,16 +1,15 @@
 {
-	"category" : "Refactoring-Core-Conditions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/19/2016 16:56",
+	"super" : "RBAbstractCondition",
+	"category" : "Refactoring-Core-Conditions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"block",
 		"type",
-		"errorBlock" ],
+		"errorBlock"
+	],
 	"name" : "RBCondition",
-	"pools" : [
-		 ],
-	"super" : "RBAbstractCondition",
-	"type" : "normal" }
+	"type" : "normal"
+}

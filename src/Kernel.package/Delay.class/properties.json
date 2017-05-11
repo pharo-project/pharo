@@ -1,18 +1,19 @@
 {
-	"category" : "Kernel-Processes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Scheduler" ],
 	"commentStamp" : "BenComan 3/19/2015 23:00",
+	"super" : "Object",
+	"category" : "Kernel-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Scheduler"
+	],
 	"instvars" : [
 		"delaySemaphore",
 		"beingWaitedOn",
 		"millisecondDelayDuration",
 		"scheduler",
-		"schedulerResumptionTime" ],
+		"schedulerResumptionTime"
+	],
 	"name" : "Delay",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

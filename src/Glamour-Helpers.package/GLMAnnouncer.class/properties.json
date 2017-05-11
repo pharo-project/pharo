@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Helpers",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 1/23/2011 00:58",
+	"super" : "Announcer",
+	"category" : "Glamour-Helpers",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"suspendAll",
-		"suspendedAnnouncemets" ],
+		"suspendedAnnouncemets"
+	],
 	"name" : "GLMAnnouncer",
-	"pools" : [
-		 ],
-	"super" : "Announcer",
-	"type" : "normal" }
+	"type" : "normal"
+}

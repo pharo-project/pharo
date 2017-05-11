@@ -1,17 +1,16 @@
 {
-	"category" : "Glamour-Browsers-Other",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 7/9/2011 18:16",
+	"super" : "GLMImplicitBrowser",
+	"category" : "Glamour-Browsers-Other",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"hasFixedSizePanes",
 		"fixedSizePanes",
 		"lastActivePresentation",
-		"firstTransmission" ],
+		"firstTransmission"
+	],
 	"name" : "GLMFinder",
-	"pools" : [
-		 ],
-	"super" : "GLMImplicitBrowser",
-	"type" : "normal" }
+	"type" : "normal"
+}

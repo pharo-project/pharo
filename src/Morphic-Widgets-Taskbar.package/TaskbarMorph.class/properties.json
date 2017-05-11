@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "AlainPlantec 1/7/2010 22:47",
+	"super" : "Morph",
 	"category" : "Morphic-Widgets-Taskbar",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"MaximumButtons",
 		"ShowTaskbar",
-		"ShowWindowPreview" ],
-	"commentStamp" : "AlainPlantec 1/7/2010 22:47",
+		"ShowWindowPreview"
+	],
 	"instvars" : [
 		"tasks",
-		"orderedTasks" ],
+		"orderedTasks"
+	],
 	"name" : "TaskbarMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

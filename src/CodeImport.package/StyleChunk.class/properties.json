@@ -1,14 +1,11 @@
 {
-	"category" : "CodeImport",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "StyleChunk",
-	"pools" : [
-		 ],
 	"super" : "CodeChunk",
-	"type" : "normal" }
+	"category" : "CodeImport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "StyleChunk",
+	"type" : "normal"
+}

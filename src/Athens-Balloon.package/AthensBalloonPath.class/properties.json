@@ -1,16 +1,15 @@
 {
-	"category" : "Athens-Balloon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AthensPath",
+	"category" : "Athens-Balloon",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"bounds",
 		"contours",
-		"last" ],
+		"last"
+	],
 	"name" : "AthensBalloonPath",
-	"pools" : [
-		 ],
-	"super" : "AthensPath",
-	"type" : "normal" }
+	"type" : "normal"
+}

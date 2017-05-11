@@ -1,16 +1,17 @@
 {
-	"category" : "Kernel-Chronology",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "brp 9/4/2003 06:32",
+	"super" : "AbstractTimeZone",
+	"category" : "Kernel-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ChronologyConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"offset",
 		"abbreviation",
-		"name" ],
+		"name"
+	],
 	"name" : "TimeZone",
-	"pools" : [
-		"ChronologyConstants" ],
-	"super" : "AbstractTimeZone",
-	"type" : "normal" }
+	"type" : "normal"
+}

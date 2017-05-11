@@ -1,14 +1,11 @@
 {
-	"category" : "Morphic-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "MorphGotFocus",
-	"pools" : [
-		 ],
 	"super" : "MorphAnnouncement",
-	"type" : "normal" }
+	"category" : "Morphic-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MorphGotFocus",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Graphics-Tests-Files",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"fileName" ],
-	"name" : "PNGReadWriterTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "Graphics-Tests-Files",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fileName"
+	],
+	"name" : "PNGReadWriterTest",
+	"type" : "normal"
+}

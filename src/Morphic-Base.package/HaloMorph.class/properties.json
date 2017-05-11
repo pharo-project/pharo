@@ -1,13 +1,15 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Morph",
 	"category" : "Morphic-Base-Widgets",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"CurrentHaloSpecifications",
 		"HaloEnclosesFullBounds",
 		"HaloWithDebugHandle",
-		"ShowBoundsInHalo" ],
-	"commentStamp" : "<historical>",
+		"ShowBoundsInHalo"
+	],
 	"instvars" : [
 		"target",
 		"innerTarget",
@@ -17,9 +19,8 @@
 		"directionArrowAnchor",
 		"haloBox",
 		"originalExtent",
-		"nameMorph" ],
+		"nameMorph"
+	],
 	"name" : "HaloMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

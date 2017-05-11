@@ -1,14 +1,11 @@
 {
-	"category" : "OmbuTests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "OmTimeStampSuffixStrategyTest",
-	"pools" : [
-		 ],
 	"super" : "OmSessionStoreNameStrategyTest",
-	"type" : "normal" }
+	"category" : "OmbuTests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OmTimeStampSuffixStrategyTest",
+	"type" : "normal"
+}

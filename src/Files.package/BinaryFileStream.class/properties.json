@@ -1,14 +1,11 @@
 {
-	"category" : "Files-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 6/5/2015 11:05",
-	"instvars" : [
-		 ],
-	"name" : "BinaryFileStream",
-	"pools" : [
-		 ],
 	"super" : "AbstractBinaryFileStream",
-	"type" : "normal" }
+	"category" : "Files-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BinaryFileStream",
+	"type" : "normal"
+}

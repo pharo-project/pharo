@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:12",
+	"super" : "SharedPool",
 	"category" : "Balloon-Engine",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BEAaLevelIndex",
 		"BEBalloonEngineSize",
@@ -204,12 +206,9 @@
 		"GWTimeMergeFill",
 		"GWTimeNextAETEntry",
 		"GWTimeNextFillEntry",
-		"GWTimeNextGETEntry" ],
-	"commentStamp" : "TorstenBergmann 1/31/2014 11:12",
-	"instvars" : [
-		 ],
+		"GWTimeNextGETEntry"
+	],
+	"instvars" : [ ],
 	"name" : "BalloonEngineConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

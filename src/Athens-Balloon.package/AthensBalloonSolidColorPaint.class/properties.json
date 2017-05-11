@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Balloon",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 12/20/2011 15:27",
-	"instvars" : [
-		"color" ],
-	"name" : "AthensBalloonSolidColorPaint",
-	"pools" : [
-		 ],
 	"super" : "AthensBalloonPaint",
-	"type" : "normal" }
+	"category" : "Athens-Balloon",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"color"
+	],
+	"name" : "AthensBalloonSolidColorPaint",
+	"type" : "normal"
+}

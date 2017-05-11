@@ -1,17 +1,16 @@
 {
-	"category" : "Reflectivity-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 2/25/2015 18:00",
+	"super" : "Object",
+	"category" : "Reflectivity-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"ast",
 		"class",
 		"compiledMethod",
-		"linkCount" ],
+		"linkCount"
+	],
 	"name" : "ReflectiveMethod",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "variable" }
+	"type" : "variable"
+}

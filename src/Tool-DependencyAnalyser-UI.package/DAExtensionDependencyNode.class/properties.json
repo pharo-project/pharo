@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "BaptisteQuide 7/11/2014 11:46",
-	"instvars" : [
-		 ],
-	"name" : "DAExtensionDependencyNode",
-	"pools" : [
-		 ],
 	"super" : "DAMethodDependencyNode",
-	"type" : "normal" }
+	"category" : "Tool-DependencyAnalyser-UI-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DAExtensionDependencyNode",
+	"type" : "normal"
+}

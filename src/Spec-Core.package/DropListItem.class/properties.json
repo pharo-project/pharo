@@ -1,17 +1,16 @@
 {
-	"category" : "Spec-Core-Widgets-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"actionHolder",
 		"model",
 		"displayBlock",
-		"icon" ],
+		"icon"
+	],
 	"name" : "DropListItem",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

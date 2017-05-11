@@ -1,15 +1,14 @@
 {
-	"category" : "Shout-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AlainPlantec 9/20/2011 17:23",
+	"super" : "Model",
+	"category" : "Shout-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"code",
-		"comment" ],
+		"comment"
+	],
 	"name" : "SHOneEditorShoutedASecondNotShouted",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

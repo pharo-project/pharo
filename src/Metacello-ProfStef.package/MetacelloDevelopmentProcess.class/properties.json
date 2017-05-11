@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-ProfStef",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloDevelopmentProcess",
-	"pools" : [
-		 ],
 	"super" : "AbstractTutorial",
-	"type" : "normal" }
+	"category" : "Metacello-ProfStef",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloDevelopmentProcess",
+	"type" : "normal"
+}

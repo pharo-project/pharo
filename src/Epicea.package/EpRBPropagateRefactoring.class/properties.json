@@ -1,14 +1,13 @@
 {
-	"category" : "Epicea-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"targetRefactoring" ],
-	"name" : "EpRBPropagateRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBRefactoring",
-	"type" : "normal" }
+	"category" : "Epicea-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"targetRefactoring"
+	],
+	"name" : "EpRBPropagateRefactoring",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "FileSystem-Core-Implementation",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UserLocalDirectory" ],
 	"commentStamp" : "cwp 11/18/2009 11:58",
-	"instvars" : [
-		 ],
-	"name" : "SystemResolver",
-	"pools" : [
-		 ],
 	"super" : "FileSystemResolver",
-	"type" : "normal" }
+	"category" : "FileSystem-Core-Implementation",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UserLocalDirectory"
+	],
+	"instvars" : [ ],
+	"name" : "SystemResolver",
+	"type" : "normal"
+}

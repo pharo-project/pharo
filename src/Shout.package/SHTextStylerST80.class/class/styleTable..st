@@ -1,4 +1,4 @@
-style table
+accessing
 styleTable: anArray 
 	styleTable := anArray.
 	textAttributesByPixelHeight := nil

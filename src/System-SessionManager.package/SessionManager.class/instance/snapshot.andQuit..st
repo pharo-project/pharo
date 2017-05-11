@@ -7,8 +7,7 @@ snapshot: save andQuit: quit
 	save
 		ifTrue: [
 					snapshotResult := Smalltalk snapshotPrimitive.	"<-- PC frozen here on image file"
-					isImageStarting := snapshotResult == true.
-					SystemAnnouncer uniqueInstance snapshotDone: isImageStarting ]
+					isImageStarting := snapshotResult == true. ]
 		ifFalse: [ isImageStarting := false ].
 	(quit and: [ isImageStarting not ])
 		ifTrue: [ Smalltalk quitPrimitive ].
@@ -18,7 +17,9 @@ snapshot: save andQuit: quit
 
 	self currentSession start: isImageStarting.
 	snapshotResult 
-		ifNil: [ self error: 'Failed to write image file (disk full?)' ].
+		ifNil: [ self error: 'Failed to write image file (disk full?)' ]
+		ifNotNil: [ 
+			SystemAnnouncer uniqueInstance snapshotDone: isImageStarting ].
 	
 	"We return the resuming state, which may be useful for users to know the state of the image"
 	^ isImageStarting

@@ -1,11 +1,13 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Graphics-Files",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BitBufferSize",
-		"Lookahead" ],
-	"commentStamp" : "<historical>",
+		"Lookahead"
+	],
 	"instvars" : [
 		"bits",
 		"values",
@@ -13,9 +15,8 @@
 		"maxcode",
 		"valptr",
 		"lookaheadBits",
-		"lookaheadSymbol" ],
+		"lookaheadSymbol"
+	],
 	"name" : "JPEGHuffmanTable",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

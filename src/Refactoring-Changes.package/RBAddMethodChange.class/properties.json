@@ -1,18 +1,17 @@
 {
-	"category" : "Refactoring-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 9/9/2016 20:08",
+	"super" : "RBRefactoryClassChange",
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"source",
 		"selector",
 		"protocols",
 		"controller",
-		"definedSelector" ],
+		"definedSelector"
+	],
 	"name" : "RBAddMethodChange",
-	"pools" : [
-		 ],
-	"super" : "RBRefactoryClassChange",
-	"type" : "normal" }
+	"type" : "normal"
+}

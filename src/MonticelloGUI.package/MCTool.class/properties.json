@@ -1,17 +1,18 @@
 {
-	"category" : "MonticelloGUI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"MCVersionCache" ],
 	"commentStamp" : "<historical>",
+	"super" : "Model",
+	"category" : "MonticelloGUI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"MCVersionCache"
+	],
 	"instvars" : [
 		"morph",
 		"label",
 		"modal",
-		"modalValue" ],
+		"modalValue"
+	],
 	"name" : "MCTool",
-	"pools" : [
-		 ],
-	"super" : "Model",
-	"type" : "normal" }
+	"type" : "normal"
+}

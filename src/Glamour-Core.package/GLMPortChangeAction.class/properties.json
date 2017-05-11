@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"portName" ],
-	"name" : "GLMPortChangeAction",
-	"pools" : [
-		 ],
 	"super" : "GLMAction",
-	"type" : "normal" }
+	"category" : "Glamour-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"portName"
+	],
+	"name" : "GLMPortChangeAction",
+	"type" : "normal"
+}

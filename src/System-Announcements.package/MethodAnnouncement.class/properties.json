@@ -1,15 +1,14 @@
 {
-	"category" : "System-Announcements-System-Methods",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "CamilleTeruel 9/4/2014 14:33",
+	"super" : "SystemAnnouncement",
+	"category" : "System-Announcements-System-Methods",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"method",
-		"methodPackage" ],
+		"methodPackage"
+	],
 	"name" : "MethodAnnouncement",
-	"pools" : [
-		 ],
-	"super" : "SystemAnnouncement",
-	"type" : "normal" }
+	"type" : "normal"
+}

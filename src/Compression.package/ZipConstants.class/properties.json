@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "SharedPool",
 	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BaseDistance",
 		"BaseLength",
@@ -34,12 +36,9 @@
 		"Repeat3To6",
 		"StoredBlock",
 		"WindowMask",
-		"WindowSize" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"WindowSize"
+	],
+	"instvars" : [ ],
 	"name" : "ZipConstants",
-	"pools" : [
-		 ],
-	"super" : "SharedPool",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Balloon-Geometry",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "LineSegment",
+	"category" : "Balloon-Geometry",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"via1",
-		"via2" ],
+		"via2"
+	],
 	"name" : "Bezier3Segment",
-	"pools" : [
-		 ],
-	"super" : "LineSegment",
-	"type" : "normal" }
+	"type" : "normal"
+}

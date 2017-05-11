@@ -1,18 +1,17 @@
 {
+	"commentStamp" : "AliakseiSyrel 3/5/2017 16:54",
+	"super" : "GLMInteractableBrick",
 	"category" : "GT-Spotter-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"iconBrick",
 		"labelBrick",
+		"actionbarBrick",
 		"stepModel",
-		"candidateLink",
-		"actionbarBrick" ],
+		"candidateLink"
+	],
 	"name" : "GTSpotterItemBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,10 +1,10 @@
 {
-	"category" : "Tests-Traits",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 1/22/2014 15:40",
+	"super" : "TestResource",
+	"category" : "Tests-Traits",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"createdClassesAndTraits",
 		"dirty",
@@ -29,9 +29,8 @@
 		"c9",
 		"c10",
 		"c11",
-		"t12" ],
+		"t12"
+	],
 	"name" : "TraitsResource",
-	"pools" : [
-		 ],
-	"super" : "TestResource",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,17 +1,16 @@
 {
-	"category" : "OpalCompiler-Core-Encoders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "OpalEncoder",
+	"category" : "OpalCompiler-Core-Encoders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"stream",
 		"position",
 		"rootNode",
-		"blockExtentsToLocals" ],
+		"blockExtentsToLocals"
+	],
 	"name" : "OpalBytecodeEncoder",
-	"pools" : [
-		 ],
-	"super" : "OpalEncoder",
-	"type" : "normal" }
+	"type" : "normal"
+}

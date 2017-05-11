@@ -1,14 +1,11 @@
 {
-	"category" : "Collections-Sequenceable",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "StephaneDucasse 10/30/2015 09:03",
-	"instvars" : [
-		 ],
-	"name" : "Array",
-	"pools" : [
-		 ],
 	"super" : "ArrayedCollection",
-	"type" : "variable" }
+	"category" : "Collections-Sequenceable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Array",
+	"type" : "variable"
+}

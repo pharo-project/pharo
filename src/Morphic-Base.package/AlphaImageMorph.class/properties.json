@@ -1,10 +1,12 @@
 {
-	"category" : "Morphic-Base-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"DefaultImage" ],
 	"commentStamp" : "StephaneDucasse 6/23/2014 16:33",
+	"super" : "ImageMorph",
+	"category" : "Morphic-Base-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"DefaultImage"
+	],
 	"instvars" : [
 		"alpha",
 		"cachedForm",
@@ -13,9 +15,8 @@
 		"enabled",
 		"autoSize",
 		"getImageSelector",
-		"model" ],
+		"model"
+	],
 	"name" : "AlphaImageMorph",
-	"pools" : [
-		 ],
-	"super" : "ImageMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

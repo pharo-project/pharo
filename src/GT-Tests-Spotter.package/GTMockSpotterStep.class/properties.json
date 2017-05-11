@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Tests-Spotter-Scripting-Mocks",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTMockSpotterStep",
-	"pools" : [
-		 ],
 	"super" : "GTSpotterStep",
-	"type" : "normal" }
+	"category" : "GT-Tests-Spotter-Scripting-Mocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTMockSpotterStep",
+	"type" : "normal"
+}

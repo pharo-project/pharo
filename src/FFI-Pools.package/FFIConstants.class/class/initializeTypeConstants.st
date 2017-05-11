@@ -1,4 +1,4 @@
-pool initialization
+private - initialization
 initializeTypeConstants
 	"type void"
 	FFITypeVoid := 0.

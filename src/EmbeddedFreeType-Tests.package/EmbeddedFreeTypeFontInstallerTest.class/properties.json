@@ -1,14 +1,11 @@
 {
-	"category" : "EmbeddedFreeType-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "EmbeddedFreeTypeFontInstallerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "EmbeddedFreeType-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EmbeddedFreeTypeFontInstallerTest",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "OpalCompiler-Core-IR-Nodes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ClementBer 10/14/2014 14:48",
-	"instvars" : [
-		 ],
-	"name" : "IRStoreLiteralVariable",
-	"pools" : [
-		 ],
 	"super" : "IRLiteralVariableAccess",
-	"type" : "normal" }
+	"category" : "OpalCompiler-Core-IR-Nodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IRStoreLiteralVariable",
+	"type" : "normal"
+}

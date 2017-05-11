@@ -1,14 +1,13 @@
 {
-	"category" : "Collections-Tests-Weak",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 15:36",
-	"instvars" : [
-		"errorWasHere" ],
-	"name" : "WeakRegistryTest",
-	"pools" : [
-		 ],
 	"super" : "ClassTestCase",
-	"type" : "normal" }
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"errorWasHere"
+	],
+	"name" : "WeakRegistryTest",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Theme",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 3/21/2015 19:45",
-	"instvars" : [
-		 ],
-	"name" : "GLMBrickPopupThemer",
-	"pools" : [
-		 ],
 	"super" : "GLMBrickThemerModule",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Widgets-UI-Popup-Themer",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMBrickPopupThemer",
+	"type" : "normal"
+}

@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
+	"super" : "SDL2MappedEvent",
 	"category" : "OSWindow-SDL2-Bindings",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_BUTTON",
 		"OFFSET_PADDING1",
@@ -12,12 +14,9 @@
 		"OFFSET_WHICH",
 		"OFFSET_WINDOWID",
 		"OFFSET_X",
-		"OFFSET_Y" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 18:44",
-	"instvars" : [
-		 ],
+		"OFFSET_Y"
+	],
+	"instvars" : [ ],
 	"name" : "SDL_MouseButtonEvent",
-	"pools" : [
-		 ],
-	"super" : "SDL2MappedEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

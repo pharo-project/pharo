@@ -1,10 +1,10 @@
 {
-	"category" : "FreeType-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FT2Handle",
+	"category" : "FreeType-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"numFaces",
 		"faceIndex",
@@ -30,9 +30,8 @@
 		"encoding",
 		"platformId",
 		"encodingId",
-		"size" ],
+		"size"
+	],
 	"name" : "FT2Face",
-	"pools" : [
-		 ],
-	"super" : "FT2Handle",
-	"type" : "normal" }
+	"type" : "normal"
+}

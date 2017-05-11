@@ -1,16 +1,13 @@
 {
-	"category" : "Collections-Tests-Abstract",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TIterateTest classTrait + TEmptyTest classTrait + TSizeTest classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "stephane.ducasse 1/12/2009 17:41",
-	"instvars" : [
-		 ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "CollectionRootTest",
-	"pools" : [
-		 ],
+	"commentStamp" : "stephane.ducasse 1/12/2009 17:41",
 	"super" : "ClassTestCase",
 	"traitcomposition" : "TIterateTest + TEmptyTest + TSizeTest",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Collections-Tests-Abstract"
+}

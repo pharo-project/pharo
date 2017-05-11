@@ -1,14 +1,13 @@
 {
-	"category" : "System-SessionManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"UniqueInstance" ],
 	"commentStamp" : "ChristopheDemarey 10/9/2015 11:51",
-	"instvars" : [
-		 ],
-	"name" : "UIManagerSessionHandler",
-	"pools" : [
-		 ],
 	"super" : "AbstractSessionHandler",
-	"type" : "normal" }
+	"category" : "System-SessionManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"UniqueInstance"
+	],
+	"instvars" : [ ],
+	"name" : "UIManagerSessionHandler",
+	"type" : "normal"
+}

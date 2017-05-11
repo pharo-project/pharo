@@ -1,10 +1,10 @@
 {
-	"category" : "Morphic-Widgets-FastTable-PluggableAdaptor",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "FTTableMorph",
+	"category" : "Morphic-Widgets-FastTable-PluggableAdaptor",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"setSelectionListSelector",
 		"getSelectionListSelector",
@@ -13,9 +13,8 @@
 		"keystrokeSelector",
 		"resetListSelector",
 		"doubleClickSelector",
-		"keystrokeActionSelector" ],
+		"keystrokeActionSelector"
+	],
 	"name" : "FTPluggableIconListMorphAdaptor",
-	"pools" : [
-		 ],
-	"super" : "FTTableMorph",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "GT-Debugger-UI",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 12/30/2015 11:06",
+	"super" : "GLMCompositePresentation",
+	"category" : "GT-Debugger-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"debugger",
-		"cachedVariables" ],
+		"cachedVariables"
+	],
 	"name" : "GTDebuggerVariablesBrowser",
-	"pools" : [
-		 ],
-	"super" : "GLMCompositePresentation",
-	"type" : "normal" }
+	"type" : "normal"
+}

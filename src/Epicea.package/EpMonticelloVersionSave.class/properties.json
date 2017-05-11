@@ -1,15 +1,14 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:52",
+	"super" : "EpEvent",
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"versionName",
-		"repositoryDescription" ],
+		"repositoryDescription"
+	],
 	"name" : "EpMonticelloVersionSave",
-	"pools" : [
-		 ],
-	"super" : "EpEvent",
-	"type" : "normal" }
+	"type" : "normal"
+}

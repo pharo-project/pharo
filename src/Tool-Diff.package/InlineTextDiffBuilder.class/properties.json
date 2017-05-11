@@ -1,14 +1,11 @@
 {
-	"category" : "Tool-Diff",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "InlineTextDiffBuilder",
-	"pools" : [
-		 ],
 	"super" : "TextDiffBuilder",
-	"type" : "normal" }
+	"category" : "Tool-Diff",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "InlineTextDiffBuilder",
+	"type" : "normal"
+}

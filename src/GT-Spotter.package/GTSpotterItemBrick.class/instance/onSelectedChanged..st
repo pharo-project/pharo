@@ -1,4 +1,4 @@
 event handling
-onSelectedChanged: ann
+onSelectedChanged: anAnnouncement
 
 	self checkOrUncheck

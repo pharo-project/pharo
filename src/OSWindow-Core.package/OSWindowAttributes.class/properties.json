@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "IgorStasenko 7/30/2014 16:18",
+	"super" : "Object",
 	"category" : "OSWindow-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"DefaultBorderless",
 		"DefaultExtent",
@@ -12,8 +14,8 @@
 		"DefaultResizable",
 		"DefaultTitle",
 		"DefaultVisible",
-		"DefaultWindowCentered" ],
-	"commentStamp" : "IgorStasenko 7/30/2014 16:18",
+		"DefaultWindowCentered"
+	],
 	"instvars" : [
 		"position",
 		"extent",
@@ -28,9 +30,8 @@
 		"resizable",
 		"maximized",
 		"minimized",
-		"visible" ],
+		"visible"
+	],
 	"name" : "OSWindowAttributes",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

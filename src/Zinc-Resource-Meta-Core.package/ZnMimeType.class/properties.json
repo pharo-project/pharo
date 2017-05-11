@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Zinc-Resource-Meta-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ExtensionsMap",
-		"TextSubTypeFragments" ],
-	"commentStamp" : "<historical>",
+		"TextSubTypeFragments"
+	],
 	"instvars" : [
 		"main",
 		"sub",
-		"parameters" ],
+		"parameters"
+	],
 	"name" : "ZnMimeType",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Glamour-Presentations",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 10/3/2014 18:20",
-	"instvars" : [
-		"isHorizontal" ],
-	"name" : "GLMActionListPresentation",
-	"pools" : [
-		 ],
 	"super" : "GLMFormatedPresentation",
-	"type" : "normal" }
+	"category" : "Glamour-Presentations",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"isHorizontal"
+	],
+	"name" : "GLMActionListPresentation",
+	"type" : "normal"
+}

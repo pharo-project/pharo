@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Spotter-EventRecorder-Base",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "JurajKubelka 11/15/2015 18:42",
-	"instvars" : [
-		"postponedEvents" ],
-	"name" : "GTSpotterEventCollector",
-	"pools" : [
-		 ],
 	"super" : "GTEventCollector",
-	"type" : "normal" }
+	"category" : "GT-Spotter-EventRecorder-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"postponedEvents"
+	],
+	"name" : "GTSpotterEventCollector",
+	"type" : "normal"
+}

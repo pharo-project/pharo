@@ -1,10 +1,12 @@
 {
-	"category" : "Compression-Archives",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "ArchiveMember",
+	"category" : "Compression-Archives",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ZipFileConstants"
+	],
+	"classvars" : [ ],
 	"instvars" : [
 		"lastModFileDateTime",
 		"fileAttributeFormat",
@@ -23,9 +25,8 @@
 		"compressedSize",
 		"uncompressedSize",
 		"writeLocalHeaderRelativeOffset",
-		"readDataRemaining" ],
+		"readDataRemaining"
+	],
 	"name" : "ZipArchiveMember",
-	"pools" : [
-		"ZipFileConstants" ],
-	"super" : "ArchiveMember",
-	"type" : "normal" }
+	"type" : "normal"
+}

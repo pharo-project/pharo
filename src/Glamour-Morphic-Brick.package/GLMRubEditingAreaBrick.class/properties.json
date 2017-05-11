@@ -1,14 +1,11 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 3/23/2015 01:00",
-	"instvars" : [
-		 ],
-	"name" : "GLMRubEditingAreaBrick",
-	"pools" : [
-		 ],
 	"super" : "GLMRubScrolledTextBrick",
-	"type" : "normal" }
+	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GLMRubEditingAreaBrick",
+	"type" : "normal"
+}

@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 5/21/2016 19:41",
-	"instvars" : [
-		 ],
-	"name" : "RBProtocolRegexRefactoring",
-	"pools" : [
-		 ],
 	"super" : "RBRegexRefactoring",
-	"type" : "normal" }
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBProtocolRegexRefactoring",
+	"type" : "normal"
+}

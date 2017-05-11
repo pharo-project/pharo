@@ -7,5 +7,7 @@ newJoinSection
 		dstColor: self modificationColor;
 		borderWidth: 1;
 		borderColor: self edgeColor;
+		additionHighlightColor: self additionHighlightColor;
+		removalHighlightColor: self removalHighlightColor;
 		addDependent: self;
 		yourself

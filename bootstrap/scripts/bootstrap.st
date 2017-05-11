@@ -1,7 +1,12 @@
-[options := CommandLineArguments default.
+[
+| options architecture |
+
+options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
 
-('[INFO] Building Image Arch ', architecture) logCr.
+FileStream stdout
+	nextPutAll: ('[INFO] Building Image Arch ', architecture);
+	cr.
 
 "Configure logging"
 (CustomStringStreamBeacon with: FileStream stdout)

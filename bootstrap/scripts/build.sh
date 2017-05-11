@@ -104,32 +104,33 @@ ln -s .. pharo-core
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
-./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
-./vm/pharo -vm-display-null core.image st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
+./vm/pharo core.image st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+./vm/pharo core.image st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
+./vm/pharo core.image st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip core$SUFFIX.zip core.image
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
-./vm/pharo -vm-display-null core.image save monticello_bootstrap
-./vm/pharo -vm-display-null monticello_bootstrap.image st st-cache/Monticello.st --save --quit
-./vm/pharo -vm-display-null monticello_bootstrap.image st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-./vm/pharo -vm-display-null monticello_bootstrap.image st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+./vm/pharo core.image save monticello_bootstrap
+./vm/pharo monticello_bootstrap.image st st-cache/Monticello.st --save --quit
+./vm/pharo monticello_bootstrap.image st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
+./vm/pharo monticello_bootstrap.image st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
 zip monticello_bootstrap$SUFFIX.zip monticello_bootstrap.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo "[Monticello] Loading Networking Packages and Remote Repositories"
-./vm/pharo -vm-display-null monticello_bootstrap.image save monticello
-./vm/pharo -vm-display-null monticello.image st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+./vm/pharo monticello_bootstrap.image save monticello
+./vm/pharo monticello.image st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
 zip monticello$SUFFIX.zip monticello.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
-./vm/pharo -vm-display-null monticello.image save metacello
-./vm/pharo -vm-display-null metacello.image st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+./vm/pharo monticello.image save metacello
+./vm/pharo metacello.image st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
 zip metacello$SUFFIX.zip metacello.*
 
 echo "[Pharo] Reloading rest of packages"
-./vm/pharo -vm-display-null metacello.image save Pharo
-./vm/pharo -vm-display-null Pharo.image eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+./vm/pharo metacello.image save Pharo
+./vm/pharo Pharo.image eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+./vm/pharo Pharo.image clean --release
 zip Pharo$SUFFIX.zip Pharo.*

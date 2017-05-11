@@ -1,15 +1,16 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"RefactoringOptions" ],
 	"commentStamp" : "NicolaiHess 5/21/2016 01:47",
+	"super" : "Object",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"RefactoringOptions"
+	],
 	"instvars" : [
 		"model",
-		"options" ],
+		"options"
+	],
 	"name" : "RBRefactoring",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

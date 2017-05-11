@@ -1,16 +1,15 @@
 {
-	"category" : "Tool-DependencyAnalyser-UI-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "ChristopheDemarey 9/11/2015 13:54",
+	"super" : "ComposableModel",
+	"category" : "Tool-DependencyAnalyser-UI-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"packageList",
 		"buttonAddPackage",
-		"packageAnalyzerTreeModel" ],
+		"packageAnalyzerTreeModel"
+	],
 	"name" : "DAAddPackageModel",
-	"pools" : [
-		 ],
-	"super" : "ComposableModel",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -8,7 +8,8 @@ testDetectOneChange
 	classFactory newClass.
 	monitor sessionStore flush.
 
-	detector := EpLostChangesDetector new.
-	detector monitorLog: logWithALostChange.
+	detector := EpLostChangesDetector newWithLog: logWithALostChange.
+	self assert: detector hasLostChanges.
 	self assert: detector lostChanges size equals: 1.
-	self assert: detector monitorLog entries size > 1. "Just to ensure assumptions of this test"
+
+	self assert: monitor log entriesCount > 1. "Just to ensure assumptions of this test"

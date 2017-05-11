@@ -1,14 +1,11 @@
 {
-	"category" : "Keymapping-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "KMKeymapTest",
-	"pools" : [
-		 ],
 	"super" : "AbstractKeymappingTest",
-	"type" : "normal" }
+	"category" : "Keymapping-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "KMKeymapTest",
+	"type" : "normal"
+}

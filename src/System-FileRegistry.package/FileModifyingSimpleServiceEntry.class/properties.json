@@ -1,14 +1,11 @@
 {
-	"category" : "System-FileRegistry",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nk 11/26/2002 12:03",
-	"instvars" : [
-		 ],
-	"name" : "FileModifyingSimpleServiceEntry",
-	"pools" : [
-		 ],
 	"super" : "SimpleServiceEntry",
-	"type" : "normal" }
+	"category" : "System-FileRegistry",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FileModifyingSimpleServiceEntry",
+	"type" : "normal"
+}

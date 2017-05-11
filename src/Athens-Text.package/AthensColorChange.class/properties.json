@@ -1,14 +1,13 @@
 {
-	"category" : "Athens-Text",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 2/6/2012 16:17",
-	"instvars" : [
-		"color" ],
-	"name" : "AthensColorChange",
-	"pools" : [
-		 ],
 	"super" : "AthensTextDisplayCommand",
-	"type" : "normal" }
+	"category" : "Athens-Text",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"color"
+	],
+	"name" : "AthensColorChange",
+	"type" : "normal"
+}

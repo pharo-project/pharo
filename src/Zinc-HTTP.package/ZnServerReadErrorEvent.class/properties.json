@@ -1,14 +1,11 @@
 {
-	"category" : "Zinc-HTTP-Logging",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 6/16/2014 15:13",
-	"instvars" : [
-		 ],
-	"name" : "ZnServerReadErrorEvent",
-	"pools" : [
-		 ],
 	"super" : "ZnServerErrorEvent",
-	"type" : "normal" }
+	"category" : "Zinc-HTTP-Logging",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ZnServerReadErrorEvent",
+	"type" : "normal"
+}

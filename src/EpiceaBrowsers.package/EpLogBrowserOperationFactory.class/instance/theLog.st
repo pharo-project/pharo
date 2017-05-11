@@ -1,0 +1,4 @@
+accessing
+theLog
+
+	^ logBrowserModel theLog

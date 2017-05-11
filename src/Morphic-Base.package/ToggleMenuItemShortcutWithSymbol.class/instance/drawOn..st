@@ -16,4 +16,4 @@ drawOn: aCanvas
 	aCanvas 
 		paragraph: paragraph 
 		bounds: keyBounds 
-		color: self owner color
+		color: self owner stringColorToUse

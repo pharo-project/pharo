@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Clusters-Optionals",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FLDictionaryCollectionCluster",
-	"pools" : [
-		 ],
 	"super" : "FLAbstractCollectionCluster",
-	"type" : "normal" }
+	"category" : "Fuel-Clusters-Optionals",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLDictionaryCollectionCluster",
+	"type" : "normal"
+}

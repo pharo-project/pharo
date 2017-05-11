@@ -1,14 +1,13 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:49",
-	"instvars" : [
-		"method" ],
-	"name" : "EpMethodAddition",
-	"pools" : [
-		 ],
 	"super" : "EpMethodChange",
-	"type" : "normal" }
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"method"
+	],
+	"name" : "EpMethodAddition",
+	"type" : "normal"
+}

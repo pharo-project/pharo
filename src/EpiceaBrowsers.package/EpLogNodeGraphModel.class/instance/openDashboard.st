@@ -1,0 +1,4 @@
+private
+openDashboard
+
+	EpDashboardModel open

@@ -1,14 +1,13 @@
 {
-	"category" : "Morphic-Widgets-FastTable-Announcement",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"fastTable" ],
-	"name" : "FTAnnouncement",
-	"pools" : [
-		 ],
 	"super" : "Announcement",
-	"type" : "normal" }
+	"category" : "Morphic-Widgets-FastTable-Announcement",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fastTable"
+	],
+	"name" : "FTAnnouncement",
+	"type" : "normal"
+}

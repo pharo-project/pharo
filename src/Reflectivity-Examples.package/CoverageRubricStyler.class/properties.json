@@ -1,14 +1,11 @@
 {
-	"category" : "Reflectivity-Examples",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "mcamp 9/23/2015 10:58",
-	"instvars" : [
-		 ],
-	"name" : "CoverageRubricStyler",
-	"pools" : [
-		 ],
 	"super" : "MetalinkIconStyler",
-	"type" : "normal" }
+	"category" : "Reflectivity-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CoverageRubricStyler",
+	"type" : "normal"
+}

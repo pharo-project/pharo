@@ -1,17 +1,18 @@
 {
-	"category" : "DebuggerModel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"LogDebuggerStackToFile" ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "DebuggerModel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"LogDebuggerStackToFile"
+	],
 	"instvars" : [
 		"name",
 		"interruptedContext",
 		"interruptedProcess",
-		"errorWasInUIProcess" ],
+		"errorWasInUIProcess"
+	],
 	"name" : "DebugSession",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

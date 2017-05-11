@@ -1,14 +1,11 @@
 {
-	"category" : "SUnit-Core-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "TestSuiteEnded",
-	"pools" : [
-		 ],
 	"super" : "TestCaseAnnouncement",
-	"type" : "normal" }
+	"category" : "SUnit-Core-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TestSuiteEnded",
+	"type" : "normal"
+}

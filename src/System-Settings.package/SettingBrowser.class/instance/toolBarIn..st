@@ -39,7 +39,7 @@ toolBarIn: aMorph
 				arguments: {aMorph}
 				getEnabled: nil
 				label: 'Choose packages' translated 
-				help: 'Select packages' translated).
+				help: 'Per default, SettingBrowser shows all the setting of the system. You can restrict what is displayed to some packages that contains setting defintions.' translated).
 	(aMorph
 				newButtonFor: self
 				getState: nil

@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Help",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 7/27/2016 21:34",
-	"instvars" : [
-		 ],
-	"name" : "RBBrowserVariableRefactoringHelp",
-	"pools" : [
-		 ],
 	"super" : "RBBrowserClassRefactoringHelp",
-	"type" : "normal" }
+	"category" : "Refactoring-Help",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBBrowserVariableRefactoringHelp",
+	"type" : "normal"
+}

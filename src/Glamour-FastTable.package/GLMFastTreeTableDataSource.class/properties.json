@@ -1,16 +1,15 @@
 {
-	"category" : "Glamour-FastTable-Model",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGLMFastTableColumnsRenderer classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 2/6/2017 14:44",
+	"classvars" : [ ],
 	"instvars" : [
-		"columnToSortBy" ],
+		"columnToSortBy"
+	],
 	"name" : "GLMFastTreeTableDataSource",
-	"pools" : [
-		 ],
+	"commentStamp" : "AndreiChis 2/6/2017 14:44",
 	"super" : "GLMFastTreeDataSource",
 	"traitcomposition" : "TGLMFastTableColumnsRenderer",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-FastTable-Model"
+}

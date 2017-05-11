@@ -1,10 +1,10 @@
 {
-	"category" : "Tool-Finder",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:44",
+	"super" : "Object",
+	"category" : "Tool-Finder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"methodNameUI",
 		"choicesList",
@@ -16,9 +16,8 @@
 		"title",
 		"selectedItemsSetterSelector",
 		"unselectedLabel",
-		"selectedLabel" ],
+		"selectedLabel"
+	],
 	"name" : "DialogItemsChooser",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

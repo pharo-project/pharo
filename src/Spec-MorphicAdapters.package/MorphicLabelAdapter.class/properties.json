@@ -1,14 +1,13 @@
 {
-	"category" : "Spec-MorphicAdapters",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		"emphasisOptions" ],
-	"name" : "MorphicLabelAdapter",
-	"pools" : [
-		 ],
 	"super" : "AbstractMorphicAdapter",
-	"type" : "normal" }
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"emphasisOptions"
+	],
+	"name" : "MorphicLabelAdapter",
+	"type" : "normal"
+}

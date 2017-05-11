@@ -1,3 +1,3 @@
 testing
 hasDefault
-	^ true
+	^ default ~~ UniqueObject

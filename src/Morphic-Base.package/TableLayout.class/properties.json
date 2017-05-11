@@ -1,15 +1,14 @@
 {
-	"category" : "Morphic-Base-Layouts",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "LayoutPolicy",
+	"category" : "Morphic-Base-Layouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"properties",
-		"minExtentCache" ],
+		"minExtentCache"
+	],
 	"name" : "TableLayout",
-	"pools" : [
-		 ],
-	"super" : "LayoutPolicy",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,14 +1,18 @@
 {
+	"commentStamp" : "nice 10/22/2013 20:04",
+	"super" : "Object",
 	"category" : "Text-Scanning",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
 	"classvars" : [
 		"ColumnBreakStopConditions",
 		"CompositionStopConditions",
 		"DefaultStopConditions",
 		"MeasuringStopConditions",
-		"PaddedSpaceCondition" ],
-	"commentStamp" : "nice 10/22/2013 20:04",
+		"PaddedSpaceCondition"
+	],
 	"instvars" : [
 		"destX",
 		"lastIndex",
@@ -30,9 +34,8 @@
 		"kern",
 		"indentationLevel",
 		"wantsColumnBreaks",
-		"pendingKernX" ],
+		"pendingKernX"
+	],
 	"name" : "CharacterScanner",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

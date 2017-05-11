@@ -1,14 +1,11 @@
 {
-	"category" : "Metacello-Core-Constructors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "MetacelloSymbolicVersionMethodSpec",
-	"pools" : [
-		 ],
 	"super" : "MetacelloMethodSpec",
-	"type" : "normal" }
+	"category" : "Metacello-Core-Constructors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloSymbolicVersionMethodSpec",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+accessing
+length
+	^ length value

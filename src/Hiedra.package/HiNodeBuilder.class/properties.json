@@ -1,15 +1,14 @@
 {
-	"category" : "Hiedra-Builders",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "HiBuilder",
+	"category" : "Hiedra-Builders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"color",
-		"width" ],
+		"width"
+	],
 	"name" : "HiNodeBuilder",
-	"pools" : [
-		 ],
-	"super" : "HiBuilder",
-	"type" : "normal" }
+	"type" : "normal"
+}

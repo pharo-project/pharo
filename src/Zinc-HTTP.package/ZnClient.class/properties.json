@@ -1,10 +1,10 @@
 {
-	"category" : "Zinc-HTTP-Client-Server",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SvenVanCaekenberghe 11/8/2011 22:31",
+	"super" : "Object",
+	"category" : "Zinc-HTTP-Client-Server",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"request",
 		"response",
@@ -12,9 +12,8 @@
 		"lastUsed",
 		"options",
 		"session",
-		"logLevel" ],
+		"logLevel"
+	],
 	"name" : "ZnClient",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

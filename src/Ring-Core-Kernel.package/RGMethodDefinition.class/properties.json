@@ -1,17 +1,16 @@
 {
-	"category" : "Ring-Core-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "VeronicaUquillas 9/18/2011 16:00",
+	"super" : "RGElementDefinition",
+	"category" : "Ring-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"protocol",
 		"sourceCode",
 		"stamp",
-		"package" ],
+		"package"
+	],
 	"name" : "RGMethodDefinition",
-	"pools" : [
-		 ],
-	"super" : "RGElementDefinition",
-	"type" : "normal" }
+	"type" : "normal"
+}

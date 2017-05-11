@@ -1,14 +1,11 @@
 {
-	"category" : "Slot-Exception",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "CircularHierarchyError",
-	"pools" : [
-		 ],
 	"super" : "ClassBuilderError",
-	"type" : "normal" }
+	"category" : "Slot-Exception",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CircularHierarchyError",
+	"type" : "normal"
+}

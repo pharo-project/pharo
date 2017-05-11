@@ -1,14 +1,11 @@
 {
-	"category" : "Refactoring-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "RBInlineParameterTest",
-	"pools" : [
-		 ],
 	"super" : "RBRefactoringTest",
-	"type" : "normal" }
+	"category" : "Refactoring-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBInlineParameterTest",
+	"type" : "normal"
+}

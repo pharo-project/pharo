@@ -1,0 +1,3 @@
+initialization
+west
+	direction := West

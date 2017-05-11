@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Tests-Debugger",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "GTSUnitDebuggerSmokeTest",
-	"pools" : [
-		 ],
 	"super" : "GTDebuggerSmokeTest",
-	"type" : "normal" }
+	"category" : "GT-Tests-Debugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTSUnitDebuggerSmokeTest",
+	"type" : "normal"
+}

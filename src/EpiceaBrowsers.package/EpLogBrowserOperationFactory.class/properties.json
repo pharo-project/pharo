@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "MartinDias 2/21/2017 01:03",
+	"super" : "Object",
+	"category" : "EpiceaBrowsers-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"entries",
+		"errorHandlerBlock",
+		"logBrowserModel"
+	],
+	"name" : "EpLogBrowserOperationFactory",
+	"type" : "normal"
+}

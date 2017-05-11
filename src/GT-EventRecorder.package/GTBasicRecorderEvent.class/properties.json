@@ -1,15 +1,14 @@
 {
-	"category" : "GT-EventRecorder-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "RogerStebler 6/30/2016 15:24",
+	"super" : "Object",
+	"category" : "GT-EventRecorder-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"info",
-		"timestamp" ],
+		"timestamp"
+	],
 	"name" : "GTBasicRecorderEvent",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

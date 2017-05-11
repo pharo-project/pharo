@@ -1,8 +1,9 @@
 strings
 wrapping: aMorphOrString
 
-	^ PanelMorph new
+	^ Morph new
 		changeTableLayout;
+		color: Color transparent;
 		addMorphBack: aMorphOrString asMorph;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;

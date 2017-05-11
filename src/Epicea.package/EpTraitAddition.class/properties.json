@@ -1,14 +1,13 @@
 {
-	"category" : "Epicea-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MartinDias 12/12/2014 14:46",
-	"instvars" : [
-		"trait" ],
-	"name" : "EpTraitAddition",
-	"pools" : [
-		 ],
 	"super" : "EpTraitChange",
-	"type" : "normal" }
+	"category" : "Epicea-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"trait"
+	],
+	"name" : "EpTraitAddition",
+	"type" : "normal"
+}

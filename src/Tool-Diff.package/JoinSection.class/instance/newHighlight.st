@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 newHighlight
 	"Anwser a new highlight."
 

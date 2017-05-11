@@ -1,14 +1,11 @@
 {
-	"category" : "Multilingual-OtherLanguages",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "yo 10/19/2004 19:52",
-	"instvars" : [
-		 ],
-	"name" : "GB2312",
-	"pools" : [
-		 ],
 	"super" : "EncodedCharSet",
-	"type" : "normal" }
+	"category" : "Multilingual-OtherLanguages",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GB2312",
+	"type" : "normal"
+}

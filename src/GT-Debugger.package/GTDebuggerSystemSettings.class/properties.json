@@ -1,14 +1,11 @@
 {
-	"category" : "GT-Debugger-Model",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 1/7/2016 10:10",
-	"instvars" : [
-		 ],
-	"name" : "GTDebuggerSystemSettings",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GTDebuggerSystemSettings",
+	"type" : "normal"
+}

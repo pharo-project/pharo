@@ -3,4 +3,4 @@ initializeWidgets
 
 	self instantiateModels: {
 		#logNodesModel -> #EpLogNodeGraphModel.
-		#logModel -> #EpLogBrowser }
+		#logModel -> #EpLogBrowserModel }

@@ -1,14 +1,11 @@
 {
-	"category" : "Renraku-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 1/19/2016 11:21",
-	"instvars" : [
-		 ],
-	"name" : "ReInspectorPresentationsNonBlockSetup",
-	"pools" : [
-		 ],
 	"super" : "ReBasicTreeRule",
-	"type" : "normal" }
+	"category" : "Renraku-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReInspectorPresentationsNonBlockSetup",
+	"type" : "normal"
+}

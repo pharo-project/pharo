@@ -1,14 +1,13 @@
 {
+	"commentStamp" : "JurajKubelka 10/30/2015 16:57",
+	"super" : "Object",
 	"category" : "GT-EventRecorder-Settings",
 	"classinstvars" : [
-		"url" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "JurajKubelka 10/30/2015 16:57",
-	"instvars" : [
-		 ],
+		"url"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
 	"name" : "GTEventRecorderSettings",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

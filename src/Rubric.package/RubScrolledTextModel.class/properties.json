@@ -1,21 +1,20 @@
 {
-	"category" : "Rubric-Editing-Widgets",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TViewModel classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "FranckWarlouzet 7/29/2015 13:38",
+	"classvars" : [ ],
 	"instvars" : [
 		"hasUnacceptedEdits",
 		"announcer",
 		"text",
 		"primarySelectionInterval",
 		"textSegments",
-		"interactionModel" ],
+		"interactionModel"
+	],
 	"name" : "RubScrolledTextModel",
-	"pools" : [
-		 ],
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:38",
 	"super" : "Object",
 	"traitcomposition" : "TViewModel",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Rubric-Editing-Widgets"
+}

@@ -1,15 +1,14 @@
 {
-	"category" : "Nautilus-GroupManager-Announcements",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 21:09",
+	"super" : "Announcement",
+	"category" : "Nautilus-GroupManager-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"group",
-		"holder" ],
+		"holder"
+	],
 	"name" : "AbstractGroupAnnouncement",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

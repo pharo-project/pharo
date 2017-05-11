@@ -1,19 +1,18 @@
 {
-	"category" : "Multilingual-TextConversion",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Multilingual-TextConversion",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"g0Size",
 		"g1Size",
 		"g0Leading",
 		"g1Leading",
 		"charSize",
-		"streamPosition" ],
+		"streamPosition"
+	],
 	"name" : "CompoundTextConverterState",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

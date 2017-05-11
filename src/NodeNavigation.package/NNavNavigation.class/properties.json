@@ -1,17 +1,18 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "NodeNavigation-Core",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"Instance",
-		"UseArrowsShortcuts" ],
-	"commentStamp" : "<historical>",
+		"UseArrowsShortcuts"
+	],
 	"instvars" : [
 		"currentEditor",
 		"lastSelection",
-		"currentSelection" ],
+		"currentSelection"
+	],
 	"name" : "NNavNavigation",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

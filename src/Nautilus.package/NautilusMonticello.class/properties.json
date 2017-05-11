@@ -1,14 +1,13 @@
 {
-	"category" : "Nautilus",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"Default" ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "NautilusMonticello",
-	"pools" : [
-		 ],
 	"super" : "Model",
-	"type" : "normal" }
+	"category" : "Nautilus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Default"
+	],
+	"instvars" : [ ],
+	"name" : "NautilusMonticello",
+	"type" : "normal"
+}

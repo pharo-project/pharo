@@ -1,14 +1,11 @@
 {
-	"category" : "AST-Tests-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/15/2016 13:01",
-	"instvars" : [
-		 ],
-	"name" : "RBPatternParserTest",
-	"pools" : [
-		 ],
 	"super" : "RBParserTest",
-	"type" : "normal" }
+	"category" : "AST-Tests-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBPatternParserTest",
+	"type" : "normal"
+}

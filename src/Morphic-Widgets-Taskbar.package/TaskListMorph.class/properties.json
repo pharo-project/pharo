@@ -1,16 +1,17 @@
 {
-	"category" : "Morphic-Widgets-Taskbar",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"KeepOpen" ],
 	"commentStamp" : "gvc 5/18/2007 11:19",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-Taskbar",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"KeepOpen"
+	],
 	"instvars" : [
 		"tasks",
 		"taskList",
-		"preview" ],
+		"preview"
+	],
 	"name" : "TaskListMorph",
-	"pools" : [
-		 ],
-	"super" : "Morph",
-	"type" : "normal" }
+	"type" : "normal"
+}

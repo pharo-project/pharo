@@ -1,14 +1,13 @@
 {
-	"category" : "TxText-Athens",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
-	"instvars" : [
-		"glyphs" ],
-	"name" : "TxCairoCharacterSpanDisplayCommand",
-	"pools" : [
-		 ],
 	"super" : "TxCharacterSpanDisplayCommand",
-	"type" : "normal" }
+	"category" : "TxText-Athens",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"glyphs"
+	],
+	"name" : "TxCairoCharacterSpanDisplayCommand",
+	"type" : "normal"
+}

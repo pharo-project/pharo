@@ -1,15 +1,14 @@
 {
-	"category" : "Spec-Layout",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "SpecLayoutSend",
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"layoutFrame",
-		"subwidget" ],
+		"subwidget"
+	],
 	"name" : "SpecLayoutAdd",
-	"pools" : [
-		 ],
-	"super" : "SpecLayoutSend",
-	"type" : "normal" }
+	"type" : "normal"
+}

@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "SvenVanCaekenberghe 6/11/2014 14:20",
+	"super" : "Announcement",
 	"category" : "Zinc-HTTP-Logging",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"IdCounter",
-		"LogEventAnnouncer" ],
-	"commentStamp" : "SvenVanCaekenberghe 6/11/2014 14:20",
+		"LogEventAnnouncer"
+	],
 	"instvars" : [
 		"timestamp",
-		"id" ],
+		"id"
+	],
 	"name" : "ZnLogEvent",
-	"pools" : [
-		 ],
-	"super" : "Announcement",
-	"type" : "normal" }
+	"type" : "normal"
+}

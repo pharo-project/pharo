@@ -1,13 +1,17 @@
 {
+	"commentStamp" : "FranckWarlouzet 7/29/2015 13:48",
+	"super" : "Object",
 	"category" : "Rubric-TextScanning",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [
+		"TextConstants"
+	],
 	"classvars" : [
 		"DefaultStopConditions",
 		"NilCondition",
 		"PaddedSpaceCondition",
-		"SpaceCondition" ],
-	"commentStamp" : "FranckWarlouzet 7/29/2015 13:48",
+		"SpaceCondition"
+	],
 	"instvars" : [
 		"destX",
 		"lastIndex",
@@ -28,9 +32,8 @@
 		"indentationLevel",
 		"baselineY",
 		"firstDestX",
-		"pendingKernX" ],
+		"pendingKernX"
+	],
 	"name" : "RubCharacterScanner",
-	"pools" : [
-		"TextConstants" ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

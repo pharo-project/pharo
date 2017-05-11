@@ -1,4 +1,10 @@
-private
-getEnv: arg1
-	"This method calls the Standard C Library getenv() function. The name of the argument (arg1) should fit decompiled version."
-	 ^ self ffiCall: #( String getenv (String arg1) ) module: LibC
+accessing
+getEnv: varName
+	"This method calls the Standard C Library getenv() function."
+	"OSEnvironment current getEnv: 'HOME'"
+	<primitive: 'primitiveGetenv' module: '' error: ec>
+	ec ifNil: [ ^self getEnvViaFFI: varName ].
+	ec == #'bad argument' ifTrue: [
+		varName isString 
+			ifFalse: [ ^self getEnv: varName asString ] ].
+	self primitiveFail

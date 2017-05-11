@@ -1,16 +1,15 @@
 {
-	"category" : "Athens-Core-Matrices",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "AthensAffineTransform",
+	"category" : "Athens-Core-Matrices",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"w0",
 		"w1",
-		"w2" ],
+		"w2"
+	],
 	"name" : "AthensGenericTransform",
-	"pools" : [
-		 ],
-	"super" : "AthensAffineTransform",
-	"type" : "normal" }
+	"type" : "normal"
+}

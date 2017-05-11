@@ -1,15 +1,14 @@
 {
-	"category" : "GT-Spotter-Processors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TudorGirba 11/30/2014 22:12",
+	"super" : "GTSpotterProcessor",
+	"category" : "GT-Spotter-Processors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"origin",
-		"allCandidates" ],
+		"allCandidates"
+	],
 	"name" : "GTSpotterCandidatesProcessor",
-	"pools" : [
-		 ],
-	"super" : "GTSpotterProcessor",
-	"type" : "normal" }
+	"type" : "normal"
+}

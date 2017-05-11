@@ -1,14 +1,11 @@
 {
-	"category" : "Fuel-Errors",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "FLMethodChanged",
-	"pools" : [
-		 ],
 	"super" : "FLMaterializationError",
-	"type" : "normal" }
+	"category" : "Fuel-Errors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FLMethodChanged",
+	"type" : "normal"
+}

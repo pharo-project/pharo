@@ -1,14 +1,13 @@
 {
-	"category" : "GT-Debugger-Actions",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AndreiChis 1/20/2015 19:47",
-	"instvars" : [
-		"codePresentationSelector" ],
-	"name" : "GTCodeDebugAction",
-	"pools" : [
-		 ],
 	"super" : "DebugAction",
-	"type" : "normal" }
+	"category" : "GT-Debugger-Actions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"codePresentationSelector"
+	],
+	"name" : "GTCodeDebugAction",
+	"type" : "normal"
+}

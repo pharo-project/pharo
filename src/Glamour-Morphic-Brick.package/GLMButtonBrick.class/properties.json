@@ -1,15 +1,14 @@
 {
-	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "AliakseiSyrel 3/22/2015 12:11",
+	"super" : "GLMInteractableBrick",
+	"category" : "Glamour-Morphic-Brick-Widgets-Basic",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"iconBrick",
-		"labelBrick" ],
+		"labelBrick"
+	],
 	"name" : "GLMButtonBrick",
-	"pools" : [
-		 ],
-	"super" : "GLMInteractableBrick",
-	"type" : "normal" }
+	"type" : "normal"
+}

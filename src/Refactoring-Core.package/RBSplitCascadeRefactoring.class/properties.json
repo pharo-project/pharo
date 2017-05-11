@@ -1,10 +1,10 @@
 {
-	"category" : "Refactoring-Core-Refactorings",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 8/6/2016 14:57",
+	"super" : "RBMethodRefactoring",
+	"category" : "Refactoring-Core-Refactorings",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"selector",
 		"selectedInterval",
@@ -12,9 +12,8 @@
 		"cascadeNode",
 		"beforeNodes",
 		"afterNodes",
-		"ancestorNode" ],
+		"ancestorNode"
+	],
 	"name" : "RBSplitCascadeRefactoring",
-	"pools" : [
-		 ],
-	"super" : "RBMethodRefactoring",
-	"type" : "normal" }
+	"type" : "normal"
+}

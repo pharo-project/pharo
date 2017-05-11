@@ -1,19 +1,18 @@
 {
-	"category" : "Glamour-Presentations",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TGLMScriptingAPITablePresentation classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "AndreiChis 10/3/2014 18:33",
+	"classvars" : [ ],
 	"instvars" : [
 		"columns",
 		"children",
 		"rootsExpanded",
-		"shouldShowHeader" ],
+		"shouldShowHeader"
+	],
 	"name" : "GLMTablePresentation",
-	"pools" : [
-		 ],
+	"commentStamp" : "AndreiChis 10/3/2014 18:33",
 	"super" : "GLMListingPresentation",
 	"traitcomposition" : "TGLMScriptingAPITablePresentation",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Glamour-Presentations"
+}

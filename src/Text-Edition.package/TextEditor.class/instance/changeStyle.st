@@ -6,7 +6,7 @@ changeStyle
 	current := TextStyle default copy.
 	names := TextStyle actualTextStyles keys.
 	menuList := names collect: [ :styleName |
-		(styleName = current name) -> styleName ].
+		(styleName = current printString) -> styleName ].
 	reply := UIManager default chooseFrom:  menuList values: names.	
 	reply ifNotNil: [
 		(style := TextStyle named: reply) ifNil: [ ^ true].

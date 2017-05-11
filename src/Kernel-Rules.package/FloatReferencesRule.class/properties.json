@@ -1,14 +1,11 @@
 {
-	"category" : "Kernel-Rules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 2/24/2016 11:47",
-	"instvars" : [
-		 ],
-	"name" : "FloatReferencesRule",
-	"pools" : [
-		 ],
 	"super" : "ReBasicTreeRule",
-	"type" : "normal" }
+	"category" : "Kernel-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "FloatReferencesRule",
+	"type" : "normal"
+}

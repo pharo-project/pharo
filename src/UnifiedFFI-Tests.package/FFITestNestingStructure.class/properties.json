@@ -1,16 +1,15 @@
 {
+	"commentStamp" : "",
+	"super" : "FFIExternalStructure",
 	"category" : "UnifiedFFI-Tests",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"OFFSET_NESTED",
 		"OFFSET_ONE",
-		"OFFSET_TWO" ],
-	"commentStamp" : "",
-	"instvars" : [
-		 ],
+		"OFFSET_TWO"
+	],
+	"instvars" : [ ],
 	"name" : "FFITestNestingStructure",
-	"pools" : [
-		 ],
-	"super" : "FFIExternalStructure",
-	"type" : "normal" }
+	"type" : "normal"
+}

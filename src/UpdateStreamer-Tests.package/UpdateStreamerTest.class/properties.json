@@ -1,14 +1,11 @@
 {
-	"category" : "UpdateStreamer-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:31",
-	"instvars" : [
-		 ],
-	"name" : "UpdateStreamerTest",
-	"pools" : [
-		 ],
 	"super" : "TestCase",
-	"type" : "normal" }
+	"category" : "UpdateStreamer-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UpdateStreamerTest",
+	"type" : "normal"
+}

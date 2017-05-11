@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:21",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchTwoFingersPinchDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchPinchDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchTwoFingersPinchDetector",
+	"type" : "normal"
+}

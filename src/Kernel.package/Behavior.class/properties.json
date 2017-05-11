@@ -1,20 +1,21 @@
 {
-	"category" : "Kernel-Classes",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TBehavior classTrait",
 	"classvars" : [
 		"ClassProperties",
-		"ObsoleteSubclasses" ],
-	"commentStamp" : "al 12/8/2005 20:44",
+		"ObsoleteSubclasses"
+	],
 	"instvars" : [
 		"superclass",
 		"methodDict",
 		"format",
-		"layout" ],
+		"layout"
+	],
 	"name" : "Behavior",
-	"pools" : [
-		 ],
+	"commentStamp" : "al 12/8/2005 20:44",
 	"super" : "Object",
 	"traitcomposition" : "TBehavior",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Kernel-Classes"
+}

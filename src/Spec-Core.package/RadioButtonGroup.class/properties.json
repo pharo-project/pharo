@@ -1,16 +1,15 @@
 {
-	"category" : "Spec-Core-Widgets-Support",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "Spirita 7/19/2016 11:16",
+	"super" : "Object",
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"buttons",
 		"currentlyActivated",
-		"canDeselectByClick" ],
+		"canDeselectByClick"
+	],
 	"name" : "RadioButtonGroup",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

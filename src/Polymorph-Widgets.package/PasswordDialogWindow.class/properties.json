@@ -1,15 +1,14 @@
 {
-	"category" : "Polymorph-Widgets-Windows",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "LaurentLaffont 4/15/2011 20:17",
+	"super" : "TextEntryDialogWindow",
+	"category" : "Polymorph-Widgets-Windows",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"textEditor",
-		"showPassword" ],
+		"showPassword"
+	],
 	"name" : "PasswordDialogWindow",
-	"pools" : [
-		 ],
-	"super" : "TextEntryDialogWindow",
-	"type" : "normal" }
+	"type" : "normal"
+}

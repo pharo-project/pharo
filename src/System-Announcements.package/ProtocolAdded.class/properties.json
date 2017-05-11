@@ -1,14 +1,11 @@
 {
-	"category" : "System-Announcements-System-Protocols",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
-	"name" : "ProtocolAdded",
-	"pools" : [
-		 ],
 	"super" : "ProtocolAnnouncement",
-	"type" : "normal" }
+	"category" : "System-Announcements-System-Protocols",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ProtocolAdded",
+	"type" : "normal"
+}

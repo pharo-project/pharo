@@ -1,14 +1,11 @@
 {
-	"category" : "BlueInk-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "FranckWarlouzet 7/27/2015 13:39",
-	"instvars" : [
-		 ],
-	"name" : "BIFormatSettingsExample",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "BlueInk-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BIFormatSettingsExample",
+	"type" : "normal"
+}

@@ -1,14 +1,13 @@
 {
-	"category" : "Compression-Streams",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "nk 3/7/2004 18:54",
-	"instvars" : [
-		"expectedCrc" ],
-	"name" : "ZipReadStream",
-	"pools" : [
-		 ],
 	"super" : "FastInflateStream",
-	"type" : "normal" }
+	"category" : "Compression-Streams",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"expectedCrc"
+	],
+	"name" : "ZipReadStream",
+	"type" : "normal"
+}

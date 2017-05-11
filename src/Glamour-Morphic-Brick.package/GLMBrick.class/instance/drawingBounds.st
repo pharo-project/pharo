@@ -1,4 +1,3 @@
-morph-common
+brick-geometry
 drawingBounds
-
-	^ self globalBounds
+	^ self renderer drawingBounds: self

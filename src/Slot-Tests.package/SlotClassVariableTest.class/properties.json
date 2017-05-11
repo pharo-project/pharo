@@ -1,15 +1,14 @@
 {
-	"category" : "Slot-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "SlotClassBuilderTest",
+	"category" : "Slot-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"announcement",
-		"collectedAnnouncements" ],
+		"collectedAnnouncements"
+	],
 	"name" : "SlotClassVariableTest",
-	"pools" : [
-		 ],
-	"super" : "SlotClassBuilderTest",
-	"type" : "normal" }
+	"type" : "normal"
+}

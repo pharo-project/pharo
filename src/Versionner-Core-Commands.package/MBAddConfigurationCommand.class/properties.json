@@ -1,14 +1,11 @@
 {
-	"category" : "Versionner-Core-Commands",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 14:09",
-	"instvars" : [
-		 ],
-	"name" : "MBAddConfigurationCommand",
-	"pools" : [
-		 ],
 	"super" : "MBDevCycleCommands",
-	"type" : "normal" }
+	"category" : "Versionner-Core-Commands",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MBAddConfigurationCommand",
+	"type" : "normal"
+}

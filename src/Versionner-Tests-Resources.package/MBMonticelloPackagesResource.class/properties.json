@@ -1,14 +1,13 @@
 {
-	"category" : "Versionner-Tests-Resources",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/20/2014 14:16",
-	"instvars" : [
-		"monticelloRepository" ],
-	"name" : "MBMonticelloPackagesResource",
-	"pools" : [
-		 ],
 	"super" : "TestResource",
-	"type" : "normal" }
+	"category" : "Versionner-Tests-Resources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"monticelloRepository"
+	],
+	"name" : "MBMonticelloPackagesResource",
+	"type" : "normal"
+}

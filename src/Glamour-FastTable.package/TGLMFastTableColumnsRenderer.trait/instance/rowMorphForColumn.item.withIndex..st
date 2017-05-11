@@ -9,7 +9,7 @@ rowMorphForColumn: aColumn item: anItem withIndex: aRowIndex
 	rowElements
 		addAll: (self 
 			rowMorphElementsForColumn: aColumn glamourColumn 
-			element: (self dataFromPresentationItem: anItem)
+			node: (self dataFromPresentationItem: anItem)
 			withIndex: aRowIndex ).
 		
 	^ Smalltalk ui theme newRowIn: World for: rowElements

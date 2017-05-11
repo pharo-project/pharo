@@ -1,14 +1,11 @@
 {
-	"category" : "OSWindow-Core-Gestures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MerwanOuddane 7/22/2015 16:25",
-	"instvars" : [
-		 ],
-	"name" : "OSTouchOneFingerHoldDetector",
-	"pools" : [
-		 ],
 	"super" : "OSTouchHoldDetector",
-	"type" : "normal" }
+	"category" : "OSWindow-Core-Gestures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OSTouchOneFingerHoldDetector",
+	"type" : "normal"
+}

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "EpLogBrowserOperationFactoryTest",
+	"category" : "EpiceaBrowsersTests-Integration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpRevertTest",
+	"type" : "normal"
+}

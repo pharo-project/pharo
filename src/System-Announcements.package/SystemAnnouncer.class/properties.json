@@ -1,16 +1,17 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Announcer",
 	"category" : "System-Announcements-Core",
 	"classinstvars" : [
-		"announcer" ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "<historical>",
+		"announcer"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"suspended",
 		"private",
-		"storedAnnouncements" ],
+		"storedAnnouncements"
+	],
 	"name" : "SystemAnnouncer",
-	"pools" : [
-		 ],
-	"super" : "Announcer",
-	"type" : "normal" }
+	"type" : "normal"
+}

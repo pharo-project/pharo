@@ -1,14 +1,11 @@
 {
-	"category" : "Spec-Inspector",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "MarcusDenker 8/4/2014 16:22",
-	"instvars" : [
-		 ],
-	"name" : "EyeSyntaxTreeInspector",
-	"pools" : [
-		 ],
 	"super" : "EyeTreeInspector",
-	"type" : "normal" }
+	"category" : "Spec-Inspector",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EyeSyntaxTreeInspector",
+	"type" : "normal"
+}

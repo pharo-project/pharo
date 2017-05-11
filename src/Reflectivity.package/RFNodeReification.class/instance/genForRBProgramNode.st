@@ -1,3 +1,3 @@
 generate
 genForRBProgramNode
-	^entity asLiteralNode
+	^RFLiteralVariableNode value: entity

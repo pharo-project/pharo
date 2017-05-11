@@ -1,14 +1,11 @@
 {
-	"category" : "GeneralRules",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "YuriyTymchuk 9/7/2016 10:42",
-	"instvars" : [
-		 ],
-	"name" : "GRGuradGuardClauseRule",
-	"pools" : [
-		 ],
 	"super" : "ReNodeRewriteRule",
-	"type" : "normal" }
+	"category" : "GeneralRules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "GRGuradGuardClauseRule",
+	"type" : "normal"
+}

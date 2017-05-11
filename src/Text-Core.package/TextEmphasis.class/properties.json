@@ -1,15 +1,14 @@
 {
-	"category" : "Text-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "<historical>",
+	"super" : "TextAttribute",
+	"category" : "Text-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"emphasisCode",
-		"setMode" ],
+		"setMode"
+	],
 	"name" : "TextEmphasis",
-	"pools" : [
-		 ],
-	"super" : "TextAttribute",
-	"type" : "normal" }
+	"type" : "normal"
+}

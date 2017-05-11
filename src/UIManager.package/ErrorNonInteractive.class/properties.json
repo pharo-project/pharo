@@ -1,14 +1,13 @@
 {
-	"category" : "UIManager",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "IgorStasenko 1/25/2011 13:29",
-	"instvars" : [
-		"exception" ],
-	"name" : "ErrorNonInteractive",
-	"pools" : [
-		 ],
 	"super" : "Error",
-	"type" : "normal" }
+	"category" : "UIManager",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"exception"
+	],
+	"name" : "ErrorNonInteractive",
+	"type" : "normal"
+}

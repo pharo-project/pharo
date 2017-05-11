@@ -1,17 +1,16 @@
 {
-	"category" : "Refactoring-Changes",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "NicolaiHess 9/8/2016 23:48",
+	"super" : "RBCompositeRefactoryChange",
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"className",
 		"isMeta",
 		"oldName",
-		"newName" ],
+		"newName"
+	],
 	"name" : "RBRenameVariableChange",
-	"pools" : [
-		 ],
-	"super" : "RBCompositeRefactoryChange",
-	"type" : "normal" }
+	"type" : "normal"
+}

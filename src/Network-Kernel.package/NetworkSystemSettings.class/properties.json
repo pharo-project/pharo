@@ -1,7 +1,9 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "Object",
 	"category" : "Network-Kernel",
-	"classinstvars" : [
-		 ],
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"BlabEmail",
 		"HTTPProxyExceptions",
@@ -13,12 +15,9 @@
 		"ProxyPassword",
 		"ProxyUser",
 		"UseHTTPProxy",
-		"UseNetworkAuthentification" ],
-	"commentStamp" : "<historical>",
-	"instvars" : [
-		 ],
+		"UseNetworkAuthentification"
+	],
+	"instvars" : [ ],
 	"name" : "NetworkSystemSettings",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}

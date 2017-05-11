@@ -1,14 +1,13 @@
 {
-	"category" : "ScriptLoader60",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		"PackagesBeforeLastLoad" ],
 	"commentStamp" : "LaurentLaffont 3/4/2011 22:44",
-	"instvars" : [
-		 ],
-	"name" : "Loader",
-	"pools" : [
-		 ],
 	"super" : "Object",
-	"type" : "normal" }
+	"category" : "ScriptLoader60",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"PackagesBeforeLastLoad"
+	],
+	"instvars" : [ ],
+	"name" : "Loader",
+	"type" : "normal"
+}

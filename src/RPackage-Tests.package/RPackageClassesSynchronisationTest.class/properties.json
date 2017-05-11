@@ -1,14 +1,11 @@
 {
-	"category" : "RPackage-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:59",
-	"instvars" : [
-		 ],
-	"name" : "RPackageClassesSynchronisationTest",
-	"pools" : [
-		 ],
 	"super" : "RPackageMCSynchronisationTest",
-	"type" : "normal" }
+	"category" : "RPackage-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RPackageClassesSynchronisationTest",
+	"type" : "normal"
+}

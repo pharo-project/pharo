@@ -1,14 +1,13 @@
 {
-	"category" : "Gofer-Core",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:34",
-	"instvars" : [
-		"workingCopies" ],
-	"name" : "GoferWorking",
-	"pools" : [
-		 ],
 	"super" : "GoferOperation",
-	"type" : "normal" }
+	"category" : "Gofer-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"workingCopies"
+	],
+	"name" : "GoferWorking",
+	"type" : "normal"
+}
