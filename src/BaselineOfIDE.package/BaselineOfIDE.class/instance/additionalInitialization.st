@@ -56,6 +56,8 @@ additionalInitialization
 	
 	RubCharacterScanner initialize.
 	
+	Pharo3DarkTheme beCurrent.
+	
 	3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].

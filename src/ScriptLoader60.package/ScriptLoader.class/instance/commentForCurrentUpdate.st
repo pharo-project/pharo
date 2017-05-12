@@ -1,7 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '20047 in Versioner (or Komitter), RemotesManager needs to list just remotes
-	https://pharo.fogbugz.com/f/cases/20047
+ ^ '20050 Theme must be reset at the end of BaselineOfIDE loading
+	https://pharo.fogbugz.com/f/cases/20050
 
-20005  Epicea: Integrate release 8.2.2
-	https://pharo.fogbugz.com/f/cases/20005'
+20051 Tab labels in Glamour should not shrink if there is available space
+	https://pharo.fogbugz.com/f/cases/20051
+
+20049 TravisIntegrationHelp is not loaded into the bootstrapped image
+	https://pharo.fogbugz.com/f/cases/20049'

@@ -74,5 +74,5 @@ git add src
 git add -u
 git commit -m "EXPORT VERSION ${VERSION}"
 git tag -fa v${VERSION} -m "TAG VERSION v${VERSION}"
-git push git@github.com:guillep/pharo-core.git
-git push --tags git@github.com:guillep/pharo-core.git
+git push git@github.com:pharo-project/pharo.git
+git push --tags git@github.com:pharo-project/pharo.git
