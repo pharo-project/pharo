@@ -1,5 +1,5 @@
 pharo - scripts
-script60489
+script60490
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.8.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.49.mcz
+BaselineOfIDE-TheIntegrator.52.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
 BaselineOfMorphic-TheIntegrator.34.mcz
 BaselineOfMorphicCore-TheIntegrator.7.mcz
@@ -61,10 +61,10 @@ Deprecated60-TheIntegrator.22.mcz
 EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
-Epicea-MartinDias.855.mcz
+Epicea-MartinDias.856.mcz
 EpiceaBrowsers-MartinDias.180.mcz
 EpiceaBrowsersTests-MartinDias.32.mcz
-EpiceaTests-MartinDias.24.mcz
+EpiceaTests-MartinDias.25.mcz
 FFI-Kernel-EstebanLorenzano.45.mcz
 FFI-Pools-TheIntegrator.5.mcz
 FileSystem-Core-TheIntegrator.222.mcz

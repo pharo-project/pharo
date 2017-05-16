@@ -58,6 +58,8 @@ additionalInitialization
 	
 	Pharo3DarkTheme beCurrent.
 	
-	3 timesRepeat: [
+		3 timesRepeat: [
 		Smalltalk garbageCollect.
 		Undeclared removeUnreferencedKeys.].
+	
+	self loadIceberg.
