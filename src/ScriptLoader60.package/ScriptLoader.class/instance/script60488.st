@@ -1,5 +1,5 @@
 pharo - scripts
-script60487
+script60488
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -151,9 +151,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2508.mcz
+Kernel-TheIntegrator.2510.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.168.mcz
+Kernel-Tests-TheIntegrator.170.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.66.mcz
@@ -251,7 +251,7 @@ OmbuTests-MartinDias.33.mcz
 OpalCompiler-Core-TheIntegrator.890.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
-Pharo-Help-TheIntegrator.43.mcz
+Pharo-Help-TheIntegrator.49.mcz
 PharoBootstrap-Initialization-TheIntegrator.4.mcz
 PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-Widgets-TheIntegrator.1435.mcz
@@ -426,7 +426,7 @@ Versionner-Nautilus-PavelKrivanek.1.mcz
 Versionner-Spec-Browser-PabloTesone.212.mcz
 Versionner-Tests-Core-Commands-MarcusDenker.21.mcz
 Versionner-Tests-Core-DependenciesModel-ChristopheDemarey.46.mcz
-Versionner-Tests-Core-Model-ChristopheDemarey.33.mcz
+Versionner-Tests-Core-Model-TheIntegrator.36.mcz
 Versionner-Tests-Resources-MarcusDenker.18.mcz
 WorldMenuHelp-TheIntegrator.2.mcz
 WriteBarrierTests-TheIntegrator.20.mcz

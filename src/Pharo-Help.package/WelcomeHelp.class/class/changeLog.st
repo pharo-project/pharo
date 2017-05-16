@@ -3,10 +3,11 @@ changeLog
 	^ HelpTopic 
 		title: 'ChangeLog'
 		contents: (self heading: 'New Stuff in Pharo 6.0'),
-'- The PharoVM and image are now provided in 64-bit version in Linux and OSX and brings even better performance and stability
+'- The PharoVM and image are now provided in 64-bit version in Linux and OSX and bring even better performance and stability
 - A new code changes management system named Epica for easier reviewing and recovering of your code
-- Integrated support for Git and easy-to-use tool for repositories and commits management named Iceberg (as preview for Pharo 7)
+- Integrated support for Git and easy-to-use tool for repositories and commits management named Iceberg (as preview for Pharo 6, it will be the default for Pharo 7)
 - Unified foreign function interface (UFFI) for interfacing with the outside world was significantly improved
+- The PharoVM is now part of OpenSmalltalk initiative
 - Introduction of objects immutability, alternative bytecode sets and block closures independent on outer context
 - The whole Pharo is now able to be bootstrapped from source codes managed by Git and Pharo modularity was improved
 - The Dark Theme was improved and set as default color theme for Pharo
@@ -36,6 +37,7 @@ The complete list of fixed issues is too big to be placed here, but you can revi
 '- 64-bits support
 - Improve host platforms management (32-bit/64-bit)
 - Improved UnifiedFFI
+- The PharoVM is now part of OpenSmalltalk initiative
 - Introduction of objects immutability
 - Introduction of FullBlockClosure which will help for future evolutions of Pharo
 - Ephemerons support, introduce Ephemeron Registry
