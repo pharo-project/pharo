@@ -1,5 +1,5 @@
 pharo - scripts
-script60486
+script60487
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -124,7 +124,7 @@ Glamour-Morphic-Widgets-TheIntegrator.209.mcz
 Glamour-Presentations-AndreiChis.190.mcz
 Glamour-Rubric-Presentations-AndreiChis.61.mcz
 Glamour-SpecIntegration-TheIntegrator.6.mcz
-Glamour-Tests-Core-PavelKrivanek.113.mcz
+Glamour-Tests-Core-TheIntegrator.115.mcz
 Glamour-Tests-Morphic-TheIntegrator.140.mcz
 Glamour-Tests-Resources-AndreiChis.5.mcz
 Glamour-Tests-Rubric-AndreiChis.36.mcz
@@ -404,7 +404,7 @@ Tools-TheIntegrator.1532.mcz
 Tools-Test-TheIntegrator.26.mcz
 Traits-TheIntegrator.988.mcz
 Transcript-TheIntegrator.56.mcz
-TravisIntegrationHelp-TheIntegrator.5.mcz
+TravisIntegrationHelp-TheIntegrator.8.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
 TxText-AthensTests-HenrikNergaard.13.mcz
 TxText-Model-MarcusDenker.67.mcz
