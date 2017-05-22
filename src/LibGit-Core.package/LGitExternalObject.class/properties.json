@@ -1,0 +1,16 @@
+{
+	"classtraitcomposition" : "TLGitPrintingTrait classTrait + TLGitCalloutTrait classTrait",
+	"classvars" : [
+		"LibraryHandle",
+		"Session"
+	],
+	"instvars" : [ ],
+	"name" : "LGitExternalObject",
+	"commentStamp" : "",
+	"super" : "FFIExternalObject",
+	"traitcomposition" : "TLGitPrintingTrait + TLGitCalloutTrait",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "LibGit-Core-Abstracts"
+}

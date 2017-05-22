@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitCallout",
+	"category" : "LibGit-Core-FFI-Callouts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitWritepackFreeCallout",
+	"type" : "normal"
+}

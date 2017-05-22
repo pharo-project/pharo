@@ -1,0 +1,3 @@
+actions
+cloneRepository
+	IceCloneRepositoryModel new openWithSpec

@@ -1,0 +1,3 @@
+*Iceberg-UI
+canBeBrowsed
+	^ false

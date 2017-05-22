@@ -1,0 +1,1 @@
+A credentials provider that asks the user for credentials.

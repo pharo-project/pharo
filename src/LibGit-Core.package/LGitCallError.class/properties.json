@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitAbstractError",
+	"category" : "LibGit-Core-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitCallError",
+	"type" : "normal"
+}

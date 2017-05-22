@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitExternalStructure",
+	"category" : "LibGit-Core-FFI-Structs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OFFSET_PRIM_DST",
+		"OFFSET_PRIM_DST_REFNAME",
+		"OFFSET_PRIM_SRC",
+		"OFFSET_PRIM_SRC_REFNAME"
+	],
+	"instvars" : [ ],
+	"name" : "LGitPushUpdate",
+	"type" : "normal"
+}

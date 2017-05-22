@@ -55,6 +55,8 @@ git checkout master
 echo "GET PHARO v${VERSION}"
 wget --quiet -O - get.pharo.org/vmT60 | bash
 wget http://files.pharo.org/image/60/${VERSION}.zip
+wget http://files.pharo.org/sources/PharoV60.sources
+wget http://files.pharo.org/sources/PharoV50.sources
 unzip ${VERSION}.zip
 rm ${VERSION}.zip
 find . -type f -name "*.image" -exec mv {} Pharo.image \;

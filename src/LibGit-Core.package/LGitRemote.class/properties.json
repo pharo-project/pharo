@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitRepositoryObject",
+	"category" : "LibGit-Core-NonCoreObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Credentials"
+	],
+	"instvars" : [
+		"remoteName",
+		"url",
+		"fetchSpec"
+	],
+	"name" : "LGitRemote",
+	"type" : "normal"
+}

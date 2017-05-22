@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "NicoPasserini 6/13/2016 15:57",
+	"super" : "Object",
+	"category" : "Iceberg-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"package",
+		"repository"
+	],
+	"name" : "IceSavedPackage",
+	"type" : "normal"
+}

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "NicoPasserini 7/1/2016 11:41",
+	"super" : "IceRemote",
+	"category" : "Iceberg-Core-Remotes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"path"
+	],
+	"name" : "IceFileRemote",
+	"type" : "normal"
+}

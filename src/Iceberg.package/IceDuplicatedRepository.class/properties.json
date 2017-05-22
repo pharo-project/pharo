@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicoPasserini 8/3/2016 14:50",
+	"super" : "IceError",
+	"category" : "Iceberg-Errors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceDuplicatedRepository",
+	"type" : "normal"
+}

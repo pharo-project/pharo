@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicoPasserini 10/5/2016 15:56",
+	"super" : "IceRepositoryAnnouncement",
+	"category" : "Iceberg-Announcements",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceRepositoryModified",
+	"type" : "normal"
+}

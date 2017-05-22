@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "MaxLeske 8/13/2015 10:34",
+	"super" : "LGitExternalEnumerationUInt32",
+	"category" : "LibGit-Core-FFI-Enums",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitStatusTypeEnum",
+	"type" : "normal"
+}

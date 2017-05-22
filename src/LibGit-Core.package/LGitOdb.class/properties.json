@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitExternalObject",
+	"category" : "LibGit-Core-NonCoreObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitOdb",
+	"type" : "normal"
+}

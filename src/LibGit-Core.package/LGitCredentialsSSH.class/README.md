@@ -1,0 +1,1 @@
+I'm a set of credentials who asks public/private keys from from files (in case you need something different than what is answered by ssh-agent, provided by LGitCredentialsSSHAgent)

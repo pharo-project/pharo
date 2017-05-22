@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitExternalObject",
+	"category" : "LibGit-Core-Abstracts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitCallout",
+	"type" : "normal"
+}

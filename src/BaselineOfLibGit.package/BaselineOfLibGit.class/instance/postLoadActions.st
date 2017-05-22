@@ -1,0 +1,3 @@
+doits
+postLoadActions
+	self changeRepositoryType

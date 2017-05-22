@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "FFICallback",
+	"category" : "LibGit-Core-FFI-Callbacks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitCallback",
+	"type" : "normal"
+}

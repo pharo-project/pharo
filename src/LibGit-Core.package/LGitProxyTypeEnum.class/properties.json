@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "LGitExternalEnumerationUInt32",
+	"category" : "LibGit-Core-FFI-Enums",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitProxyTypeEnum",
+	"type" : "normal"
+}

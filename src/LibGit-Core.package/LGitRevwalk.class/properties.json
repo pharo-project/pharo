@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitRepositoryObject",
+	"category" : "LibGit-Core-HelperObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"currentCommit",
+		"hasNext",
+		"sorting"
+	],
+	"name" : "LGitRevwalk",
+	"type" : "normal"
+}

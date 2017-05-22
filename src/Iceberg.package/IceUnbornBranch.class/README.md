@@ -1,0 +1,1 @@
+I represent the "HEAD commit" of a new repository, i.e. one without any branches or commits. Once you commit on me, your repository will have just one commit and one branch named 'master'.

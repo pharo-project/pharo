@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "IceGitHubError",
+	"category" : "Iceberg-Plugin-GitHub",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceGitHubGenericError",
+	"type" : "normal"
+}

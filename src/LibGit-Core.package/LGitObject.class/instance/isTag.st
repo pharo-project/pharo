@@ -1,0 +1,3 @@
+testing
+isTag
+	^ false

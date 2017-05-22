@@ -1,0 +1,1 @@
+I'm a command to remove branches from remotes.

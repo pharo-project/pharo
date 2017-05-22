@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitExternalStructure",
+	"category" : "LibGit-Core-FFI-Structs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OFFSET_PRIM_PROGRESS_CB",
+		"OFFSET_PRIM_PROGRESS_PAYLOAD",
+		"OFFSET_PRIM_STATS",
+		"OFFSET_PRIM_WRITEPACK"
+	],
+	"instvars" : [ ],
+	"name" : "LGitPackbuilderForeachPayload",
+	"type" : "normal"
+}

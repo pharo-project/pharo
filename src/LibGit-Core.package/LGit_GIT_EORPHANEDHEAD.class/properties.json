@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitCallReturnHandler",
+	"category" : "LibGit-Core-Exceptions-ReturnCodes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGit_GIT_EORPHANEDHEAD",
+	"type" : "normal"
+}

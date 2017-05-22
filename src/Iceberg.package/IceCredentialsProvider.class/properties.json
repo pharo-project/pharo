@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "NicoPasserini 11/7/2016 15:01",
+	"super" : "Object",
+	"category" : "Iceberg-Security",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"PlaintextCredentials",
+		"ProviderType",
+		"SshCredentials",
+		"UseCustomSsh"
+	],
+	"instvars" : [
+		"tries"
+	],
+	"name" : "IceCredentialsProvider",
+	"type" : "normal"
+}

@@ -1,0 +1,1 @@
+Base class for avoiding code duplications between dialogs that create repositories. 

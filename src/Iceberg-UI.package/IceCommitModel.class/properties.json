@@ -1,0 +1,18 @@
+{
+	"classtraitcomposition" : "TIceTool classTrait",
+	"classvars" : [ ],
+	"instvars" : [
+		"message",
+		"commitButton",
+		"commitPushButton",
+		"model"
+	],
+	"name" : "IceCommitModel",
+	"commentStamp" : "NicoPasserini 8/25/2016 14:47",
+	"super" : "ComposableModel",
+	"traitcomposition" : "TIceTool",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Iceberg-UI-View"
+}

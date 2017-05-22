@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Iceberg-UI-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"entity",
+		"diff"
+	],
+	"name" : "IceDiffChangeTreeBuilder",
+	"type" : "normal"
+}

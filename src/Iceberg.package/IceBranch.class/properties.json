@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "NicoPasserini 12/6/2016 11:40",
+	"super" : "IceCommitish",
+	"category" : "Iceberg-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"name",
+		"repository"
+	],
+	"name" : "IceBranch",
+	"type" : "normal"
+}

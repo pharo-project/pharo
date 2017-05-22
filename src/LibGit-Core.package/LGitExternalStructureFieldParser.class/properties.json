@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "FFIExternalStructureFieldParser",
+	"category" : "LibGit-Core-Abstracts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitExternalStructureFieldParser",
+	"type" : "normal"
+}

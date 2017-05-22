@@ -1,0 +1,3 @@
+alignment
+byteAlignment
+	^ 1

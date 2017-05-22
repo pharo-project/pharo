@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitRepositoryObject",
+	"category" : "LibGit-Core-CoreObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitIndex",
+	"type" : "normal"
+}

@@ -1,0 +1,1 @@
+I'm a dialog for adding remotes to repositories.

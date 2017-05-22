@@ -1,0 +1,3 @@
+operations
+createWith: aStructure
+	self subclassResponsibility
