@@ -1,5 +1,5 @@
 pharo - scripts
-script60491
+script60492
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -63,7 +63,7 @@ Deprecated60-TheIntegrator.22.mcz
 EmbeddedFreeType-TheIntegrator.30.mcz
 EmbeddedFreeType-Tests-TheIntegrator.4.mcz
 EmergencyEvaluator-TheIntegrator.35.mcz
-Epicea-MartinDias.856.mcz
+Epicea-TheIntegrator.858.mcz
 EpiceaBrowsers-MartinDias.180.mcz
 EpiceaBrowsersTests-MartinDias.32.mcz
 EpiceaTests-MartinDias.25.mcz

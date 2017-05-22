@@ -19,7 +19,7 @@ subscribeToSystemAnnouncer
 		MCVersionSaved	-> #monticelloVersionSaved:.
 		
 	} do: [ :pair |
-		systemAnnouncer
+		systemAnnouncer weak
 			when: pair key 
 			send: pair value 
 			to: self ].
