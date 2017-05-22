@@ -53,7 +53,7 @@ PWD="$( dirname $(readlink -f $0) )"
 git checkout master
 
 echo "GET PHARO v${VERSION}"
-wget --quiet -O - get.pharo.org/vm60 | bash
+wget --quiet -O - get.pharo.org/vmT60 | bash
 wget http://files.pharo.org/image/60/${VERSION}.zip
 unzip ${VERSION}.zip
 rm ${VERSION}.zip
