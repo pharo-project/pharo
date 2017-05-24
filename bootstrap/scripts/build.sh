@@ -90,9 +90,6 @@ echo "Prepare Bootstrap files"
 cp bootstrap.image core.image
 ../bootstrap/scripts/download_vm.sh
 
-#we need old sources file temporarily
-wget http://files.pharo.org/sources/PharoV50.sources
-
 echo "Prepare fonts"
 unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
 
