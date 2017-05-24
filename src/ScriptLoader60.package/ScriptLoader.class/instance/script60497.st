@@ -1,5 +1,5 @@
 pharo - scripts
-script60496
+script60497
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -18,7 +18,7 @@ Balloon-TheIntegrator.139.mcz
 Balloon-Tests-TheIntegrator.2.mcz
 BaselineOfBasicTools-TheIntegrator.8.mcz
 BaselineOfDisplay-TheIntegrator.4.mcz
-BaselineOfIDE-TheIntegrator.52.mcz
+BaselineOfIDE-TheIntegrator.55.mcz
 BaselineOfIceberg-cypress.1.mcz
 BaselineOfLibGit-cypress.1.mcz
 BaselineOfMetacello-EstebanLorenzano.89.mcz
@@ -153,7 +153,7 @@ Iceberg-Libgit-cypress.1.mcz
 Iceberg-Metacello-Integration-cypress.1.mcz
 Iceberg-Plugin-cypress.1.mcz
 Iceberg-UI-cypress.1.mcz
-ImportingResource-Help-TheIntegrator.6.mcz
+ImportingResource-Help-TheIntegrator.8.mcz
 IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
