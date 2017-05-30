@@ -133,4 +133,15 @@ echo "[Pharo] Reloading rest of packages"
 ./vm/pharo metacello.image save Pharo
 ./vm/pharo Pharo.image eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
 ./vm/pharo Pharo.image clean --release
+
+# fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
+# in older versions we must use octal representation
+printf "\231\002\320\003" > displaySize.bin
+if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
+  SEEK=24
+else
+  SEEK=40
+fi
+dd if="displaySize.bin" of="Pharo.image" bs=1 seek=$SEEK count=4 conv=notrunc
+
 zip Pharo$SUFFIX.zip Pharo.*
