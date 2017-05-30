@@ -136,7 +136,7 @@ echo "[Pharo] Reloading rest of packages"
 
 # fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
 # in older versions we must use octal representation
-echo -n "\231\002\320\003"  > displaySize.bin
+printf "\231\002\320\003" > displaySize.bin
 if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
   SEEK=24
 else
