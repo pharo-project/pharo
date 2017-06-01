@@ -4,7 +4,9 @@ fromFreetypeFont: aFont
 	^ CairoBackendCache soleInstance at: aFont ifAbsentPut: [ | emphasis |
 			emphasis := aFont simulatedEmphasis.
 			ftFace := aFont face.
-			face := CairoBackendCache soleInstance at: {ftFace.	emphasis} ifAbsentPut: [ | cff |
+			face := CairoBackendCache soleInstance 
+				at: {ftFace.	emphasis} 
+				ifAbsentPut: [ | cff |
 					cff := CairoFontFace fromFreetypeFace: ftFace.
 					emphasis ifNotNil: [ cff synthesizeEmphasis: emphasis ].
 					cff ].
