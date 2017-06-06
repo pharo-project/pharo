@@ -1,5 +1,5 @@
 pharo - scripts
-script60498
+script60499
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -33,7 +33,7 @@ BlueInk-Extras-TheIntegrator.12.mcz
 BlueInk-Tests-TheIntegrator.12.mcz
 CodeExport-TheIntegrator.21.mcz
 CodeImport-TheIntegrator.90.mcz
-CodeImportCommandLineHandlers-TheIntegrator.15.mcz
+CodeImportCommandLineHandlers-TheIntegrator.17.mcz
 Collections-Abstract-TheIntegrator.345.mcz
 Collections-Arithmetic-TheIntegrator.22.mcz
 Collections-Atomic-TheIntegrator.16.mcz
@@ -42,10 +42,10 @@ Collections-DoubleLinkedListTests-TheIntegrator.2.mcz
 Collections-Native-TheIntegrator.19.mcz
 Collections-Sequenceable-TheIntegrator.261.mcz
 Collections-Stack-TheIntegrator.10.mcz
-Collections-Streams-TheIntegrator.192.mcz
+Collections-Streams-TheIntegrator.194.mcz
 Collections-Strings-TheIntegrator.449.mcz
 Collections-Support-TheIntegrator.67.mcz
-Collections-Tests-TheIntegrator.101.mcz
+Collections-Tests-TheIntegrator.103.mcz
 Collections-Unordered-TheIntegrator.248.mcz
 Collections-Weak-TheIntegrator.108.mcz
 Colors-TheIntegrator.3.mcz
@@ -158,9 +158,9 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2510.mcz
+Kernel-TheIntegrator.2513.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.173.mcz
+Kernel-Tests-TheIntegrator.175.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.66.mcz
@@ -259,7 +259,7 @@ OmbuTests-MartinDias.33.mcz
 OpalCompiler-Core-TheIntegrator.890.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
-Pharo-Help-TheIntegrator.49.mcz
+Pharo-Help-TheIntegrator.52.mcz
 PharoBootstrap-Initialization-TheIntegrator.7.mcz
 PharoDocComment-StephaneDucasse.6.mcz
 Polymorph-Widgets-TheIntegrator.1435.mcz
@@ -354,7 +354,7 @@ System-CachingTests-TheIntegrator.19.mcz
 System-Changes-TheIntegrator.309.mcz
 System-Changes-FileServices-TheIntegrator.4.mcz
 System-Clipboard-TheIntegrator.42.mcz
-System-CommandLine-TheIntegrator.181.mcz
+System-CommandLine-TheIntegrator.183.mcz
 System-CommandLine-TextSupport-TheIntegrator.6.mcz
 System-CommandLineHandler-TheIntegrator.26.mcz
 System-FileRegistry-TheIntegrator.53.mcz

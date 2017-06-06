@@ -11,6 +11,6 @@ Pharo is a pure object-oriented programming language and a powerful environment,
 For more information, please visit here: 
 
 ', (self url: 'http://pharo.org'),
-(self subheading: 'Color theme'),
+(self subheading: 'Color themes'),
 'White theme: ', (self doItFrom: 'Pharo3Theme beCurrent. '), ' 
 Dark theme: ', (self doItFrom: 'Pharo3DarkTheme beCurrent. ').

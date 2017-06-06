@@ -1,5 +1,6 @@
 opening
 openForRelease
+	<script>
 	| window |
 	
 	World submorphs 

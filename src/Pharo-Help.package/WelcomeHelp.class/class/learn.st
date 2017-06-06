@@ -1,19 +1,19 @@
 pages
 learn
 	^ HelpTopic 
-		title: 'Learn Pharo Smalltalk'
-		contents: (self heading: 'Learn Pharo Smalltalk'), 		
+		title: 'Learn Pharo'
+		contents: (self heading: 'Learn Pharo'), 		
 'You can learn Pharo by clicking on the following expression: 
 	
 ', (self doItFrom: 'ProfStef go.'), 
 
 (self subheading: 'MOOC'), 
-'Pharo has also an excellent MOOC (Massive Open Online Course). You can find more information here: 
+'Pharo has an excellent MOOC (Massive Open Online Course). You can find more information here: 
 
 ', (self url: 'http://mooc.pharo.org'), 
 
 (self subheading: 'Books'), 
-'There are also several free Pharo books that can be download here: 
+'There are several free Pharo books that can be download here: 
 
 ', (self url: 'http://books.pharo.org'), '
 
