@@ -7,5 +7,7 @@ gitRepositoryUrl: url location: location subdirectory: subdirectory
 		subdirectory: subdirectory;
 		createRepository.
 		
-	"in some cases (like on Travis) the last commit hash resolution can fail"
-	commitHash := [repository headCommit commitId] ifError: ['UNKNOWN'].
+	commitHash := (OSEnvironment current getEnv: 'TRAVIS_COMMIT')
+		ifNil: [[repository headCommit commitId] ifError: ['UNKNOWN']]
+
+	Transcript cr; show: 'Commit hash: '; show commitHash asString; cr.
