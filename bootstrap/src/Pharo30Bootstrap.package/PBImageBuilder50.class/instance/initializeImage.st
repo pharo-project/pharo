@@ -26,12 +26,12 @@ initializeImage
 					major: {major};
 					minor: {minor};
 					suffix: ''SNAPSHOT'';
-					highestUpdate: {update};
+					commitHash: ''{update}'';
 					yourself).
 	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
 		'major' -> definitionFetcher majorVersion asString.
 		'minor' -> definitionFetcher minorVersion asString.
-		'update' -> definitionFetcher updateNumber asString.
+		'update' -> definitionFetcher commitHash asString.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
 	
