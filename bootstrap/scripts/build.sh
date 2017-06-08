@@ -73,6 +73,7 @@ if [ -z ${ARCH_DESCRIPTION} ]; then
 fi
 
 GIT_DESCRIBE=`git describe --always`
+GIT_COMMIT_HASH=`git show -s --format=%h`
 SUFFIX=${ARCH_DESCRIPTION}bit-${GIT_DESCRIBE}
 
 if [[ ${DESCRIBE} -eq "1" ]]; then
@@ -82,8 +83,13 @@ fi
 
 SUFFIX=-$SUFFIX
 
+IMAGE_NAME=Pharo7.0-${GIT_COMMIT_HASH}
+
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
 cd bootstrap-cache
+
+#We need the old sources file next to the image because of sources condensation step
+wget http://files.pharo.org/sources/PharoV60.sources
 
 #Prepare
 echo "Prepare Bootstrap files"
@@ -130,9 +136,13 @@ echo "[Metacello] Bootstrapping Metacello"
 zip metacello$SUFFIX.zip metacello.*
 
 echo "[Pharo] Reloading rest of packages"
-./vm/pharo metacello.image save Pharo
-./vm/pharo Pharo.image eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
-./vm/pharo Pharo.image clean --release
+./vm/pharo metacello.image save ${IMAGE_NAME}
+./vm/pharo "${IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+./vm/pharo "${IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+./vm/pharo "${IMAGE_NAME}.image" clean --release
+
+# clean bak sources files
+rm -f *.bak
 
 # fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
 # in older versions we must use octal representation
@@ -144,4 +154,4 @@ else
 fi
 dd if="displaySize.bin" of="Pharo.image" bs=1 seek=$SEEK count=4 conv=notrunc
 
-zip Pharo$SUFFIX.zip Pharo.*
+zip ${IMAGE_NAME}.zip ${IMAGE_NAME}.*
