@@ -15,7 +15,8 @@
 		"type",
 		"major",
 		"minor",
-		"suffix"
+		"suffix",
+		"commitHash"
 	],
 	"name" : "SystemVersion",
 	"type" : "normal"
