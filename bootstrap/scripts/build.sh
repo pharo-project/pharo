@@ -138,7 +138,7 @@ zip metacello$SUFFIX.zip metacello.*
 echo "[Pharo] Reloading rest of packages"
 ./vm/pharo metacello.image save ${IMAGE_NAME}
 ./vm/pharo "${IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
-./vm/pharo "${IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoChangesCondenser condenseNewSources"
+./vm/pharo "${IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
 ./vm/pharo "${IMAGE_NAME}.image" clean --release
 
 # clean bak sources files
