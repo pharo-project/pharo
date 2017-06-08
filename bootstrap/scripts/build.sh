@@ -152,6 +152,6 @@ if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
 else
   SEEK=40
 fi
-dd if="displaySize.bin" of="Pharo.image" bs=1 seek=$SEEK count=4 conv=notrunc
+dd if="displaySize.bin" of="${IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
 
 zip ${IMAGE_NAME}.zip ${IMAGE_NAME}.*
