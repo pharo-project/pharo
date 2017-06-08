@@ -10,4 +10,4 @@ gitRepositoryUrl: url location: location subdirectory: subdirectory
 	commitHash := (OSEnvironment current getEnv: 'TRAVIS_COMMIT')
 		ifNil: [[repository headCommit commitId] ifError: ['UNKNOWN']]
 
-	Transcript cr; show: 'Commit hash: '; show commitHash asString; cr.
+	Transcript cr; show: 'Commit hash: '; show: commitHash asString; cr.
