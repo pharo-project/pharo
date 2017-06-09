@@ -24,7 +24,7 @@ categoriesMenu: aBuilder
 		order: 200;
 		withSeparatorAfter.
 		
-	(aBuilder item: #'Categorize all uncategorized')
+	(aBuilder item: #'Categorize all uncategorized and remove empty')
 		keyText: 'h, C' if: Nautilus useOldStyleKeys not;
 		action: [ target categorizeAllUncategorizedMethods ];
 		order: 1100.	
