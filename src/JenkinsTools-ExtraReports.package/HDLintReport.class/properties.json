@@ -1,13 +1,14 @@
 {
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
 	"super" : "HDReport",
-	"category" : "HudsonBuildTools20",
+	"category" : "JenkinsTools-ExtraReports",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"gofer"
+		"environment",
+		"rules"
 	],
-	"name" : "HDChangeReport",
+	"name" : "HDLintReport",
 	"type" : "normal"
 }

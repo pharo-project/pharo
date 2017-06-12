@@ -12,7 +12,8 @@ baseline: spec
 
 		spec baseline: 'UI' with: [spec repository: repository].
 
-		spec package: 'HudsonBuildTools20'.
+		spec package: 'JenkinsTools-Core'.
+		spec package: 'JenkinsTools-ExtraReports'.
 		
 		spec baseline: 'SUnit' with: [
 			spec repository: repository.
