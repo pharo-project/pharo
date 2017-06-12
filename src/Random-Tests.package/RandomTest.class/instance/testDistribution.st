@@ -3,7 +3,7 @@ testDistribution
 	| results occurences generator |
 	1 to: 100 do: [ :i |
 		results := Bag new.
-		generator := Random new seed: 1234567+1.
+		generator := Random new seed: 1234567+i.
 		2000 timesRepeat: [ results add: (100 atRandom: generator) ].
 		occurences := Array new: 100 streamContents: [ :out |
 			results doWithOccurrences: [ :element :occurence |
