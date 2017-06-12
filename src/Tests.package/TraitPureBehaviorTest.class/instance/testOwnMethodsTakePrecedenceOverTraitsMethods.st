@@ -14,6 +14,6 @@ testOwnMethodsTakePrecedenceOverTraitsMethods
 		uses: self t1
 		category: self class category.
 	self assert: trait methodDict size = 3.
-	self assert: (trait selectors asSet includesAllOf: #(#m11 #m12 #m13 )).
+	self assert: (trait selectors asSet includesAll: #(#m11 #m12 #m13 )).
 	self assert: (trait methodDict at: #m11) sourceCode = 'm11 ^999'.
 	self assert: (trait methodDict at: #m12) sourceCode = 'm12 ^12'
