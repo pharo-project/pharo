@@ -54,7 +54,6 @@ baseline: spec
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
 		spec package: 'Regex-Help'.
-		spec package: 'UpdateStreamer-Core'.
 		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'. 

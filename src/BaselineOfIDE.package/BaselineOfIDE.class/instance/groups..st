@@ -96,7 +96,6 @@ spec group: 'General-Tests-Group' with: #(
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
 	'Tools-Test'	
-	'UpdateStreamer-Tests'
 	'WriteBarrierTests'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
@@ -136,17 +135,6 @@ spec group: 'ReflectionMirrors-Tests-Group' with: #(
 spec group: 'ReflectionMirrors-Group' with: #(
 	'ReflectionMirrors-Core-Group'
 	'ReflectionMirrors-Tests-Group'
-).
-
-spec group: 'ScriptLoader-Core-Group' with: #(
-	'ScriptLoader60'		
-).
-spec group: 'ScriptLoader-Tests-Group' with: #(
-	'ScriptLoader-Tests'
-).
-spec group: 'ScriptLoader-Group' with: #(
-	'ScriptLoader-Core-Group'
-	'ScriptLoader-Tests-Group'
 ).
 
 spec group: 'Reflectivity-Group' with: #(
@@ -510,7 +498,6 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	'ScriptLoader-Group'
 	'Deprecated-Group'
 	'Zodiac-Group'
 	'ShoreLine-Group'

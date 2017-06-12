@@ -56,7 +56,6 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
-		spec package: 'ScriptLoader60'.
 		
 		spec package: 'System-Serial Port'.
 		
@@ -272,7 +271,6 @@ baseline: spec
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
-		spec package: 'ScriptLoader-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
@@ -291,7 +289,6 @@ baseline: spec
 		spec package: 'Tools-Test'.	
 		spec package: 'TxText-AthensTests'.
 		spec package: 'TxTextTests-Model'.
-		spec package: 'UpdateStreamer-Tests'.
 		spec package: 'WorldMenuHelp'.	
 		spec package: 'WriteBarrierTests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
