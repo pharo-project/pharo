@@ -117,8 +117,6 @@ exportCoreTestsInStFile
 		testTruncate testUTF16EncoderBigEndian testUTF16EncoderLittleEndian testUTF32EncoderSimple testUndeclared
 		testUniqueClassInDefinedClassesUsingAddClassDefinition testUnknownProcesses testUnpackagedClasses
 		testUnregisterPackage testUpToAnyOfDo testWritesSlot testindexOfstartingAt
-		testClassComment
-		testBasicBehaviour
 	).		
 	
 	mcst := (self bootstrapCacheDirectory / 'st-cache' / 'CoreTests.st') asFileReference.
