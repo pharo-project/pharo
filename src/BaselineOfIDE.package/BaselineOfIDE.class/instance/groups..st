@@ -220,7 +220,6 @@ spec group: 'Shout-Group' with: #(
 ).
 
 spec group: 'MetacelloExtras-Core' with: #(
-	'BaselineOfMetacello'
 	'Metacello-GitBasedRepository'	
 	'Metacello-Bitbucket'	
 	"'Metacello-GitHub'"
