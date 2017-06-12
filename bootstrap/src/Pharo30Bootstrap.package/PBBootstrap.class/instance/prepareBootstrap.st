@@ -7,4 +7,4 @@ prepareBootstrap
 		exportMonticelloInStFile;
 		exportSUnitInStFile;
 		exportCoreTestsInStFile;
-		exportHudsonBuildToolsInStFile.
+		exportJenkinsToolsInStFile.

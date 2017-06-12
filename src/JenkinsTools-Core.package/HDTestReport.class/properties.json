@@ -1,14 +1,19 @@
 {
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
 	"super" : "HDReport",
-	"category" : "HudsonBuildTools20",
+	"category" : "JenkinsTools-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"environment",
-		"rules"
+		"suite",
+		"stream",
+		"suitePosition",
+		"suiteTime",
+		"suiteFailures",
+		"suiteErrors",
+		"progressFile"
 	],
-	"name" : "HDLintReport",
+	"name" : "HDTestReport",
 	"type" : "normal"
 }

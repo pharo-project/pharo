@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:32",
 	"super" : "ProtoObject",
-	"category" : "HudsonBuildTools20",
+	"category" : "JenkinsTools-ExtraReports",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

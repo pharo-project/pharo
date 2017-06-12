@@ -1,25 +1,19 @@
 preparation
-exportHudsonBuildToolsInStFile
+exportJenkinsToolsInStFile
 
 	| mcst blacklistedClasses blacklistedMethods | 
 	
-	blacklistedClasses := #(
-		HDChangeReport
-		HDLintReport
-		HDCoverageReport
-		HDTestCoverage
-	).	
-		
+	blacklistedClasses := #().	
 	blacklistedMethods := #().		
 	
-	mcst := (self bootstrapCacheDirectory / 'st-cache' / 'HudsonBuildTools.st') asFileReference.
+	mcst := (self bootstrapCacheDirectory / 'st-cache' / 'JenkinsTools.st') asFileReference.
 	mcst ensureDelete.
 	mcst parent ensureCreateDirectory.
 	mcst writeStreamDo: [ :stream | | writer version |
 		writer := MCStWriter on: stream.
 		writer writeInitializers: false.
 		
-		#('HudsonBuildTools20') do: [ :packageName |
+		#('JenkinsTools-Core') do: [ :packageName |
 			| definitions |
 			version := (self originRepository loadVersionFromFileNamed: packageName, '.package').
 			definitions := version snapshot definitions.

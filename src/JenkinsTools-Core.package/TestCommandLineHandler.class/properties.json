@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "EstebanLorenzano 3/20/2016 11:45",
 	"super" : "CommandLineHandler",
-	"category" : "HudsonBuildTools20",
+	"category" : "JenkinsTools-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
