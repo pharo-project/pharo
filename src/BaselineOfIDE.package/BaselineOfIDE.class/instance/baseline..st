@@ -67,7 +67,6 @@ baseline: spec
 			
 		spec package: 'Metacello-GitBasedRepository'.	
 
-		spec package: 'BaselineOfMetacello'.
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
