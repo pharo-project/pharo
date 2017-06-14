@@ -33,7 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		spec package: 'Deprecated60'.
+		"spec package: 'Deprecated60'."
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
