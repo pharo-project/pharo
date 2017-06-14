@@ -7,7 +7,7 @@ isProbablyPrimeWithK: k andQ: q
 
 	| x j y minusOne |
 	"P1"
-	x := (self - 2) atRandom + 1.
+	x := ((self - 2) * 0.6226330998459054 "a pregerated random number") asInteger + 1.
 	"P2"
 	j := 0.
 	y := x raisedTo: q modulo: self.
