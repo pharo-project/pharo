@@ -1,4 +1,7 @@
 public
 commentForCurrentUpdate
- ^ '20146 ZnHTTPSTests>>#testGetPharoVersion started to fail
-	https://pharo.fogbugz.com/f/cases/20146'
+ ^ '20093 Missing source stamp makes changes hard to view
+	https://pharo.fogbugz.com/f/cases/20093
+
+20148 transforming deprecations should take #showWarning into account
+	https://pharo.fogbugz.com/f/cases/20148'
