@@ -61,8 +61,9 @@ exportCoreTestsInStFile
 		testIsTerminatingNormalTermination
 		testWaitAndWaitTimeoutTogether	
 		
-		testAccessesSlot testAccessingBlockArgumentOptimizedBlock testAccessingVariablesInOptimizedBlock 
-		testAccessingVariablesInOptimizedBlock2 testActiveComment testAddClassAfterMethods 
+		testMillisecondsToGo
+		
+		testActiveComment testAddClassAfterMethods 
 		testAddClassAfterMethodsAtMetaclassToo testAddClassDefinitionNoDuplicate testAddMethod 
 		testAddRemoveMethod testAddRemoveSelector testAddRemoveSelectorOfMetaclass testAddTag 
 		testAddTagNames testAddTagsToAClass testAllRangesOfSubstring testAllSendersOfASelector
