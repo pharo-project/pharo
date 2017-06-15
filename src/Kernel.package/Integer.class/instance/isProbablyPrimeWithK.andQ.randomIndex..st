@@ -1,5 +1,5 @@
 testing
-isProbablyPrimeWithK: k andQ: q 
+isProbablyPrimeWithK: k andQ: q randomIndex: aRandomFloat
 	"Algorithm P, probabilistic primality test, from
 	Knuth, Donald E. 'The Art of Computer Programming', Vol 2,
 	Third Edition, section 4.5.4, page 395, P1-P5 refer to Knuth description..
@@ -7,7 +7,7 @@ isProbablyPrimeWithK: k andQ: q
 
 	| x j y minusOne |
 	"P1"
-	x := ((self - 2) * 0.6226330998459054 "a pregerated random number") asInteger + 1.
+	x := ((self - 2) * aRandomFloat "a pregerated random number") asInteger + 1.	
 	"P2"
 	j := 0.
 	y := x raisedTo: q modulo: self.
