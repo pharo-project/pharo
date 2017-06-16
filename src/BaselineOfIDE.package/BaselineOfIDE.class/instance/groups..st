@@ -364,12 +364,6 @@ spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Tests-Group'
 ).		
 
-spec group: 'ShoreLine-Group' with: #(
-	'ShoreLine-Report-Core'
-	'ShoreLine-Report-UI'	
-	'ShoreLine-Report-Settings' 
-).		
-
 spec group: 'Athens-Group' with: #(
 	"dependent on Rubric, cleanup?"
 	'Athens-Core'
@@ -499,7 +493,6 @@ spec group: #default with: #(
 	'ReflectionMirrors-Group'
 	"'Deprecated-Group'"
 	'Zodiac-Group'
-	'ShoreLine-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
 	'TxText-Group'

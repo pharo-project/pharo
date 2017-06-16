@@ -13,7 +13,6 @@
 		"entity",
 		"pluginDelegate",
 		"updateTask",
-		"showPrivacyMorph",
 		"critiques"
 	],
 	"name" : "QANautilusPluginMorph",
