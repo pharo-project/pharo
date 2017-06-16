@@ -21,6 +21,7 @@ baseline: spec
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
 		spec package: 'Compression'.
+		spec package: 'System-Platforms'.
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
 		spec package: 'Files'.
@@ -50,7 +51,6 @@ baseline: spec
 		spec package: 'System-Hashing'.
 		spec package: 'System-Localization'.
 		spec package: 'System-Model'.
-		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.

@@ -6,8 +6,8 @@ displayStringsFor: aMethodVersion
 	"It may be incomplete, empty or even start with spaces."
 	cleanStampParts := aMethodVersion stamp trim substrings.
 	
-	author := cleanStampParts ifEmpty: [ '' ] ifNotEmpty: [ :parts | parts first ].
-	version := cleanStampParts ifEmpty: [ '' ] ifNotEmpty: [ :parts | parts allButFirst joinUsing: ' ' ].
+	author := cleanStampParts ifEmpty: [ '<missing>' ] ifNotEmpty: [ :parts | parts first ].
+	version := cleanStampParts ifEmpty: [ '<missing>' ] ifNotEmpty: [ :parts | parts allButFirst joinUsing: ' ' ].
 	
 	^ {author.
 	version.
