@@ -126,10 +126,6 @@ baseline: spec
 		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
 
-		spec package: 'ShoreLine-Report-Core'.
-		spec package: 'ShoreLine-Report-UI'.	"standalone"
-		spec package: 'ShoreLine-Report-Settings'. "standalone"
-		
 		spec package: 'Versionner-Core-Model'.
 		spec package: 'Versionner-Core-Commands'.
 		spec package: 'Versionner-Core-Announcements'.
