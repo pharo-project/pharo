@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "IceGitHubCommand",
+	"category" : "Iceberg-Plugin-GitHub",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"remote",
+		"branches",
+		"branchesByName"
+	],
+	"name" : "IceGitHubRemoveBranchesCommand",
+	"type" : "normal"
+}

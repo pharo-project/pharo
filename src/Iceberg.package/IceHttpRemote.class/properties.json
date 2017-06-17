@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 2/23/2017 10:33",
+	"super" : "IceNetworkRemote",
+	"category" : "Iceberg-Core-Remotes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceHttpRemote",
+	"type" : "normal"
+}

@@ -1,0 +1,28 @@
+{
+	"commentStamp" : "MaxLeske 8/13/2015 13:20",
+	"super" : "LGitStructWithDefaults",
+	"category" : "LibGit-Core-FFI-Structs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OFFSET_PRIM_CERTIFICATE_CHECK",
+		"OFFSET_PRIM_COMPLETION",
+		"OFFSET_PRIM_CREDENTIALS",
+		"OFFSET_PRIM_PACK_PROGRESS",
+		"OFFSET_PRIM_PAYLOAD",
+		"OFFSET_PRIM_PUSH_NEGOTIATION",
+		"OFFSET_PRIM_PUSH_TRANSFER_PROGRESS",
+		"OFFSET_PRIM_PUSH_UPDATE_REFERENCE",
+		"OFFSET_PRIM_SIDEBAND_PROGRESS",
+		"OFFSET_PRIM_TRANSFER_PROGRESS",
+		"OFFSET_PRIM_TRANSPORT",
+		"OFFSET_PRIM_UPDATE_TIPS",
+		"OFFSET_PRIM_VERSION"
+	],
+	"instvars" : [
+		"credentialsCallback",
+		"certificateCheckCallback"
+	],
+	"name" : "LGitRemoteCallbacks",
+	"type" : "normal"
+}

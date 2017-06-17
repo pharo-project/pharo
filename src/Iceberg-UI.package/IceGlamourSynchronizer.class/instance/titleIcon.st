@@ -1,0 +1,3 @@
+accessing
+titleIcon
+	^ IceTool icon

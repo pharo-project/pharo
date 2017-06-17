@@ -1,8 +1,8 @@
 pages
 documentation
 	^ HelpTopic 
-		title: 'More documentation'
-		contents: (self heading: 'More documentation'), 
+		title: 'More Documentation'
+		contents: (self heading: 'More Documentation'), 
 		
 	'The most important documentation is the one you can get by exploring the system, reading class comments and looking for examples. 
 You can find "in image" help by clicking on the following expression:

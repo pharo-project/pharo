@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "IceStructuralChangeSet",
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"operation"
+	],
+	"name" : "IceMethodChange",
+	"type" : "normal"
+}

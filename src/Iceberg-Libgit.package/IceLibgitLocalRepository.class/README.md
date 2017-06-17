@@ -1,0 +1,1 @@
+Adapter which allows an IceRepository to use libgit as underlying storage.

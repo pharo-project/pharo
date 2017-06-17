@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitExternalStructure",
+	"category" : "LibGit-Core-NonCoreObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OFFSET_PRIM_OFFSET",
+		"OFFSET_PRIM_TIME"
+	],
+	"instvars" : [ ],
+	"name" : "LGitTime",
+	"type" : "normal"
+}

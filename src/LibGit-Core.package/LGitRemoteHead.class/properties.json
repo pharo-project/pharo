@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "EstebanLorenzano 1/5/2017 16:00",
+	"super" : "LGitExternalStructure",
+	"category" : "LibGit-Core-FFI-Structs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OFFSET_PRIM_LOCAL",
+		"OFFSET_PRIM_LOID",
+		"OFFSET_PRIM_NAME",
+		"OFFSET_PRIM_OID",
+		"OFFSET_PRIM_SYMREF_TARGET"
+	],
+	"instvars" : [ ],
+	"name" : "LGitRemoteHead",
+	"type" : "normal"
+}

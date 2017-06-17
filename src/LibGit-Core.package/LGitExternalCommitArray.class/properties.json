@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "MaxLeske 7/13/2015 17:10",
+	"super" : "LGitExternalArray",
+	"category" : "LibGit-Core-HelperObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitExternalCommitArray",
+	"type" : "normal"
+}

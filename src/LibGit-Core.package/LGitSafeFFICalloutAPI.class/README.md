@@ -1,0 +1,1 @@
+I'm a variant of FFICalloutAPI that uses a different builder to generate methods with an extra check to see if the object is 'ready' or not.

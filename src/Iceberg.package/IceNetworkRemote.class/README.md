@@ -1,0 +1,1 @@
+Base abstract class for SCP and HTTPS remotes.

@@ -1,0 +1,1 @@
+A dialog for asking plaintext credentials (username and password) to the user.

@@ -1,3 +1,3 @@
 accessing
 pages
-	^#(overview encodingAndDecoding importingIcon)
+	^#(overview encodingAndDecoding encodingAndDecodingImage)

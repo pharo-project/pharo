@@ -1,0 +1,3 @@
+actions
+addLocalRepository
+	IceImportLocalRepositoryModel new openWithSpec

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "FFIExternalValueHolder",
+	"category" : "LibGit-Core-FFI-Handling",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitWriteBackValue",
+	"type" : "normal"
+}

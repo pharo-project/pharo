@@ -1,0 +1,3 @@
+accessing
+finalStartLineNumber
+	^ self prim_final_start_line_number

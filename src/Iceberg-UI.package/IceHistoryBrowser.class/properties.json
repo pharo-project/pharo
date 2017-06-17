@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicoPasserini 8/23/2016 14:34",
+	"super" : "IceAbstractBrowser",
+	"category" : "Iceberg-UI-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceHistoryBrowser",
+	"type" : "normal"
+}

@@ -1,0 +1,1 @@
+Groupes different announcements that can happen in a repository.

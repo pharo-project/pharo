@@ -1,0 +1,1 @@
+Place holder for an Iceberg version. When you get an instance of me instead of a real ice package version, this means that we can not correlate the current version of the code loaded into the image with a version in the corresponding Iceberg repository.

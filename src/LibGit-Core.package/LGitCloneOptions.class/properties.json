@@ -1,0 +1,24 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitStructWithDefaults",
+	"category" : "LibGit-Core-FFI-Structs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"OFFSET_PRIM_BARE",
+		"OFFSET_PRIM_CHECKOUT_BRANCH",
+		"OFFSET_PRIM_CHECKOUT_OPTS",
+		"OFFSET_PRIM_FETCH_OPTS",
+		"OFFSET_PRIM_LOCAL",
+		"OFFSET_PRIM_REMOTE_CB",
+		"OFFSET_PRIM_REMOTE_CB_PAYLOAD",
+		"OFFSET_PRIM_REPOSITORY_CB",
+		"OFFSET_PRIM_REPOSITORY_CB_PAYLOAD",
+		"OFFSET_PRIM_VERSION"
+	],
+	"instvars" : [
+		"fetchOptions"
+	],
+	"name" : "LGitCloneOptions",
+	"type" : "normal"
+}

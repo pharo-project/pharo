@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "LGitCredentials",
+	"category" : "LibGit-Core-FFI-Structs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"publicKeyReference",
+		"privateKeyReference"
+	],
+	"name" : "LGitCredentialsSSH",
+	"type" : "normal"
+}

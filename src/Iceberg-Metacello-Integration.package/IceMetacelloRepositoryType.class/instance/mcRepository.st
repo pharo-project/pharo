@@ -1,0 +1,3 @@
+accessing
+mcRepository
+	self subclassResponsibility

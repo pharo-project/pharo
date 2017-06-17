@@ -1,0 +1,4 @@
+versioning
+commitHash
+
+	^ commitHash

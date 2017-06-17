@@ -1,3 +1,4 @@
 announcement handling
 logEntryCommented: aCommentModification
-	self addEvent: aCommentModification.
+
+	self addEvent: aCommentModification

@@ -1,0 +1,1 @@
+A dialog for asking ssh credentials to the user.

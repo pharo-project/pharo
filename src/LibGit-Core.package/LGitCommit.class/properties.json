@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicoPasserini 11/3/2016 15:40",
+	"super" : "LGitObject",
+	"category" : "LibGit-Core-CoreObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitCommit",
+	"type" : "normal"
+}

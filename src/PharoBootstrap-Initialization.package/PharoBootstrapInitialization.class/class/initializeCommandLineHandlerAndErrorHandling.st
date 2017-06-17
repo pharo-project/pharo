@@ -66,7 +66,7 @@ Unicode classPool at: #Cn put: 0.
 	UIManager classVarNamed: 'Default' put: NonInteractiveUIManager new.
 	UIManager default activate.
 
-	Smalltalk sourceFileVersionString: 'PharoV50'.
+	Smalltalk sourceFileVersionString: 'PharoV60'.
 	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk imagePath. "set the default value"
 	SourceFiles := SourceFileArray new ensureOpen. "needed to get source from a compiled method, used to log an error."
 	Smalltalk openSourceFiles.

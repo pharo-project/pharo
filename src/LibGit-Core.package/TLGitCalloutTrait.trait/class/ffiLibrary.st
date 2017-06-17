@@ -1,0 +1,4 @@
+resources
+ffiLibrary
+
+	^LGitLibrary 

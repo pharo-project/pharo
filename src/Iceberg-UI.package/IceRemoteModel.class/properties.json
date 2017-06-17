@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Iceberg-UI-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"repository",
+		"nameLabel",
+		"namePanel",
+		"urlLabel",
+		"urlPanel",
+		"addButton",
+		"acceptBlock"
+	],
+	"name" : "IceRemoteModel",
+	"type" : "normal"
+}

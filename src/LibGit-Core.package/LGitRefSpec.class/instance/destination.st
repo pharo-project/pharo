@@ -1,0 +1,3 @@
+accessing
+destination
+	^ destination ifNil: [ '' ]

@@ -1,0 +1,3 @@
+accessing
+messageText
+	^ self name

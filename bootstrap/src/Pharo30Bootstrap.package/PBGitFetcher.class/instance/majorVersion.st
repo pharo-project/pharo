@@ -1,0 +1,4 @@
+versioning
+majorVersion
+
+	^ '7'

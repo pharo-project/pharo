@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "LGitCallback",
+	"category" : "LibGit-Core-FFI-Callbacks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitIndexMatchedPathCallback",
+	"type" : "normal"
+}

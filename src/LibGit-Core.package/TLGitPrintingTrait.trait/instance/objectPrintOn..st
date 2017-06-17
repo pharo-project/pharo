@@ -1,0 +1,2 @@
+printing
+objectPrintOn: aStream

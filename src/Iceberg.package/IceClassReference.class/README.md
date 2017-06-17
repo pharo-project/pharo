@@ -1,0 +1,1 @@
+This class is just for organizing class references together in a hierarchy, see subclases for more info.

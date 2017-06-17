@@ -1,0 +1,3 @@
+Temporary versions are created in two situations:
+1) As  a temporary place holder for a version. Someone asked for a version but the package is still being loaded, at some point a real version will replace me. In the meanwhile I can respond to some messages as a version would do.
+2) For packages that are added to the repository but not yet saved. In this case the version will be replaced with a real version on next commit.

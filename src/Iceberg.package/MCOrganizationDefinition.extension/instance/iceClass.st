@@ -1,0 +1,3 @@
+*Iceberg-Core
+iceClass
+	^ nil

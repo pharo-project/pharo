@@ -1,0 +1,4 @@
+resources
+ffiNull
+
+	^FFIExternalObject null

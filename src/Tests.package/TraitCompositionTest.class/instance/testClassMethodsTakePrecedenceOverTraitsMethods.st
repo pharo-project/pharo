@@ -5,7 +5,7 @@ testClassMethodsTakePrecedenceOverTraitsMethods
 	self t4 methodDict bindingsDo: [:each | keys add: each key].
 	self assert: keys size = 6.
 	self 
-		assert: (keys includesAllOf: #(
+		assert: (keys includesAll: #(
 						#m12
 						#m13
 						#m13

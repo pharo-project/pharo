@@ -1,0 +1,1 @@
+I'm a variant of FFICalloutMethodBuilder  that adds a call to  #signalIfNotReady  before the actual ffi call.

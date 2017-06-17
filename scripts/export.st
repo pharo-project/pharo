@@ -1,4 +1,4 @@
-| zodiacRepo pharoRepo mosseAlgosRepo versions | 
+| zodiacRepo pharoRepo mosseAlgosRepo versions mooseAlgosRepo icebergTarget libgitTarget cloneRepo iceRepo libgitRepo | 
 
 zodiacRepo := MCHttpRepository
 	location: 'http://mc.stfx.eu/Zodiac'
@@ -22,6 +22,38 @@ MCWorkingCopy allManagers
 MCWorkingCopy allManagers
 	select: [ :m | m packageName beginsWith: 'Moose' ]
 	thenDo: [ :m | m repositoryGroup addRepository: mooseAlgosRepo ].
+	
+icebergTarget := ('pharo-local' asFileReference / 'Iceberg') ensureCreateDirectory.
+libgitTarget := ('pharo-local' asFileReference / 'LibGit') ensureCreateDirectory.
+
+cloneRepo := IceRepositoryCreator new 
+	remote: (IceRemote url: 'git@github.com:pharo-vcs/Iceberg.git');
+	location: icebergTarget;
+	createRepository.	
+cloneRepo backend checkoutBranch: 'v0.4'.	
+
+cloneRepo := IceRepositoryCreator new 
+	remote: (IceRemote url: 'https://github.com/pharo-vcs/libgit2-pharo-bindings.git');
+	location: libgitTarget;
+	createRepository.	
+cloneRepo backend checkoutBranch: 'development'.
+
+
+iceRepo := MCFileTreeRepository new
+	directory: icebergTarget ;
+	yourself.
+
+libgitRepo := MCFileTreeRepository new
+	directory: libgitTarget ;
+	yourself.
+	
+MCWorkingCopy allManagers
+	select: [ :m | m packageName includesSubstring: 'Iceberg' ]
+	thenDo: [ :m | m repositoryGroup addRepository: iceRepo ].
+	
+MCWorkingCopy allManagers
+	select: [ :m | #('BaselineOfLibGit' 'LibGit-Core') includes: m packageName ]
+	thenDo: [ :m | m repositoryGroup addRepository: libgitRepo ].
 
 versions := ScriptLoader new perform: (#script, SystemVersion current highestUpdate asString) asSymbol.
 

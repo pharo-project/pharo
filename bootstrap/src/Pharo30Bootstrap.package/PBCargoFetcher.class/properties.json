@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "ChristopheDemarey 7\/6\/2016 11:33",
+	"commentStamp" : "ChristopheDemarey 7/6/2016 11:33",
 	"super" : "PBDefinitionFetcher",
 	"category" : "Pharo30Bootstrap",
 	"classinstvars" : [ ],

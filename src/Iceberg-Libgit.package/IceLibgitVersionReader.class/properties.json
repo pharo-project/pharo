@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "NicoPasserini 7/7/2016 11:58",
+	"super" : "MCFileTreeStCypressReader",
+	"category" : "Iceberg-Libgit",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"iceVersion"
+	],
+	"name" : "IceLibgitVersionReader",
+	"type" : "normal"
+}

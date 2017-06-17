@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicoPasserini 5/9/2016 18:11",
+	"super" : "IceAbstractDiff",
+	"category" : "Iceberg-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceChangeSet",
+	"type" : "normal"
+}

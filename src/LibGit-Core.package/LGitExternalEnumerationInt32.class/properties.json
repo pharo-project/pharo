@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LGitExternalEnumerationUInt32",
+	"category" : "LibGit-Core-Abstracts",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LGitExternalEnumerationInt32",
+	"type" : "normal"
+}

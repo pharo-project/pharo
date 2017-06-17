@@ -1,0 +1,1 @@
+Base class for different types of versions, namely: IceVersion (normal versions) and IceForeignVersion (versions not managed by Ice).

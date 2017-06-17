@@ -1,0 +1,1 @@
+Parent class for any comparison between two versions of the code (working copy, commit or other) and comprising any level of granularity (a whole repository, a package, a class, etc.).

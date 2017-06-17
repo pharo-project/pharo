@@ -1,0 +1,3 @@
+printing
+shouldContinuePrintingOn: aStream
+	^ true
