@@ -1,1 +1,0 @@
-Emulates other 'file utils' classes by reading from a git repository (its blob, not a working copy'). Allows for reading any tree (from any commit) in the repository.

@@ -1,3 +1,0 @@
-api
-title
-	^ 'Edit repository'

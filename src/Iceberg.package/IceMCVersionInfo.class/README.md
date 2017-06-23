@@ -1,1 +1,0 @@
-Adapter to produce an MCVersionInfo that knows how to (lazily) load ancestors from an Iceberg repository.

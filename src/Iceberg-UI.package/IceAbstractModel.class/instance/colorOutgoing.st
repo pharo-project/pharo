@@ -1,3 +1,0 @@
-highlighting
-colorOutgoing
-	^ Color blue
