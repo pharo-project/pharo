@@ -13,5 +13,4 @@ testAsTraitDefinition2
 	self assert: newTrait superclass = (newSlice classNamed: #Object).
 	self assert: newTrait methods size < newSlice methods size.
 	self assert: newTrait category = #'Tests-Traits-MOP'.
-	self assert: newTrait package = (newSlice packageNamed: #Tests).
 	self assert: newTrait subclasses isEmpty.
