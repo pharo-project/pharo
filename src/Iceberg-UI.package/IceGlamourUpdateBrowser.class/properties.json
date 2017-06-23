@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "NicoPasserini 10/13/2016 17:28",
+	"super" : "IceEmbeddedBrowser",
+	"category" : "Iceberg-UI-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"announcer"
+	],
+	"name" : "IceGlamourUpdateBrowser",
+	"type" : "normal"
+}

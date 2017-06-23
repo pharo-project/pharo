@@ -1,0 +1,1 @@
+Spec model for commit (and related) operations.

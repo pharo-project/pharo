@@ -1,0 +1,4 @@
+accessing
+outgoingCommits
+	^ outgoingCommits value
+	

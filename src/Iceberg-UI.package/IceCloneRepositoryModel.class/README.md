@@ -1,0 +1,1 @@
+Dialog for cloning a repository from a remote URL

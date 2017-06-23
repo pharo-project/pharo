@@ -1,0 +1,3 @@
+querying
+canRevertChanges
+	^ false

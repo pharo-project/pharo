@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MCFileTreeStCypressWriter",
+	"category" : "Iceberg-Adapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceMetadatalessStCypressWriter",
+	"type" : "normal"
+}

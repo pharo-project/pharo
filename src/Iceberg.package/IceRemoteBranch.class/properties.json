@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicoPasserini 12/6/2016 11:42",
+	"super" : "IceBranch",
+	"category" : "Iceberg-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceRemoteBranch",
+	"type" : "normal"
+}

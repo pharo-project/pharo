@@ -1,0 +1,3 @@
+specs
+buttonLabel
+	^ 'Select'

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "EstebanLorenzano 2/1/2017 17:15",
+	"super" : "Error",
+	"category" : "Iceberg-Plugin-GitHub",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"response",
+		"jsonContents"
+	],
+	"name" : "IceGitHubError",
+	"type" : "normal"
+}

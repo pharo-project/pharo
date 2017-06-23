@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Iceberg-Plugin-Base",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Managers"
+	],
+	"instvars" : [
+		"plugins"
+	],
+	"name" : "IcePluginManager",
+	"type" : "normal"
+}

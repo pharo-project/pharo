@@ -1,0 +1,3 @@
+highlighting
+colorIncoming
+	^ Color brown

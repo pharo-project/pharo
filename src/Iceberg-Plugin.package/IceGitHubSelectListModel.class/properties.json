@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Iceberg-Plugin-GitHub",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"selectedItems",
+		"listPanel",
+		"selectButton",
+		"title",
+		"acceptBlock"
+	],
+	"name" : "IceGitHubSelectListModel",
+	"type" : "normal"
+}

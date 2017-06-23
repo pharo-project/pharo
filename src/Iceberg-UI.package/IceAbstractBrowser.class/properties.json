@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "IceTool",
+	"category" : "Iceberg-UI-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "IceAbstractBrowser",
+	"type" : "normal"
+}

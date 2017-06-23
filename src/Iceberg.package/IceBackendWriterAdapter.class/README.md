@@ -1,0 +1,1 @@
+Adapter for having MCFileTreeWriters being able to write into Iceberg backend repositories without introducing unpleasant modifications in them.

@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "ComposableModel",
+	"category" : "Iceberg-UI-View",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"nameLabel",
+		"nameInput",
+		"emailLabel",
+		"emailInput",
+		"globalCheckbox",
+		"acceptButton",
+		"acceptBlock"
+	],
+	"name" : "IceAskForUsernameAndEmailModel",
+	"type" : "normal"
+}

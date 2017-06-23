@@ -1,0 +1,3 @@
+acessing
+propertyFileExtension
+	^ MCFileTreeRepository defaultPropertyFileExtension
