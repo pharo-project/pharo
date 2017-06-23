@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"super" : "ComposableModel",
 	"category" : "Komitter-UI",
 	"classinstvars" : [
