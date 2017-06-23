@@ -1,5 +1,5 @@
 pharo - scripts
-script60499
+script60501
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -158,7 +158,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2513.mcz
+Kernel-TheIntegrator.2515.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.175.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -345,7 +345,7 @@ Spec-Layout-TheIntegrator.75.mcz
 Spec-MorphicAdapters-TheIntegrator.292.mcz
 Spec-PolyWidgets-TheIntegrator.93.mcz
 Spec-Tests-TheIntegrator.107.mcz
-Spec-Tools-TheIntegrator.386.mcz
+Spec-Tools-TheIntegrator.388.mcz
 StartupPreferences-TheIntegrator.153.mcz
 System-Announcements-TheIntegrator.138.mcz
 System-BasicCommandLineHandler-TheIntegrator.21.mcz
@@ -446,7 +446,7 @@ Zinc-Resource-Meta-Core-SvenVanCaekenberghe.61.mcz
 Zinc-Resource-Meta-FileSystem-SvenVanCaekenberghe.8.mcz
 Zinc-Resource-Meta-Tests-SvenVanCaekenberghe.37.mcz
 Zinc-Tests-SvenVanCaekenberghe.238.mcz
-Zinc-Zodiac-TheIntegrator.38.mcz
+Zinc-Zodiac-TheIntegrator.40.mcz
 Zodiac-Core-TheIntegrator.46.mcz
 Zodiac-Extra-StephaneDucasse.10.mcz
 Zodiac-Tests-TheIntegrator.17.mcz'
