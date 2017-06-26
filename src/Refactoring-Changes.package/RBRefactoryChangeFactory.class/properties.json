@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PabloTesone 1/11/2017 15:11",
+	"super" : "Object",
+	"category" : "Refactoring-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBRefactoryChangeFactory",
+	"type" : "normal"
+}
