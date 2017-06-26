@@ -3,7 +3,7 @@ moveTo: aReference
 	
 	| result |
 	result := self fileSystem 
-		move: self path
-		to: aReference resolve.
+		rename: self path
+		to: aReference resolve path.
 	result ifNotNil: [
-		self setFileSystem: result fileSystem path: result path ].		
+		self setFileSystem: filesystem path: aReference path ].		

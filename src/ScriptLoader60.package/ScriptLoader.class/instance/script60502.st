@@ -1,5 +1,5 @@
 pharo - scripts
-script60501
+script60502
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -160,7 +160,7 @@ Jobs-TheIntegrator.30.mcz
 JobsTests-TheIntegrator.2.mcz
 Kernel-TheIntegrator.2515.mcz
 Kernel-Rules-TheIntegrator.13.mcz
-Kernel-Tests-TheIntegrator.175.mcz
+Kernel-Tests-TheIntegrator.177.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
 Keymapping-Core-TheIntegrator.204.mcz
 Keymapping-KeyCombinations-TheIntegrator.66.mcz
@@ -207,7 +207,7 @@ MonticelloMocks-TheIntegrator.9.mcz
 MonticelloRemoteRepositories-TheIntegrator.19.mcz
 Moose-Algos-Graph-VincentBlondeau.33.mcz
 Morphic-Base-TheIntegrator.618.mcz
-Morphic-Core-TheIntegrator.313.mcz
+Morphic-Core-TheIntegrator.315.mcz
 Morphic-Examples-TheIntegrator.64.mcz
 Morphic-Tests-TheIntegrator.13.mcz
 Morphic-Widgets-Basic-TheIntegrator.110.mcz
@@ -404,7 +404,7 @@ Tool-FileList-Tests-EstebanLorenzano.3.mcz
 Tool-Finder-TheIntegrator.78.mcz
 Tool-ImageCleaner-TheIntegrator.19.mcz
 Tool-ProcessBrowser-TheIntegrator.27.mcz
-Tool-Profilers-TheIntegrator.37.mcz
+Tool-Profilers-TheIntegrator.39.mcz
 Tool-SystemReporter-TheIntegrator.19.mcz
 Tool-Transcript-TheIntegrator.25.mcz
 Tool-Workspace-TheIntegrator.48.mcz
