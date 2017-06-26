@@ -12,7 +12,7 @@ nextChunk
 							| character state |
 							[(character := self next) == nil
 								or: [character == $!
-										and: [state := converter saveStateOf: self..
+										and: [state := converter saveStateOf: self.
 											self next ~~ $!]]]
 								whileFalse: [stream nextPut: character].
 							character
