@@ -1,3 +1,3 @@
 settings
 compileWithErrors: aBoolean
-	CompileWithErrors := aBoolean
+	compileWithErrors := aBoolean 

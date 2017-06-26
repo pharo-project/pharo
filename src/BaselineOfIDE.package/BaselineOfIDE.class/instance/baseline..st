@@ -33,7 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		spec package: 'Deprecated60'.
+		"spec package: 'Deprecated60'."
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -56,7 +56,6 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
-		spec package: 'ScriptLoader60'.
 		
 		spec package: 'System-Serial Port'.
 		
@@ -68,7 +67,6 @@ baseline: spec
 			
 		spec package: 'Metacello-GitBasedRepository'.	
 
-		spec package: 'BaselineOfMetacello'.
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
@@ -128,10 +126,6 @@ baseline: spec
 		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
 
-		spec package: 'ShoreLine-Report-Core'.
-		spec package: 'ShoreLine-Report-UI'.	"standalone"
-		spec package: 'ShoreLine-Report-Settings'. "standalone"
-		
 		spec package: 'Versionner-Core-Model'.
 		spec package: 'Versionner-Core-Commands'.
 		spec package: 'Versionner-Core-Announcements'.
@@ -272,7 +266,6 @@ baseline: spec
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
-		spec package: 'ScriptLoader-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
@@ -291,7 +284,6 @@ baseline: spec
 		spec package: 'Tools-Test'.	
 		spec package: 'TxText-AthensTests'.
 		spec package: 'TxTextTests-Model'.
-		spec package: 'UpdateStreamer-Tests'.
 		spec package: 'WorldMenuHelp'.	
 		spec package: 'WriteBarrierTests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
