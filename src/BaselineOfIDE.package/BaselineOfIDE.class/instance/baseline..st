@@ -145,10 +145,6 @@ baseline: spec
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
 
-		spec package: 'TxText-Model'.
-		spec package: 'TxText-Athens'.
-		spec package: 'TxText-Styler'.
-
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
@@ -167,32 +163,6 @@ baseline: spec
 		spec package: 'FuzzyMatcher'.
 		spec package: 'Versionner-Nautilus'.
 		spec package: 'STON-Text support'.
-		
-		"spec package: 'ConfigurationOfGTSpotter'.
-		spec package: 'ConfigurationOfMooseAlgos'.
-		spec package: 'ConfigurationOfPharoMetacello'.
-		spec package: 'ConfigurationOfAthens'.
-		spec package: 'ConfigurationOfDependencyAnalyser'.
-		spec package: 'ConfigurationOfVersionner'.
-		spec package: 'ConfigurationOfFuelPlatform'.
-		spec package: 'ConfigurationOfFuel'.
-		spec package: 'ConfigurationOfUnifiedFFI'.
-		spec package: 'ConfigurationOfFlatQA'.
-		spec package: 'ConfigurationOfEpicea'.
-		spec package: 'ConfigurationOfGlamourCore'.
-		spec package: 'ConfigurationOfGTEventRecorder'.
-		spec package: 'ConfigurationOfSton'.
-		spec package: 'ConfigurationOfFastTable'.
-		spec package: 'ConfigurationOfSessionManager'.
-		spec package: 'ConfigurationOfCatalog'.
-		spec package: 'ConfigurationOfGToolkitCore'.
-		spec package: 'ConfigurationOfGTDebugger'.
-		spec package: 'ConfigurationOfZincHTTPComponents'.
-		spec package: 'ConfigurationOfOSWindow'.
-		spec package: 'ConfigurationOfShoreLineReporter'.
-		spec package: 'ConfigurationOfTxText'.
-		spec package: 'ConfigurationOfGTPlaygroundCore'.
-		spec package: 'ConfigurationOfGTInspectorCore'.	"
 		
 		"SortFunctions (standalone)"
 		spec package: 'SortFunctions-Core'.
@@ -282,8 +252,6 @@ baseline: spec
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
-		spec package: 'TxText-AthensTests'.
-		spec package: 'TxTextTests-Model'.
 		spec package: 'WorldMenuHelp'.	
 		spec package: 'WriteBarrierTests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
