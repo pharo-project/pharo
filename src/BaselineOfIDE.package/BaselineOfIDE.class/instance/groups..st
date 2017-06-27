@@ -375,20 +375,6 @@ spec group: 'Athens-Group' with: #(
 	'Athens-Examples'
 ).		
 
-spec group: 'TxText-Core-Group' with: #(
-	'TxText-Model'
-	'TxText-Athens'
-	'TxText-Styler'
-).		
-spec group: 'TxText-Tests-Group' with: #(
-	'TxText-AthensTests'
-	'TxTextTests-Model'
-).
-spec group: 'TxText-Group' with: #(
-	'TxText-Core-Group'
-	'TxText-Tests-Group'
-).
-
 spec group: 'OSWindow-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency, cleanup needed"
 	'GT-Core-Group'	"dependency, cleanup needed"
@@ -495,7 +481,6 @@ spec group: #default with: #(
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
-	'TxText-Group'
 
 	'GT&QA-Group'
 
