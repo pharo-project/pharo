@@ -1,5 +1,5 @@
 pharo - scripts
-script60502
+script60503
 
 	^ 'AST-Core-TheIntegrator.494.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -135,11 +135,11 @@ Gofer-Tests-TheIntegrator.164.mcz
 Gofer-UI-TheIntegrator.2.mcz
 Graphics-Canvas-TheIntegrator.14.mcz
 Graphics-Display Objects-TheIntegrator.188.mcz
-Graphics-Files-TheIntegrator.78.mcz
+Graphics-Files-TheIntegrator.80.mcz
 Graphics-Fonts-TheIntegrator.109.mcz
 Graphics-Primitives-TheIntegrator.203.mcz
 Graphics-Shapes-TheIntegrator.4.mcz
-Graphics-Tests-TheIntegrator.85.mcz
+Graphics-Tests-TheIntegrator.87.mcz
 Graphics-Transformations-TheIntegrator.17.mcz
 Growl-TheIntegrator.47.mcz
 HelpSystem-Core-TheIntegrator.178.mcz

@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "TorstenBergmann 4/27/2017 11:02",
+	"commentStamp" : "",
 	"super" : "SharedPool",
 	"category" : "FFI-Pools",
 	"classinstvars" : [ ],
