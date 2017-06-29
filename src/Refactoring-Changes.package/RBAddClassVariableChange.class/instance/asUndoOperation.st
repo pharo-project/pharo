@@ -1,3 +1,5 @@
 converting
 asUndoOperation
-	^ RBRemoveClassVariableChange remove: self variable from: self changeClass
+	^ RBRefactoryChangeManager changeFactory
+		removeClassVariable: self variable
+		from: self changeClass

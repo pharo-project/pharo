@@ -1,0 +1,3 @@
+accessing
+instance
+	^ RBRefactoryChangeManager instance changeFactory
