@@ -1,7 +1,7 @@
 converting
 asUndoOperation
 	| classChanges |
-	classChanges := RBCompositeRefactoryChange new.
+	classChanges := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
 	self changeClass withAllSubclasses do: [ :each | 
 		classChanges defineClass: each definition.
 		each class instVarNames 
