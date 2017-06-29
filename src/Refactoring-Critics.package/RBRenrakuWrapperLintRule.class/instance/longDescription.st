@@ -1,4 +1,0 @@
-accessing
-longDescription
-	
-	^ renrakuRule rationale
