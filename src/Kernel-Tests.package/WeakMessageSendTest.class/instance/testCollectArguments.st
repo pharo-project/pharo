@@ -7,17 +7,17 @@ testCollectArguments
 	| msg rcvr c|
 	
 	rcvr := OrderedCollection new.
-	c := Color green.
-	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { Color black }.
+	c := #( 42 ).
+	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { 4 }.
 	
 	msg valueWithArguments: {}.
 	
-	self assertCollection: rcvr asArray equals: { Color black }.
+	self assertCollection: rcvr asArray equals: { 4 }.
 	
 	msg valueWithArguments: { #a . WeakArray with: c }.
 	
-	self assertCollection: rcvr asArray equals: { Color black . #a }.
+	self assertCollection: rcvr asArray equals: { 4 . #a }.
 	
 	msg valueWithArguments: (WeakArray with: c).
 	
-	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }.
+	self assertCollection: rcvr asArray equals: { 4 . #a  . #( 42 ) }.
