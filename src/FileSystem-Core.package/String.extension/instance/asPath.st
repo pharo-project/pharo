@@ -6,4 +6,4 @@ asPath
 		'~/Desktop' asPath
 		'/home/foo' asPath
 		'../../foo.bar' asPath"
-	^ FileSystem disk resolve: self
+	^ Path from: self
