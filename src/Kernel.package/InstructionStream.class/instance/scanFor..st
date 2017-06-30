@@ -1,13 +1,15 @@
 scanning
 scanFor: scanBlock
-	"Answer the index of the first bytecode for which scanBlock
-	 answers true when supplied with that bytecode."
+	"Check all bytecode instructions with scanBlock, answer true if scanBlock answers true.
+	This can be used to, e.g., check whether a method contains 'push closure' bytecodes like this:
+	aMethod scanFor: [ :b | b = 143 ]"
 
-	| method end |
+	| method encoderClass end byte |
 	method := self method.
 	end := method endPC.
+	encoderClass := method encoderClass.
 	[pc <= end] whileTrue: 
-		[(scanBlock value: (method at: pc)) ifTrue: [^true].
-		[self method encoderClass isExtension: (self method at: pc)] whileTrue: [pc := pc + 2].
-		pc := self nextPc: (method at: pc)].
+		[(scanBlock value: (byte := method at: pc)) ifTrue:
+			[^true].
+		 pc := pc + (encoderClass bytecodeSize: byte)].
 	^false
