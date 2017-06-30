@@ -1,4 +1,8 @@
 event handling
 mouseLeave: evt
 	
-	self color: self selectionColor 
+	over ifTrue: [ 
+		over := false.
+		self changed	
+	]
+	 

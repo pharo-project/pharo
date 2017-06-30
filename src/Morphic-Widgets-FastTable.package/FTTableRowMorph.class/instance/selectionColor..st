@@ -1,5 +1,6 @@
 accessing
 selectionColor: aColor
 
+	selectionColor = aColor ifTrue: [ ^ self ].
 	selectionColor := aColor.
-	self color: selectionColor
+	self changed

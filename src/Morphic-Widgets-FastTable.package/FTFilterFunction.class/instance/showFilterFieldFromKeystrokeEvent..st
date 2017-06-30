@@ -10,5 +10,4 @@ showFilterFieldFromKeystrokeEvent: anEvent
 			self filterWith: contents.
 			editor setTextWith: (self colorText: contents) ].
 	ed autoAccept: true.
-	ed whenEditorEscapedDo:[self reinitializeTable ].
 	ed openEditorWithContents: (self colorText: text)

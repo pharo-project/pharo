@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"selectionColor"
+		"selectionColor",
+		"over"
 	],
 	"name" : "FTTableRowMorph",
 	"type" : "normal"
