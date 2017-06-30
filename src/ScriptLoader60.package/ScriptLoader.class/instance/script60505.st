@@ -1,7 +1,7 @@
 pharo - scripts
-script60504
+script60505
 
-	^ 'AST-Core-TheIntegrator.494.mcz
+	^ 'AST-Core-TheIntegrator.496.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
 Alien-RonieSalgado.40.mcz
 Announcements-Core-TheIntegrator.84.mcz
@@ -32,7 +32,7 @@ BlueInk-Core-TheIntegrator.29.mcz
 BlueInk-Extras-TheIntegrator.12.mcz
 BlueInk-Tests-TheIntegrator.12.mcz
 CodeExport-TheIntegrator.23.mcz
-CodeImport-TheIntegrator.90.mcz
+CodeImport-TheIntegrator.92.mcz
 CodeImportCommandLineHandlers-TheIntegrator.17.mcz
 Collections-Abstract-TheIntegrator.345.mcz
 Collections-Arithmetic-TheIntegrator.22.mcz
@@ -43,7 +43,7 @@ Collections-Native-TheIntegrator.19.mcz
 Collections-Sequenceable-TheIntegrator.261.mcz
 Collections-Stack-TheIntegrator.10.mcz
 Collections-Streams-TheIntegrator.194.mcz
-Collections-Strings-TheIntegrator.449.mcz
+Collections-Strings-TheIntegrator.451.mcz
 Collections-Support-TheIntegrator.67.mcz
 Collections-Tests-TheIntegrator.103.mcz
 Collections-Unordered-TheIntegrator.248.mcz
@@ -52,7 +52,7 @@ Colors-TheIntegrator.3.mcz
 Compiler-TheIntegrator.608.mcz
 Compression-TheIntegrator.182.mcz
 Compression-Tests-TheIntegrator.7.mcz
-ConfigurationCommandLineHandler-Core-TheIntegrator.29.mcz
+ConfigurationCommandLineHandler-Core-TheIntegrator.31.mcz
 ConfigurationCommandLineHandler-Tests-MarcusDenker.11.mcz
 ContributingToTheCatalogHelp-TheIntegrator.9.mcz
 Debugger-Tests-TheIntegrator.6.mcz
@@ -76,7 +76,7 @@ FileSystem-Tests-Core-TheIntegrator.103.mcz
 FileSystem-Tests-Disk-StephaneDucasse.25.mcz
 FileSystem-Tests-Memory-TheIntegrator.8.mcz
 FileSystem-Zip-TheIntegrator.19.mcz
-Files-TheIntegrator.430.mcz
+Files-TheIntegrator.431.mcz
 Files-Tests-TheIntegrator.12.mcz
 Flashback-Decompiler-EstebanLorenzano.21.mcz
 Flashback-Decompiler-Tests-TheIntegrator.97.mcz
@@ -134,7 +134,7 @@ Gofer-Core-TheIntegrator.237.mcz
 Gofer-Tests-TheIntegrator.164.mcz
 Gofer-UI-TheIntegrator.2.mcz
 Graphics-Canvas-TheIntegrator.14.mcz
-Graphics-Display Objects-TheIntegrator.188.mcz
+Graphics-Display Objects-TheIntegrator.190.mcz
 Graphics-Files-TheIntegrator.80.mcz
 Graphics-Fonts-TheIntegrator.109.mcz
 Graphics-Primitives-TheIntegrator.203.mcz
@@ -156,9 +156,9 @@ Iceberg-UI-cypress.1.mcz
 ImportingResource-Help-TheIntegrator.8.mcz
 IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
-Jobs-TheIntegrator.30.mcz
+Jobs-TheIntegrator.32.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2517.mcz
+Kernel-TheIntegrator.2518.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.177.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -227,7 +227,7 @@ Multilingual-Encodings-TheIntegrator.63.mcz
 Multilingual-Languages-TheIntegrator.59.mcz
 Multilingual-OtherLanguages-TheIntegrator.22.mcz
 Multilingual-Tests-TheIntegrator.46.mcz
-Multilingual-TextConversion-TheIntegrator.83.mcz
+Multilingual-TextConversion-TheIntegrator.85.mcz
 Multilingual-TextConverterOtherLanguages-TheIntegrator.4.mcz
 NECompletion-TheIntegrator.257.mcz
 NECompletion-Tests-TheIntegrator.10.mcz
@@ -256,7 +256,7 @@ OSWindow-Tests-RonieSalgado.3.mcz
 OSWindow-VM-MerwanOuddane.4.mcz
 Ombu-MartinDias.277.mcz
 OmbuTests-MartinDias.33.mcz
-OpalCompiler-Core-TheIntegrator.890.mcz
+OpalCompiler-Core-TheIntegrator.892.mcz
 OpalCompiler-Tests-TheIntegrator.380.mcz
 OpalTools-TheIntegrator.24.mcz
 Pharo-Help-TheIntegrator.52.mcz
@@ -330,7 +330,7 @@ ShoreLine-Report-Settings-TheIntegrator.7.mcz
 ShoreLine-Report-UI-TheIntegrator.19.mcz
 Shout-TheIntegrator.313.mcz
 Shout-Tests-TheIntegrator.2.mcz
-Slot-TheIntegrator.790.mcz
+Slot-TheIntegrator.792.mcz
 Slot-Tests-TheIntegrator.105.mcz
 SmartSuggestions-TheIntegrator.269.mcz
 SmartSuggestions-Tests-TheIntegrator.39.mcz
@@ -378,13 +378,13 @@ System-Settings-TheIntegrator.374.mcz
 System-Settings-Rules-TheIntegrator.2.mcz
 System-Settings-Tests-TheIntegrator.15.mcz
 System-Sound-TheIntegrator.20.mcz
-System-Sources-TheIntegrator.73.mcz
+System-Sources-TheIntegrator.76.mcz
 System-Support-TheIntegrator.1276.mcz
 System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.7.mcz
 System-VMEvents-TheIntegrator.19.mcz
 Tests-TheIntegrator.794.mcz
-Text-Core-TheIntegrator.66.mcz
+Text-Core-TheIntegrator.69.mcz
 Text-Diff-TheIntegrator.6.mcz
 Text-Edition-TheIntegrator.128.mcz
 Text-Edition-Tests-EstebanLorenzano.3.mcz
@@ -410,7 +410,7 @@ Tool-Transcript-TheIntegrator.25.mcz
 Tool-Workspace-TheIntegrator.48.mcz
 Tools-TheIntegrator.1532.mcz
 Tools-Test-TheIntegrator.26.mcz
-Traits-TheIntegrator.988.mcz
+Traits-TheIntegrator.990.mcz
 Transcript-TheIntegrator.56.mcz
 TravisIntegrationHelp-TheIntegrator.8.mcz
 TxText-Athens-EstebanLorenzano.58.mcz
@@ -418,7 +418,7 @@ TxText-AthensTests-HenrikNergaard.13.mcz
 TxText-Model-MarcusDenker.67.mcz
 TxText-Styler-HenrikNergaard.18.mcz
 TxTextTests-Model-SeanDeNigris.29.mcz
-UIManager-TheIntegrator.195.mcz
+UIManager-TheIntegrator.197.mcz
 Unicode-Initialization-TheIntegrator.17.mcz
 UnifiedFFI-EstebanLorenzano.111.mcz
 UnifiedFFI-Legacy-EstebanLorenzano.3.mcz
@@ -441,13 +441,13 @@ WriteBarrierTests-TheIntegrator.20.mcz
 Zinc-Character-Encoding-Core-SvenVanCaekenberghe.46.mcz
 Zinc-Character-Encoding-Tests-TheIntegrator.31.mcz
 Zinc-FileSystem-TheIntegrator.15.mcz
-Zinc-HTTP-TheIntegrator.459.mcz
+Zinc-HTTP-TheIntegrator.461.mcz
 Zinc-Resource-Meta-Core-SvenVanCaekenberghe.61.mcz
 Zinc-Resource-Meta-FileSystem-SvenVanCaekenberghe.8.mcz
 Zinc-Resource-Meta-Tests-SvenVanCaekenberghe.37.mcz
 Zinc-Tests-SvenVanCaekenberghe.238.mcz
 Zinc-Zodiac-TheIntegrator.40.mcz
-Zodiac-Core-TheIntegrator.46.mcz
+Zodiac-Core-TheIntegrator.48.mcz
 Zodiac-Extra-StephaneDucasse.10.mcz
 Zodiac-Tests-TheIntegrator.17.mcz'
 findTokens: String lf , String cr

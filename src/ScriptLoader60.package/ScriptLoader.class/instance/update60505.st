@@ -1,6 +1,7 @@
-public
-commentForCurrentUpdate
- ^ '20187 Request use of block in certain methods
+pharo - updates
+update60505
+	"self new update60505"
+	self withUpdateLog: '20187 Request use of block in certain methods
 	https://pharo.fogbugz.com/f/cases/20187
 
 20188 Request representation of integer literal without float exponent
@@ -13,4 +14,8 @@ commentForCurrentUpdate
 	https://pharo.fogbugz.com/f/cases/18760
 
 20186 Request removal of extra statement separators (dot)
-	https://pharo.fogbugz.com/f/cases/20186'
+	https://pharo.fogbugz.com/f/cases/20186'.
+	self loadTogether: self script60505 merge: false.
+	
+(SystemAnnouncer uniqueInstance subscriptions glmSubscriptions select: [:sub | sub subscriber isNil]) do: #finalize. 3 timesRepeat: [Smalltalk garbageCollect ].
+	self flushCaches.

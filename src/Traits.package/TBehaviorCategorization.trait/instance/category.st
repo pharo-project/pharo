@@ -10,7 +10,7 @@ category
 			ifTrue: [ ^symbol ] ].
 	result := (self environment organization categoryOfElement: self name)
 		ifNil: [ #Unclassified ]
-		ifNotNil: #yourself.
+		ifNotNil: [ :res | res ].
 	self basicCategory: result.
 	
 	^ result

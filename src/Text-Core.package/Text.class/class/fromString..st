@@ -5,7 +5,7 @@ fromString: aString
   | defaultFontStyle fontNumber |
 
   defaultFontStyle := TextStyle default.
-  fontNumber := defaultFontStyle ifNil: 1 ifNotNil: [defaultFontStyle defaultFontIndex].
+  fontNumber := defaultFontStyle ifNil: [1] ifNotNil: [defaultFontStyle defaultFontIndex].
 
   ^ self
     string: aString

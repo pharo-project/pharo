@@ -5,6 +5,6 @@ defaultFontChange
   | defaultFontStyle fontIndex |
 
   defaultFontStyle := TextStyle default.
-  fontIndex := defaultFontStyle ifNil: 1 ifNotNil: [defaultFontStyle defaultFontIndex].
+  fontIndex := defaultFontStyle ifNil: [1] ifNotNil: [defaultFontStyle defaultFontIndex].
 
   ^ self new fontNumber: fontIndex.

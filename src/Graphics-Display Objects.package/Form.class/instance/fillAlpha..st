@@ -4,6 +4,6 @@ fillAlpha: alphaValue
 	| bb |
 	self depth = 32 ifFalse:[^self error: 'Only valid for 32 bit forms'].
 	bb := BitBlt toForm: self.
-	bb combinationRule: 7. "bitOr:with:".
+	bb combinationRule: 7. "bitOr:with:"
 	bb fillColor: (Bitmap with: alphaValue << 24).
 	bb copyBits.
