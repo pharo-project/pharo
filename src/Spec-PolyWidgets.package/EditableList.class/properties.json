@@ -6,14 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"title",
 		"list",
-		"addButton",
-		"removeButton",
-		"upButton",
-		"downButton",
-		"topButton",
-		"bottomButton",
+		"addDeleteButtons",
+		"topUpDownBottomButtons",
 		"addItemBlock",
 		"okBlock"
 	],

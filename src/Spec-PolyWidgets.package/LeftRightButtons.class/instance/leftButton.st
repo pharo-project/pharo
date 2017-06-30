@@ -1,0 +1,3 @@
+accessing
+leftButton
+	^ self firstButton

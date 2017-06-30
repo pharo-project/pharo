@@ -1,27 +1,21 @@
 initialization
 initializeWidgets
 	list := self instantiate: FastTableModel.
-	addButton := self newButton.
-	removeButton := self newButton.
-	upButton := self newButton.
-	downButton := self newButton.
-	topButton := self newButton.
-	bottomButton := self newButton.
-	addButton
-		icon: (self iconNamed: #addIcon);
-		help: 'Add a new item to the list'.
-	removeButton
-		icon: (self iconNamed: #deleteIcon);
+	addDeleteButtons := self
+		instantiate: AddDeleteButtons.
+	topUpDownBottomButtons := self
+		instantiate: TopUpDownBottomButtons.
+	self addButton help: 'Add a new item to the list'.
+	self removeButton
 		help: 'Remove a item from the list'.
-	upButton
-		icon: (self iconNamed: #upIcon);
+	self upButton
 		help: 'Move this item up from one element'.
-	downButton
-		icon: (self iconNamed: #downIcon);
+	self downButton
 		help: 'Move this item down from one element'.
-	topButton
-		icon: (self iconNamed: #topIcon);
+	self topButton
 		help: 'Move this item on the first position of the list'.
-	bottomButton
-		icon: (self iconNamed: #bottomIcon);
-		help: 'Move this item on the last position of the list'
+	self bottomButton
+		help: 'Move this item on the last position of the list'.
+	self focusOrder
+		add: addDeleteButtons;
+		add: topUpDownBottomButtons

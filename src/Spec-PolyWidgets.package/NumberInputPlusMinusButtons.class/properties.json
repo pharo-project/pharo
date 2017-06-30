@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "Spirita 7/25/2016 15:39",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Elementary",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"input",
+		"plusMinusButtons",
+		"valueToIncrement"
+	],
+	"name" : "NumberInputPlusMinusButtons",
+	"type" : "normal"
+}

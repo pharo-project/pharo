@@ -1,0 +1,3 @@
+accessing
+downButton
+	^ self secondButton

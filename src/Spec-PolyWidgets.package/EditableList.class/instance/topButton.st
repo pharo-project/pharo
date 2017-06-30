@@ -1,3 +1,3 @@
-accessing
+shortcuts
 topButton
-	^ topButton
+	^ self topUpDownBottomButtons topButton

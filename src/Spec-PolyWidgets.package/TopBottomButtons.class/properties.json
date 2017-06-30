@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "Spirita 7/25/2016 15:58",
+	"super" : "AbstractTwoButtons",
+	"category" : "Spec-PolyWidgets-Button",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TopBottomButtons",
+	"type" : "normal"
+}
