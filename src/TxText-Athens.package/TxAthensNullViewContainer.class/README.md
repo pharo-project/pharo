@@ -1,2 +1,0 @@
-A view container is responsible is responsible for taking care about platform-specific duties like connecting view with outer world (like Morphic) in order to handle events etc.
-A null container simply ignores all notifications from view.
