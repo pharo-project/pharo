@@ -67,27 +67,39 @@ done
 shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
-if [ -z ${ARCH_DESCRIPTION} ]; then
+if [ -z "${ARCH_DESCRIPTION}" ]; then
   echo "No architecture specified. Please set the BOOTSTRAP_ARCH environment variable or use the -a argument";
   exit 1;
 fi
 
-GIT_DESCRIBE=`git describe --always`
-SUFFIX=${ARCH_DESCRIPTION}bit-${GIT_DESCRIBE}
+
+PREFIX=Pharo7.0
+
+GIT_COMMIT_HASH=$(git show -s --format=%h)
+SUFFIX=${ARCH_DESCRIPTION}bit-${GIT_COMMIT_HASH}
 
 if [[ ${DESCRIBE} -eq "1" ]]; then
-  echo ${SUFFIX}
+  echo "${SUFFIX}"
   exit 0
 fi
 
-SUFFIX=-$SUFFIX
+BOOTSTRAP_IMAGE_NAME=bootstrap
+CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
+MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
+MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
+METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
+PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
+
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
 cd bootstrap-cache
 
+#We need the old sources file next to the image because of sources condensation step
+wget http://files.pharo.org/sources/PharoV60.sources
+
 #Prepare
 echo "Prepare Bootstrap files"
-cp bootstrap.image core.image
+cp "${BOOTSTRAP_IMAGE_NAME}.image" "${CORE_IMAGE_NAME}.image"
 ../bootstrap/scripts/download_vm.sh
 
 echo "Prepare fonts"
@@ -104,35 +116,39 @@ ln -s .. pharo-core
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-./vm/pharo core.image st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
-./vm/pharo core.image st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
-./vm/pharo core.image st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
-zip core$SUFFIX.zip core.image
+./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
+./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
+zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
-./vm/pharo core.image save monticello_bootstrap
-./vm/pharo monticello_bootstrap.image st st-cache/Monticello.st --save --quit
-./vm/pharo monticello_bootstrap.image st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-./vm/pharo monticello_bootstrap.image st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
-zip monticello_bootstrap$SUFFIX.zip monticello_bootstrap.*
+./vm/pharo "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
+./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
+./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo "[Monticello] Loading Networking Packages and Remote Repositories"
-./vm/pharo monticello_bootstrap.image save monticello
-./vm/pharo monticello.image st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
-zip monticello$SUFFIX.zip monticello.*
+./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
+./vm/pharo "${MC_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
-./vm/pharo monticello.image save metacello
-./vm/pharo metacello.image st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
-zip metacello$SUFFIX.zip metacello.*
+./vm/pharo "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
+./vm/pharo "${METACELLO_IMAGE_NAME}.image" st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
-./vm/pharo metacello.image save Pharo
-./vm/pharo Pharo.image eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
-./vm/pharo Pharo.image clean --release
+./vm/pharo "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
+./vm/pharo "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+./vm/pharo "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+./vm/pharo "${PHARO_IMAGE_NAME}.image" clean --release
+
+# clean bak sources files
+rm -f *.bak
 
 # fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
 # in older versions we must use octal representation
@@ -142,6 +158,6 @@ if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
 else
   SEEK=40
 fi
-dd if="displaySize.bin" of="Pharo.image" bs=1 seek=$SEEK count=4 conv=notrunc
+dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
 
-zip Pharo$SUFFIX.zip Pharo.*
+zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*

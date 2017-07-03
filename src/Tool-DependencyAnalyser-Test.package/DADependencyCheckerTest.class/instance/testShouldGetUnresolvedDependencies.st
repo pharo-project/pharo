@@ -8,5 +8,5 @@ testShouldGetUnresolvedDependencies
 		assert: result size
 		equals: 1.
 		
-	self assert: ((result at: #collect:as:) includesAllOf: #(#'GT-Spotter' #'Collections-Abstract')).
+	self assert: ((result at: #collect:as:) includesAll: #(#'GT-Spotter' #'Collections-Abstract')).
 	

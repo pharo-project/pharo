@@ -33,7 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		spec package: 'Deprecated60'.
+		"spec package: 'Deprecated60'."
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -56,7 +56,6 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
-		spec package: 'ScriptLoader60'.
 		
 		spec package: 'System-Serial Port'.
 		
@@ -68,7 +67,6 @@ baseline: spec
 			
 		spec package: 'Metacello-GitBasedRepository'.	
 
-		spec package: 'BaselineOfMetacello'.
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
@@ -128,10 +126,6 @@ baseline: spec
 		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
 
-		spec package: 'ShoreLine-Report-Core'.
-		spec package: 'ShoreLine-Report-UI'.	"standalone"
-		spec package: 'ShoreLine-Report-Settings'. "standalone"
-		
 		spec package: 'Versionner-Core-Model'.
 		spec package: 'Versionner-Core-Commands'.
 		spec package: 'Versionner-Core-Announcements'.
@@ -151,10 +145,6 @@ baseline: spec
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
 
-		spec package: 'TxText-Model'.
-		spec package: 'TxText-Athens'.
-		spec package: 'TxText-Styler'.
-
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
@@ -173,32 +163,6 @@ baseline: spec
 		spec package: 'FuzzyMatcher'.
 		spec package: 'Versionner-Nautilus'.
 		spec package: 'STON-Text support'.
-		
-		"spec package: 'ConfigurationOfGTSpotter'.
-		spec package: 'ConfigurationOfMooseAlgos'.
-		spec package: 'ConfigurationOfPharoMetacello'.
-		spec package: 'ConfigurationOfAthens'.
-		spec package: 'ConfigurationOfDependencyAnalyser'.
-		spec package: 'ConfigurationOfVersionner'.
-		spec package: 'ConfigurationOfFuelPlatform'.
-		spec package: 'ConfigurationOfFuel'.
-		spec package: 'ConfigurationOfUnifiedFFI'.
-		spec package: 'ConfigurationOfFlatQA'.
-		spec package: 'ConfigurationOfEpicea'.
-		spec package: 'ConfigurationOfGlamourCore'.
-		spec package: 'ConfigurationOfGTEventRecorder'.
-		spec package: 'ConfigurationOfSton'.
-		spec package: 'ConfigurationOfFastTable'.
-		spec package: 'ConfigurationOfSessionManager'.
-		spec package: 'ConfigurationOfCatalog'.
-		spec package: 'ConfigurationOfGToolkitCore'.
-		spec package: 'ConfigurationOfGTDebugger'.
-		spec package: 'ConfigurationOfZincHTTPComponents'.
-		spec package: 'ConfigurationOfOSWindow'.
-		spec package: 'ConfigurationOfShoreLineReporter'.
-		spec package: 'ConfigurationOfTxText'.
-		spec package: 'ConfigurationOfGTPlaygroundCore'.
-		spec package: 'ConfigurationOfGTInspectorCore'.	"
 		
 		"SortFunctions (standalone)"
 		spec package: 'SortFunctions-Core'.
@@ -272,7 +236,6 @@ baseline: spec
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
-		spec package: 'ScriptLoader-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
@@ -289,9 +252,6 @@ baseline: spec
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
-		spec package: 'TxText-AthensTests'.
-		spec package: 'TxTextTests-Model'.
-		spec package: 'UpdateStreamer-Tests'.
 		spec package: 'WorldMenuHelp'.	
 		spec package: 'WriteBarrierTests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
