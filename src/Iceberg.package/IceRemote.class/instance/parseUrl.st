@@ -1,3 +1,0 @@
-private
-parseUrl
-	^ self subclassResponsibility 

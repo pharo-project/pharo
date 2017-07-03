@@ -1,3 +1,0 @@
-accessing
-defaultChooseDialogTitle
-	^ 'Choose directory'

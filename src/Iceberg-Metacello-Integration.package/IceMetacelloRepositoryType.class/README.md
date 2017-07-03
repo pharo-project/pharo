@@ -1,2 +1,0 @@
-I'm a base class to provide different type of MCRepositories from iceberg, so metacello can do his work of installing packages.
-My children define specific types, visit them to have more details of what you can do.
