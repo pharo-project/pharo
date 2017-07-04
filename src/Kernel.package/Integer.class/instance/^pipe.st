@@ -1,3 +1,3 @@
-*Alien-Core
+bit manipulation
 | anInteger
 	^self bitOr: anInteger
