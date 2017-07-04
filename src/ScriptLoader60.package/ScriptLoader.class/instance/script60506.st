@@ -1,5 +1,5 @@
 pharo - scripts
-script60505
+script60506
 
 	^ 'AST-Core-TheIntegrator.496.mcz
 AST-Tests-Core-TheIntegrator.134.mcz
@@ -42,10 +42,10 @@ Collections-DoubleLinkedListTests-TheIntegrator.2.mcz
 Collections-Native-TheIntegrator.19.mcz
 Collections-Sequenceable-TheIntegrator.261.mcz
 Collections-Stack-TheIntegrator.10.mcz
-Collections-Streams-TheIntegrator.194.mcz
+Collections-Streams-TheIntegrator.195.mcz
 Collections-Strings-TheIntegrator.451.mcz
 Collections-Support-TheIntegrator.67.mcz
-Collections-Tests-TheIntegrator.103.mcz
+Collections-Tests-TheIntegrator.105.mcz
 Collections-Unordered-TheIntegrator.248.mcz
 Collections-Weak-TheIntegrator.108.mcz
 Colors-TheIntegrator.3.mcz
@@ -158,7 +158,7 @@ IssueTracking-TheIntegrator.6.mcz
 IssueTracking-Tests-TheIntegrator.3.mcz
 Jobs-TheIntegrator.32.mcz
 JobsTests-TheIntegrator.2.mcz
-Kernel-TheIntegrator.2518.mcz
+Kernel-TheIntegrator.2520.mcz
 Kernel-Rules-TheIntegrator.13.mcz
 Kernel-Tests-TheIntegrator.177.mcz
 Kernel-Tests-Rules-TheIntegrator.5.mcz
@@ -384,7 +384,7 @@ System-Support-Rules-TheIntegrator.2.mcz
 System-SupportTests-TheIntegrator.7.mcz
 System-VMEvents-TheIntegrator.19.mcz
 Tests-TheIntegrator.794.mcz
-Text-Core-TheIntegrator.69.mcz
+Text-Core-TheIntegrator.71.mcz
 Text-Diff-TheIntegrator.6.mcz
 Text-Edition-TheIntegrator.128.mcz
 Text-Edition-Tests-EstebanLorenzano.3.mcz

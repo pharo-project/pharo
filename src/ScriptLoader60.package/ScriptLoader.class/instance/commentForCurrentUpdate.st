@@ -1,16 +1,10 @@
 public
 commentForCurrentUpdate
- ^ '20187 Request use of block in certain methods
-	https://pharo.fogbugz.com/f/cases/20187
+ ^ '20092 Improve speed of WriteStream>>tab:
+	https://pharo.fogbugz.com/f/cases/20092
 
-20188 Request representation of integer literal without float exponent
-	https://pharo.fogbugz.com/f/cases/20188
+20088 Improve speed of Character>>isSeparator in when the separator is not a space
+	https://pharo.fogbugz.com/f/cases/20088
 
-20182 Extra dot in literal array
-	https://pharo.fogbugz.com/f/cases/20182
-
-18760 Failing test: WeakAnnouncerTest>>#testNoDeadWeakSubscriptions
-	https://pharo.fogbugz.com/f/cases/18760
-
-20186 Request removal of extra statement separators (dot)
-	https://pharo.fogbugz.com/f/cases/20186'
+20204 Text class>>#fromString
+	https://pharo.fogbugz.com/f/cases/20204'
