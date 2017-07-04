@@ -1,1 +1,0 @@
-Common functionality for Ice repository backends.
