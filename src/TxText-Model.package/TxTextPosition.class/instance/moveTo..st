@@ -1,4 +1,0 @@
-navigation
-moveTo: anotherTextPosition
-
-	^ anotherTextPosition 

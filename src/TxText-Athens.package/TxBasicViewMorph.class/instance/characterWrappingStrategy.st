@@ -1,3 +1,0 @@
-text wrapping
-characterWrappingStrategy
-	^ TxAthensCharacterWrappingStrategy new

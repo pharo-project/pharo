@@ -1,3 +1,0 @@
-converting
-asCursor
-	^ self
