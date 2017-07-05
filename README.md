@@ -15,7 +15,7 @@ You can also programatically load the latest nightly build using the link:
 	https://bintray.com/pharo-project/pharo/Pharo/_latestVersion
 	
 There you will find 32 and 64 bit images. Each version contains the following generated artifacts:
-
+asd
 
 ## Bootstrapping Pharo from sources
 
