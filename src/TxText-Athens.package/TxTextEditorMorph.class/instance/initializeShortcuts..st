@@ -1,3 +1,0 @@
-initialization
-initializeShortcuts: aKMDispatcher
-	aKMDispatcher attachCategory: #TxTextEditorMorph 

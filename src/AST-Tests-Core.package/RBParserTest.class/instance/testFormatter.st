@@ -4,4 +4,4 @@ testFormatter
 		class selectors do: [ :selector | 
 		self 
 			compare: (class parseTreeFor: selector)
-			to: (RBParser parseMethod: (class parseTreeFor: selector) printString) ] ]
+			to: (self parserClass parseMethod: (class parseTreeFor: selector) printString) ] ]

@@ -1,3 +1,3 @@
 private
 byteTextConverters
-	^ ByteTextConverters ifNil: [ self initializeByteTextConverters ]
+	^ byteTextConverters ifNil: [ self initializeByteTextConverters ]

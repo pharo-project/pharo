@@ -1,3 +1,3 @@
 running
 resetResult
-	builder := RBCompositeRefactoryChange named: self name
+	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChangeNamed: self name

@@ -1,7 +1,7 @@
 tests
 testModifying
 	| tree |
-	tree := RBParser 
+	tree := self parserClass  
 				parseMethod: 'foo: a bar: b | c | self first. self second. a + b + c'.
 	self deny: tree lastIsReturn.
 	self deny: (tree body statements at: 2) isUsed.
@@ -19,7 +19,7 @@ testModifying
 		addTemporaryNamed: 'd';
 		removeTemporaryNamed: 'c'.
 	self compare: tree
-		to: (RBParser 
+		to: (self parserClass  
 				parseMethod: 'bar: a foo: b | d | self first. self second. ^a + b + c').
 	self 
 		assert: ((tree argumentNames asSet)
@@ -29,6 +29,6 @@ testModifying
 		assert: ((tree allDefinedVariables asSet)
 				removeAll: #('a' 'b' 'd');
 				yourself) isEmpty.
-	tree := RBParser parseExpression: 'self foo: 0'.
+	tree := self parserClass  parseExpression: 'self foo: 0'.
 	tree selector: #+.
-	self compare: tree to: (RBParser parseExpression: 'self + 0').
+	self compare: tree to: (self parserClass  parseExpression: 'self + 0').

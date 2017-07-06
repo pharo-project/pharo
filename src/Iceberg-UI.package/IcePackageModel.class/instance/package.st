@@ -1,3 +1,0 @@
-acessing
-package
-	^ entity
