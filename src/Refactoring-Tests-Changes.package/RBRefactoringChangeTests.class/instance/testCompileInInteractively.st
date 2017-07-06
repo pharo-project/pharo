@@ -1,7 +1,7 @@
 tests
 testCompileInInteractively
 	| change |
-	change := RBAddMethodChange compile: 'setUp' in: self class classified: #running for: self.
+	change := RBRefactoryChangeManager changeFactory addMethodSource: 'setUp' in: self class classified: #running for: self.
 	self assert: change controller = self.
 	self assert: change changeClassName = self class name.
 	self assert: change changeClass = self class.

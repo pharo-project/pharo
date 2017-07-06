@@ -1,3 +1,0 @@
-accessing
-projectName
-	^ projectName

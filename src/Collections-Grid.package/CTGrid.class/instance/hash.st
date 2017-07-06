@@ -1,4 +1,0 @@
-comparing
-hash
-
-	^ contents hash
