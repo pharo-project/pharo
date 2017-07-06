@@ -1,4 +1,0 @@
-resources
-ffiLibrary
-
-	^LGitLibrary 

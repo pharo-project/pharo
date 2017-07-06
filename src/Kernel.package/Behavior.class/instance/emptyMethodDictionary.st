@@ -1,0 +1,4 @@
+initialization
+emptyMethodDictionary
+
+	^ MethodDictionary new

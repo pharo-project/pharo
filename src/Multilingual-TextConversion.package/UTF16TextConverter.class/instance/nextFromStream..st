@@ -16,7 +16,7 @@ nextFromStream: aStream
 
 	readBOM ifTrue: 
 		[self useByteOrderMark: true.
-		character1 := aStream basicNext ifNil: [^nil]..
+		character1 := aStream basicNext ifNil: [^nil].
 		character2 := aStream basicNext ifNil: [^nil]].
 
 	charValue := self useLittleEndian 

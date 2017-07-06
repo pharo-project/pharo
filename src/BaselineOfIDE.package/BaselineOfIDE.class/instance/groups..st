@@ -96,7 +96,6 @@ spec group: 'General-Tests-Group' with: #(
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
 	'Tools-Test'	
-	'UpdateStreamer-Tests'
 	'WriteBarrierTests'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
@@ -138,17 +137,6 @@ spec group: 'ReflectionMirrors-Group' with: #(
 	'ReflectionMirrors-Tests-Group'
 ).
 
-spec group: 'ScriptLoader-Core-Group' with: #(
-	'ScriptLoader60'		
-).
-spec group: 'ScriptLoader-Tests-Group' with: #(
-	'ScriptLoader-Tests'
-).
-spec group: 'ScriptLoader-Group' with: #(
-	'ScriptLoader-Core-Group'
-	'ScriptLoader-Tests-Group'
-).
-
 spec group: 'Reflectivity-Group' with: #(
 	'Reflectivity-Tests'	"required by Reflectivity-Examples"
 	'Reflectivity-Examples'
@@ -166,9 +154,9 @@ spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Tests-Group'
 ).
 
-spec group: 'Deprecated-Group' with: #(
-	'Deprecated60'
-).
+"spec group: 'Deprecated-Group' with: #(
+	'Deprecated70'
+)."
 
 spec group: 'Manifest-Core-Group' with: #(
 	'Manifest-Core'
@@ -220,7 +208,6 @@ spec group: 'Shout-Group' with: #(
 ).
 
 spec group: 'MetacelloExtras-Core' with: #(
-	'BaselineOfMetacello'
 	'Metacello-GitBasedRepository'	
 	'Metacello-Bitbucket'	
 	"'Metacello-GitHub'"
@@ -377,12 +364,6 @@ spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Tests-Group'
 ).		
 
-spec group: 'ShoreLine-Group' with: #(
-	'ShoreLine-Report-Core'
-	'ShoreLine-Report-UI'	
-	'ShoreLine-Report-Settings' 
-).		
-
 spec group: 'Athens-Group' with: #(
 	"dependent on Rubric, cleanup?"
 	'Athens-Core'
@@ -393,20 +374,6 @@ spec group: 'Athens-Group' with: #(
 	'Athens-Cairo'
 	'Athens-Examples'
 ).		
-
-spec group: 'TxText-Core-Group' with: #(
-	'TxText-Model'
-	'TxText-Athens'
-	'TxText-Styler'
-).		
-spec group: 'TxText-Tests-Group' with: #(
-	'TxText-AthensTests'
-	'TxTextTests-Model'
-).
-spec group: 'TxText-Group' with: #(
-	'TxText-Core-Group'
-	'TxText-Tests-Group'
-).
 
 spec group: 'OSWindow-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency, cleanup needed"
@@ -510,13 +477,10 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	'ScriptLoader-Group'
-	'Deprecated-Group'
+	"'Deprecated-Group'"
 	'Zodiac-Group'
-	'ShoreLine-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
-	'TxText-Group'
 
 	'GT&QA-Group'
 

@@ -1,1 +1,0 @@
-I am a container for the credentials needed for connecting to a git repository via ssh/scp.

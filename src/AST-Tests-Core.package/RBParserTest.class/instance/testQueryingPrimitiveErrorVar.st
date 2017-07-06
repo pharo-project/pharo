@@ -1,7 +1,7 @@
 tests
 testQueryingPrimitiveErrorVar
 	| tree |
-	tree := RBParser 
+	tree := self parserClass 
 				parseMethod: 'clone
 	"Answer a shallow copy of the receiver."
 	<primitive: 148 error: ec>

@@ -1,3 +1,0 @@
-accessing
-dateLabel
-	^ dateLabel

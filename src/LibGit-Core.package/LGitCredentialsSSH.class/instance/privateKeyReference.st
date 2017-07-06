@@ -1,3 +1,0 @@
-accessing
-privateKeyReference
-	^ privateKeyReference

@@ -1,3 +1,0 @@
-defaults
-defaultValue
-	self subclassResponsibility

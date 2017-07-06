@@ -1,3 +1,0 @@
-accessing-files
-deleteFileNamed: aFilename
-	self subclassResponsibility

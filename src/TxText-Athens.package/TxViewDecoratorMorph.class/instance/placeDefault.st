@@ -1,3 +1,0 @@
-placement
-placeDefault
-	^ self placeTop

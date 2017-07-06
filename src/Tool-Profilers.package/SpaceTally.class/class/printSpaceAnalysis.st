@@ -1,4 +1,4 @@
 fileout
 printSpaceAnalysis	
-	"SpaceTally printSpaceAnalysis"
+	<script>
 	self new printSpaceAnalysis

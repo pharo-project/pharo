@@ -1,3 +1,0 @@
-actions
-createRepository
-	self subclassResponsibility

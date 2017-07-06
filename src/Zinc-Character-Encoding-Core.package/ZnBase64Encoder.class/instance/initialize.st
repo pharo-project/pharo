@@ -2,4 +2,5 @@ initialization
 initialize
 	super initialize.
 	alphabet := DefaultAlphabet.
-	inverse := DefaultInverse 
+	inverse := DefaultInverse.
+	self whitespace: #any
