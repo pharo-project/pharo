@@ -19,7 +19,5 @@ wget -O - get.pharo.org/vm60 | bash
 unzip bootstrapImage.zip
 ./pharo Pharo.image ${__dir}/prepare_image.st --save --quit
 
-
 ./pharo Pharo.image ${__dir}/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --quit
 bash ${__dir}/build.sh
-
