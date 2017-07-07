@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "DenisKudryashov 7/6/2017 15:19",
+	"super" : "Morph",
+	"category" : "Morphic-Widgets-Tabs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"progressIconMorph",
+		"progress"
+	],
+	"name" : "TabBuildingIconMorph",
+	"type" : "normal"
+}
