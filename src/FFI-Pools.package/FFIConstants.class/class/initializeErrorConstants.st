@@ -1,4 +1,4 @@
-pool initialization
+private - initialization
 initializeErrorConstants
 	"FFIConstants initializeErrorConstants"
 
