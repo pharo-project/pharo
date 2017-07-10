@@ -1,3 +1,3 @@
 system startup
-startUp
+startUp: resuming
 	self guessDefaultLineEndConvention.
