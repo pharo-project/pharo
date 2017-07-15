@@ -11,6 +11,6 @@ bestMatchingManagerForCategory: aSystemCategory do: aBlock
 		bestMatchingPackage ifNotNil: [
 			bestMatches add: mgr -> bestMatchingPackage ] ].
 	bestMatchingManagerAndPackage := bestMatches detectMin: [ :managerAndPackage |
-			managerAndPackage value package name size ].
+			managerAndPackage value name size ].
 	bestMatchingManagerAndPackage ifNotNil: [ :managerAndPackage |
 		aBlock value: managerAndPackage key ]
