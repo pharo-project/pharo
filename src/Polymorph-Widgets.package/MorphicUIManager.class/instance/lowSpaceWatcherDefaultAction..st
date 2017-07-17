@@ -19,8 +19,6 @@ lowSpaceWatcherDefaultAction: theInterruptedProcess
 		newDebugSessionNamed: 'Space is low' 
 		startedAt: preemptedProcess suspendedContext.		
 	debugSession logStackToFileIfNeeded.
-	debugSession isAboutUIProcess ifTrue: [ 
-		DefaultExecutionEnvironment beActiveDuring: [self spawnNewProcess]].
 	
 	Smalltalk tools debugger 
 		openOn: debugSession 
