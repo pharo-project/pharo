@@ -1,5 +1,6 @@
 opening
 open
+	<script>
 	| group welcome help zen about window |
 
 	welcome := WelcomeHelp open.

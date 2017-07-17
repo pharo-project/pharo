@@ -1,4 +1,4 @@
 tests
 testIncludesAll
-	self assert: (aTimespan includesAllOf: (Bag with: jan01)).
-	self deny: (aTimespan includesAllOf: (Bag with: jan01 with: jan08))
+	self assert: (aTimespan includesAll: (Bag with: jan01)).
+	self deny: (aTimespan includesAll: (Bag with: jan01 with: jan08))

@@ -1,13 +1,4 @@
 testing
 isSeparator
-	self asInteger = 32
-		ifTrue: [ ^ true ].
-	self asInteger = 13
-		ifTrue: [ ^ true ].
-	self asInteger = 9
-		ifTrue: [ ^ true ].
-	self asInteger = 10
-		ifTrue: [ ^ true ].
-	self asInteger = 12
-		ifTrue: [ ^ true ].
-	^ false
+    | in |
+    ^ (in := self asInteger) == 32 or: [ in == 13 or: [ in == 9 or: [ in == 10 or: [ in == 12 ] ] ] ]

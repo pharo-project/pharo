@@ -8,13 +8,6 @@ systemOn: aBuilder
 				order: 0;
 				iconName: #smallLanguageIcon;
 				action: [ Smalltalk aboutThisSystem ].
-			(aBuilder item: #'Software update')
-				order: 2;
-				iconName: #smallUpdateIcon;
-				precondition: [ self showUpdateOptionInWorldMenu ];
-				action: [ UpdateStreamer new updateFromServer ];
-				help: 'Load latest code updates via the internet';
-				withSeparatorAfter.
 			(aBuilder item: #'Start profiling all Processes')
 				action: [ self startMessageTally ].
 			(aBuilder item: #'Start profiling UI ')

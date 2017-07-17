@@ -1,6 +1,9 @@
 *.image
 *.changes
 *.log
+*.sources
+
+CONFIG
 
 pharo
 pharo-ui

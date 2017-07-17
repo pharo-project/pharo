@@ -6,6 +6,7 @@
 	"pools" : [ ],
 	"classvars" : [
 		"CurrentFS",
+		"DefaultWorkingDirectory",
 		"Primitives"
 	],
 	"instvars" : [

@@ -1,3 +1,0 @@
-scrolling
-scrollIntoView: aTextPosition
-	self subclassResponsibility

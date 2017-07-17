@@ -12,7 +12,7 @@ testSymbolLiteral
 	'#foo::bar' #'foo::bar'
 	'#foo::bar:' #'foo::bar:'
 	'#foo::bar::' #'foo::bar::') pairsDo: [ :parseString :expectedResult |
-		tree := RBParser parseExpression: parseString.
+		tree := self parserClass parseExpression: parseString.
 		self assert: tree value equals: expectedResult.		
 		self assert: tree start equals: 1.
 		self assert: tree stop equals: parseString size ].
@@ -26,4 +26,4 @@ testSymbolLiteral
 	('# 1' 1)
 	('##1' 1)
 	('#"bar"1' 1)) do: [ :pair | 
-		self should: [RBParser parseExpression: pair first] raise: SyntaxErrorNotification ]
+		self should: [self parserClass parseExpression: pair first] raise: SyntaxErrorNotification ]
