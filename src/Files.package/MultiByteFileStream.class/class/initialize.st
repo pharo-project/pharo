@@ -10,4 +10,4 @@ initialize
 	LookAheadCount := 2048.
 	
 	SessionManager default registerSystemClassNamed: self name.
-	self startUp.
+	self startUp: false.
