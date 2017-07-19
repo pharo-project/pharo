@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "AbstractMethodUpdateStrategy",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodRecompileStrategy",
+	"type" : "normal"
+}

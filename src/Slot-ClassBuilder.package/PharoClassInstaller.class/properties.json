@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "AbstractClassInstaller",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"environment",
+		"instanceModification",
+		"methodUpdateStrategy"
+	],
+	"name" : "PharoClassInstaller",
+	"type" : "normal"
+}

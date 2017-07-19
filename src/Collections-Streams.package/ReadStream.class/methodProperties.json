@@ -1,0 +1,17 @@
+{
+	"instance" : {
+		"localName" : "nk 12/13/2002 12:00",
+		"next" : "",
+		"readStream" : "ajh 9/5/2002 22:11",
+		"on:from:to:" : "",
+		"ascii" : "",
+		"upToAnyOf:do:" : "nice 12/8/2009 14:22",
+		"upToEnd" : "nice 12/8/2009 15:24",
+		"size" : "ar 11/2/1998 12:20",
+		"nextPut:" : "LukasRenggli 5/8/2010 18:39",
+		"next:" : "ls 8/16/1998 00:46",
+		"upTo:" : "nice 12/8/2009 15:05",
+		"readInto:startingAt:count:" : "SvenVanCaekenberghe 4/26/2011 09:21"
+	},
+	"class" : { }
+}

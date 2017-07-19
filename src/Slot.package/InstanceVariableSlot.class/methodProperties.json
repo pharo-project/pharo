@@ -1,0 +1,14 @@
+{
+	"instance" : {
+		"isSpecial" : "MarcusDenker 1/22/2015 18:46",
+		"isWrittenIn:" : "DenisKudryashov 10/28/2016 17:46",
+		"isReadIn:" : "DenisKudryashov 10/28/2016 17:46",
+		"definitionString" : "MarcusDenker 1/23/2015 14:39",
+		"emitValue:" : "MarcusDenker 6/25/2014 16:43",
+		"usingMethods" : "MarcusDenker 2/13/2015 16:11",
+		"emitStore:" : "MarcusDenker 6/25/2014 16:43"
+	},
+	"class" : {
+		"resetIvarSlots" : "NicolaiHess 10/30/2015 22:25"
+	}
+}

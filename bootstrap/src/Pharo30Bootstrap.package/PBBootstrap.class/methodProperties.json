@@ -1,0 +1,38 @@
+{
+	"instance" : {
+		"initialize" : " 7/19/2017 12:07:56",
+		"exportKernelProtocols" : " 7/19/2017 12:07:56",
+		"exportAllPackagesIntoMcz" : " 7/19/2017 12:07:56",
+		"imageName:" : " 7/19/2017 12:07:56",
+		"bootstrapCacheDirectory" : " 7/19/2017 12:07:56",
+		"exportSUnitInStFile" : " 7/19/2017 12:07:56",
+		"initializeRPackages" : " 7/19/2017 12:07:56",
+		"initializeSessionManager" : " 7/19/2017 12:07:56",
+		"bootstrapImageEval:save:quit:" : " 7/19/2017 12:07:56",
+		"exportCoreTestsInStFile" : " 7/19/2017 12:07:56",
+		"exportJenkinsToolsInStFile" : " 7/19/2017 12:07:56",
+		"architecture:" : " 7/19/2017 12:07:56",
+		"kernelPackageNames" : "GuillermoPolito 7/19/2017 13:05",
+		"originRepository" : " 7/19/2017 12:07:56",
+		"prepareBootstrap" : " 7/19/2017 12:07:56",
+		"mczCache" : " 7/19/2017 12:07:56",
+		"bootstrapImageEvalFile:" : " 7/19/2017 12:07:56",
+		"bootstrap" : " 7/19/2017 12:07:56",
+		"bootstrapMonticello" : " 7/19/2017 12:07:56",
+		"initializeClasses" : " 7/19/2017 12:07:56",
+		"initializeImage" : " 7/19/2017 12:07:56",
+		"createImage" : " 7/19/2017 12:07:56",
+		"exportMonticelloInStFile" : " 7/19/2017 12:07:56",
+		"bootstrapImageDo:" : " 7/19/2017 12:07:56",
+		"bootstrapImageEvalFile:save:quit:" : " 7/19/2017 12:07:56",
+		"patchUnhandledErrorManagement" : " 7/19/2017 12:07:56",
+		"bootstrapImageEval:" : " 7/19/2017 12:07:56",
+		"ensureBaselineOfPharoBootstrap" : " 7/19/2017 12:07:56"
+	},
+	"class" : {
+		"new" : " 7/19/2017 12:07:56",
+		"for32Bits" : " 7/19/2017 12:07:56",
+		"forArchitecture:" : " 7/19/2017 12:07:56",
+		"for64Bits" : " 7/19/2017 12:07:56"
+	}
+}

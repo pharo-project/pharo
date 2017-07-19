@@ -1,0 +1,13 @@
+{
+	"instance" : {
+		"owningScope" : "",
+		"enclosingMethodOrBlockNode" : "CamilleTeruel 2/14/2014 14:33",
+		"scope" : "ClementBera 7/26/2013 15:24",
+		"irInstruction" : "ClementBera 9/13/2016 10:53",
+		"isClean" : "ClementBera 8/5/2013 11:03",
+		"methodOrBlockNode" : "ClementBera 7/26/2013 15:24",
+		"doSemanticAnalysis" : "MarcusDenker 4/29/2015 17:46",
+		"printAsIfCompiledOn:" : "ClementBera 7/26/2013 15:24"
+	},
+	"class" : { }
+}

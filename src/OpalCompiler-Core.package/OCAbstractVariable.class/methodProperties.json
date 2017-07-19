@@ -1,0 +1,42 @@
+{
+	"instance" : {
+		"usage" : "MarcusDenker 9/5/2010 20:13",
+		"isUninitialized" : "MarcusDenker 4/9/2013 10:39",
+		"variable" : "MarcusDenker 8/12/2015 10:25",
+		"markWrite" : "MarcusDenker 10/16/2013 15:26",
+		"isSuper" : "MarcusDenker 9/1/2010 15:30",
+		"isRead" : "DenisKudryashov 12/18/2015 16:30",
+		"isLocal" : "ms 7/31/2007 00:42",
+		"isGlobalVariable" : "NicolaiHess 6/16/2015 21:52",
+		"name" : "ajh 6/23/2004 22:47",
+		"originalVar" : "ClementBera 5/21/2013 14:52",
+		"isGlobal" : "ajh 7/8/2004 16:25",
+		"semanticNodeClass" : "DenisKudryashov 12/18/2015 14:28",
+		"scope:" : "ajh 7/8/2004 16:17",
+		"isRemote" : "MarcusDenker 9/21/2010 16:02",
+		"markRead" : "MarcusDenker 10/16/2013 15:25",
+		"isInstance" : "MarcusDenker 8/27/2010 11:16",
+		"asString" : "ajh 3/16/2003 20:08",
+		"markRepeatedWrite" : "NicolaiHess 10/24/2014 00:05",
+		"usage:" : "MarcusDenker 9/22/2010 11:05",
+		"scope" : "ajh 6/23/2004 22:52",
+		"isSelf" : "MarcusDenker 9/1/2010 14:44",
+		"isWritable" : "NicolaiHess 8/24/2014 00:27",
+		"definingScope" : "ClementBera 5/21/2013 14:53",
+		"isUndeclared" : "MarcusDenker 6/14/2013 15:42",
+		"isUnused" : "MarcusDenker 10/16/2013 15:27",
+		"isLiteralVariable" : "MarcusDenker 9/20/2013 13:28",
+		"emitValue:" : "JorgeRessia 4/19/2010 09:35",
+		"isArg" : "MarcusDenker 6/13/2013 14:59",
+		"isWrite" : "NicolaiHess 10/24/2014 00:10",
+		"isClassVariable" : "NicolaiHess 6/16/2015 21:50",
+		"isSpecialVariable" : "MarcusDenker 4/16/2013 15:55",
+		"emitStore:" : "JorgeRessia 4/19/2010 09:35",
+		"isTemp" : "ajh 3/18/2003 11:13",
+		"printOn:" : "ajh 2/27/2003 00:38",
+		"isRepeatedWrite" : "NicolaiHess 10/24/2014 00:10"
+	},
+	"class" : {
+		"semanticNodeClass" : "DenisKudryashov 12/18/2015 14:29"
+	}
+}

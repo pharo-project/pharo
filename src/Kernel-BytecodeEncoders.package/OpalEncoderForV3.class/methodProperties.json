@@ -1,0 +1,36 @@
+{
+	"instance" : {
+		"genPushReceiver" : "eem 5/14/2008 16:16",
+		"genJump:" : "eem 5/14/2008 17:41",
+		"genPushInstVarLong:" : "eem 6/19/2008 08:51",
+		"genSendSuper:numArgs:" : "eem 5/30/2008 17:00",
+		"genStorePopTemp:" : "eem 5/30/2008 17:01",
+		"genPushLiteral:" : "eem 5/30/2008 17:00",
+		"genStorePopInstVarLong:" : "eem 6/19/2008 08:52",
+		"genBranchPopTrue:" : "eem 5/30/2008 16:59",
+		"genStoreInstVarLong:" : "eem 6/19/2008 08:51",
+		"genSend:numArgs:" : "GuillermoPolito 8/17/2015 13:51",
+		"genPushTemp:" : "eem 5/30/2008 17:00",
+		"genReturnSpecialLiteral:" : "eem 5/14/2008 17:39",
+		"genReturnTopToCaller" : "eem 5/14/2008 17:35",
+		"genPop" : "eem 5/14/2008 17:27",
+		"genDup" : "eem 5/15/2008 09:40",
+		"genReturnReceiver" : "eem 5/14/2008 17:40",
+		"genStoreLiteralVar:" : "eem 5/30/2008 17:01",
+		"genBranchPopFalse:" : "eem 5/30/2008 16:59",
+		"genPushThisContext" : "eem 5/14/2008 17:36",
+		"genStoreInstVar:" : "eem 6/19/2008 08:37",
+		"genPushInstVar:" : "eem 6/19/2008 08:40",
+		"genStorePopInstVar:" : "eem 6/19/2008 08:43",
+		"genStorePopLiteralVar:" : "eem 5/30/2008 17:01",
+		"genJumpLong:" : "eem 5/30/2008 16:59",
+		"isSpecialLiteralForPush:" : "GuillermoPolito 8/17/2015 13:54",
+		"genPushLiteralVar:" : "eem 5/30/2008 16:59",
+		"genReturnTop" : "eem 5/14/2008 17:35",
+		"genPushSpecialLiteral:" : "eem 5/14/2008 17:38",
+		"genStoreTemp:" : "eem 5/30/2008 17:01"
+	},
+	"class" : {
+		"supportsClosures" : "ClementBera 12/29/2014 11:37"
+	}
+}

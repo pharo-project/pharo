@@ -1,0 +1,12 @@
+{
+	"instance" : {
+		"superOf:" : "ajh 3/10/2003 00:45",
+		"isSend" : "md 11/12/2004 15:57",
+		"selector:" : "ajh 3/10/2003 00:44",
+		"isSuperSend" : "md 10/10/2005 17:37",
+		"selector" : "md 6/23/2005 13:45",
+		"superOf" : "ClementBer 10/14/2014 14:24",
+		"accept:" : "ClementBer 10/14/2014 13:32"
+	},
+	"class" : { }
+}

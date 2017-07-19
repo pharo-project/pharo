@@ -1,0 +1,17 @@
+{
+	"instance" : {
+		"variableNamed:ifAbsent:" : "GuillermoPolito 4/9/2015 17:15",
+		"newMethodScope" : "MarcusDenker 8/27/2010 12:35",
+		"lookupVar:inContext:" : "GuillermoPolito 4/10/2015 10:58",
+		"instanceScope" : "MarcusDenker 6/25/2014 16:45",
+		"printOn:" : "MarcusDenker 6/18/2013 10:00",
+		"class:" : "ajh 2/25/2003 20:10",
+		"getClass" : "MarcusDenker 2/2/2016 14:31",
+		"lookupVarForDeclaration:" : "MarcusDenker 6/5/2013 13:52",
+		"lookupVar:" : "MarcusDenker 6/14/2013 15:22",
+		"findVariable:ifNone:" : "DenisKudryashov 5/18/2016 18:33"
+	},
+	"class" : {
+		"for:" : "MarcusDenker 8/21/2010 18:39"
+	}
+}

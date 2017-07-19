@@ -1,0 +1,32 @@
+{
+	"instance" : {
+		"createTrue" : " 7/19/2017 12:07:56",
+		"compactImage" : " 7/19/2017 12:07:56",
+		"followForwardingPointers" : " 7/19/2017 12:07:56",
+		"allocateClassTable" : " 7/19/2017 12:07:56",
+		"objectMemory" : " 7/19/2017 12:07:56",
+		"prepareSimulatorForExecution" : " 7/19/2017 12:07:56",
+		"reportSizes" : " 7/19/2017 12:07:56",
+		"flushNewSpace" : " 7/19/2017 12:07:56",
+		"firstOrdinaryClassIndex" : " 7/19/2017 12:07:56",
+		"nextOrdinaryClassIndex" : " 7/19/2017 12:07:56",
+		"writeSnapshot:ofTransformedImage:headerFlags:screenSize:" : " 7/19/2017 12:07:56",
+		"createNil" : " 7/19/2017 12:07:56",
+		"gitRepositoryUrl:location:subdirectory:" : " 7/19/2017 12:07:56",
+		"createBehaviorFromDefinition:" : " 7/19/2017 12:07:56",
+		"freeForwarders" : " 7/19/2017 12:07:56",
+		"createVMStubs" : " 7/19/2017 12:07:56",
+		"instSpecOfClass:" : " 7/19/2017 12:07:56",
+		"newSpecialObjectsArray" : " 7/19/2017 12:07:56",
+		"createFalse" : " 7/19/2017 12:07:56",
+		"arrayClassIndex" : " 7/19/2017 12:07:56",
+		"allocateFreeLists" : " 7/19/2017 12:07:56",
+		"formatOfClass:" : " 7/19/2017 12:07:56",
+		"checkpoint:" : " 7/19/2017 12:07:56",
+		"instantiateClassLoader" : " 7/19/2017 12:07:56"
+	},
+	"class" : {
+		"forArchitecture:" : " 7/19/2017 12:07:56",
+		"example5617" : " 7/19/2017 12:07:56"
+	}
+}

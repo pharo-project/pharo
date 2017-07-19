@@ -1,0 +1,12 @@
+{
+	"instance" : {
+		"isLegalInstVarName" : "BenjaminVanRyseghem 11/24/2010 14:41",
+		"asSlotCollection" : "GuillermoPolito 7/19/2017 13:40",
+		"asClassVariable" : "MarcusDenker 11/6/2015 14:48",
+		"isLegalClassName" : "MarcusDenker 6/2/2015 16:31",
+		"asSlot" : "MarcusDenker 11/6/2015 14:48",
+		"asValidInstVarName" : "HenrikNergaard 12/2/2015 12:40",
+		"inviolateInstanceVariableNames" : "BenjaminVanRyseghem 11/24/2010 14:41"
+	},
+	"class" : { }
+}

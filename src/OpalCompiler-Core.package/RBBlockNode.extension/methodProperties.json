@@ -1,0 +1,18 @@
+{
+	"instance" : {
+		"methodOrBlockNode" : "ClementBera 7/26/2013 15:28",
+		"owningScope" : "jorgeRessia 11/20/2009 16:40",
+		"lastIsReturn" : "NicolaiHess 11/18/2015 00:54",
+		"ir" : "ClementBera 9/8/2016 11:58",
+		"isInlined" : "ClementBera 7/26/2013 15:11",
+		"ir:" : "ClementBera 7/5/2016 10:09",
+		"enclosingMethodOrBlockNode" : "CamilleTeruel 2/14/2014 14:37",
+		"isClean" : "NicolaiHess 11/18/2015 00:54",
+		"isInlinedLoop" : "NicolaiHess 8/12/2016 19:41",
+		"sourceNodeExecutedForPC:" : "DenisKudryashov 11/25/2016 16:03",
+		"hasBlockReturn" : "NicolaiHess 11/18/2015 00:54",
+		"irInstruction" : "ClementBera 9/8/2016 11:49",
+		"sourceNodeForPC:" : "ClementBera 9/14/2016 11:07"
+	},
+	"class" : { }
+}

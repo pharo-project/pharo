@@ -8,13 +8,6 @@ FileStream stdout
 	nextPutAll: ('[INFO] Building Image Arch ', architecture);
 	cr.
 
-"Configure logging"
-(CustomStringStreamBeacon with: FileStream stdout)
-	startFor: PBStepStartedSignal, PBStepFinishedSignal.
-
-(CustomStringStreamBeacon with: 'bootstrap.log' asFileReference writeStream)
-	startFor: PBStepStartedSignal, PBStepFinishedSignal, PBSubStepFinishedSignal.
-
 (PBBootstrap forArchitecture: architecture)
 	prepareBootstrap;
 	createImage

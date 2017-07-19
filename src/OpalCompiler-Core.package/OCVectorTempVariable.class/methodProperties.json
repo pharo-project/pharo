@@ -1,0 +1,15 @@
+{
+	"instance" : {
+		"isRemote" : "MarcusDenker 9/5/2010 17:13",
+		"indexFromIR" : "GuillermoPolito 4/9/2015 13:29",
+		"vectorName" : "MarcusDenker 12/18/2012 16:44",
+		"readFromContext:scope:" : "GuillermoPolito 4/9/2015 17:26",
+		"writeFromContext:scope:value:" : "NicolaiHess 10/26/2014 01:27",
+		"vectorName:" : "MarcusDenker 12/18/2012 16:43",
+		"emitValue:" : "MarcusDenker 12/18/2012 16:42",
+		"searchFromContext:scope:" : "GuillermoPolito 4/9/2015 17:34",
+		"emitStore:" : "MarcusDenker 12/18/2012 16:42",
+		"isTempVectorTemp" : "MarcusDenker 9/9/2010 16:11"
+	},
+	"class" : { }
+}

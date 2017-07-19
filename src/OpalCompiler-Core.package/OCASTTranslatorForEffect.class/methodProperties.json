@@ -1,0 +1,19 @@
+{
+	"instance" : {
+		"visitBlockNode:" : "ClementBera 10/22/2013 13:04",
+		"visitParseErrorNode:" : "MarcusDenker 5/9/2015 12:18",
+		"emitMessageNode:" : "MarcusDenker 10/14/2010 15:50",
+		"emitIfFalse:" : "MarcusDenker 4/11/2013 15:12",
+		"visitLiteralNode:" : "ClementBera 7/8/2014 16:27",
+		"visitSequenceNode:" : "nice 5/2/2013 00:21",
+		"emitIfTrue:" : "MarcusDenker 4/11/2013 15:12",
+		"emitOr:" : "ClementBera 7/10/2014 16:26",
+		"visitArrayNode:" : "ClementBera 10/22/2013 13:09",
+		"emitIfNotNil:" : "MarcusDenker 5/22/2013 16:50",
+		"visitAssignmentNode:" : "MarcusDenker 4/11/2013 15:12",
+		"visitVariableNode:" : "ClementBera 7/8/2014 16:30",
+		"visitLiteralArrayNode:" : "ClementBera 7/8/2014 16:27",
+		"emitAnd:" : "ClementBera 7/10/2014 16:26"
+	},
+	"class" : { }
+}

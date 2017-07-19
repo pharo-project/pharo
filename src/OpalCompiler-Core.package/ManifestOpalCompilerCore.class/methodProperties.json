@@ -1,0 +1,19 @@
+{
+	"instance" : { },
+	"class" : {
+		"ruleToDoCollectRuleV1FalsePositive" : "MarcusDenker 12/19/2012 08:17",
+		"ruleImplementedNotSentRuleV1FalsePositive" : "GuillermoPolito 8/17/2015 13:56",
+		"manuallyResolvedDependencies" : "ChristopheDemarey 4/28/2016 15:18",
+		"ruleBadMessageRuleV1FalsePositive" : "MarcusDenker 5/23/2013 08:43",
+		"ruleClassNotReferencedRuleV1FalsePositive" : "GuillermoPolito 8/17/2015 13:55",
+		"rejectRules" : "MarcusDenker 5/23/2013 08:43",
+		"ignoredDependencies" : "ChristopheDemarey 4/28/2016 15:19",
+		"ruleEqualsTrueRuleV1FalsePositive" : "GuillermoPolito 8/17/2015 13:56",
+		"ruleConsistencyCheckRuleV1FalsePositive" : "GuillermoPolito 8/17/2015 13:55",
+		"ruleMissingSubclassResponsibilityRuleV1FalsePositive" : "GuillermoPolito 8/17/2015 13:56",
+		"ruleAssignmentInIfTrueRuleV1TruePositive" : "MarcusDenker 12/18/2012 17:43",
+		"ruleVariableAssignedLiteralRuleV1FalsePositive" : "MarcusDenker 12/19/2012 08:13",
+		"ruleTempsReadBeforeWrittenRuleV1FalsePositive" : "MarcusDenker 12/19/2012 08:10",
+		"ruleMethodHasNoTimeStampRuleV1TruePositive" : "MarcusDenker 9/20/2013 15:19"
+	}
+}

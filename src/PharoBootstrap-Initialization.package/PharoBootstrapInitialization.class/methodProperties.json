@@ -1,0 +1,26 @@
+{
+	"instance" : { },
+	"class" : {
+		"loadSUnitPackage" : " 2/22/2017 13:53:00",
+		"runTests" : " 2/22/2017 13:53:00",
+		"classesToInitializeWithNoDependency" : " 7/19/2017 16:45:00",
+		"runTestsOn:" : " 2/22/2017 13:53:00",
+		"runInitializeOnClasses:" : " 2/22/2017 13:53:00",
+		"classesToInitializeWithDependencies" : " 2/22/2017 13:53:00",
+		"runStartup" : " 2/22/2017 13:53:00",
+		"applyPatches" : " 2/22/2017 13:53:00",
+		"loadTestPackages" : " 2/22/2017 13:53:00",
+		"initializeCommandLineHandlerAndErrorHandling" : "GuillermoPolito 7/19/2017 16:43",
+		"fixPharoClassInstallerMethodCopying" : " 2/22/2017 13:53:00",
+		"loadPackage:from:" : " 2/22/2017 13:53:00",
+		"fixSetInitialCodeFormatter" : " 2/22/2017 13:53:00",
+		"run" : " 2/22/2017 13:53:00",
+		"initializeClasses" : " 2/22/2017 13:53:00",
+		"testClassesFrom:" : " 2/22/2017 13:53:00",
+		"reloadBootstrapPackages" : " 2/22/2017 13:53:00",
+		"fixUpdateInstancesOfSpecialClasses" : " 2/22/2017 13:53:00",
+		"testPackages" : " 2/22/2017 13:53:00",
+		"repository" : " 2/22/2017 13:53:00",
+		"ignoredTests" : " 2/22/2017 13:53:00"
+	}
+}

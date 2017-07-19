@@ -1,0 +1,12 @@
+{
+	"instance" : {
+		"nextLexicalContextOf:" : "ChristopheDemarey 10/5/2016 10:48",
+		"initialize" : "JorgeRessia 9/23/2010 13:16",
+		"isOptimizedBlockScope" : "JorgeRessia 9/11/2010 08:08",
+		"outerNotOptimizedScope" : "JorgeRessia 9/23/2010 14:00",
+		"markInlinedLoop" : "MarcusDenker 12/14/2012 11:25",
+		"nextOuterScopeContextOf:" : "DenisKudryashov 2/28/2017 10:58",
+		"isInsideOptimizedLoop" : "JorgeRessia 9/23/2010 13:21"
+	},
+	"class" : { }
+}

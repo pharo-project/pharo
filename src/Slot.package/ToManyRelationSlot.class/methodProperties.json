@@ -1,0 +1,9 @@
+{
+	"instance" : {
+		"initialize:" : "JanVanDeSandt 2/27/2015 11:24",
+		"wantsInitalization" : "JanVanDeSandt 2/20/2015 15:48",
+		"add:to:" : "JanVanDeSandt 2/21/2015 17:06",
+		"remove:from:" : "JanVanDeSandt 2/21/2015 17:08"
+	},
+	"class" : { }
+}

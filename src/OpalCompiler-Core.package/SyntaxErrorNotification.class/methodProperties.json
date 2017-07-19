@@ -1,0 +1,15 @@
+{
+	"instance" : {
+		"errorMessage" : "MarcusDenker 6/20/2014 09:51",
+		"messageText" : "ar 9/27/2005 19:14",
+		"errorClass" : "ar 9/27/2005 19:10",
+		"errorCode" : "ar 9/27/2005 19:10",
+		"setClass:code:doitFlag:errorMessage:location:" : "MarcusDenker 9/23/2016 13:22",
+		"doitFlag" : "ar 9/27/2005 19:11",
+		"location" : "eem 9/23/2008 14:23",
+		"defaultAction" : "pavel.krivanek 6/17/2010 10:00"
+	},
+	"class" : {
+		"inClass:withCode:doitFlag:errorMessage:location:" : "AlejandroInfante 3/31/2017 12:06"
+	}
+}

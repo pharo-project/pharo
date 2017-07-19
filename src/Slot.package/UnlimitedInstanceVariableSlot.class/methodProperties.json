@@ -1,0 +1,15 @@
+{
+	"instance" : {
+		"read:" : "md 7/17/2015 14:08",
+		"write:to:" : "md 7/17/2015 14:09",
+		"layoutChanged:" : "UnlimitedInstanceVariableSlotTest 10/3/2016 15:27",
+		"installingIn:" : "md 7/17/2015 14:06",
+		"offset" : "md 7/17/2015 14:06",
+		"growBaseSlot:" : "MarcusDenker 7/20/2015 18:05",
+		"emitValue:" : "MarcusDenker 7/29/2015 07:58",
+		"todo" : "MarcusDenker 7/29/2015 08:00",
+		"calculateOffset:" : "MarcusDenker 7/18/2015 15:54",
+		"emitStore:" : "MarcusDenker 7/29/2015 07:59"
+	},
+	"class" : { }
+}

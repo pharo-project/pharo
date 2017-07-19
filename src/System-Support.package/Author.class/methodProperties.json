@@ -1,0 +1,27 @@
+{
+	"instance" : {
+		"fullName:" : "SD 8/14/2015 06:38",
+		"ifUnknownAuthorUse:during:" : "ClementBera 4/11/2013 14:01",
+		"initialize" : "",
+		"requestFullName" : "HenrikNergaard 10/4/2015 09:08",
+		"reset" : "",
+		"useAuthor:during:" : "",
+		"fullName" : "HenrikNergaard 4/5/2017 11:36",
+		"checkAndSetFullNameWith:" : "HenrikNergaard 10/4/2015 09:06",
+		"fullNamePerSe" : "SD 8/14/2015 06:38"
+	},
+	"class" : {
+		"authorSettingOn:" : "TudorGirba 4/26/2016 16:18",
+		"uniqueInstance" : "",
+		"changeStampPerSe" : "",
+		"useAuthor:during:" : "",
+		"fullName:" : "",
+		"reset" : "PavelKrivanek 4/28/2016 12:28",
+		"fullName" : "",
+		"new" : "",
+		"fixStamp:" : "MarcusDenker 10/9/2013 17:05",
+		"changeStamp" : "",
+		"requestFullName" : "",
+		"fullNamePerSe" : "Zork 10/13/2013 17:35"
+	}
+}

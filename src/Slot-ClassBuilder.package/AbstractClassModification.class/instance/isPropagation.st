@@ -1,0 +1,3 @@
+testing
+isPropagation
+	^ self subclassResponsibility 

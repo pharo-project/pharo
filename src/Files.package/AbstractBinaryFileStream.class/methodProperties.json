@@ -1,0 +1,33 @@
+{
+	"instance" : {
+		"nextPutAll:" : "GuillermoPolito 6/26/2015 15:14",
+		"crlf" : "GuillermoPolito 6/5/2015 10:22",
+		"primTruncate:to:" : "GuillermoPolito 6/26/2015 15:14",
+		"cr" : "GuillermoPolito 6/5/2015 10:22",
+		"name" : "GuillermoPolito 7/1/2015 10:33",
+		"nextInto:" : "GuillermoPolito 6/12/2015 08:57",
+		"handle:file:forWrite:" : "GuillermoPolito 6/26/2015 15:11",
+		"next:" : "GuillermoPolito 6/12/2015 08:56",
+		"next" : "MarcusDenker 8/20/2015 15:57",
+		"primSync:" : "monty 8/29/2016 20:09",
+		"lf" : "GuillermoPolito 6/5/2015 10:22",
+		"primFlush:" : "monty 8/29/2016 19:05",
+		"file" : "GuillermoPolito 6/4/2015 18:37",
+		"file:" : "GuillermoPolito 6/4/2015 18:17",
+		"position" : "GuillermoPolito 6/5/2015 10:35",
+		"skip:" : "GuillermoPolito 6/5/2015 10:41",
+		"upToAnyOf:" : "GuillermoPolito 6/4/2015 16:50",
+		"isBinary" : "GuillermoPolito 6/12/2015 08:51",
+		"upTo:" : "GuillermoPolito 6/4/2015 16:51",
+		"next:putAll:" : "GuillermoPolito 6/26/2015 15:20",
+		"primRead:into:startingAt:count:" : "GuillermoPolito 6/26/2015 15:13",
+		"peek" : "GuillermoPolito 6/5/2015 11:04",
+		"nextPut:" : "GuillermoPolito 6/4/2015 18:25",
+		"next:into:" : "GuillermoPolito 6/26/2015 15:25",
+		"primWrite:from:startingAt:count:" : "GuillermoPolito 6/26/2015 15:14",
+		"printOn:" : "monty 8/29/2016 00:17"
+	},
+	"class" : {
+		"handle:file:forWrite:" : "GuillermoPolito 6/26/2015 15:03"
+	}
+}

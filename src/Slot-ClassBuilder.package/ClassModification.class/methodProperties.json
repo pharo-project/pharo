@@ -1,0 +1,41 @@
+{
+	"instance" : {
+		"superLayout" : "NicolaiHess 10/30/2015 22:24",
+		"modifiesClassVariables" : "MarcusDenker 10/29/2014 13:28",
+		"traitComposition:" : "ToonVerwaest 4/2/2011 20:54",
+		"changes" : "ToonVerwaest 3/20/2011 15:49",
+		"additions" : "MarcusDenker 2/6/2015 13:11",
+		"initialize" : "ToonVerwaest 4/1/2011 03:31",
+		"superclass:" : "ToonVerwaest 3/20/2011 14:32",
+		"modifiesFormat" : "NicolaiHess 10/30/2015 22:24",
+		"instanceModification" : "ToonVerwaest 4/1/2011 02:45",
+		"originalScope" : "NicolaiHess 10/30/2015 22:24",
+		"installSlotAddition:on:" : "ToonVerwaest 3/28/2011 20:02",
+		"installSlotRemoval:on:" : "ToonVerwaest 3/28/2011 20:02",
+		"installSlotChangeFrom:to:on:" : "ToonVerwaest 3/28/2011 20:02",
+		"classVariables:" : "MarcusDenker 7/17/2014 21:10",
+		"removals:" : "ToonVerwaest 3/20/2011 14:30",
+		"layoutClass:slots:" : "CamilleTeruel 11/7/2014 16:39",
+		"slotShift" : "ToonVerwaest 3/20/2011 23:32",
+		"methodModification" : "NicolaiHess 10/30/2015 22:24",
+		"isPropagation" : "MartinDias 2/7/2014 16:44",
+		"modifiesSharedPools" : "MartinDias 2/7/2014 17:16",
+		"copies" : "ToonVerwaest 3/28/2011 17:45",
+		"removals" : "MarcusDenker 2/6/2015 13:11",
+		"additions:" : "ToonVerwaest 3/20/2011 14:30",
+		"sharedPools" : "MartinDias 2/7/2014 16:30",
+		"classVariables" : "MarcusDenker 7/17/2014 21:10",
+		"computeChange" : "NicolaiHess 10/30/2015 22:23",
+		"traitComposition" : "ToonVerwaest 3/31/2011 19:48",
+		"installSlotCopiedFrom:to:on:" : "ToonVerwaest 3/30/2011 13:41",
+		"modifiesSlots" : "MartinDias 2/7/2014 16:43",
+		"modifiesSuperclass" : "MartinDias 2/7/2014 16:43",
+		"superclass" : "ToonVerwaest 3/20/2011 19:34",
+		"sharedPools:" : "MartinDias 2/7/2014 16:30",
+		"newScope" : "ToonVerwaest 4/1/2011 03:04",
+		"buildModificationMapFor:" : "CamilloBruni 3/29/2011 19:00"
+	},
+	"class" : {
+		"modify:extend:withLayoutType:slots:sharedVariables:sharedPools:traitComposition:" : "CamilleTeruel 11/7/2014 16:44"
+	}
+}

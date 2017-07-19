@@ -1,0 +1,20 @@
+{
+	"instance" : {
+		"pastEndPut:" : "di 10/28/2001 12:49",
+		"nextPut:" : "monty 8/29/2016 00:57",
+		"nextPutAll:" : "LukasRenggli 5/8/2010 18:42",
+		"limit" : "monty 8/29/2016 00:55",
+		"setLimit:limitBlock:" : "monty 8/29/2016 22:05",
+		"limitBlock" : "monty 8/29/2016 00:55",
+		"limitBlock:" : "monty 8/29/2016 00:56",
+		"limit:" : "monty 8/29/2016 22:05"
+	},
+	"class" : {
+		"on:" : "monty 8/29/2016 03:15",
+		"with:" : "monty 8/29/2016 03:15",
+		"on:limit:limitBlock:" : "monty 8/29/2016 22:05",
+		"with:from:to:" : "monty 8/29/2016 03:15",
+		"defaultLimit" : "monty 8/28/2016 22:00",
+		"on:from:to:" : "monty 8/29/2016 03:15"
+	}
+}

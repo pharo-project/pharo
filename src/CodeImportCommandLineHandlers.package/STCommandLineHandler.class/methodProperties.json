@@ -1,0 +1,20 @@
+{
+	"instance" : {
+		"handleError:" : "CamilloBruni 4/28/2012 21:48",
+		"handleError:reference:" : "CamilloBruni 7/17/2013 16:20",
+		"loadSourceFiles:" : "CamilloBruni 5/1/2012 20:51",
+		"installSourceFiles" : "CamilloBruni 7/10/2013 16:09",
+		"end" : "CamilloBruni 11/6/2013 21:40",
+		"skipShebangFrom:" : "GuillermoPolito 6/6/2016 17:51",
+		"selectSourceFiles" : "HolgerHansPeterFreyther 9/12/2015 09:37",
+		"activate" : "HolgerHansPeterFreyther 9/12/2015 09:37",
+		"handleErrorsDuring:reference:" : "CamilloBruni 7/17/2013 16:21",
+		"installSourceFile:" : "ValentinRyckewaert 7/12/2016 09:49"
+	},
+	"class" : {
+		"isResponsibleFor:" : "CamilloBruni 5/2/2012 11:31",
+		"printCompilerWarning:" : "kks 5/19/2017 20:01",
+		"description" : "CamilloBruni 2/6/2013 18:18",
+		"commandName" : "CamilloBruni 5/2/2012 11:35"
+	}
+}

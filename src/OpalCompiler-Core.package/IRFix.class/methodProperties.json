@@ -1,0 +1,12 @@
+{
+	"instance" : {
+		"visitInstruction:" : "ClementBer 10/14/2014 15:57",
+		"visitReturn:" : "ClementBer 10/14/2014 16:19",
+		"initialize" : "ClementBer 10/14/2014 16:21",
+		"convertRet:forSeq:" : "ClementBer 10/14/2014 16:40",
+		"visitSequence:" : "ClementBer 10/14/2014 16:19",
+		"convertStorePop:forSeq:" : "ClementBer 10/14/2014 16:40",
+		"visitPop:" : "ClementBer 10/14/2014 16:18"
+	},
+	"class" : { }
+}

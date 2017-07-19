@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "AbstractFieldModification",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"slot"
+	],
+	"name" : "UnmodifiedField",
+	"type" : "normal"
+}

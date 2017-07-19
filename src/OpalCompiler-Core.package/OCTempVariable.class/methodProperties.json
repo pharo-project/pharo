@@ -1,0 +1,29 @@
+{
+	"instance" : {
+		"isStoringTempVector" : "MarcusDenker 11/15/2012 16:37",
+		"markEscapingRead" : "MarcusDenker 9/21/2010 18:06",
+		"markWrite" : "MarcusDenker 5/18/2011 16:00",
+		"initialize" : "MarcusDenker 9/5/2010 20:18",
+		"indexFromIR" : "GuillermoPolito 4/9/2015 15:58",
+		"escaping" : "MarcusDenker 9/22/2010 11:04",
+		"readFromContext:scope:" : "GuillermoPolito 4/9/2015 17:38",
+		"markEscapingWrite" : "NicolaiHess 10/24/2014 00:26",
+		"isEscapingRead" : "MarcusDenker 9/21/2010 16:22",
+		"markRepeatedWrite" : "NicolaiHess 10/24/2014 00:07",
+		"isCopying" : "MarcusDenker 9/9/2010 16:07",
+		"hash" : "MarcusDenker 11/16/2012 11:26",
+		"isEscaping" : "MarcusDenker 9/21/2010 16:06",
+		"isTempVectorTemp" : "",
+		"emitValue:" : "",
+		"=" : "MarcusDenker 11/16/2012 11:24",
+		"writeFromContext:scope:value:" : "GuillermoPolito 4/9/2015 15:58",
+		"isEscapingWrite" : "MarcusDenker 9/21/2010 16:22",
+		"emitStore:" : "",
+		"escaping:" : "MarcusDenker 9/22/2010 11:04",
+		"isTemp" : "ajh 6/23/2004 23:18",
+		"searchFromContext:scope:" : "GuillermoPolito 4/9/2015 17:52"
+	},
+	"class" : {
+		"semanticNodeClass" : "DenisKudryashov 12/18/2015 14:41"
+	}
+}

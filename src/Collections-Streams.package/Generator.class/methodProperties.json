@@ -1,0 +1,21 @@
+{
+	"instance" : {
+		"next" : "ar 2/10/2010 20:45",
+		"close" : "ar 2/10/2010 20:54",
+		"peek" : "lr 2/10/2010 09:16",
+		"atEnd" : "ar 2/10/2010 21:00",
+		"value:" : "ar 2/10/2010 21:01",
+		"fork" : "ar 2/10/2010 20:46",
+		"printOn:" : "lr 1/8/2009 16:21",
+		"nextPut:" : "lr 2/10/2010 09:16",
+		"reset" : "MarcusDenker 7/24/2014 17:01",
+		"size" : "lr 2/10/2010 09:16",
+		"yield:" : "ar 2/10/2010 20:52",
+		"contents" : "lr 4/26/2009 11:50",
+		"initializeOn:" : "lr 1/8/2009 16:18"
+	},
+	"class" : {
+		"examplePrimes" : "SeanDeNigris 3/30/2015 17:42",
+		"on:" : "lr 1/8/2009 15:54"
+	}
+}

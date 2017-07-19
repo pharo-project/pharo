@@ -1,0 +1,17 @@
+{
+	"instance" : {
+		"changePreferences" : "CamilloBruni 9/16/2013 01:37",
+		"isOmittingPreferences" : "SeanDeNigris 10/4/2013 13:15",
+		"default" : "CamilloBruni 5/26/2013 14:08",
+		"isChangingPreferences" : "CamilloBruni 9/16/2013 01:15",
+		"runPreferences" : "PavelKrivanek 5/18/2016 14:42",
+		"activate" : "CamilloBruni 9/16/2013 01:23",
+		"isOverridingPreferences" : "CamilloBruni 9/16/2013 01:36"
+	},
+	"class" : {
+		"isResponsibleFor:" : "EstebanLorenzano 5/23/2013 15:15",
+		"activateWith:" : "SD 8/14/2015 06:38",
+		"description" : "EstebanLorenzano 5/23/2013 14:28",
+		"priority" : "CamilloBruni 5/31/2013 11:32"
+	}
+}

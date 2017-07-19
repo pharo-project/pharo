@@ -1,0 +1,32 @@
+{
+	"instance" : {
+		"visibleSlots" : "MarcusDenker 2/5/2015 15:47",
+		"hasSlot:" : "MarcusDenker 4/9/2015 10:08",
+		"hasFields" : "ToonVerwaest 4/1/2011 03:37",
+		"fieldSize" : "ToonVerwaest 4/1/2011 03:37",
+		"checkSanity" : "ToonVerwaest 4/1/2011 03:38",
+		"isWeak" : "ToonVerwaest 4/1/2011 03:37",
+		"hasSlots" : "ToonVerwaest 4/1/2011 03:37",
+		"instVarIndexFor:ifAbsent:" : "MarcusDenker 9/30/2016 12:20",
+		"host" : "ToonVerwaest 4/1/2011 01:52",
+		"host:" : "MartinDias 8/7/2013 17:56",
+		"checkIntegrity" : "MartinDias 7/8/2013 17:22",
+		"allVisibleSlots" : "ToonVerwaest 4/2/2011 19:07",
+		"isBits" : "ToonVerwaest 4/1/2011 03:37",
+		"definesSlot:" : "MarcusDenker 4/9/2015 10:08",
+		"extendImmediate" : "EstebanLorenzano 11/26/2015 14:54",
+		"allSlots" : "ToonVerwaest 4/3/2011 22:58",
+		"hash" : "MartinDias 4/12/2013 13:20",
+		"isVariable" : "ToonVerwaest 4/1/2011 03:37",
+		"slots" : "MarcusDenker 6/25/2014 12:56",
+		"=" : "MartinDias 4/12/2013 13:15",
+		"isCustomLayout" : "MarcusDenker 5/26/2016 14:09",
+		"resolveSlot:" : "ToonVerwaest 4/7/2011 12:10",
+		"finalize" : "ToonVerwaest 4/7/2011 12:08",
+		"hasSlotNamed:" : "MarcusDenker 4/9/2015 10:08",
+		"allSlotsDo:" : "MartinDias 8/7/2012 00:42",
+		"instVarNames" : "MarcusDenker 8/27/2015 18:10",
+		"slotScope" : "MartinDias 8/6/2012 22:31"
+	},
+	"class" : { }
+}

@@ -1,0 +1,36 @@
+{
+	"instance" : {
+		"removeProperty:ifAbsent:" : "MarcusDenker 8/15/2015 09:57",
+		"isSpecial" : "MarcusDenker 7/13/2014 14:53",
+		"write:" : "MarcusDenker 7/3/2014 16:13",
+		"isReadIn:" : "DenisKudryashov 10/28/2016 17:46",
+		"isGlobalVariable" : "MarcusDenker 7/18/2014 10:03",
+		"hasProperty:" : "MarcusDenker 8/19/2015 09:39",
+		"isGlobal" : "MarcusDenker 9/17/2015 17:53",
+		"removePropertiesIfEmpty" : "MarcusDenker 8/15/2015 19:26",
+		"definitionString" : "MarcusDenker 1/7/2015 10:41",
+		"isSelfEvaluating" : "MarcusDenker 7/17/2014 17:03",
+		"ensureProperties" : "MarcusDenker 8/15/2015 09:54",
+		"name:" : "MarcusDenker 7/10/2014 16:40",
+		"properties" : "MarcusDenker 8/15/2015 09:55",
+		"definingClass" : "MarcusDenker 7/13/2014 13:29",
+		"usingMethods" : "MarcusDenker 7/13/2014 13:14",
+		"propertyAt:ifAbsentPut:" : "MarcusDenker 8/16/2015 08:47",
+		"propertyAt:put:" : "MarcusDenker 9/17/2015 17:36",
+		"emitValue:" : "MarcusDenker 7/20/2015 17:47",
+		"read" : "MarcusDenker 7/3/2014 16:13",
+		"isWrittenIn:" : "DenisKudryashov 10/28/2016 17:46",
+		"propertyAt:ifAbsent:" : "MarcusDenker 8/15/2015 16:31",
+		"isClassVariable" : "MarcusDenker 7/18/2014 10:03",
+		"asClassVariable" : "MarcusDenker 1/16/2015 18:06",
+		"emitStore:" : "MarcusDenker 5/9/2015 12:54",
+		"propertyAt:" : "MarcusDenker 8/15/2015 16:31",
+		"removeProperty:" : "MarcusDenker 8/15/2015 09:57"
+	},
+	"class" : {
+		"initialize" : "MarcusDenker 8/15/2015 10:03",
+		"checkValidName:" : "MarcusDenker 7/11/2014 18:40",
+		"initializeProperties" : "MarcusDenker 8/15/2015 10:04",
+		"named:" : "MarcusDenker 7/10/2014 16:41"
+	}
+}

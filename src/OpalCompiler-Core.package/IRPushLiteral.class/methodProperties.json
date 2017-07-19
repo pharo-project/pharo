@@ -1,0 +1,12 @@
+{
+	"instance" : {
+		"quickRetNode" : "ClementBer 10/14/2014 16:00",
+		"literal:" : "MarcusDenker 8/13/2010 13:23",
+		"canBeQuickReturn" : "ClementBer 10/14/2014 15:55",
+		"isPushLiteral:" : "MarcusDenker 9/20/2013 13:26",
+		"isPushLiteral" : "MarcusDenker 9/20/2013 13:26",
+		"literal" : "MarcusDenker 8/13/2010 13:23",
+		"accept:" : "ClementBer 10/14/2014 13:32"
+	},
+	"class" : { }
+}

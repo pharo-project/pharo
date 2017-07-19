@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Slot-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"target",
+		"layout",
+		"propagations",
+		"newClass"
+	],
+	"name" : "AbstractClassModification",
+	"type" : "normal"
+}

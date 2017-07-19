@@ -1,0 +1,3 @@
+accessing
+superclass
+	^ origin newClass

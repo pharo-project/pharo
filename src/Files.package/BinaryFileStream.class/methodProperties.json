@@ -1,0 +1,29 @@
+{
+	"instance" : {
+		"close" : "GuillermoPolito 7/1/2015 10:50",
+		"primSizeNoError:" : "GuillermoPolito 6/26/2015 15:03",
+		"sync" : "monty 8/29/2016 09:02",
+		"primAtEnd:" : "GuillermoPolito 6/26/2015 15:03",
+		"primSetPosition:to:" : "GuillermoPolito 6/26/2015 15:03",
+		"primGetPosition:" : "GuillermoPolito 6/26/2015 15:03",
+		"setToEnd" : "HenrikNergaard 8/5/2016 21:25",
+		"reset" : "GuillermoPolito 6/26/2015 15:06",
+		"primCloseNoError:" : "GuillermoPolito 6/26/2015 15:03",
+		"position" : "GuillermoPolito 6/26/2015 15:27",
+		"size" : "GuillermoPolito 6/26/2015 16:36",
+		"skip:" : "GuillermoPolito 6/5/2015 10:51",
+		"unregister" : "GuillermoPolito 7/1/2015 10:50",
+		"upToEnd" : "GuillermoPolito 6/5/2015 10:39",
+		"position:" : "GuillermoPolito 6/26/2015 15:29",
+		"primSize:" : "GuillermoPolito 6/26/2015 15:03",
+		"truncate" : "GuillermoPolito 6/26/2015 15:02",
+		"atEnd" : "GuillermoPolito 6/26/2015 15:12",
+		"register" : "GuillermoPolito 6/26/2015 16:05",
+		"peek" : "GuillermoPolito 6/6/2015 11:35",
+		"flush" : "monty 8/29/2016 09:03",
+		"closed" : "GuillermoPolito 6/26/2015 15:24",
+		"finalize" : "GuillermoPolito 7/1/2015 10:33",
+		"truncate:" : "GuillermoPolito 6/26/2015 15:02"
+	},
+	"class" : { }
+}

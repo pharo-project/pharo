@@ -1,0 +1,3 @@
+private
+computeChange
+	self checkSanity.

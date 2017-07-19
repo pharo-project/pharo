@@ -1,0 +1,15 @@
+{
+	"instance" : {
+		"tempNamed:in:" : "NicolaiHess 7/5/2016 16:13",
+		"tempNamed:in:put:" : "NicolaiHess 7/5/2016 16:13",
+		"tempNamesForContext:" : "NicolaiHess 7/5/2016 16:13",
+		"forMethod:" : "MarcusDenker 5/13/2013 13:21",
+		"rangeForPC:contextIsActiveContext:" : "MarcusDenker 4/19/2013 08:32",
+		"namedTempAt:put:in:" : "MarcusDenker 12/17/2012 17:21",
+		"namedTempAt:in:" : "MarcusDenker 12/17/2012 17:20",
+		"rangeForPC:" : "MarcusDenker 1/24/2013 14:12"
+	},
+	"class" : {
+		"forMethod:" : "MarcusDenker 11/16/2012 12:11"
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"instance" : {
+		"isGlobal" : "ajh 7/8/2004 16:25",
+		"isWritable" : "NicolaiHess 6/1/2016 22:10",
+		"isLiteralVariable" : "MarcusDenker 9/20/2013 13:28",
+		"name" : "ajh 7/2/2004 14:15",
+		"assoc" : "GiselaDecuzzi 5/22/2013 15:06",
+		"variable" : "MarcusDenker 8/12/2015 09:02",
+		"value" : "ms 8/5/2006 14:35",
+		"isGlobalVariable" : "NicolaiHess 6/16/2015 21:46",
+		"isFromSharedPool" : "MarcusDenker 2/2/2016 14:31",
+		"emitValue:" : "MarcusDenker 7/18/2014 07:23",
+		"assoc:" : "ajh 2/26/2003 17:31",
+		"isClassVariable" : "NicolaiHess 6/16/2015 21:45",
+		"emitStore:" : "MarcusDenker 7/18/2014 07:22",
+		"isGlobalClassNameBinding" : " 7/19/2017 14:45:27"
+	},
+	"class" : {
+		"semanticNodeClass" : "DenisKudryashov 12/18/2015 14:30"
+	}
+}

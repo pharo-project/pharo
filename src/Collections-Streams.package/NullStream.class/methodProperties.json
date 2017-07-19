@@ -1,0 +1,38 @@
+{
+	"instance" : {
+		"nextInto:startingAt:" : "StephaneDucasse 3/13/2010 11:07",
+		"initialize" : "StephaneDucasse 3/13/2010 11:06",
+		"nextPutAll:" : "DamienCassou 3/27/2014 17:20",
+		"next:putAll:startingAt:" : "DamienCassou 3/27/2014 17:02",
+		"contents" : "StephaneDucasse 3/13/2010 11:05",
+		"cr" : "DamienCassou 3/27/2014 16:53",
+		"binary" : "StephaneDucasse 3/13/2010 11:05",
+		"nextInto:" : "StephaneDucasse 3/13/2010 11:07",
+		"element" : "StephaneDucasse 3/13/2010 11:05",
+		"next:" : "StephaneDucasse 3/13/2010 11:06",
+		"next" : "StephaneDucasse 3/13/2010 11:06",
+		"lf" : "DamienCassou 3/27/2014 16:53",
+		"reset" : "StephaneDucasse 3/13/2010 11:08",
+		"position" : "StephaneDucasse 3/13/2010 11:08",
+		"skip:" : "StephaneDucasse 3/13/2010 11:08",
+		"peekLast" : "DamienCassou 3/27/2014 16:51",
+		"readInto:startingAt:count:" : "SvenVanCaekenberghe 4/26/2011 09:19",
+		"isBinary" : "ClementBera 7/29/2013 14:37",
+		"position:" : "StephaneDucasse 3/13/2010 11:08",
+		"next:into:startingAt:" : "StephaneDucasse 3/13/2010 11:07",
+		"next:putAll:" : "StephaneDucasse 3/13/2010 11:07",
+		"atEnd" : "StephaneDucasse 3/13/2010 11:05",
+		"next:into:" : "StephaneDucasse 3/13/2010 11:06",
+		"collectionSpecies" : "StephaneDucasse 3/13/2010 11:05",
+		"nextPut:" : "DamienCassou 3/27/2014 16:54",
+		"peek" : "StephaneDucasse 3/13/2010 11:08",
+		"ascii" : "StephaneDucasse 3/13/2010 11:04",
+		"printOn:" : "MilanMimica 11/4/2011 21:22",
+		"isEmpty" : "StephaneDucasse 3/13/2010 11:05",
+		"space" : "DamienCassou 3/27/2014 17:15",
+		"tab" : "DamienCassou 3/27/2014 17:15"
+	},
+	"class" : {
+		"new" : "StephaneDucasse 3/13/2010 11:09"
+	}
+}

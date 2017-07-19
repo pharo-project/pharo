@@ -1,0 +1,1 @@
+I represent a modification in a class that is produced because of a change in one of its superclasses. This is called a propagation.

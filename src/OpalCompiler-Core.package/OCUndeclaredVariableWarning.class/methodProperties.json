@@ -1,0 +1,18 @@
+{
+	"instance" : {
+		"substituteWord:wordInterval:offset:" : "MarcusDenker 5/17/2013 14:45",
+		"declareClassVar" : "MarcusDenker 7/25/2014 17:04",
+		"declareInstVar:" : "MarcusDenker 7/25/2014 17:05",
+		"defineTrait:" : "NicolaiHess 8/18/2016 23:37",
+		"defineClass:" : "MarcusDenker 4/6/2016 16:20",
+		"lookUpVariable" : "MarcusDenker 7/25/2014 17:04",
+		"declareTempAndPaste:" : "NicolaiHess 9/10/2014 12:05",
+		"node:" : "MarcusDenker 5/17/2013 16:27",
+		"possibleVariablesFor:" : "MarcusDenker 5/17/2013 16:25",
+		"declareGlobal" : "MarcusDenker 7/25/2014 17:05",
+		"openMenuIn:" : "NicolaiHess 8/18/2016 23:38",
+		"substituteVariable:atInterval:" : "BenComan 3/3/2014 14:28",
+		"defaultAction" : "MarcusDenker 7/9/2013 13:27"
+	},
+	"class" : { }
+}
