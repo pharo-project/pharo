@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "HEAbstractBinaryClassBuilderTest",
+	"category" : "Hermes-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HEExportingClassTest",
+	"type" : "normal"
+}
