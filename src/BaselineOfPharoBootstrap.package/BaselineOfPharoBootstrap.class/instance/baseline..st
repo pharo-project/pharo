@@ -18,6 +18,7 @@ baseline: spec
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
 		spec package: 'Files'.
+		spec package: 'Hermes'.
 		spec package: 'Jobs'.
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
