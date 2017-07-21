@@ -10,4 +10,6 @@ writeInto: aWriter
 	classes do: [ :each | each writeInto: aWriter ].
 
 	aWriter writeInt: extensionMethods size.
-	extensionMethods do: [ :e | e writeInto: aWriter ]
+	extensionMethods do: [ :e | e writeInto: aWriter ].
+
+	aWriter flush.

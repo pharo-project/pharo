@@ -1,0 +1,23 @@
+{
+	"instance" : {
+		"readByteString" : "GitHub 3/8/2017 15:15:11",
+		"readByte" : "GitHub 3/8/2017 15:15:11",
+		"close" : "GitHub 3/8/2017 15:15:11",
+		"intSize" : "GitHub 3/8/2017 15:15:11",
+		"flush" : "GitHub 3/8/2017 15:15:11",
+		"writeByteString:" : "GitHub 3/8/2017 15:15:11",
+		"writeInt:" : "GitHub 3/8/2017 15:15:11",
+		"writeUInt:" : "GitHub 3/8/2017 15:15:11",
+		"byteStringSize:" : "GitHub 3/8/2017 15:15:11",
+		"writeByte:" : "GitHub 3/8/2017 15:15:11",
+		"readUInt" : "GitHub 3/8/2017 15:15:11",
+		"readInt" : "GitHub 3/8/2017 15:15:11",
+		"writeByteArray:" : "GitHub 3/8/2017 15:15:11",
+		"readByteArray" : "GitHub 3/8/2017 15:15:11",
+		"readByteSymbol" : "GitHub 3/8/2017 15:15:11",
+		"stream" : "GitHub 3/8/2017 15:15:11",
+		"stream:" : "GitHub 3/8/2017 15:15:11",
+		"byteArraySize:" : "GitHub 3/8/2017 15:15:11"
+	},
+	"class" : { }
+}

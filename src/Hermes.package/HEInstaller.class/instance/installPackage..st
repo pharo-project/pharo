@@ -10,7 +10,12 @@ installPackage: aHEPackage
 	newClasses := aHEPackage classes
 		collect: [ :exportedClass | 
 			| aClass |
+			('[Hermes] Creating class ' , exportedClass className) logCr.
+			
 			aClass := self build: exportedClass.
+
+			('[Hermes] Installing class ' , exportedClass className) logCr.
+
 			self installClass: aClass in: exportedClass category.
 			aClass ].
 

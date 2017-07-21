@@ -4,10 +4,9 @@ openLog
 	Because it really belongs to logging facility,
 	we should delegate to it at some point "
 
-	^ (FileStream fileNamed: Smalltalk logFileName)
-		ifNil: [ NullStream new ]
-		ifNotNil: [ :stream | 
-			stream
-				wantsLineEndConversion: true;
+	^ ZnCharacterWriteStream
+		on:
+			((File named: Smalltalk logFileName) writeStream
 				setToEnd;
-				yourself ]
+				yourself)
+		encoding: ZnNullEncoder new

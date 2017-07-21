@@ -3,6 +3,12 @@ initializeCommandLineHandlerAndErrorHandling
 	"This method is run before the new bootstrapped image is saved!"
 	ProcessorScheduler initialize.
 	
+	Object initialize.
+	
+	ChronologyConstants initialize.
+	DateAndTime initialize.
+	SessionManager default installNewSession.
+	
 	Delay initialize.
 	SmallInteger initialize.
 	
@@ -42,6 +48,7 @@ initializeCommandLineHandlerAndErrorHandling
 	SHA1 initialize."
 	TraitBehavior initialize.
 	RPackage initialize.
+	Behavior initializeClassProperties.
 "	CompilationContext initialize."
 "	OCASTTranslator initialize.
 "
