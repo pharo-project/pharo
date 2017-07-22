@@ -1,4 +1,4 @@
 accessing
 manifestOf: elem
 
-	^ manifestClass := elem package packageManifestOrNil 
+	^ manifestClass := elem package ifNotNil: #packageManifestOrNil 
