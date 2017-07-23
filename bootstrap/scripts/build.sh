@@ -3,6 +3,8 @@ set -e
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
+# where can I find the VM?
+VM="./vm/pharo"
 
 function show_help {
   echo
@@ -116,36 +118,39 @@ ln -s .. pharo-core
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
-./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
-./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
-./vm/pharo "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo "[Monticello] Loading Networking Packages and Remote Repositories"
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
-./vm/pharo "${MC_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
+${VM} "${MC_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
 zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
-./vm/pharo "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
-./vm/pharo "${METACELLO_IMAGE_NAME}.image" st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+${VM} "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
+${VM} "${METACELLO_IMAGE_NAME}.image" st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
-./vm/pharo "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
-./vm/pharo "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
-./vm/pharo "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
-./vm/pharo "${PHARO_IMAGE_NAME}.image" clean --release
+${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+${VM} "${PHARO_IMAGE_NAME}.image" clean --release
+
+echo "[Pharo] Configure resulting image"
+${VM} "${PHARO_IMAGE_NAME}.image" st ../bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
 
 # clean bak sources files
 rm -f *.bak
