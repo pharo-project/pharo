@@ -1,5 +1,8 @@
 printing
 printOn: aStream
-	OpalCompiler isActive 
-		ifTrue: [ aStream nextPutAll:  self sourceNode formattedCode ]
-		ifFalse: [ aStream nextPutAll: '[...]']
+	Smalltalk globals
+		at: #OpalCompiler
+		ifPresent: [ :opalClass |
+			opalClass isActive
+				ifTrue: [ ^ aStream nextPutAll:  self sourceNode formattedCode] ].
+	^ 'aBlockClosure([...])'

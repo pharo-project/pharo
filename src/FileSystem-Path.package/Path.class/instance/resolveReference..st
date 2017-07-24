@@ -1,0 +1,3 @@
+navigating
+resolveReference: aReference
+	^ aReference

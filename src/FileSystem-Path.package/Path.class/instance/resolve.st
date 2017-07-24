@@ -1,0 +1,3 @@
+navigating
+resolve
+	^ self
