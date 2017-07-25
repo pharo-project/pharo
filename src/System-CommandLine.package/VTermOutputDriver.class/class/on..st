@@ -1,5 +1,5 @@
 instance-creation
 on: anOutputStream
 	^ self new
-		outStream: anOutputStream;
+		outStream: (ZnCharacterWriteStream on: anOutputStream encoding: 'utf8');
 		yourself
