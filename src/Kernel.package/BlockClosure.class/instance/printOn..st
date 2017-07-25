@@ -1,8 +1,8 @@
 printing
 printOn: aStream
-	Smalltalk globals
-		at: #OpalCompiler
-		ifPresent: [ :opalClass |
-			opalClass isActive
-				ifTrue: [ ^ aStream nextPutAll:  self sourceNode formattedCode] ].
-	^ 'aBlockClosure([...])'
+
+	aStream nextPutAll: ((self method hasSourceCode
+		or: [ "There is a decompiler"
+			Smalltalk globals includesKey: #FBDDecompiler ])
+				ifTrue: [ self sourceNode formattedCode ]
+				ifFalse: [ 'aBlockClosure(no source code or decompiler available)' ])

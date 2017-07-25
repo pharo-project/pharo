@@ -9,4 +9,4 @@ openLog
 			((File named: Smalltalk logFileName) writeStream
 				setToEnd;
 				yourself)
-		encoding: ZnNullEncoder new
+		encoding: 'utf8'
