@@ -59,5 +59,7 @@ initializeCommandLineHandlerAndErrorHandling
 	(Smalltalk class classVariableNamed: 'LastImagePath') value: Smalltalk primImagePath. "set the default value"
 	SourceFiles := SourceFileArray new.
 	
-	BasicCommandLineHandler new activate. "BasicCommandLineHandler startUp:"
+	Stdio initialize.
+	BasicCommandLineHandler initialize. "BasicCommandLineHandler startUp:"
+	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive.
