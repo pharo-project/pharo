@@ -1,3 +1,3 @@
 accessing
 characterSet
-	^ EncodedCharSet charsetAt: self leadingChar
+	^ AsciiCharset "EncodedCharSet charsetAt: self leadingChar"

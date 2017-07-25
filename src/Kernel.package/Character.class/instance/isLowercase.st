@@ -1,4 +1,4 @@
 testing
 isLowercase
 
-	^ AsciiCharset isLowercase: self.
+	^ self characterSet isLowercase: self.

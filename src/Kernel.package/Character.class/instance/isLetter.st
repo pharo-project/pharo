@@ -1,4 +1,4 @@
 testing
 isLetter
 
-	^ AsciiCharset isLetter: self.
+	^ self characterSet isLetter: self.

@@ -1,4 +1,4 @@
 testing
 isDigit
 
-	^ AsciiCharset isDigit: self.
+	^ self characterSet isDigit: self.
