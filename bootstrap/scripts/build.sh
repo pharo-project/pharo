@@ -85,11 +85,13 @@ fi
 
 BOOTSTRAP_IMAGE_NAME=bootstrap
 CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
+COMPILER_IMAGE_NAME=${PREFIX}-compiler-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
 MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
+VM=./vm/pharo
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
 cd bootstrap-cache
@@ -99,7 +101,7 @@ wget http://files.pharo.org/sources/PharoV60.sources
 
 #Prepare
 echo "Prepare Bootstrap files"
-cp "${BOOTSTRAP_IMAGE_NAME}.image" "${CORE_IMAGE_NAME}.image"
+cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
 ../bootstrap/scripts/download_vm.sh
 
 echo "Prepare fonts"
@@ -114,38 +116,46 @@ cd ..
 #Required for the correct work of metacello baselines and unicode initialization
 ln -s .. pharo-core 
 
+# Installing compiler through Hermes 
+echo "[Compiler] Installing compiler through Hermes"
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
+${VM} "${COMPILER_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+
+zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
+
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
-./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
-./vm/pharo "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
+cp "${COMPILER_IMAGE_NAME}.image" "${CORE_IMAGE_NAME}.image"
+${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
-./vm/pharo "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo "[Monticello] Loading Networking Packages and Remote Repositories"
-./vm/pharo "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
-./vm/pharo "${MC_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
+${VM} "${MC_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
 zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
-./vm/pharo "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
-./vm/pharo "${METACELLO_IMAGE_NAME}.image" st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+${VM} "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
+${VM} "${METACELLO_IMAGE_NAME}.image" st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
-./vm/pharo "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
-./vm/pharo "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
-./vm/pharo "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
-./vm/pharo "${PHARO_IMAGE_NAME}.image" clean --release
+${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
 # clean bak sources files
 rm -f *.bak
