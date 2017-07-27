@@ -1,7 +1,7 @@
 tests
 testParentResolutionWithAbsoluteReference
 	| base relative absolute |
-	base := (filesystem / '/plonk' / 'pinto').
+	base := (filesystem / 'plonk' / 'pinto').
 	relative := (FileSystem memory / 'griffle' / 'zonk').
 	absolute := base resolve: relative.
 	self assert: absolute fileSystem == relative fileSystem.

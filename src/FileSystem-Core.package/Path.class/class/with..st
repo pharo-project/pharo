@@ -4,11 +4,9 @@ with: aString
 	it is the name of a single path element, and path separators in it do not have 
 	special meaning."
 	
-	"(Path with: '/parent/child/') isRelative
-	answers true because this is a relative path to a file or directory named 
-	'/parent/child/'. In bash: \/parent\/child\/"
-
 	| inst |
+	(aString includes:$/ ) ifTrue: [ self error:' / shouldn''t be used in the String. The string should be the last element of a path only. Refer to Path>>with:'].
+	
 	inst := self new: 1.
 	inst at: 1 put: aString.
 	^ inst
