@@ -3,10 +3,17 @@
 | repo commit |
 
 "Create repository"
-repo := IceRepositoryCreator new
-	location: FileLocator image parent;
-	subdirectory: 'src';
-	createRepository.
+[
+	repo := IceRepositoryCreator new
+		location: FileLocator image parent;
+		subdirectory: 'src';
+		createRepository.
+] ifError: [
+	"alternative location (on CI)"	
+	repo := IceRepositoryCreator new
+		location: FileLocator image parent parent;
+		subdirectory: 'src';
+		createRepository.].
 repo beSystemRepository.
 repo register.
 "get loaded commit"
