@@ -13,12 +13,8 @@
 ]].
 
 
-RPackageOrganizer default basicInitializeFromPackagesList: #(
-	'CodeExport'
-    'CodeImport'
-	'CodeImportCommandLineHandlers'
-	'OpalCompiler-Core'
-	
+RPackageOrganizer default basicInitializeFromPackagesList: {
+	"Bootstrap packages"
 	'AST-Core'.
 	'Announcements-Core'.
 	'Colors'.
@@ -60,6 +56,17 @@ RPackageOrganizer default basicInitializeFromPackagesList: #(
 	'Transcript'.
 	'UIManager'.
 	'Zinc-Character-Encoding-Core'.
-).
+	
+	"These packages are added using hermes after bootstrap"
+	'CodeExport'.
+    'CodeImport'.
+	'CodeImportCommandLineHandlers'.
+	'OpalCompiler-Core'.
+	
+	"These packages are added using the compiler after bootstrap"
+	'FileSystem-Core'.
+	'FileSystem-Disk'.
+	'Deprecated70'.
+}.
 
 RPackageOrganizer registerInterestToSystemAnnouncement.
