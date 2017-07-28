@@ -25,7 +25,7 @@ repo loadedCode
 "using commit as versionInfo for all loaded packages"
 repo savedPackages 
 	collect: [ :eachPackage | 
-		IceMCVersionInfo allInstances anyOne new 
+		IceMCVersionInfo new 
 			fromCommit: commit package: eachPackage;
 			yourself ]
 	thenDo: [ :eachInfo |  
