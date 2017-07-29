@@ -1,5 +1,5 @@
 streaming
-cr
+newLine
 	"Output a cr on the receiver, buffered and not yet shown"
 	
-	self newLine
+	self nextPutAll: OSPlatform current lineEnding
