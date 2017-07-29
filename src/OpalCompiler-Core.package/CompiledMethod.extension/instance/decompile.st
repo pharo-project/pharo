@@ -3,5 +3,5 @@ decompile
 	^Smalltalk globals 
 		at: #FBDDecompiler
 		ifPresent: [ :decompiler | decompiler new  decompile: self]  
-		ifAbsent: [ self selector asMethodPreamble, '
+		ifAbsent: [ RBParser parseMethod: self selector asMethodPreamble, '
 	self noSourceAvailable' ]

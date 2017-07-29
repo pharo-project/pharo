@@ -3,5 +3,4 @@ parseTree
 	^(RBParser 
 		parseMethod: self sourceCode 
 		onError: [ :msg :pos | 
-			^ RBParser 
-				parseMethod: self decompile ]) methodClass: self methodClass.
+			^ self decompile ]) methodClass: self methodClass.
