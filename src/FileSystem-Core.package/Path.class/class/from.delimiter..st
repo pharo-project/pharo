@@ -5,8 +5,10 @@ from: aString delimiter: aDelimiterCharacter
 	aString isEmpty
 		ifTrue: [ ^ self root ].
 	
-	pathClass :=  ((self isAbsoluteUnixPath: aString) or: [self isAbsoluteWindowsPath: aString]) 
+	pathClass :=  ((self isAbsolutePath: aString delimiter: aDelimiterCharacter) or: 
+							[self isAbsoluteWindowsPath: aString]) 
 		ifTrue: [ AbsolutePath ]
 		ifFalse:[ RelativePath ].
 	
-	^ pathClass withAll: (pathClass canonicalizeElements: (aDelimiterCharacter split: aString))
+	^ pathClass withAll: ((aDelimiterCharacter split: aString) select: 
+		[ :segment | segment notEmpty ])
