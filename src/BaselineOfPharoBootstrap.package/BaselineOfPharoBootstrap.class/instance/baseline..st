@@ -44,4 +44,69 @@ baseline: spec
 		spec package: 'Transcript'.
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
-	].
+		
+		spec package: 'CodeExport'.
+		spec package: 'CodeImport'.
+		spec package: 'CodeImportCommandLineHandlers'.
+		spec package: 'OpalCompiler-Core'.
+		
+		spec package: 'FileSystem-Core'.
+		spec package: 'FileSystem-Disk'.
+		spec package: 'Deprecated70'.
+
+		spec group: 'KernelGroup' with: {
+			'AST-Core'.
+			'Announcements-Core'.
+			'Colors'.
+			'Collections-Abstract'.
+			'Collections-Arithmetic'.
+			'Collections-Atomic'.
+			'Collections-Native'.
+			'Collections-Sequenceable'.
+			'Collections-Stack'.
+			'Collections-Streams'.
+			'Collections-Strings'.
+			'Collections-Support'.
+			'Collections-Unordered'.
+			'Collections-Weak'.
+			'Files'.
+			'FileSystem-Path'.
+			'Hermes'.
+			'Jobs'.
+			'Kernel'.
+			'Kernel-BytecodeEncoders'.
+			'Network-UUID'.
+			'NonInteractiveTranscript'.
+			'PharoBootstrap-Initialization'.
+			'RPackage-Core'.
+			'Random-Core'.
+			'Slot'.
+			'System-Announcements'.
+			'System-BasicCommandLineHandler'.
+			'System-CommandLine'.
+			'System-CommandLineHandler'.
+			'System-Finalization'.
+			'System-Hashing'.
+			'System-Model'.
+			'System-Platforms'.
+			'System-SessionManager'.
+			'System-Sources'.
+			'System-Support'.
+			'Traits'.
+			'Transcript'.
+			'UIManager'.
+			'Zinc-Character-Encoding-Core' }.
+
+		"These packages are added using hermes after bootstrap"
+		spec group: 'CompilerGroup' with: {
+			'CodeExport'.
+		   'CodeImport'.
+			'CodeImportCommandLineHandlers'.
+			'OpalCompiler-Core' }.
+		
+		"These packages are added using the compiler after bootstrap"
+		spec group: 'FileSystemGroup' with: {
+			'FileSystem-Core'.
+			'FileSystem-Disk'.
+			'Deprecated70' }.
+	]
