@@ -1,10 +1,22 @@
 preparation
-exportFileSystemInStFile
-
-	self
-		exportPackages: #( 'FileSystem-Core' 'FileSystem-Disk' )
-		usingInitializeScript: '
-FileLocator initialize.
-DiskStore initialize.
-FileHandle initialize.'
-		intoFile: 'FileSystem.st'
+tializeUnicodeClass.
+		Character characterSet: Unicode.
+		
+		ByteTextConverter initialize.
+		
+		ChangeSet initialize.
+		
+		ZipConstants initialize.
+		ZipFileConstants initialize.
+		ZipWriteStream initialize.
+		GZipConstants initialize.
+		InflateStream initialize.
+		FastInflateStream initialize.
+		
+		MCCacheRepository initialize.
+		MCPackageManager initialize.
+		MCLazyVersionInfo initialize.
+		MCMethodDefinition initialize.
+		MCDataStream initialize.
+		MCWorkingCopy initialize.'
+		intoFile: 'Monticello.st'
