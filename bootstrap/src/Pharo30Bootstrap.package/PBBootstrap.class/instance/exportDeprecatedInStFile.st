@@ -1,28 +1,7 @@
 preparation
-re-Containers' 'RingChunkImporter'  'Compression' 'Monticello' 'Ring-Monticello' )
-		usingInitializeScript: '		
-		
-		EncodedCharSet initialize.
+exportDeprecatedInStFile
 
-		Unicode initializeTagConstants.
-		UnicodeDefinitions initializeUnicodeClass.
-		Character characterSet: Unicode.
+	self
+		exportPackages: #( 'Deprecated70' )
+		intoFile: 'Deprecated70.st'
 		
-		ByteTextConverter initialize.
-		
-		ChangeSet initialize.
-		
-		ZipConstants initialize.
-		ZipFileConstants initialize.
-		ZipWriteStream initialize.
-		GZipConstants initialize.
-		InflateStream initialize.
-		FastInflateStream initialize.
-		
-		MCCacheRepository initialize.
-		MCPackageManager initialize.
-		MCLazyVersionInfo initialize.
-		MCMethodDefinition initialize.
-		MCDataStream initialize.
-		MCWorkingCopy initialize.'
-		intoFile: 'Monticello.st'
