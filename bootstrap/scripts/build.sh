@@ -161,6 +161,8 @@ ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';rep
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
+${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
+
 # clean bak sources files
 rm -f *.bak
 
