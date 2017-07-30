@@ -20,7 +20,7 @@ addons:
     - libasound2:i386
     - libssl1.0.0:i386
     - libfreetype6:i386
-	- libcairo2:i386
+    - libcairo2:i386
 
 script:
 - bash ./bootstrap/scripts/bootstrap.sh
