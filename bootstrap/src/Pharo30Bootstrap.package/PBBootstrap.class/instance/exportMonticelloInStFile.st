@@ -9,8 +9,10 @@ exportMonticelloInStFile
 
 		Unicode initializeTagConstants.
 		UnicodeDefinitions initializeUnicodeClass.
-		Character characterSet: Unicode
-		.
+		Character characterSet: Unicode.
+		
+		ByteTextConverter initialize.
+		
 		ChangeSet initialize.
 		
 		ZipConstants initialize.

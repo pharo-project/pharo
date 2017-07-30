@@ -123,7 +123,6 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExp
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
 ${VM} "${COMPILER_IMAGE_NAME}.image" st st-cache/Deprecated70.st st-cache/FileSystem.st --quit --save
-#${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
