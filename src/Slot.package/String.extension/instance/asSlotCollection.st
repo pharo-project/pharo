@@ -6,4 +6,4 @@ asSlotCollection
 	"
 	| whitespaces |
 	whitespaces := ByteString withAll: { Character space . Character tab . Character cr }.
-	^(self substrings: whitespaces) collect: [ :substring | substring asSlot ]
+	^(self substrings: whitespaces) collect: [ :substring | substring asValidInstVarName asSlot ]
