@@ -17,9 +17,7 @@ matrix:
 addons:
   apt:
     packages:
-    - lib32asound2
-    - lib32z1
-    - lib32bz2-1.0
+    - libasound2:i386
     - libssl1.0.0:i386
     - libfreetype6:i386
 
