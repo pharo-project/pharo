@@ -2,7 +2,9 @@ bootstrapping
 loadPackageVersion: aFileName
 	
 	[ 	('Loading ', aFileName asString) logCr.
-		(self localRepository loadVersionFromFileNamed: aFileName) load.
+		"Use snapshot install instead of load to force loading.
+		Otherwise monticello finds no changes and does not load anything."
+		(self localRepository loadVersionFromFileNamed: aFileName) snapshot install.
 	] on: MCMergeOrLoadWarning do: [:warning |
 		('Warning: ', warning messageText asString) logCr.
 		warning resume: true ]
