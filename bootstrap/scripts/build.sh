@@ -3,6 +3,8 @@ set -e
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
+# where can I find the VM?
+VM="./vm/pharo"
 
 function show_help {
   echo
@@ -127,14 +129,19 @@ zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
+<<<<<<< HEAD
 #${VM} "${COMPILER_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
 cp "${COMPILER_IMAGE_NAME}.image" "${CORE_IMAGE_NAME}.image"
+=======
+${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+>>>>>>> b1625bf32c6b2b6c6f8babb789e377af5132d740
 ${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
 ${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
+
 #${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
 cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
@@ -159,7 +166,7 @@ echo "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "[Metacello new baseline: 'IDE';repository: 'filetree://../src'; load] on: MCMergeOrLoadWarning do: #load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
-#${VM} "${PHARO_IMAGE_NAME}.image" clean --release
+${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
 ${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
 
