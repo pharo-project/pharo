@@ -1,2 +1,0 @@
-notifications
-classDefinitionShallowChangedFrom: oldClass to: newClass by: classModification
