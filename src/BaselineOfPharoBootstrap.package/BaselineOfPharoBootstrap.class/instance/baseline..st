@@ -100,7 +100,7 @@ baseline: spec
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
 			'CodeExport'.
-		   'CodeImport'.
+			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
 			'OpalCompiler-Core' }.
 		
