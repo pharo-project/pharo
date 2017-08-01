@@ -1,3 +1,0 @@
-accessing
-methodStreamPosition
-	^stream position
