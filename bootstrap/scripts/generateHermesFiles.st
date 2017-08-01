@@ -1,12 +1,13 @@
 | toExport ftRepo environment rfienvironment |
 
-toExport := #('OpalCompiler-Core' CodeImport CodeExport CodeImportCommandLineHandlers).
+Transcript nextPutAll: '[Hermes] - Loading BaselineOfPharoBootstrap'; cr.
+ftRepo := MCFileTreeRepository new directory: 'src' asFileReference.
+(ftRepo versionWithInfo: (ftRepo versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.
-
-ftRepo := MCFileTreeRepository new directory: 'src' asFileReference.
+toExport := #BaselineOfPharoBootstrap asClass compilerPackageNames.
 environment := Dictionary new.
-(#BaselineOfPharoBootstrap asClass project version packages collect: #name),
+(#BaselineOfPharoBootstrap asClass kernelPackageNames),
 	toExport do: [ :name | | version |
 		version := FiMonticelloWriter new 
 			written: (ftRepo versionWithInfo: (ftRepo versionInfoFromVersionNamed: name )) snapshot
