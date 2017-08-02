@@ -9,6 +9,7 @@ node('unix') {
 	builders[architecture] = {
 		dir(architecture) {
 		
+		try{
 		stage ("Fetch Requirements-${architecture}") {	
 			checkout scm
 			sh 'wget -O - get.pharo.org/vm60 | bash	'
@@ -27,6 +28,9 @@ node('unix') {
 			sh "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources", name: "bootstrap${architecture}"
 	    }
+		} finally {
+			archiveArtifacts artifacts: 'bootstrap-cache/**', fingerprint: true
+		}
 		
 		// platforms for Jenkins node types we will build on
 		def platforms = ['unix', 'osx', 'windows']
@@ -56,10 +60,9 @@ node('unix') {
 					
 					sh "wget -O - get.pharo.org${urlprefix}/vm70 | bash"
 					sh "./pharo Pharo.image test --junit-xml-output \".*\""
-					junit "*.xml"
-					} catch (Exception e) {
-						println(e)
-						throw e
+					} finally {
+						archiveArtifacts artifacts: '*.xml', fingerprint: true
+						junit "*.xml"
 					}
 				}}
 		    }
