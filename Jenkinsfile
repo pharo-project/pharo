@@ -45,7 +45,7 @@ node('unix') {
 						urlprefix = "/64"
 					}
 					
-					def imageArchive = sh "find bootstrap-cache -name 'Pharo7.0-${ARCHITECTURE}bit-*.zip'"
+					def imageArchive = sh "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'"
 					sh "unzip ${imageArchive}"
 					def imageFile="find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.image'"
 					def changesFile="find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.changes'"
