@@ -29,7 +29,7 @@ node('unix') {
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources", name: "bootstrap${architecture}"
 	    }
 		} finally {
-			archiveArtifacts artifacts: 'bootstrap-cache/**', fingerprint: true
+			archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
 		}
 		
 		// platforms for Jenkins node types we will build on
