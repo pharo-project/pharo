@@ -47,8 +47,8 @@ node('unix') {
 					
 					def imageArchive = sh(script: "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'", returnStdout: true).trim()
 					sh "unzip ${imageArchive}"
-					def imageFile=sh(script: "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.image'", returnStdout: true).trim()
-					def changesFile=sh(script: "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.changes'", returnStdout: true).trim()
+					def imageFile=sh(script: "find . -name 'Pharo7.0-${architecture}bit-*.image'", returnStdout: true).trim()
+					def changesFile=sh(script: "find . -name 'Pharo7.0-${architecture}bit-*.changes'", returnStdout: true).trim()
 					
 					sh "cp bootstrap-cache/*.sources ."
 					sh "mv ${imageFile} Pharo.image"
