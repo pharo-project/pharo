@@ -11,13 +11,14 @@ node('unix') {
 		
 		stage ("Fetch Requirements-${architecture}") {	
 			checkout scm
-			sh 'wget -O - get.pharo.org/vm60 | bash'
+			sh 'wget -O - get.pharo.org/vm60 | bash	'
 			sh 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.1.1/bootstrapImage.zip'
 			sh 'unzip bootstrapImage.zip'
 			sh './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
 	    }
 
 		stage ("Bootstrap-${architecture}") {
+			sh "mkdir -p bootstrap-cache #required to generate hermes files"
 			sh "./pharo Pharo.image ./bootstrap/scripts/generateHermesFiles.st --quit"
 			sh "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --quit"
 	    }
