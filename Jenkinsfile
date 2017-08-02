@@ -25,7 +25,7 @@ node('unix') {
 
 		stage ("Full Image-${architecture}") {
 			sh "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
-			stash includes: "bootstrap-cache/*.zip", name: "bootstrap${architecture}"
+			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources", name: "bootstrap${architecture}"
 	    }
 		
 		// platforms for Jenkins node types we will build on
