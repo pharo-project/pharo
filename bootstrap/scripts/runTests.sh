@@ -6,8 +6,9 @@ set -o pipefail
 set -o nounset
 set -o xtrace
 
+ARCHFLAG=""
 if [ ${1} = "64" ]; then
-	ARCHFLAG=64/
+    ARCHFLAG="64/"
 fi
 
 wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
