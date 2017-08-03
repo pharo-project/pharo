@@ -11,6 +11,8 @@ if [ ${1} = "64" ]; then
     ARCHFLAG="64/"
 fi
 
+ls -la
+
 wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
 					
 IMAGE_ARCHIVE=`find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'`
