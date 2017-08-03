@@ -15,10 +15,10 @@ find bootstrap-cache
 
 wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
 					
-IMAGE_ARCHIVE=$(find bootstrap-cache -name 'Pharo7.0-${1}bit-*.zip')
+IMAGE_ARCHIVE=$(find bootstrap-cache -name Pharo7.0-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
-IMAGE_FILE=`find . -name 'Pharo7.0-${1}bit-*.image'`
-CHANGES_FILE=`find . -name 'Pharo7.0-${1}bit-*.changes'`
+IMAGE_FILE=$(find . -name Pharo7.0-${1}bit-*.image)
+CHANGES_FILE=$(find . -name Pharo7.0-${1}bit-*.changes)
 				
 cp bootstrap-cache/*.sources .
 mv $IMAGE_FILE Pharo.image
