@@ -35,7 +35,7 @@ node('unix') {
 
 		stage ("Full Image-${architecture}") {
 			shell "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
-			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources", name: "bootstrap${architecture}"
+			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 	    }
 		} finally {
 			archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
