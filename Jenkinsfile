@@ -1,12 +1,10 @@
-def shell(command) {
-	try{
-		sh "${command} > output.txt"
-		return readFile("output.txt").trim()
-	}catch(e){
-		echo e.message
-	        echo "outputFile content:" + readFile("output.txt").trim()
-		throw e
-	}
+def isWindows(){
+    return env.NODE_LABELS.toLowerCase().contains('windows')
+}
+
+def shell(params){
+    if(isWindows()) bat(params) 
+    else sh(params)
 }
 
 node('unix') {
@@ -51,26 +49,11 @@ node('unix') {
 	        def platform = platf
 		    testers["${platform}-${architecture}"] = {
 	            node(platform) { stage("Tests-${platform}-${architecture}"){
-					try {
+				try {
 					cleanWs()
-		            unstash "bootstrap${architecture}"
+					unstash "bootstrap${architecture}"
 					
-					def urlprefix = ""
-					if (architecture == "64" ) {
-						urlprefix = "/64"
-					}
-					
-					def imageArchive = shell "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'"
-					shell "unzip ${imageArchive}"
-					def imageFile= shell "find . -name 'Pharo7.0-${architecture}bit-*.image'"
-					def changesFile= shell "find . -name 'Pharo7.0-${architecture}bit-*.changes'"
-					
-					shell "cp bootstrap-cache/*.sources ."
-					shell "mv ${imageFile} Pharo.image"
-					shell "mv ${changesFile} Pharo.changes"
-					
-					shell "wget -O - get.pharo.org${urlprefix}/vm70 | bash"
-					shell "./pharo Pharo.image test --junit-xml-output \".*\""
+					shell "bootstrap/scripts/runTests.sh ${architecture}"
 					} finally {
 						archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 						junit allowEmptyResults: true, testResults: '*.xml'
