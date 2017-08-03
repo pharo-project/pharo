@@ -1,5 +1,5 @@
 def shell(command) {
-	sh("${command} > output.txt")
+	sh "${command} > output.txt"
 	return readFile("output.txt").trim()
 }
 
@@ -54,10 +54,10 @@ node('unix') {
 						urlprefix = "/64"
 					}
 					
-					def imageArchive = sh(script: "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'", returnStdout: true).trim()
+					def imageArchive = shell "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'"
 					shell "unzip ${imageArchive}"
-					def imageFile=sh(script: "find . -name 'Pharo7.0-${architecture}bit-*.image'", returnStdout: true).trim()
-					def changesFile=sh(script: "find . -name 'Pharo7.0-${architecture}bit-*.changes'", returnStdout: true).trim()
+					def imageFile= shell "find . -name 'Pharo7.0-${architecture}bit-*.image'"
+					def changesFile= shell "find . -name 'Pharo7.0-${architecture}bit-*.changes'"
 					
 					shell "cp bootstrap-cache/*.sources ."
 					shell "mv ${imageFile} Pharo.image"
