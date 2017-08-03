@@ -24,4 +24,4 @@ cp bootstrap-cache/*.sources .
 mv $IMAGE_FILE Pharo.image
 mv $CHANGES_FILE Pharo.changes
 					
-./pharo Pharo.image test --junit-xml-output ".*"
+./pharo Pharo.image test --junit-xml-output '.*'
