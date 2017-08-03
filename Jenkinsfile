@@ -65,15 +65,9 @@ node('unix') {
 					
 					shell "wget -O - get.pharo.org${urlprefix}/vm70 | bash"
 					shell "./pharo Pharo.image test --junit-xml-output \".*\""
-					} catch(excep) {
-					  echo excep.message
 					} finally {
-					   try{
-						archiveArtifacts artifacts: '*.xml', fingerprint: true
-						junit "*.xml"
-					   } catch (otherExcep) {
-					      // Doing nothing as the exception is produced because there is no artifacts to archive.      
-					   }
+						archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+						junit allowEmptyResults: true, testResults: '*.xml'
 					}
 				}}
 		    }
