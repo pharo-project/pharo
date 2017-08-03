@@ -3,7 +3,8 @@ def shell(command) {
 		sh "${command} > output.txt"
 		return readFile("output.txt").trim()
 	}catch(e){
-	        echo readFile("output.txt").trim()
+		echo e.message
+	        echo "outputFile content:" + readFile("output.txt").trim()
 		throw e
 	}
 }
