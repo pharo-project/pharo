@@ -53,7 +53,7 @@ node('unix') {
 					cleanWs()
 					unstash "bootstrap${architecture}"
 					
-					shell "bootstrap/scripts/runTests.sh ${architecture}"
+					shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture}'"
 					} finally {
 						archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 						junit allowEmptyResults: true, testResults: '*.xml'
