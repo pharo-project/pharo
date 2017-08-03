@@ -1,6 +1,11 @@
 def shell(command) {
-	sh "${command} > output.txt"
-	return readFile("output.txt").trim()
+	try{
+		sh "${command} > output.txt"
+		return readFile("output.txt").trim()
+	}catch(e){
+	        echo readFile("output.txt").trim()
+		throw e
+	}
 }
 
 node('unix') {
