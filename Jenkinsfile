@@ -1,3 +1,8 @@
+def shell(command) {
+	sh("${command} > output.txt")
+	return readFile("output.txt").trim()
+}
+
 node('unix') {
 	cleanWs()
 	def builders = [:]
@@ -12,20 +17,20 @@ node('unix') {
 		try{
 		stage ("Fetch Requirements-${architecture}") {	
 			checkout scm
-			sh 'wget -O - get.pharo.org/vm60 | bash	'
-			sh 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.1.1/bootstrapImage.zip'
-			sh 'unzip bootstrapImage.zip'
-			sh './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
+			shell 'wget -O - get.pharo.org/vm60 | bash	'
+			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.1.1/bootstrapImage.zip'
+			shell 'unzip bootstrapImage.zip'
+			shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
 	    }
 
 		stage ("Bootstrap-${architecture}") {
-			sh "mkdir -p bootstrap-cache #required to generate hermes files"
-			sh "./pharo Pharo.image ./bootstrap/scripts/generateHermesFiles.st --quit"
-			sh "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --quit"
+			shell "mkdir -p bootstrap-cache #required to generate hermes files"
+			shell "./pharo Pharo.image ./bootstrap/scripts/generateHermesFiles.st --quit"
+			shell "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --quit"
 	    }
 
 		stage ("Full Image-${architecture}") {
-			sh "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
+			shell "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources", name: "bootstrap${architecture}"
 	    }
 		} finally {
@@ -50,16 +55,16 @@ node('unix') {
 					}
 					
 					def imageArchive = sh(script: "find bootstrap-cache -name 'Pharo7.0-${architecture}bit-*.zip'", returnStdout: true).trim()
-					sh "unzip ${imageArchive}"
+					shell "unzip ${imageArchive}"
 					def imageFile=sh(script: "find . -name 'Pharo7.0-${architecture}bit-*.image'", returnStdout: true).trim()
 					def changesFile=sh(script: "find . -name 'Pharo7.0-${architecture}bit-*.changes'", returnStdout: true).trim()
 					
-					sh "cp bootstrap-cache/*.sources ."
-					sh "mv ${imageFile} Pharo.image"
-					sh "mv ${changesFile} Pharo.changes"
+					shell "cp bootstrap-cache/*.sources ."
+					shell "mv ${imageFile} Pharo.image"
+					shell "mv ${changesFile} Pharo.changes"
 					
-					sh "wget -O - get.pharo.org${urlprefix}/vm70 | bash"
-					sh "./pharo Pharo.image test --junit-xml-output \".*\""
+					shell "wget -O - get.pharo.org${urlprefix}/vm70 | bash"
+					shell "./pharo Pharo.image test --junit-xml-output \".*\""
 					} finally {
 						archiveArtifacts artifacts: '*.xml', fingerprint: true
 						junit "*.xml"
