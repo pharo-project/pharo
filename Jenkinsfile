@@ -54,6 +54,9 @@ node('unix') {
 					unstash "bootstrap${architecture}"
 					
 					shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture}'"
+					shell "bash -c 'pwd'"
+					shell "bash -c 'ls -lah'"
+					
 					} finally {
 						archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 						junit allowEmptyResults: true, testResults: '*.xml'
