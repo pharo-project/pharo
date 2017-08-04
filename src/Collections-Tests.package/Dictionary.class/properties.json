@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "CyrilFerlicot 11/1/2015 02:45",
+	"super" : "HashedCollection",
+	"category" : "Collections-Unordered",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Dictionary",
+	"type" : "normal"
+}
