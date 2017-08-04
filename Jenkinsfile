@@ -10,7 +10,7 @@ def shell(params){
 node('unix') {
 	cleanWs()
 	def builders = [:]
-	def architectures = ['32']//, '64']
+	def architectures = ['32', '64']
 	for (arch in architectures) {
     // Need to bind the label variable before the closure - can't do 'for (label in labels)'
     def architecture = arch
