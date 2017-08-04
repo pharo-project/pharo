@@ -87,11 +87,13 @@ fi
 
 BOOTSTRAP_IMAGE_NAME=bootstrap
 CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
+COMPILER_IMAGE_NAME=${PREFIX}-compiler-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
 MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
+VM=./vm/pharo
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
 cd bootstrap-cache
@@ -101,7 +103,7 @@ wget http://files.pharo.org/sources/PharoV60.sources
 
 #Prepare
 echo "Prepare Bootstrap files"
-cp "${BOOTSTRAP_IMAGE_NAME}.image" "${CORE_IMAGE_NAME}.image"
+cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
 ../bootstrap/scripts/download_vm.sh
 
 echo "Prepare fonts"
@@ -114,19 +116,32 @@ wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
 cd ..
 
 #Required for the correct work of metacello baselines and unicode initialization
-ln -s .. pharo-core 
+ln -s .. pharo-core
+
+# Installing compiler through Hermes 
+echo "[Compiler] Installing compiler through Hermes"
+${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
+${VM} "${COMPILER_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+${VM} "${COMPILER_IMAGE_NAME}.image" st st-cache/Deprecated70.st st-cache/FileSystem.st --quit --save
+zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --save --quit
+#${VM} "${COMPILER_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
+cp "${COMPILER_IMAGE_NAME}.image" "${CORE_IMAGE_NAME}.image"
 ${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --save --quit
 ${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --save --quit
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
-${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+
+#${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
@@ -145,12 +160,14 @@ zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "[Metacello new baseline: 'IDE';repository: 'filetree://../src'; load] on: MCMergeOrLoadWarning do: #load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
 echo "[Pharo] Configure resulting image"
 ${VM} "${PHARO_IMAGE_NAME}.image" st ../bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
+
+${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
 
 # clean bak sources files
 rm -f *.bak
