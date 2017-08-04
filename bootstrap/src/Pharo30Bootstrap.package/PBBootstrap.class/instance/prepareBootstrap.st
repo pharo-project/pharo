@@ -5,6 +5,7 @@ prepareBootstrap
 		exportKernelProtocols;
 		exportAllPackagesIntoMcz;
 		exportMonticelloInStFile;
+		exportMultilingualInStFile;
 		exportSUnitInStFile;
 		exportCoreTestsInStFile;
 		exportFileSystemInStFile;
