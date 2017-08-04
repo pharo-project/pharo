@@ -1,10 +1,5 @@
 language: c
 
-# set git clone depth to 1
-# otherwise clone is too slow in osx
-git:
-  depth: 1
-
 cache:
   directories:
     - github-cache
