@@ -1,4 +1,4 @@
-tests
+accessing
 testFixAction
 
 	| crit action |
@@ -13,7 +13,8 @@ testFixAction
 		tree: thisContext method parseTree.
 	
 	action := crit actions detect: [ :a | a description = 'Automatically resolve the issue' ].
-	self runWithDialogPopping: [
+	
+	self runWithDidalogPopping: [
 		self
 			shouldnt: [ action actOnCritic: crit ofEntity: crit sourceAnchor entity ]
 			raise: Error ]
