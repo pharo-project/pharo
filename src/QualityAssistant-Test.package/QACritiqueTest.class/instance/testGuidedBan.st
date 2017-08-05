@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testGuidedBan
 
 	| crit |
@@ -7,6 +7,6 @@ testGuidedBan
 		for: thisContext method
 		by: (RBLintRule allSubclasses detect: #isVisible) new.
 	
-	self runWithDidalogPopping: [
+	self runWithDialogPopping: [
 		self shouldnt: [ crit guidedBan ] raise: Error ]
 	
