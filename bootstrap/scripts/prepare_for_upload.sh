@@ -13,6 +13,6 @@ for f in Pharo7.0-*.zip; do
 	#If it is not base image
 	if [[ "$f" != "FULL_IMAGE_NAME" ]]; then
 		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
-		mv "$f" Pharo${IMAGE_KIND}-7.0.0-arch.32bit.build.${BUILD_NUMBER}.sha.${HASH}.zip;
+		mv "$f" Pharo${IMAGE_KIND}-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.32bit.zip;
 	fi
 done
