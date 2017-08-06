@@ -1,5 +1,4 @@
 protocol
 addTab: aTab
-
-	toolbar addTab: aTab.
+	toolbar addTab: aTab
 	

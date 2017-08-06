@@ -1,4 +1,3 @@
 drawing
 borderColor
-
-	^ Color gray
+	^ Smalltalk ui theme borderColor

@@ -1,4 +1,4 @@
-drawing-private
+private-drawing
 backgroundColor
 
 	^ state backgroundColor
