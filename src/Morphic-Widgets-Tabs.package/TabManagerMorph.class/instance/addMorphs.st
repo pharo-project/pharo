@@ -18,7 +18,7 @@ addMorphs
 		addMorph: contentsWrapper
 		fullFrame:
 			(LayoutFrame identity
-				topOffset: 10;
+				topOffset: 2;
 				rightOffset: -1;
 				bottomOffset: -1;
 				leftOffset: 2;
