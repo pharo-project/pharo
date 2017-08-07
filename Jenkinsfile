@@ -37,6 +37,17 @@ node('unix') {
 			shell "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 	    }
+		
+    if (architecture == 32){
+		  stage ("Convert Image - 32->64") {
+			  dir("conversion"){
+          shell "cp ../bootstrap-cache/*.zip ."
+          shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
+          archiveArtifacts artifacts: '*-64bit-*.zip', fingerprint: true
+        }
+	    }
+		}
+		
 		} finally {
 			archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
 		}
