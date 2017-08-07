@@ -38,7 +38,7 @@ node('unix') {
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 	    }
 		
-    if (architecture == 32){
+    if (architecture == "32"){
 		  stage ("Convert Image - 32->64") {
 			  dir("conversion"){
           shell "cp ../bootstrap-cache/*.zip ."
