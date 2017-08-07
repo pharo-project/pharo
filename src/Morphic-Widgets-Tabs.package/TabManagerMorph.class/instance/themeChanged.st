@@ -4,8 +4,8 @@ themeChanged
 	toolbar themeChanged.
 	
 	container
-		color: Smalltalk ui theme class lightBaseColor;
+		color: Smalltalk ui theme lightBaseColor;
 		changed.
 	contentsWrapper
-		color: Smalltalk ui theme class lightBaseColor;
+		color: Smalltalk ui theme lightBaseColor;
 		changed
