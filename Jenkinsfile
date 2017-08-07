@@ -43,7 +43,7 @@ node('unix') {
 			  dir("conversion"){
           shell "cp ../bootstrap-cache/*.zip ."
           shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
-          archiveArtifacts artifacts: '*-64bit-*.zip', fingerprint: true
+          shell "mv *-64bit-*.zip bootstrap-cache"
         }
 	    }
 		}
