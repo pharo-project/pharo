@@ -19,7 +19,7 @@ cp "${MINIMAL_IMAGE_NAME32}" latest-minimal.zip
 cp "${MINIMAL_IMAGE_NAME32}" latest-minimal-32.zip
 cp "${MINIMAL_IMAGE_NAME64}" latest-minimal-64.zip
 
-for f in Pharo7.0-*-32bit-*.zip; do
+for f in Pharo7.0*-32bit-*.zip; do
 	#If it is not base image
 	BITNESS=32bit
 	if [[ "$f" != "${FULL_IMAGE_NAME32}" ]]; then
@@ -30,7 +30,7 @@ for f in Pharo7.0-*-32bit-*.zip; do
 	fi
 done
 
-for f in Pharo7.0-*-64bit-*.zip; do
+for f in Pharo7.0*-64bit-*.zip; do
 	#If it is not base image
 	BITNESS=64bit
 	echo $f
