@@ -38,6 +38,16 @@ node('unix') {
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 	    }
 		
+	    if (architecture == "32"){
+			  stage ("Convert Image - 32->64") {
+				  dir("conversion"){
+	          shell "cp ../bootstrap-cache/*.zip ."
+	          shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
+	          shell "mv *-64bit-*.zip ../bootstrap-cache"
+	        }
+		   }
+	   }
+		
 		if( env.BRANCH_NAME == "development" ){
 			stage("Upload to files.pharo.org"){
 				dir("bootstrap-cache"){
