@@ -37,7 +37,18 @@ node('unix') {
 			shell "BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/build.sh -a ${architecture}"
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 	    }
+		
+		if( env.BRANCH_NAME == "development" ){
+			stage("Upload to files.pharo.org"){
+				dir("bootstrap-cache"){
+					shell "BUILD_NUMBER=${env.BUILD_ID} bash bootstrap/scripts/prepare_for_upload.sh"
+					shell "bash bootstrap/scripts/upload_to_files.pharo.org.sh"
+				}
+			}
+		}
+		
 		} finally {
+
 			archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
 		}
 		
