@@ -38,17 +38,29 @@ node('unix') {
 			stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
 	    }
 		
-    if (architecture == "32"){
-		  stage ("Convert Image - 32->64") {
-			  dir("conversion"){
-          shell "cp ../bootstrap-cache/*.zip ."
-          shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
-          shell "mv *-64bit-*.zip ../bootstrap-cache"
-        }
-	    }
+	    if (architecture == "32"){
+			  stage ("Convert Image - 32->64") {
+				  dir("conversion"){
+	          shell "cp ../bootstrap-cache/*.zip ."
+	          shell "bash ../bootstrap/scripts/transform_32_into_64.sh"
+	          shell "mv *-64bit-*.zip ../bootstrap-cache"
+	        }
+		   }
+	   }
+		
+		if( env.BRANCH_NAME == "development" ){
+			stage("Upload to files.pharo.org"){
+				dir("bootstrap-cache"){
+				    shell "BUILD_NUMBER=${env.BUILD_ID} bash bootstrap/scripts/prepare_for_upload.sh"
+					sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+						shell "bash bootstrap/scripts/upload_to_files.pharo.org.sh"
+					}
+				}
+			}
 		}
 		
 		} finally {
+
 			archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
 		}
 		
