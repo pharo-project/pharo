@@ -51,8 +51,10 @@ node('unix') {
 		if( env.BRANCH_NAME == "development" ){
 			stage("Upload to files.pharo.org"){
 				dir("bootstrap-cache"){
-					shell "BUILD_NUMBER=${env.BUILD_ID} bash bootstrap/scripts/prepare_for_upload.sh"
-					shell "bash bootstrap/scripts/upload_to_files.pharo.org.sh"
+				    shell "BUILD_NUMBER=${env.BUILD_ID} bash bootstrap/scripts/prepare_for_upload.sh"
+					sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+						shell "bash bootstrap/scripts/upload_to_files.pharo.org.sh"
+					}
 				}
 			}
 		}
