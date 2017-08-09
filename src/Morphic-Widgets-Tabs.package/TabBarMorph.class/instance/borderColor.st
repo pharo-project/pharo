@@ -1,3 +1,4 @@
 drawing
 borderColor
-	^ Smalltalk ui theme borderColor
+	"I do not use #borderColor because I want a light border"
+	^ Smalltalk ui theme lightBackgroundColor

@@ -1,3 +1,3 @@
 protocol
 backgroundColor
-	^ Smalltalk ui theme lightBaseColor
+	^ Smalltalk ui theme selectionColor
