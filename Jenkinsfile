@@ -63,7 +63,18 @@ node('unix') {
 
 			archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
 		}
-		
+	}
+}
+
+//Testing step
+def architectures = ['32']//, '64']
+for (arch in architectures) {
+// Need to bind the label variable before the closure - can't do 'for (label in labels)'
+def architecture = arch
+
+	builders[architecture] = {
+	dir(architecture) {
+
 		// platforms for Jenkins node types we will build on
 		def platforms = ['unix', 'osx', 'windows']
 		def testers = [:]
@@ -90,9 +101,6 @@ node('unix') {
 		}
 	} // end build block
 	
-	} // end for architectures
+} // end for architectures
 	
-	parallel builders
-	cleanWs()
-	
-} // end node
+parallel builders
