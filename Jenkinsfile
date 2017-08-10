@@ -17,7 +17,7 @@ node('unix') {
 
 	builders[architecture] = {
 		dir(architecture) {
-		
+			
 		try{
 		stage ("Fetch Requirements-${architecture}") {	
 			checkout scm
@@ -65,43 +65,35 @@ node('unix') {
 		}
 	}
 	}
+	
+	parallel builders
 }
 
 //Testing step
 def architectures = ['32']//, '64']
 for (arch in architectures) {
-// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-def architecture = arch
-
-	builders[architecture] = {
-	dir(architecture) {
-
-		// platforms for Jenkins node types we will build on
-		def platforms = ['unix', 'osx', 'windows']
-		def testers = [:]
-		for (platf in platforms) {
-	        // Need to bind the label variable before the closure - can't do 'for (label in labels)'
-	        def platform = platf
-		    testers["${platform}-${architecture}"] = {
-	            node(platform) { stage("Tests-${platform}-${architecture}"){
+	// Need to bind the label variable before the closure - can't do 'for (label in labels)'
+	def architecture = arch
+	
+	// platforms for Jenkins node types we will build on
+	def platforms = ['unix', 'osx', 'windows']
+	def testers = [:]
+	for (platf in platforms) {
+		// Need to bind the label variable before the closure - can't do 'for (label in labels)'
+		def platform = platf
+		testers["${platform}-${architecture}"] = {
+			node(platform) { stage("Tests-${platform}-${architecture}") {
 				try {
 					cleanWs()
 					unstash "bootstrap${architecture}"
-					
 					shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture}'"
-					
-					} finally {
-						archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-						junit allowEmptyResults: true, testResults: '*.xml'
-					}
-				}}
-		    }
+				} finally {
+					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+					junit allowEmptyResults: true, testResults: '*.xml'
+				}
+			}}
 		}
-		parallel testers
-		
-		}
-	} // end build block
-	
-} // end for architectures
-	
-parallel builders
+	}
+}
+
+parallel testers
