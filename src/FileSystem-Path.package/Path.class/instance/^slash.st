@@ -1,11 +1,8 @@
 navigating
 / aString
-	| path |
+	"aString is either a file or path.  If aString is relative, it is appended to the receiver, if it is absolute, an instance of the receiver with the path is answered"
 
 	aString isEmptyOrNil 
 		ifTrue: [ Error signal: 'Path element cannot be empty or nil'].
-		
-	path := self class new: self size + 1.
-	path copyFrom: self.
-	path at: path size put: aString.
-	^ path
+
+	^self resolvePath: (self class from: aString)
