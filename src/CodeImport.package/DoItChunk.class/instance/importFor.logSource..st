@@ -1,5 +1,5 @@
 importing
-importFor: requestor
+importFor: requestor logSource: logSource
 	
 	(contents beginsWith: '----') ifTrue: [ ^self ].
 	
@@ -12,5 +12,5 @@ importFor: requestor
 	^Smalltalk compiler class new
 		source: contents;
 		requestor: requestor;
-		logged: true;
+		logged: logSource;
 		evaluate.

@@ -10,6 +10,7 @@ installSourceFile: aReference
 			handleErrorsDuring: [
 				self skipShebangFrom: stream.
 				codeImporter := CodeImporter fileStream: stream.
+				codeImporter logSource: (self hasOption: 'no-source') not.
 				codeImporter parseChunks ]
 			reference: aReference ].
 	

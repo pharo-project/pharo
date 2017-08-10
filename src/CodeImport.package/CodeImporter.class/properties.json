@@ -9,7 +9,8 @@
 		"readStream",
 		"codeDeclarations",
 		"parserClass",
-		"requestor"
+		"requestor",
+		"logSource"
 	],
 	"name" : "CodeImporter",
 	"type" : "normal"
