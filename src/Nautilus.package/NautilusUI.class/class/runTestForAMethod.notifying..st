@@ -8,11 +8,11 @@ runTestForAMethod: aMethod notifying: aBoolean
 		ifFalse: [ ^ self ].
 	color := Color gray.
 	testMethod isPassedTest
-		ifTrue: [ color := Color green ].
+		ifTrue: [ color := self theme successBackgroundColor ].
 	testMethod isFailedTest
-		ifTrue: [ color := Color yellow ].
+		ifTrue: [ color := self theme warningBackgroundColor ].
 	testMethod isErrorTest
-		ifTrue: [ color := Color red ].
+		ifTrue: [ color := self theme dangerBackgroundColor ].
 	self
 		notifyTitle: 'Test Finished'
 		contents: 'Method: ' , testMethod methodClass asString , '>>#' , testMethod selector asString

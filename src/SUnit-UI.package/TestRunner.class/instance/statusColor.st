@@ -1,7 +1,7 @@
 accessing-testing
 statusColor
 	result hasErrors 
-		ifTrue: [ ^ Color red ].
+		ifTrue: [ ^ self theme dangerBackgroundColor ].
 	result hasFailures 
-		ifTrue: [ ^ Color yellow ].
-	^ Color green
+		ifTrue: [ ^ self theme warningBackgroundColor ].
+	^ self theme successBackgroundColor
