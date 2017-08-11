@@ -7,6 +7,7 @@ withAll: aCollection
 	parsedCollection := OrderedCollection new: (aCollection size max: 10).
 	aCollection do: [ :each |
 		parsedCollection addAll: (self delimeter split: each) ].
+	parsedCollection := self removeRedundantSegments: parsedCollection.
 	inst := self new: parsedCollection size.
 	parsedCollection withIndexDo: [:segment :index |
 		inst at: index put: segment].
