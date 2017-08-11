@@ -1,4 +1,4 @@
-*SUnit-Core
+SUnit-support
 isTestMethod
 	"Is the receiver a TestCase test method?"
 
