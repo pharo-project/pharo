@@ -14,8 +14,11 @@
 		location: FileLocator image parent parent;
 		subdirectory: 'src';
 		createRepository.].
+
+repo name: 'pharo'.
 repo beSystemRepository.
 repo register.
+
 "get loaded commit"
 commit := repo branch lastCommit.
 "set loaded commit as reference"
