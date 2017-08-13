@@ -2,4 +2,5 @@ private
 refresh
 
 	lastRefresh := Time millisecondClockValue.
-	self currentWorld doOneCycleNow.
+	UIManager default uiProcess == Processor activeProcess
+		ifTrue: [ self currentWorld doOneCycleNow ]

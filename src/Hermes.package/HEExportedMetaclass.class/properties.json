@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "HESymbol",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HEExportedMetaclass",
+	"type" : "normal"
+}

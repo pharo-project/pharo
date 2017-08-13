@@ -10,6 +10,6 @@ testIntervals
 					source := tree source copyFrom: each start to: each stop.
 					each isPragma ifFalse: [
 						newNode := each isMethod 
-								ifTrue: [RBParser parseMethod: source]
-								ifFalse: [RBParser parseExpression: source].
+								ifTrue: [self parserClass parseMethod: source]
+								ifFalse: [self parserClass parseExpression: source].
 						self compare: each to: newNode]]]

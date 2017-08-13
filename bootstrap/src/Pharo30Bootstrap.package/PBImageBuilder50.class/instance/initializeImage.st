@@ -10,7 +10,7 @@ initializeImage
 	self bootstrapInterpreter evaluateCode: '
 	Smalltalk at: #Processor put: (ProcessorScheduler basicNew).
 	(Smalltalk at: #Processor) instVarAt: 1 put: ((1 to: 80) collect: [ :i | ProcessList new ])'.
-	
+
 	"Initialize the processor association for the special objects array.
 	Enchancement possible: This should be automatically managed by the createVMStubs method"
 	objectSpace backend processorAssociation: (self bootstrapInterpreter evaluateCode: 'Smalltalk globals associationAt: #Processor.').
@@ -26,12 +26,12 @@ initializeImage
 					major: {major};
 					minor: {minor};
 					suffix: ''SNAPSHOT'';
-					highestUpdate: {update};
+					commitHash: ''{update}'';
 					yourself).
 	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
 		'major' -> definitionFetcher majorVersion asString.
 		'minor' -> definitionFetcher minorVersion asString.
-		'update' -> definitionFetcher updateNumber asString.
+		'update' -> definitionFetcher commitHash asString.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
 	

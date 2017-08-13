@@ -1,8 +1,7 @@
 tests
 testSizeInMemorySmallIntegers
-	self assert: 42 sizeInMemory= 0.
-	self assert: -42 sizeInMemory= 0.
-	self assert: 0 sizeInMemory= 0.
-	self assert: 999999999999999999999 sizeInMemory > 0.
-
-	
+	self assert: SmallInteger minVal sizeInMemory isZero.
+	self assert: 0 sizeInMemory isZero.
+	self assert: SmallInteger maxVal sizeInMemory isZero.
+	self assert: (SmallInteger minVal - 1) sizeInMemory > 0.
+	self assert: (SmallInteger maxVal + 1) sizeInMemory > 0

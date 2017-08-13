@@ -1,1 +1,0 @@
-I am announced right after some text are inserted into text.

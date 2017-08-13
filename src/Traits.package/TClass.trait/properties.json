@@ -1,7 +1,5 @@
 {
+	"name" : "TClass",
 	"commentStamp" : "TorstenBergmann 2/4/2014 20:37",
-	"traitcomposition" : "TBehaviorCategorization",
-	"classtraitcomposition" : "TBehaviorCategorization classTrait",
-	"category" : "Traits-Kernel-Traits",
-	"name" : "TClass"
+	"category" : "Traits-Kernel-Traits"
 }

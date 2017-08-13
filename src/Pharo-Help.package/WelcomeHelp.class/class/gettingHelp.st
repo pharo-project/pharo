@@ -1,8 +1,8 @@
 pages
 gettingHelp
 	^ HelpTopic 
-		title: 'Getting help'
-		contents: (self heading: 'Getting help'),
+		title: 'Getting Help'
+		contents: (self heading: 'Getting Help'),
 		'Pharo has a vibrant community that shares knowledge in different ways: 
 
 - The "Pharo Users" mailing list: 

@@ -1,11 +1,14 @@
 system primitives
-digitAt: n 
-	"Answer the value of an indexable field in the receiver.  LargePositiveInteger uses bytes of base two number, and each is a 'digit' base 256.  Fail if the argument (the index) is not an Integer or is out of bounds."
-	n>4 ifTrue: [^ 0].
-	self < 0
-		ifTrue: 
-			[self = SmallInteger minVal ifTrue:
-				["Can't negate minVal -- treat specially"
-				^ #(0 0 0 64) at: n].
-			^ ((0-self) bitShift: (1-n)*8) bitAnd: 16rFF]
-		ifFalse: [^ (self bitShift: (1-n)*8) bitAnd: 16rFF]
+digitAt: n
+	"Answer the value of an apparent byte-indexable field in the receiver,
+	 analogous to the large integers, which are organized as bytes."
+
+	n = 1
+		ifTrue: [ 
+			"Negate carefully in case the receiver is SmallInteger minVal"
+			^ self < 0
+				ifTrue: [ -256 - self bitAnd: 255 ]
+				ifFalse: [ self bitAnd: 255 ] ].
+	^ self < 0
+		ifTrue: [ (-256 - self bitShift: -8) + 1 digitAt: n - 1 ]
+		ifFalse: [ (self bitShift: 8 - (n bitShift: 3)) bitAnd: 255 ]

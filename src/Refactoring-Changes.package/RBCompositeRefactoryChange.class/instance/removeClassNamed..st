@@ -1,3 +1,3 @@
 refactory-changes
 removeClassNamed: aSymbol 
-	^ self addChange: (RBRemoveClassChange removeClassName: aSymbol)
+	^ self addChange: (RBRefactoryChangeManager changeFactory removeClassNamed: aSymbol)

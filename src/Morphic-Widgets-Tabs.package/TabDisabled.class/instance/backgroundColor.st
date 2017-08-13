@@ -1,4 +1,3 @@
 protocol
 backgroundColor
-	
-	^ Color gray darker
+	^ Smalltalk ui theme disabledColor

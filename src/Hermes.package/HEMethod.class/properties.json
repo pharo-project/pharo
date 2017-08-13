@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "",
+	"super" : "HEAbstractExported",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"className",
+		"name",
+		"header",
+		"literals",
+		"bytecode",
+		"protocol"
+	],
+	"name" : "HEMethod",
+	"type" : "normal"
+}

@@ -1,6 +1,6 @@
 initialization
 initialize
-	changes := RBCompositeRefactoryChange new.
+	changes := RBRefactoryChangeManager changeFactory compositeRefactoryChange.
 	environment := RBBrowserEnvironment new.
 	newClasses := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.

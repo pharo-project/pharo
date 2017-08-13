@@ -8,4 +8,4 @@ cairo_font_face_t * cairo_ft_font_face_create_for_ft_face
 "
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	
-	^ self nbCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(uint aFace , int flags )) 
+	^ self nbCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 

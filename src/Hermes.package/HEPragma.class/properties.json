@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "HEExportedLiteral",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"method",
+		"arguments",
+		"keyword"
+	],
+	"name" : "HEPragma",
+	"type" : "normal"
+}

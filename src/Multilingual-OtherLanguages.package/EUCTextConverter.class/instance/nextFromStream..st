@@ -1,7 +1,7 @@
 conversion
 nextFromStream: aStream
 
-	| character1 character2 offset value1 value2 nonUnicodeChar |
+	| encodedCharacter character1 character2 offset value1 value2 codePoint |
 	aStream isBinary ifTrue: [^ aStream basicNext].
 	(character1 := aStream basicNext) ifNil: [^ nil].
 	character1 asciiValue <= 127 ifTrue: [^ character1].
@@ -12,5 +12,6 @@ nextFromStream: aStream
 	(value1 < 0 or: [value1 > 93]) ifTrue: [^ nil].
 	(value2 < 0 or: [value2 > 93]) ifTrue: [^ nil].
 
-	nonUnicodeChar := Character leadingChar: self leadingChar code: value1 * 94 + value2.
-	^ Character codePoint: nonUnicodeChar asUnicode.
+	encodedCharacter := (Character leadingChar: self leadingChar code: value1 * 94 + value2) charCode + 1.
+	codePoint := (EncodedCharSet charsetAt: self leadingChar) ucsTable at: encodedCharacter.
+	^ Character codePoint: codePoint

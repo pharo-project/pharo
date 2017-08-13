@@ -1,10 +1,19 @@
 *.image
 *.changes
 *.log
+*.sources
+*.dmp
+*.zip
+
+methodProperties.json
+**/monticello.meta/version
+
+CONFIG
 
 pharo
 pharo-ui
 pharo-vm/
+
 
 pharo-local/
 epicea-sessions/

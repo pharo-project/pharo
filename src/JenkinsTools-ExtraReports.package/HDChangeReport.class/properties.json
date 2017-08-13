@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
+	"super" : "HDReport",
+	"category" : "JenkinsTools-ExtraReports",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"gofer"
+	],
+	"name" : "HDChangeReport",
+	"type" : "normal"
+}

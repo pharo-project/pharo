@@ -1,3 +1,0 @@
-protocol
-backgroundColor
-	^ Color darkGray 

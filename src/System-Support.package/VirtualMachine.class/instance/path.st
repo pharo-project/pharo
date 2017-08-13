@@ -4,4 +4,4 @@ path
 
 	"Smalltalk vm path"
 
-	^ FilePathEncoder decode: self primVmPath
+	^ self primVmPath

@@ -1,4 +1,0 @@
-testing
-isCursor
-
-	^ end == start
