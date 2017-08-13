@@ -1,0 +1,3 @@
+deprecated
+blue
+	^self blueFont

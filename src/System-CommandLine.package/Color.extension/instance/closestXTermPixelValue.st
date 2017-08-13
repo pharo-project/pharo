@@ -1,4 +1,4 @@
-*System-CommandLine-TextSupport
+*System-CommandLine
 closestXTermPixelValue
 	| index |
 	"Return the nearest approximation to this color for 256 xterm color."

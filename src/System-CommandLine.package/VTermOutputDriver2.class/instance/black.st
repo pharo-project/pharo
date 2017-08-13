@@ -1,0 +1,3 @@
+deprecated
+black
+	^self blackFont.
