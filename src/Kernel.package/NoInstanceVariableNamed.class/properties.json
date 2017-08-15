@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "CyrilFerlicot 8/15/2017 20:33",
+	"super" : "Error",
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"instVarName"
+	],
+	"name" : "NoInstanceVariableNamed",
+	"type" : "normal"
+}
