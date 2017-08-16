@@ -159,7 +159,7 @@ zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "[Metacello new baseline: 'IDE';repository: 'filetree://../src'; load] on: MCMergeOrLoadWarning do: #load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 

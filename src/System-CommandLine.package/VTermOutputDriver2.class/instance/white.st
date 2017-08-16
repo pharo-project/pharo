@@ -1,0 +1,3 @@
+deprecated
+white
+	^self whiteFont
