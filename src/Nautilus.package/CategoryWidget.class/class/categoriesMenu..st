@@ -25,15 +25,8 @@ categoriesMenu: aBuilder
 		order: 200.
 			
 	(aBuilder item: #'Browse External Package')
-		enabledBlock: [ 
-			target enableCategorySingleSelection and: [ 
-				target selectedCategories anySatisfy: [ :cat | cat beginsWith: '*' ] 
-			]
-		];
-		action: [ | pkg |
-			pkg := RPackageOrganizer default packageNamed: target selectedCategories anyOne allButFirst.
-			Smalltalk tools browser openOnPackage: pkg
- 		];
+		enabledBlock: [ target enableCategorySingleSelection and: [ target selectedCategories anySatisfy: [ :cat | cat beginsWith: '*' ] 	] ];
+		action: [ (RPackage organizer packageForProtocol: target selectedCategory inClass: target class) browse ];
 		order: 250;
 		withSeparatorAfter.
 		
