@@ -9,4 +9,4 @@ from: aString delimiter: aDelimiterCharacter
 		ifTrue: [ AbsolutePath ]
 		ifFalse:[ RelativePath ].
 	
-	^ pathClass withAll: (pathClass canonicalizeElements: (aDelimiterCharacter split: aString))
+	^ pathClass withAll: (aDelimiterCharacter split: aString)
