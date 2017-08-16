@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "TorstenBergmann 4/13/2016 08:24",
-	"super" : "Object",
+	"super" : "WebBrowser",
 	"category" : "WebBrowser-Core-OS-Unix",
 	"classinstvars" : [ ],
 	"pools" : [ ],
