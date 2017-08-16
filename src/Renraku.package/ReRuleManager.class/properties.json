@@ -3,7 +3,9 @@
 	"super" : "Object",
 	"category" : "Renraku-Utility",
 	"classinstvars" : [
-		"uniqueInstance"
+		"uniqueInstance",
+		"managers",
+		"default"
 	],
 	"pools" : [ ],
 	"classvars" : [ ],

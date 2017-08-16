@@ -4,9 +4,9 @@ testBan2
 	
 		
 	criticToSkip := testMethod critiques detect: [ :critic |
-		critic rule class = RBUnclassifiedMethodsRule ].
+		critic rule class = ScreamerRule ].
 	
 	testClass ban: criticToSkip.
 	
 	self assert: (testMethod critiques noneSatisfy: [ :critic |
-		critic rule class = RBUnclassifiedMethodsRule ]).
+		critic rule class = ScreamerRule ]).
