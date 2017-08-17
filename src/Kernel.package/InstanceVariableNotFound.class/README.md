@@ -6,11 +6,11 @@ I am an exception raised when we try to access to an instance variable by its na
 Examples 
 --------------------------
 
-	NoInstanceVariableNamed signalFor: 'test'.
+	InstanceVariableNotFound signalFor: 'test'.
 	
 	Object new instVarNamed: 'test'.
 	
-	[ Object new instVarNamed: 'test' ] on: NoInstanceVariableNamed do: [ :ex | ex ].
+	[ Object new instVarNamed: 'test' ] on: InstanceVariableNotFound do: [ :ex | ex ].
 
 Internal Representation and Key Implementation Points.
 --------------------------
