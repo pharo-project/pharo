@@ -7,19 +7,19 @@ testExtendingPath
 	self should: [ '/a/b' asPath / nil ] raise: Error.
 
 	ref := '/a/b/c' asPath / 'd/e'.
-	self assert: (ref segments = #('a' 'b' 'c' 'd' 'e')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
 
 	ref := '/a/b/c' asPath / 'd/e'.
-	self assert: (ref parent segments = #('a' 'b' 'c' 'd')).
+	self assert: ref parent segments equals: #('a' 'b' 'c' 'd').
 
 	ref := '/a/b/c' asPath / '../d'.
-	self assert: (ref segments = #('a' 'b' 'd')).
+	self assert: ref segments equals:  #('a' 'b' 'c' '..' 'd').
 
 	ref := '/a/b/c' asPath / 'd/..'.
-	self assert: (ref segments = #('a' 'b' 'c')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' '..').
 
 	ref := '/a/b/c' asPath / 'd/../e'.
-	self assert: (ref segments = #('a' 'b' 'c' 'e')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' '..' 'e').
 
 	ref := '/a/b/c' asPath / './d'.
 	self assert: (ref segments = #('a' 'b' 'c' 'd')).
@@ -28,5 +28,5 @@ testExtendingPath
 	self assert: (ref segments = #('a' 'b' 'c' 'd')).
 
 	ref := '/a/b/c' asPath / 'd/./e'.
-	self assert: (ref segments = #('a' 'b' 'c' 'd' 'e')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
 

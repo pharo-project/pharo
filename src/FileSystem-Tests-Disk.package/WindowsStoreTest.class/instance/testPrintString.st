@@ -15,5 +15,5 @@ testPrintString
 	self assert: (filesystem referenceTo: 'c:\') printString equals: 'File @ c:\'.
 	
 	"empty"
-	self assert: (filesystem referenceTo: './') printString equals: 'File @ '.
-	self assert: (filesystem referenceTo: '.\') printString equals: 'File @ '
+	self assert: (filesystem referenceTo: './') printString equals: 'File @ .'.
+	self assert: (filesystem referenceTo: '.\') printString equals: 'File @ .'

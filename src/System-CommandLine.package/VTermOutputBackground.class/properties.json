@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "ValentinRyckewaert 8/9/2016 11:36",
+	"super" : "VTermOutputStyleElement",
+	"category" : "System-CommandLine",
+	"classinstvars" : [ ],
+	"pools" : [
+		"VTermOutputStyles"
+	],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VTermOutputBackground",
+	"type" : "normal"
+}

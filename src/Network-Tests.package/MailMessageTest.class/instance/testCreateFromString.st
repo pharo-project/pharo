@@ -17,7 +17,7 @@ English, and then do the deed.  Oh, and expand my RAM to 128 first.
 Mike
 '.
 
-	message := MailMessage from: text.
+	message := MailMessage fromRfc822: text.
 
 	self assert: message text = text.
 	self assert: message subject = 'RE: Windows 2000 on your laptop'.

@@ -4,16 +4,16 @@ testRedundantSeparators
 	| ref |
 
 	ref := '/a/b/c' asPath / 'foo/'.
-	self assert: (ref segments = #('a' 'b' 'c' 'foo')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo').
 
 	ref := '/a/b/c' asPath / 'foo//'.
-	self assert: (ref segments = #('a' 'b' 'c' 'foo')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo').
 
 	ref := '/a/b/c' asPath / 'foo//..'.
-	self assert: (ref segments = #('a' 'b' 'c')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo' '..').
 
 	ref := '/a/b/c' asPath / '..//foo'.
-	self assert: (ref segments = #('a' 'b' 'foo')).
+	self assert: ref segments equals: #('a' 'b' 'c' '..' 'foo').
 
 	ref := '/a/b/c' asPath / 'foo//..//bar'.
-	self assert: (ref segments = #('a' 'b' 'c' 'bar')).
+	self assert: ref segments equals: #('a' 'b' 'c' 'foo' '..' 'bar')

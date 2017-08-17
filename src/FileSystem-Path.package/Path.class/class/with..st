@@ -5,6 +5,7 @@ with: aString
 	| inst parsedCollection |
 
 	parsedCollection := self delimeter split: aString.
+	parsedCollection := self removeRedundantSegments: parsedCollection.
 	inst := self new: parsedCollection size.
 	parsedCollection withIndexDo: [:segment :index |
 		inst at: index put: segment].

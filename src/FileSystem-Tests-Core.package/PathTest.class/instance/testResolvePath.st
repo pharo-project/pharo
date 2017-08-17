@@ -23,5 +23,5 @@ testResolvePath
 		assert: (path resolvePath: Path * 'child')
 		equals: (Path / 'grandfather' / 'father' / 'child' / 'child').
 	self
-		assert:  (path resolvePath: (Path parent) / '..')
+		assert:  (path resolvePath: (Path parent) / '..') canonicalize
 		equals: (Path / 'grandfather')

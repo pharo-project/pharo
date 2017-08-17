@@ -1,0 +1,3 @@
+deprecated
+insertLine
+	^self newLine
