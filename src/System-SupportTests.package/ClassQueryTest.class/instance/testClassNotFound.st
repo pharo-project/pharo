@@ -1,12 +1,4 @@
 tests
 testClassNotFound
 	
-	| correctErrorRaised |
-	
-	correctErrorRaised := false.
-	
-	[ Smalltalk globals classNamed: #notExistedClass ]
-		on: ClassNotFound do: [
-			correctErrorRaised := true. ].
-		
-    self assert: correctErrorRaised.
+     self should: [ Smalltalk globals classNamed: #notExistedClass ] raise: ClassNotFound
