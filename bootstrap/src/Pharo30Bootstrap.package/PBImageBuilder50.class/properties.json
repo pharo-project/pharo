@@ -15,7 +15,8 @@
 		"definitionFetcher",
 		"statistics",
 		"logger",
-		"imageFileReference"
+		"imageFileReference",
+		"buildNumber"
 	],
 	"name" : "PBImageBuilder50",
 	"type" : "normal"

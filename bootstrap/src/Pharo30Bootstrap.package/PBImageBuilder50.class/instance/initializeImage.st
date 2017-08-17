@@ -25,13 +25,14 @@ initializeImage
 					type: ''Pharo'';
 					major: {major};
 					minor: {minor};
-					suffix: ''SNAPSHOT'';
-					commitHash: ''{update}'';
+					suffix: ''alpha.build.{build}.sha.{hash}'';
+					commitHash: ''{hash}'';
 					yourself).
 	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
 		'major' -> definitionFetcher majorVersion asString.
 		'minor' -> definitionFetcher minorVersion asString.
-		'update' -> definitionFetcher commitHash asString.
+		'build' -> self buildNumber asString.
+		'hash' -> definitionFetcher commitHash asString.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
 	
