@@ -9,6 +9,4 @@ imageVersionString
 			nextPut: $.;
 			nextPutAll: self minor printString;
 			nextPut: $-;
-			nextPutAll: self highestUpdate printString;
-			nextPut: $-;
 			nextPutAll: self suffix]
