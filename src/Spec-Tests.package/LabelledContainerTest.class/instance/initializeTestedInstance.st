@@ -1,0 +1,3 @@
+running
+initializeTestedInstance
+	testedInstance content: TestingComposableModel.

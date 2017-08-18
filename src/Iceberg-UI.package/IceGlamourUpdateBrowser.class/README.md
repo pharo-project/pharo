@@ -1,1 +1,0 @@
-This browser allows you to see the new commits  in your [upstream](../../../wiki/Some-keys-to-understand-Git-nomenclature#upstream), browse the changes and merge them into your current branch (or load them without merging).

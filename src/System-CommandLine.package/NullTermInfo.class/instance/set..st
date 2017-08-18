@@ -1,0 +1,3 @@
+TermStyle
+set: aString
+	^ aString

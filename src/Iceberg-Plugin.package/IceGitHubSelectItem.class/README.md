@@ -1,1 +1,0 @@
-I'm a helper to keep selected items in a list.

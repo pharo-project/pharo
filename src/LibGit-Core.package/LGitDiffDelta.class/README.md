@@ -1,1 +1,0 @@
-I represent the difference between two entities (e.g. two files). If one of the entities is new or deleted the "nfiles" field will hold be set to 1, otherwise it will be set to 2.

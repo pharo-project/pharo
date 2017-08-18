@@ -1,1 +1,0 @@
-/** Structure describing the binary contents of a diff. */

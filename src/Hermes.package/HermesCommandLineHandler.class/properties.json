@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "CommandLineHandler",
+	"category" : "Hermes-CommandLineHandler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HermesCommandLineHandler",
+	"type" : "normal"
+}

@@ -1,3 +1,0 @@
-accessing
-iconWidth
-	^ 24

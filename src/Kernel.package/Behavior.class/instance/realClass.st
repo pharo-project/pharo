@@ -1,0 +1,4 @@
+accessing
+realClass
+
+	^ self

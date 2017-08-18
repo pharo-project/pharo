@@ -1,3 +1,0 @@
-actions
-newRepository
-	IceNewRepositoryModel new openWithSpec

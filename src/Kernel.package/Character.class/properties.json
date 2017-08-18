@@ -5,6 +5,7 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [
+		"CharSet",
 		"CharacterTable",
 		"DigitValues"
 	],

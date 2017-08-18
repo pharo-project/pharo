@@ -1,9 +1,7 @@
 bootstrap
 createImage
 
-	self flag: #fixArguments.
-	
 	(PBImageBuilderSpur50 forArchitecture: architecture)
-		gitRepositoryUrl: 'UNUSED' location: 'UNUSED' subdirectory: 'UNUSED';
+		gitRepositoryUrl: 'git@github.com:pharo-project/pharo.git' location: '.' subdirectory: 'src';
 	 	imageFileReference: imageReference;  
 		bootstrap.

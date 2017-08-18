@@ -1,10 +1,10 @@
 private
 updateChanges
-	
 	| aCompositeChange |
-	aCompositeChange := RBCompositeRefactoryChange new.
-	changes do: [:each | aCompositeChange addChange: each ].
+	aCompositeChange := RBRefactoryChangeManager changeFactory
+		compositeRefactoryChange.
+	changes do: [ :each | aCompositeChange addChange: each ].
 
-	self flag: 'todo'. "Filter the shown changes depending on the selected scope"
+	self flag: 'todo'.	"Filter the shown changes depending on the selected scope"
 
 	changesTree roots: (aCompositeChange whatToDisplayIn: self)

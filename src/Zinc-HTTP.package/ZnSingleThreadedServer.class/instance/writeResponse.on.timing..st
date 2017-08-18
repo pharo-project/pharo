@@ -4,6 +4,6 @@ writeResponse: response on: stream timing: timing
 	
 	| initialMilliseconds |
 	initialMilliseconds := Time millisecondClockValue.
-	response writeOn: stream.
+	self withDefaultCharacterEncoderDo: [ response writeOn: stream ].
 	stream flush.
 	timing responseDuration: (self logResponseWritten: response started: initialMilliseconds)  

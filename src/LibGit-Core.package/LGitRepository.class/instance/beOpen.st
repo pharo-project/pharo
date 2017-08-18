@@ -1,3 +1,0 @@
-accessing
-beOpen
-	isOpen := true
