@@ -16,9 +16,12 @@ classOrTraitNamed: aString
 				ifFalse: [ 
 					meta := false.
 					baseName := aString ] ].
-	^self at: baseName asSymbol ifPresent:
-            [ :global |
-               (global isBehavior or: [global isTrait])ifTrue:
-                       [ meta
-                               ifFalse: [ global ]
-                               ifTrue: [ global classSide ]]]
+	^self at: baseName asSymbol
+		ifPresent: [ :global |
+   			(global isBehavior or: [global isTrait])
+				ifTrue: [
+					meta
+						ifFalse: [ global ]
+						ifTrue: [ global classSide ] ] ]
+		ifAbsent: [ 
+			ClassNotFound signal ].
