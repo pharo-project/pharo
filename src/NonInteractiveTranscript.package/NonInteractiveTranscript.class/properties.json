@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TTranscript classTrait",
+	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:19",
+	"super" : "Object",
+	"category" : "NonInteractiveTranscript",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"stream",
@@ -7,11 +11,5 @@
 		"accessSemaphore"
 	],
 	"name" : "NonInteractiveTranscript",
-	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:19",
-	"super" : "Object",
-	"traitcomposition" : "TTranscript",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "NonInteractiveTranscript"
+	"type" : "normal"
 }

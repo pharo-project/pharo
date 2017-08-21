@@ -1,4 +1,0 @@
-accessing
-mimeType
-
-	^ ZnMimeType applicationSton

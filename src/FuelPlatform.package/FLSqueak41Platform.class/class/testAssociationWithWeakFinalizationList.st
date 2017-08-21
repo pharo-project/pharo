@@ -1,3 +1,0 @@
-private-extensions-weakobjectstest
-testAssociationWithWeakFinalizationList
-	<flExtensionOf: #FLWeakObjectsTest>

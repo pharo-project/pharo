@@ -28,14 +28,7 @@ offsetReadFieldAt: offsetVariableName
 						nextPut: $)]]].
 
 	self isAtomic ifFalse: "structure type"
-		[^String streamContents:[:s|
-			s nextPutAll:'^';
-				print: referentClass;
-				nextPutAll:' fromHandle: (handle structAt: ';
-				nextPutAll: offsetVariableName;
-				nextPutAll:' length: ';
-				print: self byteSize;
-				nextPutAll:')']].
+		[^ self offsetReadStructFieldAt: offsetVariableName ].
 
 	"Atomic non-pointer types"
 	^String streamContents:

@@ -6,10 +6,8 @@ initializeStream
 	Overwrtitten to use #fileNameWithDate"
 	
 	stream := self isStdout 
-		ifTrue: [ FileStream stdout ]
-		ifFalse: [ FileStream fileNamed: self fileNameWithDate ].
-	stream wantsLineEndConversion: true.
+		ifTrue: [ Stdio stdout ]
+		ifFalse: [ File named: self fileNameWithDate ].
 	self isStdout
-		ifTrue: [ stream converter "Force lazy initialization of converter" ] 
 		ifFalse: [ stream setToEnd ].
 	^ stream

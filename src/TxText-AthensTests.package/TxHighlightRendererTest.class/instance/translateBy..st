@@ -1,2 +1,0 @@
-canvas
-translateBy: aPoint 

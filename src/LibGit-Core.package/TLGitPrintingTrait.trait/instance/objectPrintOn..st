@@ -1,2 +1,0 @@
-printing
-objectPrintOn: aStream

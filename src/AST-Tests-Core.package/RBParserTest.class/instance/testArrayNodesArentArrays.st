@@ -4,11 +4,9 @@ testArrayNodesArentArrays
 Therefore it shouldn't return true for message #isArray (like an instance of a real
 array would"
 	| arrayNode nonArrayNode |
-	arrayNode := RBParser 
-				parseExpression: '{ 1 . 2 . 3}'.
+	arrayNode := self parserClass parseExpression: '{ 1 . 2 . 3}'.
 				
-	nonArrayNode := RBParser 
-				parseExpression: 'a := 3'.
+	nonArrayNode := self parserClass parseExpression: 'a := 3'.
 				
 	self deny: arrayNode isArray.
 	self assert: arrayNode isDynamicArray.

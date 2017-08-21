@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "ValentinRyckewaert 6/24/2016 10:49",
+	"super" : "SharedPool",
+	"category" : "System-CommandLine",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Blink",
+		"Bold",
+		"InvisibleFont",
+		"ResetStyle",
+		"Reverse",
+		"Standout",
+		"Underline"
+	],
+	"instvars" : [ ],
+	"name" : "VTermOutputStyles",
+	"type" : "normal"
+}

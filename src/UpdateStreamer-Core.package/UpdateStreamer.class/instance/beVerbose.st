@@ -1,4 +1,0 @@
-accessing
-beVerbose
-
-	silent := false

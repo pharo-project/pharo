@@ -1,0 +1,3 @@
+events-shortcuts
+whenSelectedItemChanged: aBlock
+self list whenSelectedItemChanged: aBlock

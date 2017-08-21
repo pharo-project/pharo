@@ -8,8 +8,6 @@ emphasis 		SmallInteger	bitmask determining character attributes (underline, bol
 contents 		String 			The text that will be displayed. 
 hasFocus 		Boolean 		Do I have the keyboard focus or not? 
 
-If you shift-click on a StringMorph you can edit its string. This is accomplished the following way: StringMorph can launch a StringMorphEditor if it receives a #mouseDown event.
-
 A StringMorph may also be used like a SimpleButtonMorph to do an action when clicked. Use the menu 'extras' / 'add mouseUpAction'.
 
 The following propery will be defined:

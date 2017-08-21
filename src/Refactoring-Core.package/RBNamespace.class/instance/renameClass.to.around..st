@@ -1,7 +1,7 @@
 changes
 renameClass: aRBClass to: aSymbol around: aBlock
 	| change value dict |
-	change := RBRenameClassChange rename: aRBClass name to: aSymbol.
+	change := RBRefactoryChangeManager changeFactory renameClass: aRBClass to: aSymbol.
 	self performChange: change around: aBlock.
 	self flushCaches.
 	dict := (newClasses includesKey: aRBClass name)

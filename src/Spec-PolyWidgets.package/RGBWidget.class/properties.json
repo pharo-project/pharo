@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "Spirita 7/28/2016 13:25",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-RGBAndShape",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"preview",
+		"sliders",
+		"extentForPreview"
+	],
+	"name" : "RGBWidget",
+	"type" : "normal"
+}

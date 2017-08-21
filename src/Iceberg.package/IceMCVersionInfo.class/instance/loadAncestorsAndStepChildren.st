@@ -1,3 +1,0 @@
-private
-loadAncestorsAndStepChildren
-	self shouldBeImplemented 

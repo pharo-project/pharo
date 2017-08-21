@@ -1,7 +1,7 @@
 tests
 testQuerying
 	| tree aNode arg1Node bNode |
-	tree := RBParser 
+	tree := self parserClass 
 				parseMethod: ('test: a`	| b |`	b := (self foo: a; bar) baz.`	b := super test: b.`	^[:arg1 | self foa1 + (super foo: arg1 foo: a foo: b)]' 
 						copyReplaceAll: '`'
 						with: (String with: (Character value: 13))).

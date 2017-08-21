@@ -1,3 +1,0 @@
-accessing
-layoutStrategy
-	^ layoutStrategy

@@ -4,4 +4,10 @@ prepareBootstrap
 	self
 		exportKernelProtocols;
 		exportAllPackagesIntoMcz;
-		exportMonticelloInStFile.
+		exportMonticelloInStFile;
+		exportMultilingualInStFile;
+		exportSUnitInStFile;
+		exportCoreTestsInStFile;
+		exportFileSystemInStFile;
+		exportDeprecatedInStFile;
+		exportJenkinsToolsInStFile.

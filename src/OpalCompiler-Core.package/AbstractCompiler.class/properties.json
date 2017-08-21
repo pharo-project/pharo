@@ -3,7 +3,7 @@
 	"super" : "Object",
 	"category" : "OpalCompiler-Core-FrontEnd",
 	"classinstvars" : [
-		"CompileWithErrors"
+		"compileWithErrors"
 	],
 	"pools" : [ ],
 	"classvars" : [ ],

@@ -1,0 +1,15 @@
+{
+	"classtraitcomposition" : "TComparable classTrait",
+	"classvars" : [ ],
+	"instvars" : [
+		"aVariable"
+	],
+	"name" : "AClassToBeExtracted",
+	"commentStamp" : "",
+	"super" : "Object",
+	"traitcomposition" : "TComparable",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Hermes-Tests-External-Package"
+}

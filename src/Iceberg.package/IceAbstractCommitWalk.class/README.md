@@ -1,1 +1,0 @@
-Base class for shared code between different commit walk implementations.

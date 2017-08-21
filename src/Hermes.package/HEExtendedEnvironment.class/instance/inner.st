@@ -1,0 +1,3 @@
+accessing
+inner
+	^ inner
