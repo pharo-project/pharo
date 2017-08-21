@@ -1,7 +1,7 @@
 testing
 testUsers
 	self assert: self t2 classSide traitUsers size = 3.
-	self assert: (self t2 classSide traitUsers includesAllOf: {				
+	self assert: (self t2 classSide traitUsers includesAll: {				
 		(self t4 classTrait).
 		(self t5 classTrait).
 		(self t6 classTrait) }).

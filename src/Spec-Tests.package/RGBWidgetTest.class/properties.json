@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-PolyWidgets-RGBAndShape",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RGBWidgetTest",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+deprecated
+termcap
+	^self

@@ -1,0 +1,2 @@
+traits
+notifyUsersOfChangedSelectors: aCollection

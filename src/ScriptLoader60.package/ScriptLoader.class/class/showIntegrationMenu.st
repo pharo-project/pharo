@@ -1,4 +1,0 @@
-menu
-showIntegrationMenu
-
-	CurrentlyIntegratingChanges := true.

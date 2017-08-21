@@ -1,4 +1,0 @@
-accessing
-view
-	
-	^ view

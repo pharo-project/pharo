@@ -1,7 +1,7 @@
 tests parsing
 testPragmaPrimitiveError
 	| tree  pragma |
-	tree := RBParser 
+	tree := self parserClass 
 				parseMethod: 'veryBasicAt: index 
 	<primitive: #dooo module: #bar error: code>
 	^ code'.

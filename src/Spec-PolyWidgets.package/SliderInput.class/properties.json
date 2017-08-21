@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "Spirita 7/21/2016 18:06",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Elementary",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"slider",
+		"input"
+	],
+	"name" : "SliderInput",
+	"type" : "normal"
+}

@@ -1,3 +1,3 @@
 importing
 import
-	self subclassResponsibility
+	self importFor: nil logSource: true

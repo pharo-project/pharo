@@ -3,6 +3,8 @@ logChange: aStringOrText
 	"Write the argument, aString, onto the changes file."
 
 	| aString |
+	SourceFiles changesFileStream ifNil: [ ^ self ].
+	
 	self assureStartupStampLogged.
 
 	aString := aStringOrText asString.

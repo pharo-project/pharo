@@ -1,0 +1,13 @@
+{
+	"classtraitcomposition" : "TSimpleTraitToBeExtracted classTrait",
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AClassToBeExtractedFactory",
+	"commentStamp" : "",
+	"super" : "Object",
+	"traitcomposition" : "TSimpleTraitToBeExtracted",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Hermes-Tests-External-Package"
+}

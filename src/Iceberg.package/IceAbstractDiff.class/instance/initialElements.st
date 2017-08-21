@@ -1,3 +1,0 @@
-initialization
-initialElements
-	^ self subclassResponsibility 

@@ -1,4 +1,0 @@
-accesing
-isAtEnd
-
-	^ position isAtEnd 

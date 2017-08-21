@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "DenisKudryashov 7/18/2017 11:41",
+	"super" : "WeakValueDictionary",
+	"category" : "Collections-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakIdentityValueDictionary",
+	"type" : "normal"
+}

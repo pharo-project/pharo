@@ -1,3 +1,0 @@
-testing
-isLoaded
-	self subclassResponsibility 
