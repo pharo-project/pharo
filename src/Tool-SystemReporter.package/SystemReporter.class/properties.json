@@ -10,7 +10,8 @@
 		"categoriesSelected",
 		"report",
 		"categoryList",
-		"sourceTextModel"
+		"sourceTextModel",
+		"spaceAnalysisResult"
 	],
 	"name" : "SystemReporter",
 	"type" : "normal"

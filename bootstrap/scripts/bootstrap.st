@@ -3,6 +3,7 @@
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
+buildNumber := options optionAt: 'BUILD_NUMBER' ifAbsent: [ 'NO_CI' ].
 
 "Configure logging"
 (CustomStringStreamBeacon with: FileStream stdout)
@@ -14,6 +15,7 @@ FileStream stdout
 
 
 (PBBootstrap forArchitecture: architecture)
+	buildNumber: buildNumber;
 	prepareBootstrap;
 	createImage
 
