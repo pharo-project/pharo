@@ -1,4 +1,0 @@
-private
-attributes
-	^ attributes
-	

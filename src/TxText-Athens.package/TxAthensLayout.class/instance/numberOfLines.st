@@ -1,3 +1,0 @@
-accessing
-numberOfLines
-	^ lines size

@@ -1,1 +1,0 @@
-a history record containing insert operation

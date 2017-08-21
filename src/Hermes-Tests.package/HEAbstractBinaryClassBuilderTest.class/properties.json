@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "PabloTesone 2/28/2017 11:19",
+	"super" : "TestCase",
+	"category" : "Hermes-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"filename",
+		"reader",
+		"writer",
+		"fileReference"
+	],
+	"name" : "HEAbstractBinaryClassBuilderTest",
+	"type" : "normal"
+}

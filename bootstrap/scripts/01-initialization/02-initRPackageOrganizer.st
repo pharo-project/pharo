@@ -1,4 +1,5 @@
-'protocols.txt' asFileReference readStreamDo: [:stream |
+(File named: 'protocols.txt') readStreamDo: [:binaryStream | | stream |
+  stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
   [stream atEnd] whileFalse: [ | line items selector |
     line := stream upTo: Character cr.
     items := line findTokens: String tab.
@@ -12,25 +13,60 @@
 ]].
 
 
-RPackageOrganizer default basicInitializeFromPackagesList: #(
-    'Kernel' 'Collections-Strings' 'Collections-Weak'  'System-Support' 'Files'
-    'AST-Core'
-    'Announcements-Core' 'CodeExport'
-    'CodeImport' 'CodeImportCommandLineHandlers' 'Collections-Abstract'
-    'Collections-Arithmetic' 'Collections-Atomic' 'Collections-Native'
-    'Collections-Sequenceable' 'Collections-Stack' 'Collections-Streams'
-     'Collections-Support' 'Collections-Unordered'
-     'FileSystem-Core' 'FileSystem-Disk'
-     'Jobs'   'Multilingual-Encodings' 'Multilingual-Languages'
-    'Multilingual-TextConversion' 'Network-UUID' 'OpalCompiler-Core' 'Random-Core' 'RPackage-Core'
-    'Ring-Core-Containers' 'Ring-Core-Kernel' 'RingChunkImporter'
-    'Slot' 'System-Announcements' 'System-BasicCommandLineHandler' 'System-Changes'
-    'System-CommandLine' 'System-CommandLineHandler' 'System-Finalization'
-    'System-Hashing' 'System-Localization' 'System-Model' 'System-Platforms'
-    'System-Sources'  'Traits' 'Transcript' 'UIManager'
-    'Zinc-Character-Encoding-Core' 'Zinc-Resource-Meta-Core' 'NonInteractiveTranscript'
-    'System-SessionManager'
-    'PharoBootstrap-Initialization' 'Colors' 'Compression'
-).
+RPackageOrganizer default basicInitializeFromPackagesList: {
+	"Bootstrap packages"
+	'AST-Core'.
+	'Announcements-Core'.
+	'Colors'.
+	'Collections-Abstract'.
+	'Collections-Arithmetic'.
+	'Collections-Atomic'.
+	'Collections-Native'.
+	'Collections-Sequenceable'.
+	'Collections-Stack'.
+	'Collections-Streams'.
+	'Collections-Strings'.
+	'Collections-Support'.
+	'Collections-Unordered'.
+	'Collections-Weak'.
+	'Files'.
+	'FileSystem-Path'.
+	'Hermes'.
+	'Jobs'.
+	'Kernel'.
+	'Kernel-BytecodeEncoders'.
+	'Network-UUID'.
+	'NonInteractiveTranscript'.
+	'PharoBootstrap-Initialization'.
+	'RPackage-Core'.
+	'Random-Core'.
+	'Slot'.
+	'System-Announcements'.
+	'System-BasicCommandLineHandler'.
+	'System-CommandLine'.
+	'System-CommandLineHandler'.
+	'System-Finalization'.
+	'System-Hashing'.
+	'System-Model'.
+	'System-Platforms'.
+	'System-SessionManager'.
+	'System-Sources'.
+	'System-Support'.
+	'Traits'.
+	'Transcript'.
+	'UIManager'.
+	'Zinc-Character-Encoding-Core'.
+	
+	"These packages are added using hermes after bootstrap"
+	'CodeExport'.
+    'CodeImport'.
+	'CodeImportCommandLineHandlers'.
+	'OpalCompiler-Core'.
+	
+	"These packages are added using the compiler after bootstrap"
+	'FileSystem-Core'.
+	'FileSystem-Disk'.
+	'Deprecated70'.
+}.
 
 RPackageOrganizer registerInterestToSystemAnnouncement.

@@ -1,3 +1,0 @@
-testing
-isBlinking
-	^ true 

@@ -1,4 +1,0 @@
-registration
-actionType
-	<preDebuggingAction>
-	"<gtContextCodeDebuggingAction>"

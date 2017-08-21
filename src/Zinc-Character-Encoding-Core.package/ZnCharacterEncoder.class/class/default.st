@@ -4,4 +4,3 @@ default
 	when none is otherwise specified."
 	
 	^ ZnDefaultCharacterEncoder value
-		ifNil: [ ZnNullEncoder new ]

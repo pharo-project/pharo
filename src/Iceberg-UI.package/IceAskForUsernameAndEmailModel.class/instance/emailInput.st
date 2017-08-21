@@ -1,3 +1,0 @@
-accessing ui
-emailInput
-	^ emailInput

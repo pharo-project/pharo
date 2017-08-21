@@ -4,6 +4,6 @@ fullName
 
 	[fullName isEmptyOrNil] whileTrue: [
 		self requestFullName.
-		(fullName isEmptyOrNil or:[ fullName = 'FirstnameLastname' translated ]) ifTrue: [fullName := nil. ^'Anonymous']
+		(fullName isEmptyOrNil or:[ fullName = 'FirstnameLastname' ]) ifTrue: [fullName := nil. ^'Anonymous']
 	].
 	^ fullName

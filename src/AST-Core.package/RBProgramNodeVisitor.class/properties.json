@@ -1,13 +1,11 @@
 {
-	"classtraitcomposition" : "TRBProgramNodeVisitor classTrait",
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "AST-Core-Visitors",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
 	"name" : "RBProgramNodeVisitor",
-	"commentStamp" : "<historical>",
-	"super" : "Object",
-	"traitcomposition" : "TRBProgramNodeVisitor",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "AST-Core-Visitors"
+	"type" : "normal"
 }

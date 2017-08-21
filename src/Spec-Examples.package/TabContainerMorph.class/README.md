@@ -1,1 +1,0 @@
-A TabContainerMorph is a morph (which should be pluggable soon) which handle a first bar for tabs button and a container which is used to display the morph corresponding to the selected tab
