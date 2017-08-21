@@ -55,7 +55,7 @@ baseline: spec
 		spec package: 'Deprecated70'.
 
 		spec package: 'SUnit-Core'.
-		spec package: 'SUnit-Tests'.
+		"spec package: 'SUnit-Tests'."
 		spec package: 'JenkinsTools-Core'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
@@ -101,7 +101,8 @@ baseline: spec
 			'Traits'.
 			'Transcript'.
 			'UIManager'.
-			'Zinc-Character-Encoding-Core' }.
+			'Zinc-Character-Encoding-Core'.
+			'InitializePackagesCommandLineHandler' }.
 
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
@@ -118,7 +119,6 @@ baseline: spec
 
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.
-			'SUnit-Tests'.
-			'JenkinsTools-Core'.
-			'InitializePackagesCommandLineHandler' }.
+			"'SUnit-Tests'."
+			'JenkinsTools-Core'}.
 	]
