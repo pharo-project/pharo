@@ -13,7 +13,7 @@ testPragmaConstantLiteralArgument
 	invalidPragma := 'foo 
 	<return: Point>
 	^ 0@0'.
-	self shouldnt:[RBParser parseMethod: primitiveDeclartion] raise: Exception.
-	self shouldnt:[RBParser 	parseMethod: validPragma] raise: Exception.
-	self should:[RBParser parseMethod: invalidPragma] raise: Exception.
+	self shouldnt:[self parserClass parseMethod: primitiveDeclartion] raise: Exception.
+	self shouldnt:[self parserClass 	parseMethod: validPragma] raise: Exception.
+	self should:[self parserClass parseMethod: invalidPragma] raise: Exception.
 	

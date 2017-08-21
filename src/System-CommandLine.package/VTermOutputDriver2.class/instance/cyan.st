@@ -1,0 +1,3 @@
+deprecated
+cyan
+	^self cyanFont

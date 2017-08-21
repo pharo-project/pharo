@@ -1,8 +1,0 @@
-enum declaration
-enumDecl
-	^#(
-	GIT_SORT_NONE 0
-	GIT_SORT_TOPOLOGICAL 1
-	GIT_SORT_TIME 2
-	GIT_SORT_REVERSE 4
-	)

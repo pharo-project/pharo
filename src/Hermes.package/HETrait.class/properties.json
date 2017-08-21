@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "HEMethodContainer",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"traitName"
+	],
+	"name" : "HETrait",
+	"type" : "normal"
+}

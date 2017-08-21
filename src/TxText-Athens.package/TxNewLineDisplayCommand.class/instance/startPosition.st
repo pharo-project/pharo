@@ -1,3 +1,0 @@
-accessing
-startPosition
-	^ span startPosition

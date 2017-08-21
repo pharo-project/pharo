@@ -1,2 +1,0 @@
-I'm an error thrown in callbacks when no credentials has been found.
-Callbacks supplying credentials HAVE to throw this error and not one created by themselves (because libgit2 aborts processing with this exception and not with others). 

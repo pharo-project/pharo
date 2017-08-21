@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "Spirita 7/21/2016 18:06",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"redSlider",
+		"greenSlider",
+		"blueSlider"
+	],
+	"name" : "RGBSliders",
+	"type" : "normal"
+}

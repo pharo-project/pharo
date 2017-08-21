@@ -1,5 +1,5 @@
 initialization
-reset.
+reset
 	remoteStringMap := IdentityDictionary new.
 	newChangesFile := self temporaryFile.
 	

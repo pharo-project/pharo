@@ -3,19 +3,19 @@
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
-
-FileStream stdout
-	nextPutAll: ('[INFO] Building Image Arch ', architecture);
-	cr.
+buildNumber := options optionAt: 'BUILD_NUMBER' ifAbsent: [ 'NO_CI' ].
 
 "Configure logging"
 (CustomStringStreamBeacon with: FileStream stdout)
 	startFor: PBStepStartedSignal, PBStepFinishedSignal.
 
-(CustomStringStreamBeacon with: 'bootstrap.log' asFileReference writeStream)
-	startFor: PBStepStartedSignal, PBStepFinishedSignal, PBSubStepFinishedSignal.
+FileStream stdout
+	nextPutAll: ('[INFO] Building Image Arch ', architecture);
+	cr.
+
 
 (PBBootstrap forArchitecture: architecture)
+	buildNumber: buildNumber;
 	prepareBootstrap;
 	createImage
 

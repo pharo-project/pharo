@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "CyrilFerlicot 8/18/2017 01:10",
+	"super" : "Error",
+	"category" : "Kernel-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"instVarName"
+	],
+	"name" : "InstanceVariableNotFound",
+	"type" : "normal"
+}

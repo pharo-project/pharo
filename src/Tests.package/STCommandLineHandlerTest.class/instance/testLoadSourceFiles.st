@@ -10,4 +10,4 @@ testLoadSourceFiles
 	
 	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') size = 2.
-	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: FileReference ]).
+	self assert: ((codeLoader instVarNamed: 'sourceFiles') allSatisfy: [ :each | each isKindOf: File ]).

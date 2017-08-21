@@ -1,3 +1,0 @@
-factory
-horizontal
-	^ TxHorizontalSlider 

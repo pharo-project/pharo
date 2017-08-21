@@ -1,3 +1,3 @@
 accessing
 resetResult
-	builder := RBCompositeRefactoryChange new
+	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange

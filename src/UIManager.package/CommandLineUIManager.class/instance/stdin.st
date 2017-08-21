@@ -1,4 +1,4 @@
 accessing
 stdin
-	
-	^ FileStream stdin
+
+	^ Stdio stdin

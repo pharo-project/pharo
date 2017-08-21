@@ -1,3 +1,3 @@
 refactory-changes
 defineClass: aString 
-	^ self addChange: (RBAddClassChange definition: aString)
+	^ self addChange: (RBRefactoryChangeManager changeFactory addClassDefinition: aString)
