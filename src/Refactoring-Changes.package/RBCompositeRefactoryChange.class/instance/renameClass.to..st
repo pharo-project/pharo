@@ -1,3 +1,3 @@
 refactory-changes
 renameClass: class to: newName 
-	^ self addChange: (RBRenameClassChange rename: class name to: newName)
+	^ self addChange: (RBRefactoryChangeManager changeFactory renameClass: class to: newName)

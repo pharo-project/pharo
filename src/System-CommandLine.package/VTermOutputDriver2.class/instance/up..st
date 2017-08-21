@@ -1,0 +1,3 @@
+deprecated
+up: aString
+	^self

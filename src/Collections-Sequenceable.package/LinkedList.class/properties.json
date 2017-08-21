@@ -1,15 +1,14 @@
 {
+	"commentStamp" : "VincentBlondeau 4/1/2016 18:10",
+	"super" : "SequenceableCollection",
 	"category" : "Collections-Sequenceable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"firstLink",
 		"lastLink"
 	],
 	"name" : "LinkedList",
-	"commentStamp" : "VincentBlondeau 4/1/2016 18:10",
-	"super" : "SequenceableCollection",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classtraitcomposition" : "TSortable classTrait"
+	"type" : "normal"
 }

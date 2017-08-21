@@ -1,0 +1,3 @@
+deprecated
+pink
+	^self

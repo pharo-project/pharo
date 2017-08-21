@@ -7,9 +7,9 @@ runTestsOfClass: aClass notifying: aBoolean
 	
 	aBoolean ifFalse: [ ^self ].
 	color := Color gray.
-	result hasPassed ifTrue: [ color :=  Color green ].
-	result hasFailures ifTrue: [ color :=  Color yellow ].
-	result hasErrors ifTrue: [ color :=  Color red ].
+	result hasPassed ifTrue: [ color := self theme successBackgroundColor ].
+	result hasFailures ifTrue: [ color := self theme warningBackgroundColor ].
+	result hasErrors ifTrue: [ color := self theme dangerBackgroundColor ].
 			
 	self 
 		notifyTitle: aClass name 

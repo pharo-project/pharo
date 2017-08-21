@@ -1,5 +1,5 @@
 private protocol
 writeRequest
 	self signalHTTPProgress: 'Writing request'.
-	request writeOn: connection.
+	self withDefaultCharacterEncoderDo: [ request writeOn: connection ].
 	connection flush

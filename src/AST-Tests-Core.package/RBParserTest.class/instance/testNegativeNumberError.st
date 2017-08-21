@@ -1,3 +1,3 @@
 tests parsing
 testNegativeNumberError
-	self should: [ RBParser parseExpression: '- 2' ] raise: SyntaxErrorNotification
+	self should: [ self parserClass parseExpression: '- 2' ] raise: SyntaxErrorNotification

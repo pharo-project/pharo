@@ -1,12 +1,11 @@
 {
+	"commentStamp" : "<historical>",
+	"super" : "SequenceableCollection",
 	"category" : "Collections-Abstract",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
 	"name" : "ArrayedCollection",
-	"commentStamp" : "<historical>",
-	"super" : "SequenceableCollection",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classtraitcomposition" : "TSortable classTrait"
+	"type" : "normal"
 }

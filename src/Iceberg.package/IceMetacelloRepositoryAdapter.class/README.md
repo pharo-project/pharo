@@ -1,1 +1,0 @@
-Adapter for allowing metacello to use Iceberg to download packages and versions.

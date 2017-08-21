@@ -1,1 +1,0 @@
-I'm an error that happens when something went wrong on GitHub API operations.

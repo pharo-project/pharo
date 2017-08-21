@@ -1,0 +1,3 @@
+*Network-Mail
+asEmailHeaderString
+	^ self

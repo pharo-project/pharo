@@ -27,7 +27,6 @@ classDefinitionFor: aClass
 			category: ''{category}'';
 			environment: {superClass} environment;
 			classSlots: ''{classInstanceVariablesString}'' asSlotCollection ].
-	newClass setTraitComposition: {aTraitComposition} asTraitComposition.
 	newClass layout compactClassIndex: {compactIndex}.
 	newClass'
 		format: { 
@@ -39,5 +38,4 @@ classDefinitionFor: aClass
 			'sharedPoolsString' -> aClass sharedPoolsString.
 			'category' -> aClass category asString.
 			'classInstanceVariablesString' -> (' ' join: aClass classSide instVarNames).
-			'aTraitComposition' -> aClass traitCompositionString.
 			'compactIndex' -> (self compactClassIndexForClass: aClass) } asDictionary.

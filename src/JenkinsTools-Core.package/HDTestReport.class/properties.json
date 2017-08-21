@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
+	"super" : "HDReport",
+	"category" : "JenkinsTools-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"suite",
+		"stream",
+		"suitePosition",
+		"suiteTime",
+		"suiteFailures",
+		"suiteErrors",
+		"progressFile"
+	],
+	"name" : "HDTestReport",
+	"type" : "normal"
+}

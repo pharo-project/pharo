@@ -3,7 +3,7 @@
 	"super" : "ZnCharacterEncoder",
 	"category" : "Zinc-Character-Encoding-Core",
 	"classinstvars" : [
-		"ByteTextConverters"
+		"byteTextConverters"
 	],
 	"pools" : [ ],
 	"classvars" : [ ],

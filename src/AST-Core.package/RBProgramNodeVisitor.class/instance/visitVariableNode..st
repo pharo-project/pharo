@@ -1,0 +1,3 @@
+visiting
+visitVariableNode: aVariableNode
+	^ aVariableNode

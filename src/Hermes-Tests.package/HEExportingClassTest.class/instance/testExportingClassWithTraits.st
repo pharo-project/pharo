@@ -1,0 +1,3 @@
+tests
+testExportingClassWithTraits
+	self doTestExportingClass: HETeSimpleClassWithTraits

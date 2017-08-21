@@ -1,3 +1,0 @@
-accessing
-endPosition
-	^ interval end 

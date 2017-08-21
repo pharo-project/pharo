@@ -1,1 +1,0 @@
-Base class for all errors in Iceberg.

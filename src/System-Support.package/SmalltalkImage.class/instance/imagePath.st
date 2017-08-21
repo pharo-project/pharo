@@ -4,4 +4,4 @@ imagePath
 
 	"SmalltalkImage current imagePath"
 
-	^ FilePathEncoder decode: self primImagePath
+	^ self primImagePath

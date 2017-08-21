@@ -1,3 +1,0 @@
-doits
-postLoadActions
-	self changeRepositoryType

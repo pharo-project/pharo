@@ -9,9 +9,6 @@ testCorrespondingTestCase
 	(Class -> ClassTest).
 	(Class class -> ClassTest).
 	(ClassTest -> nil).
-	(Metaclass -> MetaclassTest).
-	(Metaclass class -> MetaclassTest).
-	(MetaclassTest -> nil).
 	(NautilusUtilsTestStub -> NautilusUtilsTestStubTest).
 	(NautilusUtilsTestStub class -> NautilusUtilsTestStubTest).
 	(NautilusUtilsTestStubTest -> nil).
