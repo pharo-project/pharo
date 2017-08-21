@@ -1,0 +1,1 @@
+Just a class used for tests, it has a complex trait combination.

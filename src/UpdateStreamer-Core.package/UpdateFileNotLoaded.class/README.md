@@ -1,1 +1,0 @@
-This warning is signalled if during the update process, certain update files cannot be found.

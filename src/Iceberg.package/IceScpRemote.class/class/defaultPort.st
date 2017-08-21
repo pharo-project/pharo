@@ -1,3 +1,0 @@
-defaults
-defaultPort
-	^ 22

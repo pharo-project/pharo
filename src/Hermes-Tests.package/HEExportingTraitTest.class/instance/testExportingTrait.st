@@ -1,0 +1,3 @@
+tests
+testExportingTrait
+	self doTestExportingTrait: THEOneTestTrait.

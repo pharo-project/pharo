@@ -1,3 +1,3 @@
 delegated
 parent
-	^ self withPath: self path parent
+	^ self withPath: self resolve path parent

@@ -1,7 +1,7 @@
 tests-perform
 testPerformAddRemoveClassInteractively
 	| change |
-	change := RBAddClassChange definition: 'Object subclass: #' , self changeMock name , 'Temporary
+	change := RBRefactoryChangeManager changeFactory addClassDefinition: 'Object subclass: #' , self changeMock name , 'Temporary
 	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''

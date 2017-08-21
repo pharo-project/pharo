@@ -1,7 +1,7 @@
 testing
 testUsers
 	self assert: self t1 traitUsers size = 3.
-	self assert: (self t1 traitUsers includesAllOf: {self t4. self t5. self t6 }).
+	self assert: (self t1 traitUsers includesAll: {self t4. self t5. self t6 }).
 	self assert: self t3 traitUsers isEmpty.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 traitUsers anyOne = self c2.

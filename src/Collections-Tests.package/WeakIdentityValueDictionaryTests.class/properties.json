@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "WeakValueDictionaryTest",
+	"category" : "Collections-Tests-Weak",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WeakIdentityValueDictionaryTests",
+	"type" : "normal"
+}

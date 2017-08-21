@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "Spirita 7/22/2016 16:24",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Elementary",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dropList",
+		"input"
+	],
+	"name" : "InputTextDropList",
+	"type" : "normal"
+}

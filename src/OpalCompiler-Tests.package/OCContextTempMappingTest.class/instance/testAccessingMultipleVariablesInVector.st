@@ -1,6 +1,10 @@
 tests
 testAccessingMultipleVariablesInVector
 	| t1 t2 t3 t4 t5 t6 |
+	
+	"Check the source code availability to do not fail on images without sources"
+	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	
 	t1 := 1.
 	t2 := 2.
 	t3 := 3.

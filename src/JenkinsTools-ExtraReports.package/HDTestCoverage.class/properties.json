@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:32",
+	"super" : "ProtoObject",
+	"category" : "JenkinsTools-ExtraReports",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hasRun",
+		"reference",
+		"method"
+	],
+	"name" : "HDTestCoverage",
+	"type" : "normal"
+}

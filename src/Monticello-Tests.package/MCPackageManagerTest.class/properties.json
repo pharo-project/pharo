@@ -7,7 +7,9 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"package2",
-		"package1"
+		"package1",
+		"mcPackage1",
+		"mcPackage2"
 	],
 	"name" : "MCPackageManagerTest",
 	"type" : "normal"

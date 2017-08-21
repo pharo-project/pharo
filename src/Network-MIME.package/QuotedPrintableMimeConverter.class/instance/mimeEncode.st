@@ -18,7 +18,7 @@ mimeEncode
 					ifTrue: [
 						mimeStream nextPutAll: '=0D=0A'.
 						char = Character cr ifTrue: [ dataStream peekFor: Character lf ].
-						lineLength := 0 ]
+						lineLength := lineLength + 6 ]
 					ifFalse: [
 						charValue > 255 ifTrue: [ self error: 'Character out of range' ].
 						mimeStream nextPut: $=.

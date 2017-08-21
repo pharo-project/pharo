@@ -1,3 +1,0 @@
-accessing
-currentBranch
-	^ self branch

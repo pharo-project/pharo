@@ -17,13 +17,12 @@ createInitialObjects
 	
 	PBSubStepFinishedSignal log: 'preparing class builder'.
 	self bootstrapInterpreter evaluateCode: 'DangerousClassNotifier disable'.
-	
+
 	self bootstrapInterpreter evaluateCode: 'Undeclared := Dictionary new.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk := SmalltalkImage basicNew.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk instVarAt: 1 put: (SystemDictionary withOrganizer: SystemOrganizer new).'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Smalltalk put: Smalltalk.'.
 	self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Undeclared put: Undeclared.'.
-
 
 	"Initialize the globals of the system. Careful: The AST interpreter will not know about these if we do not put them in the bootstrapEnvironment."	
 	self bootstrapInterpreter evaluateCode: 'Smalltalk globals at: #Processor put: nil.'.
@@ -65,6 +64,7 @@ createInitialObjects
 	self bootstrapInterpreter evaluateCode: 'Symbol initialize.
 	Symbol classPool at: #SymbolTable put: (WeakSet withAll: ByteSymbol allInstances)'.
 	objectSpace symbolTable: (EPInternalSymbolTable new objectSpace: objectSpace).
+
 	
 	PBSubStepFinishedSignal log: 'Bootstrapping class layouts'.
 	bootstrapInterpreter evaluateCode:

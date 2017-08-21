@@ -1,3 +1,0 @@
-initialize-release
-propertyFileExtension
-  ^ MCFileTreeRepository defaultPropertyFileExtension

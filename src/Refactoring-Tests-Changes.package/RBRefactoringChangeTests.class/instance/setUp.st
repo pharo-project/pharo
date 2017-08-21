@@ -2,4 +2,4 @@ running
 setUp
 	super setUp.
 	self createMockClass.
-	changes := RBCompositeRefactoryChange named: 'testing'
+	changes := RBRefactoryChangeManager changeFactory compositeRefactoryChangeNamed: 'testing'
