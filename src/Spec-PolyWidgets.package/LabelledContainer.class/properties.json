@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "Spirita 7/27/2016 16:25",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Elementary",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"label",
+		"subwidget"
+	],
+	"name" : "LabelledContainer",
+	"type" : "normal"
+}

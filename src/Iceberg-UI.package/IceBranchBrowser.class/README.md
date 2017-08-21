@@ -1,1 +1,0 @@
-I'm a browser to compare a branch with current installed sources.

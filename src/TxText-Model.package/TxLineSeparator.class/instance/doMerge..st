@@ -1,3 +1,0 @@
-operations
-doMerge: aCharacterSpan
-	^ false.

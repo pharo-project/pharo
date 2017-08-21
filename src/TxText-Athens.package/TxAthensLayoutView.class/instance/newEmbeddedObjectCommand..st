@@ -1,4 +1,0 @@
-factory
-newEmbeddedObjectCommand: anEmbeddedObjectSpan
-
-	^ container newEmbeddedObjectCommand: anEmbeddedObjectSpan

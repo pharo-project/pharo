@@ -1,0 +1,4 @@
+*renraku
+reBanName
+
+	^ 'Class'

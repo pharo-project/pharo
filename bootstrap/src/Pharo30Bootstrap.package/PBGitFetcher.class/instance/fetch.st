@@ -5,11 +5,11 @@ fetch
 	self ensureRepository.
 	
 	environment := Dictionary new.
-	(#BaselineOfPharoBootstrap asClass project version allPackagesForSpecNamed: #minimal) do: [ :package | | version |
+	#BaselineOfPharoBootstrap asClass kernelPackageNames do: [ :package | | version |
 		version := FiMonticelloWriter new 
-			written: (self latestVersionOfPackageNamed: package name) snapshot
-			name: package name.
-		environment at: package name ifAbsentPut: version.
+			written: (self latestVersionOfPackageNamed: package) snapshot
+			name: package.
+		environment at: package ifAbsentPut: version.
 	].
 	
-	^ self patchDefinition: environment values asFiSet asRFiEnvironment	
+	^ environment values asFiSet asRFiEnvironment	

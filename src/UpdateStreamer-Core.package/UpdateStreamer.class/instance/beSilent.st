@@ -1,4 +1,0 @@
-accessing
-beSilent
-
-	silent := true

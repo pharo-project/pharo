@@ -11,7 +11,8 @@ initialize
 		add: #'VM Options' method: #reportVMOptions;
 		add: #'VM Modules' method: #reportModules;
 		add: #'VM Parameters' method: #reportVMParameters;
-		add: #'VM Stats' method: #reportVMStats.
+		add: #'VM Stats' method: #reportVMStats;
+		add: #'Space Analysis' method: #reportSpaceAnalysis.
 	Smalltalk os platformName = 'Win32'
 		ifTrue: [ self add: #'VM Configuration' method: #reportWin32VMConfig ].
 	self add: #'OS General' method: #reportOS.

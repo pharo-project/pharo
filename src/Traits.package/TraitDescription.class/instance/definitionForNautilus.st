@@ -1,0 +1,4 @@
+accessing
+definitionForNautilus
+
+	^ self definition

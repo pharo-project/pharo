@@ -1,3 +1,3 @@
 class initialization
 initialize
-	Default := nil
+	default := nil

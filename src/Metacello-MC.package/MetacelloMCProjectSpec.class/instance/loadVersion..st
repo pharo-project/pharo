@@ -28,7 +28,7 @@ loadVersion: aVersionOrNil
             (cachedList := projectCache at: vrsn ifAbsent: [  ]) == nil
                 ifTrue: [ projectCache at: vrsn put: list ]
                 ifFalse: [ 
-                    (cachedList size = list size and: [ cachedList includesAllOf: list ])
+                    (cachedList size = list size and: [ cachedList includesAll: list ])
                         ifTrue: [ 
                             "no need to refetch list ... recursion stoppper (Issue 95)"
                             ^ self ]

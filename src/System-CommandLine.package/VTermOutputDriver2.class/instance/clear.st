@@ -1,0 +1,3 @@
+deprecated
+clear
+	^self resetStyle

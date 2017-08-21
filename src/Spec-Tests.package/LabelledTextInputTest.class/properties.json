@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TextInputFieldModelTest",
+	"category" : "Spec-Tests-PolyWidgets-Labelled",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LabelledTextInputTest",
+	"type" : "normal"
+}

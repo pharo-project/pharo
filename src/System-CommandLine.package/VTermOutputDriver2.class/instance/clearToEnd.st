@@ -1,0 +1,3 @@
+deprecated
+clearToEnd
+	^self

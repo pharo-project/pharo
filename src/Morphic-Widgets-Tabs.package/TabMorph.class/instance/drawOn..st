@@ -12,8 +12,8 @@ drawOn: aCanvas
 		borderColor: Color transparent.
 		
 	borderVertices overlappingPairsDo: [ :start :end | 
-			aCanvas
-				line: start
-				to: end
-				width: 1
-				color: self borderColor. ]
+		aCanvas
+			line: start
+			to: end
+			width: 1
+			color: self borderColor ]

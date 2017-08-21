@@ -9,12 +9,12 @@ initialize
 	self registerShortcuts.
 	
 	container := Morph new
-		color: Smalltalk ui theme class lightBaseColor;
+		color: self containerColor;
 		changeProportionalLayout;
 		yourself.
 		
 	contentsWrapper := Morph new
-		color: Smalltalk ui theme class lightBaseColor;
+		color: self containerColor;
 		changeProportionalLayout;
 		yourself.
 		

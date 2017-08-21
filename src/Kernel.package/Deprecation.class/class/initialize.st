@@ -1,3 +1,3 @@
 class initialization
 initialize
-	Log  := nil
+	Log := nil "#deprecationsWhile: logs all deprecations here"

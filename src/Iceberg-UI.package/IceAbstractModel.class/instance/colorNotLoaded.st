@@ -1,3 +1,0 @@
-highlighting
-colorNotLoaded
-	^ Color darkGray
