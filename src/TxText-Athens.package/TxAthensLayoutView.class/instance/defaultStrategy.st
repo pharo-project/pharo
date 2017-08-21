@@ -1,3 +1,0 @@
-defaults
-defaultStrategy
-	^  TxAthensNoWrapStrategy  new

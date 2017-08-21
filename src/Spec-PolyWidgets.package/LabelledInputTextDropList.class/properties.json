@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "Spirita 7/25/2016 17:03",
+	"super" : "LabelledContainer",
+	"category" : "Spec-PolyWidgets-Labelled",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LabelledInputTextDropList",
+	"type" : "normal"
+}

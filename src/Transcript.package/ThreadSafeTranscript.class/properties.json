@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TTranscript classTrait",
+	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:39",
+	"super" : "Model",
+	"category" : "Transcript",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"stream",
@@ -9,11 +13,5 @@
 		"stepContents"
 	],
 	"name" : "ThreadSafeTranscript",
-	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:39",
-	"super" : "Model",
-	"traitcomposition" : "TTranscript",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Transcript"
+	"type" : "normal"
 }

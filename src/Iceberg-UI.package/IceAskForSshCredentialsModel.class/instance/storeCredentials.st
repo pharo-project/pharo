@@ -1,3 +1,0 @@
-accessing
-storeCredentials
-	^ storeCheckbox state 

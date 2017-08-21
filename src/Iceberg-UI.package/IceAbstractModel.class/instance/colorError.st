@@ -1,3 +1,0 @@
-highlighting
-colorError
-	^ Color red

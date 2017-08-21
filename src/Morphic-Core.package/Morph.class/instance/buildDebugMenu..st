@@ -23,9 +23,6 @@ buildDebugMenu: aHand
 		ifTrue: [ aMenu add: 'inspect model' target: self model selector: #inspect.
 			aMenu lastItem
 				icon: (self iconNamed: #smallInspectItIcon) ].
-	aMenu add: 'explore morph' target: self selector: #explore.
-	aMenu lastItem
-		icon: (self iconNamed: #smallInspectItIcon).
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'

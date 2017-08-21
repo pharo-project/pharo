@@ -4,7 +4,11 @@ SystemOrganization addCategory: 'Spec-Tests-Core-Widgets'!
 SystemOrganization addCategory: 'Spec-Tests-Examples'!
 SystemOrganization addCategory: 'Spec-Tests-Examples-Morphic'!
 SystemOrganization addCategory: 'Spec-Tests-Examples-Wrapper'!
+SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-Elementary'!
+SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-Labelled'!
 SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-ListAndTree'!
+SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-RGBAndShape'!
+SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-Support'!
 SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-Toolbar'!
 SystemOrganization addCategory: 'Spec-Tests-PolyWidgets-Widgets'!
 SystemOrganization addCategory: 'Spec-Tests-Utils'!

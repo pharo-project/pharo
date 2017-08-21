@@ -1,3 +1,0 @@
-operations
-diffIndexToWorkDir
-	self diffIndexToWorkDirOptions: LGitDiffOptions defaults

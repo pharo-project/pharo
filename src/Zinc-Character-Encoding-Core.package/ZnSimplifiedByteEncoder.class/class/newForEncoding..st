@@ -3,10 +3,11 @@ newForEncoding: string
 	"Return a new character encoder object for an encoding described by string.
 	We use our precomputed ByteTextConverters tables."
 
-	| tables |
-	tables := self byteTextConverters at: (self canonicalEncodingIdentifier: string).
+	| tables canonicalName |
+	canonicalName := self canonicalEncodingIdentifier: string.
+	tables := self byteTextConverters at: canonicalName.
 	^ self new
-		identifier: string;
+		identifier: canonicalName;
 		byteToUnicode: tables first;
 		unicodeToByte: tables second;
 		yourself

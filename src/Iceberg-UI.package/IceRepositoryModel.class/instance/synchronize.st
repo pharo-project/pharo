@@ -1,3 +1,0 @@
-actions
-synchronize
-	IceGlamourSynchronizer synchronize: self repository

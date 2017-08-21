@@ -1,3 +1,0 @@
-navigation
-moveToLineStart
-	self subclassResponsibility 

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "DropListModelTest",
+	"category" : "Spec-Tests-PolyWidgets-Labelled",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LabelledDropListTest",
+	"type" : "normal"
+}

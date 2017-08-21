@@ -1,5 +1,4 @@
 drawing
-drawSubmorphsOn: aCanvas
-
-	super drawSubmorphsOn: aCanvas.
-	self drawLinesOn: aCanvas
+drawSubmorphsOn: canvas
+	super drawSubmorphsOn: canvas.
+	self drawLinesOn: canvas

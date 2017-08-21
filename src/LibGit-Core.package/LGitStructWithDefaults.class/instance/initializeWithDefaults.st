@@ -1,3 +1,0 @@
-operations
-initializeWithDefaults
-	self subclassResponsibility

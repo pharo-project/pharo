@@ -2,15 +2,15 @@ testing
 testAsClassDefinitionSourceDefinition
 
 	| newClass |
-	newClass:= Trait asRingDefinition.
-	self assert: (newClass definitionSource =  'TraitDescription subclass: #Trait
-	uses: TClass
-	instanceVariableNames: ''name environment classTrait category''
+	newClass:= MOPTestClassC asRingDefinition.
+	self assert: (newClass definitionSource =  'Object subclass: #MOPTestClassC
+	uses: Trait2
+	instanceVariableNames: ''''
 	classVariableNames: ''''
 	poolDictionaries: ''''
-	category: ''Traits-Kernel''').
+	category: ''Tests-Traits-MOP''').
 	
-	self assert: (newClass theMetaClass definitionSource =  'Trait class
-	uses: TClass classTrait
+	self assert: (newClass theMetaClass definitionSource =  'MOPTestClassC class
+	uses: Trait2 classTrait
 	instanceVariableNames: ''''').
 	

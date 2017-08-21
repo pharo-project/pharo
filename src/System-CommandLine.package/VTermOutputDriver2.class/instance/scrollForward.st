@@ -1,0 +1,3 @@
+deprecated
+scrollForward
+	^self

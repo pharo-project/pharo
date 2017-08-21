@@ -1,0 +1,3 @@
+deprecated
+normal
+	^self

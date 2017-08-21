@@ -1,3 +1,0 @@
-printing
-shouldContinuePrintingOn: aStream
-	^ true
