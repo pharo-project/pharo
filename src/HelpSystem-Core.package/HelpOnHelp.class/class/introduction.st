@@ -11,5 +11,4 @@ The help system is a simple user interface to display help contents to the user.
 
 There is a predefined mechanism allowing you to have help contents stored as source code using methods in specific help provider classes. This allows to manage the help texts using the standard development tools. But this is only one possible representation.
 
-Yes, this is a good solution.
 !' readStream nextChunkText

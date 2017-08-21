@@ -1,0 +1,3 @@
+deprecated
+home
+	^self

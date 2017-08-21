@@ -3,7 +3,7 @@
 	"super" : "ZnServer",
 	"category" : "Zinc-HTTP-Client-Server",
 	"classinstvars" : [
-		"Default"
+		"default"
 	],
 	"pools" : [ ],
 	"classvars" : [ ],

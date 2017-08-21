@@ -1,3 +1,0 @@
-*Iceberg-UI
-canBrowseReferences
-	^ true

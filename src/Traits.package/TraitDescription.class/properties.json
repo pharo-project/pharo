@@ -1,15 +1,13 @@
 {
-	"classtraitcomposition" : "TClassDescription classTrait + TComposingDescription classTrait + TTransformationCompatibility classTrait",
+	"commentStamp" : "<historical>",
+	"super" : "TraitBehavior",
+	"category" : "Traits-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"organization"
 	],
 	"name" : "TraitDescription",
-	"commentStamp" : "<historical>",
-	"super" : "TraitBehavior",
-	"traitcomposition" : "TClassDescription + TComposingDescription + TTransformationCompatibility",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Traits-Kernel"
+	"type" : "normal"
 }

@@ -1,7 +1,7 @@
 tests
 testAddClassInteractively
 	| change |
-	change := RBAddClassChange definition: 'TestCase subclass: #' , self class name , '
+	change := RBRefactoryChangeManager changeFactory addClassDefinition: 'TestCase subclass: #' , self class name , '
 	instanceVariableNames: ''instVar''
 	classVariableNames: ''ClassVar''
 	poolDictionaries: ''PoolDict''

@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TBehavior classTrait",
+	"commentStamp" : "apb 3/2/2006 17:49",
+	"super" : "Object",
+	"category" : "Traits-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"TraitProperties"
 	],
@@ -10,11 +14,5 @@
 		"users"
 	],
 	"name" : "TraitBehavior",
-	"commentStamp" : "apb 3/2/2006 17:49",
-	"super" : "Object",
-	"traitcomposition" : "TBehavior",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Traits-Kernel"
+	"type" : "normal"
 }

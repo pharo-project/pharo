@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Hermes-ClassInstaller",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"inner",
+		"newMethod",
+		"newClass",
+		"newSelector"
+	],
+	"name" : "HEExtendedEnvironment",
+	"type" : "normal"
+}

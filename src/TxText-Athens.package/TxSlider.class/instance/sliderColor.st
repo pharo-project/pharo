@@ -1,3 +1,0 @@
-protocol
-sliderColor
-	^ Color lightGray 

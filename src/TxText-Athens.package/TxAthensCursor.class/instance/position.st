@@ -1,3 +1,0 @@
-geometry
-position
-	^ layoutPosition topPointInView 

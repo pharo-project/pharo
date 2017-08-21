@@ -1,1 +1,0 @@
-I control the mouse cursor appearance when the user holds the mouse over it.

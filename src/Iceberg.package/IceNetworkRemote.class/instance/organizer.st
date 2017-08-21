@@ -1,3 +1,0 @@
-querying
-organizer
-	^ self owner

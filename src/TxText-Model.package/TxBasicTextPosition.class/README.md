@@ -1,1 +1,0 @@
-I am an abstract class, defining the protocol for a text position.

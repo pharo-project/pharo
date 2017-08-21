@@ -1,3 +1,0 @@
-commits
-incomingCommitsFrom: aRemote
-	^ #()

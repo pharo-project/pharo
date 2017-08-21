@@ -1,3 +1,0 @@
-accessing
-host
-	^ self subclassResponsibility
