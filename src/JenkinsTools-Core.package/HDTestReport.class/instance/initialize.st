@@ -9,7 +9,6 @@ initialize
 	
 	aFile := File named: 'progress.log'.
 	aFile delete.
-	progressFile := ZnCrPortableWriteStream on: (
-		ZnCharacterWriteStream
+	progressFile := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
-			encoding: 'utf8').	
+			encoding: 'utf8'.	
