@@ -87,6 +87,10 @@ fi
 
 BOOTSTRAP_IMAGE_NAME=bootstrap
 BOOTSTRAP_ARCHIVE_IMAGE_NAME=${PREFIX}-bootstrap-${SUFFIX}
+
+HERMES_ARCHIVE_NAME=${PREFIX}-hermesPackages-${SUFFIX}
+RPACKAGE_ARCHIVE_NAME=${PREFIX}-rpackage-${SUFFIX}
+
 CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PREFIX}-compiler-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
@@ -109,6 +113,11 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
 # Archive bootstrap image
 cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
+
+# Archive binary Hermes packages
+zip "${HERMES_ARCHIVE_NAME}.zip" "*.hermes"
+# Archive RPackage definitions
+zip "${RPACKAGE_ARCHIVE_NAME}.zip" "protocols*.txt" "packages*.txt"
 
 ../bootstrap/scripts/download_vm.sh
 
