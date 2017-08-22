@@ -115,9 +115,9 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" "*.hermes"
+zip "${HERMES_ARCHIVE_NAME}.zip" OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes SUnit-Core.hermes JenkinsTools-Core.hermes 
 # Archive RPackage definitions
-zip "${RPACKAGE_ARCHIVE_NAME}.zip" "protocols*.txt" "packages*.txt"
+zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
 ../bootstrap/scripts/download_vm.sh
 
