@@ -157,7 +157,7 @@ baseline: spec
 		spec package: 'OSWindow-Core'.
 		spec package: 'OSWindow-SDL2'.
 		spec package: 'OSWindow-VM'.
-		
+				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
 		spec package: 'ReflectionMirrors-Primitives'.
