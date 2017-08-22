@@ -19,10 +19,10 @@ IMAGE_ARCHIVE=$(find bootstrap-cache -name Pharo7.0-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
 IMAGE_FILE=$(find . -name Pharo7.0-bootstrap-${1}bit-*.image)
 
-HERMES_ARCHIVE=$(find bootstrap-cache -name Pharo7.0-hermesPackages-{1}bit-*.zip)
+HERMES_ARCHIVE=$(find bootstrap-cache -name Pharo7.0-hermesPackages-${1}bit-*.zip)
 unzip $HERMES_ARCHIVE
 
-RPACKAGE_ARCHIVE=$(find bootstrap-cache -name Pharo7.0-rpackage-{1}bit-*.zip)
+RPACKAGE_ARCHIVE=$(find bootstrap-cache -name Pharo7.0-rpackage-${1}bit-*.zip)
 unzip $RPACKAGE_ARCHIVE
 
 mv $IMAGE_FILE bootstrap.image
