@@ -7,7 +7,7 @@ tearDown
 	stream tab; nextPutAll: '<system-err><![CDATA[]]></system-err>'; lf.
 	stream nextPutAll: '</testsuite>'.
 	
-	stream position: suitePosition.
+	stream wrappedStream position: suitePosition.
 	stream 
 		nextPutAll: ' failures="'; print: suiteFailures; 
 		nextPutAll: '" errors="'; print: suiteErrors; 

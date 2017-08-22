@@ -2,7 +2,8 @@ cleaning
 delete: aBehavior
 	aBehavior isObsolete
 		ifTrue: [ ^ self ].
-	aBehavior removeFromChanges.
+	self class environment at: #ChangeSet ifPresent: [ 
+		aBehavior removeFromChanges ].
 	(createdSilently includes: aBehavior)
 		ifTrue: [ aBehavior removeFromSystemUnlogged ]
 		ifFalse: [ aBehavior removeFromSystem ].

@@ -1,4 +1,4 @@
-*SUnit-Core
+SUnit-support
 isPassedTest
 	"Is the receiver a test method that passed?"
 

@@ -86,6 +86,7 @@ if [[ ${DESCRIBE} -eq "1" ]]; then
 fi
 
 BOOTSTRAP_IMAGE_NAME=bootstrap
+BOOTSTRAP_ARCHIVE_IMAGE_NAME=${PREFIX}-bootstrap-${SUFFIX}
 CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PREFIX}-compiler-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
@@ -104,6 +105,11 @@ wget http://files.pharo.org/sources/PharoV60.sources
 #Prepare
 echo "Prepare Bootstrap files"
 cp "${BOOTSTRAP_IMAGE_NAME}.image" "${COMPILER_IMAGE_NAME}.image"
+
+# Archive bootstrap image
+cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
+zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
+
 ../bootstrap/scripts/download_vm.sh
 
 echo "Prepare fonts"
@@ -118,9 +124,13 @@ cd ..
 #Required for the correct work of metacello baselines and unicode initialization
 ln -s .. pharo-core
 
+# Installing RPackage
+echo "[Compiler] Installing RPackage"
+${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKernel.txt --packages=packagesKernel.txt --save
+
 # Installing compiler through Hermes 
 echo "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
@@ -131,7 +141,6 @@ zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
 ${VM} "${COMPILER_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
-${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/02-initRPackageOrganizer.st --no-source --save --quit
 ${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 

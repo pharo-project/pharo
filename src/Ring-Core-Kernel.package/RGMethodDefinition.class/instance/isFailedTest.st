@@ -1,4 +1,4 @@
-*SUnit-Core
+SUnit-support
 isFailedTest
 	"Is the receiver a test method that failed?"
 
