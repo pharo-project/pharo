@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "StephaneDucasse 11/29/2014 23:03",
-	"super" : "ReNodeBasedRule",
+	"super" : "RBBlockLintRule",
 	"category" : "Kernel-Rules",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "SendsDeprecatedMethodToGlobalRule",
+	"name" : "OldSendsDeprecatedMethodToGlobalRule",
 	"type" : "normal"
 }
