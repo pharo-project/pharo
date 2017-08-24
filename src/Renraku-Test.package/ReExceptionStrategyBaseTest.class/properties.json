@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "YuriyTymchuk 7/19/2017 13:51",
+	"super" : "TestCase",
+	"category" : "Renraku-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"currentStrategy"
+	],
+	"name" : "ReExceptionStrategyBaseTest",
+	"type" : "normal"
+}

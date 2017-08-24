@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "YuriyTymchuk 7/14/2017 11:36",
+	"super" : "Object",
+	"category" : "Renraku-Utility",
+	"classinstvars" : [
+		"uniqueInstance"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReCriticEngine",
+	"type" : "normal"
+}
