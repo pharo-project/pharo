@@ -6,6 +6,7 @@
 - [TelePharo](https://github.com/dionisiydk/TelePharo) is a complete toolset for remote development of Pharo images. 
 - [Workflow](https://github.com/Netstyle/Workflow) is powerful and extensible workflow management engine
 - [Mocketry](https://github.com/dionisiydk/Mocketry) is a mock objects framework which provides simplest way to stub any message to any object and to verify any occurred behaviour
+- [PharoThings](https://github.com/pharo-iot/PharoThings) is a live programming platform for IoT projects based on Pharo
 
 # Pharo project on SmalltalkHub
 - [Pillar](http://smalltalkhub.com/mc/Pier/Pillar/main/) is a pharo library and collection of tools for the creation of documentation. It's also the official documentation tool for Pharo used by [Pharo books](books.md). A summary of the pillar syntax can be found [here](http://pillarhub.pharocloud.com/hub/pillarhub/pillarcheatsheet) , a tutorial [here](https://ci.inria.fr/pharo-contribution/job/EnterprisePharoBook/lastSuccessfulBuild/artifact/book-result/PillarChap) and a presentation [here](http://esug.org/data/ESUG2015/4%20thursday/1600-1630%20Pilar/Pillar.pdf) 
