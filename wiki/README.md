@@ -13,8 +13,8 @@ If you are a SquareBracketsAsssociates contributor you alredy set to go. There i
 
 
 [books]: contents/books.md
-[blogs]: https://github.com/SquareBracketAssociates/PharoWiki/blob/master/contents/blogs.md
-[wikis]: https://github.com/SquareBracketAssociates/PharoWiki/blob/master/contents/wikis.md
-[projects]: https://github.com/SquareBracketAssociates/PharoWiki/blob/master/contents/projects.md
-[how to]: https://github.com/SquareBracketAssociates/PharoWiki/blob/master/contents/howto.md
-[news]: https://github.com/SquareBracketAssociates/PharoWiki/blob/master/contents/news.md
+[blogs]: contents/blogs.md
+[wikis]: contents/wikis.md
+[projects]: projects.md
+[how to]: contents/howto.md
+[news]: contents/news.md
