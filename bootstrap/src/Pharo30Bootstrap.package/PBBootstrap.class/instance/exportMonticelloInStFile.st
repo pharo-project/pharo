@@ -1,24 +1,11 @@
 preparation
 exportMonticelloInStFile
 
-	| mcst |
-	mcst := (self bootstrapCacheDirectory / 'st-cache' / 'Monticello.st') asFileReference.
-	mcst ensureDelete.
-	mcst parent ensureCreateDirectory.
-	mcst writeStreamDo: [ :stream | | writer version |
-		writer := MCStWriter on: stream.
-		writer writeInitializers: false.
-
-		version := (self originRepository loadVersionFromFileNamed: 'Compression.package').
-		writer writeDefinitions: version snapshot definitions.
-
-		version := (self originRepository loadVersionFromFileNamed: 'Monticello.package').
-		writer writeDefinitions: version snapshot definitions.
-
-		version := (self originRepository loadVersionFromFileNamed: 'Ring-Monticello.package').
-		writer writeDefinitions: version snapshot definitions.
-	    
-		stream nextPutAll: '		
+	self
+		exportPackages: #( 'RingChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Core-Kernel' 'Ring-Core-Containers' 'RingChunkImporter'  'Compression' 'Monticello' 'Ring-Monticello' )
+		usingInitializeScript: '
+		ChangeSet initialize.
+		
 		ZipConstants initialize.
 		ZipFileConstants initialize.
 		ZipWriteStream initialize.
@@ -31,5 +18,5 @@ exportMonticelloInStFile
 		MCLazyVersionInfo initialize.
 		MCMethodDefinition initialize.
 		MCDataStream initialize.
-		MCWorkingCopy initialize.'.
-	].
+		MCWorkingCopy initialize.'
+		intoFile: 'Monticello.st'

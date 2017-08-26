@@ -2,10 +2,10 @@ initialize-release
 readFrom: stream
 	self contentLength isNil
 		ifTrue: [ 
-			self bytes: (ZnUtils readUpToEnd: stream limit: ZnConstants maximumEntitySize).
+			self bytes: (ZnUtils readUpToEnd: stream limit: ZnMaximumEntitySize value).
 			self contentLength: self bytes size ]
 		ifFalse: [ | byteArray |
-			self contentLength > ZnConstants maximumEntitySize
+			self contentLength > ZnMaximumEntitySize value
 				ifTrue: [ ZnEntityTooLarge signal ].
 			byteArray := ByteArray ofSize: self contentLength.
 			self contentLength > ZnUtils streamingBufferSize 

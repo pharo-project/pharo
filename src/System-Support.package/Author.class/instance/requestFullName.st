@@ -3,7 +3,7 @@ requestFullName
 	| initialAnswer |
 	
 	initialAnswer := fullName isEmptyOrNil
-				ifTrue: ['FirstnameLastname' translated]
+				ifTrue: ['FirstnameLastname']
 				ifFalse: [fullName].
 				
 	(AuthorNameRequest new initialAnswer: initialAnswer) signal ifNotNil: [ :newName | 

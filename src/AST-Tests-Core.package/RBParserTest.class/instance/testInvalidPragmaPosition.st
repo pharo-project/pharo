@@ -6,4 +6,4 @@ testInvalidPragmaPosition
 	'foo [:x | <foo: $a> ] value'
 	'foo ^ <foo: $a>'
 	) 
-	do: [ :each | self should: [ RBParser parseMethod: each ] raise: SyntaxErrorNotification ]
+	do: [ :each | self should: [ self parserClass parseMethod: each ] raise: SyntaxErrorNotification ]

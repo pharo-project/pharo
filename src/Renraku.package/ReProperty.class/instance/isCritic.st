@@ -1,3 +1,7 @@
-testing
+deprecated
 isCritic
-	^ false
+
+	self
+		deprecated: 'Please use #isCritique instead'
+		transformWith: '`@receiver isCritic' -> '`@receiver isCritique'.
+	^ self isCritique

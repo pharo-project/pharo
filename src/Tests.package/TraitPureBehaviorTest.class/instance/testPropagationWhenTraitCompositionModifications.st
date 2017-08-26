@@ -18,4 +18,4 @@ testPropagationWhenTraitCompositionModifications
 		uses: self t3
 		category: self class category.
 	self assert: self c2 methodDict size = 10.
-	self assert: (self c2 selectors asSet includesAllOf: #(#m31 #m32 #m33 ))
+	self assert: (self c2 selectors asSet includesAll: #(#m31 #m32 #m33 ))

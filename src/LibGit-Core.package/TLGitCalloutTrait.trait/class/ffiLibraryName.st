@@ -1,4 +1,0 @@
-resources
-ffiLibraryName
-
-	^self ffiLibrary

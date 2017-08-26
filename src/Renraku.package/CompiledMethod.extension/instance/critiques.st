@@ -1,31 +1,11 @@
 *renraku
 critiques
 	<eProperty>
-	| rules critiques manifest builder |
+	| critiques |
 	
-		
-	builder := TheManifestBuilder new.
-	manifest := builder manifestOf: self.
-		
-	rules    := ReRuleManager uniqueInstance methodRules.
-	critiques  := Set new.
-	rules
-		reject: [ :rule |
-			manifest isNotNil and:
-			[ (builder bansRule: rule for: self) or:
-			[ (builder bansRule: rule for: self methodClass) or:
-			[  builder bansRule: rule for: self package ] ] ] ]
-		thenDo: [ :rule |
-			[ rule resetResult.
-			  rule
-				  check: self
-				  forCritiquesDo: [ :critic |
-					  critiques add: critic ]
-			] on: Error
-			  do: [ :er | ReSettings showErrors ifTrue: [ er pass ] ].
-			Processor yield ].
+	critiques := ReCriticEngine critiquesOf: self.
+	critiques :=
+		critiques,
+		(ReCriticEngine nodeCritiquesOf: self).
 	
-	
-	ReSystemAnnouncer uniqueInstance notifyEntity: self criticizedWith: critiques. 
-	
-	^ critiques, self nodeCritiques 
+	^ critiques

@@ -1,0 +1,4 @@
+testing
+isForCurrentSystem
+
+	^self subclassResponsibility 

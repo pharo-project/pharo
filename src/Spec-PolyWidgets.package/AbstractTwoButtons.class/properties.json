@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "Spirita 7/25/2016 15:47",
+	"super" : "ComposableModel",
+	"category" : "Spec-PolyWidgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"firstButton",
+		"secondButton"
+	],
+	"name" : "AbstractTwoButtons",
+	"type" : "normal"
+}

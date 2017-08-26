@@ -1,3 +1,0 @@
-accessing
-model
-	^ model value

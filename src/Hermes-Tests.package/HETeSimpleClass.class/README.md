@@ -1,0 +1,1 @@
+Just a Simple class used for tests

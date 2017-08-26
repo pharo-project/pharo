@@ -1,1 +1,0 @@
-I am a 'remote' repository which is stored locally in your machine and accessed through a 'file://' url.

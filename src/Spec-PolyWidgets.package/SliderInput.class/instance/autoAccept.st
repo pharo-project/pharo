@@ -1,0 +1,3 @@
+accessing
+autoAccept
+	^ input autoAccept

@@ -1,0 +1,1 @@
+The subclasses of this class define how Renraku should handle exceptions signallied by analyzers

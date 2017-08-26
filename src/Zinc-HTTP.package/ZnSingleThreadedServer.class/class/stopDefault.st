@@ -4,7 +4,7 @@ stopDefault
 	Return the stopped instance, if any."
 	
 	| server |
-	(server := Default) ifNotNil: [ 
-		Default stop.  
-		Default := nil ].
+	(server := default) ifNotNil: [ 
+		default stop.  
+		default := nil ].
 	^ server

@@ -1,1 +1,0 @@
-Dialog for creating an Iceberg repository out of an existing local git repository.

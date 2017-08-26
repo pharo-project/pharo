@@ -5,14 +5,11 @@ initializeStream
 	I will append to regular files."
 	
 	stream := self isStdout 
-		ifTrue: [ FileStream stdout ]
+		ifTrue: [ Stdio stdout ]
 		ifFalse: [ 
 			self isStderr
-				ifTrue: [ FileStream stderr ]
-				ifFalse: [ FileStream fileNamed: self fileName ]].
-	stream wantsLineEndConversion: true.
+				ifTrue: [ Stdio stderr ]
+				ifFalse: [ File named: self fileName ]].
 	(self isStdout or: [ self isStderr ])
-		ifTrue: [ stream converter "Force lazy initialization of converter" ] 
 		ifFalse: [ stream setToEnd ].
 	^ stream
-	

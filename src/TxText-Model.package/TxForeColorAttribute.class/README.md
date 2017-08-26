@@ -1,1 +1,0 @@
-I represent the foreground color of a text span

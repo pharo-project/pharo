@@ -1,4 +1,4 @@
-utilities
+accessing
 encodingNames 
 
 	^ #() copy.

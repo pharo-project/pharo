@@ -4,7 +4,7 @@ errorReportOn: stream
 	stream.  For both the error file, and emailing a bug report.   
 	Suppress any errors while getting printStrings.  Limit the length."
 	
-	| stackDepth aContext startPos |
+	| stackDepth aContext |
 	stream print: Date today; space; print: Time now; cr.
 	stream cr.
 	stream nextPutAll: 'VM: ';
@@ -25,7 +25,6 @@ errorReportOn: stream
 	stream cr.
 	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."	
 	stackDepth := 0.  
-	startPos := stream position.
 	aContext := self.
 	[ aContext notNil and: [ (stackDepth := stackDepth + 1) < 40 ]] 
 		whileTrue: [
@@ -42,11 +41,6 @@ errorReportOn: stream
 			- - - - - - - - - - - - - - - - - -'; cr ].
 		"just class>>selector"	
 		stream print: aContext; cr. 		
-		stream position > (startPos+150000) 
-			ifTrue: [
-				stream nextPutAll:  '...etc...'.	
-			 	"exit early"		
-				^ self].	
 		stackDepth > 200 ifTrue: [
 			stream nextPutAll: '-- and more not shown --'.
 			^  self ].

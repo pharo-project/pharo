@@ -1,0 +1,3 @@
+deprecated
+blinking
+	^self blink
