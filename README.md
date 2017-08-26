@@ -64,3 +64,7 @@ This repository is a mirrored version of the latest Pharo packages. The scripts 
 A CI job in the [Inria](http://ci.inria.fr) infrastructure executes these scripts for every new version of the source code and pushes into this repository the latest version of the sources.
 
 https://ci.inria.fr/pharo/view/Pharo%20bootstrap/job/Pharo-6.0-Bootstrap-Git-Export/
+
+# Pharo wiki
+
+The Pharo wiki is an effort to bring links to any project, form of documentation, article, success story etc under one roof and can be found [here](https://github.com/pharo-project/pharo/tree/master/wiki)
