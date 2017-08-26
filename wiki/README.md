@@ -15,6 +15,6 @@ If you are a SquareBracketsAsssociates contributor you alredy set to go. There i
 [books]: contents/books.md
 [blogs]: contents/blogs.md
 [wikis]: contents/wikis.md
-[projects]: projects.md
+[projects]: contents/projects.md
 [how to]: contents/howto.md
 [news]: contents/news.md
