@@ -1,8 +1,8 @@
 archive operations
-extractAllTo: aDirectory 
+extractAllTo: aDirectory
 	"Extract all elements to the given directory"
-	UIManager default informUserDuring: 
-		[ :bar | 
-		self 
-			extractAllTo: aDirectory
-			informing: bar ]
+
+	UIManager default
+		informUserDuring: [ :bar | 
+			bar max: self members size.
+			self extractAllTo: aDirectory informing: bar ]
