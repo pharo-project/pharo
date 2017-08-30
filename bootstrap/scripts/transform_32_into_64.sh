@@ -40,12 +40,9 @@ for f in Pharo7.0-32bit-*.zip; do
 	HASH=$(find $f | head -n 1 | cut -d '-' -f 3 | cut -d '.' -f 1)
 	./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 	
-	if [ -f "${IMAGENAME}.sources" ]; then
-		mv "${IMAGENAME}.sources" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.sources"
-	fi
 	mv "tempconversion-64.image" "Pharo7.0-64bit-$HASH.image"
 	mv "tempconversion-64.changes" "Pharo7.0-64bit-$HASH.changes"
-	zip Pharo7.0-64bit-$HASH.zip Pharo7.0-64bit-$HASH.*
+	zip Pharo7.0-64bit-$HASH.zip Pharo7.0-64bit-$HASH.* ${IMAGENAME}.sources
 	rm *.image *.changes *.sources
 done
 
