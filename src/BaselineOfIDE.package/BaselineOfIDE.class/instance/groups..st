@@ -16,6 +16,7 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
+	'PerformMessageCommandLineHandler' 	"standalone"
 ).	
 	
 spec group: 'NodeNavigation-Group' with: #(

@@ -30,4 +30,4 @@ mv $IMAGE_FILE bootstrap.image
 ./pharo bootstrap.image
 ./pharo bootstrap.image initializePackages --packages=packagesKernel.txt --protocols=protocolsKernel.txt --save
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes --save
-./pharo bootstrap.image test --junit-xml-output SUnit-Core			
+./pharo bootstrap.image test --junit-xml-output SUnit-Core SUnit-Tests	

@@ -214,6 +214,7 @@ baseline: spec
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
+		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
