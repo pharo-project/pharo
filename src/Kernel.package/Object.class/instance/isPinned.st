@@ -1,4 +1,4 @@
-system primitives
+pinning
 isPinned
 	"Answer if the receiver is pinned.  The VM's garbage collector routinely moves
 	 objects as it reclaims and compacts memory.  But it can also pin an object so
