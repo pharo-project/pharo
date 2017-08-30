@@ -37,7 +37,7 @@ initializeCommandLineHandlerAndErrorHandling
 	Slot initialize.
 	TraitBehavior initialize.
 	RPackage initialize.
-	Behavior initializeClassProperties.
+	Behavior initialize.
 
 	UIManager classVarNamed: 'Default' put: NonInteractiveUIManager new.
 	UIManager default activate.
