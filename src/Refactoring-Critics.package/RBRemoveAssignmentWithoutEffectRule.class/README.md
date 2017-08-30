@@ -1,1 +1,1 @@
-Remove assignment that has no effect. For example, var := var is useless.
+See my #longDescription .
