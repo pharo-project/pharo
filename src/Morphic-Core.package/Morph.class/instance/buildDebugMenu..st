@@ -19,11 +19,9 @@ buildDebugMenu: aHand
 	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
 	aMenu lastItem
 		icon: (self iconNamed: #smallInspectItIcon).
-
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'
 		target: self
 		selector: #browseHierarchy.
-
 	^ aMenu
