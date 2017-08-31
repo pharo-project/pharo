@@ -53,8 +53,10 @@ PWD="$( dirname $(readlink -f $0) )"
 git checkout master
 
 echo "GET PHARO v${VERSION}"
-wget --quiet -O - get.pharo.org/vm60 | bash
+wget --quiet -O - get.pharo.org/vmT60 | bash
 wget http://files.pharo.org/image/60/${VERSION}.zip
+wget http://files.pharo.org/sources/PharoV60.sources
+wget http://files.pharo.org/sources/PharoV50.sources
 unzip ${VERSION}.zip
 rm ${VERSION}.zip
 find . -type f -name "*.image" -exec mv {} Pharo.image \;
@@ -74,5 +76,5 @@ git add src
 git add -u
 git commit -m "EXPORT VERSION ${VERSION}"
 git tag -fa v${VERSION} -m "TAG VERSION v${VERSION}"
-git push git@github.com:guillep/pharo-core.git
-git push --tags git@github.com:guillep/pharo-core.git
+git push git@github.com:pharo-project/pharo.git
+git push --tags git@github.com:pharo-project/pharo.git

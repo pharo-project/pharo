@@ -13,7 +13,8 @@
 		"testAnnouncer",
 		"entryReferenceByEvent",
 		"jobAnnouncer",
-		"announcer"
+		"announcer",
+		"debugMode"
 	],
 	"name" : "EpMonitor",
 	"type" : "normal"

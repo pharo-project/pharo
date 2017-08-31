@@ -1,5 +1,6 @@
 showing
 openForRelease
+	<script>
 	| browser window findBlock |
 	
 	findBlock := [ :each | (each isKindOf: SystemWindow) and: [ each label = self bookName ] ]. 

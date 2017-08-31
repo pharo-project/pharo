@@ -2,7 +2,7 @@ instance creation
 forAction: anAction
 	| baseColor |
 	
-	baseColor := Smalltalk ui theme class baseColor.
+	baseColor := Smalltalk ui theme baseColor.
 	self extent: anAction icon extent.
 	
 	self activeEnabledNotOverUpFillStyle: baseColor.

@@ -1,4 +1,0 @@
-*Spec-MorphicAdapters
-isMorphicModel
-
-	^ true

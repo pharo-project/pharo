@@ -1,3 +1,3 @@
 public - opal compatibility
 compilationContextClass
-	^ compilationContextClass ifNil: [ CCompilationContext  ]
+	^ compilationContextClass ifNil: [ CompilationContext  ]

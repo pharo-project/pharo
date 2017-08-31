@@ -40,6 +40,8 @@ baseline: spec
 		spec package: 'Keymapping-Settings'.
 		spec package: 'Keymapping-Tools-Spec'.
 
+		spec package: 'WebBrowser-Core'.
+
 		spec package: 'HelpSystem-Core'.
 
 		spec package: 'Rubric'.

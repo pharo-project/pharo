@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "ChristopheDemarey 10\/20\/2015 11:37",
+	"commentStamp" : "ChristopheDemarey 10/20/2015 11:37",
 	"super" : "Object",
 	"category" : "Pharo30Bootstrap",
 	"classinstvars" : [ ],
@@ -15,7 +15,8 @@
 		"definitionFetcher",
 		"statistics",
 		"logger",
-		"imageFileReference"
+		"imageFileReference",
+		"buildNumber"
 	],
 	"name" : "PBImageBuilder50",
 	"type" : "normal"

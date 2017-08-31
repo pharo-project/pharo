@@ -1,27 +1,26 @@
-as yet unclassified
+tests
 testClassRemoved
 
 	| rule |
 	
-	rule := RBLintRule
+	rule := ReAbstractRule 
 		subclass: #ReRuleManagerTestingRule
 		instanceVariableNames: ''
 		classVariableNames: ''
 		category: testPackage name.
 	rule class
-		compile: 'checksMethod ^ true';
-		compile: 'isVisible ^ true'.
+		compile: 'checksMethod ^ true'.
 		
 	rule compile: 'name ^ ''test'''.
 
-	ReRuleManager uniqueInstance resetRules.
+	ReRuleManager reset.
 
 	self assert:
-		(ReRuleManager uniqueInstance allRules anySatisfy: [ :r |
+		(ReRuleManager default allRules anySatisfy: [ :r |
 			r class == rule ]).
 		
 	rule removeFromSystem.
 		
 	self assert:
-		(ReRuleManager uniqueInstance allRules noneSatisfy: [ :r |
+		(ReRuleManager default allRules noneSatisfy: [ :r |
 			r class == rule ]).

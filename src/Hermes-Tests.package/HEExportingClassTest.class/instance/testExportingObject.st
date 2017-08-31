@@ -1,0 +1,3 @@
+tests
+testExportingObject
+	self doTestExportingClass: Object

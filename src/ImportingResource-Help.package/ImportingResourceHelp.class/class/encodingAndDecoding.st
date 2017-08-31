@@ -2,7 +2,7 @@ documentation
 encodingAndDecoding
 	^ HelpTopic 
 		title: 'Encoding and Decoding'
-		contents: 
+		contents: (self heading: 'Encoding and Decoding'),
 'The basic mechanism to encode and decode data is provided by the class Base64MimeConverter. Consider the following example:
 
 mimeEncoded := ''Hello World'' asByteArray base64Encoded.

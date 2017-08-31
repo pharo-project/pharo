@@ -1,4 +1,5 @@
 announcement handling
 categoryAdded: aCategoryAdded
 
-	self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName)
+	self handleAnyErrorDuring: [
+		self addEvent: (EpCategoryAddition named: aCategoryAdded categoryName) ]

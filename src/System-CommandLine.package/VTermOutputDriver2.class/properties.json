@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "PavelKrivanek 11/7/2016 17:45",
+	"super" : "Object",
+	"category" : "System-CommandLine",
+	"classinstvars" : [ ],
+	"pools" : [
+		"VTermOutputStyles"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"outStream",
+		"terminfo",
+		"style",
+		"installedStyle"
+	],
+	"name" : "VTermOutputDriver2",
+	"type" : "normal"
+}

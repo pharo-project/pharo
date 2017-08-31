@@ -4,7 +4,7 @@ step05
 		title: 'Step 05 - Define .travis.yml'
 		contents: 
 		(self heading: 'Step 05 - Define .travis.yml'),	
-		'You need to indicates to Travis on which platform you want to run the tests. Consider the file:',
+		'You need to indicates to Travis on which platform you want to run the tests. Consider the file:', String cr, String cr,
 		(self bold: 
 'language: smalltalk
 

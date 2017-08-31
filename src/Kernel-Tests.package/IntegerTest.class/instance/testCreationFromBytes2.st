@@ -5,6 +5,7 @@ testCreationFromBytes2
 	"it is illegal for a LargeInteger to be less than SmallInteger maxVal." 
 	"here we test that Integer>>byte!byte2:byte3:byte4: resconstructs (SmallInteger maxVal + 1) as an instance of LargePositiveInteger. "
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
+	Smalltalk vm wordSize = 4 ifFalse: [ ^ self skip ].
 	maxSmallInt := SmallInteger maxVal.
 	hexString := (maxSmallInt + 1) printStringHex.
 	self assert: hexString size = 8.

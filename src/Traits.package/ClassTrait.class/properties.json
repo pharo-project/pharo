@@ -1,15 +1,13 @@
 {
-	"classtraitcomposition" : "TApplyingOnClassSide classTrait",
+	"commentStamp" : "<historical>",
+	"super" : "TraitDescription",
+	"category" : "Traits-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"baseTrait"
 	],
 	"name" : "ClassTrait",
-	"commentStamp" : "<historical>",
-	"super" : "TraitDescription",
-	"traitcomposition" : "TApplyingOnClassSide",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Traits-Kernel"
+	"type" : "normal"
 }

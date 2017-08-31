@@ -1,0 +1,3 @@
+reading
+readByte
+	^ stream next

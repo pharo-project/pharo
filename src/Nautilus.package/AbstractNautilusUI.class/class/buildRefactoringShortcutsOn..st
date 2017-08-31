@@ -36,4 +36,4 @@ buildRefactoringShortcutsOn: aBuilder
 		category: #NautilusGlobalShortcuts
 		default: $h meta, $c meta shift
 		do: [ :target | target categorizeAllUncategorizedMethods ]
-		description: 'Categorize all uncategorized'.
+		description: 'Categorize all uncategorized and remove empty'.

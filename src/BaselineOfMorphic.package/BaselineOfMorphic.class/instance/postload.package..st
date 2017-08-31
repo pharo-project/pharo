@@ -15,9 +15,9 @@ postload: loader package: packageSpec
 	FLLargeIdentityHashedCollection initialize.
 	FLPlatform classPool at: #Current put: FLPharo6Platform new.
 
-	FileStream stdout nextPutAll: 'starting...'; lf.
+	Stdio stdout nextPutAll: 'starting...'; lf.
 
-	FileStream stdout nextPutAll: Smalltalk ui asString; lf.
+	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
 
 	SparseLargeTable recompile. 
 	
@@ -30,7 +30,7 @@ postload: loader package: packageSpec
 
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
 
-	FileStream stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
+	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
 	#(ProgressBarMorph BalloonBezierSimulation BalloonEngineConstants BalloonEngine 
 	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem 
@@ -55,7 +55,7 @@ postload: loader package: packageSpec
 	UIManager default: MorphicUIManager new.
 	World displayWorldSafely.
 	UIManager default uiProcess resume.
-	Pharo3DarkTheme beCurrent.
+	Pharo3Theme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 
