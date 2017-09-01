@@ -1,2 +1,2 @@
 SystemOrganization addCategory: #QualityAssistant!
-SystemOrganization addCategory: 'QualityAssistant-Announcements'!
+SystemOrganization addCategory: #'QualityAssistant-Announcements'!
