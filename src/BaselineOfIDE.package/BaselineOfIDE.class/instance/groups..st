@@ -154,9 +154,9 @@ spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Tests-Group'
 ).
 
-"spec group: 'Deprecated-Group' with: #(
+spec group: 'Deprecated-Group' with: #(
 	'Deprecated70'
-)."
+).
 
 spec group: 'Manifest-Core-Group' with: #(
 	'Manifest-Core'
@@ -479,7 +479,7 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	"'Deprecated-Group'"
+	'Deprecated-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
