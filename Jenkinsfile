@@ -1,3 +1,5 @@
+import hudson.tasks.test.AbstractTestResultAction
+
 def retryTimes = 3
 
 def isWindows(){
@@ -8,6 +10,28 @@ def shell(params){
     if(isWindows()) bat(params) 
     else sh(params)
 }
+
+def runTests(architecture, prefix=''){
+	def tries = 0
+	def success = false
+	waitUntil {
+		tries += 1
+		try {
+			cleanWs()
+			unstash "bootstrap${architecture}"
+			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture}'"
+			junit allowEmptyResults: true, testResults: '*.xml'
+			success = currentBuild.result == 'UNSTABLE'
+		} catch(e) {
+			//If there is an exception ignore.
+			//success will be false and we will retry thanks to waitUntil
+		} finally {
+			cleanWs()
+		}
+		success || tries == retryTimes
+	}
+	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+} 
 
 node('unix') {
 	cleanWs()
@@ -85,30 +109,12 @@ for (arch in architectures) {
 		def platform = platf
 		testers["${platform}-${architecture}"] = {
 			node(platform) { stage("Tests-${platform}-${architecture}") {
-				retry(retryTimes) {
-				try {
-					cleanWs()
-					unstash "bootstrap${architecture}"
-					shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture}'"
-				} finally {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-					junit allowEmptyResults: true, testResults: '*.xml'
-					cleanWs()
-				}}
-			}}	
+				runTests(architecture)
+			}}
 		}
 		testers["kernel-${platform}-${architecture}"] = {
 			node(platform) { stage("Kernel-tests-${platform}-${architecture}") {
-				retry(retryTimes) {
-				try {
-					cleanWs()
-					unstash "bootstrap${architecture}"
-					shell "bash -c 'bootstrap/scripts/runKernelTests.sh ${architecture}'"
-				} finally {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-					junit allowEmptyResults: true, testResults: '*.xml'
-					cleanWs()
-				}}
+				runTests(architecture, "Kernel")
 			}}
 		}
 	}
