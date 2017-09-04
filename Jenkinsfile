@@ -1,3 +1,5 @@
+def retryTimes = 3
+
 def isWindows(){
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
@@ -83,6 +85,7 @@ for (arch in architectures) {
 		def platform = platf
 		testers["${platform}-${architecture}"] = {
 			node(platform) { stage("Tests-${platform}-${architecture}") {
+				retry(retryTimes) {
 				try {
 					cleanWs()
 					unstash "bootstrap${architecture}"
@@ -91,19 +94,12 @@ for (arch in architectures) {
 					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 					junit allowEmptyResults: true, testResults: '*.xml'
 					cleanWs()
-				}
-			}}
+				}}
+			}}	
 		}
-	}
-}
-for (arch in architectures) {
-	// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-	def architecture = arch
-	for (platf in platforms) {
-		// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-		def platform = platf
 		testers["kernel-${platform}-${architecture}"] = {
 			node(platform) { stage("Kernel-tests-${platform}-${architecture}") {
+				retry(retryTimes) {
 				try {
 					cleanWs()
 					unstash "bootstrap${architecture}"
@@ -112,7 +108,7 @@ for (arch in architectures) {
 					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 					junit allowEmptyResults: true, testResults: '*.xml'
 					cleanWs()
-				}
+				}}
 			}}
 		}
 	}
