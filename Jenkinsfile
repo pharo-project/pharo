@@ -21,7 +21,7 @@ def runTests(architecture, prefix=''){
 			unstash "bootstrap${architecture}"
 			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture}'"
 			junit allowEmptyResults: true, testResults: '*.xml'
-			success = currentBuild.result == 'UNSTABLE'
+			success = currentBuild.result == 'SUCCESS'
 		} catch(e) {
 			//If there is an exception ignore.
 			//success will be false and we will retry thanks to waitUntil
