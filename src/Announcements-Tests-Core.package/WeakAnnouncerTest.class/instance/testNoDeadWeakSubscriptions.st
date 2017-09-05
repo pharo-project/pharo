@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testNoDeadWeakSubscriptions
 
 	5 timesRepeat: [ Smalltalk garbageCollect ].

@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 new
 	^ self new: 1
