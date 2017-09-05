@@ -1,0 +1,4 @@
+accessing
+outStream
+
+	^outStream

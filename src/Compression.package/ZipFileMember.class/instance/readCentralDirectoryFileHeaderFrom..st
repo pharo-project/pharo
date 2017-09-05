@@ -26,6 +26,6 @@ readCentralDirectoryFileHeaderFrom: aStream
 
 	fileName := (aStream next: fileNameLength) asString.
 	cdExtraField := (aStream next: extraFieldLength) asByteArray asString.
-	fileComment := (aStream next: fileCommentLength) asString convertFromSystemString.
+	fileComment := (aStream next: fileCommentLength) asByteArray utf8Decoded.
 
 	self desiredCompressionMethod: compressionMethod

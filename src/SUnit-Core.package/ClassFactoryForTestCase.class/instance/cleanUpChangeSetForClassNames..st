@@ -1,8 +1,10 @@
 cleaning
 cleanUpChangeSetForClassNames: classeNames
-	| changeSet |
-	changeSet := ChangeSet current.
-	classeNames do: [:name|
-		changeSet 
-			removeClassChanges: name;
-			removeClassChanges: name, ' class'].	
+
+	self class environment at: #ChangeSet ifPresent: [ :aChangeSetClass |
+		| changeSet |
+		changeSet := aChangeSetClass current.
+		classeNames do: [:name|	
+			changeSet 
+				removeClassChanges: name;
+				removeClassChanges: name, ' class'] ]..	

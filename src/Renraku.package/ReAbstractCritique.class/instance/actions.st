@@ -34,19 +34,7 @@ actions
 								notifyCritique: crit
 								AutoFixedFor: crit sourceAnchor entity.
 								changesBrowser accept ];
-					centered
-				
-				"(TextModel new
-					title: 'Apply the proposed changes?';
-					extent: 800@600;
-					text: change diffedText;
-					disable;
-					openDialogWithSpec)
-						okAction: [ ReSystemAnnouncer uniqueInstance
-								notifyCritique: crit
-								AutoFixedFor: crit sourceAnchor entity.
-								change execute ];
-			centered" ];
+					centered ];
 			yourself) ].
 	
 	actions add: (RePropertyAction new

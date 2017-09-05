@@ -1,6 +1,6 @@
 compiler
 compiler
 	^self compilerClass new
-		compilationContextClass: CCompilationContext;
+		compilationContextClass: CompilationContext;
 		environment: self environment;
 		class: self

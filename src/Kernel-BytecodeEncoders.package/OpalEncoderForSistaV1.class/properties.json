@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "ClementBera 8/9/2016 15:47",
+	"super" : "OpalBytecodeEncoder",
+	"category" : "Kernel-BytecodeEncoders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OpalEncoderForSistaV1",
+	"type" : "normal"
+}

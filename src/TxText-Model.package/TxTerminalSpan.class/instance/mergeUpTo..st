@@ -1,3 +1,0 @@
-operations
-mergeUpTo: aTxEndSpan 
-	^ self

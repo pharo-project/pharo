@@ -1,4 +1,4 @@
-as yet unclassified
+private
 defaultFontChange
   "Answer a TextFontChange that represents the default font"
 

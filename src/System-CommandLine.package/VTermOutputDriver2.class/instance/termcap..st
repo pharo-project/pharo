@@ -1,0 +1,3 @@
+deprecated
+termcap: aString
+	^self

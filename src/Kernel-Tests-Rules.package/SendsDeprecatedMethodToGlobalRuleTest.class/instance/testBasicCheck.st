@@ -5,4 +5,5 @@ testBasicCheck
 	testMethod := testClass >> (
 		testClass compile: 'testMethod ', self globalName, ' ', self deprecatedMethodName).
 
-	self assert: (SendsDeprecatedMethodToGlobalRule new basicCheck: testMethod)
+	self assert: (testMethod externalProperties anySatisfy: [ :eprop |
+		eprop rule class = SendsDeprecatedMethodToGlobalRule ])

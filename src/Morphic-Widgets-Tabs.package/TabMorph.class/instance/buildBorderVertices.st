@@ -1,4 +1,4 @@
-drawing-private
+private-drawing
 buildBorderVertices
 	
 	^ state buildBorderVertices

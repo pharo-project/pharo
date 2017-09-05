@@ -1,3 +1,0 @@
-accessing
-loadedCode
-	^ loadedCode

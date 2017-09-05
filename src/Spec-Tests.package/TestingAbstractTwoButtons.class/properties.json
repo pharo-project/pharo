@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "Spirita 7/28/2016 11:16",
+	"super" : "AbstractTwoButtons",
+	"category" : "Spec-Tests-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TestingAbstractTwoButtons",
+	"type" : "normal"
+}

@@ -1,0 +1,2 @@
+deprecated
+deprecatedMethod5

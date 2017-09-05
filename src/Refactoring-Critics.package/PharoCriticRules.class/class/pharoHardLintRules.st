@@ -12,7 +12,7 @@ pharoHardLintRules
 		RBEqualNotUsedRule.
 		RBOnlyReadOrWrittenTemporaryRule.
 		RBPrecedenceRule.
-		SendsDeprecatedMethodToGlobalRule.
+		OldSendsDeprecatedMethodToGlobalRule.
 		RBSizeCheckRule.
 		RBUnconditionalRecursionRule.
 		RBUnoptimizedToDoRule.

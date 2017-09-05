@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TBehavior classTrait",
+	"commentStamp" : "al 12/8/2005 20:44",
+	"super" : "Object",
+	"category" : "Kernel-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [
 		"ClassProperties",
 		"ObsoleteSubclasses"
@@ -11,11 +15,5 @@
 		"layout"
 	],
 	"name" : "Behavior",
-	"commentStamp" : "al 12/8/2005 20:44",
-	"super" : "Object",
-	"traitcomposition" : "TBehavior",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Kernel-Classes"
+	"type" : "normal"
 }

@@ -1,0 +1,3 @@
+deprecated
+down: aString
+	^self

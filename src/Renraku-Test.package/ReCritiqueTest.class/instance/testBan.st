@@ -3,9 +3,9 @@ testBan
 	| criticToSkip |
 		
 	criticToSkip := testClass critiques detect: [ :critic |
-		critic rule class = RBNoClassCommentRule ].
+		critic rule class = ScreamerRule ].
 	
 	criticToSkip ban.
 	
 	self assert: (testClass critiques noneSatisfy: [ :critic |
-		critic rule class = RBNoClassCommentRule ]).
+		critic rule class = ScreamerRule ]).

@@ -1,0 +1,3 @@
+deprecated
+overwrite: aString
+	^self

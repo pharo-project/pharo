@@ -1,4 +1,4 @@
-pool initialization
+private - initialization
 initializeCallingConventions
 	"These constants map onto the flags inst var of an ExternalFunction.
 	 The first eight bits define the calling convention.  Attribute flags
