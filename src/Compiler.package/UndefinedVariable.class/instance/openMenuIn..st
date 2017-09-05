@@ -1,4 +1,4 @@
-as yet unclassified
+correcting
 openMenuIn: aBlock
 	| caption index |
 	caption := name, ' appears to be 

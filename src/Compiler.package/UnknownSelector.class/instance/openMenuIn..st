@@ -1,4 +1,4 @@
-as yet unclassified
+correcting
 openMenuIn: aBlock
 	| alternatives labels lines caption choice |
 	alternatives := Symbol possibleSelectorsFor: name.

@@ -1,4 +1,4 @@
-as yet unclassified
+correcting
 openMenuIn: aBlock
 	| index |
 	index := aBlock value: #('yes' 'no')
