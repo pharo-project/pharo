@@ -1,7 +1,5 @@
 import hudson.tasks.test.AbstractTestResultAction
 
-def retryTimes = 3
-
 def isWindows(){
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
@@ -12,6 +10,7 @@ def shell(params){
 }
 
 def runTests(architecture, prefix=''){
+	def retryTimes = 3
 	def tries = 0
 	def success = false
 	waitUntil {
