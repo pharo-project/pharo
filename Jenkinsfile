@@ -1,3 +1,5 @@
+import hudson.tasks.test.AbstractTestResultAction
+
 def isWindows(){
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
@@ -6,6 +8,35 @@ def shell(params){
     if(isWindows()) bat(params) 
     else sh(params)
 }
+
+def runTests(architecture, prefix=''){
+	def retryTimes = 3
+	def tries = 0
+	def success = false
+	waitUntil {
+		tries += 1
+		echo "Try #${tries}"
+		try {
+			cleanWs()
+			unstash "bootstrap${architecture}"
+			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture}'"
+			junit allowEmptyResults: true, testResults: '*.xml'
+			success = !(currentBuild.result == 'UNSTABLE')
+			echo "Tests run with result ${currentBuild.result}"
+		} catch(e) {
+			//If there is an exception ignore.
+			//success will be false and we will retry thanks to waitUntil
+			currentBuild.result == 'FAILURE'
+			echo "Tests couldn't complete to run due to an exception"
+		}
+		if (!success && tries == retryTimes) {
+			echo "Out of retries"
+		}
+		return success || (tries == retryTimes)
+	}
+	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+	cleanWs()
+} 
 
 node('unix') {
 	cleanWs()
@@ -83,36 +114,12 @@ for (arch in architectures) {
 		def platform = platf
 		testers["${platform}-${architecture}"] = {
 			node(platform) { stage("Tests-${platform}-${architecture}") {
-				try {
-					cleanWs()
-					unstash "bootstrap${architecture}"
-					shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture}'"
-				} finally {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-					junit allowEmptyResults: true, testResults: '*.xml'
-					cleanWs()
-				}
+				runTests(architecture)
 			}}
 		}
-	}
-}
-for (arch in architectures) {
-	// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-	def architecture = arch
-	for (platf in platforms) {
-		// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-		def platform = platf
 		testers["kernel-${platform}-${architecture}"] = {
 			node(platform) { stage("Kernel-tests-${platform}-${architecture}") {
-				try {
-					cleanWs()
-					unstash "bootstrap${architecture}"
-					shell "bash -c 'bootstrap/scripts/runKernelTests.sh ${architecture}'"
-				} finally {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-					junit allowEmptyResults: true, testResults: '*.xml'
-					cleanWs()
-				}
+				runTests(architecture, "Kernel")
 			}}
 		}
 	}
