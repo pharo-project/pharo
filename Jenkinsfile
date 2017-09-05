@@ -28,8 +28,6 @@ def runTests(architecture, prefix=''){
 			//If there is an exception ignore.
 			//success will be false and we will retry thanks to waitUntil
 			echo "Tests couldn't complete to run due to an exception"
-		} finally {
-			cleanWs()
 		}
 		if (tries == retryTimes) {
 			echo "Out of retries"
@@ -37,6 +35,7 @@ def runTests(architecture, prefix=''){
 		return success || (tries == retryTimes)
 	}
 	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+	cleanWs()
 } 
 
 node('unix') {
