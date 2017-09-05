@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 bold
 	^ self new emphasisCode: 1

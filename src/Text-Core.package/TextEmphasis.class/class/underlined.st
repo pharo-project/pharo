@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 underlined
 	^ self new emphasisCode: 4

@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 versionInformation
 	| wcPredicate |
 	wcPredicate := self workingCopyPredicate.
