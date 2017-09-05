@@ -16,19 +16,25 @@ def runTests(architecture, prefix=''){
 	def success = false
 	waitUntil {
 		tries += 1
+		echo "Try #${tries}"
 		try {
 			cleanWs()
 			unstash "bootstrap${architecture}"
 			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture}'"
 			junit allowEmptyResults: true, testResults: '*.xml'
 			success = !(currentBuild.result == 'UNSTABLE')
+			echo "Tests run with result ${currentBuild.result}"
 		} catch(e) {
 			//If there is an exception ignore.
 			//success will be false and we will retry thanks to waitUntil
+			echo "Tests couldn't complete to run due to an exception"
 		} finally {
 			cleanWs()
 		}
-		success || tries == retryTimes
+		if (tries == retryTimes) {
+			echo "Out of retries"
+		}
+		return success || (tries == retryTimes)
 	}
 	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 } 
