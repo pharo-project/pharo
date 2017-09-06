@@ -1,7 +1,7 @@
 private
 classRuleFor: aTestSelector plusClasses: aCollectionOfTestedClasses
-	| rule expectedResultEnvironment |
-	rule := self
+	| result expectedResultEnvironment |
+	result := self
 		runRuleFor: aTestSelector
 		onEnvironment: self classEnvironmentWithAllObjectClasses.
 	expectedResultEnvironment :=
@@ -9,5 +9,5 @@ classRuleFor: aTestSelector plusClasses: aCollectionOfTestedClasses
 			(aCollectionOfTestedClasses copyWith:
 				(self objectClassFor: aTestSelector)).
 	self
-		assertResultOfRule: rule
+		assertResultOfRule: result
 		hasSameClassesAsEnvironment: expectedResultEnvironment

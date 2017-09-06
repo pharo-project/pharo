@@ -1,7 +1,7 @@
 private
 ruleFor: aTestSelector plusSelectors: aCollectionOfTestedSelectors
-	| rule expectedResultEnvironment |
-	rule := self
+	| result expectedResultEnvironment |
+	result := self
 		runRuleFor: aTestSelector
 		onEnvironment: (self classEnvironmentWith: RBSmalllintTestObject).
 	expectedResultEnvironment := RBSelectorEnvironment new.
@@ -13,5 +13,5 @@ ruleFor: aTestSelector plusSelectors: aCollectionOfTestedSelectors
 				assert: (RBSmalllintTestObject includesSelector: each)
 				description: 'Missing test method RBSmalllintTestObject>>' , each printString ].
 	self
-		assertResultOfRule: rule
+		assertResultOfRule: result
 		hasSameSelectorsAsEnvironment: expectedResultEnvironment

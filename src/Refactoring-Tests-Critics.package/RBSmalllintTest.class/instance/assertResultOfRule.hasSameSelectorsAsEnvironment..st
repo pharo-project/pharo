@@ -1,6 +1,4 @@
 private
-assertResultOfRule: aLintRule hasSameSelectorsAsEnvironment: anEnvironment
-	| resultEnvironment |
-	resultEnvironment := aLintRule result.
-	self assertEnvironment: resultEnvironment hasAllSelectorsInEnvironment: anEnvironment.
-	self assertEnvironment: anEnvironment hasAllSelectorsInEnvironment: resultEnvironment
+assertResultOfRule: critiques hasSameSelectorsAsEnvironment: anEnvironment
+	self assertResult: critiques hasAllMethodsInEnvironment: anEnvironment.
+	self assertEnvironment: anEnvironment hasAllMethodsOfTheResult: critiques

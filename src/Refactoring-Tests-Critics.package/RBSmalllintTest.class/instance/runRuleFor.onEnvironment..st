@@ -1,9 +1,11 @@
 private
 runRuleFor: aTestSelector onEnvironment: anEnvironment
-	| rule |
+	| rule runner |
 	rule := (self ruleClassFor: aTestSelector) new.
 	self assertIsValidRule: rule.
-	RBSmalllintChecker
-		runRule: rule
-		onEnvironment: anEnvironment.
-	^ rule.
+	runner := ReSmalllintChecker new.
+	runner 
+		rule: {rule};
+		environment: anEnvironment;
+		run.
+	^ runner criticsOf: rule.

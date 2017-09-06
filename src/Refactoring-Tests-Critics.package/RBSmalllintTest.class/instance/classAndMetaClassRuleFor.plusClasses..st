@@ -1,7 +1,7 @@
 private
 classAndMetaClassRuleFor: aTestSelector plusClasses: aCollectionOfTestedClasses
-	| rule expectedResultClasses expectedResultEnvironment |
-	rule := self
+	| result expectedResultClasses expectedResultEnvironment |
+	result := self
 		runRuleFor: aTestSelector
 		onEnvironment: self classEnvironmentWithAllObjectClasses.
 	expectedResultClasses :=
@@ -11,5 +11,5 @@ classAndMetaClassRuleFor: aTestSelector plusClasses: aCollectionOfTestedClasses
 	expectedResultClasses do: [ :each |
 		expectedResultEnvironment addClass: each theMetaClass ].
 	self
-		assertResultOfRule: rule
+		assertResultOfRule: result
 		hasSameClassesAsEnvironment: expectedResultEnvironment
