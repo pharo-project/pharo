@@ -1,5 +1,5 @@
 hooks
 afterCheck: aNode mappings: mappingDict
-	self
+	^ self
 		isSearchingLiteralExpression: aNode
-		for: (mappingDict at: '``@expression')
+		for: (mappingDict at: '``@object')
