@@ -1,4 +1,4 @@
-as yet unclassified
+private
 setParser: aParser name: aString range: anInterval 
 	parser := aParser.
 	name := aString.

@@ -1,4 +1,4 @@
-as yet unclassified
+correcting
 openMenuIn: aBlock 
 	| alternatives labels actions lines caption choice |
 	alternatives := parser possibleVariablesFor: name.
