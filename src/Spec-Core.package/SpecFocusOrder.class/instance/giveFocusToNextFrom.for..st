@@ -1,4 +1,4 @@
-as yet unclassified
+operating
 giveFocusToNextFrom: aPresenter for: aModel
 	"aPresenter is the object what currently get the focus, aModel is the object use to call the good parent in a complex hierarchy"
 

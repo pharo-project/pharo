@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 fontArray: anArray
 
 	fontArray := anArray.

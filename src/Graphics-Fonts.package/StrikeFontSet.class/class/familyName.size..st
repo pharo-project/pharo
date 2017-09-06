@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 familyName: aName size: aSize
 	"Answer a font (or the default font if the name is unknown) in the specified size."
 
