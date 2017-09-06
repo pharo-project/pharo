@@ -1,3 +1,3 @@
-as yet unclassified
+test mock
 simpleMethod
 	^FooValue1

@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 dominates: other
 	"NOTE: The use of active in this code is specific to its use in the method
 		Text class addAttribute: att toArray: others"

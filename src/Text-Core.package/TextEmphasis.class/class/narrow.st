@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 narrow
 	^ TextKern kern: -1

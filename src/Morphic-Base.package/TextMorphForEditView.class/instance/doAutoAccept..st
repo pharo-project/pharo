@@ -1,4 +1,4 @@
-as yet unclassified
+accept/cancel
 doAutoAccept: evt
 	"Do the key stroke and check to see if it should be accepted."
 
