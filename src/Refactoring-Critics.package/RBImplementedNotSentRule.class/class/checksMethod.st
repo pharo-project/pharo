@@ -1,3 +1,3 @@
 testing
 checksMethod
-	^ true
+	^ true 

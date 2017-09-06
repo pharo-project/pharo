@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'| `@temps | 
 			`@.Statements1. 
 			[`index <= `@stop] 
@@ -35,4 +34,3 @@ initialize
 					`@.BlockStmts1. 
 					`index := `index - 1].
 			`@.Statements2' )
-		do: [ :node :answer | node ]

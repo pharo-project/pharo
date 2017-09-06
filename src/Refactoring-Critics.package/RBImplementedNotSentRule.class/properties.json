@@ -1,13 +1,13 @@
 {
 	"commentStamp" : "StephaneDucasse 11/29/2014 21:01",
-	"super" : "RBBlockLintRule",
+	"super" : "ReAbstractRule",
 	"category" : "Refactoring-Critics-BlockRules",
-	"classinstvars" : [ ],
+	"classinstvars" : [
+		"allMessages"
+	],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"literals"
-	],
+	"instvars" : [ ],
 	"name" : "RBImplementedNotSentRule",
 	"type" : "normal"
 }

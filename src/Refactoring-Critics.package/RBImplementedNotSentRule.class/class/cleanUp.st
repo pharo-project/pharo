@@ -1,0 +1,4 @@
+cleanup
+cleanUp
+
+	allMessages := nil

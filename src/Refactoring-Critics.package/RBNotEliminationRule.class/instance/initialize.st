@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: '``@object not not' with: '``@object';
 		replace: '``@object isEmpty not' with: '``@object isNotEmpty';
 		replace: '``@object not ifTrue: ``@block' with: '``@object ifFalse: ``@block';

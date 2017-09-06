@@ -1,6 +1,6 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: '``@object withFirstCharacterDownshifted' with: '``@object uncapitalized'.
 

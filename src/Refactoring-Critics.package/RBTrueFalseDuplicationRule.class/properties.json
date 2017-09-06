@@ -1,6 +1,6 @@
 {
-	"commentStamp" : "StephaneDucasse 11/29/2014 22:56",
-	"super" : "RBParseTreeLintRule",
+	"commentStamp" : "StephaneDucasse 11/29/2014 21:29",
+	"super" : "ReNodeRewriteRule",
 	"category" : "Refactoring-Critics-ParseTreeRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],

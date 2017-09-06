@@ -1,13 +1,11 @@
 {
-	"commentStamp" : "StephaneDucasse 11/29/2014 20:54",
-	"super" : "RBBlockLintRule",
+	"commentStamp" : "YuriyTymchuk 7/11/2017 14:45",
+	"super" : "ReAbstractRule",
 	"category" : "Refactoring-Critics-BlockRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"matcher"
-	],
+	"instvars" : [ ],
 	"name" : "RBLongMethodsRule",
 	"type" : "normal"
 }

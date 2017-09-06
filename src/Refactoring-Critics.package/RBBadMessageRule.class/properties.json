@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "StephaneDucasse 11/29/2014 21:14",
-	"super" : "RBBlockLintRule",
+	"super" : "ReNodeBasedRule",
 	"category" : "Refactoring-Critics-BlockRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],

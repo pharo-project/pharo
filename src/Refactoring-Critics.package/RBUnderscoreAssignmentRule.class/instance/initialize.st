@@ -1,6 +1,8 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule 
-		replace: '`var := ``@object' with: '`var := ``@object'
-		when: [ :node | node assignmentOperator = '_' ]
+	self 
+		replace: '`var := ``@object'
+		with:    '`var := ``@object'
+		"yes, they are the same"
+		"see afterCheck"

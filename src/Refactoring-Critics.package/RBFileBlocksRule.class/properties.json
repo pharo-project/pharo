@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "NicolaiHess 9/29/2015 21:57",
-	"super" : "RBParseTreeLintRule",
+	"super" : "ReNodeMatchRule",
 	"category" : "Refactoring-Critics-ParseTreeRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],

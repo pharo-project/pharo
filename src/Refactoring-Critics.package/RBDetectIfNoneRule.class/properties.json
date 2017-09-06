@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "YuriyTymchuk 5/23/2016 14:38",
-	"super" : "RBTransformationRule",
+	"super" : "ReNodeRewriteRule",
 	"category" : "Refactoring-Critics-TransformationRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],

@@ -1,4 +1,4 @@
-This smell arises when a long method is found (with 10 or more statements). Note that, it counts statements, not lines. Long methods should often be split into several smaller ones. 
+This smell arises when a long method is found with meny statements. Note that, it counts statements, not lines. Long methods should often be split into several smaller ones. 
 
 Long methods should often be split into several smaller ones. When you start to need an empty line to separate groups of statements, this is an indication that you should probably define a new method. 
 	

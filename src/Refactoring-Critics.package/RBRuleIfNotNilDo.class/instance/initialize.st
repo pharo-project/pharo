@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: '`@receiver ifNotNilDo: `@statements'
 			with: '`@receiver ifNotNil: `@statements';	
 		replace: '`@receiver ifNotNilDo: `@statements1 ifNil: `@statements2'

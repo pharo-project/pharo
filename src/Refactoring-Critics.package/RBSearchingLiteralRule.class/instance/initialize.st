@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'``@object = `#literal or: [``@expression]' 
 			'``@object == `#literal or: [``@expression]' 
 			'`#literal = ``@object or: [``@expression]' 
@@ -11,10 +10,3 @@ initialize
 			'``@expression | (``@object == `#literal)' 
 			'``@expression | (`#literal = ``@object)' 
 			'``@expression | (`#literal == ``@object)')
-		do: [ :node :answer | 
-			answer isNil 
-				ifTrue: [
-					(self isSearchingLiteralExpression: node)
-						ifTrue: [ node ]
-						ifFalse: [ nil ] ]
-				ifFalse: [ answer ] ]

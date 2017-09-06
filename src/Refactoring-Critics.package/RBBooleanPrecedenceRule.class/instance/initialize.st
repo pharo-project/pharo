@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	self  matchesAny: #(
 			'`@object1 | `@object2 = `@object3'
 			'`@object1 | `@object2 == `@object3'
 			'`@object1 & `@object2 = `@object3'
@@ -11,4 +10,4 @@ initialize
 			'`@object1 | `@object2 ~~ `@object3'
 			'`@object1 & `@object2 ~= `@object3'
 			'`@object1 & `@object2 ~~ `@object3' )
-		do: [ :node :answer | node ]
+		

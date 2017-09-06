@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	 self matchesAny: #(
 			'PopUpMenu confirm: `@object1 orCancel: `@object2'
 			'PopUpMenu confirm: `@object1 trueChoice: `@object2 falseChoice: `@object3'
 			'PopUpMenu confirm: `@object1'
@@ -14,4 +13,3 @@ initialize
 			'PopUpMenu labels: `@object1'
 			'PopUpMenu withCaption: `@object1 chooseFrom: `@object2'
 			 )
-		do: [ :node :answer | node ]

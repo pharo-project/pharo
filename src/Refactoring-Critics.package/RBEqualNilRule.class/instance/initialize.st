@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: '``@object = nil' with: '``@object isNil';
 		replace: '``@object == nil' with: '``@object isNil';
 		replace: '``@object ~= nil' with: '``@object notNil';

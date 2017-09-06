@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'[| `@temps | 
 				`var := `@object.  
 				`@.statements] 
@@ -13,4 +12,3 @@ initialize
 				`@.statements] 
 						ifCurtailed: 
 							[`var `@messages: `@args]' )
-		do: [ :node :answer | node ]

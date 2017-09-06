@@ -7,4 +7,4 @@ initialize
 				do: [ :conversionMessage | 
 					| baseString |
 					baseString := '``@receiver ' , collectionMessage , ' ``@arg '.
-					self rewriteRule replace: baseString , conversionMessage with: baseString ] ]
+					self replace: baseString , conversionMessage with: baseString ] ]

@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: '``@collection contains: [:`each | | `@temps | ``@.Statements]'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]';
 		

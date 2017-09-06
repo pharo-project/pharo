@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'`@collection do: [:`each | | `@temps | 
 				`@.Statements1. 
 				`@condition ifFalse: [| `@BlockTemps | `@.BlockStatements1. ^`each]. 
@@ -27,4 +26,3 @@ initialize
 				`@.Statements1. 
 				`@condition ifTrue: [| `@BlockTemps | `@.BlockStatements1.  ^false]. 
 				`@.Statements2]' )
-		do: [ :node :answer | node ]

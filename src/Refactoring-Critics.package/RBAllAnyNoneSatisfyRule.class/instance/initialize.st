@@ -1,10 +1,10 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 	
 		" allSatisfy: "
-		replaceMethod: '`@method: `@args
+		addMatchingMethod: '`@method: `@args
 			| `@temps |
 			`@.statements.
 			`@collection do: [ :`each |
@@ -13,7 +13,7 @@ initialize
 				`@condition
 					ifFalse: [ ^ false ] ].
 			^ true'
-		with: '`@method: `@args
+		rewriteTo: '`@method: `@args
 			| `@temps |
 			`@.statements. 
 			^ `@collection allSatisfy: [ :`each |
@@ -22,7 +22,7 @@ initialize
 				`@condition ]';
 
 		" anySatisfy: "
-		replaceMethod: '`@method: `@args
+		addMatchingMethod: '`@method: `@args
 			| `@temps |
 			`@.statements.
 			`@collection do: [ :`each |
@@ -31,7 +31,7 @@ initialize
 				`@condition
 					ifTrue: [ ^ true ] ].
 			^ false'
-		with: '`@method: `@args
+		rewriteTo: '`@method: `@args
 			| `@temps |
 			`@.statements.
 			^ `@collection anySatisfy: [ :`each | 
@@ -40,7 +40,7 @@ initialize
 				`@condition ]';
 
 		" noneSatisfy: "
-		replaceMethod: '`@method: `@args
+		addMatchingMethod: '`@method: `@args
 			| `@temps |
 			`@.statements.
 			`@collection do: [ :`each |
@@ -49,7 +49,7 @@ initialize
 				`@condition
 					ifTrue: [ ^ false ] ].
 			^ true'
-		with: '`@method: `@args
+		rewriteTo: '`@method: `@args
 			| `@temps |
 			`@.statements.
 			^ `@collection noneSatisfy: [ :`each | 

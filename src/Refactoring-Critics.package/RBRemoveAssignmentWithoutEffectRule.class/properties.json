@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "RBTransformationRule",
+	"super" : "ReNodeRewriteRule",
 	"category" : "Refactoring-Critics",
 	"classinstvars" : [ ],
 	"pools" : [ ],

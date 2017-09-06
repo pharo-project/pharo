@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: 'UITheme current'
 			with: 'Smalltalk ui theme';
 		replace: 'ThemeIcons current'

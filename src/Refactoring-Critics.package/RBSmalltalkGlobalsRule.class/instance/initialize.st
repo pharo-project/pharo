@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: 'Smalltalk allClasses'
 			with: 'Smalltalk globals allClasses';
 		replace: 'Smalltalk allClassesDo: `@statements'

@@ -2,5 +2,5 @@ initialization
 initialize
 	super initialize.
  
-	self rewriteRule
+	self
 		replace: 	'`var := `var' with: ''

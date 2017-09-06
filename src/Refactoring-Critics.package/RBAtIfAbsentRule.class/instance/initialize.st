@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self rewriteRule
+	self
 		replace: '``@dictionary at: ``@key 
 					ifAbsent: [| `@temps | 
 							``@.Statements1.

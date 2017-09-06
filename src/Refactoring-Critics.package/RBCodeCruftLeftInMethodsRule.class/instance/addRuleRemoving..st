@@ -9,4 +9,4 @@ addRuleRemoving: patternString
 ``@.Statements2'.
 	findString := methodTemplate format: { patternString }.
 	replaceString := methodTemplate format: { '' }.
-	self rewriteRule replace: findString with: replaceString
+	self replace: findString with: replaceString

@@ -1,14 +1,11 @@
 {
 	"commentStamp" : "StephaneDucasse 11/29/2014 20:16",
-	"super" : "RBBlockLintRule",
+	"super" : "ReAbstractRule",
 	"category" : "Refactoring-Critics-BlockRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"packages",
-		"package"
-	],
+	"instvars" : [ ],
 	"name" : "RBUnpackagedCodeRule",
 	"type" : "normal"
 }

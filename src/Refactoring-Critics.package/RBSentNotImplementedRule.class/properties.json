@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "NicolaiHess 8/31/2015 16:07",
-	"super" : "RBBlockLintRule",
+	"super" : "ReAbstractRule",
 	"category" : "Refactoring-Critics-BlockRules",
 	"classinstvars" : [ ],
 	"pools" : [ ],

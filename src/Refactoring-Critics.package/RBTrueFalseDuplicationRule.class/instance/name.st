@@ -1,3 +1,3 @@
 accessing
 name
-	^ 'Check for same statements in ifTrue:ifFalse: blocks'
+	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'

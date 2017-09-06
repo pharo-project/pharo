@@ -1,8 +1,6 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'^`@condition ifTrue: [| `@temps | `@.statements]'
 			'^`@condition ifFalse: [| `@temps | `@.statements]' )
-		do: [ :node :answer | node ]

@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'`@menu add: `#label action: `#sym'
 			'`@menu add: `#label selector: `#sym arguments: `@stuff'
 			'`@menu add: `#label subMenu: `@stuff target: `@targ selector: `#sel argumentList: `@args'
@@ -19,4 +18,3 @@ initialize
 			'`@menu balloonTextForLastItem: `#label'
 			'`@menu labels: `#lit lines: `@lines selections: `@sels'
 			'`@menu title: `#title' )
-		do: [ :node :answer | node ]

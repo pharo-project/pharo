@@ -1,26 +1,63 @@
 initialization
 initialize
 	super initialize.
-	self matcher
-		matchesAnyOf: #(
-			'`@object 
-				ifTrue: [| `@temps1 | `@.Statements1. `.Statement] 
-				ifFalse: [| `@temps2 | `@.Statements2. `.Statement]' 
-			'`@object 
-				ifTrue: [| `@temps1 | `.Statement. `@.Statements1] 
-				ifFalse: [| `@temps2 | `.Statement. `@.Statements2]' 
-			'`@object 
-				ifFalse: [| `@temps1 | `@.Statements1. `.Statement] 
-				ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' 
-			'`@object 
-				ifFalse: [| `@temps1 | `.Statement. `@.Statements1] 
-				ifTrue: [| `@temps2 | `.Statement. `@.Statement2]') 
-			do: [ :node :answer | 
-				answer isNil 
-					ifTrue: [
-						| statement |
-						statement := node arguments first body statements last.
-						(statement isVariable and: [ statement = node arguments last body statements last ]) 
-							ifFalse: [ node ]
-							ifTrue: [ nil ] ]
-					ifFalse: [ answer ] ]
+	self
+		"true/false last common"
+		replace: '
+		`.@PreStatements.
+		`@boolExp 
+			ifTrue: [ | `@trueTemps | `@.TrueStatements. `.LastStatement ] 
+			ifFalse: [ | `@falseTemps | `@.FalseStatements. `.LastStatement ].
+		`.@PostStatements.'
+		with: '
+		`.@PreStatements.
+		`@boolExp 
+			ifTrue: [ | `@trueTemps | `@.TrueStatements. ] 
+			ifFalse: [ | `@falseTemps | `@.FalseStatements. ].
+		`.LastStatement.
+		`.@PostStatements.';
+		
+		"false/true last common"
+		replace: '
+		`.@PreStatements.
+		`@boolExp 
+			ifFalse: [ | `@falseTemps | `@.FalseStatements. `.LastStatement ] 
+			ifTrue: [ | `@trueTemps | `@.TrueStatements. `.LastStatement ].
+		`.@PostStatements.'
+		with: '
+		`.@PreStatements.
+		`@boolExp 
+			ifFalse: [ | `@falseTemps | `@.FalseStatements. ] 
+			ifTrue: [ | `@trueTemps | `@.TrueStatements. ].
+		`.LastStatement.
+		`.@PostStatements.';
+		
+		"true/false first common"
+		replace: '
+		`.@PreStatements.
+		`@boolExp 
+			ifTrue: [ | `@trueTemps | `.FirstStatement. `@.TrueStatements. ] 
+			ifFalse: [ | `@falseTemps | `.FirstStatement. `@.FalseStatements. ].
+		`.@PostStatements.'
+		with: '
+		`.@PreStatements.
+		`.FirstStatement.
+		`@boolExp 
+			ifTrue: [ | `@trueTemps | `@.TrueStatements. ] 
+			ifFalse: [ | `@falseTemps | `@.FalseStatements. ].
+		`.@PostStatements.';
+		
+		"false/true first common"
+		replace: '
+		`.@PreStatements.
+		`@boolExp 
+			ifFalse: [ | `@falseTemps | `.FirstStatement. `@.FalseStatements. ]
+			ifTrue: [ | `@trueTemps | `.FirstStatement. `@.TrueStatements. ].
+		`.@PostStatements.'
+		with: '
+		`.@PreStatements.
+		`.FirstStatement.
+		`@boolExp 
+			ifFalse: [ | `@falseTemps | `@.FalseStatements. ]
+			ifTrue: [ | `@trueTemps | `@.TrueStatements. ].
+		`.@PostStatements.'

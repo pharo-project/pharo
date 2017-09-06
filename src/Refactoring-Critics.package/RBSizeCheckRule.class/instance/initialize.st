@@ -11,6 +11,5 @@ initialize
 		collect: [ :each | '`@object notEmpty ifTrue: [`@object' , (self genericPatternForSelector: each) , '. `@.Statements2]' ]).
 	patterns addAll: (self selectors
 		collect: [ :each | '`@object size = 0 ifFalse: [`@object' , (self genericPatternForSelector: each) , '. `@.Statements2]' ]).
-	self matcher
-		matchesAnyOf: patterns
-		do: [ :node :answer | node ]
+	self matchesAny: patterns
+		

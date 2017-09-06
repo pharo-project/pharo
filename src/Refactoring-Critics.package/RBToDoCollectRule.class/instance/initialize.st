@@ -1,8 +1,7 @@
 initialization
 initialize
 	super initialize.
-	self matcher 
-		matchesAnyOf: #(
+	self matchesAny: #(
 			'| `@temps1 |
 			`@.Stmts1.
 			`collection := Array new: `@size.
@@ -25,4 +24,3 @@ initialize
 					`collection at: `i put: `@obj.
 					`@.BStmt2].
 			`@.Stmts3' )
-		do: [ :node :answer | node ]
