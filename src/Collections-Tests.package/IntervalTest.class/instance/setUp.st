@@ -1,4 +1,4 @@
-setup
+running
 setUp
 
 	empty := (1 to: 0).

@@ -1,4 +1,4 @@
-tests
+running
 setUp
 	manager := SessionManager new.
 	session := self newTestSessionfor: manager.

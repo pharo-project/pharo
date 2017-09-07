@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	empty := self speciesClass new.
 	nonEmpty := self speciesClass new
