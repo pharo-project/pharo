@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	className := #TUTU.
 	renamedName := #RenamedTUTU.

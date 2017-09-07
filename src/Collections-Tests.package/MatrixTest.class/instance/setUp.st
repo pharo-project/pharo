@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	matrix1 := Matrix new: 2.
 	matrix1 at:1 at:1 put: 1.

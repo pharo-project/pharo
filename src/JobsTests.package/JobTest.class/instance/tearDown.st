@@ -1,4 +1,4 @@
-tests
+running
 tearDown
 
 	Smalltalk globals at: #SystemProgressMorph ifPresent: [:spm | 

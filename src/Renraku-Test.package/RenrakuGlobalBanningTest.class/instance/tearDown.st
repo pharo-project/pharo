@@ -1,4 +1,4 @@
-initialization
+running
 tearDown
 	oldRulesSettings keysAndValuesDo: [ :rule :setting |
 		rule enabled: setting ].
