@@ -1,4 +1,4 @@
-*GT-BytecodeDebugger
+comparing
 hash
 
 	^ ((self bytes hash bitXor: self description hash) bitXor: 

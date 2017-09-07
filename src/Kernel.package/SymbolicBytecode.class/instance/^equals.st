@@ -1,4 +1,4 @@
-*GT-BytecodeDebugger
+comparing
 = anObject
 
 	self == anObject
