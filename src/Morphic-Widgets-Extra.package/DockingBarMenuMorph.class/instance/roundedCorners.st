@@ -1,4 +1,4 @@
-as yet unclassified
+rounding
 roundedCorners
 	"Return a list of those corners to round"
 	self wasActivatedFromDockingBar
