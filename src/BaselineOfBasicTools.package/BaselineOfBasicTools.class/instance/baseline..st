@@ -39,8 +39,6 @@ baseline: spec
 		
 		spec package: 'Announcements-Help'.	
 		spec package: 'Metacello-FileTree'.
-		spec package: 'Metacello-GitBasedRepository'.
-		spec package: 'Metacello-GitHub'.
 		spec package: 'Metacello-ProfStef'.
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.

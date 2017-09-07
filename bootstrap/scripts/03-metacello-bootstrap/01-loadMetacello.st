@@ -21,6 +21,8 @@ mcPackages := #(
  'Metacello-ToolBox'
  'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
+ 'Metacello-GitBasedRepository'
+ 'Metacello-GitHub'
  ).
 
 MCMethodDefinition initializersEnabled: false.
