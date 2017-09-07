@@ -1,4 +1,4 @@
-as yet unclassified
+private - initialization
 initializeShiftCmdKeyShortcuts 
 	"Initialize the shift-command-key (or control-key) shortcut table."
 	"NOTE: if you don't know what your keyboard generates, use Sensor kbdTest"
