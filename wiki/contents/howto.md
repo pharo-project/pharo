@@ -14,3 +14,4 @@
 - [How to contribute to the development of Pharo](https://github.com/guillep/PharoIntegrationProcess/wiki/Pharo-Development-Process)
 - [How to create a small web app](https://ci.inria.fr/pharo-contribution/job/EnterprisePharoBook/lastSuccessfulBuild/artifact/book-result/WebApp/WebApp.html)
 - [How to document your project using Pillar](https://ci.inria.fr/pharo-contribution/job/EnterprisePharoBook/lastSuccessfulBuild/artifact/book-result/PillarChap/Pillar.html)
+- [How to create Ruby On Rails applications using Pharo 6](https://railsexpress.quora.com/Pharo-6-Generating-Ruby-on-Rails-Applications)
