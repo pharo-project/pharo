@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 descentKern
 
 	^ (fontArray at: 1) descentKern.

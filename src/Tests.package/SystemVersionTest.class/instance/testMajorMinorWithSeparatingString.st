@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testMajorMinorWithSeparatingString
 	"SystemVersionTest debug: #testMajorMinorWithSeparatingString"
 	

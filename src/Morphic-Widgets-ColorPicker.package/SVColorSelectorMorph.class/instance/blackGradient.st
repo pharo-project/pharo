@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 blackGradient
 	"Answer the black gradient. Top to bottom, transparent to black."
 

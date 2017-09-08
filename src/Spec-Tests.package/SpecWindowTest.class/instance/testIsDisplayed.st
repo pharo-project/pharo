@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testIsDisplayed
 
 	"Test for case: 16800 -> ask a SpecWindow for #isDisplayed always returns true"

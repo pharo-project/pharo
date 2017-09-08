@@ -1,4 +1,4 @@
-as yet unclassified
+evaluating
 DoIt
 	^ MCWorkingCopy
 		managersForClass: MFClassA

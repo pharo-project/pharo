@@ -1,4 +1,4 @@
-testing - properties
+tests - properties
 testIsReadInMethod
 	
 	ivarForTesting printString.
