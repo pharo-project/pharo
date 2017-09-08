@@ -1,4 +1,4 @@
-accessing
+comparing
 hash
 	| hash |
 	hash := String stringHash: baseTrait initialHash: 0.

@@ -1,4 +1,4 @@
-hash
+comparing
 hash
 
 	^ self ticks hash 
