@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 from: old to: new
 	"Answer a new instance of the receiver with the given
 	old and new text."
