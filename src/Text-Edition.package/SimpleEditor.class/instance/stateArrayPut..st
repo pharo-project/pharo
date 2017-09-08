@@ -1,4 +1,4 @@
-initialize-release
+initialize - release
 stateArrayPut: stateArray
 	| sel |
 	sel := stateArray at: 1.
