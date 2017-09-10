@@ -8,8 +8,8 @@ testHasAbstractMethods
 	self deny: Behavior class hasAbstractMethods.
 	
 	
-	self assert: DiskStore hasAbstractMethods.
-	"DiskStore defines methods because its class side contains abstract methods"
-	self assert: DiskStore class hasAbstractMethods.
+	self assert: ObjectLayout hasAbstractMethods.
+	"ObjectLayout defines methods because its class side contains abstract methods"
+	self assert: ObjectLayout class hasAbstractMethods.
 	
 	
