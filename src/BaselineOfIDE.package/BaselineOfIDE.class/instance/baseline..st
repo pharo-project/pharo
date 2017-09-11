@@ -66,6 +66,8 @@ baseline: spec
 		spec package: 'Zodiac-Extra'.	
 		spec package: 'Zinc-Zodiac'.	
 			
+		spec package: 'Metacello-GitBasedRepository'.	
+
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
