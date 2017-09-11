@@ -1,20 +1,15 @@
 tests
 testTwoCriticalsShouldWaitEachOther
 
-	| lastCriticalExecuted firstCriticalExecutedFirst semaphoreToHoldMutex |
-	lastCriticalExecuted := false.
-	firstCriticalExecutedFirst := false.
-	semaphoreToHoldMutex := Semaphore new.
+	| lastExecuted lastExecutedAfterFirst |
+	lastExecuted := false.
+	lastExecutedAfterFirst := nil.
 	
-	self fork: [
-		mutex critical: [ semaphoreToHoldMutex wait. "here we grab mutex and control it with semaphore"
-		firstCriticalExecutedFirst := lastCriticalExecuted not ]].
-	self waitLastProcessLock.
+	self fork: [mutex critical: [ 5 milliSeconds wait.
+			lastExecutedAfterFirst := lastExecuted not ]].
 	
-	self fork: [mutex critical: [ lastCriticalExecuted := true ]].
-	self waitLastProcessLock.
-	
-	semaphoreToHoldMutex signal.
-	self waitLastProcessTerminate.
-	self assert: lastCriticalExecuted.
-	self assert: firstCriticalExecutedFirst 
+	self fork: [mutex critical: [ lastExecuted := true ]].
+	10 milliSeconds wait.
+		
+	self assert: lastExecuted.
+	self assert: lastExecutedAfterFirst 

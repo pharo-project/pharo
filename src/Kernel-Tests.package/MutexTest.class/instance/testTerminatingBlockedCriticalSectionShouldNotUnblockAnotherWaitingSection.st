@@ -1,23 +1,17 @@
 tests
 testTerminatingBlockedCriticalSectionShouldNotUnblockAnotherWaitingSection
-	| semaphoreToHoldMutex holdingCriticalExecutedFirst firstWaitingProcess lastCriticalExecuted |
-	holdingCriticalExecutedFirst := false.
-	semaphoreToHoldMutex := Semaphore new.
-	lastCriticalExecuted := false.
-	
-	self fork: [
-		mutex critical: [ semaphoreToHoldMutex wait. "here we grab mutex and control it with semaphore"
-		holdingCriticalExecutedFirst := lastCriticalExecuted not ]].
-	self waitLastProcessLock.
-	
-	firstWaitingProcess := self fork: [mutex critical: [ self error: 'should not happen' ]].
-	self waitLastProcessLock.
-	self fork: [mutex critical: [ lastCriticalExecuted := true]].
-	self waitLastProcessLock.
 
-	firstWaitingProcess terminate.
-	self waitLastProcessLock. "check that last process is still waiting"
-	semaphoreToHoldMutex signal. "here we resume first process execution"
-	self waitLastProcessTerminate.
-	self assert: holdingCriticalExecutedFirst.
-	self assert: lastCriticalExecuted.
+	| lastExecuted lastExecutedAfterFirst secondCritical |
+	lastExecuted := false.
+	lastExecutedAfterFirst := nil.
+	
+	self fork: [mutex critical: [ 10 milliSeconds wait.
+			lastExecutedAfterFirst := lastExecuted not ]].
+	
+	secondCritical := self fork: [mutex critical: [ lastExecuted := true ]].
+	self fork: [mutex critical: [ lastExecuted := true ]].
+	5 milliSeconds wait.
+	secondCritical terminate.
+	10 milliSeconds wait.
+	self assert: lastExecuted.
+	self assert: lastExecutedAfterFirst

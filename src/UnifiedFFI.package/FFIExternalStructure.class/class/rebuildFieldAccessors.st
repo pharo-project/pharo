@@ -1,6 +1,7 @@
 private
 rebuildFieldAccessors
-	self removeAllOffsetVariables. 
-	self 
-		compileFields: self fields 
-		withAccessors: true
+	Author useAuthor: 'UFFIGenerator' during: [
+		self removeAllOffsetVariables. 
+		self 
+			compileFields: self fields 
+			withAccessors: true]
