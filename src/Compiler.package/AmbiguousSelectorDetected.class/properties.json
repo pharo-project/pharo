@@ -8,6 +8,6 @@
 	"instvars" : [
 		"interval"
 	],
-	"name" : "AmbiguousSelector",
+	"name" : "AmbiguousSelectorDetected",
 	"type" : "normal"
 }

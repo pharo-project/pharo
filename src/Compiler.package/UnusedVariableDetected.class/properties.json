@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "UnusedVariable",
+	"name" : "UnusedVariableDetected",
 	"type" : "normal"
 }

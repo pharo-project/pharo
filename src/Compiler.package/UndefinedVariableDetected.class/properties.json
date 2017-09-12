@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "UndefinedVariable",
+	"name" : "UndefinedVariableDetected",
 	"type" : "normal"
 }
