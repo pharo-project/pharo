@@ -1,3 +1,3 @@
 formatting
 formatVersion
-	^ 0
+	^ 1
