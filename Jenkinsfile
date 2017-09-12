@@ -36,7 +36,68 @@ def runTests(architecture, prefix=''){
 	}
 	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
 	cleanWs()
-} 
+}
+
+def shellOutput(params){
+    return (isWindows())? bat(returnStdout: true, script: params).trim() : sh(returnStdout: true, script: params).trim()
+}
+
+def notifyBuild(status){
+	if( env.BRANCH_NAME != "development" ) {
+		//Should only notify in development
+		return
+	}
+	
+	def owner = "pharo-project"
+	def title = status
+	
+	//Get the merge information from the last commit
+	def logMessage = shellOutput('git log -1 --format="%B"')
+	def logSHA = shellOutput('git log -1 --format="%p"')
+	
+	def mailMessage = "Could not extract further issue information from commit message: ${logMessage}"
+	
+	//If there is no pull request information, we will send a log with the last commit message only
+	def isPRMergeCommit = logMessage ==~ "Merge pull request #[0-9]+ from.*"	
+	if (isPRMergeCommit) {
+		def pullRequestId = logMessage.split(' ')[3].substring(1)
+		def githubPullRequestHttpRequest = "https://api.github.com/repos/${owner}/pharo/pulls/${pullRequestId}"
+		def response = httpRequest githubPullRequestHttpRequest
+		if (response.status == 200) { 
+			def pullRequestJSON = readJSON text: response.content
+			def pullRequestTitle = pullRequestJSON['title']
+			
+			def pullRequestUrl = "https://github.com/pharo-project/${owner}/pulls/${pullRequestId}"
+			mailMessage = """The Pull Request #${pullRequestId} was integrated: \"${pullRequestTitle}\"
+Pull request url: ${pullRequestUrl}
+"""
+			title = pullRequestTitle
+			def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
+			def fogbugzUrl = "https://pharo.fogbugz.com/f/cases/${issueNumber}"
+			
+			mailMessage += """
+Issue Url: ${fogbugzUrl}"""
+		} else {
+			mailMessage += """
+No associated issue found"""
+		}
+	}
+	
+	def body = """There is a new Pharo build available!
+	
+The status of the build #${env.BUILD_NUMBER} was: ${status}.
+
+${mailMessage}
+Build Url: ${env.BUILD_URL}
+
+Check for latest built images in http://files.pharo.org:
+ - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
+ - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
+"""
+	mail to: 'pharo-dev@lists.pharo.org', cc: 'guillermopolito@gmail.com', subject: "Build #${env.BUILD_NUMBER}: ${title}", body: body
+}
+
+try{
 
 node('unix') {
 	cleanWs()
@@ -125,3 +186,8 @@ for (arch in architectures) {
 	}
 }
 parallel testers
+
+	notifyBuild("SUCCESS")
+} catch (e) {
+	notifyBuild("FAILURE")
+}
