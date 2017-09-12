@@ -94,7 +94,7 @@ Check for latest built images in http://files.pharo.org:
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
 """
-	mail to: 'pharo-dev@lists.pharo.org', cc: 'guillermopolito@gmail.com', subject: "Build #${env.BUILD_NUMBER}: ${title}", body: body
+	mail to: 'pharo-dev@lists.pharo.org', cc: 'guillermopolito@gmail.com', subject: "[Pharo 7.0-dev] Build #${env.BUILD_NUMBER}: ${title}", body: body
 }
 
 try{
