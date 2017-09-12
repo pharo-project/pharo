@@ -15,5 +15,7 @@ doTestExportingPackage: aPackageNamed
 	self assert: old extensionMethods size equals: (aPackage extensionMethods) size.
 	
 	self assert: ( old classes allSatisfy: [ :e | self in: old classes allSuperclassesAreBeforeThan: e] ).
+	self assert: ( old classes allSatisfy: [ :e | self in: old classes allSharedPoolsAreBeforeThan: e] ).
+	self assert: ( old traits allSatisfy: [ :e | self in: old traits allTraitsAreBeforeThan: e] ).
 
 	self assert: new equals: old.

@@ -1,15 +1,15 @@
 writing
 writeInto: aWriter
-	aWriter writeInt: version.
+	aWriter writeInt32: version.
 	aWriter writeByteString: packageName.
 
-	aWriter writeInt: traits size.
+	aWriter writeInt32: traits size.
 	traits do: [ :each | each writeInto: aWriter ].
 
-	aWriter writeInt: classes size.
+	aWriter writeInt32: classes size.
 	classes do: [ :each | each writeInto: aWriter ].
 
-	aWriter writeInt: extensionMethods size.
+	aWriter writeInt32: extensionMethods size.
 	extensionMethods do: [ :e | e writeInto: aWriter ].
 
 	aWriter flush.

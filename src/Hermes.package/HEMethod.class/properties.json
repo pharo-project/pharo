@@ -8,10 +8,13 @@
 	"instvars" : [
 		"className",
 		"name",
-		"header",
 		"literals",
 		"bytecode",
-		"protocol"
+		"protocol",
+		"encoderClassName",
+		"numArgs",
+		"numTemps",
+		"hasPrimitive"
 	],
 	"name" : "HEMethod",
 	"type" : "normal"
