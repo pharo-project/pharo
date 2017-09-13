@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "StephaneDucasse 11/29/2014 18:01",
+	"super" : "ReNodeRewriteRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBDeprecateWithFirstCharacterDownshifted",
+	"type" : "normal"
+}

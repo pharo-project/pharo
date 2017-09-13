@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "NicolaiHess 8/31/2015 16:07",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBSentNotImplementedRule",
+	"type" : "normal"
+}

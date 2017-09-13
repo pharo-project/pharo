@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "StephaneDucasse 11/29/2014 20:54",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBLocalMethodsOfAClassNotInItsTraitComposition",
+	"type" : "normal"
+}

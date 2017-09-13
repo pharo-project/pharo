@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "StephaneDucasse 11/29/2014 22:57",
+	"super" : "ReNodeMatchRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBToDoWithIncrementRule",
+	"type" : "normal"
+}

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "StephaneDucasse 11/29/2014 20:19",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"literalNames"
+	],
+	"name" : "RBUncommonMessageSendRule",
+	"type" : "normal"
+}
