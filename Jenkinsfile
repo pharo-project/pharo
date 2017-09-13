@@ -105,11 +105,16 @@ The status of the build #${env.BUILD_NUMBER} was: ${status}.
 
 ${mailMessage}
 Build Url: ${env.BUILD_URL}
+"""
 
+	// If we are building development, add information about the uploads
+	if( env.BRANCH_NAME == "development" ) {
+	""""
 Check for latest built images in http://files.pharo.org:
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
 """
+	}
 	mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
 	} catch (e) {
 		//If there is an error during mail send, just print it and continue
