@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testClose
 	| h i |
 	h := HistoryNode new.
