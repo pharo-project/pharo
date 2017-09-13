@@ -1,6 +1,10 @@
 import hudson.tasks.test.AbstractTestResultAction
 
 def isWindows(){
+	//If NODE_LABELS environment variable is null, we assume we are on master unix machine
+	if (env.NODE_LABELS == null) {
+		return false
+	}
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
 
@@ -43,6 +47,7 @@ def shellOutput(params){
 }
 
 def notifyBuild(status){
+	try{
 	if( env.BRANCH_NAME != "development" ) {
 		//Should only notify in development
 		return
@@ -95,6 +100,10 @@ Check for latest built images in http://files.pharo.org:
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
 """
 	mail to: 'pharo-dev@lists.pharo.org', cc: 'guillermopolito@gmail.com', subject: "[Pharo 7.0-dev] Build #${env.BUILD_NUMBER}: ${title}", body: body
+	} catch (e) {
+		//If there is an error during mail send, just print it and continue
+		echo 'Error while sending email: ' + e.toString()
+	}
 }
 
 try{
@@ -187,7 +196,8 @@ for (arch in architectures) {
 }
 parallel testers
 
-	notifyBuild("SUCCESS")
+notifyBuild("SUCCESS")
 } catch (e) {
 	notifyBuild("FAILURE")
+	throw e
 }
