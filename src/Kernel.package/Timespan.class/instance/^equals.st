@@ -1,4 +1,4 @@
-arithmetic
+comparing
 = comparand
 	^ self species = comparand species 
 		and: [ self start = comparand start 
