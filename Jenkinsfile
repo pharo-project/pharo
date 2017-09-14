@@ -47,12 +47,23 @@ def shellOutput(params){
 }
 
 def notifyBuild(status){
+	node('unix'){ stage('notify'){
 	try{
-	if( env.BRANCH_NAME != "development" ) {
-		//Should only notify in development
-		return
+	
+	//If this is development, we send the email to the bugtracker list
+	//Otherwise, we send it to pharo-dev
+	def toMail = "pharo-bugtracker@lists.gforge.inria.fr"
+	def buildKind = env.BRANCH_NAME
+	if (env.CHANGE_ID != null){
+		buildKind = "PR ${env.CHANGE_ID}"
+	}
+	if( env.BRANCH_NAME == "development" ) {
+		toMail = "pharo-dev@lists.pharo.org"
+		buildKind = "7.0-dev"
 	}
 	
+	//We checkout scm to have access to the log information
+	checkout scm
 	def owner = "pharo-project"
 	def title = status
 	
@@ -94,16 +105,24 @@ The status of the build #${env.BUILD_NUMBER} was: ${status}.
 
 ${mailMessage}
 Build Url: ${env.BUILD_URL}
+"""
 
+	// If we are building development, add information about the uploads
+	if( env.BRANCH_NAME == "development" ) {
+	""""
 Check for latest built images in http://files.pharo.org:
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
  - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
 """
-	mail to: 'pharo-dev@lists.pharo.org', cc: 'guillermopolito@gmail.com', subject: "[Pharo 7.0-dev] Build #${env.BUILD_NUMBER}: ${title}", body: body
+	}
+	mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
 	} catch (e) {
 		//If there is an error during mail send, just print it and continue
 		echo 'Error while sending email: ' + e.toString()
-	}
+	} finally {
+		archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
+		cleanWs()
+	}}}
 }
 
 try{
@@ -196,7 +215,7 @@ for (arch in architectures) {
 }
 parallel testers
 
-notifyBuild("SUCCESS")
+	notifyBuild("SUCCESS")
 } catch (e) {
 	notifyBuild("FAILURE")
 	throw e
