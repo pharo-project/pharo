@@ -4,11 +4,12 @@ rebuildMethod: aMethod into: aClass
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
-	extendedEnvironment newMethod: newMethod.
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
 	newMethod := CompiledMethod newMethod: aMethod bytecode size header: (aMethod headerFor: extendedEnvironment).
+
+	extendedEnvironment newMethod: newMethod.
 
 	aMethod literals
 		doWithIndex:

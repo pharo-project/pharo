@@ -1,6 +1,3 @@
 testing
 numberOfRequiredClassesOf: aClass in: aCollection
-	| requiredClasses |
-	
-	requiredClasses := aClass allSuperclasses , ((self allSharedPoolsOf: aClass) flatCollect: #withAllSuperclasses).
-	^ (aCollection select: [:e | requiredClasses includes: e]) size
+	^ ((aClass allSuperclassesIn: aCollection) , ((self allSharedPoolsOf: aClass in: aCollection) flatCollect: [:e | {e} , (e allSuperclassesIn: aCollection)])) size

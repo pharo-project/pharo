@@ -1,9 +1,9 @@
 as yet unclassified
 doTestExportingPackage: aPackageNamed
-	| old new aPackage |
-	aPackage := RPackageOrganizer default packageNamed: aPackageNamed.
-	old := HEPackage for:aPackage.
+	| new |
  
+	self fillOldPackage: aPackageNamed.
+
 	old writeInto: writer.
 	writer flush.
 	
@@ -17,5 +17,9 @@ doTestExportingPackage: aPackageNamed
 	self assert: ( old classes allSatisfy: [ :e | self in: old classes allSuperclassesAreBeforeThan: e] ).
 	self assert: ( old classes allSatisfy: [ :e | self in: old classes allSharedPoolsAreBeforeThan: e] ).
 	self assert: ( old traits allSatisfy: [ :e | self in: old traits allTraitsAreBeforeThan: e] ).
+
+	old traits with: new traits do: [ :a :b | self assert: a equals:b ].
+	old classes with: new classes do: [ :a :b | self assert: a equals:b ].
+	old extensionMethods with: new extensionMethods do: [ :a :b | self assert: a equals:b ].
 
 	self assert: new equals: old.

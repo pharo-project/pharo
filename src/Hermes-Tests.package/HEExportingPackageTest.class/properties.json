@@ -5,7 +5,10 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
+	"instvars" : [
+		"old",
+		"aPackage"
+	],
 	"name" : "HEExportingPackageTest",
 	"type" : "normal"
 }
