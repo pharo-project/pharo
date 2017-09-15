@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "HEExportingPackageTest",
+	"category" : "Hermes-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HEExportingPackageFromRingTest",
+	"type" : "normal"
+}

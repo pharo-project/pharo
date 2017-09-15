@@ -1,5 +1,7 @@
 writing
 writeInto: aWriter
+	self sortContent.
+
 	aWriter writeInt32: version.
 	aWriter writeByteString: packageName.
 

@@ -120,7 +120,6 @@ Check for latest built images in http://files.pharo.org:
 		//If there is an error during mail send, just print it and continue
 		echo 'Error while sending email: ' + e.toString()
 	} finally {
-		archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
 		cleanWs()
 	}}}
 }

@@ -1,7 +1,7 @@
 as yet unclassified
 in: aSeq allSharedPoolsAreBeforeThan: aClass
-	| myIndex realClass |
+	| myIndex allSharedPools |
 	myIndex := aSeq indexOf: aClass.
-	realClass := Smalltalk at: aClass className.
-	^ realClass sharedPools allSatisfy: [ :sharedPool | 
-		(aSeq detectIndex: [ :e | e className = sharedPool name ] ifNone: [ -1 ]) < myIndex ]
+	allSharedPools := ({aClass} , (aClass allSuperclassesIn: aSeq)) flatCollect: [:e | e sharedPoolsIn: aSeq].
+	
+	^ allSharedPools allSatisfy: [ :sp | (aSeq indexOf: sp) < myIndex ]
