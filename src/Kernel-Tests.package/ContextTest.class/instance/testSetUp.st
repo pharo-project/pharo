@@ -7,5 +7,4 @@ testSetUp
 	self assert: aMethodContext receiver = aReceiver.
 	self assert: (aMethodContext method isKindOf: CompiledMethod).
 	self assert: aMethodContext method = aCompiledMethod.
-	self assert: aMethodContext methodNode selector = #rightCenter.
 	self assert: aMethodContext client printString = 'ContextTest>>#testSetUp'.
