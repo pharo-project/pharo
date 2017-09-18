@@ -47,6 +47,7 @@ baseline: spec
 		spec package: 'FuelTests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
+		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'Monticello-Tests'.

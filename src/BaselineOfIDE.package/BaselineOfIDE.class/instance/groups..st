@@ -421,6 +421,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'RPackage-Tests' 
 	'Collections-Tests'
 	'Kernel-Tests' 
+	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
