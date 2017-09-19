@@ -15,7 +15,7 @@ cd ..
 #We convert all files that are not full image (Pharo7.0-${IMAGE_KIND}-32bit-${HASH}.*)
 for f in Pharo7.0-*-32bit-*.zip; do
 	unzip "$f"
-	IMAGEFILENAME=$(find . -iname *.image -maxdepth 0)
+	IMAGEFILENAME=$(find . -iname *.image -maxdepth 1)
 	IMAGENAME=${IMAGEFILENAME%.*}
 	mv "${IMAGENAME}.image" tempconversion.image
 	touch "${IMAGENAME}.changes"
