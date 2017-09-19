@@ -17,7 +17,6 @@ environment := repository asRing2EnvironmentWith: packageNames.
 environment fixProtoObjectClassSuperclass.
 environment addGlobalsNamed: #(#Smalltalk #UTF8TextConverter #MacRomanTextConverter #FileStream ChangeSet Character).
 
-environment browse.
 environment clean.
 
 toExport do: [ :packageName |
