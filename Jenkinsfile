@@ -74,7 +74,7 @@ def notifyBuild(status){
 	def mailMessage = "Could not extract further issue information from commit message: ${logMessage}"
 	
 	//If there is no pull request information, we will send a log with the last commit message only
-	def isPRMergeCommit = logMessage ==~ "Merge pull request #[0-9]+ from.*"	
+	def isPRMergeCommit = logMessage.startsWith("Merge pull request ")	
 	if (isPRMergeCommit) {
 		def pullRequestId = logMessage.split(' ')[3].substring(1)
 		def githubPullRequestHttpRequest = "https://api.github.com/repos/${owner}/pharo/pulls/${pullRequestId}"
