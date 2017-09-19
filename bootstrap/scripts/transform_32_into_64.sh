@@ -17,17 +17,21 @@ for f in Pharo7.0-*-32bit-*.zip; do
 	unzip "$f"
 	IMAGEFILENAME=$(find . -iname *.image -maxdepth 1)
 	IMAGENAME=${IMAGEFILENAME%.*}
-	mv "${IMAGENAME}.image" tempconversion.image
-	touch "${IMAGENAME}.changes"
-	mv "${IMAGENAME}.changes" tempconversion.changes
 	
-	IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
-	HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
-	./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
+	if [ -f "${IMAGENAME}.image" ]
+	then
+		mv "${IMAGENAME}.image" tempconversion.image
+		touch "${IMAGENAME}.changes"
+		mv "${IMAGENAME}.changes" tempconversion.changes
+	
+		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
+		HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
+		./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 
-	mv "tempconversion-64.image" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.image"
-	mv "tempconversion-64.changes" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.changes"
-	zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.*
+		mv "tempconversion-64.image" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.image"
+		mv "tempconversion-64.changes" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.changes"
+		zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.*
+	fi
 	rm -f *.image *.changes *.sources
 done
 
