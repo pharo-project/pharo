@@ -1,5 +1,5 @@
 [
-| options architecture repository packageNames environment fetcher buildNumber |
+| options architecture repository packageNames environment fetcher buildNumber bootstrap |
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
@@ -13,8 +13,8 @@ FileStream stdout
 	nextPutAll: ('[INFO] Building Image Arch ', architecture);
 	cr.
 
-(PBBootstrap forArchitecture: architecture)
-	buildNumber: buildNumber;
+bootstrap := PBBootstrap forArchitecture: architecture.
+bootstrap buildNumber: buildNumber;
 	prepareBootstrap.
 	
 repository := MCFileTreeRepository new
@@ -35,6 +35,6 @@ fetcher := PBRing2GitFetcher new.
 fetcher gitRepositoryUrl: 'git@github.com:pharo-project/pharo.git' location: '.' subdirectory: 'src'.
 fetcher buildNumber: buildNumber.
 	
-environment bootstrapWith: fetcher architecture: architecture.	
+environment bootstrapWith: fetcher architecture: architecture to: bootstrap imageReference.	
 
 ] on: Warning do: #resume
