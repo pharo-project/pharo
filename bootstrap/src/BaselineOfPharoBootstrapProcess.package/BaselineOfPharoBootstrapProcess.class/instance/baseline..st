@@ -7,5 +7,8 @@ baseline: spec
 		spec baseline: 'Hermes' with: [ spec
 			repository: 'github://tesonep/hermes:v2.1.0';
   			loads: 'ring' ].
+		spec baseline: 'Ring2' with: [ spec
+			repository: 'github://pavel-krivanek/Ring2:productionBootstrap';
+  			loads: 'bootstrap' ].  			
 		spec
 			 package: 'Pharo30Bootstrap' ]
