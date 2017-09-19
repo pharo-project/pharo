@@ -83,7 +83,7 @@ def notifyBuild(status){
 			def pullRequestJSON = readJSON text: response.content
 			def pullRequestTitle = pullRequestJSON['title']
 			
-			def pullRequestUrl = "https://github.com/pharo-project/${owner}/pulls/${pullRequestId}"
+			def pullRequestUrl = "https://github.com/${owner}/pharo/pull/${pullRequestId}"
 			mailMessage = """The Pull Request #${pullRequestId} was integrated: \"${pullRequestTitle}\"
 Pull request url: ${pullRequestUrl}
 """
