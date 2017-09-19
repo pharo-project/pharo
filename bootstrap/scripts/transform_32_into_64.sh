@@ -15,12 +15,13 @@ cd ..
 #We convert all files that are not full image (Pharo7.0-${IMAGE_KIND}-32bit-${HASH}.*)
 for f in Pharo7.0-*-32bit-*.zip; do
 	unzip "$f"
-	IMAGENAME=${f%.*}
+	IMAGEFILENAME=$(find . -iname *.image -maxdepth 0)
+	IMAGENAME=${IMAGEFILENAME%.*}
 	mv "${IMAGENAME}.image" tempconversion.image
 	touch "${IMAGENAME}.changes"
 	mv "${IMAGENAME}.changes" tempconversion.changes
 	
-	IMAGE_KIND=$(echo "${IMAGENAME}" | cut -d '-' -f 2)
+	IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
 	HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
 	./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 
