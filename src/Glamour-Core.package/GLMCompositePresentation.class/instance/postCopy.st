@@ -1,4 +1,4 @@
-comparison
+copying
 postCopy
 	super postCopy.
 	presentations ifNotNil: [ :arg | 
