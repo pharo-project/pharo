@@ -261,6 +261,7 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.
 	].
