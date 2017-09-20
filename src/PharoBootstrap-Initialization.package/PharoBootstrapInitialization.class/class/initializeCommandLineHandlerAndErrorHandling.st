@@ -49,6 +49,10 @@ initializeCommandLineHandlerAndErrorHandling
 	"Create the ASTCache and add it to the startup list"
 	ASTCache initialize.
 	
+	Color initialize.
+	InstructionStream initialize.
+	SmallInteger initialize.
+
 	"Initialize basic command line behaviour"
 	Stdio initialize.
 	NonInteractiveTranscript initialize.
