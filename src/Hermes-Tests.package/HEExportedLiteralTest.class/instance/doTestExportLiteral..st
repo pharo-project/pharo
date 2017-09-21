@@ -1,8 +1,5 @@
 tests
 doTestExportLiteral: original 
 	| exported |
-	original asExportedLiteral writeInto: writer.
-	writer flush.
-	
-	exported := (HEExportedLiteral readFrom: reader) value.	
+	exported := self export: original.
 	self assert: exported equals: original.

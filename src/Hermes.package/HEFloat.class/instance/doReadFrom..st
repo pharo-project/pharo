@@ -1,8 +1,11 @@
 reading
 doReadFrom: aReader
-	value := BoxedFloat64 new.
-	value at:1 put: (aReader readUInt32).
-	value at:2 put: (aReader readUInt32).
+	| originalValue |
+	originalValue := BoxedFloat64 new.
+	originalValue at:1 put: (aReader readUInt32).
+	originalValue at:2 put: (aReader readUInt32).
 	
 	"Force the conversion to SmallFloat64 or BoxedFloat64"
-	value := value + 0
+	value := originalValue + 0.
+	
+	(value literalEqual: originalValue) ifFalse:[ value := value negated]
