@@ -33,8 +33,10 @@ def runTests(architecture, prefix=''){
 			echo "Tests couldn't complete to run due to an exception"
 		}
 		if (!success && tries == retryTimes) {
-			currentBuild.result = 'FAILURE'
 			echo "Out of retries"
+      //If the problem is with an exception I have to raise it because if not the test is marked as success.
+			if(currentBuild.result == 'FAILURE')
+        error("Out of retries running " + prefix + " tests")
 		}
 		return success || (tries == retryTimes)
 	}
