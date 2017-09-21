@@ -1,3 +1,3 @@
-private
+copying
 postCopy
 	array := array copy
