@@ -7,6 +7,7 @@ changeLog
 - bootstraping of a smaller image that will not include compiler/parser (Compiler and related packages are exported and loaded using a binary exporter named Hermes)
 - integration of Renraku quality framework
 - integration of WebBrowser
+- integration of ReferenceFinder
 
 ', (self heading: 'All Issues'), 
 'Over ... fixes and enhancements were integrated in this release.
