@@ -68,4 +68,4 @@ additionalInitialization
 	
 	self loadIceberg.
 	
-	WelcomeHelp openForRelease.
+	WorldState addDeferredUIMessage:  [WelcomeHelp openForRelease].
