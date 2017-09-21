@@ -30,10 +30,10 @@ def runTests(architecture, prefix=''){
 		} catch(e) {
 			//If there is an exception ignore.
 			//success will be false and we will retry thanks to waitUntil
-			currentBuild.result == 'FAILURE'
 			echo "Tests couldn't complete to run due to an exception"
 		}
 		if (!success && tries == retryTimes) {
+			currentBuild.result = 'FAILURE'
 			echo "Out of retries"
 		}
 		return success || (tries == retryTimes)
