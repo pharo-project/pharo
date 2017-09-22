@@ -30,8 +30,8 @@ initializeImage
 					commitHash: ''{hash}'';
 					yourself).
 	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
-		'major' -> definitionFetcher majorVersion asString.
-		'minor' -> definitionFetcher minorVersion asString.
+		'major' -> definitionFetcher majorVersion asNumber.
+		'minor' -> definitionFetcher minorVersion asNumber.
 		'build' -> self buildNumber asNumber.
 		'hash' -> definitionFetcher commitHash asString.
 	} asDictionary).
