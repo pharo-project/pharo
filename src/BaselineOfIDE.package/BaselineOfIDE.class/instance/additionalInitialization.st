@@ -67,5 +67,3 @@ additionalInitialization
 		Undeclared removeUnreferencedKeys.].
 	
 	self loadIceberg.
-	
-	WorldState addDeferredUIMessage:  [WelcomeHelp openForRelease].
