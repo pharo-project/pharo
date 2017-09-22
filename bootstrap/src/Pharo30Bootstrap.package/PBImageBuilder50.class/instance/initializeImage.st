@@ -25,7 +25,8 @@ initializeImage
 					type: ''Pharo'';
 					major: {major};
 					minor: {minor};
-					suffix: ''alpha.build.{build}.sha.{hash}'';
+					suffix: ''alpha'';
+					build: ''{build}'';
 					highestUpdate: {update};
 					commitHash: ''{hash}'';
 					yourself).
@@ -36,7 +37,7 @@ initializeImage
 		'hash' -> definitionFetcher commitHash asString.
 		'update' -> 
 			( (([definitionFetcher majorVersion asNumber] ifError: [0]) * 10000) 
-			+ (([definitionFetcher minorVersion asNumber] ifError: [0]) * 10000) 
+			+ (([definitionFetcher minorVersion asNumber] ifError: [0]) * 1000) 
 			+ ([self buildNumber asNumber] ifError: [0])) asString.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
