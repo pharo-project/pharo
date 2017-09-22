@@ -1,7 +1,6 @@
 tests
-testMajorMinorWithSeparatingString
-	"SystemVersionTest debug: #testMajorMinorWithSeparatingString"
+testMajorMinorWithSeparatingString 
 	
-	self assert: ((SystemVersion fromShortVersionString: 'Squeak3.7alpha') majorMinor: '-') = '3-7'.
-	self assert: ((SystemVersion fromShortVersionString: 'Pharo1.0ALPHA') majorMinor: '')  = '10'.
-	self assert: ((SystemVersion fromShortVersionString: 'Pharo1.1') majorMinor: '.') = '1.1'.
+	self assert: ((SystemVersion fromVersionString: 'Squeak3.7+alpha') majorMinor: '-') = '3-7'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinor: '')  = '10'.
+	self assert: ((SystemVersion fromVersionString: 'Pharo1.1') majorMinor: '.') = '1.1'.

@@ -1,9 +1,14 @@
-accessing
+deprecated
 parseShortVersionString: aString 
 	"Answer the parts of aString, expected in short format <type><major>.<minor><suffix>."
 
 	| stream length type major minor suffix |
 
+	self 
+		deprecated: 'Use #fromVersionString: instead'
+		on: '22 September 2017' 
+		in: 'Pharo-7.0+alpha.build.148.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
+	
 	stream := aString readStream.
 	[stream peek isDigit] whileFalse: [stream next].
 	length := stream position.
