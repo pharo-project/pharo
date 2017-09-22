@@ -32,7 +32,7 @@ initializeImage
 	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
 		'major' -> definitionFetcher majorVersion asString.
 		'minor' -> definitionFetcher minorVersion asString.
-		'build' -> self buildNumber asString.
+		'build' -> self buildNumber asNumber.
 		'hash' -> definitionFetcher commitHash asString.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
