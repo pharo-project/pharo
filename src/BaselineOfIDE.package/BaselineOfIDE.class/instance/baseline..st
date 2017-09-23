@@ -173,7 +173,7 @@ baseline: spec
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
-		spec package: 'Collections-DoubleLinkedListTests'.
+		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'ContributingToTheCatalogHelp'.
