@@ -253,7 +253,7 @@ baseline: spec
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
 		spec package: 'WorldMenuHelp'.	
-		spec package: 'WriteBarrierTests'.
+		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.

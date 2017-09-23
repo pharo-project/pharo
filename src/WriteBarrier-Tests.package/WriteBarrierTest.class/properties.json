@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "ClementBera 4/21/2016 14:12",
 	"super" : "TestCase",
-	"category" : "WriteBarrierTests",
+	"category" : "WriteBarrier-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [

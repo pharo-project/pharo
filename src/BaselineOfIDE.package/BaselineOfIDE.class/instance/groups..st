@@ -97,7 +97,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
 	'Tools-Test'	
-	'WriteBarrierTests'
+	'WriteBarrier-Tests'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
