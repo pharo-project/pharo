@@ -431,7 +431,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
 	'Files-Tests' 
-	'JobsTests' 
+	'Jobs-Tests' 
 	'Multilingual-Tests'
 	'OpalCompiler-Tests' 
 	'Random-Tests'

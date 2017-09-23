@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/5/2014 08:39",
 	"super" : "TestCase",
-	"category" : "JobsTests",
+	"category" : "Jobs-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

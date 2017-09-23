@@ -200,7 +200,7 @@ baseline: spec
 		spec package: 'HowToContributeHelp'.
 		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking-Tests'.
-		spec package: 'JobsTests'.
+		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
