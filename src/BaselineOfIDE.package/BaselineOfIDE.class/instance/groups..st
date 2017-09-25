@@ -58,7 +58,7 @@ spec group: 'General-Tests-Group' with: #(
 	'MonticelloMocks'
 	'FuelTests'
 	'Balloon-Tests'
-	'Collections-DoubleLinkedListTests'
+	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
