@@ -93,7 +93,7 @@ spec group: 'General-Tests-Group' with: #(
 	'System-Localization-Tests'
 	'System-SessionManager-Tests'
 	'System-Settings-Tests'
-	'System-SupportTests'
+	'System-Support-Tests'
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
 	'Tools-Test'	
