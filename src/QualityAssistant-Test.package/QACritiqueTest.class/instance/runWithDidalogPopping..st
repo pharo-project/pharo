@@ -1,4 +1,4 @@
-as yet unclassified
+running
 runWithDidalogPopping: anAssertingBlock
 
 	UIManager default class = MorphicUIManager

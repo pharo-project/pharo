@@ -1,4 +1,4 @@
-as yet unclassified
+creation
 newTextEditorMorph
 	"Answer a new text entry morph."
 

@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testMajorMinorVersion
 	"SystemVersionTest run: #testMajorMinorVersion"
 	

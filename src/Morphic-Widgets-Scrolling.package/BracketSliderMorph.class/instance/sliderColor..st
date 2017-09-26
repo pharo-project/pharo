@@ -1,4 +1,4 @@
-access
+accessing
 sliderColor: newColor
 	"Set the slider colour."
 	

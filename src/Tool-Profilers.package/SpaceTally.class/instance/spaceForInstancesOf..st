@@ -1,4 +1,4 @@
-as yet unclassified
+utilities
 spaceForInstancesOf: aClass
 	"Answer a pair of the number of bytes consumed by all instances of the
 	 given class, including their object headers, and the number of instances."

@@ -72,7 +72,7 @@ exportCoreTestsInStFile
 		writer writeInitializers: false.
 		
 		#('RPackage-Tests' 'Collections-Tests' 'Kernel-Tests' 'AST-Tests-Core' 'Announcements-Tests-Core'  'FileSystem-Tests-Core' 
-		'FileSystem-Tests-Disk' 'Files-Tests' 'JobsTests'  'Multilingual-Tests' 'OpalCompiler-Tests'  'Random-Tests' 'ReleaseTests'
+		'FileSystem-Tests-Disk' 'Files-Tests' 'Jobs-Tests'  'Multilingual-Tests' 'OpalCompiler-Tests'  'Random-Tests' 'ReleaseTests'
 		'Ring-Tests-Kernel'  'Ring-Tests-Containers' 'Zinc-Character-Encoding-Tests' 'Tests' 'FileSystem-Memory')  do: [ :packageName |
 			| definitions |
 			version := (self originRepository loadVersionFromFileNamed: packageName, '.package').

@@ -1,3 +1,3 @@
 tests
 testExportingOpal
-		self doTestExportingPackage: 'OpalCompiler-Core'.
+	self doTestExportingPackage: 'OpalCompiler-Core'.

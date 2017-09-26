@@ -1,4 +1,4 @@
-as yet unclassified
+field definition
 fieldsDesc
 	"
 	self rebuildFieldAccessors

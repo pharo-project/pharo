@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 normal
 	^ self new emphasisCode: 0

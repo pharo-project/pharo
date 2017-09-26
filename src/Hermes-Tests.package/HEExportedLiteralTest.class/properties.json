@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "TestCase",
+	"super" : "HEAbstractBinaryClassBuilderTest",
 	"category" : "Hermes-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],

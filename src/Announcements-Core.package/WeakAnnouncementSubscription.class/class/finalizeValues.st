@@ -1,4 +1,4 @@
-finalization support
+finalization
 finalizeValues
 	
 	| head |

@@ -1,4 +1,4 @@
-finalizing
+finalization
 finalizeValues
 	" cleanup the receiver, so it could be reused "
 	| ex |

@@ -1,4 +1,4 @@
-as yet unclassified
+examples
 exampleAssignment: anObject
 	foo := anObject.
 	

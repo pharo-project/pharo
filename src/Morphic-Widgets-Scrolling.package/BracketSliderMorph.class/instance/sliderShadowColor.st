@@ -1,4 +1,4 @@
-access
+accessing
 sliderShadowColor
 	"Answer the color for the slider shadow."
 	

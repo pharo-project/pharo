@@ -1,4 +1,4 @@
-testing
+tests
 testNoWeakBlock
 	"There is no such thing as a weak block, these things never go away."
 

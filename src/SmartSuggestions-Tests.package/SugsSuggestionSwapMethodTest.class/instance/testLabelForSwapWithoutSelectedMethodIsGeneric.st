@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testLabelForSwapWithoutSelectedMethodIsGeneric
 	| sugg |
 	sugg := SugsSuggestionFactory createSwapMethod.

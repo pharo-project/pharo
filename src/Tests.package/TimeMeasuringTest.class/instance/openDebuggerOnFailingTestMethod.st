@@ -1,3 +1,3 @@
-as yet unclassified
+debugging
 openDebuggerOnFailingTestMethod
 	shouldProfile := true

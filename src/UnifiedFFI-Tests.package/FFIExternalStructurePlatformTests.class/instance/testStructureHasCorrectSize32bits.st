@@ -1,6 +1,6 @@
 tests
 testStructureHasCorrectSize32bits
-	self is32bits ifFalse: [ ^ self skip ].
+	self is32bit ifFalse: [ ^ self skip ].
 	
 	self 
 		assert: (FFIExternalType sizeOf: FFITestStructureByPlatform) 

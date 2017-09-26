@@ -1,4 +1,4 @@
-as yet unclassified
+accessing - defaults
 splitterWidth
 	"Answer the width of splitter to use for dif joins."
 	

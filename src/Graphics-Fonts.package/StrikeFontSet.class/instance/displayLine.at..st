@@ -1,4 +1,4 @@
-as yet unclassified
+displaying
 displayLine: aString at: aPoint 
 	"Display the characters in aString, starting at position aPoint."
 

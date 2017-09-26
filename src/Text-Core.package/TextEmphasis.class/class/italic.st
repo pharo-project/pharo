@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 italic
 	^ self new emphasisCode: 2
