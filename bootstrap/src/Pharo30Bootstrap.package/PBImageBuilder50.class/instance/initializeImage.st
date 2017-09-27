@@ -40,7 +40,7 @@ initializeImage
 	self followForwardingPointers.
 
 "	espellBackend simulator stackPages pages do: [ :page | espellBackend simulator stackPages freeStackPage: page ].
-	espellBackend simulator freeUntracedStackPages. "
+	espellBackend simulator freeUntracedStackPages."
 	[[ espellBackend objectMemory flushNewSpace. ]
 		on: Halt
 		do: [:ex|
