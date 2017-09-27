@@ -1,4 +1,4 @@
-accessing - properties
+accessing
 type: anObject
 	"Set the value of type"
 

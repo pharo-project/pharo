@@ -1,3 +1,3 @@
-accessing - properties
+accessing
 date: newDate
 	date := newDate

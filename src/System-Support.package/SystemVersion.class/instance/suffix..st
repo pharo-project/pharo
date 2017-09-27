@@ -1,4 +1,4 @@
-accessing - properties
+accessing
 suffix: anObject
 	"Set the value of suffix"
 

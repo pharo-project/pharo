@@ -1,5 +1,5 @@
-accessing - properties
-minor: anInteger
-	"Set the minor part of the receiver"
+accessing
+minor: anObject
+	"Set the value of minor"
 
-	minor := anInteger
+	minor := anObject

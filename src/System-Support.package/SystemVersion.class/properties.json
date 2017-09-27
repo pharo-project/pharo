@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "TorstenBergmann 9/22/2017 03:51",
+	"commentStamp" : "<historical>",
 	"super" : "Object",
 	"category" : "System-Support",
 	"classinstvars" : [ ],
@@ -8,13 +8,13 @@
 		"Current"
 	],
 	"instvars" : [
+		"version",
 		"date",
 		"highestUpdate",
 		"type",
 		"major",
 		"minor",
 		"suffix",
-		"build",
 		"commitHash"
 	],
 	"name" : "SystemVersion",

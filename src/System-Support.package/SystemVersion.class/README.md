@@ -1,17 +1,9 @@
-I am responsible for maintaining what (image) version of Pharo is running.
-Usually my format is:
+I am responsible for maintaining what version of Pharo and the VM is running.  I also track all of the update items that have been included in the image.
 
-     Pharo-<major>.<minor>+<suffix>.build.<buildnumber>.sha.<commitHash>
-
-following semver.org (but wothout a patch number). The metadata with suffix, build number
-and commit hash are option.
+I'm invoked at auto start to get the latest plugins, etc.
 
 Some queries are
 	SystemVersion current major
 	SystemVersion current minor
 	SystemVersion current suffix
-	SystemVersion current highestUpdate
-
-For compatibility we also have
-
-        SystemVersion current version
+	SystemVersion current	highestUpdate

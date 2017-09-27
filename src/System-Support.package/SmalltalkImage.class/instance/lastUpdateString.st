@@ -1,4 +1,4 @@
 sources, change log
 lastUpdateString
 	"SmalltalkImage current lastUpdateString"
-	^'Build information: ', SystemVersion current suffix asString
+	^'Build information: {1}' format: { SystemVersion current asString } 

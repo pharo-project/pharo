@@ -1,5 +1,4 @@
-compatibility
+accessing
 highestUpdate
-	 ^highestUpdate ifNil: [ highestUpdate := self calculateHighestUpdate ].
-
-	
+	"Returns the highest number of available updates"
+	^highestUpdate
