@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PabloTesone 9/27/2016 18:36",
+	"super" : "TestCase",
+	"category" : "Shift-ClassBuilder-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"result",
+		"builder"
+	],
+	"name" : "ShAbstractClassBuilderTest",
+	"type" : "normal"
+}

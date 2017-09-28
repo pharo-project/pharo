@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "Shift-ClassInstaller-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newClass",
+		"superClass",
+		"subClass"
+	],
+	"name" : "ShAbstractClassInstallerTest",
+	"type" : "normal"
+}

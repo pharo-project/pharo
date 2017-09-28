@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShGlobalsEnvironment",
+	"category" : "Shift-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShSmalltalkGlobalsEnvironment",
+	"type" : "normal"
+}

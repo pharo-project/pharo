@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShDefaultBuilderEnhancer",
+	"category" : "Shift-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShOldTraitsBuilderEnhancer",
+	"type" : "normal"
+}

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "SlotMethodRecompilationTest 9/26/2017 14:28",
+	"super" : "Object",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"builder"
+	],
+	"name" : "ShAbstractChangeDetector",
+	"type" : "normal"
+}

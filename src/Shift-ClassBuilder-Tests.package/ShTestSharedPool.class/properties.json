@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "SharedPool",
+	"category" : "Shift-ClassBuilder-Tests-TestClasses",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"FooValue1"
+	],
+	"instvars" : [ ],
+	"name" : "ShTestSharedPool",
+	"type" : "normal"
+}

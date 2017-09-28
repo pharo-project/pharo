@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShAbstractChangeDetector",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShBitLayoutChangeDetector",
+	"type" : "normal"
+}

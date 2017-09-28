@@ -1,0 +1,29 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Shift-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"buildEnvironment",
+		"superclassName",
+		"name",
+		"layoutDefinition",
+		"comment",
+		"commentStamp",
+		"superclass",
+		"category",
+		"newMetaclass",
+		"newClass",
+		"oldClass",
+		"oldMetaclass",
+		"builderEnhancer",
+		"metaclassClass",
+		"extensibleProperties",
+		"changeComparers",
+		"changes"
+	],
+	"name" : "ShiftClassBuilder",
+	"type" : "normal"
+}

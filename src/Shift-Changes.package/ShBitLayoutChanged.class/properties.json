@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShAbstractChange",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShBitLayoutChanged",
+	"type" : "normal"
+}

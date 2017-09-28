@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShAbstractClassBuilderTest",
+	"category" : "Shift-ClassBuilder-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShModifyClassTest",
+	"type" : "normal"
+}
