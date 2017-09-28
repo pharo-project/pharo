@@ -89,6 +89,9 @@ baseline: spec
 			'PharoBootstrap-Initialization'.
 			'RPackage-Core'.
 			'Random-Core'.
+			'Shift-Changes'.
+			'Shift-ClassBuilder'.
+			'Shift-ClassInstaller'.
 			'Slot'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
