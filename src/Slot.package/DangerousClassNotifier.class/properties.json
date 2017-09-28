@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "BenComan 2/18/2014 01:44",
 	"super" : "Object",
-	"category" : "Slot-ClassBuilder",
+	"category" : "Slot",
 	"classinstvars" : [
 		"enabled"
 	],
