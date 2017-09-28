@@ -2,7 +2,7 @@ comparing
 compareClass
 	| oldLayout newLayout bitLayoutNames |
 	oldLayout := builder oldClass classLayout class name.
-	newLayout := builder layoutDefinition layoutClass.
+	newLayout := builder layoutDefinition layoutClass name.
 	
 	oldLayout = newLayout ifTrue:[ ^#() ].
 	bitLayoutNames := BitsLayout allSubclasses collect: #name.
