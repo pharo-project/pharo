@@ -6,7 +6,7 @@ createClass
 	builderEnhancer 
 		configureClass: newClass
 		superclass: self superclass
-		withLayoutType: self layoutDefinition layoutType
+		withLayoutType: self layoutDefinition layoutClass
 		slots: self layoutDefinition slots.
 
 	newClass environment: self buildEnvironment environment.

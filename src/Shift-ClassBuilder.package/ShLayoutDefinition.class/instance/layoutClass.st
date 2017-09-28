@@ -1,3 +1,3 @@
 accessing
 layoutClass
-	^ layoutClass
+	^ layoutClass ifNil: [ builder classNamed: #FixedLayout ]

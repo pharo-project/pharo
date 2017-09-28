@@ -1,3 +1,3 @@
 testing
 isBits
-	^ self layoutType new isBits.
+	^ self layoutClass new isBits.
