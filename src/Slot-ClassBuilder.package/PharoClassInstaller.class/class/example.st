@@ -1,6 +1,6 @@
 example
 example
-	^ PharoClassInstaller make: [ :aSlotClassBuilder |
+	^ Smalltalk classInstaller make: [ :aSlotClassBuilder |
 		aSlotClassBuilder
 			superclass: Object;
 			name: #MyClass;

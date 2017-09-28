@@ -1,5 +1,5 @@
 tests
 testValidateClassName		
 		
-	PharoClassInstaller 
+	Smalltalk classInstaller 
 		validateClassName: #GoodClassNameThatShouldNotExist

@@ -1,3 +1,0 @@
-numeric
-c
-	^ 'c1'

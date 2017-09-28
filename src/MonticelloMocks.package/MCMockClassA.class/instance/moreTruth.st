@@ -1,4 +1,0 @@
-boolean
-moreTruth
-
-	^ true
