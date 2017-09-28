@@ -1,4 +1,4 @@
-instance creation
+as yet unclassified
 newFrom: aDict 
 	"Answer an instance of me containing the same associations as aDict.
 	 Error if any key appears twice."

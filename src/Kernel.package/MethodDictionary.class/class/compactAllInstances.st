@@ -1,4 +1,4 @@
-initialization
+as yet unclassified
 compactAllInstances
 
 	| instancesToExchange newInstances |

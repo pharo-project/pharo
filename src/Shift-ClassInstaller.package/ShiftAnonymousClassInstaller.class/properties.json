@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "ShiftClassInstaller",
 	"category" : "Shift-ClassInstaller",
 	"classinstvars" : [ ],
 	"pools" : [ ],

@@ -1,0 +1,3 @@
+building
+installInEnvironment: newClass.
+	^ self.

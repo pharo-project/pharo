@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 oldClass: anObject
 	oldClass := anObject

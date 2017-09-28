@@ -1,4 +1,4 @@
-as yet unclassified
+migrating
 migrateClassTo: newClass
 	| slotsToMigrate |
 	oldClass ifNil:[^ self].

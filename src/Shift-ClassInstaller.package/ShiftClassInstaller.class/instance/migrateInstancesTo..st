@@ -1,4 +1,4 @@
-as yet unclassified
+migrating
 migrateInstancesTo: newClass
 	| oldObjects newObjects |
 	oldObjects := oldClass allInstances.
