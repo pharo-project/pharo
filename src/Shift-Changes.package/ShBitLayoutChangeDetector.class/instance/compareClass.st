@@ -5,7 +5,7 @@ compareClass
 	newLayout := builder layoutDefinition layoutClass name.
 	
 	oldLayout = newLayout ifTrue:[ ^#() ].
-	bitLayoutNames := BitsLayout allSubclasses collect: #name.
+	bitLayoutNames := BitsLayout allSubclasses collect: [:e | e name].
 	
 	(bitLayoutNames includes: newLayout )
 		ifTrue:[ ^ { ShBitLayoutChanged new builder: builder; yourself. } ].
