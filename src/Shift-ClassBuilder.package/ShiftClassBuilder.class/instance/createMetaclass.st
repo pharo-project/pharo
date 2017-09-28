@@ -4,7 +4,7 @@ createMetaclass
 	
 	builderEnhancer 
 		configureMetaclass: newMetaclass 	
-		superclass: self superclass class
+		superclass: (superclass ifNil: [ Class ] ifNotNil: [ superclass class ])
 		withLayoutType: FixedLayout
 		slots: self layoutDefinition classSlots.
 		
