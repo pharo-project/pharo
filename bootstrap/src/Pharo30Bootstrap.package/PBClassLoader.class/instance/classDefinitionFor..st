@@ -16,7 +16,7 @@ classDefinitionFor: aClass
 											ifTrue: [ 'WordLayout' ]
 											ifFalse: [ 'ByteLayout' ]]]].
 	^ '| newClass |
-	newClass := PharoClassInstaller make: [ :builder |
+	newClass := ShiftClassInstaller make: [ :builder |
 		builder
 			superclass: {superClass};
 			name: ''{name}'';
