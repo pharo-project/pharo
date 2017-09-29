@@ -1,0 +1,1 @@
+This package includes all the methods and classes to be deprecated in Pharo70, that are used by the IDE. In the Deprecated70 there are classes and methods that are loaded before in the bootstrap process. 

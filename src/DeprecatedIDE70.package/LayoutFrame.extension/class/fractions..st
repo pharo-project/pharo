@@ -1,4 +1,4 @@
-*Deprecated70
+*DeprecatedIDE70
 fractions: fractionsOrNil
 	"Do not use this API if you do not have already have the rectangles that should be passed as argument. 
 	If you are creating the rectangles representing the numbers you need, better use the accessors: 

@@ -1,4 +1,4 @@
-*Deprecated70
+*DeprecatedIDE70
 offsets: offsetsOrNil
 	"read comment of fractions:offsets: please!"
 
