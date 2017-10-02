@@ -5,7 +5,7 @@ slot, similar to a class variable.
 
 I just overide the methods for reflective read and write (#read and #write:to:), I do not bother to emit bytecode myself but rely on the fallback that the compiler will generate code for reflective read and write (see the emit* method of my superclass).
 
-PharoClassInstaller make: [ :builder |
+Smalltalk classInstaller make: [ :builder |
 	builder name: #A;
 	slots: { TestSlot named: #iv };
 	category: #Playground ].
