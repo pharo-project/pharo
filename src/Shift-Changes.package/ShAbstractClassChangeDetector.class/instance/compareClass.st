@@ -5,4 +5,4 @@ compareClass
 
 	^ (comparer value: oldValue value: newValue)
 		ifTrue: [ #() ]
-		ifFalse: [ {self newChange} ]
+		ifFalse: [ self newChanges ]

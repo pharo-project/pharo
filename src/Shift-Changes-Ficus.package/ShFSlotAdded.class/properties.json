@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "ShFSlotChange",
+	"category" : "Shift-Changes-Ficus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"slotName",
+		"slotType"
+	],
+	"name" : "ShFSlotAdded",
+	"type" : "normal"
+}

@@ -1,0 +1,3 @@
+checking change
+propertyAccesor
+	^ #name

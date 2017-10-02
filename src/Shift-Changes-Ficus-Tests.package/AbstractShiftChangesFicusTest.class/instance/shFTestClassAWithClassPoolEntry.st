@@ -1,0 +1,3 @@
+accessing ficus classes
+shFTestClassAWithClassPoolEntry
+	^ self lookForFicusClass: #ShFTestClassAWithClassPoolEntry
