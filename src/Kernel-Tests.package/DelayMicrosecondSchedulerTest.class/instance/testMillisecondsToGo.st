@@ -1,7 +1,7 @@
 tests
 testMillisecondsToGo
 	| delay scheduler millisecondsToGo |
-	scheduler := DelayMicrosecondScheduler new.
+	scheduler := self delaySchedulerClass new.
 	delay := Delay forMilliseconds: 100.
 	scheduler schedule: delay.
 	scheduler handleTimerEvent: Time microsecondClockValue.

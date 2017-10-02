@@ -1,7 +1,7 @@
 tests
 testForSeconds
 	| scheduler delay preTick postTick actualDuration |
-	scheduler := DelayMicrosecondScheduler new.
+	scheduler := self delaySchedulerClass new.
 	delay := Delay forSeconds: 1.
 	scheduler schedule: delay.
 	

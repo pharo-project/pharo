@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "DelayMicrosecondSchedulerTest",
+	"category" : "Kernel-Tests-Processes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DelayTicklessSchedulerTest",
+	"type" : "normal"
+}
