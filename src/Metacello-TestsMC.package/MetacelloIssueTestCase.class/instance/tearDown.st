@@ -11,12 +11,12 @@ tearDown
     ifTrue: [ aGofer metacelloUnload ].
   MCRepositoryGroup default
     removeIdenticalRepository:
-        (Smalltalk at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
+        (Smalltalk globals at: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ]);
     removeIdenticalRepository:
-        (Smalltalk at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
+        (Smalltalk globals at: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ]);
     yourself.
-  Smalltalk removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
-  Smalltalk removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
+  Smalltalk globals removeKey: #'Metacello_Gofer_Test_Repository' ifAbsent: [  ].
+  Smalltalk globals removeKey: #'Metacello_Configuration_Test_Repository' ifAbsent: [  ].
   finalWorkingCopyList := MCWorkingCopy allManagers
     collect: [ :each | each packageName ].
   diff := finalWorkingCopyList difference: initialWorkingCopyList.
