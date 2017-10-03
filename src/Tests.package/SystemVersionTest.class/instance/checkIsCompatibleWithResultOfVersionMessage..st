@@ -1,4 +1,4 @@
-tests - utilities
+utilities
 checkIsCompatibleWithResultOfVersionMessage: aString
 	"Checks whether a string is compatible with the result of the existing #version message who returned 
 	   Pharomajor.minor[suffix]
