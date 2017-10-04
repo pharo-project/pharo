@@ -12,5 +12,8 @@ imageVersionString
 		self hasValidBuildNumber ifTrue: [ 
 			self suffix ifNotEmpty: [ str nextPut: $.].
 			str nextPutAll: 'build.'; nextPutAll: self build asString ].	
-		self commitHash ifNotEmpty: [ str nextPutAll: '.sha.'; nextPutAll: self commitHash ].					
+		self commitHash ifNotEmpty: [ str nextPutAll: '.sha.'; nextPutAll: self commitHash ].
+		
+		Smalltalk vm is32bit ifTrue: [ str nextPutAll: ' (32 Bit)' ]
+								   ifFalse: [ str nextPutAll: ' (64 Bit)' ].					
 	]
