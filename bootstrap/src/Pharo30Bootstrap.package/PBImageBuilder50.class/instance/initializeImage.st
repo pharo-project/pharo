@@ -26,7 +26,7 @@ initializeImage
 					major: {major};
 					minor: {minor};
 					suffix: ''alpha'';
-					build: ''{build}'';
+					build: {build};
 					commitHash: ''{hash}'';
 					yourself).
 	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
