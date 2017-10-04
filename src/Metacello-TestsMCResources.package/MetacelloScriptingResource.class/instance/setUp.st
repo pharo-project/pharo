@@ -41,4 +41,5 @@ setUp
     setUpConfiguration181;
     setUpBaselineIssue215;
     setUpConfigurationIssue339;
+    setUpIssue399;
     yourself

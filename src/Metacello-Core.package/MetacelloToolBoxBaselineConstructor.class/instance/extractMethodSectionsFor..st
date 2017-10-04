@@ -1,0 +1,3 @@
+extraction
+extractMethodSectionsFor: aBaselineClass
+  self shouldNotImplement

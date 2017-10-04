@@ -26,6 +26,19 @@ createRepository: aRepositorySpec
                 fileHandleOn:
                   (aRepositorySpec description copyFrom: headerSize + 1 to: description size)) ] ].
   Smalltalk
+    at: #'TonelRepository'
+    ifPresent: [ :cl | 
+      type = 'tonel'
+        ifTrue: [ 
+          | description headerSize |
+          description := aRepositorySpec description.
+          headerSize := 'tonel://' size.
+          ^ cl new
+            directory:
+              (self
+                fileHandleOn:
+                  (aRepositorySpec description copyFrom: headerSize + 1 to: description size)) ] ].
+  Smalltalk
     at: #'MCGitHubRepository'
     ifPresent: [ :cl | 
       type = 'github'
