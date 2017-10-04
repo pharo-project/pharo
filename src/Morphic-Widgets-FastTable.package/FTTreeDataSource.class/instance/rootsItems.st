@@ -1,3 +1,5 @@
 accessing
 rootsItems
-	^ rootItem children
+	^ rootItem 
+		ifNotNil: #children
+		ifNil: [ #() ]
