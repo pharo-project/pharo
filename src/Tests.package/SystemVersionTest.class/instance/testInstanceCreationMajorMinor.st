@@ -12,4 +12,4 @@ testInstanceCreationMajorMinor
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
 		assert: version date notNil;
-		assert: version printString equals: 'Pharo-6.1'
+		assert: (version printString beginsWith: 'Pharo-6.1')

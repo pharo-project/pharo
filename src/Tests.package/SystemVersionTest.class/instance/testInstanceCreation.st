@@ -13,4 +13,4 @@ testInstanceCreation
 		assert: version commitHashShort isEmpty;
 		assert: version commitHashShort isEmpty;		
 		assert: version date notNil;
-		assert: version printString equals: 'Pharo-0.0'
+		assert: (version printString beginsWith: 'Pharo-0.0')

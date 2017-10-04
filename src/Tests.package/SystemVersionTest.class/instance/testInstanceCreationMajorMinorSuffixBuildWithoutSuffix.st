@@ -12,4 +12,4 @@ testInstanceCreationMajorMinorSuffixBuildWithoutSuffix
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;
 		assert: version date notNil;		
-		assert: version printString equals: 'Pharo-7.0+build.142'
+		assert: (version printString beginsWith: 'Pharo-7.0+build.142')
