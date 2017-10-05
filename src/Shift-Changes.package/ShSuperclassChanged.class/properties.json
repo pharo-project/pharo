@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShAbstractClassChangeDetector",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShSuperclassChanged",
+	"type" : "normal"
+}

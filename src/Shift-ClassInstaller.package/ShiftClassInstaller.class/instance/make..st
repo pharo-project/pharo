@@ -6,22 +6,27 @@ make: aBlock
 
 	self lookupOldClass.
 
-	builder oldClass: oldClass.
-	newClass := builder build.
+	[	
+		builder oldClass: oldClass.
+		newClass := builder build.
 
-	self installInEnvironment: newClass.
+		self installInEnvironment: newClass.
 
-	newClass superclass addSubclass: newClass.
-	builder builderEnhancer beforeMigratingClass: builder installer: self.
+		newClass superclass addSubclass: newClass.
+		builder builderEnhancer beforeMigratingClass: builder installer: self.
 
-	self migrateClassTo: newClass.
+		self migrateClassTo: newClass.
 
-	builder builderEnhancer afterMigratingClass: builder installer: self.	
+		builder builderEnhancer afterMigratingClass: builder installer: self.	
+
+		newClass subclasses do: [ :e | self remake: e ].
+	] on: ShNoChangesInClass do:[
+		"If there are no changes in the building, I am not building or replacing nothing"
+		newClass := oldClass.
+	].
 
 	self recategorize: newClass to: builder category.
 	self comment: newClass.
-
-	newClass subclasses do: [ :e | self remake: e ].
 
 	self notifyChanges.
 

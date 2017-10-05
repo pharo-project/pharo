@@ -1,7 +1,6 @@
 building
 build	
 	self tryToFillOldClass.
-	
 	self validateSuperclass.
 	self compareWithOldClass.
 
