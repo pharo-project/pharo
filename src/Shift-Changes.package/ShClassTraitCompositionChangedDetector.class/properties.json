@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "ShTraitCompositionChanged",
+	"super" : "ShTraitCompositionChangedDetector",
 	"category" : "Shift-Changes",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "ShClassTraitCompositionChanged",
+	"name" : "ShClassTraitCompositionChangedDetector",
 	"type" : "normal"
 }

@@ -5,9 +5,7 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"enhancer"
-	],
-	"name" : "ShTraitCompositionChanged",
+	"instvars" : [ ],
+	"name" : "ShSuperclassChangedDetector",
 	"type" : "normal"
 }
