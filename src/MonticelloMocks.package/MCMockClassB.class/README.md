@@ -1,0 +1,1 @@
+This comment has a bang! Bang! Bang!

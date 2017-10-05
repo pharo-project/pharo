@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "MonticelloMocks",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Foo"
+	],
+	"instvars" : [ ],
+	"name" : "MCMockClassF",
+	"type" : "normal"
+}

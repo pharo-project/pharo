@@ -1,0 +1,3 @@
+numeric
+two
+	^ 2
