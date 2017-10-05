@@ -1,3 +1,0 @@
-accessing
-newSlot
-	^ newSlot
