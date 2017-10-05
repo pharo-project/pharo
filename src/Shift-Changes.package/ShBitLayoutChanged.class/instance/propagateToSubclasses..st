@@ -1,3 +1,3 @@
 propagating
 propagateToSubclasses: anotherBuilder
-	anotherBuilder layoutDefinition layoutClass: builder layoutDefinition layoutClass
+	anotherBuilder layoutDefinition layoutClass: builder layoutDefinition layoutClass 
