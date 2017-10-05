@@ -1,7 +1,7 @@
 notifications
 recategorize: aClass to: newCategory
 	| oldCategory |
-	oldCategory := aClass basicCategory.
+	oldCategory := oldClass ifNotNil:[oldClass basicCategory].
 	oldCategory == newCategory asSymbol
 		ifTrue: [ ^ self ].
 

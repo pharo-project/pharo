@@ -1,3 +1,3 @@
 accessing
 superclass
-	^ superclass ifNil:[buildEnvironment classNamed: (self superclassName)]
+	^ superclass ifNil:[ superclassName ifNotNil: [buildEnvironment classNamed: (self superclassName)]]
