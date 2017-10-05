@@ -1,4 +1,4 @@
-initialization
+changes
 compareSlotCollection: a with: b
 	(a size = b size) ifFalse:[^false].
 

@@ -1,4 +1,4 @@
-as yet unclassified
+changes
 newChanges
 	^ {ShClassChanged new
 		builder: builder;

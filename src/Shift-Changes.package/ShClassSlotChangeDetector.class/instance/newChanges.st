@@ -1,4 +1,4 @@
-initialization
+changes
 newChanges
 	^ {(ShMetaclassChanged new
 		builder: builder;

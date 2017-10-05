@@ -13,7 +13,7 @@ compareClass
 	(bitLayoutNames includes: oldLayout )
 		ifFalse:[ ^ #() ].
 
-	(builder layoutDefinition slots ~= builder oldClass slots)	
+	(builder layoutDefinition slots size ~= builder oldClass slots size)	
 		ifTrue:[ ^ { ShBitLayoutChanged new builder: builder; yourself. } ].
 
 	(builder oldClass superclass allSlots isEmpty not)	

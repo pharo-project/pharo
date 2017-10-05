@@ -1,4 +1,4 @@
-initialization
+changes
 newChanges
 	^ {ShClassChanged new
 		builder: builder;
