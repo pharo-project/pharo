@@ -1,5 +1,5 @@
 examples
-exampleColorControls
+colorControls
 	"Open a window with examples of each of the color controls."
 	"self exampleColorControls"
 	<sampleInstance>
