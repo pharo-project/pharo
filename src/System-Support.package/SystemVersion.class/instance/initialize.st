@@ -5,6 +5,6 @@ initialize
 	major := 0.
 	minor := 0.	 	
 	suffix := ''.
-	build := -1. "means no build number given, as we also accept a build number 0"
+	build := self class invalidBuildNumber.
 	commitHash := ''.
 	date := Date today.
