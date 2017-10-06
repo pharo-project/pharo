@@ -1,4 +1,4 @@
-running
+initialization
 tearDown
 
 	self directory ensureDeleteAll 
