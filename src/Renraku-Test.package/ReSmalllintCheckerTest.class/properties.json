@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ReCodeBasedTestCase",
+	"category" : "Renraku-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReSmalllintCheckerTest",
+	"type" : "normal"
+}

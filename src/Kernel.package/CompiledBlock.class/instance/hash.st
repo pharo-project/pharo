@@ -1,4 +1,4 @@
-accessing
+comparing
 hash
 	"CompiledMethod>>#= compares code, i.e. same literals and same bytecode.
 	 So we look at the header, methodClass and some bytes between initialPC and endPC,

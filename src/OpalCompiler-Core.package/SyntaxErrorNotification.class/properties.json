@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "StephaneDucasse 5/31/2015 07:45",
+	"commentStamp" : "",
 	"super" : "Notification",
 	"category" : "OpalCompiler-Core-Exception",
 	"classinstvars" : [ ],

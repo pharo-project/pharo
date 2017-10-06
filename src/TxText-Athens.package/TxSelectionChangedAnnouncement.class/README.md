@@ -1,1 +1,0 @@
-i am announced each time when selection has changed

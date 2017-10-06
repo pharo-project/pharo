@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	emptyDict := self classToBeTested new.
 	nonEmptyDict := self classToBeTested new.

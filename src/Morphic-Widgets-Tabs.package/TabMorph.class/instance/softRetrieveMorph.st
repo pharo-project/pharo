@@ -1,6 +1,6 @@
 protocol
 softRetrieveMorph
-	| rotating oldIcon |
+	| oldIcon |
 	"Like retrieveMorph but done in a separated process"	
 	morph ifNotNil: [ ^ self ].	
 	retrievingProcess 
@@ -10,16 +10,13 @@ softRetrieveMorph
 				ifFalse: [ ^ self ] ].
 	
 	oldIcon := self icon ifNotNil: [ :i | i form ].
-	rotating := self createAnimationProcess.
+	label icon: TabBuildingIconMorph new.
 	retrievingProcess := [ [
-		rotating resume.
-		"compute time consuming data"
-		morph := retrievingBlock value.
-		retrievingSemaphore signal.
+		morph := retrievingBlock value]
+	ensure: [		
 		UIManager default defer: [
-			self triggerEvent: #tabRefreshed with: self.
-			self icon: oldIcon]]
-	ensure: [
-		rotating terminate.
-		UIManager default defer: [self icon: oldIcon]
+			self icon: oldIcon.
+			self triggerEvent: #tabRefreshed with: self].
+		"I should signal all waiters here"
+		[retrievingSemaphore isEmpty] whileFalse: [ retrievingSemaphore signal].
 	] ] forkAt: Processor activePriority - 2

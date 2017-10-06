@@ -1,10 +1,5 @@
 language: c
 
-# set git clone depth to 1
-# otherwise clone is too slow in osx
-git:
-  depth: 1
-
 cache:
   directories:
     - github-cache
@@ -12,54 +7,16 @@ cache:
 
 matrix:
   include:
-    - os: linux
-      env: JOB=test BOOTSTRAP_ARCH=32 PHARO_VERSION=60
-    - os: linux
-      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60
-#    - os: osx
-#      env: JOB=test BOOTSTRAP_ARCH=32 PHARO_VERSION=60
-#    - os: osx
-#      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60
     - env: JOB=bootstrap BOOTSTRAP_ARCH=32 PHARO_VERSION=60
-    - env: JOB=bootstrap BOOTSTRAP_ARCH=64 PHARO_VERSION=60
-  exclude:
-    - env: JOB=bootstrap BOOTSTRAP_ARCH=32 PHARO_VERSION=60 TRAVIS_PULL_REQUEST=true
-    - env: JOB=bootstrap BOOTSTRAP_ARCH=64 PHARO_VERSION=60 TRAVIS_PULL_REQUEST=true
-  allow_failures:
-    - os: linux
-      env: JOB=test BOOTSTRAP_ARCH=32 PHARO_VERSION=60 TRAVIS_PULL_REQUEST=false
-    - os: linux
-      env: JOB=test BOOTSTRAP_ARCH=64 PHARO_VERSION=60 TRAVIS_PULL_REQUEST=false
 
 addons:
   apt:
     packages:
-    - lib32asound2
-    - lib32z1
-    - lib32bz2-1.0
+    - libasound2:i386
     - libssl1.0.0:i386
     - libfreetype6:i386
-
-install:
-- wget -O - get.pharo.org/${PHARO_VERSION}+vm | bash
-- "./pharo Pharo.image ./bootstrap/scripts/prepare_image.st --save --quit"
+    - libcairo2:i386
 
 script:
-- ./pharo Pharo.image ./bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --quit
-- bash ./bootstrap/scripts/build.sh
-- if [[ ${JOB} == "test" ]]; then ./bootstrap-cache/vm/pharo bootstrap-cache/Pharo.image test --no-xterm --fail-on-failure ".*"; fi
-
-before_deploy:
-- sh ./scripts/deploy_bintray_prepare.sh
-
-after_deploy:
-- sh ./scripts/deploy_bintray_check.sh
-
-deploy:
-  provider: bintray
-  file: ".bintray.json"
-  user: "guillep"
-  key:
-    secure: iCTa9gER9O8lwHi6d52MZzrT96j5QhPC9y/oSmpMzdh91op3cjQXDGVzu+NUhZ77OUCRCCtSm2ISFbIztDbkgci0eBjJ8bmQDjZKI5+MEaKyJf7l0L1LQ3ahNfnSDVIdNg9EyxByP4TJNIPGZ8SnQzLy9Anp2GKo+ONWMPHcHR9EO5Mey4Wehwz/g3KvN+WJ5Z/8FBW5n4a6lARYBUijsYAQSAwGt/bBjVRTRWjC61gQCVi6av7WLD1MRG2FguH75EuDZYkO2LOJSK0H4k5jaOpRzz+Vff0Zb/r9YIk1IyjpJsHq5y0EUcr5VuPllV43qIAT3s/9UUZ2T4AFrq1e4zpYNb/TWRHMgB5EYOkYCqlH2LcH6aQySRzJohA1qGzMq1SoblPFEZYlYKKHizTHkYxasGr32cfvh6Gv4/BaEd3/y6xKpTQ6D1u05ea1ccNRZkoqp1jivvh0r9PXQY40whgDoUVInC2/zKvbwZGA+7zOM72Hk8BT3zL+fLNyNeuEnozddYRrvAiGxT/rqeLIuYKnXfAu2WrVKWMQ5jBjVdus6ZJYbPJP2eqAcLAIco+ZqCFE8jruIopMeg0+4V8hUgP9Xn1CxNLNIVMc9RogKY/xIy0aYlrCtODc2Xz+6NDXci2jmVWLKEj+jYNDg7qJfR7jErK0DCE3Vhp1aa4DGug=
-  on:
-    condition: $JOB = bootstrap
+- bash ./bootstrap/scripts/bootstrap.sh
+- ./bootstrap-cache/vm/pharo bootstrap-cache/Pharo.image test --no-xterm --fail-on-failure ".*"

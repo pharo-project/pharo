@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	super setUp.
 	p1 := self createNewPackageNamed: self p1Name.

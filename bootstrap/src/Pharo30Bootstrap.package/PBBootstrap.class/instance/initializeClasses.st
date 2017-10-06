@@ -8,9 +8,9 @@ initializeClasses
 		#ProcessorScheduler #Categorizer #CCompilationContext #SetElement #Deprecation #ZnMimeType #TraitBehavior 
 		#AsyncFile #RPackage #Stdio #FileStream #ASTCache #MacRomanTextConverter 
 		#CompiledMethod  #ISO88592TextConverter #UUIDGenerator #Locale #Symbol
-		#BISimpleFormatter #InstructionStream #TemporaryVariable #MD5NonPrimitive #ChronologyConstants 
+		#BISimpleFormatter #TemporaryVariable #MD5NonPrimitive #ChronologyConstants 
 		#BasicCommandLineHandler #CompilationContext #FileLocator #LanguageEnvironment #Character #SmalltalkImage 
-		#EncodedCharSet #ByteString #SmallInteger #String  #WeakArray #Object #Latin9Environment
+		#EncodedCharSet #ByteString #String  #WeakArray #Object #Latin9Environment
 		 #Latin2Environment #Key #ZnBase64Encoder #UIManagerSessionHandler #MultiByteFileStream 
 		#Latin1  #RBScanner #CP1250TextConverter #WeakAnnouncementSubscription #ZnUTF8Encoder #Context #Unicode 
 		#ZnSimplifiedByteEncoder)

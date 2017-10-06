@@ -1,4 +1,4 @@
-as yet unclassified
+accessing - morphs
 ageMorph
 	^ ( self theme  
 				newTextEntryIn: World

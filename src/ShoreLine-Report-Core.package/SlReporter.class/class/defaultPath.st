@@ -1,4 +1,0 @@
-configuration
-defaultPath
-
-	^ 'api/stacktraces'

@@ -1,1 +1,1 @@
-CombinedChar parseCompositionMappingFrom: ('pharo-core' asFileReference / 'resources' / 'unicode' / 'UnicodeData.txt') readStream.
+CombinedChar parseCompositionMappingFrom: (ZnCharacterReadStream on: (File named: '../resources/unicode/UnicodeData.txt') readStream encoding: 'utf8').

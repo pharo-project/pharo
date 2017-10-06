@@ -1,4 +1,4 @@
-set up
+running
 setUp
 	super setUp.
 	manager := RBRefactoringManager classVarNamed: #Instance.

@@ -1,4 +1,4 @@
-as yet unclassified
+accessing - morphs
 firstNameMorph
 	^ ( self theme  
 				newTextEntryIn: World

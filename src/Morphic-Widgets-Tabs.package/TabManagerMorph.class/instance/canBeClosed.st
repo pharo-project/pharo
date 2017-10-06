@@ -1,4 +1,3 @@
 protocol
 canBeClosed
-
 	^ toolbar canBeClosed

@@ -1,3 +1,0 @@
-conversion
-asTxModel
-	^ self

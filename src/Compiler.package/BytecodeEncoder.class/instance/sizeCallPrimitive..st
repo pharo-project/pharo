@@ -1,3 +1,3 @@
-as yet unclassified
+opcode sizing
 sizeCallPrimitive: primitiveIndex
 	^self sizeOpcodeSelector: #genCallPrimitive: withArguments: {primitiveIndex}

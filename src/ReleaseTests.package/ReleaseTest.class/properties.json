@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "TestCase",
-	"category" : "ReleaseTests",
+	"category" : "ReleaseTests-Release",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

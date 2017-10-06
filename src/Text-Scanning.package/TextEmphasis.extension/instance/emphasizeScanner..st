@@ -1,4 +1,4 @@
 *Text-Scanning
 emphasizeScanner: scanner
-	"Set the emphasist for text scanning"
+	"Set the emphasis for text scanning"
 	scanner addEmphasis: emphasisCode

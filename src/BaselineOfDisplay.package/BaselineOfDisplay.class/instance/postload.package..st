@@ -16,7 +16,6 @@ postload: loader package: packageSpec
 	Cursor initialize.
 	DisplayScreen initialize.
 	BitBlt initialize.
-	Color initialize.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	

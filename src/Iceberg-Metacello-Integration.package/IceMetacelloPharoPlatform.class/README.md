@@ -1,1 +1,0 @@
-I'm a class to add support for iceberg to metacello.

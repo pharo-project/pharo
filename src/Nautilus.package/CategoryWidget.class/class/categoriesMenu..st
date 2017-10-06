@@ -4,6 +4,7 @@ categoriesMenu: aBuilder
 	| target |
 	
 	target := aBuilder model.
+	
 	(aBuilder item: #'Find Method...')
 		keyText: 'f, m' if: Nautilus useOldStyleKeys not;
 		keyText: 'f' if: Nautilus useOldStyleKeys;
@@ -21,10 +22,15 @@ categoriesMenu: aBuilder
 		keyText: 'b, f' if: Nautilus useOldStyleKeys not;
 		keyText: 'b' if: Nautilus useOldStyleKeys;
 		action: [ target fullBrowse ];
-		order: 200;
+		order: 200.
+			
+	(aBuilder item: #'Browse External Package')
+		enabledBlock: [ target enableCategorySingleSelection and: [ target selectedCategories anySatisfy: [ :cat | cat beginsWith: '*' ] 	] ];
+		action: [ (RPackage organizer packageForProtocol: target selectedCategory inClass: target class) browse ];
+		order: 250;
 		withSeparatorAfter.
 		
-	(aBuilder item: #'Categorize all uncategorized')
+	(aBuilder item: #'Categorize all uncategorized and remove empty')
 		keyText: 'h, C' if: Nautilus useOldStyleKeys not;
 		action: [ target categorizeAllUncategorizedMethods ];
 		order: 1100.	

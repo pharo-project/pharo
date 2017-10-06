@@ -1,0 +1,3 @@
+deprecated
+restoreCursor
+	^self

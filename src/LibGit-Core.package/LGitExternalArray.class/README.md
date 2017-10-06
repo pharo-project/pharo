@@ -1,1 +1,0 @@
-I provide general implementations for my subclasses that represent dedicated arrays of a certain type.

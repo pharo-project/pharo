@@ -1,4 +1,4 @@
-as yet unclassified
+private - accessing
 keyboardEvent 
 	| event |
 	event := KeyboardEvent new.

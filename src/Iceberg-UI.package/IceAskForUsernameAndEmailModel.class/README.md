@@ -1,1 +1,0 @@
-I'm a dialog for asking "user.name" and "user.email" .

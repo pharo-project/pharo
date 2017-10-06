@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "SvenVanCaekenberghe 6/7/2017 10:28",
+	"super" : "PharoFilesOpener",
+	"category" : "System-Sources",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "NoPharoFilesOpener",
+	"type" : "normal"
+}

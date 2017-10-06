@@ -1,3 +1,0 @@
-compatibility
-isMorphicModel
-	^true

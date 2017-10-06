@@ -1,4 +1,4 @@
-as yet unclassified
+examples
 timingMany
 	| dicts keys size loops count |
 	

@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 scanFrom: strm
 	"read a doit in the funny format used by Text styles on files. d10 factorial;;  end with two semicolons"
 

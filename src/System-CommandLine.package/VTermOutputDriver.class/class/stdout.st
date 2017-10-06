@@ -1,3 +1,3 @@
 instance-creation
 stdout
-	^ self on: FileStream stdout
+	^ self on: Stdio stdout

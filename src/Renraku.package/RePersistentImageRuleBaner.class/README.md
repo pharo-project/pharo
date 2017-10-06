@@ -1,0 +1,1 @@
+Same as the superclass but also saves the banned rule with a setting

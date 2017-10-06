@@ -1,3 +1,0 @@
-accessing
-width
-	^ extent x

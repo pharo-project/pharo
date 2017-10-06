@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"repository"
+		"repository",
+		"commitHash"
 	],
 	"name" : "PBGitFetcher",
 	"type" : "normal"
