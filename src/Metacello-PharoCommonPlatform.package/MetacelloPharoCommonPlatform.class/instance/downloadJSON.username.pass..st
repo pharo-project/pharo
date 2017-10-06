@@ -16,7 +16,7 @@ downloadJSON: url username: username pass: pass
 		readOnlyFileNamed: jsonFile localName
 		do: [ :fileStream | 
 			| result |
-			result := MCFileTreeJsonParser
+			result := (Smalltalk at: #MCFileTreeJsonParser)
 				parseStream: fileStream self
 				deleteFileNamed: errorFileName.
 			^ result ] ]
