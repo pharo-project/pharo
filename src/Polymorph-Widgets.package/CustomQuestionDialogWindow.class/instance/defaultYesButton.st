@@ -1,4 +1,4 @@
-as yet unclassified
+defaults
 defaultYesButton
 	"Answer a default yes button."
 

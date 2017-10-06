@@ -5,7 +5,7 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ 
+	"instvars" : [
 		"index"
 	],
 	"name" : "IndexedSlot",

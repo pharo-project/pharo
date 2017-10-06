@@ -1,4 +1,4 @@
-set up
+running
 setUp
 	| st |
 	super setUp.

@@ -1,47 +1,33 @@
-| toExport ftRepo environment rfienvironment |
+| toExport repository packageNames environment |
 
 Transcript nextPutAll: '[Hermes] - Loading BaselineOfPharoBootstrap'; cr.
-ftRepo := MCFileTreeRepository new directory: 'src' asFileReference.
-(ftRepo versionWithInfo: (ftRepo versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
+
+repository := MCFileTreeRepository new
+	directory: 'src' asFileReference;
+	yourself.
+(repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.
+
 toExport := #BaselineOfPharoBootstrap asClass sUnitPackageNames.
-environment := Dictionary new.
-(#BaselineOfPharoBootstrap asClass kernelPackageNames),
-	toExport do: [ :name | | version |
-		version := FiMonticelloWriter new 
-			written: (ftRepo versionWithInfo: (ftRepo versionInfoFromVersionNamed: name )) snapshot
-			name: name.
-		environment at: name ifAbsentPut: version.
-].
+	
+packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, toExport.
+environment := repository asRing2EnvironmentWith: packageNames.		
 
-rfienvironment := environment values asFiSet asRFiEnvironment.
+environment fixProtoObjectClassSuperclass.
+environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream ChangeSet Character Processor SystemOrganization).
 
-Transcript nextPutAll: '[Hermes] - Creating Globals'; cr.
+environment clean.
 
-"Required by OpalCompiler"
-rfienvironment globalByName at: #Smalltalk put: nil.
-
-"Required by CodeExport"
-rfienvironment globalByName at: #UTF8TextConverter put: nil.
-rfienvironment globalByName at: #MacRomanTextConverter put: nil.
-rfienvironment globalByName at: #FileStream put: nil.
-rfienvironment globalByName at: #FileSystem put: nil.
-
-"Required by CodeImport"
-rfienvironment globalByName at: #ChangeSet put: nil.
-
-
-toExport do: [ :name | | hePackage writer |
-	Transcript nextPutAll: ('[Hermes] - Exporting Package ' , name); cr.
-
-	hePackage := HERingToHermesBuilder new visitPackage: (rfienvironment packages detect: [ :p | p name = name ]).
+toExport do: [ :packageName |
+	| oldPackage hePackage writer |
+	oldPackage := environment ask packageNamed: packageName.
+	hePackage := HERing2ToHermesBuilder new visitPackage: (oldPackage).
 	writer := HEBinaryReaderWriter new
-			stream: (File openForWriteFileNamed: 'bootstrap-cache/' , name, '.hermes');
+			stream: (File openForWriteFileNamed: 'bootstrap-cache/' , packageName, '.hermes');
 			yourself.
 	hePackage writeInto: writer.
 	writer flush.
-	writer close.
-].
+	writer close. ].
 
 Transcript nextPutAll: '[Hermes] - Done'; cr.

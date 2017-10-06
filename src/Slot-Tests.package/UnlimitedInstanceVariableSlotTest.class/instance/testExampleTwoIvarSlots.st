@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testExampleTwoIvarSlots
 
 	| object slot1 slot2 |

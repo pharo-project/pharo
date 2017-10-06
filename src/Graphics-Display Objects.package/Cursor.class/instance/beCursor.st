@@ -1,8 +1,4 @@
 primitives
 beCursor
-	"Primitive. Tell the interpreter to use the receiver as the current cursor 
-	image. Fail if the receiver does not match the size expected by the 
-	hardware. Essential. See Object documentation whatIsAPrimitive."
-
-	<primitive: 101>
-	self primitiveFailed
+	"TODO: This is the place for redirecting the be cursor primitive into OSWindow"
+	self primitiveBeCursor

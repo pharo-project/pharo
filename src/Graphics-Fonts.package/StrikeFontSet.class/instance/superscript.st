@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 superscript
 
 	^ (fontArray  at: 1) superscript

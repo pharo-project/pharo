@@ -1,4 +1,4 @@
-initialization
+running
 setUp
 	super setUp.
 	oldRulesSettings := Dictionary new.

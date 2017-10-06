@@ -1,4 +1,4 @@
-initialize
+running
 tearDown
 	"Tearing down code for NECControllerTest"
 

@@ -55,7 +55,7 @@ baseline: spec
 		spec package: 'DeprecatedFileStream'.
 
 		spec package: 'SUnit-Core'.
-		"spec package: 'SUnit-Tests'."
+		spec package: 'SUnit-Tests'.
 		spec package: 'JenkinsTools-Core'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
@@ -119,6 +119,6 @@ baseline: spec
 
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.
-			"'SUnit-Tests'."
+			'SUnit-Tests'.
 			'JenkinsTools-Core'}.
 	]

@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 bonk: glyphForm with: bonkForm at: j
 	"Bonking means to run through the glyphs clearing out black pixels
 	between characters to prevent them from straying into an adjacent

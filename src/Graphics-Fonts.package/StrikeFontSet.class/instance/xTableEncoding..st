@@ -1,4 +1,4 @@
-as yet unclassified
+private
 xTableEncoding: anInteger
 	"Answer an Array of the left x-coordinate of characters in glyphs."
 

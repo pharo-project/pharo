@@ -1,4 +1,4 @@
-as yet unclassified
+private - initialization
 initializeWithFontArray: anArray 
 	"Initialize with given font array, the ascent of primary font is modified 
 	if another font has higher size"

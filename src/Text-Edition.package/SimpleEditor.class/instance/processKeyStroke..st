@@ -1,4 +1,4 @@
-typing support
+typing - support
 processKeyStroke: aKeyboardEvent
 
 	"Key struck on the keyboard. Find out which one and, if special, carry 

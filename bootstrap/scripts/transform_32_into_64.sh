@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Bash3 Boilerplate. Copyright (c) 2014, kvz.io
+set -o errexit
+set -o pipefail
 set -o nounset
 set -o xtrace
 
@@ -14,19 +15,24 @@ cd ..
 #We convert all files that are not full image (Pharo7.0-${IMAGE_KIND}-32bit-${HASH}.*)
 for f in Pharo7.0-*-32bit-*.zip; do
 	unzip "$f"
-	IMAGENAME=${f%.*}
-	mv "${IMAGENAME}.image" tempconversion.image
-	touch "${IMAGENAME}.changes"
-	mv "${IMAGENAME}.changes" tempconversion.changes
+	IMAGEFILENAME=$(find . -iname *.image -maxdepth 1)
+	IMAGENAME=${IMAGEFILENAME%.*}
 	
-	IMAGE_KIND=$(echo "${IMAGENAME}" | cut -d '-' -f 2)
-	HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
-	./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
+	if [ -f "${IMAGENAME}.image" ]
+	then
+		mv "${IMAGENAME}.image" tempconversion.image
+		touch "${IMAGENAME}.changes"
+		mv "${IMAGENAME}.changes" tempconversion.changes
+	
+		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
+		HASH=$(echo "$f" | head -n 1 | cut -d '-' -f 4 | cut -d '.' -f 1)
+		./vmmaker/pharo ./vmmaker/generator.image eval "[Spur32to64BitBootstrap new bootstrapImage: '../tempconversion.image'] on: AssertionFailure do: [ :fail | fail resumeUnchecked: nil ]"
 
-	mv "tempconversion-64.image" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.image"
-	mv "tempconversion-64.changes" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.changes"
-	zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.*
-	rm *.image *.changes *.sources
+		mv "tempconversion-64.image" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.image"
+		mv "tempconversion-64.changes" "Pharo7.0-${IMAGE_KIND}-64bit-$HASH.changes"
+		zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.zip Pharo7.0-${IMAGE_KIND}-64bit-$HASH.*
+	fi
+	rm -f *.image *.changes *.sources
 done
 
 #We convert full image file (Pharo7.0-32bit-${HASH}.*)
@@ -43,7 +49,7 @@ for f in Pharo7.0-32bit-*.zip; do
 	mv "tempconversion-64.image" "Pharo7.0-64bit-$HASH.image"
 	mv "tempconversion-64.changes" "Pharo7.0-64bit-$HASH.changes"
 	zip Pharo7.0-64bit-$HASH.zip Pharo7.0-64bit-$HASH.* ${IMAGENAME}.sources
-	rm *.image *.changes *.sources
+	rm -f *.image *.changes *.sources
 done
 
 rm -rf vmmaker

@@ -1,4 +1,4 @@
-testing
+comparing
 = aSet
 	self == aSet ifTrue: [^ true].	"stop recursion"
 	(aSet isKindOf: Set) ifFalse: [^ false].

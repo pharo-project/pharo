@@ -1,4 +1,4 @@
-protocol
+comparing
 = anotherWrapper
 	self species = anotherWrapper species
 		ifFalse: [ ^ false ].

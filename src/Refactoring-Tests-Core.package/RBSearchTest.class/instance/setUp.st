@@ -1,4 +1,4 @@
-accessing
+running
 setUp
 	super setUp.
 	classSearches := Dictionary new.

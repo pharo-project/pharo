@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "HEFraction",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HEScaledDecimal",
+	"type" : "normal"
+}
