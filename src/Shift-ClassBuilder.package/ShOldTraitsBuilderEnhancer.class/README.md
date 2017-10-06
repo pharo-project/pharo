@@ -1,0 +1,1 @@
+I extend the ShiftClassBuilder to have the old implementation of traits

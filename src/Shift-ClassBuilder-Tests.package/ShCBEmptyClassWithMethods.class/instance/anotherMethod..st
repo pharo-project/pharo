@@ -1,3 +1,3 @@
-as yet unclassified
+test methods
 anotherMethod: aValue
 	^ aValue.

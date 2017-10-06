@@ -1,2 +1,2 @@
-as yet unclassified
+migrating
 afterMigratingClass: aBuilder installer: anInstaller.
