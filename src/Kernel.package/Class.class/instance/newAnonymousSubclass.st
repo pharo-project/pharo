@@ -6,7 +6,7 @@ newAnonymousSubclass
     We use this pragma to test if Class does not contain some accidental 
     local selectors."
 
-	^ AnonymousClassInstaller make: [ :builder |
+	^ Smalltalk anonymousClassInstaller make: [ :builder |
 		builder
 			superclass: self ;
 			layoutClass: self classLayout class ].
