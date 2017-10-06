@@ -2,7 +2,7 @@ examples
 colorControls
 	"Open a window with examples of each of the color controls."
 	"self exampleColorControls"
-	<sampleInstance>
+	<script>
 	|dialog builder|
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example color controls') useDefaultOKButton.

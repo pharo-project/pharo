@@ -2,7 +2,7 @@ examples
 exampleWindowWithToolbars
 	"Open an example window with toolbars."
 	"self exampleWindowWithToolbars"
-	<sampleInstance>
+	<script>
 	
 	| win fileMenu tools dock text holder |
 	win := StandardWindow new.

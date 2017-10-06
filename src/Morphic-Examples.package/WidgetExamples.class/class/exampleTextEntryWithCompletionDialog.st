@@ -1,7 +1,7 @@
 examples
 exampleTextEntryWithCompletionDialog
 	"self exampleTextEntryWithCompletionDialog"
-	<sampleInstance>
+	<script>
 	| applicants entryCompletion |
 	applicants := (Array
 				streamContents: [:strm | Symbol

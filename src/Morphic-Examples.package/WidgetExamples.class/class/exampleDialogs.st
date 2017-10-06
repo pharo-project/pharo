@@ -2,7 +2,7 @@ examples
 exampleDialogs
 	"Open an example of each services dialog"
 	"self exampleDialogs"
-	<sampleInstance>
+	<script>
 	
 	self exampleBuilder
 		chooseFont: TextStyle default defaultFont;

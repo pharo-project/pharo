@@ -1,9 +1,8 @@
 examples
 exampleGroups
 	"Open a window with examples of each of the group type morphs."
-
 	"self exampleGroups"
-	<sampleInstance>
+	<script>
 	| dialog builder |
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example groups')

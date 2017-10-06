@@ -2,8 +2,8 @@ examples
 exampleOtherControls
 	"Open a window with examples of each of the other controls."
 	"self exampleOtherControls"
-	<sampleInstance>
-	|dialog builder image emboss fuzzy|
+	<script>
+	| dialog builder image emboss fuzzy |
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example other controls') useDefaultOKButton.
 	emboss := (dialog newString: 'Hello there') trackPaneColor: false.

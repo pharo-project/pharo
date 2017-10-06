@@ -2,7 +2,7 @@ examples
 exampleBasicControls
 	"Open a window with examples of each of the basic controls."
 	"self exampleBasicControls"
-	<sampleInstance>
+	<script>
 	|dialog builder radioModel treeModel|
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
