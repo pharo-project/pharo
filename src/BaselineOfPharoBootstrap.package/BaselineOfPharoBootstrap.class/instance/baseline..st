@@ -45,6 +45,9 @@ baseline: spec
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
+		spec package: 'FFI-Kernel'.
+		spec package: 'FFI-Pools'.
+		
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
 		spec package: 'CodeImportCommandLineHandlers'.
@@ -61,6 +64,9 @@ baseline: spec
 		
 
 		spec group: 'KernelGroup' with: {
+			'FFI-Kernel'.
+			'FFI-Pools'.
+		
 			'AST-Core'.
 			'Announcements-Core'.
 			'Colors'.
