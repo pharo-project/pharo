@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 newFromPairs: anArray
 	"Answer an instance of me associating (anArray at: i) to (anArray at: i+1)
 	 for each odd i.  anArray must have an even number of entries."

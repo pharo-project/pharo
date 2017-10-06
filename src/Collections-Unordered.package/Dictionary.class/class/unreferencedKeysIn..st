@@ -1,4 +1,4 @@
-as yet unclassified
+private
 unreferencedKeysIn: aDictionary
 	^ 'Scanning for references . . .'
 		displayProgressFrom: 0
