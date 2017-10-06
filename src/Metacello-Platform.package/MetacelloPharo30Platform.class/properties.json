@@ -1,11 +1,11 @@
 {
-	"commentStamp" : "EstebanLorenzano 10/6/2017 18:56",
-	"super" : "MetacelloPharoCommonPlatform",
+	"commentStamp" : "<historical>",
+	"super" : "MetacelloPharoPlatform",
 	"category" : "Metacello-Platform",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "MetacelloPharoPlatform",
+	"name" : "MetacelloPharo30Platform",
 	"type" : "normal"
 }
