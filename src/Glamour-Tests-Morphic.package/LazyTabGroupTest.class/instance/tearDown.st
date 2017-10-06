@@ -1,3 +1,3 @@
-setup - tear down
+running
 tearDown
 	window ifNotNil: [window delete]

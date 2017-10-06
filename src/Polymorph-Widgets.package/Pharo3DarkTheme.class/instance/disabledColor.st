@@ -1,3 +1,3 @@
 accessing colors
 disabledColor 
-	^ Color veryLightGray muchLighter
+	^ Color gray lighter

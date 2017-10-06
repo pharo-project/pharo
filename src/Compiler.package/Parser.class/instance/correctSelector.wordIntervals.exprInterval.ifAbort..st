@@ -11,7 +11,7 @@ correctSelector: proposedKeyword wordIntervals: spots exprInterval: expInt ifAbo
 	requestor selectFrom: spots first first to: spots last last.
 	requestor select.
 
-	correctSelector := UnknownSelector name: proposedKeyword.
+	correctSelector := UnknownSelectorDetected name: proposedKeyword.
 	correctSelector ifNil: [^abortAction value].
 
 	requestor deselect.

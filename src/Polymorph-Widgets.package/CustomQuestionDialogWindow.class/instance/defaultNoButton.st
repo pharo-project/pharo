@@ -1,4 +1,4 @@
-as yet unclassified
+defaults
 defaultNoButton
 	"Answer a default no button."
 

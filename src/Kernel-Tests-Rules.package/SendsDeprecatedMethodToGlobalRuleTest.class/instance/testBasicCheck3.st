@@ -8,4 +8,5 @@ testBasicCheck3
 	testMethod := testClass >> (
 		testClass compile: 'testMethod TestVar yourself').
 
-	self deny: (SendsDeprecatedMethodToGlobalRule new basicCheck: testMethod)
+	self assert: (testMethod externalProperties noneSatisfy: [ :eprop |
+		eprop rule class = SendsDeprecatedMethodToGlobalRule ])

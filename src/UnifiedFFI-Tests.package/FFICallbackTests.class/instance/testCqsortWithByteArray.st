@@ -11,7 +11,7 @@ testCqsortWithByteArray
 	expected := (1.0 to: 10.0 by: 0.5) asArray.
 	
 	values := FFIExternalArray newType: 'double' size: unsorted size.
-	values getHandle pin.
+	values getHandle pinInMemory.
 	unsorted withIndexDo: [ :each :index | values at: index put: each ].
 	callback := FFICallback
 		signature:  #(int (const void *arg1, const void *arg2))

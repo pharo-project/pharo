@@ -1,4 +1,4 @@
-typing/selecting keys
+typing - selecting keys
 forwardDelete: aKeyboardEvent
 	"Delete forward over the next character.
 	  Make Undo work on the whole type-in, not just the one char.

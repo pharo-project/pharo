@@ -1,4 +1,4 @@
-setUp
+running
 setUp
 
 	currentCompiler := SmalltalkImage compilerClass.

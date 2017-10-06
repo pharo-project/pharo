@@ -1,0 +1,3 @@
+public
+changesFileOrNil
+	^ nil

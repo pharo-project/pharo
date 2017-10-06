@@ -28,7 +28,8 @@
 		"alarms",
 		"lastAlarmTime",
 		"menuBuilder",
-		"activeHand"
+		"activeHand",
+		"currentCursor"
 	],
 	"name" : "WorldState",
 	"type" : "normal"

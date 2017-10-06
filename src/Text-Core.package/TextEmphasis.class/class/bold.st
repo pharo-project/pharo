@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 bold
 	^ self new emphasisCode: 1

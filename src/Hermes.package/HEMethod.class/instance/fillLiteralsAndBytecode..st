@@ -2,9 +2,12 @@ instance creation
 fillLiteralsAndBytecode: aMethod
 	| literalSpace |
 	
-	header := aMethod header.
+	encoderClassName := aMethod encoderClass name.
+	numArgs := aMethod numArgs.
+	numTemps := aMethod numTemps.
+	hasPrimitive := aMethod isPrimitive asBit.
 
-	literalSpace := (aMethod numLiterals + 1) * 4.
+	literalSpace := (aMethod numLiterals + 1) * Smalltalk wordSize.
 
 	bytecode := ByteArray new: aMethod size - literalSpace.
 	1 to: bytecode size do: [ :i | bytecode at: i put: (aMethod at: i + literalSpace) ].

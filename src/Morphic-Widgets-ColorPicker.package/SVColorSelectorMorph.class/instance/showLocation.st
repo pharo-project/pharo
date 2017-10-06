@@ -1,4 +1,4 @@
-as yet unclassified
+displaying
 showLocation
 	"Show the location morph and update the display."
 	

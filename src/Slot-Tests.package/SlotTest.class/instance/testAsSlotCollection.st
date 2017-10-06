@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testAsSlotCollection
 	
  	self assert: 'a b' asSlotCollection = {#a => InstanceVariableSlot. #b => InstanceVariableSlot}.

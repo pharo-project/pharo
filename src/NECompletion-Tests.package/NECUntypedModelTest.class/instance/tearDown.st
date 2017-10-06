@@ -1,3 +1,3 @@
-tests
+running
 tearDown
 	NECPreferences caseSensitive: prefValueCase
