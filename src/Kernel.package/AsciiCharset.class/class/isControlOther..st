@@ -1,6 +1,4 @@
 character classification
-isControlOther: char 
-	| code |
-	code := char charCode.
-	code <= 16r1F ifTrue: [ ^ true ].
-	^ code = Character delete
+isControlOther: char
+	char charCode <= 16r1F ifTrue: [ ^ true ].
+	^ char = Character delete 

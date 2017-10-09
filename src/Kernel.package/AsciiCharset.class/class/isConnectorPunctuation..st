@@ -1,3 +1,3 @@
 character classification
 isConnectorPunctuation: char
-	^ false
+	^ char = $_
