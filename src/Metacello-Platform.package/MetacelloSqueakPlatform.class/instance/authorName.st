@@ -1,4 +1,0 @@
-utilities
-authorName
-
-	^Utilities authorInitials
