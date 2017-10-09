@@ -1,3 +1,3 @@
-accessing
+*Metacello-Platform
 urlSchemes
 	^ #(github)

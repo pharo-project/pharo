@@ -4,3 +4,4 @@ extractRepositoryFrom: zipFile to: directory
 	ZipArchive new 
 		readFrom:  zipFile;
 		extractAllTo: directory asFileReference.
+	zipFile asFileReference delete.
