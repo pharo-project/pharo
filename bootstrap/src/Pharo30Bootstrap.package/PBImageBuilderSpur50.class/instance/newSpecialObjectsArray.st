@@ -1,7 +1,7 @@
 instance creation
 newSpecialObjectsArray
 	| newSpecialObjectsArray |
-	newSpecialObjectsArray := espellBackend arrayClass asClassMirror basicNew: 56.
+	newSpecialObjectsArray := espellBackend arrayClass asClassMirror basicNew: 60.
 	newSpecialObjectsArray at: 1 put: espellBackend nilObject.
 	newSpecialObjectsArray at: 2 put: espellBackend falseObject.
 	newSpecialObjectsArray at: 3 put: espellBackend trueObject.
