@@ -5,6 +5,6 @@ testTwoRecursiveCriticalsShouldNotWaitEachOther
 	executed := false.
 	
 	self fork: [mutex critical: [ mutex critical: [ executed := true ]]].
-	10 milliSeconds wait.
+	self waitLastProcessTerminate.
 		
 	self assert: executed

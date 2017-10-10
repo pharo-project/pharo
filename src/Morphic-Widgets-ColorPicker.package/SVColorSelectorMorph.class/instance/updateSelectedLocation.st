@@ -1,4 +1,4 @@
-as yet unclassified
+updating
 updateSelectedLocation
 	"Position the location morph to indicate the selected colour."
 	

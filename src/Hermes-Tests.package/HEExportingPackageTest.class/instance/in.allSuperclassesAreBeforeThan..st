@@ -1,6 +1,8 @@
 as yet unclassified
 in: aSeq allSuperclassesAreBeforeThan: aClass
-	| myIndex realClass |
+	| myIndex superclass superclassIndex |
 	myIndex := aSeq indexOf: aClass.
-	realClass := Smalltalk at: aClass className.
-	^ realClass allSuperclasses allSatisfy: [ :superclass | (aSeq detectIndex: [ :e | e className = superclass name ] ifNone: [ -1 ]) < myIndex ]
+	superclass := aSeq detect: [ :e | e className = aClass superclass ] ifNone: [ ^ true ].
+
+	superclassIndex := aSeq indexOf: superclass.
+	^ (superclassIndex < myIndex) and:[ self in:aSeq allSuperclassesAreBeforeThan: superclass].

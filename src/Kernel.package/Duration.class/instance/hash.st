@@ -1,4 +1,4 @@
-accessing
+comparing
 hash
 	^seconds bitXor: nanos
  

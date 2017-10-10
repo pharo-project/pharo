@@ -5,5 +5,3 @@ value: anObject
 		oldValue := value.
 		value := anObject.
 		self valueChanged: oldValue ].
-
-	^ value

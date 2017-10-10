@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 selectedLocation
 	"Answer the location within the receiver of the selected colour
 	relative to the receiver's top left."

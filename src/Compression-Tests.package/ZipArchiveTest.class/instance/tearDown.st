@@ -1,4 +1,4 @@
-tests
+running
 tearDown
 
 	fileToZip ensureDelete.

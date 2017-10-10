@@ -1,4 +1,10 @@
+import hudson.tasks.test.AbstractTestResultAction
+
 def isWindows(){
+	//If NODE_LABELS environment variable is null, we assume we are on master unix machine
+	if (env.NODE_LABELS == null) {
+		return false
+	}
     return env.NODE_LABELS.toLowerCase().contains('windows')
 }
 
@@ -6,6 +12,121 @@ def shell(params){
     if(isWindows()) bat(params) 
     else sh(params)
 }
+
+def runTests(architecture, prefix=''){
+	def retryTimes = 3
+	def tries = 0
+	def success = false
+	waitUntil {
+		tries += 1
+		echo "Try #${tries}"
+		try {
+			cleanWs()
+			unstash "bootstrap${architecture}"
+			shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture}'"
+			junit allowEmptyResults: true, testResults: '*.xml'
+			success = !(currentBuild.result == 'UNSTABLE')
+			echo "Tests run with result ${currentBuild.result}"
+		} catch(e) {
+			//If there is an exception ignore.
+			//success will be false and we will retry thanks to waitUntil
+			echo "Tests couldn't complete to run due to an exception"
+		}
+		if (!success && tries == retryTimes) {
+			echo "Out of retries"
+      //If the problem is with an exception I have to raise it because if not the test is marked as success.
+			if(currentBuild.result != 'UNSTABLE')
+        error("Out of retries running " + prefix + " tests")
+		}
+		return success || (tries == retryTimes)
+	}
+	archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
+	cleanWs()
+}
+
+def shellOutput(params){
+    return (isWindows())? bat(returnStdout: true, script: params).trim() : sh(returnStdout: true, script: params).trim()
+}
+
+def notifyBuild(status){
+	node('unix'){ stage('notify'){
+	try{
+	
+	//If this is development, we send the email to the bugtracker list
+	//Otherwise, we send it to pharo-dev
+	def toMail = "pharo-bugtracker@lists.gforge.inria.fr"
+	def buildKind = env.BRANCH_NAME
+	if (env.CHANGE_ID != null){
+		buildKind = "PR ${env.CHANGE_ID}"
+	}
+	if( env.BRANCH_NAME == "development" ) {
+		toMail = "pharo-dev@lists.pharo.org"
+		buildKind = "7.0-dev"
+	}
+	
+	//We checkout scm to have access to the log information
+	checkout scm
+	def owner = "pharo-project"
+	def title = status
+	
+	//Get the merge information from the last commit
+	def logMessage = shellOutput('git log -1 --format="%B"')
+	def logSHA = shellOutput('git log -1 --format="%p"')
+	
+	def mailMessage = "Could not extract further issue information from commit message: ${logMessage}"
+	
+	//If there is no pull request information, we will send a log with the last commit message only
+	def isPRMergeCommit = logMessage.startsWith("Merge pull request ")	
+	if (isPRMergeCommit) {
+		def pullRequestId = logMessage.split(' ')[3].substring(1)
+		def githubPullRequestHttpRequest = "https://api.github.com/repos/${owner}/pharo/pulls/${pullRequestId}"
+		def response = httpRequest githubPullRequestHttpRequest
+		if (response.status == 200) { 
+			def pullRequestJSON = readJSON text: response.content
+			def pullRequestTitle = pullRequestJSON['title']
+			
+			def pullRequestUrl = "https://github.com/${owner}/pharo/pull/${pullRequestId}"
+			mailMessage = """The Pull Request #${pullRequestId} was integrated: \"${pullRequestTitle}\"
+Pull request url: ${pullRequestUrl}
+"""
+			title = pullRequestTitle
+			def issueNumber = pullRequestJSON['head']['ref'].split('-')[0]
+			def fogbugzUrl = "https://pharo.fogbugz.com/f/cases/${issueNumber}"
+			
+			mailMessage += """
+Issue Url: ${fogbugzUrl}"""
+		} else {
+			mailMessage += """
+No associated issue found"""
+		}
+	}
+	
+	def body = """There is a new Pharo build available!
+	
+The status of the build #${env.BUILD_NUMBER} was: ${status}.
+
+${mailMessage}
+Build Url: ${env.BUILD_URL}
+"""
+
+	// If we are building development, add information about the uploads
+	if( env.BRANCH_NAME == "development" ) {
+	""""
+Check for latest built images in http://files.pharo.org:
+ - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.32bit.zip
+ - http://files.pharo.org/images/70/Pharo-7.0.0-alpha.build.${env.BUILD_NUMBER}.sha.${logSHA}.arch.64bit.zip
+"""
+	}
+	mail to: toMail, cc: 'guillermopolito@gmail.com', subject: "[Pharo ${buildKind}] Build #${env.BUILD_NUMBER}: ${title}", body: body
+	} catch (e) {
+		//If there is an error during mail send, just print it and continue
+		echo 'Error while sending email: ' + e.toString()
+	} finally {
+		cleanWs()
+	}}}
+}
+
+try{
 
 node('unix') {
 	cleanWs()
@@ -83,38 +204,20 @@ for (arch in architectures) {
 		def platform = platf
 		testers["${platform}-${architecture}"] = {
 			node(platform) { stage("Tests-${platform}-${architecture}") {
-				try {
-					cleanWs()
-					unstash "bootstrap${architecture}"
-					shell "bash -c 'bootstrap/scripts/runTests.sh ${architecture}'"
-				} finally {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-					junit allowEmptyResults: true, testResults: '*.xml'
-					cleanWs()
-				}
+				runTests(architecture)
 			}}
 		}
-	}
-}
-for (arch in architectures) {
-	// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-	def architecture = arch
-	for (platf in platforms) {
-		// Need to bind the label variable before the closure - can't do 'for (label in labels)'
-		def platform = platf
 		testers["kernel-${platform}-${architecture}"] = {
 			node(platform) { stage("Kernel-tests-${platform}-${architecture}") {
-				try {
-					cleanWs()
-					unstash "bootstrap${architecture}"
-					shell "bash -c 'bootstrap/scripts/runKernelTests.sh ${architecture}'"
-				} finally {
-					archiveArtifacts allowEmptyArchive: true, artifacts: '*.xml', fingerprint: true
-					junit allowEmptyResults: true, testResults: '*.xml'
-					cleanWs()
-				}
+				runTests(architecture, "Kernel")
 			}}
 		}
 	}
 }
 parallel testers
+
+	notifyBuild("SUCCESS")
+} catch (e) {
+	notifyBuild("FAILURE")
+	throw e
+}

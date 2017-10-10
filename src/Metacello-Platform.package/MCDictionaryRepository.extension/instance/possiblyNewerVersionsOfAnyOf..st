@@ -1,0 +1,4 @@
+*metacello-platform
+possiblyNewerVersionsOfAnyOf: versionNames 
+
+	^#()

@@ -1,8 +1,8 @@
 pages
 welcome
 	^ HelpTopic 
-		title: 'Welcome to Pharo 6.0'
-		contents: (self heading: 'Pharo 6.0'), 
+		title: 'Welcome to Pharo 7.0alpha'
+		contents: (self heading: 'Pharo 7.0alpha'), 
 		
 'Welcome to Pharo, an immersive live programming environment.
 

@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 fontNumber: n
 	^ self new fontNumber: n

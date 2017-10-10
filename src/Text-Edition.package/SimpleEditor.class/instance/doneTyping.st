@@ -1,3 +1,3 @@
-typing support
+typing - support
 doneTyping
 	beginTypeInIndex := nil

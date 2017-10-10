@@ -1,4 +1,4 @@
-as yet unclassified
+defaults
 characterForColumnBreak
 
 	^Character value: 12

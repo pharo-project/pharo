@@ -1,3 +1,3 @@
 widgets
 newList
-	^ self instantiate: ListModel
+	^ self instantiate: FastTableModel

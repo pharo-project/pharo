@@ -1,4 +1,4 @@
-as yet unclassified
+running
 runWithMorphicDidalogPopping: anAssertingBlock
 
 	| semaphore worldSubmoprhs newMorphs closingProcess |

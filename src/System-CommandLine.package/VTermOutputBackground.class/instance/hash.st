@@ -1,3 +1,3 @@
-styling
+comparing
 hash
 	^ self color hash

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Hermes-Ring",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"ringClass",
+		"ringMethod"
+	],
+	"name" : "HERingBinder",
+	"type" : "normal"
+}

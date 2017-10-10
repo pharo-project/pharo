@@ -1,4 +1,4 @@
-as yet unclassified
+event handling
 handlesMouseDown: anEvent
 	"Answer true to report mouse down activity."
 	

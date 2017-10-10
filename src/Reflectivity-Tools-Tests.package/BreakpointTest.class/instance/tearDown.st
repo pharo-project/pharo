@@ -1,4 +1,4 @@
-initialization
+running
 tearDown
 	| pkg |
 	super tearDown.

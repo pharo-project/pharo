@@ -1,4 +1,4 @@
 settings
 isStepRefreshEnabled
 
-	^ EnabledStepRefreshStatus ifNil: [ false ]
+	^ EnabledStepRefreshStatus ifNil: [ true ]

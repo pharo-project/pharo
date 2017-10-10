@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 autoAccept
 	"Answer the value of autoAccept"
 

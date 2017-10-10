@@ -1,4 +1,4 @@
-as yet unclassified
+control
 activeSubmenu: aSubmenu 
 	super activeSubmenu: aSubmenu.
 	aSubmenu

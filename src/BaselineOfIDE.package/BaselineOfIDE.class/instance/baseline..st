@@ -47,6 +47,7 @@ baseline: spec
 		spec package: 'FuelTests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
+		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'Monticello-Tests'.
@@ -66,8 +67,6 @@ baseline: spec
 		spec package: 'Zodiac-Extra'.	
 		spec package: 'Zinc-Zodiac'.	
 			
-		spec package: 'Metacello-GitBasedRepository'.	
-
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
@@ -175,7 +174,7 @@ baseline: spec
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
-		spec package: 'Collections-DoubleLinkedListTests'.
+		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'ContributingToTheCatalogHelp'.
@@ -202,7 +201,7 @@ baseline: spec
 		spec package: 'HowToContributeHelp'.
 		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking-Tests'.
-		spec package: 'JobsTests'.
+		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
@@ -250,12 +249,12 @@ baseline: spec
 		spec package: 'System-Settings-Rules'.
 		spec package: 'System-Settings-Tests'.
 		spec package: 'System-Support-Rules'.
-		spec package: 'System-SupportTests'.
+		spec package: 'System-Support-Tests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
 		spec package: 'WorldMenuHelp'.	
-		spec package: 'WriteBarrierTests'.
+		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
@@ -263,6 +262,7 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.
 	].

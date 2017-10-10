@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testBasicBehaviour
 	self
 		should: [(HashTester with: 1)
