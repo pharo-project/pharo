@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "PackageManifest",
-	"category" : "NonInteractiveTranscript",
+	"category" : "Transcript-NonInteractive",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

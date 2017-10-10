@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:19",
 	"super" : "Object",
-	"category" : "NonInteractiveTranscript",
+	"category" : "Transcript-NonInteractive",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
