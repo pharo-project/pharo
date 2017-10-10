@@ -1,4 +1,0 @@
-declare
-install
-
-	self installThreadSafeAsTranscript

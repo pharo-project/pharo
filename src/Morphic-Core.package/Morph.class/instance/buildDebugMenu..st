@@ -19,9 +19,18 @@ buildDebugMenu: aHand
 	aMenu add: 'inspect owner chain' selector: #inspectOwnerChain.
 	aMenu lastItem
 		icon: (self iconNamed: #smallInspectItIcon).
+	self isMorphicModel
+		ifTrue: [ aMenu add: 'inspect model' target: self model selector: #inspect.
+			aMenu lastItem
+				icon: (self iconNamed: #smallInspectItIcon) ].
 	aMenu addLine.
 	aMenu
 		add: 'browse morph class'
 		target: self
 		selector: #browseHierarchy.
+	self isMorphicModel
+		ifTrue: [ aMenu
+				add: 'browse model class'
+				target: self model
+				selector: #browseHierarchy ].
 	^ aMenu

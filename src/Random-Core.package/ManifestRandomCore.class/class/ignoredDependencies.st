@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 ignoredDependencies
-	^ #(#Transcript)
+	^ #(#'Transcript-Core')
