@@ -12,6 +12,8 @@ initializeCommandLineHandlerAndErrorHandling
 	Delay initialize.
 	SmallInteger initialize.
 	
+	Smalltalk recreateSpecialObjectsArray.
+	
 	ProcessorScheduler startUp.
 	
 	OSPlatform startUp: true.
