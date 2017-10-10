@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 newSpecialObjectsArray
 	| newSpecialObjectsArray |
 	newSpecialObjectsArray := espellBackend arrayClass asClassMirror basicNew: 56.
@@ -43,4 +43,11 @@ newSpecialObjectsArray
 	newSpecialObjectsArray at: 49 put: (#aboutToReturn:through: asLiteralInObjectSpace: objectSpace).
 	newSpecialObjectsArray at: 50 put: (#run:with:in: asLiteralInObjectSpace: objectSpace).
 	self flag: #'add WeakFinalization list'.
+	newSpecialObjectsArray at: 51 put: (#attemptToAssign:withIndex: asLiteralInObjectSpace: objectSpace).
+	newSpecialObjectsArray at: 52 put: self errorMessagesArray.
+	newSpecialObjectsArray at: 54 put: (#invokeCallbackContext: asLiteralInObjectSpace: objectSpace).
+	newSpecialObjectsArray at: 58 put: (#unusedBytecode asLiteralInObjectSpace: objectSpace).
+	newSpecialObjectsArray at: 59 put: (#conditionalBranchCounterTrippedOn: asLiteralInObjectSpace: objectSpace).
+	newSpecialObjectsArray at: 60 put: (#classTrapFor: asLiteralInObjectSpace: objectSpace).
+
 	^newSpecialObjectsArray.
