@@ -1,5 +1,5 @@
 running
-runWithMorphicDidalogPopping: anAssertingBlock
+runWithMorphicDialogPopping: anAssertingBlock
 
 	| semaphore worldSubmoprhs newMorphs closingProcess |
 
