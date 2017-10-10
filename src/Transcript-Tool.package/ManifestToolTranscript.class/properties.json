@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "PackageManifest",
-	"category" : "Tool-Transcript",
+	"category" : "Transcript-Tool",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

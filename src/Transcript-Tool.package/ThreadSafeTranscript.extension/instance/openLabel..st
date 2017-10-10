@@ -1,4 +1,4 @@
-*Tool-Transcript
+*Transcript-Tool
 openLabel: aString
 	| window m |
 	window := (SystemWindow labelled: aString) model: self.

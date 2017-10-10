@@ -1,4 +1,4 @@
-*Tool-Transcript
+*Transcript-Tool
 menuCommandOn: aBuilder
 	<worldMenu>
 	(aBuilder item: #'Transcript')
