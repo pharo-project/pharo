@@ -1,13 +1,13 @@
 {
-	"commentStamp" : "",
+	"commentStamp" : "SvenVanCaekenberghe 6/24/2014 23:54",
 	"super" : "ClassTestCase",
-	"category" : "Tests-System-Hashing",
+	"category" : "System-Hashing-Tests-SHA256",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"hash"
 	],
-	"name" : "MD5Test",
+	"name" : "SHA256Test",
 	"type" : "normal"
 }

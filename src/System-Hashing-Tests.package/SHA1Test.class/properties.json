@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "ClassTestCase",
-	"category" : "Tests-System-Hashing",
+	"category" : "System-Hashing-Tests-SHA1",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

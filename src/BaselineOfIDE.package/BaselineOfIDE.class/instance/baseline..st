@@ -243,6 +243,7 @@ baseline: spec
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
 		spec package: 'System-CachingTests'.
+		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
 		spec package: 'System-Localization-Tests'.
 		spec package: 'System-SessionManager-Tests'.

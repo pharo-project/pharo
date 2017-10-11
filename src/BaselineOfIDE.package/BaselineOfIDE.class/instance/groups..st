@@ -89,6 +89,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Slot-Tests'
 	'Spec-Tests'
 	'System-CachingTests'
+	'System-Hashing-Tests'
 	'System-History-Tests'
 	'System-Localization-Tests'
 	'System-SessionManager-Tests'
