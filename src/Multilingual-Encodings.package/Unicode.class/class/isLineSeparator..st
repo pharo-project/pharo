@@ -1,7 +1,3 @@
 character classification
 isLineSeparator: char
-	| index |
-	index := char charCode + 1.
-	index > GeneralCategory size
-		ifTrue: [ ^ false ].
-	^ (GeneralCategory at: index) = Zl
+	^ self is: char inCategory: Zl

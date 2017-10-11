@@ -1,7 +1,3 @@
 character classification
 isSpacingCombiningMark: char
-	| index |
-	index := char charCode + 1.
-	index > GeneralCategory size
-		ifTrue: [ ^ false ].
-	^ (GeneralCategory at: index) = Mc
+	^ self is: char inCategory: Mc

@@ -1,7 +1,3 @@
 character classification
 isFinalQuote: char
-	| index |
-	index := char charCode + 1.
-	index > GeneralCategory size
-		ifTrue: [ ^ false ].
-	^ (GeneralCategory at: index) = Pf
+	^ self is: char inCategory: Pf

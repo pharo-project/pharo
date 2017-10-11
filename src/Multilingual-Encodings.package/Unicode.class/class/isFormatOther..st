@@ -1,7 +1,3 @@
 character classification
 isFormatOther: char 
-	| index |
-	index := char charCode + 1.
-	index > GeneralCategory size
-		ifTrue: [ ^ false ].
-	^ (GeneralCategory at: index) = Cf
+	^ self is: char inCategory: Cf
