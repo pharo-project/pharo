@@ -1,4 +1,4 @@
-private
+class initialization
 nonCharacters
 	nonCharacters
 		ifNil: [ nonCharacters := (16rFDD0 to: 16rFDEF) asOrderedCollection
