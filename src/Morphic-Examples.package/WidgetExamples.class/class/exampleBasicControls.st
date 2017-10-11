@@ -2,7 +2,7 @@ examples
 exampleBasicControls
 	"Open a window with examples of each of the basic controls."
 	"self exampleBasicControls"
-	
+	<script>
 	|dialog builder radioModel treeModel|
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
@@ -16,15 +16,15 @@ exampleBasicControls
 			'Default Button'->((dialog newButtonFor: nil action: nil label: 'Default Button' help: 'This is a default button') isDefault: true).
 			'Disabled Button'->(dialog newButtonFor: nil action: nil label: 'Disabled Button'
 							help: 'This is a disabled button') disable.
-			'Selected Button'->(dialog newButtonFor: (ValueHolder new contents: true) getState: #contents
+			'Selected Button'->(dialog newButtonFor: (NewValueHolder new value: true) getState: #value
 							action: nil arguments: #() getEnabled: nil label: 'A Button' help: 'This is a selected button').
-			'Selected Disabled Button'->(dialog newButtonFor: (ValueHolder new contents: true) getState: #contents
+			'Selected Disabled Button'->(dialog newButtonFor: (NewValueHolder new value: true) getState: #value
 							action: nil arguments: #() getEnabled: nil label: 'Disabled Button'
 							help: 'This is a selected disabled button') disable.
-			'Checkbox'->(dialog newCheckboxFor: (ValueHolder new contents: true)
-							getSelected: #contents setSelected: #contents: label: 'A Checkbox' help: 'This is a checkbox').
-			'Disabled Checkbox'->(dialog newCheckboxFor: (ValueHolder new contents: true)
-							getSelected: #contents setSelected: #contents:
+			'Checkbox'->(dialog newCheckboxFor: (NewValueHolder new value: true)
+							getSelected: #value setSelected: #value: label: 'A Checkbox' help: 'This is a checkbox').
+			'Disabled Checkbox'->(dialog newCheckboxFor: (NewValueHolder new value: true)
+							getSelected: #value setSelected: #value:
 							label: 'A Disabled Checkbox' help: 'This is a disabled checkbox') disable.
 			'Radio Buttons'->((dialog newColumn: {
 								(dialog newRadioButtonFor: radioModel
@@ -37,14 +37,14 @@ exampleBasicControls
 			'Disabled Radio Button'->(dialog newRadioButtonFor: radioModel
 									getSelected: #isRight setSelected: #beRight label: 'Right'
 									help: 'This is a disabled radio buton') disable.
-			'Text Entry'->(dialog newTextEntryFor: (ValueHolder new contents: 'Hello')
-							getText: #contents setText: #contents: help: 'This is a text entry').
-			'Disabled Text Entry'->(dialog newTextEntryFor: (ValueHolder new contents: 'Hello')
-							getText: #contents setText: #contents: help: 'This is a disabled text entry') disable.
-			'Slider'->(dialog newSliderFor: (ValueHolder new contents: 0.5)
-							getValue: #contents setValue: #contents: help: 'This is a slider').
-			'Disabled Slider'->(dialog newSliderFor: (ValueHolder new contents: 0.75)
-							getValue: #contents setValue: #contents: help: 'This is a disabled slider') disable}.
+			'Text Entry'->(dialog newTextEntryFor: (NewValueHolder new value: 'Hello')
+							getText: #value setText: #value: help: 'This is a text entry').
+			'Disabled Text Entry'->(dialog newTextEntryFor: (NewValueHolder new value: 'Hello')
+							getText: #value setText: #value: help: 'This is a disabled text entry') disable.
+			'Slider'->(dialog newSliderFor: (NewValueHolder new value: 0.5)
+							getValue: #value setValue: #value: help: 'This is a slider').
+			'Disabled Slider'->(dialog newSliderFor: (NewValueHolder new value: 0.75)
+							getValue: #value setValue: #value: help: 'This is a disabled slider') disable}.
 			dialog newVerticalSeparator.
 			dialog newLabelGroup: {
 			'Drop List'->(dialog newDropListFor: (ListModel new items: #('One' 'Two' 'Three' 'Four'))
@@ -73,11 +73,11 @@ exampleBasicControls
 			dialog newVerticalSeparator.
 			dialog newColumn: {
 				dialog newTitle: 'Text Editor' for: (
-					(dialog newTextEditorFor: (ValueHolder new contents: 'Hello')
-						getText: #contents setText: #contents:) minWidth: 100).
+					(dialog newTextEditorFor: (NewValueHolder new value: 'Hello')
+						getText: #value setText: #value:) minWidth: 100).
 				dialog newTitle: 'Disabled Text Editor' for: (
-					(dialog newTextEditorFor: (ValueHolder new contents: 'Hello')
-						getText: #contents setText: #contents:) disable)}})
+					(dialog newTextEditorFor: (NewValueHolder new value: 'Hello')
+						getText: #value setText: #value:) disable)}})
 			vResizing: #spaceFill);
 		model: nil.
 	builder openModal: dialog

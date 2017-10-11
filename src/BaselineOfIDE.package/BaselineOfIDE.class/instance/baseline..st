@@ -33,8 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		spec package: 'DeprecatedIDE70'.
-		
+		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		

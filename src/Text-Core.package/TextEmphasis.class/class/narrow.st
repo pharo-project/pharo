@@ -1,3 +1,3 @@
-defaults
+instance creation
 narrow
-	^ TextKern kern: -1
+	^ self new emphasisCode: 8

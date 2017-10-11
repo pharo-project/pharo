@@ -156,7 +156,7 @@ spec group: 'SmartSuggestions-Group' with: #(
 ).
 
 spec group: 'Deprecated-Group' with: #(
-	'DeprecatedIDE70'
+	'Deprecated70'
 ).
 
 spec group: 'Manifest-Core-Group' with: #(

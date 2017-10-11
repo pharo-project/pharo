@@ -1,3 +1,3 @@
-*Metacello-Core
+*metacello-core
 setPreLoadDoItInMetacelloSpec: aMetacelloSpec
     self asSymbol setPreLoadDoItInMetacelloSpec: aMetacelloSpec

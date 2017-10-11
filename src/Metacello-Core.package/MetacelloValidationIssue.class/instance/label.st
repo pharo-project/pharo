@@ -1,4 +1,4 @@
 accessing
 label
 
-	^ self subclassResponsibility 
+	^''
