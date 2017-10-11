@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:57",
+	"super" : "TextPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"ghostText",
+		"acceptOnCR",
+		"entryCompletion",
+		"isEncrypted"
+	],
+	"name" : "TextInputFieldPresenter",
+	"type" : "normal"
+}

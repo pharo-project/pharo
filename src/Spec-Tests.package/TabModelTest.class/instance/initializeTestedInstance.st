@@ -1,3 +1,3 @@
 running
 initializeTestedInstance
-	manager := TabManagerModel new
+	manager := TabManagerPresenter new

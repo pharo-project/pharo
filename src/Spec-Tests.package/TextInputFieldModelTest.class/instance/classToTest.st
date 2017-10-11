@@ -1,3 +1,3 @@
 running
 classToTest
-	^ TextInputFieldModel
+	^ TextInputFieldPresenter

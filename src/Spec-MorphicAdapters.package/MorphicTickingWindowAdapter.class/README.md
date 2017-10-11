@@ -1,1 +1,1 @@
-I am the adapter used to bridge a TickingWindowModel and a TickingSpecWindow
+I am the adapter used to bridge a TickingWindowPresenter and a TickingSpecWindow

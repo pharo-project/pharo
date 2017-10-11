@@ -1,4 +1,4 @@
 running
 initializeTestedInstance
-	radio1 := RadioButtonModel new.
-	radio2 := RadioButtonModel new
+	radio1 := RadioButtonPresenter new.
+	radio2 := RadioButtonPresenter new

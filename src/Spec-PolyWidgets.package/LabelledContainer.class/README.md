@@ -1,4 +1,4 @@
-I am an elementary Spec widget that adds a LabelModel at another widget.
+I am an elementary Spec widget that adds a LabelPresenter at another widget.
 
 self example
 
