@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "AndrewBlack 10/9/2017 17:46",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Charset",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"rng",
+		"nonCharacters",
+		"unicodeGenerator"
+	],
+	"name" : "UnicodeTest",
+	"type" : "normal"
+}
