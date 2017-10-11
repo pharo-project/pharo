@@ -1,11 +1,11 @@
 {
-	"commentStamp" : "PabloTesone 9/29/2017 15:25",
+	"commentStamp" : "PavelKrivanek 10/11/2017 10:20",
 	"super" : "PackageManifest",
-	"category" : "DeprecatedIDE70",
+	"category" : "Deprecated70",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "ManifestDeprecatedIDE70",
+	"name" : "ManifestDeprecated70",
 	"type" : "normal"
 }
