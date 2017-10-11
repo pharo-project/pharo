@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 9/22/2017 03:03",
 	"super" : "TestCase",
-	"category" : "Tests-System",
+	"category" : "System-Support-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
