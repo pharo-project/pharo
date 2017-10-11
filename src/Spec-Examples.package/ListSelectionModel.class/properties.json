@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ListSelectionPresenter",
+	"category" : "Spec-Examples-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ListSelectionModel",
+	"type" : "normal"
+}
