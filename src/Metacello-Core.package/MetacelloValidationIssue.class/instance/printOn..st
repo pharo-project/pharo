@@ -1,31 +1,33 @@
 printing
 printOn: aStream
-
 	aStream
 		nextPutAll: self label;
 		nextPut: $:;
 		space;
 		nextPutAll: self explanation.
-		
-	self reasonCode ~~ #none ifTrue: [ 
-		aStream space;
-			nextPut: ${;
-			space;
-			<< self reasonCode;
-			space;
-			nextPut: $} 
-	].
-
-	(self configurationClass isNil and: [ self callSite isNil ]) ifTrue: [ ^ self ].
-	
-	aStream space; nextPut: $[; space.
-		
-	self configurationClass ifNotNil: [ 
-		aStream nextPutAll: (self configurationClass name ifNil: ['']); space 
-	].
-
-	self callSite ifNotNil: [ 
-		aStream nextPutAll: self callSite; space 
-	].
-
-	aStream nextPut: $]  
+	self reasonCode ~~ #none
+		ifTrue: [ 
+			aStream
+				space;
+				nextPut: ${;
+				space;
+				nextPutAll: self reasonCode asString;
+				space;
+				nextPut: $} ].
+	(self configurationClass ~~ nil or: [ self callSite ~~ nil ])
+		ifTrue: [ 
+			aStream
+				space;
+				nextPut: $[;
+				space.
+			self configurationClass ~~ nil
+				ifTrue: [ 
+					aStream
+						nextPutAll: self configurationClass name asString;
+						space ].
+			self callSite ~~ nil
+				ifTrue: [ 
+					aStream
+						nextPutAll: self callSite name asString;
+						space ].
+			aStream nextPut: $] ]
