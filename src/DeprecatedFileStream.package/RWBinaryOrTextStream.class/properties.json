@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "ReadWriteStream",
-	"category" : "Deprecated70",
+	"category" : "DeprecatedFileStream",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

@@ -52,7 +52,7 @@ baseline: spec
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
-		spec package: 'Deprecated70'.
+		spec package: 'DeprecatedFileStream'.
 
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
@@ -115,7 +115,7 @@ baseline: spec
 		spec group: 'FileSystemGroup' with: {
 			'FileSystem-Core'.
 			'FileSystem-Disk'.
-			'Deprecated70' }.
+			'DeprecatedFileStream' }.
 
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.

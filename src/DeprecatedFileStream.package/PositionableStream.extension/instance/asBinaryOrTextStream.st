@@ -1,4 +1,4 @@
-*Deprecated70
+*DeprecatedFileStream
 asBinaryOrTextStream
 	"Convert to a stream that can switch between bytes and characters"
 

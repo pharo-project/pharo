@@ -1,4 +1,4 @@
-*Deprecated70
+utils
 writeSourceCodeFrom: aStream baseName: baseName isSt: stOrCsFlag
 
 	| extension converter fileName  |
