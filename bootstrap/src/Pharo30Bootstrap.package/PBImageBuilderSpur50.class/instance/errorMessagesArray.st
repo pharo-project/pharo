@@ -3,7 +3,7 @@ errorMessagesArray
 
 	"return objects for error messages - special objects array at index 52"
 	
- 	^ { {nil "nil => generic error". 
+ 	^ {nil "nil => generic error". 
 		#'bad receiver'. #'bad argument'. #'bad index'.
 		#'bad number of arguments'.
 		#'inappropriate operation'.  #'unsupported operation'.
@@ -12,4 +12,4 @@ errorMessagesArray
 		#'internal error in named primitive machinery'.
 		#'object may move'. #'resource limit exceeded'.
 		#'object is pinned'. #'primitive write beyond end of object'.
-		#'object moved'. #'object not pinned'. #'callback error'} } asLiteralInObjectSpace: objectSpace
+		#'object moved'. #'object not pinned'. #'callback error'} asLiteralInObjectSpace: objectSpace
