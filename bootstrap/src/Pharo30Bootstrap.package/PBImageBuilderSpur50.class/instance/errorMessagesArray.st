@@ -3,7 +3,7 @@ errorMessagesArray
 
 	"return objects for error messages - special objects array at index 52"
 	
- 	^ { {espellBackend nilObject "nil => generic error". 
+ 	^ { {nil "nil => generic error". 
 		#'bad receiver'. #'bad argument'. #'bad index'.
 		#'bad number of arguments'.
 		#'inappropriate operation'.  #'unsupported operation'.
