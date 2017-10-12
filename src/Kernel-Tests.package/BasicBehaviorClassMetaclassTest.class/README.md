@@ -3,4 +3,3 @@ This class contains some tests regarding the classes
 		ClassDescription
 			Class
 			Metaclass
-	
