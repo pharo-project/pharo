@@ -2,14 +2,14 @@ A VersionnerProjectPackagesPanel is the panel related to packages defined in a p
 It shows packages and provides actions on them.
 
 Instance Variables
-	addPackageButton:		ButtonModel 
-	editPackageButton:		ButtonModel
-	packageChangesButton:		ButtonModel
+	addPackageButton:		ButtonPresenter
+	editPackageButton:		ButtonPresenter
+	packageChangesButton:		ButtonPresenter
 	packages: 			A collection of MTPackage to display
-	packagesList:		IconListModel 
-	packagesLabel:		LabelModel
+	packagesList:		IconListPresenter
+	packagesLabel:		LabelPresenter
 	project: 	MTProject
-	savePackageButton:		ButtonModel
+	savePackageButton:		ButtonPresenter
 
 addPackageButton
 	- Add a new package

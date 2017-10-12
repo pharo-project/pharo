@@ -1,3 +1,3 @@
 accessing
 rootNodeClassFromItem: anItem
-	^ MorphTreeNodeModel
+	^ TreeNodePresenter

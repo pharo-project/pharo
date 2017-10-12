@@ -4,8 +4,8 @@ example
 	
 	| demo model window |
 	demo := AthensDemoMorph new openInWorld. 
-	(model := DynamicComposableModel new)
-		instantiateModels: #(backButton ButtonModel forwardButton ButtonModel).
+	(model := DynamicComposablePresenter new)
+		instantiatePresenters: #(backButton ButtonPresenter forwardButton ButtonPresenter).
 	model backButton label: 'Previous Figure'; action: [ demo prevFigure ].
 	model forwardButton label: 'Next Figure'; action: [ demo nextFigure ].
 	window := model openWithSpecLayout: (SpecLayout composed

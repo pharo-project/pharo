@@ -5,13 +5,13 @@ initializeWidgets
 	toolbar browser: self.
 	
 	"repository"
-	(repositoryLabel := self instantiate: LabelModel)
+	(repositoryLabel := self instantiate: LabelPresenter)
 		label: 'Repository:'.
-	(repository := self instantiate: TextInputFieldModel)
+	(repository := self instantiate: TextInputFieldPresenter)
 		entryCompletion: nil;
 		acceptOnCR: true;
 		ghostText: 'none'.
-	repositoryAddButton := (self instantiate: ButtonModel)
+	repositoryAddButton := (self instantiate: ButtonPresenter)
 		icon: (self iconNamed: #monticelloPackageIcon);
 		help: 'Add a new repository to this project';
 		yourself.
@@ -24,22 +24,22 @@ initializeWidgets
 				(VSBrowseVersionCommand target: selection version for: self) execute ] ];
 		changedBlock: [ self hasChanges ];
 		yourself.
-	versionsLabel := (self instantiate: LabelModel)
+	versionsLabel := (self instantiate: LabelPresenter)
 		label: 'Versions';
 		yourself.
-	allVersionsCheckBox := (self instantiate: CheckBoxModel)
+	allVersionsCheckBox := (self instantiate: CheckBoxPresenter)
 		label: 'browse all';
 		state: false;
 		yourself.
 
 	"Version details"
-	versionDescriptionLabel := (self instantiate: LabelModel)
+	versionDescriptionLabel := (self instantiate: LabelPresenter)
 		label: 'Version description:';
 		yourself.
-	versionDescription := (self instantiate: TextModel)
+	versionDescription := (self instantiate: TextPresenter)
 		enabled: false;
 		yourself.
-	versionCommitMessage := self instantiate: LabelModel.
+	versionCommitMessage := self instantiate: LabelPresenter.
 	
 	"Project details"
 	projectPanel := self instantiate: VersionnerProjectPanel.

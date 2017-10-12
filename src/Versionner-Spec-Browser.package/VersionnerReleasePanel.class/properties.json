@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "ChristopheDemarey 3/11/2014 17:32",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Versionner-Spec-Browser",
 	"classinstvars" : [ ],
 	"pools" : [ ],

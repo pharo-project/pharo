@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "ChristopheDemarey 2/21/2014 17:41",
-	"super" : "TreeNodeModel",
+	"super" : "TreeNodePresenter",
 	"category" : "Versionner-Spec-Browser",
 	"classinstvars" : [ ],
 	"pools" : [ ],

@@ -5,7 +5,7 @@ openOnString
 	| anUI layout bottomLayout temp |	
 	anUI := DynamicComposablePresenter new.
 	anUI title: self title.
-	anUI instantiateModels: #( 
+	anUI instantiatePresenters: #( 
 		label LabelPresenter
 		check CheckBoxPresenter
 		text TextInputFieldPresenter

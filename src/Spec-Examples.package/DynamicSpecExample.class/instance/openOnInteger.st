@@ -6,7 +6,7 @@ openOnInteger
 	
 	anUI := DynamicComposablePresenter new.
 	anUI title: self title.
-	anUI instantiateModels: #( 
+	anUI instantiatePresenters: #( 
 		text LabelPresenter
 		plus ButtonPresenter
 		minus ButtonPresenter ).
