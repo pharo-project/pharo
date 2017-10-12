@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "Object",
-	"category" : "SmartSuggestions-Tests",
+	"category" : "SmartSuggestions-Tests-Mocks",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
