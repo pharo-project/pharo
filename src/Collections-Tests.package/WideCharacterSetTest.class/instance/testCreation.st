@@ -1,4 +1,4 @@
-testing
+tests
 testCreation
 	"By now, only creation method is newFrom:"
 

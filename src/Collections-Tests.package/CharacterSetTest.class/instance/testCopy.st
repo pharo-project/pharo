@@ -1,4 +1,4 @@
-testing
+tests
 testCopy
     | theOriginal theCopy |
     theOriginal := CharacterSet newFrom: 'abc'.

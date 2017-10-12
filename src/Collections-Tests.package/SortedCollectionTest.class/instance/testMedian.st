@@ -1,4 +1,4 @@
-basic
+tests - basic
 testMedian
 	"self run: #testMedian"
 	"self debug: #testMedian"

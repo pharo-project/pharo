@@ -1,4 +1,4 @@
-test - comparing
+tests - comparing
 testHashBlock
 	| pluggableDict keys |
 

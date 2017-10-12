@@ -1,4 +1,4 @@
-testing - converting
+tests - converting
 testWithoutLeadingDigits
 	#( 
 		'foo' 'foo'

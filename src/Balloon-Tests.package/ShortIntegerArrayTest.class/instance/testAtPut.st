@@ -1,4 +1,4 @@
-testing
+tests
 testAtPut
 
 	shortIntegerArray at: 3 put: 100.

@@ -1,4 +1,4 @@
-testing
+tests
 testNumArgs
 	"This is about http://code.google.com/p/pharo/issues/detail?id=237"
 	

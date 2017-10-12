@@ -1,0 +1,1 @@
+SUnit tests for null streams
