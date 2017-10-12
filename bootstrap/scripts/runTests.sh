@@ -23,5 +23,6 @@ CHANGES_FILE=$(find . -name Pharo7.0-${1}bit-*.changes)
 cp bootstrap-cache/*.sources .
 mv $IMAGE_FILE Pharo.image
 mv $CHANGES_FILE Pharo.changes
-					
+
+./pharo Pharo.image eval --save "MCCacheRepository reset."
 ./pharo Pharo.image test --junit-xml-output '.*'
