@@ -1,4 +1,4 @@
-testing
+tests
 testBivalentReading
 	| data ioBuffer buffer |
 	data := 'some string'.

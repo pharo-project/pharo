@@ -1,4 +1,4 @@
-testing
+tests - plain
 testPlainClientWrite
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket :mySemaphore | | clientSocket serverStream |

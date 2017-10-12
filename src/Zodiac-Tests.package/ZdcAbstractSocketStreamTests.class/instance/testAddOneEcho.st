@@ -1,4 +1,4 @@
-testing
+tests
 testAddOneEcho
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket | | clientSocket stream data |

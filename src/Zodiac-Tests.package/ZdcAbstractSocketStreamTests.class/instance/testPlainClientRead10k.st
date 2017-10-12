@@ -1,4 +1,4 @@
-testing
+tests - plain
 testPlainClientRead10k
 	| dataSent dataRead clientStream semaphore |
 	dataSent := self bytes: 10000.

@@ -1,4 +1,4 @@
-testing
+tests
 testNextPutAllStartingAt
 	| ioBuffer |
 	ioBuffer := ZdcIOBuffer on: (String new: 12).
