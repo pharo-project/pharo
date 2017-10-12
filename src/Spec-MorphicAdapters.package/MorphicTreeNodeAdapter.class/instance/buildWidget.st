@@ -1,6 +1,6 @@
 factory
 buildWidget
-	^ TreeNodePresenter new
+	^ SpecTreeNodeModel new
 		setItemFromBlock: self itemBlock;
 		icon: self icon;
 		setChildren: self childrenBlock;
