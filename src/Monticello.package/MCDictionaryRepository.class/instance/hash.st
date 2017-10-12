@@ -1,3 +1,4 @@
 comparing
 hash
+
 	^ self identityHash
