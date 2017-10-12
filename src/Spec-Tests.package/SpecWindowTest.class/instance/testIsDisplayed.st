@@ -5,7 +5,7 @@ testIsDisplayed
 	
 	| windowModel |
 
-	windowModel := TextModel new openWithSpec.	
+	windowModel := TextPresenter new openWithSpec.	
 	self assert: (windowModel isDisplayed).
 	
 	windowModel window minimize.	

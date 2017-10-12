@@ -2,7 +2,7 @@ private
 changeToList
 
 	self instantiateModels: 
-		#( bottom #ListModel ).
+		#( bottom #ListPresenter ).
 
 	button font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10).
 		

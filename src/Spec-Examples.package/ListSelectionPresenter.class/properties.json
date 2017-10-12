@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "Spirita 7/26/2016 15:03",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"listModel",
+		"textModel1",
+		"textModel2",
+		"textRefreshingProcess"
+	],
+	"name" : "ListSelectionPresenter",
+	"type" : "normal"
+}

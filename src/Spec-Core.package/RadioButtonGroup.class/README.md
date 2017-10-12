@@ -1,7 +1,7 @@
 I am a group for radio buttons which ensures that only one button is activated at the same time.
 
 I collaborate with
-- RadioButtonModel are usually the buttons I manage.
+- RadioButtonPresenter are usually the buttons I manage.
 - ValueHolder to link buttons.
 
 I provide the following methods

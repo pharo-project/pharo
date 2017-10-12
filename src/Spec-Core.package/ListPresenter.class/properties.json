@@ -1,0 +1,26 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:43",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"selectionHolder",
+		"listHolder",
+		"menuHolder",
+		"shortcutsHolder",
+		"multiSelectionHolder",
+		"multiSelection",
+		"allowToSelect",
+		"listItemsCache",
+		"filteringBlockHolder",
+		"sortingBlockHolder",
+		"wrapBlockHolder",
+		"listAnnouncer",
+		"backgroundColorBlock",
+		"autoDeselect"
+	],
+	"name" : "ListPresenter",
+	"type" : "normal"
+}

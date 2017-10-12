@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:41",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"tabSelectedActionHolder",
+		"labelHolder",
+		"iconHolder",
+		"morphHolder",
+		"retrievingBlockHolder",
+		"menuHolder",
+		"actionsHolder",
+		"closeableHolder",
+		"selectedHolder"
+	],
+	"name" : "TabPresenter",
+	"type" : "normal"
+}

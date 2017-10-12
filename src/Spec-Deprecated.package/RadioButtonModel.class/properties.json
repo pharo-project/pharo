@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "RadioButtonPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RadioButtonModel",
+	"type" : "normal"
+}
