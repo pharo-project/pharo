@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "LRUCacheTests",
-	"category" : "System-CachingTests",
+	"category" : "System-Caching-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
