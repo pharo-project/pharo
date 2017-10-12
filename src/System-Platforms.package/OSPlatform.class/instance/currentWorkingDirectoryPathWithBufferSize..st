@@ -1,6 +1,10 @@
 accessing
 currentWorkingDirectoryPathWithBufferSize: aBufferSize
-	"This method calls the method getPwdViaFFI with arugement of a buffer size."
-	|buffer |
-	buffer := String new: aBufferSize  .
-	^self getPwdViaFFI: buffer size:aBufferSize. 
+	| buffer |
+	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
+	ec ifNotNil: [
+		"Should signal the reason but the API does not accept it"
+		self primitiveFail ].
+
+	buffer := String new: aBufferSize.
+	^ self getPwdViaFFI: buffer size: aBufferSize
