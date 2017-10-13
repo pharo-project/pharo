@@ -1,4 +1,4 @@
-class-var
+tests - class variables
 testCreateClassAccessorsIsValidIfMuttatorMissed
 	| suggestion context |
 	

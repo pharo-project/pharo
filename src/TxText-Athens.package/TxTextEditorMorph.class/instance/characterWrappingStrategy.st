@@ -1,4 +1,0 @@
-text wrapping
-characterWrappingStrategy
-
-	^ TxAthensCharacterWrappingStrategy new rightMargin: CursorEdgeMargin

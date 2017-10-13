@@ -1,0 +1,3 @@
+deprecated
+red
+	^self redFont

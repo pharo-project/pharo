@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 blackGradientMorph
 	"Answer the black gradient morph."
 

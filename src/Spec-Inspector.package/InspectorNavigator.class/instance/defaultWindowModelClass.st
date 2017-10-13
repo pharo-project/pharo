@@ -5,4 +5,4 @@ defaultWindowModelClass
 	stdout := VTermOutputDriver stdout.
 	stdout nextPutAll: self class name.
 	stdout cr.
-	^ TickingWindowModel 
+	^ TickingWindowPresenter

@@ -1,0 +1,3 @@
+deprecated
+yellow
+	^self yellowFont

@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "FranckWarlouzet 7/27/2015 13:24",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "BlueInk-Extras",
 	"classinstvars" : [ ],
 	"pools" : [ ],

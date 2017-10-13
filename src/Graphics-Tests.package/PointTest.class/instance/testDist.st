@@ -1,4 +1,4 @@
-tests-point functions
+tests - point functions
 testDist
 
 	self assert: (0 @ 0 dist: 0 @ 0) = 0.

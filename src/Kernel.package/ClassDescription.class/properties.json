@@ -1,16 +1,14 @@
 {
-	"classtraitcomposition" : "TClassDescription classTrait",
+	"commentStamp" : "<historical>",
+	"super" : "Behavior",
+	"category" : "Kernel-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"instanceVariables",
 		"organization"
 	],
 	"name" : "ClassDescription",
-	"commentStamp" : "<historical>",
-	"super" : "Behavior",
-	"traitcomposition" : "TClassDescription",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Kernel-Classes"
+	"type" : "normal"
 }

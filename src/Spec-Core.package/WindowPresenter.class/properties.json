@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:52",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"model",
+		"initialExtent",
+		"title",
+		"isClosedHolder",
+		"isResizeable"
+	],
+	"name" : "WindowPresenter",
+	"type" : "normal"
+}

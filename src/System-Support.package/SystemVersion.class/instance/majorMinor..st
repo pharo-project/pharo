@@ -1,12 +1,11 @@
-accessing
+utilities
 majorMinor: aSeparatingString
-	"Return the major/minor version number of the form XaSeparatingStringY, without any 'alpha' or 'beta' or other suffix. If the receiver needs upgrading, do it. Remove the guard in 1.3."
+	"Return the major/minor version number of the form XaSeparatingStringY, without any 'alpha' or 'beta' or other suffix."
 	"SystemVersion current majorMinor: '-'"
 	"SystemVersion current majorMinor: ''"
-	
-	self upgrade.
+
 	^String streamContents: [:str |
 		str 
 			nextPutAll: self major printString; 
 			nextPutAll: aSeparatingString;
-			nextPutAll: self minor printString]
+			nextPutAll: self minor printString ]

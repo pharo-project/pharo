@@ -1,0 +1,4 @@
+accessing
+strategyDescription
+
+	^ 'Report exception as a property (critique) which can be debuged afterwards.'

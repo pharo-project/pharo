@@ -1,3 +1,0 @@
-operation
-tryMergeAndUpdatePosition: position
-	^ position

@@ -1,4 +1,4 @@
-as yet unclassified
+comparing
 = anotherObject
 
 	^super = anotherObject and: [ variableName = anotherObject variableName ]

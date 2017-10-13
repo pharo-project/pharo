@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 autoAccept: anObject
 	"Set the value of autoAccept"
 

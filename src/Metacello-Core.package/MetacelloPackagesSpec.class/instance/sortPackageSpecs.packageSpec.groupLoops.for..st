@@ -44,7 +44,7 @@ sortPackageSpecs: orderedSpecs packageSpec: packageSpec groupLoops: groupLoops f
                     cr;
                     tab;
                     tab;
-                    show: each name ].
+                    show: each ].
               Transcript
                 cr;
                 show:
@@ -58,7 +58,7 @@ sortPackageSpecs: orderedSpecs packageSpec: packageSpec groupLoops: groupLoops f
                     cr;
                     tab;
                     tab;
-                    show: each name ] ].
+                    show: each ] ].
           movePackage := movePackage or: [ packageIndex <= targetIndex ].
           false
             ifTrue: [ 

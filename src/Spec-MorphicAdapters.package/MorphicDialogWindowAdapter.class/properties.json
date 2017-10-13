@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "<historical>",
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:08",
 	"super" : "MorphicWindowAdapter",
 	"category" : "Spec-MorphicAdapters",
 	"classinstvars" : [ ],

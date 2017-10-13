@@ -1,6 +1,8 @@
 testing
 includesAllOf: aCollection 
 
-	self flag: 'use includesAll: instead'.
+	self
+		deprecated: 'Please use #includesAll: instead'
+		transformWith: '`@receiver includesAllOf: `@statements' -> '`@receiver includesAll: `@statements'.
 	
-	^ self includesAll: aCollection.
+	^ self includesAll: aCollection

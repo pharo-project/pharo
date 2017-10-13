@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "SugsAbstractContext",
-	"category" : "SmartSuggestions-Tests",
+	"category" : "SmartSuggestions-Tests-Mocks",
 	"classinstvars" : [
 		"anInstanceVar"
 	],

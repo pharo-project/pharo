@@ -1,4 +1,4 @@
-tests-rectangle functions
+tests - rectangle functions
 testWithWidth
 
 	| r |

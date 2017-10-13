@@ -1,4 +1,4 @@
-*Metacello-Core
+*metacello-core
 setPostLoadDoItInMetacelloSpec: aMetacelloSpec
     self precedence == 0
         ifTrue: [ self error: 'Invalid selector' ].

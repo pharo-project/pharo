@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 selectionIndex
 	"Answer the initial selection index for the list."
 

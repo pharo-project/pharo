@@ -3,7 +3,7 @@ loadPatch
 	| old new |
 	(self zip memberNamed: 'patch.bin') ifNotNil:
 		[:m | [^ patch := (MCDataStream on: m contentStream) next ]
-			on: Error do: [:fallThrough ]].
+			on: Error do: [:fallThrough |]].
 	definitions := OrderedCollection new.
 	(self zip membersMatching: 'old/*')
 		do: [:m | self extractDefinitionsFrom: m].

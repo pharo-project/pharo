@@ -1,13 +1,13 @@
 accessing
 tree
 	^ tree ifNil: [ 
-		tree := self instantiate: TreeModel.
+		tree := self instantiate: TreePresenter.
 		tree
 			isCheckList: true;
 			multiSelection: true;
 			autoMultiSelection: true;
 		"	rootNodeHolder: [ :item | 
-				TreeNodeModel with: item model: tree ];"
+				TreeNodePresenter with: item model: tree ];"
 	
 			displayBlock:  [ :aPackageOrClass |
 				self labelFor: aPackageOrClass ];

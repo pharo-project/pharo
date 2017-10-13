@@ -1,3 +1,3 @@
 converting
 asUndoOperation
-	^ RBAddMethodChange compile: (self methodSourceFor: selector) in: self changeClass
+	^ RBRefactoryChangeManager changeFactory addMethodSource: (self methodSourceFor: selector) in: self changeClass

@@ -1,4 +1,4 @@
-initialization
+running
 setUp
 	super setUp.
 	prototypes add: TextEmphasis bold;

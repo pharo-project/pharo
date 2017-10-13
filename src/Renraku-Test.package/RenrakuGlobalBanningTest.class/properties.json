@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "ReCodeBasedTestCase",
+	"category" : "Renraku-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"oldRulesSettings"
+	],
+	"name" : "RenrakuGlobalBanningTest",
+	"type" : "normal"
+}

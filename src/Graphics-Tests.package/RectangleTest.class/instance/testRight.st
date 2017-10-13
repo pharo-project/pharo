@@ -1,4 +1,4 @@
-tests-accessing
+tests - accessing
 testRight
 |rect|
 rect:=(0 @ 0 corner: 20 @ 20) right:10.

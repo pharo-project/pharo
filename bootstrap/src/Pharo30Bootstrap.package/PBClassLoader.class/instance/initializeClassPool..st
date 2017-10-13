@@ -13,6 +13,9 @@ initializeClassPool: aClassName
 		withTemps: { 
 			'aClassVariableNamesCollection' -> (builder objectSpace newArrayWithAll: classVariableBindings)
 		}.
-	class className: aClassName.
+	
+	"Force the creation of the symbol using the object space class table." 
+	self flag: #bug. "If we do not use basicSetClassName, we duplicate symbols"
+	class basicSetClassName: (aClassName asLiteralInObjectSpace: builder objectSpace).
 	class classPool: classPool.
 	^ class

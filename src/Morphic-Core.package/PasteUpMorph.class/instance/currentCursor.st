@@ -1,0 +1,3 @@
+cursor
+currentCursor
+	^ worldState currentCursor

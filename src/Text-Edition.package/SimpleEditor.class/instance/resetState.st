@@ -1,4 +1,4 @@
-initialize-release
+initialize - release
 resetState 
 	"Establish the initial conditions for editing the paragraph: place caret 
 	before first character, set the emphasis to that of the first character,

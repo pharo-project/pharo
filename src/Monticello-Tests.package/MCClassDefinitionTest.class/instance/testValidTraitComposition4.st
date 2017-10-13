@@ -20,5 +20,5 @@ testValidTraitComposition4
 	d load.
 	self assert: (Smalltalk hasClassNamed: 'MCMockClassC').
 	cls := Smalltalk at: #MCMockClassC.
-	self assert: (cls selectors includesAllOf: {#c}).
+	self assert: (cls selectors includesAll: {#c}).
 	self deny: (cls selectors includesAnyOf: {#c1})

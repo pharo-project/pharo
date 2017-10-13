@@ -1,3 +1,0 @@
-accessing
-beForced
-	forced := true

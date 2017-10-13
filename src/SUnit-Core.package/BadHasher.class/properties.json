@@ -2,7 +2,9 @@
 	"commentStamp" : "mjr 8/20/2003 13:28",
 	"super" : "Object",
 	"category" : "SUnit-Core-Utilities",
-	"classinstvars" : [ ],
+	"classinstvars" : [
+		"lastRandomIndex"
+	],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],

@@ -1,4 +1,4 @@
-typing support
+typing - support
 openTypeIn
 	"Set up beginTypeInIndex to keep track of the leftmost backspace."
 

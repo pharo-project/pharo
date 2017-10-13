@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testEmptyHistory
 	| h |
 	h := HistoryNode new.

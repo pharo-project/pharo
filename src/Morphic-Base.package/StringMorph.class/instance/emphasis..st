@@ -1,7 +1,10 @@
-font
-emphasis: aNumber
-	"
-	Set the receiver's emphasis as indicated. aNumber is a bitmask with the following format:
+accessing
+emphasis: aCodeOrTextEmphasis
+	"Set my emphasis to aCodeOrTextEmphasis, which is either a TextEmphasis object,
+	or a numeric code that is treated as a bitmask.   In the case of a TextEmphasis,
+	sending the message value will return the code number.  
+	
+	The bits have the following significance (see also the class comment for TextEmphasis)
 	
 	bit 			attribute
 	2r1	 (1) 		bold 
@@ -18,6 +21,5 @@ emphasis: aNumber
 	etc...
 	"
 
-	emphasis := aNumber.
-	
+	emphasis := aCodeOrTextEmphasis value.
 	^ self font: font emphasis: emphasis

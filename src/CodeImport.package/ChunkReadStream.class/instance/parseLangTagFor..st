@@ -11,7 +11,7 @@ parseLangTagFor: aString
 		runsRaw := self basicNextChunk.
 		string := self decodeString: aString andRuns: runsRaw
 	] ifFalse: [
-		"If we find a ] but not a lang tag, there is something really wrong and we are not ready to parse that".
+		"If we find a ] but not a lang tag, there is something really wrong and we are not ready to parse that"
 		^ string , self basicNextChunk
 	].
 	^ string

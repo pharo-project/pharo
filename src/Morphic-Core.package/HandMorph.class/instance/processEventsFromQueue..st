@@ -12,7 +12,11 @@ processEventsFromQueue: anEventQueue
 	[anEventQueue isNotNil and: [(evtBuf := anEventQueue nextEvent) isNotNil]] whileTrue: 
 			[evt := nil.	"for unknown event types"
 			type := evtBuf first.
-			type = EventTypeMouse ifTrue: [recentModifiers := evtBuf sixth. evt := self generateMouseEvent: evtBuf].
+			type = EventTypeMouse ifTrue: [
+				self world beCursorOwner.
+				recentModifiers := evtBuf sixth.
+				evt := self generateMouseEvent: evtBuf
+			].
 			type = EventTypeKeyboard 
 				ifTrue: [recentModifiers := evtBuf fifth. evt := self generateKeyboardEvent: evtBuf].
 			type = EventTypeDragDropFiles 

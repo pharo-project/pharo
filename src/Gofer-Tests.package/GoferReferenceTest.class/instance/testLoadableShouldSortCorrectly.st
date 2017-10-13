@@ -1,4 +1,4 @@
-testing
+tests
 testLoadableShouldSortCorrectly
 	| sorted |
 	sorted := self versionReferences
