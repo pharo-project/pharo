@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "Spirita 7/19/2016 11:09",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"widgets",
+		"layout"
+	],
+	"name" : "DynamicComposablePresenter",
+	"type" : "normal"
+}

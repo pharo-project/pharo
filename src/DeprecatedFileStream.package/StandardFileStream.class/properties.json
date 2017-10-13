@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "ul 12/6/2009 05:13",
+	"super" : "FileStream",
+	"category" : "DeprecatedFileStream",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Registry"
+	],
+	"instvars" : [
+		"name",
+		"fileID",
+		"buffer1"
+	],
+	"name" : "StandardFileStream",
+	"type" : "normal"
+}

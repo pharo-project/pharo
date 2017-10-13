@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "YuriyTymchuk 7/16/2017 16:58",
+	"super" : "ReExceptionStrategy",
+	"category" : "Renraku-Utility",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReLogExceptionStrategy",
+	"type" : "normal"
+}

@@ -18,17 +18,6 @@ initialize
 	self initializeProgress.
 	self initializeUpdateTask.
 	
-	showPrivacyMorph := self class wasOpenedBefore not.
-	
-	showPrivacyMorph
-		ifTrue: [ 
-			self class wasOpenedBefore: true.
-			GLMAsyncTask new
-				delay: 10000;
-				onCompleted: [ showPrivacyMorph := false ];
-				execute.
-			self addMorphBack: self privacyMorph ];
-		ifFalse: [
-			self addMorphBack: listMorph ].
+	self addMorphBack: listMorph.
 	
 	self subscribe

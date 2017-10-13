@@ -1,3 +1,3 @@
-initialize-release
+running
 setUp
 	failure := Object new.

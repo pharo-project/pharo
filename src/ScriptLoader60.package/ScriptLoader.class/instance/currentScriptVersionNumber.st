@@ -1,3 +1,0 @@
-generate scripts/methods
-currentScriptVersionNumber
-	^ CurrentScriptVersionNumber

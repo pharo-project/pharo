@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TickingWindowPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TickingWindowModel",
+	"type" : "normal"
+}

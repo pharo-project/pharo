@@ -2,7 +2,8 @@ examples
 exampleDialogs
 	"Open an example of each services dialog"
 	"self exampleDialogs"
-
+	<script>
+	
 	self exampleBuilder
 		chooseFont: TextStyle default defaultFont;
 		chooseColor: (Color r: 0.529 g: 0.611 b: 0.004);

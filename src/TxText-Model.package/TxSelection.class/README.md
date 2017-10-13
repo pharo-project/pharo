@@ -1,1 +1,0 @@
-I represent a selection interval of a text.

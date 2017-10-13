@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "",
+	"super" : "HEMethodContainer",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"className",
+		"superclass",
+		"instanceVariables",
+		"classInstancevariables",
+		"classVariables",
+		"sharedPools",
+		"layoutClass"
+	],
+	"name" : "HEClass",
+	"type" : "normal"
+}

@@ -1,3 +1,3 @@
-initialization
+running
 setUp
 	architecture := FFIArchitecture forCurrentArchitecture

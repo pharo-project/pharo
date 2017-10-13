@@ -1,1 +1,1 @@
-I am the bridget between a TreeNodeModel and a SpecTreeNodeModel
+I am the bridget between a TreeNodePresenter and a SpecTreeNodeModel

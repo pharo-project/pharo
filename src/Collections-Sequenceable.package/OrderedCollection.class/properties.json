@@ -1,5 +1,9 @@
 {
+	"commentStamp" : "NicolaiHess 5/25/2016 21:36",
+	"super" : "SequenceableCollection",
 	"category" : "Collections-Sequenceable",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"array",
@@ -7,10 +11,5 @@
 		"lastIndex"
 	],
 	"name" : "OrderedCollection",
-	"commentStamp" : "NicolaiHess 5/25/2016 21:36",
-	"super" : "SequenceableCollection",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classtraitcomposition" : "TSortable classTrait"
+	"type" : "normal"
 }

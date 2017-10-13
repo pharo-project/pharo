@@ -1,6 +1,6 @@
 accessing
 directory
-	"Answer the a file reference to the directory containing the Smalltalk virtual machine."
-	"SmalltalkImage current directory"
+	"Answer the full path name for the current virtual machine."
 
-	^ FileLocator vmDirectory
+	<primitive: 142>
+	self primitiveFailed

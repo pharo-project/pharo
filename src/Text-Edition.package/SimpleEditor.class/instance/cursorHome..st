@@ -1,4 +1,4 @@
-nonediting/nontyping keys
+nonediting - nontyping keys
 cursorHome: aKeyboardEvent 
 
 	"Private - Move cursor from position in current line to beginning of

@@ -1,0 +1,3 @@
+accessing
+binding
+	^ nil -> self

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "YuriyTymchuk 6/28/2017 13:08",
+	"super" : "ReImageRuleBaner",
+	"category" : "Renraku-Utility",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RePersistentImageRuleBaner",
+	"type" : "normal"
+}

@@ -1,6 +1,6 @@
 {
-	"commentStamp" : "RonieSalgado 9/9/2016 18:06",
-	"super" : "WindowModel",
+	"commentStamp" : "PavelKrivanek 10/12/2017 16:25",
+	"super" : "WindowPresenter",
 	"category" : "OSWindow-Core-Morphic",
 	"classinstvars" : [ ],
 	"pools" : [ ],

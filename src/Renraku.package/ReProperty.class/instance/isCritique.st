@@ -1,0 +1,3 @@
+testing
+isCritique
+	^ false

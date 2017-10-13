@@ -6,7 +6,7 @@ printConfigurations: configurations
 			nextPutAll: 'Found ';
 			print: configurations size;
 			nextPutAll: ' Configuration';
-			nextPutAll: (configurations size = 1 ifTrue: ':' ifFalse: 's:') ]).
+			nextPutAll: (configurations size = 1 ifTrue: [':'] ifFalse: ['s:']) ]).
 	
 	configurations do: [ :name | 
 			self << name. 

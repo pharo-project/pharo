@@ -28,7 +28,7 @@ correctVariable: proposedVariable interval: spot
 	"requestor select."
 
 	"Build the menu with alternatives"
-	action := UndeclaredVariable 
+	action := UndeclaredVariableDetected 
 				signalFor: self
 				name: proposedVariable
 				inRange: spot.

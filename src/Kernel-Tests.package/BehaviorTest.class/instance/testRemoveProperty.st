@@ -1,4 +1,4 @@
-test - properties
+tests - properties
 testRemoveProperty
 	self class propertyAt: #testKeySelector put: 1.
 	self class removeProperty: #testKeySelector.

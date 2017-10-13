@@ -1,4 +1,4 @@
-protocol
+comparing
 hash
 	| hash |
 	hash := selectedPackage hash.

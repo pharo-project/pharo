@@ -1,3 +1,3 @@
 running
 classToTest
-	^ MenuModel
+	^ MenuPresenter

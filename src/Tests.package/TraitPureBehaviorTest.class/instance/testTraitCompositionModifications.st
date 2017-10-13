@@ -10,6 +10,6 @@ testTraitCompositionModifications
 				+ self t2.
 	self assert: self t6 methodDict size = 4.
 	self 
-		assert: (self t6 selectors asSet includesAllOf: #(#m13 #m13Alias #m21 #m22 )).
+		assert: (self t6 selectors asSet includesAll: #(#m13 #m13Alias #m21 #m22 )).
 	self 
 		assert: (self t6 sourceCodeAt: #m13Alias) asString = 'm13Alias ^self m12'

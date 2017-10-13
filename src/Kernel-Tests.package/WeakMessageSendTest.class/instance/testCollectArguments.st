@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testCollectArguments
 
 	"Fogbugz issue 18127"

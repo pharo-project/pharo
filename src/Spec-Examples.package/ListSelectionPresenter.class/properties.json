@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "PavelKrivanek 10/12/2017 15:33",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-Examples",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"listModel",
+		"textModel1",
+		"textModel2",
+		"textRefreshingProcess"
+	],
+	"name" : "ListSelectionPresenter",
+	"type" : "normal"
+}

@@ -1,4 +1,4 @@
-as yet unclassified
+subscription
 subscribeTo: anAnnouncer
 
 	anAnnouncer "weak" 

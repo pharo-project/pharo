@@ -1,4 +1,4 @@
-setup
+running
 tearDown
 	MCWorkingCopy removeDependent: self emptyOrganizer.
 	self cleanClassesPackagesAndCategories.

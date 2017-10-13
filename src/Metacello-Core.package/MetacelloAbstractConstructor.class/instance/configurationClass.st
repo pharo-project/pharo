@@ -1,4 +1,4 @@
 accessing
 configurationClass
 
-	^ self subclassResponsibility
+	^self subclassResponsibility

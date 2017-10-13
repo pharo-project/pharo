@@ -1,3 +1,3 @@
-setup
+running
 setUp
 	generator := UUIDGenerator new

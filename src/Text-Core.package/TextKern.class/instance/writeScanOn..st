@@ -1,4 +1,4 @@
-as yet unclassified
+utilities
 writeScanOn: strm
 
 	kern > 0 ifTrue: [

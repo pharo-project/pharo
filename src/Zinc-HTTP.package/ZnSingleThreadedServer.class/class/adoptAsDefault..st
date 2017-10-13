@@ -5,4 +5,4 @@ adoptAsDefault: server
 	Note that this is a class instance variable."
 	
 	self stopDefault.
-	Default := server
+	default := server

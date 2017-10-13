@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 variableName: aSymbol
 	^ self new
 		variableName: aSymbol;

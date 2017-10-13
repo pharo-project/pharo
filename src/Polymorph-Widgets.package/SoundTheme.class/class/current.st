@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 current
 	"Answer the current ui theme."
 

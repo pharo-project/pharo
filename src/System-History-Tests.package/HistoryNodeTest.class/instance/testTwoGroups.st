@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testTwoGroups
 	| h i grp1 grp2  i2 i3 i4 | 
 	h := HistoryNode new.

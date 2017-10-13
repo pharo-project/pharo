@@ -5,4 +5,4 @@ contents
 	this can thus only be done once"
 	
 	stream ifNil: [ ^ nil ].
-	^ ZnUtils readUpToEnd: self stream limit: ZnConstants maximumEntitySize
+	^ ZnUtils readUpToEnd: self stream limit: ZnMaximumEntitySize value

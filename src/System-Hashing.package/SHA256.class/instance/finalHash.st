@@ -1,6 +1,6 @@
 accessing
 finalHash
-	"Concatenate the final totals to build the 160-bit integer result."
+	"Concatenate the final totals to build the 256-bit integer result."
 	"Details: If the primitives are supported, the results are in the totals array. Otherwise, they are in the instance variables totalA through totalE."
 
 		^ (totalA asInteger bitShift: 224) +

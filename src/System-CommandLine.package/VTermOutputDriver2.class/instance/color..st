@@ -1,0 +1,3 @@
+deprecated
+color: aColor
+	^self

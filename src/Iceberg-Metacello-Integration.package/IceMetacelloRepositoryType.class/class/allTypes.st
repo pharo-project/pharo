@@ -1,3 +1,0 @@
-accessing
-allTypes
-	^ self allSubclasses 

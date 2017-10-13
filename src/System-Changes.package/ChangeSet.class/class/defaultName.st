@@ -1,3 +1,3 @@
 defaults
 defaultName
-	^ self uniqueNameLike: 'Unnamed' translated
+	^ self uniqueNameLike: 'Unnamed'

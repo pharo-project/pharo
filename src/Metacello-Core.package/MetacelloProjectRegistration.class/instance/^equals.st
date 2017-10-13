@@ -1,4 +1,4 @@
-comparision
+comparing
 = aRegistration
     aRegistration class == self class
         ifFalse: [ ^ false ].

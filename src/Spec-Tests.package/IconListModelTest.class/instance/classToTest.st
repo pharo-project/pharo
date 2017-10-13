@@ -1,3 +1,3 @@
 running
 classToTest
-	^ IconListModel
+	^ IconListPresenter

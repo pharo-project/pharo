@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-PolyWidgets-Elementary",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LabelledContainerTest",
+	"type" : "normal"
+}
