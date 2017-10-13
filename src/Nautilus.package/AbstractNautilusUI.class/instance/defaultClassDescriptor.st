@@ -1,17 +1,23 @@
 source code area
 defaultClassDescriptor
 	| string |
-	string := Slot showSlotClassDefinition 
-		ifTrue: [  
-'Object subclass: #NameOfSubclass
-	slots: {}
-	classVariables: {}
-	category: ''']
+	string := (String new: 12) writeStream.
+	string nextPutAll: 
+'Object subclass: #NameOfSubClass
+	uses: {}
+'.
+	Slot showSlotClassDefinition 
+		ifTrue: [
+			string nextPutAll:
+'		slots: {}
+		classVariables: {}
+		category: ''']
 		ifFalse: [
-'Object subclass: #NameOfSubclass
-	instanceVariableNames: ''''
+			string nextPutAll:
+'	instanceVariableNames: ''''
 	classVariableNames: ''''
 	package: ''' ].
-	^ self selectedPackage
-		ifNil: [string, '''' ]
-		ifNotNil: [:package | string, package name, '''' ]
+	self selectedPackage
+		ifNil: [string nextPutAll: '''' ]
+		ifNotNil: [:package | string nextPutAll: package name; nextPutAll: '''' ].
+	^string contents
