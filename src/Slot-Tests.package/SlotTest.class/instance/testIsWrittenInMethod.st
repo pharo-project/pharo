@@ -1,4 +1,4 @@
-testing - properties
+tests - properties
 testIsWrittenInMethod
 	
 	ivarForTesting := #test.

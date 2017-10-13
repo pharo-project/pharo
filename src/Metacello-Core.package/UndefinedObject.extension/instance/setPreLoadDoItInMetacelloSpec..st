@@ -1,4 +1,4 @@
-*Metacello-Core
+*metacello-core
 setPreLoadDoItInMetacelloSpec: aMetacelloSpec
 
 	aMetacelloSpec setPreLoadDoIt: 

@@ -1,4 +1,4 @@
-initialize-release
+running
 tearDown
 	super tearDown.
 	self removeClass: emptyClass .

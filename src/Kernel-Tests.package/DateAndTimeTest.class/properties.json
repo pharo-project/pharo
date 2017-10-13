@@ -1,13 +1,11 @@
 {
-	"classtraitcomposition" : "TDateTimeTest classTrait",
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:33",
+	"super" : "ClassTestCase",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
 	"name" : "DateAndTimeTest",
-	"commentStamp" : "TorstenBergmann 2/5/2014 08:33",
-	"super" : "ClassTestCase",
-	"traitcomposition" : "TDateTimeTest",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Kernel-Tests-Chronology"
+	"type" : "normal"
 }

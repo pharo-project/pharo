@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 beCurrent
 	"Make a new instance of the receiver be the current theme."
 

@@ -1,3 +1,0 @@
-accessing
-view
-	^ layout view

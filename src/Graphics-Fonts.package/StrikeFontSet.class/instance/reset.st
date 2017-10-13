@@ -1,4 +1,4 @@
-as yet unclassified
+private - initialization
 reset
 	"Reset the cache of derivative emphasized fonts"
 

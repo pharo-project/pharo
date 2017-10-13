@@ -1,3 +1,0 @@
-accessing
-extensionCategoryName
-	^ 'FuelPlatformExtensions'

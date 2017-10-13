@@ -1,1 +1,1 @@
-I am the adapter used to bridge an FastTableModel and a FTPluggableIconListMorphAdaptor
+I am the adapter used to bridge an FastTablePresenter and a FTPluggableIconListMorphAdaptor

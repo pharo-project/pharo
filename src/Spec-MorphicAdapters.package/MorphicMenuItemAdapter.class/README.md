@@ -1,1 +1,1 @@
-I am the bridge between a MenuItemModel and a ToggleMenuItemMorph
+I am the bridge between a MenuItemPresenter and a ToggleMenuItemMorph

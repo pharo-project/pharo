@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "DenisKudryashov 9/18/2017 11:29",
+	"super" : "LiteralVariable",
+	"category" : "Slot-Variables",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UndeclaredVariable",
+	"type" : "normal"
+}

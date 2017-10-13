@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MenuGroupPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MenuGroupModel",
+	"type" : "normal"
+}

@@ -6,5 +6,5 @@ testShuffled
 	is := i shuffled.
 	self assert: i ~= is.
 	self assert: i size equals: is size.
-	self assert: (is includesAllOf: i).
-	self assert: (i includesAllOf: is).
+	self assert: (is includesAll: i).
+	self assert: (i includesAll: is).

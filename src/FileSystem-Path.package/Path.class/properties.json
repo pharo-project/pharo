@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "AlistairGrant 8/10/2017 20:55",
+	"super" : "Object",
+	"category" : "FileSystem-Path",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Path",
+	"type" : "variable"
+}

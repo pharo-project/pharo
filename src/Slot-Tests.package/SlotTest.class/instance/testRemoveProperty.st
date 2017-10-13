@@ -1,4 +1,4 @@
-testing - properties
+tests - properties
 testRemoveProperty
 	| ivar | 
 	ivar := self class slotNamed: #ivarForTesting.

@@ -1,13 +1,10 @@
 tests - testing
 testIsDeprecated
-
-	#(	
-		deprecatedMethod 
-	  	deprecatedMethod2 
-	 	deprecatedMethod3 
-		deprecatedMethod4
-	) do: [ :each | 
-		self assert: (self class >> each) isDeprecated 
-	].
-	
-	self deny: (self class >> #testIsDeprecated) isDeprecated.
+	| deprecatedSelectors |
+	deprecatedSelectors := #(deprecatedMethod deprecatedMethod2 deprecatedMethod3 deprecatedMethod4 deprecatedMethod5 deprecatedMethod6 deprecatedMethod7)
+		asSet.
+	self class
+		selectorsDo: [ :each | 
+			(deprecatedSelectors includes: each)
+				ifTrue: [ self assert: (self class >> each) isDeprecated ]
+				ifFalse: [ self deny: (self class >> each) isDeprecated ] ]

@@ -1,3 +1,3 @@
 accessing
 fileName
-	^ FilePathEncoder decode: self fullPath
+	^ self fullPath

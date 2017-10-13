@@ -4,7 +4,7 @@ freshListTab
 		label: 'Fresh List'
 		icon: nil
 		retrievingBlock: [ 1 second asDelay wait.
-			ListModel new
+			ListPresenter new
 				items: (1 to: 50) asOrderedCollection;
 				buildWithSpec ]
 		actions:

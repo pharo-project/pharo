@@ -1,0 +1,3 @@
+refactory-changes-composites
+compositeRefactoryChange
+	^ RBCompositeRefactoryChange new

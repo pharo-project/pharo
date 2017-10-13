@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testLabelForSwapInstanceMethodRefersToClass
 	| sugg |
 	sugg := SugsSuggestionFactory createSwapMethod.

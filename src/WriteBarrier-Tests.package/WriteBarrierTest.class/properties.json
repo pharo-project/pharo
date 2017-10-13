@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "ClementBera 4/21/2016 14:12",
+	"super" : "TestCase",
+	"category" : "WriteBarrier-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"ContextInstance"
+	],
+	"instvars" : [ ],
+	"name" : "WriteBarrierTest",
+	"type" : "normal"
+}

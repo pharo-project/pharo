@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "StephaneDucasse 11/29/2014 23:03",
+	"super" : "RBBlockLintRule",
+	"category" : "Kernel-Rules",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "OldSendsDeprecatedMethodToGlobalRule",
+	"type" : "normal"
+}

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "GuillermoPolito 19/07/2017 17:02",
+	"super" : "Object",
+	"category" : "Kernel-BasicObjects",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AsciiCharset",
+	"type" : "normal"
+}

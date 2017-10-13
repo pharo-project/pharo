@@ -5,7 +5,7 @@ next: n
 	readBuffer := ByteArray new: n.
 	startingAt := 1.
 	peekBuffer ifNotNil: [ 
-		readBuffer at: 1put: peekBuffer.
+		readBuffer at: 1 put: peekBuffer.
 		startingAt := startingAt + 1.
 		peekBuffer := nil ].
 	read := self primRead: handle into: readBuffer startingAt: startingAt count: n - startingAt + 1.

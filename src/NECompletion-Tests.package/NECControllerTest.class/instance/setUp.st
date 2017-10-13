@@ -1,4 +1,4 @@
-initialize
+running
 setUp
 	"Setting up code for NECControllerTest"
 

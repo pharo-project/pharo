@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ContainerPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ContainerModel",
+	"type" : "normal"
+}

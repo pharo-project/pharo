@@ -18,7 +18,7 @@ testPragmas
 	('foo |t| <foo: 1.2>' 		#foo: (1.2))
 	('foo |t| <foo: 1 bar: 2>' #foo:bar: (1 2))
 	) do: [ :each |
-		tree := RBParser parseMethod: each first.
+		tree := self parserClass parseMethod: each first.
 		self assert: (tree pragmas size = 1).
 		node := tree pragmas first.
 		self assert: node selector = each second.
@@ -27,8 +27,8 @@ testPragmas
 		self assert: (each first at: node start) equals: $<.
 		self assert: (each first at: node stop) equals: $> ].
 	
-	self assert: (RBParser parseMethod: 'selector <a>') isMethod.
-	self assert: (RBParser parseMethod: '
+	self assert: (self parserClass parseMethod: 'selector <a>') isMethod.
+	self assert: (self parserClass parseMethod: '
 	selector 
 		"comment1" 
 		|temp| 
@@ -36,7 +36,7 @@ testPragmas
 		<a> 
 		#<.
 		^1') isMethod.
-	self should: [RBParser parseMethod: '
+	self should: [self parserClass parseMethod: '
 	selector 
 		"comment1" 
 		|temp| 

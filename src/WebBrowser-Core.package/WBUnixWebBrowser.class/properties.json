@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 4/13/2016 08:24",
+	"super" : "WebBrowser",
+	"category" : "WebBrowser-Core-OS-Unix",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WBUnixWebBrowser",
+	"type" : "normal"
+}

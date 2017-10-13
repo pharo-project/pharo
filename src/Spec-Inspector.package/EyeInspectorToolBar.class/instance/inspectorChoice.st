@@ -2,7 +2,7 @@ accessing
 inspectorChoice
 	inspectorChoice
 		ifNil: [ 
-			inspectorChoice := self instantiate: DropListModel.
+			inspectorChoice := self instantiate: DropListPresenter.
 			inspectorChoice
 				whenSelectedItemChanged: [ :inspectorType |
 					self preventUpdatesDuring: [

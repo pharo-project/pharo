@@ -1,3 +1,3 @@
 refactory-changes
 removeClass: aClass 
-	^ self addChange: (RBRemoveClassChange removeClassName: aClass name)
+	^ self addChange: (RBRefactoryChangeManager changeFactory removeClassNamed: aClass name)

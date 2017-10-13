@@ -1,3 +1,0 @@
-accessing
-goferPriority
-	^ 8

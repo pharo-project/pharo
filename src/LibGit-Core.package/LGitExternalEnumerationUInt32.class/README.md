@@ -1,1 +1,0 @@
-See the comment in NBExternalEnumeration. I am a copy of NBExternalEnumeration with the exception that I inherit from Object, not from SharedPool.

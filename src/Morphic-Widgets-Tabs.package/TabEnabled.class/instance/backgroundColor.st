@@ -1,4 +1,3 @@
 protocol
 backgroundColor
-	
-	^ Color fromHexString: 'aaaaaa'
+	^ Smalltalk ui theme darkBaseColor 

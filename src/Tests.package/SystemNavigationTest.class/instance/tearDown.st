@@ -1,4 +1,4 @@
-setUp-tearDown
+running
 tearDown
 	super tearDown.
 	self classFactory cleanUp. 

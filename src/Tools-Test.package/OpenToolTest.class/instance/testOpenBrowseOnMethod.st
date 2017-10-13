@@ -1,6 +1,6 @@
 test browse
 testOpenBrowseOnMethod
 	| browser |
-	browser := (Object>>#name) browse.
+	browser := (Object>>#yourself) browse.
 	browser changed.
 	browser close.

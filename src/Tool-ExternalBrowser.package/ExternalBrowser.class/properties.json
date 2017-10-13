@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "GuillermoPolito 5/29/2015 13:37",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Tool-ExternalBrowser",
 	"classinstvars" : [ ],
 	"pools" : [ ],

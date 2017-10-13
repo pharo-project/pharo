@@ -1,0 +1,23 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:25",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"helpHolder",
+		"borderWidth",
+		"borderColor",
+		"enabledHolder",
+		"dragEnabled",
+		"dropEnabled",
+		"dragTransformationBlock",
+		"wantDropBlock",
+		"acceptDropBlock",
+		"transferBlock",
+		"color"
+	],
+	"name" : "AbstractWidgetPresenter",
+	"type" : "normal"
+}

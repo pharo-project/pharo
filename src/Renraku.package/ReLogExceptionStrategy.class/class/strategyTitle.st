@@ -1,0 +1,4 @@
+accessing
+strategyTitle
+
+	^ 'Log Exception'

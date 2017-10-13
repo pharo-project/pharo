@@ -1,3 +1,0 @@
-accessing
-username
-	^ usernameInput text

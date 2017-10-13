@@ -1,7 +1,7 @@
 tabs creation
 redMorphTab
 	| tab |
-	tab := TabModel new.
+	tab := TabPresenter new.
 	tab
 		label: 'Red Morph';
 		icon: (tab iconNamed: #smallBackIcon);

@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:39",
+	"super" : "Model",
+	"category" : "Transcript-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"accessSemaphore",
+		"deferredClear",
+		"deferredEndEntry",
+		"stepContents"
+	],
+	"name" : "ThreadSafeTranscript",
+	"type" : "normal"
+}

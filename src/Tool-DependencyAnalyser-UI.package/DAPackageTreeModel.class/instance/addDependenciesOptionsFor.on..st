@@ -6,6 +6,6 @@ addDependenciesOptionsFor: selectedNodes on: menuGroup
 			namesOfSelected := selectedNodes collect: [ :package | package content theClass ].
 			menuGroup
 				addMenuItem:
-					(MenuItemModel new
+					(MenuItemPresenter new
 						name: 'Browse dependencies from class';
 						action: [ self openTreeFor: namesOfSelected ]) ]

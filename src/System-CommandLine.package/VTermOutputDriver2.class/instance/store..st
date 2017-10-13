@@ -1,0 +1,3 @@
+deprecated
+store: aString
+	^self

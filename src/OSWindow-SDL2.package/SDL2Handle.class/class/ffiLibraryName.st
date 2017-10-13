@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 ffiLibraryName
 	^ SDL2 ffiLibraryName

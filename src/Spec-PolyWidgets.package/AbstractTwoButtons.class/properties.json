@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:01",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-PolyWidgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"firstButton",
+		"secondButton"
+	],
+	"name" : "AbstractTwoButtons",
+	"type" : "normal"
+}

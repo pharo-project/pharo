@@ -1,4 +1,4 @@
-as yet unclassified
+event handling
 mouseDown: event
 	"Trigger a 0..1 range based on location."
 	

@@ -1,4 +1,4 @@
-as yet unclassified
+utilities
 recursionReset
 	"ThumbnailMorph recursionReset"
 	"Reset the RecursionDepth counter in case the user interrupted

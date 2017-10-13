@@ -2,7 +2,7 @@ tests
 testInterpretASpecModelMorphAssociation
 
 	| spec model morph |
-	model := AbstractWidgetModel new.
+	model := AbstractWidgetPresenter new.
 	spec := {#PluggableListMorph. #model:. #model}.
 	morph := specInterpreterClass interpretASpec: spec model: model.
 	

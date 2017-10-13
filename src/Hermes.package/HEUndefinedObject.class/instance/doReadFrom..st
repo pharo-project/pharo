@@ -1,0 +1,2 @@
+reading
+doReadFrom: aReader

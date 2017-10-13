@@ -1,4 +1,4 @@
-as yet unclassified
+accept/cancel
 acceptOnFocusChange
 	"Answer the value of acceptOnFocusChange"
 

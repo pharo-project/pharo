@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "HEByteString",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HECharacter",
+	"type" : "normal"
+}

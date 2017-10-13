@@ -1,4 +1,4 @@
-tests-accessing
+tests - accessing
 testArea
 
 	self assert: (0 @ 0 corner: 5 @ 5) area = 25.
