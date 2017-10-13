@@ -1,3 +1,3 @@
 instance creation
-mesageContext
+messageContext
 	^ self new selectorToUse: #withMesage; yourself.

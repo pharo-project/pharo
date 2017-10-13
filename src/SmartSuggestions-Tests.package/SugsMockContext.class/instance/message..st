@@ -1,3 +1,3 @@
-api-context
+api - context
 message: theName
 	^ message := theName.

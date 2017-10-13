@@ -1,4 +1,4 @@
-valid
+tests - valid
 testExtractLocalInAMessageNodeIsValid
 	| context suggestion |
 	context := SugsMockContext withMessageName: 'justAName'.
