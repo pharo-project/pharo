@@ -1,4 +1,4 @@
-some tests
+tests - some
 testAsSet
 	"could be moved in Array or Collection"
 

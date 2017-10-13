@@ -1,4 +1,4 @@
-testing
+tests
 testBasics
 	| q |
 	q := SharedQueue new.

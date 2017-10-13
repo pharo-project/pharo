@@ -1,4 +1,4 @@
-test-comparing
+tests - comparing
 testComparing
 	self assert: 'foo' < 'foo:'.
 	self assert: 'foo' < 'fooBar'.
