@@ -1,7 +1,7 @@
 private
 changeToButton
 
-	self instantiateModels: 
+	self instantiatePresenters: 
 		#( bottom ButtonPresenter ).
 	button font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9).
 		

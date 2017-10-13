@@ -1,6 +1,6 @@
 instance creation
-instantiateModels: aCollectionOfPairs
-	"instantiateModels: is legacy code in ComposablePresenter and must not be used. It will be deprecated and removed."
+instantiatePresenters: aCollectionOfPairs
+	"instantiatePresenters: is legacy code in ComposablePresenter and must not be used. It will be deprecated and removed."
 
 	"Used to instantiate multiple sub widget at once. Take aCollectionOfPairs where each odd element is an inst var name and each even element is a class name, create an instance from the class name and store it into the inst var"
 
