@@ -1,4 +1,4 @@
-as yet unclassified
+updating
 updateGradients
 	"Update the gradient directions."
 

@@ -1,4 +1,4 @@
-as yet unclassified
+performance
 reportPerformance
 	| str |
 	str := (MultiByteFileStream fileNamed: 'performanceReports.txt') ascii; wantsLineEndConversion: true; yourself.

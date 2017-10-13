@@ -1,11 +1,9 @@
-as yet unclassified
+initialization
 initialize 
 	"Initialize the keyboard shortcut maps and the shared buffers
-	for copying text across views and managing again and undo." 
- 
-	"
-	SimpleEditor initialize
+	 for copying text across views and managing again and undo.
 	"
 
-	self initializeCmdKeyShortcuts.
-	self initializeShiftCmdKeyShortcuts
+	self 
+		initializeCmdKeyShortcuts;
+		initializeShiftCmdKeyShortcuts

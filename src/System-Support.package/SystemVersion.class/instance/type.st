@@ -1,4 +1,4 @@
-accessing
+accessing - properties
 type
 	"Answer the value of type"
 

@@ -2,16 +2,16 @@ examples
 exampleColorControls
 	"Open a window with examples of each of the color controls."
 	"self exampleColorControls"
-
-	|dialog builder|
+	<script>
+	| dialog builder|
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example color controls') useDefaultOKButton.
 	dialog contentMorph: (dialog newRow: {
 		dialog newLabelGroup: {
-			'Alpha Selector'->(dialog newAlphaSelector: (ValueHolder new contents: 0)
-							getAlpha: #contents setAlpha: #contents: help: 'This is an alpha channel selector').
-			'Hue Selector'->(dialog newHueSelector: (ValueHolder new contents: 0)
-							getHue: #contents setHue: #contents: help: 'This is a hue selector').
+			'Alpha Selector'->(dialog newAlphaSelector: (NewValueHolder new value: 0)
+							getAlpha: #value setAlpha: #value: help: 'This is an alpha channel selector').
+			'Hue Selector'->(dialog newHueSelector: (NewValueHolder new value: 0)
+							getHue: #value setHue: #value: help: 'This is a hue selector').
 			'SV Color Selector'->((dialog newSVSelector: Color yellow
 									help: 'This is a saturation-volume selector') minHeight: 80).
 			'HSV Color Selector'->((dialog newHSVSelector: Color green

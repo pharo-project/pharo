@@ -1,3 +1,3 @@
 api-shortcuts
 emptyList
-	^ self dropList emptyList
+	self dropList emptyList

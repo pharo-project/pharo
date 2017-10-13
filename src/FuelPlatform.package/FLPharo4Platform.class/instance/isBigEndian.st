@@ -1,3 +1,0 @@
-testing
-isBigEndian
-	^ Smalltalk isBigEndian

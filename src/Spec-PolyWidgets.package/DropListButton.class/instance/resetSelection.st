@@ -1,3 +1,3 @@
 api-shortcuts
 resetSelection
-	^ self dropList resetSelection
+	self dropList resetSelection

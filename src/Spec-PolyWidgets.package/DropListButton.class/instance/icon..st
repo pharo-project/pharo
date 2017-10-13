@@ -1,3 +1,3 @@
 api-shortcuts
 icon: anIcon
-	^ self button icon: anIcon
+	self button icon: anIcon

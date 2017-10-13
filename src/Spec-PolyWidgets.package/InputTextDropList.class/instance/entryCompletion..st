@@ -1,3 +1,3 @@
 api-shortcuts
 entryCompletion: anEntryCompletion
-	^ self input entryCompletion: anEntryCompletion
+	self input entryCompletion: anEntryCompletion

@@ -11,7 +11,7 @@
 		"backgroundColor"
 	],
 	"name" : "StringMorph",
-	"commentStamp" : "efc 3/7/2003 17:34",
+	"commentStamp" : "PavelKrivanek 6/28/2017 09:57",
 	"super" : "Morph",
 	"traitcomposition" : "TAbleToRotate",
 	"type" : "normal",

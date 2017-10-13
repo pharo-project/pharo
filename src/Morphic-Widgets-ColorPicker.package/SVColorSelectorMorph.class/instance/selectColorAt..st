@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 selectColorAt: aPoint
 	"Set the color at the given position."
 	

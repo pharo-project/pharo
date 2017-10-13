@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 derivedFrom: aForm      "Cursor initNormalWithMask.  Cursor normal show"
 	"aForm is presumably a cursor"
 	| cursor mask ext |

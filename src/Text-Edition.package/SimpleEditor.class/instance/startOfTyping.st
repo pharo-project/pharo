@@ -1,3 +1,3 @@
-typing support
+typing - support
 startOfTyping
 	^ beginTypeInIndex

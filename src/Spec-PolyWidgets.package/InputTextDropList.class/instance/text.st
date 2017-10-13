@@ -1,3 +1,3 @@
 api-shortcuts
 text
-	^ self input text
+	self input text

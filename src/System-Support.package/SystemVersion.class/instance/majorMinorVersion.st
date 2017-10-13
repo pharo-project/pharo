@@ -1,4 +1,4 @@
 accessing
 majorMinorVersion
 	
-	^ self type, self dottedMajorMinor.
+	^ self type, self dottedMajorMinor

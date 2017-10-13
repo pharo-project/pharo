@@ -4,7 +4,9 @@
 	"category" : "Renraku-Test",
 	"classinstvars" : [ ],
 	"pools" : [ ],
-	"classvars" : [ ],
+	"classvars" : [
+		"ScreamerRule"
+	],
 	"instvars" : [
 		"testPackage"
 	],

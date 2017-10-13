@@ -1,4 +1,4 @@
 actions
 guidedBan
 
-	sourceAnchor entity guidedBan: self  
+	ReCriticEngine guidedBy: sourceAnchor entity ban: self

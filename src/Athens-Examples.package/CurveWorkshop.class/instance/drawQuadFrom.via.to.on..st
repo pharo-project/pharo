@@ -1,4 +1,4 @@
-as yet unclassified
+drawing
 drawQuadFrom: pt1 via: pt2 to: pt3 on: canvas
 	| curve triangle middleRay curveBlock |
 

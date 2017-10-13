@@ -1,0 +1,3 @@
+deprecated
+backspace
+	^self

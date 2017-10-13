@@ -1,4 +1,4 @@
-as yet unclassified
+examples
 exampleOperationAndAssignment: aNumber
 	|a|
 	a := aNumber.

@@ -1,3 +1,3 @@
 accessing
 value: aNumber
-	^ slider value: aNumber
+	slider value: aNumber 

@@ -1,3 +1,3 @@
 accessing
 label: aString
-^ 	slider label: aString
+	slider label: aString

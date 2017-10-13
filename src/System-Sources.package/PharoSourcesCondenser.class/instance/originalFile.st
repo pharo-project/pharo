@@ -1,3 +1,3 @@
 accessing
 originalFile
-	^ Smalltalk sourcesFile
+	^ Smalltalk sourcesFile asFileReference

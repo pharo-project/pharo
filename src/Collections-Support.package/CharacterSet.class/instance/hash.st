@@ -1,3 +1,3 @@
-comparison
+comparing
 hash
 	^self byteArrayMap hash

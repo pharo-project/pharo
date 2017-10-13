@@ -1,7 +1,7 @@
 initialization
 initializeWidgets
 
-	listModel := self instantiate: FastTableModel.
+	listModel := self instantiate: FastTablePresenter.
 	textModel := self newCode.
 	toolbarModel := self instantiate: MethodToolbar.
 	

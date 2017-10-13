@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	super setUp.
 	createdClasses := OrderedCollection new.

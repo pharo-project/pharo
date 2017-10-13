@@ -5,7 +5,7 @@ merge: aProjectRegistration
   self shouldBeMutable.
   aProjectRegistration validate.
   aProjectRegistration configurationProjectSpec
-    ifNotNil: [ :aSpec | 
+    ifNotNil: [ :aSpec |
       configurationProjectSpec := aSpec copy.
       configurationProjectSpec versionOrNil
         ifNotNil: [ :version | 

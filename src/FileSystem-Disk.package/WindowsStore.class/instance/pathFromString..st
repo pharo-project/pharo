@@ -9,4 +9,4 @@ pathFromString: aString
 			AbsolutePath ]
 		ifFalse: [ self stripDrive: pathElements.
 			RelativePath ].
-	^pathClass withAll: (pathClass canonicalizeElements: pathElements).
+	^pathClass withAll: pathElements

@@ -1,7 +1,7 @@
 running
 tearDown
 
-	testPackage mcPackage workingCopy unload.
+	self tearDownscreamerRule.
 	testPackage unregister.
 	testPackage := nil.	
 	super tearDown 

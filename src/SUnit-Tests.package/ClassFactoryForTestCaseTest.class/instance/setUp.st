@@ -1,4 +1,4 @@
-setUp-tearDown
+running
 setUp
 	super setUp.
 	factory := ClassFactoryForTestCase new

@@ -1,4 +1,4 @@
-I am a LabelledContainer specialized to manage a ListModel.
+I am a LabelledContainer specialized to manage a ListPresenter.
 See LabelledContainer
 
 self example

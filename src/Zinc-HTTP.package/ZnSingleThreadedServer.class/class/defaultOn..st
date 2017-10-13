@@ -6,8 +6,8 @@ defaultOn: portNumber
 	If there was a previous default instance, reuse it:
 	if it was running stop it, change the port if necessary."
 
-	^ Default 
+	^ default 
 		ifNil: [
-			Default := self on: portNumber ] 
+			default := self on: portNumber ] 
 		ifNotNil: [ 
-			Default stop; port: portNumber; yourself ]
+			default stop; port: portNumber; yourself ]

@@ -1,3 +1,0 @@
-layout
-layoutChanged
-	^ super layoutChanged

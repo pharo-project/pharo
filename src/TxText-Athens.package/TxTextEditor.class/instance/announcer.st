@@ -1,3 +1,0 @@
-accessing
-announcer
-	^ announcer weak

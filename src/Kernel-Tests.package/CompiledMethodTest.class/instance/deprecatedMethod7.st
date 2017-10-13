@@ -1,0 +1,2 @@
+deprecated - category
+deprecatedMethod7

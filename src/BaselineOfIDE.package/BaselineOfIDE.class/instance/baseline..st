@@ -5,7 +5,7 @@ baseline: spec
 
  	| repository | 
 	
-	repository := 'filetree://./pharo-core/src'.    
+	repository := 'filetree://./pharo-core/src'.     
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
@@ -33,7 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		spec package: 'Deprecated60'.
+		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -47,6 +47,7 @@ baseline: spec
 		spec package: 'FuelTests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
+		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'Monticello-Tests'.
@@ -56,9 +57,9 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
-		spec package: 'ScriptLoader60'.
 		
 		spec package: 'System-Serial Port'.
+		spec package: 'System-Localization'.
 		
 		spec package: 'Zinc-Resource-Meta-Tests'.
 
@@ -66,9 +67,6 @@ baseline: spec
 		spec package: 'Zodiac-Extra'.	
 		spec package: 'Zinc-Zodiac'.	
 			
-		spec package: 'Metacello-GitBasedRepository'.	
-
-		spec package: 'BaselineOfMetacello'.
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
@@ -128,10 +126,6 @@ baseline: spec
 		spec package: 'Tool-DependencyAnalyser-Test'.	"standalone"
 		spec package: 'Tool-DependencyAnalyser-Test-Data'.	"standalone"
 
-		spec package: 'ShoreLine-Report-Core'.
-		spec package: 'ShoreLine-Report-UI'.	"standalone"
-		spec package: 'ShoreLine-Report-Settings'. "standalone"
-		
 		spec package: 'Versionner-Core-Model'.
 		spec package: 'Versionner-Core-Commands'.
 		spec package: 'Versionner-Core-Announcements'.
@@ -151,10 +145,6 @@ baseline: spec
 		spec package: 'Athens-Cairo'.
 		spec package: 'Athens-Examples'.
 
-		spec package: 'TxText-Model'.
-		spec package: 'TxText-Athens'.
-		spec package: 'TxText-Styler'.
-
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
@@ -166,39 +156,13 @@ baseline: spec
 		spec package: 'OSWindow-Core'.
 		spec package: 'OSWindow-SDL2'.
 		spec package: 'OSWindow-VM'.
-		
+				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'FuzzyMatcher'.
 		spec package: 'Versionner-Nautilus'.
 		spec package: 'STON-Text support'.
-		
-		"spec package: 'ConfigurationOfGTSpotter'.
-		spec package: 'ConfigurationOfMooseAlgos'.
-		spec package: 'ConfigurationOfPharoMetacello'.
-		spec package: 'ConfigurationOfAthens'.
-		spec package: 'ConfigurationOfDependencyAnalyser'.
-		spec package: 'ConfigurationOfVersionner'.
-		spec package: 'ConfigurationOfFuelPlatform'.
-		spec package: 'ConfigurationOfFuel'.
-		spec package: 'ConfigurationOfUnifiedFFI'.
-		spec package: 'ConfigurationOfFlatQA'.
-		spec package: 'ConfigurationOfEpicea'.
-		spec package: 'ConfigurationOfGlamourCore'.
-		spec package: 'ConfigurationOfGTEventRecorder'.
-		spec package: 'ConfigurationOfSton'.
-		spec package: 'ConfigurationOfFastTable'.
-		spec package: 'ConfigurationOfSessionManager'.
-		spec package: 'ConfigurationOfCatalog'.
-		spec package: 'ConfigurationOfGToolkitCore'.
-		spec package: 'ConfigurationOfGTDebugger'.
-		spec package: 'ConfigurationOfZincHTTPComponents'.
-		spec package: 'ConfigurationOfOSWindow'.
-		spec package: 'ConfigurationOfShoreLineReporter'.
-		spec package: 'ConfigurationOfTxText'.
-		spec package: 'ConfigurationOfGTPlaygroundCore'.
-		spec package: 'ConfigurationOfGTInspectorCore'.	"
 		
 		"SortFunctions (standalone)"
 		spec package: 'SortFunctions-Core'.
@@ -210,7 +174,7 @@ baseline: spec
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
-		spec package: 'Collections-DoubleLinkedListTests'.
+		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'ContributingToTheCatalogHelp'.
@@ -237,7 +201,7 @@ baseline: spec
 		spec package: 'HowToContributeHelp'.
 		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking-Tests'.
-		spec package: 'JobsTests'.
+		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
@@ -249,6 +213,7 @@ baseline: spec
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
+		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
@@ -272,28 +237,25 @@ baseline: spec
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
-		spec package: 'ScriptLoader-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
 		spec package: 'System-CachingTests'.
+		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
 		spec package: 'System-Localization-Tests'.
 		spec package: 'System-SessionManager-Tests'.
 		spec package: 'System-Settings-Rules'.
 		spec package: 'System-Settings-Tests'.
 		spec package: 'System-Support-Rules'.
-		spec package: 'System-SupportTests'.
+		spec package: 'System-Support-Tests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
-		spec package: 'TxText-AthensTests'.
-		spec package: 'TxTextTests-Model'.
-		spec package: 'UpdateStreamer-Tests'.
 		spec package: 'WorldMenuHelp'.	
-		spec package: 'WriteBarrierTests'.
+		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
@@ -301,6 +263,7 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.
 	].

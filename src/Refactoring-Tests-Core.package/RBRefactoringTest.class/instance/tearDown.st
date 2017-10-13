@@ -1,4 +1,4 @@
-set up
+running
 tearDown
 	super tearDown.
 	RBRefactoringManager instance release.

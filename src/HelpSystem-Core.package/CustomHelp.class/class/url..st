@@ -7,15 +7,7 @@ url: aString
 	
 	color := Color fromHexString: '3196D3'.
 	
-	clickBlock := [ 
-		self environment 
-			at: #WebBrowser 
-			ifPresent: [ :browserClass | browserClass openOn: aString ]
-			ifAbsent: [ 
-				Clipboard clipboardText: aString.
-				self inform: 'The URL has been pasted into your clipboard'.
-			]
-	].
+	clickBlock := [ WebBrowser openOn: aString ].
 
 	^ aString asText 
 		addAttribute: (	TextAction new actOnClickBlock: clickBlock);

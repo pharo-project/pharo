@@ -1,4 +1,3 @@
 drawing
 selectedColor
-
-	^ Smalltalk ui theme class lightBaseColor
+	^ Smalltalk ui theme selectionColor

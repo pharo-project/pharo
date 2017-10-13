@@ -1,3 +1,0 @@
-accessing
-privateKey
-	^ privateKeyLocation location

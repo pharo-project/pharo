@@ -3,10 +3,9 @@ logStdErrorDuring: aBlock
 	| stderr |
 	[
 		"install the line end conversion and force initialize the converter"
-		stderr := FileStream  stderr
-					wantsLineEndConversion: true;
-					converter;
-					yourself.
+		stderr := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+			on: Stdio stderr
+			encoding: 'utf8').
 		
 		"log in red"
 		stderr nextPut: Character escape; nextPutAll: '[31m'.

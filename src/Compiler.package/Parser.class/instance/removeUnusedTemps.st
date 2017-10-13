@@ -12,7 +12,7 @@ removeUnusedTemps
 		and: [(str at: tempsMark) = $|]) ifFalse: [^ self].
 	encoder unusedTempNames do:
 		[:temp | | start end |
-		(UnusedVariable name: temp) ifTrue:
+		(UnusedVariableDetected name: temp) ifTrue:
 			[(encoder encodeVariable: temp) isUndefTemp
 				ifTrue:
 					[end := tempsMark.

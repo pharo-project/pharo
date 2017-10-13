@@ -1,3 +1,0 @@
-initialization
-validate
-	"TODO"

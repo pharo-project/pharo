@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "<historical>",
+	"commentStamp" : "",
 	"super" : "KomitableObject",
 	"category" : "Komitter-Models",
 	"classinstvars" : [ ],

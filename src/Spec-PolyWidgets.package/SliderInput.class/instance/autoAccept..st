@@ -1,3 +1,4 @@
 accessing
 autoAccept: aBoolean
-^ 	input autoAccept: aBoolean
+	
+	input autoAccept: aBoolean

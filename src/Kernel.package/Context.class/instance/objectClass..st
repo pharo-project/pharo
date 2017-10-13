@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 objectClass: aReceiver
 	<primitive: 111>
 	self primitiveFailed

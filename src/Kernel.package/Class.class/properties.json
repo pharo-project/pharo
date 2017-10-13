@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TClass classTrait",
+	"commentStamp" : "<historical>",
+	"super" : "ClassDescription",
+	"category" : "Kernel-Classes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"subclasses",
@@ -12,11 +16,5 @@
 		"localSelectors"
 	],
 	"name" : "Class",
-	"commentStamp" : "<historical>",
-	"super" : "ClassDescription",
-	"traitcomposition" : "TClass",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Kernel-Classes"
+	"type" : "normal"
 }

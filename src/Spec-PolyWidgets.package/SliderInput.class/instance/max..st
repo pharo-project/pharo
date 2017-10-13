@@ -1,3 +1,3 @@
 accessing
 max: aNumber
-^ 	slider max: aNumber
+	slider max: aNumber

@@ -1,4 +1,4 @@
-typing support
+typing - support
 backTo: startIndex
 	"During typing, backspace to startIndex.  Deleted characters fall into three
 	 clusters, from left to right in the text: (1) preexisting characters that were

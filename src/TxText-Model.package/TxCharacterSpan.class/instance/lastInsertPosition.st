@@ -1,3 +1,0 @@
-accessing
-lastInsertPosition
-	^ characters size 

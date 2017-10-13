@@ -1,3 +1,3 @@
 api-shortcuts
 beEncrypted
-	^ self input beEncrypted
+	self input beEncrypted

@@ -1,3 +1,3 @@
 api-shortcuts
 label
-	^ self button label
+	self button label

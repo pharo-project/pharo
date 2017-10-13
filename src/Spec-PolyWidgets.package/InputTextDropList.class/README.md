@@ -1,4 +1,4 @@
-I am an elementary Spec widget that associates an TextInputField and a DropListModel.
+I am an elementary Spec widget that associates an TextInputField and a DropListPresenter.
 
 self example
 

@@ -1,3 +1,0 @@
-accessing
-text
-	^ layout text

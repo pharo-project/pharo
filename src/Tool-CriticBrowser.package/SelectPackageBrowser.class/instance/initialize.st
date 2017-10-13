@@ -3,8 +3,8 @@ initialize
 
 	| wrappingBlock |
 	super initialize.	
-	toSelectModel := self instantiate: ListModel.
-	selectedModel := self instantiate: ListModel.
+	toSelectModel := self instantiate: ListPresenter.
+	selectedModel := self instantiate: ListPresenter.
 	selectedModel beMultipleSelection.
 	toSelectModel beMultipleSelection.
 	testPackage := OrderedCollection new.

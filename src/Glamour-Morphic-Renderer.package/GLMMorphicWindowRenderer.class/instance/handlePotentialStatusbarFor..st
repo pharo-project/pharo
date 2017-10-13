@@ -8,5 +8,7 @@ handlePotentialStatusbarFor: aRenderable
 			bottomOffset := (0 - (LabelMorph contents: 'XXX') minHeight) * 1.2.
 			window
 				addMorph: statusbarMorph
-				fullFrame: (LayoutFrame fractions: (0 @ 1 corner: 1 @ 1) offsets: (2 @ bottomOffset corner: -2 @ 0)) ].
+				fullFrame: (LayoutFrame identity 
+					fractions: (0 @ 1 corner: 1 @ 1) offsets: (2 @ bottomOffset corner: -2 @ 0); 
+					yourself) ].
 	^ bottomOffset

@@ -1,3 +1,0 @@
-actions
-chooseReference 
-	self subclassResponsibility

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "ReExceptionStrategyBaseTest",
+	"category" : "Renraku-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"brokenRule"
+	],
+	"name" : "ReSmokeExceptionStrategyTest",
+	"type" : "normal"
+}

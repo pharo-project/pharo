@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:30",
+	"super" : "Object",
+	"category" : "JenkinsTools-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "HDReport",
+	"type" : "normal"
+}
