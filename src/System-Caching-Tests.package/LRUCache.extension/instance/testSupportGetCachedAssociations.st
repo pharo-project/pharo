@@ -1,4 +1,4 @@
-*System-CachingTests
+*System-Caching-Tests
 testSupportGetCachedAssociations
 	| result |
 	result := OrderedCollection new.
