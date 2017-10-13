@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "Spirita 7/25/2016 17:22",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Spec-PolyWidgets-Button",
 	"classinstvars" : [ ],
 	"pools" : [ ],
