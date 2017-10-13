@@ -7,9 +7,7 @@ testHasAbstractMethods
 	self assert: Behavior hasAbstractMethods.
 	self deny: Behavior class hasAbstractMethods.
 	
-	
 	self assert: ObjectLayout hasAbstractMethods.
 	"ObjectLayout defines methods because its class side contains abstract methods"
 	self assert: ObjectLayout class hasAbstractMethods.
-	
 	
