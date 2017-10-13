@@ -1,0 +1,4 @@
+accessing
+thumbsDownButton
+	^ self secondButton
+	

@@ -1,0 +1,3 @@
+accessing
+rightButton
+	^ self secondButton

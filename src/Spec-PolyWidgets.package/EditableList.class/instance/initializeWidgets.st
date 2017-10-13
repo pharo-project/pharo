@@ -13,15 +13,14 @@ initializeWidgets
 	removeButton
 		icon: (self iconNamed: #deleteIcon);
 		help: 'Remove a item from the list'.
-	upButton
-		icon: (self iconNamed: #upIcon);
+	self upButton
 		help: 'Move this item up from one element'.
-	downButton
-		icon: (self iconNamed: #downIcon);
+	self downButton
 		help: 'Move this item down from one element'.
-	topButton
-		icon: (self iconNamed: #topIcon);
+	self topButton
 		help: 'Move this item on the first position of the list'.
-	bottomButton
-		icon: (self iconNamed: #bottomIcon);
-		help: 'Move this item on the last position of the list'
+	self bottomButton
+		help: 'Move this item on the last position of the list'.
+	self focusOrder
+		add: addDeleteButtons;
+		add: topUpDownBottomButtons

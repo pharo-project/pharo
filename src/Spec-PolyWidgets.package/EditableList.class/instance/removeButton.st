@@ -1,3 +1,3 @@
-accessing
+shortcuts
 removeButton
-	^ removeButton
+	^ self addDeleteButtons removeButton

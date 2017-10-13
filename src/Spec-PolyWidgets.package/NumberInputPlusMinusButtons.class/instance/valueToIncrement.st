@@ -1,0 +1,3 @@
+accessing
+valueToIncrement
+	^ valueToIncrement value
