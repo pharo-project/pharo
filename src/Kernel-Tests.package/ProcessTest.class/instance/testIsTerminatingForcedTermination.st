@@ -1,4 +1,4 @@
-testing
+tests - termination
 testIsTerminatingForcedTermination
 	| process unwound started terminator unwindChecks terminationSemaphore |
 	unwound := false.

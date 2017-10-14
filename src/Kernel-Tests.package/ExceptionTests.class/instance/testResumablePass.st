@@ -1,4 +1,4 @@
-testing-outer
+tests - outer
 testResumablePass
 
 	| result |

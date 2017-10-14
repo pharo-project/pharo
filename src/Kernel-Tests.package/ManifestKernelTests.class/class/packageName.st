@@ -1,3 +1,3 @@
-meta-data
+metadata
 packageName
 	^ #KernelTests

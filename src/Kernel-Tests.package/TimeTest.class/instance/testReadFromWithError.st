@@ -1,4 +1,4 @@
-tests input
+tests - input
 testReadFromWithError
 	"self debug: #testReadFromWithError"
 	

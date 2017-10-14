@@ -1,4 +1,4 @@
-testing - navigation
+tests - navigation
 testReferencedClasses
 	{(ExceptionTester -> { MyTestNotification. Warning. String. MyResumableTestError. OrderedCollection. MyTestError}). 
 	 (CollectionCombinator -> {Array}).
