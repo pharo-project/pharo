@@ -1,4 +1,4 @@
-testing
+tests - unsubscribing
 testUnsubscribeBlock
 	| announcement |
 	announcer

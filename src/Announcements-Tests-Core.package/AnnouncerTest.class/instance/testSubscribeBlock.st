@@ -1,4 +1,4 @@
-testing
+tests - subscribing
 testSubscribeBlock
 	| announcement instance |
 	announcer
