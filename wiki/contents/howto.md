@@ -13,6 +13,7 @@
 - [Startup scripts](https://marianopeck.wordpress.com/2012/05/12/startuploader-running-startup-scripts-in-pharo/)
 - [Profile your code](http://astares.blogspot.gr/2017/08/profiling-in-pharo.html)
 - [Generate equality and hashing for a class](http://forum.world.st/Equals-and-HashCode-Builder-tp4974958p4975087.html)
+- [Optimizing for Large (i.e. several GB) Images](https://clementbera.wordpress.com/2017/03/12/tuning-the-pharo-garbage-collector/)
 
 ## Demos/Tutorials
 - [How to make a SMS bot](http://www.codeandmusic.com/why-i-chose-pharo-smalltalk-to-build-my-bot/?utm_content=buffera7148&utm_medium=social&utm_source=facebook.com&utm_campaign=buffer)
