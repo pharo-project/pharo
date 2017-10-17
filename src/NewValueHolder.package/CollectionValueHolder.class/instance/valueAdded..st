@@ -1,4 +1,4 @@
 announcing
 valueAdded: newValue
-	self announcer announce: (ValueAdded newValue: newValue).
+	announcer announce: (ValueAdded newValue: newValue).
 	self valueChanged: newValue
