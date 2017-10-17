@@ -1,4 +1,4 @@
-announcements
+announcing
 whenChangedDo: aBlock
 	"Culled block [ :newValue :oldValue :announcement :announcer | ]"
 
