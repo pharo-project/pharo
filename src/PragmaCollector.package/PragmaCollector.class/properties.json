@@ -8,7 +8,6 @@
 	"instvars" : [
 		"collected",
 		"filter",
-		"announcer",
 		"announcing"
 	],
 	"name" : "PragmaCollector",

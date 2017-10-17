@@ -4,7 +4,6 @@
 	"instvars" : [
 		"selection",
 		"scrollValue",
-		"announcer",
 		"classIsMeta",
 		"selectedClassName",
 		"selectedMethodName",
