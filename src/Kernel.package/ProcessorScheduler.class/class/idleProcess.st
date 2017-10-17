@@ -3,4 +3,4 @@ idleProcess
 	"A default background process which is invisible."
 
 	[true] whileTrue:
-		[self relinquishProcessorForMicroseconds: 50000]
+		[self relinquishProcessorForMicroseconds: 1000]
