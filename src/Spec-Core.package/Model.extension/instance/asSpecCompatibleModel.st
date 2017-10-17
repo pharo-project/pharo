@@ -1,0 +1,4 @@
+*Spec-Core
+asSpecCompatibleModel
+
+	^ self

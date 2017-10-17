@@ -1,7 +1,7 @@
 instance creation
-owner: anOwningPresenter
+owner: anOwningPresenter on: aDomainObject
 
 	^ self basicNew
 		owner: anOwningPresenter;
-		initialize;
+		on: aDomainObject;
 		yourself

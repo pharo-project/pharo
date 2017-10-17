@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'Spec-Tests'!
+SystemOrganization addCategory: #'Spec-Tests-Core'!
 SystemOrganization addCategory: #'Spec-Tests-Core-Support'!
 SystemOrganization addCategory: #'Spec-Tests-Core-Widgets'!
 SystemOrganization addCategory: #'Spec-Tests-Deprecated'!

@@ -1,0 +1,4 @@
+accessing - private
+specCompatibleModel
+
+	^ specCompatibleModel

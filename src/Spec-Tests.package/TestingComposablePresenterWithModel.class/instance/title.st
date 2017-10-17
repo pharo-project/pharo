@@ -1,0 +1,4 @@
+specs
+title
+
+	^ 'Point'
