@@ -9,4 +9,4 @@ whenChangedDo: aBlock
 		cull: announcement oldValue
 		cull: announcement
 		cull: ann ].
-	self announcer when: ValueChanged do: block
+	announcer when: ValueChanged do: block
