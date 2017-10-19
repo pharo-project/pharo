@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "OmStoreTest",
-	"category" : "OmbuTests",
+	"category" : "Ombu-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

@@ -1,16 +1,11 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "TestCase",
-	"category" : "OmbuTests",
+	"category" : "Ombu-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"store",
-		"anEntry",
-		"aReference",
-		"otherStore"
-	],
-	"name" : "OmStoreTest",
+	"instvars" : [ ],
+	"name" : "OmStoreFactoryTest",
 	"type" : "normal"
 }
