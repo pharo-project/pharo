@@ -21,7 +21,7 @@ baseline: spec
 		spec package: 'Hiedra'.
 		spec package: 'EpiceaBrowsers'.
 		spec package: 'HiedraTests'. 
-		spec package: 'OmbuTests'.
+		spec package: 'Ombu-Tests'.
 		spec package: 'EpiceaTests'.
 		spec package: 'EpiceaBrowsersTests'.
 
