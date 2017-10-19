@@ -1,4 +1,4 @@
-testing-references
+tests - references
 testVersionReference
 	gofer 
 		repository: self monticelloRepository; 

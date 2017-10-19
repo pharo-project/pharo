@@ -1,4 +1,4 @@
-tests-point functions
+tests - point functions
 testEightNeighbors
 
 	| x y |

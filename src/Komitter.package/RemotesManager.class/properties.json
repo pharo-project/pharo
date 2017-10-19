@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "ChristopheDemarey 1/8/2014 17:00",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Komitter-Support",
 	"classinstvars" : [
 		"addRemoteIcon",

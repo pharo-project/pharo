@@ -47,25 +47,25 @@ exampleBasicControls
 							getValue: #value setValue: #value: help: 'This is a disabled slider') disable}.
 			dialog newVerticalSeparator.
 			dialog newLabelGroup: {
-			'Drop List'->(dialog newDropListFor: (ListModel new items: #('One' 'Two' 'Three' 'Four'))
+			'Drop List'->(dialog newDropListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex: help: 'This is a drop list').
-			'Disabled Drop List'->(dialog newDropListFor: (ListModel new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
+			'Disabled Drop List'->(dialog newDropListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a disabled drop list') disable.
-			'Editable Drop List'->(dialog newEditableDropListFor: (ListModel new items: SortedCollection new)
+			'Editable Drop List'->(dialog newEditableDropListFor: (ListPresenter new items: SortedCollection new)
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							addToList: #add: ghostText: 'Enter new items' getEnabled: nil help: 'This is an editable drop list').
-			'Morph Drop List'->(dialog newMorphDropListFor: (ListModel new items: ((Color red wheel: 20)
+			'Morph Drop List'->(dialog newMorphDropListFor: (ListPresenter new items: ((Color red wheel: 20)
 									collect: [:c | Morph new extent: 120@12; color: c]))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a morph drop list').
-			'Normal List'->((dialog newListFor: (ListModel new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
+			'Normal List'->((dialog newListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
 							list: #getList selected: #selectedIndex changeSelected: #setSelectedIndex:
 							help: 'This is a list') minWidth: 120).
-			'Disabled List'->(dialog newListFor: (ListModel new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
+			'Disabled List'->(dialog newListFor: (ListPresenter new items: #('One' 'Two' 'Three' 'Four'); setSelectedIndex: 3)
 							list: #getList selected: #selectedIndex changeSelected: #setSelectedIndex:
 							help: 'This is a disabled list') disable.
-			'Morph List'->(dialog newMorphListFor: (ListModel new items: ((Color red wheel: 20)
+			'Morph List'->(dialog newMorphListFor: (ListPresenter new items: ((Color red wheel: 20)
 									collect: [:c | Morph new extent: 80@12; color: c]))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a morph list').

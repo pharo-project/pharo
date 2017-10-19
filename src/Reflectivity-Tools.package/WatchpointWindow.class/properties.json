@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "johanfabry 11/24/2015 14:11",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Reflectivity-Tools-Watchpoints",
 	"classinstvars" : [ ],
 	"pools" : [ ],

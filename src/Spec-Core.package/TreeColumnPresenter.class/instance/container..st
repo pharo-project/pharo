@@ -1,4 +1,4 @@
 api
-container: aTreeModel
+container: aTreePresenter
 
-	container value: aTreeModel
+	container value: aTreePresenter

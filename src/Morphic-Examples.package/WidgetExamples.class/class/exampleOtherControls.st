@@ -51,13 +51,13 @@ exampleOtherControls
 			(dialog newColumn: {
 				(dialog newExpander: 'An Expander' forAll: {
 					dialog newLabel: 'Expanded!'.
-					builder newMorphListFor: (ListModel new items: ((Color red wheel: 15)
+					builder newMorphListFor: (ListPresenter new items: ((Color red wheel: 15)
 									collect: [:c | Morph new extent: 80@12; color: c]))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a morph drop list'}) minWidth: 100.
 				dialog newExpander: 'Another' forAll: {
 					dialog newLabel: 'Expanded!'.
-					builder newMorphDropListFor: (ListModel new items: ((Color red wheel: 8)
+					builder newMorphDropListFor: (ListPresenter new items: ((Color red wheel: 8)
 									collect: [:c | Morph new extent: 80@12; color: c]))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a morph drop list'}})

@@ -88,7 +88,7 @@ spec group: 'General-Tests-Group' with: #(
 	'SUnit-Tests'
 	'Slot-Tests'
 	'Spec-Tests'
-	'System-CachingTests'
+	'System-Caching-Tests'
 	'System-Hashing-Tests'
 	'System-History-Tests'
 	'System-Localization-Tests'

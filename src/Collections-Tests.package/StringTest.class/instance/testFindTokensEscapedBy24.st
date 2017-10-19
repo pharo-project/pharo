@@ -1,4 +1,4 @@
-testing - tokenizing
+tests - tokenizing
 testFindTokensEscapedBy24
 
 	| tokens |

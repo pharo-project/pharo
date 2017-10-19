@@ -1,4 +1,4 @@
-testing - class variables
+tests - class variables
 testClassVarNames
 
 	self assert: (Object classVarNames includes: #DependentsFields).

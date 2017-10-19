@@ -1,4 +1,4 @@
-class-var
+tests - class variables
 testCreateClassAccessorsIsValidIfAccessIsMissed
 	| suggestion context |
 	

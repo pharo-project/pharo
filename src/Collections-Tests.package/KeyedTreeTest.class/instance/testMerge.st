@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testMerge
 	"Test the merge method for success and failure modes."
 

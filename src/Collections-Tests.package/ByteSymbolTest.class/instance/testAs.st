@@ -1,4 +1,4 @@
-test - creation
+tests - creation
 testAs
 	"self debug: #testAs"
 

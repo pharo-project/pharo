@@ -1,6 +1,6 @@
 {
-	"commentStamp" : "<historical>",
-	"super" : "ComposableModel",
+	"commentStamp" : "PavelKrivanek 10/12/2017 16:18",
+	"super" : "ComposablePresenter",
 	"category" : "Versionner-Spec-Browser",
 	"classinstvars" : [ ],
 	"pools" : [ ],
