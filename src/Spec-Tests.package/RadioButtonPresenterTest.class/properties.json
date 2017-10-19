@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "ListPresenterTest",
-	"category" : "Spec-Tests-PolyWidgets-Labelled",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-Core-Widgets",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "LabelledListTest",
+	"name" : "RadioButtonPresenterTest",
 	"type" : "normal"
 }

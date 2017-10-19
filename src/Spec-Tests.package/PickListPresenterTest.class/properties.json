@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "ListPresenterTest",
-	"category" : "Spec-Tests-PolyWidgets-Labelled",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-PolyWidgets-ListAndTree",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "LabelledListTest",
+	"name" : "PickListPresenterTest",
 	"type" : "normal"
 }

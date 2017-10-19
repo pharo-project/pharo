@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "DropListModelTest",
+	"super" : "DropListPresenterTest",
 	"category" : "Spec-Tests-PolyWidgets-Labelled",
 	"classinstvars" : [ ],
 	"pools" : [ ],

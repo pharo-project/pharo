@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"radio1",
+		"radio2"
+	],
+	"name" : "RadioButtonGroupPresenterTest",
+	"type" : "normal"
+}
