@@ -1,11 +1,11 @@
 examples - filtering
-gtExampleWorldMenuSearchOn: aSpotter
+gtExampleWorldMenuSearchOn
 	<gtExample>
 	<label: 'World menu search'>
 	<description: 'A spotter for searching through the world menu'>
-	<dependsOn: #gtExampleBasic>
-
-	^ aSpotter
+	| spotter |
+	spotter := self gtExampleBasic.
+	^ spotter
 		filterByMethods: {
 			GTSpotter>>#spotterWorldMenuFor:}
 	

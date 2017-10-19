@@ -1,11 +1,11 @@
 examples - filtering
-gtExampleHelpSearchOn: aSpotter
+gtExampleHelpSearch
 	<gtExample>
 	<label: 'Help search'>
 	<description: 'A spotter for searching through help pages.'>
-	<dependsOn: #gtExampleBasic>
-	
-	^ aSpotter
+	| spotter |
+	spotter := self gtExampleBasic.	
+	^ spotter
 		filterByMethods: {
 			GTSpotter>>#spotterForHelpTopicFor:.
 			HelpTopic>>#spotterForHelpTopicFor:}

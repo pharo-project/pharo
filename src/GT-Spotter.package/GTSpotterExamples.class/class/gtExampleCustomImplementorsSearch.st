@@ -1,12 +1,12 @@
 examples - filtering
-gtExampleCustomImplementorsSearchOn: aSpotter
+gtExampleCustomImplementorsSearch
 	<gtExample>
 	<label: 'Custom implementors search'>
 	<description: 'A spotter for searching through the implementors of a 
 	method that overrides properties of the search step.'>
-	<dependsOn: #gtExampleOnCompliedMethod>
-	
-	^ aSpotter
+	| spotter |
+	spotter := self gtExampleOnCompliedMethod.	
+	^ spotter
 		processorsFilter: (GTSpotterMethodListProcessorFilter new 
 			allowProcessorsFrom: CompiledMethod>>#spotterForImplementorsFor: 
 			configuredWith: [ :aProcessor | aProcessor
