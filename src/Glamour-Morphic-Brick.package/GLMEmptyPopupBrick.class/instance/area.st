@@ -5,8 +5,6 @@ area
 	firstBounds := self subbricks first outerBounds.
 	secondBounds := self subbricks second outerBounds.
 
-	(secondBounds origin x - firstBounds origin x) logCr.
-
 	^ GLMArea
 		origin: firstBounds origin
 		vectors: { 
