@@ -1,19 +1,18 @@
 running
-check: anAST forCritiquesDo: aCriticBlock
+check: aMethod forCritiquesDo: aCriticBlock
 
-	anAST isMethod ifFalse: [ ^ self ].
-	anAST pragmaNamed: #gtInspectorPresentationOrder: ifAbsent: [ ^ self ].
+	(aMethod hasPragmaNamed: #gtInspectorPresentationOrder:) ifFalse: [ ^ self ].
 	
-	^ (anAST statements
+	^ (aMethod ast statements
 			reject: [ :statement |
 				self
-					presentation: anAST arguments first
+					presentation: aMethod ast arguments first
 					isTheLeftmostRecepientIn: (statement isReturn
 						ifTrue: [ statement value ]
 						ifFalse: [ statement ]) ]			
 			thenCollect: [ :statement |
 				aCriticBlock cull: (ReTrivialCritique
 					withAnchor: (ReIntervalSourceAnchor
-						entity: anAST
+						entity: aMethod
 						interval: statement sourceInterval)
 					by: self) ])

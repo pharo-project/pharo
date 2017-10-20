@@ -1,4 +1,4 @@
-testing - instance creation
+tests - instance creation
 testSpace
 	"self debug: #testSpace"
 	

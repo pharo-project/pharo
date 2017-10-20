@@ -1,4 +1,4 @@
-setup
+running
 setUp
 
 	localTimeZoneToRestore := DateAndTime localTimeZone.

@@ -1,7 +1,7 @@
 initialization
-adapt: aComposableModel
+adapt: aComposablePresenter
 
-	model := aComposableModel.
-	aComposableModel addDependent: self.
+	model := aComposablePresenter.
+	aComposablePresenter addDependent: self.
 
 	widget := self buildWidget.

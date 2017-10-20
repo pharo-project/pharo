@@ -1,4 +1,0 @@
-*renraku
-reBanName
-
-	^ 'Class'

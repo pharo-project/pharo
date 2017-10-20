@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/5/2014 09:30",
 	"super" : "TestResource",
-	"category" : "Gofer-Tests",
+	"category" : "Gofer-Tests-Resources",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

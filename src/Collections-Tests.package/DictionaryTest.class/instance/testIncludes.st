@@ -1,4 +1,4 @@
-test - testing
+tests - testing
 testIncludes
 	| o1 o2 newDict |
 	self assert: (nonEmptyDict includes: self element).

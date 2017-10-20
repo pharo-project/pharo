@@ -16,6 +16,7 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
+	'PerformMessageCommandLineHandler' 	"standalone"
 ).	
 	
 spec group: 'NodeNavigation-Group' with: #(
@@ -57,7 +58,7 @@ spec group: 'General-Tests-Group' with: #(
 	'MonticelloMocks'
 	'FuelTests'
 	'Balloon-Tests'
-	'Collections-DoubleLinkedListTests'
+	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
@@ -87,16 +88,17 @@ spec group: 'General-Tests-Group' with: #(
 	'SUnit-Tests'
 	'Slot-Tests'
 	'Spec-Tests'
-	'System-CachingTests'
+	'System-Caching-Tests'
+	'System-Hashing-Tests'
 	'System-History-Tests'
 	'System-Localization-Tests'
 	'System-SessionManager-Tests'
 	'System-Settings-Tests'
-	'System-SupportTests'
+	'System-Support-Tests'
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
 	'Tools-Test'	
-	'WriteBarrierTests'
+	'WriteBarrier-Tests'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
@@ -154,9 +156,9 @@ spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Tests-Group'
 ).
 
-"spec group: 'Deprecated-Group' with: #(
+spec group: 'Deprecated-Group' with: #(
 	'Deprecated70'
-)."
+).
 
 spec group: 'Manifest-Core-Group' with: #(
 	'Manifest-Core'
@@ -208,7 +210,6 @@ spec group: 'Shout-Group' with: #(
 ).
 
 spec group: 'MetacelloExtras-Core' with: #(
-	'Metacello-GitBasedRepository'	
 	'Metacello-Bitbucket'	
 	"'Metacello-GitHub'"
 ).
@@ -263,6 +264,10 @@ spec group: 'Catalog-Group' with: #(
 spec group: 'SortFunctions-Group' with: #(
 	'SortFunctions-Core'
 	'SortFunctions-Tests'
+).
+
+spec group: 'ReferenceFinder-Group' with: #(
+	'ReferenceFinder-Core'
 ).
 
 spec group: 'QualityAssistant-Core-Group' with: #(
@@ -421,13 +426,14 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'RPackage-Tests' 
 	'Collections-Tests'
 	'Kernel-Tests' 
+	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
 	'Files-Tests' 
-	'JobsTests' 
+	'Jobs-Tests' 
 	'Multilingual-Tests'
 	'OpalCompiler-Tests' 
 	'Random-Tests'
@@ -479,7 +485,7 @@ spec group: #default with: #(
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	"'Deprecated-Group'"
+	'Deprecated-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
@@ -495,8 +501,8 @@ spec group: #default with: #(
 	'NodeNavigation-Group'
 	'Versionner-Group'
 	'General-Tests-Group'
-	
 	'SortFunctions-Group'	
+	'ReferenceFinder-Group'
 	
 	'BaselineOfPharoBootstrap'
 ).

@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "jfabry 12/13/2016 15:51",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Spec-PolyWidgets-Widgets",
 	"classinstvars" : [ ],
 	"pools" : [ ],

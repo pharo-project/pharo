@@ -1,4 +1,4 @@
-suggstions-by-selection
+tests - suggestions by selection
 testSuggestionForATemporaryVariableNodeIncludesAllDeclared
 	| suggestions expected|
 

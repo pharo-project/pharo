@@ -27,3 +27,4 @@ downloadBasicFile: url to: outputFileName username: username pass: pass
      [ proc isRunning ] whileTrue: [ (Delay forMilliseconds: 100) wait ].
      out close.
      err close.
+	^ errorFileName 

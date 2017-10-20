@@ -1,4 +1,4 @@
-as yet unclassified
+operating
 giveFocusToPreviousFrom: aPresenter for: aModel
 	| focus |
 	focus := self presenters.

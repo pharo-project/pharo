@@ -1,4 +1,4 @@
-initialize-release
+running
 tearDown
 	toDelete
 		select: [ :path | filesystem exists: path ]

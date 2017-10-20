@@ -1,7 +1,7 @@
 initialization
-adapt: aComposableModel
+adapt: aComposablePresenter
 
-	super adapt: aComposableModel.
+	super adapt: aComposablePresenter.
 	widget
 		on: #click
 		send: #click

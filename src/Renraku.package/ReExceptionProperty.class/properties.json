@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "YuriyTymchuk 7/15/2017 23:46",
+	"super" : "ReProperty",
+	"category" : "Renraku-Critiques",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stack",
+		"message"
+	],
+	"name" : "ReExceptionProperty",
+	"type" : "normal"
+}

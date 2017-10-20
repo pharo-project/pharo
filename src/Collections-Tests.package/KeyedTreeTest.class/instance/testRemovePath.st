@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testRemovePath
 	"Test the remove path method for success and failure modes."
 

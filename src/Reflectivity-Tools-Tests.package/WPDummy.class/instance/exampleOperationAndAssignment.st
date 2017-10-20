@@ -1,4 +1,4 @@
-as yet unclassified
+examples
 exampleOperationAndAssignment
 	|a|
 	a := 1 + 1.

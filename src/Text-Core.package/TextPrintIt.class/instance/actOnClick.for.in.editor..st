@@ -1,4 +1,4 @@
-as yet unclassified
+evaluating
 actOnClick: anEvent for: anObject in: paragraph editor: editor
 
 	| result |

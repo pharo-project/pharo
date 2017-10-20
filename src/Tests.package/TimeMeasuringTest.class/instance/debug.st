@@ -1,4 +1,4 @@
-as yet unclassified
+debugging
 debug
 	self resources do: [:res | 
 		res isAvailable ifFalse: [^res signalInitializationError]].

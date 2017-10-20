@@ -1,3 +1,3 @@
 accessing colors
 warningBackgroundColor
-	^ self warningTextColor darker darker
+	^ Color yellow

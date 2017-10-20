@@ -27,31 +27,18 @@ initializeCommandLineHandlerAndErrorHandling
 	Smalltalk globals 
 		at: #Transcript
 		put: (NonInteractiveTranscript stdout install).
-	CompilationContext initialize.
 	Float initialize.
 
-	"Initialize classes related to compiler"
-"	InflateStream initialize.
-	ByteTextConverter initialize.
-	ZipWriteStream initialize."
 	SetElement initialize.
 	ExternalSemaphoreTable initialize.
-"	MacRomanTextConverter initialize."
 	Collection initialize.
-"	ISOLanguageDefinition initialize."
 	CompiledMethod initialize.
-"	MD5NonPrimitive initialize.
-	DangerousClassNotifier initialize."
 	Categorizer initialize.
 	Slot initialize.
-	"CP1252TextConverter initialize.
-	SHA1 initialize."
 	TraitBehavior initialize.
 	RPackage initialize.
-	Behavior initializeClassProperties.
-"	CompilationContext initialize."
-"	OCASTTranslator initialize.
-"
+	Behavior initialize.
+
 	UIManager classVarNamed: 'Default' put: NonInteractiveUIManager new.
 	UIManager default activate.
 
@@ -62,6 +49,15 @@ initializeCommandLineHandlerAndErrorHandling
 	"Create the ASTCache and add it to the startup list"
 	ASTCache initialize.
 	
+	Color initialize.
+	InstructionStream initialize.
+	SmallInteger initialize.
+
+	"FFI"
+	ExternalObject initialize.
+	ExternalFunction initialize.
+	ExternalType initialize.
+
 	"Initialize basic command line behaviour"
 	Stdio initialize.
 	NonInteractiveTranscript initialize.

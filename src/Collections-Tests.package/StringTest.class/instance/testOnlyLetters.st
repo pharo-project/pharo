@@ -1,4 +1,4 @@
-testing
+tests
 testOnlyLetters
 
 self assert: ('abc98def' onlyLetters) = 'abcdef'.

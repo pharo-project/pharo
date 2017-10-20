@@ -1,4 +1,4 @@
 accessing
 environmentsView
 	^ environmentsView ifNil: [ 
-		environmentsView := self instantiate: DropListModel. ]
+		environmentsView := self instantiate: DropListPresenter. ]

@@ -1,4 +1,4 @@
-testing - navigation
+tests - navigation
 testMethodsReferencingClasses
 
 	| collectionOfMethods collectionOfMethodsShouldBe |

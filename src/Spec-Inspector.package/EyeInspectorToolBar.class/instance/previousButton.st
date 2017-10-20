@@ -2,7 +2,7 @@ accessing
 previousButton
 	previousButton
 		ifNil: [ 
-			previousButton := self instantiate: ButtonModel.
+			previousButton := self instantiate: ButtonPresenter.
 			previousButton label: '<'.
 			previousButton
 				action: [ 

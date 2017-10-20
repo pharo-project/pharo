@@ -1,4 +1,4 @@
-test - implementation
+tests - implementation
 testFindElementOrNil
 	"Set>>findElementOrNil: takes an associaiton (when called on a dictionary) an integer, the index of the first
 	position at is either equal to the assocation or which is nil"

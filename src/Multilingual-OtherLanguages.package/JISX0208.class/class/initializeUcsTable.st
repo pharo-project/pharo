@@ -22,4 +22,4 @@ initializeUcsTable
 			jisX0208Table at: code put: u.
 		].
 	].
-	UcsTable := jisX0208Table.
+	ucsTable := jisX0208Table.

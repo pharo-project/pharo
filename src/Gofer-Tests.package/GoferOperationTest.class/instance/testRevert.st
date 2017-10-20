@@ -1,4 +1,4 @@
-testing
+tests
 testRevert
 	gofer
 		package: 'GoferFoo';

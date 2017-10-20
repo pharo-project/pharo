@@ -23,5 +23,5 @@ initializeUcsTable
 			ksX1001Table at: code put: u.
 		].
 	].
-	UcsTable := ksX1001Table.
+	ucsTable := ksX1001Table.
 

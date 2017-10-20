@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TAssertable classTrait",
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Kernel-Tests-Chronology",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"dayPosition",
@@ -11,11 +15,5 @@
 		"date"
 	],
 	"name" : "DatePrintFormatTester",
-	"commentStamp" : "<historical>",
-	"super" : "Object",
-	"traitcomposition" : "TAssertable",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Kernel-Tests-Chronology"
+	"type" : "normal"
 }

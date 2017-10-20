@@ -1,0 +1,3 @@
+Finds reference paths between objects to help find memory leaks. It finds the shortest paths between the objects. 
+
+If you want to find a path between the "Smalltalk" global dictionary and some instance of a class, you can use the findPathToInstanceOf: method. For example, "ReferenceFinder findPathToInstanceOf: WriteStream" will find a reference path between Smalltalk and an instance of WriteStream.

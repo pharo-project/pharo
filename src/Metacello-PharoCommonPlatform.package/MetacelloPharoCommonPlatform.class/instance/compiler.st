@@ -1,3 +1,3 @@
 utilities
 compiler
-	^ self class environment at: #Compiler
+	^ Smalltalk compilerClass

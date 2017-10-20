@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "NicolaiHess 2/16/2015 14:58",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Spec-Tools-Keymapping",
 	"classinstvars" : [ ],
 	"pools" : [ ],

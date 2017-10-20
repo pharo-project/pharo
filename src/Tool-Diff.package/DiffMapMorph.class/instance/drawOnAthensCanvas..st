@@ -1,4 +1,4 @@
-nil
+drawing
 drawOnAthensCanvas: anAthensCanvas
 	"Draw the indicators for the mappings."
 	

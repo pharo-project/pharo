@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 workingCopyPredicate
 	^[:e | '*Traits*' match: e package name]

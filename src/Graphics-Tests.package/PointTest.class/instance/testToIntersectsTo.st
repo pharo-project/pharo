@@ -1,4 +1,4 @@
-tests-geometry
+tests - geometry
 testToIntersectsTo
 
 	self assert: ( (1 @ 1) to: ( 1 @ 6) intersects: (1 @ 1) to: (2 @ 9) ).

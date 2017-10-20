@@ -1,1 +1,0 @@
-A MultiColumnListModel is a spec model for Multi columns list

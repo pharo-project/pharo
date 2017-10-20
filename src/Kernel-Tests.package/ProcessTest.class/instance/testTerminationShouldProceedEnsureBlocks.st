@@ -1,4 +1,4 @@
-testing
+tests - termination
 testTerminationShouldProceedEnsureBlocks
 
 	| ensureCalled process semaphore |

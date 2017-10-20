@@ -1,0 +1,1 @@
+This is deprecated class because the original class TickingWindowModel was renamed to TickingWindowPresenter. You should stop to use this class and modify your code to use TickingWindowPresenter.

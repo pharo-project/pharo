@@ -1,4 +1,4 @@
-valid-context
+tests - valid context
 testContextForNautilusItsANautilusContext
 	| nautilus |
 	

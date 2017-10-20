@@ -1,4 +1,4 @@
-testing
+tests
 testMetaclassNumberOfInstances
 	"self run: #testMetaclassNumberOfInstances"
 

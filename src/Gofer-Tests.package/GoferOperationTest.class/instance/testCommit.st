@@ -1,4 +1,4 @@
-testing
+tests
 testCommit
 	| repository |
 	repository := MCDictionaryRepository new.

@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testGroup
 	| h i |
 	h := HistoryNode new.

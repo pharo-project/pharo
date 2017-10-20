@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 2/5/2014 08:41",
+	"super" : "TestCase",
+	"category" : "OpalCompiler-Tests-Misc",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MethodPragmaTest",
+	"type" : "normal"
+}

@@ -1,4 +1,4 @@
-testing
+tests
 testWeakObject
 	| counter collector forwarder |
 	counter := 0.

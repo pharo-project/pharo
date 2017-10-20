@@ -1,4 +1,4 @@
-testing-outer
+tests - outer
 testNonResumableOuter
 
 	self should: [

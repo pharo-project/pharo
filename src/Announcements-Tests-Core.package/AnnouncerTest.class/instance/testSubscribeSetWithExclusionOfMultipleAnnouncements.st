@@ -1,4 +1,4 @@
-testing
+tests - subscribing
 testSubscribeSetWithExclusionOfMultipleAnnouncements
 	| announcement instance |
 	announcer

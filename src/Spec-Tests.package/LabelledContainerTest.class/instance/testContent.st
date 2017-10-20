@@ -1,4 +1,4 @@
 tests
 testContent
-	testedInstance content: ListModel.
-	self assert: testedInstance subwidget class equals: ListModel
+	testedInstance content: ListPresenter.
+	self assert: testedInstance subwidget class equals: ListPresenter

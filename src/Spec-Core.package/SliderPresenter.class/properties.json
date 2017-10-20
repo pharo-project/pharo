@@ -1,0 +1,20 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:45",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"max",
+		"min",
+		"quantum",
+		"value",
+		"isSetting",
+		"isChanging",
+		"absoluteValue",
+		"labelHolder"
+	],
+	"name" : "SliderPresenter",
+	"type" : "normal"
+}

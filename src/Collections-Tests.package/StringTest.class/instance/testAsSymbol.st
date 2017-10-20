@@ -1,4 +1,4 @@
-testing
+tests
 testAsSymbol
 
 self assert: ('hel','lo' asSymbol) = #'hello'.

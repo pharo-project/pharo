@@ -1,0 +1,1 @@
+A WindowPresenter is a spec presenter for a Window

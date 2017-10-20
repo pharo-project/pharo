@@ -14,7 +14,7 @@ ambiguousSelector: aString inRange: anInterval
 	requestor select.
 
 	"Build the menu with alternatives"
-	correctedSelector := AmbiguousSelector 
+	correctedSelector := AmbiguousSelectorDetected 
 			signalName: aString
 			inRange: intervalWithOffset.
 	correctedSelector ifNil: [^self fail].

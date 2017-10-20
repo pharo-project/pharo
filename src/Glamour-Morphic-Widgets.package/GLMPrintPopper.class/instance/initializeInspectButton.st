@@ -7,4 +7,6 @@ initializeInspectButton
 		setBalloonText: 'Inspect' translated.
 	self
 		addMorph: inspectButton
-		fullFrame: (LayoutFrame fractions: (1 @ 0 corner: 1 @ 0) offsets: (inspectButton width  @ 0 corner: 0 @ (2*inspectButton width) ))
+		fullFrame: (LayoutFrame identity 
+			fractions: (1 @ 0 corner: 1 @ 0) offsets: (inspectButton width  @ 0 corner: 0 @ (2*inspectButton width) ); 
+			yourself)
