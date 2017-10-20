@@ -1,3 +1,0 @@
-defaults
-defaultPort
-	^self subclassResponsibility

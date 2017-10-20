@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "TorstenBergmann 2/12/2014 22:31",
+	"super" : "HDTestReport",
+	"category" : "JenkinsTools-ExtraReports",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"packages",
+		"wrappers",
+		"covered"
+	],
+	"name" : "HDCoverageReport",
+	"type" : "normal"
+}

@@ -1,11 +1,6 @@
 emitting code
 readReferenceAt: byteOffset
-	^ String streamContents:[ :stream|
-		stream 
-			nextPutAll:'^';
-			print: self objectClass;
-			nextPutAll:' fromHandle: (handle referenceStructAt: ';
-			print: byteOffset;
-			nextPutAll:' length: ';
-			print: self externalTypeSize;
-			nextPutAll:')' ].
+	^ '^ {1} fromHandle: (handle referenceStructAt: {2} length: {1} byteSize)'
+		format: { 
+			self objectClass name.
+			byteOffset }

@@ -1,2 +1,0 @@
-private-hacks-metacello
-fixMetacello

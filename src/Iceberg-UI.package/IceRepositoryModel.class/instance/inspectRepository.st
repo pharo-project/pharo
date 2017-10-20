@@ -1,3 +1,0 @@
-actions
-inspectRepository
-	self repository inspect

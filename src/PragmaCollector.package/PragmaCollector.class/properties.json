@@ -1,14 +1,13 @@
 {
 	"commentStamp" : "AlainPlantec 11/28/2009 01:09",
 	"super" : "Model",
-	"category" : "PragmaCollector",
+	"category" : "PragmaCollector-Base",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"collected",
 		"filter",
-		"announcer",
 		"announcing"
 	],
 	"name" : "PragmaCollector",

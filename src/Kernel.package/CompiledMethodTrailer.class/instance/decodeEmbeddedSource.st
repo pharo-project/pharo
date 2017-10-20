@@ -7,4 +7,4 @@ decodeEmbeddedSource
  	input := (ReadStream on: method asByteArray from: method size - size+1 to: method size - size + len).
 	dataStr := WriteStream on: (ByteArray new: len).
 	[ input atEnd ] whileFalse: [ dataStr nextPut: input next ].
-	data := dataStr contents asString convertFromEncoding: 'utf8'
+	data := dataStr contents utf8Decoded

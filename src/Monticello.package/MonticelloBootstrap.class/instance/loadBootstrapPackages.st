@@ -3,10 +3,9 @@ loadBootstrapPackages
 
 	MCCacheRepository cacheDirectory: directory.
 
-	(self bootstrapVersionsExcept: [ :package | (((package name beginsWith: 'Slot') 
-			or: [package name beginsWith: 'Collections-Sequenceable'])
-				or: [package name beginsWith: 'Kernel'])
-					or: [package name beginsWith: 'Monticello'] ])
+	(self bootstrapVersionsExcept: [ :package | 
+		#('Collections-Sequenceable' 'Slot' 'Kernel' 'Monticello')
+			includes: package name])
 		do: [ :version | self loadPackageVersion: version ].
 
 	self loadBootstrapPackageNamed: 'Kernel'.

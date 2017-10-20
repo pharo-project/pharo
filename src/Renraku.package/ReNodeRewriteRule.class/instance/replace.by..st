@@ -1,5 +1,9 @@
-adding
+deprecated
 replace: aString by: aBlock
-	"add 	a 'from->to' pair, first element of which is a rewrite expression in a form of a string that is used to match nodes. The second parameter is a block that has to return a node which should replace the matched one. The block may accept 2 atguments: the matched node, and a dictionary of wildcard variables mapping"
+	
+	self
+		deprecated: 'Use #replace:byEvaluating: for better understandability'
+		transformWith: '`@receiver replace: `@aString by: `@aBlock' 
+						-> '`@receiver replace: `@aString byEvaluating: `@aBlock'.	
 
-	self addMatchingExpression: aString rewriteWith: aBlock
+	self replace: aString byEvaluating: aBlock

@@ -1,3 +1,3 @@
-setUp - tearDown
+running
 tearDown
 	SmalltalkImage compilerClass: currentCompiler.

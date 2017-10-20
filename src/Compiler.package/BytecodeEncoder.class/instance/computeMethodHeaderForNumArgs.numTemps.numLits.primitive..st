@@ -1,4 +1,4 @@
-as yet unclassified
+bytecode generation
 computeMethodHeaderForNumArgs: numArgs numTemps: numTemps numLits: numLits primitive: primitiveIndex
 	numArgs > 15 ifTrue:
 		[^self error: 'Cannot compile -- too many arguments'].

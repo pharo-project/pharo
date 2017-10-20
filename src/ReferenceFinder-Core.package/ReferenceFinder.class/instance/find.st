@@ -1,0 +1,3 @@
+private
+find
+	self searchForObject

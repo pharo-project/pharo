@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "PavelKrivanek 3/7/2017 11:42",
+	"commentStamp" : "<historical>",
 	"super" : "RPackageSet",
 	"category" : "Metacello-TestsCommonMC",
 	"classinstvars" : [ ],

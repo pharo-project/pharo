@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 for: aCondition
 	^self new linkCondition: aCondition

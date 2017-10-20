@@ -1,3 +1,3 @@
-accessing
+comparing
 hash
 	^pointSize hash

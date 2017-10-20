@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "HEAbstractExported",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"methods",
+		"classSideMethods",
+		"traitComposition",
+		"classTraitComposition",
+		"category"
+	],
+	"name" : "HEMethodContainer",
+	"type" : "normal"
+}

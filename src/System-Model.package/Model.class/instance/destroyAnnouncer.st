@@ -1,0 +1,4 @@
+announcing
+destroyAnnouncer
+
+	announcer := nil.

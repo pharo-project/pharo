@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Spec-Tests-Utils",
 	"classinstvars" : [ ],
 	"pools" : [ ],

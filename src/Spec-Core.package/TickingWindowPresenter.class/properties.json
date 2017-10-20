@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "StephaneDucasse 3/7/2014 10:45",
+	"super" : "WindowPresenter",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TickingWindowPresenter",
+	"type" : "normal"
+}

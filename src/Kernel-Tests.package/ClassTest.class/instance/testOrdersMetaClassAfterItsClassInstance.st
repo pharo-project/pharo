@@ -1,4 +1,4 @@
-testing - file in/out
+tests - file in/out
 testOrdersMetaClassAfterItsClassInstance
 	| ordered |
 	ordered := (Class superclassOrder:  

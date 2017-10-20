@@ -7,7 +7,8 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"testClass",
-		"testMethod"
+		"testMethod",
+		"testClass2"
 	],
 	"name" : "ReCodeBasedTestCase",
 	"type" : "normal"

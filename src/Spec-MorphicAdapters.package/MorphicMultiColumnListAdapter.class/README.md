@@ -1,1 +1,1 @@
-I am the adapter used to bridge a MultiColumnListModel and a PluggableMultiColumnListMorph
+I am the adapter used to bridge a MultiColumnListPresenter and a PluggableMultiColumnListMorph

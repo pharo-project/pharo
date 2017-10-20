@@ -1,3 +1,0 @@
-blinking support
-wantsSteps
-	^ false

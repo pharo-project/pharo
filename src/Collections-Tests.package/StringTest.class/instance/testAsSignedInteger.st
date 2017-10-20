@@ -1,4 +1,4 @@
-testing
+tests
 testAsSignedInteger
 
 self assert: ('test' asSignedInteger) = nil.

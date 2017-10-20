@@ -10,8 +10,7 @@
 		"code",
 		"className",
 		"selector",
-		"classIsMeta",
-		"announcer"
+		"classIsMeta"
 	],
 	"name" : "RubMethodEditingExample",
 	"type" : "normal"

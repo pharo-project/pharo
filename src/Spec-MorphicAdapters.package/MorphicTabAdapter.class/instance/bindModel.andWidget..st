@@ -1,6 +1,6 @@
 updating
 bindModel: aTabModel andWidget: aWidget
-	"bind change propagation between Spec TabModel and Morphic Tab"
+	"bind change propagation between Spec TabPresenter and Morphic Tab"
 
 	aWidget when: #tabSelected send: #tabSelected to: aTabModel.
 	aTabModel actionsHolder whenChangedDo: [ :new | aWidget actions: new ].

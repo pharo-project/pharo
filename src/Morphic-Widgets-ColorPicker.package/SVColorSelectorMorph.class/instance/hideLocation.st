@@ -1,4 +1,4 @@
-as yet unclassified
+displaying
 hideLocation
 	"Hide the location morph and update the display."
 

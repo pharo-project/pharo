@@ -1,4 +1,4 @@
-setup
+running
 setUp
 
 	a := 1 -> 'one'.

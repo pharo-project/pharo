@@ -1,1 +1,1 @@
-Other wrapper for dependent package (use in TreeModel). Useful in reverse analysis.
+Other wrapper for dependent package (use in TreePresenter). Useful in reverse analysis.

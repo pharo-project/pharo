@@ -4,7 +4,7 @@ addMenuEntriesOn: aMenuGroup
 
 	aMenuGroup 
 		addMenuItem:
-			(MenuItemModel new
+			(MenuItemPresenter new
 						name: 'Generate GraphViz file';
 						action: [ self ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
 									graphvizGenerator := DAPackageCycleGenerator 

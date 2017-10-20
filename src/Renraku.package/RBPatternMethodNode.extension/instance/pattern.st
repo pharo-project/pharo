@@ -1,0 +1,4 @@
+*renraku
+pattern
+
+	^ self selector

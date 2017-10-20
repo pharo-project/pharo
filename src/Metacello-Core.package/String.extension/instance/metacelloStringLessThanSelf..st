@@ -1,4 +1,4 @@
-*Metacello-Core-version comparison
+*metacello-core-version comparison
 metacelloStringLessThanSelf: aString
 
 	^aString < self

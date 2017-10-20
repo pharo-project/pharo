@@ -1,4 +1,4 @@
-testing
+tests
 testFork
 
 	| hasBlockRun block return checkAssert |

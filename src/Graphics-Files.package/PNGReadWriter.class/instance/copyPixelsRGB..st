@@ -36,7 +36,7 @@ copyPixelsRGB: y
 					at: 3 put: (thisScanline at: i);
 					at: 2 put: (thisScanline at: i+1);
 					at: 1 put: (thisScanline at: i+2).
-				tempBits at: x put: pixel.
+				tempBits at: x put: pixel normalize.
 				i := i + 3].
 			transparentPixelValue
 				ifNotNil:
@@ -53,7 +53,7 @@ copyPixelsRGB: y
 							at: 3 put: (thisScanline at: i);
 							at: 2 put: (thisScanline at: i+2);
 							at: 1 put: (thisScanline at: i+4).
-						tempBits at: x put: pixel]
+						tempBits at: x put: pixel normalize]
 					ifFalse:
 						[tempBits at: x put: 0].
 				i := i + 6]].

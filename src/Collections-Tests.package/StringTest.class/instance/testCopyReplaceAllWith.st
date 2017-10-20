@@ -1,4 +1,4 @@
-test - copy
+tests - copy
 testCopyReplaceAllWith
 	self assert: ('--A--' copyReplaceAll: 'A' with: 'ABC') equals: '--ABC--'.
 	self assert: ('--A--' copyReplaceAll: 'A' with: 'X') equals: '--X--'.

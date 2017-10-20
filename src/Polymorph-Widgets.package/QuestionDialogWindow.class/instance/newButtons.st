@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 newButtons
 	"Answer new buttons as appropriate."
 

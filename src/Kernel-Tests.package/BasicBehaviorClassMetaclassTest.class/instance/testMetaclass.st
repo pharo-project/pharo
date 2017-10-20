@@ -1,4 +1,4 @@
-testing
+tests
 testMetaclass
 	"self run: #testMetaclass"
 	

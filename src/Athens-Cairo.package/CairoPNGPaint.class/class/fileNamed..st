@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 fileNamed: aFileName
 	| image|
 	image := self new.

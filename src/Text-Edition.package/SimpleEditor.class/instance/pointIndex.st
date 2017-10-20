@@ -1,3 +1,3 @@
-accessing-selection
+accessing - selection
 pointIndex
 	^ pointIndex

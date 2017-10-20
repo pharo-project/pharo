@@ -1,1 +1,0 @@
-A reference to a class that has been removed, but can be handled polymorphically with references to existing classes (see IceSimpleClassReference)

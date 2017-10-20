@@ -1,4 +1,4 @@
-testing
+tests - unsubscribing
 testUnsubscribeSet
 	| announcement |
 	announcer

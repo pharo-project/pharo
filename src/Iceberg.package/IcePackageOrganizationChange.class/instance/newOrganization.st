@@ -1,3 +1,0 @@
-accessing
-newOrganization
-	^ newOrganization ifNil: #()

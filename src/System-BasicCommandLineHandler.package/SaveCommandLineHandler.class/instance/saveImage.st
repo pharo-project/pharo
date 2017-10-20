@@ -3,8 +3,8 @@ saveImage
 	| imageName oldImageFile oldChangesFile |
 	
 	imageName := self arguments detect: [ :arg| arg ~= '--delete-old' ].
-	oldImageFile := Smalltalk imageFile resolve.
-	oldChangesFile := Smalltalk changesFile resolve.
+	oldImageFile := File named: Smalltalk imagePath.
+	oldChangesFile := File named: (Smalltalk imagePath copyUpToLast: '.') , '.changes'.
 	
 	(Smalltalk saveAs: imageName)
 		ifTrue: [ 

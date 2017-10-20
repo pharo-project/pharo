@@ -1,3 +1,0 @@
-accessing
-name
-	^ '<New branch>'

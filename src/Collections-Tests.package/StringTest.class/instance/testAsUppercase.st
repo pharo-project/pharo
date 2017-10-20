@@ -1,4 +1,4 @@
-testing
+tests
 testAsUppercase 
 
 self assert: ('éèàôütest' asUppercase) = 'ÉÈÀÔÜTEST'.

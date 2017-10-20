@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 browsedEnvironment
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]

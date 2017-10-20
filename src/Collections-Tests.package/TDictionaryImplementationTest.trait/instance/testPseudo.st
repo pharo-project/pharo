@@ -1,4 +1,4 @@
-test - implementation
+tests - implementation
 testPseudo
 	"(self run: #testPseudo)"
 

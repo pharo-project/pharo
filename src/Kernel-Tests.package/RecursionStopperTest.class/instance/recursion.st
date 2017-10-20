@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 recursion
 	
 	RecursionStopper during: [ self recursion ].

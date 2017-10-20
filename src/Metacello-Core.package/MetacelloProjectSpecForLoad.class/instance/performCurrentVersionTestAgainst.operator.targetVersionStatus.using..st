@@ -19,6 +19,11 @@ performCurrentVersionTestAgainst: vrsn operator: anOperator targetVersionStatus:
       (targetVersionStatus includes: cv versionStatus)
         ifTrue: [ ^ cv perform: anOperator with: vrsn ].
       ^ false ].
+  true
+    ifTrue: [ 
+      "unconditional fail test at this point for Issue #388"
+      "https://github.com/dalehenrich/metacello-work/issues/388"
+      ^ false ].
   (self hasOverride not or: [ targetVersionStatus ~= #(#'allLoadedToSpec') ])
     ifTrue: [ ^ false ].
   (self overrideProjectSpec allPackagesLoaded: anMCLoader)

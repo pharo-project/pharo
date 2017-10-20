@@ -1,4 +1,4 @@
-as yet unclassified
+accessing - text
 cancelText: aStringOrText help: helpString
 	"Set the cancel button label.
 	if the text is nil, remove the button."

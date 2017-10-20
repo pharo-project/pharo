@@ -1,3 +1,0 @@
-actions
-loadDefaultUpdates
-	UpdateStreamer new updateFromServer.

@@ -1,6 +1,6 @@
 event-handling
 saveElement
-	"When you press Cmd+s on the description TextModel, you can save the new value in the inspected object"
+	"When you press Cmd+s on the description TextPresenter, you can save the new value in the inspected object"
 
 	|newValue|
 		

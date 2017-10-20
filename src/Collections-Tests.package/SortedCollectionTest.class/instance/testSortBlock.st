@@ -1,4 +1,4 @@
-basic
+tests - basic
 testSortBlock
 	"self run: #testSortBlock"
 	"self debug: #testSortBlock"

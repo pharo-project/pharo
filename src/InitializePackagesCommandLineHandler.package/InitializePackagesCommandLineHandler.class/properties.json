@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 8/17/2017 16:45",
+	"super" : "CommandLineHandler",
+	"category" : "InitializePackagesCommandLineHandler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "InitializePackagesCommandLineHandler",
+	"type" : "normal"
+}

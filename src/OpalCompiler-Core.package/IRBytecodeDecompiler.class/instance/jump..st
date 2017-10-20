@@ -1,7 +1,7 @@
 instruction decoding
 jump: dist
 	| index seq instr newSeq seqs |
-	index := instructionStream pc + dist .
+	index := instructionStream pc + dist.
 
 	dist >= 0 ifTrue: [
 		"jump forward"
@@ -22,7 +22,7 @@ jump: dist
 			newSeq := seq splitAfter: instr ].
 	irBuilder addJumpBackTarget: index to: newSeq.
 	"if we have split the currentSequence of the irBuilder, make sure to set it
-	to the newSeq".	
+	to the newSeq"
 	irBuilder currentSequence = seq ifTrue: [irBuilder currentSequence: newSeq].
 	irBuilder jumpBackTo: index.
 

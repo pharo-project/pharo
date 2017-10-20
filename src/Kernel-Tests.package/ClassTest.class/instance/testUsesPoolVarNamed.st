@@ -1,4 +1,4 @@
-testing - access
+tests - access
 testUsesPoolVarNamed
 	"self debug: #testUsesPoolVarNamed"
 

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "LabelPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LabelModel",
+	"type" : "normal"
+}
