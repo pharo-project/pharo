@@ -1,3 +1,0 @@
-accessing
-repositoryDirectory
-	^ self location

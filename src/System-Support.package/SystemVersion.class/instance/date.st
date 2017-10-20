@@ -1,3 +1,3 @@
-accessing
+accessing - properties
 date
 	^date

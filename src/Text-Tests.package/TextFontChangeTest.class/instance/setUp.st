@@ -1,4 +1,4 @@
-initialization
+running
 setUp
 	"create the prototypes for testing"
 	super setUp.

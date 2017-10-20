@@ -7,9 +7,9 @@ testRetrievingCategoriesInAPackage
 	
 	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryForTest'.
 	self
-		assert: (retrievedCategories includesAllOf: #(#CategoryForTest #'CategoryForTest-Core' #'CategoryForTest-Tests' )).
+		assert: (retrievedCategories includesAll: #(#CategoryForTest #'CategoryForTest-Core' #'CategoryForTest-Tests' )).
 	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryForTest-Core'.
 	self
-		assert: (retrievedCategories includesAllOf: #(#'CategoryForTest-Core')). 
+		assert: (retrievedCategories includesAll: #(#'CategoryForTest-Core')). 
 	retrievedCategories := self systemNavigationToTest categoriesInPackageNamed: 'CategoryFor'.
 	self assert: retrievedCategories isEmpty.

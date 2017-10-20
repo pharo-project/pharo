@@ -1,4 +1,4 @@
-testing - converting
+tests - converting
 testSubstrings
 	| allByteCharacters substring separators |
 

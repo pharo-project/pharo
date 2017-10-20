@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "ValentinRyckewaert 8/9/2016 11:28",
+	"super" : "Object",
+	"category" : "System-CommandLine",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"font",
+		"background",
+		"styles"
+	],
+	"name" : "VTermOutputStyle",
+	"type" : "normal"
+}

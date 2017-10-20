@@ -1,3 +1,0 @@
-detached head
-lastCommit
-	^ self

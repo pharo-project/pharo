@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "HEArray",
+	"category" : "Hermes-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"subject"
+	],
+	"name" : "HETraitTransformation",
+	"type" : "normal"
+}

@@ -28,4 +28,3 @@ copyMethodsFrom: oldClass to: newClass using: classModification
 
 MonticelloBootstrap bootstrapDefault.
 MCCacheRepository reset.
-!

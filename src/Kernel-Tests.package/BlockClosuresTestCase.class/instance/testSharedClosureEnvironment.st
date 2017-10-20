@@ -1,4 +1,4 @@
-testing
+tests
 testSharedClosureEnvironment
 	|blockArray|
 	blockArray := self constructSharedClosureEnvironmentInDeadFrame.

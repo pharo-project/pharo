@@ -1,4 +1,4 @@
-testing - arithmetic
+tests - arithmetic
 testReciprocalModulo
 	1 to: 512 do: [:a |
 		a + 1 to: 512 do: [:b |

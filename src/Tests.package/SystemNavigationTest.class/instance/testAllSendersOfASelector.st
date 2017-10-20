@@ -11,4 +11,4 @@ testAllSendersOfASelector
 	senders := self systemNavigationToTest allSendersOf: selector.
 	self assert: senders size = 2.
 	callers := senders collect: [ :methodRef | methodRef selector].
-	self assert: (callers includesAllOf: #(#anotherMethod #yetAnotherMethod))
+	self assert: (callers includesAll: #(#anotherMethod #yetAnotherMethod))

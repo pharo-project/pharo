@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 normal
 	^ self new emphasisCode: 0

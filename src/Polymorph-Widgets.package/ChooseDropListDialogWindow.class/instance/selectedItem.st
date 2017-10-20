@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 selectedItem
 	"Answer the selected list item or nil if cancelled."
 

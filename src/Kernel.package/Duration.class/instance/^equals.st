@@ -1,4 +1,4 @@
-arithmetic
+comparing
 = comparand 
  	"Answer whether the argument is a <Duration> representing the same 
  	period of time as the receiver."

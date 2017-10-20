@@ -4,11 +4,13 @@ installSourceFile: aReference
 	| codeImporter |
 
 	" parse the code given in the source file"
-	aReference readStreamDo: [ :stream |
+	aReference readStreamDo: [ :binary | | stream |
+		stream := ZnCharacterReadStream on: binary encoding: 'utf8'.
 		self 
 			handleErrorsDuring: [
 				self skipShebangFrom: stream.
 				codeImporter := CodeImporter fileStream: stream.
+				codeImporter logSource: (self hasOption: 'no-source') not.
 				codeImporter parseChunks ]
 			reference: aReference ].
 	

@@ -1,5 +1,5 @@
 instance creation
-adaptAsPopup: aComposableModel
+adaptAsPopup: aComposablePresenter
 	^ self new
-		adaptAsPopup: aComposableModel;
+		adaptAsPopup: aComposablePresenter;
 		yourself

@@ -17,15 +17,7 @@ offsetWriteFieldAt: offsetVariableName with: valueName
 				nextPutAll:' getHandle.']].
 
 	self isAtomic ifFalse:[
-		^String streamContents:[:s|
-			s nextPutAll:'handle structAt: ';
-				nextPutAll: offsetVariableName;
-				nextPutAll:' put: ';
-				nextPutAll: valueName;
-				nextPutAll:' getHandle';
-				nextPutAll:' length: ';
-				print: self byteSize;
-				nextPutAll:'.']].
+		^ self offsetWriteStructFieldAt: offsetVariableName with: valueName ].
 
 	^String streamContents:[:s|
 		s nextPutAll:'handle ';

@@ -1,2 +1,2 @@
 SystemOrganization addCategory: #NewValueHolder!
-SystemOrganization addCategory: 'NewValueHolder-Tests'!
+SystemOrganization addCategory: #'NewValueHolder-Tests'!

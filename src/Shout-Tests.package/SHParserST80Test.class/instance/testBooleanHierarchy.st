@@ -1,3 +1,3 @@
-tests-smoke
+tests - smoke
 testBooleanHierarchy
 	self verifyHierarchy: Boolean

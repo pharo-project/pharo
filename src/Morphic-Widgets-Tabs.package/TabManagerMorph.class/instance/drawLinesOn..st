@@ -1,7 +1,8 @@
 drawing
 drawLinesOn: aCanvas
-	aCanvas
-		line: self topLeft + (0 @ 25)
+	self flag: #TODO. "this method, I don't know what's is for."
+	"aCanvas
+		line: self topLeft
 		to: self bottomLeft
 		width: 1
 		color: self borderColor.
@@ -11,7 +12,7 @@ drawLinesOn: aCanvas
 		width: 1
 		color: self borderColor.
 	aCanvas
-		line: self topRight + (0 @ 26)
+		line: self topRight
 		to: self bottomRight
 		width: 1
-		color: self borderColor
+		color: self borderColor"

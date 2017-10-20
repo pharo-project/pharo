@@ -1,2 +1,2 @@
 SystemOrganization addCategory: #UIManager!
-SystemOrganization addCategory: 'UIManager-Support'!
+SystemOrganization addCategory: #'UIManager-Support'!

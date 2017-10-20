@@ -13,4 +13,4 @@ testSelectSourceFiles
 	"Now verify that it doesn't try to load localhost"
 	self assert: (codeLoader instVarNamed: 'sourceFiles') notNil.
 	self assert: (codeLoader instVarNamed: 'sourceFiles') size equals: 1.
-	self assert: (codeLoader instVarNamed: 'sourceFiles') first basename equals: 'does-not-exist.st'.
+	self assert: (codeLoader instVarNamed: 'sourceFiles') first name equals: 'does-not-exist.st'.

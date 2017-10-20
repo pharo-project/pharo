@@ -1,4 +1,4 @@
-test-comparing
+tests - comparing
 testCorrectAgainst
 
 | coll |

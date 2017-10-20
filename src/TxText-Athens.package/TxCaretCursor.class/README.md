@@ -1,1 +1,0 @@
-In most command-line interfaces or text editors, the text cursor or caret navigation, is an underscore, a solid rectangle, or a vertical line, which may be flashing or steady, indicating where text will be placed when entered (the insertion point).

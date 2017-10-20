@@ -16,6 +16,7 @@ spec group: 'Optional-Group' with: #(
 	'System-Serial Port'	"standalone?"
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
+	'PerformMessageCommandLineHandler' 	"standalone"
 ).	
 	
 spec group: 'NodeNavigation-Group' with: #(
@@ -57,7 +58,7 @@ spec group: 'General-Tests-Group' with: #(
 	'MonticelloMocks'
 	'FuelTests'
 	'Balloon-Tests'
-	'Collections-DoubleLinkedListTests'
+	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
@@ -87,17 +88,17 @@ spec group: 'General-Tests-Group' with: #(
 	'SUnit-Tests'
 	'Slot-Tests'
 	'Spec-Tests'
-	'System-CachingTests'
+	'System-Caching-Tests'
+	'System-Hashing-Tests'
 	'System-History-Tests'
 	'System-Localization-Tests'
 	'System-SessionManager-Tests'
 	'System-Settings-Tests'
-	'System-SupportTests'
+	'System-Support-Tests'
 	'Text-Edition-Tests'
 	'Tool-FileList-Tests'
 	'Tools-Test'	
-	'UpdateStreamer-Tests'
-	'WriteBarrierTests'
+	'WriteBarrier-Tests'
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
@@ -138,17 +139,6 @@ spec group: 'ReflectionMirrors-Group' with: #(
 	'ReflectionMirrors-Tests-Group'
 ).
 
-spec group: 'ScriptLoader-Core-Group' with: #(
-	'ScriptLoader60'		
-).
-spec group: 'ScriptLoader-Tests-Group' with: #(
-	'ScriptLoader-Tests'
-).
-spec group: 'ScriptLoader-Group' with: #(
-	'ScriptLoader-Core-Group'
-	'ScriptLoader-Tests-Group'
-).
-
 spec group: 'Reflectivity-Group' with: #(
 	'Reflectivity-Tests'	"required by Reflectivity-Examples"
 	'Reflectivity-Examples'
@@ -167,7 +157,7 @@ spec group: 'SmartSuggestions-Group' with: #(
 ).
 
 spec group: 'Deprecated-Group' with: #(
-	'Deprecated60'
+	'Deprecated70'
 ).
 
 spec group: 'Manifest-Core-Group' with: #(
@@ -220,8 +210,6 @@ spec group: 'Shout-Group' with: #(
 ).
 
 spec group: 'MetacelloExtras-Core' with: #(
-	'BaselineOfMetacello'
-	'Metacello-GitBasedRepository'	
 	'Metacello-Bitbucket'	
 	"'Metacello-GitHub'"
 ).
@@ -276,6 +264,10 @@ spec group: 'Catalog-Group' with: #(
 spec group: 'SortFunctions-Group' with: #(
 	'SortFunctions-Core'
 	'SortFunctions-Tests'
+).
+
+spec group: 'ReferenceFinder-Group' with: #(
+	'ReferenceFinder-Core'
 ).
 
 spec group: 'QualityAssistant-Core-Group' with: #(
@@ -377,12 +369,6 @@ spec group: 'DependencyAnalyser-Group' with: #(
 	'DependencyAnalyser-Tests-Group'
 ).		
 
-spec group: 'ShoreLine-Group' with: #(
-	'ShoreLine-Report-Core'
-	'ShoreLine-Report-UI'	
-	'ShoreLine-Report-Settings' 
-).		
-
 spec group: 'Athens-Group' with: #(
 	"dependent on Rubric, cleanup?"
 	'Athens-Core'
@@ -393,20 +379,6 @@ spec group: 'Athens-Group' with: #(
 	'Athens-Cairo'
 	'Athens-Examples'
 ).		
-
-spec group: 'TxText-Core-Group' with: #(
-	'TxText-Model'
-	'TxText-Athens'
-	'TxText-Styler'
-).		
-spec group: 'TxText-Tests-Group' with: #(
-	'TxText-AthensTests'
-	'TxTextTests-Model'
-).
-spec group: 'TxText-Group' with: #(
-	'TxText-Core-Group'
-	'TxText-Tests-Group'
-).
 
 spec group: 'OSWindow-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency, cleanup needed"
@@ -454,13 +426,14 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'RPackage-Tests' 
 	'Collections-Tests'
 	'Kernel-Tests' 
+	'Kernel-Tests-WithCompiler' 
 	'AST-Tests-Core' "requires BlueInk-Core"
 	'Announcements-Tests-Core'
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
 	'Files-Tests' 
-	'JobsTests' 
+	'Jobs-Tests' 
 	'Multilingual-Tests'
 	'OpalCompiler-Tests' 
 	'Random-Tests'
@@ -505,18 +478,17 @@ spec group: #default with: #(
 
 	'Shout-Group'
 
+	'System-Localization'
+
 	"standalone:" 
 	'MetacelloExtras-Core'
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	'ScriptLoader-Group'
 	'Deprecated-Group'
 	'Zodiac-Group'
-	'ShoreLine-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
-	'TxText-Group'
 
 	'GT&QA-Group'
 
@@ -529,8 +501,8 @@ spec group: #default with: #(
 	'NodeNavigation-Group'
 	'Versionner-Group'
 	'General-Tests-Group'
-	
 	'SortFunctions-Group'	
+	'ReferenceFinder-Group'
 	
 	'BaselineOfPharoBootstrap'
 ).

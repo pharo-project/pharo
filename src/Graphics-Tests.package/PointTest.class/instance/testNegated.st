@@ -1,4 +1,4 @@
-tests-transforming
+tests - transforming
 testNegated
 
 	self assert: (0 @ 0) negated = (0 @ 0).

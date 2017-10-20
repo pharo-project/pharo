@@ -1,4 +1,4 @@
-testing-reference
+tests - reference
 testContraintShouldFindLatestVersion
 	| constraintReference reference |
 	constraintReference := GoferConstraintReference 

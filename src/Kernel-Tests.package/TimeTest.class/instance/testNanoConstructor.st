@@ -1,4 +1,4 @@
-tests input
+tests - input
 testNanoConstructor
 
 	| timeFromString timeFromNano timeFromNanoSecond |

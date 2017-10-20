@@ -1,4 +1,4 @@
-basic
+tests - basic
 testSort
 	"self run: #testSort"
 	| s |

@@ -1,4 +1,4 @@
-testing - converting
+tests - converting
 testWithFirstCharacterDownshifted
 
 	| uc lc empty |		

@@ -1,4 +1,4 @@
-test - remove
+tests - remove
 testRemoveElementThatExistsTwice
 	"self debug: #testRemoveElementThatDoesExistsTwice"
 	| size |

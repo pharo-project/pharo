@@ -1,4 +1,4 @@
-as yet unclassified
+displaying
 installOn: aDisplayContext
 
 	^ aDisplayContext installStrikeFont: self.

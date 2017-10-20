@@ -1,4 +1,4 @@
-testing
+tests
 testHasWideCharacterFromTo
 
 self assert: ('te€st' hasWideCharacterFrom: 1 to: 3).

@@ -1,0 +1,3 @@
+*Reflectivity
+visitStorePopIntoTempNode: aNode
+	^ aNode

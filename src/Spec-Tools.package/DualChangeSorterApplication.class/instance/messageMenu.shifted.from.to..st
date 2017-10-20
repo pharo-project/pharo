@@ -4,10 +4,10 @@ messageMenu: menu shifted: shifted from: sourcePanel to: destinationPanel
 	
 	| menuModel menuDual |
 	
-	menuModel := MenuModel new.
+	menuModel := MenuPresenter new.
 	sourcePanel selectedSelector ifNil: [ ^ nil ].
 	sourcePanel messageMenu: menu shifted: shifted.
-	menuDual := MenuModel new fromSpec: (PragmaMenuBuilder 
+	menuDual := MenuPresenter new fromSpec: (PragmaMenuBuilder 
 		pragmaKeyword: 'dualChangeSorterMessageListMenu'
 		model: { self. sourcePanel. destinationPanel }) 
 		menuSpec.

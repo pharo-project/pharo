@@ -1,5 +1,11 @@
 accessing
 searchString
-	^ sourceEntity instVarNames last = super searchString
-		ifTrue:  [ super searchString, '''' ]
-		ifFalse:	[ super searchString, ' ' ]
+	| origString |
+	
+	origString := super searchString.
+	(sourceEntity instVarNames includes: origString) ifTrue: [ 
+		^ self modify: origString for: sourceEntity instVarNames ].
+	(sourceEntity classVarNames includes: origString) ifTrue: [ 
+		^ self modify: origString for: sourceEntity classVarNames ].
+
+	^ origString

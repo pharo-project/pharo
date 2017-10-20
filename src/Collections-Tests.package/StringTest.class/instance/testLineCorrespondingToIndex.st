@@ -1,4 +1,4 @@
-testing - lines
+tests - lines
 testLineCorrespondingToIndex
 	| sampleCRString sampleLFString sampleCRLFString anIndex |
 	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.

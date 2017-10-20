@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:34",
+	"super" : "DynamicComposablePresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"buttons",
+		"canDeselectByClick",
+		"currentActivated"
+	],
+	"name" : "RadioButtonGroupPresenter",
+	"type" : "normal"
+}

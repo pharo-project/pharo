@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TransferPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TransferModel",
+	"type" : "normal"
+}

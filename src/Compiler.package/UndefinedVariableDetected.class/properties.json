@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 1/31/2014 11:18",
+	"super" : "ParserNotification",
+	"category" : "Compiler-Exceptions",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "UndefinedVariableDetected",
+	"type" : "normal"
+}

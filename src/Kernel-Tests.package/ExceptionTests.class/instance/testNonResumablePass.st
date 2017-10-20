@@ -1,4 +1,4 @@
-testing-outer
+tests - outer
 testNonResumablePass
 
 	self should: [

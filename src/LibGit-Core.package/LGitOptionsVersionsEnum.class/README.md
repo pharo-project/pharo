@@ -1,1 +1,0 @@
-I map names to versions for all the option structs.

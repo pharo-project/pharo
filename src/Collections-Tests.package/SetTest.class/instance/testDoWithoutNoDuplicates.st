@@ -1,4 +1,4 @@
-test - iterate
+tests - iterate
 testDoWithoutNoDuplicates
 	"self debug: #testDoWithoutNoDuplicates"
 	| res |

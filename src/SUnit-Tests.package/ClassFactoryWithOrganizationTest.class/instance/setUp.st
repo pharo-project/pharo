@@ -1,4 +1,4 @@
-setUp-tearDown
+running
 setUp
 	| environment |
 	super setUp.

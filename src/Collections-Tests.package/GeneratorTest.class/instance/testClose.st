@@ -1,4 +1,4 @@
-testing
+tests
 testClose
 	| generator doEnsure notEnsure |
 	doEnsure := notEnsure := 0.

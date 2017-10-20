@@ -21,4 +21,4 @@ initializeUcsTable
 			u := unicode at: uIndex.
 			gb2312Table at: code put: u.
 		] ].
-	UcsTable := gb2312Table.
+	ucsTable := gb2312Table.

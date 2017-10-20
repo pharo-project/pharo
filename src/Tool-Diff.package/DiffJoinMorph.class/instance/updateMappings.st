@@ -1,4 +1,4 @@
-as yet unclassified
+private - updating
 updateMappings
 	"Update the shapes of the joins."
 	

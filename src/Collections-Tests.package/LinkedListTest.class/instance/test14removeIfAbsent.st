@@ -1,4 +1,4 @@
-testing
+tests
 test14removeIfAbsent
 	list add: link1.
 	

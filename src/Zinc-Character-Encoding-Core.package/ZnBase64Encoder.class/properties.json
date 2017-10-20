@@ -12,7 +12,8 @@
 		"alphabet",
 		"inverse",
 		"lineLength",
-		"lineEnd"
+		"lineEnd",
+		"whitespace"
 	],
 	"name" : "ZnBase64Encoder",
 	"type" : "normal"

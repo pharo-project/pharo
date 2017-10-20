@@ -1,1 +1,0 @@
-I represent an external array of commits.

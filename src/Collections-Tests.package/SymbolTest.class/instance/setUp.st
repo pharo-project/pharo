@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	emptySymbol := #''.
 	collectionSize4 := #abcd.

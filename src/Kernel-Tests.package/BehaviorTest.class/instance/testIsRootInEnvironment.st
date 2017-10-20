@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testIsRootInEnvironment
 	self assert: ProtoObject isRootInEnvironment.
 	self deny: Object isRootInEnvironment

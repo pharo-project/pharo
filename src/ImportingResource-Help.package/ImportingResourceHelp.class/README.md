@@ -1,0 +1,1 @@
+A help topic on how to import resources into the image

@@ -1,4 +1,4 @@
-some tests
+tests - some
 testCollect2
 	| newFull result |
 	newFull := Set withAll: (1 to: 10).

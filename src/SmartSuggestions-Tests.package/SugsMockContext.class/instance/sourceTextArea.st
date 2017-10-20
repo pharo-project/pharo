@@ -1,3 +1,3 @@
-api-context
+api - context
 sourceTextArea
 	^ RubScrolledTextMorph new

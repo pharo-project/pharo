@@ -1,4 +1,4 @@
-tests - Dictionary keys values associations access
+tests - dictionary keys values associations access
 testAssociations
 
 	| collection result  |

@@ -1,1 +1,0 @@
-Shows information about branches, history of commits and the changes in each commit.

@@ -1,4 +1,4 @@
-initialize
+initialization
 initialize
 	"self initialize"
 	

@@ -1,4 +1,0 @@
-configuration
-defaultExtractor
-
-	^ SlReportExtractor

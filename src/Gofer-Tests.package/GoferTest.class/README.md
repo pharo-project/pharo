@@ -1,1 +1,1 @@
-SUnit tests for Gofer
+Abstract superclass for Gofer tests

@@ -1,6 +1,6 @@
 initialization
 initializeWidgets
-	listModel := self instantiate: ListModel .
+	listModel := self instantiate: ListPresenter .
 	textModel := self newCode.
 	toolbarModel := self instantiate: MethodToolbar.
 	self focusOrder

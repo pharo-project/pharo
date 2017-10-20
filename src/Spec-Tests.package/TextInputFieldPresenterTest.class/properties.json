@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TextPresenterTest",
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextInputFieldPresenterTest",
+	"type" : "normal"
+}

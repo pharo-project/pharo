@@ -1,4 +1,4 @@
-as yet unclassified
+accessing - morphs
 marriedMorph
 	^ ( self theme  
 			newCheckboxIn: World

@@ -1,3 +1,3 @@
 testing
 isLiteralVariable
-	^true.
+	^true

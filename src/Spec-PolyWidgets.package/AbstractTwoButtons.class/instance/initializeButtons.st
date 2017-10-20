@@ -1,0 +1,3 @@
+initialization
+initializeButtons
+self subclassResponsibility
