@@ -128,13 +128,12 @@ Check for latest built images in http://files.pharo.org:
 
 try{
 
+if( env.BRANCH_NAME == "development" ) {
+    properties([disableConcurrentBuilds()])
+}
+	
 node('unix') {
-    
-	if( env.BRANCH_NAME == "development" ) {
-		properties([disableConcurrentBuilds()])
-	}
-    
-	cleanWs()
+ 	cleanWs()
 	def builders = [:]
 	def architectures = ['32']//, '64']
 	for (arch in architectures) {
