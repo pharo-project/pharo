@@ -1,4 +1,4 @@
 api
 resetSelection
 
-	listModel resetSelection
+	listPresenter resetSelection

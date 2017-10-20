@@ -6,8 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"listModel",
-		"searchModel"
+		"listPresenter",
+		"searchPresenter"
 	],
 	"name" : "SearchableList",
 	"type" : "normal"

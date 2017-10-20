@@ -1,4 +1,4 @@
 api
 setSelectedIndex: anIndex
 
-	listModel setSelectedIndex: anIndex
+	listPresenter setSelectedIndex: anIndex

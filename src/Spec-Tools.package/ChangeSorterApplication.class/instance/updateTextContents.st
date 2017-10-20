@@ -9,6 +9,6 @@ updateTextContents
 				prettyPrint: prettyPrint
 				showDiff: showDiff).
 	({'Method was added, but cannot be found!'. 'Added then removed (see versions)'. 'Method has been removed (see versions)'} includes: text)
-		ifTrue: [ textModel aboutToStyle: false ]
-		ifFalse: [ textModel aboutToStyle: true ] .
-	textModel text: text.
+		ifTrue: [ textPresenter aboutToStyle: false ]
+		ifFalse: [ textPresenter aboutToStyle: true ] .
+	textPresenter text: text.

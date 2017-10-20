@@ -8,13 +8,13 @@
 	"instvars" : [
 		"defaultValueHolder",
 		"labelClickableHolder",
-		"listModel",
 		"pickedItemsHolder",
 		"wrapHolder",
 		"associationsItemToWrapper",
 		"associationsWrapperToItem",
 		"associationsIndexToWrapper",
-		"blockToPerformOnWrappers"
+		"blockToPerformOnWrappers",
+		"listPresenter"
 	],
 	"name" : "PickListPresenter",
 	"type" : "normal"

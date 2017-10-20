@@ -1,5 +1,5 @@
 tests
 testFiltering
-	testedInstance listModel items: {'aa' . 'bb' . 'ab' . 'ba'}.
-	testedInstance searchModel text: 'a'.
-	self assert: testedInstance listModel listItems asArray equals: {'aa' . 'ab'}
+	testedInstance listPresenter items: {'aa' . 'bb' . 'ab' . 'ba'}.
+	testedInstance searchPresenter text: 'a'.
+	self assert: testedInstance listPresenter listItems asArray equals: {'aa' . 'ab'}

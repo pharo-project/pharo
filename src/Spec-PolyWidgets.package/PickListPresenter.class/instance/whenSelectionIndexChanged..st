@@ -1,4 +1,4 @@
 api-events
 whenSelectionIndexChanged: aBlock
 
-	listModel whenSelectionIndexChanged: aBlock
+	listPresenter whenSelectionIndexChanged: aBlock
