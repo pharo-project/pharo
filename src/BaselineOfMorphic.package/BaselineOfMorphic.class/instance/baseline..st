@@ -12,6 +12,7 @@ baseline: spec
 
 		spec baseline: 'MorphicCore' with: [spec repository: repository].
 
+		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'Text-Core'.
 		spec package: 'System-Clipboard'.
@@ -66,7 +67,6 @@ baseline: spec
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings'.
 		spec package: 'System-Sound'.
-		spec package: 'System-Localization'.
 		
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
