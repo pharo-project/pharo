@@ -478,8 +478,6 @@ spec group: #default with: #(
 
 	'Shout-Group'
 
-	'System-Localization'
-
 	"standalone:" 
 	'MetacelloExtras-Core'
 	'Metacello-Tests-Group'		 
