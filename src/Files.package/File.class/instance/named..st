@@ -1,4 +1,5 @@
 instance creation
 named: fileName
 
-	name := fileName
+	name := (FilePathEncoder encode: fileName) asFileReference fullName
+

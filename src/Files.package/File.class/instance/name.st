@@ -1,4 +1,4 @@
-instance creation
+accessing
 name
 
 	^ name
