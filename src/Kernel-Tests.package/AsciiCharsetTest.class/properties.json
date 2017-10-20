@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "AndrewBlack 10/9/2017 14:35",
+	"super" : "TestCase",
+	"category" : "Kernel-Tests-Charset",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AsciiCharsetTest",
+	"type" : "normal"
+}

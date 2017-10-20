@@ -1,0 +1,3 @@
+testing
+isSpacingCombiningMark
+^ self characterSet isSpacingCombiningMark: self

@@ -39,7 +39,8 @@
 		"ToUpper",
 		"Zl",
 		"Zp",
-		"Zs"
+		"Zs",
+		"nonCharacters"
 	],
 	"instvars" : [ ],
 	"name" : "Unicode",
