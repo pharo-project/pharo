@@ -59,7 +59,6 @@ baseline: spec
 		spec package: 'Ring-Tests-Kernel'.
 		
 		spec package: 'System-Serial Port'.
-		spec package: 'System-Localization'.
 		
 		spec package: 'Zinc-Resource-Meta-Tests'.
 

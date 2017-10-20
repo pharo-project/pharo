@@ -66,6 +66,8 @@ baseline: spec
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings'.
 		spec package: 'System-Sound'.
+		spec package: 'System-Localization'.
+		
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
