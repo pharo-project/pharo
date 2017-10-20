@@ -1,4 +1,4 @@
-tests logical operations
+tests - logical operations
 testAND
 
 	self assert: (true & true).

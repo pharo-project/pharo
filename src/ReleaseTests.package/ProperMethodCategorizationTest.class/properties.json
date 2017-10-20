@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 9/7/2017 12:10",
+	"super" : "TestCase",
+	"category" : "ReleaseTests-Categorization",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ProperMethodCategorizationTest",
+	"type" : "normal"
+}

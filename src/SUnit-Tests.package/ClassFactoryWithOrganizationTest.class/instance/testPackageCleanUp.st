@@ -11,4 +11,5 @@ testPackageCleanUp
 	allClasses := self testedEnvironment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
 	self assert: (self testedOrganization categoriesMatching: factory packageName, '*') isEmpty. 
-	self deny: (ChangeSet current changedClassNames includesAnyOf: createdClassNames).
+	self class environment at: #ChangeSet ifPresent: [:changeSet |
+		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ].

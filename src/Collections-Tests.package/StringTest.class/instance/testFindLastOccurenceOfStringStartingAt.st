@@ -1,4 +1,4 @@
-testing
+tests
 testFindLastOccurenceOfStringStartingAt
 
 	self assert: ('Smalltalk' findLastOccurrenceOfString: 'al' startingAt: 2) = 7.

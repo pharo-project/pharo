@@ -1,5 +1,5 @@
-accessing
-major: anObject
-	"Set the value of major"
+accessing - properties
+major: anInteger
+	"Set the major part of the receiver"
 
-	major := anObject
+	major := anInteger

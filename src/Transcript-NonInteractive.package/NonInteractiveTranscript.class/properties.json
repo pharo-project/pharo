@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:19",
+	"super" : "Object",
+	"category" : "Transcript-NonInteractive",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"fileName",
+		"accessSemaphore"
+	],
+	"name" : "NonInteractiveTranscript",
+	"type" : "normal"
+}

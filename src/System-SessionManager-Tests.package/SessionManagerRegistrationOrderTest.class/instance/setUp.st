@@ -1,3 +1,3 @@
-tests
+running
 setUp
 	manager := SessionManager new

@@ -1,1 +1,0 @@
-is a person who criticizes stuff, while the product of criticism is a critique. *Critic classes are renamed to *Critique

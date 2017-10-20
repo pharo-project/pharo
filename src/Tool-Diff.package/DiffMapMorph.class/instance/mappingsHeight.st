@@ -1,4 +1,4 @@
-as yet unclassified
+private - accessing
 mappingsHeight
 	"Answer the maximum y of all the mappings."
 	

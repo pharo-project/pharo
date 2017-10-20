@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 icon
 	"Answer an icon for the receiver."
 

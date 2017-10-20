@@ -3,7 +3,7 @@ spotterPreviewCodeIn: aComposite
 	<spotterPreview: 10>
 	aComposite pharoMethod
 		title: [self name];
-		display: #definitionForNautilus;
+		display: #definitionForSpotter;
 		smalltalkClass: [ nil ];
 		entity: self.
 		

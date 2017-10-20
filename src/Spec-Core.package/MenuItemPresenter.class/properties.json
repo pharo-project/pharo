@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:30",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"action",
+		"name",
+		"shortcut",
+		"subMenu",
+		"icon",
+		"description",
+		"state",
+		"enabled",
+		"autoRefresh"
+	],
+	"name" : "MenuItemPresenter",
+	"type" : "normal"
+}

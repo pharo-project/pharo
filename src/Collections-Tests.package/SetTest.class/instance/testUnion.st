@@ -1,4 +1,4 @@
-some tests
+tests - some
 testUnion
 	| newFull col newCol |
 	full add: 3.

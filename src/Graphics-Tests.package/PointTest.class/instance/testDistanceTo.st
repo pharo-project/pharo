@@ -1,4 +1,4 @@
-tests-point functions
+tests - point functions
 testDistanceTo
 
 	self assert: (0 @ 0 distanceTo: 0 @ 0) = 0.

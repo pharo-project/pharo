@@ -1,4 +1,4 @@
-testing - converting
+tests - converting
 testTrimLineSpaces
 	self assert: 'test     \do' withCRs trimLineSpaces equals: 'test\do' withCRs.
 	self assert: 'test     \  do' withCRs trimLineSpaces equals: 'test\  do' withCRs.

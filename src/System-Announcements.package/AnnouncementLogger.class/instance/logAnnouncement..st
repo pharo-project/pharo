@@ -1,4 +1,4 @@
-as yet unclassified
+logging
 logAnnouncement: ann
 
 	Transcript show: ann printString ; cr

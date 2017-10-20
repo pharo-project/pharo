@@ -20,9 +20,23 @@ markerOrNilFor: compiledMethod
 	for the second form."
 
 	| e |
-	((e := compiledMethod endPC) = 19 or: [e = 20]) ifFalse: [^ nil].
-	(compiledMethod numLiterals = 3) ifFalse:[^ nil].
-	(compiledMethod at: 17) =  16r70 ifFalse:[^ nil].		"push self"
-	(compiledMethod at: 18) = 16rD0 ifFalse:[^ nil].		"send <literal 1>"
+	e := compiledMethod endPC.
+	(#(19 20 35) includes: e) ifFalse: [ ^ nil ].
+	
+	"Should have exactly 3 literals"
+	(compiledMethod numLiterals = 3) ifFalse:[ ^ nil ].	
+	
+	"If we are on 32 bits"
+	(#(19 20) includes: e) ifTrue: [ 
+		(compiledMethod at: 17) =  16r70 ifFalse: [ ^ nil ].		"push self"
+		(compiledMethod at: 18) = 16rD0 ifFalse: [ ^ nil ].		"send <literal 1>"
+	].
+	
+		"If we are on 32 bits"
+	(e = 35) ifTrue: [ 
+		(compiledMethod at: 33) =  16r70 ifFalse: [ ^ nil].		"push self"
+		(compiledMethod at: 34) = 16rD0 ifFalse: [ ^ nil ].		"send <literal 1>"
+	].
+	
 	"If we reach this point, we have a marker method that sends self <literal 1>"
 	^ compiledMethod literalAt: 1

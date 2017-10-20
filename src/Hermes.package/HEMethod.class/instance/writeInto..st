@@ -3,8 +3,13 @@ writeInto: aWriter
 	aWriter writeByteString: name.
 	aWriter writeByteString: className.
 	aWriter writeByteString: protocol.
-	aWriter writeInt: header.
+
+	aWriter writeByteString: encoderClassName.
+	aWriter writeUInt32: numArgs.
+	aWriter writeUInt32: numTemps.
+	aWriter writeUInt32: hasPrimitive.
+
 	aWriter writeByteArray: bytecode.
 	
-	aWriter writeInt: literals size.
+	aWriter writeInt32: literals size.
 	literals do:[:e | e writeInto: aWriter].

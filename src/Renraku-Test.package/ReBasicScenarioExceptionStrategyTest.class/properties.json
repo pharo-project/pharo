@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ReExceptionStrategyBaseTest",
+	"category" : "Renraku-Test",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ReBasicScenarioExceptionStrategyTest",
+	"type" : "normal"
+}

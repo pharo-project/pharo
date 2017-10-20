@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 narrow
-	^ TextKern kern: -1
+	^ self new emphasisCode: 8

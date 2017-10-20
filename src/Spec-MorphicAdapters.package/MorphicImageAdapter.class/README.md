@@ -1,1 +1,1 @@
-I am the bridge between an ImageModel and a AlphaImageMorph
+I am the bridge between an ImagePresenter and a AlphaImageMorph

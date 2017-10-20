@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:42",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"actionHolder",
+		"labelHolder",
+		"fontHolder",
+		"stateHolder",
+		"actionPerformedHolder",
+		"askBeforeChangingHolder",
+		"iconHolder",
+		"menuHolder",
+		"shortcutHolder"
+	],
+	"name" : "ButtonPresenter",
+	"type" : "normal"
+}

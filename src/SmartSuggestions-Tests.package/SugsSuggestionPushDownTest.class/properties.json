@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/3/2014 23:44",
 	"super" : "SugsSuggestionTest",
-	"category" : "SmartSuggestions-Tests",
+	"category" : "SmartSuggestions-Tests-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

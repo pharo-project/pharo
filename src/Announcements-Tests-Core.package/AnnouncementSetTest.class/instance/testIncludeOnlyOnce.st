@@ -1,4 +1,4 @@
-testing
+tests
 testIncludeOnlyOnce
 	| set |
 	set := AnnouncementMockA , AnnouncementMockB , AnnouncementMockA.

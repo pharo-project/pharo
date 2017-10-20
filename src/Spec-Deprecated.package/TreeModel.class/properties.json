@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TreePresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TreeModel",
+	"type" : "normal"
+}

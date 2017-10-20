@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "DiffPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DiffModel",
+	"type" : "normal"
+}

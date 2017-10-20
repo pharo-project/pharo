@@ -4,7 +4,7 @@ configuration098Issue215: spec
   spec
     for: #'common'
     do: [ 
-      spec description: self name , '>>configuration092Issue63:'.
+      spec description: self className , '>>configuration092Issue63:'.
       spec
         baseline: 'External'
           with: [ 

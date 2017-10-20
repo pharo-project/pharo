@@ -1,0 +1,3 @@
+testing-interest
+checksMethod
+	^ true

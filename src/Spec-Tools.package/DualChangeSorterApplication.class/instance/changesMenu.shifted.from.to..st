@@ -2,10 +2,10 @@ menu
 changesMenu: menu shifted: shifted from: sourcePanel to: destinationPanel
 	| menuModel menuDest |
 
-	menuModel := MenuModel new.
+	menuModel := MenuPresenter new.
 	menu addTitle: 'Change Set'.
 	sourcePanel changeSetMenu1: menu shifted: shifted.
-	menuDest := MenuModel new
+	menuDest := MenuPresenter new
 		fromSpec:
 			(PragmaMenuBuilder
 				pragmaKeyword: 'dualChangeSorteChangesListMenu'

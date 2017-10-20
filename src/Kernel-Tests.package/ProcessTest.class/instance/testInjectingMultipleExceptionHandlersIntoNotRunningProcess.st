@@ -1,4 +1,4 @@
-testing
+tests - exception handlers
 testInjectingMultipleExceptionHandlersIntoNotRunningProcess
 
 	| error process lastHandler firstHandler |

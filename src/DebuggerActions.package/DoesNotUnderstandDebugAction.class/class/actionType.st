@@ -1,3 +1,3 @@
-as yet unclassified
+registration
 actionType
 	<debuggingAction>

@@ -1,3 +1,3 @@
-as yet unclassified
+cleaning
 cleanUp
 	PrimarySelection := nil.

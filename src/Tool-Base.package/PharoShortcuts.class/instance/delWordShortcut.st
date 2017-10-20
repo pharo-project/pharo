@@ -1,4 +1,4 @@
-as yet unclassified
+keymaps - editor edit
 delWordShortcut
 
 	^ Character delete shift asShortcut

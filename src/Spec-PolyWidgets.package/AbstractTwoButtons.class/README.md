@@ -1,4 +1,4 @@
-I am an abstract Spec widget managing two ButtonModel.
+I am an abstract Spec widget managing two ButtonPresenter.
 
 I provide shortcuts to set easier the buttons
 -  firstIcon:secondIcon: that take two name of icon and set the buttons with the corresponding icons.

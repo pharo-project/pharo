@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testAtPathIfAbsent
 	"Test the at path if absent method for success and failure modes."
 

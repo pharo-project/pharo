@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 resources
 	^ super resources copyWith: TraitsResource

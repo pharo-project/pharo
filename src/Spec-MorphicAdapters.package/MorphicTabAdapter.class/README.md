@@ -1,1 +1,1 @@
-I am the adapter used to bridge a TabModel and a Tab
+I am the adapter used to bridge a TabPresenter and a Tab

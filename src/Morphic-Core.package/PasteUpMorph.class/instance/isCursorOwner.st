@@ -1,0 +1,3 @@
+cursor
+isCursorOwner
+	^ false

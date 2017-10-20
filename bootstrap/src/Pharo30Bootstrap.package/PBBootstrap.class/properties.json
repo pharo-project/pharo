@@ -9,7 +9,8 @@
 		"architecture",
 		"kernelPackageNames",
 		"imageReference",
-		"buildNumber"
+		"buildNumber",
+		"sUnitPackageNames"
 	],
 	"name" : "PBBootstrap",
 	"type" : "normal"

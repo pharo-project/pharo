@@ -1,4 +1,4 @@
-test - adding
+tests - adding
 testAddAll
 	
 	| collectionToAdd collection result oldSize |

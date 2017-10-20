@@ -1,4 +1,4 @@
-as yet unclassified
+private - initialization
 initializeCmdKeyShortcuts
 	"Initialize the (unshifted) command-key (or alt-key) shortcut table."
 

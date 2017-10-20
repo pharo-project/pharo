@@ -1,10 +1,9 @@
 running
-check: anAST forCritiquesDo: aCriticBlock
+check: aMethod forCritiquesDo: aCriticBlock
 
-	anAST isMethod ifFalse: [ ^ self ].
-	anAST pragmaNamed: #gtInspectorPresentationOrder: ifAbsent: [ ^ self ].
+	(aMethod hasPragmaNamed: #gtInspectorPresentationOrder:) ifFalse: [ ^ self ].
 	
-	^ (anAST sendNodes
+	^ (aMethod ast sendNodes
 			reject: [ :message |
 				(self presentationScriptingMathods includes: message selector) ==> [
 				| argument |
@@ -13,7 +12,7 @@ check: anAST forCritiquesDo: aCriticBlock
 			thenCollect: [ :message |
 				aCriticBlock cull: (ReTrivialCritique
 					withAnchor: (ReIntervalSourceAnchor
-						entity: anAST
+						entity: aMethod
 						interval: message	 sourceInterval)
 					by: self) ])
 				

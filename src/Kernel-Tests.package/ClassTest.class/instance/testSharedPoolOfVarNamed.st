@@ -1,4 +1,4 @@
-testing - access
+tests - access
 testSharedPoolOfVarNamed
 	"self debug: #testSharedPoolOfVarNamed"
 

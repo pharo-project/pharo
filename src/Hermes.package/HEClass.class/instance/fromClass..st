@@ -1,7 +1,7 @@
 initialization
 fromClass: aClass
 	className := aClass name.
-	superclass := aClass superclass name.
+	superclass := aClass superclass ifNil: '' ifNotNil:#name.
 	instanceVariables := (aClass slots collect: #name) joinUsing: ' '.
 	classInstancevariables := (aClass class slots collect: #name) joinUsing: ' '.
 	classVariables := aClass classPool keys joinUsing: ' '.

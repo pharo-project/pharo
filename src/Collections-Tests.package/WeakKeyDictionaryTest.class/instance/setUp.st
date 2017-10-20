@@ -1,4 +1,4 @@
-setup
+running
 setUp
 	keys := (1 to: 1000) collect:[:n| 'key', n asString].
 	dict := WeakKeyDictionary new.

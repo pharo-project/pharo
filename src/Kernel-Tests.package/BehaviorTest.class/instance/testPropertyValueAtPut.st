@@ -1,4 +1,4 @@
-test - properties
+tests - properties
 testPropertyValueAtPut
 	| testValue |
 	testValue := Date today.

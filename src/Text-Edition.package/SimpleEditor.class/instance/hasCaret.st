@@ -1,3 +1,3 @@
-accessing-selection
+testing
 hasCaret
 	^markIndex = pointIndex

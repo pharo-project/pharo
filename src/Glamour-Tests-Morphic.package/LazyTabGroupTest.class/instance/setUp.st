@@ -1,4 +1,4 @@
-setup - tear down
+running
 setUp
 	tabs := LazyTabGroupMorph new.
 	tabs addLazyPage: (PanelMorph new fillStyle: (SolidFillStyle color: Color red)) label: 'one'.
