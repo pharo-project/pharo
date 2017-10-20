@@ -1,5 +1,6 @@
 accessing
 defaultWorkingDirectory
-	| pathString |
-	pathString := Primitives decode: Primitives imageFile.
-	^ (self pathFromString: pathString) parent
+	"Answer the default working directory, which is defined as the directory where the image resides."
+
+	^ DefaultWorkingDirectory
+		ifNil: [ self class defaultWorkingDirectory ]

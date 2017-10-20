@@ -1,0 +1,1 @@
+I contain some functionality shared between code entities

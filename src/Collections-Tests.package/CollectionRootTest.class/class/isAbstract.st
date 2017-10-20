@@ -1,4 +1,4 @@
-as yet unclassified
+testing
 isAbstract
 
 	^ self name = #CollectionRootTest

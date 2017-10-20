@@ -1,2 +1,2 @@
 SystemOrganization addCategory: #'Morphic-Widgets-Basic'!
-SystemOrganization addCategory: 'Morphic-Widgets-Basic-Buttons'!
+SystemOrganization addCategory: #'Morphic-Widgets-Basic-Buttons'!

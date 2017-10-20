@@ -2,8 +2,8 @@ examples
 exampleOtherControls
 	"Open a window with examples of each of the other controls."
 	"self exampleOtherControls"
-	
-	|dialog builder image emboss fuzzy|
+	<script>
+	| dialog builder image emboss fuzzy |
 	builder := self exampleBuilder.
 	dialog := (builder newPluggableDialogWindow: 'Example other controls') useDefaultOKButton.
 	emboss := (dialog newString: 'Hello there') trackPaneColor: false.
@@ -26,8 +26,8 @@ exampleOtherControls
 					getEnabled: nil useIndex: false help: 'The image layout')}}).
 		dialog newVerticalSeparator.
 		dialog newLabelGroup: {
-			'Color presenter'->((dialog newColorPresenterFor: (ValueHolder new contents: (Color blue alpha: 0.6))
-					getColor: #contents help: 'This is a color presenter')
+			'Color presenter'->((dialog newColorPresenterFor: (NewValueHolder new value: (Color blue alpha: 0.6))
+					getColor: #value help: 'This is a color presenter')
 					vResizing: #shrinkWrap).
 			'Color chooser'->(dialog newColorChooserFor: emboss
 					getColor: #color setColor: #color: help: 'This is a color chooser').
@@ -51,13 +51,13 @@ exampleOtherControls
 			(dialog newColumn: {
 				(dialog newExpander: 'An Expander' forAll: {
 					dialog newLabel: 'Expanded!'.
-					builder newMorphListFor: (ListModel new items: ((Color red wheel: 15)
+					builder newMorphListFor: (ListPresenter new items: ((Color red wheel: 15)
 									collect: [:c | Morph new extent: 80@12; color: c]))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a morph drop list'}) minWidth: 100.
 				dialog newExpander: 'Another' forAll: {
 					dialog newLabel: 'Expanded!'.
-					builder newMorphDropListFor: (ListModel new items: ((Color red wheel: 8)
+					builder newMorphDropListFor: (ListPresenter new items: ((Color red wheel: 8)
 									collect: [:c | Morph new extent: 80@12; color: c]))
 							list: #getList getSelected: #selectedIndex setSelected: #setSelectedIndex:
 							help: 'This is a morph drop list'}})

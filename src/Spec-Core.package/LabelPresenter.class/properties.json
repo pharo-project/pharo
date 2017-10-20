@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:41",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"labelHolder",
+		"emphasis"
+	],
+	"name" : "LabelPresenter",
+	"type" : "normal"
+}

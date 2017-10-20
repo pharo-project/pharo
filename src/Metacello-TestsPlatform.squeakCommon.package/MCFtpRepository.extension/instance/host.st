@@ -1,4 +1,0 @@
-*metacello-testsplatform
-host
-
-	^host

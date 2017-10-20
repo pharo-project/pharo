@@ -21,7 +21,7 @@ baseline: spec
 		spec package: 'FontChooser'.
 
 		spec package: 'Tool-Base'.
-		spec package: 'Tool-Transcript'.
+		spec package: 'Transcript-Tool'.
 		spec package: 'Tool-Workspace'.
 
 		spec package: 'Spec-Core'.
@@ -31,6 +31,8 @@ baseline: spec
 		spec package: 'Spec-MorphicAdapters'.
 		spec package: 'Spec-PolyWidgets'.
 		spec package: 'Spec-Tools'.
+		
+		spec package: 'Spec-Deprecated'.
 
 		spec package: 'Morphic-Widgets-Tree'.
 
@@ -39,6 +41,8 @@ baseline: spec
 		spec package: 'Keymapping-Pragmas'.
 		spec package: 'Keymapping-Settings'.
 		spec package: 'Keymapping-Tools-Spec'.
+
+		spec package: 'WebBrowser-Core'.
 
 		spec package: 'HelpSystem-Core'.
 

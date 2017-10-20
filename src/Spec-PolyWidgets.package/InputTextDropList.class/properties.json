@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:11",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-PolyWidgets-Elementary",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dropList",
+		"input"
+	],
+	"name" : "InputTextDropList",
+	"type" : "normal"
+}

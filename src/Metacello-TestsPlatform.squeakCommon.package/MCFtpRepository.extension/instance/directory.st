@@ -1,4 +1,0 @@
-*metacello-testsplatform
-directory
-
-	^directory

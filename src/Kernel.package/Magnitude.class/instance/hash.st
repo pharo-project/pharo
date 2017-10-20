@@ -1,4 +1,4 @@
-hash
+comparing
 hash
 	"Hash must be redefined whenever = is redefined."
 

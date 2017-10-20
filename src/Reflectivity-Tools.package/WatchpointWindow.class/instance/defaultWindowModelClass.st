@@ -1,4 +1,4 @@
 accessing
 defaultWindowModelClass
 
-	^ TickingWindowModel 
+	^ TickingWindowPresenter

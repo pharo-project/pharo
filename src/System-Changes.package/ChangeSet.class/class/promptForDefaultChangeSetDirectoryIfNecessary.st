@@ -10,11 +10,11 @@ promptForDefaultChangeSetDirectoryIfNecessary
 	directoryPath := self defaultChangeSetDirectoryName.
 	[dir := directoryPath asFileReference.
 	dir exists] 
-		whileFalse: [message := 'The preferred change set directory' translated , ' (''{1}'') ' , 'does not exist.' translated , '
-' , 'Create it or use the default directory' translated , ' ({2})?' format: {directoryPath. FileSystem workingDirectory fullName}.
+		whileFalse: [message := 'The preferred change set directory' , ' (''{1}'') ' , 'does not exist.' , '
+' , 'Create it or use the default directory' , ' ({2})?' format: {directoryPath. FileSystem workingDirectory fullName}.
 			choice := UIManager default
 						chooseFrom: (#('Create directory' 'Use default directory and forget preference' 'Choose another directory' )
-								collect: [:ea | ea translated])
+								collect: [:ea | ea ])
 						message: message.
 			choice = 1
 				ifTrue: [dir ensureCreateDirectory ].

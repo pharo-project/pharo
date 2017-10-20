@@ -1,4 +1,4 @@
-typing support
+typing - support
 dispatchOn: aKeyboardEvent
 	"Carry out the action associated with this character, if any.
 	Type-ahead is passed so some routines can flush or use it."

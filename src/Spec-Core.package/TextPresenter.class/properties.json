@@ -1,0 +1,29 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:47",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"aboutToStyleHolder",
+		"behaviorHolder",
+		"textHolder",
+		"actionToPerformHolder",
+		"readSelectionHolder",
+		"actionPerformedHolder",
+		"isCodeCompletionAllowedHolder",
+		"doItContext",
+		"doItReceiver",
+		"hasUnacceptedEdits",
+		"selection",
+		"scrollValue",
+		"menuHolder",
+		"autoAccept",
+		"wantsVisualFeedback",
+		"askBeforeDiscardingEdits",
+		"isForSmalltalkCodeHolder"
+	],
+	"name" : "TextPresenter",
+	"type" : "normal"
+}

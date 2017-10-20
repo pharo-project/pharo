@@ -1,0 +1,3 @@
+running
+classToTest
+	^ ListPresenter

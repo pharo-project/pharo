@@ -1,3 +1,0 @@
-initialization
-oldOrganization: aCollectionOfTags
-	self basicOrganizationChange oldOrganization: aCollectionOfTags 

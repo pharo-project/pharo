@@ -1,4 +1,4 @@
-testing
+tests
 testIndexOfWideCharacterFromTo
 
 self assert: ('123éàôüÖẞ' indexOfWideCharacterFrom: 1 to: 9)  = 9.

@@ -1,4 +1,4 @@
-tests-converting
+tests - converting
 testAsIntegerPoint
 	|testPoint|
 	self assert: (1 @ 1) asIntegerPoint = (1 @ 1).

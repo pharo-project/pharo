@@ -1,3 +1,3 @@
-as yet unclassified
+instance creation
 underlined
 	^ self new emphasisCode: 4

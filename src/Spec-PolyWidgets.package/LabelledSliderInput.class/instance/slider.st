@@ -1,0 +1,3 @@
+accessing
+slider
+	^ subwidget slider

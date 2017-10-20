@@ -1,7 +1,7 @@
 private-changes
 renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock 
-	^self performChange: (RBRenameInstanceVariableChange 
-				rename: oldName
+	^self performChange: (RBRefactoryChangeManager changeFactory 
+				renameInstanceVariable: oldName
 				to: newName
 				in: aRBClass)
 		around: aBlock

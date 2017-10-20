@@ -1,4 +1,0 @@
-private-extensions-flbasicserializationtest
-expectedFailuresForFLBasicSerializationTest
-	<flExtensionOf: #FLBasicSerializationTest selector: #expectedFailures>
-	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal testWideStringClassName)

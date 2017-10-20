@@ -1,1 +1,1 @@
-I am the adapter used to bridge a DialogWindowModel and a DialogWindow
+I am the adapter used to bridge a DialogWindowPresenter and a DialogWindow

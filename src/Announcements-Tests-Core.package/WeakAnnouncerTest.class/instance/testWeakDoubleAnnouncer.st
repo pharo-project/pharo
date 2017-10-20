@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testWeakDoubleAnnouncer
 
 	| a1 a2 o |

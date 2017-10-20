@@ -1,4 +1,4 @@
-testing
+tests
 test22addAll
 	| link5 link6 link7 link8 listToBeAdded |
 	link5 := Link new.

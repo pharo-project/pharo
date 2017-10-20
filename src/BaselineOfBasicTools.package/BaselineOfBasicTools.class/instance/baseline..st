@@ -12,7 +12,8 @@ baseline: spec
 
 		spec baseline: 'UI' with: [spec repository: repository].
 
-		spec package: 'HudsonBuildTools20'.
+		spec package: 'JenkinsTools-Core'.
+		spec package: 'JenkinsTools-ExtraReports'.
 		
 		spec baseline: 'SUnit' with: [
 			spec repository: repository.
@@ -38,8 +39,6 @@ baseline: spec
 		
 		spec package: 'Announcements-Help'.	
 		spec package: 'Metacello-FileTree'.
-		spec package: 'Metacello-GitBasedRepository'.
-		spec package: 'Metacello-GitHub'.
 		spec package: 'Metacello-ProfStef'.
 		spec package: 'Metacello-Reference'.
 		spec package: 'Metacello-Tutorial'.
@@ -53,7 +52,6 @@ baseline: spec
 		spec package: 'Refactoring-Core'.
 		spec package: 'Refactoring-Environment'.
 		spec package: 'Regex-Help'.
-		spec package: 'UpdateStreamer-Core'.
 		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking'.
 		spec package: 'Monticello-OldDataStreamCompatibility'. 

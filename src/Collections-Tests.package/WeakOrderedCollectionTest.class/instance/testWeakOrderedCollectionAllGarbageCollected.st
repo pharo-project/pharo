@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testWeakOrderedCollectionAllGarbageCollected
 	| anArray anotherObject weakOrderedCollection |
 	

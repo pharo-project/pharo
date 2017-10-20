@@ -1,10 +1,10 @@
 handling
 transform
-	| node rewriteRule aMethod|
+	| node rewriteRule aMethod |
+	self raiseWarning ifFalse: [ ^ self ]. "when desprecations are disables, we do not want to transform, either"
 	self rewriterClass ifNil:[ ^ self signal ].
 	aMethod := self contextOfSender method.
-	"no need to transform doits"
-	aMethod isDoIt ifTrue:[^ self].
+	aMethod isDoIt ifTrue:[^ self]. "no need to transform doits"
 	node := self contextOfSender sourceNodeExecuted.
 	rewriteRule := self rewriterClass new 
 		replace: rule key with: rule value.

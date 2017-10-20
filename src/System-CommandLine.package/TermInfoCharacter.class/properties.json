@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "ValentinRyckewaert 6/24/2016 10:49",
+	"super" : "NullTermInfo",
+	"category" : "System-CommandLine",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"cache"
+	],
+	"name" : "TermInfoCharacter",
+	"type" : "normal"
+}

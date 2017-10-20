@@ -2,6 +2,10 @@ tests
 testAccessingTempsVectorInBlock2
 
 	|a b r |
+	
+	"Check the source code availability to do not fail on images without sources"
+	thisContext method hasSourceCode ifTrue: [ ^ self ].
+	
 	a := [ r := 'failure'].
 	[ b :='success'.
 	r := thisContext ] on: Error do: a.

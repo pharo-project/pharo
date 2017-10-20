@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 mappingWhiteToTransparentFrom: aFormOrCursor
 	"Return a ColorForm copied from the given Form or Cursor with white mapped to transparent."
 

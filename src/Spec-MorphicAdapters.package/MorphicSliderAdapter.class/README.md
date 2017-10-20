@@ -1,1 +1,1 @@
-I am the adapter used to bridget a SliderModel and a PluggableSliderMorph
+I am the adapter used to bridget a SliderPresenter and a PluggableSliderMorph

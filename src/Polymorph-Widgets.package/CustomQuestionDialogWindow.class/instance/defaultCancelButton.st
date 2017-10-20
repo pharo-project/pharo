@@ -1,4 +1,4 @@
-as yet unclassified
+defaults
 defaultCancelButton
 	"Answer a default cancel button."
 

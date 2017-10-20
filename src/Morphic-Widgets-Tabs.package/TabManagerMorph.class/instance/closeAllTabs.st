@@ -1,4 +1,3 @@
 protocol
 closeAllTabs
-
 	toolbar closeAllTabs

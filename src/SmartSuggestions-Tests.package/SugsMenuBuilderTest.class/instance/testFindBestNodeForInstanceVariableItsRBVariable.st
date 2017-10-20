@@ -1,4 +1,4 @@
-nodes
+tests - nodes
 testFindBestNodeForInstanceVariableItsRBVariable
 	| node |
 

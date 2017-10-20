@@ -1,4 +1,4 @@
-testing
+tests - exception handlers
 testInjectingExceptionHandlerIntoProcessWithArg
 
 	| error interceptedError process interrupted processArg |

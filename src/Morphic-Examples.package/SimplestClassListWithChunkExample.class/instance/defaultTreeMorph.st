@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 defaultTreeMorph
 	^ super defaultTreeMorph chunkSize: 100; yourself

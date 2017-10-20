@@ -1,4 +1,4 @@
-as yet unclassified
+display
 openInWorld
 
 	super openInWorld.

@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 itemsForTest
 	^ rootClass allSubclasses

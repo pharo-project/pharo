@@ -1,4 +1,4 @@
-as yet unclassified
+defaults
 default: defaultOption
 	"Set the default button."
 

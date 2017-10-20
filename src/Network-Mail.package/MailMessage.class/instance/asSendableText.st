@@ -13,8 +13,8 @@ asSendableText
 			line isEmpty ifTrue: [pastHeader := true].
 			pastHeader
 				ifTrue: 
-					["(line beginsWith: '--==')
-						ifTrue: [atAttachment := true]."
+					[(line beginsWith: '--==')
+						ifTrue: [atAttachment := true].
 					atAttachment
 						ifTrue: 
 							["at or after an attachment line; no more 

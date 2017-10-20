@@ -1,4 +1,4 @@
-initialization
+running
 tearDown
 	"Tearing down code for NautilusUITest"
 

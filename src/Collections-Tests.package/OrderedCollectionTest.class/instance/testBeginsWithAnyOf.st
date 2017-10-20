@@ -1,4 +1,4 @@
-tests begin 
+tests - begin
 testBeginsWithAnyOf
 	"We can't test SequenceableCollection directly. However, we can test a sampling of its descendants."
 	"self debug: #testBeginsWithAnyOf"

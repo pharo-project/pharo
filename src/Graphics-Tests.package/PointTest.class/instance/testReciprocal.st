@@ -1,4 +1,4 @@
-tests-arithmetic
+tests - arithmetic
 testReciprocal
 
 	self assert: (1 @ 1) reciprocal = (1 @ 1).

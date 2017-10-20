@@ -1,4 +1,4 @@
-testing-working
+tests - working
 testContraintShouldFindWorkingCopy
 	| constraintReference workingCopy |
 	constraintReference := GoferConstraintReference 

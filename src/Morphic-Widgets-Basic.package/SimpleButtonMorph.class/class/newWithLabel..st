@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 newWithLabel: labelString
 
 	^ self new label:  labelString

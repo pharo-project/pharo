@@ -1,4 +1,4 @@
-testing
+tests
 testIndexOf
 
 self assert: ('test this string' indexOf: $k) = 0.

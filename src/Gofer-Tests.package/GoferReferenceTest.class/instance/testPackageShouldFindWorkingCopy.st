@@ -1,4 +1,4 @@
-testing-working
+tests - working
 testPackageShouldFindWorkingCopy
 	| packageReference workingCopy |
 	packageReference := GoferPackageReference name: 'Gofer-Core'.

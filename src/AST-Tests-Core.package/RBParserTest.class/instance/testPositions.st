@@ -1,7 +1,7 @@
 tests
 testPositions
 	| blockNode |
-	blockNode := RBParser parseExpression: '[:a :b | ]'.
+	blockNode := self parserClass parseExpression: '[:a :b | ]'.
 	self assert: blockNode left = 1.
 	self assert: blockNode right = 10.
 	self assert: blockNode bar = 8.

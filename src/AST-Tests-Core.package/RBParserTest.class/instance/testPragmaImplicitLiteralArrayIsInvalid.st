@@ -7,18 +7,18 @@ testPragmaImplicitLiteralArrayIsInvalid
 	pragmaWithExpressionAsArgument := 'foo 
 	<func: (3+4) res: 7>
 	^ self'.
-	self should:[RBParser parseMethod: pragmaWithExpressionAsArgument] raise: Exception.
+	self should:[self parserClass parseMethod: pragmaWithExpressionAsArgument] raise: Exception.
 
 	"an explicit literal array is allowed"
 	pragmaWithLiteralArrayAsArgument := 'foo 
 	<func: #(3+4) res: 7>
 	^ self'.
 	"Should work"
-	RBParser parseMethod: pragmaWithLiteralArrayAsArgument.
+	self parserClass parseMethod: pragmaWithLiteralArrayAsArgument.
 
 	"and of course a string literal"
 	pragmaWithStringAsArgument := 'foo 
 	<func: ''(3+4)'' res: 7>
 	^ self'.
 	"should work"
-	RBParser parseMethod: pragmaWithStringAsArgument.
+	self parserClass parseMethod: pragmaWithStringAsArgument.

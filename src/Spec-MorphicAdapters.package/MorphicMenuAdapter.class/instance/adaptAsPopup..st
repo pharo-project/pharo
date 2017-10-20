@@ -1,6 +1,6 @@
 initialization
-adaptAsPopup: aComposableModel
+adaptAsPopup: aComposablePresenter
 
-	model := aComposableModel.
-	aComposableModel addDependent: self.
+	model := aComposablePresenter.
+	aComposablePresenter addDependent: self.
 	widget := self buildWidgetPopup.

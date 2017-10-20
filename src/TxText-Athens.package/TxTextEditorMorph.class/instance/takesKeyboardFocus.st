@@ -1,3 +1,0 @@
-focus management
-takesKeyboardFocus
-	^ true

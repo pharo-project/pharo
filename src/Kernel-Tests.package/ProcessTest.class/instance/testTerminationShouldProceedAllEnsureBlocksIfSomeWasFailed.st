@@ -1,4 +1,4 @@
-testing
+tests - termination
 testTerminationShouldProceedAllEnsureBlocksIfSomeWasFailed
 
 	| ensureCalled process ensureFailure forkedFailures |

@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 editor: aSmalltalkEditor
 	editor := aSmalltalkEditor 

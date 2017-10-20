@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:07",
+	"super" : "WindowPresenter",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"contents",
+		"toolbar"
+	],
+	"name" : "DialogWindowPresenter",
+	"type" : "normal"
+}

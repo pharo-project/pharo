@@ -1,3 +1,0 @@
-accessing
-calculateNewBounds
-	self subclassResponsibility

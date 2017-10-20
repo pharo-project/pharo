@@ -1,4 +1,4 @@
-as yet unclassified
+accept/cancel
 acceptOnFocusChange: anObject
 	"Set the value of acceptOnFocusChange"
 

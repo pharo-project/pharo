@@ -1,3 +1,3 @@
-as yet unclassified
+running
 runCase
 	[super runCase] ensure: [self reportPerformance]

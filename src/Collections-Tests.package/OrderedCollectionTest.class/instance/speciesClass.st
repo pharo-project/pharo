@@ -1,4 +1,4 @@
-test - iterate
+accessing
 speciesClass
 	
 	^ OrderedCollection

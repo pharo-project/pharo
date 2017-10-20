@@ -1,5 +1,0 @@
-updating
-ownerChanged
-
-	self updateCursor .
-	
