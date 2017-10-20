@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "AbstractAdapter",
+	"category" : "Spec-StubAdapter-Adapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecStubAbstractAdapter",
+	"type" : "normal"
+}

@@ -1,0 +1,4 @@
+factory
+buildWidget
+
+	^ SpecStubTextInputFieldView new

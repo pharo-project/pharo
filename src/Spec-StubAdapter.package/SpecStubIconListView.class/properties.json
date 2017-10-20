@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "SpecStubViews",
+	"category" : "Spec-StubAdapter-Views",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecStubIconListView",
+	"type" : "normal"
+}
