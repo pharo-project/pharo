@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "SvenVanCaekenberghe 6/24/2014 23:54",
+	"super" : "ClassTestCase",
+	"category" : "System-Hashing-Tests-SHA256",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hash"
+	],
+	"name" : "SHA256Test",
+	"type" : "normal"
+}

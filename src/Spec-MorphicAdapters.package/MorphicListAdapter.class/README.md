@@ -1,1 +1,1 @@
-I am the adapter used to bridge a ListModel and a PluggableListMorph
+I am the adapter used to bridge a ListPresenter and a PluggableListMorph

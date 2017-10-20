@@ -1,8 +1,8 @@
 initialization
 initializeWidgets
-	text := self instantiate: LabelModel.
-	plus := self instantiate: ButtonModel.
-	minus := self instantiate: ButtonModel.
+	text := self instantiate: LabelPresenter.
+	plus := self instantiate: ButtonPresenter.
+	minus := self instantiate: ButtonPresenter.
 	plus
 		label: '+'.
 	minus

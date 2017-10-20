@@ -1,7 +1,7 @@
 initialization
 initializeWidgets
-	dropList := self instantiate: DropListModel.
-	button := self instantiate: ButtonModel.
+	dropList := self instantiate: DropListPresenter.
+	button := self instantiate: ButtonPresenter.
 	self focusOrder
 		add: dropList;
 		add: button

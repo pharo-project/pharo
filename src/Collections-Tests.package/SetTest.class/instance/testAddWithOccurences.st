@@ -1,4 +1,4 @@
-some tests
+tests - some
 testAddWithOccurences
  
 	empty add: 2 withOccurrences: 3.

@@ -1,4 +1,4 @@
-testing
+tests
 testCopy
     | theOriginal theCopy |
     theOriginal := WideCharacterSet newFrom: ('abc' copyWith: 300 asCharacter).

@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Komitter-Support",
 	"classinstvars" : [ ],
 	"pools" : [ ],

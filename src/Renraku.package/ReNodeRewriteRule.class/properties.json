@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "YuriyTymchuk 7/9/2016 13:31",
-	"super" : "ReNodeBasedRule",
+	"super" : "RePatternCodeRule",
 	"category" : "Renraku-Rules-Rewrite",
 	"classinstvars" : [ ],
 	"pools" : [ ],

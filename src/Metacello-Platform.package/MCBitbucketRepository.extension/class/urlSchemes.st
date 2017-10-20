@@ -1,0 +1,3 @@
+*Metacello-Platform
+urlSchemes
+	^ #(bitbucket)

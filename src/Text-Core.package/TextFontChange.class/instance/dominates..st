@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 dominates: other
 	^ other isKindOf: TextFontChange

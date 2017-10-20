@@ -4,5 +4,5 @@ defaultWorkingDirectory
 	Clients should normally use the instance side method which caches this value."
 	| pathString |
 
-	pathString := Primitives decode: Primitives imageFile.
-	^(Path from: pathString delimiter: self delimiter) parent
+	pathString := OSPlatform current currentWorkingDirectoryPath.
+	^(Path from: pathString delimiter: self delimiter).

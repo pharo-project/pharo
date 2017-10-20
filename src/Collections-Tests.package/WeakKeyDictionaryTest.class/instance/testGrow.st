@@ -1,4 +1,4 @@
-testing
+tests
 testGrow
 	keys := nil.
 	dict at: self put: nil.

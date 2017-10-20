@@ -5,7 +5,7 @@ baseline: spec
 
  	| repository | 
 	
-	repository := 'filetree://./pharo-core/src'.    
+	repository := 'filetree://./pharo-core/src'.     
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
@@ -33,7 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		"spec package: 'Deprecated60'."
+		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -47,6 +47,7 @@ baseline: spec
 		spec package: 'FuelTests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
+		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
 		spec package: 'Monticello-Tests'.
@@ -66,8 +67,6 @@ baseline: spec
 		spec package: 'Zodiac-Extra'.	
 		spec package: 'Zinc-Zodiac'.	
 			
-		spec package: 'Metacello-GitBasedRepository'.	
-
 		spec package: 'Metacello-Bitbucket'.		
 		spec package: 'Metacello-TestsMCResources'.
 		spec package: 'Metacello-TestsCore'.
@@ -157,7 +156,7 @@ baseline: spec
 		spec package: 'OSWindow-Core'.
 		spec package: 'OSWindow-SDL2'.
 		spec package: 'OSWindow-VM'.
-		
+				
 		spec package: 'System-CommandLine-TextSupport'.
 		spec package: 'GeneralRules'.
 		spec package: 'ReflectionMirrors-Primitives'.
@@ -175,7 +174,7 @@ baseline: spec
 		spec package: 'Balloon-Tests'.
 		spec package: 'BlueInk-Extras'.
 		spec package: 'BlueInk-Tests'.
-		spec package: 'Collections-DoubleLinkedListTests'.
+		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
 		spec package: 'ContributingToTheCatalogHelp'.
@@ -202,7 +201,7 @@ baseline: spec
 		spec package: 'HowToContributeHelp'.
 		spec package: 'ImportingResource-Help'.
 		spec package: 'IssueTracking-Tests'.
-		spec package: 'JobsTests'.
+		spec package: 'Jobs-Tests'.
 		spec package: 'Kernel-Tests-Rules'.
 		spec package: 'Keymapping-Tests'.
 		spec package: 'Manifest-Tests'.
@@ -214,6 +213,7 @@ baseline: spec
 		spec package: 'NodeNavigation-Tests'.
 		spec package: 'OSWindow-SDL2-Examples'.
 		spec package: 'OSWindow-Tests'.
+		spec package: 'PerformMessageCommandLineHandler'.
 		spec package: 'Pharo-Help'.
 		spec package: 'PharoDocComment'.
 		spec package: 'Polymorph-Widgets-Rules'.
@@ -242,19 +242,20 @@ baseline: spec
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
-		spec package: 'System-CachingTests'.
+		spec package: 'System-Caching-Tests'.
+		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
 		spec package: 'System-Localization-Tests'.
 		spec package: 'System-SessionManager-Tests'.
 		spec package: 'System-Settings-Rules'.
 		spec package: 'System-Settings-Tests'.
 		spec package: 'System-Support-Rules'.
-		spec package: 'System-SupportTests'.
+		spec package: 'System-Support-Tests'.
 		spec package: 'Text-Edition-Tests'.
 		spec package: 'Tool-FileList-Tests'.
 		spec package: 'Tools-Test'.	
 		spec package: 'WorldMenuHelp'.	
-		spec package: 'WriteBarrierTests'.
+		spec package: 'WriteBarrier-Tests'.
 		spec package: 'Zinc-Character-Encoding-Tests'.
 		spec package: 'Zinc-Resource-Meta-FileSystem'.	
 		spec package: 'Zinc-Tests'.
@@ -262,6 +263,7 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.
 	].

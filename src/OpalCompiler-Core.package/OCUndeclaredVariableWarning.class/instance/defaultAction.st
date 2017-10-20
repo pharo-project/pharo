@@ -11,5 +11,5 @@ defaultAction
 	self traceCr: '(' , varName , ' is Undeclared) '.
 
 	^super defaultAction ifNil: [
-		Undeclared at: varName asSymbol put: nil.
+		Undeclared add: (UndeclaredVariable named: varName asSymbol).
 		OCUndeclaredVariable new name: varName asSymbol]

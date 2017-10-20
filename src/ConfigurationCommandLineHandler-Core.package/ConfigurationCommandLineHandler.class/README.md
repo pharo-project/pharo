@@ -1,7 +1,9 @@
 Command line handler for dealing with Metacello configurations from the command line
 
-Usage: config [--help] <repository url> [<configuration>] [--install[=<version>]] [--group=<group>] [--username=<username>] [--password=<password>]
+Usage: config [--help] <repository url> [<configuration>] [--install[=<version>]] [--group=<group>] [--username=<username>] [--password=<password>][--no-quit][--no-save]
 	--help              show this help message
+	--no-quit        keep the image running after configuration install
+	--no-save       Don't save the image after configuration install
 	<repository url>    A Monticello repository name 
 	<configuration>     A valid Metacello Configuration name
 	<version>           A valid version for the given configuration

@@ -9,5 +9,3 @@ installVersion: aVersionName
 		(self hasOption: 'group')
 			ifTrue: [ metacelloVersion load: self groups ]
 			ifFalse: [ metacelloVersion load ]].
-	
-	Smalltalk snapshot: true andQuit: true.

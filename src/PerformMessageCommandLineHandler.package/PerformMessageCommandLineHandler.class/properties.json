@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 8/11/2017 15:19",
+	"super" : "CommandLineHandler",
+	"category" : "PerformMessageCommandLineHandler",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "PerformMessageCommandLineHandler",
+	"type" : "normal"
+}

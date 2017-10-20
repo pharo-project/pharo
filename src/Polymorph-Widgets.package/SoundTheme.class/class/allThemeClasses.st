@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 allThemeClasses
 	"Answer the subclasses of the receiver that are considered to be
 	concrete (useable as a theme)."

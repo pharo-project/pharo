@@ -1,4 +1,4 @@
-test-comparing
+tests - comparing
 testComparingCaseInsensitiveLatin1
 
 	"ascii-letter"

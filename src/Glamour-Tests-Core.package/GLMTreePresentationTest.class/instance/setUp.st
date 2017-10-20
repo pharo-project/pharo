@@ -1,4 +1,4 @@
-tests
+running
 setUp
 	pane := GLMPane named: 'test'.
 	presentation := GLMTreePresentation new.

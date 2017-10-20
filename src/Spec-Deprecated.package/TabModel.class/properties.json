@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TabPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TabModel",
+	"type" : "normal"
+}

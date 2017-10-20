@@ -1,4 +1,4 @@
-nonediting/nontyping keys
+nonediting - nontyping keys
 cursorEnd: aKeyboardEvent
 
 	"Private - Move cursor end of current line."

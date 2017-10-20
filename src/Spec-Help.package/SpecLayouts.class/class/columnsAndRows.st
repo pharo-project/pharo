@@ -53,6 +53,6 @@ And the same but for a column:
 			    yourself
 			
 			
-Note that it is generally considered a bad habit to hardcode the size of the widgets. Methods are available on ComposableModel providing sensible default sizes, like the width of a button. When specifying custom widget sizes, care should be taken to take in account the current font size.'
+Note that it is generally considered a bad habit to hardcode the size of the widgets. Methods are available on ComposablePresenter providing sensible default sizes, like the width of a button. When specifying custom widget sizes, care should be taken to take in account the current font size.'
 			
 		

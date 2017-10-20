@@ -1,4 +1,4 @@
-tests-truncation and roundoff
+tests - truncation and roundoff
 testIsIntegerPoint
 
 	self assert: (1 @ 1) isIntegerPoint.

@@ -1,4 +1,4 @@
-as yet unclassified
+enablement
 toggleEnabled
 	"Toggle the enabled state."
 

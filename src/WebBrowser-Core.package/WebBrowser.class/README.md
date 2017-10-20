@@ -1,0 +1,1 @@
+General access to a webbrowser

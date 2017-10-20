@@ -1,0 +1,1 @@
+An abstract class containing common tools for match and rewrite rules

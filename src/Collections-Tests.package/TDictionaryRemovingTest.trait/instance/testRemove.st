@@ -1,4 +1,4 @@
-test - removing
+tests - removing
 testRemove
 
 	self should: [self nonEmptyDict remove: nil] raise: Error.

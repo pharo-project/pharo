@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 9/22/2017 03:03",
+	"super" : "TestCase",
+	"category" : "System-Support-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SystemVersionTest",
+	"type" : "normal"
+}

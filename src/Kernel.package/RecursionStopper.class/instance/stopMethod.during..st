@@ -1,4 +1,4 @@
-as yet unclassified
+operating
 stopMethod: aMethod during: aBlock
 
 	(activeMethods includes: aMethod) ifTrue: [ ^ self ].

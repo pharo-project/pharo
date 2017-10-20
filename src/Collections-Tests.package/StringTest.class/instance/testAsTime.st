@@ -1,4 +1,4 @@
-testing
+tests
 testAsTime 
 
 self assert: ('1:00:00' asTime asString) = '1:00 am'.

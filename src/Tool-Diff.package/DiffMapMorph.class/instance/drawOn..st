@@ -1,4 +1,4 @@
-nil
+drawing
 drawOn: aCanvas
 	"Draw the indicators for the mappings."
 	

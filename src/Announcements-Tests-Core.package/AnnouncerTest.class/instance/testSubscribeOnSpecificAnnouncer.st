@@ -1,4 +1,4 @@
-testing
+tests - subscribing
 testSubscribeOnSpecificAnnouncer
 	| announcement instance |
 	announcer

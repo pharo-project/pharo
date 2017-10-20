@@ -1,1 +1,1 @@
-I am the adapter used to bridget a LabelModel and a LabelMorph
+I am the adapter used to bridget a LabelPresenter and a LabelMorph

@@ -1,4 +1,4 @@
-tests logical operations
+tests - logical operations
 testOR
 
 	self assert: (true | true).

@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 basicColor: aColor
 	"Set the gradient colors."
 	

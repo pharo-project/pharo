@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 font4
 	^ self new fontNumber: 4

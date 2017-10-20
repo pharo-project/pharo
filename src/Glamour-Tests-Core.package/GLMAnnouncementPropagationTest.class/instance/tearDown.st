@@ -1,3 +1,3 @@
-setup
+running
 tearDown
 	GLMLogger reset

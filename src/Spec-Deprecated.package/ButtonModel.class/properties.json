@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ButtonPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ButtonModel",
+	"type" : "normal"
+}

@@ -1,3 +1,3 @@
-as yet unclassified
+defaults
 font2
 	^ self new fontNumber: 2

@@ -1,4 +1,4 @@
-as yet unclassified
+building
 newContentMorph
 	"Answer a new content morph."
 

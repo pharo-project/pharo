@@ -8,7 +8,7 @@
 	],
 	"name" : "EyeAbstractInspector",
 	"commentStamp" : "<historical>",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"traitcomposition" : "TInspectorActions",
 	"type" : "normal",
 	"classinstvars" : [ ],

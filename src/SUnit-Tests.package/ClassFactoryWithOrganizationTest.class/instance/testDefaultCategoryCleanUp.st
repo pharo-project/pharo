@@ -9,4 +9,5 @@ testDefaultCategoryCleanUp
 	allClasses := self testedEnvironment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [:class| allClasses includes: class]).
 	self deny: (self testedOrganization categories includes: factory defaultCategory). 
-	self deny: (ChangeSet current changedClassNames includesAnyOf: createdClassNames)
+	self class environment at: #ChangeSet ifPresent: [:changeSet |
+		self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ].

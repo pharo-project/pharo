@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testWithRecursion
 
 	self should: [ self recursion ] notTakeMoreThanMilliseconds: 3.

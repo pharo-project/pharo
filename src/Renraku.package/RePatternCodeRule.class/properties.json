@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "YuriyTymchuk 7/12/2017 10:43",
+	"super" : "ReNodeBasedRule",
+	"category" : "Renraku-Rules-Rewrite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RePatternCodeRule",
+	"type" : "normal"
+}

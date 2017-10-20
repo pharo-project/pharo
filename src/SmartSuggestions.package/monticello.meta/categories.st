@@ -1,3 +1,3 @@
 SystemOrganization addCategory: #SmartSuggestions!
-SystemOrganization addCategory: 'SmartSuggestions-Menu'!
-SystemOrganization addCategory: 'SmartSuggestions-Suggestion'!
+SystemOrganization addCategory: #'SmartSuggestions-Menu'!
+SystemOrganization addCategory: #'SmartSuggestions-Suggestion'!

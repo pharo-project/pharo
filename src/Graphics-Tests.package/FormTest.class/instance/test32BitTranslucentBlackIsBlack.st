@@ -1,4 +1,4 @@
-tests
+tests - 32 bit
 test32BitTranslucentBlackIsBlack
 	|form|
 	form := Form extent: 1@1 depth: 32.

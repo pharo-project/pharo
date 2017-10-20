@@ -1,3 +1,3 @@
-as yet unclassified
+examples
 example
 	^ self new open

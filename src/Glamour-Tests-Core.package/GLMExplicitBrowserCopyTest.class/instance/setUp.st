@@ -1,4 +1,4 @@
-tests
+running
 setUp
 	| pane1 pane2 transmission1 transmission2 | 
 	browser := GLMExplicitBrowser new. 

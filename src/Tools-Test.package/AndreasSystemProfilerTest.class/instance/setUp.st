@@ -1,4 +1,4 @@
-tests tally
+running
 setUp
 	tally := QSystemTally new.
 	tally class: self class method: self class >> #testPrintingTally	

@@ -2,10 +2,10 @@ writing
 doWriteMethods: aWriter
 	aWriter writeByteString: category.
 
-	aWriter writeInt: methods size.
+	aWriter writeInt32: methods size.
 	methods do: [ :e | e writeInto: aWriter ].
 
-	aWriter writeInt: classSideMethods size.
+	aWriter writeInt32: classSideMethods size.
 	classSideMethods do: [ :e | e writeInto: aWriter ].
 
 	traitComposition writeInto: aWriter.

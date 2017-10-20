@@ -5,6 +5,6 @@ spotterImplementorsFor: aStep
 	aStep listProcessor
 		title: 'Implementors';
 		filter: GTFilterImplementor item: [ :filter :context | 
-			SystemNavigation default allBehaviorsDo: [ :class | class methodsDo: filter ] ];
+			SystemNavigation default allBehaviorsDo: [ :class | class localMethods do: filter ] ];
 		keyBinding: $m meta;
 		wantsToDisplayOnEmptyQuery: false

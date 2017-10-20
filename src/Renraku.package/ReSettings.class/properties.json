@@ -8,7 +8,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"showErrors",
 		"inspectorPlugin",
 		"spotterPlugin"
 	],
