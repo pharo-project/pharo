@@ -31,6 +31,7 @@ baseline: spec
 		spec package: 'Spec-MorphicAdapters'.
 		spec package: 'Spec-PolyWidgets'.
 		spec package: 'Spec-Tools'.
+		spec package: 'Spec-StubAdapter'.
 		
 		spec package: 'Spec-Deprecated'.
 
