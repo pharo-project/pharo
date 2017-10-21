@@ -5,4 +5,4 @@ objectChanged
 	self container morph removeAllMorphs.
 	self container morph
 		addMorph: self thumbnailMorph
-		fullFrame: LayoutFrame identity
+		fullFrame: SpecLayoutFrame identity
