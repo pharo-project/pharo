@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "StephaneDucasse 9/30/2014 20:21",
 	"super" : "Object",
-	"category" : "Morphic-Base-Menus",
+	"category" : "MenuRegistration",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
