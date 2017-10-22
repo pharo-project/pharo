@@ -1,4 +1,4 @@
-fonts and font indexes
+*Text-Edition
 addNewFontSize: pointSize
 	"Add a font in specified size to the array of fonts."
 	| f d newArray t  |

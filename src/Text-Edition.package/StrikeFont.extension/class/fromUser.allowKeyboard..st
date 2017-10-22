@@ -1,4 +1,4 @@
-instance creation
+*Text-Edition
 fromUser: priorFont allowKeyboard: aBoolean 
 	"Present a menu of available fonts, and if one is chosen, return it. Otherwise return nil."
 	"StrikeFont fromUser"

@@ -1,4 +1,4 @@
-event handling
+*Text-Edition
 actOnMove: anEvent for: target in: aParagraph editor: anEditor
 	anEvent shiftPressed ifFalse: [ ^ false ].
 	anEditor textArea highlightMessageSend ifFalse: [ ^ false ].

@@ -1,4 +1,4 @@
-fonts and font indexes
+*Text-Edition
 addNewFontSizeDialog: args
 	"This is called from a modal menu and call back the menu with entered argument."
 	| f n r |

@@ -1,4 +1,4 @@
-event handling
+*Text-Edition
 actOnClick: anEvent for: target in: aParagraph editor: anEditor
 	self flag: 'TODO: complete implementation with class'.
 	

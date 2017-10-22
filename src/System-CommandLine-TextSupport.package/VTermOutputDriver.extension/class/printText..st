@@ -1,4 +1,4 @@
-*Text-Core
+*System-CommandLine-TextSupport
 printText: aText
 	" Example code shows how to output formatted text"
 	| out |

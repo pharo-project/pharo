@@ -1,4 +1,4 @@
-evaluating
+*Text-Edition
 actOnClick: anEvent for: target in: aParagraph editor: anEditor
 	anEvent shiftPressed
 		ifFalse: [ anEditor browseClassFrom: self className ]

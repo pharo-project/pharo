@@ -1,4 +1,4 @@
-evaluating
+*Text-Edition
 actOnClick: anEvent for: anObject in: paragraph editor: editor
 
 	| result |
