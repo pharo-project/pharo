@@ -30,6 +30,8 @@ baseline: spec
 		spec package: 'FuelCommandLineHandler'.
 		spec package: 'FuelSystem-FileRegistry'.
 
+		spec package: 'Fonts-Abstract'.
+
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.

@@ -1,4 +1,4 @@
 defaults
 toolbarHeight
 
-	^ StandardFonts defaultFont height + 12
+	^ self defaultFont height + 12

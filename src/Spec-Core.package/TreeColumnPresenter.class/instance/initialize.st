@@ -8,7 +8,7 @@ initialize
 	initialWidth := 100 asValueHolder.
 	resizable := true asValueHolder.
 	headerLabel := nil asValueHolder.
-	headerFont := StandardFonts defaultFont asValueHolder.
+	headerFont := self class defaultFont asValueHolder.
 	headerIcon := nil asValueHolder.
 	headerAction := nil asValueHolder.
 	

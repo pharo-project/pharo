@@ -1,4 +1,4 @@
 defaults
 inputTextHeight
 
-	^ StandardFonts defaultFont height + 12
+	^ self defaultFont height + 12
