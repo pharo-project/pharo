@@ -1,3 +1,3 @@
-*Keymapping-KeyCombinations
+keymapping
 asShortcut
 	^ self asKeyCombination

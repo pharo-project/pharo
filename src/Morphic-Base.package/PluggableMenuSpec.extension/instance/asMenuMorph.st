@@ -1,4 +1,4 @@
-morphic
+*Morphic-Base
 asMenuMorph
 	| prior menu myitems |
 	prior := parentMenu.

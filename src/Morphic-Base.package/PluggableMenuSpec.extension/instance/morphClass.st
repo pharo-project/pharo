@@ -1,3 +1,3 @@
-morphic
+*Morphic-Base
 morphClass
 	^ MenuMorph

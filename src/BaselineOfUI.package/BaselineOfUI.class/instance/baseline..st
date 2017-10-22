@@ -37,9 +37,6 @@ baseline: spec
 
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec package: 'Keymapping-Core'.
-		spec package: 'Keymapping-KeyCombinations'.
-		spec package: 'Keymapping-Pragmas'.
 		spec package: 'Keymapping-Settings'.
 		spec package: 'Keymapping-Tools-Spec'.
 

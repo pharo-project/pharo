@@ -1,4 +1,4 @@
-morphic
+*Morphic-Base
 asMenuItemMorphFrom: parentMenu isLast: aBoolean
 
 	| it act lbl menu |

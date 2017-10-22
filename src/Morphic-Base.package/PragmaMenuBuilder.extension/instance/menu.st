@@ -1,4 +1,4 @@
-public menu building
+*Morphic-Base
 menu
 	"returns a MenuMorph build from my menuSpec"
 	

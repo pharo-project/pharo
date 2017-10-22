@@ -1,3 +1,3 @@
-*Keymapping-KeyCombinations
+keymapping
 asKeyCombination
 	^ KMKeyCombination fromKeyboardEvent: self

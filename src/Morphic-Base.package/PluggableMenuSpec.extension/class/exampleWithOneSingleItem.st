@@ -1,4 +1,4 @@
-example
+*Morphic-Base-Examples
 exampleWithOneSingleItem
 	"self exampleWithOneSingleItem"
 	

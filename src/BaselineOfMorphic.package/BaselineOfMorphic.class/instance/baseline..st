@@ -39,6 +39,10 @@ baseline: spec
 
 		spec package: 'MenuRegistration'.
 
+		spec package: 'Keymapping-Core'.
+		spec package: 'Keymapping-KeyCombinations'.
+		spec package: 'Keymapping-Pragmas'.
+
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.

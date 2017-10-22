@@ -1,4 +1,4 @@
-*Keymapping-KeyCombinations
+keymapping
 modifiedCharacter
     self flag: #hack.
     "Hack me.  When Ctrl is pressed, the key ascii value is not right and we have to do something ugly"

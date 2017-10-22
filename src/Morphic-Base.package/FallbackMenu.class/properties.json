@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "Object",
-	"category" : "MenuRegistration-Core",
+	"category" : "Morphic-Base-Menus",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
