@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "StandardWindow",
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecWindow",
+	"type" : "normal"
+}

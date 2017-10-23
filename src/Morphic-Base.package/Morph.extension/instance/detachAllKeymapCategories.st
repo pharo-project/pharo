@@ -1,0 +1,4 @@
+*Morphic-Base-keymapping
+detachAllKeymapCategories
+
+	self kmDispatcher detachAllKeymapCategories

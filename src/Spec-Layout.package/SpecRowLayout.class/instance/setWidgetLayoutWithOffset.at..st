@@ -9,12 +9,12 @@ setWidgetLayoutWithOffset: e at: idx
 	idx = size
 		ifTrue: [ 
 			e layoutFrame:
-				((1 @ 0 corner: 1 @ 1) asLayoutFrame
+				((1 @ 0 corner: 1 @ 1) asSpecLayoutFrame
 					topLeftOffset: width negated @ y0;
 					bottomRightOffset: 0 @ y1) ]
 		ifFalse: [ 
 			e layoutFrame:
-				((currentProportional @ 0 corner: currentProportional @ 1) asLayoutFrame
+				((currentProportional @ 0 corner: currentProportional @ 1) asSpecLayoutFrame
 					topLeftOffset: currentOffset @ y0;
 					bottomRightOffset: (currentOffset + width) @ y1).
 			currentOffset := currentOffset + width ]

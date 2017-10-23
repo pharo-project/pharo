@@ -1,3 +1,3 @@
-api
+adding
 addTitle: aString
-	title value: aString translated
+	title value: aString
