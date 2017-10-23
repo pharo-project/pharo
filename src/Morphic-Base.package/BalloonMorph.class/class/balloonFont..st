@@ -1,3 +1,3 @@
 utility
 balloonFont: aFont
-	BalloonFont := aFont
+	StandardFonts balloonFont: aFont
