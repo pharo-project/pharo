@@ -100,7 +100,6 @@ baseline: spec
 
 		spec package: 'GT-Playground'.
 
-		spec package: 'System-Identification'.
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
