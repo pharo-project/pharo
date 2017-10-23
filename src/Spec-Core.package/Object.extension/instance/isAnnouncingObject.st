@@ -1,0 +1,4 @@
+*Spec-Core
+isAnnouncingObject
+
+	^ false

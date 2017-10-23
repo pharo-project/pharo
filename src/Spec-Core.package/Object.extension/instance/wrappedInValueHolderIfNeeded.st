@@ -1,4 +1,4 @@
 *Spec-Core
-asSpecCompatibleModel
+wrappedInValueHolderIfNeeded
 
 	^ self asValueHolder

@@ -1,4 +1,0 @@
-*Spec-Core
-isSpecCompatibleModel
-
-	^ true

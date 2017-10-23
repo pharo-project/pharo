@@ -1,4 +1,4 @@
 accessing
 model
 
-	 ^ self specCompatibleModel value
+	 ^ self announcingObject value

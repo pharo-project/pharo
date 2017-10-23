@@ -7,14 +7,14 @@ testModelSettingObjectToModel
 	model := TestingPointModel x: 1 y: 2.
 	point := 40@54.
 	presenter := TestingComposablePresenterWithModel on: model.
-	self assert: presenter specCompatibleModel isSpecCompatibleModel.
-	self deny: presenter specCompatibleModel isValueHolder.
-	self deny: point isSpecCompatibleModel.
+	self assert: presenter announcingObject isAnnouncingObject.
+	self deny: presenter announcingObject isValueHolder.
+	self deny: point isAnnouncingObject.
 	self deny: point isValueHolder.
 	presenter model: point.
-	self assert: presenter specCompatibleModel isSpecCompatibleModel.
-	self assert: presenter specCompatibleModel isValueHolder.
+	self assert: presenter announcingObject isAnnouncingObject.
+	self assert: presenter announcingObject isValueHolder.
 	self assert: presenter model == point.
-	self deny: presenter specCompatibleModel == model.
-	self assert: presenter specCompatibleModel announcer numberOfSubscriptions > 0.
+	self deny: presenter announcingObject == model.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
 

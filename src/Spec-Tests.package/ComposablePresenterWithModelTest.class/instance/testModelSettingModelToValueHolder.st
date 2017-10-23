@@ -8,13 +8,13 @@ testModelSettingModelToValueHolder
 
 	presenter := TestingComposablePresenterWithModel on: point.
 	model := TestingPointModel x: 1 y: 2.
-	self assert: presenter specCompatibleModel isSpecCompatibleModel.
-	self assert: presenter specCompatibleModel isValueHolder.
-	self assert: model isSpecCompatibleModel.
+	self assert: presenter announcingObject isAnnouncingObject.
+	self assert: presenter announcingObject isValueHolder.
+	self assert: model isAnnouncingObject.
 	self deny: model isValueHolder.
 	presenter model: model.
-	self assert: presenter specCompatibleModel isSpecCompatibleModel.
-	self deny: presenter specCompatibleModel isValueHolder.
-	self assert: presenter specCompatibleModel == model.
-	self assert: presenter specCompatibleModel announcer numberOfSubscriptions > 0.
+	self assert: presenter announcingObject isAnnouncingObject.
+	self deny: presenter announcingObject isValueHolder.
+	self assert: presenter announcingObject == model.
+	self assert: presenter announcingObject announcer numberOfSubscriptions > 0.
 
