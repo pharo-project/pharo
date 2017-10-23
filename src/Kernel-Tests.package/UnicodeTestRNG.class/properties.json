@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "AndrewBlack 10/9/2017 17:52",
+	"super" : "TestResource",
+	"category" : "Kernel-Tests-Charset",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"generator",
+		"nonCharacters"
+	],
+	"name" : "UnicodeTestRNG",
+	"type" : "normal"
+}

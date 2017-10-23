@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"redTab"
+	],
+	"name" : "TabManagerPresenterTest",
+	"type" : "normal"
+}
