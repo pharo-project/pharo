@@ -3,5 +3,5 @@ owner: anOwningPresenter on: aDomainObject
 
 	^ self basicNew
 		owner: anOwningPresenter;
-		on: aDomainObject;
+		setModelBeforeInitialization: aDomainObject;
 		yourself
