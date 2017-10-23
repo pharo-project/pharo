@@ -1,0 +1,3 @@
+table defaults
+cellInset
+	^cellInset

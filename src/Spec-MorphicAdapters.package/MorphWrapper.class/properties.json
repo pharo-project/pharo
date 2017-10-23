@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"layout",
+		"morph"
+	],
+	"name" : "MorphWrapper",
+	"type" : "normal"
+}

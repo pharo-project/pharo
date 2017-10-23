@@ -31,12 +31,18 @@ baseline: spec
 		spec package: 'FuelCommandLineHandler'.
 		spec package: 'FuelSystem-FileRegistry'.
 
+		spec package: 'Fonts-Abstract'.
+
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
 		spec package: 'MenuRegistration'.
+
+		spec package: 'Keymapping-Core'.
+		spec package: 'Keymapping-KeyCombinations'.
+		spec package: 'Keymapping-Pragmas'.
 
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
