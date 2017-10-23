@@ -1,4 +1,4 @@
 api
 indexFor: aCheckbox
 
-	^ listModel listItems indexOf: aCheckbox.
+	^ listPresenter listItems indexOf: aCheckbox.
