@@ -1,8 +1,9 @@
 private
 chooseDate
 
-	| calendar |
-	calendar := CalendarMorph openOn: Date today.
+	| calendar defaultDate |
+	defaultDate := self date ifNil: [ self defaultDate ].
+	calendar := CalendarMorph openOn: defaultDate.
 	calendar
 		center: calendar cursorPoint;
 		fitInWorld;
