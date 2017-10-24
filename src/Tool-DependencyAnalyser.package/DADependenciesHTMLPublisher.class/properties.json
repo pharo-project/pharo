@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "ChristopheDemarey 9/1/2015 13:19",
+	"super" : "Object",
+	"category" : "Tool-DependencyAnalyser-HTMLReport",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"report"
+	],
+	"name" : "DADependenciesHTMLPublisher",
+	"type" : "normal"
+}
