@@ -1,6 +1,8 @@
 accessing
 code: integer
 	(ZnConstants httpStatusCodes includesKey: integer) 
-		ifFalse: [ 
-			(ZnUnknownHttpStatusCode code: integer) signal ].
+		ifFalse: [
+			(integer between: 100 and: 599)
+				ifFalse: [
+					(ZnUnknownHttpStatusCode code: integer) signal ] ].
 	code := integer
