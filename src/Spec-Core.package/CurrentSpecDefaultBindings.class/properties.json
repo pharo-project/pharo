@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "DynamicVariable",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "CurrentSpecDefaultBindings",
+	"type" : "normal"
+}

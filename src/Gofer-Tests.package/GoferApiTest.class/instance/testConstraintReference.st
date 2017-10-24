@@ -1,4 +1,4 @@
-testing-references
+tests - references
 testConstraintReference
 	gofer 
 		repository: self monticelloRepository; 

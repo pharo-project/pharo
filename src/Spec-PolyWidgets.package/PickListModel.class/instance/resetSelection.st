@@ -1,4 +1,0 @@
-api
-resetSelection
-
-	listModel resetSelection

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "WindowPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "WindowModel",
+	"type" : "normal"
+}

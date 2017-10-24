@@ -5,9 +5,9 @@ initializeWidgets
 	
 	packagesPanel := self instantiate: VersionnerProjectPackagesPanel.
 
-	groupsLabel  := (self instantiate: LabelModel)
+	groupsLabel  := (self instantiate: LabelPresenter)
 		label: 'Groups';
 		yourself.
 	
-	projectsLabel :=  self instantiate: LabelModel.
+	projectsLabel :=  self instantiate: LabelPresenter.
 	projectsLabel label: 'Dependent projects'.

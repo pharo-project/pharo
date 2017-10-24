@@ -6,13 +6,10 @@ baseline: spec
 		spec preLoadDoIt: #'preload:package:'.
 		spec postLoadDoIt: #'postload:package:'.
 		spec 
-			"ffi"
-			package: 'FFI-Pools';
-			package: 'FFI-Kernel' with: [ spec requires: #('FFI-Pools') ];
 			"alien"
-			package: 'Alien' with: [ spec requires: #('FFI-Kernel') ];
+			package: 'Alien';
 			"unified ffi"
-			package: 'UnifiedFFI' with: [ spec requires: #('FFI-Kernel' 'Alien') ];
+			package: 'UnifiedFFI' with: [ spec requires: #('Alien') ];
 			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
 			package: 'UnifiedFFI-Legacy' with: [ spec requires: #('UnifiedFFI') ].
 			

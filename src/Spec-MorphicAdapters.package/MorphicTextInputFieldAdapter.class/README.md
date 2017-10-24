@@ -1,1 +1,1 @@
-I am the adapter used to bridge a TextInputFieldModel and a PluggableTextFieldMorph
+I am the adapter used to bridge a TextInputFieldPresenter and a PluggableTextFieldMorph

@@ -1,4 +1,4 @@
-testing
+tests
 testNoArgBlock
 	"we are supposed to accept zero-argument blocks as actions "
 

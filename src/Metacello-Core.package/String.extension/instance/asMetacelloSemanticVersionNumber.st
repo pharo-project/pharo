@@ -1,3 +1,3 @@
-*Metacello-Core
+*metacello-core
 asMetacelloSemanticVersionNumber
     ^ MetacelloSemanticVersionNumber fromString: self

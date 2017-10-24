@@ -1,4 +1,4 @@
-testing
+tests
 testAllRangesOfSubstring
 
 self assert: ('aabbccbb' allRangesOfSubstring: 'bb' ) = {(3 to: 4). (7 to: 8)}.

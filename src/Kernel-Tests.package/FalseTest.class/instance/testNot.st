@@ -1,4 +1,4 @@
-tests logical operations
+tests - logical operations
 testNot
 
 	self assert: (false not).

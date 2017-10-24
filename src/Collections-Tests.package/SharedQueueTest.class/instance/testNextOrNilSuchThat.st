@@ -1,4 +1,4 @@
-testing
+tests
 testNextOrNilSuchThat
 	| q item |
 	q := SharedQueue new.

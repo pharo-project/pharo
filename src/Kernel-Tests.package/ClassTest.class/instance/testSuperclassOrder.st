@@ -1,4 +1,4 @@
-testing - file in/out
+tests - file in/out
 testSuperclassOrder
 	|  ordered orderedSuperclasses shuffledSuperclasses |
 	orderedSuperclasses := {ProtoObject. Object. Collection. SequenceableCollection}.

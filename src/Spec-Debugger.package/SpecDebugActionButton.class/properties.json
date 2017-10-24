@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "ButtonModel",
+	"super" : "ButtonPresenter",
 	"category" : "Spec-Debugger",
 	"classinstvars" : [ ],
 	"pools" : [ ],

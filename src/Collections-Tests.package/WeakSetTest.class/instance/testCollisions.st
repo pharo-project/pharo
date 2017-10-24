@@ -1,4 +1,4 @@
-testing
+tests
 testCollisions
 
 	| ws o1 o2 o5 on remember forget |

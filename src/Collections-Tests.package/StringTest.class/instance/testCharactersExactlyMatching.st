@@ -1,4 +1,4 @@
-testing
+tests
 testCharactersExactlyMatching
 	self assert: 5 equals: ('voiture' charactersExactlyMatching: 'voituze').
 	self assert: 0 equals: ('voiture' charactersExactlyMatching: '').

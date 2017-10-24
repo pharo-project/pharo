@@ -1,4 +1,4 @@
-assertions-halt
+assertions - halt
 shouldntHaltAfter: aNumber times: aBlock
 	
 	self shouldntHaltWhen: [ aNumber timesRepeat: aBlock ].

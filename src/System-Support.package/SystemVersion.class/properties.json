@@ -8,13 +8,13 @@
 		"Current"
 	],
 	"instvars" : [
-		"version",
 		"date",
 		"highestUpdate",
 		"type",
 		"major",
 		"minor",
 		"suffix",
+		"build",
 		"commitHash"
 	],
 	"name" : "SystemVersion",

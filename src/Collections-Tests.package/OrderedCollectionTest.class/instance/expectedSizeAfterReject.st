@@ -1,3 +1,3 @@
-test - iterate
+accessing
 expectedSizeAfterReject
 	^1

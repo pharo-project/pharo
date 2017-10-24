@@ -16,7 +16,7 @@ verifyVersionImportPragmas: pragmaDict definedIn: versionMap
                                             ^ self
                                                 error:
                                                     'The imported version:' , importedVersion printString , ' for version: ' , versionString
-                                                        , ' referenced from the method: ' , pragma methodSelector printString
+                                                        , ' referenced from the method: ' , (MetacelloPlatform current selectorForPragma: pragma) printString
                                                         , ' in configuration ' , configuration class printString
                                                         , ' has not been defined.' ] ] ] ] ]
                 on: Error

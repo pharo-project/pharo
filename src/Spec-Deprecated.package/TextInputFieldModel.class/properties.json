@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TextInputFieldPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextInputFieldModel",
+	"type" : "normal"
+}

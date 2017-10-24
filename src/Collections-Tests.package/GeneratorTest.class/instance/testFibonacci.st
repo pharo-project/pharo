@@ -1,4 +1,4 @@
-testing
+tests
 testFibonacci
 	| generator |
 	generator := self fibonacciSequence.

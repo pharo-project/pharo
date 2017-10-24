@@ -1,0 +1,4 @@
+converting
+asSpecLayoutFrame
+
+	^ self

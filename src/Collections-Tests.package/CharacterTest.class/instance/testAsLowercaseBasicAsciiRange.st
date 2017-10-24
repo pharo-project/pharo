@@ -1,4 +1,4 @@
-tests conversion
+tests - conversion
 testAsLowercaseBasicAsciiRange
 	| lowercase uppercase |
 	lowercase  := 'abcdefghijklmnopqrstuvwxyz123456789'.

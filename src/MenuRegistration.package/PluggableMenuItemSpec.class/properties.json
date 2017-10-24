@@ -1,0 +1,23 @@
+{
+	"commentStamp" : "StephaneDucasse 9/30/2014 20:22",
+	"super" : "Object",
+	"category" : "MenuRegistration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"label",
+		"action",
+		"checked",
+		"enabled",
+		"separator",
+		"subMenu",
+		"icon",
+		"enabledBlock",
+		"keyText",
+		"help",
+		"name"
+	],
+	"name" : "PluggableMenuItemSpec",
+	"type" : "normal"
+}

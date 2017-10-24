@@ -1,4 +1,4 @@
-bugs
+tests - bugs
 testPokerUnhibernateBug
 	"self run: #testPokerUnhibernateBug"
 

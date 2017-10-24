@@ -1,4 +1,4 @@
-test - iterate
+tests - iterate
 doWithoutNumber
 
 	^ 4

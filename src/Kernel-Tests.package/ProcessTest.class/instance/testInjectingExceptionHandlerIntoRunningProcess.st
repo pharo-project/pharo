@@ -1,4 +1,4 @@
-testing
+tests - exception handlers
 testInjectingExceptionHandlerIntoRunningProcess
 
 	| error interceptedError process sema started interrupted |

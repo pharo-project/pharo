@@ -1,6 +1,6 @@
 accessing
 hashStream: aPositionableStream
-	"Hash the contents of the given stream from the current position to the end using the Secure Hash Algorithm. The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Scheier, Wiley, 1996."
+	"Hash the contents of the given stream from the current position to the end using SHA-256, the 256-bit variant of SHA-2. The SHA-2 family of algorithms are defined in FIPS PUB 180-4."
 	"SHA256 new hashStream: (ReadStream on: 'foo')"
 
 	| startPosition buf bitLength |
