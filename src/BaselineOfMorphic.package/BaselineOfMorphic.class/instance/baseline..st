@@ -86,4 +86,5 @@ baseline: spec
 		spec package: 'System-OSEnvironments'.
 
 		spec package: 'StartupPreferences'.
+		spec package: 'System-Identification'.
 	].
