@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 manuallyResolvedDependencies
-	^ #(#'FileSystem-Disk' #'System-Platforms' #'AST-Core' #'System-Support' #'Collections-Streams' #Traits)
+	^ #(#'Collections-Streams' #'System-Support' #'System-Platforms' #'Zinc-Character-Encoding-Core' #'AST-Core' #'System-Settings' #'FileSystem-Disk')

@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 manuallyResolvedDependencies
-	^ #(#'Collections-Streams' #'Collections-Abstract' #Traits)
+	^ #(#'Collections-Streams' #'Collections-Abstract')

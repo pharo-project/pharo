@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 manuallyResolvedDependencies
-	^ #(#'RPackage-Core' #Files #'Collections-Abstract')
+	^ #(#'Collections-Abstract' #'Zinc-Character-Encoding-Core' #'System-Support')

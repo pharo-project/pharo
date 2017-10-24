@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 manuallyResolvedDependencies
-	^ #(#'System-Settings' #'System-Sources' #'System-Localization' #'AST-Core' #'Transcript-Core' #Reflectivity #'Regex-Core' #'FFI-Kernel' #'Multilingual-TextConversion' #'Random-Core' #'System-Platforms')
+	^ #(#'Regex-Core' #'System-Settings' #'Zinc-Character-Encoding-Core' #'FFI-Kernel' #'Multilingual-TextConversion' #'System-Platforms' #'Transcript-Core' #'AST-Core' #'System-Sources' #Reflectivity #'OpalCompiler-Core' #'System-Localization')
