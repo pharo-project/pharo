@@ -2,12 +2,16 @@ fill-styles
 progressBarFillStyleFor: aProgressBar
 	"Return the progress bar fillStyle for the given progress bar."
 	
-	|aColor area|
-	aColor := self progressBarColorFor: aProgressBar.
+	|area c|
+	c := self progressBarColorFor: aProgressBar.
 	area :=  aProgressBar bounds.
 	^(GradientFillStyle ramp: {
-			0.0->aColor darker duller. 0.2-> aColor darker.
-			0.8->aColor twiceLighter. 1.0->aColor})	
+			0.0->c twiceDarker.
+			0.2->c twiceLighter lighter.
+			0.3->c twiceLighter lighter.
+			0.4->c darker.
+			0.6->c twiceLighter lighter.
+			1.0->Color white})
 		origin: area origin;
 		direction: 0@area height;
 		radial: false

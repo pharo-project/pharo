@@ -5,8 +5,7 @@ splitterNormalFillStyleFor: aSplitter
 	|aColor|
 	aColor := aSplitter paneColor.
 	^(GradientFillStyle ramp: {
-		0.0->aColor whiter whiter. 0.2->aColor lighter.
-		0.8->aColor darker. 1.0->aColor blacker})
+		0.0->aColor twiceLighter. 1.0->aColor darker})
 		origin: aSplitter topLeft;
 		direction: (aSplitter splitsTopAndBottom
 			ifTrue: [0 @ aSplitter height]

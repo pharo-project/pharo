@@ -2,9 +2,17 @@ morph creation
 newFocusIndicatorMorphFor: aMorph
 	"Answer a new focus indicator for the given morph."
 
+	|radius|
+	radius := aMorph focusIndicatorCornerRadius.
 	^BorderedMorph new
 		fillStyle: Color transparent;
-		borderStyle: (DashedBorder
-						width: 1
-						dashColors: {aMorph focusColor. Color transparent} dashLengths: #(1 1));
+		borderStyle: ((CompositeBorder new width: radius)
+						borders: {RoundedBorder new
+									cornerRadius: radius;
+									width: 1;
+									baseColor: self settings scrollbarColor.
+								RoundedBorder new	
+									cornerRadius: radius - 1;
+									width: 1;
+									baseColor: (self settings scrollbarColor alpha: 0.4)});
 		bounds: aMorph focusBounds

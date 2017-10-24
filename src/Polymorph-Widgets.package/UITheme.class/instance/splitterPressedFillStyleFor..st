@@ -3,10 +3,9 @@ splitterPressedFillStyleFor: aSplitter
 	"Return the pressed splitter fillStyle for the given splitter."
 	
 	|aColor|
-	aColor := aSplitter paneColor twiceDarker.
+	aColor := aSplitter paneColor duller.
 	^(GradientFillStyle ramp: {
-			0.0->Color white. 0.4-> aColor twiceLighter.
-			1.0->aColor darker duller})
+			0.0->aColor twiceLighter. 1.0->aColor twiceDarker})
 		origin: aSplitter topLeft;
 		direction: (aSplitter splitsTopAndBottom
 			ifTrue: [0 @ aSplitter height]
