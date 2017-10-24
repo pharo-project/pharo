@@ -1,0 +1,3 @@
+tests - empty
+empty
+	^ empty

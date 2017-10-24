@@ -1,0 +1,3 @@
+test - copy
+testAsByteArray
+	^ self

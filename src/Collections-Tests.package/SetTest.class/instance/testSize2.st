@@ -1,11 +1,11 @@
 tests - some
 testSize2
-	self assert: (empty size = 0).
-	self assert: (full size = 4).
-	empty add: 2.
-	empty add: 1.
-	full add: 2.
-	self assert: (empty size = 2).
-	self assert: (full size = 4).
-	empty remove: 2.
-	self assert: (empty size = 1).
+	self assert: empty size equals: 0.
+	self assert: full size equals: 4.
+	empty add: elementNotIn.
+	empty add: $X.
+	full add: self elementInForIncludesTest.
+	self assert: empty size equals: 2.
+	self assert: full size equals: 4.
+	empty remove: $X.
+	self assert: empty size equals: 1

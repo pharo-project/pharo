@@ -1,4 +1,6 @@
 tests - some
 testLike
-	self assert: ((full like: 3) = 3).
-	self assert: ((full like: 8) isNil).
+	| e |
+	e := self element.
+	self assert: (full like: e) equals: e.
+	self assert: ((full like: elementNotIn) isNil)

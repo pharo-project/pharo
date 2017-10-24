@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "nice 11/20/2007 00:35",
-	"super" : "TestCase",
+	"super" : "SetTest",
 	"category" : "Collections-Tests-Support",
 	"classinstvars" : [ ],
 	"pools" : [ ],

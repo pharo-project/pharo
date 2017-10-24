@@ -1,4 +1,4 @@
-collection ops
+testing
 includes: aCharacter
 	aCharacter asciiValue >= 256
 		ifTrue: ["Guard against wide characters"

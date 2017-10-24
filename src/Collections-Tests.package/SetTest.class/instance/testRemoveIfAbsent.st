@@ -1,9 +1,10 @@
 tests - some
 testRemoveIfAbsent
 	"self debug: #testRemoveIfAbsent"
-	
-	self assert: (full remove: 8 ifAbsent: [true]).
-	self assert: (full remove: 4 ifAbsent: [false]) isNumber.
+	| e |
+	e := self element.	
+	self assert: (full remove: elementNotIn ifAbsent: [true]).
+	self assert: (full remove: e ifAbsent: [false]) equals: e
 	
 	
 	

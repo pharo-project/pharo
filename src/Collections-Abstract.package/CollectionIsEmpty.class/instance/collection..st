@@ -1,5 +1,5 @@
 accessing
 collection: aCollection
-	"Set the collection where something is not found in"
+	"Set the collection in which something is not found"
 	
 	self signaler: aCollection

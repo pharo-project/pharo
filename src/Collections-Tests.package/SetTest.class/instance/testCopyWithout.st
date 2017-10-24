@@ -1,11 +1,12 @@
 tests - some
 testCopyWithout
-	| newFull | 
-	full add: 3.
-	full add: 2.
-	newFull := full copyWithout: 3.
-	self assert: (newFull size = (full size - 1)).
-	self deny: (newFull includes: 3).
-	self assert: ((newFull select: [:each | (full includes: each) not]) isEmpty).
-	self assert: ((full select: [:each | (newFull includes: each) not]) = (Set with: 3)).
-	
+	| newFull e |
+	e := self elementNotIn.
+	full add: e.
+	newFull := full copyWithout: e.
+	self assert: newFull size equals: full size - 1.
+	self deny: (newFull includes: e).
+	self assert: (newFull reject: [ :each | full includes: each ]) isEmpty.
+	self
+		assert: (full reject: [ :each | newFull includes: each ])
+		equals: (self classToBeTested with: e)

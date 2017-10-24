@@ -1,4 +1,4 @@
-comparing
+private
 species
 	^self hasWideCharacters
 		ifTrue: [WideCharacterSet]

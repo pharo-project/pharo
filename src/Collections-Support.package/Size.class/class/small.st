@@ -1,0 +1,3 @@
+private
+small
+	^ Small new

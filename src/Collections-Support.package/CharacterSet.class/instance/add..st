@@ -1,4 +1,4 @@
-collection ops
+adding
 add: aCharacter
 	"I automatically become a WideCharacterSet if you add a wide character to myself"
 	
