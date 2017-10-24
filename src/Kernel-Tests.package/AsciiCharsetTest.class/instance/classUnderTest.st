@@ -1,0 +1,3 @@
+helper
+classUnderTest
+	^ AsciiCharset

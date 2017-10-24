@@ -9,7 +9,7 @@ createDevelopment: developmentVersionString for: configurationBasename importFro
 			inCategory: 'versions'
 			forVersion: developmentVersionString;
 		importFrom: baselineVersionString
-			updateProjects: false
+			updateProjects: true
 			updatePackages: true
 			versionSpecsDo: [ :attribute :versionSpec | 
 				attribute == #common

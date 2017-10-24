@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "webwarrior 6/9/2014 15:40",
+	"super" : "ContainerPresenter",
+	"category" : "Spec-Core-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TableContainerPresenter",
+	"type" : "normal"
+}

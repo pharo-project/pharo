@@ -3,15 +3,15 @@ testIsDisplayed
 
 	"Test for case: 16800 -> ask a SpecWindow for #isDisplayed always returns true"
 	
-	| windowModel |
+	| windowPresenter |
 
-	windowModel := TextModel new openWithSpec.	
-	self assert: (windowModel isDisplayed).
+	windowPresenter := TextPresenter new openWithSpec.	
+	self assert: (windowPresenter isDisplayed).
 	
-	windowModel window minimize.	
-	self assert: (windowModel isDisplayed).
+	windowPresenter window minimize.	
+	self assert: (windowPresenter isDisplayed).
 		
-	windowModel window close.
-	self assert: (windowModel isDisplayed not).
+	windowPresenter window close.
+	self assert: (windowPresenter isDisplayed not).
 
 	

@@ -1,4 +1,4 @@
-test - copy
+tests - copy
 testCopyReplaceAllWithAsTokens
 
 self assert: ('test te str' copyReplaceAll: 'te' with: 'longone' asTokens: true) = 'test longone str'.

@@ -12,5 +12,3 @@ initializeInspectButton
 			bottomFraction: 0;
 			leftOffset: inspectButton width;
 			bottomOffset: (2*inspectButton width))
-			
-		

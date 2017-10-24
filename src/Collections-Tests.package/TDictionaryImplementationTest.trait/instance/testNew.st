@@ -1,4 +1,4 @@
-test - implementation
+tests - implementation
 testNew
 	| d |
 	d := self classToBeTested new: 10.

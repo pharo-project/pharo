@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "ChristopheDemarey 3/18/2014 17:31",
-	"super" : "IconListModel",
+	"super" : "IconListPresenter",
 	"category" : "Versionner-Spec-Browser",
 	"classinstvars" : [ ],
 	"pools" : [ ],

@@ -1,9 +1,9 @@
 initialization
 initializePresenter
 
-	searchModel whenTextChanged: [:newText || text |
-		text :=  searchModel getText asLowercase.
+	searchPresenter whenTextChanged: [:newText || text |
+		text :=  searchPresenter getText asLowercase.
 		text isEmpty
-			ifTrue: [ listModel resetFilteringBlock ]
+			ifTrue: [ listPresenter resetFilteringBlock ]
 			ifFalse: [
-				listModel filteringBlock: [:col | col select: [:e | e asLowercase beginsWith: searchModel getText asLowercase ]]]]
+				listPresenter filteringBlock: [:col | col select: [:e | e asLowercase beginsWith: searchPresenter getText asLowercase ]]]]

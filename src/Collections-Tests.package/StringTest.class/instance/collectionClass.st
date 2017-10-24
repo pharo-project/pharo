@@ -1,4 +1,4 @@
-test - set arithmetic
+tests - set arithmetic
 collectionClass
 
 	^ String

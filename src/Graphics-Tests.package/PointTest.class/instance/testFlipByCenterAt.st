@@ -1,4 +1,4 @@
-tests-point functions
+tests - point functions
 testFlipByCenterAt
 
 	| center a direction |

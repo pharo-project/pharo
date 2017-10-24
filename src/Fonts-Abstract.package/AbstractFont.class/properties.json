@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Object",
+	"category" : "Fonts-Abstract",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "AbstractFont",
+	"type" : "normal"
+}

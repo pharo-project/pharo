@@ -1,1 +1,1 @@
-SUnit tests for shouts ST80 parser
+SUnit tests for Shouts ST80 parser

@@ -1,4 +1,4 @@
-tests controlling
+tests - controlling
 testAnd
 
 	self deny: (false and: ['alternativeBlock']).

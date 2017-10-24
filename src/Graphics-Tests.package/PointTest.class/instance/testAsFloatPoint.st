@@ -1,4 +1,4 @@
-tests-converting
+tests - converting
 testAsFloatPoint
 	|testPoint|
 	self assert: (1 @ 1) asFloatPoint = (1.0 @ 1.0).

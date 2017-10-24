@@ -1,1 +1,1 @@
-I am the adapter used to bridge a TreeModel and a MorphTreeMorph
+I am the adapter used to bridge a TreePresenter and a MorphTreeMorph

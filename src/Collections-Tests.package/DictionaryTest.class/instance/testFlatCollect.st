@@ -1,4 +1,4 @@
-test - flatCollect
+tests - flatCollect
 testFlatCollect
 
 	| res |

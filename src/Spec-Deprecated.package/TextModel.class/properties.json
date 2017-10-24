@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TextPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TextModel",
+	"type" : "normal"
+}

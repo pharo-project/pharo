@@ -1,4 +1,4 @@
-testing
+tests
 testIsLiteralSymbol
 
 	self assert: ('*+-/\~=<>&@%,|' allSatisfy: [:char | (Symbol with: char) isLiteralSymbol])

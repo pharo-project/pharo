@@ -1,4 +1,4 @@
 initialization
 initializeWidgets
 	super initializeWidgets.
-	self content: TextInputFieldModel.
+	self content: TextInputFieldPresenter.

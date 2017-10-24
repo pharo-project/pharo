@@ -1,4 +1,4 @@
-testing
+tests
 testCompareCaseSensitive
 
 self assert: ('EEA' compare: 'fgh' caseSensitive: true) = 1.

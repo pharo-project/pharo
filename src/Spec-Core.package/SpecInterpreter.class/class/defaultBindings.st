@@ -1,4 +1,5 @@
 private
 defaultBindings
 	
-	^ MorphicAdapterBindings new
+	^ (CurrentSpecDefaultBindings value ifNil: [ self environment at: #MorphicAdapterBindings]) new
+	

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "MartinDias 9/26/2017 21:10",
+	"super" : "Object",
+	"category" : "Epicea-Support",
+	"classinstvars" : [
+		"current"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EpPlatform",
+	"type" : "normal"
+}

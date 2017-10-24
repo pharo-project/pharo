@@ -1,4 +1,4 @@
-testing
+tests
 testColorFrom
 	self assert: ((Color colorFrom: #white) asHexString sameAs: 'ffffff').
 	self assert: ((Color colorFrom: #(1.0 0.5 0.0)) asHexString sameAs: 'ff8000').

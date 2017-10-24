@@ -11,4 +11,3 @@ initializeTextMorph
 		vResizing: #spaceFill;
 		hResizing: #spaceFill;
 		addMorph: textMorph fullFrame: LayoutFrame identity
-	

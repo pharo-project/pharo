@@ -1,4 +1,4 @@
 api
 selectorsMenu: aBlock
 
-	methodsListModel menu: aBlock
+	methodsListPresenter menu: aBlock

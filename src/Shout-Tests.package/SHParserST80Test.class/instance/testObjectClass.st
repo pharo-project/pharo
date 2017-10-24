@@ -1,3 +1,3 @@
-tests-smoke
+tests - smoke
 testObjectClass
 	self verifyClass: Object

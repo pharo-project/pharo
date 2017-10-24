@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:40",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"actionWhenActivatedHolder",
+		"stateHolder",
+		"labelClickableHolder",
+		"labelHolder",
+		"actionWhenDeactivatedHolder"
+	],
+	"name" : "AbstractFormButtonPresenter",
+	"type" : "normal"
+}

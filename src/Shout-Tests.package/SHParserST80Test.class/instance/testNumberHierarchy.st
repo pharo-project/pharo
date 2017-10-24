@@ -1,3 +1,3 @@
-tests-smoke
+tests - smoke
 testNumberHierarchy
 	self verifyHierarchy: Number
