@@ -503,4 +503,6 @@ spec group: #default with: #(
 	'ReferenceFinder-Group'
 	
 	'BaselineOfPharoBootstrap'
+	'BaselineOfMonticello'
+	'BaselineOfMetacello'
 ).
