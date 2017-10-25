@@ -1,0 +1,3 @@
+accessing
+transform: anObject
+	^ anObject

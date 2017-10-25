@@ -2,7 +2,7 @@ accessing
 nextButton
 	nextButton
 		ifNil: [ 
-			nextButton := self instantiate: ButtonModel.
+			nextButton := self instantiate: ButtonPresenter.
 			nextButton 
 				label: '>';
 				action: [ 

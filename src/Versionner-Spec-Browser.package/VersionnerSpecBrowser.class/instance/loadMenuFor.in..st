@@ -9,10 +9,10 @@ loadMenuFor: mbInfo in: aMenu
 			for: (configurationList selectedItem) ].
 	commands := commands sorted: [:a :b | a order <= b order].
 	
-	menuGroup := MenuGroupModel new.
+	menuGroup := MenuGroupPresenter new.
 	commands do: [ :command |
 		menuGroup addMenuItem: 
-			(MenuItemModel new
+			(MenuItemPresenter new
 				name: command title;
 				action: [ self unregister.
 						 command execute.

@@ -4,7 +4,7 @@ openPharoZenWorkspace
 
 	"self openPharoZenWorkspace"
 
-	TextModel new
+	TextPresenter new
 		text: self pharoZenValuesContents;
 		title: 'Pharo Zen' translated;
 		aboutText: self aboutPharoZen;

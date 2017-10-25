@@ -12,7 +12,7 @@ asEpiceaRingDefinition
 		comment: self organization classComment;
 		stamp: self organization commentStamp;
 		definitionSource: self definition;
-		package: self epiceaPackageName;
+		package: (EpPlatform current packageNameFor: self);
 		withMetaclass.
 
 	ring theMetaClass 

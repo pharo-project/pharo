@@ -1,4 +1,4 @@
-testing
+tests
 testReset
 	| generator |
 	generator := self numbersBetween: 1 and: 3.

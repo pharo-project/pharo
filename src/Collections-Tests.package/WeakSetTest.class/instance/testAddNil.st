@@ -1,4 +1,4 @@
-testing
+tests
 testAddNil
 	| ws |
 	ws := WeakSet new.

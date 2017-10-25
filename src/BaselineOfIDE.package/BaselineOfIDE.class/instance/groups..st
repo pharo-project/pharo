@@ -333,7 +333,6 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Inspector'
 	'GT-InspectorExtensions-Core'
 	'GT-Playground'
-	'System-Identification'
 	'GT-EventRecorder'
 	'GT-Spotter'
 	'GT-SpotterExtensions-Core'

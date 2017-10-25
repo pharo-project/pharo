@@ -1,4 +1,4 @@
-testing
+tests
 testCaseInsensitiveLessOrEqual
 
 self assert: ('EEA' caseInsensitiveLessOrEqual: 'fgh').

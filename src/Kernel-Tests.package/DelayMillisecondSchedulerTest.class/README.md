@@ -1,1 +1,1 @@
-Provide tests for DelayScheduler
+SUnit tests for class DelayMillisecondScheduler

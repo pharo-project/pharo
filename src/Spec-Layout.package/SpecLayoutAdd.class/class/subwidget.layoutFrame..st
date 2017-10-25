@@ -3,5 +3,5 @@ subwidget: subwidget layoutFrame: aLayoutFrame
 
 	^ self new
 		subwidget: subwidget 
-		layoutFrame: aLayoutFrame asLayoutFrame; 
+		layoutFrame: aLayoutFrame asSpecLayoutFrame; 
 		yourself

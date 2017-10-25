@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "BaptisteQuide 8/7/2014 18:26",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Tool-DependencyAnalyser-UI-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],

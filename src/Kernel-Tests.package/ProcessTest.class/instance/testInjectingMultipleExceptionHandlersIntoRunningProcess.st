@@ -1,4 +1,4 @@
-testing
+tests - exception handlers
 testInjectingMultipleExceptionHandlersIntoRunningProcess
 
 	| error process lastHandler firstHandler sema |

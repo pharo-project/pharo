@@ -1,4 +1,4 @@
-testing - file in/out
+tests - file in/out
 testOrdersACollectionOfClassesBySuperclass
 	"self debug: #testOrdersACollectionOfClassesBySuperclass"
 	| ordered |

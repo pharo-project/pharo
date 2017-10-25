@@ -1,6 +1,6 @@
 initialization
 initializeWidgets
-	listModel := self instantiate:  ListModel .
+	listModel := self instantiate:  ListPresenter .
 	methodModel := self instantiate: MethodBrowser.
 	self focusOrder
 		add: listModel;

@@ -1,4 +1,4 @@
-test - equality
+tests - equality
 nonEmpty
 	
 	^ self explicitRequirement

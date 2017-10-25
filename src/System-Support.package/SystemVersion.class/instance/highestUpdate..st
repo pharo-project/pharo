@@ -1,3 +1,3 @@
-accessing
+compatibility
 highestUpdate: anInteger
 	highestUpdate := anInteger

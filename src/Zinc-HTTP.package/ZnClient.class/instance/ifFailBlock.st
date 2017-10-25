@@ -4,4 +4,4 @@ ifFailBlock
 	Defaults to #pass-ing the exception up. 
 	Accepts an exception as argument."
 	
-	^ self optionAt: #ifFailBlock ifAbsent: [ [ :exception | exception pass ] ]
+	^ self optionAt: #ifFailBlock ifAbsentPut: [ [ :exception | exception pass ] ]

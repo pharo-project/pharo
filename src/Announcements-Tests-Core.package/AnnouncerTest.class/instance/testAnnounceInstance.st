@@ -1,4 +1,4 @@
-testing
+tests
 testAnnounceInstance
 	| instance |
 	instance := AnnouncementMockA new.

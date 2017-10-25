@@ -1,3 +1,3 @@
 accessing
 modelClass
-	^ LabelModel
+	^ LabelPresenter

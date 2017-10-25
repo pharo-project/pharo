@@ -1,11 +1,11 @@
 initialization
 registerClassActions
 	
-	classesListModel whenSelectedItemChanged: [:class | 
-		methodsListModel resetSelection.
+	classesListPresenter whenSelectedItemChanged: [:class | 
+		methodsListPresenter resetSelection.
 		self updateTextContents.
-		textModel behavior: class.
-		textModel aboutToStyle: false.
+		textPresenter behavior: class.
+		textPresenter aboutToStyle: false.
 		class 
-			ifNil: [ methodsListModel items: {} ]
-			ifNotNil: [ methodsListModel items: (self selectedChangeSet selectorsInClass: class name) sort ]].
+			ifNil: [ methodsListPresenter items: {} ]
+			ifNotNil: [ methodsListPresenter items: (self selectedChangeSet selectorsInClass: class name) sort ]].

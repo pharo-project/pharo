@@ -1,4 +1,3 @@
 utilities
 authorName
-
 	^ Author fullName

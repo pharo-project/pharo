@@ -1,16 +1,16 @@
 initialization
 registerChangeActions
 	
-	changesListModel
+	changesListPresenter
 		whenSelectedItemChanged: [:change | 
-			classesListModel resetSelection.
+			classesListPresenter resetSelection.
 			self updateTextContents.
 			change 
 				ifNil: [
-					classesListModel items: {}.
-					methodsListModel items: {}.
+					classesListPresenter items: {}.
+					methodsListPresenter items: {}.
 					]
 				ifNotNil: [
-					classesListModel items: (change changedClasses sort: [:a :b | a name < b name ]).
+					classesListPresenter items: (change changedClasses sort: [:a :b | a name < b name ]).
 					 ]].
 	

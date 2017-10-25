@@ -1,4 +1,4 @@
-tests-converting
+tests - converting
 testAsPoint
 
 	self deny: 1 isPoint.

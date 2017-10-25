@@ -1,8 +1,3 @@
 character classification
-isDigit: char 
-	| value |
-	value := char charCode.
-	value > (GeneralCategory size - 1)
-		ifTrue: [^ false].
-	^ (GeneralCategory at: value + 1)
-		= Nd
+isDigit: char
+	^ self is: char inCategory: Nd

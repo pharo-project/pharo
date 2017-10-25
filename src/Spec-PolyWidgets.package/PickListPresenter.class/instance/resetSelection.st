@@ -1,0 +1,4 @@
+api
+resetSelection
+
+	listPresenter resetSelection

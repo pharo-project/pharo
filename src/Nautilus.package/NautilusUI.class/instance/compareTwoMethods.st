@@ -1,7 +1,7 @@
 menus behavior
 compareTwoMethods
 	
-	(DiffModel new
+	(DiffPresenter new
 		showOptions: true;
 		leftText: self selectedMethods first sourceCode;
 		rightText: self selectedMethods second sourceCode;

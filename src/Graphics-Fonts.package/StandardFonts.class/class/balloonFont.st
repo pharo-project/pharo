@@ -1,3 +1,3 @@
 font accessing
 balloonFont
-	^BalloonMorph balloonFont
+	^ BalloonFont ifNil: [BalloonFont := self defaultFont]

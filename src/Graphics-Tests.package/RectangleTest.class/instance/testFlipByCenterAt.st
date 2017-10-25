@@ -1,4 +1,4 @@
-tests-transforming
+tests - transforming
 testFlipByCenterAt
 
 	| rectangle |
