@@ -1,3 +1,3 @@
 *growl
 growlLabelColorFor: aGrowlMorph
-	^ Color black lighter
+	^ Color white twiceDarker

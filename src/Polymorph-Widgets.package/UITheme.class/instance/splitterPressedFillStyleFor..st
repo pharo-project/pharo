@@ -3,9 +3,8 @@ splitterPressedFillStyleFor: aSplitter
 	"Return the pressed splitter fillStyle for the given splitter."
 	
 	|aColor|
-	aColor := aSplitter paneColor duller.
-	^(GradientFillStyle ramp: {
-			0.0->aColor twiceLighter. 1.0->aColor twiceDarker})
+	aColor := self glamorousBaseColorFor: aSplitter.
+	^ (GradientFillStyle ramp: {0.0->aColor lighter. 0.9-> aColor})
 		origin: aSplitter topLeft;
 		direction: (aSplitter splitsTopAndBottom
 			ifTrue: [0 @ aSplitter height]

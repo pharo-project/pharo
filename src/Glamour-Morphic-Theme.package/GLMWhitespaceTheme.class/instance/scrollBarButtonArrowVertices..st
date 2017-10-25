@@ -1,3 +1,3 @@
 scrollbars
 scrollBarButtonArrowVertices: aRectangle 
-	^ self verticesForSimpleArrow: aRectangle
+	^ self verticesForComplexArrow: aRectangle

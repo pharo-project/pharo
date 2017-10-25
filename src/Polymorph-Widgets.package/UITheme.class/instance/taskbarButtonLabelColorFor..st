@@ -3,8 +3,8 @@ taskbarButtonLabelColorFor: aButton
 	"Answer the colour for the label of the given taskbar button."
 
 	^aButton model
-		ifNil: [Color black]
+		ifNil: [super taskbarButtonLabelColorFor: aButton]
 		ifNotNil: [:win |
 			win isActive
-				ifTrue: [self selectionColor darker]
-				ifFalse: [Color black]]
+				ifTrue: [Color black]
+				ifFalse: [Color gray darker]]

@@ -1,5 +1,4 @@
 fill-styles
 windowActiveFillStyleFor: aWindow
-	"Return the window active fillStyle for the given window."
-	
-	^self windowColor
+	"We do not want the lighting effect when the window goes inactive"
+	^SolidFillStyle color: self class baseColor

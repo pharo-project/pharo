@@ -1,8 +1,6 @@
 border-styles
 tabPanelBorderStyleFor: aTabGroup
-	"Answer the normal border style for a tab group."
-
-	^TabPanelBorder new
+	^ Pharo3TabPanelBorder new 
 		width: 1;
-		baseColor: (aTabGroup paneColor alphaMixed: 0.8 with: Color black);
+		baseColor: ((self glamorousDarkBaseColorFor: aTabGroup));
 		tabSelector: aTabGroup tabSelectorMorph
