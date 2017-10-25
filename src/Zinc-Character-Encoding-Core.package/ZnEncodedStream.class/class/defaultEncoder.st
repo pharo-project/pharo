@@ -1,3 +1,3 @@
 accessing
 defaultEncoder
-	^ ZnUTF8Encoder new
+	^ ZnCharacterEncoder utf8
