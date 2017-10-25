@@ -88,7 +88,8 @@ spec group: 'General-Tests-Group' with: #(
 	'SUnit-Tests'
 	'Slot-Tests'
 	'Spec-Tests'
-	'System-CachingTests'
+	'System-Caching-Tests'
+	'System-Hashing-Tests'
 	'System-History-Tests'
 	'System-Localization-Tests'
 	'System-SessionManager-Tests'
@@ -155,9 +156,9 @@ spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Tests-Group'
 ).
 
-"spec group: 'Deprecated-Group' with: #(
+spec group: 'Deprecated-Group' with: #(
 	'Deprecated70'
-)."
+).
 
 spec group: 'Manifest-Core-Group' with: #(
 	'Manifest-Core'
@@ -477,14 +478,12 @@ spec group: #default with: #(
 
 	'Shout-Group'
 
-	'System-Localization'
-
 	"standalone:" 
 	'MetacelloExtras-Core'
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	"'Deprecated-Group'"
+	'Deprecated-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
