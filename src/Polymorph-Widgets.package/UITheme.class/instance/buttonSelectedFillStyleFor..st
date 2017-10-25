@@ -1,5 +1,6 @@
 fill-styles-buttons
 buttonSelectedFillStyleFor: aButton
-	"Return the button selected fillStyle for the given color."
+	"Return the normal button fillStyle for the given button."
 	
-	^self buttonNormalFillStyleFor: aButton
+	^ SolidFillStyle color: (self glamorousLightSelectionColorFor: aButton)
+	

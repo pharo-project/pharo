@@ -2,6 +2,6 @@ border-styles
 plainGroupPanelBorderStyleFor: aGroupPanel
 	"Answer the normal border style for a plain group panel."
 
-	^BorderStyle simple
-		width: 0;
+	^SimpleBorder new
+		width: 1;
 		baseColor: Color transparent

@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "UIThemeWatery",
+	"super" : "UITheme",
 	"category" : "Glamour-Morphic-Theme",
 	"classinstvars" : [ ],
 	"pools" : [ ],
