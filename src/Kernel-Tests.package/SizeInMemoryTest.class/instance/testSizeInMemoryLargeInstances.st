@@ -1,7 +1,7 @@
 tests
 "protocol: tests"
 testSizeInMemoryLargeInstances
-	"Two words for the object header + a world per instance variable"
+	"Two words for the object header + a word per instance variable"
 
 	self assert: Smalltalk allClasses sizeInMemory = (5 * Smalltalk wordSize).
 	self
