@@ -12,7 +12,7 @@ sizeInMemory
 			"indexed elements"
 			bytesPerElement := self class isBytes
 				ifTrue: [ 1 ]
-				ifFalse: [ 4 ].
+				ifFalse: [ Smalltalk wordSize ]. "If it is a word layout"
 			contentBytes := contentBytes + (self basicSize * bytesPerElement).
 			"If we are not filling an ammount of bytes multiple of the wordSize, we do it"
 			contentBytes \\ Smalltalk wordSize = 0
