@@ -26,7 +26,7 @@ runUntilErrorOrReturnFrom: aSender
 	"Control resumes here once above ensure block or exception handler is executed"
 	^ error ifNil: [
 		"No error was raised, remove ensure context by stepping until popped"
-		[context isDead] whileFalse: [topContext := topContext stepToCallee].
+		[(context isDead)or: [ topContext isNil  ]] whileFalse: [topContext := topContext stepToCallee].
 		{topContext. nil}
 
 	] ifNotNil: [
