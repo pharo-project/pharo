@@ -1,5 +1,5 @@
 {
-	"commentStamp" : "JulienDelplanque 10/27/2017 19:56",
+	"commentStamp" : "JulienDelplanque 10/27/2017 20:17",
 	"super" : "CommandLineHandler",
 	"category" : "MetacelloCommandLineHandler-Core",
 	"classinstvars" : [ ],
