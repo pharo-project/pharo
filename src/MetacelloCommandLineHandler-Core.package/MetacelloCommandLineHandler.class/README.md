@@ -1,4 +1,4 @@
-Command line handler for dealing with Metacello Baselines/Configurations from the command line
+Command line handler for dealing with Metacello from the command line.
 
 Usage:
 metacello --help
@@ -9,7 +9,7 @@ metacello install <repository url> (<baseline>|<configuration>) [--version=<vers
 	<repository url>    A Monticello repository name 
 	<baseline>     A valid Metacello Baseline name
 	<configuration>     A valid Metacello Configuration name
-	<version>           A valid version for the given Baseline/Configuration
+	<version>           A valid version for the given Configuration (incompatible with Baseline)
 	<group name>            A valid Metacello group name(s)
 	
 Examples:
