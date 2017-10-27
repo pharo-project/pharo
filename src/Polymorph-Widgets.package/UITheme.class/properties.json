@@ -14,7 +14,8 @@
 		"settings",
 		"forms",
 		"soundTheme",
-		"focusIndicator"
+		"focusIndicator",
+		"windowActiveDropShadowStyle"
 	],
 	"name" : "UITheme",
 	"type" : "normal"
