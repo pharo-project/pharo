@@ -262,6 +262,9 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'BaselineOfMonticello'.
+		spec package: 'BaselineOfMetacello'.
+		
 		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.
