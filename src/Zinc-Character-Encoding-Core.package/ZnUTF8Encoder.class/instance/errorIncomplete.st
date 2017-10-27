@@ -1,3 +1,3 @@
 error handling
 errorIncomplete
-	self error: 'Incomplete utf-8 encoding'
+	^ self error: 'Incomplete utf-8 encoding'

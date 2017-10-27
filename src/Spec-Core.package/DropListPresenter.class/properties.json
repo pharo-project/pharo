@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:41",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"listHolder",
+		"selectionHolder",
+		"displayBlock",
+		"iconHolder"
+	],
+	"name" : "DropListPresenter",
+	"type" : "normal"
+}

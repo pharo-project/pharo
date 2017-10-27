@@ -1,1 +1,1 @@
-This is the unit test for the class Margin. 
+SUnit tests for class Margin

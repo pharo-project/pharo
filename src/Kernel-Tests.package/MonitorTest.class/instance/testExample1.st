@@ -1,4 +1,4 @@
-examples
+tests - examples
 testExample1
 
 	| producer1 producer2  monitor goal work counter goalReached finished |

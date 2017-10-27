@@ -1,4 +1,4 @@
-testing
+tests
 testLocalChanges
 	| changes |
 	gofer

@@ -1,4 +1,4 @@
-test - implementation
+tests - implementation
 testScanFor
 	"Set>>scanFor: return an integer "
 	| assoc indexForG |

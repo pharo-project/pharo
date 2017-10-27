@@ -1,4 +1,4 @@
-tests controlling
+tests - controlling
 testIfTrueIfFalse
 
 	self assert: (true ifTrue: ['trueAlternativeBlock'] 

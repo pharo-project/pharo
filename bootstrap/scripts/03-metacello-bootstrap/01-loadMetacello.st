@@ -23,6 +23,7 @@ mcPackages := #(
  'Metacello-GitHub'
  'Metacello-Platform'
  'Metacello-ToolBox'
+ 'Metacello-PharoExtensions'
  ).
 
 MCMethodDefinition initializersEnabled: false.

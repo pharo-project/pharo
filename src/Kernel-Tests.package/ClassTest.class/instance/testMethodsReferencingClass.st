@@ -1,4 +1,4 @@
-testing - navigation
+tests - navigation
 testMethodsReferencingClass
 	self assert: (ClassTest methodsReferencingClass: (Smalltalk classNamed: #ExampleForTest111)) equals: {(ClassTest >> #testOrdersACollectionOfClassesBySuperclass)}.
 	self

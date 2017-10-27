@@ -1,4 +1,4 @@
-testing
+tests - exception handlers
 testInjectingExceptionHandlerIntoNotRunningProcess
 
 	| error interceptedError process interrupted |

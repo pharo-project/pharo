@@ -1,4 +1,4 @@
-test - testing
+tests - testing
 testKeyForIdentity
 	self assert: (nonEmptyDict keyForIdentity: 30) = #b.
 

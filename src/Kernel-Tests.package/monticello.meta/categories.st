@@ -1,4 +1,5 @@
 SystemOrganization addCategory: #'Kernel-Tests'!
+SystemOrganization addCategory: #'Kernel-Tests-Charset'!
 SystemOrganization addCategory: #'Kernel-Tests-Chronology'!
 SystemOrganization addCategory: #'Kernel-Tests-Classes'!
 SystemOrganization addCategory: #'Kernel-Tests-Exception'!

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:29",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ListPresenterTest",
+	"type" : "normal"
+}

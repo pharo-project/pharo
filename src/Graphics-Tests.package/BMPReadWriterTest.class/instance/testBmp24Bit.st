@@ -1,4 +1,4 @@
-reading
+tests - reading
 testBmp24Bit
 	| reader form |
 	reader := BMPReadWriter new on: (ReadStream on: self bmpData24bit).

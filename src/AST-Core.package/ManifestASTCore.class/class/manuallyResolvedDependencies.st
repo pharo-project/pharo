@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 manuallyResolvedDependencies
-	^ #(#'Collections-Abstract' #Transcript)
+	^ #(#'Collections-Abstract' #'Transcript-Core')

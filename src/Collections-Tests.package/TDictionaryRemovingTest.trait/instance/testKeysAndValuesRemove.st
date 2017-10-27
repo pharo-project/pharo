@@ -1,4 +1,4 @@
-test - removing
+tests - removing
 testKeysAndValuesRemove
 	| oldSize collection keyIn |
 	

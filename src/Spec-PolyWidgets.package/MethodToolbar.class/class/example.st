@@ -3,7 +3,7 @@ example
 	| example |
 	example := MethodToolbar new.
 	example
-		method: ButtonModel >> #state:;
+		method: ButtonPresenter >> #state:;
 		method: nil;
 		extent: 550 @ 100;
 		openWithSpec.

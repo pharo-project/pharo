@@ -5,7 +5,7 @@ baseline: spec
 
  	| repository | 
 	
-	repository := 'filetree://./pharo-core/src'.    
+	repository := 'filetree://./pharo-core/src'.     
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
@@ -33,7 +33,7 @@ baseline: spec
 
 		spec package: 'FuelTools-Debugger'.
 		
-		"spec package: 'Deprecated60'."
+		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
 		spec package: 'BlueInk-Core'.
 		
@@ -57,9 +57,9 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
-		spec package: 'System-Localization'.
 		
 		spec package: 'Zinc-Resource-Meta-Tests'.
 
@@ -101,7 +101,6 @@ baseline: spec
 
 		spec package: 'GT-Playground'.
 
-		spec package: 'System-Identification'.
 		spec package: 'GT-EventRecorder'.
 
 		spec package: 'GT-Spotter'.
@@ -242,7 +241,8 @@ baseline: spec
 		spec package: 'SmartSuggestions-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
-		spec package: 'System-CachingTests'.
+		spec package: 'System-Caching-Tests'.
+		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
 		spec package: 'System-Localization-Tests'.
 		spec package: 'System-SessionManager-Tests'.
@@ -262,6 +262,9 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'BaselineOfMonticello'.
+		spec package: 'BaselineOfMetacello'.
+		
 		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.

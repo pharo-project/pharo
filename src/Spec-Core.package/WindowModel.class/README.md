@@ -1,1 +1,0 @@
-A WindowModel is a spec model for a Window

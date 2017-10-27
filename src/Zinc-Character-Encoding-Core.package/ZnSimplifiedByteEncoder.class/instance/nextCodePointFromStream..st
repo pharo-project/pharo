@@ -7,7 +7,7 @@ nextCodePointFromStream: stream
 		ifTrue: [ byteValue ]
 		ifFalse: [ 
 			(byteToUnicode at: byteValue - 127 ifAbsent: [ nil ])
-				ifNotNil: [ :unicode | unicode codePoint ]
+				ifNotNil: [ :unicode | unicode asInteger ]
 				ifNil: [ 
 					strict
 						ifTrue: [ self errorOutsideRange ]

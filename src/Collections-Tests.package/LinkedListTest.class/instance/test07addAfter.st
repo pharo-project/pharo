@@ -1,4 +1,4 @@
-testing
+tests
 test07addAfter
 	self assert: list isEmpty.
 	

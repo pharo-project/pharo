@@ -1,4 +1,4 @@
-testing
+tests
 testYield
 
 	| lowerHasRun lowerPriority same1HasRun same2HasRun |

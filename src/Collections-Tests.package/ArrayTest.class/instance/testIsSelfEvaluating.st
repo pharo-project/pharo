@@ -1,4 +1,4 @@
-testing
+tests
 testIsSelfEvaluating
 
 	self assert: example1 isSelfEvaluating.

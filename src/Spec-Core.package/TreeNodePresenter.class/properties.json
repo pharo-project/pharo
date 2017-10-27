@@ -1,0 +1,26 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"children",
+		"content",
+		"icon",
+		"container",
+		"matchTokenFilter",
+		"contents",
+		"parentNode",
+		"childNodeClass",
+		"selected",
+		"lastClicked",
+		"mouseDownAction",
+		"hasContentToShow",
+		"isExpanded",
+		"hasChildren"
+	],
+	"name" : "TreeNodePresenter",
+	"type" : "normal"
+}

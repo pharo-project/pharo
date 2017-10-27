@@ -1,4 +1,4 @@
-source
+tests - source
 testDelegateSelectionWithoutInstaceVariablesItsNotValid
 	| suggestion |
 	

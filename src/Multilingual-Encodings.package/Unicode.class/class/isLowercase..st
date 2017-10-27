@@ -1,8 +1,7 @@
 character classification
 isLowercase: char 
-	| value |
-	value := char charCode.
-	value > (GeneralCategory size - 1)
+	| index |
+	index := char charCode + 1.
+	index > GeneralCategory size
 		ifTrue: [^ false].
-	^ (GeneralCategory at: value + 1)
-		= Ll
+	^ (GeneralCategory at: index) = Ll

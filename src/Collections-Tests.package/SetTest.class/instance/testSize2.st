@@ -1,4 +1,4 @@
-some tests
+tests - some
 testSize2
 	self assert: (empty size = 0).
 	self assert: (full size = 4).

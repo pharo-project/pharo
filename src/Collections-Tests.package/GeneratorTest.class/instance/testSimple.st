@@ -1,4 +1,4 @@
-testing
+tests
 testSimple
 	| generator |
 	generator := Generator on: [ :g | g yield: 1; yield: 2 ].

@@ -1,4 +1,4 @@
-testing
+tests - termination
 testIsTerminatingNormalTermination
 	| sem process unwound started terminator |
 	sem := Semaphore new.

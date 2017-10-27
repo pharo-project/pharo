@@ -1,0 +1,1 @@
+I am font that provides no real glyphs nor displaying possibilities. I server only as a stub font that provides measurements on texts.

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:31",
+	"super" : "AbstractWidgetPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"items",
+		"autoRefresh"
+	],
+	"name" : "MenuGroupPresenter",
+	"type" : "normal"
+}

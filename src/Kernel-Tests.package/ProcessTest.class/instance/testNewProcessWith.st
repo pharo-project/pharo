@@ -1,4 +1,4 @@
-testing
+tests - creation
 testNewProcessWith
 
 	| hasBlockRun block return passedArguments receivedArgument1 receivedArgument2 |

@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "DialogWindow",
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"specWidget",
+		"toolbar"
+	],
+	"name" : "SpecDialogWindow",
+	"type" : "normal"
+}

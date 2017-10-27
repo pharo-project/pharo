@@ -1,4 +1,4 @@
-testing-handling
+tests - handling
 testHandlingWhenThereIsSomeExclusionButDontApplies
 
 	| wasHandled result |

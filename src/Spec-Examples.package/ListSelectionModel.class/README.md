@@ -1,3 +1,1 @@
-A ListSelectionModel is a basic example to show multi selection on lists
-
-self example
+This is deprecated class because the original class ListSelectionModel was renamed to ListSelectionPresenter. You should stop to use this class and modify your code to use ListSelectionPresenter.

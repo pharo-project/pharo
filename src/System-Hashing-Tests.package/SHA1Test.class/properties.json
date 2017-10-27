@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "ClassTestCase",
+	"category" : "System-Hashing-Tests-SHA1",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hash"
+	],
+	"name" : "SHA1Test",
+	"type" : "normal"
+}

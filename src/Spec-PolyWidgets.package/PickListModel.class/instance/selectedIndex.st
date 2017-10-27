@@ -1,4 +1,0 @@
-api
-selectedIndex
-
-	^ listModel selectedIndex

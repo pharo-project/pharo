@@ -1,4 +1,4 @@
-tests-point functions
+tests - point functions
 testCrossProduct
 
 	self assert: (0 @ 0 crossProduct: 0 @ 0) = 0.

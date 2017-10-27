@@ -1,6 +1,6 @@
 public
 hashStream: aPositionableStream
-	"Hash the contents of the given stream from the current position to the end using the Secure Hash Algorithm. The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Scheier, Wiley, 1996."
+	"Hash the contents of the given stream from the current position to the end using the Secure Hash Algorithm. The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Schneier, Wiley, 1996."
 	"http://en.wikipedia.org/wiki/Sha1#Example_hashes" 
 	"(SHA1 new hashStream: 'The quick brown fox jumps over the lazy dog' readStream) hex."
 	
