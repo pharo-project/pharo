@@ -8,9 +8,7 @@ stepToHome: aContext
 				onBehalfOf: self.
 	suspendedContext := pair first.
 	error := pair second.
-	"error class = Halt ifTrue: [ 
-		aContext methodNode 
-			pragmaNamed: #debuggerCompleteToSender 
-			ifPresent: [ ^ self completeTo: aContext sender ] ]."
-	error ifNotNil: [^ suspendedContext := error signalerContext].
+	error ifNotNil: [
+		suspendedContext := error signalerContext.
+		suspendedContext push: error defaultResumeValue. "debugger will show signalling method and will be able continue execution. For this it needs some result of signalling"].
 	^ suspendedContext
