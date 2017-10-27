@@ -5,4 +5,4 @@ fileOutMethod: selector
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutMethod: selector on: internalStream.
-	FileStream writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '')) isSt: true.
+	CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , (selector copyReplaceAll: ':' with: '')) isSt: true.

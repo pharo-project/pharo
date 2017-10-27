@@ -8,8 +8,11 @@ testNextLine
 	| file |
 	(File named: filename)
 		writeStreamDo: [ :stream | stream nextPutAll: text ].
-	file := File openForReadFileNamed: filename.
-	lines do: [ :e | self assert: file nextLine = e ].
+	file := ZnFastLineReader on: 
+			(ZnCharacterReadStream
+				on: (File openForReadFileNamed: filename)
+				encoding: 'utf8').
+	lines do: [ :e | self assert: file nextLine equals: e ].
 	self assert: file nextLine isNil.
 	file close ] ensure: [ 
 		(FileSystem disk workingDirectory / filename) ensureDelete ].

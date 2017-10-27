@@ -8,7 +8,7 @@ fileOut
 		print: SystemOrganization;  "ends with a cr"
 		nextPutAll: ')!'; cr.
 
-	FileStream 
+	CodeExporter 
 		writeSourceCodeFrom: internalStream 
 		baseName: 'SystemOrganization.st' asFileReference nextVersion basenameWithoutExtension 
 		isSt: true

@@ -1,5 +1,5 @@
 Provides a simple, platform-independent, file stream. I am 
-   - bynary
+   - binary
    - not buffered
    - provide no encoding/conversions
 
