@@ -1,0 +1,26 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "ParseNode",
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"scopeTable",
+		"nTemps",
+		"supered",
+		"requestor",
+		"class",
+		"selector",
+		"literalStream",
+		"selectorSet",
+		"litIndSet",
+		"litSet",
+		"sourceRanges",
+		"globalSourceRanges",
+		"addedSelectorAndMethodClassLiterals",
+		"optimizedSelectors"
+	],
+	"name" : "LegacyEncoder",
+	"type" : "normal"
+}

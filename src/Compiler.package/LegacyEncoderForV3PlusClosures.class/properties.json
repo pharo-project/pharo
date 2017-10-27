@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "LegacyEncoderForV3",
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "LegacyEncoderForV3PlusClosures",
+	"type" : "normal"
+}
