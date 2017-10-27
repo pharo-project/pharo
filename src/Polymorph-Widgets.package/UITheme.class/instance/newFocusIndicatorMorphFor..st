@@ -2,9 +2,9 @@ morph creation
 newFocusIndicatorMorphFor: aMorph
 	"Answer a new focus indicator for the given morph."
 
-	^BorderedMorph new
+	^ BorderedMorph new
 		fillStyle: Color transparent;
-		borderStyle: (DashedBorder
-						width: 1
-						dashColors: {aMorph focusColor. Color transparent} dashLengths: #(1 1));
+		borderStyle: (SimpleBorder new
+			 width: 1;
+			baseColor: (self glamorousBaseSelectionColorFor: aMorph));
 		bounds: aMorph focusBounds

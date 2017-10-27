@@ -1,5 +1,3 @@
-fill-styles
+fill-styles-buttons
 tabLabelSelectedFillStyleFor: aTabLabel
-	"Return the selected fillStyle for the given tab label."
-	
-	^aTabLabel paneColor
+	^ self buttonSelectedFillStyleFor: aTabLabel 

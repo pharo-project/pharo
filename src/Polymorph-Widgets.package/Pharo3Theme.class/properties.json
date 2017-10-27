@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "UIThemeWatery",
+	"super" : "UITheme",
 	"category" : "Polymorph-Widgets-Themes",
 	"classinstvars" : [ ],
 	"pools" : [ ],
