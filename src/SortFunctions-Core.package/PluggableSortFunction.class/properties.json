@@ -1,14 +1,13 @@
 {
-	"commentStamp" : "DenisKudriashov 10/27/2017 13:29",
+	"commentStamp" : "DenisKudriashov 10/27/2017 13:25",
 	"super" : "SortFunction",
 	"category" : "SortFunctions-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"nextFunction",
-		"startFunction"
+		"collatorBlock"
 	],
-	"name" : "ChainedSortFunction",
+	"name" : "PluggableSortFunction",
 	"type" : "normal"
 }

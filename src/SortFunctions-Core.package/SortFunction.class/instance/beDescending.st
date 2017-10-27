@@ -1,4 +1,4 @@
 initailize-release
-descend
+beDescending
 
 	direction := -1

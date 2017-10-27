@@ -1,4 +1,4 @@
 converting
 , aSortFunction
 
-	self next: next , aSortFunction
+	^self class startWith: startFunction then: nextFunction , aSortFunction

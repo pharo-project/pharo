@@ -1,4 +1,4 @@
 initailize-release
-direction: anInteger
+direction: oneOrMinusOne
 
-	direction := anInteger
+	direction := oneOrMinusOne
