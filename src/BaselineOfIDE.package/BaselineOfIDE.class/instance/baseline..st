@@ -57,6 +57,7 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
 		
