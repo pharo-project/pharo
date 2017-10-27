@@ -6,10 +6,9 @@ testNextLine
 	text := lines first , String cr , lines second , String crlf , lines third , String lf , lines fourth.
 	[ 
 	| file |
-	(StandardFileStream forceNewFileNamed: filename)
-		nextPutAll: text;
-		close.
-	file := StandardFileStream readOnlyFileNamed: filename.
+	(File named: filename)
+		writeStreamDo: [ :stream | stream nextPutAll: text ].
+	file := File openForReadFileNamed: filename.
 	lines do: [ :e | self assert: file nextLine = e ].
 	self assert: file nextLine isNil.
 	file close ] ensure: [ 

@@ -3,7 +3,7 @@ from: aFileName
 
 	| entry |
 	"Now get the size, attributes, and timestamps, and see if the file exists"
-	stream := StandardFileStream readOnlyFileNamed: aFileName.
+	stream := File openForReadFileNamed: aFileName.
 	self localFileName: (externalFileName := stream name).
 	entry := stream directoryEntry.
 	compressedSize := uncompressedSize := entry size.

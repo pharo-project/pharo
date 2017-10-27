@@ -11,7 +11,7 @@ delete: path
 	(self isDirectory: path)
 		ifTrue: [ Primitives deleteDirectory: encodedPathString ]
 		ifFalse: [ 
-			StandardFileStream
+			File
 				retryWithGC: [ Primitives deleteFile: encodedPathString ]
 				until: [ :result | result notNil ]
 				forFileNamed: pathString ]

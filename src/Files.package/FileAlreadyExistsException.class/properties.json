@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "GuillermoPolito 10/27/2017 09:22",
+	"super" : "FileException",
+	"category" : "Files-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"file"
+	],
+	"name" : "FileAlreadyExistsException",
+	"type" : "normal"
+}

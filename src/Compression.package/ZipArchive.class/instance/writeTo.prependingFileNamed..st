@@ -2,7 +2,7 @@ writing
 writeTo: stream prependingFileNamed: aFileName
 	| prepended buffer |
 	stream binary.
-	prepended := StandardFileStream readOnlyFileNamed: aFileName.
+	prepended := File openForReadFileNamed: aFileName.
 	prepended binary.
 	buffer := ByteArray new: (prepended size min: 32768).
 	[ prepended atEnd ] whileFalse: [ | bytesRead |

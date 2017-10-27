@@ -6,7 +6,7 @@ compressAndDecompress: aFile using: tempFile stats: stats
 	fileSize := aFile size.
 	(fileSize < 1"00000" "or:[fileSize > 1000000]") ifTrue:[aFile close. ^nil].
 	Transcript cr; show:'Testing ', aFile name,' ... '.
-	tempStream := StandardFileStream new open: tempFile fullName forWrite: true.
+	tempStream := File openForWriteFileNamed: tempFile fullName.
 	'Compressing ', aFile name,'...' displayProgressFrom:  1 to: aFile size during: [ :bar |
 			result := self regressionCompress: aFile into: tempStream notifiying: bar stats: stats].
 	result ifTrue: [
