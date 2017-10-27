@@ -1,4 +1,4 @@
 accessing
 userLocalDirectory
 	^ UserLocalDirectory ifNil: [ 
-		FileLocator workingDirectory / self defaultLocalDirectoryName  ]
+		FileLocator imageDirectory / self defaultLocalDirectoryName  ]
