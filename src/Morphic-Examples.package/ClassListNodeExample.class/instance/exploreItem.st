@@ -1,3 +1,3 @@
 accessing
 exploreItem
-	self explore
+	self inspect

@@ -1,3 +1,3 @@
 defaults
 iconBlock: aNode
-	^[ aNode explore]
+	^[ aNode inspect]

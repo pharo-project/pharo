@@ -30,7 +30,7 @@ buildMetaMenu: evt
 		add: 'inspect'
 		selector: #inspectAt:event:
 		argument: evt position.
-	menu add: 'explore' selector: #explore.
+	menu add: 'explore' selector: #inspect.
 	menu lastItem
 		icon: (self iconNamed: #smallInspectItIcon).
 	menu addLine.

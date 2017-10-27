@@ -7,6 +7,5 @@ simpleActionList
 	browser column: #one.
 	browser transmit to: #one; andShow: [ :a |
 		a actionList
-			act: [:entity | entity inspect ] entitled: 'Inspect';
-			act: [:entity | entity explore ] entitled: 'Explore'].
+			act: [:entity | entity inspect ] entitled: 'Inspect'].
 	^ browser

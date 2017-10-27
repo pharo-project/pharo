@@ -1,6 +1,6 @@
 test inspect
 testInspectInteger
 	| inspector |
-	inspector := 1 inspector.
+	inspector :=  self openInspectorOn: 1.
 	inspector changed.
 	inspector close.

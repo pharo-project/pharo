@@ -7,4 +7,4 @@ execute
 
 	UIManager default inform: 'Issues were found'.
 	result := result collect: [ :each | each explanation ].
-	result explore
+	result inspect

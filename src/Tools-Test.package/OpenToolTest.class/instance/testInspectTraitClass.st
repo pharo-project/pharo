@@ -1,6 +1,6 @@
 test inspect
 testInspectTraitClass
 	| inspector |
-	inspector := TBehavior inspector.
+	inspector :=  self openInspectorOn: TBehavior.
 	inspector changed.
 	inspector close.

@@ -1,3 +1,3 @@
 do-its
 exploreIt
-	self evaluateSelectionAndDo: [:result | result explore]
+	self evaluateSelectionAndDo: [:result | result inspect]

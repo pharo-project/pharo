@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "mcamp 11/17/2015 11:33",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Reflectivity-Examples",
 	"classinstvars" : [ ],
 	"pools" : [ ],
