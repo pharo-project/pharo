@@ -25,7 +25,6 @@ initializedSessionManager
 		registerSystemClassNamed: #MCMethodDefinition; "System"
 		registerSystemClassNamed: #Symbol; "System"
 		registerSystemClassNamed: #Locale; "System"
-		registerSystemClassNamed: #MultiByteFileStream; "System"
 		registerSystemClassNamed: #WeakArray; "System"
 		registerSystemClassNamed: #FileStream; "System"
 		registerSystemClassNamed: #BasicCommandLineHandler; "System"

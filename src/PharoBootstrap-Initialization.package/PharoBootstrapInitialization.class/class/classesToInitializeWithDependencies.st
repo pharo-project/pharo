@@ -34,7 +34,6 @@ classesToInitializeWithDependencies
 #WeakAnnouncementSubscription
 #WeakFinalizationList
 #CP1250TextConverter
-#MultiByteFileStream
 #RBScanner
 #MCWorkingCopy
 #WideSymbol
