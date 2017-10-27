@@ -7,6 +7,8 @@ readFrom: aReader
 	protocol := aReader readByteSymbol.
 		
 	encoderClassName := aReader readByteString.
+	(encoderClassName beginsWith: 'Opal') ifTrue: [ 
+		encoderClassName := encoderClassName withoutPrefix: 'Opal' ].
 	numArgs := aReader readUInt32.
 	numTemps := aReader readUInt32.
 	hasPrimitive := aReader readUInt32.

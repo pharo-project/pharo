@@ -1,0 +1,4 @@
+font
+defaultFont
+
+	^ StubFixedFont new

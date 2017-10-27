@@ -1,7 +1,7 @@
 results
 v3VMHeader: literalsSize
 	| header primBits endPrimNumber |
-	self encoderClass name = #OpalEncoderForSistaV1 ifTrue: [ 
+	self encoderClass name = #EncoderForSistaV1 ifTrue: [ 
 		self error: 'SistaV1 non supported in non spur VM'].
 	endPrimNumber := self endPrimNumber.
 	primBits := endPrimNumber <= 16r1FF

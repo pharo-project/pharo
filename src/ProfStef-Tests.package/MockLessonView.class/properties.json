@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:48",
 	"super" : "Object",
-	"category" : "ProfStef-Tests",
+	"category" : "ProfStef-Tests-Mocks",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

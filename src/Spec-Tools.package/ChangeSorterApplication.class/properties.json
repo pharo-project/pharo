@@ -7,14 +7,14 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"model",
-		"changesListModel",
-		"classesListModel",
-		"methodsListModel",
-		"textModel",
 		"prettyPrint",
 		"showDiff",
 		"prettyButton",
-		"diffButton"
+		"diffButton",
+		"changesListPresenter",
+		"methodsListPresenter",
+		"classesListPresenter",
+		"textPresenter"
 	],
 	"name" : "ChangeSorterApplication",
 	"type" : "normal"

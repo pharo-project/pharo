@@ -1,4 +1,4 @@
 api-events
 whenListChanged: aBlock
 
-	listModel whenListChanged: aBlock
+	listPresenter whenListChanged: aBlock

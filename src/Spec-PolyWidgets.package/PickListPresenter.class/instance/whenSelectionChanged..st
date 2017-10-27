@@ -5,4 +5,4 @@ whenSelectionChanged: aBlock
 	If you are interested in the items, use whenSelectedItemChanged:
 	If you are interested in the index, use whenSelectionIndexChanged:"
 
-	listModel whenSelectionChanged: aBlock.
+	listPresenter whenSelectionChanged: aBlock.

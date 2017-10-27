@@ -1,0 +1,3 @@
+keymapping
+asShortcut
+	^ self asKeyCombination

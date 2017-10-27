@@ -1,5 +1,5 @@
 instance creation
 forFilenameExtension: extension ifAbsent: block
-	^ ExtensionsMap 
+	^ self extensionsMap 
 		at: extension 
 		ifAbsent: block

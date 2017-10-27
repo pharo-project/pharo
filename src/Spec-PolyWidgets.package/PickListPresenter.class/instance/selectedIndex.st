@@ -1,4 +1,4 @@
 api
 selectedIndex
 
-	^ listModel selectedIndex
+	^ listPresenter selectedIndex

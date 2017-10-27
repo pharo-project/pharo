@@ -1,4 +1,4 @@
 api
 selectedChangeSetIndex
 
-	 ^ changesListModel selectedIndex
+	 ^ changesListPresenter selectedIndex
