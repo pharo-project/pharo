@@ -210,10 +210,6 @@ spec group: 'Shout-Group' with: #(
 	'Shout-Tests-Group'
 ).
 
-spec group: 'MetacelloExtras-Core' with: #(
-	'Metacello-Bitbucket'	
-	"'Metacello-GitHub'"
-).
 spec group: 'Metacello-Tests-Group' with: #(
 	'Metacello-TestsMCResources'
 	'Metacello-TestsCore'
@@ -479,7 +475,6 @@ spec group: #default with: #(
 	'Shout-Group'
 
 	"standalone:" 
-	'MetacelloExtras-Core'
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
