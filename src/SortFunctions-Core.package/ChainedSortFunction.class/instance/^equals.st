@@ -6,6 +6,6 @@ comparing
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ direction = anObject direction1
+	^ direction = anObject direction
 		and: [ startFunction = anObject startFunction
 				and: [ nextFunction = anObject nextFunction ] ]
