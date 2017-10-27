@@ -1,6 +1,7 @@
 initialization
 initialize
 
-	displayBlockHolder := [ :object | object asStringOrText ] asValueHolder.
+	super initialize.
+	displayBlockHolder := [ :object | object ifNotNil: [ object asStringOrText ] ifNil: '' ] asValueHolder.
 	displayBlockHolder whenChangedDo: [ self date: self date ].
-	super initialize. "do this last so default will be set after displayBlock"
+	self date: self defaultDate.
