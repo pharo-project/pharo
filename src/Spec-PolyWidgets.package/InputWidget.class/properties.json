@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "SeanDeNigris 1/23/2014 11:40",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-PolyWidgets-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"input",
+		"label",
+		"okAction",
+		"value",
+		"title"
+	],
+	"name" : "InputWidget",
+	"type" : "normal"
+}
