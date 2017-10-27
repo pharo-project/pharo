@@ -6,7 +6,7 @@ findSelectorFromAST
 
 	fallbackBlock := [^ ''].
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
-	node isSequence ifTrue: [
+	(node isNil or: [node isSequence]) ifTrue: [
 		self selectLine.
 		node := self bestNodeInTextAreaOnError: fallbackBlock]. 
 	node isMethod ifFalse: [ 
