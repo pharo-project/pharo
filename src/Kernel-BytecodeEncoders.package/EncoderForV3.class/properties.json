@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "ClementBera 6/10/2016 10:47",
-	"super" : "OpalBytecodeEncoder",
+	"super" : "BytecodeEncoder",
 	"category" : "Kernel-BytecodeEncoders",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "OpalEncoderForV3",
+	"name" : "EncoderForV3",
 	"type" : "normal"
 }

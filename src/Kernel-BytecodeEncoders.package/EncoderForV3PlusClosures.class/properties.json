@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "Object",
+	"super" : "EncoderForV3",
 	"category" : "Kernel-BytecodeEncoders",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "OpalEncoder",
+	"name" : "EncoderForV3PlusClosures",
 	"type" : "normal"
 }
