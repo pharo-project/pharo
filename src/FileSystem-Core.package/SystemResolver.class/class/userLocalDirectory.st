@@ -1,4 +1,4 @@
 accessing
 userLocalDirectory
 	^ UserLocalDirectory ifNil: [ 
-		FileLocator imageDirectory / self defaultLocalDirectoryName  ]
+		(FileLocator imageDirectory / self defaultLocalDirectoryName) resolve  ]
