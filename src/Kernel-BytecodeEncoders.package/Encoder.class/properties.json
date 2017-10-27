@@ -1,16 +1,11 @@
 {
 	"commentStamp" : "<historical>",
-	"super" : "OpalEncoder",
+	"super" : "Object",
 	"category" : "Kernel-BytecodeEncoders",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"stream",
-		"position",
-		"rootNode",
-		"blockExtentsToLocals"
-	],
-	"name" : "OpalBytecodeEncoder",
+	"instvars" : [ ],
+	"name" : "Encoder",
 	"type" : "normal"
 }
