@@ -6,7 +6,7 @@ selectedSymbol
 	self hasCursor ifTrue: [^ nil].
 	aString := self selection string copyWithoutAll:
 		{Character space.  Character cr.  Character tab}.
-	aString size = 0 ifTrue: [^ nil].
+	aString isEmpty ifTrue: [^ nil].
 	Symbol hasInterned: aString  ifTrue: [:sym | ^ sym].
 
 	^ nil

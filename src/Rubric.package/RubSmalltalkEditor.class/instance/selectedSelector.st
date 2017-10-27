@@ -3,6 +3,8 @@ selectedSelector
 	"Try to make a selector out of the current text selection"
 
 	| node |
+	
+	self hasSelection ifFalse: [ ^self findSelectorFromAST ].
 	node := RBParser parseFaultyExpression: self selection string.
 	node
 		nodesDo: [ :n | 

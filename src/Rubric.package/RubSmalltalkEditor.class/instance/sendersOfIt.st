@@ -3,7 +3,7 @@ sendersOfIt
 	"Open a senders browser on the selected selector"
 
 	| selectedSelector syst |
-	self lineSelectAndEmptyCheck: [ ^ self ].
+	"self lineSelectAndEmptyCheck: [ ^ self ]."
 	selectedSelector := self selectedSelector.
 	selectedSelector isNil
 		ifTrue: [ ^ textArea flash ].
