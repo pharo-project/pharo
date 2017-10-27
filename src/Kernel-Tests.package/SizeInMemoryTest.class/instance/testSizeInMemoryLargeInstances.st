@@ -1,7 +1,7 @@
 tests
 testSizeInMemoryLargeInstances
 
-	"Two words for the object header + a world per instance variable"
+	"64 bits for the object header + a world per instance variable"
 
 	self
 		assert: Smalltalk allClasses sizeInMemory = (self align64Bits: (self headerSize + (3 * Smalltalk wordSize)));
