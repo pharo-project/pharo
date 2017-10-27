@@ -3,7 +3,7 @@ testBlockReturning
 	
 	| aCompiledMethod bytecode index |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  OpalEncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'open
 	(self announcements at: self index ifAbsent: [ ^ self ]) 
 		open';

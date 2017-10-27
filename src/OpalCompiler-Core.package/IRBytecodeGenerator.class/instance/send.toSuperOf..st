@@ -1,7 +1,7 @@
 instructions
 send: selector toSuperOf: behavior
 
-	(encoder class = OpalEncoderForSistaV1 and: [ inBlock ])
+	(encoder class = EncoderForSistaV1 and: [ inBlock ])
 		ifTrue: [ 
 			| index nArgs |
 			behavior isTrait ifTrue: [ 
