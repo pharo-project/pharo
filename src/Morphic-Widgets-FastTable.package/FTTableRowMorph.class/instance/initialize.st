@@ -5,5 +5,6 @@ initialize
 		clipSubmorphs:true;
 		layoutPolicy: FTRowLayout new.
 		
-	selectionColor := self defaultColor
+	selectionColor := self defaultColor.
+	over := false
 	
