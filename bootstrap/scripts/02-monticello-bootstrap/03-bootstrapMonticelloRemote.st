@@ -1,7 +1,6 @@
 mcPackages := #(
  'Network-Kernel'
  'Network-MIME'
- 'Network-Url'
  'Network-Protocols'
 
  'MonticelloRemoteRepositories'
