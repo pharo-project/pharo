@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "JulienDelplanque 10/27/2017 20:17",
+	"super" : "CommandLineHandler",
+	"category" : "MetacelloCommandLineHandler-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MetacelloCommandLineHandler",
+	"type" : "normal"
+}

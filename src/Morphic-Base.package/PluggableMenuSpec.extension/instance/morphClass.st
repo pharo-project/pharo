@@ -1,0 +1,3 @@
+*Morphic-Base
+morphClass
+	^ MenuMorph

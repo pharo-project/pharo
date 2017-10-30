@@ -1,0 +1,25 @@
+{
+	"commentStamp" : "",
+	"super" : "SpecLayoutProperties",
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"cellInset",
+		"cellPositioning",
+		"cellSpacing",
+		"layoutInset",
+		"listCentering",
+		"listDirection",
+		"listSpacing",
+		"reverseTableCells",
+		"rubberBandCells",
+		"wrapCentering",
+		"wrapDirection",
+		"minCellSize",
+		"maxCellSize"
+	],
+	"name" : "SpecTableLayoutProperties",
+	"type" : "normal"
+}

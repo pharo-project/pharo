@@ -1,6 +1,7 @@
 instance creation
-owner: owner
+owner: anOwningPresenter
 
-	^ self new
-		owner: owner;
+	^ self basicNew
+		owner: anOwningPresenter;
+		initialize;
 		yourself

@@ -1,0 +1,4 @@
+factory
+buildWidget
+
+	^ SpecStubMultiColumnListView new

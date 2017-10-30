@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [
 		"ByteASCIISet",
-		"ByteUTF8Encoding"
+		"ByteUTF8Encoding",
+		"Default"
 	],
 	"instvars" : [ ],
 	"name" : "ZnUTF8Encoder",

@@ -4,8 +4,7 @@ readInto: string startingAt: offset count: requestedCount fromStream: stream
 	returning the number read, there could be less available when stream is atEnd"
 	"Overwritten for performance reasons"
 
-	| byteBuffer readCount |
-	byteBuffer := ByteArray new: requestedCount.
-	readCount := stream readInto: byteBuffer startingAt: 1 count: requestedCount.
-	string replaceFrom: offset to: offset + readCount - 1 with: byteBuffer startingAt: 1.
-	^ readCount
+	offset to: offset + requestedCount - 1 do: [ :index |
+		stream atEnd ifTrue: [ ^ index - offset ].  
+		string byteAt: index put: stream next ].
+	^ requestedCount

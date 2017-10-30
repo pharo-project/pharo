@@ -1,4 +1,7 @@
 accessing
 date: aDate
 
-	^ self dateModel text: aDate asString.
+	| dateString |
+	date := aDate.
+	dateString := self displayBlock value: date.
+	self dateModel text: dateString.

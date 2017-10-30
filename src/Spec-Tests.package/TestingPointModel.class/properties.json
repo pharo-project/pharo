@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PavelKrivanek 10/17/2017 15:00",
+	"super" : "Model",
+	"category" : "Spec-Tests-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"x",
+		"y"
+	],
+	"name" : "TestingPointModel",
+	"type" : "normal"
+}

@@ -5,9 +5,7 @@
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"stackPane"
-	],
+	"instvars" : [ ],
 	"name" : "GTSpecPreDebugWindow",
 	"type" : "normal"
 }

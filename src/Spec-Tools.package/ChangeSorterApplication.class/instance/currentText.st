@@ -1,4 +1,4 @@
 api
 currentText
 
-	 ^ textModel getText
+	 ^ textPresenter getText

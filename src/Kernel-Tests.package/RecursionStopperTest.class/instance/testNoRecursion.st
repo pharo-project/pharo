@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testNoRecursion
 
 	RecursionStopper during: [ value := value + 1 ].

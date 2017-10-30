@@ -3,7 +3,7 @@ testSetUp
 	
 	| aCompiledMethod bytecode index |
 	aCompiledMethod := OpalCompiler new
-									encoderClass:  OpalEncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'setUp
 												super setUp.
 												collection := OrderedCollection new';

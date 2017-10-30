@@ -1,4 +1,4 @@
-testing - lines
+tests - lines
 testLines
 	| sampleCRString sampleLFString sampleCRLFString sampleMixedString sampleMixedString2 |
 	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.

@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "PavelKrivanek 10/22/2017 10:05",
+	"super" : "AbstractFont",
+	"category" : "Fonts-Abstract",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"baseFont",
+		"substitutionCharacter",
+		"displaySelector"
+	],
+	"name" : "StubFixedFont",
+	"type" : "normal"
+}

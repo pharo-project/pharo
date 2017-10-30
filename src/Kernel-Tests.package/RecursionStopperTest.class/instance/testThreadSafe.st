@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testThreadSafe
 
 	self should: [ self threadSafe ] notTakeMoreThanMilliseconds: 10.

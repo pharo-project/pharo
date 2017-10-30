@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PabloTesone 10/18/2017 11:14",
+	"super" : "FileSystemError",
+	"category" : "FileSystem-Core-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "DirectoryIsNotEmpty",
+	"type" : "normal"
+}

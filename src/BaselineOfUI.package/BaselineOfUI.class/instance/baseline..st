@@ -31,14 +31,12 @@ baseline: spec
 		spec package: 'Spec-MorphicAdapters'.
 		spec package: 'Spec-PolyWidgets'.
 		spec package: 'Spec-Tools'.
+		spec package: 'Spec-StubAdapter'.
 		
 		spec package: 'Spec-Deprecated'.
 
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec package: 'Keymapping-Core'.
-		spec package: 'Keymapping-KeyCombinations'.
-		spec package: 'Keymapping-Pragmas'.
 		spec package: 'Keymapping-Settings'.
 		spec package: 'Keymapping-Tools-Spec'.
 

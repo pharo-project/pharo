@@ -2,5 +2,5 @@ api
 selectedItem
 
 	^ associationsWrapperToItem 
-		at: listModel selectedItem
+		at: listPresenter selectedItem
 		ifAbsent: [ nil ]

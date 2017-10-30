@@ -1,0 +1,3 @@
+table defaults
+cellSpacing
+	^cellSpacing

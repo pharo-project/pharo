@@ -1,8 +1,7 @@
 character classification
-isLetter: char 
-	| value codeCat |
-	value := char charCode.
-	value > (GeneralCategory size - 1)
-		ifTrue: [^ false].
-	^ (codeCat := GeneralCategory at: value + 1) >= Ll
-		and: [codeCat <= Lu]
+isLetter: char
+	| index |
+	index := char charCode + 1.
+	index > GeneralCategory size
+		ifTrue: [ ^ false ].
+	^ (GeneralCategory at: index) between: Ll and: Lu

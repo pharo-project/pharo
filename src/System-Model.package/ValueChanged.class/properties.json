@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "Announcement",
+	"category" : "System-Model",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"newValue",
+		"oldValue"
+	],
+	"name" : "ValueChanged",
+	"type" : "normal"
+}

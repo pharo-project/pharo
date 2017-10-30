@@ -1,4 +1,4 @@
-testing
+tests
 testReadFrom
 
 	self expectedBehavior do: [:association |

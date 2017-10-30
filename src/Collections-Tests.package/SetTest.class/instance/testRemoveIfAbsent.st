@@ -1,4 +1,4 @@
-some tests
+tests - some
 testRemoveIfAbsent
 	"self debug: #testRemoveIfAbsent"
 	

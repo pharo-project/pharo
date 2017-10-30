@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "StephaneDucasse 9/30/2014 20:21",
+	"super" : "Object",
+	"category" : "MenuRegistration",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"label",
+		"model",
+		"items",
+		"parentMenu"
+	],
+	"name" : "PluggableMenuSpec",
+	"type" : "normal"
+}

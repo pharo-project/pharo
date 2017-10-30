@@ -1,4 +1,4 @@
 api
 selectedSelector
 
-	 ^ methodsListModel selectedItem
+	 ^ methodsListPresenter selectedItem

@@ -12,13 +12,13 @@ wrap: item at: index
 	
 	checkBox whenActivatedDo: [ 
 		self addPicked: item.
-		listModel setSelectedItem: checkBox.
-		listModel takeKeyboardFocus ].
+		listPresenter setSelectedItem: checkBox.
+		listPresenter takeKeyboardFocus ].
 	
 	checkBox whenDeactivatedDo: [ 
 		self removePicked: item.
-		listModel setSelectedItem: checkBox.
-		listModel takeKeyboardFocus ].
+		listPresenter setSelectedItem: checkBox.
+		listPresenter takeKeyboardFocus ].
 	
 	checkBox 
 		state: self defaultValue;

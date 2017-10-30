@@ -1,7 +1,5 @@
 class initialization
 initialize
-	"Last forced update: 20161016"
+	"Last forced update: 20170829"
 	
-	self 
-		initializeExtensionsMap;
-		initializeTextSubTypeFragments
+	self initializeTextSubTypeFragments

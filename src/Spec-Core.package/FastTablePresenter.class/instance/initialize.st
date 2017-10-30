@@ -1,4 +1,4 @@
 initialization
 initialize
 	super initialize.
-	columns := {FTColumn new}
+	columns := {SpecFTColumn new}

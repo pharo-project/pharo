@@ -1,4 +1,4 @@
-testing
+tests
 testInstanceCreation
 	| set |
 	set := AnnouncementMockA , AnnouncementMockB.

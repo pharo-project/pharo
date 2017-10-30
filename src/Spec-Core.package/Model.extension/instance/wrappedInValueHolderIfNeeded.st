@@ -1,0 +1,4 @@
+*Spec-Core
+wrappedInValueHolderIfNeeded
+
+	^ self

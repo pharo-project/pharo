@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Spec-Layout",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"hResizing",
+		"vResizing",
+		"disableLayout"
+	],
+	"name" : "SpecLayoutProperties",
+	"type" : "normal"
+}
