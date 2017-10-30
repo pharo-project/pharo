@@ -1,4 +1,4 @@
-accessing
+tests - filling
 testFillingWayOutside
 	| f1 bb |
 	f1 := Form extent: 100 @ 100 depth: 1.

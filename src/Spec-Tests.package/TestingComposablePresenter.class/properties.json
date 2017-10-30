@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:35",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-Tests-Utils",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"list"
+	],
+	"name" : "TestingComposablePresenter",
+	"type" : "normal"
+}

@@ -1,1 +1,1 @@
-I am the adapter used to bridge a WindowModel and a SystemWindow
+I am the adapter used to bridge a WindowPresenter and a SystemWindow

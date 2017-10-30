@@ -1,4 +1,4 @@
-test - adding
+tests - adding
 testAddWithKeyAlreadyIn
 	| dictionary result association oldSize |
 	dictionary := self nonEmptyDict.

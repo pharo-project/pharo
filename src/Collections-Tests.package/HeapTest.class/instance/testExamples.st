@@ -1,4 +1,4 @@
-testing
+tests
 testExamples
 	self heapExample.
 	self heapSortExample

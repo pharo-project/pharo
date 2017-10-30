@@ -2,4 +2,4 @@ fill-styles-buttons
 radioButtonSelectedDisabledFillStyleFor: aRadioButton
 	"Return the selected disabled radio button fillStyle for the given button."
 	
-	^self checkboxButtonSelectedDisabledFillStyleFor: aRadioButton
+	^self radioButtonNormalFillStyleFor: aRadioButton

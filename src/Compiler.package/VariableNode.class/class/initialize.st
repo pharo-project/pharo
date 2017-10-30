@@ -1,7 +1,7 @@
 initialization
 initialize    "VariableNode initialize.  Decompiler initialize"
 	| encoder |
-	encoder := Encoder new.
+	encoder := LegacyEncoder new.
 	StdVariables := Dictionary new: 16.
 	encoder
 		fillDict: StdVariables

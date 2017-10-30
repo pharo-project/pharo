@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "CamilloBruni 2/22/2014 18:58",
 	"super" : "TestCase",
-	"category" : "ProfStef-Tests",
+	"category" : "ProfStef-Tests-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

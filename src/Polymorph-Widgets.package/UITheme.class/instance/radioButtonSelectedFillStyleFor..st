@@ -2,4 +2,4 @@ fill-styles-buttons
 radioButtonSelectedFillStyleFor: aRadioButton
 	"Return the selected radio button fillStyle for the given button."
 	
-	^self checkboxButtonSelectedFillStyleFor: aRadioButton
+	^(ImageFillStyle form: self radioButtonSelectedForm) origin: aRadioButton topLeft

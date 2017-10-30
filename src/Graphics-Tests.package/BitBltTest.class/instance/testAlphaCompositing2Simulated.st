@@ -1,4 +1,4 @@
-bugs
+tests - bugs
 testAlphaCompositing2Simulated
 	"self run: #testAlphaCompositing2Simulated"
 

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "EncoderForV3",
+	"category" : "Kernel-BytecodeEncoders",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "EncoderForV3PlusClosures",
+	"type" : "normal"
+}

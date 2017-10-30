@@ -12,6 +12,7 @@ baseline: spec
 
 		spec baseline: 'MorphicCore' with: [spec repository: repository].
 
+		spec package: 'System-Localization'.
 		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'Text-Core'.
 		spec package: 'System-Clipboard'.
@@ -30,12 +31,18 @@ baseline: spec
 		spec package: 'FuelCommandLineHandler'.
 		spec package: 'FuelSystem-FileRegistry'.
 
+		spec package: 'Fonts-Abstract'.
+
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
 		spec package: 'MenuRegistration'.
+
+		spec package: 'Keymapping-Core'.
+		spec package: 'Keymapping-KeyCombinations'.
+		spec package: 'Keymapping-Pragmas'.
 
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
@@ -66,6 +73,7 @@ baseline: spec
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings'.
 		spec package: 'System-Sound'.
+		
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
@@ -78,4 +86,5 @@ baseline: spec
 		spec package: 'System-OSEnvironments'.
 
 		spec package: 'StartupPreferences'.
+		spec package: 'System-Identification'.
 	].

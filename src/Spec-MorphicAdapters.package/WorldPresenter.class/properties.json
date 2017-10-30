@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "NicolaiHess 5/25/2016 21:39",
+	"super" : "WindowPresenter",
+	"category" : "Spec-MorphicAdapters",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"widget"
+	],
+	"name" : "WorldPresenter",
+	"type" : "normal"
+}

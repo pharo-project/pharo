@@ -1,4 +1,4 @@
 accessing
 valueChanged: oldValue to: newValue
 	
-	announcer announce: (ValueChanged oldValue: oldValue newValue: newValue)
+	self announcer announce: (ValueChanged oldValue: oldValue newValue: newValue)

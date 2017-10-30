@@ -1,4 +1,4 @@
-testing
+tests
 testBehaviorClassClassDescriptionMetaclassHierarchy
 	"self run: #testBehaviorClassClassDescriptionMetaclassHierarchy"
 	

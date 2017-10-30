@@ -1,4 +1,4 @@
 api
 setSelectedClass: aClass
 
-	 ^ classesListModel setSelectedItem: aClass
+	 ^ classesListPresenter setSelectedItem: aClass

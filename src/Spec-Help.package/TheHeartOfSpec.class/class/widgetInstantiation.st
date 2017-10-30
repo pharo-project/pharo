@@ -9,6 +9,6 @@ Through the use of an creation method or through the use of the instantiate: met
 for example newButton creates a button widget, and newList creates a list widget. 
 The complete list of available widget creation methods can be found in the class Composable-Model in the protocol widgets. 
 
-Considering the second option, to reuse any composite widgets, i.e. a subclass of ComposableModel, the widget needs to be initialized using the instantiate: method. For example, to reuse a Message-Browser widget, the code is:
+Considering the second option, to reuse any composite widgets, i.e. a subclass of ComposablePresenter, the widget needs to be initialized using the instantiate: method. For example, to reuse a Message-Browser widget, the code is:
 
 	self instantiate: MessageBrowser.'

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "SvenVanCaekenberghe 5/12/2015 14:21",
+	"super" : "NonInteractiveTranscript",
+	"category" : "Transcript-NonInteractive",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"date"
+	],
+	"name" : "DailyNonInteractiveTranscript",
+	"type" : "normal"
+}

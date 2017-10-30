@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 # A POSIX variable
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
@@ -143,7 +144,7 @@ echo "[Compiler] Installing compiler through Hermes"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
-${VM} "${COMPILER_IMAGE_NAME}.image" st st-cache/Multilingual.st st-cache/Deprecated70.st st-cache/FileSystem.st --no-source --quit --save
+${VM} "${COMPILER_IMAGE_NAME}.image" st st-cache/Multilingual.st st-cache/DeprecatedFileStream.st st-cache/FileSystem.st --no-source --quit --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 

@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 complexRecursionFirstCall
 
 	LocalRecursionStopper during: [ self complexRecursionLastCall ]

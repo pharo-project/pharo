@@ -1,12 +1,11 @@
 {
 	"commentStamp" : "PeterUhnak 3/5/2016 11:16",
-	"super" : "Object",
+	"super" : "Model",
 	"category" : "NewValueHolder",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"announcer",
 		"lock",
 		"value"
 	],

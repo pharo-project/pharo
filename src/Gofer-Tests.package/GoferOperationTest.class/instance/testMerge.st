@@ -1,4 +1,4 @@
-testing
+tests
 testMerge
 	| initial |
 	initial := gofer copy.

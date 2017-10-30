@@ -11,11 +11,13 @@ newTaskbarThumbnailIn: aThemedMorph for: aWindow
 		layoutInset: 8;
 		cellInset: 4;
 		addMorphBack: thumb;
-		addMorphBack: (self
-			buttonLabelForText: (aWindow labelString truncateWithElipsisTo: 50)).
+		addMorphBack: ((self
+			buttonLabelForText: (aWindow labelString truncateWithElipsisTo: 50))
+				color: Color white).
 	answer
 		extent: answer minExtent;
 		fillStyle: (self taskListFillStyleFor: answer);
 		borderStyle: (self taskbarThumbnailNormalBorderStyleFor: aWindow);
 		cornerStyle: (self taskbarThumbnailCornerStyleFor: answer).
 	^answer
+			

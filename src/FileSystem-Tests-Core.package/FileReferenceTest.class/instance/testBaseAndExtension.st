@@ -13,5 +13,5 @@ testBaseAndExtension
 	
 	"Note that the extension of a complex extension starts after the last extension delimiter"
 	complexExtension := filesystem * 'plonk' / 'griffle.taz.txt'.
-	self assert: complexExtension base equals: 'griffle'.
+	self assert: complexExtension base equals: 'griffle.taz'.
 	self assert: complexExtension extension equals: 'txt'.

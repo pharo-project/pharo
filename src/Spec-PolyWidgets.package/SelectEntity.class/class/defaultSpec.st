@@ -6,6 +6,6 @@ defaultSpec
 		newColumn: [ :col |
 				col newRow: [:row |
 					row add: #entityText;
-						add: #selectEntity width: ComposableModel toolbarHeight]
-					height: ComposableModel toolbarHeight];
+						add: #selectEntity width: ComposablePresenter toolbarHeight]
+					height: ComposablePresenter toolbarHeight];
 		yourself

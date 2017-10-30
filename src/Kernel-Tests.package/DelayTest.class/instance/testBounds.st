@@ -1,4 +1,4 @@
-testing
+tests
 testBounds
 	"self run: #testBounds"
 

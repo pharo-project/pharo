@@ -4,4 +4,4 @@ resizerGripNormalFillStyleFor: aResizer
 	For the moment, answer a transparent colour for no drawing,
 	non transparent to draw as normal."
 	
-	^Color white
+	^Color transparent

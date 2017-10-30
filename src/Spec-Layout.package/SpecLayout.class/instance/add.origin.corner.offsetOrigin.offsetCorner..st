@@ -4,6 +4,6 @@ add: aSpec origin: originPoint corner: cornerPoint offsetOrigin: ooPoint offsetC
 	commands add: (SpecLayoutAdd 
 							subwidget: aSpec
 							layoutFrame: 
-								((originPoint corner: cornerPoint) asLayoutFrame 
+								((originPoint corner: cornerPoint) asSpecLayoutFrame 
 									topLeftOffset: ooPoint;
 									bottomRightOffset: ocPoint ))

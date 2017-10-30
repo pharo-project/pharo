@@ -1,0 +1,21 @@
+{
+	"commentStamp" : "Spirita 7/28/2016 13:26",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-PolyWidgets-ListAndTree",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"defaultValueHolder",
+		"labelClickableHolder",
+		"pickedItemsHolder",
+		"wrapHolder",
+		"associationsItemToWrapper",
+		"associationsWrapperToItem",
+		"associationsIndexToWrapper",
+		"blockToPerformOnWrappers",
+		"listPresenter"
+	],
+	"name" : "PickListPresenter",
+	"type" : "normal"
+}

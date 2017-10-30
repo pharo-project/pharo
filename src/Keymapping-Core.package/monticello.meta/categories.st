@@ -1,2 +1,2 @@
 SystemOrganization addCategory: #'Keymapping-Core'!
-SystemOrganization addCategory: 'Keymapping-Core-Announcements'!
+SystemOrganization addCategory: #'Keymapping-Core-Announcements'!

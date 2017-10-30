@@ -5,4 +5,4 @@ utf8Encoded
 	
 	" 'Les élèves français' utf8Encoded "
 	
-	^ self encodeWith: #utf8
+	^ self encodeWith: ZnCharacterEncoder utf8

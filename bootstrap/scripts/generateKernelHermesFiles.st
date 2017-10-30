@@ -5,6 +5,7 @@ Transcript nextPutAll: '[Hermes] - Loading BaselineOfPharoBootstrap'; cr.
 repository := MCFileTreeRepository new
 	directory: 'src' asFileReference;
 	yourself.
+(repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.

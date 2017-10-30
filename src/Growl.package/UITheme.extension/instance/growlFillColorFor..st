@@ -1,3 +1,3 @@
 *growl
 growlFillColorFor: aGrowlMorph
-	^ self selectionColor
+	^ Color darkGray alpha: 0.5

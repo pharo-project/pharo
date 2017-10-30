@@ -1,4 +1,4 @@
-nodes
+tests - nodes
 testFindBestNodeForSelfNodeItsRBSelf
 	| node |
 

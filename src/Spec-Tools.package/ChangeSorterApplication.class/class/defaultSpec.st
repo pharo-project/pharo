@@ -6,10 +6,10 @@ defaultSpec
 		newColumn: [:c | 
 				c 
 					newRow: [:r | r 
-									add: #changesListModel;
+									add: #changesListPresenter;
 									addSplitter;
-									add: #classesListModel ];
+									add: #classesListPresenter ];
 					addSplitter;
-					add: #methodsListModel;
+					add: #methodsListPresenter;
 					addSplitter;
-					add: #textModel ].
+					add: #textPresenter ].

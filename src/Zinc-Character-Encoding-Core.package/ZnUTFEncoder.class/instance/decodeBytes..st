@@ -6,11 +6,11 @@ decodeBytes: bytes
 	| byteStream |
 	byteStream := bytes readStream.
 	^ String streamContents: [ :stream |
-		[ byteStream atEnd ] whileFalse: [ | char |
-			char := self nextFromStream: byteStream.
-			(char isOctetCharacter not and: [ stream originalContents isWideString not ])
+		[ byteStream atEnd ] whileFalse: [ | codePoint |
+			codePoint := self nextCodePointFromStream: byteStream.
+			(codePoint > 255 and: [ stream originalContents isWideString not ])
 				ifTrue: [ | wideString position |
 					position := stream position.
 					wideString := WideString from: stream originalContents.
 					stream on: wideString; setFrom: position + 1 to: position ].
-			stream nextPut: char ] ] 
+			stream nextPut: (Character value: codePoint) ] ] 

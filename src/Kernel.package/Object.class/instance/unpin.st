@@ -1,7 +1,7 @@
 pinning
 unpin
-	self
+	"self
 		deprecated: 'Please use #unpinInMemory instead'
-		transformWith: '`@receiver unpin' -> '`@receiver unpinInMemory'.
+		transformWith: '`@receiver unpin' -> '`@receiver unpinInMemory'."
 		
 	self unpinInMemory

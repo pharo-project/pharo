@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:23",
+	"super" : "ListPresenter",
+	"category" : "Spec-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MultiColumnListPresenter",
+	"type" : "normal"
+}

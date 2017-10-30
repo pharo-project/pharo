@@ -1,4 +1,4 @@
-testing-reference
+tests - reference
 testVersionShouldFindLatestVersion
 	| versionReference reference |
 	versionReference := GoferVersionReference name: 'GoferFoo-lr.2'.

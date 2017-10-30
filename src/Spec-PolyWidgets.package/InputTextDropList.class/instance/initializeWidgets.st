@@ -1,7 +1,7 @@
 initialization
 initializeWidgets
-	input := self instantiate: TextInputFieldModel.
-	dropList := self instantiate: DropListModel.
+	input := self instantiate: TextInputFieldPresenter.
+	dropList := self instantiate: DropListPresenter.
 	self focusOrder
 		add: input;
 		add: dropList

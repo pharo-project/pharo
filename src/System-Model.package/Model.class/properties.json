@@ -7,7 +7,7 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"dependents",
-		"announceur"
+		"announcer"
 	],
 	"name" : "Model",
 	"type" : "normal"
