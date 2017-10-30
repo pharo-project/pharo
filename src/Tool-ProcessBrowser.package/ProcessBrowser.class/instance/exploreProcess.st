@@ -1,3 +1,3 @@
 process list
 exploreProcess
-	selectedProcess explore
+	selectedProcess inspect

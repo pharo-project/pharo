@@ -1,4 +1,4 @@
 accessing
 browseValidationResults
 
-	self validate explore
+	self validate inspect

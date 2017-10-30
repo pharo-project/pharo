@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "DenisKudriashov 10/27/2017 13:25",
+	"super" : "SortFunction",
+	"category" : "SortFunctions-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"propertyValuable",
+		"undefinedDirection"
+	],
+	"name" : "SortByPropertyFunction",
+	"type" : "normal"
+}

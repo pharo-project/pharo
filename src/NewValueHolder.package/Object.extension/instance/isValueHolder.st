@@ -1,0 +1,4 @@
+*NewValueHolder
+isValueHolder
+
+	^ false

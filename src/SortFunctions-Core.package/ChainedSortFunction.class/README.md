@@ -1,4 +1,4 @@
-I add to my parent the idea of a "next" function to use when two objects are equal by my particular collator.
+I add to my parent the idea of a "next" function to use when two objects are equal by my primary collator.
 
 Usage
 
@@ -13,5 +13,5 @@ customers sort: #lastName ascending, #firstName, #age descending
 (note the missing ascending on the #firstName argument)
 
 Instance Variables
-	next	<SortFunction>	the next SortFunction to evaluate in the event my evaluator results in equal values.
-
+	startFunction	<SortFunction> the primary SortFunction to collate given objects
+	next	Function	<SortFunction>	the next SortFunction to evaluate in the event primary collation results are equal values

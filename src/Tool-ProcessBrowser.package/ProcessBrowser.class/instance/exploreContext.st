@@ -1,3 +1,3 @@
 stack list
 exploreContext
-	selectedContext explore
+	selectedContext inspect

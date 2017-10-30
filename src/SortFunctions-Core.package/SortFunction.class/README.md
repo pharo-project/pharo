@@ -26,7 +26,10 @@ Using #undefinedFirst and #undefinedLast it is possible to deal with nil values,
 #(a nil z b) sorted: #value ascending undefinedFirst.
 #(a nil z b) sorted: #value ascending undefinedLast.
 
-Instance Variables
-	collator	<BlockClosure>	This is the collation function that must return a -1, 0, or 1. It is usually composed by an initialization method such as sendMessage: or monadicBlock:, but may be set directly.
-	direction	<SmallInteger>	1 for ascending, -1 for descending
+Different scenarios are implemented by my different subclasses:
+- SortByPropertyFunction implement property comparison by selector or block
+- PluggableSortFunction represent two args collator block
+- and ChainedSortFunction implements composition of collators created by comma message
 
+Instance Variables
+	direction	<SmallInteger>	1 for ascending, -1 for descending

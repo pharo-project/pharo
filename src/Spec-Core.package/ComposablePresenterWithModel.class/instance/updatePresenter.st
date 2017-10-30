@@ -1,0 +1,4 @@
+updating
+updatePresenter
+
+	self modelChanged 

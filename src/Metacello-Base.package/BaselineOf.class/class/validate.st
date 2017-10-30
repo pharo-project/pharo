@@ -12,4 +12,4 @@ validate
   ^ ((Smalltalk at: #'MetacelloToolBox')
     validateBaseline: self
     debug: #()
-    recurse: false) explore
+    recurse: false) inspect

@@ -1,5 +1,5 @@
 fill-styles-buttons
 checkboxButtonNormalFillStyleFor: aCheckboxButton
-	"Return the normal checkbox button fillStyle for the given button."
+	"Return the normal checkbox button fillStyle for the given checkbox button."
 	
-	^Color white
+	^(ImageFillStyle form: self checkboxForm) origin: aCheckboxButton topLeft

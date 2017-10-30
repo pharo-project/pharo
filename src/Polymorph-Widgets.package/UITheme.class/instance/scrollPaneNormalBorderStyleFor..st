@@ -1,7 +1,7 @@
 border-styles
 scrollPaneNormalBorderStyleFor: aScrollPane
-	"Return the normal borderStyle for the given scroll pane"
+	"Return the normal borderStyle for the given scroll pane."
 
-	^BorderStyle inset
+	^BorderStyle simple
 		width: 1;
 		baseColor: aScrollPane paneColor
