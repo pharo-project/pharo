@@ -1,3 +1,3 @@
 accessing
 fontToUse
-	^ UITheme new textFont
+	^ UITheme current textFont
