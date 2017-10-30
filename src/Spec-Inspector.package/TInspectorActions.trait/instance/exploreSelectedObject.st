@@ -1,3 +1,3 @@
 actions
 exploreSelectedObject
-	self selectedObjectDo: [ :anObject | anObject explore ].
+	self selectedObjectDo: [ :anObject | anObject inspect ].

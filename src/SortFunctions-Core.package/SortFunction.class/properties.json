@@ -1,14 +1,12 @@
 {
-	"commentStamp" : "SvenVanCaekenberghe 3/2/2017 13:00",
+	"commentStamp" : "DenisKudriashov 10/27/2017 13:14",
 	"super" : "Object",
 	"category" : "SortFunctions-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"direction",
-		"collator",
-		"undefinedDirection"
+		"direction"
 	],
 	"name" : "SortFunction",
 	"type" : "normal"

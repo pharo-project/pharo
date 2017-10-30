@@ -15,10 +15,7 @@ pharoScriptPresentationExample
 						selectionAct: [ :workspace :page | workspace evaluateSelection ] on: $d entitled: 'Do it';
 						selectionAct: [ :workspace :page | workspace evaluateSelectionAndDo: [ :result | result inspect ] ]
 							on: $i
-							entitled: 'Inspect it';
-						selectionAct: [ :workspace :page | workspace evaluateSelectionAndDo: [ :result | result explore ] ]
-							on: $e
-							entitled: 'Explore it' ].
+							entitled: 'Inspect it'].
 	browser transmit
 		to: #r2;
 		andShow: [ :aComposite | 

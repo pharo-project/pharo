@@ -13,5 +13,5 @@ pharoScript
 		a text 
 			title: 'Evaluated result';
 			display: [:code | [Smalltalk compiler evaluate: code ] on: Error do: ['Error']];
-			act: [:text | text displayValue explore] icon: GLMUIThemeExtraIcons glamorousInspect entitled: 'Explore' ].
+			act: [:text | text displayValue inspect] icon: GLMUIThemeExtraIcons glamorousInspect entitled: 'Inspect' ].
 	^ browser

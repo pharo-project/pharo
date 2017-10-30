@@ -1,3 +1,3 @@
 action
 exploreValue
-	^ self value explore
+	^ self value inspect

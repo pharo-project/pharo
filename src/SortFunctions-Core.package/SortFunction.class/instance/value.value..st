@@ -1,7 +1,8 @@
 evaluating
-value: anObject value: bObject
-	"Masquerade as a two argument block, used by many of the sorting APIs, by returning whether anObject should be placed before bObject or not."
+value: anObject1 value: anObject2
+	"Masquerade as a two argument block, used by many of the sorting APIs, 
+	by returning whether anObject1 should be placed before anObject2 or not"
 
 	| result |
-	result := (collator value: anObject value: bObject) * direction.
+	result := self collate: anObject1 with: anObject2.
 	^result <= 0
