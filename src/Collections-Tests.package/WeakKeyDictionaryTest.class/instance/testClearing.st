@@ -1,4 +1,4 @@
-testing
+tests
 testClearing
 	keys := nil.
 	dict at: self put: nil.

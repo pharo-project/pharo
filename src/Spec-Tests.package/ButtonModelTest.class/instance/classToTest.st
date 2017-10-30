@@ -1,3 +1,0 @@
-running
-classToTest
-^ ButtonModel 

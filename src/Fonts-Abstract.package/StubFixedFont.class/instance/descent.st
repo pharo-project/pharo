@@ -1,0 +1,3 @@
+accessing
+descent
+	^ 4

@@ -1,4 +1,4 @@
-testing
+tests
 testNewWithSize
 	|array|
 	array := Array new: 5.

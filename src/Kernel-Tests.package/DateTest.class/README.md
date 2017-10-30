@@ -1,1 +1,1 @@
-This is the unit test for the class Date. 
+SUnit tests for class Date

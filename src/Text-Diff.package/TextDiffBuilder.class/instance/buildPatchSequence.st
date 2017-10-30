@@ -5,8 +5,8 @@ buildPatchSequence
 	^Array streamContents: [ :stream |
 		self 
 			patchSequenceDoIfMatch: [ :string |
-				stream nextPut: #match -> (string copyWithout: Character cr) ]
+				stream nextPut: #match -> string ]
 			ifInsert: [ :string | 
-				stream nextPut: #insert -> (string copyWithout: Character cr) ]
+				stream nextPut: #insert -> string ]
 			ifRemove: [ :string | 
-				stream nextPut: #remove -> (string copyWithout: Character cr) ] ]
+				stream nextPut: #remove -> string ] ]

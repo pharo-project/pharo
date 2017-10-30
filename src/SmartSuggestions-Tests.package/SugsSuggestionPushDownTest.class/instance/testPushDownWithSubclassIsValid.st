@@ -1,4 +1,4 @@
-method
+tests - methods
 testPushDownWithSubclassIsValid
 	| suggestion subclass |
 

@@ -1,5 +1,8 @@
+set -x
+set -e
+
 wget -O - get.pharo.org/vm60 | bash
-wget https://github.com/guillep/PharoBootstrap/releases/download/v1.1.1/bootstrapImage.zip
+wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2/bootstrapImage.zip
 unzip bootstrapImage.zip
 
 ./pharo Pharo.image ./bootstrap/scripts/prepare_image.st --save --quit

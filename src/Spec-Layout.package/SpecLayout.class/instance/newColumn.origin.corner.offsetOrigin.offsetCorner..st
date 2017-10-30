@@ -7,6 +7,6 @@ newColumn: aBlock origin: originPoint corner: cornerPoint offsetOrigin: ooPoint 
 	
 	commands add: (SpecLayoutAddColumn
 							block: block
-							layoutFrame: ((originPoint corner: cornerPoint) asLayoutFrame
+							layoutFrame: ((originPoint corner: cornerPoint) asSpecLayoutFrame
 										topLeftOffset: ooPoint;
 										bottomRightOffset: ocPoint)).

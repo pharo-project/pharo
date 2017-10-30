@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "alain.plantec 10/20/2009 11:34",
 	"super" : "Announcement",
-	"category" : "PragmaCollector",
+	"category" : "PragmaCollector-Announcements",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

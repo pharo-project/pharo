@@ -1,0 +1,4 @@
+api
+selectedIndex
+
+	^ listPresenter selectedIndex

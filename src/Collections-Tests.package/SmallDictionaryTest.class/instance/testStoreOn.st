@@ -1,4 +1,4 @@
-test - printing
+tests - printing
 testStoreOn
 	"self debug: #testStoreOn"
 	

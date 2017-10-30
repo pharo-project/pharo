@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 14:06",
+	"super" : "ComposablePresenter",
+	"category" : "Spec-PolyWidgets-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"dateLabel",
+		"displayBlockHolder",
+		"chooseDateButton",
+		"dateModel",
+		"date"
+	],
+	"name" : "DatePresenter",
+	"type" : "normal"
+}

@@ -1,5 +1,5 @@
 initialization widgets
-initializeButtonWidget: aButtonModel forAction: aDebuggingAction
+initializeButtonWidget: aButtonPresenter forAction: aDebuggingAction
 
-	aButtonModel 
+	aButtonPresenter
 		debugAction: aDebuggingAction

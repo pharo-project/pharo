@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Komitter-UI",
 	"classinstvars" : [
 		"manageRemotesIcon"

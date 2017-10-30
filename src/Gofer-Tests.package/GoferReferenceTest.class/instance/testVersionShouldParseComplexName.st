@@ -1,4 +1,4 @@
-testing
+tests
 testVersionShouldParseComplexName
 	| queryReference |
 	queryReference := GoferVersionReference name: 'Seaside2.8b5'.

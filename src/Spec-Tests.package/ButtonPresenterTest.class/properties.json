@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 2/5/2014 09:21",
+	"super" : "SpecTestCase",
+	"category" : "Spec-Tests-Core-Widgets",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ButtonPresenterTest",
+	"type" : "normal"
+}

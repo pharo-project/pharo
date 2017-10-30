@@ -1,1 +1,1 @@
-I am the adapter used to bridge an IconListModel and a PluggableIconListMorph
+I am the adapter used to bridge an IconListPresenter and a PluggableIconListMorph

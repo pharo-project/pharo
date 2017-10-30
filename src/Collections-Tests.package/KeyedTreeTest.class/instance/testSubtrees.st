@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testSubtrees
 	"Test the subtrees method for success and failure modes."
 

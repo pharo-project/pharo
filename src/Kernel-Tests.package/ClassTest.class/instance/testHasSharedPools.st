@@ -1,4 +1,4 @@
-testing - access
+tests - access
 testHasSharedPools
 	"self run: #testHasSharedPools"
 

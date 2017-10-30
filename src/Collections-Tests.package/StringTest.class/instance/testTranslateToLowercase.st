@@ -1,4 +1,4 @@
-testing
+tests
 testTranslateToLowercase
 
 self assert: ('test this string' translateToLowercase) = 'test this string'.

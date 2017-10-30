@@ -1,3 +1,3 @@
 *growl
 growlBorderColorFor: aGrowlMorph
-	^ Color transparent 
+	^ Color white alpha: 0.5

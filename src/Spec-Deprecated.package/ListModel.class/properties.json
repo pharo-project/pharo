@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ListPresenter",
+	"category" : "Spec-Deprecated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ListModel",
+	"type" : "normal"
+}

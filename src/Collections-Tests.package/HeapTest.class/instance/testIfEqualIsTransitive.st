@@ -1,4 +1,4 @@
-testing
+tests
 testIfEqualIsTransitive
 	"This is http://bugs.squeak.org/view.php?id=6943"
 

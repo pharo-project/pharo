@@ -1,4 +1,4 @@
-testing - converting
+tests - converting
 testTrimRight
 	self assert: '' trimRight = ''.
 	self assert: ' ' trimRight = ''.

@@ -1,4 +1,4 @@
-testing
+tests
 testAtPutFloat
 
 	pointArray at: 2 put: 1.2 @ 5.5.

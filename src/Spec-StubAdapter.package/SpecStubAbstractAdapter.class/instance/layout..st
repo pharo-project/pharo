@@ -1,0 +1,2 @@
+protocol
+layout: aLayout

@@ -1,4 +1,4 @@
-some tests
+tests - some
 testIntersection 
 	| newFull col |
 	full add: 3; add: 2.

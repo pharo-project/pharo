@@ -1,4 +1,4 @@
-testing
+tests - unsubscribing
 testUnsubscribeSend
 	| announcement receiver |
 	announcer when: AnnouncementMockA send: #value: to: (receiver := [ :ann | announcement := ann ]).

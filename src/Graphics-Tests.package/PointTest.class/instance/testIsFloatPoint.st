@@ -1,4 +1,4 @@
-tests-truncation and roundoff
+tests - truncation and roundoff
 testIsFloatPoint
 
 	self deny: (1 @ 1) isFloatPoint.

@@ -1,4 +1,4 @@
-tests-rectangle functions
+tests - rectangle functions
 testSideNearestTo
 	"rectangular area of screen implies that negalive coordinates not allowed"
 	| rectangle |

@@ -3,7 +3,7 @@ testToDoInsideTempNotInlined
 	"Some instructions are the same but we have a different number at he begining, and the storeTemp and popIntoTemp issue"
 	| aCompiledMethod bytecode index |
 	aCompiledMethod := OpalCompiler new
-										encoderClass:  OpalEncoderForV3PlusClosures; 
+										encoderClass:  EncoderForV3PlusClosures; 
 										source: 'testToDoInsideTempNotInlined
 														| block |
 														block := [ :index | 

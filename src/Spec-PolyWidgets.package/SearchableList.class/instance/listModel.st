@@ -1,3 +1,0 @@
-accessing
-listModel
-	^ listModel

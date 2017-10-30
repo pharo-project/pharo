@@ -5,7 +5,7 @@ updateClassesList
 	sel := self selectedClass.
 	
 	self selectedChangeSet
-			ifNil: [ classesListModel items: {} ]
-			ifNotNil: [:change |	classesListModel items: (change changedClasses sort: [:a :b | a name < b name ])].
+			ifNil: [ classesListPresenter items: {} ]
+			ifNotNil: [:change |	classesListPresenter items: (change changedClasses sort: [:a :b | a name < b name ])].
 				
-	classesListModel setSelectedItem: sel
+	classesListPresenter setSelectedItem: sel

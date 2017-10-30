@@ -1,4 +1,4 @@
-accessing
+tests
 testReadWriteStreamNextNBug
 	| aStream |
 	aStream := ReadWriteStream on: String new.

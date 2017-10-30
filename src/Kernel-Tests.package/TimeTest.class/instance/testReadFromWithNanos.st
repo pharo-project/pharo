@@ -1,4 +1,4 @@
-tests input
+tests - input
 testReadFromWithNanos
 	"self debug: #testReadFromWithNanos"
 	

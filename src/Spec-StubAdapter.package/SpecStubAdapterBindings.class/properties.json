@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 10/21/2017 23:17",
+	"super" : "SpecAdapterBindings",
+	"category" : "Spec-StubAdapter-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SpecStubAdapterBindings",
+	"type" : "normal"
+}

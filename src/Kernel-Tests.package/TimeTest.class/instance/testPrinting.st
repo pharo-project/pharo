@@ -1,4 +1,4 @@
-tests printing
+tests - printing
 testPrinting
 
 	self	

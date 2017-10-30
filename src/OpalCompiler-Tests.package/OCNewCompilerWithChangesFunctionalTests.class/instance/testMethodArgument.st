@@ -3,7 +3,7 @@ testMethodArgument
 	
 	| aCompiledMethod bytecode index |
 	aCompiledMethod := OpalCompiler new 
-											encoderClass:  OpalEncoderForV3PlusClosures; 
+											encoderClass:  EncoderForV3PlusClosures; 
 											source: 'testMethodArgument
 															| temp block |
 															temp := 0.

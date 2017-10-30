@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "Spirita 7/28/2016 15:11",
-	"super" : "ComposableModel",
+	"super" : "ComposablePresenter",
 	"category" : "Spec-Examples-Morphic",
 	"classinstvars" : [ ],
 	"pools" : [ ],

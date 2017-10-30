@@ -1,0 +1,1 @@
+A testing model for testing of the class ComposablePresenterWithModel

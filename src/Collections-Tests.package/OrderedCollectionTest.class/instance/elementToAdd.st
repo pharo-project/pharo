@@ -1,3 +1,3 @@
-test - copy
+tests - copy
 elementToAdd
 	^ 55

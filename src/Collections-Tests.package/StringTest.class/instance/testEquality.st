@@ -1,4 +1,4 @@
-testing
+tests
 testEquality
 	"self run: #testEquality"
 	
