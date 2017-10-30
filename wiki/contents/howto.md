@@ -2,6 +2,7 @@
 - [How to install Pharo VM on Linux](https://github.com/SquareBracketAssociates/PharoWiki/blob/master/contents/pharolinux.md)
 - [How to contribute to the development of Pharo](https://github.com/guillep/PharoIntegrationProcess/wiki/Pharo-Development-Process)
 - [How to document your project using Pillar](https://ci.inria.fr/pharo-contribution/job/EnterprisePharoBook/lastSuccessfulBuild/artifact/book-result/PillarChap/Pillar.html)
+- [Find the Latest VM for Your Platform](http://files.pharo.org/get-files/)
 
 ## Cookbook 
 - [World Menu Editing](https://stackoverflow.com/questions/43021482/how-can-i-edit-the-worldmenu-in-pharo)
