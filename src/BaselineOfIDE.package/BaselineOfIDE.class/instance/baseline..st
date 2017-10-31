@@ -176,6 +176,7 @@ baseline: spec
 		spec package: 'Collections-DoubleLinkedList-Tests'.
 		spec package: 'Compression-Tests'.
 		spec package: 'ConfigurationCommandLineHandler-Tests'.
+		spec package: 'MetacelloCommandLineHander-Tests'.
 		spec package: 'ContributingToTheCatalogHelp'.
 		spec package: 'Debugger-Tests'.
 		spec package: 'EmbeddedFreeType-Tests'.
