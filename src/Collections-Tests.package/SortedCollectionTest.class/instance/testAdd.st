@@ -1,4 +1,4 @@
-basic
+tests - basic
 testAdd
 	"self run: #testAdd"
 	"self debug: #testAdd"

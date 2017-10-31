@@ -1,4 +1,4 @@
-testing - instance creation
+tests - instance creation
 testLoremIpsum2048
 	| fillerText |
 	fillerText := String loremIpsum: 2048.

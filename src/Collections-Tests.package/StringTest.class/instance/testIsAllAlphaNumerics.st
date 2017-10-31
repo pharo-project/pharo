@@ -1,4 +1,4 @@
-testing
+tests
 testIsAllAlphaNumerics
 
 self assert: ('123dwef890' isAllAlphaNumerics).

@@ -17,12 +17,13 @@ mcPackages := #(
  'MonticelloFileTree-Core'
  'Metacello-MC'
  'Metacello-PharoCommonPlatform'
- 'Metacello-Platform'
- 'Metacello-ToolBox'
  'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
  'Metacello-GitBasedRepository'
  'Metacello-GitHub'
+ 'Metacello-Platform'
+ 'Metacello-ToolBox'
+ 'Metacello-PharoExtensions'
  ).
 
 MCMethodDefinition initializersEnabled: false.

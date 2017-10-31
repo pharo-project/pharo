@@ -1,4 +1,4 @@
-methods
+tests - methods
 testRemoveArgsWithArgsItsValid
 	| suggestion |
 

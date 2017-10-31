@@ -1,3 +1,3 @@
 SystemOrganization addCategory: #NautilusRefactoring!
-SystemOrganization addCategory: 'NautilusRefactoring-Tests'!
-SystemOrganization addCategory: 'NautilusRefactoring-Utilities'!
+SystemOrganization addCategory: #'NautilusRefactoring-Tests'!
+SystemOrganization addCategory: #'NautilusRefactoring-Utilities'!

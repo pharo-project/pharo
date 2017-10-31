@@ -4,7 +4,7 @@ baselineIssue215: spec
   spec
     for: #'common'
     do: [ 
-      spec description: self name , '>>baselineGithubReferenceV:'.
+      spec description: self className , '>>baselineGithubReferenceV:'.
       spec
         baseline: 'External'
           with: [ 

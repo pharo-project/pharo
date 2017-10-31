@@ -1,4 +1,4 @@
-testing - internet
+tests - internet
 testWithUnixLineEndings
 
 	{

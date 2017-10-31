@@ -1,0 +1,25 @@
+{
+	"commentStamp" : "PavelKrivanek 10/11/2017 13:39",
+	"super" : "Model",
+	"category" : "Spec-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"focusOrder",
+		"owner",
+		"window",
+		"spec",
+		"extentHolder",
+		"needRebuild",
+		"additionalKeyBindings",
+		"keyStrokesForNextFocusHolder",
+		"keyStrokesForPreviousFocusHolder",
+		"windowIcon",
+		"aboutText",
+		"askOkToClose",
+		"titleHolder"
+	],
+	"name" : "ComposablePresenter",
+	"type" : "normal"
+}

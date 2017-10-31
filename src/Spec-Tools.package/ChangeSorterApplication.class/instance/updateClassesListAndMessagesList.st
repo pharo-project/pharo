@@ -1,8 +1,8 @@
 api
 updateClassesListAndMessagesList
 	| sel |
-	sel := methodsListModel selectedItem.
+	sel := methodsListPresenter selectedItem.
 	
 	self updateClassesList.
-	methodsListModel setSelectedItem: sel.
+	methodsListPresenter setSelectedItem: sel.
 	self updateMessagesList.

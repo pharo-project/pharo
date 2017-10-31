@@ -16,7 +16,7 @@ codeMethod: selector block: block tempVars: vars primitive: primitive class: cla
 		precedence: selector precedence
 		temporaries: temporaries
 		block: block
-		encoder: (Encoder new initScopeAndLiteralTables
+		encoder: (LegacyEncoder new initScopeAndLiteralTables
 					temps: tempVars
 					literals: literalValues
 					class: class)

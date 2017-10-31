@@ -24,7 +24,7 @@ baseline: spec
 		spec package: 'Kernel'.
 		spec package: 'Kernel-BytecodeEncoders'.
 		spec package: 'Network-UUID'.
-		spec package: 'NonInteractiveTranscript'.
+		spec package: 'Transcript-NonInteractive'.
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'RPackage-Core'.
 		spec package: 'Random-Core'.
@@ -44,9 +44,12 @@ baseline: spec
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
 		spec package: 'Traits'.
-		spec package: 'Transcript'.
+		spec package: 'Transcript-Core'.
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
+		
+		spec package: 'FFI-Kernel'.
+		spec package: 'FFI-Pools'.
 		
 		spec package: 'CodeExport'.
 		spec package: 'CodeImport'.
@@ -55,7 +58,7 @@ baseline: spec
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
-		spec package: 'Deprecated70'.
+		spec package: 'DeprecatedFileStream'.
 
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
@@ -64,6 +67,9 @@ baseline: spec
 		
 
 		spec group: 'KernelGroup' with: {
+			'FFI-Kernel'.
+			'FFI-Pools'.
+		
 			'AST-Core'.
 			'Announcements-Core'.
 			'Colors'.
@@ -85,7 +91,7 @@ baseline: spec
 			'Kernel'.
 			'Kernel-BytecodeEncoders'.
 			'Network-UUID'.
-			'NonInteractiveTranscript'.
+			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
 			'RPackage-Core'.
 			'Random-Core'.
@@ -105,7 +111,7 @@ baseline: spec
 			'System-Sources'.
 			'System-Support'.
 			'Traits'.
-			'Transcript'.
+			'Transcript-Core'.
 			'UIManager'.
 			'Zinc-Character-Encoding-Core'.
 			'InitializePackagesCommandLineHandler' }.
@@ -121,7 +127,7 @@ baseline: spec
 		spec group: 'FileSystemGroup' with: {
 			'FileSystem-Core'.
 			'FileSystem-Disk'.
-			'Deprecated70' }.
+			'DeprecatedFileStream' }.
 
 		spec group: 'SUnitGroup' with: {
 			'SUnit-Core'.

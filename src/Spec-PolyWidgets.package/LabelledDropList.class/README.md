@@ -1,4 +1,4 @@
-I am a LabelledContainer specialized to manage a DropListModel.
+I am a LabelledContainer specialized to manage a DropListPresenter.
 See LabelledContainer
 
 self example

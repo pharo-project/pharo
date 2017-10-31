@@ -1,3 +1,3 @@
 *GT-InspectorExtensions-Core
 gtAnnouncer
-	^ announcer
+	^ self announcer

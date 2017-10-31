@@ -1,4 +1,4 @@
 api
 changeSets
 
-	^ self changesListModel listItems
+	^ self changesListPresenter listItems

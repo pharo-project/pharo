@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "StephaneDucasse 3/7/2014 10:41",
+	"super" : "SpecWindow",
+	"category" : "Spec-MorphicAdapters-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TickingSpecWindow",
+	"type" : "normal"
+}

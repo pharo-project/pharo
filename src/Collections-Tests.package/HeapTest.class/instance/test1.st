@@ -1,4 +1,4 @@
-testing
+tests
 test1
 	| data |
 

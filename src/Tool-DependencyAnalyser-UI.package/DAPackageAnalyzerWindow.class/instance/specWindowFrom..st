@@ -1,6 +1,6 @@
 building
 specWindowFrom: aSpec
-	| windowModel specWindow |
-	windowModel := aSpec window.
-	specWindow := windowModel window.
+	| windowPresenter specWindow |
+	windowPresenter := aSpec window.
+	specWindow := windowPresenter window.
 	^ specWindow

@@ -1,4 +1,4 @@
-testing
+tests
 testContention1
 	"here is a test case that breaks the standard SharedQueue from Squeak 3.8"
 

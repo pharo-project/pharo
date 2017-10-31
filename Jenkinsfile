@@ -128,8 +128,12 @@ Check for latest built images in http://files.pharo.org:
 
 try{
 
+if( env.BRANCH_NAME == "development" ) {
+    properties([disableConcurrentBuilds()])
+}
+	
 node('unix') {
-	cleanWs()
+ 	cleanWs()
 	def builders = [:]
 	def architectures = ['32']//, '64']
 	for (arch in architectures) {
@@ -143,7 +147,7 @@ node('unix') {
 		stage ("Fetch Requirements-${architecture}") {	
 			checkout scm
 			shell 'wget -O - get.pharo.org/vm60 | bash	'
-			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.1.1/bootstrapImage.zip'
+			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2/bootstrapImage.zip'
 			shell 'unzip bootstrapImage.zip'
 			shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
 	    }

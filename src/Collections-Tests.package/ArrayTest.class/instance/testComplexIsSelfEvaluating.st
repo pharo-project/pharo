@@ -1,4 +1,4 @@
-testing
+tests
 testComplexIsSelfEvaluating
 	"self run: #testComplexIsSelfEvaluating"
 

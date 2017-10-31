@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testCopy
 	"Test the copy method for success and failure modes."
 

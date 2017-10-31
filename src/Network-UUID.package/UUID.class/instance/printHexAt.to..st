@@ -1,5 +1,7 @@
 private
 printHexAt: index to: aStream
+	"Print the hex value of my byte at index to aStream"
+	
 	| map v |
 	map := '0123456789abcdef'.
 	v := self at: index.

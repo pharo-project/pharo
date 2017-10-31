@@ -1,4 +1,4 @@
-testing
+tests
 testNumericSuffix
 
 self assert: ('abc98' numericSuffix) = 98.

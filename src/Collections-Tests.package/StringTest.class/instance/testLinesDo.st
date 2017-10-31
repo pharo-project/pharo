@@ -1,4 +1,4 @@
-testing - lines
+tests - lines
 testLinesDo
 	| sampleCRString sampleLFString sampleCRLFString lines |
 	sampleCRString := 'Fred', String cr , 'the' , String cr , 'Bear'.

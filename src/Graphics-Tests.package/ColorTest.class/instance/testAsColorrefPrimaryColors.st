@@ -1,4 +1,4 @@
-testing
+tests
 testAsColorrefPrimaryColors
 "issue 13784 Color>>#asColorref ignores blue"
 	self assertColorrefFor: Color black equals: 16r000000;

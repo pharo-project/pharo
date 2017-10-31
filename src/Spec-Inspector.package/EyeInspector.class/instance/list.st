@@ -1,7 +1,7 @@
 accessing
 list
 	^ list ifNil: [ 
-		list := self instantiate: FastTableModel.
+		list := self instantiate: FastTablePresenter.
 		list 
 			handlesDoubleClick: true;
 			whenSelectedItemChanged: [ :item |

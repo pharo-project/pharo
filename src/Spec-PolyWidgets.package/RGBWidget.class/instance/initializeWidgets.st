@@ -1,6 +1,6 @@
 initialization
 initializeWidgets
-	preview := self instantiate: ImageModel.
+	preview := self instantiate: ImagePresenter.
 	sliders := self instantiate: RGBSliders.
 	preview image: (Form extent: 30 @ 30 depth: 32).
 	preview image: self makeNewForm.

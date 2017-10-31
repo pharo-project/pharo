@@ -1,10 +1,8 @@
 label-styles
 buttonLabelForText: aTextOrString
 	"Answer the label to use for the given text."
-
 	^aTextOrString isString
-		ifTrue: [(LabelMorph contents: aTextOrString)
-					disabledStyle: self disabledItemStyle]
+		ifTrue: [(LabelMorph contents: aTextOrString) color: self textColor ]
 		ifFalse: [|t|
 				t := TextMorph new newContents: aTextOrString.
 				t

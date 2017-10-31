@@ -1,1 +1,1 @@
-I am the adapter used to bridget a DropListModel and a DropListMorph
+I am the adapter used to bridget a DropListPresenter and a DropListMorph

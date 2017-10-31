@@ -3,7 +3,7 @@ testBlockTemp
 	
 	| aCompiledMethod bytecode index |
 	aCompiledMethod := OpalCompiler new
-							encoderClass:  OpalEncoderForV3PlusClosures; 
+							encoderClass:  EncoderForV3PlusClosures; 
 									source: 'testBlockTemp
 	| block block1 block2 |
 	block := [ :arg | [ arg ] ].

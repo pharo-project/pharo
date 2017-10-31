@@ -88,7 +88,8 @@ spec group: 'General-Tests-Group' with: #(
 	'SUnit-Tests'
 	'Slot-Tests'
 	'Spec-Tests'
-	'System-CachingTests'
+	'System-Caching-Tests'
+	'System-Hashing-Tests'
 	'System-History-Tests'
 	'System-Localization-Tests'
 	'System-SessionManager-Tests'
@@ -102,6 +103,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
+	'System-DependenciesTests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -155,9 +157,9 @@ spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Tests-Group'
 ).
 
-"spec group: 'Deprecated-Group' with: #(
+spec group: 'Deprecated-Group' with: #(
 	'Deprecated70'
-)."
+).
 
 spec group: 'Manifest-Core-Group' with: #(
 	'Manifest-Core'
@@ -332,7 +334,6 @@ spec group: 'GT-Core-Group' with: #(
 	'GT-Inspector'
 	'GT-InspectorExtensions-Core'
 	'GT-Playground'
-	'System-Identification'
 	'GT-EventRecorder'
 	'GT-Spotter'
 	'GT-SpotterExtensions-Core'
@@ -477,14 +478,12 @@ spec group: #default with: #(
 
 	'Shout-Group'
 
-	'System-Localization'
-
 	"standalone:" 
 	'MetacelloExtras-Core'
 	'Metacello-Tests-Group'		 
 	'General-Help-Group'
 	'ReflectionMirrors-Group'
-	"'Deprecated-Group'"
+	'Deprecated-Group'
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
@@ -504,4 +503,6 @@ spec group: #default with: #(
 	'ReferenceFinder-Group'
 	
 	'BaselineOfPharoBootstrap'
+	'BaselineOfMonticello'
+	'BaselineOfMetacello'
 ).

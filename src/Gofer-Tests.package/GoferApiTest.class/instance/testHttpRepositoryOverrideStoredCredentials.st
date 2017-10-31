@@ -1,4 +1,4 @@
-testing-repositories
+tests - repositories
 testHttpRepositoryOverrideStoredCredentials
 
 	| exampleServer registry |

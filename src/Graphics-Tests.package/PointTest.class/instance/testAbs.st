@@ -1,4 +1,4 @@
-tests-arithmetic
+tests - arithmetic
 testAbs
 
 	self assert: (0 @ 0) abs = (0 @ 0).

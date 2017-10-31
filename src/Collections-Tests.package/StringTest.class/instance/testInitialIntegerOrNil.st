@@ -1,4 +1,4 @@
-testing
+tests
 testInitialIntegerOrNil
 
 self assert: ('234Whoopie' initialIntegerOrNil) = 234.

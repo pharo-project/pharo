@@ -1,4 +1,4 @@
-testing-repositories
+tests - repositories
 testCustomRepository
 	gofer repository: self monticelloRepository.
 	self assert: gofer repositories: (Array with: self monticelloRepository description).

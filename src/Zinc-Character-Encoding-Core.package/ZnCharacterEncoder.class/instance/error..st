@@ -1,3 +1,3 @@
 error handling
 error: message
-	ZnCharacterEncodingError signal: message
+	^ ZnCharacterEncodingError signal: message

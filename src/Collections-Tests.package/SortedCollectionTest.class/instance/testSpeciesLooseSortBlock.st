@@ -1,4 +1,4 @@
-basic
+tests - basic
 testSpeciesLooseSortBlock
 	"This is a non regression test for http://bugs.squeak.org/view.php?id=6535"
 

@@ -1,4 +1,4 @@
-testing
+tests
 testIndexOfFirstUppercaseCharacter
 
 self assert: ('test thiS strIng' indexOfFirstUppercaseCharacter) = 9.

@@ -1,4 +1,4 @@
 api
 classesOn: aShortcut do: aBlock
 
-	classesListModel bindKeyCombination: aShortcut toAction: aBlock
+	classesListPresenter bindKeyCombination: aShortcut toAction: aBlock

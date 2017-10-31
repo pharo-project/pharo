@@ -1,4 +1,4 @@
-testing-handling
+tests - handling
 testHandlerContext
 	"A test ensuring that when evaluating the action block the exception environment is set to the handler context."
 

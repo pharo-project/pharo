@@ -1,5 +1,5 @@
 fill-styles
 dialogWindowActiveFillStyleFor: aWindow
-	"Return the dialog window active fillStyle for the given window."
+	"Return the window active fillStyle for the given window."
 	
-	^aWindow paneColorToUse lighter
+	^self windowActiveFillStyleFor: aWindow

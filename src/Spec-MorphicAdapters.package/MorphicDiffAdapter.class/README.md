@@ -1,1 +1,1 @@
-I am an adpater to bridge a DiffModel and a DiffMorph
+I am an adpater to bridge a DiffPresenter and a DiffMorph

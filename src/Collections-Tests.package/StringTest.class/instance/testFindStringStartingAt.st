@@ -1,4 +1,4 @@
-testing
+tests
 testFindStringStartingAt
 
 self assert: ('éèàôüößäóñíá' findString: 'ÉÈ' startingAt: 1) = 0.

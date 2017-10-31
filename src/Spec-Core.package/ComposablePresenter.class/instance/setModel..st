@@ -1,0 +1,3 @@
+model access
+setModel: aDomainObject
+

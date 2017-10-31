@@ -1,5 +1,5 @@
 accessing
 randomGenerator
-	"Return the Random generator that I use"
+	"Return the random generator that I use"
 	
 	^ random
