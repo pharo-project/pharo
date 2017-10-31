@@ -24,6 +24,7 @@ mcPackages := #(
  'Metacello-Platform'
  'Metacello-ToolBox'
  'Metacello-PharoExtensions'
+ 'MetacelloCommandLineHandler-Core'
  ).
 
 MCMethodDefinition initializersEnabled: false.
