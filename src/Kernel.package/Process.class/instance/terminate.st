@@ -6,7 +6,6 @@ terminate
 	terminating := self isTerminating
 		ifTrue: [ ^ ProcessAlreadyTerminating signal ]
 		ifFalse: [ true ].
-		
 	self isActiveProcess 
 		ifTrue: [
 			ctxt := thisContext.
