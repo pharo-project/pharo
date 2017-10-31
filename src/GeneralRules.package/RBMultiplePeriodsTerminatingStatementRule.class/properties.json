@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "monty 8/15/2016 23:12",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBMultiplePeriodsTerminatingStatementRule",
+	"type" : "normal"
+}

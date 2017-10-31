@@ -1,17 +1,14 @@
 running
 check: aNode forCritiquesDo: aCriticBlock
-
-	| receiver |
+	| messageReceiver |
 
 	aNode isMessage ifFalse: [ ^ self ].
-	receiver := aNode receiver.
-
-	receiver isVariable ifFalse: [ ^ self ].
-	receiver binding ifNil: [ receiver doSemanticAnalysis ].
-	receiver isGlobal ifFalse: [ ^ self ]. 
-		
+	
+	messageReceiver := aNode receiver.
+	messageReceiver isVariable ifFalse: [ ^ self ].
+	messageReceiver isGlobal ifFalse: [ ^ self ].
 	(self
 		check: aNode selector
-		forDeprecationIn: receiver name ) ifFalse: [ ^ self ]. 
-				
-	aCriticBlock cull: (self critiqueFor: aNode) 
+		forDeprecationIn: messageReceiver name) ifFalse: [ ^ self ].
+		
+	self critiqueFor: aNode

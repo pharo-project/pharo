@@ -1,0 +1,4 @@
+private
+assertResultOfRule: critiques hasSameSelectorsAsEnvironment: anEnvironment
+	self assertResult: critiques hasAllMethodsInEnvironment: anEnvironment.
+	self assertEnvironment: anEnvironment hasAllMethodsOfTheResult: critiques

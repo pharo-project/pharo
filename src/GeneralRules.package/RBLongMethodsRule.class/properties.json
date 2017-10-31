@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "YuriyTymchuk 7/11/2017 14:45",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBLongMethodsRule",
+	"type" : "normal"
+}

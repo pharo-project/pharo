@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "MarcusDenker 6/28/2016 18:46",
+	"super" : "ReNodeBasedRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBDeadBlockRule",
+	"type" : "normal"
+}

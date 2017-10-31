@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "YuriyTymchuk 5/25/2016 16:39",
-	"super" : "RBBlockLintRule",
+	"super" : "ReAbstractRule",
 	"category" : "Kernel-Rules",
 	"classinstvars" : [ ],
 	"pools" : [ ],

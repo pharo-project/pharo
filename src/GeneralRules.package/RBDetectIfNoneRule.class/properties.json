@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "YuriyTymchuk 5/23/2016 14:38",
+	"super" : "ReNodeRewriteRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBDetectIfNoneRule",
+	"type" : "normal"
+}

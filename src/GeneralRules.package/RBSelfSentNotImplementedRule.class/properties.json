@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "MarcusDenker 2/25/2016 16:04",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBSelfSentNotImplementedRule",
+	"type" : "normal"
+}

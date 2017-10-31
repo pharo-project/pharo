@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "monty 6/12/2015 17:22",
+	"super" : "ReAbstractRule",
+	"category" : "GeneralRules-Migrated",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "RBUnaryAccessingMethodWithoutReturnRule",
+	"type" : "normal"
+}
