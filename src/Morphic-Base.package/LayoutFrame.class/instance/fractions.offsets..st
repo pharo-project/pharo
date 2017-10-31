@@ -1,8 +1,8 @@
-accessing
+deprecated
 fractions: fractionsOrNil offsets: offsetsOrNil
 
 	| fractions offsets |
-
+	self deprecated: 'Do not use this method. It forces to create spurious objects (rectangle or points) for nothing.'.
 	fractions := fractionsOrNil ifNil: [0@0 extent: 0@0].
 	offsets := offsetsOrNil ifNil: [0@0 extent: 0@0].
 	

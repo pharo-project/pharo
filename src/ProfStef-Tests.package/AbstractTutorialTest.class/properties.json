@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/12/2014 22:51",
 	"super" : "TestCase",
-	"category" : "ProfStef-Tests",
+	"category" : "ProfStef-Tests-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PavelKrivanek 10/24/2017 12:51",
+	"super" : "TestCase",
+	"category" : "System-DependenciesTests",
+	"classinstvars" : [
+		"dependenciesReport"
+	],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "SystemDependenciesTest",
+	"type" : "normal"
+}

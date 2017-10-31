@@ -57,6 +57,7 @@ baseline: spec
 		spec package: 'ReleaseTests'.
 		spec package: 'Ring-Tests-Containers'.
 		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
 		
@@ -261,6 +262,9 @@ baseline: spec
 		spec package: 'System-Identification-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
+		spec package: 'BaselineOfMonticello'.
+		spec package: 'BaselineOfMetacello'.
+		
 		spec package: 'ReferenceFinder-Core'.
 
       self groups: spec.

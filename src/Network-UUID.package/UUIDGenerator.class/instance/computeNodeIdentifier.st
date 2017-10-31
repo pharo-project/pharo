@@ -1,5 +1,7 @@
 private
 computeNodeIdentifier
+	"Compute and return a 'node identifier', a 16 element byte array that should be unique to this image, vm, invocation, network, machine combination"
+	
 	| nodeData |
 	nodeData := String streamContents: [ :out |
 		Smalltalk at: #NetNameResolver ifPresent: [ :netNameResolver |

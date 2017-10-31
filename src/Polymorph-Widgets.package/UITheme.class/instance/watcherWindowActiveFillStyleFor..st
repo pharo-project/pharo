@@ -1,4 +1,4 @@
 *Polymorph-Widgets-Themes
 watcherWindowActiveFillStyleFor: aWindow
 
-	^ self windowActiveFillStyleFor: aWindow
+	^ SolidFillStyle color: (Color veryVeryLightGray alpha: 0.6)

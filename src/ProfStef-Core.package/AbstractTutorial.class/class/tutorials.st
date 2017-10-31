@@ -1,6 +1,4 @@
 tutorial metainfo
 tutorials
-	^ (self subclasses 
-		sort: [:a :b |  a name < b name]) 
-		select: [:aTutorial |
-			(aTutorial category = 'ProfStef-Tests') not ].
+	^ (self subclasses sort: [ :a :b | a name < b name ])
+		reject: [ :aTutorial | aTutorial package name = 'ProfStef-Tests' ]

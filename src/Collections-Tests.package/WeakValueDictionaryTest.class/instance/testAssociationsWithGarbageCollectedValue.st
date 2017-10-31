@@ -1,0 +1,4 @@
+tests
+testAssociationsWithGarbageCollectedValue
+
+	self assert: self dictionaryWithGarbageCollectedValue associations isEmpty

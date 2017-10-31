@@ -21,7 +21,7 @@ codeMethod: selector block: block tempVars: vars primitive: primitive class: cla
 		precedence: selector precedence
 		temporaries: temporaries
 		block: block
-		encoder: (EncoderForV3PlusClosures new initScopeAndLiteralTables
+		encoder: (LegacyEncoderForV3PlusClosures new initScopeAndLiteralTables
 					temps: visibleTemps, invisibleTemps
 					literals: literalValues
 					class: class)

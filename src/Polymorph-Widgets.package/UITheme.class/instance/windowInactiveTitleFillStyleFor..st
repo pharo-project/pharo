@@ -1,5 +1,4 @@
 fill-styles
 windowInactiveTitleFillStyleFor: aWindow
-	"Return the window inactive title fillStyle for the given color."
-	
-	^self windowActiveTitleFillStyleFor: aWindow
+	"We do not want the lighting effect when the window goes inactive"
+	^ SolidFillStyle color: Color transparent
