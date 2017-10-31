@@ -1,3 +1,3 @@
 helper
 newBytecodeGen
-	^ IRBytecodeGenerator newWithEncoderClass: OpalEncoderForV3PlusClosures
+	^ IRBytecodeGenerator newWithEncoderClass: EncoderForV3PlusClosures

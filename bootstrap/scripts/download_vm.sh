@@ -1,3 +1,6 @@
+set -x
+set -e
+
 #Downloads a SPUR vm for the configured architecture
 
 mkdir vm

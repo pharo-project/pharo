@@ -2,7 +2,7 @@ test - array compilation
 testMultiElementArray
 	| aCompiledMethod bytecode index |
 	aCompiledMethod := OpalCompiler new 
-									encoderClass:  OpalEncoderForV3PlusClosures; 
+									encoderClass:  EncoderForV3PlusClosures; 
 									source: 'method
 	^{1. 2. 3. 4. 5. 6 }';
 									class: OCMockCompilationClass;

@@ -1,5 +1,3 @@
-fill-styles
+fill-styles-buttons
 tabLabelNormalFillStyleFor: aTabLabel
-	"Return the normal fillStyle for the given tab label."
-	
-	^aTabLabel paneColor lighter
+	^ self buttonNormalFillStyleFor: aTabLabel 

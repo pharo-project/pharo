@@ -103,6 +103,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
+	'System-DependenciesTests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -502,4 +503,6 @@ spec group: #default with: #(
 	'ReferenceFinder-Group'
 	
 	'BaselineOfPharoBootstrap'
+	'BaselineOfMonticello'
+	'BaselineOfMetacello'
 ).

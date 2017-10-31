@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "LegacyEncoder",
+	"category" : "Compiler-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"position",
+		"rootNode",
+		"blockExtentsToLocals"
+	],
+	"name" : "LegacyBytecodeEncoder",
+	"type" : "normal"
+}

@@ -9,7 +9,8 @@
 		"dateLabel",
 		"displayBlockHolder",
 		"chooseDateButton",
-		"dateModel"
+		"dateModel",
+		"date"
 	],
 	"name" : "DatePresenter",
 	"type" : "normal"

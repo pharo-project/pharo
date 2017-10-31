@@ -12,6 +12,7 @@ textInputFor: aTreeModel withHelpMessage: helpStringMessage
 	textInput askBeforeDiscardingEdits: false.
 	textInput ghostText: helpStringMessage.
 	textInput layoutFrame: (LayoutFrame identity 
-			fractions: (0 @ 1 corner: 1 @ 1) offsets: (0 @ -26 corner: 0 @ -4); 
-			yourself).
+			topFraction: 1;
+			topOffset: -26;
+			bottomOffset: -4).
 	^ textInput

@@ -19,7 +19,7 @@ UUIDs have a standard string representation, like this:
 	
 The representation consists of 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens).
 
-My #printOn: #printString and #asString methods produce this representation.  My class' #fromString or instance #readFrom: parse it.
+My #printOn: #printString and #asString methods produce this representation.  My class' #fromString: or instance #readFrom: parse it.
 
 Alternatively, my base 36 number representation is  the shortest representation still being able to work as filenames etc since it does not depend on case nor characters that might cause problems, and it is reasonably short.
 

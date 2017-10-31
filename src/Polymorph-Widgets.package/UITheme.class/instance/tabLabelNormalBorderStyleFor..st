@@ -1,7 +1,6 @@
 border-styles
 tabLabelNormalBorderStyleFor: aTabLabel
-	"Answer the normal border style for a tab label."
-
-	^BorderStyle simple
+"	^SimpleBorder new
 		width: 0;
-		baseColor: Color transparent
+		baseColor: (self buttonBaseColorFor: aTabLabel) darker
+"	^ self buttonNormalBorderStyleFor: aTabLabel

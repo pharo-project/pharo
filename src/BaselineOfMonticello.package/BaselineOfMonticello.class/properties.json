@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 10/24/2017 09:36",
+	"super" : "BaselineOf",
+	"category" : "BaselineOfMonticello",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "BaselineOfMonticello",
+	"type" : "normal"
+}

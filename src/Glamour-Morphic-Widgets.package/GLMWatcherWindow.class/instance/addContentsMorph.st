@@ -3,8 +3,10 @@ addContentsMorph
 	self contentsMorph: GLMMorphic emptyMorph.
 	self contentsMorph
 		layoutFrame: (LayoutFrame identity 
-			fractions: (0 @ 0 corner: 1 @ 1) offsets: (10@10 corner: -10@(-10)); 
-			yourself);
+							leftOffset: 10; 
+							topOffset: 10; 
+							rightOffset: -10;
+							bottomOffset: -10);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill.
 	self addMorphBack: self contentsMorph
