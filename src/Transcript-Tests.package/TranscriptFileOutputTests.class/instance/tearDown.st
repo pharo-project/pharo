@@ -1,0 +1,5 @@
+running
+tearDown
+
+	self removeAllTestFiles.
+	

@@ -1,0 +1,18 @@
+{
+	"classtraitcomposition" : "TTranscriptOutput classTrait",
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"cleared",
+		"textMorph",
+		"connections"
+	],
+	"name" : "TranscriptRubricOutput",
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:26",
+	"super" : "Model",
+	"traitcomposition" : "TTranscriptOutput",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Transcript-UI"
+}

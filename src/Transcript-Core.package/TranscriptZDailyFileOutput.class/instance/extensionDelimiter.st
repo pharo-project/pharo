@@ -1,0 +1,4 @@
+private
+extensionDelimiter
+
+	^Path extensionDelimiter

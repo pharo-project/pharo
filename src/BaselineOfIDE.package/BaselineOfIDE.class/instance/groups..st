@@ -104,6 +104,8 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
+	'Transcript-Tests'
+	'Transcript-UI-Tests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(

@@ -1,0 +1,4 @@
+running
+setUp
+
+	self removeAllTestFiles.

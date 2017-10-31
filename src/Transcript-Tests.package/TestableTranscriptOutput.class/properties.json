@@ -1,0 +1,21 @@
+{
+	"classtraitcomposition" : "TTranscriptOutput classTrait",
+	"classvars" : [ ],
+	"instvars" : [
+		"data",
+		"subs",
+		"clearCount",
+		"closeCount",
+		"entryCount",
+		"updateCount",
+		"subscribedInCount"
+	],
+	"name" : "TestableTranscriptOutput",
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:03",
+	"super" : "Object",
+	"traitcomposition" : "TTranscriptOutput",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Transcript-Tests"
+}

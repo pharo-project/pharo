@@ -1,3 +1,3 @@
 private
 activate
-	NonInteractiveTranscript stderr install
+	TranscriptSpecialFileOutput globalStderr

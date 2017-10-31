@@ -1,0 +1,4 @@
+private
+hasValidStream
+
+	^fileStream isNotNil

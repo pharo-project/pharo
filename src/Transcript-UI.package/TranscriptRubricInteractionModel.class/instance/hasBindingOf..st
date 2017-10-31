@@ -1,0 +1,4 @@
+binding
+hasBindingOf: aString
+
+	^false
