@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "TorstenBergmann 2/5/2014 10:18",
 	"super" : "TestCase",
-	"category" : "DeprecatedFileStream",
+	"category" : "Deprecated70",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
