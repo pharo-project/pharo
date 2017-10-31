@@ -28,7 +28,8 @@ baseline: spec
 			package: 'Metacello-GitHub';
 			package: 'Metacello-Platform';
 			package: 'Metacello-ToolBox';
-			package: 'Metacello-PharoExtensions'. 
+			package: 'Metacello-PharoExtensions';
+			package: 'MetacelloCommandLineHandler-Core'. 
 
 			
 			
