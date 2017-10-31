@@ -1,6 +1,6 @@
 test inspect
 testInspectClass
 	| inspector |
-	inspector := Object inspector.
+	inspector :=  self openInspectorOn: Object.
 	inspector changed.
 	inspector close.

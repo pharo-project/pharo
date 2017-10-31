@@ -1,3 +1,3 @@
 actions
 exploreItem
-	self item explore
+	self item inspect

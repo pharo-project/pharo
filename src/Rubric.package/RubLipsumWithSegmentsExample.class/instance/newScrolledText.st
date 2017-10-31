@@ -31,7 +31,7 @@ newScrolledText
 			r label: 'Explore'.
 			r changeable: false.
 			r icon: (self iconNamed: #smallHelpIcon).
-			r iconBlock: [ :seg :event | seg explore ].
+			r iconBlock: [ :seg :event | seg inspect ].
 			scrolledText addSegment: (r := RubPlainSegmentMorph from: 1300 to: 1610).
 			r label: 'Remove'.
 			r

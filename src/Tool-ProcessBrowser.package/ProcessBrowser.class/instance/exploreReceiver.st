@@ -1,3 +1,3 @@
 stack list
 exploreReceiver
-	selectedContext ifNotNil: [ selectedContext receiver explore ]
+	selectedContext ifNotNil: [ selectedContext receiver inspect ]

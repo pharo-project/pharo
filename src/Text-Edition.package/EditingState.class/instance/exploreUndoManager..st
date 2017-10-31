@@ -1,4 +1,4 @@
 private-debugging
 exploreUndoManager: aKeyboardEvent
-	self undoManager explore.
+	self undoManager inspect.
 	^ true

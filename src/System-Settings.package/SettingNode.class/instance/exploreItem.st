@@ -1,3 +1,3 @@
 menu
 exploreItem
-	self settingDeclaration explore
+	self settingDeclaration inspect
