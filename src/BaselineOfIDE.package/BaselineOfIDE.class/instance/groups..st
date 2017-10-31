@@ -60,6 +60,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
+	'MetacelloCommandLineHandler-Tests'
 	'Debugger-Tests'
 	'EmbeddedFreeType-Tests'
 	'FileSystem-Tests-Memory'
