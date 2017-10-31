@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "GuillermoPolito 7/13/2016 10:36",
+	"super" : "Object",
+	"category" : "Files-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"name"
+	],
+	"name" : "Directory",
+	"type" : "normal"
+}
