@@ -1,0 +1,1 @@
+I know how to detect a change in the collection of the shared variables (class variables).

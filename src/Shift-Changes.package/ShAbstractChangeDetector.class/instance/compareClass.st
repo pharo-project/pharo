@@ -1,0 +1,3 @@
+comparing
+compareClass
+	^ self subclassResponsibility 

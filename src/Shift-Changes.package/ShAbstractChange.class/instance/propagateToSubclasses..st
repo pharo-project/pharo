@@ -1,0 +1,2 @@
+propagating
+propagateToSubclasses: aBuilder

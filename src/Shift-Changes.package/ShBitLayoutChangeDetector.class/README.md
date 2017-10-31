@@ -1,0 +1,1 @@
+I can compare an old class and a builder to detect if the layout kind changed and if there is need to propagate it.

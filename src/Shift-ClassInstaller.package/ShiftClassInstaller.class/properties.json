@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PabloTesone 10/6/2017 18:11",
+	"super" : "Object",
+	"category" : "Shift-ClassInstaller",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"oldClass",
+		"builder"
+	],
+	"name" : "ShiftClassInstaller",
+	"type" : "normal"
+}

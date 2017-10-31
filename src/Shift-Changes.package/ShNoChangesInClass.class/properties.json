@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PabloTesone 10/5/2017 11:56",
+	"super" : "Notification",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShNoChangesInClass",
+	"type" : "normal"
+}

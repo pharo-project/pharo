@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "PabloTesone 10/6/2017 18:03",
+	"super" : "ShAbstractChangeDetector",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"oldValue",
+		"newValue",
+		"builderAccessor",
+		"classAccessor",
+		"comparer"
+	],
+	"name" : "ShAbstractClassChangeDetector",
+	"type" : "normal"
+}

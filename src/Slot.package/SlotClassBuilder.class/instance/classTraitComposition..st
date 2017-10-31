@@ -1,3 +1,0 @@
-accessing
-classTraitComposition: aTraitComposition
-	classTraitComposition := aTraitComposition asTraitComposition

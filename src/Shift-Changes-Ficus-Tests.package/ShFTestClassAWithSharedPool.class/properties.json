@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Shift-Changes-Ficus-Tests-TestClasses",
+	"classinstvars" : [ ],
+	"pools" : [
+		"ShFTestSharedPool"
+	],
+	"classvars" : [ ],
+	"instvars" : [
+		"oneSlot"
+	],
+	"name" : "ShFTestClassAWithSharedPool",
+	"type" : "normal"
+}

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "ShFAbstractChange",
+	"category" : "Shift-Changes-Ficus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"poolName"
+	],
+	"name" : "ShFSharedPoolChange",
+	"type" : "normal"
+}

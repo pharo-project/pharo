@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShFAbstractSingleChange",
+	"category" : "Shift-Changes-Ficus",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShFClassRename",
+	"type" : "normal"
+}

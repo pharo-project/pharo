@@ -1,1 +1,0 @@
-I represent a modification in a class. 

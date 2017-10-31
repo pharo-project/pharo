@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "PabloTesone 10/6/2017 17:59",
+	"super" : "Object",
+	"category" : "Shift-Changes",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"builder",
+		"oldClass"
+	],
+	"name" : "ShAbstractChange",
+	"type" : "normal"
+}

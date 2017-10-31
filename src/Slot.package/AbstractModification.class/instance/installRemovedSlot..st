@@ -1,3 +1,0 @@
-installing
-installRemovedSlot: removedSlot
-	self subclassResponsibility

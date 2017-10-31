@@ -1,0 +1,13 @@
+{
+	"classtraitcomposition" : "TShFTestTrait classTrait",
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShFTestClassC",
+	"commentStamp" : "",
+	"super" : "ShFTestClassB",
+	"traitcomposition" : "TShFTestTrait",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "Shift-Changes-Ficus-Tests-TestClassesB"
+}

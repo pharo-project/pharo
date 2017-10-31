@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "AbstractShiftChangesFicusTest",
+	"category" : "Shift-Changes-Ficus-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShFChangeInClassTest",
+	"type" : "normal"
+}

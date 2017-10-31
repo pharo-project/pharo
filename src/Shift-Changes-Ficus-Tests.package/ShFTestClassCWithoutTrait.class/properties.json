@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "ShFTestClassB",
+	"category" : "Shift-Changes-Ficus-Tests-TestClassesB",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "ShFTestClassCWithoutTrait",
+	"type" : "normal"
+}

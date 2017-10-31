@@ -1,0 +1,18 @@
+{
+	"commentStamp" : "PabloTesone 10/6/2017 18:16",
+	"super" : "Object",
+	"category" : "Shift-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"layoutClass",
+		"slots",
+		"classSlots",
+		"sharedPools",
+		"sharedVariables",
+		"builder"
+	],
+	"name" : "ShLayoutDefinition",
+	"type" : "normal"
+}

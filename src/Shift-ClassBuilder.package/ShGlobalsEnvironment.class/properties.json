@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "PabloTesone 10/6/2017 18:17",
+	"super" : "Object",
+	"category" : "Shift-ClassBuilder",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"environment"
+	],
+	"name" : "ShGlobalsEnvironment",
+	"type" : "normal"
+}

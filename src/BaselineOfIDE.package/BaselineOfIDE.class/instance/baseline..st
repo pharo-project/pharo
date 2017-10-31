@@ -236,6 +236,8 @@ baseline: spec
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
+		spec package: 'Shift-ClassBuilder-Tests'.
+		spec package: 'Shift-ClassInstaller-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.

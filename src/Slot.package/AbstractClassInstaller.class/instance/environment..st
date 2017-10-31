@@ -1,3 +1,0 @@
-accessing
-environment: anEnvironment
-	self subclassResponsibility
