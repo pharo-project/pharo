@@ -26,7 +26,7 @@ initializeCommandLineHandlerAndErrorHandling
 	
 	Smalltalk globals 
 		at: #Transcript
-		put: (NonInteractiveTranscript stdout install).
+		put: TranscriptStream new.
 	Float initialize.
 
 	SetElement initialize.
@@ -60,7 +60,6 @@ initializeCommandLineHandlerAndErrorHandling
 
 	"Initialize basic command line behaviour"
 	Stdio initialize.
-	NonInteractiveTranscript initialize.
 	BasicCommandLineHandler initialize.
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive.

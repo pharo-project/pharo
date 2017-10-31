@@ -23,7 +23,6 @@ classesToInitializeWithDependencies
 #Stdio
 #Context
 #Key
-#NonInteractiveTranscript
 #Latin2Environment
 #UUIDGenerator
 #Symbol

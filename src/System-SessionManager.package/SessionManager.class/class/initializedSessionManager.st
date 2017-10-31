@@ -29,7 +29,6 @@ initializedSessionManager
 		registerSystemClassNamed: #WeakArray; "System"
 		registerSystemClassNamed: #FileStream; "System"
 		registerSystemClassNamed: #BasicCommandLineHandler; "System"
-		registerSystemClassNamed: #NonInteractiveTranscript; "System"
 		registerSystemClassNamed: #ASTCache; "System"
 		registerSystemClassNamed: #OSEnvironment; "System"
 		registerSystemClassNamed: #EndianDetector; "System"
