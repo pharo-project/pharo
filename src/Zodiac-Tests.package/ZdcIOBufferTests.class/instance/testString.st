@@ -1,4 +1,4 @@
-testing
+tests
 testString
 	| ioBuffer |
 	ioBuffer := ZdcIOBuffer on: (String new: 10).

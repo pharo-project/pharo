@@ -1,4 +1,4 @@
-testing
+tests
 testReadIntoStartingAtCount
 	| data ioBuffer string |
 	data := 'abcdefghijkl'.

@@ -1,4 +1,4 @@
-testing
+tests
 testClearing
 	| byteArrayManager one two |
 	byteArrayManager := ZdcByteArrayManager new.

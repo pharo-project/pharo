@@ -1,4 +1,4 @@
-testing
+tests - reverse
 testReverseEcho10kFixed
 	| dataSent dataRead clientStream semaphore |
 	semaphore := self runServer: [ :serverSocket | | clientSocket stream data |

@@ -1,4 +1,4 @@
-testing
+tests
 testAdvanceWritePointer
 	| ioBuffer offset |
 	ioBuffer := ZdcIOBuffer on: (ByteArray new: 10).
