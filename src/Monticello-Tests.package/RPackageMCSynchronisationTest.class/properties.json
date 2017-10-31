@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "<historical>",
 	"super" : "RPackageTestCase",
-	"category" : "RPackage-Tests",
+	"category" : "Monticello-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
