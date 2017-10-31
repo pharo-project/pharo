@@ -31,7 +31,7 @@ spec group: 'Epicea-Core-Group' with: #(
 	'Hiedra'
 	'EpiceaBrowsers').
 spec group: 'Epicea-Tests-Group' with: #(
-	'OmbuTests'
+	'Ombu-Tests'
 	'EpiceaTests'
 	'HiedraTests'
 	'EpiceaBrowsersTests'
@@ -77,7 +77,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Morphic-Tests'
 	'NECompletion-Tests'
 	'Nautilus-Tests'
-	'OmbuTests'
+	'Ombu-Tests'
 	'ProfStef-Tests'
 
 	'Reflectivity-Tools-Tests'
