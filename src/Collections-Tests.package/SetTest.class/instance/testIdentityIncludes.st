@@ -1,8 +1,9 @@
 tests - includes
 testIdentityIncludes
-	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
+	"test containment in presence of elements that are 'included' but not 'identityIncludeded'"
 
-	" can not be used by collections that can't include elements for wich copy doesn't return another instance "
+	"Can _not_ be used by collections that can't include elements for which copy doesn't return 
+	 a distinct object"
 
 	| collection element |
 	self collectionWithCopyNonIdentical.

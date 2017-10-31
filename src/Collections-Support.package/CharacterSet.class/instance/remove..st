@@ -1,6 +1,3 @@
-collection ops
+removing
 remove: aCharacter
-	aCharacter asciiValue >= 256
-		ifFalse: ["Guard against wide characters"
-			map at: aCharacter asciiValue + 1 put: 0].
-	^aCharacter
+	^ self remove: aCharacter ifAbsent: [ self errorNotFound: aCharacter ]

@@ -1,4 +1,4 @@
-collection ops
+enumerating
 do: aBlock
 	"evaluate aBlock with each character in the set"
 

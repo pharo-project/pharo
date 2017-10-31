@@ -1,5 +1,7 @@
-collection ops
+enumerating
 do: aBlock 
+	byteArrayMap withIndexDo: [ :each :index | (each = 1) 
+			ifTrue: [ aBlock value: (Character value: index - 1) ]].
 	map
 		keysAndValuesDo: [:index :lowmap |
 			| high16Bits |

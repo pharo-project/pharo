@@ -1,7 +1,9 @@
 collection ops
 findFirstInByteString: aByteString startingAt: startIndex
-	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
-	^ByteString
+	"Double dispatching: since we know first argument is a ByteString, 
+	we can use a ByteString primitive."
+	
+	^ ByteString
 		findFirstInString: aByteString
-		inSet: self byteArrayMap
+		inSet: byteArrayMap
 		startingAt: startIndex
