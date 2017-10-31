@@ -6,11 +6,13 @@ testNextLine
 	text := lines first , String cr , lines second , String crlf , lines third , String lf , lines fourth.
 	[ 
 	| file |
-	(StandardFileStream forceNewFileNamed: filename)
-		nextPutAll: text;
-		close.
-	file := StandardFileStream readOnlyFileNamed: filename.
-	lines do: [ :e | self assert: file nextLine = e ].
+	(File named: filename)
+		writeStreamDo: [ :stream | stream nextPutAll: text ].
+	file := ZnFastLineReader on: 
+			(ZnCharacterReadStream
+				on: (File openForReadFileNamed: filename)
+				encoding: 'utf8').
+	lines do: [ :e | self assert: file nextLine equals: e ].
 	self assert: file nextLine isNil.
 	file close ] ensure: [ 
 		(FileSystem disk workingDirectory / filename) ensureDelete ].

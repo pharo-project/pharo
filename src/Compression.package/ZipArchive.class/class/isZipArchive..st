@@ -5,7 +5,7 @@ isZipArchive: aStreamOrFileName
 	| stream eocdPosition |
 	stream := aStreamOrFileName isStream
 		ifTrue: [aStreamOrFileName]
-		ifFalse: [StandardFileStream oldFileNamed: aStreamOrFileName].
+		ifFalse: [File openForReadFileNamed: aStreamOrFileName].
 	stream ifNil: [^ false].
 	"nil happens sometimes somehow"
 	stream size < 22 ifTrue: [^ false].

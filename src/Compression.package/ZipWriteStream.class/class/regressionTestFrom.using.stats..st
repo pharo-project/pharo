@@ -5,7 +5,7 @@ regressionTestFrom: fd using: tempFile stats: stats
 	files do: [ :file | 
 		file = tempFile ifFalse: [
 			self 
-				compressAndDecompress: (StandardFileStream new open: file fullName forWrite: false) 
+				compressAndDecompress: (File openForReadFileNamed: file fullName) 
 				using: tempFile 
 				stats: stats]].
 	

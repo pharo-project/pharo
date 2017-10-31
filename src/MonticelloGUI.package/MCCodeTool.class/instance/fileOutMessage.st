@@ -35,4 +35,4 @@ fileOutMessage
 								forClass: patchOp definition actualClass]]
 					ifNil:
 						[internalStream nextChunkPut: patchOp definition className, ' removeFromSystem']]].
-		FileStream writeSourceCodeFrom: internalStream baseName: fileName isSt: true]
+		CodeExporter writeSourceCodeFrom: internalStream baseName: fileName isSt: true]

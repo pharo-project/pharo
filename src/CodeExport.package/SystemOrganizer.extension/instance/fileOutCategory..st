@@ -6,4 +6,4 @@ fileOutCategory: category
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
 	self fileOutCategory: category on: internalStream.
-	^ FileStream writeSourceCodeFrom: internalStream baseName: category isSt: true 
+	^ CodeExporter writeSourceCodeFrom: internalStream baseName: category isSt: true 

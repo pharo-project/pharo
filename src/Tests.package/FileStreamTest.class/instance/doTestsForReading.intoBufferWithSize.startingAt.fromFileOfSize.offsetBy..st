@@ -11,11 +11,9 @@ doTestsForReading: count intoBufferWithSize: readSize startingAt: startIndex fro
 	writeBuffer := (ByteArray new: writeSize).
 	0 to: writeSize -1 do: [:ix | writeBuffer at: ix +1 put: (ix \\ 255) + 1].
 
-	(StandardFileStream forceNewFileNamed: filename)
-		 binary ;
-		 nextPutAll: writeBuffer ;
-		 close.
-	file := StandardFileStream readOnlyFileNamed: filename.
+	(File named: filename)
+		writeStreamDo: [ :stream | stream nextPutAll: writeBuffer ].
+	file := File openForReadFileNamed: filename.
 	
 	readBuffer := ByteArray new: readSize.
 

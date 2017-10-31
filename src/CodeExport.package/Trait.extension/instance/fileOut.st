@@ -11,6 +11,5 @@ fileOut
 		self shouldFileOutPools
 			ifTrue: [self fileOutSharedPoolsOn: internalStream]].
 	self fileOutOn: internalStream.
-	internalStream trailer.
 
-	FileStream writeSourceCodeFrom: internalStream baseName: self name isSt: true
+	CodeExporter writeSourceCodeFrom: internalStream baseName: self name isSt: true

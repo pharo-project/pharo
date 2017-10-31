@@ -35,7 +35,6 @@ forCompatibility
 		registerSystemClassNamed: #Symbol; "System"
 		
 		registerSystemClassNamed: #Locale; "System"
-		registerSystemClassNamed: #MultiByteFileStream; "System"
 		registerSystemClassNamed: #UUIDGenerator; "Network"
 		registerSystemClassNamed: #WeakArray; "System"
 		registerSystemClassNamed: #MacOSClipboard; "nothing to do - will not be in  the list"

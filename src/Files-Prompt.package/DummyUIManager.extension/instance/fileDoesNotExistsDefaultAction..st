@@ -1,0 +1,2 @@
+*Files-Prompt
+fileDoesNotExistsDefaultAction: anException

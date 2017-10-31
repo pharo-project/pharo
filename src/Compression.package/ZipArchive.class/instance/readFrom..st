@@ -3,7 +3,7 @@ readFrom: aStreamOrFileName
 	| stream name eocdPosition |
 	stream := aStreamOrFileName isStream
 		ifTrue: [name := aStreamOrFileName printString. aStreamOrFileName]
-		ifFalse: [StandardFileStream readOnlyFileNamed: (name := aStreamOrFileName)].
+		ifFalse: [ File openForReadFileNamed: (name := aStreamOrFileName asFileReference fullName) ].
 	stream binary.
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [self error: 'can''t find EOCD position'].

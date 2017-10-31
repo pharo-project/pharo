@@ -181,6 +181,7 @@ baseline: spec
 		spec package: 'EmbeddedFreeType-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
 		spec package: 'FileSystem-Tests-Memory'.
+		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
 		spec package: 'Flashback-Decompiler-Tests'.
 		spec package: 'FontInfrastructure-Tests'.

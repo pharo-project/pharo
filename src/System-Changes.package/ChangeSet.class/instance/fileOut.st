@@ -17,5 +17,7 @@ fileOut
 			self fileOutPreambleOn: internalStream.
 			self fileOutOn: internalStream.
 			self fileOutPostscriptOn: internalStream.
-			internalStream trailer.
-			FileStream writeSourceCodeFrom: internalStream baseName: (nameToUse copyFrom: 1 to: nameToUse size - 3) isSt: false ]
+			CodeExporter 
+				writeSourceCodeFrom: internalStream
+				baseName: (nameToUse copyFrom: 1 to: nameToUse size - 3)
+				isSt: false ]

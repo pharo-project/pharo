@@ -1,2 +1,0 @@
-default actions
-fileExistsDefaultAction: anException

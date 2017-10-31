@@ -7,15 +7,15 @@ retryWithGC: execBlock until: testBlock forFileNamed: fullName
 
 	| blockValue foundIt |
 	blockValue := execBlock value.
-	(testBlock value: blockValue) ifTrue:[^blockValue].
+	(testBlock value: blockValue) ifTrue: [ ^ blockValue ].
 
 	"Optimization: See if we have a file with the given name. Not really needed"
 	foundIt := self registry keys "hold on strongly for now" 
-		anySatisfy:[:file| file name sameAs: fullName].
+		anySatisfy: [:file| file name sameAs: fullName].
 	foundIt ifFalse:[^blockValue].
 
 	Smalltalk garbageCollectMost.
 	blockValue := execBlock value.
-	(testBlock value: blockValue) ifTrue:[^blockValue].
+	(testBlock value: blockValue) ifTrue: [ ^ blockValue ].
 	Smalltalk garbageCollect.
 	^execBlock value.

@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "TorstenBergmann 2/5/2014 10:18",
+	"super" : "TestCase",
+	"category" : "Deprecated70",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MultiByteFileStreamTest",
+	"type" : "normal"
+}

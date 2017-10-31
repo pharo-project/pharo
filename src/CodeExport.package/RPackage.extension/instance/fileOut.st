@@ -19,4 +19,4 @@ fileOut
 			extendedClass := (Smalltalk globals classNamed: className).
 			extendedClass theMetaClass fileOutMethod: selector on: internalStream ] ].
 	
-	^ FileStream writeSourceCodeFrom: internalStream baseName: self name isSt: true.
+	^ CodeExporter writeSourceCodeFrom: internalStream baseName: self name isSt: true.

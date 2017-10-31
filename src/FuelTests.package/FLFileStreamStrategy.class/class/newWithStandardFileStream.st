@@ -1,4 +1,4 @@
 instance creation
 newWithStandardFileStream
 
-	^self newWith: StandardFileStream
+	^self newWith: (Smalltalk globals at: #StandardFileStream)

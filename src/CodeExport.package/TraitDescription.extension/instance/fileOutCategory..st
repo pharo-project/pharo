@@ -7,4 +7,4 @@ fileOutCategory: catName
 	self fileOutCategory: catName on: internalStream.
 	internalStream trailer.
 
-	^ FileStream writeSourceCodeFrom: internalStream baseName: (self name , '-' , catName) isSt: true.
+	^ CodeExporter writeSourceCodeFrom: internalStream baseName: (self name , '-' , catName) isSt: true.

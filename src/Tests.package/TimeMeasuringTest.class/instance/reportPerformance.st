@@ -1,7 +1,10 @@
 performance
 reportPerformance
 	| str |
-	str := (MultiByteFileStream fileNamed: 'performanceReports.txt') ascii; wantsLineEndConversion: true; yourself.
+	str := ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+			on: (File openForWriteFileNamed: 'performanceReports.txt')
+			encoding: 'utf8').
+	
 	str setToEnd;
 		nextPutAll: ' test: ', testSelector;
 		nextPutAll: ' time: ', realTime asString; 
