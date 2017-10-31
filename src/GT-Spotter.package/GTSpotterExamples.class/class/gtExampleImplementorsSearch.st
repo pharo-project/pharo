@@ -1,10 +1,10 @@
 examples - filtering
-gtExampleImplementorsSearchOn: aSpotter
+gtExampleImplementorsSearch
 	<gtExample>
 	<label: 'Implementors search on single method'>
 	<description: 'A spotter for searching through the implementors of a method.'>
-	<dependsOn: #gtExampleOnCompliedMethod>
-	
-	^ aSpotter
+	| spotter |
+	spotter := self gtExampleOnCompliedMethod.
+	^ spotter
 		filterByMethods: {
 			CompiledMethod>>#spotterForImplementorsFor:}
