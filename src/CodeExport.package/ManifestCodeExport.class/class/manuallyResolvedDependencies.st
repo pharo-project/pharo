@@ -1,3 +1,3 @@
 meta-data - dependency analyser
 manuallyResolvedDependencies
-	^ #(#Slot #'System-Localization' #'Collections-Abstract' #UIManager #'FileSystem-Disk')
+	^ #(#Slot #'System-Localization' #'FileSystem-Core' #'Collections-Abstract' #UIManager)
