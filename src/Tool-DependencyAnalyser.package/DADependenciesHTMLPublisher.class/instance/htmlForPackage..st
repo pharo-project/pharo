@@ -1,0 +1,3 @@
+publishing
+htmlForPackage: aPackageName
+	^ 	aPackageName
