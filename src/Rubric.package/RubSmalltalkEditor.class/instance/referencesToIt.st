@@ -2,9 +2,8 @@ menu messages
 referencesToIt
 	"Open a references browser on the selected symbol"
 
-	| aSymbol env ref |
+	| aSymbol |
 	self selectLine.
-	((aSymbol := self selectedSymbol) == nil)
-			ifTrue: [^ textArea flash].
-
+	(aSymbol := self selectedSymbol) isNil
+		ifTrue: [ ^ textArea flash ].
 	self referencesTo: aSymbol
