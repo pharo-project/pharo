@@ -1,5 +1,5 @@
 private
 collection
-	"Return the collection where something is not found in"
+	"Return the collection in which something is not found"
 	
 	^ self signaler

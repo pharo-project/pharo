@@ -1,4 +1,4 @@
-conversion
+converting
 asString
 	"Convert the receiver into a String"
 

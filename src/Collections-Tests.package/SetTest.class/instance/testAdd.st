@@ -1,4 +1,7 @@
 tests - sunit original tests
 testAdd 
-	empty add: 5.
-	self assert: (empty includes: 5).
+	| e |
+	e := self element.
+	empty add: e.
+	self assert: (empty includes: e) 
+			description: ['after adding ' , e printString , ', it wasn''t included']

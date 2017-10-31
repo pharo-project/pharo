@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "Magnitude",
+	"category" : "Collections-Support",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "Size",
+	"type" : "normal"
+}

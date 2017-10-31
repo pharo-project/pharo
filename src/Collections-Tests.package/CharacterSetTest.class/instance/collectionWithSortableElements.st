@@ -1,0 +1,3 @@
+requirements
+collectionWithSortableElements
+	^ nonEmpty1element 

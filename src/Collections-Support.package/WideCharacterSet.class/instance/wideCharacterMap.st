@@ -1,3 +1,3 @@
-comparing
+private
 wideCharacterMap
 	^map

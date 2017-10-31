@@ -1,6 +1,5 @@
 tests - sunit original tests
 testIncludes
-	self assert: (full includes: 4).
-	self assert: (full includes: 3).
-	self deny: (full includes: 6).
+	self assert: (full includes: self elementInForIncludesTest).
+	self deny: (full includes: self elementNotIn).
 			
