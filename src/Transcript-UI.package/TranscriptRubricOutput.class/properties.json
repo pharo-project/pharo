@@ -1,5 +1,9 @@
 {
-	"classtraitcomposition" : "TTranscriptOutput classTrait",
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:26",
+	"super" : "TranscriptOutput",
+	"category" : "Transcript-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"stream",
@@ -8,11 +12,5 @@
 		"connections"
 	],
 	"name" : "TranscriptRubricOutput",
-	"commentStamp" : "HenrikNergaard 2/27/2016 12:26",
-	"super" : "Model",
-	"traitcomposition" : "TTranscriptOutput",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Transcript-UI"
+	"type" : "normal"
 }

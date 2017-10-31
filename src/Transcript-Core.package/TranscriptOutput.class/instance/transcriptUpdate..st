@@ -1,2 +1,2 @@
-updating
+transcript
 transcriptUpdate: updateStrategy

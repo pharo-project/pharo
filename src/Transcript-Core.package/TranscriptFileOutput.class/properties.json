@@ -1,16 +1,14 @@
 {
-	"classtraitcomposition" : "TTranscriptOutput classTrait",
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:08",
+	"super" : "TranscriptOutput",
+	"category" : "Transcript-Core-Outputs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"fileStream",
 		"fileName"
 	],
 	"name" : "TranscriptFileOutput",
-	"commentStamp" : "HenrikNergaard 2/27/2016 12:08",
-	"super" : "Object",
-	"traitcomposition" : "TTranscriptOutput",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "Transcript-Core-Outputs"
+	"type" : "normal"
 }
