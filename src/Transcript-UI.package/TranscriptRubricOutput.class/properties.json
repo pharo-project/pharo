@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:26",
+	"super" : "TranscriptOutput",
+	"category" : "Transcript-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"cleared",
+		"textMorph",
+		"connections"
+	],
+	"name" : "TranscriptRubricOutput",
+	"type" : "normal"
+}

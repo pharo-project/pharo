@@ -1,0 +1,4 @@
+updating
+updateRubricOutput: aRubricTransriptModel
+
+	aRubricTransriptModel checkForUpdate

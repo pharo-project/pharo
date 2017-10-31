@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:26",
+	"super" : "TranscriptUpdateStrategy",
+	"category" : "Transcript-UI",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"updateDelay",
+		"updateConstraints",
+		"constraintsChecker",
+		"nextUpdate"
+	],
+	"name" : "TranscriptZMorphicUpdateStrategy",
+	"type" : "normal"
+}

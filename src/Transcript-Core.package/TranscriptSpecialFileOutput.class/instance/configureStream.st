@@ -1,0 +1,4 @@
+private
+configureStream
+
+	fileStream converter

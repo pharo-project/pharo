@@ -260,6 +260,8 @@ baseline: spec
 		spec package: 'Zinc-Tests'.
 		spec package: 'TravisIntegrationHelp'.
 		spec package: 'System-Identification-Tests'.
+		spec package: 'Transcript-Tests'.
+		spec package: 'Transcript-UI-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.

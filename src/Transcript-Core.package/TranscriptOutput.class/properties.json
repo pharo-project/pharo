@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "PavelKrivanek 10/31/2017 10:19",
+	"super" : "Model",
+	"category" : "Transcript-Core-Outputs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TranscriptOutput",
+	"type" : "normal"
+}

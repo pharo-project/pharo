@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:08",
+	"super" : "TranscriptOutput",
+	"category" : "Transcript-Core-Outputs",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"fileStream",
+		"fileName"
+	],
+	"name" : "TranscriptFileOutput",
+	"type" : "normal"
+}

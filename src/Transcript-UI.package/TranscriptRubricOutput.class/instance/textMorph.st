@@ -1,0 +1,4 @@
+accessing
+textMorph
+
+	^textMorph 

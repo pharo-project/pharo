@@ -1,0 +1,4 @@
+private
+addDependent: anObject
+	
+	"nope"

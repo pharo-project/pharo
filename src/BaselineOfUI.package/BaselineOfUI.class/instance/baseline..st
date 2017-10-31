@@ -21,7 +21,7 @@ baseline: spec
 		spec package: 'FontChooser'.
 
 		spec package: 'Tool-Base'.
-		spec package: 'Transcript-Tool'.
+		spec package: 'Transcript-UI'.
 		spec package: 'Tool-Workspace'.
 
 		spec package: 'Spec-Core'.

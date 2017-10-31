@@ -1,0 +1,1 @@
+Class used for testing, provides accessors to instance variables not accessible by default.

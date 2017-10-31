@@ -1,0 +1,16 @@
+{
+	"commentStamp" : "HenrikNergaard 2/27/2016 13:31",
+	"super" : "Object",
+	"category" : "Transcript-Core-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"stream",
+		"mutex",
+		"outputs",
+		"updateStrategy"
+	],
+	"name" : "TranscriptStream",
+	"type" : "normal"
+}

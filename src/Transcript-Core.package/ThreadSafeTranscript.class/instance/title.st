@@ -1,4 +1,0 @@
-ui building
-title
-
-	^ 'Transcript'

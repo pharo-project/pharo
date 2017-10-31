@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "HenrikNergaard 2/27/2016 12:03",
+	"super" : "TranscriptOutput",
+	"category" : "Transcript-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"data",
+		"subs",
+		"clearCount",
+		"closeCount",
+		"entryCount",
+		"updateCount",
+		"subscribedInCount"
+	],
+	"name" : "TestableTranscriptOutput",
+	"type" : "normal"
+}

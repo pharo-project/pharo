@@ -1,0 +1,1 @@
+This is a special file output class meant for filestreams which are held open by others, such as stdout and stderr.

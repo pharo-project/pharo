@@ -1,0 +1,4 @@
+binding
+bindingOf: aString 
+
+	^nil

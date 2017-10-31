@@ -46,7 +46,6 @@ forCompatibility
 		registerSystemClassNamed: #FT2Handle; "GUI"
 		registerSystemClassNamed: #FreeTypeSettings; "GUI"
 	
-		registerSystemClassNamed: #NonInteractiveTranscript; "System"
 		registerSystemClassNamed: #ASTCache; "System"
 		registerSystemClassNamed: #NOCCompletionTable; "Tool"
 		registerSystemClassNamed: #Nautilus; "Tool"

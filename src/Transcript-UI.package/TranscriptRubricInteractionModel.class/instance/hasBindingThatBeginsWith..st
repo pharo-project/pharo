@@ -1,0 +1,4 @@
+shout
+hasBindingThatBeginsWith: aString
+
+	^false
