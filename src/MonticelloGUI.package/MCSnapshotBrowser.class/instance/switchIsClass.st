@@ -1,3 +1,0 @@
-switch
-switchIsClass
-	^ switch = #class

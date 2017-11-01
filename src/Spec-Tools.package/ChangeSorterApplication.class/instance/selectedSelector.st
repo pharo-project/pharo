@@ -1,4 +1,0 @@
-api
-selectedSelector
-
-	 ^ methodsListPresenter selectedItem

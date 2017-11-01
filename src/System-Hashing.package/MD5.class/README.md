@@ -1,1 +1,0 @@
-This class implements the MD5 128-bit one-way hash function. It uses the MD5Plugin for better performance. Some methods are taken from the original version of MD5NonPrimitive.

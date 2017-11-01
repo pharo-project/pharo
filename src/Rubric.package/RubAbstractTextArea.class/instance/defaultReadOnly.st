@@ -1,4 +1,0 @@
-defaults
-defaultReadOnly
-
-	^ false

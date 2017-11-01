@@ -1,4 +1,0 @@
-button-variables
-browseVariablesButtonState
-
-	^ false

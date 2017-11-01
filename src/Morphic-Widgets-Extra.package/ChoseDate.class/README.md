@@ -1,1 +1,0 @@
-A ChoseDate is an announcement raised by the CalendarMorph

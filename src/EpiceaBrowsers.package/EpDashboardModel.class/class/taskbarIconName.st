@@ -1,4 +1,0 @@
-icons
-taskbarIconName
-
-	^ #config

@@ -1,3 +1,0 @@
-event type
-eventType
-	^ nil

@@ -1,4 +1,0 @@
-private
-defaultInitialExtent
-	
-	^ World extent

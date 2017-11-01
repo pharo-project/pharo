@@ -1,1 +1,0 @@
-Used to announce the change of a selection in the tree

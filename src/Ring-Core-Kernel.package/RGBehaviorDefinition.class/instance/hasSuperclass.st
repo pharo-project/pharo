@@ -1,4 +1,0 @@
-testing
-hasSuperclass
-
-	^superclass notNil

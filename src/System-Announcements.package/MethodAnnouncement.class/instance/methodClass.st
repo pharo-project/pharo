@@ -1,3 +1,0 @@
-accessing
-methodClass
-	^ method methodClass

@@ -1,4 +1,0 @@
-actions lookup
-debuggingActionsPragmas
-
-	^ { #debuggingAction }

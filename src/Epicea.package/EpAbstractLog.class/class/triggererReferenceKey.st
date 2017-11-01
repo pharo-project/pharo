@@ -1,4 +1,0 @@
-tag keys
-triggererReferenceKey
-
-	^ #trigger

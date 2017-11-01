@@ -1,4 +1,0 @@
-compatibility
-itemClass
-
-	^ self selectedClass 

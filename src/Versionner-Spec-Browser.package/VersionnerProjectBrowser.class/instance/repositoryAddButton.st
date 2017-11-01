@@ -1,3 +1,0 @@
-accessing
-repositoryAddButton
-	^ repositoryAddButton

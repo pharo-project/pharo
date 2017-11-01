@@ -1,3 +1,0 @@
-public
-truncate
-	entry truncate

@@ -1,1 +1,0 @@
-I know how to create accessors for a class var

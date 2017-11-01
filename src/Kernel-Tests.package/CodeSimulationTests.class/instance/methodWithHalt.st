@@ -1,3 +1,0 @@
-tests
-methodWithHalt
-	self halt

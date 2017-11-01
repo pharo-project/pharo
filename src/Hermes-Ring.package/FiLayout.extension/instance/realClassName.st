@@ -1,2 +1,0 @@
-*Hermes-Ring
-realClassName

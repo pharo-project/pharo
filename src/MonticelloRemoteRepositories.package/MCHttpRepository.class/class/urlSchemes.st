@@ -1,3 +1,0 @@
-accessing
-urlSchemes
-	^ #(http https)

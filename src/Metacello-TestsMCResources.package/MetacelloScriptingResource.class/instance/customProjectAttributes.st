@@ -1,3 +1,0 @@
-external repository
-customProjectAttributes
-    ^ #(#custom)

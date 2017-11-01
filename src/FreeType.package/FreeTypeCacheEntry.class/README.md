@@ -1,1 +1,0 @@
-An entry for the FreeTypeCache

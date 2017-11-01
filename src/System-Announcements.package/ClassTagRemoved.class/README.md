@@ -1,1 +1,0 @@
-I am announced when existing class tag is removed from package

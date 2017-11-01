@@ -1,1 +1,0 @@
-A GLMMatchingPresentationsChanged is announced by the pane when the presentations that should be displayed change due to changes in the values of the ports of the pane.

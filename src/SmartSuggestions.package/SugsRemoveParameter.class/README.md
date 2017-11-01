@@ -1,1 +1,0 @@
-I know how to remove a parameter from a method

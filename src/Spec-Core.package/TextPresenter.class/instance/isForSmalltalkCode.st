@@ -1,3 +1,0 @@
-api
-isForSmalltalkCode
-	^ isForSmalltalkCodeHolder value

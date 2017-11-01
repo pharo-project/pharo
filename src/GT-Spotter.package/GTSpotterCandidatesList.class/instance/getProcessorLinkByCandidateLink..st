@@ -1,4 +1,0 @@
-processors
-getProcessorLinkByCandidateLink: aCandidateLink
-
-	^ aCandidateLink processorLink

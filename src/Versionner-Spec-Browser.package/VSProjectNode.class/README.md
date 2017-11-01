@@ -1,1 +1,0 @@
-Class used to display projects with specific icons and no child in a tree.

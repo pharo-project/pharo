@@ -1,1 +1,0 @@
-i am abstract OpenGL renderer facade. 

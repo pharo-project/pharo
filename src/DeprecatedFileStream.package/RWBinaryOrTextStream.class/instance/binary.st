@@ -1,3 +1,0 @@
-modes
-binary
-	isBinary := true

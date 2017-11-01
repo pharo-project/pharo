@@ -1,1 +1,0 @@
-I am a lookup key (acting like an association but) holding only weakly on my value.

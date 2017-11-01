@@ -1,3 +1,0 @@
-private
-length
-	^ 1

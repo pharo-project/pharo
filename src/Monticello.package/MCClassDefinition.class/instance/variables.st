@@ -1,3 +1,0 @@
-accessing
-variables
-	^ variables

@@ -1,3 +1,0 @@
-operations
-refresh
-	self updateReport

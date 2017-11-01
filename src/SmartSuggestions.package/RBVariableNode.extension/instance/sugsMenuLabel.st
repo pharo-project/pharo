@@ -1,3 +1,0 @@
-*SmartSuggestions
-sugsMenuLabel
-	^ name

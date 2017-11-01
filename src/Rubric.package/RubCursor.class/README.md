@@ -1,1 +1,0 @@
-I represent a cursor for the mouse 

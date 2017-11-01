@@ -1,5 +1,0 @@
-commands
-cmdBrowsePackageChanges
-	<command>
-	^ MBPackageChangesCommand
-	

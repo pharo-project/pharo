@@ -1,1 +1,0 @@
-I am an abstract announcement class. Extend me if you want to use an announcement related to a Rubric action  

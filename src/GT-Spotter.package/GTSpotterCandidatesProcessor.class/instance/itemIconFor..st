@@ -1,3 +1,0 @@
-private
-itemIconFor: anObject
-	^ nil

@@ -1,4 +1,0 @@
-actions
-doLoad
-
-	self subclassResponsibility

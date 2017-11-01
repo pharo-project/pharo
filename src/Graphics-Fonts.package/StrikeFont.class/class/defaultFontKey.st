@@ -1,3 +1,0 @@
-accessing
-defaultFontKey
-	^ self dejaVuKey 

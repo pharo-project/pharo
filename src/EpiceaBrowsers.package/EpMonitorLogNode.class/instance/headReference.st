@@ -1,3 +1,0 @@
-accessing
-headReference
-	^ headReference

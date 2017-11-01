@@ -1,1 +1,0 @@
-This filter only accepts code changes that would produce a change if applied in current image.

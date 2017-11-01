@@ -1,1 +1,0 @@
-I am an in-memory store of entries.

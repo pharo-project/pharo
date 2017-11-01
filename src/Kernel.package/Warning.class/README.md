@@ -1,1 +1,0 @@
-A Warning is a Notification which by default should be brought to the attention of the user.

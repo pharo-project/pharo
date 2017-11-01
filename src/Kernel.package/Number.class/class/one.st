@@ -1,4 +1,0 @@
-constants
-one
-
-	^1

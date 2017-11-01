@@ -1,1 +1,0 @@
-A MCRemoval represents the removal of an entity of a given snapshot.

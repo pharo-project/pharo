@@ -1,4 +1,0 @@
-accessing
-morph
-
-	^ self widget

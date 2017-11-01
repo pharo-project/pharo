@@ -1,3 +1,0 @@
-testing
-definesClass: aClass
-	^ true

@@ -1,3 +1,0 @@
-visitor
-visitClassModification: aModificationClassChange
-	^ self modificationIcon

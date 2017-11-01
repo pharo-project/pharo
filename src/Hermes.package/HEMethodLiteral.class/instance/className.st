@@ -1,3 +1,0 @@
-introspection
-className
-	^ className

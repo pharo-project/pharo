@@ -1,1 +1,0 @@
-I am a template class whose algorithm for serialize a collection of objects consists on delegate the serialization of each individual object to the subclass.

@@ -1,4 +1,0 @@
-accessing matrices
-pathTransform
-
-	^ pathTransform

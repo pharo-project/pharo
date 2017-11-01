@@ -1,4 +1,0 @@
-private
-protocolOrganizer
-	
-	^ protocolOrganizer

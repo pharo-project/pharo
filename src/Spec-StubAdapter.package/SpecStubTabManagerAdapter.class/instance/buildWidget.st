@@ -1,4 +1,0 @@
-factory
-buildWidget
-
-	^ SpecStubTabManagerView new

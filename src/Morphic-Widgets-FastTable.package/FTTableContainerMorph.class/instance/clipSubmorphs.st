@@ -1,4 +1,0 @@
-drawing
-clipSubmorphs
-
-	^ true

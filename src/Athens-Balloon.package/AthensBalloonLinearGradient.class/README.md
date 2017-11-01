@@ -1,1 +1,0 @@
-i represent a linear gradient paint in balloon backend.

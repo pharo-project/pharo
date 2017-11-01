@@ -1,3 +1,0 @@
-accessing
-socketStreamClass
-	^ self subclassResponsibility 

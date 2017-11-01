@@ -1,4 +1,0 @@
-values
-searchFieldTextColor
-	
-	^ Color black

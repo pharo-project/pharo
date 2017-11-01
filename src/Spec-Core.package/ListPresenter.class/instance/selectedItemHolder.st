@@ -1,4 +1,0 @@
-private
-selectedItemHolder
-
-	^ selectionHolder selection

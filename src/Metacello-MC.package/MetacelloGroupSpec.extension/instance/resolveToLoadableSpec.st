@@ -1,4 +1,0 @@
-*metacello-mc
-resolveToLoadableSpec
-
-	^nil

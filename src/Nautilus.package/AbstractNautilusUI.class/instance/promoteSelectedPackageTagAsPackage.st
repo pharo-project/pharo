@@ -1,3 +1,0 @@
-menu-packages
-promoteSelectedPackageTagAsPackage
-	self subclassResponsibility

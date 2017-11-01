@@ -1,3 +1,0 @@
-installing
-postload
-	self evaluate

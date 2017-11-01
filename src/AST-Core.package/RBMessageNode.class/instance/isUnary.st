@@ -1,3 +1,0 @@
-testing
-isUnary
-	^arguments isEmpty

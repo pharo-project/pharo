@@ -1,1 +1,0 @@
-This strategy replaces the presentations from the pane of the destination port.

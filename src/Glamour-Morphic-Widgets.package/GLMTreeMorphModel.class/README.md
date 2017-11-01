@@ -1,1 +1,0 @@
-ClassTree new openOn: Collection

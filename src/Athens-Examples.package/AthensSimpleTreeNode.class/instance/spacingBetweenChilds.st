@@ -1,3 +1,0 @@
-accessing
-spacingBetweenChilds
-	^ 10

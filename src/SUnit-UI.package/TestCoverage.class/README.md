@@ -1,1 +1,0 @@
-I wrap a method in order to detect whether it has been called or not. Then I can be used to calculate test coverage for SUnit.

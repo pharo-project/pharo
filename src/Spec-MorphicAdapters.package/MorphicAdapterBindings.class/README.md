@@ -1,1 +1,0 @@
-I am used to link the spec-adapter names to the morphic adapters

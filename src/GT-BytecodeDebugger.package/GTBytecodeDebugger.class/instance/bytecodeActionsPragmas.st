@@ -1,4 +1,0 @@
-building actions
-bytecodeActionsPragmas
-
-	^ #( bytecodeCodeDebuggingAction )

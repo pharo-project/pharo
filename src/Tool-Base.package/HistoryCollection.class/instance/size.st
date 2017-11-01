@@ -1,4 +1,0 @@
-protocol
-size
-
-	^ storage size

@@ -1,4 +1,0 @@
-converting
-asMatrixTransform2x3
-	^globalTransform asMatrixTransform2x3
-		composedWithLocal: localTransform asMatrixTransform2x3

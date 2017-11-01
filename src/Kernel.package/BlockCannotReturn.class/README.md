@@ -1,1 +1,0 @@
-This exception is thrown when a block tries to return but there is no home context.

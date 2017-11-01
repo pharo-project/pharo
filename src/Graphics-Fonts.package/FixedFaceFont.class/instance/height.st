@@ -1,3 +1,0 @@
-accessing
-height
-	^baseFont height

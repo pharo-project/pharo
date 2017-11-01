@@ -1,4 +1,0 @@
-converting
-asStringOrText
-
-	^self text

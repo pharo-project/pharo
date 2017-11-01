@@ -1,3 +1,0 @@
-accessing
-lightBaseColor
-	^ Color darkGray

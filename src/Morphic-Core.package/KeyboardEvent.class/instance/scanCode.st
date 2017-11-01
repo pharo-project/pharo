@@ -1,3 +1,0 @@
-keyboard
-scanCode
-	^scanCode

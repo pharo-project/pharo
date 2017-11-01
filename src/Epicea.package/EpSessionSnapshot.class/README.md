@@ -1,1 +1,0 @@
-When an image is launched, a session starts. After that, the session can be snapshoted multiple times. I represent the snapshot of a session.

@@ -1,1 +1,0 @@
-I am a specialized version for the 'self'

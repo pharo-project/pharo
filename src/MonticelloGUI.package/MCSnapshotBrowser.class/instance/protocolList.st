@@ -1,3 +1,0 @@
-listing
-protocolList
-	^ self visibleProtocols

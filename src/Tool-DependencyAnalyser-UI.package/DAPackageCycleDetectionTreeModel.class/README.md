@@ -1,1 +1,0 @@
-A PDPackageDetectCycleTreeModel shows all cycles among packages from a graph of dependencies.

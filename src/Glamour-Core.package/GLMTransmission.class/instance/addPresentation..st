@@ -1,3 +1,0 @@
-accessing
-addPresentation: aPresentation
-	self transmissionStrategy addPresentation: aPresentation

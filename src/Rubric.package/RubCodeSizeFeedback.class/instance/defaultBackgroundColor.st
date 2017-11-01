@@ -1,3 +1,0 @@
-defaults
-defaultBackgroundColor
-	^ self backgroundColor 

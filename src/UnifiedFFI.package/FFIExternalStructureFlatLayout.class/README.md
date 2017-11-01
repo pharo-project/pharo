@@ -1,1 +1,0 @@
-I represent a flattened layout of a structure. I am use to compute whether a structure is passed in registers or not, and which registers are used for passing the structure.

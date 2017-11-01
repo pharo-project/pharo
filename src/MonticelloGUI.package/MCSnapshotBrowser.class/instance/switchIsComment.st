@@ -1,3 +1,0 @@
-switch
-switchIsComment
-	^ switch = #comment.

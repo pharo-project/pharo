@@ -1,3 +1,0 @@
-accessing
-daPackage
-	^ self content

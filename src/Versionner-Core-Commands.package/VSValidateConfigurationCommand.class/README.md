@@ -1,1 +1,0 @@
-This command allows you to check inconsistencies in a Configuration class.

@@ -1,3 +1,0 @@
-handling
-defaultAction
-	Smalltalk signalLowSpace.

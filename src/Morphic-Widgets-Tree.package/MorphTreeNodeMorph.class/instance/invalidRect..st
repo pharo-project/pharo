@@ -1,3 +1,0 @@
-change reporting
-invalidRect: aRectangle
-	

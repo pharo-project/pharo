@@ -1,3 +1,0 @@
-accessing
-refresh
-	self collectCommitActions

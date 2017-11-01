@@ -1,3 +1,0 @@
-temp vars
-copiedVars
-	^ copiedVars

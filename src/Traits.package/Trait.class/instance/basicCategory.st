@@ -1,3 +1,0 @@
-accessing
-basicCategory
-	^category

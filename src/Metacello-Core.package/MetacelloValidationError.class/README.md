@@ -1,1 +1,0 @@
-MetacelloValidationError indicates that errors are to be expected if an attempt to use the configuration/version is made

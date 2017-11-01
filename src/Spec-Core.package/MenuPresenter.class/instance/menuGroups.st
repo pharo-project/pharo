@@ -1,4 +1,0 @@
-api
-menuGroups
-
-	^ groups value

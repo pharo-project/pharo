@@ -1,1 +1,0 @@
-I am an expert on Mac OS X filesystem conventions. I resolve origins according to these conventions.

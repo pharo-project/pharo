@@ -1,3 +1,0 @@
-rendering
-actOnPaneSelected: anAnnouncement
-	tabs selectedPageIndex: anAnnouncement position

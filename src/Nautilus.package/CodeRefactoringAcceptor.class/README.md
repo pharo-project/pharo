@@ -1,1 +1,0 @@
-I am an acceptor in the context of a RBRefactoring. I create a namespace of the current browser environment and set it as the model for the refactoring. The refactoring is executed and opens a changes browser for viewing, accepting or cancel the refactoring operation.

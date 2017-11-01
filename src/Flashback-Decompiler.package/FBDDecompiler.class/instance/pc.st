@@ -1,3 +1,0 @@
-private
-pc
-	^ instructionStream pc

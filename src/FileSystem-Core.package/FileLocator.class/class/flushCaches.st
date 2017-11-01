@@ -1,3 +1,0 @@
-flushing
-flushCaches
-	Resolver flushCaches

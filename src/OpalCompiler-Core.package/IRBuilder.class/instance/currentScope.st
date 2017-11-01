@@ -1,3 +1,0 @@
-scopes
-currentScope 
-	^currentScope top

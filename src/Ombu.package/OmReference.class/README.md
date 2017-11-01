@@ -1,1 +1,0 @@
-I represent a reference to an entry into a store.

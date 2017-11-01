@@ -1,3 +1,0 @@
-morphic ui
-repositorySearchMaxSize
-	^self class repositorySearchMaxSize

@@ -1,1 +1,0 @@
-I am a toolbar to be used in the EpLogBrowserModel.

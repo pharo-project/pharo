@@ -1,3 +1,0 @@
-private
-next
-	^ generator next

@@ -1,3 +1,0 @@
-accessing decorators
-withOpeningClosingDelimitersHighlight
-	self withDecoratorNamed: #openingClosingDelimitersHighlight

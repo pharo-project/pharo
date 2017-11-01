@@ -1,1 +1,0 @@
-A utility class containing the help for GT SUnitDebugger.

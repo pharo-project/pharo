@@ -1,3 +1,0 @@
-requirements
-canBeUnhealthy
-	^ true

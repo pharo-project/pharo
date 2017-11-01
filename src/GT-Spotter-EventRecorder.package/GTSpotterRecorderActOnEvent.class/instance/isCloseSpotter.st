@@ -1,3 +1,0 @@
-testing
-isCloseSpotter
-	^ true

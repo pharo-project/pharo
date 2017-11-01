@@ -1,3 +1,0 @@
-ui
-windowIsClosing
-	self unregister.

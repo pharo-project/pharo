@@ -1,4 +1,0 @@
-accessing
-stderr
-		
-	^ Stdio stderr

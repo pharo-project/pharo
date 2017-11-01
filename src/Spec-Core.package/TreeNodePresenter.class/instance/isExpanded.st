@@ -1,4 +1,0 @@
-api
-isExpanded
-	
-	^ isExpanded value

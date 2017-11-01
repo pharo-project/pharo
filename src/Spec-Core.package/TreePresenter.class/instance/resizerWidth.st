@@ -1,4 +1,0 @@
-api
-resizerWidth
-
-	^ resizerWidth value

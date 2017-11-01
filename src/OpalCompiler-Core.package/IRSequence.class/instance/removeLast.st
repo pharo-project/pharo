@@ -1,3 +1,0 @@
-removing
-removeLast
-	^sequence removeLast.

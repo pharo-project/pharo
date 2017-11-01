@@ -1,4 +1,0 @@
-definition
-priorDefinition
-
-	^ priorDefinition

@@ -1,4 +1,0 @@
-api
-selectedIndex
-
-	^ listPresenter selectedIndex

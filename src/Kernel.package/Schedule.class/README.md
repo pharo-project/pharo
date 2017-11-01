@@ -1,1 +1,0 @@
-I represent a powerful class for implementing recurring schedules.

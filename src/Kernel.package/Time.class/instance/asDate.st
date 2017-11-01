@@ -1,4 +1,0 @@
-converting
-asDate
-
-	^ Date today

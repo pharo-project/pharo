@@ -1,3 +1,0 @@
-methods
-justSendsSuper
-	super justSendsSuper

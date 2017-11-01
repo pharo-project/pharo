@@ -1,1 +1,0 @@
-I am the abstract class for all the Scroll gesture detectors

@@ -1,3 +1,0 @@
-performing
-reference
-	^ RBClassToRename new

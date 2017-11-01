@@ -1,3 +1,0 @@
-private
-space
-	codeStream space

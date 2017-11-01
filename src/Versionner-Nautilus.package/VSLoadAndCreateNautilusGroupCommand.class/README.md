@@ -1,2 +1,0 @@
-Load into your image the selected version or baseline. If you already have a version installed, then it will be simply overriden.
-After loading, it creates a group in Nautilus with all the loaded packages.

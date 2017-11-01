@@ -1,3 +1,0 @@
-printing
-millisecondsUntilResumptionTime: millisecondResumptionTime
-	self subclassResponsibility 

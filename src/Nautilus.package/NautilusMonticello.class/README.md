@@ -1,1 +1,0 @@
-A NautilusMonticello is a class used to handle monticello integration into Nautilus by creating the menu entries

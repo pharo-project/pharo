@@ -1,4 +1,0 @@
-api
-resizable
-
-	^ resizable value

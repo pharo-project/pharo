@@ -1,1 +1,0 @@
-A filter for booleans

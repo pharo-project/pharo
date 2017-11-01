@@ -1,1 +1,0 @@
-This debugger action is responsible for saving the current method from a debugger.

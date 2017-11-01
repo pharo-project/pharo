@@ -1,3 +1,0 @@
-api
-color
- ^ sliders color

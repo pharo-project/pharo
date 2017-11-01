@@ -1,3 +1,0 @@
-accessing
-repositoryLabel
-	^ repositoryLabel

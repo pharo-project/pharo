@@ -1,3 +1,0 @@
-evaluating
-value
-	^ self getHandle

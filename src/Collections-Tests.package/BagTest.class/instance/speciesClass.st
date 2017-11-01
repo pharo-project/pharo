@@ -1,4 +1,0 @@
-requirements
-speciesClass
-	
-	^ Bag

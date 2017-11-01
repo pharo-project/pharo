@@ -1,4 +1,0 @@
-api
-selectedClassIndex
-
-	 ^ classesListPresenter selectedIndex

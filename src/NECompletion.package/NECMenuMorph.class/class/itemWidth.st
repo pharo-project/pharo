@@ -1,3 +1,0 @@
-preferences
-itemWidth
-	^ 250

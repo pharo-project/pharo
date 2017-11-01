@@ -1,3 +1,0 @@
-visitor
-visitTraitModification: aTraitModificationChange
-	^ self modificationIcon

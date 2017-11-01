@@ -1,3 +1,0 @@
-font creation
-localeChanged
-	self setupDefaultFallbackFont

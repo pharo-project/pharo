@@ -1,1 +1,0 @@
-Definition of a clickable highlighted range of text with optional borders.

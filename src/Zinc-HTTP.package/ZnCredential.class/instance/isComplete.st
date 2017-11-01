@@ -1,3 +1,0 @@
-testing
-isComplete
-	^ self subclassResponsibility 

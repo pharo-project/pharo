@@ -1,3 +1,0 @@
-*SUnit-Core
-isTestCase
-	^false

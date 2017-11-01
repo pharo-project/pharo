@@ -1,3 +1,0 @@
-escaping
-isEscapingRead
-	^escaping = #escapingRead

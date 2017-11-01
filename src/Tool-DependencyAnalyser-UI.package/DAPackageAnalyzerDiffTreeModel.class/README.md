@@ -1,1 +1,0 @@
-A PDPackageAnalyzerDiffTreeModel is to watch what are the difference between two analysis of dependencies.

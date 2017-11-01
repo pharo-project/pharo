@@ -1,3 +1,0 @@
-options
-shouldStyle
-	^true

@@ -1,3 +1,0 @@
-deprecated
-cursorEnhanced
-	^self

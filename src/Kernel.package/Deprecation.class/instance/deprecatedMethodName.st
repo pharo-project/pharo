@@ -1,3 +1,0 @@
-private
-deprecatedMethodName
-	^self contextOfDeprecatedMethod method printString

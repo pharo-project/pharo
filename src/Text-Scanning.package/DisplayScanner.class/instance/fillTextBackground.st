@@ -1,3 +1,0 @@
-displaying
-fillTextBackground
-	self subclassResponsibility

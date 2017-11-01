@@ -1,3 +1,0 @@
-external core
-isExternal
-    ^ false

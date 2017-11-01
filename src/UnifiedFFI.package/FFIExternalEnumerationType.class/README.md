@@ -1,1 +1,0 @@
-I define the type for FFIExternalEnumeration objects.

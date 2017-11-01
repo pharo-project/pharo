@@ -1,3 +1,0 @@
-canvas accessing
-origin
-	^ origin

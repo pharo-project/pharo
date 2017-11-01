@@ -1,3 +1,0 @@
-accessing
-externalType
-	^ self subclassResponsibility

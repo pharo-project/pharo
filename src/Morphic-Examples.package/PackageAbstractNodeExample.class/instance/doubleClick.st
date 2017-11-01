@@ -1,3 +1,0 @@
-accessing
-doubleClick
-	self browseItem

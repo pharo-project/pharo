@@ -1,1 +1,0 @@
-I'm the one who manage the navigation and I have memory from what I've been navigating

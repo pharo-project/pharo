@@ -1,3 +1,0 @@
-accessing
-hasCheckBox	
-	^ checked notNil

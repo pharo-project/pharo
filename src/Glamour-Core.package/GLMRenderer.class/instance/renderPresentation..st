@@ -1,4 +1,0 @@
-rendering
-renderPresentation: aPresentation 
-
-	^ nil

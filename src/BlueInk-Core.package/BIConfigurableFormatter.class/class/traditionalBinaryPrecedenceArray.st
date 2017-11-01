@@ -1,3 +1,0 @@
-accessing
-traditionalBinaryPrecedenceArray
-	^ DefaultPrettyPrintContext traditionalBinaryPrecedenceArray printString 

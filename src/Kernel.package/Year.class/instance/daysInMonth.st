@@ -1,4 +1,0 @@
-accessing
-daysInMonth 
-
-	^ Date daysInMonth  

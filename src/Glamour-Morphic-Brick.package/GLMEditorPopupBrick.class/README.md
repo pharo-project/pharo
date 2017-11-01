@@ -1,1 +1,0 @@
-I am a popup with a text editor allowing users to "in-place" edit values

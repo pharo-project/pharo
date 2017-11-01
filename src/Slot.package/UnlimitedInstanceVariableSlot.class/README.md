@@ -1,1 +1,0 @@
-We store state in a hidden array. Contrary to normal instance variables the number is unlimited.

@@ -1,3 +1,0 @@
-matching
-canMatch: aProgramNode 
-	^true

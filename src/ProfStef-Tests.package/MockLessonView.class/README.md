@@ -1,1 +1,0 @@
-A LessonView mock for testing purposes

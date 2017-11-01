@@ -1,1 +1,0 @@
-Versionner toolbar spec definition.

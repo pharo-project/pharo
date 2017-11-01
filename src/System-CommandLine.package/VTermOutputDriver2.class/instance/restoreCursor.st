@@ -1,3 +1,0 @@
-deprecated
-restoreCursor
-	^self

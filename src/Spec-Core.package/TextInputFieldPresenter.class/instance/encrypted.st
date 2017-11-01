@@ -1,4 +1,0 @@
-accessing
-encrypted
-
-	^ isEncrypted value

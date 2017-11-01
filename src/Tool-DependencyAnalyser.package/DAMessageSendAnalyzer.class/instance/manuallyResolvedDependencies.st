@@ -1,3 +1,0 @@
-accessing
-manuallyResolvedDependencies
-	^ self rPackage manuallyResolvedDependencies 

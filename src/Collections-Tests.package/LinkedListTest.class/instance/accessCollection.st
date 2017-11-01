@@ -1,3 +1,0 @@
-requirements
-accessCollection
-	^collectionWithoutEqualElements 

@@ -1,3 +1,0 @@
-accessing
-paint
-	^ paint  

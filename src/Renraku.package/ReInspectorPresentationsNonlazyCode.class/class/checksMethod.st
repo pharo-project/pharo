@@ -1,3 +1,0 @@
-testing-interest
-checksMethod
-	^ true

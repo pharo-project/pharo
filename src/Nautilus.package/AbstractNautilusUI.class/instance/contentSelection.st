@@ -1,3 +1,0 @@
-accessing
-contentSelection
-	^ contentSelection

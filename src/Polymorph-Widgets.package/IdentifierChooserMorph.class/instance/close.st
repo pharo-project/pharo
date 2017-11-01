@@ -1,3 +1,0 @@
-action
-close
-	self delete.

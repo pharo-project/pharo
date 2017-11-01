@@ -1,3 +1,0 @@
-delegated
-sourcesName
-	^ Smalltalk sourcesName

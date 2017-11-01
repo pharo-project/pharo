@@ -1,4 +1,0 @@
-converting
-asGlamorousPane 
-	 
-	^self

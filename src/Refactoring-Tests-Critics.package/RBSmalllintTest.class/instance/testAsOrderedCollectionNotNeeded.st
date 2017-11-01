@@ -1,3 +1,0 @@
-tests
-testAsOrderedCollectionNotNeeded
-	self ruleFor: self currentSelector

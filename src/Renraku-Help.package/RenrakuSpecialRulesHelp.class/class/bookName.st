@@ -1,4 +1,0 @@
-accessing
-bookName
-
-	^ 'Special Rules'

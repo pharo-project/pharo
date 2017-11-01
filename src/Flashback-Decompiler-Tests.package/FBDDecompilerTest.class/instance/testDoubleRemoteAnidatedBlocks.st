@@ -1,3 +1,0 @@
-tests
-testDoubleRemoteAnidatedBlocks
-	self checkCorrectDecompilation: #doubleRemoteAnidatedBlocks.

@@ -1,3 +1,0 @@
-execute
-execute
-	target inspect

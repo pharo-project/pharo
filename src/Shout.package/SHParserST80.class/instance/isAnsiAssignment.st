@@ -1,3 +1,0 @@
-token testing
-isAnsiAssignment
-	^ currentToken = ':='

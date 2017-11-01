@@ -1,3 +1,0 @@
-private
-newAnnouncer
-	^ Announcer new

@@ -1,3 +1,0 @@
-printing
-millisecondsUntilResumptionTime: millisecondResumptionTime
-	^ millisecondResumptionTime - Time millisecondClockValue

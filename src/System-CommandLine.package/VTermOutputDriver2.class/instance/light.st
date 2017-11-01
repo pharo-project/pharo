@@ -1,3 +1,0 @@
-deprecated
-light
-	^self

@@ -1,3 +1,0 @@
-accessing
-stderr
-	^ stderr

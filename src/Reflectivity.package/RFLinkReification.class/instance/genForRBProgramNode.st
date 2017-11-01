@@ -1,3 +1,0 @@
-generate
-genForRBProgramNode
-	^link asLiteralNode

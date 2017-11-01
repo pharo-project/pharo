@@ -1,3 +1,0 @@
-accessing
-targetClass
-	self subclassResponsibility.

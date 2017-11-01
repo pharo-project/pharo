@@ -1,3 +1,0 @@
-private
-selectedDirectory
-	^ self directory

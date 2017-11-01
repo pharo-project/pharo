@@ -1,4 +1,0 @@
-accessing
-defaultIcon
-
-	^ GLMUIThemeExtraIcons glamorousHelp

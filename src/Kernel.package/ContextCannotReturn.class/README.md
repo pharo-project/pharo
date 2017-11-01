@@ -1,1 +1,0 @@
-This exception is thrown when a value is returned from a context, but the context is dead and the return can not be done.

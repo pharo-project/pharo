@@ -1,4 +1,0 @@
-API
-beComplete
-
-	self close.

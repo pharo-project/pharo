@@ -1,0 +1,55 @@
+"
+i used to hold shapes built by path builder in cairo backend
+"
+Class {
+	#name : #AthensCairoPath,
+	#superclass : #FFIExternalObject,
+	#traits : 'TCairoLibrary',
+	#classTraits : 'TCairoLibrary classTrait',
+	#category : 'Athens-Cairo-Paths'
+}
+
+{ #category : #'instance creation' }
+AthensCairoPath class >> finalizeResourceData: aHandle [
+
+	self primDestroyPath: aHandle value 
+]
+
+{ #category : #'instance creation' }
+AthensCairoPath class >> primDestroyPath: aHandle [
+
+	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
+	
+	^ self nbCall: #(void cairo_path_destroy ( ulong aHandle ))
+
+]
+
+{ #category : #converting }
+AthensCairoPath >> asAthensShapeOn: anAthensCanvas [ 
+	
+	^ self
+]
+
+{ #category : #initialize-release }
+AthensCairoPath >> initialize [ 
+	handle value = 0 ifTrue: [ 
+		self error: 'Error creating new path' ].
+	FFIExternalResourceManager addResource: self data: handle
+]
+
+{ #category : #drawing }
+AthensCairoPath >> paintFillsUsing: aPaint on: anAthensCanvas [ 
+	
+	"This method is a part of rendering dispatch  Canvas->receiver->paint"
+	
+	^ aPaint athensFillPath: self on: anAthensCanvas
+]
+
+{ #category : #'instance creation' }
+AthensCairoPath >> primDestroyPath: aHandle [
+
+	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
+	
+	^ self nbCall: #(void cairo_path_destroy ( ulong aHandle ))
+
+]

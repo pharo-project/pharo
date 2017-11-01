@@ -1,1 +1,0 @@
-A base superclass for rules that check AST nodes.

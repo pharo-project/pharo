@@ -1,4 +1,0 @@
-public
-maxFileNameLength
-
-	^ 255

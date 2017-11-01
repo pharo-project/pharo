@@ -1,1 +1,0 @@
-I am a trait used for testing.

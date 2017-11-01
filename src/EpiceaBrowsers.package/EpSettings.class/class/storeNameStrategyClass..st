@@ -1,4 +1,0 @@
-accessing
-storeNameStrategyClass: aStrategyClass
-
-	OmSessionStore storeNameStrategy: aStrategyClass new

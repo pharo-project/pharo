@@ -1,3 +1,0 @@
-accessing
-strongSelectionValue
-	^ strongSelectionValue

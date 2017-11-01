@@ -1,3 +1,0 @@
-accessing
-fileSize
-	^ 0

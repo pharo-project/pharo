@@ -1,3 +1,0 @@
-private
-rootEnvironment
-	^ environment rootEnvironment

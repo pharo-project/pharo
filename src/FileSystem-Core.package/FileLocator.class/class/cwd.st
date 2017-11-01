@@ -1,3 +1,0 @@
-origins
-cwd
-	^ self workingDirectory

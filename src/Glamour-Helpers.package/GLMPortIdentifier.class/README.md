@@ -1,1 +1,0 @@
-This class is a simple data structure to be used for identifying a port by name.

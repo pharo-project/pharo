@@ -1,1 +1,0 @@
-I am a node in a tree of Epicea logs that represents a log file. Read more in my superclass comment.

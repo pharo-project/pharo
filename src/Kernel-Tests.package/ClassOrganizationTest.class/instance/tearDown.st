@@ -1,3 +1,0 @@
-running
-tearDown
-	class removeFromSystem

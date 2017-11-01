@@ -1,3 +1,0 @@
-controlling
-resetFailures
-	failedProcesses removeAll

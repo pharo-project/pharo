@@ -1,3 +1,0 @@
-tests
-testPrimitiveErrorCode
-	self checkCorrectDecompilation: #examplePrimitiveErrorCode

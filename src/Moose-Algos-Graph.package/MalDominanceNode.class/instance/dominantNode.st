@@ -1,4 +1,0 @@
-accessing
-dominantNode
-
-	^ self find

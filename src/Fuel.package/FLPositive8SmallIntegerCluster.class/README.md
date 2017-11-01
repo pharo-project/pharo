@@ -1,1 +1,0 @@
-unsigned, 8-bit integer

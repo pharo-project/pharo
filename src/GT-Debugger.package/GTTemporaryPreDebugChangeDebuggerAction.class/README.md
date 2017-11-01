@@ -1,1 +1,0 @@
-This action adds the possibility of opening a GTDebugger from the PreDebugWindow.

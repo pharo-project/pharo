@@ -1,4 +1,0 @@
-callbacks
-profileSelection
-
-	textMorph tallyIt

@@ -1,3 +1,0 @@
-binding
-hasBindingOf: aString
-	^false

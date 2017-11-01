@@ -1,1 +1,0 @@
-I am a refactoring change for the class side of a class addition.

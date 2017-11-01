@@ -1,4 +1,0 @@
-accessing
-symbolicVersion
-
-	^symbolicVersion

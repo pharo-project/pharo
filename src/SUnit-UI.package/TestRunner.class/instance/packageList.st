@@ -1,3 +1,0 @@
-accessing-packages
-packageList
-	^ packages

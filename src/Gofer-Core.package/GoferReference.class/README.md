@@ -1,1 +1,0 @@
-A GoferReference is an abstract superclass for various kinds of references to Monticello packages and versions.

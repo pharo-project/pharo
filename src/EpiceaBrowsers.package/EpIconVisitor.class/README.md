@@ -1,1 +1,0 @@
-I answer an icon for each EpEvent.

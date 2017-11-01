@@ -1,1 +1,0 @@
-Groupbox with title with a vertical layout. Appears in a lighter colour than the owner's pane colour.

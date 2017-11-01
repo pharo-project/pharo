@@ -1,3 +1,0 @@
-defaults
-borderColor 
-	^Color gray

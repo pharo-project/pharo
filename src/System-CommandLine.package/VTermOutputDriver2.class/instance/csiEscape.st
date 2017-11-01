@@ -1,3 +1,0 @@
-deprecated
-csiEscape
-	^self

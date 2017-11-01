@@ -1,3 +1,0 @@
-composition
-compositionRectangle
-	^ container

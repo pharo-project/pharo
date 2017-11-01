@@ -1,3 +1,0 @@
-navigating
-startOfLine
-	^ self cr

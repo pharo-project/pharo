@@ -1,4 +1,0 @@
-results
-ir
-
-	^ ir optimize

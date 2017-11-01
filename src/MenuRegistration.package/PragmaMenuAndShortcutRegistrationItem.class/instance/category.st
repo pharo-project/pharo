@@ -1,4 +1,0 @@
-protocol
-category
-
-	^ category

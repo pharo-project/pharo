@@ -1,3 +1,0 @@
-testing
-mustTakeIntoAccountCheckSpace
-	^container listManager isCheckList

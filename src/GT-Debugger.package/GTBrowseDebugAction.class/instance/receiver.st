@@ -1,4 +1,0 @@
-accessing
-receiver
-
-	^ self debugger

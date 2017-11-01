@@ -1,3 +1,0 @@
-submorphs-accessing
-changeExtendCommentPolicy
-	self paragraphProvider model announcer announce: NautilusExtendCommentSwitch

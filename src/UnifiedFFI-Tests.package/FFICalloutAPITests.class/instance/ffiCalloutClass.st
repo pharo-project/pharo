@@ -1,3 +1,0 @@
-running
-ffiCalloutClass
-	^ FFICalloutAPI

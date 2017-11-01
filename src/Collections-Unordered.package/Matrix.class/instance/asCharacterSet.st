@@ -1,3 +1,0 @@
-converting
-asCharacterSet
-	^ contents asCharacterSet

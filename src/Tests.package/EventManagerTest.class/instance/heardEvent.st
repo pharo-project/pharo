@@ -1,4 +1,0 @@
-private
-heardEvent
-
-	succeeded := true

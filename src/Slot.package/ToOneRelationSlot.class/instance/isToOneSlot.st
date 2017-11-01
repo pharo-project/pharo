@@ -1,4 +1,0 @@
-testing
-isToOneSlot
-
-	^true

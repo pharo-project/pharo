@@ -1,3 +1,0 @@
-testing
-isInheritable
-	^self enabled

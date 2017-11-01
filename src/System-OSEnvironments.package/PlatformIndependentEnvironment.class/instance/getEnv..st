@@ -1,3 +1,0 @@
-private
-getEnv: aVariableName
-	^ nil

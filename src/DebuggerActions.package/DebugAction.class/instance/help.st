@@ -1,4 +1,0 @@
-accessing
-help
-
-	^ self defaultHelp

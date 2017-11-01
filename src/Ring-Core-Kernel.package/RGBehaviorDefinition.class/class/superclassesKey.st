@@ -1,4 +1,0 @@
-class-annotations
-superclassesKey
-
-	^#superclasses

@@ -1,3 +1,0 @@
-configuration
-edgeClass
-	^ MalWeightedEdge 

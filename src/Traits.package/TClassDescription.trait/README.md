@@ -1,1 +1,0 @@
-Kernel trait for ClassDescription

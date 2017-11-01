@@ -1,3 +1,0 @@
-accessing
-multiLineMessages
-	^ context multiLineMessages

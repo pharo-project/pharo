@@ -1,4 +1,0 @@
-values
-breadcrumbSeparatorColor
-
-	^ self breadcrumbItemBackgroundColor muchLighter slightlyDarker

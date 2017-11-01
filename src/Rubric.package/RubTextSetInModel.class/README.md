@@ -1,1 +1,0 @@
-I am raised when text is set in the model

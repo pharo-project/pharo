@@ -1,3 +1,0 @@
-drawing
-disableDrawing
-	drawingEnabled := false

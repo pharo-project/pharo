@@ -1,3 +1,0 @@
-initialization
-defaultBottomMargin
-	^ 11

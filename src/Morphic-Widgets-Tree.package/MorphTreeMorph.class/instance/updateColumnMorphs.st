@@ -1,3 +1,0 @@
-updating
-updateColumnMorphs
-	self privateUpdateColumnMorphs

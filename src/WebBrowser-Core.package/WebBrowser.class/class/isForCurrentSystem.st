@@ -1,4 +1,0 @@
-testing
-isForCurrentSystem
-
-	^self subclassResponsibility 

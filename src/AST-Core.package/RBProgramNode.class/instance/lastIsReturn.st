@@ -1,3 +1,0 @@
-testing
-lastIsReturn
-	^self isReturn

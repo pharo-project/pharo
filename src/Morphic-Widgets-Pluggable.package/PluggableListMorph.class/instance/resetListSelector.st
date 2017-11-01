@@ -1,4 +1,0 @@
-multi-selection
-resetListSelector
-
-	^ resetListSelector

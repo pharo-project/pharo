@@ -1,3 +1,0 @@
-mocking
-interactive
-	^interactive

@@ -1,1 +1,0 @@
-i am used to render freetype glyphs using balloon primitives.

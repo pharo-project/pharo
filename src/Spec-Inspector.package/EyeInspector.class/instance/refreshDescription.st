@@ -1,3 +1,0 @@
-event-handling
-refreshDescription
-	self refreshDescription: self selectedElement

@@ -1,3 +1,0 @@
-utilities
-pathNameDelimiter
-    self subclassResponsibility

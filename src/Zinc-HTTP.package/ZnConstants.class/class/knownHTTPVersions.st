@@ -1,3 +1,0 @@
-accessing
-knownHTTPVersions
-	^ #('HTTP/1.1' 'HTTP/1.0')

@@ -1,1 +1,0 @@
-I implement a filter for fast table. The filter (filterBlock) is a BlockClosure with two arguments. The first argument is a filtered item, the second argument is a string pattern. The block has to return true if the item should be displayed; false otherwise.

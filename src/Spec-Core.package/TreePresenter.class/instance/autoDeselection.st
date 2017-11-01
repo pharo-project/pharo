@@ -1,4 +1,0 @@
-api
-autoDeselection
-
-	^ autoDeselection value

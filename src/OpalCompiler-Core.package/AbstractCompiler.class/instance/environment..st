@@ -1,3 +1,0 @@
-accessing
-environment: anSmallTalkImage
-	self subclassResponsibility

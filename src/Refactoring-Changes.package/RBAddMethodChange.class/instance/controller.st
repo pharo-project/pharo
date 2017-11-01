@@ -1,3 +1,0 @@
-private
-controller
-	^ controller

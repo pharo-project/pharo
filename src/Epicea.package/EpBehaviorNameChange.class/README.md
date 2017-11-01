@@ -1,1 +1,0 @@
-I represent a rename of a class or a trait.

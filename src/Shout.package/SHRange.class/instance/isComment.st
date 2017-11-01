@@ -1,3 +1,0 @@
-tests
-isComment
-	^ type == #comment

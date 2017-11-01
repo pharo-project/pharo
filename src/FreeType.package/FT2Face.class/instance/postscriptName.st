@@ -1,3 +1,0 @@
-accessing
-postscriptName
-	^self primGetPostscriptName

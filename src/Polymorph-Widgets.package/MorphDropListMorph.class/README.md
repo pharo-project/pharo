@@ -1,1 +1,0 @@
-Drop list supporting morphs in list.

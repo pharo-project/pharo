@@ -1,3 +1,0 @@
-selection
-resetCategoriesList
-	self categoryWidget resetCategoryList

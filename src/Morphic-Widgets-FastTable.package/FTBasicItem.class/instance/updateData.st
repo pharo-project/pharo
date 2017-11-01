@@ -1,3 +1,0 @@
-updating
-updateData
-	children := nil

@@ -1,4 +1,0 @@
-accessing
-defaultMaxListSize
-
-	^100

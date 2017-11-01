@@ -1,4 +1,0 @@
-settings
-showBoundsInHalo
-
-	^ true

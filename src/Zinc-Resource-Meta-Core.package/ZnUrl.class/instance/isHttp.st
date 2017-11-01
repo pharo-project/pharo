@@ -1,3 +1,0 @@
-testing
-isHttp
-	^ scheme == #http

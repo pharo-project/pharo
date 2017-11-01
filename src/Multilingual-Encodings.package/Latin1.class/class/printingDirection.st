@@ -1,4 +1,0 @@
-accessing - displaying
-printingDirection
-
-	^ #right.

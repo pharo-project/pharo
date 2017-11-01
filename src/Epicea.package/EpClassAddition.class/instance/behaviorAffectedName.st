@@ -1,4 +1,0 @@
-accessing
-behaviorAffectedName
-
-	^ class name

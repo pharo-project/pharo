@@ -1,3 +1,0 @@
-accessing
-verticalSeparatorWidth
-	^ 1

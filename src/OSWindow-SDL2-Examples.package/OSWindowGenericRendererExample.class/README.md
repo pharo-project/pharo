@@ -1,1 +1,0 @@
-Example showing how to use the joystick.

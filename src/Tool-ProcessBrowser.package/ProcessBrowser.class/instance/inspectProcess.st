@@ -1,3 +1,0 @@
-process list
-inspectProcess
-	selectedProcess inspect

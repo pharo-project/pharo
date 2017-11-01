@@ -1,3 +1,0 @@
-testing
-isSSL
-	^ variant = #ssl

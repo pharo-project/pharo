@@ -1,4 +1,0 @@
-constants
-threePi
-
-	^ ThreePi

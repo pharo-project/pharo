@@ -1,1 +1,0 @@
-I am an object that doesn't always report #= correctly.  Used for testing the EqualityTester.

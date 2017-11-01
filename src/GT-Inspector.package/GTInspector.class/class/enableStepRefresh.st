@@ -1,3 +1,0 @@
-settings
-enableStepRefresh
-	self setEnabledStepRefreshStatus: true

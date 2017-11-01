@@ -1,3 +1,0 @@
-model access
-setModelBeforeInitialization: aDomainObject
-

@@ -1,3 +1,0 @@
-protocol
-scrollSelectionIntoView
-	packagesList scrollSelectionIntoView

@@ -1,1 +1,0 @@
-I represent x86_64 architectures.

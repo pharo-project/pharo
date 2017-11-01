@@ -1,3 +1,0 @@
-loading
-loadVersionInfo
-	self subclassResponsibility

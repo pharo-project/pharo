@@ -1,4 +1,0 @@
-positioning
-position
-
-	self subclassResponsibility

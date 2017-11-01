@@ -1,3 +1,0 @@
-meta-data
-packageName
-	^ #Kernel

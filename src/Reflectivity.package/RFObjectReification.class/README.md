@@ -1,1 +1,0 @@
-Using the ObjectRefification, one can pass a pointer to the object where the link is installed in

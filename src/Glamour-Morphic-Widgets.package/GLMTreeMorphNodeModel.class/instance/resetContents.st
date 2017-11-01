@@ -1,3 +1,0 @@
-actions
-resetContents
-	contents := nil

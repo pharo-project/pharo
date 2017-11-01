@@ -1,4 +1,0 @@
-api
-showOptions
-
-	^ showOptions value

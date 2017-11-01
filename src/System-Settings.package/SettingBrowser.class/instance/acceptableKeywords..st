@@ -1,3 +1,0 @@
-accessing
-acceptableKeywords: aCollectionOfRegExps 
-	self treeHolder acceptableKeywords: aCollectionOfRegExps 

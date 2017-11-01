@@ -1,3 +1,0 @@
-generate
-preamble: aNode
-	^#()

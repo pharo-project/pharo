@@ -1,1 +1,0 @@
-I represent a refactoring which it's not possible to reconstruct because the original information is lost.

@@ -1,3 +1,0 @@
-accessing
-environments
-	^ environmentsHolder value

@@ -1,1 +1,0 @@
-I'm a field spec for fields in FFIExternalStructure

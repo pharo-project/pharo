@@ -1,3 +1,0 @@
-display
-index
-	^index

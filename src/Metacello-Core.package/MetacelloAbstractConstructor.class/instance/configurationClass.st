@@ -1,4 +1,0 @@
-accessing
-configurationClass
-
-	^self subclassResponsibility

@@ -1,1 +1,0 @@
-STONReaderTests test materialization.

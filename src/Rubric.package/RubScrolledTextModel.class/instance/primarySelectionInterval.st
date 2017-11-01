@@ -1,3 +1,0 @@
-text managing
-primarySelectionInterval
-	^ primarySelectionInterval 

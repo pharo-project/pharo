@@ -1,4 +1,0 @@
-accessing
-defaultName
-
-	^  self unclassified

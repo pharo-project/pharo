@@ -1,4 +1,0 @@
-defaults
-staticSmallWidth
-
-	^ 50

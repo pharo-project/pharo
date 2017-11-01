@@ -1,4 +1,0 @@
-initialization
-empty
-
-	^ empty

@@ -1,3 +1,0 @@
-event handling
-whenTextAreaExtentChanged: anAnnouncement
-	self updateBounds

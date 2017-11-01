@@ -1,4 +1,0 @@
-values
-itemIconMaxWidth
-
-	^ 50

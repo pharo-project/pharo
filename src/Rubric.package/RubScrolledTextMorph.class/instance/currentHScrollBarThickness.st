@@ -1,3 +1,0 @@
-accessing scrollbars
-currentHScrollBarThickness
-	^self scrollPane currentHScrollBarThickness

@@ -1,4 +1,0 @@
-selection
-resetClassesListSelection
-
-	classWidget resetClassSelection 

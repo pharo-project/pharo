@@ -1,3 +1,0 @@
-accessing
-isAbstract
-	^ self = CommandLineHandler

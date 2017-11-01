@@ -1,4 +1,0 @@
-private
-stringhash
-
-	^ self hash.

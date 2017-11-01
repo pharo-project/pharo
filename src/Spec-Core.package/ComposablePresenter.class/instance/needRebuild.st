@@ -1,4 +1,0 @@
-accessing
-needRebuild
-
-	^ needRebuild value

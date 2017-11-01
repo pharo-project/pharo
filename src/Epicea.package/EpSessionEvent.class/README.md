@@ -1,1 +1,0 @@
-When an image is launched, a session starts. When quits, the session ends. In the middle, it could be snapshoted multiple times. My subclasses represent such events.

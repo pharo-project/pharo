@@ -1,4 +1,0 @@
-utilities
-encodingNames
-
-	^Array new

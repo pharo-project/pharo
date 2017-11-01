@@ -1,1 +1,0 @@
-A TrivialCritique with and extended actions to open a dependency browser for ArchitecturalRule

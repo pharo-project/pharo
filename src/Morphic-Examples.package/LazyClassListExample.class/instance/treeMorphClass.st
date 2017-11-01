@@ -1,3 +1,0 @@
-accessing
-treeMorphClass
-	^ LazyMorphTreeMorph 

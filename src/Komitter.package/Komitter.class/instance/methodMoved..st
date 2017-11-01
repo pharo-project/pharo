@@ -1,2 +1,0 @@
-announcement
-methodMoved: anAnnouncement

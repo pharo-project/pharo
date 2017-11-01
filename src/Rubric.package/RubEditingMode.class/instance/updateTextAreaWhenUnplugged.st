@@ -1,2 +1,0 @@
-initialize-release
-updateTextAreaWhenUnplugged

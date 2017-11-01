@@ -1,4 +1,0 @@
-accessing
-debugHighlightStop
-
-	^ self stopWithoutParentheses

@@ -1,3 +1,0 @@
-accessing
-classForBrowsing
-	self subclassResponsibility 

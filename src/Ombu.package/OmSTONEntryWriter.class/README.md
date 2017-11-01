@@ -1,1 +1,0 @@
-I implement how to write entries to a stream using Ston serializer.

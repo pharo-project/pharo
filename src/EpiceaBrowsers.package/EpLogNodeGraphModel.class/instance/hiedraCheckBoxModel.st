@@ -1,3 +1,0 @@
-accessing widgets
-hiedraCheckBoxModel
-	^ hiedraCheckBoxModel

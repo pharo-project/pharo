@@ -1,1 +1,0 @@
-A FinderNode is an abstract class used by the tree of FinderUI

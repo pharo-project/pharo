@@ -1,4 +1,0 @@
-protocol
-buildVerticesFrom: borderVertices
-
-	^ borderVertices

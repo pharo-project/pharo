@@ -1,3 +1,0 @@
-update
-updateWithFilter: aCollectionOfPDPackages
-	self packageAnalyzerTreeModel filterWithPackages: aCollectionOfPDPackages.

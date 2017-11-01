@@ -1,1 +1,0 @@
-A sequence is corresponds to a block in the control flow graph.

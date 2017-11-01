@@ -1,1 +1,0 @@
-ZnResponseReadEvent signals that a response was read in duration milliseconds. This time includes all waiting, server processing and networking.

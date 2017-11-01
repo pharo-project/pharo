@@ -1,4 +1,0 @@
-values
-categoryNameMarginRight
-
-	^ 10

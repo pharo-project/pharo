@@ -1,3 +1,0 @@
-tests
-testToDoValueLimitExpression
-	self checkCorrectDecompilation: #exampleToDoValueLimitExpression

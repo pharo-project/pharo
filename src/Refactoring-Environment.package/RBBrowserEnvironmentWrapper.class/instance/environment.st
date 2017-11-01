@@ -1,3 +1,0 @@
-private
-environment
-	^ environment

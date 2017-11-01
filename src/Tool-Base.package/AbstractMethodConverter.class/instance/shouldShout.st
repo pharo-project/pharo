@@ -1,4 +1,0 @@
-initialization
-shouldShout
-
-	^ false

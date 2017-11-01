@@ -1,1 +1,0 @@
-This keeps track of the stack count for the BytecodeGenerator.

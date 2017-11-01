@@ -1,3 +1,0 @@
-private building
-printStringOf: anObject
-	self subclassResponsibility

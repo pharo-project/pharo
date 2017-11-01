@@ -1,3 +1,0 @@
-accessing
-methodNode
-	^node methodNode

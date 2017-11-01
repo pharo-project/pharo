@@ -1,3 +1,0 @@
-public
-computeAnnouncerObjects 
-	self subclassResponsibility

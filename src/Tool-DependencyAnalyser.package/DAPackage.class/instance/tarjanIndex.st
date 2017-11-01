@@ -1,3 +1,0 @@
-tarjan
-tarjanIndex
-	^ tarjanIndex 

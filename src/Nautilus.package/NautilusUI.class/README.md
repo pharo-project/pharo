@@ -1,1 +1,0 @@
-A UI for an instance of Nautilus

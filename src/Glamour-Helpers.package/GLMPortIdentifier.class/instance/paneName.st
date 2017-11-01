@@ -1,3 +1,0 @@
-accessing
-paneName
-	^ paneName

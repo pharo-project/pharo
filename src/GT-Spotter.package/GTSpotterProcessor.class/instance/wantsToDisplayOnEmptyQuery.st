@@ -1,3 +1,0 @@
-accessing
-wantsToDisplayOnEmptyQuery
-	^ true

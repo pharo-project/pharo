@@ -1,3 +1,0 @@
-accessing
-hasMethodReturn
-	^closureOrNil hasMethodReturn

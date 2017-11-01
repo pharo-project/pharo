@@ -1,3 +1,0 @@
-display
-icon
-	^icon.

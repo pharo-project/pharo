@@ -1,4 +1,0 @@
-rename
-priorName
-
-	^ priorName

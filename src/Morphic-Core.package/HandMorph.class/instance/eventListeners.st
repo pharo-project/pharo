@@ -1,3 +1,0 @@
-listeners
-eventListeners
-	^eventListeners

@@ -1,3 +1,0 @@
-testing
-isBelowMaximum
-	^ total <= maximum 

@@ -1,4 +1,0 @@
-accessing
-behaviorAffectedName
-
-	^ newTrait name

@@ -1,1 +1,0 @@
-Instruction "send: selector" or "send: selector toSuperOf: behavior"

@@ -1,1 +1,0 @@
-FLPerson is a class just to be able to change the hash of an object and try to test problems with hash.

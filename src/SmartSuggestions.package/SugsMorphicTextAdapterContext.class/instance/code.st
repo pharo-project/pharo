@@ -1,3 +1,0 @@
-accessing
-code
-	^ model getText .

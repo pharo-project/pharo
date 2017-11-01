@@ -1,3 +1,0 @@
-testing
-isStore
-	^false

@@ -1,3 +1,0 @@
-private
-longMethodSize
-	^ 20

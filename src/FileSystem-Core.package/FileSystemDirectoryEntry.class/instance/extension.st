@@ -1,3 +1,0 @@
-delegate
-extension
-	^ reference extension

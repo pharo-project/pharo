@@ -1,1 +1,0 @@
-A simple trait used in tests

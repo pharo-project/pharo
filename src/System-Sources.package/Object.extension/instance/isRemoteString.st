@@ -1,4 +1,0 @@
-*System-Sources
-isRemoteString
-
-	^ false

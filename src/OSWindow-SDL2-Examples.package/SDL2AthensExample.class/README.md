@@ -1,1 +1,0 @@
-Superclass to show how to use OSWindow properly with athens

@@ -1,4 +1,0 @@
-private
-applyChanges
-
-	self valid

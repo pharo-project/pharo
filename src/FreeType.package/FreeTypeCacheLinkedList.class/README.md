@@ -1,1 +1,0 @@
-A linked list for the FreeTypeCache

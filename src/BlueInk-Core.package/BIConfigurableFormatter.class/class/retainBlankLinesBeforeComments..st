@@ -1,4 +1,0 @@
-accessing
-retainBlankLinesBeforeComments: aBoolean
-	DefaultPrettyPrintContext retainBlankLinesBeforeComments: aBoolean.
-	self announceASettingChange

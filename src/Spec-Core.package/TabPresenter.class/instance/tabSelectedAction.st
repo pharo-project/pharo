@@ -1,4 +1,0 @@
-api
-tabSelectedAction
-
-	^ tabSelectedActionHolder value

@@ -1,3 +1,0 @@
-tests
-testMethodTempInNestedBlock
-	self checkCorrectDecompilation: #exampleMethodTempInNestedBlock

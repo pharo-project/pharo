@@ -1,3 +1,0 @@
-converting
-asFloatArray
-	^ contents asFloatArray

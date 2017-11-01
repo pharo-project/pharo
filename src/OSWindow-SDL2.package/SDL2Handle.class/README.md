@@ -1,1 +1,0 @@
-My subclasses represent various handles coming from SDL2 library

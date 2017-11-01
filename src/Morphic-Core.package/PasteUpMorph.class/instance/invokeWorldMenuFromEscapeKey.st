@@ -1,3 +1,0 @@
-world menu
-invokeWorldMenuFromEscapeKey
-	self invokeWorldMenu: ActiveEvent

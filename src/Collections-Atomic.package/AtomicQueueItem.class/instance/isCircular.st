@@ -1,3 +1,0 @@
-accessing
-isCircular
-	^ next == self

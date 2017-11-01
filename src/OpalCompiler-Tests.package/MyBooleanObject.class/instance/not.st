@@ -1,3 +1,0 @@
-logical operations
-not
-	^true

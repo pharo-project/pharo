@@ -1,3 +1,0 @@
-tests
-testTempVarOverridesInstVar
-	self ruleFor: self currentSelector

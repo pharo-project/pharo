@@ -1,4 +1,0 @@
-testing
-visited
-
-	^ firstDepth notNil

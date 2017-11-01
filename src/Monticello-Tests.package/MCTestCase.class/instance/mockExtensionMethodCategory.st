@@ -1,3 +1,0 @@
-mocks
-mockExtensionMethodCategory
-	^ '*MonticelloMocks'

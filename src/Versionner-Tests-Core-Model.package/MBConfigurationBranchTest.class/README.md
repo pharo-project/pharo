@@ -1,1 +1,0 @@
-SUnit tests for configuration branches in Versionner

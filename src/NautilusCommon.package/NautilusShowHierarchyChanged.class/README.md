@@ -1,1 +1,0 @@
-A NautilusShowHierarchyChanged is raised when the value of howHierarchy is switched

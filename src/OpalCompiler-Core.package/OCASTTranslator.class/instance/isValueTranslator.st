@@ -1,3 +1,0 @@
-testing
-isValueTranslator
-	^self == valueTranslator

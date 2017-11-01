@@ -1,1 +1,0 @@
-This is a strategy to capture the intended arrangement of multiple presentations of a composite presentation. The subclasses define the actual arrangement.

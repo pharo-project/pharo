@@ -1,3 +1,0 @@
-lint
-justSendsSuper
-	super justSendsSuper

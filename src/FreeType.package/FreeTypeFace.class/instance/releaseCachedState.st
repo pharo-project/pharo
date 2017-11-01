@@ -1,4 +1,0 @@
-caching
-releaseCachedState
-
-	hasKerning := nil.

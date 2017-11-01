@@ -1,4 +1,0 @@
-requirements
-accessCollection
-
-	^ example1

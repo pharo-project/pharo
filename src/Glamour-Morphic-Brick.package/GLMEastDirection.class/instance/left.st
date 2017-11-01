@@ -1,3 +1,0 @@
-direction
-left
-	^ GLMNorthDirection uniqueInstance

@@ -1,4 +1,0 @@
-testing
-isNullable
-
-	^#syntaxAny ~~ kind

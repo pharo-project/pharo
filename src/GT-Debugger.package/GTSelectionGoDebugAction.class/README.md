@@ -1,1 +1,0 @@
-This action is responsible for evaluating the selection in a code pane of a debugger and pushing the result in the inspector of the debugger.

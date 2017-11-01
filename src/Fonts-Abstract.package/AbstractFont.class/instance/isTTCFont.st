@@ -1,3 +1,0 @@
-testing
-isTTCFont
-	^false

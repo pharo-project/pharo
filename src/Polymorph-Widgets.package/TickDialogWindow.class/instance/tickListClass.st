@@ -1,4 +1,0 @@
-private
-tickListClass
-
-	^ MorphTreeModel

@@ -1,3 +1,0 @@
-migrating
-methodModification
-	^ origin methodModification

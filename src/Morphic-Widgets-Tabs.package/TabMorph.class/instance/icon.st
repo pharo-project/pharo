@@ -1,4 +1,0 @@
-protocol
-icon
-
-	^ label icon

@@ -1,3 +1,0 @@
-accessing
-fileContentsExternalMemoryBytes
-	^fileContentsExternalMemory ifNotNil:[fileContentsExternalMemory bytes]

@@ -1,3 +1,0 @@
-examples
-exampleLiteralArray
-	^ #(1)

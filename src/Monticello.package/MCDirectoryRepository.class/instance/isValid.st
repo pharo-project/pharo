@@ -1,3 +1,0 @@
-testing
-isValid
-	^directory exists

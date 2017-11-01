@@ -1,1 +1,0 @@
-I store meta-data for a package assembly. I'm the common superclass of all package assemblies.

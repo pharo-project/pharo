@@ -1,3 +1,0 @@
-accessing
-capacity
-	^keys size

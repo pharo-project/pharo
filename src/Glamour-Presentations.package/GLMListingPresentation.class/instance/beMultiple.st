@@ -1,3 +1,0 @@
-scripting
-beMultiple
-	allowsMultipleSelection := true

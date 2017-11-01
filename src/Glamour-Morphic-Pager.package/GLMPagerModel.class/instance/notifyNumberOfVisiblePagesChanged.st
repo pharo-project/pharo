@@ -1,4 +1,0 @@
-notifying
-notifyNumberOfVisiblePagesChanged
-
-	self notifyAll: GLMNumberOfVisiblePagesChanged new.

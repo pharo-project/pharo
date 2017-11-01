@@ -1,3 +1,0 @@
-protocol
-resetClassList
-	classesListElements := nil.

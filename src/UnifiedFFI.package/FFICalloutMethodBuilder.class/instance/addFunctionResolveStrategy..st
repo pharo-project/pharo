@@ -1,3 +1,0 @@
-accessing
-addFunctionResolveStrategy: aStrategy
-	functionResolutionStrategies add: aStrategy

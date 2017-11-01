@@ -1,3 +1,0 @@
-initialization
-north
-	direction := North

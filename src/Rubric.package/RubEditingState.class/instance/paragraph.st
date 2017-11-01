@@ -1,3 +1,0 @@
-accessing
-paragraph
-	^ textArea paragraph

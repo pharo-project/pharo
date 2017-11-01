@@ -1,1 +1,0 @@
-I represent a ReDo operation performed in a EpLogBrowser.

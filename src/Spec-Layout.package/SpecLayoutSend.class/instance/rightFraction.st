@@ -1,4 +1,0 @@
-protocol
-rightFraction
-
-	^ 0

@@ -1,3 +1,0 @@
-*FileSystem-Disk
-isDiskFileSystem
-	^ false

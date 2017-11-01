@@ -1,1 +1,0 @@
-A MCScriptParser identifies script and add MCScriptDefinition. 

@@ -1,4 +1,0 @@
-list-morph
-getCritiques
-
-	^ critiques

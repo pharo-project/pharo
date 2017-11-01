@@ -1,4 +1,0 @@
-accessing
-bePassive 
-	 
-	active := false

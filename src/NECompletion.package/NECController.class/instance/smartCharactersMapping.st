@@ -1,3 +1,0 @@
-settings
-smartCharactersMapping
-	^ NECPreferences smartCharactersMapping 

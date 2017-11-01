@@ -1,3 +1,0 @@
-private
-matchingClass
-	^RBMessageNode

@@ -1,3 +1,0 @@
-updating
-updateData
-	self subclassResponsibility

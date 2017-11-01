@@ -1,1 +1,0 @@
-I am the state corresponding to a tab being disabled.

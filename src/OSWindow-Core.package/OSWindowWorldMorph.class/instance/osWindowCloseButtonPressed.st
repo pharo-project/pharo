@@ -1,3 +1,0 @@
-as yet unclassified
-osWindowCloseButtonPressed
-	self delete

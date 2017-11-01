@@ -1,1 +1,0 @@
-Command to copy a baseline in Versionner

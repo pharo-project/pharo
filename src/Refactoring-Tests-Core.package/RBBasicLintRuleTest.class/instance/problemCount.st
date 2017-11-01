@@ -1,3 +1,0 @@
-accessing
-problemCount
-	^result problemCount

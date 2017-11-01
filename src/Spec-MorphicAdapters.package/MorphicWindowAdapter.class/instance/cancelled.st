@@ -1,4 +1,0 @@
-widget API
-cancelled
-
-	^ false

@@ -1,1 +1,0 @@
-WorkingCopyToolBar new openWithSpec

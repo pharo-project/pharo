@@ -1,1 +1,0 @@
-I am an acceptor in the context of code rewriting using RBTreeRewriting

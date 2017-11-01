@@ -1,3 +1,0 @@
-accessing
-abi
-	^'IA32'

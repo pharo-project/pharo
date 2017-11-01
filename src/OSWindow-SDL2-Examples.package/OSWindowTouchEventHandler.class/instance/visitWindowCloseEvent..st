@@ -1,3 +1,0 @@
-visiting
-visitWindowCloseEvent: anEvent
-	touchExample destroy

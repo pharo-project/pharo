@@ -1,4 +1,0 @@
-tests - empty
-nonEmpty
-	
-	^ full

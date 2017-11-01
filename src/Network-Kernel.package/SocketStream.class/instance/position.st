@@ -1,3 +1,0 @@
-private
-position
-	^lastRead

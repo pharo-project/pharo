@@ -1,3 +1,0 @@
-accessing
-borderColor
-	^ borderColor

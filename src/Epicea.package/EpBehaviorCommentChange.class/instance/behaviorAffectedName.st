@@ -1,3 +1,0 @@
-accessing
-behaviorAffectedName
-	^ behavior name

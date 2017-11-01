@@ -1,3 +1,0 @@
-accessing
-useTraditionalBinaryPrecedenceForParentheses: anObject
-	useTraditionalBinaryPrecedenceForParentheses := anObject

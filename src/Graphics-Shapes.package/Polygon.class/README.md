@@ -1,1 +1,0 @@
-I'm a Polygon PathShape (see PathShape).

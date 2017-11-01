@@ -1,1 +1,0 @@
-I'm a mock object to mock a translator

@@ -1,3 +1,0 @@
-accessing
-anInstanceVariable
-	^ anInstanceVariable

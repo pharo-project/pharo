@@ -1,3 +1,0 @@
-methods
-debbuggingMessageSent
-	self rearmOneShot

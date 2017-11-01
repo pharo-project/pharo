@@ -1,1 +1,0 @@
-I am a generic cluster for objects with indexable variables.

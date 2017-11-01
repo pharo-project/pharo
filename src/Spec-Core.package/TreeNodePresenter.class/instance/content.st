@@ -1,4 +1,0 @@
-api
-content
-
-	^ content value

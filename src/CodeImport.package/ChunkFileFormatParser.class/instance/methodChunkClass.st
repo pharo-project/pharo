@@ -1,3 +1,0 @@
-class factory
-methodChunkClass
-	^ MethodChunk

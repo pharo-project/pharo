@@ -1,4 +1,0 @@
-merging
-mergeMap
-
-	^Dictionary new.

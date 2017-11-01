@@ -1,3 +1,0 @@
-accessing
-someDemoMethod
-	^ self junk

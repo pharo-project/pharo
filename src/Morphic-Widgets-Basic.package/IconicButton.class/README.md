@@ -1,1 +1,0 @@
-A "Simple Button" in which the appearance is provided by a Form.

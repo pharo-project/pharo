@@ -1,3 +1,0 @@
-accessing
-sizeMedium 
-	^ 13

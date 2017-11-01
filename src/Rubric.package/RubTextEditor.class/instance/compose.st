@@ -1,3 +1,0 @@
-private
-compose
-	^textArea compose

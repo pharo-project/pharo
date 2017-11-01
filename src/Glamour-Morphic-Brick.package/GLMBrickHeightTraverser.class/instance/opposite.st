@@ -1,4 +1,0 @@
-accessing
-opposite
-
-	^ GLMBrickWidthTraverser uniqueInstance

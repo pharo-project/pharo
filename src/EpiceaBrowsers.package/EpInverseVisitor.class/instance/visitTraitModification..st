@@ -1,4 +1,0 @@
-visitor
-visitTraitModification: aTraitModification
-
-	self notYetImplemented

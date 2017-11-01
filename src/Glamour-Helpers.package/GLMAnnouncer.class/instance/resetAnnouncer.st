@@ -1,3 +1,0 @@
-accessing
-resetAnnouncer
-	registry reset

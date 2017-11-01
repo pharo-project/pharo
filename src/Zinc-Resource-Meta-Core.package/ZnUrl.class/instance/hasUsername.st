@@ -1,3 +1,0 @@
-testing
-hasUsername
-	^ username notNil

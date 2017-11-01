@@ -1,3 +1,0 @@
-comparing
-containsReference: aReference
-	^ false

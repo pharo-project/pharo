@@ -1,4 +1,0 @@
-accessing
-testObject
-
-	^ testContext receiver

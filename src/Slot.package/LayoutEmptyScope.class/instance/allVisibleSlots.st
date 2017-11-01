@@ -1,3 +1,0 @@
-accessing
-allVisibleSlots
-	^ OrderedCollection new

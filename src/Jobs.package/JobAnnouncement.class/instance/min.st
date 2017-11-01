@@ -1,3 +1,0 @@
-accessing
-min
-	^ job min

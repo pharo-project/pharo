@@ -1,4 +1,0 @@
-api
-titleText
-
-	^ titleWidget text

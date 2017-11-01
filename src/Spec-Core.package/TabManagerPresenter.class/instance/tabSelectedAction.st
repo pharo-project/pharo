@@ -1,4 +1,0 @@
-api
-tabSelectedAction
-
-	^ tabSelectedAction value

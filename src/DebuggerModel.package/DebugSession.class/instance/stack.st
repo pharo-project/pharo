@@ -1,4 +1,0 @@
-accessing
-stack
-
-	^ interruptedContext stack

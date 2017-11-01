@@ -1,3 +1,0 @@
-accessing
-asPotentialDropTarget 
-	self model asPotentialDropTarget

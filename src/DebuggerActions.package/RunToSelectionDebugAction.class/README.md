@@ -1,1 +1,0 @@
-A RunToSelectionDebugAction resumes the execution until the selected position in the source code is reached.

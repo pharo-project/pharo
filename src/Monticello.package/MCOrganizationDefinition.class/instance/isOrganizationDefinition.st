@@ -1,3 +1,0 @@
-testing
-isOrganizationDefinition
-	^ true

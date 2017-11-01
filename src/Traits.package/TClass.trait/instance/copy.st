@@ -1,3 +1,0 @@
-copying
-copy
-	^self explicitRequirement.

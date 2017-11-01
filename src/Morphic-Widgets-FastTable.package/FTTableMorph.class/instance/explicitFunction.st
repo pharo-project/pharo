@@ -1,3 +1,0 @@
-accessing
-explicitFunction
-	function showWidget

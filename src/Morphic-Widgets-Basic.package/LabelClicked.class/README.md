@@ -1,1 +1,0 @@
-I am an announcement raised when someone click on the label of a CheckboxMorph

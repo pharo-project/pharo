@@ -1,1 +1,0 @@
-I am a SharedPool for the style constants used by VTermOutputDriver

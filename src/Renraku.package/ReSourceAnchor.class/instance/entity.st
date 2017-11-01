@@ -1,3 +1,0 @@
-accessing
-entity
-	^ self sourceEntity

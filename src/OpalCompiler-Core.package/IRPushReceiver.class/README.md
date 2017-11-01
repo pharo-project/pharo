@@ -1,1 +1,0 @@
-I am modelling the push self bytecode

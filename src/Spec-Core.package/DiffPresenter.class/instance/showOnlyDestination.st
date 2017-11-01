@@ -1,4 +1,0 @@
-api
-showOnlyDestination
-
-	^ showOnlyDestination value

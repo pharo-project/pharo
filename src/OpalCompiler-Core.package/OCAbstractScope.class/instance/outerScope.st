@@ -1,4 +1,0 @@
-levels
-outerScope
-
-	^ outerScope

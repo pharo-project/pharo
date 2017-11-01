@@ -1,4 +1,0 @@
-commands
-cmdSavePackage
-	<command>
-	^ MBSavePackageCommand

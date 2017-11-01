@@ -1,3 +1,0 @@
-converting
-asIdentitySet
-	^ contents asIdentitySet

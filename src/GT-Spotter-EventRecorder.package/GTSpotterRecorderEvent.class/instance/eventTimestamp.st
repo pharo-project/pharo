@@ -1,3 +1,0 @@
-accessing
-eventTimestamp
-	^ self timestamp

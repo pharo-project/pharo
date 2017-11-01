@@ -1,3 +1,0 @@
-selection
-selectNextMethod
-	methodWidget selectNextMethod

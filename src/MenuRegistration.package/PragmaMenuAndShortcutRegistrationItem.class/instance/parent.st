@@ -1,4 +1,0 @@
-accessing
-parent
-
-	^ parent

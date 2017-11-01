@@ -1,4 +1,0 @@
-private
-defaultTitle
-	
-	^  'Change Sorter'

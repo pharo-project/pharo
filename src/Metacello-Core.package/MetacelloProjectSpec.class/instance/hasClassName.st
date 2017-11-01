@@ -1,3 +1,0 @@
-printing
-hasClassName
-    ^ className ~~ nil

@@ -1,3 +1,0 @@
-accessing
-treeModel
-	^ treeModel

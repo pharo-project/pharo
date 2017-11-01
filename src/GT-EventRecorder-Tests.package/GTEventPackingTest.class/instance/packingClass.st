@@ -1,3 +1,0 @@
-accessing
-packingClass
-	^ self subclassResponsibility

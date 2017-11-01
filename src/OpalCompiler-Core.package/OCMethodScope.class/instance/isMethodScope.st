@@ -1,3 +1,0 @@
-testing
-isMethodScope 
-	^true

@@ -1,4 +1,0 @@
-accessing
-numArgs
-
-	^ numArgs

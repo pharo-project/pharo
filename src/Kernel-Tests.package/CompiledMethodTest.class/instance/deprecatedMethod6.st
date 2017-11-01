@@ -1,2 +1,0 @@
-category - deprecated
-deprecatedMethod6

@@ -1,3 +1,0 @@
-running
-tearDown
-	self restoreMocks

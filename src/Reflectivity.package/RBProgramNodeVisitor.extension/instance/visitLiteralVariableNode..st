@@ -1,2 +1,0 @@
-*Reflectivity
-visitLiteralVariableNode: aNode

@@ -1,4 +1,0 @@
-accessing
-pages
-
-	^ #(RenrakuCritiqueDesignHelp RenrakuCritiqueExamplesHelp)

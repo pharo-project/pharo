@@ -1,3 +1,0 @@
-generate
-genForClassVariable
-	^self genForLiteralVariable

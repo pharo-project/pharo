@@ -1,3 +1,0 @@
-accessing
-instanceVariables
-	^self instVarNames.

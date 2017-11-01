@@ -1,4 +1,0 @@
-updating
-updateWidth
-
-	self resize

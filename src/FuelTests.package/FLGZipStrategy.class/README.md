@@ -1,1 +1,0 @@
-I am a strategy for using GZipStream.

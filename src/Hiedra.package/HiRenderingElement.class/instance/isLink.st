@@ -1,4 +1,0 @@
-testing
-isLink
-
-	^ self subclassResponsibility

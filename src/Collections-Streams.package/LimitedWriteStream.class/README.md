@@ -1,3 +1,0 @@
-A LimitedWriteStream is a specialized WriteStream that has a maximum size of the collection it streams over. When this limit is reached a special limitBlock is executed. This can for example be used to "bail out" of lengthy streaming operations before they have finished.  For a simple example take a look at the universal Object printString.
-
-The message SequenceableCollection class streamContents:limitedTo: creates a LimitedWriteStream. In this case it prevents very large (or possibly recursive) object structures to "overdo" their textual representation. 

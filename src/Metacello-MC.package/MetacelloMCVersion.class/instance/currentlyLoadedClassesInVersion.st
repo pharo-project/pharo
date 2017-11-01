@@ -1,4 +1,0 @@
-querying
-currentlyLoadedClassesInVersion
-
-	^self spec currentlyLoadedClassesInVersion

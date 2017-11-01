@@ -1,4 +1,0 @@
-api
-cancelled
-
-	^ cancelled value

@@ -1,3 +1,0 @@
-focus handling
-mouseFocus
-	^mouseFocus

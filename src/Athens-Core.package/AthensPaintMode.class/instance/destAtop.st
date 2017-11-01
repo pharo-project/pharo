@@ -1,4 +1,0 @@
-modes
-destAtop
-	
-	self notAvailable

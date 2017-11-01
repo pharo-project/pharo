@@ -1,3 +1,0 @@
-testing
-testImageDirectory
-	self assertOriginResolves: #imageDirectory

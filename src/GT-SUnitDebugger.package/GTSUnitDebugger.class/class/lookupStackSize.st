@@ -1,3 +1,0 @@
-testing
-lookupStackSize
-	^ 512

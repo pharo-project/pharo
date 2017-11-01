@@ -1,3 +1,0 @@
-private
-getFlags
-	^ handle getFlags

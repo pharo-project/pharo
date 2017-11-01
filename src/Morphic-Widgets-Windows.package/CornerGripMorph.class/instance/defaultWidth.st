@@ -1,3 +1,0 @@
-accessing
-defaultWidth
-	^ 22

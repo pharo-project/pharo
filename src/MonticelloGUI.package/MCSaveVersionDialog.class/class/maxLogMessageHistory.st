@@ -1,4 +1,0 @@
-history
-maxLogMessageHistory
-
-	^ 15

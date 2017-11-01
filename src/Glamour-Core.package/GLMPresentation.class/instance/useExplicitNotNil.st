@@ -1,4 +1,0 @@
-accessing
-useExplicitNotNil 
-	 
-	implicitNotNil := false

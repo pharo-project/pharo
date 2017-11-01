@@ -1,3 +1,0 @@
-private
-definitionClass
-	^ self changeClass

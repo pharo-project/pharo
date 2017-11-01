@@ -1,2 +1,0 @@
-modes
-ascii

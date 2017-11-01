@@ -1,1 +1,0 @@
-This is a helper browser for the Raw view in the GTInspector. It provides an overview of the slots and it offers an evaluator.

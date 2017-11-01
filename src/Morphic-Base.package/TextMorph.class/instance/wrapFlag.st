@@ -1,4 +1,0 @@
-accessing
-wrapFlag
-	^ wrapFlag 
-	

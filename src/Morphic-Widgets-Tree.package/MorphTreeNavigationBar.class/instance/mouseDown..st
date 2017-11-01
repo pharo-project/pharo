@@ -1,2 +1,0 @@
-private
-mouseDown: anEvent

@@ -1,1 +1,0 @@
-Configurable basic settings for themes.

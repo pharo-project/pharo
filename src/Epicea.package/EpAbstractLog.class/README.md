@@ -1,1 +1,0 @@
-I am an abstract log of system events (EpEvent), stored into entries (OmEntry).

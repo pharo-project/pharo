@@ -1,1 +1,0 @@
-See comment of my superclass TraitTransformation.

@@ -1,3 +1,0 @@
-accessing
-stopWithoutParentheses
-	^self subclassResponsibility

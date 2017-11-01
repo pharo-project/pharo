@@ -1,3 +1,0 @@
-accessing
-isoString
-	^self asString

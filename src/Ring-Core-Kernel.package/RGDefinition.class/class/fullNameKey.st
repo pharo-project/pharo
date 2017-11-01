@@ -1,4 +1,0 @@
-annotations
-fullNameKey
-
-	^#fullName

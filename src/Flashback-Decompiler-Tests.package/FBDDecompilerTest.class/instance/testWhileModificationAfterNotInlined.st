@@ -1,3 +1,0 @@
-tests
-testWhileModificationAfterNotInlined
-	self checkCorrectDecompilation: #exampleWhileModificationAfterNotInlined

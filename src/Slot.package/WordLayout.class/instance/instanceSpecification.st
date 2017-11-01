@@ -1,3 +1,0 @@
-format
-instanceSpecification
-	^ 10

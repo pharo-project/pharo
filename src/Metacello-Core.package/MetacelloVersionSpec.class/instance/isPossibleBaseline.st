@@ -1,3 +1,0 @@
-testing
-isPossibleBaseline
-    self subclassResponsibility

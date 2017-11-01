@@ -1,4 +1,0 @@
-accessing
-selectedCategory
-
-	^ selectedCategory

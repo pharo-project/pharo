@@ -1,3 +1,0 @@
-accessing
-checkWidth
-	^ 10

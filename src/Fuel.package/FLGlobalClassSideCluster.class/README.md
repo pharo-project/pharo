@@ -1,1 +1,0 @@
-I am a cluster for those Metaclasses and ClassTrait who are not stored in detail.

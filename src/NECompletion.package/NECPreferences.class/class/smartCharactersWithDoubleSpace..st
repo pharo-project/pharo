@@ -1,3 +1,0 @@
-accessing
-smartCharactersWithDoubleSpace: aString
-	smartCharactersWithDoubleSpace := aString

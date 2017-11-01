@@ -1,3 +1,0 @@
-selection change
-selectionChanged
-	client selectionChanged

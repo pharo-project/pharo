@@ -1,3 +1,0 @@
-menu
-wantsYellowButtonMenu
-	^ self menuAllowed 

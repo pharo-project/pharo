@@ -1,1 +1,0 @@
-A TextFieldExample is a simple example of how to use TextFields.

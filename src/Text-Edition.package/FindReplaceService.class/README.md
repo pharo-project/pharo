@@ -1,1 +1,0 @@
-Model for a find and replace service in editors

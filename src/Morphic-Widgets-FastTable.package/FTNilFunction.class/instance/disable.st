@@ -1,5 +1,0 @@
-protocol
-disable
-	"Do nothing"
-
-	

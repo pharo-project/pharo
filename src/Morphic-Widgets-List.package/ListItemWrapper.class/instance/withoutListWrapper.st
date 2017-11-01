@@ -1,4 +1,0 @@
-converting
-withoutListWrapper
-
-	^item withoutListWrapper

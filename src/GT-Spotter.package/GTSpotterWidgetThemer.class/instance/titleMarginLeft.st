@@ -1,3 +1,0 @@
-values
-titleMarginLeft
-	^ 20

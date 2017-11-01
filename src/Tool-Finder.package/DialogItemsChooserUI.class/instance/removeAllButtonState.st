@@ -1,3 +1,0 @@
-buttons creations
-removeAllButtonState
-	^false

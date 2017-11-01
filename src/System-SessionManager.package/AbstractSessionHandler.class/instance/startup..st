@@ -1,3 +1,0 @@
-handlers
-startup: isImageStarting
-	self subclassResponsibility

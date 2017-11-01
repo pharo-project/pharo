@@ -1,3 +1,0 @@
-testing
-isMethodSelected
-	^selectedNode isMethod 

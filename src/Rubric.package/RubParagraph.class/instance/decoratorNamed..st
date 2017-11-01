@@ -1,3 +1,0 @@
-querying
-decoratorNamed: aKey
-	^ nil

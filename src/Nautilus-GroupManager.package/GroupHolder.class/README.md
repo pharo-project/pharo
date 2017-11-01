@@ -1,1 +1,0 @@
-A GroupsHolder is a simple object which manage a collection of groups

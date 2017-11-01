@@ -1,1 +1,0 @@
-I am a keymap category.  I represent a set of keymaps that can be attached to a morph, so morphs can share my keymaps.

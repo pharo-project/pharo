@@ -1,3 +1,0 @@
-theme
-animateClose
-	"Animate closing."

@@ -1,4 +1,0 @@
-accessing
-defaultGraphics
-
-	^  DefaultGraphics 

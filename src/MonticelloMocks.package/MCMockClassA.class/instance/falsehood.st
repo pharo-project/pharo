@@ -1,3 +1,0 @@
-boolean
-falsehood
-	^ false

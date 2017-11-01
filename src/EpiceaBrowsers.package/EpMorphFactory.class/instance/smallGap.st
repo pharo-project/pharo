@@ -1,4 +1,0 @@
-generic
-smallGap
-
-	^ self wrapping: ''

@@ -1,4 +1,0 @@
-controlling
-maxTimeForTest: aDuration
-
-	CurrentExecutionEnvironment value maxTimeForTest: aDuration

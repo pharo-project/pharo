@@ -1,3 +1,0 @@
-streaming
-flush
-	self endEntry

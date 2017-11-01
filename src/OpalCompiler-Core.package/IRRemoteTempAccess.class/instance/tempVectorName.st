@@ -1,3 +1,0 @@
-accessing
-tempVectorName
-	^ tempVectorName

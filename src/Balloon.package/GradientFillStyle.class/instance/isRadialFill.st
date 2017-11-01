@@ -1,3 +1,0 @@
-testing
-isRadialFill
-	^radial == true

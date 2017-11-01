@@ -1,1 +1,0 @@
-A generic (abstract) integer type.

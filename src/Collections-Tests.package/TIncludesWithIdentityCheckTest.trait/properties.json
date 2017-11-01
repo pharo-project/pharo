@@ -1,7 +1,0 @@
-{
-	"commentStamp" : "TorstenBergmann 2/20/2014 15:34",
-	"traitcomposition" : "TIncludesTest",
-	"classtraitcomposition" : "TIncludesTest classTrait",
-	"category" : "Collections-Tests-Abstract",
-	"name" : "TIncludesWithIdentityCheckTest"
-}

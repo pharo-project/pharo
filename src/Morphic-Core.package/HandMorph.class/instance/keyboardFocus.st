@@ -1,3 +1,0 @@
-focus handling
-keyboardFocus 
-	^ keyboardFocus

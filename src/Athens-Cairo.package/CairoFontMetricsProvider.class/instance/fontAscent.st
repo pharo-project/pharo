@@ -1,3 +1,0 @@
-accessing
-fontAscent
-	^ extents ascent

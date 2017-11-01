@@ -1,3 +1,0 @@
-accessing
-version
-	^ version

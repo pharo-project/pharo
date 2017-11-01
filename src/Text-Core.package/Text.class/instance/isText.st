@@ -1,3 +1,0 @@
-comparing
-isText
-	^ true

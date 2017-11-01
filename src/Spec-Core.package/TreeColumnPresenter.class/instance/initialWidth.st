@@ -1,4 +1,0 @@
-api
-initialWidth
-
-	^ initialWidth value

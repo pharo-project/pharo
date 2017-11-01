@@ -1,2 +1,0 @@
-enumerating
-allSlotsDo: aBlock

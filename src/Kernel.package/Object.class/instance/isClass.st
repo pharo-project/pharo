@@ -1,3 +1,0 @@
-testing
-isClass
-	^ false

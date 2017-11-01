@@ -1,4 +1,0 @@
-testing
-hasId 
-	 
-	^id notNil

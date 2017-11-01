@@ -1,1 +1,0 @@
-I represent a Form obtained by replicating a pattern form indefinitely in all directions.

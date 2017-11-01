@@ -1,4 +1,0 @@
-accessing
-isStayUpItem
-
-	^selector == #toggleStayUp:

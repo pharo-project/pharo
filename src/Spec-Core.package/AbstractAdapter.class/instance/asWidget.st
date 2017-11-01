@@ -1,4 +1,0 @@
-protocol
-asWidget
-
-	^ self widget

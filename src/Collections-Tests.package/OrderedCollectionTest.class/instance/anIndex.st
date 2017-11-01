@@ -1,4 +1,0 @@
-helpers
-anIndex
-
-	^ 2

@@ -1,4 +1,0 @@
-setup
-classToBeTested 
-
-	^ Dictionary

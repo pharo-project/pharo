@@ -1,3 +1,0 @@
-visiting
-visitTouchOneFingerHoldEvent: anEvent
-	touchExample switchDiscoMode

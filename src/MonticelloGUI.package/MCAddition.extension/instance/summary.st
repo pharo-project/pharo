@@ -1,4 +1,0 @@
-*MonticelloGUI
-summary
-
-	^ definition summary

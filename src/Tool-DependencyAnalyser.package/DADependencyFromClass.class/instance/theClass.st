@@ -1,3 +1,0 @@
-accessing
-theClass
-	^ theClass

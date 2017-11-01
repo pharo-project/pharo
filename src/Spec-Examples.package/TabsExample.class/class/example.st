@@ -1,3 +1,0 @@
-examples
-example
-	^ self open

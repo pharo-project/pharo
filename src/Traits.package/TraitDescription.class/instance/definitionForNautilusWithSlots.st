@@ -1,4 +1,0 @@
-accessing
-definitionForNautilusWithSlots
-
-	^ self definition

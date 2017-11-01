@@ -1,1 +1,0 @@
-I am a bar gathering tabs. I am the one managing the selected tab and related bahavior (unselecting the last one, updating the layout to make the selected tab on top of the other)

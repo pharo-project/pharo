@@ -1,4 +1,0 @@
-preferences
-useFloatingPoint
-
-	^ false

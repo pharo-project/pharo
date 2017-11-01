@@ -1,1 +1,0 @@
-Announce that a locale was changed

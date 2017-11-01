@@ -1,3 +1,0 @@
-requirements
-integerCollection
-	^ nonEmpty 

@@ -1,3 +1,0 @@
-accessing
-knownEncodingIdentifiers
-	^ #( utf8 )

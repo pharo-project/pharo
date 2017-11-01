@@ -1,3 +1,0 @@
-converting
-asUndoOperation
-	^self subclassResponsibility

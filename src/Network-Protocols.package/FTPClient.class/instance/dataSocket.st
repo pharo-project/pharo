@@ -1,3 +1,0 @@
-private
-dataSocket
-	^dataSocket

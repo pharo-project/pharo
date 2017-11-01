@@ -1,1 +1,0 @@
-I implement behavior to apply and revert code changes.

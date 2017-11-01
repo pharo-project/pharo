@@ -1,3 +1,0 @@
-building
-build
-	self subclassResponsibility 

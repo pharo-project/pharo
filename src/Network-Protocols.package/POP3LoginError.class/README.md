@@ -1,1 +1,0 @@
-Exception for signaling POP3 login failures.

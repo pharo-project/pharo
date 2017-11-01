@@ -1,1 +1,0 @@
-I am raised when the user starts to edit a text area in the model side

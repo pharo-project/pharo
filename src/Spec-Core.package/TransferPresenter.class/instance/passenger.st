@@ -1,4 +1,0 @@
-accessing
-passenger
-
-	^ passenger value

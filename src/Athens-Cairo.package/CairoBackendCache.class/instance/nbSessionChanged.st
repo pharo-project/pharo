@@ -1,5 +1,0 @@
-removeMe
-nbSessionChanged
-
-	self initialize.
-	

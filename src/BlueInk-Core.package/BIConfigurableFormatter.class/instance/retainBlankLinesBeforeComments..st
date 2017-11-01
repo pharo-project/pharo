@@ -1,3 +1,0 @@
-accessing
-retainBlankLinesBeforeComments: aBoolean
-	context retainBlankLinesBeforeComments: aBoolean

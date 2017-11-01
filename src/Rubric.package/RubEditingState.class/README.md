@@ -1,1 +1,0 @@
-I represent datas of the current text area to manage undo operations etc

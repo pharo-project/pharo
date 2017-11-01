@@ -1,3 +1,0 @@
-testing
-isGlobalVariable
-	^ assoc isGlobalVariable

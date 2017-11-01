@@ -1,4 +1,0 @@
-testing
-isHShrinking
-
-	^ hResizing = #shrinkWrap

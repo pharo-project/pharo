@@ -1,1 +1,0 @@
-A structure that contains system-dependent information about a window. 

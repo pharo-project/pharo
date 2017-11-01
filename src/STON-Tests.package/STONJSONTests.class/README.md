@@ -1,1 +1,0 @@
-STONJSONTests contains unit tests for the JSON functionality available in STON.

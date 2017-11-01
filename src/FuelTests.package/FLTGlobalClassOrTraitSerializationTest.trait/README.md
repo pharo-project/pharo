@@ -1,1 +1,0 @@
-I test the serialization of classes and traits as *external* objects, i.e. the classes or traits have to be present in the image at materialization time.

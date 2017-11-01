@@ -1,3 +1,0 @@
-compatbility
-platformFamily
-	^ self family

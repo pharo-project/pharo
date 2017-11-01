@@ -1,3 +1,0 @@
-private
-directionArrowLength
-	^ 25

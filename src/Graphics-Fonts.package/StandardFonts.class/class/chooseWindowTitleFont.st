@@ -1,3 +1,0 @@
-choosing
-chooseWindowTitleFont
-	self chooseStandardFont: #windowTitleFont

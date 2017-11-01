@@ -1,1 +1,0 @@
-Tests whether two objects are equals: they contain the same objects in the same order.

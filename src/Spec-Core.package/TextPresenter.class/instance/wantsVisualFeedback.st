@@ -1,4 +1,0 @@
-api
-wantsVisualFeedback
-
-	^ wantsVisualFeedback value

@@ -1,4 +1,0 @@
-triggering
-isEpiceaInterestingJobOwner
-
-	^ true

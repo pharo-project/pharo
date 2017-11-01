@@ -1,3 +1,0 @@
-methods
-equalsTrue
-	^true == self

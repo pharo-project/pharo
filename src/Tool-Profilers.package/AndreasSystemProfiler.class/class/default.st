@@ -1,3 +1,0 @@
-spying
-default
-	^self new

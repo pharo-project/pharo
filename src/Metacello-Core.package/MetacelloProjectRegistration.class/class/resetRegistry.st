@@ -1,3 +1,0 @@
-accessing
-resetRegistry
-    Registry := nil

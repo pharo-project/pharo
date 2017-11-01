@@ -1,4 +1,0 @@
-resources
-aStoreName
-
-	^ 'aTestGlobalName'

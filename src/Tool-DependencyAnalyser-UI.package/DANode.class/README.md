@@ -1,1 +1,0 @@
-A PDNode is an abstract class for to display nodes in a tree.

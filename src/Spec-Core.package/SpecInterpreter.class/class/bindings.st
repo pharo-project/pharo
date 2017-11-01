@@ -1,4 +1,0 @@
-accessing
-bindings
-
-	^ self defaultBindings 

@@ -1,4 +1,0 @@
-api
-messages
-
-	^ listModel listItems

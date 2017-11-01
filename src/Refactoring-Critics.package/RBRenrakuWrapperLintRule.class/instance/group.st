@@ -1,4 +1,0 @@
-accessing
-group
-
-	^ renrakuRule group

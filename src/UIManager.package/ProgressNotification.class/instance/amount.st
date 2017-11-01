@@ -1,3 +1,0 @@
-accessing
-amount
-	^amount

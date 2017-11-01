@@ -1,3 +1,0 @@
-private
-criticalError
-	Processor activeProcess terminate

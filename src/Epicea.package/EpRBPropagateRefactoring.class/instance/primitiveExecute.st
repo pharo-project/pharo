@@ -1,3 +1,0 @@
-private
-primitiveExecute
-	targetRefactoring propagateTransformation.

@@ -1,4 +1,0 @@
-dialog
-headerLabel
-
-	^ headerLabel

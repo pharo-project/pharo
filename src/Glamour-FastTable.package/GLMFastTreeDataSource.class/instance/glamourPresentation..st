@@ -1,3 +1,0 @@
-accessing
-glamourPresentation: aGLMFastTreePresentation
-	glamourPresentation := aGLMFastTreePresentation

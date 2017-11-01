@@ -1,3 +1,0 @@
-accessing
-technologyName
-	^ 'ston'

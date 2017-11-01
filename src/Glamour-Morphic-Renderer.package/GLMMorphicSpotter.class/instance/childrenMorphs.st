@@ -1,3 +1,0 @@
-accessing
-childrenMorphs
-	^ childrenMorphs

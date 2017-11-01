@@ -1,3 +1,0 @@
-accessing
-autoAccept
-	^ input autoAccept

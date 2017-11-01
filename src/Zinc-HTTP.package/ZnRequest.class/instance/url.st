@@ -1,3 +1,0 @@
-accessing
-url
-	^ self uri 

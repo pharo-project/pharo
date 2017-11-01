@@ -1,1 +1,0 @@
-I am a TextArea that only has one line of text.

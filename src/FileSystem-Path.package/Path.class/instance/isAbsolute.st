@@ -1,3 +1,0 @@
-testing
-isAbsolute
-	self subclassResponsibility 

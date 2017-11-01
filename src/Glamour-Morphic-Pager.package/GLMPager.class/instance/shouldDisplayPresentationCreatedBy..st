@@ -1,3 +1,0 @@
-testing
-shouldDisplayPresentationCreatedBy: aCollection 
-	^ true

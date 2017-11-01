@@ -1,3 +1,0 @@
-event-handling
-refreshPrintDescription
-	self printDescription: self selectedElement

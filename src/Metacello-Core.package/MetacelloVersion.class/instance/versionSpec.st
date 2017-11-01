@@ -1,4 +1,0 @@
-accessing
-versionSpec
-
-	^self spec

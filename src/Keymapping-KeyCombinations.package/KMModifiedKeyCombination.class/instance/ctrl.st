@@ -1,3 +1,0 @@
-combining
-ctrl
-	^ self control

@@ -1,4 +1,0 @@
-comparing
-requirements
-
-	^ requires ifNil: [#()]

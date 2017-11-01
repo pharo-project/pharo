@@ -1,4 +1,0 @@
-private
-newSlice
-
-	^ KomitNewSlice new

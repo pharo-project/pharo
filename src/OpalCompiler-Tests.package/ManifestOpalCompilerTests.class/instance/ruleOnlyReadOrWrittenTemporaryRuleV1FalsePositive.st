@@ -1,3 +1,0 @@
-code-critics
-ruleOnlyReadOrWrittenTemporaryRuleV1FalsePositive
-^ #(#(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingVariablesInOptimizedBlock2 #false)) #'2015-04-09T21:02:04.928132+02:00') #(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingTempsVectorInBlock #false)) #'2015-04-09T21:02:04.927985+02:00') #(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingVariablesInOptimizedBlock #false)) #'2015-04-09T21:02:04.927828+02:00') #(#(#RGMethodDefinition #(#OCContextTempMappingTest #testAccessingVariablesInBlock #false)) #'2015-04-09T21:02:04.928107+02:00') )

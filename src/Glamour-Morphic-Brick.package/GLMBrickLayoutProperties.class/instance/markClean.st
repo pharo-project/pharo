@@ -1,4 +1,0 @@
-accessing
-markClean
-
-	isDirty := false

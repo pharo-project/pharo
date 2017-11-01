@@ -1,3 +1,0 @@
-geometry
-outerBounds
-	^ self fullBounds

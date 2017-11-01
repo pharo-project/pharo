@@ -1,3 +1,0 @@
-accessing
-pc
-	^ instructionStream pc

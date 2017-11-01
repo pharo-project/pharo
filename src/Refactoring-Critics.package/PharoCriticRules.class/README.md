@@ -1,1 +1,0 @@
-I hold default rules used to check quality of code that is proposed for integration into Pharo.

@@ -1,1 +1,0 @@
-A GTGenericStackDebuggerSelectionChanged is an event send to the debugger after the selection in the stack pane is changed.

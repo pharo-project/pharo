@@ -1,3 +1,0 @@
-settings api
-filterKernelClasses
-	^ false

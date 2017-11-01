@@ -1,4 +1,0 @@
-testing
-hasUndefinedDirection
-
-	^undefinedDirection notNil

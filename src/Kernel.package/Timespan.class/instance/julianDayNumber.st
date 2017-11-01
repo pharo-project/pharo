@@ -1,4 +1,0 @@
-accessing
-julianDayNumber 
-
-	^ start julianDayNumber 

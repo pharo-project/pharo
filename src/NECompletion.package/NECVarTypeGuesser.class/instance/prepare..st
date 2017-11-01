@@ -1,2 +1,0 @@
-bytecode decoding
-prepare: aCompiledMethod 

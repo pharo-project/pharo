@@ -1,1 +1,0 @@
-Standard dialog for selecting a colour by HSVA colour selector, picking from the screen or editing of values.

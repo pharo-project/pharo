@@ -1,3 +1,0 @@
-accessing
-configurationClasses
-	^ MetacelloToolBox configurationClasses

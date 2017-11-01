@@ -1,1 +1,0 @@
-I am the adpater used to bridge a TabManagerPresenter and a TabManager

@@ -1,3 +1,0 @@
-paging
-pageHeight
-	^pageHeight.

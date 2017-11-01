@@ -1,3 +1,0 @@
-methods
-usesTrue
-	^ True

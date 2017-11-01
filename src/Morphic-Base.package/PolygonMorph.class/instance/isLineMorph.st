@@ -1,3 +1,0 @@
-testing
-isLineMorph
-	^closed not

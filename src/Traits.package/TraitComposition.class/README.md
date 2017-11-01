@@ -1,3 +1,0 @@
-I hold a collection of trait transformations and provide important facilities to query the trait composition. For each trait in the composition clause there exists exactly one transformation in the collection.
-
-Note, that directly manipulating the composition of a class or trait does not effect changes automatically. Use PureBehavior>>setTraitComposition: to do this. You have to make a copy of the old trait composition before changing it because only the difference between the new and the old composition is updated!

@@ -1,4 +1,0 @@
-testing types
-isPool
-
-	^false

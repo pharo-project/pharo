@@ -1,3 +1,0 @@
-drawing
-showDebugInfo
-	^ true 

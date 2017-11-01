@@ -1,3 +1,0 @@
-compatibility
-errors
-	^ self unexpectedErrors

@@ -1,4 +1,0 @@
-accessing
-variableInPoolDefiner2
-
-	^ VariableInPoolDefiner2

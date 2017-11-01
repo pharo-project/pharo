@@ -1,4 +1,0 @@
-streaming
-writeStream
-
-	^ self openForWrite

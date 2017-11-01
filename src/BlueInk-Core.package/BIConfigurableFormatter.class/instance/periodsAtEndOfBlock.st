@@ -1,3 +1,0 @@
-accessing
-periodsAtEndOfBlock
-	^ context periodsAtEndOfBlock

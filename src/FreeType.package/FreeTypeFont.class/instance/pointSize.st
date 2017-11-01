@@ -1,3 +1,0 @@
-measuring
-pointSize
-	^pointSize

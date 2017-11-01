@@ -1,4 +1,0 @@
-accessing
-withoutListWrapper
-
-	^complexContents withoutListWrapper

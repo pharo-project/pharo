@@ -1,3 +1,0 @@
-tests
-testWhileTrue
-	self checkCorrectDecompilation: #exampleWhileTrue

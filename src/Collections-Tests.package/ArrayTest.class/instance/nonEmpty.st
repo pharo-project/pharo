@@ -1,4 +1,0 @@
-initialization
-nonEmpty
-
-	^ example1

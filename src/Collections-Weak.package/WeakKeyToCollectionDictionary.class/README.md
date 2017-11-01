@@ -1,2 +1,0 @@
-This class represents an identity dictionary with weak keys, whose values are collections. 
-Keys not in the dictionary are mapped to the empty collection.  Conversely, if a collection becomes empty, the mapping can be removed to save time and space.  However, because this requires re-hashing, it does not pay to do this to eagerly.

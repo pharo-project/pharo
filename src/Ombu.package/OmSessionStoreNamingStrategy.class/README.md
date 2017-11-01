@@ -1,1 +1,0 @@
-My subclasses define a way to find a name for a new Ombu log.  Names should not collide with an existing file in the same directory.

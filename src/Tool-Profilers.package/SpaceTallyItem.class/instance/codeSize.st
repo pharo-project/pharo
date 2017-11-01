@@ -1,4 +1,0 @@
-accessing
-codeSize
-
-	^ codeSize

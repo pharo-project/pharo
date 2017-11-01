@@ -1,1 +1,0 @@
-I am a special iamge morph used to be displayed as an icon for loading

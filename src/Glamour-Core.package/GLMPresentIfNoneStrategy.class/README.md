@@ -1,1 +1,0 @@
-This strategy sets presentations only if none exits in the pane of the destination port.

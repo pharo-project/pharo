@@ -1,3 +1,0 @@
-testing
-isSideRuler
-	^ false

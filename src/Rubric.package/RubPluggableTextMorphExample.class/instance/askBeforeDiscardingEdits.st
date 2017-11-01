@@ -1,3 +1,0 @@
-edits
-askBeforeDiscardingEdits
-	^ false

@@ -1,1 +1,0 @@
-I am not a test! I provide usage examples for the SUnit debugger.

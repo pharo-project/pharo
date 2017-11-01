@@ -1,3 +1,0 @@
-private
-createStderr
-	^ Stdio stderr

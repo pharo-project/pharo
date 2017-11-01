@@ -1,3 +1,0 @@
-accessing
-tryNamedPrimitiveTemplateMethod
-	^ TryNamedPrimitiveTemplateMethod

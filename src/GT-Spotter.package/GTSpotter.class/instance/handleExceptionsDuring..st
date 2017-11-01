@@ -1,3 +1,0 @@
-event handling
-handleExceptionsDuring: aBlock
-	self exceptionHandler handleExceptionsDuring: aBlock

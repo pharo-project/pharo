@@ -1,4 +1,0 @@
-accessing
-dontShowPreview
-
-	isPreviewVisible := false

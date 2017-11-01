@@ -1,1 +1,0 @@
-I include all variable enries for class, pool and global vars.

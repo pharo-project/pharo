@@ -1,1 +1,0 @@
-One finger is down and has not moved on the screen

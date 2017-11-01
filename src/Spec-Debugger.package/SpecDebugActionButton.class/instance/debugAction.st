@@ -1,4 +1,0 @@
-accessing
-debugAction
-
-	^ debugActionHolder value 

@@ -1,4 +1,0 @@
-display
-pluginName
-
-	^ self name

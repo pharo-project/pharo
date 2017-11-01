@@ -1,3 +1,0 @@
-displaying
-label
-	^ self content

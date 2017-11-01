@@ -1,4 +1,0 @@
-snapshotting
-shutDown
-
-	Scheduler shutDown.

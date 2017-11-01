@@ -1,3 +1,0 @@
-bindings
-guessTypeForName: aString 
-	^ nil

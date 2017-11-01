@@ -1,3 +1,0 @@
-accessing
-dataFromPresentationItem: anItem
-	self explicitRequirement

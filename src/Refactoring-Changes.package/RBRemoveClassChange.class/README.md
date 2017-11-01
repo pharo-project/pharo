@@ -1,1 +1,0 @@
-I am a class refactoring change for removing a class. On execution, my class will be removed from the system (all globals).

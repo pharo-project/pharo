@@ -1,1 +1,0 @@
-A ValueAdded is an announcement raised when an item (or a collection of items) was added to CollectionValueHolder.

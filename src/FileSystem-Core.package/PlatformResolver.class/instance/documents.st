@@ -1,3 +1,0 @@
-origins
-documents
-	^ self subclassResponsibility

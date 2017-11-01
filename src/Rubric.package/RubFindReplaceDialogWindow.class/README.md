@@ -1,1 +1,0 @@
-I am the window to find and replace text in a text area

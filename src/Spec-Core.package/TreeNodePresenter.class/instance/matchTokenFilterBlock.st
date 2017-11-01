@@ -1,4 +1,0 @@
-api
-matchTokenFilterBlock
-
-	^ matchTokenFilter value

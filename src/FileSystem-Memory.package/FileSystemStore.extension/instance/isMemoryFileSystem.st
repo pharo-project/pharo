@@ -1,3 +1,0 @@
-*FileSystem-Memory
-isMemoryFileSystem
-	^ false

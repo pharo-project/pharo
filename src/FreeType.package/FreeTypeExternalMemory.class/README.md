@@ -1,1 +1,0 @@
-FreeType externalMemory 

@@ -1,3 +1,0 @@
-protocol
-title
-	^ 'Cycles analysis'

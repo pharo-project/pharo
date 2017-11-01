@@ -1,3 +1,0 @@
-private
-scheduleDuration
-	^ schedule sum

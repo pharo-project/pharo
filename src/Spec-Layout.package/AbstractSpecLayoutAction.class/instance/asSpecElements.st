@@ -1,4 +1,0 @@
-protocol
-asSpecElements
-
-	self subclassResponsibility 

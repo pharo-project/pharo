@@ -1,3 +1,0 @@
-accessing
-inspectItem
-	self inspect

@@ -1,4 +1,0 @@
-api
-askOkToClose
-
-	^ askOkToClose value

@@ -1,4 +1,0 @@
-accessing
-nullCategory
-
-	^ #'no messages'

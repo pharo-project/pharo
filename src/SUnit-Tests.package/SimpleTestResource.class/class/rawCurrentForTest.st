@@ -1,3 +1,0 @@
-accessing
-rawCurrentForTest
-	^current

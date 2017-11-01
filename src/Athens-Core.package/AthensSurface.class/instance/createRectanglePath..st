@@ -1,3 +1,0 @@
-paths
-createRectanglePath: aRectangle 
-	^ aRectangle

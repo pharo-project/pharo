@@ -1,1 +1,0 @@
-i am the root of various window events hierarchy

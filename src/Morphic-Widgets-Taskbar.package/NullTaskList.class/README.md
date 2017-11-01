@@ -1,1 +1,0 @@
-I stand in when the task list is not open in the world.

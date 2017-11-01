@@ -1,1 +1,0 @@
-A test resource for test purposes for Versionner

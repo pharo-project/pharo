@@ -1,4 +1,0 @@
-accessing
-newMethod
-
-	^ method

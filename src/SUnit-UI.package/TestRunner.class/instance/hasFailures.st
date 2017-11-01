@@ -1,3 +1,0 @@
-testing
-hasFailures
-	^ result hasFailures.

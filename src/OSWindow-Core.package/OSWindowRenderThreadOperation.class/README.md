@@ -1,1 +1,0 @@
-I am a render operation, used to send commands (which can be asynchronous or synchronous) to the render thread. 

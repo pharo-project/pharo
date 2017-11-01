@@ -1,4 +1,0 @@
-accessing
-protocol
-
-	^ method protocol

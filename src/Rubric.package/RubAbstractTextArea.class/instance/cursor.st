@@ -1,3 +1,0 @@
-accessing cursor
-cursor
-	^ cursor

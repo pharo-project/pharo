@@ -1,3 +1,0 @@
-accessing
-depth
-	^myCanvas depth

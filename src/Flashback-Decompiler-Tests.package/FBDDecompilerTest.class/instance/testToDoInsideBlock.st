@@ -1,3 +1,0 @@
-tests
-testToDoInsideBlock
-	self checkCorrectDecompilation: #exampleToDoInsideBlock

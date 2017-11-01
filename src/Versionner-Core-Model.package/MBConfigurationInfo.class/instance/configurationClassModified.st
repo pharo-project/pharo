@@ -1,4 +1,0 @@
-updating
-configurationClassModified
-
-	self fullRecalculate 

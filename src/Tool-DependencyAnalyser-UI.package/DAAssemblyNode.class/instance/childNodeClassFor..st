@@ -1,3 +1,0 @@
-api
-childNodeClassFor: anItem
-	^ DADependentPackageNode

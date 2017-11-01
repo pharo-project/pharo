@@ -1,3 +1,0 @@
-modes
-hslLuminosity
-	self notAvailable

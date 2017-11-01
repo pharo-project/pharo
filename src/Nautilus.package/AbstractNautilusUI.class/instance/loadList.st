@@ -1,4 +1,0 @@
-private
-loadList
-	
-	^  self getPackagesWithoutExtensionsList

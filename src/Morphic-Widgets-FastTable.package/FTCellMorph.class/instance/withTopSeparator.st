@@ -1,3 +1,0 @@
-accessing
-withTopSeparator
-	topSeparator := true

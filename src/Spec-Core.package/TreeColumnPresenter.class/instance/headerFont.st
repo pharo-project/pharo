@@ -1,4 +1,0 @@
-api
-headerFont
-
-	^ headerFont value

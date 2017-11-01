@@ -1,3 +1,0 @@
-accessing
-descender
-	^descender

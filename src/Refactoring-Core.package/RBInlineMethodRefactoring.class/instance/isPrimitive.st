@@ -1,3 +1,0 @@
-testing
-isPrimitive
-	^inlineParseTree isPrimitive

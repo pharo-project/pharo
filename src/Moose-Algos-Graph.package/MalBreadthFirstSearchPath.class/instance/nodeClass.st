@@ -1,4 +1,0 @@
-accessing
-nodeClass
-
-	^ MalBfsNode 

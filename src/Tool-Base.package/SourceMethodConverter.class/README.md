@@ -1,1 +1,0 @@
-A SourceMessageConverter is a wrapper wich display the source code of the provided message

@@ -1,4 +1,0 @@
-api
-headerAction
-
-	^ headerAction value

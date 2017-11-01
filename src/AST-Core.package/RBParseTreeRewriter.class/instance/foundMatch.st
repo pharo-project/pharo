@@ -1,3 +1,0 @@
-private
-foundMatch
-	answer := true

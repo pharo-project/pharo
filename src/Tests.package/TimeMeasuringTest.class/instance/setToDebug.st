@@ -1,3 +1,0 @@
-debugging
-setToDebug
-	shouldProfile := true

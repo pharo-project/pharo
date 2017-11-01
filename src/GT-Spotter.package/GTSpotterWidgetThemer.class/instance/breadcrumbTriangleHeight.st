@@ -1,4 +1,0 @@
-values
-breadcrumbTriangleHeight
-
-	^ 16

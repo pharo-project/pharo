@@ -1,1 +1,0 @@
-I am a display object which can both paint myself on a medium (displayOn: messages), and can act as a medium myself. My chief subclass is Form.

@@ -1,3 +1,0 @@
-settings
-removeAllHttpProxyExceptions
-	HTTPProxyExceptions removeAll.

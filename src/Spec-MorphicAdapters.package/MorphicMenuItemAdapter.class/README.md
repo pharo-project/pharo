@@ -1,1 +1,0 @@
-I am the bridge between a MenuItemPresenter and a ToggleMenuItemMorph

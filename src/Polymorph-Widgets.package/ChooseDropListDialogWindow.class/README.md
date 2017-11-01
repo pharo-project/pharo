@@ -1,1 +1,0 @@
-Message dialog containing a drop list for selection of an item.

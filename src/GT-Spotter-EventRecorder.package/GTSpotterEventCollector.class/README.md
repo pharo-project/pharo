@@ -1,2 +1,0 @@
-I represent a GTEventCollector for GTSpotter application.
-I am a bit spetial because I send only closed sessions. It means, bundle always end with closing event. The rest of the events are postponed for the next delivery cycle.

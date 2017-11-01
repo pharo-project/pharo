@@ -1,3 +1,0 @@
-menu pragmas
-packageFixPragma
-	^ 'nautilusGlobalPackageTreeFixMenu'

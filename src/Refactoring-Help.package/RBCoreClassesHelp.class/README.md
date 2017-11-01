@@ -1,1 +1,0 @@
-A book chapter describing  important core classes from the class comments.

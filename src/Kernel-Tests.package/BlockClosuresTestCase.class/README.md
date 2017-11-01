@@ -1,1 +1,0 @@
-This test case collects examples for block uses that require full block closures.

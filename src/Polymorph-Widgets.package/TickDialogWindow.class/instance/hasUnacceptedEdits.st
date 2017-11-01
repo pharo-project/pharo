@@ -1,4 +1,0 @@
-compatibility
-hasUnacceptedEdits
-
-	^ true

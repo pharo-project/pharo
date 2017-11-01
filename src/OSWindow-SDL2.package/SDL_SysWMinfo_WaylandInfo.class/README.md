@@ -1,1 +1,0 @@
-A structure that contains Wayland specific information about a window. 

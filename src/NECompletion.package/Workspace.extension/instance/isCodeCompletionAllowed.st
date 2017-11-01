@@ -1,3 +1,0 @@
-*necompletion
-isCodeCompletionAllowed
-	^true

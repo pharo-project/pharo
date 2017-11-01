@@ -1,3 +1,0 @@
-attachments
-firstVertex
-	^vertices first

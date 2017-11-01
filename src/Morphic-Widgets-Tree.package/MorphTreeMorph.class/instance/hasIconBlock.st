@@ -1,3 +1,0 @@
-accessing
-hasIconBlock
-	^ iconBlock notNil

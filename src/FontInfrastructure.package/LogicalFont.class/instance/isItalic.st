@@ -1,3 +1,0 @@
-testing
-isItalic
-	^self isItalicOrOblique

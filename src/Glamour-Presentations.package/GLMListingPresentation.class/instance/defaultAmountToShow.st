@@ -1,3 +1,0 @@
-accessing
-defaultAmountToShow
-	^ 500

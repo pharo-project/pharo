@@ -1,4 +1,0 @@
-conversion
-asMonth
-
-	^ self 

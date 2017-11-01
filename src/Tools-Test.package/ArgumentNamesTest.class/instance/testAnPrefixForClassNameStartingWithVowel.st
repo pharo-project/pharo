@@ -1,4 +1,0 @@
-tests
-testAnPrefixForClassNameStartingWithVowel
-
-	self testInteger.

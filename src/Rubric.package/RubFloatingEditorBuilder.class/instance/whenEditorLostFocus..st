@@ -1,3 +1,0 @@
-announcement handling
-whenEditorLostFocus: anAnnouncement
-	self closeEditor

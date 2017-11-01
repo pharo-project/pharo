@@ -1,3 +1,0 @@
-private
-waitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil
-	self exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil.

@@ -1,4 +1,0 @@
-accessing
-oldProtocol
-
-	^ oldMethod protocol

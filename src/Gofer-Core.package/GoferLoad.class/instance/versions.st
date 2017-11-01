@@ -1,3 +1,0 @@
-accessing
-versions
-	^ model versions

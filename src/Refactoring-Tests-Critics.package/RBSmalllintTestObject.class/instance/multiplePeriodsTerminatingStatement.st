@@ -1,3 +1,0 @@
-methods
-multiplePeriodsTerminatingStatement
-	^ self..

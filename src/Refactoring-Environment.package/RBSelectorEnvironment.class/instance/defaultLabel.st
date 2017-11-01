@@ -1,3 +1,0 @@
-private
-defaultLabel
-	^'some methods'

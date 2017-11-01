@@ -1,4 +1,0 @@
-testing
-isEmptyOrNil
-
-	^content isEmptyOrNil 

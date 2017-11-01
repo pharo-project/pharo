@@ -1,3 +1,0 @@
-class initialization
-nullCategory
-	^ NullCategory

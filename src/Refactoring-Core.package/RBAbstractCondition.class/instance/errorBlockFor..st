@@ -1,3 +1,0 @@
-private
-errorBlockFor: aBoolean 
-	^nil

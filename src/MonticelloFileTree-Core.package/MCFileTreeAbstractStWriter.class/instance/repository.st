@@ -1,3 +1,0 @@
-private
-repository
-  ^ stream repository

@@ -1,3 +1,0 @@
-handlers
-shutdown: isImageQuitting
-	self subclassResponsibility

@@ -1,1 +1,0 @@
-SUnit tests for self evaluting objects 

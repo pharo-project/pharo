@@ -1,4 +1,0 @@
-accessing
-theMetaClass
-
-	self subclassResponsibility

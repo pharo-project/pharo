@@ -1,1 +1,0 @@
-I represent the specialized variable named 'thisContext'

@@ -1,0 +1,384 @@
+"
+Metalinks are used to annotate other AST nodes. An annotated AST is expanded, compiled and executed on the fly thanks to the ReflectiveMethod/CompiledMethod Twin. 
+
+For a given node metalinks can be put at different positions:
+
+- before: The metalink is executed before the execution of the node.  
+- instead: The metalink is executed insted the node.
+- after: The metalink is executed after the execution of the node.
+(... later: onError,  Do we have an #around instead of #instead?)
+
+Not all the nodes provide all the position. For example, literals don't provide onError and onSuccess positions.
+
+metaObject: The target object to call
+selector: send this selector
+arguments
+
+condition:  turn link on/off 
+level: Meta Level at which the link is active
+------ Examples -----
+
+MetaLink new 
+	metaObject: Halt;
+	selector: #now.
+	
+MetaObject new 
+	metaObject: [ self halt ];
+	selector: #value.
+"
+Class {
+	#name : #MetaLink,
+	#superclass : #Object,
+	#instVars : [
+		'arguments',
+		'condition',
+		'conditionArguments',
+		'control',
+		'level',
+		'metaObject',
+		'nodes',
+		'selector',
+		'options'
+	],
+	#category : #Reflectivity-Links
+}
+
+{ #category : #options }
+MetaLink class >> defaultOptions [
+	^ #(
+	+ optionInlineMetaObject            "meta object is inlined by default."
+	+ optionInlineCondition              "condition is inlined by default."
+	- optionCompileOnLinkInstallation   "generate compiledMethod on link installation"
+	- optionOneShot                     "remove link after first activation"
+	- optionMetalevel                   "force level: 0 for the link"
+	- optionDisabledLink                "links are active by default"
+	)
+]
+
+{ #category : #cleanup }
+MetaLink class >> uninstallAll [
+	<script>
+	self allInstances do: #uninstall.
+]
+
+{ #category : #accessing }
+MetaLink >> allReifications [
+	| reifications |
+	"we only check reification, that is symbols."
+	reifications := (self arguments select: [:each | each isSymbol]) asSet. 
+	self metaObject isSymbol ifTrue: [reifications add: self metaObject].
+	
+	self conditionArguments ifNil: [  
+		self condition ifNotNil: [reifications addAll: (self reificationsFor: self condition)]]
+		ifNotNil: [reifications addAll: self conditionArguments ].
+	
+	^reifications
+]
+
+{ #category : #accessing }
+MetaLink >> arguments [
+	^arguments
+]
+
+{ #category : #'link api' }
+MetaLink >> arguments: args [
+	arguments := args.
+	self invalidate.
+]
+
+{ #category : #installing }
+MetaLink >> checkForCompatibilityWith: aNode [
+	| supported |
+	
+	supported := Set new.
+	RFReification subclasses do: [:plugin |
+		(plugin entities anySatisfy: [:class | aNode isKindOf: class]) ifTrue: [
+		supported add: plugin key]].
+	self allReifications do: [ :each | (supported includes: each) ifFalse: [^false  ]  ].
+	^true
+]
+
+{ #category : #accessing }
+MetaLink >> condition [
+	^condition
+]
+
+{ #category : #'link api' }
+MetaLink >> condition: aCondition [
+	condition:= aCondition.
+	self optionInlineCondition ifTrue: [^self invalidate].
+	nodes do: [ :node |  | methodNode |
+		methodNode := node methodNode.
+		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineCondition)
+			 ifTrue: [ methodNode method invalidate ] ].
+	
+
+	
+
+]
+
+{ #category : #'link api' }
+MetaLink >> condition: aCondition arguments: anArray [
+	self condition: aCondition.
+	conditionArguments := anArray.
+
+	
+
+]
+
+{ #category : #accessing }
+MetaLink >> conditionArguments [
+	^conditionArguments
+]
+
+{ #category : #accessing }
+MetaLink >> control [
+	^control
+	
+]
+
+{ #category : #'link api' }
+MetaLink >> control: aRFLinkControl [
+	control:= aRFLinkControl.
+	self invalidate.
+]
+
+{ #category : #'reflecive api' }
+MetaLink >> disable [
+	"turn off link reflectively while keeping the condition"
+	self hasReifiedCondition
+		ifFalse: [self condition: (RFCondition for: condition)].
+	self condition disable.
+]
+
+{ #category : #private }
+MetaLink >> doesNotUnderstand: message [
+
+	(message selector isUnary and: [ message selector beginsWith: 'option'] )
+		ifTrue: [ ^ options includes: message selector ].
+		
+	^ super doesNotUnderstand: message
+]
+
+{ #category : #'reflecive api' }
+MetaLink >> enable [
+	"turn on link reflectively if it has been turned off"
+	self hasReifiedCondition
+		ifTrue: [self condition enable].
+	
+
+]
+
+{ #category : #testing }
+MetaLink >> hasCondition [	
+	^condition notNil
+]
+
+{ #category : #testing }
+MetaLink >> hasMetaLevel [
+	^level notNil
+]
+
+{ #category : #options }
+MetaLink >> hasOption: aSymbol [
+	^options includes: aSymbol
+]
+
+{ #category : #testing }
+MetaLink >> hasReifiedCondition [
+	self hasCondition ifFalse: [ ^false ].
+	^self condition isKindOf: RFCondition
+]
+
+{ #category : #initialization }
+MetaLink >> initialize [
+	nodes := IdentitySet new.
+	control := #before.
+	selector := #value.
+	arguments := #().
+	options := Set new.
+	self parseOptions: self class defaultOptions.
+]
+
+{ #category : #installing }
+MetaLink >> installOn: aNode [ 
+	nodes add: aNode
+	
+]
+
+{ #category : #installing }
+MetaLink >> installOnVariable: aVariable [
+	nodes add: aVariable
+]
+
+{ #category : #installing }
+MetaLink >> invalidate [
+	nodes do: [ :node | node invalidate ]
+]
+
+{ #category : #accessing }
+MetaLink >> level [
+	^ level
+]
+
+{ #category : #'link api' }
+MetaLink >> level: anObject [
+	level := anObject.
+	self invalidate.
+]
+
+{ #category : #accessing }
+MetaLink >> metaLinkOptions: anArray [
+	self options: anArray
+]
+
+{ #category : #accessing }
+MetaLink >> metaObject [
+	^ metaObject
+]
+
+{ #category : #'link api' }
+MetaLink >> metaObject: anObject [
+	metaObject := anObject.
+	self optionInlineMetaObject ifTrue: [^self invalidate].
+	nodes do: [ :node | | methodNode |
+		methodNode := node methodNode.
+		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineMetaObject)
+			 ifTrue: [ methodNode method invalidate ] ].
+	
+	
+]
+
+{ #category : #accessing }
+MetaLink >> methods [
+	^nodes flatCollect: [ :entity |
+		(entity isKindOf: RBProgramNode) 
+			ifTrue: [ {entity methodNode compiledMethod}  ]
+			ifFalse: [ entity usingMethods ] ]
+]
+
+{ #category : #accessing }
+MetaLink >> option: anArray [ 
+	self parseOptions: anArray
+]
+
+{ #category : #options }
+MetaLink >> optionCompileOnLinkInstallation [
+	^ options includes: #optionCompileOnLinkInstallation
+]
+
+{ #category : #options }
+MetaLink >> optionCompileOnLinkInstallation: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionCompileOnLinkInstallation ] 
+		ifFalse: [ options remove: #optionCompileOnLinkInstallation ifAbsent:[] ]
+]
+
+{ #category : #options }
+MetaLink >> optionDisabledLink [
+	^ options includes: #optionDisabledLink
+]
+
+{ #category : #options }
+MetaLink >> optionDisabledLink: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionDisabledLink ] 
+		ifFalse: [ options remove: #optionDisabledLink ifAbsent:[] ]
+]
+
+{ #category : #options }
+MetaLink >> optionInlineCondition [
+	^ options includes: #optionInlineCondition
+]
+
+{ #category : #options }
+MetaLink >> optionInlineCondition: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionInlineCondition ] 
+		ifFalse: [ options remove: #optionInlineCondition ifAbsent:[] ]
+]
+
+{ #category : #options }
+MetaLink >> optionInlineMetaObject [
+	^ options includes: #optionInlineMetaObject
+]
+
+{ #category : #options }
+MetaLink >> optionInlineMetaObject: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionInlineMetaObject ] 
+		ifFalse: [ options remove: #optionInlineMetaObject ifAbsent:[] ]
+]
+
+{ #category : #options }
+MetaLink >> optionMetalevel [
+	^ options includes: #optionMetalevel
+]
+
+{ #category : #options }
+MetaLink >> optionMetalevel: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionMetalevel ] 
+		ifFalse: [ options remove: #optionMetalevel ifAbsent:[] ]
+]
+
+{ #category : #options }
+MetaLink >> optionOneShot [
+	^ options includes: #optionOneShot
+]
+
+{ #category : #options }
+MetaLink >> optionOneShot: aBoolean [
+	aBoolean
+		ifTrue: [ options add: #optionOneShot ] 
+		ifFalse: [ options remove: #optionOneShot ifAbsent:[] ]
+]
+
+{ #category : #accessing }
+MetaLink >> options [
+	^options
+]
+
+{ #category : #accessing }
+MetaLink >> options: anArray [ 
+	self parseOptions: anArray
+]
+
+{ #category : #private }
+MetaLink >> parseOptions: optionsArray [
+
+	options parseOptions: optionsArray
+]
+
+{ #category : #private }
+MetaLink >> reificationsFor: aBlockOrBoolean [
+	(aBlockOrBoolean isKindOf: Boolean) ifTrue: [ ^#() ].
+	(aBlockOrBoolean isKindOf: RFCondition) ifTrue: [^aBlockOrBoolean reifications].
+	^aBlockOrBoolean argumentNames.
+]
+
+{ #category : #accessing }
+MetaLink >> selector [
+	^selector
+	
+]
+
+{ #category : #'link api' }
+MetaLink >> selector: aSymbol [
+	selector := aSymbol.
+	self invalidate.
+]
+
+{ #category : #installing }
+MetaLink >> uninstall [
+	nodes do: [:node | node removeLink: self].
+	nodes removeAll.
+]
+
+{ #category : #ast }
+MetaLink >> valueInContext: aBlock [
+	(RFMetaContext current isActive: (self level ifNil: [0]))
+		ifFalse: [ ^ self ].
+	RFMetaContext current shiftLevelUp.
+	^ aBlock ctxtEnsure: [ RFMetaContext current shiftLevelDown ]
+]

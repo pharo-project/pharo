@@ -1,3 +1,0 @@
-accessing
-fromSource
-	^ definition diffSource

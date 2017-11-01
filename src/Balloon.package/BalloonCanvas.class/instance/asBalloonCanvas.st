@@ -1,3 +1,0 @@
-converting
-asBalloonCanvas
-	^self

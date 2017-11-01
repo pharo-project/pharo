@@ -1,4 +1,0 @@
-accessing
-firstSource
-
-	^ previousNodes first

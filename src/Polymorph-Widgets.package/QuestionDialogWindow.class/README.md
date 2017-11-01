@@ -1,1 +1,0 @@
-A yes/no/cancel message dialog. Cancel (escape & return) is the default.

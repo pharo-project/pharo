@@ -1,4 +1,0 @@
-accessing
-isLeapYear
-
-	^ start isLeapYear 

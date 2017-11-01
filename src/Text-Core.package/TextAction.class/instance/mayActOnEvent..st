@@ -1,4 +1,0 @@
-testing
-mayActOnEvent: anEvent
-
-	^ true

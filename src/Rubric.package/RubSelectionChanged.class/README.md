@@ -1,1 +1,0 @@
-I am raised when the current selection is modified 

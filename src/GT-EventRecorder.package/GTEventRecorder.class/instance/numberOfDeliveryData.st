@@ -1,3 +1,0 @@
-convenient
-numberOfDeliveryData
-	^ delivery size

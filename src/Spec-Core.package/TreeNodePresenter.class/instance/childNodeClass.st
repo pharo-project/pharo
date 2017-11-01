@@ -1,4 +1,0 @@
-api
-childNodeClass
-
-	^ childNodeClass value

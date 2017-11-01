@@ -1,1 +1,0 @@
-Notify about repackaging of a class

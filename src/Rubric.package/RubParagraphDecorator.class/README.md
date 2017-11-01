@@ -1,1 +1,0 @@
-I am a decorator for the paragraph of a text area. I can be used to draw something on the paragraph 

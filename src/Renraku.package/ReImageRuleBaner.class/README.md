@@ -1,1 +1,0 @@
-A pluggable functionality used to ban rules in the image scale

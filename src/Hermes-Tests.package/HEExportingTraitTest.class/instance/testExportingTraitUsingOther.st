@@ -1,3 +1,0 @@
-tests
-testExportingTraitUsingOther
-	self doTestExportingTrait: THEATraitUsingOthers.

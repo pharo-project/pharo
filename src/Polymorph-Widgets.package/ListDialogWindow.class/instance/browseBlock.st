@@ -1,4 +1,0 @@
-button behavior
-browseBlock
-
-	^ browseBlock

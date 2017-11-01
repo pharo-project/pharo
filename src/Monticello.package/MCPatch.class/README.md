@@ -1,1 +1,0 @@
-I represent a set of patch operations which can be applied by sending message applyTo: to my instances. 

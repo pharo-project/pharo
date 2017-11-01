@@ -1,3 +1,0 @@
-accessing
-minimumNewLinesBetweenStatements: anInteger
-	context minimumNewLinesBetweenStatements: anInteger

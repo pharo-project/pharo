@@ -1,3 +1,0 @@
-accessing
-input
-	^ subwidget input

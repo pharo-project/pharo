@@ -1,1 +1,0 @@
-A RBCompositeLintRule is a composite rule holding rules.

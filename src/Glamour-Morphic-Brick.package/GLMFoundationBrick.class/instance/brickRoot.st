@@ -1,4 +1,0 @@
-accessing
-brickRoot
-
-	^ brickRoot

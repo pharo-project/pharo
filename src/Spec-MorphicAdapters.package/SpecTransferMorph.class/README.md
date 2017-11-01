@@ -1,1 +1,0 @@
-I am a Spec specific subclass of TransferMorph used to initialize the trasnfer morph state correctly with the Spec constraints

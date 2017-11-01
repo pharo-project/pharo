@@ -1,3 +1,0 @@
-testing
-hasErrors
-	^ result hasErrors.

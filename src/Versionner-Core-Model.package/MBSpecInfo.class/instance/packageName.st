@@ -1,4 +1,0 @@
-accessing
-packageName
-
-	^self name

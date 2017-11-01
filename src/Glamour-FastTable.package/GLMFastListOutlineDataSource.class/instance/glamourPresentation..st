@@ -1,3 +1,0 @@
-accessing
-glamourPresentation: aGlamourPresentation
-	glamourPresentation := aGlamourPresentation

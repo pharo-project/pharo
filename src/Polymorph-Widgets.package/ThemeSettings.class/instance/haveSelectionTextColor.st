@@ -1,4 +1,0 @@
-accessing
-haveSelectionTextColor
-	
-	^ selectionTextColor notNil

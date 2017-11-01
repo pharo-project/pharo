@@ -1,1 +1,0 @@
-Superclass of all swipes events

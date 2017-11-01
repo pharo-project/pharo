@@ -1,3 +1,0 @@
-examples
-exampleLiteral
-	^ 2

@@ -1,4 +1,0 @@
-protocol
-methodsSelection
-
-	^ methodsSelection

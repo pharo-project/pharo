@@ -1,4 +1,0 @@
-protocol
-resetCategorySelection
-
-	categoriesSelection removeAll

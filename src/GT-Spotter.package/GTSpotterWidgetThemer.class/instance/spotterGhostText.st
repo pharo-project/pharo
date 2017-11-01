@@ -1,4 +1,0 @@
-values
-spotterGhostText
-
-	^ 'Search'

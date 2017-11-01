@@ -1,4 +1,0 @@
-commands
-cmdMakeDevelopment
-	<command>
-	^ VSMakeDevelopmentCommand

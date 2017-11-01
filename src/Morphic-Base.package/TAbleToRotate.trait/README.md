@@ -1,1 +1,0 @@
-A trait for morphs able to rotate

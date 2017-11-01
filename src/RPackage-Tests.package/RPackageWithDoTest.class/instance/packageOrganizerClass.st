@@ -1,3 +1,0 @@
-tests
-packageOrganizerClass
-	^ RPackageOrganizer

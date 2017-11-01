@@ -1,3 +1,0 @@
-actions
-close
-	open := false

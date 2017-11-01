@@ -1,3 +1,0 @@
-interface
-loadAllFileNames
-	self subclassResponsibility

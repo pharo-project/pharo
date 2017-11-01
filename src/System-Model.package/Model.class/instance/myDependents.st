@@ -1,4 +1,0 @@
-dependents-private
-myDependents
-
-	^ dependents

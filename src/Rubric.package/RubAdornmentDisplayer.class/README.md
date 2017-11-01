@@ -1,1 +1,0 @@
-RubAdornmentDisplayer adds a simple adornment for text area

@@ -1,3 +1,0 @@
-tests
-testAddRemoveDependents
-	self classRuleFor: self currentSelector

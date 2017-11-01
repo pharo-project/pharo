@@ -1,1 +1,0 @@
-Raises an error that represents that the compilation has been aborted. If not handled, it signals an UnhandledError.

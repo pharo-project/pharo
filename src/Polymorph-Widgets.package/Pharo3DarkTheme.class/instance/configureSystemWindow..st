@@ -1,3 +1,0 @@
-configure
-configureSystemWindow: aWindow
-	

@@ -1,3 +1,0 @@
-initialization
-defaultRenderer
-	^ GLMBrickRenderer new

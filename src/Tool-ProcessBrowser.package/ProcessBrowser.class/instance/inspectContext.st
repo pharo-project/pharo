@@ -1,3 +1,0 @@
-stack list
-inspectContext
-	selectedContext inspect

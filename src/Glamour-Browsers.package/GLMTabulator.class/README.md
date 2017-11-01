@@ -1,1 +1,0 @@
-A GLMTabulator is an explicit browser that allows us to place panes in columns and rows.

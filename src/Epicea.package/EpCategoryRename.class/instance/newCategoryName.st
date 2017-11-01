@@ -1,4 +1,0 @@
-accessing
-newCategoryName
-
-	^ self categoryName

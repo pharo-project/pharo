@@ -1,1 +1,0 @@
-Allows to render a morph as a scene in athens

@@ -1,1 +1,0 @@
-I represent the Ctrl key modifier. Look at my superclass for a more detailed explanaition.

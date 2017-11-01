@@ -1,4 +1,0 @@
-compatibility
-label
-
-	^ self title.

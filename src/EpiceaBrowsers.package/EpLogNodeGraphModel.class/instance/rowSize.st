@@ -1,4 +1,0 @@
-accessing
-rowSize
-
-	^ 23

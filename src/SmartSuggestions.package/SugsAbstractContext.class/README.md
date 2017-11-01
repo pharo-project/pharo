@@ -1,1 +1,0 @@
-I'm the API used by smart suggestions with facilities to know the selected text, and having all the needed information for execute the commands.

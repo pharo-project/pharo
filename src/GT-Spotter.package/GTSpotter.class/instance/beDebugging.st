@@ -1,3 +1,0 @@
-accessing-convenience
-beDebugging
-	self exceptionHandler: GTSpotterDebuggingExceptionHandler new

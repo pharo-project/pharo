@@ -1,4 +1,0 @@
-accessing
-size
-
-	^ 1

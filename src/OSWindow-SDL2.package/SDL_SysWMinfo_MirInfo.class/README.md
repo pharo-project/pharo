@@ -1,1 +1,0 @@
-A structure that contains Mir specific information about a window. 

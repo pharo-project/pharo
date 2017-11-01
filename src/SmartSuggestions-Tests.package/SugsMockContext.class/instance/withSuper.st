@@ -1,3 +1,0 @@
-testing
-withSuper
-	super

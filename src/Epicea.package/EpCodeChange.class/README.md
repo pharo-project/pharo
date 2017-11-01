@@ -1,1 +1,0 @@
-I represent a change in a code entity.

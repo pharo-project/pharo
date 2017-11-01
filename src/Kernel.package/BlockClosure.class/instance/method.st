@@ -1,3 +1,0 @@
-accessing
-method
-	^outerContext method

@@ -1,4 +1,0 @@
-private
-lastCommit
-
-	^ lastCommit value

@@ -1,1 +1,0 @@
-A Renraku critic event about an entity

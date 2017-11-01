@@ -1,1 +1,0 @@
-I'm a kind of cache for versions and filenames of packages.

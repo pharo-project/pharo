@@ -1,4 +1,0 @@
-api
-isResizeable
-
-	^ isResizeable value

@@ -1,1 +1,0 @@
-A canvas which forwards drawing commands to sub-canvases.

@@ -1,3 +1,0 @@
-buttons creations
-removeAllButtonAction
-	self removeAllItems.

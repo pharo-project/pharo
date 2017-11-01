@@ -1,4 +1,0 @@
-accessing
-depth
-
-	^ Display depth

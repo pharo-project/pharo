@@ -1,3 +1,0 @@
-streams-compatibility
-binaryReadStream
-	^ self subclassResponsibility

@@ -1,3 +1,0 @@
-tests
-testSimpleBlockLocalIfNested
-	self checkCorrectDecompilation: #exampleSimpleBlockLocalIfNested

@@ -1,4 +1,0 @@
-private
-resetRootNodes
-
-	rootNodes := nil

@@ -1,3 +1,0 @@
-displaying
-colorForInsets
-	^ Color transparent

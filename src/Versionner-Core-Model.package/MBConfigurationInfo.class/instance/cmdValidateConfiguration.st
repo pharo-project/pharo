@@ -1,4 +1,0 @@
-commands
-cmdValidateConfiguration
-	<command>
-	^ VSValidateConfigurationCommand

@@ -1,3 +1,0 @@
-sample repository
-isSample
-    ^ false

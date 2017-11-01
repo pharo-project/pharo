@@ -1,1 +1,0 @@
-I am a structure that in the AMD64 SystemV ABI is passed in 1 integer register, and in 1 float register.

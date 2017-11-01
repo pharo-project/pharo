@@ -1,4 +1,0 @@
-testing-interest
-checksNode
-
-	^ false

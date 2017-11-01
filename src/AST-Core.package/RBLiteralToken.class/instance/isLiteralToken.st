@@ -1,3 +1,0 @@
-testing
-isLiteralToken
-	^true

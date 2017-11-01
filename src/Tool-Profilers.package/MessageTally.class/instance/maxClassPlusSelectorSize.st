@@ -1,3 +1,0 @@
-printing format
-maxClassPlusSelectorSize
-	^maxClassPlusSelectorSize

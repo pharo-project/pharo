@@ -1,1 +1,0 @@
-A MCWorkingCopyDeleted class is an announcement raised when a MCWorkingCopy is removed

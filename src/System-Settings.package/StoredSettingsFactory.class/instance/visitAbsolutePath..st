@@ -1,3 +1,0 @@
-visitor
-visitAbsolutePath: anAbsolutePath 
-	self newAbsolutePathStoredSetting realValue: anAbsolutePath segments

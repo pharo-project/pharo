@@ -1,1 +1,0 @@
-This is deprecated class because the original class TestingComposableModel was renamed to TestingComposablePresenter. You should stop to use this class and modify your code to use TestingComposablePresenter.

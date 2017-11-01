@@ -1,1 +1,0 @@
-Infos about a project

@@ -1,3 +1,0 @@
-validation
-checkIntegrity
-	self checkSanity

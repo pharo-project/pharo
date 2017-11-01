@@ -1,3 +1,0 @@
-accessing
-sessionClass
-	self subclassResponsibility

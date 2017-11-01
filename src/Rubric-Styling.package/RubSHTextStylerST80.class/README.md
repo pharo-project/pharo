@@ -1,1 +1,0 @@
-I extend SHTextStylerST80 and replace the links for methdos, classes and variables with the Rubric specific links.

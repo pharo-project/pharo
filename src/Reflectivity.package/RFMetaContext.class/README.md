@@ -1,1 +1,0 @@
-I model the meta level when activating a MetaLink.

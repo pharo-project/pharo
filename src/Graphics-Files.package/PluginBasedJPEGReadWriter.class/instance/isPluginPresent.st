@@ -1,3 +1,0 @@
-testing
-isPluginPresent
-	^self primJPEGPluginIsPresent

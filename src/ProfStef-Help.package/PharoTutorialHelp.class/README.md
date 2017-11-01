@@ -1,1 +1,0 @@
-HelpSystem book documenting PharoTutorial

@@ -1,3 +1,0 @@
-requirements
-elementNotInForOccurrences
-	^ 666

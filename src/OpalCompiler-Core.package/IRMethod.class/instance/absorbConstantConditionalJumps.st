@@ -1,4 +1,0 @@
-optimizing
-absorbConstantConditionalJumps
-
-	startSequence absorbConstantConditionalJumps: IdentitySet new

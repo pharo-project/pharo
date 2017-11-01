@@ -1,4 +1,0 @@
-building actions
-codeActionsPragmas
-
-	^ #( codeDebuggingAction )

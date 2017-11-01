@@ -1,3 +1,0 @@
-accessing
-packageName
-	^ target packageName

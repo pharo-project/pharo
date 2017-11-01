@@ -1,3 +1,0 @@
-scrolling
-newTransformMorph
-	^ MorphTreeTransformMorph new 

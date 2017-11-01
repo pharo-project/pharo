@@ -1,3 +1,0 @@
-copying
-deepCopy
-	^ self errorDontCopy

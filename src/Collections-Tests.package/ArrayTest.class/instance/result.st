@@ -1,4 +1,0 @@
-initialization
-result
-	
-	^ collectResult

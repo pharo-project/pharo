@@ -1,1 +1,0 @@
-Abstract wrapper for method references

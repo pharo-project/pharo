@@ -1,4 +1,0 @@
-helpers
-errorMessage
-
-	^ 'test message'

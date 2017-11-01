@@ -1,3 +1,0 @@
-lookups
-resolverError
-	^self primNameResolverError

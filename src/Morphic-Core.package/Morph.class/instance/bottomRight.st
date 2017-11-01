@@ -1,4 +1,0 @@
-geometry
-bottomRight
-
-	^ bounds bottomRight

@@ -1,1 +1,0 @@
-Provide font metrics (Cairo)

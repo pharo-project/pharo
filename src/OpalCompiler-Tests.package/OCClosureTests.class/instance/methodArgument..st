@@ -1,4 +1,0 @@
-testing
-methodArgument: anObject
-	^ [ anObject ]
-	

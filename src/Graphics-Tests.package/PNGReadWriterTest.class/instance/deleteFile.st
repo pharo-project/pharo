@@ -1,3 +1,0 @@
-helpers
-deleteFile
-	fileName asFileReference ensureDelete

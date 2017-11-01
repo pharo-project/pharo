@@ -1,3 +1,0 @@
-selection
-minimumSelection
-	^ 1

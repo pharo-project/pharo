@@ -1,3 +1,0 @@
-actions
-nextString
-	^ stream nextDelimited: $'

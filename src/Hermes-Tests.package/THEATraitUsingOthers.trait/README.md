@@ -1,1 +1,0 @@
-Just a trait used for tests, it has a  trait combination.

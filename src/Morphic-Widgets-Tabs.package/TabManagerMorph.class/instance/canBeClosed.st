@@ -1,3 +1,0 @@
-protocol
-canBeClosed
-	^ toolbar canBeClosed

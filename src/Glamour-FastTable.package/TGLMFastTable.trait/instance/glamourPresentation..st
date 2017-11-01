@@ -1,3 +1,0 @@
-accessing
-glamourPresentation: anObject
-	self explicitRequirement

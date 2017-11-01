@@ -1,3 +1,0 @@
-external core
-externalAuthorName
-    ^ 'dkh'

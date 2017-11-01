@@ -1,4 +1,0 @@
-private
-similarSpeciesInstance
-
-	^self similarInstance

@@ -1,3 +1,0 @@
-mocking
-rootTopic
-	^rootTopic

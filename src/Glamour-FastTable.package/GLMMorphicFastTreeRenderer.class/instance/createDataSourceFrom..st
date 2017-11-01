@@ -1,3 +1,0 @@
-initialization
-createDataSourceFrom: aPresentation
-	^ GLMFastTreeDataSource new

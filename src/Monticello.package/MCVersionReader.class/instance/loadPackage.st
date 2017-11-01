@@ -1,3 +1,0 @@
-loading
-loadPackage
-	self subclassResponsibility 

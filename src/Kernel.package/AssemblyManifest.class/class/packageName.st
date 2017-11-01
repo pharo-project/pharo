@@ -1,3 +1,0 @@
-accessing
-packageName
-	self shouldBeImplemented

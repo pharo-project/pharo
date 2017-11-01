@@ -1,4 +1,0 @@
-accessing
-classesListPresenter
-
-	^ classesListPresenter

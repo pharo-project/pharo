@@ -1,3 +1,0 @@
-private
-useSelectionBar
-	^ TextEditor useSelectionBar

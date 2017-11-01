@@ -1,3 +1,0 @@
-accessing
-selectedNodePathList
-	^ self subclassResponsibility

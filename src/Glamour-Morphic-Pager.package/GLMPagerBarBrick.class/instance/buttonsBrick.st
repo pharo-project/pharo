@@ -1,4 +1,0 @@
-bar-accessing
-buttonsBrick
-
-	^ buttonsBrick

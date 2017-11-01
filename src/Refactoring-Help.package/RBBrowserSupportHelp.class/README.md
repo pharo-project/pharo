@@ -1,1 +1,0 @@
-This is the chapter of  the refactoring framework help about refactoring support in the System Browser.

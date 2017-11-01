@@ -1,2 +1,0 @@
-reading
-doReadFrom: aReader

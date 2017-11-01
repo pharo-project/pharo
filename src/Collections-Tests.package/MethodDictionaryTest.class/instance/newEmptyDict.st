@@ -1,3 +1,0 @@
-requirements
-newEmptyDict
-	^ MethodDictionary new

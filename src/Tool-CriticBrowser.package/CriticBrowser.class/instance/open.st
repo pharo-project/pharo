@@ -1,4 +1,0 @@
-display
-open
-
-	^ self openWithSpec

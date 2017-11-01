@@ -1,3 +1,0 @@
-generate
-genForGlobalVariable
-	^self genForLiteralVariable

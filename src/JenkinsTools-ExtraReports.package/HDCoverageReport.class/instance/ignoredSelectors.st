@@ -1,3 +1,0 @@
-private
-ignoredSelectors
-	^ #(packageNamesUnderTest classNamesNotUnderTest)

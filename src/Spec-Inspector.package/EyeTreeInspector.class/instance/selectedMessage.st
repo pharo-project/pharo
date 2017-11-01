@@ -1,3 +1,0 @@
-smartSuggestions - support
-selectedMessage
-	^ nil

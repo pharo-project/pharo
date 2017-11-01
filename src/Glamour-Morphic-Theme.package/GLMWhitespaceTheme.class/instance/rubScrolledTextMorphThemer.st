@@ -1,3 +1,0 @@
-themers
-rubScrolledTextMorphThemer
-	^ RubScrolledTextMorphThemerForGLMWhitespaceTheme new

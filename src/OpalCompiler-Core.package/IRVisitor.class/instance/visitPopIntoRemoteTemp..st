@@ -1,2 +1,0 @@
-visiting
-visitPopIntoRemoteTemp: remoteTemp

@@ -1,3 +1,0 @@
-accessing
-lastSelectedNodePath
-	^ self selectedNodePath

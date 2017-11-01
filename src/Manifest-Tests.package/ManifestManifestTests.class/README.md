@@ -1,1 +1,0 @@
-The manifest for Manifest-Tests package

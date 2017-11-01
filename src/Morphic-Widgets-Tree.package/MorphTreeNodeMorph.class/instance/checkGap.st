@@ -1,3 +1,0 @@
-accessing
-checkGap
-	^ 2

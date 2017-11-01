@@ -1,4 +1,0 @@
-accessing
-selectedBehavior
-	
-	^ self highlightSmalltalkContext

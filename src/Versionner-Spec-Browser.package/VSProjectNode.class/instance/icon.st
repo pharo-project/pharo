@@ -1,4 +1,0 @@
-accessing
-icon
-	 
-	^ VersionnerSpecBrowser configurationLoadedIcon

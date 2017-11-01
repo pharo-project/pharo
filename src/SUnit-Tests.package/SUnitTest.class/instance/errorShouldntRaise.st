@@ -1,3 +1,0 @@
-testing
-errorShouldntRaise
-	self someMessageThatIsntUnderstood

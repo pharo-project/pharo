@@ -1,3 +1,0 @@
-protocol
-resetGroupsSelection
-	groupsSelection removeAll

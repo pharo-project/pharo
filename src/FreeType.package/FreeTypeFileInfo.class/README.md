@@ -1,1 +1,0 @@
-File infos for a FreeType font

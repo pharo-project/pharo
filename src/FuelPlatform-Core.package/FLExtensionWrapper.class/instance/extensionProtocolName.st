@@ -1,3 +1,0 @@
-private
-extensionProtocolName
-	^ FLPlatform extensionProtocolName

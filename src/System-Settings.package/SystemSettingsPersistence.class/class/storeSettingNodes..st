@@ -1,3 +1,0 @@
-storing
-storeSettingNodes: aCollectionOfSettingNodes 
-	self default storeSettingNodes: aCollectionOfSettingNodes

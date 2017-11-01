@@ -1,3 +1,0 @@
-user-interface
-findTextFieldMorph
-	^ textFieldMorph

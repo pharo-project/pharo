@@ -1,5 +1,0 @@
-accessing
-inspectorPluggin
-	
-
-	^ inspectorPlugin

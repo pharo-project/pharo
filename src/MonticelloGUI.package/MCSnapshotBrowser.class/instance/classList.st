@@ -1,3 +1,0 @@
-listing
-classList
-	^ self visibleClasses

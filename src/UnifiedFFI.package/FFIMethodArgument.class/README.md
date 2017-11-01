@@ -1,1 +1,0 @@
-I implement the push strategy for method arguments who are simple variables.

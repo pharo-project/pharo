@@ -1,3 +1,0 @@
-accessing
-retainBlankLinesBetweenStatements
-	^ context retainBlankLinesBetweenStatements

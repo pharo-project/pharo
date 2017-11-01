@@ -1,4 +1,0 @@
-testing
-isVariableReference
-
-	^expr isVariableReference

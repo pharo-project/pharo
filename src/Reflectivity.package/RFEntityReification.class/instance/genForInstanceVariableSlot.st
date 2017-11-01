@@ -1,4 +1,0 @@
-generate
-genForInstanceVariableSlot
-	
-	^entity asLiteralNode

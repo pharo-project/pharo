@@ -1,1 +1,0 @@
-A label that underdraws to the top-left, top-right, bottom-right and bottom left by a specifed offset in a contrasting colour to the receiver's with a specified alpha value.

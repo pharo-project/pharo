@@ -1,3 +1,0 @@
-preconditions
-preconditions
-	^RBCondition empty

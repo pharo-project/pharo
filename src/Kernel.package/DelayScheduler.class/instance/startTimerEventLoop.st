@@ -1,3 +1,0 @@
-timer process
-startTimerEventLoop
-	self subclassResponsibility 

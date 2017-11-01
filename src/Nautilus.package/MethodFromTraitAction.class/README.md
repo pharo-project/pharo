@@ -1,1 +1,0 @@
-Action when the method comes from a trait

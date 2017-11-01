@@ -1,1 +1,0 @@
-This class represents the domestic character encoding called KS X 1001 used for Korean.

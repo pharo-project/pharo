@@ -1,4 +1,0 @@
-mapping
-sourceByteIndex
-
-	^ sourceMapByteIndex

@@ -1,3 +1,0 @@
-scripting
-asConfigurationProject
-    ^ MetacelloMCProject new

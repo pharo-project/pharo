@@ -1,4 +1,0 @@
-accessing
-periodsAtEndOfBlock: aBoolean
-	DefaultPrettyPrintContext periodsAtEndOfBlock: aBoolean.
-	self announceASettingChange

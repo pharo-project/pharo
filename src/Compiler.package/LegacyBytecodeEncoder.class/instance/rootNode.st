@@ -1,3 +1,0 @@
-accessing
-rootNode "^<BlockNode>"
-	^rootNode

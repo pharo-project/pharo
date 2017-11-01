@@ -1,3 +1,0 @@
-accessing
-selectionColorToUse
-	^ self primarySelectionColor

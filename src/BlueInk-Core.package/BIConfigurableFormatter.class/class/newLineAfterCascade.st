@@ -1,3 +1,0 @@
-accessing
-newLineAfterCascade
-	^ DefaultPrettyPrintContext newLineAfterCascade

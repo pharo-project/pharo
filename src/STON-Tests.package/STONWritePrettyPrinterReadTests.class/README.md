@@ -1,1 +1,0 @@
-STONWritePrettyPrinterReadTests tests pretty printed serialization followed by materialization.

@@ -1,1 +1,0 @@
-I scan a paragraph

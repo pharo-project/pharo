@@ -1,4 +1,0 @@
-accessing
-spotterPlugin
-	
-	^ spotterPlugin

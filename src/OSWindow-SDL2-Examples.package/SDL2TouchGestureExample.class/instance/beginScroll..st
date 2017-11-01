@@ -1,2 +1,0 @@
-manage scrolling
-beginScroll: anEvent

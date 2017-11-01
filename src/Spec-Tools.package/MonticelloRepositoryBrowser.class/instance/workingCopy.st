@@ -1,3 +1,0 @@
-accessing
-workingCopy
-	^ workingCopies selectedItem

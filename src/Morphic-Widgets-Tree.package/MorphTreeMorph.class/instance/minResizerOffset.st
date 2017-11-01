@@ -1,3 +1,0 @@
-geometry
-minResizerOffset
-	^ 20

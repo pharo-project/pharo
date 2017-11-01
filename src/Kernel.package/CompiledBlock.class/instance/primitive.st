@@ -1,3 +1,0 @@
-accessing
-primitive
-	^ 0

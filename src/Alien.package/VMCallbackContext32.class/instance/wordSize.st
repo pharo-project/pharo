@@ -1,3 +1,0 @@
-accessing
-wordSize
-	^4

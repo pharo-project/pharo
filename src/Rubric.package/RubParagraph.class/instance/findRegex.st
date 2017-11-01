@@ -1,3 +1,0 @@
-mock selection
-findRegex
-	^ nil

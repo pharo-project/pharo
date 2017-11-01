@@ -1,3 +1,0 @@
-testing
-isThisContext
-	^false

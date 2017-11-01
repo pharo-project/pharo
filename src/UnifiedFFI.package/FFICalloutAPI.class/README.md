@@ -1,1 +1,0 @@
-I'm a façade to perform ffi nb calls.

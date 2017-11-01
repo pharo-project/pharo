@@ -1,4 +1,0 @@
-private
-virtualLastVisiblePageIndex
-
-	^ virtualLastVisiblePageIndex

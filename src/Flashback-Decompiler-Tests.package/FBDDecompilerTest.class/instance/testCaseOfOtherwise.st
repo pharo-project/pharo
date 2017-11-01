@@ -1,3 +1,0 @@
-tests
-testCaseOfOtherwise
-	self checkCorrectDecompilation: #exampleCaseOfOtherwise.

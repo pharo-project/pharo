@@ -1,1 +1,0 @@
-STONWriteReadTests test serialization followed by materialization.

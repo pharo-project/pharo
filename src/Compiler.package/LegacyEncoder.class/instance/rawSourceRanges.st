@@ -1,4 +1,0 @@
-source mapping
-rawSourceRanges
-
-	^ sourceRanges 

@@ -1,5 +1,0 @@
-examples
-exampleMessageSend
-	self exampleOperation
-	
-	

@@ -1,4 +1,0 @@
-accessing
-triggerOnMouseDown
-
-	^ triggerOnMouseDown

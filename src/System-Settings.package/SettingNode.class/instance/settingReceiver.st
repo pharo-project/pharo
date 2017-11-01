@@ -1,3 +1,0 @@
-accessing
-settingReceiver
-	^ item settingReceiver

@@ -1,4 +1,0 @@
-accessing
-lineCount
-
-	^ string lineCount

@@ -1,3 +1,0 @@
-constants
-blueButton
-	^ 1

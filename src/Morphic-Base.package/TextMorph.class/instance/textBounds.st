@@ -1,3 +1,0 @@
-geometry
-textBounds
-	^ bounds

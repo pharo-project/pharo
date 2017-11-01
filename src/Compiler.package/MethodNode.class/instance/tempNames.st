@@ -1,3 +1,0 @@
-printing
-tempNames
-	^ encoder tempNames

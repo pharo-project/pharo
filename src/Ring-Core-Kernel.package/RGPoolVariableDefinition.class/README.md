@@ -1,1 +1,0 @@
-A pool variable definition

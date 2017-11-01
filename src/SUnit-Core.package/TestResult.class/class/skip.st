@@ -1,3 +1,0 @@
-exceptions
-skip
-	^ TestSkip

@@ -1,4 +1,0 @@
-api
-headerLabel
-
-	^ headerLabel value

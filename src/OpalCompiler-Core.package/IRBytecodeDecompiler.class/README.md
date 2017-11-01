@@ -1,1 +1,0 @@
-I interpret bytecode instructions, sending the appropriate instruction messages to my IRBuilder, resulting in an IRMethod.

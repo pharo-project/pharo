@@ -1,4 +1,0 @@
-accessing
-strategyTitle
-
-	^ 'Pass Exception'

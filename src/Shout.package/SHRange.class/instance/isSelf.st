@@ -1,4 +1,0 @@
-tests
-isSelf
-	
-	^type == #self

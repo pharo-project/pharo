@@ -1,1 +1,0 @@
-Announced when a user views a diff for a critic's autofix

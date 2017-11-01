@@ -1,3 +1,0 @@
-tests
-testToDoWithMessage
-	self checkCorrectDecompilation: #exampleToDoWithMessage

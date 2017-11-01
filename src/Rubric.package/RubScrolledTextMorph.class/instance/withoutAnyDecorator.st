@@ -1,3 +1,0 @@
-accessing decorators
-withoutAnyDecorator
-	self textArea withoutAnyDecorator

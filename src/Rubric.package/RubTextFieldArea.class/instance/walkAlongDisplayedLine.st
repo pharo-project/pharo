@@ -1,3 +1,0 @@
-settings
-walkAlongDisplayedLine
-	^ false

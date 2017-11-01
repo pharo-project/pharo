@@ -1,3 +1,0 @@
-testing
-isInstanceScope
-	^ false

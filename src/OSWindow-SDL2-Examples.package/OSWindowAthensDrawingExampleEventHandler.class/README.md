@@ -1,1 +1,0 @@
-i a m the event handler linked to SDL2AthensDrawingExample

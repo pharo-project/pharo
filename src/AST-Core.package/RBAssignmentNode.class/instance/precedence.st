@@ -1,3 +1,0 @@
-accessing
-precedence
-	^5

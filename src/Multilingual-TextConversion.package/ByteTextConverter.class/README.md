@@ -1,1 +1,0 @@
-A ByteTextConverter is the abstract class for text converters on single byte encodings.

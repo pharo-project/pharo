@@ -1,3 +1,0 @@
-system primitives
-digitLength
-	self subclassResponsibility

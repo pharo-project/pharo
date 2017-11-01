@@ -1,3 +1,0 @@
-visiting
-visitVariableNode: aVariableNode
-	^ aVariableNode

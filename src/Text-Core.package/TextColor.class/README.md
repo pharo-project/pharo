@@ -1,1 +1,0 @@
-A TextColor encodes a text color change applicable over a given range of text.

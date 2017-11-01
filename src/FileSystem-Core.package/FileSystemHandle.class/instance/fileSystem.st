@@ -1,3 +1,0 @@
-accessing
-fileSystem
-	^ reference fileSystem 

@@ -1,3 +1,0 @@
-defaults
-iconLabelBlock: aNode
-	^ ['halt']

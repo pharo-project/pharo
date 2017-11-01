@@ -1,3 +1,0 @@
-widget method
-buildMethodWidget
-	self subclassResponsibility

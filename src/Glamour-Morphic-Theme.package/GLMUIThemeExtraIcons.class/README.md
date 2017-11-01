@@ -1,1 +1,0 @@
-This class offers a number of extra icons that work with the Glamorous Theme.

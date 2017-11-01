@@ -1,3 +1,0 @@
-running
-execute
-	^ self model

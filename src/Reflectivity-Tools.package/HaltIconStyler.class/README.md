@@ -1,1 +1,0 @@
-I'm in charge to style  the editor for  a "self halt".

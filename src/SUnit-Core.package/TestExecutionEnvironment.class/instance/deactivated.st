@@ -1,4 +1,0 @@
-controlling
-deactivated
-
-	watchDogProcess terminate

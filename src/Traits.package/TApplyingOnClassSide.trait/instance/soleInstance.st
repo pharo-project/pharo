@@ -1,3 +1,0 @@
-accessing
-soleInstance
-	^self explicitRequirement.

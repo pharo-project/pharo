@@ -1,3 +1,0 @@
-edit view
-editView
-	^ editView

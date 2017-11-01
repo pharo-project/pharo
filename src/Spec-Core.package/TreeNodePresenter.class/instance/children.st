@@ -1,4 +1,0 @@
-api
-children
-
-	^ children value

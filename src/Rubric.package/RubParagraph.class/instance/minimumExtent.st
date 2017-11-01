@@ -1,3 +1,0 @@
-geometry
-minimumExtent
-	^ textArea minimumExtent

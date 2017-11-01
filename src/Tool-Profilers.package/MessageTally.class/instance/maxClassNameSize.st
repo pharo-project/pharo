@@ -1,3 +1,0 @@
-printing format
-maxClassNameSize
-	^maxClassNameSize

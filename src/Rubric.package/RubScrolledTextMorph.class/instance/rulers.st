@@ -1,3 +1,0 @@
-accessing rulers
-rulers
-	^ rulers 

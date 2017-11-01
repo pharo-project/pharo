@@ -1,1 +1,0 @@
-I am a node in a tree of Epicea logs that represent the EpMonitor current log. Read more in my superclass comment.

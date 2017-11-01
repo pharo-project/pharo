@@ -1,6 +1,0 @@
-initialization
-initializePresenter
-
-	self whenSelectedItemChangesOnListModel.
-	
-

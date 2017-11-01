@@ -1,1 +1,0 @@
-A DiffMorphChangeRecordConverter is a converter used to show the diff between two methodreferences with a side by side view.

@@ -1,4 +1,0 @@
-converting
-asAthensShapeOn: anAthensCanvas 
-	
-	^ self

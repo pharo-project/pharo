@@ -1,1 +1,0 @@
-I schedule and postpone a message send until the specified duration passed.

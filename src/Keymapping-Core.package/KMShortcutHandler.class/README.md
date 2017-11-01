@@ -1,1 +1,0 @@
-I am a shortcut handler that installs keymappings in the system.

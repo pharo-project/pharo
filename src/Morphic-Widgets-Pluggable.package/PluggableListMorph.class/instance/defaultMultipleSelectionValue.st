@@ -1,4 +1,0 @@
-multi-selection
-defaultMultipleSelectionValue
-
-	^ false

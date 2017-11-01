@@ -1,4 +1,0 @@
-api
-selected
-	
-	^ selected value

@@ -1,3 +1,0 @@
-accessing
-fieldSize
-	self subclassResponsibility

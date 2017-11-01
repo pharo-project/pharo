@@ -1,3 +1,0 @@
-deprecated
-green
-	^self greenFont

@@ -1,1 +1,0 @@
-ChronologyConstants is a SharedPool for the constants used by the Kernel-Chronology classes.

@@ -1,3 +1,0 @@
-menu
-accessorCode
-	^ self instVarName
