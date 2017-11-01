@@ -39,11 +39,11 @@ cloneRepo := IceRepositoryCreator new
 cloneRepo backend checkoutBranch: 'development'.
 
 
-iceRepo := MCFileTreeRepository new
+iceRepo := TonelRepository new
 	directory: icebergTarget ;
 	yourself.
 
-libgitRepo := MCFileTreeRepository new
+libgitRepo := TonelRepository new
 	directory: libgitTarget ;
 	yourself.
 	
@@ -73,4 +73,4 @@ versions := versions sorted: [ :v1 :v2 | v1 < v2 ].
 			('src' asFileReference / packageName , '.package') ensureDeleteAll.
 			IceMetadatalessFileTreeWriter
 				fileOut: version
-				on: (MCFileTreeRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] ] on: Warning do: #resume.
+				on: (TonelRepository new directory: 'src' asFileReference ensureCreateDirectory) ] ] ] on: Warning do: #resume.
