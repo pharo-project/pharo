@@ -10,7 +10,7 @@ testDurationMoreThanMaxTicks
 	nowTick := 100 milliSeconds.
 	expectedTick := nowTick + maxTicks.
 
-	scheduler := DelayMicrosecondScheduler new.
+	scheduler := self delaySchedulerClass new.
 	scheduler schedule: duration asDelay. 
 	nextTick := scheduler handleTimerEvent: nowTick asMicroseconds.
 

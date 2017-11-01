@@ -9,7 +9,7 @@ testTestInterferenceWithSystemTimingSemaphore
 	preventing it being triggered to expire normal system delays, which would lead totestScheduler 
 	system lockup.  This test indicates that timingSemaphore must be triggered to reset in #tearDown."
 	
-	scheduler := DelayMicrosecondScheduler new.
+	scheduler := self delaySchedulerClass new.
 	
 	"FIRST SHOW HOW IT WORKS PROPERLY"
 	delay := Delay forMilliseconds: 100.
