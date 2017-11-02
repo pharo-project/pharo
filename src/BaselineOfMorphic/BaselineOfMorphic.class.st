@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
-	#category : #BaselineOfMorphic
+	#category : 'BaselineOfMorphic'
 }
 
 { #category : #baseline }
@@ -109,6 +109,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-TickList'.
 		
 		spec package: 'System-Changes-FileServices'.
+		spec package: 'System-OSEnvironments'.
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
