@@ -72,10 +72,21 @@ HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
 
 { #category : #private }
 HDTestReport >> calculateNodeName [
-	^ OSEnvironment current at: 'JENKINS_HOME' ifPresent:[:value | 
-		Smalltalk os family , (Smalltalk vm is32bit ifTrue:['32'] ifFalse:['64']), '.'.	
-	] ifAbsent:[ '' ].
+	| environmentClass name bitString |
+	bitString := Smalltalk vm is32bit
+		ifTrue: [ '32' ]
+		ifFalse: [ '64' ].
 
+	name := Smalltalk os family , bitString , '.'.
+
+	" If the environment class is not available, because it needs FFI, I use the node name,
+	because for sure I am in the Bootstrap process."
+	environmentClass := Smalltalk at: #OSEnvironment ifAbsent: [ ^ name ].
+
+	^ environmentClass current
+		at: 'JENKINS_HOME'
+		ifPresent: [ :value | name ]
+		ifAbsent: [ '' ]
 ]
 
 { #category : #running }
