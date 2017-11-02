@@ -1,1 +1,0 @@
-Specific to BinaryFileStream

@@ -1,3 +1,0 @@
-accessing
-receiver
-	^ context receiver

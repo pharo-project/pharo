@@ -1,3 +1,0 @@
-*Polymorph-Widgets
-ui 
-	^ UIThemeRegistry 

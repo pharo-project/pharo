@@ -1,4 +1,0 @@
-focus handling
-defaultFocusMorph
-
-	^ searchMorph

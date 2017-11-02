@@ -1,4 +1,0 @@
-printing
-label
-
-	^self printString

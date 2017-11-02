@@ -1,1 +1,0 @@
-Abstract info for a version in Versionner

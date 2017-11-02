@@ -1,3 +1,0 @@
-testing
-isStartTLS
-	^ variant = #startTLS

@@ -1,1 +1,0 @@
-A Stopwatch maintains a collection of timespans.

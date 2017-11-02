@@ -1,4 +1,0 @@
-coverage
-classToBeTested
-
-	^ Year

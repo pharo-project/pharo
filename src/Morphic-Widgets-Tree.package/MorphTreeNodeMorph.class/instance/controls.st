@@ -1,3 +1,0 @@
-accessing
-controls
-	^ controls

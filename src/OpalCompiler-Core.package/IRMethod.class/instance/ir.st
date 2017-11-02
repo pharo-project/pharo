@@ -1,3 +1,0 @@
-accessing
-ir
-	^self.

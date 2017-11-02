@@ -1,3 +1,0 @@
-versions
-development
-    ^ nil

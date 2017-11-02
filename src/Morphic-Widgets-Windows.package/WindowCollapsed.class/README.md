@@ -1,1 +1,0 @@
-This announcement is emitted when a window is collapsed, by pressing the '-' top left button of a window.

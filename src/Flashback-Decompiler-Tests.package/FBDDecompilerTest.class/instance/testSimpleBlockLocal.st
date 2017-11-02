@@ -1,3 +1,0 @@
-tests
-testSimpleBlockLocal
-	self checkCorrectDecompilation: #exampleSimpleBlockLocal

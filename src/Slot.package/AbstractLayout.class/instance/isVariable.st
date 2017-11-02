@@ -1,3 +1,0 @@
-testing
-isVariable
-	^ false

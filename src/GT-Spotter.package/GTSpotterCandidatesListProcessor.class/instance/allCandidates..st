@@ -1,3 +1,0 @@
-compatibility
-allCandidates: aBlockWithOneArgument
-	self items: aBlockWithOneArgument

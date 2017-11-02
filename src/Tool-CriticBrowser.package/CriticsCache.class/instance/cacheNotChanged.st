@@ -1,3 +1,0 @@
-private
-cacheNotChanged 
-	change := false

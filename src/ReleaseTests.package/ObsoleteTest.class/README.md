@@ -1,1 +1,0 @@
-Example class for ClassTest

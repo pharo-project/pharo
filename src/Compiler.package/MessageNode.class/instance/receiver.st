@@ -1,3 +1,0 @@
-equation translation
-receiver
-	^receiver

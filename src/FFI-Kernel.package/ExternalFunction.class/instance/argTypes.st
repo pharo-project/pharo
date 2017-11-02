@@ -1,3 +1,0 @@
-accessing
-argTypes
-	^argTypes

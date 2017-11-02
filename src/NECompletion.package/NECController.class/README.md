@@ -1,1 +1,0 @@
-I live as an instance variable in a Browser, Debugger, Workspace or other window. I'm the glue between all participants of the completion system. I create the NECContext and pass myself to the NECMenuMorph. I process the keyboard events and pass them to the NECMenuMorph or close the morph if needed.

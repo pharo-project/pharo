@@ -1,3 +1,0 @@
-displaying
-close
-	window close

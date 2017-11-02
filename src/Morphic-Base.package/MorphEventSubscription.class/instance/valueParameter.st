@@ -1,4 +1,0 @@
-accessing
-valueParameter
-
-	^ valueParameter

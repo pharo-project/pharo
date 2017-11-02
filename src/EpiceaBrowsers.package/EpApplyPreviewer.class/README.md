@@ -1,1 +1,0 @@
-I take as input a collection of  EpCodeChange instances and output the equivalent of such changes as if they were applied in current image.

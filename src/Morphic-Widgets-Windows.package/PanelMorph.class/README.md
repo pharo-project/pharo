@@ -1,1 +1,0 @@
-A container morph that tracks the owner's pane colour unless an explicit fillStyle is specified. Additionally allows hooking of mouseOver events (no button down).

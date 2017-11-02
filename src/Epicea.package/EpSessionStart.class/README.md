@@ -1,1 +1,0 @@
-When an image is launched, a session starts. I represent the start of a session.

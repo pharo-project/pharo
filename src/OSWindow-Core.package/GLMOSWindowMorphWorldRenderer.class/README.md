@@ -1,1 +1,0 @@
-I am a Glamour renderer that uses morphic in a external window.

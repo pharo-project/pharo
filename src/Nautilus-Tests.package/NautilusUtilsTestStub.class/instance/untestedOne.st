@@ -1,3 +1,0 @@
-accessing
-untestedOne
-	^ self one

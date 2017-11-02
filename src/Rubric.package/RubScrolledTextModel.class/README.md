@@ -1,1 +1,0 @@
-I am the main model of a text area. I should be used to dialog with the container of the text area. I am able to communicate the necessary infos to the morph. 

@@ -1,1 +1,0 @@
-Border supporting multiple "sub-borders".

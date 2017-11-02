@@ -1,1 +1,0 @@
-I am raised when the left bounds of the text area are changed

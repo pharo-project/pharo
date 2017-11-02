@@ -1,1 +1,0 @@
-I'm an external value holder type (see ==FFIExternalValueHolder==  comment).

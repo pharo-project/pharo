@@ -1,3 +1,0 @@
-display
-defaultWindowLabel
-	^'Finder'.

@@ -1,3 +1,0 @@
-switching
-isOn
-	^ color = onColor

@@ -1,1 +1,0 @@
-Writer for Metacello MCM

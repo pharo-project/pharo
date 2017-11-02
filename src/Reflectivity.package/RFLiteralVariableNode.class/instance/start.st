@@ -1,3 +1,0 @@
-accessing
-start
-	^0

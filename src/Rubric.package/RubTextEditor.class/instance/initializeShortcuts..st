@@ -1,3 +1,0 @@
-keymapping
-initializeShortcuts: aKMDispatcher
-	aKMDispatcher attachCategory: RubTextEditor name

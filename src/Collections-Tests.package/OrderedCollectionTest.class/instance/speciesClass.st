@@ -1,4 +1,0 @@
-accessing
-speciesClass
-	
-	^ OrderedCollection

@@ -1,3 +1,0 @@
-scripting
-hideHeader
-	self explicitRequirement

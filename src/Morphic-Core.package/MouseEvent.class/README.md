@@ -1,1 +1,0 @@
-Superclass for mouse events

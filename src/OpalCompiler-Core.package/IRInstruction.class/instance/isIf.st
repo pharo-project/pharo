@@ -1,4 +1,0 @@
-testing
-isIf
-
-	^ false 

@@ -1,3 +1,0 @@
-testing
-isBinary
-	^ stream isBinary

@@ -1,3 +1,0 @@
-coloring
-errorColor 
-	self red

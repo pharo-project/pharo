@@ -1,3 +1,0 @@
-private
-callingConvention
-	^ callingConvention

@@ -1,3 +1,0 @@
-event handling
-horizontalSourceScroll: anAnnouncement
-	self dstMorph scrollPane hScrollbarValueWithoutAnnouncement: anAnnouncement scrollValue

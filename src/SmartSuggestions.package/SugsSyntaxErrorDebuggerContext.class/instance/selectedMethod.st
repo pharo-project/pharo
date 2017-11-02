@@ -1,5 +1,0 @@
-refactoring
-selectedMethod
-
-	^ nil
-	

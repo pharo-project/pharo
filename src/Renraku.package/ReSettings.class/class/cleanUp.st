@@ -1,5 +1,0 @@
-cleanup
-cleanUp
-	
-	
-	uniqueInstance := nil

@@ -1,4 +1,0 @@
-api
-icon
-
-	self subclassResponsibility

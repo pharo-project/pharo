@@ -1,1 +1,0 @@
-I am a cluster for classes that should be present when materializing. In other words, it only serializes a reference to the class, using its name.

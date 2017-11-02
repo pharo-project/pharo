@@ -1,1 +1,0 @@
-I am an abstract class for gestures which sends events that are puntuals

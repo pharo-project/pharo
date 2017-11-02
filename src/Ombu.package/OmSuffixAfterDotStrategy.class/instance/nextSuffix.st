@@ -1,4 +1,0 @@
-accessing
-nextSuffix
-
-	^ self subclassResponsibility

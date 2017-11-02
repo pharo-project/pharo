@@ -1,3 +1,0 @@
-testing
-isWindows
-	^ false

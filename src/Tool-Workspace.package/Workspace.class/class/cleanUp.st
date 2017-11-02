@@ -1,3 +1,0 @@
-cleaning
-cleanUp
-	LastContents := nil.

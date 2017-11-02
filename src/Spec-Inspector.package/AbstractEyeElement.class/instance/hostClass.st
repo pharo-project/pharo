@@ -1,3 +1,0 @@
-accessing
-hostClass
-	^ host class

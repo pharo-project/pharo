@@ -1,3 +1,0 @@
-public
-maxFileNameLength
-	self subclassResponsibility 

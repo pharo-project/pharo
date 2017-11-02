@@ -1,4 +1,0 @@
-private
-leadingChar
-
-	^ self subclassResponsibility

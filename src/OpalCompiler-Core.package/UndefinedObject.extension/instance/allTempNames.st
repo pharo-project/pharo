@@ -1,3 +1,0 @@
-*opalcompiler-core
-allTempNames
-	^#()

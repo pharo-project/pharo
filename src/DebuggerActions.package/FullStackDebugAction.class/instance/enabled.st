@@ -1,4 +1,0 @@
-accessing
-enabled
-
-	^ self shouldEnableFullStackButton

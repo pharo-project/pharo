@@ -1,1 +1,0 @@
-I am an animated window who interacts with the OSWindowRenderThread

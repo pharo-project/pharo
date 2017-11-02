@@ -1,4 +1,0 @@
-printing
-asString
-
-	  ^self sourceCode

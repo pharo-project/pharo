@@ -1,3 +1,0 @@
-default abi
-integerRegisterSize
-	self subclassResponsibility

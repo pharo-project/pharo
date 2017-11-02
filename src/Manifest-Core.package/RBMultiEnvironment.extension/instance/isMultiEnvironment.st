@@ -1,3 +1,0 @@
-*Manifest-Core
-isMultiEnvironment
-	^ true

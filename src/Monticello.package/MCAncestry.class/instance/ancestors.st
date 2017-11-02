@@ -1,3 +1,0 @@
-ancestry
-ancestors
-	^ ancestors ifNil: [#()]

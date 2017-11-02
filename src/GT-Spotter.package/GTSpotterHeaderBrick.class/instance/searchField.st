@@ -1,4 +1,0 @@
-accessing
-searchField
-
-	^ searchField

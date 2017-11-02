@@ -1,3 +1,0 @@
-initialization
-install
-    Current := self

@@ -1,3 +1,0 @@
-accessing
-lastEntry
-	^ entryHead next

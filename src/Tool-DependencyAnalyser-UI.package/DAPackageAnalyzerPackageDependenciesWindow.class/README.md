@@ -1,1 +1,0 @@
-UI merging SpecTreeModel cycles and Nautilus UI.

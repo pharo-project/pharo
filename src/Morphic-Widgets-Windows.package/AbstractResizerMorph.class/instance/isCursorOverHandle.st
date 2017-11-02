@@ -1,4 +1,0 @@
-testing
-isCursorOverHandle
-
-	^ true

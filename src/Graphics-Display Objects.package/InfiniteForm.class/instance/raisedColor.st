@@ -1,3 +1,0 @@
-displaying
-raisedColor
-	^ Color transparent

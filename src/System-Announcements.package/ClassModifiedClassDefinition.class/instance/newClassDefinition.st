@@ -1,3 +1,0 @@
-accessing
-newClassDefinition
-	^newClassDefinition

@@ -1,3 +1,0 @@
-accessing
-indentString
-	^ context indentString

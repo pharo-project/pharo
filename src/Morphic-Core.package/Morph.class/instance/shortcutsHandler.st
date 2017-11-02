@@ -1,4 +1,0 @@
-shortcuts
-shortcutsHandler
-
-	^ ShortcutsHandler 

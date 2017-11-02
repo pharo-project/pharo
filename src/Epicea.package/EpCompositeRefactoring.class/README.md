@@ -1,1 +1,0 @@
-I represent a refactoring that is composed of other refactorings.

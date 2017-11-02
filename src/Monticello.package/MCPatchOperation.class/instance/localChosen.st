@@ -1,3 +1,0 @@
-testing
-localChosen
-	^ isApplicable == false

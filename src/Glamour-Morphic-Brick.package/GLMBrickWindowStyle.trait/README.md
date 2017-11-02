@@ -1,1 +1,0 @@
-I'm a style module related to a brik windows and its componenets

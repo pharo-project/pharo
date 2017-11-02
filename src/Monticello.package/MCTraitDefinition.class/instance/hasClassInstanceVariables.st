@@ -1,4 +1,0 @@
-testing
-hasClassInstanceVariables
-	^ false
-

@@ -1,1 +1,0 @@
-A SpecInterpreter is a interpreter for spec presenters

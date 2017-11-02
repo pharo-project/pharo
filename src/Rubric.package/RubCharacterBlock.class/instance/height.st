@@ -1,3 +1,0 @@
-accessing
-height
-	^ surface height

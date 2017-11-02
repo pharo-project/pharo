@@ -1,3 +1,0 @@
-display
-restoreDisplay	
-	"do nothing"

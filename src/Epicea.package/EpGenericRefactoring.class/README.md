@@ -1,1 +1,0 @@
-I represent a generic refactoring, which can be reconstructed via it's #storeString.

@@ -1,3 +1,0 @@
-accessing
-selectedClassOrMetaClass
-	^ self classToUse 

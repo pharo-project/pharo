@@ -1,3 +1,0 @@
-utility
-quit
-	self exitSuccess

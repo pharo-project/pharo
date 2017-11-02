@@ -1,3 +1,0 @@
-rendering presentations
-renderPharoScriptPresentation: aPharoScriptPresentation 
-	^ GLMMorphicPharoScriptRenderer render: aPharoScriptPresentation from: self

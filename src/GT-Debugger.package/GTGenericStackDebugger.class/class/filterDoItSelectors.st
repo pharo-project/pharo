@@ -1,3 +1,0 @@
-settings api
-filterDoItSelectors
-	^ false

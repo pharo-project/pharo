@@ -1,4 +1,0 @@
-accessing
-lineUpBlockBrackets: aBoolean
-	DefaultPrettyPrintContext lineUpBlockBrackets: aBoolean.
-	self announceASettingChange

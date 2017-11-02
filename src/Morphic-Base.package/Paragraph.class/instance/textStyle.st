@@ -1,3 +1,0 @@
-access
-textStyle
-	^ textStyle

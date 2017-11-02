@@ -1,4 +1,0 @@
-protocol
-leftFraction
-
-	^ layoutFrame leftFraction 

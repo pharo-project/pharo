@@ -1,3 +1,0 @@
-accessing
-gtIterator
-	^ self new

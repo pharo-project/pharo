@@ -1,1 +1,0 @@
-Explains help topics

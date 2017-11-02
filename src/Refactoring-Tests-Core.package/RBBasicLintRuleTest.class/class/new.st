@@ -1,3 +1,0 @@
-private
-new
-	^super new

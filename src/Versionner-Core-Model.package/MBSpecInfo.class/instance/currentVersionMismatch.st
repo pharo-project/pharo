@@ -1,4 +1,0 @@
-testing
-currentVersionMismatch
-
-	^false

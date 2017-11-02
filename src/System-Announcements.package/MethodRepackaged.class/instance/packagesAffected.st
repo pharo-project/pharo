@@ -1,3 +1,0 @@
-accessing
-packagesAffected
-	^{oldPackage. newPackage}

@@ -1,1 +1,0 @@
-I am raised when a horizontal scroll is done

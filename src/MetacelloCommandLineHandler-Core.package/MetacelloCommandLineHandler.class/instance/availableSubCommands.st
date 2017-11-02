@@ -1,3 +1,0 @@
-accessing
-availableSubCommands
-	^ #('install')

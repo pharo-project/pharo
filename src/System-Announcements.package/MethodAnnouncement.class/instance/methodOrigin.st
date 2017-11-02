@@ -1,3 +1,0 @@
-accessing
-methodOrigin
-	^ method origin

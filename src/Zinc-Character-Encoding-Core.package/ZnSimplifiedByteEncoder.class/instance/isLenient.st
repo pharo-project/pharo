@@ -1,3 +1,0 @@
-testing
-isLenient
-	^ strict not

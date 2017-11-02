@@ -1,3 +1,0 @@
-ston persistence
-stonContainSubObjects 
-	^ false

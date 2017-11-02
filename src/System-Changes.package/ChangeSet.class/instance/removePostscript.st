@@ -1,3 +1,0 @@
-accessing
-removePostscript
-	postscript := nil

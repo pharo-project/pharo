@@ -1,1 +1,0 @@
-A link in text referring to class and methods. 

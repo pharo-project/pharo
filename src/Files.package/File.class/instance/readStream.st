@@ -1,4 +1,0 @@
-streaming
-readStream
-	
-	^ self openForRead

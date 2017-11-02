@@ -11,7 +11,7 @@ exportPackages: packageList withBlacklistedClasses: blacklistedClasses withBlack
 		
 		packageList do: [ :packageName |
 			| definitions |
-			version := (self originRepository loadVersionFromFileNamed: packageName, '.package').
+			version := (self originRepository loadVersionFromFileNamed: packageName).
 			definitions := version snapshot definitions.
 			definitions := definitions reject: [:def | blacklistedClasses includes: def className ].
 			definitions := definitions reject: [:def | def isMethodDefinition and: [methods includes: def selector] ].

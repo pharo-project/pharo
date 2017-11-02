@@ -1,1 +1,0 @@
-I am delivered when part (or whole) window are exposed on the desktop and needs refreshing.

@@ -1,1 +1,0 @@
-Specialized version of inspector showing occurrences of items of the bag

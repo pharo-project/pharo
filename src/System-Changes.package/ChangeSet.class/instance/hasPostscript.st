@@ -1,3 +1,0 @@
-accessing
-hasPostscript
-	^ postscript notNil

@@ -1,3 +1,0 @@
-icons
-taskbarIconName
-	^#smallFindIcon

@@ -1,3 +1,0 @@
-running
-initializeTestedInstance
-	testedInstance content: TestingComposablePresenter.

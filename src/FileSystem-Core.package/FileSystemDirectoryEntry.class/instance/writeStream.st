@@ -1,3 +1,0 @@
-delegate
-writeStream
-	^ reference writeStream

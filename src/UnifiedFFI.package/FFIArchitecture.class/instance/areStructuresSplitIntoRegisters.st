@@ -1,3 +1,0 @@
-default abi
-areStructuresSplitIntoRegisters
-	^ false

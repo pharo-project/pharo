@@ -1,3 +1,0 @@
-registration
-gtDebuggingAction
-	"<gtDebuggingAction>"

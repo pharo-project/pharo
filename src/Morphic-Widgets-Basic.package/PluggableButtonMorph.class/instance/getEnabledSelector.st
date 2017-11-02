@@ -1,3 +1,0 @@
-accessing
-getEnabledSelector
-	^getEnabledSelector

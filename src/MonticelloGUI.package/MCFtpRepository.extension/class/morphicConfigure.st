@@ -1,3 +1,0 @@
-*MonticelloGUI
-morphicConfigure
-	^ self fillInTheBlankConfigure

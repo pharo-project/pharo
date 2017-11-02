@@ -1,4 +1,0 @@
-drawing
-clippingBounds
-
-	^ self fullBounds

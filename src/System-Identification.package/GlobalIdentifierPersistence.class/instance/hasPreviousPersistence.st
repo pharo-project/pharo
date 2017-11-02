@@ -1,3 +1,0 @@
-testing
-hasPreviousPersistence
-	^ previousPersistence notNil

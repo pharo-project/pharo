@@ -1,1 +1,0 @@
-I am an abstract announcement relates to text area bounds changing

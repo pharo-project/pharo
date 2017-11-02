@@ -1,3 +1,0 @@
-accessing cursor
-cursorClass
-	^ RubCursor

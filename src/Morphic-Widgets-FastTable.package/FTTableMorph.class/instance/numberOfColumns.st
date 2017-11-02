@@ -1,3 +1,0 @@
-accessing
-numberOfColumns 
-	^ columns size

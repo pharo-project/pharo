@@ -1,4 +1,0 @@
-protocol
-hasFocus
-	
-	^ classesList hasKeyboardFocus

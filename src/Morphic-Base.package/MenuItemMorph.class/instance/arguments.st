@@ -1,4 +1,0 @@
-accessing
-arguments
-
-	^ arguments

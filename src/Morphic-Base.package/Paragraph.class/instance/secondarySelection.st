@@ -1,3 +1,0 @@
-access
-secondarySelection
-	^ secondarySelection

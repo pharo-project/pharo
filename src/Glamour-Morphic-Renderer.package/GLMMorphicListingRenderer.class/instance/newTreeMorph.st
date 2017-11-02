@@ -1,4 +1,0 @@
-private
-newTreeMorph
-
-	^ GLMPaginatedMorphTreeMorph new

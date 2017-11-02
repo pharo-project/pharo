@@ -1,4 +1,0 @@
-accessing
-bookName
-
-	^ 'Creating Rules'

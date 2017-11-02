@@ -1,3 +1,0 @@
-testing
-isConstantNumber
-	^ key isNumber

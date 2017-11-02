@@ -1,2 +1,0 @@
-enumerating
-versionDirectivesDepthFirstDo: aBlock

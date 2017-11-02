@@ -1,3 +1,0 @@
-private-parsing
-parseKeywordMessage
-	^self parseKeywordMessageWith: self parseBinaryMessage

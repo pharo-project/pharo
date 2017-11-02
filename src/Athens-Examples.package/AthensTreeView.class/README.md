@@ -1,1 +1,0 @@
-A tree visualization using Athens for display

@@ -1,1 +1,0 @@
-I represent a shortcut setting. I relate a keymap with its default shortcut and its current shortcut, so it can be mutated.

@@ -1,1 +1,0 @@
-I'm a datasource to interpret messages in teh form provided for a PluggableIconListMorph.

@@ -1,3 +1,0 @@
-accessing
-carColor
-	^ Color veryVeryLightGray

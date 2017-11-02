@@ -1,3 +1,0 @@
-refactoring
-sourceTextArea
-	^ nil

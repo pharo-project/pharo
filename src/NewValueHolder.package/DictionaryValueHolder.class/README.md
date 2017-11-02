@@ -1,1 +1,0 @@
-I am designed specifically for dictionaries.

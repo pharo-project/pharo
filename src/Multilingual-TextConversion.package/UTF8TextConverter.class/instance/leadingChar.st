@@ -1,4 +1,0 @@
-friend
-leadingChar
-
-	^ self shouldNotImplement

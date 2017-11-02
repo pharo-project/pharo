@@ -1,4 +1,0 @@
-requirements
-result
-
-	 ^ collectResult

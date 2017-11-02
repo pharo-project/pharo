@@ -1,3 +1,0 @@
-accessing
-oneLineMessages
-	^ DefaultPrettyPrintContext oneLineMessages printString

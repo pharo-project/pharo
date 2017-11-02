@@ -1,3 +1,0 @@
-*Morphic-Base
-isMenuItemMorph
-	^false

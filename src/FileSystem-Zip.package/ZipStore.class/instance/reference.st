@@ -1,3 +1,0 @@
-public
-reference
-	^ reference

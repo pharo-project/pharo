@@ -1,1 +1,0 @@
-I am the adapter used to bridge an IconListPresenter and a PluggableIconListMorph

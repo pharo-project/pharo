@@ -1,3 +1,0 @@
-testing
-hasSubclasses
-	^self explicitRequirement

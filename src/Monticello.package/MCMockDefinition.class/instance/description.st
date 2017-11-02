@@ -1,4 +1,0 @@
-comparing
-description
-
-	^ token first

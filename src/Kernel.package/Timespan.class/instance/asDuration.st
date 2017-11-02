@@ -1,4 +1,0 @@
-conversion
-asDuration
-
-	^ self duration

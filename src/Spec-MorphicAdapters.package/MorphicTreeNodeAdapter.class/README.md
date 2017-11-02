@@ -1,1 +1,0 @@
-I am the bridget between a TreeNodePresenter and a SpecTreeNodeModel

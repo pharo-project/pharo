@@ -1,3 +1,0 @@
-requirements
-expectedSizeAfterReject
-	^1

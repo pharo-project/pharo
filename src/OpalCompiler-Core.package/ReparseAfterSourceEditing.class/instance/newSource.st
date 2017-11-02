@@ -1,4 +1,0 @@
-accessing
-newSource
-	
-	^ newSource

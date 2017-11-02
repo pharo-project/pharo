@@ -1,1 +1,0 @@
-I indicate to the renderer to execute a message on the window that rendered this presentation. It will only execute if the presentation is directly rendered in a window (i.e., if this is the presentation to which #openWith: was sent)

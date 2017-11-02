@@ -1,1 +1,0 @@
-Abstract superclass for SUnit tests for smart suggestions classes

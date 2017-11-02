@@ -1,1 +1,0 @@
-A pseudo file stream which can be used for updates.

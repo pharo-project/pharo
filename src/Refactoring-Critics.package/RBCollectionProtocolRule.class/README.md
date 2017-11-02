@@ -1,1 +1,0 @@
-Checks code using the do: method instead of using the collect: or select: methods. This often occurs with new people writing code. The collect: and select: variants express the source code''s intentions better.

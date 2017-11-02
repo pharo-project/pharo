@@ -1,3 +1,0 @@
-accessing
-floatRegisterCount
-	^ floatRegisterCount

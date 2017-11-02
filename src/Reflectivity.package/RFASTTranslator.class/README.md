@@ -1,1 +1,0 @@
-subclass of Opal that takes links into account

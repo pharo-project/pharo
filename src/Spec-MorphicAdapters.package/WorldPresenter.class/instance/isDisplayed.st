@@ -1,4 +1,0 @@
-api
-isDisplayed
-
-	^ true

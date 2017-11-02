@@ -1,4 +1,0 @@
-running
-tearDownPackages
-
-	^#('MBFooTests' 'ConfigurationOfMBBranchTests')

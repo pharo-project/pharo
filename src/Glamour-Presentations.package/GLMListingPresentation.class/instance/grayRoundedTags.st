@@ -1,4 +1,0 @@
-accessing
-grayRoundedTags
-
-	tagsStyle := #grayRoundedButton

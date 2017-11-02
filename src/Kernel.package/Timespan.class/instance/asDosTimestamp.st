@@ -1,4 +1,0 @@
-conversion
-asDosTimestamp 
-
-	^ start asDosTimestamp 

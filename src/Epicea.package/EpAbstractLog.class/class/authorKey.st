@@ -1,3 +1,0 @@
-tag keys
-authorKey
-	^ #author

@@ -1,4 +1,0 @@
-commands
-cmdCommitPatchVersion
-	<command>
-	^ VSCommitPatchCommand

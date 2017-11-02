@@ -1,1 +1,0 @@
-I am used to test the behavior of Context>>jump in MethodContextTest. My example methods includes instance variable stores. When my instance is read-only or writeable, the example method uses or not the write barrier call-back. The copy of the context answered can be used to ensure the stack state is correct.

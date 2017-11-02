@@ -1,3 +1,0 @@
-initialization
-createDefaultHandle
-	^ 0

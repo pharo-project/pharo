@@ -1,4 +1,0 @@
-accessing
-retainBlankLinesBetweenStatements: aBoolean
-	DefaultPrettyPrintContext retainBlankLinesBetweenStatements: aBoolean.
-	self announceASettingChange

@@ -1,4 +1,0 @@
-values
-breadcrumbItemTextColor
-
-	^ Color white

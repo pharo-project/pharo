@@ -1,3 +1,0 @@
-private
-markInlinedLoop
-	isInlinedLoop := true

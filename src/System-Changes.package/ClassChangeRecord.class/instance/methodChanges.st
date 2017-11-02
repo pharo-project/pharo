@@ -1,4 +1,0 @@
-method changes
-methodChanges
-
-	^ methodChanges

@@ -1,4 +1,0 @@
-defaults
-staticHeight
-
-	^ 100

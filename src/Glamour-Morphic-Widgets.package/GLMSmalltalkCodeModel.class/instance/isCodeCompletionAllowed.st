@@ -1,3 +1,0 @@
-completion
-isCodeCompletionAllowed 
-	^true

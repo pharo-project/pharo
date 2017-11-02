@@ -1,3 +1,0 @@
-*System-Clipboard
-clipboardClass
-	^UnixClipboard

@@ -1,2 +1,0 @@
-configure
-configurePluggableTextFieldMorph: textFieldMorph

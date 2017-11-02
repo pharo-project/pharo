@@ -1,4 +1,0 @@
-querying
-relativeCurrentVersion
-
-	^self projectReference relativeCurrentVersion

@@ -1,2 +1,0 @@
-font dirs
-rememberFontDir: aDirecory

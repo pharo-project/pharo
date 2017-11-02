@@ -1,4 +1,0 @@
-accessing
-fullName
-
-	^self name

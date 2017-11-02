@@ -1,3 +1,0 @@
-private
-computeChange
-	self checkSanity.

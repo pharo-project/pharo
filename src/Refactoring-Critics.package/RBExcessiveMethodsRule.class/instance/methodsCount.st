@@ -1,3 +1,0 @@
-private
-methodsCount
-	^ 60

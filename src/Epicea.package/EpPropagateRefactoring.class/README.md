@@ -1,1 +1,0 @@
-I represent a refactoring that consists in the propagation (i.e. the "redo") of another refactoring.

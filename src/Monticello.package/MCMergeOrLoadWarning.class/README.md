@@ -1,1 +1,0 @@
-A MCMergeOrLoadWarning is a simple warning used when amerge or a load action may override existing entities.

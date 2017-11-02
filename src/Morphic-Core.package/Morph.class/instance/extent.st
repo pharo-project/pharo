@@ -1,4 +1,0 @@
-geometry
-extent
-
-	^ bounds extent

@@ -1,3 +1,0 @@
-accessing
-registerSelectionTarget: aTarget 
-	self subclassResponsibility

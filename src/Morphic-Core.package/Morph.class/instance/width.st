@@ -1,4 +1,0 @@
-geometry
-width
-
-	^ bounds width

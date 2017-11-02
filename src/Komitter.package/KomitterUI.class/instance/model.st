@@ -1,4 +1,0 @@
-api
-model
-
-	^ model value

@@ -1,4 +1,0 @@
-accessing
-processorsFilter
-
-	^ processorsFilter

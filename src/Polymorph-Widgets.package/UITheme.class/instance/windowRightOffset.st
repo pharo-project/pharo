@@ -1,4 +1,0 @@
-defaults
-windowRightOffset
-
-	^ 0

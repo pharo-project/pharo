@@ -1,3 +1,0 @@
-testing
-isBlockArg
-	^#block == argType

@@ -1,3 +1,0 @@
-api
-aboutTitle
-	^ self toolName.

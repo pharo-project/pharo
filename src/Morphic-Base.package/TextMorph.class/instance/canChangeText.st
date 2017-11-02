@@ -1,3 +1,0 @@
-testing
-canChangeText
-	^ self enabled 

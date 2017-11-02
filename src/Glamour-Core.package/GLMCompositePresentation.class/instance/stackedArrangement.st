@@ -1,3 +1,0 @@
-scripting
-stackedArrangement
-	^ self stackedVerticallyArrangement

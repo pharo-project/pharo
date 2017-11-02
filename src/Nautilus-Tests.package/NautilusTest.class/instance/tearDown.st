@@ -1,4 +1,0 @@
-running
-tearDown
-
-	nautilus := nil.

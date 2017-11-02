@@ -1,3 +1,0 @@
-accessing
-ast
-	^ self parseTree

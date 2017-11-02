@@ -1,4 +1,0 @@
-testing
-appliesToDebugger: aDebugger
-
-	^ true

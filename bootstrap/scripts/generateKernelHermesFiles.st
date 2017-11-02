@@ -2,7 +2,7 @@
 
 Transcript nextPutAll: '[Hermes] - Loading BaselineOfPharoBootstrap'; cr.
 
-repository := MCFileTreeRepository new
+repository := TonelRepository new
 	directory: 'src' asFileReference;
 	yourself.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.

@@ -1,4 +1,0 @@
-private
-validateVersionSpec: versionSpec
-
-	self subclassResponsibility

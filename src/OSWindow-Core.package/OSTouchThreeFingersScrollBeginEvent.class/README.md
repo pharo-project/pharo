@@ -1,1 +1,0 @@
-Three fingers started to scroll

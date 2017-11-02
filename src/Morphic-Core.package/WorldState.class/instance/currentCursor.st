@@ -1,3 +1,0 @@
-accessing
-currentCursor
-	^ currentCursor

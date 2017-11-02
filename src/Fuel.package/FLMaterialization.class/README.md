@@ -1,1 +1,0 @@
-I implement the algorithm for materializing an object graph on a stream. FLMaterializer known how to build instances of me.

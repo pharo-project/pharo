@@ -1,4 +1,0 @@
-private
-large
-
-	^55

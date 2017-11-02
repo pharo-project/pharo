@@ -1,3 +1,0 @@
-*Fuel
-fuelReplacement
-	^ self

@@ -1,4 +1,0 @@
-menus behavior
-restrictedBrowseGroup
-
-	self restrictedBrowseGroups: self packageWidget selectedGroups

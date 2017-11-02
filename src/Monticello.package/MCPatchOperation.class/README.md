@@ -1,1 +1,0 @@
-I'm an abstract class that represent an single delta element between two packages: removal, addition or modification.

@@ -1,1 +1,0 @@
-This is a specialization of the class Delay that is used for the implementation of the class Monitor.

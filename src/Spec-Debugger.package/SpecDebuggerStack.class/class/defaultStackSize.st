@@ -1,4 +1,0 @@
-accessing
-defaultStackSize
-
-	^ 20

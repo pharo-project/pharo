@@ -1,1 +1,0 @@
-Example for a simple grid node

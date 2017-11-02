@@ -1,1 +1,0 @@
-A CallbackForWin64X64 is a callback for platforms with x64/x86_64 processors using the Win64 ABI.

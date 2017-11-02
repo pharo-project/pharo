@@ -1,3 +1,0 @@
-testing
-isArg
-	^argType notNil

@@ -1,3 +1,0 @@
-private
-useSecondarySelection
-	^ TextEditor useSecondarySelection

@@ -1,4 +1,0 @@
-rows
-borderWidth
-
-	^ 1

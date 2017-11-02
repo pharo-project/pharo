@@ -1,1 +1,0 @@
-A GLMContextChanged is announced by a presentation when an outer port event raises.

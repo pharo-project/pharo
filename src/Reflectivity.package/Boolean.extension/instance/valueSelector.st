@@ -1,3 +1,0 @@
-*Reflectivity
-valueSelector
-	^#value

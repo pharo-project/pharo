@@ -1,1 +1,0 @@
-I am a dispatcher that dispatches the global keymappings.

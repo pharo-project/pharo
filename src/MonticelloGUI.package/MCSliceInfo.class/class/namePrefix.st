@@ -1,3 +1,0 @@
-accessing
-namePrefix
-	^ 'SLICE-Issue-'

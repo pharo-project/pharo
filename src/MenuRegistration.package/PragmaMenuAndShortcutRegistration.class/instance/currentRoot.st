@@ -1,4 +1,0 @@
-accessing
-currentRoot
-
-	^ currentRoot

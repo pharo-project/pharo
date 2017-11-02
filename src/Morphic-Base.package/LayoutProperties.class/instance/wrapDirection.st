@@ -1,3 +1,0 @@
-table defaults
-wrapDirection
-	^#none

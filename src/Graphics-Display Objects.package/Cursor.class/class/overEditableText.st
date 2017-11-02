@@ -1,3 +1,0 @@
-constants
-overEditableText
-	^ OverEditableText 

@@ -1,4 +1,0 @@
-updating
-fullRecalculate
-
-	self recalculate

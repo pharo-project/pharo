@@ -1,3 +1,0 @@
-accessing
-withDropListButton
-	self textEditorMorph withDropListButton

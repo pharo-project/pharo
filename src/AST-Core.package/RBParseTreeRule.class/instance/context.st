@@ -1,3 +1,0 @@
-private
-context
-	^owner context

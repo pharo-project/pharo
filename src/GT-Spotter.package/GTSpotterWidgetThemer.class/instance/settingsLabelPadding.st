@@ -1,4 +1,0 @@
-values
-settingsLabelPadding
-
-	^ 4

@@ -1,3 +1,0 @@
-converting
-asLiteralIn: env
-	^ value.

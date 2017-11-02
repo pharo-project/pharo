@@ -1,4 +1,0 @@
-printing
-label
-
-	^ 'H '

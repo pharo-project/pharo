@@ -1,1 +1,0 @@
-I'm a base announcement for FastTable announces.

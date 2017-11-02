@@ -1,3 +1,0 @@
-display
-pluginName
-	^ 'Quality Assistant'

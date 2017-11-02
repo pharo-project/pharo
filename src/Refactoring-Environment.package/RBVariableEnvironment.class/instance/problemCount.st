@@ -1,3 +1,0 @@
-accessing
-problemCount
-	^self numberVariables

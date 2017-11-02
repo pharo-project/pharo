@@ -1,1 +1,0 @@
-I am activated when user presses `Escape` key

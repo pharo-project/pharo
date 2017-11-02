@@ -1,1 +1,0 @@
-Just a class used for tests, it has a simple trait combination.

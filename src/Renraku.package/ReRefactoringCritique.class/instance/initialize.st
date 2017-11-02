@@ -1,4 +1,0 @@
-initialization
-initialize
-	
-	alreadyExecuted := false

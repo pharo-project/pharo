@@ -1,1 +1,0 @@
-SUnit tests for hooked serialization using fuel

@@ -1,6 +1,0 @@
-initialization
-removeTestPackageModel
-
-	^ removeTestPackageModel
-	
-	

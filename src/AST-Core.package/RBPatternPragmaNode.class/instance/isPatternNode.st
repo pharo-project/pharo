@@ -1,3 +1,0 @@
-testing-matching
-isPatternNode
-	^ true

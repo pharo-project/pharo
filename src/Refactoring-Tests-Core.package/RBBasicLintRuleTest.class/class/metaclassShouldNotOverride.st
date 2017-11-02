@@ -1,3 +1,0 @@
-private
-metaclassShouldNotOverride
-	^#(#name #comment)

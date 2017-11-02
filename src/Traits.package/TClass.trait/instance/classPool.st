@@ -1,3 +1,0 @@
-accessing
-classPool
-	^self explicitRequirement.

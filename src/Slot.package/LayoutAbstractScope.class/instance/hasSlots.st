@@ -1,3 +1,0 @@
-testing
-hasSlots
-	self subclassResponsibility

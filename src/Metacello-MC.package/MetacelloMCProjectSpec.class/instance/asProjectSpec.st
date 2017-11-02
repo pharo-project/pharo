@@ -1,3 +1,0 @@
-scripting
-asProjectSpec
-    ^ self

@@ -1,3 +1,0 @@
-numeric
-a
-	^ 'a2'

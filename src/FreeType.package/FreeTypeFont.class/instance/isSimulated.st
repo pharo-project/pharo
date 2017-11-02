@@ -1,3 +1,0 @@
-testing
-isSimulated
-	^simulatedEmphasis notNil

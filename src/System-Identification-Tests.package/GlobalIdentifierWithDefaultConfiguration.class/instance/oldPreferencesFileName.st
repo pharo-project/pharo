@@ -1,3 +1,0 @@
-accessing
-oldPreferencesFileName
-	^ identifier persistenceStrategy previous fileName

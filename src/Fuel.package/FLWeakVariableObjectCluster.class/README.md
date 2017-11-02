@@ -1,1 +1,0 @@
-I am a cluster for objects with weak indexable variables.

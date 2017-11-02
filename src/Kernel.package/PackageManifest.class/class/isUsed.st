@@ -1,3 +1,0 @@
-System-Support
-isUsed
-	^ true

@@ -1,1 +1,0 @@
-I am an abstract class to add decoration on a text area

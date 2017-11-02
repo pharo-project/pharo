@@ -1,4 +1,0 @@
-private
-performOkAction
-
-	okBlock value

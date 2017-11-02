@@ -1,3 +1,0 @@
-icons
-glamorousLargeGrayCircleEmphasized
-	^ self iconNamed: #glamorousLargeGrayCircleEmphasized

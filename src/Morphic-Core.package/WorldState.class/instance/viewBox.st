@@ -1,4 +1,0 @@
-canvas
-viewBox
-
-	^ viewBox

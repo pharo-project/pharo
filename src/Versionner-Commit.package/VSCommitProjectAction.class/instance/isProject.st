@@ -1,3 +1,0 @@
-testing
-isProject
-	^ true

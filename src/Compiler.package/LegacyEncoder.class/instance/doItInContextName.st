@@ -1,3 +1,0 @@
-encoding
-doItInContextName
-	^'ThisContext'

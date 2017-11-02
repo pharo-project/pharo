@@ -1,1 +1,0 @@
-maybe Color could act as a AthensPaint by itself by implementing a corresponding protocol

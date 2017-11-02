@@ -1,1 +1,0 @@
-I am an error raised when extending a class with an incompatible layout.

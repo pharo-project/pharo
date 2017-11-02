@@ -1,3 +1,0 @@
-buttons behavior
-instanceButtonAction: aBoolean
-	self toggleShowInstance

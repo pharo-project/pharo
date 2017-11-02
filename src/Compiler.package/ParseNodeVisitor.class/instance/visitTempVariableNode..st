@@ -1,2 +1,0 @@
-visiting
-visitTempVariableNode: aTempVariableNode

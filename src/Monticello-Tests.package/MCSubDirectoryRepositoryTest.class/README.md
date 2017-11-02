@@ -1,1 +1,0 @@
-I am not a subclass of MCRepositoryTest because my purpose was to show that a bug had been fixed and my author didn't feel like implementing all the reuirements of MCRepositoryTests

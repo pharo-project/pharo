@@ -1,4 +1,0 @@
-cluster buckets
-primitivesBucket
-	
-	^ primitivesBucket

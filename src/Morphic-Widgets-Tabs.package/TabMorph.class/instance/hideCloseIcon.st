@@ -1,4 +1,0 @@
-protocol
-hideCloseIcon
-
-	closeIcon hide

@@ -1,3 +1,0 @@
-running
-tearDownClassFactory
-	self classFactory cleanUp

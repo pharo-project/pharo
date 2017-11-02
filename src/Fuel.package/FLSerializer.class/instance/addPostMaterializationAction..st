@@ -1,3 +1,0 @@
-header
-addPostMaterializationAction: aCleanBlockClosure
-	header addPostMaterializationAction: aCleanBlockClosure

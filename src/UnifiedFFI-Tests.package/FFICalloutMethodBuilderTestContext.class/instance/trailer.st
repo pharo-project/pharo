@@ -1,3 +1,0 @@
-accessing
-trailer
-	^ CompiledMethodTrailer empty

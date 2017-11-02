@@ -1,3 +1,0 @@
-accessing
-hostName
-	^ 'smalltalkhub.com'

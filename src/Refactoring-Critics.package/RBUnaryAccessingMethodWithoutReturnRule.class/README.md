@@ -1,1 +1,0 @@
-Checks for any unary "accessing" methods without explicit return statements.

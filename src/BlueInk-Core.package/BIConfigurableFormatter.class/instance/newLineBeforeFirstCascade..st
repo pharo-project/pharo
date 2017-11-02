@@ -1,3 +1,0 @@
-accessing
-newLineBeforeFirstCascade: aBoolean
-	context newLineBeforeFirstCascade: aBoolean

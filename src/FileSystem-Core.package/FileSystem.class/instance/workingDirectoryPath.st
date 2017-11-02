@@ -1,3 +1,0 @@
-accessing
-workingDirectoryPath
-	^ store defaultWorkingDirectory

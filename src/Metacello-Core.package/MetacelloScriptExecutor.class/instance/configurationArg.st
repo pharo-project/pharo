@@ -1,3 +1,0 @@
-args
-configurationArg
-    ^ configurationArg

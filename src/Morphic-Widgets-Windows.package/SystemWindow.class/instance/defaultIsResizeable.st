@@ -1,4 +1,0 @@
-controls
-defaultIsResizeable
-
-	^ true

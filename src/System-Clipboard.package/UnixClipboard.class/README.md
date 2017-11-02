@@ -1,1 +1,0 @@
-The Unix vm does not do line-ending conversion, thus this subclass which specifies we convert CR's to LF's when pasting to it

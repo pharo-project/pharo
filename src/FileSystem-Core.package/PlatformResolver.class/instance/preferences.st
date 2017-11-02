@@ -1,3 +1,0 @@
-origins
-preferences
-	^ self subclassResponsibility

@@ -1,1 +1,0 @@
-A SubPixel-AntiAliased GlyphRenderer for FreeType

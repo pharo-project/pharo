@@ -1,1 +1,0 @@
-I am an optimized stream for writing and reading *indexes*, i.e. positive integers with a known upper bound. 

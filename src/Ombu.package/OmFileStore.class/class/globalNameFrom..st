@@ -1,4 +1,0 @@
-accessing
-globalNameFrom: directoryEntryOrFileReference
-
-	^ directoryEntryOrFileReference asFileReference basenameWithoutExtension

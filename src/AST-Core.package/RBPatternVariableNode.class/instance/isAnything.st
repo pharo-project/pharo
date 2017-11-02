@@ -1,3 +1,0 @@
-testing-matching
-isAnything
-	^isAnything

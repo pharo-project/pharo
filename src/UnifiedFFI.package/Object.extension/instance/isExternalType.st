@@ -1,3 +1,0 @@
-*UnifiedFFI
-isExternalType
-	^ false

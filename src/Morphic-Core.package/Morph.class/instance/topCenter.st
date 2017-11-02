@@ -1,4 +1,0 @@
-geometry
-topCenter
-
-	^ bounds topCenter

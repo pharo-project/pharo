@@ -1,3 +1,0 @@
-requirements
-empty
-	self subclassResponsibility

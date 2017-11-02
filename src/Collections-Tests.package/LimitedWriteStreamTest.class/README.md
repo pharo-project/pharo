@@ -1,1 +1,0 @@
-SUnit test clss for LimitedWriteStream

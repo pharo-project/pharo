@@ -1,1 +1,0 @@
-Morph displaying opposing arrows.

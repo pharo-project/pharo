@@ -1,1 +1,0 @@
-Writer for a package structure

@@ -1,3 +1,0 @@
-masking
-maskEnabled
-	self subclassResponsibility

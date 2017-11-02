@@ -1,4 +1,0 @@
-*renraku
-checksNode
-
-	^ false

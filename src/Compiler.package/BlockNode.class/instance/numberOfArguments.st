@@ -1,4 +1,0 @@
-accessing
-numberOfArguments
-
-	^arguments size

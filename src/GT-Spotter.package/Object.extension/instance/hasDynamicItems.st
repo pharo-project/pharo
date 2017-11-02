@@ -1,3 +1,0 @@
-*GT-Spotter
-hasDynamicItems
-	^ false

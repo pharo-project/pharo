@@ -1,1 +1,0 @@
-**MetacelloLookupProjectSpec** is signalled to allow a handler to substitute a different (equivalent) project spec for fetching or loading purposes

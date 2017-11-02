@@ -1,1 +1,0 @@
-I am PrimitiveFailed, an exception signaled when a primitive fails.

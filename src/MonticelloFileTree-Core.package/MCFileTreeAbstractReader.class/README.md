@@ -1,1 +1,0 @@
-Abstract reader superclass for FileTree

@@ -1,3 +1,0 @@
-visitor
-visitCategoryAddition: aPackageCreated
-	environment organization addCategory: aPackageCreated categoryName

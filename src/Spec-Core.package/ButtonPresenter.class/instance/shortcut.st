@@ -1,4 +1,0 @@
-api
-shortcut
-
-	^ shortcutHolder value

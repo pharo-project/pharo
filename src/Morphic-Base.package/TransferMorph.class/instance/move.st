@@ -1,3 +1,0 @@
-accessing
-move
-	copy := false

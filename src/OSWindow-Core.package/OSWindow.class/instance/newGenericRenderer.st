@@ -1,3 +1,0 @@
-factory
-newGenericRenderer
-	^ handle newGenericRenderer

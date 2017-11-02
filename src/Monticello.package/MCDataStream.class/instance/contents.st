@@ -1,3 +1,0 @@
-other
-contents
-	^byteStream contents

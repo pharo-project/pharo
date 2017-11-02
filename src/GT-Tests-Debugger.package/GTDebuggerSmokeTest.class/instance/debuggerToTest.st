@@ -1,3 +1,0 @@
-accessing
-debuggerToTest
-	self subclassResponsibility

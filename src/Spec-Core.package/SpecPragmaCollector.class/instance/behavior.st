@@ -1,3 +1,0 @@
-accessing
-behavior
-	^ behavior

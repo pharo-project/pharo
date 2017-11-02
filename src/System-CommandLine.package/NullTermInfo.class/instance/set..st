@@ -1,3 +1,0 @@
-TermStyle
-set: aString
-	^ aString

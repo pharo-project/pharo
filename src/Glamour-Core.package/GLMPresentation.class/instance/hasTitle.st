@@ -1,3 +1,0 @@
-testing
-hasTitle
-	^ title notNil

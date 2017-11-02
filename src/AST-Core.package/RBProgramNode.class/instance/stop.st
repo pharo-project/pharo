@@ -1,3 +1,0 @@
-accessing
-stop
-	self subclassResponsibility

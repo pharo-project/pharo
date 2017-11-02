@@ -1,1 +1,0 @@
-I render an icon to control the state of #doOnlyOnce: 

@@ -1,1 +1,0 @@
-A MCMerger is an abstract responsible for performing merge operations and detecting conflicts.

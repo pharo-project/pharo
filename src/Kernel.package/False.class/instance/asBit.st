@@ -1,4 +1,0 @@
-converting
-asBit
-
-	^ 0

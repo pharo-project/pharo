@@ -1,1 +1,0 @@
-This is the unit test for the class Month.

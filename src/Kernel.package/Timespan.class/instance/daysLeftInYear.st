@@ -1,3 +1,0 @@
-accessing
-daysLeftInYear
-	^ start daysLeftInYear

@@ -1,4 +1,0 @@
-icons
-goIcon
-
-	^ GLMUIThemeExtraIcons glamorousGo

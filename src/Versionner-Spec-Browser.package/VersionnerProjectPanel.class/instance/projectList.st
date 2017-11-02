@@ -1,3 +1,0 @@
-accessing-ui
-projectList
-	^ projectList

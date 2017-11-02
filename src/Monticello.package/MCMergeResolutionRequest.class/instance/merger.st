@@ -1,3 +1,0 @@
-accessing
-merger
-	^ merger

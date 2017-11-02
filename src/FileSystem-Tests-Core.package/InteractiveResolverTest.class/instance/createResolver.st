@@ -1,3 +1,0 @@
-running
-createResolver
-	^ InteractiveResolver new

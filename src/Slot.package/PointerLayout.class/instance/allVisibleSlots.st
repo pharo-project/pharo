@@ -1,3 +1,0 @@
-accessing
-allVisibleSlots
-	^ slotScope allVisibleSlots

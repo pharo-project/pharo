@@ -1,3 +1,0 @@
-private
-setRun
-	hasRun := true

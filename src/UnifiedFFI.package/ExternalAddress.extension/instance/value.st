@@ -1,3 +1,0 @@
-*UnifiedFFI
-value
-	^ self asInteger

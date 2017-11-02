@@ -1,1 +1,0 @@
-Layout scopes reify how classes extend the layout of their superclass.

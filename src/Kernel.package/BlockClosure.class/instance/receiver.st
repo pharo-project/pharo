@@ -1,3 +1,0 @@
-accessing
-receiver
-	^outerContext receiver

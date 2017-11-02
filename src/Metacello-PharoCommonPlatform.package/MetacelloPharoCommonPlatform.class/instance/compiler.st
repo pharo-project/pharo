@@ -1,3 +1,0 @@
-utilities
-compiler
-	^ Smalltalk compilerClass

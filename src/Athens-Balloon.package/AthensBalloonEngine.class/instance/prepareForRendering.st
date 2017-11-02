@@ -1,3 +1,0 @@
-private
-prepareForRendering
-	self fastReset

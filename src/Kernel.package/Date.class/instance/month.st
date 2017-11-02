@@ -1,3 +1,0 @@
-accessing
-month
-	^ self asMonth

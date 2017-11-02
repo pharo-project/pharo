@@ -1,3 +1,0 @@
-testing
-isSuitable
-	^ self isSupported

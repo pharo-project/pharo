@@ -1,3 +1,0 @@
-accessing
-splitsTopAndBottom
-	^ false

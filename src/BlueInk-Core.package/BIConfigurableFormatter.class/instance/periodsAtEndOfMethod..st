@@ -1,3 +1,0 @@
-accessing
-periodsAtEndOfMethod: aBoolean
-	context periodsAtEndOfMethod: aBoolean

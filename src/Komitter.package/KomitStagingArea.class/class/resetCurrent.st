@@ -1,4 +1,0 @@
-release
-resetCurrent
-
-	current := nil

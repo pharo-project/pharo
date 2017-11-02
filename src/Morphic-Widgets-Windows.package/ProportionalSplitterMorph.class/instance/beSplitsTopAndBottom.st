@@ -1,5 +1,0 @@
-operations
-beSplitsTopAndBottom
-
-	splitsTopAndBottom := true.
-	

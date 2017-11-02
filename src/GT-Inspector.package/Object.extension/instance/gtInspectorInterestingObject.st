@@ -1,3 +1,0 @@
-*GT-Inspector
-gtInspectorInterestingObject
-	^ self

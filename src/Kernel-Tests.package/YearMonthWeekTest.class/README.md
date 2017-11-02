@@ -1,2 +1,0 @@
-I am one of several Sunit test Cases intentended to provide complete coverage for the Chronology set of classes as part of the external testing. See DateAndEpochTestCase for a complete list.  tlk.
-I have no fixtures but do make sure to restore anything I change.

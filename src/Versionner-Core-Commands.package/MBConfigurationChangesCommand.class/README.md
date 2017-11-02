@@ -1,1 +1,0 @@
-Command to browse changes on a configuration in versionner

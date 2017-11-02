@@ -1,3 +1,0 @@
-private
-asDirectory
-	^self

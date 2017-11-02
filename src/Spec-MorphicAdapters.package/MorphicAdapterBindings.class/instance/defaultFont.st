@@ -1,4 +1,0 @@
-fonts
-defaultFont
-
-	^ StandardFonts defaultFont

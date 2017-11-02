@@ -1,4 +1,0 @@
-accessing
-strategyTitle
-
-	^ 'Ignore Exception'

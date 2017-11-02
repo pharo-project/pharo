@@ -1,3 +1,0 @@
-accessing
-slantValue
-	self subclassResponsibility

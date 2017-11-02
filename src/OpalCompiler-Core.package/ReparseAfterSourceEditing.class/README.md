@@ -1,1 +1,0 @@
-Notify about the need to reparse after source code was edited

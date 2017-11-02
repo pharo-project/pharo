@@ -1,4 +1,0 @@
-configuration
-edgeClass
-
-	^ edgeClass

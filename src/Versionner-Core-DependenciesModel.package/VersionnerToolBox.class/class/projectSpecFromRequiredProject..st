@@ -1,3 +1,0 @@
-spec creation
-projectSpecFromRequiredProject: aRequiredProject
-	^ self new projectSpecFromRequiredProject: aRequiredProject

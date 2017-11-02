@@ -1,3 +1,0 @@
-cursor
-temporaryCursor
-	^ temporaryCursor

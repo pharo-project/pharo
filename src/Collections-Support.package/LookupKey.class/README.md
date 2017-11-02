@@ -1,1 +1,0 @@
-I represent a key for looking up entries in a data structure. Subclasses of me, such as Association, typically represent dictionary entries.

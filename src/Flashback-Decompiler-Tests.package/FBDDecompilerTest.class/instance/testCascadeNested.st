@@ -1,3 +1,0 @@
-tests
-testCascadeNested
-	self checkCorrectDecompilation: #exampleCascadeNested.

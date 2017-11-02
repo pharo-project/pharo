@@ -1,1 +1,0 @@
-Example for a class list node

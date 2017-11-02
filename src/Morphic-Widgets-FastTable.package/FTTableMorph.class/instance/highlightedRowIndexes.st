@@ -1,3 +1,0 @@
-accessing selection
-highlightedRowIndexes
-	^ highlightedRowIndexes

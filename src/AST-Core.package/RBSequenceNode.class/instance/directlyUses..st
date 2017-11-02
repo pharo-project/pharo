@@ -1,3 +1,0 @@
-testing
-directlyUses: aNode 
-	^false

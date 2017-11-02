@@ -1,3 +1,0 @@
-private
-labelFont
-	^StandardFonts defaultFont

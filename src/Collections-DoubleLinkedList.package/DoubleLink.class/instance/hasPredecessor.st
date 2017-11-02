@@ -1,3 +1,0 @@
-testing
-hasPredecessor
-	^ previousLink notNil

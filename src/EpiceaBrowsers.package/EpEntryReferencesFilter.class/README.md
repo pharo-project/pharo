@@ -1,1 +1,0 @@
-This filter rejects an arbitrary collection of log entries.

@@ -1,1 +1,0 @@
-Allow the annotation display in class comment pane

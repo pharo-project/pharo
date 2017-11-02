@@ -1,3 +1,0 @@
-display
-checkForNewDisplaySize
-	"do nothing"

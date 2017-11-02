@@ -1,3 +1,0 @@
-testing
-hasScheme
-	^ scheme notNil

@@ -1,3 +1,0 @@
-writing
-tab
-	outStream tab

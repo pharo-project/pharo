@@ -1,1 +1,0 @@
-I am a node wrapping a KomitDefinition

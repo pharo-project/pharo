@@ -1,3 +1,0 @@
-private
-classVariables
-	^classVariables

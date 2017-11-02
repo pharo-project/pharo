@@ -1,3 +1,0 @@
-running
-runTarjan
-	super run

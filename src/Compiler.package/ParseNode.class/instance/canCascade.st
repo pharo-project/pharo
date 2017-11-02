@@ -1,4 +1,0 @@
-testing
-canCascade
-
-	^false

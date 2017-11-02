@@ -1,3 +1,0 @@
-accessing
-nonBodySuccessorSequences
-	^self successorSequences

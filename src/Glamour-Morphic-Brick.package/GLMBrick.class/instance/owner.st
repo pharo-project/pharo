@@ -1,4 +1,0 @@
-brick-structure
-owner
-
-	^ owner

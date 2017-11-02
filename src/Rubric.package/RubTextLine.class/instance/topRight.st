@@ -1,3 +1,0 @@
-accessing
-topRight
-	^ right @ top

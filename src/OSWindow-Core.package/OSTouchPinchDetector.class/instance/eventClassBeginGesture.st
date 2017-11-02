@@ -1,3 +1,0 @@
-abstract
-eventClassBeginGesture
-	self subclassResponsibility

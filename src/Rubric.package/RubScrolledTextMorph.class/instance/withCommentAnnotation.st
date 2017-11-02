@@ -1,3 +1,0 @@
-accessing rulers
-withCommentAnnotation
-	self withRulerNamed: #commentAnnotation

@@ -1,3 +1,0 @@
-refreshing
-selectDevelopmentVersion
-	versionList selectDevelopment

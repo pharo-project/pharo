@@ -1,4 +1,0 @@
-api
-cancelAction
-
-	^ cancelAction value

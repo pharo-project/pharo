@@ -1,3 +1,0 @@
-binding
-bindingOf: aString
-	^nil

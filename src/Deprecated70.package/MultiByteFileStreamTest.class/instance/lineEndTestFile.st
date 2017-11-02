@@ -1,3 +1,0 @@
-support
-lineEndTestFile
-	^'lineEndTesting.txt'

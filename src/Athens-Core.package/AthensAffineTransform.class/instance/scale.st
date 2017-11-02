@@ -1,3 +1,0 @@
-accessing
-scale
-	^ sx@sy

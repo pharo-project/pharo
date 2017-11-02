@@ -1,1 +1,0 @@
-I represent the modification of a trait.

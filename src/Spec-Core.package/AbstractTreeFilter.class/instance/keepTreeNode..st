@@ -1,4 +1,0 @@
-filtering
-keepTreeNode: aNode
-
-	^ false

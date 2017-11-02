@@ -1,3 +1,0 @@
-tests
-testPrintHumanReadableOn
-	self testHumanReadablePrintString

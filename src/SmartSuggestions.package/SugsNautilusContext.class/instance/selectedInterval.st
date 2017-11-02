@@ -1,4 +1,0 @@
-accessing
-selectedInterval
-
-	^ model selectionInterval

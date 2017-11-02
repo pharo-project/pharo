@@ -1,3 +1,0 @@
-testing
-isUserSelection
-	^ false

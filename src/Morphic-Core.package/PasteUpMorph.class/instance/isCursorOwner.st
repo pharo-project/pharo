@@ -1,3 +1,0 @@
-cursor
-isCursorOwner
-	^ false

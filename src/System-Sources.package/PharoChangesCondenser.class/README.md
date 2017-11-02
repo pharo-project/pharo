@@ -1,1 +1,0 @@
-I create a new more compact changes files with a single version of each method in the image.

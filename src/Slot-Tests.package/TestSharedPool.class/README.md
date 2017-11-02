@@ -1,1 +1,0 @@
-I am a shared pool used for testing.

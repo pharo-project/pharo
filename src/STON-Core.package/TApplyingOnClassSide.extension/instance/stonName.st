@@ -1,3 +1,0 @@
-*ston-core
-stonName
-	^ #Class

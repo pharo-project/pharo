@@ -1,3 +1,0 @@
-accessing
-snapshotErrorImage
-	^ SnapshotErrorImage == true

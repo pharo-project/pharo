@@ -1,3 +1,0 @@
-converting
-asColorArray
-	^self

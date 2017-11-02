@@ -1,3 +1,0 @@
-formatting
-expandMacros
-	^self expandMacrosWithArguments: #()

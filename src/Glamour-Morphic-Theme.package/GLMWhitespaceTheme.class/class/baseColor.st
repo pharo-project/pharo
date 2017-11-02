@@ -1,3 +1,0 @@
-accessing
-baseColor
-	^ Color white

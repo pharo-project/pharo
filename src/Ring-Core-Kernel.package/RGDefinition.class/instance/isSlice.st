@@ -1,4 +1,0 @@
-testing types
-isSlice
-
-	^false

@@ -1,3 +1,0 @@
-*Transcript-Tool
-interactionModel
-	^ self

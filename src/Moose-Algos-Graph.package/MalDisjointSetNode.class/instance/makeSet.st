@@ -1,4 +1,0 @@
-accessing
-makeSet
-
-	parent := self

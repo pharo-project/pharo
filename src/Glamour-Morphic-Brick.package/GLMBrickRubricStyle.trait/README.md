@@ -1,1 +1,0 @@
-I'm a style module related to a rubric text fields and its componenets

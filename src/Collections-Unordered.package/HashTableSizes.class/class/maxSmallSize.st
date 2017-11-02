@@ -1,3 +1,0 @@
-private
-maxSmallSize
-	^ 255

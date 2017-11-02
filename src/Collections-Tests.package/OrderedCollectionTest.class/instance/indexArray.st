@@ -1,3 +1,0 @@
-requirements
-indexArray
-	^ indexArray .

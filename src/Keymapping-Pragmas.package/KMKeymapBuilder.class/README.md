@@ -1,1 +1,0 @@
-I am a specific builder to configure one shortcut.

@@ -1,3 +1,0 @@
-accessing
-checker: aGlobalIdentifierPersistenceChecker
-	checker := aGlobalIdentifierPersistenceChecker

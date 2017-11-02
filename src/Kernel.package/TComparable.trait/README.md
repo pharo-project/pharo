@@ -1,1 +1,0 @@
-This trait is a protocol for comparable objects. Classes using it must implement #<, #=, and #hash.

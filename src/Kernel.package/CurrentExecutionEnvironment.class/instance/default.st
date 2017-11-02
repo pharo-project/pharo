@@ -1,3 +1,0 @@
-accessing
-default
-	^DefaultExecutionEnvironment instance

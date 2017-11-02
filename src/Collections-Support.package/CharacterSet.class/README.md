@@ -1,1 +1,0 @@
-A set of characters.  Lookups for inclusion are very fast.

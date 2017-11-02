@@ -1,4 +1,0 @@
-helpers
-waitLastProcessTerminate
-
-	self waitProcessTermination: forkedProcesses last

@@ -1,4 +1,0 @@
-accessing
-peek
-
-	^ decoratedStream peek

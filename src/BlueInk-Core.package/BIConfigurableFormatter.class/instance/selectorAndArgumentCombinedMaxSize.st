@@ -1,3 +1,0 @@
-accessing
-selectorAndArgumentCombinedMaxSize
-	^ context selectorAndArgumentCombinedMaxSize

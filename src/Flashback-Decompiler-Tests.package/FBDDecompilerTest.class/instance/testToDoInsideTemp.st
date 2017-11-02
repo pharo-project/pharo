@@ -1,3 +1,0 @@
-tests
-testToDoInsideTemp
-	self checkCorrectDecompilation: #exampleToDoInsideTemp

@@ -1,3 +1,0 @@
-accessing
-modelClass
-	^class

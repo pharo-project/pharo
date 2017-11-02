@@ -1,4 +1,0 @@
-accessing
-textConverter
-	
-	^ textConverterHolder value

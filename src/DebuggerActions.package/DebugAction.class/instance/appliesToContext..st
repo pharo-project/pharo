@@ -1,4 +1,0 @@
-testing
-appliesToContext: aContext
-
-	^ true

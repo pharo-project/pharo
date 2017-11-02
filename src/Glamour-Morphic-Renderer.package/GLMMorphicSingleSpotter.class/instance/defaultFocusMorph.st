@@ -1,3 +1,0 @@
-morphic
-defaultFocusMorph
-	^ textMorph

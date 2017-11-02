@@ -1,4 +1,0 @@
-accessing
-size
-
-	^string size

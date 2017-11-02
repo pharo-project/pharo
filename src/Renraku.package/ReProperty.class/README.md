@@ -1,1 +1,0 @@
-I'm an external property of some entity. I have a source anchor to it…

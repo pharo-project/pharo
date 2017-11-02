@@ -1,4 +1,0 @@
-commands
-cmdSaveConfiguration
-	<command>
-	^ MBSaveConfigurationCommand

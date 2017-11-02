@@ -1,3 +1,0 @@
-updating
-updateContentsWithPreviouslyExpanded: aCollection 
-	packagesList updateContentsWithPreviouslyExpanded: aCollection

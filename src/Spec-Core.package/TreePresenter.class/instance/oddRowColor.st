@@ -1,4 +1,0 @@
-api
-oddRowColor
-
-	^ oddRowColor value

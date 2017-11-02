@@ -1,2 +1,0 @@
-compatibility
-methodClass: aMethodClass

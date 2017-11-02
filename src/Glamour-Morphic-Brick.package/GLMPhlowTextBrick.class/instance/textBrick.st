@@ -1,5 +1,0 @@
-accessing
-textBrick
-
-	^ textBrick
-	

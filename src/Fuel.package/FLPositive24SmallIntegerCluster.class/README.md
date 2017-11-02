@@ -1,1 +1,0 @@
-unsigned, 24-bit integer

@@ -1,1 +1,0 @@
-I just a helper class used to debug & visualize rendering of bezier segment. This class is subject of changes or complete removal

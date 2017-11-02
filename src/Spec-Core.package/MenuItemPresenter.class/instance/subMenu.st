@@ -1,4 +1,0 @@
-api
-subMenu
-
-	^ subMenu value

@@ -1,3 +1,0 @@
-accessing
-maxLineLength
-	^ context maxLineLength

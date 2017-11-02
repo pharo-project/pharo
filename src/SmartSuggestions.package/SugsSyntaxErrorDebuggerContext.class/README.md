@@ -1,1 +1,0 @@
-I know how to talk with a syntax error debugger and extract the information needed by the suggestions

@@ -1,1 +1,0 @@
-I represent a group of rules in CriticBrowser tree view

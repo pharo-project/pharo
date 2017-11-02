@@ -1,4 +1,0 @@
-testing
-isPushLiteral: valueTest
-
-	^ false

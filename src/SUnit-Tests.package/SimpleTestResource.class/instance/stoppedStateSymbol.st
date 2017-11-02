@@ -1,4 +1,0 @@
-running
-stoppedStateSymbol
-
-	^#stopped

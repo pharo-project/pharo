@@ -1,4 +1,0 @@
-parsing - private
-isEscape
-
-	^ char = $\

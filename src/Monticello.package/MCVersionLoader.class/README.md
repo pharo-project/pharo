@@ -1,1 +1,0 @@
-A MCVersionLoader is responsible for loading a given version. 

@@ -1,4 +1,0 @@
-testing
-isClassOrganizationDeclaration
-
-	^ false

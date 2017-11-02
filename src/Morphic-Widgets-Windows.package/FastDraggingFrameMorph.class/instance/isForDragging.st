@@ -1,3 +1,0 @@
-testing
-isForDragging
-	^ location isNil

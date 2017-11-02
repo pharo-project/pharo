@@ -1,1 +1,0 @@
-A testing composable presenter for testing of the class ComposablePresenterWithModel

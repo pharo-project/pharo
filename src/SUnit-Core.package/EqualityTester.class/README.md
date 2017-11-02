@@ -1,1 +1,0 @@
-I provide a simple way to test the equality properties of any object.

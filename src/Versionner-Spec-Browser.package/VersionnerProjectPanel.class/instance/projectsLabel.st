@@ -1,3 +1,0 @@
-accessing-ui
-projectsLabel
-	^ projectsLabel

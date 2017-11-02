@@ -1,2 +1,0 @@
-rendering
-actOnPaneRemoved: ann

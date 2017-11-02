@@ -1,1 +1,0 @@
-Manifest for Fuel package

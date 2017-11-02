@@ -1,3 +1,0 @@
-user interface
-newScrolledTextWithScrollbar
-	^ self newScrolledText hScrollbarShowAlways

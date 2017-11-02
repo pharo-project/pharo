@@ -1,4 +1,0 @@
-commands
-cmdUpdateFromItsRepository
-	<command>
-	^ VSUpdateFromItsRepositoryCommand

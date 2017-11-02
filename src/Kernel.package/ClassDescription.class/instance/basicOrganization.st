@@ -1,3 +1,0 @@
-organization
-basicOrganization
-	^ organization 

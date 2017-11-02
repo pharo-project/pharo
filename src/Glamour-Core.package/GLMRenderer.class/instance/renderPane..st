@@ -1,4 +1,0 @@
-rendering
-renderPane: aPane 
-	 
-	^nil

@@ -1,3 +1,0 @@
-accessing
-indentsForKeywords
-	^ context indentsForKeywords

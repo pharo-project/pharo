@@ -1,1 +1,0 @@
-Abstract class used to display groups in a tree.

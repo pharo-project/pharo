@@ -1,4 +1,0 @@
-accessing
-id
-
-	^ GTStepToBytecodeDebugAction name

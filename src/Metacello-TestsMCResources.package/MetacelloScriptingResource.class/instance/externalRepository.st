@@ -1,3 +1,0 @@
-accessing
-externalRepository
-    ^ externalRepository

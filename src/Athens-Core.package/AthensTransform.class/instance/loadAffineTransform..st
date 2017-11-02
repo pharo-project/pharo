@@ -1,3 +1,0 @@
-transformations
-loadAffineTransform: anAthenTransform
-	self subclassResponsibility

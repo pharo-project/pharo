@@ -1,3 +1,0 @@
-converting
-asFraction
-	^ self asTrueFraction 

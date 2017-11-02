@@ -1,4 +1,0 @@
-initialization
-isDebug
-
-	^ true

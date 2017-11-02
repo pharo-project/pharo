@@ -1,3 +1,0 @@
-ordering
-order
-	^ self title

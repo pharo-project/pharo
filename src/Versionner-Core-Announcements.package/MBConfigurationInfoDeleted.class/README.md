@@ -1,1 +1,0 @@
-A configuration info was deleted

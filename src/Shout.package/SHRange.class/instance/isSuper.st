@@ -1,4 +1,0 @@
-tests
-isSuper
-	
-	^type == #super

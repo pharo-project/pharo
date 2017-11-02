@@ -1,3 +1,0 @@
-accessing
-lineHeight
-	^ bottom - top

@@ -1,3 +1,0 @@
-api
-isSymbolicVersionResolutionChecked
-	^ symbolicVersionResolutionCheckBox state

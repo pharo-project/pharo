@@ -1,4 +1,0 @@
-refactoring
-sourceTextArea
-	
-	^ model sourceTextArea

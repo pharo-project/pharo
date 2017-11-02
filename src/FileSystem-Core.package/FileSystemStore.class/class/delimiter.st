@@ -1,3 +1,0 @@
-accessing
-delimiter
-	self shouldBeImplemented 

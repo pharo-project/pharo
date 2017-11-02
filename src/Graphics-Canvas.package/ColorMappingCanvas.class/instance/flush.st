@@ -1,3 +1,0 @@
-initialization
-flush
-	myCanvas flush.

@@ -1,3 +1,0 @@
-acessing
-shouldSwapMenuOpenerButtons
-	^ ShouldSwapMenuOpenerButtons 

@@ -1,4 +1,0 @@
-accessing
-monthName 
-
-	^ start monthName 

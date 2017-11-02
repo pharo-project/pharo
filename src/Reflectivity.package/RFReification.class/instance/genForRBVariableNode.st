@@ -1,3 +1,0 @@
-generate
-genForRBVariableNode
-	^self genForRBProgramNode

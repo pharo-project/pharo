@@ -1,5 +1,0 @@
-mapping
-sourceNodeExecuted
-
-	^ self sourceNode
-	

@@ -1,4 +1,0 @@
-examples
-example
-	
-	^ GLMCompositeBrick gtExampleTable

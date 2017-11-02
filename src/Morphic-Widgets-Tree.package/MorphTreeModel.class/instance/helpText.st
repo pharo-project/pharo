@@ -1,4 +1,0 @@
-help-text
-helpText
-
-	^ nil

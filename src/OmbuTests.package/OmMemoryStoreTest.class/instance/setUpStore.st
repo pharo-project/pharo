@@ -1,3 +1,0 @@
-resources
-setUpStore	
-	^ OmMemoryStore new

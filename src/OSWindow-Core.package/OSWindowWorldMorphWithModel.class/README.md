@@ -1,1 +1,0 @@
-I am an OSWindow world morph that includes a model, to be used with Spec and Glamour.

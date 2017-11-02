@@ -1,3 +1,0 @@
-site credentials
-siteUsername
-  ^ siteUsername

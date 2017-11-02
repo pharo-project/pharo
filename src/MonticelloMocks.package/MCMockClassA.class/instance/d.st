@@ -1,3 +1,0 @@
-numeric
-d
-	^ 'd'

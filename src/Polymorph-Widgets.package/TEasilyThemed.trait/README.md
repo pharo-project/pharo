@@ -1,1 +1,0 @@
-Trait providing useful theme-related methods.

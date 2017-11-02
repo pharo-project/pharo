@@ -1,3 +1,0 @@
-accessing
-lineGrid
-	^ ascent + descent

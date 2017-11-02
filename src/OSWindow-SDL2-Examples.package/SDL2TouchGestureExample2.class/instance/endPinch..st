@@ -1,2 +1,0 @@
-manage pinch
-endPinch: anEvent

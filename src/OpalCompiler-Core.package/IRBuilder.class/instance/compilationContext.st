@@ -1,3 +1,0 @@
-accessing
-compilationContext
-	^ir compilationContext 

@@ -1,3 +1,0 @@
-accessing
-oldComment
-	^ oldComment

@@ -1,3 +1,0 @@
-helpers-names
-anotherClassName
-	^ #SlotTestsClassB

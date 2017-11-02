@@ -1,3 +1,0 @@
-extending
-extendImmediate
-	^ ImmediateLayout new

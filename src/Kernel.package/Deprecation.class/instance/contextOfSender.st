@@ -1,3 +1,0 @@
-accessing
-contextOfSender
-	^context sender

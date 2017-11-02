@@ -1,1 +1,0 @@
-AssignmentNode comment: 'I represent a (var_expr) construct.'

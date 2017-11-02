@@ -1,3 +1,0 @@
-shout
-minTextSizeForStylingInBackground
-	^ self class minTextSizeForStylingInBackground

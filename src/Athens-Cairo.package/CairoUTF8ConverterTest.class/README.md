@@ -1,1 +1,0 @@
-A CairoUTF8ConverterTest is a test class for testing the behavior of CairoUTF8Converter

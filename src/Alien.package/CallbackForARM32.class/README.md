@@ -1,1 +1,0 @@
-A CallbackForARM32 is a callback for platforms with ARMv4/v5/v6/v7 processors using the System V ABI.

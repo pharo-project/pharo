@@ -1,4 +1,0 @@
-tests
-isInstanceVariable
-	
-	^type == #instVar

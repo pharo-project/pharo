@@ -1,3 +1,0 @@
-numeric
-two
-	^ 2

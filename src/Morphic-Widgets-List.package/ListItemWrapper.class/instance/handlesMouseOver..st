@@ -1,4 +1,0 @@
-testing
-handlesMouseOver: evt
-
-	^false

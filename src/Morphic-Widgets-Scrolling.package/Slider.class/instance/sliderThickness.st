@@ -1,3 +1,0 @@
-geometry
-sliderThickness
-	^ 7

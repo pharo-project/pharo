@@ -1,3 +1,0 @@
-private
-defaultSymbolicVersionResolverBlock
-	^ self defaultSymbolicVersionResolverBlock: self configuration

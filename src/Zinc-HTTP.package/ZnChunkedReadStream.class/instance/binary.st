@@ -1,3 +1,0 @@
-accessing
-binary
-	stream binary

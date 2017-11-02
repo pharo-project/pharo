@@ -1,3 +1,0 @@
-spec classes
-projectSpecClass
-    ^ MetacelloProjectSpec

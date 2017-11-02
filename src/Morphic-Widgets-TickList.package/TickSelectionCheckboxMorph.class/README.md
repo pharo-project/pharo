@@ -1,1 +1,0 @@
-A TickSelectionCheckboxMorph is a checkbox which propagate a bit more the events

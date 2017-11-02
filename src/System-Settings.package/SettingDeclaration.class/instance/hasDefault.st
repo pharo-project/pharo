@@ -1,3 +1,0 @@
-testing
-hasDefault
-	^ default ~~ UniqueObject

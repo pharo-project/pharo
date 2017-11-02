@@ -1,3 +1,0 @@
-accessing
-projectPanel
-	^ projectPanel

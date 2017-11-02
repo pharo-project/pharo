@@ -1,3 +1,0 @@
-preferences
-scrollArrowSize
-	^ 8

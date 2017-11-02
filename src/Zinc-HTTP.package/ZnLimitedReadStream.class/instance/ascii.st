@@ -1,3 +1,0 @@
-accessing
-ascii
-	binary := false

@@ -1,3 +1,0 @@
-running
-createFileSystem
-	self subclassResponsibility 

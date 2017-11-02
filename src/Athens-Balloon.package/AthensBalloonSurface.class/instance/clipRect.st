@@ -1,3 +1,0 @@
-accessing
-clipRect
-	^ engine clipRect

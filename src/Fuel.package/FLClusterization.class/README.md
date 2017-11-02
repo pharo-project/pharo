@@ -1,1 +1,0 @@
-I manage the clusters collected during the analysis step of serialization.

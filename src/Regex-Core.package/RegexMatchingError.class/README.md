@@ -1,1 +1,0 @@
-This class represents matching errors in regular expressions.

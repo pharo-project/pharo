@@ -1,1 +1,0 @@
-I draw links in a straight line. See comment in superclass.

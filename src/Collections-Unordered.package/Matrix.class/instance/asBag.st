@@ -1,3 +1,0 @@
-converting
-asBag
-	^ contents asBag

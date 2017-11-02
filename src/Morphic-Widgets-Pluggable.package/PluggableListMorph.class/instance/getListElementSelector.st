@@ -1,4 +1,0 @@
-accessing
-getListElementSelector
-
-	^ getListElementSelector

@@ -1,1 +1,0 @@
-i am a handle for null window , created using OSNullWindowDriver.

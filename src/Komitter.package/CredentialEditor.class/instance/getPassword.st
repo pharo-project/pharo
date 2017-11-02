@@ -1,4 +1,0 @@
-api
-getPassword
-
-	^ password text

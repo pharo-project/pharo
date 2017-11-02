@@ -1,4 +1,0 @@
-initialization
-defaultDimension
-
-	^ 50

@@ -1,1 +1,0 @@
-I model argument variables. By definition, an argument variable is always initialized, and can't be written to.

@@ -1,3 +1,0 @@
-scripting
-sendOneOrMultiple
-	self sendOneOrMultipleAs: Array

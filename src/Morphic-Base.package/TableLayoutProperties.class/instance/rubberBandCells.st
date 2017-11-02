@@ -1,3 +1,0 @@
-table defaults
-rubberBandCells
-	^rubberBandCells

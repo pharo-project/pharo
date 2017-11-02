@@ -1,3 +1,0 @@
-accessing
-makeSyncronous
-	isSyncronous := true

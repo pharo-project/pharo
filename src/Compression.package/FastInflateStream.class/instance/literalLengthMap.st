@@ -1,3 +1,0 @@
-huffman trees
-literalLengthMap
-	^LiteralLengthMap

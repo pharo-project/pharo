@@ -1,1 +1,0 @@
-SUnit tests for memory handles, the tests may be found in superclass

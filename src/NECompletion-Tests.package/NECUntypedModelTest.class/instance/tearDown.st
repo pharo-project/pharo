@@ -1,3 +1,0 @@
-running
-tearDown
-	NECPreferences caseSensitive: prefValueCase

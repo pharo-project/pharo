@@ -1,3 +1,0 @@
-requirements
-collectionOfFloat
-	^collectionOfFloat 

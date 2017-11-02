@@ -1,3 +1,0 @@
-examples
-exampleArray
-	^ {3}

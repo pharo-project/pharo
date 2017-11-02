@@ -1,2 +1,0 @@
-convenience
-assortCandidatesSize: aNumber

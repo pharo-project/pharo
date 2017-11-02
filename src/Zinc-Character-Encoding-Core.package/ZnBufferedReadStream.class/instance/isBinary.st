@@ -1,3 +1,0 @@
-accessing
-isBinary
-	^ stream isBinary

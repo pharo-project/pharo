@@ -1,2 +1,0 @@
-configure
-configureTextMorph: textMorph 

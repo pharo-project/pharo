@@ -1,3 +1,0 @@
-accessing
-sizeLarge
-	^ 16

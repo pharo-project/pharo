@@ -1,4 +1,0 @@
-accessing
-object
-
-	^ object value

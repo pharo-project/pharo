@@ -1,3 +1,0 @@
-displaying
-displayEmbeddedForm: aForm
-	self subclassResponsibility

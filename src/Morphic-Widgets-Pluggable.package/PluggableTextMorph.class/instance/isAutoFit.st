@@ -1,3 +1,0 @@
-testing
-isAutoFit
-	^textMorph isAutoFit

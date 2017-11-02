@@ -1,3 +1,0 @@
-actions
-windowIsClosing
-	self unregister.

@@ -1,3 +1,0 @@
-testing
-includesPackage: packageName
-	^ true

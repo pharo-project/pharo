@@ -1,3 +1,0 @@
-initialize-release
-beForSmalltalkComment
-	self textArea beForSmalltalkComment

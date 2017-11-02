@@ -1,4 +1,0 @@
-accessing
-basename
-
-	^ reference basename

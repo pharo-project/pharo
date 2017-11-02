@@ -1,1 +1,0 @@
-Abstract super class for all network related exceptions.

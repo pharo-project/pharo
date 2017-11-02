@@ -1,1 +1,0 @@
-I know how to  extract the information needed for the suggestions from a finder UI object

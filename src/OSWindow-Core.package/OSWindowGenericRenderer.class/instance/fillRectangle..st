@@ -1,3 +1,0 @@
-rendering
-fillRectangle: aRectangle
-	self subclassResponsibility

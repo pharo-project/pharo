@@ -1,4 +1,0 @@
-api
-preferedPaneColor
-
-	^ preferedPaneColor value

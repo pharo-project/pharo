@@ -1,3 +1,0 @@
-reading
-doReadHeaderFrom: aReader
-	self subclassResponsibility

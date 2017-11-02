@@ -1,4 +1,0 @@
-spec protocol
-isExpanded: aBoolean
-
-	

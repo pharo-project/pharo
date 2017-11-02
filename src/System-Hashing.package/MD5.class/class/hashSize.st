@@ -1,3 +1,0 @@
-accessing
-hashSize
-	^ 16

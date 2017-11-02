@@ -1,3 +1,0 @@
-running
-tearDown
-	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.

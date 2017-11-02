@@ -1,1 +1,0 @@
-Unload the package with the selected configuration.

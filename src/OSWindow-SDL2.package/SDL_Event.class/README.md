@@ -1,1 +1,0 @@
-This is a raw SDL2 event

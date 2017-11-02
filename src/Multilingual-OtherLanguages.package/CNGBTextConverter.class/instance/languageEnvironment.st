@@ -1,4 +1,0 @@
-private
-languageEnvironment
-
-	^ SimplifiedChineseEnvironment.

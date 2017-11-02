@@ -1,1 +1,0 @@
-I know how to iterate a collection of HiNode in a specific depth-first way.

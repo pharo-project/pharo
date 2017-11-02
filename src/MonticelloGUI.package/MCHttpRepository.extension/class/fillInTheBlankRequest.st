@@ -1,4 +1,0 @@
-*MonticelloGUI
-fillInTheBlankRequest
-	^ 'HTTP Repository:'
-			

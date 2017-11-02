@@ -1,3 +1,0 @@
-accessing
-instVarNames
-	^self selectedClass allInstVarNames

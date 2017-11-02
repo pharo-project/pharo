@@ -1,3 +1,0 @@
-initialization
-initialize
-	doNotQuitOnRestart := false.

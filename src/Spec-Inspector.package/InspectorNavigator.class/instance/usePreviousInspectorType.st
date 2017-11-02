@@ -1,3 +1,0 @@
-actions
-usePreviousInspectorType
-	self inspectorType: self previousInspectorType

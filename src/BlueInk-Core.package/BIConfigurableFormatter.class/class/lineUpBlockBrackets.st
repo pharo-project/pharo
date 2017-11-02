@@ -1,3 +1,0 @@
-accessing
-lineUpBlockBrackets
-	^ DefaultPrettyPrintContext lineUpBlockBrackets

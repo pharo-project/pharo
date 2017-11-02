@@ -1,1 +1,0 @@
-I am a tree inspector that takes the EyeElements from the default inspectors and displays them in a tree.

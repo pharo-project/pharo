@@ -1,3 +1,0 @@
-instruction decoding
-pushReceiver
-	irBuilder pushReceiver

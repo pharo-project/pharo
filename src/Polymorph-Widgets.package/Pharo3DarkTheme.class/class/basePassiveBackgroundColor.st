@@ -1,3 +1,0 @@
-accessing
-basePassiveBackgroundColor
-	^ Color darkGray

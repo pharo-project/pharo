@@ -1,4 +1,0 @@
-accessing matrices
-imageTransform
-
-	^ imageTransform

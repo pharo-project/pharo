@@ -1,3 +1,0 @@
-types
-longType
-	^ FFIInt64

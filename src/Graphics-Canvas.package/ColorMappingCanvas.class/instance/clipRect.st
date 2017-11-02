@@ -1,3 +1,0 @@
-accessing
-clipRect
-	^myCanvas clipRect

@@ -1,1 +1,0 @@
-This announcement is emitted when a window leaves a collapsed mode. This happens when you press on a window icon in the taskbar.

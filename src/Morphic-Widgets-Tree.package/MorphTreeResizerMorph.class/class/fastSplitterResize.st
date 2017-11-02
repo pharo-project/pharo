@@ -1,3 +1,0 @@
-accessing
-fastSplitterResize
-	^ true

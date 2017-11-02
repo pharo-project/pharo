@@ -1,1 +1,0 @@
-I am an abstract superclass for errors that may occur during filesystem operations.

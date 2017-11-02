@@ -1,1 +1,0 @@
-I wrap a file store that is renewed each time either the Smalltalk session changes, among others (check #needsReset).

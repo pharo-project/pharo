@@ -1,3 +1,0 @@
-*UnifiedFFI
-ffiCallingConvention
-	^ #cdecl

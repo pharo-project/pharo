@@ -1,1 +1,0 @@
-I know how to build ruler links.

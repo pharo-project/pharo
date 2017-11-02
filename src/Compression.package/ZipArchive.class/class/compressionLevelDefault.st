@@ -1,3 +1,0 @@
-constants
-compressionLevelDefault
-	^CompressionLevelDefault

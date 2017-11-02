@@ -1,2 +1,0 @@
-announcements
-methodRecategorized: aMethod

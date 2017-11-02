@@ -1,1 +1,0 @@
-The rule detects if any Float system classes are refferenced by an AST

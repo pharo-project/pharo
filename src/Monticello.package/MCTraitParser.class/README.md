@@ -1,1 +1,0 @@
-A MCTraitParser extracts an MCTraitDefinition from the source.

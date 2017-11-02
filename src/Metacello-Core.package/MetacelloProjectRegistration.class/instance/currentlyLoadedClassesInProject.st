@@ -1,3 +1,0 @@
-querying
-currentlyLoadedClassesInProject
-	^ self projectSpec currentlyLoadedClassesInVersion asSet

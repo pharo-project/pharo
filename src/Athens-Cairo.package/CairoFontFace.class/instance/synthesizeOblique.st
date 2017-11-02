@@ -1,3 +1,0 @@
-accessing
-synthesizeOblique
-	self primSetSynthesizeEmphasis: 2

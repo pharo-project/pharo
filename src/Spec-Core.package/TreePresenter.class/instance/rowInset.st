@@ -1,4 +1,0 @@
-api
-rowInset
-
-	^ rowInset value

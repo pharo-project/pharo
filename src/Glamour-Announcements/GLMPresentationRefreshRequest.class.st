@@ -1,0 +1,21 @@
+"
+A GLMPresentationUpdateRequest is announced by the presentation to notify the presentation that it should update it's content in a fast and non disrutive way. It is usually used in automatic refresh. A presentation can implement this the same way as #update, however it doesn't have to recompute it's content. Depending on its state the presentation can also ignore this request (for example it it is not visible on screen). 
+"
+Class {
+	#name : #GLMPresentationRefreshRequest,
+	#superclass : #Announcement,
+	#instVars : [
+		'presentation'
+	],
+	#category : 'Glamour-Announcements'
+}
+
+{ #category : #accessing }
+GLMPresentationRefreshRequest >> presentation [
+	^ presentation
+]
+
+{ #category : #accessing }
+GLMPresentationRefreshRequest >> presentation: anObject [
+	presentation := anObject
+]

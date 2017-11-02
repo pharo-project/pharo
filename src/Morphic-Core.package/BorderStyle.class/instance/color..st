@@ -1,3 +1,0 @@
-accessing
-color: aColor
-	"Ignored"

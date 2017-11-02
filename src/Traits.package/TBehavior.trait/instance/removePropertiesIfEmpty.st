@@ -1,3 +1,0 @@
-accessing-properties
-removePropertiesIfEmpty
-	^ self explicitRequirement

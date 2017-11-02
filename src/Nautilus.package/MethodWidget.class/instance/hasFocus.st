@@ -1,4 +1,0 @@
-private
-hasFocus
-
-	^ methodsList hasKeyboardFocus

@@ -1,4 +1,0 @@
-accessing
-inputFlowControlType
-
-	^ inputFlowControlType

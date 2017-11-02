@@ -1,3 +1,0 @@
-refactoring
-selectedMethod
-	^ model selectedMethod

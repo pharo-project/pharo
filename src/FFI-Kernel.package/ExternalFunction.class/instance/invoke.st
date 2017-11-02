@@ -1,3 +1,0 @@
-invoking
-invoke
-	^self invokeWithArguments: #()

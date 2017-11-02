@@ -1,2 +1,0 @@
-*GT-SpotterExtensions-Core-private
-withClassesFixedForNautilus

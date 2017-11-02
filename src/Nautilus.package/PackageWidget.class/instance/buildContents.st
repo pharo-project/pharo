@@ -1,3 +1,0 @@
-protocol
-buildContents
-	packagesList buildContents

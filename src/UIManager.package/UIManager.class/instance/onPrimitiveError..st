@@ -1,2 +1,0 @@
-events
-onPrimitiveError: aString	

@@ -1,4 +1,0 @@
-accessing
-processor
-
-	^ self value

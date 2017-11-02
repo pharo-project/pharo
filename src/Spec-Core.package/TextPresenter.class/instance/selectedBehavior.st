@@ -1,4 +1,0 @@
-api
-selectedBehavior
-
-	^ behaviorHolder value

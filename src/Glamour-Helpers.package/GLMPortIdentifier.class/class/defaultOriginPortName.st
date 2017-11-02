@@ -1,3 +1,0 @@
-accessing
-defaultOriginPortName
-	^ #selection

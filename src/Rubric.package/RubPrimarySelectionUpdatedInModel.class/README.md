@@ -1,1 +1,0 @@
-I am raised when the selection changes in the model side

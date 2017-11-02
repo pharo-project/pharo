@@ -1,4 +1,0 @@
-accessing
-successorSequences
-
-	^ {destination. successor} 

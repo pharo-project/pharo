@@ -1,3 +1,0 @@
-accessing
-internalDictionaryWithAssociations
-	^ self internalDictionaryClass newFrom: self orderedAssociations

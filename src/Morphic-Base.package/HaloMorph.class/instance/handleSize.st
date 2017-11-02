@@ -1,3 +1,0 @@
-private
-handleSize
-	^ 20

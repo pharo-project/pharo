@@ -1,3 +1,0 @@
-private
-rootClasses
-	^ model rootClasses

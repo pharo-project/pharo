@@ -1,1 +1,0 @@
-Provides extended Graphic support like translucency

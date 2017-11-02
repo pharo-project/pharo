@@ -1,1 +1,0 @@
-AbstractKeyPressedPlugin is an abstract plugin which reacts to key strokes by sending the message keyPressed to the plugin.

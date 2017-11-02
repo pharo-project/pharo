@@ -1,3 +1,0 @@
-private
-versionClass
-    ^ self subclassResponsibility

@@ -1,2 +1,0 @@
-friend
-emitSequenceToResetStateIfNeededOn: aStream

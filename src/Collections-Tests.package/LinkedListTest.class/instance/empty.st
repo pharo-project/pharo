@@ -1,3 +1,0 @@
-tests - empty
-empty
-	^ list

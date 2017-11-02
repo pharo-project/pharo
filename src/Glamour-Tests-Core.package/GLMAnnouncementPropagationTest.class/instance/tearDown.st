@@ -1,3 +1,0 @@
-running
-tearDown
-	GLMLogger reset

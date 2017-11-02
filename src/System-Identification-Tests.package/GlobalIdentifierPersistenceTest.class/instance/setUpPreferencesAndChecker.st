@@ -1,3 +1,0 @@
-running
-setUpPreferencesAndChecker
-	self subclassResponsibility

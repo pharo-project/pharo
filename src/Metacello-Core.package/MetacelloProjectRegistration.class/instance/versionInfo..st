@@ -1,3 +1,0 @@
-accessing
-versionInfo: aMetacelloProjectRegistrationVersionInfo
-  versionInfo := aMetacelloProjectRegistrationVersionInfo

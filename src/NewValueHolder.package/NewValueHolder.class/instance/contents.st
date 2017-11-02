@@ -1,4 +1,0 @@
-backward
-contents
-
-	^ self value

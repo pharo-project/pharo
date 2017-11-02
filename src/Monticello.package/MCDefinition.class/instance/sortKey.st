@@ -1,3 +1,0 @@
-comparing
-sortKey
-	self subclassResponsibility 

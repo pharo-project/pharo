@@ -1,4 +1,0 @@
-*renraku
-pattern
-
-	^ self name

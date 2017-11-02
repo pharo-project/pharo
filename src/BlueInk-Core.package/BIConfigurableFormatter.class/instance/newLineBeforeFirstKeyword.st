@@ -1,3 +1,0 @@
-accessing
-newLineBeforeFirstKeyword
-	^ context newLineBeforeFirstKeyword

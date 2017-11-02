@@ -1,3 +1,0 @@
-buttons behavior
-browseScopedButtonAction
-	self restrictedBrowsePackage

@@ -1,3 +1,0 @@
-System-FileRegistry
-initialize
-	self clearVersionInfo

@@ -1,4 +1,0 @@
-testing
-isValueHolder
-
-	^ true

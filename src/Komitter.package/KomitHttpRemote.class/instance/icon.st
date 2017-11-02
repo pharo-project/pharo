@@ -1,4 +1,0 @@
-*Komitter-UI
-icon
-
-	^ 'HTTP'

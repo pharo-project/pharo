@@ -1,4 +1,0 @@
-api
-label
-
-	^ labelHolder value

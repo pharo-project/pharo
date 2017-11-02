@@ -1,4 +1,0 @@
-api
-text
-
-	^ self getText

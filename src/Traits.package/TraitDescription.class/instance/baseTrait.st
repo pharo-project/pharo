@@ -1,3 +1,0 @@
-accessing parallel hierarchy
-baseTrait
-	self subclassResponsibility

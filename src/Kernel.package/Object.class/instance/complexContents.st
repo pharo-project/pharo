@@ -1,4 +1,0 @@
-user interface
-complexContents
-
-	^self

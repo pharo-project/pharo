@@ -1,3 +1,0 @@
-tests
-testIfTrueWithOr
-	self checkCorrectDecompilation: #exampleIfTrueWithOr

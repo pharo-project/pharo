@@ -1,3 +1,0 @@
-memory space
-lowSpaceWatcherProcess
-	^LowSpaceProcess

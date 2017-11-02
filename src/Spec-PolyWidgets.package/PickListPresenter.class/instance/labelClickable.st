@@ -1,4 +1,0 @@
-api
-labelClickable
-	
-	^ labelClickableHolder value

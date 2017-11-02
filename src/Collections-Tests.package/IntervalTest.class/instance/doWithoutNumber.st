@@ -1,4 +1,0 @@
-requirements
-doWithoutNumber
-
-	^ 6

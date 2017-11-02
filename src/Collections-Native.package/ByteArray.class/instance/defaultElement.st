@@ -1,4 +1,0 @@
-private
-defaultElement
-
-	^0

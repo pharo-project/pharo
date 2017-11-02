@@ -1,4 +1,0 @@
-decorating
-position
-	
-	^ decoratedStream position

@@ -1,3 +1,0 @@
-colors
-backgroundColor
-	^ Color gray

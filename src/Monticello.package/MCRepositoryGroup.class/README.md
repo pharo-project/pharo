@@ -1,1 +1,0 @@
-A singleton class, holds the list of repositories. Can look for a requested VersionInfo among its repositories.

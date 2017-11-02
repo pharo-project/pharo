@@ -17,7 +17,7 @@ bootstrap := PBBootstrap forArchitecture: architecture.
 bootstrap buildNumber: buildNumber;
 	prepareBootstrap.
 	
-repository := MCFileTreeRepository new
+repository := TonelRepository new
 	directory: './src' asFileReference;
 	yourself.
 

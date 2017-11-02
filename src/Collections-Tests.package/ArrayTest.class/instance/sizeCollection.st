@@ -1,4 +1,0 @@
-requirements
-sizeCollection
-
-	^ self collection

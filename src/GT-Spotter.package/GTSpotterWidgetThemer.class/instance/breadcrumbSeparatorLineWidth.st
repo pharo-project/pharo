@@ -1,4 +1,0 @@
-values
-breadcrumbSeparatorLineWidth
-
-	^ 2

@@ -1,3 +1,0 @@
-navigating
-goToNextLesson
-  self next

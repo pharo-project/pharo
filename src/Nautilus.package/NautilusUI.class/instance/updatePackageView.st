@@ -1,3 +1,0 @@
-private
-updatePackageView
-	self packageWidget updatePackageView

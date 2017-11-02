@@ -1,4 +1,0 @@
-accessing
-changeFilterRequestFor: aGTInspector
-
-	self subclassResponsibility

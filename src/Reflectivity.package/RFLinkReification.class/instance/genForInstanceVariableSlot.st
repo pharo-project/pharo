@@ -1,3 +1,0 @@
-generate
-genForInstanceVariableSlot
-	^link asLiteralNode

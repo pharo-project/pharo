@@ -1,4 +1,0 @@
-*Polymorph-Widgets
-getMenuSelector
-
-	^ getMenuSelector

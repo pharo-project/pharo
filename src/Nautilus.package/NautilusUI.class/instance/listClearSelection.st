@@ -1,3 +1,0 @@
-private
-listClearSelection
-	self packageWidget deselectAll.

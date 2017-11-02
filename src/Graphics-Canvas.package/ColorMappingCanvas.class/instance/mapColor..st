@@ -1,3 +1,0 @@
-private
-mapColor: aColor
-	^aColor

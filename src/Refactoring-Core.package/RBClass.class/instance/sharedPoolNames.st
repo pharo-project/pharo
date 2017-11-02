@@ -1,3 +1,0 @@
-accessing
-sharedPoolNames
-	^self privatePoolDictionaryNames copy

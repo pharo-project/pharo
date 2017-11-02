@@ -1,3 +1,0 @@
-accessing
-enableCustom
-	^ enableCustom value

@@ -1,3 +1,0 @@
-registration
-actionType
-	<debuggingAction>

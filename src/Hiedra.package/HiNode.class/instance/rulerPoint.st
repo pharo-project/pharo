@@ -1,3 +1,0 @@
-accessing
-rulerPoint
-	^ columnIndex @ rowIndex 

@@ -1,4 +1,0 @@
-protocol
-last
-
-	^ storage last

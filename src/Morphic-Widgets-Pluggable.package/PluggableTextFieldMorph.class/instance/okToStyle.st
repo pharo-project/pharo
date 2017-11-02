@@ -1,3 +1,0 @@
-styling
-okToStyle
-	^ false

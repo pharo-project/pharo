@@ -1,1 +1,0 @@
-A special tree inspector that displays the submorph hierarchy of the inspected morph.

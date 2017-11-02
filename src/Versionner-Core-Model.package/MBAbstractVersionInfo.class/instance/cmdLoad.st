@@ -1,4 +1,0 @@
-commands
-cmdLoad
-	<command>
-	^ VSLoadCommand

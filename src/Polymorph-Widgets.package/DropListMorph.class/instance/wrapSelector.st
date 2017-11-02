@@ -1,4 +1,0 @@
-wrapping
-wrapSelector
-	
-	^ wrapSelector

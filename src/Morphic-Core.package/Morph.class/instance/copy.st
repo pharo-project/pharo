@@ -1,4 +1,0 @@
-copying
-copy
-
-	^ self veryDeepCopy

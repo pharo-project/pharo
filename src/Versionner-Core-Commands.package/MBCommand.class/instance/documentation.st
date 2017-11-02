@@ -1,3 +1,0 @@
-documentation
-documentation
-	self subclassResponsibility

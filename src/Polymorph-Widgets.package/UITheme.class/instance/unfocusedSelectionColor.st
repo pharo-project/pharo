@@ -1,3 +1,0 @@
-accessing colors
-unfocusedSelectionColor
-	^ self settings unfocusedSelectionColor

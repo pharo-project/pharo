@@ -1,4 +1,0 @@
-accessing
-ir
-
-	^ methodBuilder ir

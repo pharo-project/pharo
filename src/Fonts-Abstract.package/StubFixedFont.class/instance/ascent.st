@@ -1,3 +1,0 @@
-accessing
-ascent
-	^ 13

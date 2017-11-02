@@ -1,3 +1,0 @@
-file system
-fileDirectoryClass
-	^FileSystem

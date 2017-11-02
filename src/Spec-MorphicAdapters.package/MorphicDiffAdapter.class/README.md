@@ -1,1 +1,0 @@
-I am an adpater to bridge a DiffPresenter and a DiffMorph

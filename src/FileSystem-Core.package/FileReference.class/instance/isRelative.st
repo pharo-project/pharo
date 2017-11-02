@@ -1,3 +1,0 @@
-testing
-isRelative
-	^ path isRelative

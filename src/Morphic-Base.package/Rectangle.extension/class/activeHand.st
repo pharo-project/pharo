@@ -1,4 +1,0 @@
-*Morphic-Base
-activeHand
-
-	^ ActiveHand

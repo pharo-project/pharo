@@ -1,3 +1,0 @@
-public
-sync
-	self flush

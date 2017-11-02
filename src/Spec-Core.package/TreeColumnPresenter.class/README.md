@@ -1,1 +1,0 @@
-I represent a tree column. I am used to specify how to render nodes, as well as the header title, icon , action on click and properties (resizable, initial width)

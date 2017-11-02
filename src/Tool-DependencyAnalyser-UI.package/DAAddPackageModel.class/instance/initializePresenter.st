@@ -1,3 +1,0 @@
-initialization
-initializePresenter
-	self actionOnAddPackage

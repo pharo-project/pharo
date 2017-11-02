@@ -1,3 +1,0 @@
-helpers-names
-aCategory
-	^ 'SlotTestsTmp'

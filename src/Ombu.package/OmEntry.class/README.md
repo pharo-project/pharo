@@ -1,1 +1,0 @@
-I am a container for recording objects into a store. I also have tags for custom meta-information.

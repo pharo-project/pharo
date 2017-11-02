@@ -1,3 +1,0 @@
-reading
-readByte
-	^ stream next

@@ -1,4 +1,0 @@
-factory
-buildWidget
-
-	^ SpecStubContainerView new

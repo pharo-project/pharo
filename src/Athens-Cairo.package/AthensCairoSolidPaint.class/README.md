@@ -1,1 +1,0 @@
-i represent solid color paint in cairo backend

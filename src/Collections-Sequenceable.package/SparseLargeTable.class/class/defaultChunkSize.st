@@ -1,4 +1,0 @@
-accessing
-defaultChunkSize
-
-	^100

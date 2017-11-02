@@ -1,4 +1,0 @@
-tests
-testCascadeIfTrueIfFalse
-
-	self checkCorrectDecompilation: #exampleCascadeIfTrueIfFalse.

@@ -1,3 +1,0 @@
-constants
-defaultPackageName
-	^ #'_UnpackagedPackage'

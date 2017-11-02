@@ -1,3 +1,0 @@
-scripting-convenience
-matchSubstrings
-	self filter: GTFilterSubstrings

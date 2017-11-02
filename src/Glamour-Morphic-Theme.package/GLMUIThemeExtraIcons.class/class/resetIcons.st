@@ -1,3 +1,0 @@
-utils
-resetIcons
-	icons := nil

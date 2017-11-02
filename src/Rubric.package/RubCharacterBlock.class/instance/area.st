@@ -1,3 +1,0 @@
-accessing
-area
-	^ surface area

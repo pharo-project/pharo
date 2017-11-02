@@ -1,3 +1,0 @@
-setup
-sizeCollection
-	^ otherCollectionWithoutEqualElements

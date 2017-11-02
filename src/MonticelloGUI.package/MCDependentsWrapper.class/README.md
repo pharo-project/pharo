@@ -1,1 +1,0 @@
-Specialized list item wrapper for dependents

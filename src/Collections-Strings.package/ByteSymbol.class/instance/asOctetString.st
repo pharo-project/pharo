@@ -1,3 +1,0 @@
-converting
-asOctetString
-	^ self

@@ -1,5 +1,0 @@
-mapping
-sourceNode
-
-	^ sourceNode
-	

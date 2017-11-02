@@ -1,1 +1,0 @@
-A Renraku event with multiple critics.

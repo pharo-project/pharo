@@ -1,1 +1,0 @@
-GLMExpander aims to implement a Hopscotch-like browser. This is similar to a tree where each tree node content is itself a presentation.

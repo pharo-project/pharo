@@ -1,3 +1,0 @@
-testing
-hasUnacceptedEdits
-	^self sourceTextArea hasUnacceptedEdits

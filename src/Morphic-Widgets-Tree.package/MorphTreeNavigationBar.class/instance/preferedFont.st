@@ -1,3 +1,0 @@
-accessing
-preferedFont
-	^ self balloonFont 

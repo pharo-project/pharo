@@ -1,4 +1,0 @@
-accessing
-fetchingSpecLoader
-
-	^self

@@ -1,3 +1,0 @@
-accessing
-ancestors
-	^ ancestry ancestors

@@ -1,3 +1,0 @@
-tests
-testExportingClassWithComplexTraits
-	self doTestExportingClass: HETeSimpleClassWithComplexTraits

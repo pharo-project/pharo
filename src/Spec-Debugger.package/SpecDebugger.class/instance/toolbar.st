@@ -1,4 +1,0 @@
-accessing widgets
-toolbar
-
-	^ toolbar

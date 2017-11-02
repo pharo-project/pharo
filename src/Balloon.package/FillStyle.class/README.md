@@ -1,1 +1,0 @@
-FillStyle is an abstract base class for fills in the BalloonEngine.

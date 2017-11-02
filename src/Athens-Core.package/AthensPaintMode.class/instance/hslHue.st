@@ -1,3 +1,0 @@
-modes
-hslHue
-	self notAvailable

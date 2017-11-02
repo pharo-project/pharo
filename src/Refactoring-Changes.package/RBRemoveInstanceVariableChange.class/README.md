@@ -1,1 +1,0 @@
-I am a refactoring for removing an instance variable. My changes are executed on the instance or class side.

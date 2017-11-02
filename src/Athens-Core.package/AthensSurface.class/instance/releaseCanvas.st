@@ -1,3 +1,0 @@
-private
-releaseCanvas
-	currentCanvas := nil

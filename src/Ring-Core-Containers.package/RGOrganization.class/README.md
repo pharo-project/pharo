@@ -1,1 +1,0 @@
-An organization with categories

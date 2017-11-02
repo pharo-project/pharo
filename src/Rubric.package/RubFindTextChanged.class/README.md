@@ -1,1 +1,0 @@
-I am raised when the text to find changed

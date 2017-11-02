@@ -1,3 +1,0 @@
-tests
-testDefinesEqualNotHash
-	self classRuleFor: self currentSelector

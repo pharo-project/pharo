@@ -1,3 +1,0 @@
-accessing
-helpPackages
-	^ #('ProfStef-Core')

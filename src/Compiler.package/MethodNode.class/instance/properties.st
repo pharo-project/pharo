@@ -1,3 +1,0 @@
-code generation
-properties
-	^ properties

@@ -1,4 +1,0 @@
-comparing
-identityHash
-
-	^self hashMultiply

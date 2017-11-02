@@ -1,3 +1,0 @@
-reflectivity
-visitLiteralVariableNode: aLiteralVariableNode
-	 methodBuilder pushLiteralVariable: aLiteralVariableNode binding

@@ -1,3 +1,0 @@
-building
-codeEmptySequence
-	^ self codeSequence: #()

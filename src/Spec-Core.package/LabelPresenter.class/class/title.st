@@ -1,4 +1,0 @@
-specs
-title
-
-	^ 'Label Morph'

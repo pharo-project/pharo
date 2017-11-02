@@ -1,1 +1,0 @@
-I know how to go to the previous selection in the text

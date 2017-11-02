@@ -1,1 +1,0 @@
-Text converter for CP1252.  Windows code page used in Western Europe.

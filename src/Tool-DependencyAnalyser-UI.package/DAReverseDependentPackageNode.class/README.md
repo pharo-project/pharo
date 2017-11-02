@@ -1,1 +1,0 @@
-A PDReverseDependentPackageNode is used to display a dependent package in a reverse tree.

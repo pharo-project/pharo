@@ -1,3 +1,0 @@
-accessing
-protocolsAffected
-	^{self protocol}

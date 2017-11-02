@@ -1,1 +1,0 @@
-A MTAnnouncement is used to signal a change on a MTProject model.

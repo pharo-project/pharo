@@ -1,4 +1,0 @@
-buttons behavior
-addLabel
-	
-	^ 'Create'

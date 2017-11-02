@@ -1,3 +1,0 @@
-formatting
-formatVersion
-	^ 1

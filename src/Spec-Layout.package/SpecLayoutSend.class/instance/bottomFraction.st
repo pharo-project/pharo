@@ -1,4 +1,0 @@
-protocol
-bottomFraction
-
-	^ 0

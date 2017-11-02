@@ -1,3 +1,0 @@
-public
-isValid
-	^process notNil

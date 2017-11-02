@@ -1,3 +1,0 @@
-initialization
-model
-	^ model

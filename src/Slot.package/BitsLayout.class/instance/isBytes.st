@@ -1,3 +1,0 @@
-testing
-isBytes
-	^ self subclassResponsibility

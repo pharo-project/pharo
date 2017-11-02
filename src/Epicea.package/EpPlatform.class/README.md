@@ -1,1 +1,0 @@
-My API has methods whose implementation might depend on the Pharo image version.

@@ -1,3 +1,0 @@
-traits
-traitComposition
-	self subclassResponsibility

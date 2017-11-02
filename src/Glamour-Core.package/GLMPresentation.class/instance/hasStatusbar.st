@@ -1,3 +1,0 @@
-statusbar
-hasStatusbar
-	^ statusPane notNil

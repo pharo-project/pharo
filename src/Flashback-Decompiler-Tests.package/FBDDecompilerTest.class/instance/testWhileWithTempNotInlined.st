@@ -1,3 +1,0 @@
-tests
-testWhileWithTempNotInlined
-	self checkCorrectDecompilation: #exampleWhileWithTempNotInlined

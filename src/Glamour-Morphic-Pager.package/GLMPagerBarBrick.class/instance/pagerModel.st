@@ -1,4 +1,0 @@
-bar-accessing
-pagerModel
-
-	^ pagerModel

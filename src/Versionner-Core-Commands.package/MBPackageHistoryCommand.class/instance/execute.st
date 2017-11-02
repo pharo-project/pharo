@@ -1,4 +1,0 @@
-execute
-execute
-
-	self browseVersionHistory

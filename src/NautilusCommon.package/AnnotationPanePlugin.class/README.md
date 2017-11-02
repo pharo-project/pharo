@@ -1,1 +1,0 @@
-An IgorsPlugin is a plugin which displays info about the current selection

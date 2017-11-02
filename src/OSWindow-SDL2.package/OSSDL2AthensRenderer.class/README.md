@@ -1,1 +1,0 @@
-I am an Athens renderer which uses SDL2.

@@ -1,1 +1,0 @@
-this class is subject of changes/removal. do not use it.

@@ -1,3 +1,0 @@
-updating
-resetRootInfo
-	hasToggleAtRoot := nil.

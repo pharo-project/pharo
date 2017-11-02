@@ -1,1 +1,0 @@
-A GLMBrickedMorph is a direct subclass of Morph with removed layouting mechanism

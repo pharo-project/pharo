@@ -1,4 +1,0 @@
-api
-iconHolder
-
-	^ iconHolder value

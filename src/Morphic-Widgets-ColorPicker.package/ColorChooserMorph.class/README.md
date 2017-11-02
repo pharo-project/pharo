@@ -1,1 +1,0 @@
-ColorPresenter that opens a colour selector when clicked.

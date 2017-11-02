@@ -1,6 +1,0 @@
-setup
-empty
-
-	^ empty
-	
-	

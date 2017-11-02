@@ -1,3 +1,0 @@
-comparing
-instVarNamesForEqualityComparison
-	^ self class allInstVarNames

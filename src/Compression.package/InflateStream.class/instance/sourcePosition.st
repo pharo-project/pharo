@@ -1,3 +1,0 @@
-positioning
-sourcePosition
-	^sourcePos

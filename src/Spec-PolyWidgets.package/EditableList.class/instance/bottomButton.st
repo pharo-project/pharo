@@ -1,3 +1,0 @@
-accessing
-bottomButton
-	^ bottomButton

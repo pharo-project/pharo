@@ -1,1 +1,0 @@
-a message being composed.  When finished, it will be submitted via a Celeste.

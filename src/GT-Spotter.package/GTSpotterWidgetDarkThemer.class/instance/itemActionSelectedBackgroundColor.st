@@ -1,4 +1,0 @@
-values
-itemActionSelectedBackgroundColor
-
-	^ self itemSelectedBackgroundColor slightlyDarker

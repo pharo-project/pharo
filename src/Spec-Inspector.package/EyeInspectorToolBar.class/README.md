@@ -1,1 +1,0 @@
-Toolbar to explore previous or next inpected elements

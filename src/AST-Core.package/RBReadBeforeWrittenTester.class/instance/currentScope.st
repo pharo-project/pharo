@@ -1,3 +1,0 @@
-private
-currentScope
-	^scopeStack last

@@ -1,3 +1,0 @@
-alignment
-rightFlush 
-	textStyle rightFlush

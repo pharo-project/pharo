@@ -1,3 +1,0 @@
-accessing
-synthesizeBold
-	self primSetSynthesizeEmphasis: 1

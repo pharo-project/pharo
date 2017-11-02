@@ -1,1 +1,0 @@
-FloatArrays store 32bit IEEE floating point numbers.

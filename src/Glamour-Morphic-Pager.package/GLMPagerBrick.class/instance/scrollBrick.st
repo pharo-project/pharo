@@ -1,4 +1,0 @@
-pager-accessing
-scrollBrick
-
-	^ scrollBrick

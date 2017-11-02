@@ -1,3 +1,0 @@
-protocol
-okToChange
-	^ model okToChange

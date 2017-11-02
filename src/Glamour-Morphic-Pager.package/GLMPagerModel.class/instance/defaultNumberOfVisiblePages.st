@@ -1,3 +1,0 @@
-accessing
-defaultNumberOfVisiblePages
-	^ 2

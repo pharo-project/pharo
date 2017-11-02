@@ -1,3 +1,0 @@
-private
-getCurrentPoint
-	^ context getCurrentPoint

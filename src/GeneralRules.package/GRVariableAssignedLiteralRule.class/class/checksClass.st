@@ -1,4 +1,0 @@
-testing-interest
-checksClass
-
-	^ true

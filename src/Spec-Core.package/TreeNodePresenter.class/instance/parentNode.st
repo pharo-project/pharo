@@ -1,4 +1,0 @@
-api
-parentNode
-
-	^ parentNode value

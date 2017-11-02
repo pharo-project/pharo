@@ -1,1 +1,0 @@
-I am widget for selecting environments.

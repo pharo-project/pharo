@@ -1,3 +1,0 @@
-accessing
-local
-	^ LocalTimeZone new

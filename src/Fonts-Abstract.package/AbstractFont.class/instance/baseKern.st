@@ -1,3 +1,0 @@
-accessing
-baseKern
-	^0

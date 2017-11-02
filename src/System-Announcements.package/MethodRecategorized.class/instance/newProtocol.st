@@ -1,4 +1,0 @@
-accessing
-newProtocol
-	
-	^ self protocol

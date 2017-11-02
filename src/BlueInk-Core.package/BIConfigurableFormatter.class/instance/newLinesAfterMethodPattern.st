@@ -1,3 +1,0 @@
-accessing
-newLinesAfterMethodPattern
-	^ context newLinesAfterMethodPattern

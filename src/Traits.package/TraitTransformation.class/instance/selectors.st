@@ -1,3 +1,0 @@
-enquiries
-selectors
-	^self allSelectors

@@ -1,4 +1,0 @@
-values
-settingsLabelSelectedTextColor
-
-	^ Color black

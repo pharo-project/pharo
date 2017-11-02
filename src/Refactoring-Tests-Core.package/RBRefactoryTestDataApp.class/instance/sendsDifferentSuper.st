@@ -1,3 +1,0 @@
-lint
-sendsDifferentSuper
-	super printString

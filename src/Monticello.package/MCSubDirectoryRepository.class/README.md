@@ -1,1 +1,0 @@
-A MCDirectoryRepository that looks in subdirectories too.

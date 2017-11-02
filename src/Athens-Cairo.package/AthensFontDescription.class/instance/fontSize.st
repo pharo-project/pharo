@@ -1,3 +1,0 @@
-cairo-options
-fontSize
-	^ size 

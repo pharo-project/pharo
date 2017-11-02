@@ -1,1 +1,0 @@
-I'm the core of Hiedra. See my users to understand me.

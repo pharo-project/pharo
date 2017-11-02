@@ -1,2 +1,0 @@
-Dialog window displaying a message with a single OK button. Escape/return will close. Icon is a themed information icon.
-Handles long messages through use of a text editor with potential for scrolling.

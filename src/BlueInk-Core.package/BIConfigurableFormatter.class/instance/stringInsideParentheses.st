@@ -1,3 +1,0 @@
-accessing
-stringInsideParentheses
-	^ context stringInsideParentheses

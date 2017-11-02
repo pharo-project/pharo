@@ -1,4 +1,0 @@
-protocol
-takeKeyboardFocus
-
-	methodsList takeKeyboardFocus

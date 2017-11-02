@@ -1,3 +1,0 @@
-*Spec-Inspector
-inspectorClass
-	^ EyeFloatInspector

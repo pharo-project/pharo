@@ -1,2 +1,0 @@
-logging
-logChange: aStringOrText

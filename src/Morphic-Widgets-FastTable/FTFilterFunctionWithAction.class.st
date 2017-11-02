@@ -1,0 +1,109 @@
+"
+I am a Filter widget that also have an action button.
+
+Description
+-------------------------------------------------
+I am use as a FilterFunction but I also have a Button. I am use by FTTableMorph.
+
+Public API and Key Messages
+-------------------------------------------------
+
+- #table: aTableMorph action: aBlock named: aString
+	is my constructor. The block is the action to be executed by the button and the string is the name of the button.
+	
+
+Internal Representation and Key Implementation Points.
+-------------------------------------------------
+
+    Instance Variables
+	actionBlock:		I am a block that need to be executed when the user press the button
+	actionButton:		I am the button of the widget
+
+The action block can takes 3 parameters:
+- The filtered data source
+- The pattern on the filter field 
+- The selected element on the table
+"
+Class {
+	#name : #FTFilterFunctionWithAction,
+	#superclass : #FTFilterFunction,
+	#instVars : [
+		'actionButton',
+		'actionBlock'
+	],
+	#category : 'Morphic-Widgets-FastTable-Functions'
+}
+
+{ #category : #'instance creation' }
+FTFilterFunctionWithAction class >> table: aFTTableMorph action: aBlockClosure named: aString [
+	^ (self table: aFTTableMorph)
+		action: aBlockClosure named: aString;
+		yourself
+]
+
+{ #category : #option }
+FTFilterFunctionWithAction >> action: aBlockClosure named: aString [
+	actionBlock := aBlockClosure.
+	self initializeActionButtonNamed: aString 
+]
+
+{ #category : #accessing }
+FTFilterFunctionWithAction >> beExplicite [
+	super beExplicite.
+	table addMorph: actionButton.
+	table selectedRowIndex = 0
+		ifTrue: [ table selectRowIndex: 1 ]
+]
+
+{ #category : #execute }
+FTFilterFunctionWithAction >> execute [
+	actionBlock
+		cull: table dataSource
+		cull: field getTextFromModel asString
+		cull:
+			(table selectedRowIndex = 0
+				ifFalse: [ table dataSource realElementAt: table selectedRowIndex ]
+				ifTrue: [ nil ])
+]
+
+{ #category : #initialization }
+FTFilterFunctionWithAction >> initializeActionButtonNamed: aString [
+	actionButton := PluggableButtonMorph
+		newButtonFor: self
+		action: #execute
+		label: aString
+		help: nil
+]
+
+{ #category : #private }
+FTFilterFunctionWithAction >> resizeButton [
+	| topLeft bottomRight |
+	self flag: #TODO.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
+	bottomRight := (table bounds right - table verticalScrollBarWidth) @ table bottom.
+	topLeft := (bottomRight x - actionButton width) @ (table bounds bottom - self fieldHeigh).
+	actionButton bounds: (topLeft corner: bottomRight)
+]
+
+{ #category : #private }
+FTFilterFunctionWithAction >> resizeField [
+	| topLeft bottomRight |
+	self flag: #TODO.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
+	topLeft := table bounds left @ (table bounds bottom - self fieldHeigh).
+	bottomRight := (table bounds right - table verticalScrollBarWidth - (actionButton width + 5))
+		@ table bottom.
+	field bounds: (topLeft corner: bottomRight)
+]
+
+{ #category : #private }
+FTFilterFunctionWithAction >> resizeWidget [
+	self resizeField.
+	self resizeButton
+]
+
+{ #category : #accessing }
+FTFilterFunctionWithAction >> showWidget [
+	super showWidget.
+	table addMorph: actionButton.
+	table selectedRowIndex = 0
+		ifTrue: [ table selectRowIndex: 1 ]
+]

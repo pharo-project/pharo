@@ -1,3 +1,0 @@
-running
-loadConfiguration
-	self metacelloVersion load

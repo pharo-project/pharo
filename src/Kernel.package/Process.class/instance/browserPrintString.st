@@ -1,3 +1,0 @@
-printing
-browserPrintString
-	^self browserPrintStringWith: suspendedContext

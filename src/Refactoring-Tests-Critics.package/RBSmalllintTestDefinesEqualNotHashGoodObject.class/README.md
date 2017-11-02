@@ -1,1 +1,0 @@
-This class shouldn't trigger the RBDefinesEqualNotHashRule critic.

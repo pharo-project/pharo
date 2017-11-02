@@ -1,1 +1,0 @@
-A ZIP write stream

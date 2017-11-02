@@ -1,3 +1,0 @@
-accessing
-searchedTextListMaxSize
-	^20

@@ -1,1 +1,0 @@
-A SlotExampleMovie is an example class to demonstrate the workings of relation slots.

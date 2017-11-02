@@ -1,3 +1,0 @@
-accessing
-widthForRounding
-	^self width

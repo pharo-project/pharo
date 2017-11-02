@@ -1,3 +1,0 @@
-accessing
-itemsForTest
-	^ rootClass allSubclasses

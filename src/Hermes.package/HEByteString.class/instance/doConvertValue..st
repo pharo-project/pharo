@@ -1,3 +1,0 @@
-reading
-doConvertValue: aValue
-	^ aValue.

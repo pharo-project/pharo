@@ -1,3 +1,0 @@
-requirements
-firstCollection
-	^example1 

@@ -1,3 +1,0 @@
-default abi
-returnSingleFloatsAsDoubles
-	^ false

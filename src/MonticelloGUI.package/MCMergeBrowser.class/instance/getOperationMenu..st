@@ -1,3 +1,0 @@
-actions
-getOperationMenu: aMenu
-	^ aMenu

@@ -1,1 +1,0 @@
-Class used to display packages in a tree.

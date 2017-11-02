@@ -1,3 +1,0 @@
-testing
-hasStepModel
-	^ stepModel isNotNil

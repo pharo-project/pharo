@@ -1,4 +1,0 @@
-pager-accessing
-pagerBar
-
-	^ pagerBar

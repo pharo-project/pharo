@@ -1,3 +1,0 @@
-testing
-isReadable
-	^ self ownerRead

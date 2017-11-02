@@ -1,3 +1,0 @@
-private
-stepGlobal
-	"ignored"

@@ -1,1 +1,0 @@
-I am the handle in the right top of windows used for resizing them.

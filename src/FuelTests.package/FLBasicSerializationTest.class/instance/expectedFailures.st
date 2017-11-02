@@ -1,3 +1,0 @@
-failures
-expectedFailures
-	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal)

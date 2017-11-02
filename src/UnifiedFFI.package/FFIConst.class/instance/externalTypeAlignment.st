@@ -1,3 +1,0 @@
-accessing
-externalTypeAlignment
-	^ externalType externalTypeAlignment

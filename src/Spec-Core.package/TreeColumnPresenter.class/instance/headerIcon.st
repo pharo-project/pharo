@@ -1,4 +1,0 @@
-api
-headerIcon
-
-	^ headerIcon value

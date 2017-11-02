@@ -1,4 +1,0 @@
-class methods
-isCharset
-
-	^ false.

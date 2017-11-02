@@ -1,4 +1,0 @@
-accessing
-valuesAndCounts
-
-	^ contents

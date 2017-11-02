@@ -1,3 +1,0 @@
-private
-selectedItem
-	^selectedItem

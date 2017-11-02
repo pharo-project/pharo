@@ -1,3 +1,0 @@
-accessing
-classes 
-	^ self definedClasses

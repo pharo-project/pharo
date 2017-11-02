@@ -1,4 +1,0 @@
-values
-breadcrumbHeight
-
-	^ 26

@@ -1,1 +1,0 @@
-DialogWindow that updates content based upon its model.

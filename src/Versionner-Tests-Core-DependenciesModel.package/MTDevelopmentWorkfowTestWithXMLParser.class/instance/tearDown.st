@@ -1,3 +1,0 @@
-running
-tearDown 
-	classFactory cleanUp.

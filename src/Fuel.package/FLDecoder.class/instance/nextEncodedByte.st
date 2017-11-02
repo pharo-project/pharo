@@ -1,3 +1,0 @@
-decoding
-nextEncodedByte
-	^stream next

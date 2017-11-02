@@ -1,1 +1,0 @@
-This class represents the symbols containing 8bit characters.

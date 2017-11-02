@@ -1,3 +1,0 @@
-accessing
-toSource
-	^ modification diffSource

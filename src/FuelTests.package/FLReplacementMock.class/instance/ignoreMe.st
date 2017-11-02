@@ -1,3 +1,0 @@
-accessing
-ignoreMe
-	^ ignoreMe := true

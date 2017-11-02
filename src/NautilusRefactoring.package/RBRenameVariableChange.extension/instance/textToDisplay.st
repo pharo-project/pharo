@@ -1,4 +1,0 @@
-*NautilusRefactoring
-textToDisplay
-
-	self printString

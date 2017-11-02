@@ -1,3 +1,0 @@
-utility
-enable
-	cacheEnabled := true

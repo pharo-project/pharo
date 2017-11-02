@@ -1,3 +1,0 @@
-accessing
-creationTemplate
-	self subclassResponsibility.

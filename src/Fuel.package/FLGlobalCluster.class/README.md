@@ -1,1 +1,0 @@
-I am a cluster for objects that are reachables from Smalltalk global dictionary.

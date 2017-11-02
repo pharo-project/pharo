@@ -1,2 +1,0 @@
-I am class which provides a convenient interface to work with arrays which elements are values of some external (C) type.
-This class uses double dispatch to solve #at: and #at:put: methods, if you need to achieve speed, is recommendable to subclass me and override this methods to avoid the indirection.

@@ -1,3 +1,0 @@
-modes
-text
-	isBinary := false

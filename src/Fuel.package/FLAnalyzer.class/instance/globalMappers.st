@@ -1,4 +1,0 @@
-accessing
-globalMappers
-	
-	^globalMappersFactory value

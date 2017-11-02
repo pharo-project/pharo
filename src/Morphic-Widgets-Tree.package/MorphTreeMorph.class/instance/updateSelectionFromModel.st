@@ -1,3 +1,0 @@
-updating
-updateSelectionFromModel
-	^ self listManager updateSelectionFromModel

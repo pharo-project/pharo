@@ -1,3 +1,0 @@
-accessing
-veryLightSelectionColor
-	^ self lightSelectionColor muchLighter

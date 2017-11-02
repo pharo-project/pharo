@@ -1,3 +1,0 @@
-settings api
-filterLinkSelectors
-	^ false

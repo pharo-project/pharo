@@ -1,1 +1,0 @@
-STONTestUser3 extends STONTestUser but wants nil instance variables to be written

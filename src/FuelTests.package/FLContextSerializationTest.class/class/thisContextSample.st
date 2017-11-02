@@ -1,3 +1,0 @@
-running
-thisContextSample
-	^ thisContext copy

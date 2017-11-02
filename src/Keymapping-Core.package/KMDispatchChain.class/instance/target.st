@@ -1,3 +1,0 @@
-iterating
-target
-	^target

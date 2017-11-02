@@ -1,1 +1,0 @@
-ZnServerErrorEvent is a ZnServerLogEvent related to an exception that occurred.

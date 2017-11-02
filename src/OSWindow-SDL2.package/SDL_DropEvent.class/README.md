@@ -1,1 +1,0 @@
-SDL2 library structure representing a dropped file into the window.

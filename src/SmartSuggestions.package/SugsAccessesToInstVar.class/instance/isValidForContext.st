@@ -1,3 +1,0 @@
-execution
-isValidForContext
-	^ context hasClassUnImplementedAccessors

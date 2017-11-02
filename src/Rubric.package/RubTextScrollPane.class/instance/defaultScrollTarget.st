@@ -1,3 +1,0 @@
-initialize
-defaultScrollTarget
-	^ RubEditingArea new

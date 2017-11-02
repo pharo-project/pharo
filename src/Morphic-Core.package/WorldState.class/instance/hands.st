@@ -1,4 +1,0 @@
-hands
-hands
-
-	^ hands

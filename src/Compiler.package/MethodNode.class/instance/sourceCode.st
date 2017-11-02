@@ -1,4 +1,0 @@
-printing
-sourceCode
-
-	^ self sourceText.

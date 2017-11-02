@@ -1,3 +1,0 @@
-accessing
-bottom
-	^ surface bottom

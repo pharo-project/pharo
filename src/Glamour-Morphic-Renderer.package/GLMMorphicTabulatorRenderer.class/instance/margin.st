@@ -1,3 +1,0 @@
-private
-margin
-	^ 1

@@ -1,3 +1,0 @@
-accessing
-classAffected
-	^self newClassDefinition

@@ -1,3 +1,0 @@
-accessing
-dragTransferType
-	^ self getListElementSelector

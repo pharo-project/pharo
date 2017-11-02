@@ -1,3 +1,0 @@
-accessing
-newLineBeforeFirstKeyword
-	^ DefaultPrettyPrintContext newLineBeforeFirstKeyword

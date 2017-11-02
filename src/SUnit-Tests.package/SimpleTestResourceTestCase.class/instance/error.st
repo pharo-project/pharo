@@ -1,3 +1,0 @@
-private
-error
-	'foo' odd

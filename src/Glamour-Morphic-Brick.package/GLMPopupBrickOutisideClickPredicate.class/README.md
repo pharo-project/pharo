@@ -1,1 +1,0 @@
-I am activated when user clicks outside of a popup

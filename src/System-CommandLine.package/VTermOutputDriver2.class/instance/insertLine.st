@@ -1,3 +1,0 @@
-deprecated
-insertLine
-	^self newLine

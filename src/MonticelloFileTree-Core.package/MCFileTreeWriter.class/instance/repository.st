@@ -1,3 +1,0 @@
-writing
-repository
-  ^ stream

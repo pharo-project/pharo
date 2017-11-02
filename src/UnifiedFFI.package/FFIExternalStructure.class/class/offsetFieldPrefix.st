@@ -1,3 +1,0 @@
-private
-offsetFieldPrefix
-	^ 'OFFSET'

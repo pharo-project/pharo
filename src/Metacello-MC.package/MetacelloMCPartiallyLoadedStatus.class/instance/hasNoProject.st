@@ -1,3 +1,0 @@
-accessing
-hasNoProject
-	^ hasNoProject

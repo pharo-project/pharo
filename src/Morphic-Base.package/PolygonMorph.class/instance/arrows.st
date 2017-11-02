@@ -1,3 +1,0 @@
-menu
-arrows
-	^arrows

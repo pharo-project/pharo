@@ -1,4 +1,0 @@
-printing
-methodClass
-
-	^ encoder classEncoding

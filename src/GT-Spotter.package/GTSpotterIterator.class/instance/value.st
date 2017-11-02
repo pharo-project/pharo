@@ -1,3 +1,0 @@
-public
-value
-	^ self items

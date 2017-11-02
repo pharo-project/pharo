@@ -1,3 +1,0 @@
-accessing
-originalCenter
-	^ originalCenter

@@ -1,4 +1,0 @@
-private testing
-debuggingName
-
-	^ debuggingName 

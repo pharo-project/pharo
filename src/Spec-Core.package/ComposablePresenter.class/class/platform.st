@@ -1,4 +1,0 @@
-platform
-platform
-
-	^ SpecInterpreter bindings

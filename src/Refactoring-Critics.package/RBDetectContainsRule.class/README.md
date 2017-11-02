@@ -1,1 +1,0 @@
-Checks for bytecodePrimEqual  using the do: method instead of using the contains: or detect: methods.

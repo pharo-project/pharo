@@ -1,3 +1,0 @@
-numeric
-one
-	^ 1

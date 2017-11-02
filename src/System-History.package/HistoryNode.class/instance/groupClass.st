@@ -1,3 +1,0 @@
-accessing
-groupClass
-	^ self class

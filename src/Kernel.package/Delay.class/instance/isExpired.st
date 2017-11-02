@@ -1,4 +1,0 @@
-delaying
-isExpired
-
-	^delaySemaphore isSignaled.

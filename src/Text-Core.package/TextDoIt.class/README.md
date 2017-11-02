@@ -1,1 +1,0 @@
-A doIt action on a text. When the text is clicked the text is seen as source code and evaluated

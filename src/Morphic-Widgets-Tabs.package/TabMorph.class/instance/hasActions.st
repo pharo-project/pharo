@@ -1,4 +1,0 @@
-protocol
-hasActions
-
-	^ actions notEmpty

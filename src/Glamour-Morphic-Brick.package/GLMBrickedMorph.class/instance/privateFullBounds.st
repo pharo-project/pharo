@@ -1,3 +1,0 @@
-layout
-privateFullBounds
-	^ self fullBounds

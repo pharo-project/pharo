@@ -1,4 +1,0 @@
-accessing
-julianDayNumberUTC
-	
-	^ julianDayNumber

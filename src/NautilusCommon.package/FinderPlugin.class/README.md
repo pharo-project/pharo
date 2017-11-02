@@ -1,1 +1,0 @@
-I show the finder bar within Nautilus

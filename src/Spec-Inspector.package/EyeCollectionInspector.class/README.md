@@ -1,1 +1,0 @@
-Specialized version of inspector showing the size of the inspected collection in title.

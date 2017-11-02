@@ -1,3 +1,0 @@
-package filter
-useLastPackagePatternString
-	self packagePatternString: SharedPackageFilterPatternsHolder instance lastValue

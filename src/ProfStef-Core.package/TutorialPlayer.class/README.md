@@ -1,1 +1,0 @@
-I can navigate through an AbstractTutorial subclass. With #next and #previous you can go forward and backward through the tutorial. 

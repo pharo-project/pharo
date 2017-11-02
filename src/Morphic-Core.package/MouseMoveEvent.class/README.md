@@ -1,1 +1,0 @@
-A move event from the mouse

@@ -1,2 +1,0 @@
-I define a strategy to handle selections. 
-The sense of this class is shown in my children: I allow to handle the case of multiple and simple selection in a well designed way, instead using ifs everywhere.

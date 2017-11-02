@@ -1,3 +1,0 @@
-private
-deleteFromFileSystem
-	self fileReference ensureDelete

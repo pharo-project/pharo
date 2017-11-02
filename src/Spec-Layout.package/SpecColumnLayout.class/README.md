@@ -1,1 +1,0 @@
-A SpecColumnLayout is the layout used to specify a new column

@@ -1,4 +1,0 @@
-private
-labelMorph
-
-	^ labelMorph.

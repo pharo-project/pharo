@@ -1,3 +1,0 @@
-private
-workingCopy 
-	^ self subclassResponsibility

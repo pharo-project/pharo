@@ -1,3 +1,0 @@
-enumerating
-withParentScopesDo: aBlock
-	self subclassResponsibility

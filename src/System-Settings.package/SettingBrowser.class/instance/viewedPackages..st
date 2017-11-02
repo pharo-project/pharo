@@ -1,3 +1,0 @@
-accessing
-viewedPackages: aCollectionOfPackagesOrNil
-	viewedPackages := aCollectionOfPackagesOrNil

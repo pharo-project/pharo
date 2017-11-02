@@ -1,4 +1,0 @@
-brick
-focusedBorderWidth
-
-	^ 1

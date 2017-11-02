@@ -1,4 +1,0 @@
-accessing
-behaviorAffected
-
-	^ self traitRemoved

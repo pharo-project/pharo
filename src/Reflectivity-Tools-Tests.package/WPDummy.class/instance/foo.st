@@ -1,3 +1,0 @@
-accessing
-foo
-	^ foo

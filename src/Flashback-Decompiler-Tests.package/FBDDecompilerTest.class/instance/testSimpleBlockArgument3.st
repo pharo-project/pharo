@@ -1,3 +1,0 @@
-tests
-testSimpleBlockArgument3
-	self checkCorrectDecompilation: #exampleSimpleBlockArgument3

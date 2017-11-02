@@ -1,3 +1,0 @@
-accessing
-reader
-	^ STONReader new

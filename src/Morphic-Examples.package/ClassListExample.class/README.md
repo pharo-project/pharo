@@ -1,1 +1,0 @@
-ClassListExample new openOn: Object

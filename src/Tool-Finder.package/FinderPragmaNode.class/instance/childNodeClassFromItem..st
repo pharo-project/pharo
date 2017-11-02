@@ -1,4 +1,0 @@
-accessing
-childNodeClassFromItem: anItem 
-	
-	^ FinderPragmaMethodNode 

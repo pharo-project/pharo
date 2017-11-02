@@ -1,3 +1,0 @@
-private
-nextElement
-	self subclassResponsibility 

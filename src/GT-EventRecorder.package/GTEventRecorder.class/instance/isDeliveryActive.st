@@ -1,3 +1,0 @@
-testing
-isDeliveryActive
-	^ delivery isActive

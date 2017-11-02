@@ -1,4 +1,0 @@
-protocol
-resetMethodList
-
-	methods := nil

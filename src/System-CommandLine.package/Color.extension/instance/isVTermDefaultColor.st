@@ -1,4 +1,0 @@
-*System-CommandLine
-isVTermDefaultColor
-
-	^ false

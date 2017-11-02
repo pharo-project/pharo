@@ -1,1 +1,0 @@
-Organises a set of pages sharing the same space and selected through the use of tabs along the top.

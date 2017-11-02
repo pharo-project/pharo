@@ -1,3 +1,0 @@
-controlling
-prepareForNewProcess: aProcess
-	self subclassResponsibility 

@@ -1,1 +1,0 @@
-I do not filter presentation and allow all of them to be displayed

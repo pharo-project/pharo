@@ -1,4 +1,0 @@
-accessing
-postMaterializationActions: listOfPostMaterializationActions
-	postMaterializationActions := listOfPostMaterializationActions.
-	

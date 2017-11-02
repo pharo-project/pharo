@@ -1,4 +1,0 @@
-api
-evenRowColor
-
-	^ evenRowColor value

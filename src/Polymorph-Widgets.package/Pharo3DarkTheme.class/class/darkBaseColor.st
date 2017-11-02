@@ -1,3 +1,0 @@
-accessing
-darkBaseColor
-	^ Color veryDarkGray

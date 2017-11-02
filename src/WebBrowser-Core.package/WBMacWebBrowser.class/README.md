@@ -1,1 +1,0 @@
-Access to the web browser on Mac

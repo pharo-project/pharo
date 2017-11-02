@@ -1,1 +1,0 @@
-I holding a set of OpenGL attributes, used to initialize an opengl rendering context for a window.

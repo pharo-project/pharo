@@ -1,4 +1,0 @@
-api
-autoRefresh
-
-	^ autoRefresh value

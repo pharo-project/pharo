@@ -1,4 +1,0 @@
-converting
-asBinaryOrTextStream
-
-	^ self

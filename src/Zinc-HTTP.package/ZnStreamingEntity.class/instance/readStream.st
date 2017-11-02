@@ -1,3 +1,0 @@
-accessing
-readStream 
-	^ self stream

@@ -1,4 +1,0 @@
-commands
-cmdCopyBaseline
-	<command>
-	^ MBCopyBaselineCommand

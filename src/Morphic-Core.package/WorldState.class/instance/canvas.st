@@ -1,4 +1,0 @@
-canvas
-canvas
-
-	^ canvas

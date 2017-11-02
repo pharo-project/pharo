@@ -1,3 +1,0 @@
-accessing
-debugActionExecutedAnnouncement
-	^ debugActionExecutedAnnouncement

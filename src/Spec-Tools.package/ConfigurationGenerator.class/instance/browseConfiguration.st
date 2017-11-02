@@ -1,3 +1,0 @@
-metacello
-browseConfiguration
-	self configurationClass browse

@@ -1,3 +1,0 @@
-accessing
-numberOfDependencies
-	^ dependencies size

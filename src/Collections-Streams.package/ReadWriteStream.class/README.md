@@ -1,1 +1,0 @@
-I represent an accessor for a sequence of objects. My instances can both read and store objects.

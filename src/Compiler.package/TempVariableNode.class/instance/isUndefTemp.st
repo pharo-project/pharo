@@ -1,3 +1,0 @@
-testing
-isUndefTemp
-	^ hasDefs not

@@ -1,4 +1,0 @@
-drawing
-font
-
-	^ StandardFonts defaultFont

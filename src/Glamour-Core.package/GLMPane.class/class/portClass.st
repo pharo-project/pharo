@@ -1,4 +1,0 @@
-private
-portClass 
-	 
-	^GLMPanePort

@@ -1,1 +1,0 @@
-I am a public announcement sent when a new RPackage is renamed

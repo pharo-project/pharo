@@ -1,4 +1,0 @@
-accessing
-setSelectionSelector
-
-	^ setSelectionSelector

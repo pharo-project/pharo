@@ -1,4 +1,0 @@
-accessing
-contents
-
-	^ textModel getText

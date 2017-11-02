@@ -1,1 +1,0 @@
-I filter given strings by checking substrings inclusion

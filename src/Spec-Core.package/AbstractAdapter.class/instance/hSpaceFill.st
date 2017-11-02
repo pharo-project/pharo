@@ -1,4 +1,0 @@
-protocol
-hSpaceFill
-
-	self subclassResponsibility

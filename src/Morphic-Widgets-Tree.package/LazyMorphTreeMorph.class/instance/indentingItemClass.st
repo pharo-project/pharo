@@ -1,4 +1,0 @@
-lazy tree
-indentingItemClass
-	
-	^ LazyMorphTreeNodeMorph

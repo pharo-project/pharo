@@ -1,3 +1,0 @@
-private
-reference
-	^ reference

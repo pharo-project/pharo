@@ -1,1 +1,0 @@
-I'm a set of permissions for a Directory Entry

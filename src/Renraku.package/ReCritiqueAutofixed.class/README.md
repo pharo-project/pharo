@@ -1,1 +1,0 @@
-Event of a critic being automatically fixed by entity transformation

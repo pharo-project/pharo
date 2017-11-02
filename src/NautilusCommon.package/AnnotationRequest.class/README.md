@@ -1,1 +1,0 @@
-I am a private class used by AnnotationPanePlugin

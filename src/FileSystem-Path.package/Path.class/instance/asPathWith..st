@@ -1,3 +1,0 @@
-converting
-asPathWith: anObject
-	^ self

@@ -1,1 +1,0 @@
-A GTDebuggerBrowserUpdateRequest is a wrapper for a DebugActionExecuted event. It is sent to the debugger after the DebugActionExecuted event was handled by the debugger.

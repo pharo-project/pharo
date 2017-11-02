@@ -1,3 +1,0 @@
-accessing
-extensionDependenciesSize
-	^ 0

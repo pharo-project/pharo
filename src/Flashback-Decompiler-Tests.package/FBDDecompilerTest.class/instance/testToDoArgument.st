@@ -1,3 +1,0 @@
-tests
-testToDoArgument
-	self checkCorrectDecompilation: #exampleToDoArgument

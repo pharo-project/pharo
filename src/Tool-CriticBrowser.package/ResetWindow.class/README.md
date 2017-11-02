@@ -1,1 +1,0 @@
-A ResetWindow is simple UI to reset the currently analysed model.

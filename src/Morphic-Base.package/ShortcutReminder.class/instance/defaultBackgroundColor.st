@@ -1,4 +1,0 @@
-defaults
-defaultBackgroundColor
-
-	^Color gray

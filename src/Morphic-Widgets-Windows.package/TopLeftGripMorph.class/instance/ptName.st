@@ -1,3 +1,0 @@
-target resize
-ptName
-	^#topLeft

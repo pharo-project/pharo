@@ -1,1 +1,0 @@
-I am an expert on Windows filesystem conventions. I resolve origins according to these conventions.

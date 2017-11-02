@@ -1,3 +1,0 @@
-requests
-methodClass
-	^ method methodClass

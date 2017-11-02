@@ -1,4 +1,0 @@
-encoding
-flush
-
-	^ stream flush.

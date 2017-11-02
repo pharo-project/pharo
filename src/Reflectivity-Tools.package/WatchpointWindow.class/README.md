@@ -1,1 +1,0 @@
-I am a minimal user interface that shows the last entries in the watchpoint history.

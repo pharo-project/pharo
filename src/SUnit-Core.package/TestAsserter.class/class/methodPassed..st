@@ -1,4 +1,0 @@
-factory
-methodPassed: aSelector
-
-	^ false

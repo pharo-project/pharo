@@ -1,3 +1,0 @@
-accessing
-selectedMessage
-	^ self selectedMethod

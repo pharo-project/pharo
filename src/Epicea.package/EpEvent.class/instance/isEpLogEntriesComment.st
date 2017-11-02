@@ -1,4 +1,0 @@
-testing
-isEpLogEntriesComment
-
-	^ false

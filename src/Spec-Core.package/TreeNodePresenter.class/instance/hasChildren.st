@@ -1,4 +1,0 @@
-api
-hasChildren
-
-	^ hasChildren value

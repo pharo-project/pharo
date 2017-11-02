@@ -1,3 +1,0 @@
-accessing
-keymapContainer
-	^ KMRepository default

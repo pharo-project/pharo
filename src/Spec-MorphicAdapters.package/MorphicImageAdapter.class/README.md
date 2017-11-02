@@ -1,1 +1,0 @@
-I am the bridge between an ImagePresenter and a AlphaImageMorph

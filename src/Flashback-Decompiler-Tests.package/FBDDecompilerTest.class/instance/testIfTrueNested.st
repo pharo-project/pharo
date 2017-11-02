@@ -1,3 +1,0 @@
-tests
-testIfTrueNested
-	self checkCorrectDecompilation: #exampleIfTrueNested

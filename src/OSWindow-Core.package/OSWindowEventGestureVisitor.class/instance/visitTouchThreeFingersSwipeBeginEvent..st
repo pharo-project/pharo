@@ -1,2 +1,0 @@
-visiting - three fingers gestures
-visitTouchThreeFingersSwipeBeginEvent: anEvent

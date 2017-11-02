@@ -1,3 +1,0 @@
-initialization-filter
-initializeWithSystemCycles
-	packageAnalyzerTreeModel := DAPackageCycleDetectionTreeModel system.

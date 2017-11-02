@@ -1,4 +1,0 @@
-compatibility
-method
-
-	^ self selectedMethod 

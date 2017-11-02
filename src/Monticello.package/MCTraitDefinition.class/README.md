@@ -1,1 +1,0 @@
-A MCTraitDefinition represents a trait.

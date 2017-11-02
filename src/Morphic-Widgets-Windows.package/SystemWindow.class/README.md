@@ -1,3 +1,0 @@
-SystemWindow is the Morphic equivalent of StandardSystemView -- a labelled container for rectangular views, with iconic facilities for close, collapse/expand, and resizing.
-
-The attribute onlyActiveOnTop, if set to true (and any call to activate will set this), determines that only the top member of a collection of such windows on the screen shall be active.  To be not active means that a mouse click in any region will only result in bringing the window to the top and then making it active.

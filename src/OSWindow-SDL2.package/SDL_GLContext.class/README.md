@@ -1,1 +1,0 @@
-I represent a handle of GL rendering context, coming from SDL2 library

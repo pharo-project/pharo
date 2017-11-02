@@ -1,3 +1,0 @@
-accessing
-numGlyphs
-	^numGlyphs

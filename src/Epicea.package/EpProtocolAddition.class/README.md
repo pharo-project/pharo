@@ -1,1 +1,0 @@
-I represent the addition of a protocol of a class or a trait.

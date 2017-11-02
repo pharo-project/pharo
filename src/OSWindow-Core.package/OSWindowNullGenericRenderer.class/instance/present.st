@@ -1,3 +1,0 @@
-rendering
-present
-	"Do nothing"

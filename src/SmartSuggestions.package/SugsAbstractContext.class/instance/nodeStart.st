@@ -1,3 +1,0 @@
-accessing
-nodeStart
-	^selectedNode start.

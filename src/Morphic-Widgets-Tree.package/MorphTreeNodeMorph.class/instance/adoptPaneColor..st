@@ -1,2 +1,0 @@
-updating
-adoptPaneColor: aColor

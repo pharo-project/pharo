@@ -1,4 +1,0 @@
-private
-selectedIndexHolder
-
-	^ selectionHolder index

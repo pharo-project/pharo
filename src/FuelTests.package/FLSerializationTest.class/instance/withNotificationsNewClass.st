@@ -1,3 +1,0 @@
-class-factory
-withNotificationsNewClass
-	^ self classFactory withNotificationsNewClass

@@ -1,3 +1,0 @@
-tests
-testNestedIfNilIfNotNil
-	self checkCorrectDecompilation: #exampleNestedIfNilIfNotNil.

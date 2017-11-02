@@ -1,3 +1,0 @@
-moves
-firstPosition
-	^ firstPosition

@@ -1,4 +1,0 @@
-accessing
-getLabelSelector
-
-	^ getLabelSelector

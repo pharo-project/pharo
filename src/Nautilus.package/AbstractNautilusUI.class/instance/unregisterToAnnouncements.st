@@ -1,5 +1,0 @@
-announcement registration
-unregisterToAnnouncements
-	self unregisterToSystemAnnouncements.
-	self unregisterToTestAnnouncements. 
-	self unregisterToGroupAnnouncements. 

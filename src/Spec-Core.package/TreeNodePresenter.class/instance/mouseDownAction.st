@@ -1,4 +1,0 @@
-api
-mouseDownAction
-
-	^ mouseDownAction value

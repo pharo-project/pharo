@@ -1,4 +1,0 @@
-requirements
-elementInForIncludesTest
-
-	^ elementInForCopy 

@@ -1,1 +1,0 @@
-An ExternalAddress is an opaque handle to objects outside Smalltalk memory (e.g., a pointer).

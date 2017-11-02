@@ -1,3 +1,0 @@
-accessing rulers
-withoutCodeSizeFeedback
-	self withoutRulerNamed: #codeSizeFeedback

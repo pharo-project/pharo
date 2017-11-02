@@ -1,1 +1,0 @@
-I implement how to read entries from a stream using Fuel serializer.

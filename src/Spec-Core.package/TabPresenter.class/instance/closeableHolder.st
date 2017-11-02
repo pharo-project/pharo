@@ -1,4 +1,0 @@
-api-valueHolder
-closeableHolder
-
-	^ closeableHolder

@@ -1,1 +1,0 @@
-A test mock where a global send is not present

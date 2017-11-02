@@ -1,3 +1,0 @@
-accessing
-sentMessages
-	^ OrderedCollection new

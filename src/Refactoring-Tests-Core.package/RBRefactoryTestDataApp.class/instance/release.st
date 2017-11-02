@@ -1,3 +1,0 @@
-lint
-release
-	self printString

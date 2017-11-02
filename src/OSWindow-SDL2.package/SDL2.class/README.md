@@ -1,1 +1,0 @@
-A bunch of functions in a single class for accessing SDL2 interface

@@ -1,3 +1,0 @@
-gui
-close
-	window delete.

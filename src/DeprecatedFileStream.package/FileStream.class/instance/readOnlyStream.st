@@ -1,3 +1,0 @@
-modes
-readOnlyStream
-	^self readOnly

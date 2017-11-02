@@ -1,1 +1,0 @@
-ShortIntegerArray is an array for efficiently representing integers in the 16bit range.

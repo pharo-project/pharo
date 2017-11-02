@@ -1,3 +1,0 @@
-testing
-isClassDefinition
-	^false

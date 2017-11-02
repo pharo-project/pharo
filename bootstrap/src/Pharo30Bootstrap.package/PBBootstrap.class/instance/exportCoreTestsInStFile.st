@@ -75,7 +75,7 @@ exportCoreTestsInStFile
 		'FileSystem-Tests-Disk' 'Files-Tests' 'Jobs-Tests'  'Multilingual-Tests' 'OpalCompiler-Tests'  'Random-Tests' 'ReleaseTests'
 		'Ring-Tests-Kernel'  'Ring-Tests-Containers' 'Zinc-Character-Encoding-Tests' 'Tests' 'FileSystem-Memory')  do: [ :packageName |
 			| definitions |
-			version := (self originRepository loadVersionFromFileNamed: packageName, '.package').
+			version := (self originRepository loadVersionFromFileNamed: packageName).
 			definitions := version snapshot definitions.
 			definitions := definitions reject: [:def | blacklistedClasses includes: def className ].
 			definitions := definitions reject: [:def | def isMethodDefinition and: [blacklistedMethods includes: def selector] ].

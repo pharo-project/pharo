@@ -1,1 +1,0 @@
-This is event about protocol rename. It should substitute ClassReorganized announcement 

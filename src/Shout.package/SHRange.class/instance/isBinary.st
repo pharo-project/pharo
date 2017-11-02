@@ -1,3 +1,0 @@
-tests
-isBinary
-	^type == #binary

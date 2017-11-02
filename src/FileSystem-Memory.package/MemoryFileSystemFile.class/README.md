@@ -1,1 +1,0 @@
-I represent a memory file system entry for a regular file

@@ -1,3 +1,0 @@
-rendering
-renderGlamorouslyOn: aRenderer
-	self subclassResponsibility

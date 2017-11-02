@@ -1,3 +1,0 @@
-shout
-shoutAboutToStyle: ATextView
-	^ true

@@ -1,4 +1,0 @@
-camp smalltalk
-isResumable
-	
-	^ false

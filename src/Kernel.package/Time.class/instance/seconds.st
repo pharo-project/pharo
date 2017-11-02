@@ -1,4 +1,0 @@
-accessing
-seconds
-
-	^ self second

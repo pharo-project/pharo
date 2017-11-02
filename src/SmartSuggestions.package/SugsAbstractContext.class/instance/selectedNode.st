@@ -1,3 +1,0 @@
-initialize
-selectedNode
-	^selectedNode 

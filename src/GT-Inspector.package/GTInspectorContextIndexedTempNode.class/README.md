@@ -1,1 +1,0 @@
-I am a variable node for representing an  indexed variable stored in a  Context object that does not have a name.  These are values that are pushed and popped on the stack when executing message sends. For example, the parameters neede to perform a message send are pushed in a Context object.

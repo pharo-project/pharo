@@ -1,3 +1,0 @@
-deprecated
-up
-	^self

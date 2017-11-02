@@ -1,2 +1,0 @@
-*Monticello-RPackage
-updateAfterNewMCPackageUnregistred: anAnnouncement

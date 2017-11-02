@@ -1,3 +1,0 @@
-navigating
-resolveReference: aReference
-	^ aReference

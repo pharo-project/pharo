@@ -1,1 +1,0 @@
-I am an abstract test case for Ombu stores. My subclasses implement a hook to answer new concrete stores.

@@ -1,4 +1,0 @@
-private
-basicSetToEnd
-
-	^ super setToEnd.

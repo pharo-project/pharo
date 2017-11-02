@@ -1,4 +1,0 @@
-commands
-cmdOpenRepositoryCommand
-	<command>
-	^ VSOpenRepositoryCommand

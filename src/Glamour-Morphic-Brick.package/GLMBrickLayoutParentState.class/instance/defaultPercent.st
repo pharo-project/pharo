@@ -1,4 +1,0 @@
-initialization
-defaultPercent
-
-	^ 100

@@ -1,4 +1,0 @@
-accessing
-opposite
-
-	^ self subclassResponsibility

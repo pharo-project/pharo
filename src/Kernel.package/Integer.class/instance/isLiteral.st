@@ -1,4 +1,0 @@
-printing
-isLiteral
-
-	^true

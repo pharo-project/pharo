@@ -1,4 +1,0 @@
-private-shout
-okToStyle
-
-	^ true

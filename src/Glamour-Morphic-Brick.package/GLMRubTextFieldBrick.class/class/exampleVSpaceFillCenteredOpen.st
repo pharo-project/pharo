@@ -1,4 +1,0 @@
-examples-open
-exampleVSpaceFillCenteredOpen
-
-	self gtExampleVSpaceFillCentered openCenteredInBrickWindow

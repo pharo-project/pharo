@@ -1,4 +1,0 @@
-private
-setTimestampInMetacelloVersion: aMetacelloVersionSpec
-
-	aMetacelloVersionSpec setTimestamp: self

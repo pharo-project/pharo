@@ -1,1 +1,0 @@
-I am a Null object representing the absence of a Keymap.

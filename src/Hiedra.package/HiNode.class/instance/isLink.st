@@ -1,4 +1,0 @@
-testing
-isLink
-
-	^ false

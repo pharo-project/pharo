@@ -1,1 +1,0 @@
-This action is responsible for canceling/clearing the changes in a code editor from a debugger.

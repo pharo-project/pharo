@@ -1,3 +1,0 @@
-selection
-selectionColor: aColor 
-	"ignored"

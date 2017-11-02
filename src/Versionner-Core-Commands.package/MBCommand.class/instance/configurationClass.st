@@ -1,3 +1,0 @@
-accessing-computed
-configurationClass
-	^ target

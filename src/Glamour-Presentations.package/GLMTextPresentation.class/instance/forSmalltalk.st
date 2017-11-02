@@ -1,3 +1,0 @@
-accessing
-forSmalltalk
-	highlightSmalltalk := true

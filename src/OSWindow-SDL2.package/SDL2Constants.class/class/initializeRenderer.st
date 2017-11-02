@@ -1,9 +1,0 @@
-class initialization
-initializeRenderer
-	"
-	Renderer related constants.
-	"
-      SDL_RENDERER_SOFTWARE := 16r00000001.
-    	SDL_RENDERER_ACCELERATED := 16r00000002.
-    	SDL_RENDERER_PRESENTVSYNC := 16r00000004.
-    	SDL_RENDERER_TARGETTEXTURE := 16r00000008.

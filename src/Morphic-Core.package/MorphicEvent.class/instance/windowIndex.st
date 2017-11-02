@@ -1,3 +1,0 @@
-accessing
-windowIndex
-	^windowIndex

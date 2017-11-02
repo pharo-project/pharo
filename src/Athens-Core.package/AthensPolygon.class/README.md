@@ -1,1 +1,0 @@
-i am special kind of shape which using only straight line segments, unlike from more generic paths.

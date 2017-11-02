@@ -1,3 +1,0 @@
-testing
-isTranslucent
-	^color isTranslucent

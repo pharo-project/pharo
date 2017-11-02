@@ -1,1 +1,0 @@
-CharacterSetTest holds tests for CharacterSet

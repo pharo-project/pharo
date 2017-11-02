@@ -1,1 +1,0 @@
-A generic error raised when try to instantiate dates.

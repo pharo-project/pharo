@@ -1,4 +1,0 @@
-*NautilusRefactoring
-nameToDisplay
-
-	^ self changeString

@@ -1,3 +1,0 @@
-accessing
-selectedTextBlock
-	^ selectedTextBlock ifNil: [ [''] ]

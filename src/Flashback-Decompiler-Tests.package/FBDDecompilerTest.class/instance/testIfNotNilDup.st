@@ -1,3 +1,0 @@
-tests
-testIfNotNilDup
-	self checkCorrectDecompilation: #exampleIfNotNilDup

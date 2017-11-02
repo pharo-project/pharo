@@ -1,3 +1,0 @@
-private
-requiresSpecsForPackageOrdering: aVersionSpec
-  ^ {self}

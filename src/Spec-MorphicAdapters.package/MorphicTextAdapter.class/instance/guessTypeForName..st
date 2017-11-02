@@ -1,4 +1,0 @@
-NOCompletion
-guessTypeForName: aString
-
-	^nil

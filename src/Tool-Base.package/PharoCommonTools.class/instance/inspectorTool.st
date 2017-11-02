@@ -1,3 +1,0 @@
-tools
-inspectorTool
-	^ self inspector

@@ -1,4 +1,0 @@
-testing
-numElements
-
-	^ elements size

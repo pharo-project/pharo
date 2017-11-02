@@ -1,3 +1,0 @@
-instance creation
-title
-	^ 'Playground'

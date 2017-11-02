@@ -1,3 +1,0 @@
-factory
-newParser
-	^ FFIFunctionParser new

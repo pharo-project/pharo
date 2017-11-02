@@ -1,3 +1,0 @@
-accessing
-actualPreferencesFileName
-	^ 'preferences.ston'

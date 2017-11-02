@@ -1,3 +1,0 @@
-accessing
-searchString
-	^ searchMorph searchString

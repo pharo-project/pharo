@@ -1,3 +1,0 @@
-generate
-genForRBMessageNode
-	^self genForRBProgramNode 

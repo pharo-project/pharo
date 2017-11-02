@@ -1,4 +1,0 @@
-accessing
-removeAllMethods
-
-	^ methods removeAll.

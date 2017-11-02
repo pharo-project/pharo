@@ -1,4 +1,0 @@
-api
-hasContentToShow
-
-	^ hasContentToShow value

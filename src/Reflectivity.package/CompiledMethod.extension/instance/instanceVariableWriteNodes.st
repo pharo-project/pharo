@@ -1,3 +1,0 @@
-*Reflectivity
-instanceVariableWriteNodes
-	^self ast instanceVariableWriteNodes

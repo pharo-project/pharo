@@ -1,1 +1,0 @@
-Renderer for font glyphs

@@ -1,3 +1,0 @@
-lookups
-loopBackName
-	^'localhost'

@@ -1,4 +1,0 @@
-running
-nodeClass
-
-	^ MalSndNode

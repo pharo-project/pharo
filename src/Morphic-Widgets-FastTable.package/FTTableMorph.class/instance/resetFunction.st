@@ -1,3 +1,0 @@
-accessing
-resetFunction
-	function reset

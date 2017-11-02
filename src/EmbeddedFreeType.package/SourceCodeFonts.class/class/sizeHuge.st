@@ -1,3 +1,0 @@
-accessing
-sizeHuge
-	^ 22

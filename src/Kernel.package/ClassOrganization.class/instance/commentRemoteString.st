@@ -1,4 +1,0 @@
-backward compatibility
-commentRemoteString
-
-	^ comment

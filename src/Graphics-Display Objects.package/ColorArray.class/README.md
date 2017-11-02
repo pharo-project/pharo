@@ -1,1 +1,0 @@
-An array of colors

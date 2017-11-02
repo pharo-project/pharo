@@ -1,3 +1,0 @@
-accessing
-currentActivated
-	^ currentActivated value

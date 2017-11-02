@@ -1,3 +1,0 @@
-column drawing
-rowMorphGetSelector
-	^ rowMorphGetSelector

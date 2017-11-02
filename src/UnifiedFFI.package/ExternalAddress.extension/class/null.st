@@ -1,3 +1,0 @@
-*UnifiedFFI
-null
-	^ self new

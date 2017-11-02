@@ -1,3 +1,0 @@
-coverage
-selectorsToBeIgnored
-	^ #(#DoIt #DoItIn:)

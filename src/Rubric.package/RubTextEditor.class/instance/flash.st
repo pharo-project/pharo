@@ -1,3 +1,0 @@
-displaying
-flash
-	^ textArea flash

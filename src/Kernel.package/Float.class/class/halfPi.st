@@ -1,3 +1,0 @@
-constants
-halfPi
-	^ Halfpi

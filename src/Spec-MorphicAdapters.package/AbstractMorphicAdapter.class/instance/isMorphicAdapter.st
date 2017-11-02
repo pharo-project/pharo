@@ -1,4 +1,0 @@
-testing
-isMorphicAdapter
-
-	^ true

@@ -1,3 +1,0 @@
-installing
-installOn: aModification
-	self subclassResponsibility

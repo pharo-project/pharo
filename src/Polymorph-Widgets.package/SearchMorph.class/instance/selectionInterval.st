@@ -1,3 +1,0 @@
-accessing
-selectionInterval
-	^ contentMorph selectionInterval

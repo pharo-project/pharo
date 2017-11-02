@@ -1,3 +1,0 @@
-building internal
-forwardSign
-	^ 'Next >>'

@@ -1,3 +1,0 @@
-private
-resetConnectionInfo
-	connectInfo := nil

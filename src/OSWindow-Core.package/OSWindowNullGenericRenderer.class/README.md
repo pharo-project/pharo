@@ -1,1 +1,0 @@
-I am an implementation of the generic API for native window rendering that does nothing.

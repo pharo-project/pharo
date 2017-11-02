@@ -1,3 +1,0 @@
-accessing
-firstArgument
-	^ arguments first

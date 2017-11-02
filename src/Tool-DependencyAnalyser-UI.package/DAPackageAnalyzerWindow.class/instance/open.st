@@ -1,4 +1,0 @@
-accessing
-open
-	^ self openInWorld.
-	

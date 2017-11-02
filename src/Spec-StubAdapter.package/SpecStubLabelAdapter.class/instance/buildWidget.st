@@ -1,4 +1,0 @@
-factory
-buildWidget
-
-	^ SpecStubLabelAdapter new

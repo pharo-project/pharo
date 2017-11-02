@@ -1,3 +1,0 @@
-converting
-asKeyCombination
-	^self

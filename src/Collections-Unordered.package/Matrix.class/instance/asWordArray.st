@@ -1,3 +1,0 @@
-converting
-asWordArray
-	^ contents asWordArray

@@ -1,4 +1,0 @@
-*Tools-Debugger
-canonicalArgumentName
-
-	^ 'aCollection'.

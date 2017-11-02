@@ -1,4 +1,0 @@
-specs
-title
-
-	^ 'Radio Button'

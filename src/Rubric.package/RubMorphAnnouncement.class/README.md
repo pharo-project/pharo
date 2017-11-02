@@ -1,1 +1,0 @@
-I am an abstract class related to morph announcements

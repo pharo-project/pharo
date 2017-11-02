@@ -1,3 +1,0 @@
-accessing
-now
-	^ Time totalSeconds

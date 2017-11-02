@@ -1,2 +1,0 @@
-I am a refactoring change for a method removement. I know about the class of this method, the selector and whether it is from the 
-class or instance side. On removing this method (selector) will be removed from the class.

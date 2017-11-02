@@ -1,3 +1,0 @@
-displaying
-displayString
-	^ name

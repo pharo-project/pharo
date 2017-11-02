@@ -1,4 +1,0 @@
-*NodeNavigation
-isWorkspace
-
-	^true

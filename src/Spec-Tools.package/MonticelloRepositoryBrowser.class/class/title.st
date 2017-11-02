@@ -1,4 +1,0 @@
-spec
-title
-
-	^ 'Monticello Browser'

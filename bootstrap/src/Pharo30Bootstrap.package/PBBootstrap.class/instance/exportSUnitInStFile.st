@@ -9,10 +9,10 @@ exportSUnitInStFile
 		writer := MCStWriter on: stream.
 		writer writeInitializers: false.
 
-		version := (self originRepository loadVersionFromFileNamed: 'SUnit-Core.package').
+		version := (self originRepository loadVersionFromFileNamed: 'SUnit-Core').
 		writer writeDefinitions: version snapshot definitions.
 
-		version := (self originRepository loadVersionFromFileNamed: 'SUnit-Tests.package').
+		version := (self originRepository loadVersionFromFileNamed: 'SUnit-Tests').
 		writer writeDefinitions: version snapshot definitions.
 	    
 		stream nextPutAll: '		

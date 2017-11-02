@@ -1,4 +1,0 @@
-api
-selectedClass
-
-	 ^ classesListPresenter selectedItem

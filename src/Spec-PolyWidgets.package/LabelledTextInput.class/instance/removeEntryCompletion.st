@@ -1,3 +1,0 @@
-api-shortcuts
-removeEntryCompletion
-	^self input removeEntryCompletion

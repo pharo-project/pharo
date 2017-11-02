@@ -1,3 +1,0 @@
-list-morph
-allowToSelect
-	^ true

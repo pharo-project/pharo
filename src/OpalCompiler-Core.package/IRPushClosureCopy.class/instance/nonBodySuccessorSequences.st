@@ -1,4 +1,0 @@
-accessing
-nonBodySuccessorSequences
-
-	^ {destination}

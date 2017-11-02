@@ -1,3 +1,0 @@
-temp vars
-tempVector
-	^ tempVector 

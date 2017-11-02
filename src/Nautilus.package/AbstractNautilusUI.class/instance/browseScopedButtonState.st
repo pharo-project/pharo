@@ -1,3 +1,0 @@
-buttons behavior
-browseScopedButtonState
-	^ false

@@ -1,3 +1,0 @@
-storing
-storeIdentifier: settingNodeIdentifierString
-	self default storeIdentifier: settingNodeIdentifierString

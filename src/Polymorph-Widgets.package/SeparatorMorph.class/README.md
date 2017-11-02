@@ -1,1 +1,0 @@
-Simple themed separator morph.

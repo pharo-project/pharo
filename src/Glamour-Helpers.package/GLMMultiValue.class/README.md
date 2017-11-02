@@ -1,1 +1,0 @@
-GLMMultiValue is helper class that is used in #glamourValue:.

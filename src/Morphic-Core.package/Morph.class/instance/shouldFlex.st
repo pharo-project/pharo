@@ -1,3 +1,0 @@
-testing
-shouldFlex
-	^ self isFlexMorph.

@@ -1,3 +1,0 @@
-selector-chooser
-selectorChooser
-	^ selectorChooser

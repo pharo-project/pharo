@@ -1,3 +1,0 @@
-accessing
-glamourPresentation
-	self explicitRequirement

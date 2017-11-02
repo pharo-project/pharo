@@ -1,3 +1,0 @@
-converting
-asFileReference
-	^ self resolve

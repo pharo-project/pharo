@@ -1,3 +1,0 @@
-testing
-withClassVariable
-	ClassVariable

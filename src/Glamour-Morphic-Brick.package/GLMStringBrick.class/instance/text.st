@@ -1,4 +1,0 @@
-accessing
-text
-
-	^ text

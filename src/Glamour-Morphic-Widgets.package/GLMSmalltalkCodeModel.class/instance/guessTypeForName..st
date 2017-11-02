@@ -1,3 +1,0 @@
-completion
-guessTypeForName: aString 
-	^ nil

@@ -1,3 +1,0 @@
-private-classes
-messageNodeClass
-	^RBPatternMessageNode

@@ -1,1 +1,0 @@
-I am delivered when user drop something into the window (of course, if there's a drag and drop support by underlaying platform).

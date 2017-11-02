@@ -1,1 +1,0 @@
-I am the morph the user grabs to adjust pane splitters.

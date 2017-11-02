@@ -1,1 +1,0 @@
-I represent a subscription to an event.  I'm kind of an announcement, that's why I will be replaced by them soon :)

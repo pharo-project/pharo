@@ -1,3 +1,0 @@
-matching
-matchesEvent: aKeyboardEvent
-	self subclassResponsibility

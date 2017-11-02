@@ -1,3 +1,0 @@
-accessing
-height
-	^ 7

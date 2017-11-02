@@ -1,3 +1,0 @@
-accessing
-anyOne
-	^ self first

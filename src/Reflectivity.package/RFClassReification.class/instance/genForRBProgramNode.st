@@ -1,3 +1,0 @@
-generate
-genForRBProgramNode
-	^self generate

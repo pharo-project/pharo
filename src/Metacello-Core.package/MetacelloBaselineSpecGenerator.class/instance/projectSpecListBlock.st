@@ -1,3 +1,0 @@
-accessing
-projectSpecListBlock
-    ^ [ MetacelloProjectRegistration baselineProjectSpecs ]

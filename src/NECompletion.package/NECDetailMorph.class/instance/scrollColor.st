@@ -1,3 +1,0 @@
-drawing
-scrollColor
-	^ NECMenuMorph scrollColor

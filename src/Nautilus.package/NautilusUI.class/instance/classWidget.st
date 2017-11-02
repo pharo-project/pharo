@@ -1,4 +1,0 @@
-widget class
-classWidget
-
-	^ classWidget
