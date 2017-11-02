@@ -8,7 +8,7 @@ This baseline includes several utility methods required to prepare data for the 
 Class {
 	#name : #BaselineOfPharoBootstrap,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfPharoBootstrap'
+	#category : #BaselineOfPharoBootstrap
 }
 
 { #category : #accessing }
@@ -73,6 +73,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Finalization'.
 		spec package: 'System-Hashing'.
 		spec package: 'System-Model'.
+		spec package: 'System-OSEnvironments'.		
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
@@ -137,6 +138,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Finalization'.
 			'System-Hashing'.
 			'System-Model'.
+			'System-OSEnvironments'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
