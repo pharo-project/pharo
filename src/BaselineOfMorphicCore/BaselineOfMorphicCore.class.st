@@ -23,7 +23,7 @@ BaselineOfMorphicCore >> baseline: spec [
 
 	| repository | 
 	
-	repository := 'filetree://./pharo-core/src'. 
+	repository := 'tonel://./pharo-core/src'. 
 
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
