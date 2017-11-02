@@ -12,7 +12,11 @@ Class {
 
 { #category : #testing }
 MCReader class >> canReadFileNamed: fileName [
-	^ (fileName endsWith: self extension)
+	| ext |
+	ext := (self extension beginsWith: '.')
+		ifTrue: [ self extension ]
+		ifFalse: [ '.', self extension ].
+	^ (fileName endsWith: ext)	
 ]
 
 { #category : #testing }
