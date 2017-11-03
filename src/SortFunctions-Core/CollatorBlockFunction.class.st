@@ -13,7 +13,7 @@ Internal Representation and Key Implementation Points.
 	collatorBlock:		<BlockClosure>	This is the collation function that must return a -1, 0, or 1
 "
 Class {
-	#name : #PluggableSortFunction,
+	#name : #CollatorBlockFunction,
 	#superclass : #SortFunction,
 	#instVars : [
 		'collatorBlock'
@@ -22,13 +22,13 @@ Class {
 }
 
 { #category : #'instance creation' }
-PluggableSortFunction class >> usingBlock: twoArgsBlock [
+CollatorBlockFunction class >> usingBlock: twoArgsBlock [
 	^self new 
 		collatorBlock: twoArgsBlock
 ]
 
 { #category : #comparing }
-PluggableSortFunction >> = anObject [
+CollatorBlockFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject
@@ -40,24 +40,24 @@ PluggableSortFunction >> = anObject [
 ]
 
 { #category : #accessing }
-PluggableSortFunction >> collatorBlock [
+CollatorBlockFunction >> collatorBlock [
 	^ collatorBlock
 ]
 
 { #category : #accessing }
-PluggableSortFunction >> collatorBlock: anObject [
+CollatorBlockFunction >> collatorBlock: anObject [
 	collatorBlock := anObject
 ]
 
 { #category : #comparing }
-PluggableSortFunction >> hash [
+CollatorBlockFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ direction hash bitXor: collatorBlock hash
 ]
 
 { #category : #evaluating }
-PluggableSortFunction >> threeWayCompare: anObject1 with: anObject2 [
+CollatorBlockFunction >> threeWayCompare: anObject1 with: anObject2 [
 
 	^collatorBlock value: anObject1 value: anObject2 
 ]
