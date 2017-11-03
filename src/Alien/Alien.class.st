@@ -733,6 +733,12 @@ Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" 
 	^self primitiveFailed
 ]
 
+{ #category : #primitives-callouts }
+Alien >> primFFICallResult: result "<Alien>" withArguments: args [ "<Array of: Alien | Integer> ^<Alien>"
+	<primitive: 'primVarArgsCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
+	^self primitiveFailed
+]
+
 { #category : #'primitives-library loading' }
 Alien >> primFindSymbol: symbolName [ "<String> ^<Integer>"
 	"The receiver is assumed to be a proxy whose first field contans the handle of a library
