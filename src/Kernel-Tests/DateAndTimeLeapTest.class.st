@@ -19,6 +19,7 @@ Class {
 
 { #category : #running }
 DateAndTimeLeapTest >> setUp [
+	super setUp.
 	aDateAndTime := (DateAndTime 
 		year: 2004 month: 2 day: 29 
 		hour: 13 minute: 33 second: 0 

@@ -19,6 +19,7 @@ Class {
 
 { #category : #running }
 TimespanDoTest >> setUp [
+	super setUp.
 	aDate := DateAndTime
 				year: 2003
 				month: 01
