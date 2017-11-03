@@ -394,6 +394,7 @@ spec group: 'Optional-Group' with: #(
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
 	'PerformMessageCommandLineHandler' 	"standalone"
+	'Files-Prompt'
 ).	
 	
 spec group: 'NodeNavigation-Group' with: #(
