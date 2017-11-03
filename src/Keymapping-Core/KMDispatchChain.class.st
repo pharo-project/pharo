@@ -10,7 +10,7 @@ Class {
 		'dispatcher',
 		'initialTarget'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #'instance creation' }

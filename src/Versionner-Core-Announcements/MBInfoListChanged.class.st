@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'configurationInfo'
 	],
-	#category : 'Versionner-Core-Announcements'
+	#category : #Versionner-Core-Announcements
 }
 
 { #category : #'instance creation' }

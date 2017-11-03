@@ -4,5 +4,5 @@ This is deprecated class because the original class ContainerModel was renamed t
 Class {
 	#name : #ContainerModel,
 	#superclass : #ContainerPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

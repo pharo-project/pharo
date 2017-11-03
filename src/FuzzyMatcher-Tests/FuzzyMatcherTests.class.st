@@ -4,7 +4,7 @@ Tests for FuzzyMatcher.
 Class {
 	#name : #FuzzyMatcherTests,
 	#superclass : #TestCase,
-	#category : 'FuzzyMatcher-Tests'
+	#category : #FuzzyMatcher-Tests
 }
 
 { #category : #asserting }

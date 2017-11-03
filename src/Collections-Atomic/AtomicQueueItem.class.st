@@ -9,7 +9,7 @@ Class {
 		'next',
 		'object'
 	],
-	#category : 'Collections-Atomic'
+	#category : #Collections-Atomic
 }
 
 { #category : #initialization }

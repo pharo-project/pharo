@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'toolbarBox'
 	],
-	#category : 'OSWindow-Core-Morphic'
+	#category : #OSWindow-Core-Morphic
 }
 
 { #category : #callbacks }

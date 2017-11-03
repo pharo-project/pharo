@@ -20,7 +20,7 @@ This code can be changed to
 Class {
 	#name : #RBFileBlocksRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

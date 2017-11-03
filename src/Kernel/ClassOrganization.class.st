@@ -11,7 +11,7 @@ Class {
 		'protocolOrganizer',
 		'organizedClass'
 	],
-	#category : 'Kernel-Protocols'
+	#category : #Kernel-Protocols
 }
 
 { #category : #'instance creation' }

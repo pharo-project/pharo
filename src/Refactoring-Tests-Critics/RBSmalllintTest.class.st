@@ -1,7 +1,7 @@
 Class {
 	#name : #RBSmalllintTest,
 	#superclass : #TestCase,
-	#category : 'Refactoring-Tests-Critics'
+	#category : #Refactoring-Tests-Critics
 }
 
 { #category : #accessing }

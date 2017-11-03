@@ -14,7 +14,7 @@ Class {
 		'superMessages',
 		'messages'
 	],
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #'instance creation' }

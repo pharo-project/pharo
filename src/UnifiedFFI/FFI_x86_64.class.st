@@ -4,7 +4,7 @@ I represent x86_64 architectures.
 Class {
 	#name : #FFI_x86_64,
 	#superclass : #FFIArchitecture,
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #private }

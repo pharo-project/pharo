@@ -8,7 +8,7 @@ Class {
 		'familyName',
 		'members'
 	],
-	#category : 'FontInfrastructure'
+	#category : #FontInfrastructure
 }
 
 { #category : #'member lookup' }

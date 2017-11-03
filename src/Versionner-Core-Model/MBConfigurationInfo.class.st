@@ -25,7 +25,7 @@ Class {
 		'workingCopy',
 		'trimVersionLists'
 	],
-	#category : 'Versionner-Core-Model'
+	#category : #Versionner-Core-Model
 }
 
 { #category : #'instance creation' }

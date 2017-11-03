@@ -4,7 +4,7 @@ An OSWindowAttributesTest is a test class for testing the behavior of OSWindowAt
 Class {
 	#name : #OSWindowAttributesTest,
 	#superclass : #TestCase,
-	#category : 'OSWindow-Tests'
+	#category : #OSWindow-Tests
 }
 
 { #category : #tests }

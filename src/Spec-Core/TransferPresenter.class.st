@@ -8,7 +8,7 @@ Class {
 		'passenger',
 		'source'
 	],
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #specs }

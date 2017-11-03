@@ -6,7 +6,7 @@ Class {
 	#superclass : #AbstractMorphicAdapter,
 	#traits : 'TViewModel',
 	#classTraits : 'TViewModel classTrait',
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #'spec protocol' }

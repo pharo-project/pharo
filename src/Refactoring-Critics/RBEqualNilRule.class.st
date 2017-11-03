@@ -4,7 +4,7 @@ Replaces = nil and == nil by isNil, ~= nil and ~~ nil by notNil to make the code
 Class {
 	#name : #RBEqualNilRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

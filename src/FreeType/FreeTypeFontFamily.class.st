@@ -4,7 +4,7 @@ FreeType font family
 Class {
 	#name : #FreeTypeFontFamily,
 	#superclass : #FontFamilyAbstract,
-	#category : 'FreeType-FontManager'
+	#category : #FreeType-FontManager
 }
 
 { #category : #accessing }

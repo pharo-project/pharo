@@ -28,7 +28,7 @@ Class {
 		'tail',
 		'dummy'
 	],
-	#category : 'Collections-Atomic'
+	#category : #Collections-Atomic
 }
 
 { #category : #'instance creation' }

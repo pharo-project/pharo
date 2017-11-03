@@ -4,7 +4,7 @@ I am a scroll bar
 Class {
 	#name : #RubScrollBar,
 	#superclass : #GeneralScrollBar,
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #style }

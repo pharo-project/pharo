@@ -8,7 +8,7 @@ Class {
 		'filters',
 		'booleanOperator'
 	],
-	#category : 'DebuggerFilters'
+	#category : #DebuggerFilters
 }
 
 { #category : #'instance creation' }

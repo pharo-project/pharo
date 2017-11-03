@@ -11,7 +11,7 @@ Class {
 		'customMenuActions',
 		'text'
 	],
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #spec }

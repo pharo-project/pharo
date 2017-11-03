@@ -11,7 +11,7 @@ Class {
 		'textModel',
 		'toolbarModel'
 	],
-	#category : 'Spec-Examples'
+	#category : #Spec-Examples
 }
 
 { #category : #specs }

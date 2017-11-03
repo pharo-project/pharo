@@ -4,7 +4,7 @@ This rule checks if all subclassResponsibility methods are defined in all leaf c
 Class {
 	#name : #RBSubclassResponsibilityNotDefinedRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

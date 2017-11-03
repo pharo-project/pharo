@@ -17,7 +17,7 @@ Class {
 		'blockToPerformOnWrappers',
 		'listPresenter'
 	],
-	#category : 'Spec-PolyWidgets-ListAndTree'
+	#category : #Spec-PolyWidgets-ListAndTree
 }
 
 { #category : #specs }

@@ -4,7 +4,7 @@ Ignore the exception silently and continue the execution
 Class {
 	#name : #ReIgnoreExceptionStrategy,
 	#superclass : #ReExceptionStrategy,
-	#category : 'Renraku-Utility'
+	#category : #Renraku-Utility
 }
 
 { #category : #'error handling' }

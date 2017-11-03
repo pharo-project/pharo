@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'condition'
 	],
-	#category : 'Refactoring-Core-Conditions'
+	#category : #Refactoring-Core-Conditions
 }
 
 { #category : #'instance creation' }

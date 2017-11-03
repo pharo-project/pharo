@@ -20,7 +20,7 @@ Class {
 		'dependencies',
 		'parent'
 	],
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #instantiation }

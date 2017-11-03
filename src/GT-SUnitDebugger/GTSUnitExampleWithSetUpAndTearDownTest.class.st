@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'a'
 	],
-	#category : 'GT-SUnitDebugger'
+	#category : #GT-SUnitDebugger
 }
 
 { #category : #testing }

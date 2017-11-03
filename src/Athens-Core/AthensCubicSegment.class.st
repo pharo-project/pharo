@@ -9,7 +9,7 @@ Class {
 		'via2',
 		'to'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #visitor }

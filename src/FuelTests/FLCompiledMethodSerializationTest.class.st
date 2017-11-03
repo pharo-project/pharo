@@ -5,7 +5,7 @@ Class {
 		'theCompiledMethod',
 		'theClass'
 	],
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #running }

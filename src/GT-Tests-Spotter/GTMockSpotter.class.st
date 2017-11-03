@@ -1,7 +1,7 @@
 Class {
 	#name : #GTMockSpotter,
 	#superclass : #GTSpotter,
-	#category : 'GT-Tests-Spotter-Scripting-Mocks'
+	#category : #GT-Tests-Spotter-Scripting-Mocks
 }
 
 { #category : #accessing-defaults }

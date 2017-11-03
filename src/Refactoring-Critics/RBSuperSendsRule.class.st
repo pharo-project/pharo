@@ -4,7 +4,7 @@ Rewrite super messages to self messages when both refer to same method
 Class {
 	#name : #RBSuperSendsRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

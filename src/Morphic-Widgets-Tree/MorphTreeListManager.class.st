@@ -25,7 +25,7 @@ Class {
 		'removeOnlyLastSelected',
 		'doubleClickSelector'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #'selection change' }

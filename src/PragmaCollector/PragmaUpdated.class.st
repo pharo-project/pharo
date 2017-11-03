@@ -8,5 +8,5 @@ Instance Variables
 Class {
 	#name : #PragmaUpdated,
 	#superclass : #PragmaAnnouncement,
-	#category : 'PragmaCollector-Announcements'
+	#category : #PragmaCollector-Announcements
 }

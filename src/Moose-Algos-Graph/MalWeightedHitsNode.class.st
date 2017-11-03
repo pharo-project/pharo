@@ -7,7 +7,7 @@ Class {
 		'nextEdges',
 		'previousEdges'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #printing }

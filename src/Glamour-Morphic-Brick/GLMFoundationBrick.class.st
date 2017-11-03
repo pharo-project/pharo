@@ -18,7 +18,7 @@ Class {
 		'vResizing',
 		'hResizing'
 	],
-	#category : 'Glamour-Morphic-Brick-Morphic'
+	#category : #Glamour-Morphic-Brick-Morphic
 }
 
 { #category : #'instance creation' }

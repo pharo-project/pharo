@@ -6,7 +6,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnTooManyRedirects,
 	#superclass : #Error,
-	#category : 'Zinc-HTTP-Exceptions'
+	#category : #Zinc-HTTP-Exceptions
 }
 
 { #category : #testing }

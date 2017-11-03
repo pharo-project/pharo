@@ -20,7 +20,7 @@ Class {
 		'FT2Constants',
 		'FreeTypeCacheConstants'
 	],
-	#category : 'FreeType-Fonts'
+	#category : #FreeType-Fonts
 }
 
 { #category : #'instance creation' }

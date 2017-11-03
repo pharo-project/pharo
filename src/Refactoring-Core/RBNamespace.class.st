@@ -47,7 +47,7 @@ Class {
 		'implementorsCache',
 		'sendersCache'
 	],
-	#category : 'Refactoring-Core-Model'
+	#category : #Refactoring-Core-Model
 }
 
 { #category : #'instance creation' }

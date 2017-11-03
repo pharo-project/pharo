@@ -17,7 +17,7 @@ Class {
 		'totalSize',
 		'chunkCount'
 	],
-	#category : 'Zinc-HTTP-Streaming'
+	#category : #Zinc-HTTP-Streaming
 }
 
 { #category : #'instance creation' }

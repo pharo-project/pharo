@@ -6,7 +6,7 @@ Class {
 		'initialWorkingCopyList',
 		'undefinedSymbols'
 	],
-	#category : 'Metacello-TestsMC'
+	#category : #Metacello-TestsMC
 }
 
 { #category : #running }

@@ -13,7 +13,7 @@ Class {
 		'emphasisCode',
 		'setMode'
 	],
-	#category : 'Text-Core'
+	#category : #Text-Core
 }
 
 { #category : #constants }

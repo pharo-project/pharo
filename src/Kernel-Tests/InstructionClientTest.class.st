@@ -7,7 +7,7 @@ This is the unit test for the class InstructionClient. Unit tests are a good way
 Class {
 	#name : #InstructionClientTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #tests }

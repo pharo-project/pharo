@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnImageExampleDelegateTests,
 	#superclass : #TestCase,
-	#category : 'Zinc-Tests'
+	#category : #Zinc-Tests
 }
 
 { #category : #private }

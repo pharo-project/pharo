@@ -4,7 +4,7 @@ I extend SHTextStylerST80 and replace the links for methdos, classes and variabl
 Class {
 	#name : #RubSHTextStylerST80,
 	#superclass : #SHRBTextStyler,
-	#category : 'Rubric-Styling'
+	#category : #Rubric-Styling
 }
 
 { #category : #'style table' }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'parentNode'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #dependents }

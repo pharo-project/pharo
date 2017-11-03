@@ -9,7 +9,7 @@ Class {
 		'provided',
 		'orderedItems'
 	],
-	#category : 'Monticello-Loading'
+	#category : #Monticello-Loading
 }
 
 { #category : #instance-creation }

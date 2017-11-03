@@ -67,7 +67,7 @@ Class {
 		'CachedFontColorMaps',
 		'ColorConvertingMaps'
 	],
-	#category : 'Graphics-Primitives'
+	#category : #Graphics-Primitives
 }
 
 { #category : #'instance creation' }

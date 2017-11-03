@@ -4,7 +4,7 @@ I know how to  extract the information needed for the suggestions from a finder 
 Class {
 	#name : #SugsFinderContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #refactoring }

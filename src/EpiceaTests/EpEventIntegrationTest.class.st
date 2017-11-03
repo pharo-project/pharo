@@ -1,7 +1,7 @@
 Class {
 	#name : #EpEventIntegrationTest,
 	#superclass : #EpEnabledIntegrationTest,
-	#category : 'EpiceaTests-Integration'
+	#category : #EpiceaTests-Integration
 }
 
 { #category : #mocks }

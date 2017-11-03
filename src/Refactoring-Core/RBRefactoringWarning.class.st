@@ -5,5 +5,5 @@ The receiver is a warning that usually requires the user to validate. This is us
 Class {
 	#name : #RBRefactoringWarning,
 	#superclass : #Notification,
-	#category : 'Refactoring-Core-Support'
+	#category : #Refactoring-Core-Support
 }

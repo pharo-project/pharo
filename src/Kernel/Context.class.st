@@ -31,7 +31,7 @@ Class {
 		'SpecialPrimitiveSimulators',
 		'TryNamedPrimitiveTemplateMethod'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #enumerating }

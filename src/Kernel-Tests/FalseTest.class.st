@@ -4,7 +4,7 @@ SUnit tests for false/False class
 Class {
 	#name : #FalseTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Objects'
+	#category : #Kernel-Tests-Objects
 }
 
 { #category : #'tests - logical operations' }

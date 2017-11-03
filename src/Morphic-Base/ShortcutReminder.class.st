@@ -19,7 +19,7 @@ Class {
 		'DefaultReminder',
 		'Enabled'
 	],
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #defaults }

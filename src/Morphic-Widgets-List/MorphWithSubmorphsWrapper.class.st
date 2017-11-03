@@ -4,7 +4,7 @@ Display a morph in a SimpleHierarchicalListMorph, and arrange to recursively dis
 Class {
 	#name : #MorphWithSubmorphsWrapper,
 	#superclass : #ListItemWrapper,
-	#category : 'Morphic-Widgets-List'
+	#category : #Morphic-Widgets-List
 }
 
 { #category : #hierarchy }

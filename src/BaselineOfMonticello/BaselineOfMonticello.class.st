@@ -4,7 +4,7 @@ This baseline is used to store information about Monticello packages. It is not 
 Class {
 	#name : #BaselineOfMonticello,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfMonticello'
+	#category : #BaselineOfMonticello
 }
 
 { #category : #accessing }

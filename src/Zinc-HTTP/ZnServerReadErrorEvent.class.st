@@ -5,7 +5,7 @@ ZnServerReadErrorEvent signals an error during the reading of a request. These e
 Class {
 	#name : #ZnServerReadErrorEvent,
 	#superclass : #ZnServerErrorEvent,
-	#category : 'Zinc-HTTP-Logging'
+	#category : #Zinc-HTTP-Logging
 }
 
 { #category : #printing }

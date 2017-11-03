@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'collatorBlock'
 	],
-	#category : 'SortFunctions-Core'
+	#category : #SortFunctions-Core
 }
 
 { #category : #'instance creation' }

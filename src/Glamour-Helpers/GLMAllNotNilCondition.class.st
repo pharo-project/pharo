@@ -6,7 +6,7 @@ We use this as a default condition for presentations. Usually, you will want to 
 Class {
 	#name : #GLMAllNotNilCondition,
 	#superclass : #GLMCondition,
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #glamour }

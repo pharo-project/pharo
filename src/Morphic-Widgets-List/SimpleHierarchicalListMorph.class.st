@@ -26,7 +26,7 @@ Class {
 		'expandedForm',
 		'notExpandedForm'
 	],
-	#category : 'Morphic-Widgets-List'
+	#category : #Morphic-Widgets-List
 }
 
 { #category : #shortcuts }

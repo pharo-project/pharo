@@ -13,7 +13,7 @@ Class {
 		'suiteErrors',
 		'progressFile'
 	],
-	#category : 'JenkinsTools-Core'
+	#category : #JenkinsTools-Core
 }
 
 { #category : #running }

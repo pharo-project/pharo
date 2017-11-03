@@ -36,7 +36,7 @@ Class {
 		'code',
 		'index'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #'code generation (closures)' }

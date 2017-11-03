@@ -4,7 +4,7 @@ This smell arises when an instance variable is not both read and written. If an 
 Class {
 	#name : #RBOnlyReadOrWrittenVariableRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

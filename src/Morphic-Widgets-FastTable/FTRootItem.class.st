@@ -16,7 +16,7 @@ FTRootItem data: Object allSubclasses from: aDataSource
 Class {
 	#name : #FTRootItem,
 	#superclass : #FTTreeItem,
-	#category : 'Morphic-Widgets-FastTable-Tree'
+	#category : #Morphic-Widgets-FastTable-Tree
 }
 
 { #category : #accessing }

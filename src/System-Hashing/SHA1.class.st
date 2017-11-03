@@ -26,7 +26,7 @@ Class {
 		'K3',
 		'K4'
 	],
-	#category : 'System-Hashing-SHA1'
+	#category : #System-Hashing-SHA1
 }
 
 { #category : #accessing }

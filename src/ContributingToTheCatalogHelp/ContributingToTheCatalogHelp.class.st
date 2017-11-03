@@ -4,7 +4,7 @@ Help file on how to contribute to catalog
 Class {
 	#name : #ContributingToTheCatalogHelp,
 	#superclass : #CustomHelp,
-	#category : 'ContributingToTheCatalogHelp'
+	#category : #ContributingToTheCatalogHelp
 }
 
 { #category : #pages }

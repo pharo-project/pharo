@@ -45,7 +45,7 @@ Class {
 		'PackagesIconsCache',
 		'PreviousFocusKey'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #menu }

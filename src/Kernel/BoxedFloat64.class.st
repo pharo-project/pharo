@@ -5,7 +5,7 @@ Class {
 	#name : #BoxedFloat64,
 	#superclass : #Float,
 	#type : #words,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #'instance creation' }

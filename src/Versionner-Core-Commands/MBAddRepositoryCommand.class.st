@@ -4,7 +4,7 @@ Command to add a repository in Versionner
 Class {
 	#name : #MBAddRepositoryCommand,
 	#superclass : #MBDevCycleCommands,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

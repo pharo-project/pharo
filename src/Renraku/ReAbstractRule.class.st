@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : 'Renraku-Rules'
+	#category : #Renraku-Rules
 }
 
 { #category : #conversion }

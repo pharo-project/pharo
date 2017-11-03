@@ -31,7 +31,7 @@ Class {
 		'dragThreshold',
 		'localStamp'
 	],
-	#category : 'Morphic-Base-ProgressBar'
+	#category : #Morphic-Base-ProgressBar
 }
 
 { #category : #'event handling' }

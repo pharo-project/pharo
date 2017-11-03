@@ -5,7 +5,7 @@ I optimize checks for existing files by doing a head request instead of reloadin
 Class {
 	#name : #MCSqueaksourceRepository,
 	#superclass : #MCHttpRepository,
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #'creation template' }

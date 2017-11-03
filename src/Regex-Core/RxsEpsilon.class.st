@@ -6,7 +6,7 @@ This is an empty string.  It terminates some of the recursive constructs.
 Class {
 	#name : #RxsEpsilon,
 	#superclass : #RxsNode,
-	#category : 'Regex-Core'
+	#category : #Regex-Core
 }
 
 { #category : #building }

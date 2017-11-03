@@ -4,7 +4,7 @@ Handling changes
 Class {
 	#name : #GoferChanges,
 	#superclass : #GoferWorking,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #private }

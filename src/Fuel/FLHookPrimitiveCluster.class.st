@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'theClass'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Each rule has a few fundamental features to implement in this book with will wal
 Class {
 	#name : #RenrakuRuleCreationHelp,
 	#superclass : #RenrakuRuleHelp,
-	#category : 'Renraku-Help'
+	#category : #Renraku-Help
 }
 
 { #category : #pages }

@@ -5,7 +5,7 @@ Class {
 		'ghostText',
 		'textColor'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #querying }

@@ -13,7 +13,7 @@ Class {
 		'previousAuthor',
 		'quadrangleClass'
 	],
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #tests }

@@ -4,7 +4,7 @@ This is the chapter of the refactoring help book about the class refactoring ava
 Class {
 	#name : #RBBrowserClassRefactoringHelp,
 	#superclass : #RBBrowserSupportHelp,
-	#category : 'Refactoring-Help'
+	#category : #Refactoring-Help
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Public API and Key Messages
 Class {
 	#name : #GTEventPacking,
 	#superclass : #Object,
-	#category : 'GT-EventRecorder-Support'
+	#category : #GT-EventRecorder-Support
 }
 
 { #category : #accessing }

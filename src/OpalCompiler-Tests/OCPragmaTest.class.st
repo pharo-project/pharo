@@ -1,7 +1,7 @@
 Class {
 	#name : #OCPragmaTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Source'
+	#category : #OpalCompiler-Tests-Source
 }
 
 { #category : #method-tested }

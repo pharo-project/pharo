@@ -5,7 +5,7 @@ Class {
 		'container',
 		'paneMorph'
 	],
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

@@ -8,7 +8,7 @@ Class {
 		'organization',
 		'class'
 	],
-	#category : 'Kernel-Tests-Protocols'
+	#category : #Kernel-Tests-Protocols
 }
 
 { #category : #accessing }

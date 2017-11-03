@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'Kernel-Chronology'
+	#category : #Kernel-Chronology
 }
 
 { #category : #private }

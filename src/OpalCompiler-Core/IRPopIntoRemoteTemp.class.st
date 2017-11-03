@@ -4,7 +4,7 @@ pop into remote temp
 Class {
 	#name : #IRPopIntoRemoteTemp,
 	#superclass : #IRRemoteTempAccess,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

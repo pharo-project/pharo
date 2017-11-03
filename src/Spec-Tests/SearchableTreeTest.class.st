@@ -1,7 +1,7 @@
 Class {
 	#name : #SearchableTreeTest,
 	#superclass : #SpecTestCase,
-	#category : 'Spec-Tests-PolyWidgets-ListAndTree'
+	#category : #Spec-Tests-PolyWidgets-ListAndTree
 }
 
 { #category : #running }

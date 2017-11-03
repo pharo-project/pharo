@@ -1,7 +1,7 @@
 Class {
 	#name : #FFITypesTests,
 	#superclass : #TestCase,
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #ranges }

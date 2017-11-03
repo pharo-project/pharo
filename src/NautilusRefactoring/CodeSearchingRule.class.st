@@ -8,7 +8,7 @@ use #matcher: for setting the parse tree searcher.
 Class {
 	#name : #CodeSearchingRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'NautilusRefactoring'
+	#category : #NautilusRefactoring
 }
 
 { #category : #testing }

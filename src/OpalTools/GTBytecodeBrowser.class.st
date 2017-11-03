@@ -7,7 +7,7 @@ self openOn: (self>>#compose)
 Class {
 	#name : #GTBytecodeBrowser,
 	#superclass : #GLMCompositePresentation,
-	#category : 'OpalTools'
+	#category : #OpalTools
 }
 
 { #category : #building }

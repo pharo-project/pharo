@@ -4,7 +4,7 @@ I am a refactoring for removing an instance variable. My changes are executed on
 Class {
 	#name : #RBRemoveInstanceVariableChange,
 	#superclass : #RBRefactoryVariableChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #converting }

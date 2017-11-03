@@ -4,7 +4,7 @@ FLRectangleCluster is an optional class that optimizes Rectangle instances, sinc
 Class {
 	#name : #FLRectangleCluster,
 	#superclass : #FLOptimizedObjectCluster,
-	#category : 'Fuel-Clusters-Optionals'
+	#category : #Fuel-Clusters-Optionals
 }
 
 { #category : #serialize/materialize }

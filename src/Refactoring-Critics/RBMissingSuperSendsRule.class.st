@@ -4,7 +4,7 @@ Checks that methods that should always contain a super message send, actually co
 Class {
 	#name : #RBMissingSuperSendsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

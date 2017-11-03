@@ -4,7 +4,7 @@ AbstractFont defines the generic interface that all fonts need to implement.
 Class {
 	#name : #AbstractFont,
 	#superclass : #Object,
-	#category : 'Fonts-Abstract'
+	#category : #Fonts-Abstract
 }
 
 { #category : #'as yet unclassified' }

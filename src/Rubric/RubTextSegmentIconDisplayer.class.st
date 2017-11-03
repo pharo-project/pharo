@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'previouslyIn'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #querying }

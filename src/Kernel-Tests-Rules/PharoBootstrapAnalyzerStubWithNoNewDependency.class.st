@@ -6,7 +6,7 @@ Stub class to do not compute dependencies of the given package butrather give pr
 Class {
 	#name : #PharoBootstrapAnalyzerStubWithNoNewDependency,
 	#superclass : #Object,
-	#category : 'Kernel-Tests-Rules'
+	#category : #Kernel-Tests-Rules
 }
 
 { #category : #accessing }

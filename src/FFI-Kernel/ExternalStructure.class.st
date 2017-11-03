@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'compiledSpec'
 	],
-	#category : 'FFI-Kernel'
+	#category : #FFI-Kernel
 }
 
 { #category : #'field definition' }

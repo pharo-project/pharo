@@ -29,7 +29,7 @@ Class {
 	#classVars : [
 		'TypeAliases'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #'class initialization' }

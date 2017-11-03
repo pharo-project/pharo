@@ -4,7 +4,7 @@ A TimeProfilerNode represents a node in the tally tree
 Class {
 	#name : #TimeProfilerNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : 'Tool-Profilers'
+	#category : #Tool-Profilers
 }
 
 { #category : #printing }

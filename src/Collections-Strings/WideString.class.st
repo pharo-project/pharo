@@ -6,7 +6,7 @@ Class {
 	#name : #WideString,
 	#superclass : #String,
 	#type : #words,
-	#category : 'Collections-Strings'
+	#category : #Collections-Strings
 }
 
 { #category : #'instance creation' }

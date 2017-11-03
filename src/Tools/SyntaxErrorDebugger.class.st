@@ -20,7 +20,7 @@ Class {
 		'announcer',
 		'syntaxError'
 	],
-	#category : 'Tools-Debugger'
+	#category : #Tools-Debugger
 }
 
 { #category : #'instance creation' }

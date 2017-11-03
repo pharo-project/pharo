@@ -10,7 +10,7 @@ Class {
 		'symbolicVersion',
 		'currentContext'
 	],
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #'method generation' }

@@ -12,7 +12,7 @@ So we model long as a special type and we use platform speciphic settings.
 Class {
 	#name : #FFIULong,
 	#superclass : #FFIIntegerType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

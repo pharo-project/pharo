@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'LastVersionLoad'
 	],
-	#category : 'Versionner-Tests-Resources'
+	#category : #Versionner-Tests-Resources
 }
 
 { #category : #private }

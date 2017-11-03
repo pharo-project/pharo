@@ -15,7 +15,7 @@ Class {
 		'password',
 		'enabled'
 	],
-	#category : 'STON-Tests'
+	#category : #STON-Tests
 }
 
 { #category : #'instance creation' }

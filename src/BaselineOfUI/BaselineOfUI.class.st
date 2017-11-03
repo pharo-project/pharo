@@ -17,7 +17,7 @@ Installs:
 Class {
 	#name : #BaselineOfUI,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfUI'
+	#category : #BaselineOfUI
 }
 
 { #category : #baseline }

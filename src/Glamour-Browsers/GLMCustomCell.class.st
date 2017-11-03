@@ -8,7 +8,7 @@ Class {
 		'browser',
 		'size'
 	],
-	#category : 'Glamour-Browsers-Tabulator'
+	#category : #Glamour-Browsers-Tabulator
 }
 
 { #category : #accessing }

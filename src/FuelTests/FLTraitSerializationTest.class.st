@@ -4,7 +4,7 @@ I have the common behavior for testing trait serialization.
 Class {
 	#name : #FLTraitSerializationTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #running }

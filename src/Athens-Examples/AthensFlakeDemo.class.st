@@ -11,7 +11,7 @@ Class {
 		'frame',
 		'spike'
 	],
-	#category : 'Athens-Examples'
+	#category : #Athens-Examples
 }
 
 { #category : #'as yet unclassified' }

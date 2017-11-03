@@ -11,7 +11,7 @@ Class {
 		'delta',
 		'modifiers'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #accessing }

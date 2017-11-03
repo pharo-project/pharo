@@ -1,7 +1,7 @@
 Class {
 	#name : #DynamicWidgetChangeTest,
 	#superclass : #SpecTestCase,
-	#category : 'Spec-Tests-Examples'
+	#category : #Spec-Tests-Examples
 }
 
 { #category : #running }

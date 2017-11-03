@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'expanded'
 	],
-	#category : 'NECompletion-Model'
+	#category : #NECompletion-Model
 }
 
 { #category : #initialization }

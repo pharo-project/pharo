@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'transformationForSerializing'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #cleanup }

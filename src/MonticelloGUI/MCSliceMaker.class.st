@@ -27,7 +27,7 @@ Class {
 		'window',
 		'okToDoSlice'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #opening }

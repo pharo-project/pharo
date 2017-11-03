@@ -4,7 +4,7 @@ I encapsulate a repository stored on squeaksource
 Class {
 	#name : #KomitSqueakSourceRemote,
 	#superclass : #KomitRemote,
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #'*Komitter-UI' }

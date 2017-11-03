@@ -8,7 +8,7 @@ Class {
 		'stringMorph',
 		'counter'
 	],
-	#category : 'NautilusCommon-Plugin-Examples'
+	#category : #NautilusCommon-Plugin-Examples
 }
 
 { #category : #position }

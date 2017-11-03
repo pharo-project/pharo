@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'action'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'instance creation' }

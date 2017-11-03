@@ -33,7 +33,7 @@ Class {
 		'entryCompletion',
 		'isEncrypted'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

@@ -8,7 +8,7 @@ Class {
 		'portSymbol',
 		'valueBlock'
 	],
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #accessing }

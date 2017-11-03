@@ -7,7 +7,7 @@ I am cleaning the semantic analysis of the AST.
 Class {
 	#name : #OCASTSemanticCleaner,
 	#superclass : #RBProgramNodeVisitor,
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #api }

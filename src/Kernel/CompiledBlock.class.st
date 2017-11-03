@@ -12,7 +12,7 @@ Class {
 	#name : #CompiledBlock,
 	#superclass : #CompiledCode,
 	#type : #compiledMethod,
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #accessing }

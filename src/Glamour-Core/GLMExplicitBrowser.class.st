@@ -4,7 +4,7 @@ A GLMExplicitBrowser is a browser that allows the user to explicitly define the 
 Class {
 	#name : #GLMExplicitBrowser,
 	#superclass : #GLMBrowser,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #accessing }

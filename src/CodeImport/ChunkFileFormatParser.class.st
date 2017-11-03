@@ -14,7 +14,7 @@ Class {
 		'methodsForSelector',
 		'reorganizeSelector'
 	],
-	#category : 'CodeImport'
+	#category : #CodeImport
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'wordSize'
 	],
-	#category : 'FFI-Kernel'
+	#category : #FFI-Kernel
 }
 
 { #category : #'instance creation' }

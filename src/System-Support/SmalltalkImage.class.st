@@ -47,7 +47,7 @@ Class {
 		'SpecialSelectors',
 		'Tools'
 	],
-	#category : 'System-Support'
+	#category : #System-Support
 }
 
 { #category : #cleanup }

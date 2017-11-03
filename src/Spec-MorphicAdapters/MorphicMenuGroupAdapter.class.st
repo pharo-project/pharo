@@ -5,7 +5,7 @@ There is not Morphic represenation of a MenuGroup, that is why I do not have a c
 Class {
 	#name : #MorphicMenuGroupAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #private }

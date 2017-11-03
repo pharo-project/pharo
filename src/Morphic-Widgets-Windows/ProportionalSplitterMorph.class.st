@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'ShowHandles'
 	],
-	#category : 'Morphic-Widgets-Windows-Resizing'
+	#category : #Morphic-Widgets-Windows-Resizing
 }
 
 { #category : #preferences }

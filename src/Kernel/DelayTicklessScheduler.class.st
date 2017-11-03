@@ -6,7 +6,7 @@ In contrast to the DelayMicrosecondScheduler the sleep duration will not be capp
 Class {
 	#name : #DelayTicklessScheduler,
 	#superclass : #DelayMicrosecondScheduler,
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'timer process' }

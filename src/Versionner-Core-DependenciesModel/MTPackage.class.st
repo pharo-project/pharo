@@ -6,7 +6,7 @@ Note: Metacello allows to describe external dependencies. In this case, transiti
 Class {
 	#name : #MTPackage,
 	#superclass : #MTDependency,
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #visiting }

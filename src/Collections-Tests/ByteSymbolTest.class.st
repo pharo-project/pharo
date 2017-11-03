@@ -4,7 +4,7 @@ SUnit tests for byte symbols
 Class {
 	#name : #ByteSymbolTest,
 	#superclass : #SymbolTest,
-	#category : 'Collections-Tests-Strings'
+	#category : #Collections-Tests-Strings
 }
 
 { #category : #'tests - creation' }

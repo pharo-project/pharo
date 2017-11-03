@@ -4,7 +4,7 @@ Checks for mathematical expressions that might be evaluated different (from left
 Class {
 	#name : #RBPrecedenceRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

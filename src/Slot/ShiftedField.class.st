@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'shift'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #migrating }

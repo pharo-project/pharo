@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'allocatedByCairo'
 	],
-	#category : 'Athens-Cairo-Text'
+	#category : #Athens-Cairo-Text
 }
 
 { #category : #'instance creation' }

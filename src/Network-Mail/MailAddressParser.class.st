@@ -13,7 +13,7 @@ Class {
 		'addresses',
 		'curAddrTokens'
 	],
-	#category : 'Network-Mail'
+	#category : #Network-Mail
 }
 
 { #category : #parsing }

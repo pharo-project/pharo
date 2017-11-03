@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterDeploymentExceptionHandlerMock5,
 	#superclass : #GTSpotterDeploymentExceptionHandlerMock,
-	#category : 'GT-Tests-Spotter-Exceptions-Mocks'
+	#category : #GT-Tests-Spotter-Exceptions-Mocks
 }
 
 { #category : #public }

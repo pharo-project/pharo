@@ -11,7 +11,7 @@ Class {
 		'label',
 		'button'
 	],
-	#category : 'Spec-PolyWidgets-ListAndTree'
+	#category : #Spec-PolyWidgets-ListAndTree
 }
 
 { #category : #specs }

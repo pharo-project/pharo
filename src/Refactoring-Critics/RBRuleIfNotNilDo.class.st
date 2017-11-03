@@ -4,7 +4,7 @@ ifNotNilDo: should not be used as ifNotNil: works for blocks with arguments, too
 Class {
 	#name : #RBRuleIfNotNilDo,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'currentSection',
 		'methodSections'
 	],
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #private }

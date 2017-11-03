@@ -4,7 +4,7 @@ A namespace is a container that in addition to managing classes and methods, it 
 Class {
 	#name : #RGNamespace,
 	#superclass : #RGContainer,
-	#category : 'Ring-Core-Containers'
+	#category : #Ring-Core-Containers
 }
 
 { #category : #'adding elements' }

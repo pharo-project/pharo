@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'group'
 	],
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }
 
 { #category : #'instance creation' }

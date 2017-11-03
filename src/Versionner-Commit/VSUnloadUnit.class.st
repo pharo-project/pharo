@@ -5,7 +5,7 @@ Class {
 		'configurationClass',
 		'commitVersion'
 	],
-	#category : 'Versionner-Commit'
+	#category : #Versionner-Commit
 }
 
 { #category : #'instance creation' }

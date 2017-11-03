@@ -14,7 +14,7 @@ Class {
 		'changeSorterRight',
 		'isRefreshing'
 	],
-	#category : 'Spec-Tools-ChangeSorter'
+	#category : #Spec-Tools-ChangeSorter
 }
 
 { #category : #menu }

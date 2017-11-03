@@ -1,7 +1,7 @@
 Class {
 	#name : #FileDialogWindowTest,
 	#superclass : #TestCase,
-	#category : 'Tool-FileList-Tests'
+	#category : #Tool-FileList-Tests
 }
 
 { #category : #tests }

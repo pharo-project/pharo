@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'ZeroPoint'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #'instance creation' }

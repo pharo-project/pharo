@@ -3,7 +3,7 @@ I'm a style module related to a checkbox and its componenets
 "
 Trait {
 	#name : #GLMBrickCheckBoxStyle,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-checkbox }

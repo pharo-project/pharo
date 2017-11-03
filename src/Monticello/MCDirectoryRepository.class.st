@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'DefaultDirectoryName'
 	],
-	#category : 'Monticello-Repositories'
+	#category : #Monticello-Repositories
 }
 
 { #category : #accessing }

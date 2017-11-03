@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'bytes'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

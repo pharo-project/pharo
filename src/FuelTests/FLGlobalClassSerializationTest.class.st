@@ -6,7 +6,7 @@ Class {
 	#superclass : #FLClassSerializationTest,
 	#traits : 'FLTGlobalClassOrTraitSerializationTest',
 	#classTraits : 'FLTGlobalClassOrTraitSerializationTest classTrait',
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }

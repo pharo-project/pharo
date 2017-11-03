@@ -16,7 +16,7 @@ Class {
 		'pathStart',
 		'lastSegment'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #'path commands' }

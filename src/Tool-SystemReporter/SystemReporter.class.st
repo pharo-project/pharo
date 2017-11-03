@@ -21,7 +21,7 @@ Class {
 		'sourceTextModel',
 		'spaceAnalysisResult'
 	],
-	#category : 'Tool-SystemReporter'
+	#category : #Tool-SystemReporter
 }
 
 { #category : #'instance creation' }

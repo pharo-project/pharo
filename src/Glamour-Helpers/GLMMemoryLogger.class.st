@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'announcements'
 	],
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #accessing }

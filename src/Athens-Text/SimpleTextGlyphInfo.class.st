@@ -4,7 +4,7 @@ Simple glyph infos
 Class {
 	#name : #SimpleTextGlyphInfo,
 	#superclass : #FT2GlyphSlot,
-	#category : 'Athens-Text'
+	#category : #Athens-Text
 }
 
 { #category : #instance-creation }

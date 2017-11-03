@@ -30,7 +30,7 @@ Class {
 		'DefaultStencilSize',
 		'DefaultSwapControl'
 	],
-	#category : 'OSWindow-Core-OpenGL'
+	#category : #OSWindow-Core-OpenGL
 }
 
 { #category : #'as yet unclassified' }

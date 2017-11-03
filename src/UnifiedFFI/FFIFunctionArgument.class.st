@@ -5,7 +5,7 @@ My children define different pushing strategies for the valid types or argument 
 Class {
 	#name : #FFIFunctionArgument,
 	#superclass : #Object,
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #'private emitting code' }

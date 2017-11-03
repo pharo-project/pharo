@@ -81,7 +81,7 @@ Class {
 		'isEnabled',
 		'isDoubleClickEnabled'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Core'
+	#category : #Glamour-Morphic-Brick-Widgets-Core
 }
 
 { #category : #states }

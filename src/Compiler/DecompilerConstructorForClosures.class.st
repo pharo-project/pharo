@@ -4,7 +4,7 @@ Similar to superclass but for closures
 Class {
 	#name : #DecompilerConstructorForClosures,
 	#superclass : #DecompilerConstructor,
-	#category : 'Compiler-Support'
+	#category : #Compiler-Support
 }
 
 { #category : #constructor }

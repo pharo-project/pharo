@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'maxLength'
 	],
-	#category : 'Morphic-Widgets-Pluggable'
+	#category : #Morphic-Widgets-Pluggable
 }
 
 { #category : #private }

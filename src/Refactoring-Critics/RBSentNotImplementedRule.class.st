@@ -4,7 +4,7 @@ This smell arises when a message is sent by a method,  but no class in the syste
 Class {
 	#name : #RBSentNotImplementedRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

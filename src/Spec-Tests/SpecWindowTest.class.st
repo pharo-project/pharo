@@ -1,7 +1,7 @@
 Class {
 	#name : #SpecWindowTest,
 	#superclass : #TestCase,
-	#category : 'Spec-Tests'
+	#category : #Spec-Tests
 }
 
 { #category : #tests }

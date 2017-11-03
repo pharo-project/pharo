@@ -25,7 +25,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : 'Athens-Balloon'
+	#category : #Athens-Balloon
 }
 
 { #category : #'as yet unclassified' }

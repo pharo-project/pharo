@@ -31,7 +31,7 @@ Class {
 	#classInstVars : [
 		'lifoCallbackSemaphore'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'primitives-memory management' }
@@ -730,12 +730,6 @@ Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" 
 { #category : #primitives-callouts }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 "<Alien | Integer>" with: arg8 "<Alien | Integer>" with: arg9 "<Alien | Integer>" with: arg10 "<Alien | Integer>" with: arg11 "<Alien | Integer>" with: arg12 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
-	^self primitiveFailed
-]
-
-{ #category : #primitives-callouts }
-Alien >> primFFICallResult: result "<Alien>" withArguments: args [ "<Array of: Alien | Integer> ^<Alien>"
-	<primitive: 'primVarArgsCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 

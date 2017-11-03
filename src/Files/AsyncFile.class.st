@@ -17,7 +17,7 @@ Class {
 		'Busy',
 		'ErrorCode'
 	],
-	#category : 'Files-Core'
+	#category : #Files-Core
 }
 
 { #category : #initialization }

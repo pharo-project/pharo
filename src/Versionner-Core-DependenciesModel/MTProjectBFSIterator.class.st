@@ -10,7 +10,7 @@ Class {
 		'queue',
 		'alreadyVisited'
 	],
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #'instance creation' }

@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'classReorganized'
 	],
-	#category : 'System-Announcements-System-Classes'
+	#category : #System-Announcements-System-Classes
 }
 
 { #category : #'instance creation' }

@@ -19,7 +19,7 @@ Class {
 		'scrollPane',
 		'bar'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Scrollpane'
+	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
 }
 
 { #category : #scrollbar-brick-accessing }

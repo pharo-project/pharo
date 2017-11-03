@@ -5,7 +5,7 @@ Usually used within horizontal scroll panes
 Class {
 	#name : #GLMHorizontalBandBrick,
 	#superclass : #GLMBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Core'
+	#category : #Glamour-Morphic-Brick-Widgets-Core
 }
 
 { #category : #initialization }

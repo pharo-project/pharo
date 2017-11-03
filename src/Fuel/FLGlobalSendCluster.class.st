@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'globalSends'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #mapping }

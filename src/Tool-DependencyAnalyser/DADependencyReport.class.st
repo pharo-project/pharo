@@ -10,7 +10,7 @@ Class {
 		'imageVersion',
 		'analysisRunString'
 	],
-	#category : 'Tool-DependencyAnalyser-Report'
+	#category : #Tool-DependencyAnalyser-Report
 }
 
 { #category : #example }

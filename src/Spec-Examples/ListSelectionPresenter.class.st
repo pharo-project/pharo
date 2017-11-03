@@ -12,7 +12,7 @@ Class {
 		'textModel2',
 		'textRefreshingProcess'
 	],
-	#category : 'Spec-Examples'
+	#category : #Spec-Examples
 }
 
 { #category : #specs }

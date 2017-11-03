@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'fieldIndex'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #accessing }

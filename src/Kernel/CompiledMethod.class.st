@@ -17,7 +17,7 @@ Class {
 	#name : #CompiledMethod,
 	#superclass : #CompiledCode,
 	#type : #compiledMethod,
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #constants }

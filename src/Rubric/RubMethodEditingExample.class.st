@@ -11,7 +11,7 @@ Class {
 		'selector',
 		'classIsMeta'
 	],
-	#category : 'Rubric-Editing-Widgets-Examples'
+	#category : #Rubric-Editing-Widgets-Examples
 }
 
 { #category : #'instance creation' }

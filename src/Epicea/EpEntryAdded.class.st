@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entry'
 	],
-	#category : 'Epicea-Announcements'
+	#category : #Epicea-Announcements
 }
 
 { #category : #'instance creation' }

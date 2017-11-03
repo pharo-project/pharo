@@ -8,7 +8,7 @@ Class {
 		'filePath',
 		'timestamp'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

@@ -9,7 +9,7 @@ Class {
 		'handleColor',
 		'lastMouse'
 	],
-	#category : 'Morphic-Widgets-Windows-Resizing'
+	#category : #Morphic-Widgets-Windows-Resizing
 }
 
 { #category : #actions }

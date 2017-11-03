@@ -15,7 +15,7 @@ Class {
 		'EnableStackColoring',
 		'GTDebuggerEnabledStatus'
 	],
-	#category : 'GT-Debugger-UI'
+	#category : #GT-Debugger-UI
 }
 
 { #category : #testing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'showState'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #initialization }

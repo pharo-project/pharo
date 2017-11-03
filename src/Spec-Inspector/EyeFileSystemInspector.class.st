@@ -4,7 +4,7 @@ I am an inspector dedicated to the visualization of file systems
 Class {
 	#name : #EyeFileSystemInspector,
 	#superclass : #EyeTreeInspector,
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #accessing }

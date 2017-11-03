@@ -4,7 +4,7 @@ Tests for MetaLink
 Class {
 	#name : #MetaLinkTest,
 	#superclass : #TestCase,
-	#category : 'Reflectivity-Tests'
+	#category : #Reflectivity-Tests
 }
 
 { #category : #'tests - misc' }

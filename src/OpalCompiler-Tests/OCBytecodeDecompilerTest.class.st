@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'currentCompiler'
 	],
-	#category : 'OpalCompiler-Tests-Bytecode'
+	#category : #OpalCompiler-Tests-Bytecode
 }
 
 { #category : #examples }

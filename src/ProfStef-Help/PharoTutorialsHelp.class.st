@@ -4,7 +4,7 @@ I'm a HelpSystem book which list all Pharo tutorials
 Class {
 	#name : #PharoTutorialsHelp,
 	#superclass : #PharoTutorialHelp,
-	#category : 'ProfStef-Help'
+	#category : #ProfStef-Help
 }
 
 { #category : #accessing }

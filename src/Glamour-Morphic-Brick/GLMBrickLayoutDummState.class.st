@@ -1,5 +1,5 @@
 Class {
 	#name : #GLMBrickLayoutDummState,
 	#superclass : #GLMBrickLayoutState,
-	#category : 'Glamour-Morphic-Brick-Layouts'
+	#category : #Glamour-Morphic-Brick-Layouts
 }

@@ -11,7 +11,7 @@ compressed := zipStream encodedStream contents.
 Class {
 	#name : #ZLibWriteStream,
 	#superclass : #ZipWriteStream,
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #initialization }

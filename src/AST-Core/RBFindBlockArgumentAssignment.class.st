@@ -8,7 +8,7 @@ Class {
 		'arguments',
 		'argumentAssignments'
 	],
-	#category : 'AST-Core-Visitors'
+	#category : #AST-Core-Visitors
 }
 
 { #category : #accessing }

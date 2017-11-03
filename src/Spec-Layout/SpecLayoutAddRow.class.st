@@ -5,7 +5,7 @@ A SpecLayoutAddRow is an action representing the addition of a row to a layout
 Class {
 	#name : #SpecLayoutAddRow,
 	#superclass : #SpecLayoutAdd,
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #'instance creation' }

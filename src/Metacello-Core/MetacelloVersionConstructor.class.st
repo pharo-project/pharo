@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'errorMap'
 	],
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #'instance creation' }

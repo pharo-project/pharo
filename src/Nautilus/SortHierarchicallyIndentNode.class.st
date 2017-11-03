@@ -10,7 +10,7 @@ Class {
 		'element',
 		'indent'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #'instance creation' }

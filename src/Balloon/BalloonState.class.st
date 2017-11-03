@@ -9,7 +9,7 @@ Class {
 		'colorTransform',
 		'aaLevel'
 	],
-	#category : 'Balloon-Engine'
+	#category : #Balloon-Engine
 }
 
 { #category : #accessing }

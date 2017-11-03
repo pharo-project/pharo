@@ -8,7 +8,7 @@ Class {
 		'isBinary',
 		'converter'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #defaults }

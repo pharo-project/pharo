@@ -19,7 +19,7 @@ Class {
 	#classInstVars : [
 		'defaultSettings'
 	],
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #query }

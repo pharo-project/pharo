@@ -4,7 +4,7 @@ SUnit tests for comment definitions
 Class {
 	#name : #RGCommentDefinitionTest,
 	#superclass : #TestCase,
-	#category : 'Ring-Tests-Kernel'
+	#category : #Ring-Tests-Kernel
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ The classic option to extract a line of code in a local variable
 Class {
 	#name : #SugsExtractToLocalVariable,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

@@ -4,7 +4,7 @@ I provide a test suite for Float values. Examine my tests to see how Floats shou
 Class {
 	#name : #FloatTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #'tests - IEEE 754' }

@@ -4,7 +4,7 @@ Tree item for PluggableTreeMorph.
 Class {
 	#name : #PluggableTreeItemNode,
 	#superclass : #ListItemWrapper,
-	#category : 'Morphic-Widgets-Pluggable'
+	#category : #Morphic-Widgets-Pluggable
 }
 
 { #category : #accessing }

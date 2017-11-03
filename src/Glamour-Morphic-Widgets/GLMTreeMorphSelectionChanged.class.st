@@ -5,7 +5,7 @@ Class {
 		'selectionValue',
 		'selectionPathValue'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #accessing }

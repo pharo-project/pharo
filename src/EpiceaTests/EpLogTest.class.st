@@ -5,7 +5,7 @@ Class {
 		'log',
 		'logBuilder'
 	],
-	#category : 'EpiceaTests-Log'
+	#category : #EpiceaTests-Log
 }
 
 { #category : #running }

@@ -4,7 +4,7 @@ I am an abstract group node model
 Class {
 	#name : #PackageTreeGroupModel,
 	#superclass : #PackageTreeNodeModel,
-	#category : 'Nautilus-Tree'
+	#category : #Nautilus-Tree
 }
 
 { #category : #converting }

@@ -24,7 +24,7 @@ Class {
 		'PreferredExtent',
 		'RememberPreferredExtent'
 	],
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #menu }

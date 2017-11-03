@@ -4,7 +4,7 @@ SUnit tests for namespaces
 Class {
 	#name : #RGNamespaceTest,
 	#superclass : #TestCase,
-	#category : 'Ring-Tests-Containers'
+	#category : #Ring-Tests-Containers
 }
 
 { #category : #testing }

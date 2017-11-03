@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'bfsp'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #running }

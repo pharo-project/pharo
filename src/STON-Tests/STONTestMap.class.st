@@ -6,7 +6,7 @@ I am a Dictionary but I don't print my elements during #printOn: to allow safe i
 Class {
 	#name : #STONTestMap,
 	#superclass : #Dictionary,
-	#category : 'STON-Tests'
+	#category : #STON-Tests
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'pagerModel'
 	],
-	#category : 'Glamour-Tests-Core'
+	#category : #Glamour-Tests-Core
 }
 
 { #category : #private }

@@ -5,7 +5,7 @@ Trait {
 	#name : #TOccurrencesForMultiplinessTest,
 	#traits : 'TOccurrencesTest',
 	#classTraits : 'TOccurrencesTest classTrait',
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #requirements }

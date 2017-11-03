@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlayPageFilePersistence,
 	#superclass : #GTPlayPagePersistence,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #private }

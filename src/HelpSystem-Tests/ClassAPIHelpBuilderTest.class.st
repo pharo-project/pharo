@@ -4,7 +4,7 @@ SUnit tests for ClassAPIHelpBuilder
 Class {
 	#name : #ClassAPIHelpBuilderTest,
 	#superclass : #TestCase,
-	#category : 'HelpSystem-Tests-Builders'
+	#category : #HelpSystem-Tests-Builders
 }
 
 { #category : #testing }

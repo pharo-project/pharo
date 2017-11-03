@@ -39,7 +39,7 @@ Class {
 		'dataSource',
 		'pattern'
 	],
-	#category : 'Morphic-Widgets-FastTable-Tree'
+	#category : #Morphic-Widgets-FastTable-Tree
 }
 
 { #category : #instance-creation }

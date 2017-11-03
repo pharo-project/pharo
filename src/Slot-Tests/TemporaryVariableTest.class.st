@@ -1,7 +1,7 @@
 Class {
 	#name : #TemporaryVariableTest,
 	#superclass : #TestCase,
-	#category : 'Slot-Tests'
+	#category : #Slot-Tests
 }
 
 { #category : #tests }

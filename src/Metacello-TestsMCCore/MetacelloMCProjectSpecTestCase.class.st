@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloMCProjectSpecTestCase,
 	#superclass : #MetacelloProjectSpecTestCase,
-	#category : 'Metacello-TestsMCCore'
+	#category : #Metacello-TestsMCCore
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Instance Variables
 Class {
 	#name : #PickOneSettingDeclaration,
 	#superclass : #MultipleSettingDeclaration,
-	#category : 'System-Settings-Core'
+	#category : #System-Settings-Core
 }
 
 { #category : #'user interface' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #HEFraction,
 	#superclass : #HEExportedLiteral,
-	#category : 'Hermes-Model'
+	#category : #Hermes-Model
 }
 
 { #category : #'as yet unclassified' }

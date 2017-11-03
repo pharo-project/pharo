@@ -5,7 +5,7 @@ Trait {
 	#name : #TAsStringCommaAndDelimiterSequenceableTest,
 	#traits : 'TAsStringCommaAndDelimiterTest',
 	#classTraits : 'TAsStringCommaAndDelimiterTest classTrait',
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #requirements }

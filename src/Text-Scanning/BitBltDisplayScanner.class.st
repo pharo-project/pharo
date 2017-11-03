@@ -20,7 +20,7 @@ Class {
 		'bitBlt',
 		'fillBlt'
 	],
-	#category : 'Text-Scanning'
+	#category : #Text-Scanning
 }
 
 { #category : #queries }

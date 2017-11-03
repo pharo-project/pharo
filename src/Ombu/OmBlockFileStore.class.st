@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'blocks'
 	],
-	#category : 'Ombu-Stores'
+	#category : #Ombu-Stores
 }
 
 { #category : #private }

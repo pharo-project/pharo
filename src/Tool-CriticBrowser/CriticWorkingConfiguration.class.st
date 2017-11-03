@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #'instance creation' }

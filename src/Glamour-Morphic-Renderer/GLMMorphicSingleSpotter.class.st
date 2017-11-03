@@ -11,7 +11,7 @@ Class {
 		'answer',
 		'parent'
 	],
-	#category : 'Glamour-Morphic-Renderer-Spotter'
+	#category : #Glamour-Morphic-Renderer-Spotter
 }
 
 { #category : #'instance creation' }

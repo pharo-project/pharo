@@ -4,7 +4,7 @@ SUnit tests for fuels pluggable substitutions
 Class {
 	#name : #FLPluggableSubstitutionTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }

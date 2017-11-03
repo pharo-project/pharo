@@ -5,7 +5,7 @@ the idea is to have another version of the changes that can use the atomic class
 Class {
 	#name : #RBRefactoryChangeFactory,
 	#superclass : #Object,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #accessing }

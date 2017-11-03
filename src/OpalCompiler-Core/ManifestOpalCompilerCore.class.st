@@ -4,7 +4,7 @@ This is the Manifest for Opal for recording false positive of the code critique 
 Class {
 	#name : #ManifestOpalCompilerCore,
 	#superclass : #PackageManifest,
-	#category : 'OpalCompiler-Core'
+	#category : #OpalCompiler-Core
 }
 
 { #category : #'meta-data - dependency analyser' }

@@ -10,7 +10,7 @@ Class {
 		'allProtocol',
 		'protocols'
 	],
-	#category : 'Kernel-Protocols'
+	#category : #Kernel-Protocols
 }
 
 { #category : #import }

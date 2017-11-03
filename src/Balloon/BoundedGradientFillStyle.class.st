@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'extent'
 	],
-	#category : 'Balloon-Fills'
+	#category : #Balloon-Fills
 }
 
 { #category : #comparing }

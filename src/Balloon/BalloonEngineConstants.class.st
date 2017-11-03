@@ -208,7 +208,7 @@ Class {
 		'GWTimeNextFillEntry',
 		'GWTimeNextGETEntry'
 	],
-	#category : 'Balloon-Engine'
+	#category : #Balloon-Engine
 }
 
 { #category : #'pool definition' }

@@ -31,7 +31,7 @@ To remember the options I keep some values inside a Dictionary. This dictionary 
 "
 Trait {
 	#name : #TGLMFastTableFunctionsPresentation,
-	#category : 'Glamour-FastTable-Presentations'
+	#category : #Glamour-FastTable-Presentations
 }
 
 { #category : #accessing }

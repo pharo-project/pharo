@@ -14,7 +14,7 @@ Class {
 		'publishedUrl',
 		'persistenceStrategies'
 	],
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #private }

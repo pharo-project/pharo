@@ -4,7 +4,7 @@ Checks that all subclasses of the Collection classes that add an instance variab
 Class {
 	#name : #RBCollectionCopyEmptyRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Checks for common ifTrue: returns that could be simplified using a boolean expre
 Class {
 	#name : #RBIfTrueReturnsRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

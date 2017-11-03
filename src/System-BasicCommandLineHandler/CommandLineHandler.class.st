@@ -25,7 +25,7 @@ Class {
 		'stdout',
 		'stderr'
 	],
-	#category : 'System-BasicCommandLineHandler'
+	#category : #System-BasicCommandLineHandler
 }
 
 { #category : #'instance creation' }

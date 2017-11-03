@@ -6,7 +6,7 @@ Class {
 		'beforeLoads',
 		'evalDoits'
 	],
-	#category : 'Metacello-MC-Loaders'
+	#category : #Metacello-MC-Loaders
 }
 
 { #category : #accessing }

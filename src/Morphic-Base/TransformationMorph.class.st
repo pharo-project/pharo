@@ -8,7 +8,7 @@ Class {
 	#superclass : #TransformMorph,
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #example }

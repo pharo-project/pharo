@@ -4,7 +4,7 @@ TextStyleAsFont Family members
 Class {
 	#name : #TextStyleAsFontFamilyMember,
 	#superclass : #FontFamilyMemberAbstract,
-	#category : 'FreeType-FontManager'
+	#category : #FreeType-FontManager
 }
 
 { #category : #comparing }

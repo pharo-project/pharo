@@ -8,7 +8,7 @@ Class {
 		'start',
 		'stop'
 	],
-	#category : 'Athens-Text'
+	#category : #Athens-Text
 }
 
 { #category : #rendering }

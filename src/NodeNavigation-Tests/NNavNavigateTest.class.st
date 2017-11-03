@@ -4,7 +4,7 @@ I tests the navigations directions
 Class {
 	#name : #NNavNavigateTest,
 	#superclass : #TestCase,
-	#category : 'NodeNavigation-Tests'
+	#category : #NodeNavigation-Tests
 }
 
 { #category : #sibling }

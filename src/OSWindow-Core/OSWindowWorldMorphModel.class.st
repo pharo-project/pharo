@@ -9,7 +9,7 @@ ProtocolBrowser new openExternalWindowWithSpec.
 Class {
 	#name : #OSWindowWorldMorphModel,
 	#superclass : #WindowPresenter,
-	#category : 'OSWindow-Core-Morphic'
+	#category : #OSWindow-Core-Morphic
 }
 
 { #category : #'as yet unclassified' }

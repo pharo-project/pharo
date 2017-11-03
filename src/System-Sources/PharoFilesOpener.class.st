@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'System-Sources'
+	#category : #System-Sources
 }
 
 { #category : #singleton }

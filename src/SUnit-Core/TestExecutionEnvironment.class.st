@@ -40,7 +40,7 @@ Class {
 		'failedProcesses',
 		'testCompleted'
 	],
-	#category : 'SUnit-Core-Kernel'
+	#category : #SUnit-Core-Kernel
 }
 
 { #category : #controlling }

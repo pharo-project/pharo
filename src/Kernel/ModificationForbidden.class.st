@@ -17,7 +17,7 @@ Class {
 		'newValue',
 		'retrySelector'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #'instance creation' }

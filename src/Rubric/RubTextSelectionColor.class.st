@@ -12,7 +12,7 @@ Class {
 		'PrimarySelection',
 		'SecondarySelection'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'default accessing' }

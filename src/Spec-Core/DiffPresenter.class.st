@@ -19,7 +19,7 @@ Class {
 		'showOnlyDestination',
 		'showOnlySource'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

@@ -25,7 +25,7 @@ aCollection reject: [ :each | ... anObject ]
 Class {
 	#name : #RBNotEliminationRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

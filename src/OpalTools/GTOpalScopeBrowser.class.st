@@ -7,7 +7,7 @@ self openOn: (self>>#compose) ast
 Class {
 	#name : #GTOpalScopeBrowser,
 	#superclass : #GLMCompositePresentation,
-	#category : 'OpalTools'
+	#category : #OpalTools
 }
 
 { #category : #building }

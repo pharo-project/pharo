@@ -4,7 +4,7 @@ Handling remote changes
 Class {
 	#name : #GoferRemoteChanges,
 	#superclass : #GoferChanges,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #queries }

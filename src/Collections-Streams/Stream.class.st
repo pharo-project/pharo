@@ -4,7 +4,7 @@ I am an abstract class that represents an accessor for a sequence of objects. Th
 Class {
 	#name : #Stream,
 	#superclass : #Object,
-	#category : 'Collections-Streams'
+	#category : #Collections-Streams
 }
 
 { #category : #'instance creation' }

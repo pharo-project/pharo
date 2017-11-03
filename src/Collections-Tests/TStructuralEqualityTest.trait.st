@@ -3,7 +3,7 @@ Tests whether two objects are equals: they contain the same objects in the same 
 "
 Trait {
 	#name : #TStructuralEqualityTest,
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #'test - equality' }

@@ -32,7 +32,7 @@ Class {
 		'icon',
 		'autoRefresh'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

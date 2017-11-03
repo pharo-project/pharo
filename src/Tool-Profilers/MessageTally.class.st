@@ -95,7 +95,7 @@ Class {
 		'DefaultPollPeriod',
 		'Timer'
 	],
-	#category : 'Tool-Profilers'
+	#category : #Tool-Profilers
 }
 
 { #category : #defaults }

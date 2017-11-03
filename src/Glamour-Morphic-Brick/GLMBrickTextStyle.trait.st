@@ -3,7 +3,7 @@ I'm a style module related to a string brick
 "
 Trait {
 	#name : #GLMBrickTextStyle,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-text }

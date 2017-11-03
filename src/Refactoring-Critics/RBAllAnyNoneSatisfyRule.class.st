@@ -18,7 +18,7 @@ collection allSatisfy: [ :each | condition ]
 Class {
 	#name : #RBAllAnyNoneSatisfyRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ I am an eye element for bags, showing appropriate thing with occurrences
 Class {
 	#name : #BagEyeElement,
 	#superclass : #IndexedEyeElement,
-	#category : 'Spec-Inspector-Element'
+	#category : #Spec-Inspector-Element
 }
 
 { #category : #accessing }

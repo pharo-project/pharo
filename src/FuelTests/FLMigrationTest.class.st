@@ -4,7 +4,7 @@ SUnit tests for migrations
 Class {
 	#name : #FLMigrationTest,
 	#superclass : #FLClassSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #running }

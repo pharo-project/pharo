@@ -4,7 +4,7 @@ In addition to my superclass, I provide an API to execute the #step method every
 Class {
 	#name : #TickingWindowPresenter,
 	#superclass : #WindowPresenter,
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #specs }

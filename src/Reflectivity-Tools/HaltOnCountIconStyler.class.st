@@ -4,7 +4,7 @@ I'm in charge to style  the editor for  a ""haltOnCount:"". Clicking on it reset
 Class {
 	#name : #HaltOnCountIconStyler,
 	#superclass : #HaltIconStyler,
-	#category : 'Reflectivity-Tools-Breakpoints'
+	#category : #Reflectivity-Tools-Breakpoints
 }
 
 { #category : #defaults }

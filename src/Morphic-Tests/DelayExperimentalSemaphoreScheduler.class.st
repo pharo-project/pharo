@@ -19,7 +19,7 @@ Class {
 		'scheduledDelayIsNil',
 		'finishedDelayIsNil'
 	],
-	#category : 'Morphic-Tests-Processes'
+	#category : #Morphic-Tests-Processes
 }
 
 { #category : #'timer process' }

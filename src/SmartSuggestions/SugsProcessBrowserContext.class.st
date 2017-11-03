@@ -4,7 +4,7 @@ I know how to use a ProcessBrowser to extract the information needed for the sug
 Class {
 	#name : #SugsProcessBrowserContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #selection }

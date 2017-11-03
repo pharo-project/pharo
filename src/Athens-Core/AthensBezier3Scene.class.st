@@ -10,7 +10,7 @@ Class {
 		'pt3',
 		'pt4'
 	],
-	#category : 'Athens-Core-PathsGeometry'
+	#category : #Athens-Core-PathsGeometry
 }
 
 { #category : #'instance creation' }

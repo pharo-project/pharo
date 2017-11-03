@@ -12,7 +12,7 @@ Class {
 		'browser',
 		'icon'
 	],
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #'instance creation' }

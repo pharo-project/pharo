@@ -4,7 +4,7 @@ A PDAbstractItemDiff is a object which represent a package who added/modified/re
 Class {
 	#name : #DAPackageItemDiff,
 	#superclass : #DAAbstractItemDiff,
-	#category : 'Tool-DependencyAnalyser-Diff'
+	#category : #Tool-DependencyAnalyser-Diff
 }
 
 { #category : #accessing }

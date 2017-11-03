@@ -4,7 +4,7 @@ When defining a description of a setting, you don't need to translate it, and th
 Class {
 	#name : #SettingDontTranslateDescriptionRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'System-Settings-Rules'
+	#category : #System-Settings-Rules
 }
 
 { #category : #running }

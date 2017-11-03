@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'brokenRule'
 	],
-	#category : 'Renraku-Test'
+	#category : #Renraku-Test
 }
 
 { #category : #running }

@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'TraitProperties'
 	],
-	#category : 'Traits-Kernel'
+	#category : #Traits-Kernel
 }
 
 { #category : #initialization }

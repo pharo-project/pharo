@@ -466,7 +466,7 @@ Class {
 		'SDL_WINDOW_RESIZABLE',
 		'SDL_WINDOW_SHOWN'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'class initialization' }

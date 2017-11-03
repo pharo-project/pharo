@@ -9,7 +9,7 @@ Class {
 		'declaration',
 		'shortcutName'
 	],
-	#category : 'Keymapping-Settings'
+	#category : #Keymapping-Settings
 }
 
 { #category : #accessing }

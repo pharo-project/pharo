@@ -4,7 +4,7 @@ Checks for inefficient nesting of logical conditions.
 Class {
 	#name : #RBUnoptimizedAndOrRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

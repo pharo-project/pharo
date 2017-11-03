@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloToolBoxBaselineConstructor,
 	#superclass : #MetacelloToolBoxConstructor,
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ I am an eye element for the class of an inspected element.
 Class {
 	#name : #ClassEyeElement,
 	#superclass : #AbstractEyeElement,
-	#category : 'Spec-Inspector-Element'
+	#category : #Spec-Inspector-Element
 }
 
 { #category : #accessing }

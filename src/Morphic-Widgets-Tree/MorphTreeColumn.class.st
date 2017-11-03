@@ -14,7 +14,7 @@ Class {
 		'isPotentialDropTarget',
 		'resizable'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #accessing }

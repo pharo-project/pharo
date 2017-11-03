@@ -4,7 +4,7 @@ I define the type for FFITypeArray objects.
 Class {
 	#name : #FFITypeArrayType,
 	#superclass : #FFIExternalArrayType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #private }

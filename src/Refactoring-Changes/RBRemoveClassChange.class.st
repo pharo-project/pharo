@@ -4,7 +4,7 @@ I am a class refactoring change for removing a class. On execution, my class wil
 Class {
 	#name : #RBRemoveClassChange,
 	#superclass : #RBRefactoryClassChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #'instance creation' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #STONWriteReadCommentsTests,
 	#superclass : #STONWriteReadTests,
-	#category : 'STON-Tests'
+	#category : #STON-Tests
 }
 
 { #category : #private }

@@ -15,7 +15,7 @@ Class {
 		'availableRows',
 		'rootItems'
 	],
-	#category : 'Morphic-Widgets-FastTable-Tree-Basic'
+	#category : #Morphic-Widgets-FastTable-Tree-Basic
 }
 
 { #category : #examples }

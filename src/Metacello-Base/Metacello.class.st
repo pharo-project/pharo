@@ -308,7 +308,7 @@ Class {
 		'executorSpec',
 		'statements'
 	],
-	#category : 'Metacello-Base'
+	#category : #Metacello-Base
 }
 
 { #category : #'instance creation' }

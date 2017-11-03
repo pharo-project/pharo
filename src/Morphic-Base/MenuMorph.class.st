@@ -21,7 +21,7 @@ Class {
 		'CloseBoxImage',
 		'PushPinImage'
 	],
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #'private - utilities' }

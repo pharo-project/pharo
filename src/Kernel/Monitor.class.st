@@ -83,7 +83,7 @@ Class {
 		'queueDict',
 		'queuesMutex'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #private }

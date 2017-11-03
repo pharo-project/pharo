@@ -12,7 +12,7 @@ Class {
 		'classes',
 		'metaClasses'
 	],
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #'instance creation' }

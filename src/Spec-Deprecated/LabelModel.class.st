@@ -4,5 +4,5 @@ This is deprecated class because the original class LabelModel was renamed to La
 Class {
 	#name : #LabelModel,
 	#superclass : #LabelPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

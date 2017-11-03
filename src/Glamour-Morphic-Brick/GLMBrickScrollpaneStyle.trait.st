@@ -3,7 +3,7 @@ I'm a style module related to a scrollpane and its component.
 "
 Trait {
 	#name : #GLMBrickScrollpaneStyle,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-scrollbar }

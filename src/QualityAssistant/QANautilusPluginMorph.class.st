@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'wasOpenedBefore'
 	],
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #cleanup }

@@ -6,7 +6,7 @@ Class {
 		'issueNumber',
 		'madeUpTitleString'
 	],
-	#category : 'IssueTracking-Tests'
+	#category : #IssueTracking-Tests
 }
 
 { #category : #running }

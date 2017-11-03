@@ -35,7 +35,7 @@ Class {
 		'totalH',
 		'totals'
 	],
-	#category : 'System-Hashing-SHA256'
+	#category : #System-Hashing-SHA256
 }
 
 { #category : #accessing }

@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : 'EpiceaBrowsers-Integration'
+	#category : #EpiceaBrowsers-Integration
 }
 
 { #category : #accessing }

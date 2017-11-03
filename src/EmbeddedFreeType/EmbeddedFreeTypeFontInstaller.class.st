@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'EmbeddedFreeType'
+	#category : #EmbeddedFreeType
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #FLSimpleStackTest,
 	#superclass : #TestCase,
-	#category : 'FuelTests-Collections'
+	#category : #FuelTests-Collections
 }
 
 { #category : #testing }

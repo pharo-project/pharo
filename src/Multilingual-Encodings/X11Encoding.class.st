@@ -4,7 +4,7 @@ X11 encoding
 Class {
 	#name : #X11Encoding,
 	#superclass : #Object,
-	#category : 'Multilingual-Encodings'
+	#category : #Multilingual-Encodings
 }
 
 { #category : #accessing }

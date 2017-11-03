@@ -13,7 +13,7 @@ Class {
 		'morph',
 		'directKeymaps'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #'instance creation' }

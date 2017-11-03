@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'spec'
 	],
-	#category : 'Metacello-Core-Loaders'
+	#category : #Metacello-Core-Loaders
 }
 
 { #category : #'instance creation' }

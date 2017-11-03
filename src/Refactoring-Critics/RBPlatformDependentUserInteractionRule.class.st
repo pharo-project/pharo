@@ -6,7 +6,7 @@ This rule should be updated.
 Class {
 	#name : #RBPlatformDependentUserInteractionRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

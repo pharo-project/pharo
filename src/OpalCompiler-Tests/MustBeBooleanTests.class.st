@@ -1,7 +1,7 @@
 Class {
 	#name : #MustBeBooleanTests,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Misc'
+	#category : #OpalCompiler-Tests-Misc
 }
 
 { #category : #tests }

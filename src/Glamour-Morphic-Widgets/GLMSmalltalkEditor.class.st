@@ -4,7 +4,7 @@ GLMSmalltalkEditor is a helper class for Glamour. The only goal for this class i
 Class {
 	#name : #GLMSmalltalkEditor,
 	#superclass : #SmalltalkEditor,
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'class initialization' }

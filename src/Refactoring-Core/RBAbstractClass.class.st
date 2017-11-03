@@ -34,7 +34,7 @@ Class {
 	#classVars : [
 		'LookupSuperclass'
 	],
-	#category : 'Refactoring-Core-Model'
+	#category : #Refactoring-Core-Model
 }
 
 { #category : #'class initialization' }

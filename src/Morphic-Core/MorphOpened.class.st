@@ -6,5 +6,5 @@ Take into account that when a morph is opened, all it's children also get opened
 Class {
 	#name : #MorphOpened,
 	#superclass : #MorphAnnouncement,
-	#category : 'Morphic-Core-Announcements'
+	#category : #Morphic-Core-Announcements
 }

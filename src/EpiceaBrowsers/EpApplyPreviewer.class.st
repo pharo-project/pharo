@@ -11,7 +11,7 @@ Class {
 		'logBrowserModel',
 		'sourceEntries'
 	],
-	#category : 'EpiceaBrowsers-Visitors'
+	#category : #EpiceaBrowsers-Visitors
 }
 
 { #category : #private }

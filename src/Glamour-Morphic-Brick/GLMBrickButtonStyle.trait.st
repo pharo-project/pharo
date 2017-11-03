@@ -3,7 +3,7 @@ I'm a style module related to the button and its componenets
 "
 Trait {
 	#name : #GLMBrickButtonStyle,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-button }

@@ -4,5 +4,5 @@ I represent an unrecoverable exceptional event while trying to load preferences 
 Class {
 	#name : #StartupPreferencesLoadingError,
 	#superclass : #Error,
-	#category : 'StartupPreferences'
+	#category : #StartupPreferences
 }

@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'nextChar'
 	],
-	#category : 'CodeImport'
+	#category : #CodeImport
 }
 
 { #category : #decorated }

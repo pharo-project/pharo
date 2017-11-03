@@ -4,7 +4,7 @@ I am the bridge between a MenuItemPresenter and a ToggleMenuItemMorph
 Class {
 	#name : #MorphicMenuItemAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #'widget API' }

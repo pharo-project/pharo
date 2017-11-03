@@ -12,7 +12,7 @@ Class {
 		'controls',
 		'wrapScrolling'
 	],
-	#category : 'Morphic-Widgets-PolyTabs'
+	#category : #Morphic-Widgets-PolyTabs
 }
 
 { #category : #operations }

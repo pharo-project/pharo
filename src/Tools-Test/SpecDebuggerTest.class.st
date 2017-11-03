@@ -4,7 +4,7 @@ SUnit tests for SpecDebugger
 Class {
 	#name : #SpecDebuggerTest,
 	#superclass : #TestCase,
-	#category : 'Tools-Test-Debugger'
+	#category : #Tools-Test-Debugger
 }
 
 { #category : #testing }

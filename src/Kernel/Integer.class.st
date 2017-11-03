@@ -10,7 +10,7 @@ Integer division consists of:
 Class {
 	#name : #Integer,
 	#superclass : #Number,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #'instance creation' }

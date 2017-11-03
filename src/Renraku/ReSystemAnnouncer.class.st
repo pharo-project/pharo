@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Renraku-Announcements'
+	#category : #Renraku-Announcements
 }
 
 { #category : #'instance creation' }

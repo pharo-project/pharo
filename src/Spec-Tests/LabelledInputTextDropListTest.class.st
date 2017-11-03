@@ -1,7 +1,7 @@
 Class {
 	#name : #LabelledInputTextDropListTest,
 	#superclass : #InputTextDropListTest,
-	#category : 'Spec-Tests-PolyWidgets-Labelled'
+	#category : #Spec-Tests-PolyWidgets-Labelled
 }
 
 { #category : #running }

@@ -8,7 +8,7 @@ Class {
 		'family',
 		'styleName'
 	],
-	#category : 'FontInfrastructure'
+	#category : #FontInfrastructure
 }
 
 { #category : #converting }

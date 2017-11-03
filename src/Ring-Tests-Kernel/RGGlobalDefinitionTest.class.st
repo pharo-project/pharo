@@ -4,7 +4,7 @@ SUnit tests for global definitions (pools, global variables)
 Class {
 	#name : #RGGlobalDefinitionTest,
 	#superclass : #TestCase,
-	#category : 'Ring-Tests-Kernel'
+	#category : #Ring-Tests-Kernel
 }
 
 { #category : #testing }

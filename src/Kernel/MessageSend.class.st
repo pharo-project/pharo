@@ -16,7 +16,7 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#category : 'Kernel-Messaging'
+	#category : #Kernel-Messaging
 }
 
 { #category : #'instance creation' }

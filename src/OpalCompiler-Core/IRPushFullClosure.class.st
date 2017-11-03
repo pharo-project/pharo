@@ -10,7 +10,7 @@ Class {
 		'compiledBlock',
 		'copiedValues'
 	],
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

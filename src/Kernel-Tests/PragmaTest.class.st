@@ -10,7 +10,7 @@ Class {
 		'yetAnotherAtPragma',
 		'atPutPragma'
 	],
-	#category : 'Kernel-Tests-Pragmas'
+	#category : #Kernel-Tests-Pragmas
 }
 
 { #category : #running }

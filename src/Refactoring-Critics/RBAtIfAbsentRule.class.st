@@ -6,7 +6,7 @@ Replaces at:ifAbsent: by at:ifAbsentPut:. Its leads to shorter and more readable
 Class {
 	#name : #RBAtIfAbsentRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

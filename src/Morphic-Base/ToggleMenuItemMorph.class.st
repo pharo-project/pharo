@@ -9,7 +9,7 @@ Class {
 		'enablementSelector',
 		'keyText'
 	],
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #selecting }

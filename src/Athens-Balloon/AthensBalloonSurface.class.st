@@ -15,7 +15,7 @@ Class {
 		'strokeTransform',
 		'engine'
 	],
-	#category : 'Athens-Balloon'
+	#category : #Athens-Balloon
 }
 
 { #category : #'as yet unclassified' }

@@ -76,7 +76,7 @@ Class {
 		'packageCacheRepository',
 		'resolvedReferencesCache'
 	],
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #private }

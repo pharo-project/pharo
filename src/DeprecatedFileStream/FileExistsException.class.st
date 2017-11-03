@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileClass'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #exceptioninstantiator }

@@ -10,7 +10,7 @@ Class {
 		'askBeforeDiscardingEdits',
 		'getEnabledSelector'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Common SUnit tests for MBInfo
 Class {
 	#name : #MBInfoTest,
 	#superclass : #MBAbstractTest,
-	#category : 'Versionner-Tests-Core-Model'
+	#category : #Versionner-Tests-Core-Model
 }
 
 { #category : #tests }

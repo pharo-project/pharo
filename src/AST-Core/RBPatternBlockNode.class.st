@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'valueBlock'
 	],
-	#category : 'AST-Core-Pattern'
+	#category : #AST-Core-Pattern
 }
 
 { #category : #visitor }

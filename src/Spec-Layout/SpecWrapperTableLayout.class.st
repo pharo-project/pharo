@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'elementAdded'
 	],
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #'instance creation' }

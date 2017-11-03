@@ -1,7 +1,7 @@
 Class {
 	#name : #FileStreamTest,
 	#superclass : #ClassTestCase,
-	#category : 'Tests-Files'
+	#category : #Tests-Files
 }
 
 { #category : #private }

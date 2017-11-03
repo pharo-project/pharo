@@ -20,7 +20,7 @@ Class {
 		'bounds',
 		'vertices'
 	],
-	#category : 'Graphics-Shapes'
+	#category : #Graphics-Shapes
 }
 
 { #category : #'as yet unclassified' }

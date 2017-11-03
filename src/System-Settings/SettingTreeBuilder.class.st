@@ -9,7 +9,7 @@ Class {
 		'currentParent',
 		'currentPragma'
 	],
-	#category : 'System-Settings-Browser'
+	#category : #System-Settings-Browser
 }
 
 { #category : #'instance creation' }

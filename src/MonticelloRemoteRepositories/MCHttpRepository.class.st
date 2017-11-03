@@ -11,7 +11,7 @@ Class {
 		'password',
 		'readerCache'
 	],
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'b'
 	],
-	#category : 'MonticelloGUI-Tests'
+	#category : #MonticelloGUI-Tests
 }
 
 { #category : #running }

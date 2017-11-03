@@ -4,7 +4,7 @@ Checks for literal arrays that contain the #, symbol. The user may have thought 
 Class {
 	#name : #RBLiteralArrayContainsCommaRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

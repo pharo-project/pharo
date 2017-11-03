@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'preDebugWindow'
 	],
-	#category : 'DebuggerActions'
+	#category : #DebuggerActions
 }
 
 { #category : #'actions creation' }

@@ -13,7 +13,7 @@ Class {
 		'packageH',
 		'anArray'
 	],
-	#category : 'Tool-DependencyAnalyser-Test'
+	#category : #Tool-DependencyAnalyser-Test
 }
 
 { #category : #running }

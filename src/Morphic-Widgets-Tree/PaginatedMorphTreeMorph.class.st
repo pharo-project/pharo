@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'pager'
 	],
-	#category : 'Morphic-Widgets-Tree-Pagination'
+	#category : #Morphic-Widgets-Tree-Pagination
 }
 
 { #category : #'pager managing' }

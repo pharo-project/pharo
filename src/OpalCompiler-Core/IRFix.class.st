@@ -14,7 +14,7 @@ Class {
 		'storePopToFix',
 		'retToFix'
 	],
-	#category : 'OpalCompiler-Core-IR-Manipulation'
+	#category : #OpalCompiler-Core-IR-Manipulation
 }
 
 { #category : #private }

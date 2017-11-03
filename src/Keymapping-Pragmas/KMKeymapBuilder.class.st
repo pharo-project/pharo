@@ -8,7 +8,7 @@ Class {
 		'shortcutName',
 		'platform'
 	],
-	#category : 'Keymapping-Pragmas'
+	#category : #Keymapping-Pragmas
 }
 
 { #category : #'as yet unclassified' }

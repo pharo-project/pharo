@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'classNames'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #'error messages' }

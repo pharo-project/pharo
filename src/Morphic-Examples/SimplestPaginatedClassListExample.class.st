@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'rootClass'
 	],
-	#category : 'Morphic-Examples-MorphTreeWidget'
+	#category : #Morphic-Examples-MorphTreeWidget
 }
 
 { #category : #examples }

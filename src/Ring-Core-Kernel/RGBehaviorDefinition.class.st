@@ -14,7 +14,7 @@ Class {
 		'methods',
 		'protocols'
 	],
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #class-annotations }

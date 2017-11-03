@@ -10,7 +10,7 @@ Class {
 		'modificationTime',
 		'basename'
 	],
-	#category : 'FileSystem-Memory'
+	#category : #FileSystem-Memory
 }
 
 { #category : #'as yet unclassified' }

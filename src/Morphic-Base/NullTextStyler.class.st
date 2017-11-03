@@ -4,7 +4,7 @@ This class is a styler NullObject
 Class {
 	#name : #NullTextStyler,
 	#superclass : #Object,
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #accessing }

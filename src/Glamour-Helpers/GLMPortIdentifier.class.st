@@ -8,7 +8,7 @@ Class {
 		'paneName',
 		'portName'
 	],
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #'instance creation' }

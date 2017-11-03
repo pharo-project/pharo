@@ -11,7 +11,7 @@ Class {
 		'methodSelection',
 		'switch'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #'instance creation' }

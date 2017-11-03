@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'ProgressBarEnabled'
 	],
-	#category : 'UIManager'
+	#category : #UIManager
 }
 
 { #category : #'ui requests' }

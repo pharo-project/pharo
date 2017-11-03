@@ -10,7 +10,7 @@ Class {
 		'blockcounter',
 		'compilationContext'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #api }

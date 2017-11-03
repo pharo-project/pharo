@@ -17,7 +17,7 @@ User32 class>>getActiveWindow
 Class {
 	#name : #FFIConstantHandle,
 	#superclass : #FFIExternalReference,
-	#category : 'UnifiedFFI-Objects'
+	#category : #UnifiedFFI-Objects
 }
 
 { #category : #converting }

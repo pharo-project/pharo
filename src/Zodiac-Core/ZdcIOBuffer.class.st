@@ -22,7 +22,7 @@ Class {
 		'readPointer',
 		'writePointer'
 	],
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ Class {
 		'selectedColor',
 		'locationMorph'
 	],
-	#category : 'Morphic-Widgets-ColorPicker'
+	#category : #Morphic-Widgets-ColorPicker
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Checks for return statements within ensure: blocks that can have unintended side
 Class {
 	#name : #RBReturnInEnsureRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

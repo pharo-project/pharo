@@ -11,7 +11,7 @@ Class {
 		'enabled',
 		'getEnabledSelector'
 	],
-	#category : 'Morphic-Widgets-ColorPicker'
+	#category : #Morphic-Widgets-ColorPicker
 }
 
 { #category : #example }

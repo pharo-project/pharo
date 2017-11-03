@@ -6,7 +6,7 @@ I can resolve the queried sequences and retrieve a list of answers according to 
 Class {
 	#name : #NOCController,
 	#superclass : #NECController,
-	#category : 'NECompletion-OCompletion'
+	#category : #NECompletion-OCompletion
 }
 
 { #category : #private }

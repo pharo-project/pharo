@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Glamour-Morphic-Brick-Layouts'
+	#category : #Glamour-Morphic-Brick-Layouts
 }
 
 { #category : #cleanup }

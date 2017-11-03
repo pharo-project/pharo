@@ -5,7 +5,7 @@ Class {
 		'prefix',
 		'requestorPos'
 	],
-	#category : 'Rubric-Editing-Core-Support'
+	#category : #Rubric-Editing-Core-Support
 }
 
 { #category : #opening }

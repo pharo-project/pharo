@@ -1,7 +1,7 @@
 Class {
 	#name : #MethodClassifierTest,
 	#superclass : #TestCase,
-	#category : 'Tools-Test-Base'
+	#category : #Tools-Test-Base
 }
 
 { #category : #tests }

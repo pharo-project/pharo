@@ -8,7 +8,7 @@ Class {
 		'Author',
 		'VariableInPoolDefiner2'
 	],
-	#category : 'Kernel-Tests-Classes'
+	#category : #Kernel-Tests-Classes
 }
 
 { #category : #initialization }

@@ -23,7 +23,7 @@ Class {
 		'LastScreenModeSelected',
 		'ScreenSave'
 	],
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #accessing }

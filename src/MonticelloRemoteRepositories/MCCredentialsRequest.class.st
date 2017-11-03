@@ -10,7 +10,7 @@ Class {
 		'password',
 		'url'
 	],
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #signalling }

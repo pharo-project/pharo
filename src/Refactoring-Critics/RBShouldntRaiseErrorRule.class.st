@@ -35,7 +35,7 @@ be avoided.
 Class {
 	#name : #RBShouldntRaiseErrorRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

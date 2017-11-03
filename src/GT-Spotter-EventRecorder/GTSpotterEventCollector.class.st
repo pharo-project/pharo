@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'postponedEvents'
 	],
-	#category : 'GT-Spotter-EventRecorder-Base'
+	#category : #GT-Spotter-EventRecorder-Base
 }
 
 { #category : #accessing }

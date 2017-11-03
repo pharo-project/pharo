@@ -4,5 +4,5 @@ A NautilusExtendCommentSwitch is raised when the button to maximize the class co
 Class {
 	#name : #NautilusExtendCommentSwitch,
 	#superclass : #NautilusBooleanAnnouncement,
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }

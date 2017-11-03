@@ -10,7 +10,7 @@ Class {
 		'listModel',
 		'methodModel'
 	],
-	#category : 'Spec-Examples'
+	#category : #Spec-Examples
 }
 
 { #category : #specs }

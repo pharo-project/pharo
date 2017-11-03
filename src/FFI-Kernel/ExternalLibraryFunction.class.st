@@ -14,7 +14,7 @@ Class {
 		'module',
 		'errorCodeName'
 	],
-	#category : 'FFI-Kernel'
+	#category : #FFI-Kernel
 }
 
 { #category : #'instance creation' }

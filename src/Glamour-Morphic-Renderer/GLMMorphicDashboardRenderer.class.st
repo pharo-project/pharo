@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicDashboardRenderer,
 	#superclass : #GLMMorphicBrowserRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #private }

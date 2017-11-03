@@ -33,7 +33,7 @@ Class {
 		'TypeMap',
 		'WriteSelectors'
 	],
-	#category : 'Monticello-Storing'
+	#category : #Monticello-Storing
 }
 
 { #category : #cleanup }

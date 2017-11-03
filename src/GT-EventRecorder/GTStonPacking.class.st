@@ -4,7 +4,7 @@ I serialize or materialize objects using STON framework. Create instance of me c
 Class {
 	#name : #GTStonPacking,
 	#superclass : #GTEventPacking,
-	#category : 'GT-EventRecorder-Support'
+	#category : #GT-EventRecorder-Support
 }
 
 { #category : #private }

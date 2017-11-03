@@ -4,5 +4,5 @@ This is deprecated class because the original class TestingComposableModel was r
 Class {
 	#name : #TestingComposableModel,
 	#superclass : #TestingComposablePresenter,
-	#category : 'Spec-Tests-Deprecated'
+	#category : #Spec-Tests-Deprecated
 }

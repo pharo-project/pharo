@@ -4,7 +4,7 @@ Same as CriticsCache but with tweaks for Renraku model
 Class {
 	#name : #ReCriticsCache,
 	#superclass : #CriticsCache,
-	#category : 'Renraku-CriticBrowser'
+	#category : #Renraku-CriticBrowser
 }
 
 { #category : #initialize-release }

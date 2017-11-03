@@ -13,7 +13,7 @@ Class {
 		'Instance',
 		'UseArrowsShortcuts'
 	],
-	#category : 'NodeNavigation-Core'
+	#category : #NodeNavigation-Core
 }
 
 { #category : #'instance creation' }

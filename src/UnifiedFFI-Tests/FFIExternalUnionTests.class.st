@@ -1,7 +1,7 @@
 Class {
 	#name : #FFIExternalUnionTests,
 	#superclass : #TestCase,
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #tests }

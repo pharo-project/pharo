@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicSmalltalkCodeRenderer,
 	#superclass : #GLMMorphicTextRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #callbacks }

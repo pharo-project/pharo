@@ -4,7 +4,7 @@ i am delivered when user releases a mouse button
 Class {
 	#name : #OSMouseButtonReleaseEvent,
 	#superclass : #OSMouseButtonEvent,
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

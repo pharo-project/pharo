@@ -4,5 +4,5 @@ Happens when nautilus plugin displays critics in the list. (critics collection c
 Class {
 	#name : #QACritiquesSeen,
 	#superclass : #ReMultipleCritiquesEvent,
-	#category : 'QualityAssistant-Announcements'
+	#category : #QualityAssistant-Announcements
 }

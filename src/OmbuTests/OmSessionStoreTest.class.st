@@ -1,7 +1,7 @@
 Class {
 	#name : #OmSessionStoreTest,
 	#superclass : #OmStoreTest,
-	#category : 'OmbuTests'
+	#category : #OmbuTests
 }
 
 { #category : #resources }

@@ -5,7 +5,7 @@ Trait {
 	#name : #TDictionaryCopyingTest,
 	#traits : 'TCloneTest',
 	#classTraits : 'TCloneTest classTrait',
-	#category : 'Collections-Tests-Unordered'
+	#category : #Collections-Tests-Unordered
 }
 
 { #category : #helper }

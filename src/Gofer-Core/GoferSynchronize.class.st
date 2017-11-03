@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'cacheReferences'
 	],
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #accessing }

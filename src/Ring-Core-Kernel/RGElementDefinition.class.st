@@ -81,7 +81,7 @@ Class {
 	#instVars : [
 		'parent'
 	],
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #'parsing stamp' }

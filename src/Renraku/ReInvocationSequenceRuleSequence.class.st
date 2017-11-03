@@ -8,7 +8,7 @@ Class {
 		'before',
 		'after'
 	],
-	#category : 'Renraku-Rules'
+	#category : #Renraku-Rules
 }
 
 { #category : #'instance creation' }

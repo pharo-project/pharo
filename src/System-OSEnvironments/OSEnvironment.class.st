@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'System-OSEnvironments'
+	#category : #System-OSEnvironments
 }
 
 { #category : #'instance creation' }

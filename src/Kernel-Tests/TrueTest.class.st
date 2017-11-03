@@ -4,7 +4,7 @@ SUnit tests for true/True class
 Class {
 	#name : #TrueTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Objects'
+	#category : #Kernel-Tests-Objects
 }
 
 { #category : #'tests - logical operations' }

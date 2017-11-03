@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'scale'
 	],
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #'instance creation' }

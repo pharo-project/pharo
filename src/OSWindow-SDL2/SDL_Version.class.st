@@ -9,7 +9,7 @@ Class {
 		'OFFSET_MINOR',
 		'OFFSET_PATCH'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #accessing }

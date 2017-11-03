@@ -10,7 +10,7 @@ Class {
 		'tag',
 		'vertices'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'instance creation' }

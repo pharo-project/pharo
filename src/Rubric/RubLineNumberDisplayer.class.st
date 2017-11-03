@@ -4,7 +4,7 @@ I am the displayer of line numbers in the text area
 Class {
 	#name : #RubLineNumberDisplayer,
 	#superclass : #RubScrolledTextSideRuler,
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #querying }

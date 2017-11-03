@@ -13,7 +13,7 @@ Class {
 		'Replacements',
 		'Singleton'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #initializing }

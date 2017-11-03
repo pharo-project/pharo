@@ -4,7 +4,7 @@ ifNotEmptyDo: should not be used as ifNotEmpty: works for blocks with arguments,
 Class {
 	#name : #RBRuleIfNotEmptyDo,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

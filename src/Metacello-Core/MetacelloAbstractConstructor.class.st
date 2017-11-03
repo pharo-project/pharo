@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloAbstractConstructor,
 	#superclass : #Object,
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #accessing }

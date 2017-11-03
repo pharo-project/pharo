@@ -4,7 +4,7 @@ A superclass for classes used to test critics.
 Class {
 	#name : #RBSmalllintTestSuperclassObject,
 	#superclass : #Object,
-	#category : 'Refactoring-Tests-Critics'
+	#category : #Refactoring-Tests-Critics
 }
 
 { #category : #accessing }

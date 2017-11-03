@@ -8,7 +8,7 @@ Class {
 		'configurationInfo',
 		'version'
 	],
-	#category : 'Versionner-Core-Model'
+	#category : #Versionner-Core-Model
 }
 
 { #category : #'instance creation' }

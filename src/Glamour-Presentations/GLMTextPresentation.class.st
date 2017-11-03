@@ -14,7 +14,7 @@ Class {
 		'highlightSmalltalk',
 		'highlightSmalltalkContext'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #accessing }

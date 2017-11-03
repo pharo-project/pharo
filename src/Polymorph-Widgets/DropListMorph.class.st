@@ -21,7 +21,7 @@ Class {
 		'wrapSelector',
 		'defaultContents'
 	],
-	#category : 'Polymorph-Widgets'
+	#category : #Polymorph-Widgets
 }
 
 { #category : #'instance creation' }

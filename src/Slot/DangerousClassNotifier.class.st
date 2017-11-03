@@ -26,7 +26,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #validation }

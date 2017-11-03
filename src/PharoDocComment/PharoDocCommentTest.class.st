@@ -1,7 +1,7 @@
 Class {
 	#name : #PharoDocCommentTest,
 	#superclass : #TestCase,
-	#category : 'PharoDocComment'
+	#category : #PharoDocComment
 }
 
 { #category : #resources }

@@ -19,7 +19,7 @@ Class {
 		'morph',
 		'originalObject'
 	],
-	#category : 'Morphic-Widgets-Basic'
+	#category : #Morphic-Widgets-Basic
 }
 
 { #category : #'instance creation' }

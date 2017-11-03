@@ -8,7 +8,7 @@ Class {
 		'group',
 		'holder'
 	],
-	#category : 'Nautilus-GroupManager-Announcements'
+	#category : #Nautilus-GroupManager-Announcements
 }
 
 { #category : #'instance creation' }

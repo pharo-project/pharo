@@ -8,7 +8,7 @@ Class {
 		'invalidRects',
 		'totalRepaint'
 	],
-	#category : 'Morphic-Core-Support'
+	#category : #Morphic-Core-Support
 }
 
 { #category : #'instance creation' }

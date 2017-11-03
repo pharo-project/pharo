@@ -12,7 +12,7 @@ Class {
 		'fields',
 		'representation'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #testing }

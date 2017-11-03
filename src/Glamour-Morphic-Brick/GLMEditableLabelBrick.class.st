@@ -22,7 +22,7 @@ Class {
 		'cancelOnEscape',
 		'cancelOnFocusLost'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI'
+	#category : #Glamour-Morphic-Brick-Widgets-UI
 }
 
 { #category : #examples }

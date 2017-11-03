@@ -10,7 +10,7 @@ Class {
 		'rootNode',
 		'blockExtentsToLocals'
 	],
-	#category : 'Compiler-Kernel'
+	#category : #Compiler-Kernel
 }
 
 { #category : #'bytecode decoding' }

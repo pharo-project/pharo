@@ -29,7 +29,7 @@ Class {
 		'tagsToFilterBy',
 		'dataCache'
 	],
-	#category : 'Glamour-FastTable-Model'
+	#category : #Glamour-FastTable-Model
 }
 
 { #category : #accessing }

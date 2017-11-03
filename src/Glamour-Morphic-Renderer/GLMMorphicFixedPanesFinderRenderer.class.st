@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicFixedPanesFinderRenderer,
 	#superclass : #GLMMorphicFinderRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

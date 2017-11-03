@@ -4,7 +4,7 @@ SUnit tests for PointerFinder
 Class {
 	#name : #PointerFinderTest,
 	#superclass : #TestCase,
-	#category : 'Tools-Test-PointerFinder'
+	#category : #Tools-Test-PointerFinder
 }
 
 { #category : #'as yet unclassified' }

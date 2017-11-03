@@ -12,7 +12,7 @@ Class {
 		'ui',
 		'object'
 	],
-	#category : 'Spec-Examples-Wrapper'
+	#category : #Spec-Examples-Wrapper
 }
 
 { #category : #example }

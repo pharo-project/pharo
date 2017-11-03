@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'exclusions'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #exceptionselector }

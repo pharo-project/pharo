@@ -34,7 +34,7 @@ Class {
 		'customizeValuable',
 		'escapeBlock'
 	],
-	#category : 'Rubric-Editing-Core-Support'
+	#category : #Rubric-Editing-Core-Support
 }
 
 { #category : #example }

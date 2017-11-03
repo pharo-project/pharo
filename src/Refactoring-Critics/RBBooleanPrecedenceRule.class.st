@@ -4,7 +4,7 @@ Checks precedence ordering of & and | with equality operators. Since | and & hav
 Class {
 	#name : #RBBooleanPrecedenceRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

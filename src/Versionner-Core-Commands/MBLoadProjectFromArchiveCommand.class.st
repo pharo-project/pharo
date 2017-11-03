@@ -4,7 +4,7 @@ Command to load project from archive in versionner
 Class {
 	#name : #MBLoadProjectFromArchiveCommand,
 	#superclass : #MBConfigurationInfoCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMTextMorphicTest,
 	#superclass : #GLMMorphicTest,
-	#category : 'Glamour-Tests-Morphic'
+	#category : #Glamour-Tests-Morphic
 }
 
 { #category : #tests }

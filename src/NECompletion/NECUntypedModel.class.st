@@ -12,7 +12,7 @@ Class {
 		'classVars',
 		'listLimit'
 	],
-	#category : 'NECompletion-Model'
+	#category : #NECompletion-Model
 }
 
 { #category : #'instance creation' }

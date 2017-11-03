@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlaygroundEditableTabLabel,
 	#superclass : #GLMEditableLabelBrick,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #initialization }

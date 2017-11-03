@@ -1,7 +1,7 @@
 Class {
 	#name : #MethodMapTests,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Misc'
+	#category : #OpalCompiler-Tests-Misc
 }
 
 { #category : #util }

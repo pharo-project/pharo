@@ -5,7 +5,7 @@ For example, [:x | 1 + x] value: 4 is equivalent to 1 + 4
 Class {
 	#name : #RBExtraBlockRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

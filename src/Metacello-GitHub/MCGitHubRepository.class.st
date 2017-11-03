@@ -6,7 +6,7 @@ Class {
 		'DownloadCache',
 		'ETagsCache'
 	],
-	#category : 'Metacello-GitHub'
+	#category : #Metacello-GitHub
 }
 
 { #category : #accessing }

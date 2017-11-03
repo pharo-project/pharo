@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'icon'
 	],
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #'*Komitter-UI' }

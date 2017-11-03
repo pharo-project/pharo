@@ -9,7 +9,7 @@ Class {
 		'sortedElements',
 		'verticesWithNoIncomingEdge'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #private }

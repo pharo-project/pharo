@@ -37,7 +37,7 @@ Class {
 		'Cr',
 		'Lf'
 	],
-	#category : 'Regex-Core'
+	#category : #Regex-Core
 }
 
 { #category : #'instance creation' }

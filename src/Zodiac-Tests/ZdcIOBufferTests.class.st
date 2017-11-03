@@ -4,7 +4,7 @@ ZdcIOBufferTests holds unit tests for ZdcIOBuffer.
 Class {
 	#name : #ZdcIOBufferTests,
 	#superclass : #TestCase,
-	#category : 'Zodiac-Tests'
+	#category : #Zodiac-Tests
 }
 
 { #category : #testing }

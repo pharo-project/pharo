@@ -26,7 +26,7 @@ Class {
 		'scheduledTime',
 		'numArgs'
 	],
-	#category : 'Morphic-Base-Events'
+	#category : #Morphic-Base-Events
 }
 
 { #category : #'instance creation' }

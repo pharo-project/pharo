@@ -11,7 +11,7 @@ Class {
 		'object',
 		'previousLink'
 	],
-	#category : 'FreeType-Cache'
+	#category : #FreeType-Cache
 }
 
 { #category : #comparing }

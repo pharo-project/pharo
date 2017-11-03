@@ -28,7 +28,7 @@ Class {
 		'widgets',
 		'layout'
 	],
-	#category : 'Spec-Core'
+	#category : #Spec-Core
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Action when the method is abstract
 Class {
 	#name : #MethodIsAbstractAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

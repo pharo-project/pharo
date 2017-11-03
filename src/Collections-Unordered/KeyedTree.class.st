@@ -15,7 +15,7 @@ Example:
 Class {
 	#name : #KeyedTree,
 	#superclass : #Dictionary,
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #accessing }

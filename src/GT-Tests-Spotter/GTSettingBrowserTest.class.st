@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSettingBrowserTest,
 	#superclass : #TestCase,
-	#category : 'GT-Tests-Spotter-SettingBrowser'
+	#category : #GT-Tests-Spotter-SettingBrowser
 }
 
 { #category : #tests }

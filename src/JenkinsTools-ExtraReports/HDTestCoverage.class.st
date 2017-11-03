@@ -9,7 +9,7 @@ Class {
 		'reference',
 		'method'
 	],
-	#category : 'JenkinsTools-ExtraReports'
+	#category : #JenkinsTools-ExtraReports
 }
 
 { #category : #'instance creation' }

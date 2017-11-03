@@ -4,7 +4,7 @@ I represent an error produced during materialization when a serialized global na
 Class {
 	#name : #FLGlobalNotFound,
 	#superclass : #FLMaterializationError,
-	#category : 'Fuel-Errors'
+	#category : #Fuel-Errors
 }
 
 { #category : #signaling }

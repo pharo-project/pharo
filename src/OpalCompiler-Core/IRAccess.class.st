@@ -4,5 +4,5 @@ IRAccess models all bytecodes that read or write variables or self/super/thisCon
 Class {
 	#name : #IRAccess,
 	#superclass : #IRInstruction,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }

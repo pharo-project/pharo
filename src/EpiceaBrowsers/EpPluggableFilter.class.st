@@ -8,7 +8,7 @@ Class {
 		'condition',
 		'title'
 	],
-	#category : 'EpiceaBrowsers-Filters'
+	#category : #EpiceaBrowsers-Filters
 }
 
 { #category : #'special filters' }

@@ -6,7 +6,7 @@ The main problem we've seen with the Text version is that it doesn't preserve fo
 Class {
 	#name : #TextLineEndingsTest,
 	#superclass : #TestCase,
-	#category : 'Text-Tests'
+	#category : #Text-Tests
 }
 
 { #category : #tests }

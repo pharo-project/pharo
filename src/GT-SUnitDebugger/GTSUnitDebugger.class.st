@@ -6,7 +6,7 @@ I embed a textual diff when an #assert:equals: assertion fails and provide acces
 Class {
 	#name : #GTSUnitDebugger,
 	#superclass : #GTGenericStackDebugger,
-	#category : 'GT-SUnitDebugger'
+	#category : #GT-SUnitDebugger
 }
 
 { #category : #testing }

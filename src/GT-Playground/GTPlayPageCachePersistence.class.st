@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlayPageCachePersistence,
 	#superclass : #GTPlayPageFilePersistence,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #accessing }

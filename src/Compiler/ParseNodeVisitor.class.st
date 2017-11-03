@@ -21,7 +21,7 @@ I am an abstract superclass for ParseNode visitors that functions as a null visi
 Class {
 	#name : #ParseNodeVisitor,
 	#superclass : #Object,
-	#category : 'Compiler-Support'
+	#category : #Compiler-Support
 }
 
 { #category : #visiting }

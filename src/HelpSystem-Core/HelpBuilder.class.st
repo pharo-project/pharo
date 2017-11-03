@@ -15,7 +15,7 @@ Class {
 		'topicToBuild',
 		'rootToBuildFrom'
 	],
-	#category : 'HelpSystem-Core-Builders'
+	#category : #HelpSystem-Core-Builders
 }
 
 { #category : #building }

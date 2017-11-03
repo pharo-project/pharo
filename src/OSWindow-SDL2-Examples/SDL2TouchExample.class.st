@@ -9,7 +9,7 @@ Class {
 		'circle',
 		'moveToDraw'
 	],
-	#category : 'OSWindow-SDL2-Examples-Touch'
+	#category : #OSWindow-SDL2-Examples-Touch
 }
 
 { #category : #examples }

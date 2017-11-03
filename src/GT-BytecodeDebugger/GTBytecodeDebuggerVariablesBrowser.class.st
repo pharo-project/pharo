@@ -6,7 +6,7 @@ I provide a different view of all variables from  a Context suitable for a bytec
 Class {
 	#name : #GTBytecodeDebuggerVariablesBrowser,
 	#superclass : #GTDebuggerVariablesBrowser,
-	#category : 'GT-BytecodeDebugger-UI'
+	#category : #GT-BytecodeDebugger-UI
 }
 
 { #category : #'private building' }

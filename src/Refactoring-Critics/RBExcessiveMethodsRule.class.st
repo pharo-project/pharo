@@ -10,7 +10,7 @@ The defined number of methods can be edited in #methodsCount.
 Class {
 	#name : #RBExcessiveMethodsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

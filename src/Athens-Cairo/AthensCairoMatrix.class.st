@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : 'Athens-Cairo-Transforms'
+	#category : #Athens-Cairo-Transforms
 }
 
 { #category : #'field definition' }

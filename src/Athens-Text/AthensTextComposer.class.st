@@ -8,7 +8,7 @@ Class {
 		'lines',
 		'text'
 	],
-	#category : 'Athens-Text'
+	#category : #Athens-Text
 }
 
 { #category : #'as yet unclassified' }

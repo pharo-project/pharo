@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'brick'
 	],
-	#category : 'Glamour-Morphic-Brick-Layouts-Utils'
+	#category : #Glamour-Morphic-Brick-Layouts-Utils
 }
 
 { #category : #'instance creation' }

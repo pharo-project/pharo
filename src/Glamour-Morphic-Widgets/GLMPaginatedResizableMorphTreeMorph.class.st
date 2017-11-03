@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMPaginatedResizableMorphTreeMorph,
 	#superclass : #GLMPaginatedMorphTreeMorph,
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'as yet unclassified' }

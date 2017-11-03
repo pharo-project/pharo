@@ -11,7 +11,7 @@ Class {
 		'morph',
 		'world'
 	],
-	#category : 'Morphic-Tests-Kernel'
+	#category : #Morphic-Tests-Kernel
 }
 
 { #category : #running }

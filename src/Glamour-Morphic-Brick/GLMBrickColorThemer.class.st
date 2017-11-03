@@ -4,7 +4,7 @@ I define different usefull colors
 Class {
 	#name : #GLMBrickColorThemer,
 	#superclass : #GLMBrickThemerModule,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-colors }

@@ -30,7 +30,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Graphics-Fonts'
+	#category : #Graphics-Fonts
 }
 
 { #category : #'font accessing' }

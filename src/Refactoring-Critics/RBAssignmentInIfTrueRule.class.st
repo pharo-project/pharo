@@ -12,7 +12,7 @@ var :=  test
 Class {
 	#name : #RBAssignmentInIfTrueRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

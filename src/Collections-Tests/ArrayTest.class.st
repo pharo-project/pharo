@@ -50,7 +50,7 @@ Class {
 		'collectionOfCollectionsOfInts',
 		'simpleCollection'
 	],
-	#category : 'Collections-Tests-Arrayed'
+	#category : #Collections-Tests-Arrayed
 }
 
 { #category : #helpers }

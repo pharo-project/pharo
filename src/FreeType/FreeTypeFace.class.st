@@ -11,7 +11,7 @@ Class {
 		'hasKerning',
 		'session'
 	],
-	#category : 'FreeType-Fonts'
+	#category : #FreeType-Fonts
 }
 
 { #category : #'font dirs' }

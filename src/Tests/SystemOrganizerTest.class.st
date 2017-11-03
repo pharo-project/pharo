@@ -1,7 +1,7 @@
 Class {
 	#name : #SystemOrganizerTest,
 	#superclass : #TestCase,
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #tests }

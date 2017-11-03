@@ -4,7 +4,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Glamour-Morphic-Brick-Utils-Geometry'
+	#category : #Glamour-Morphic-Brick-Utils-Geometry
 }
 
 { #category : #accessing }

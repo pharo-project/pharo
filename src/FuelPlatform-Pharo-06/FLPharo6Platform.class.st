@@ -1,7 +1,7 @@
 Class {
 	#name : #FLPharo6Platform,
 	#superclass : #FLPharoPlatform,
-	#category : 'FuelPlatform-Pharo-06'
+	#category : #FuelPlatform-Pharo-06
 }
 
 { #category : #private-hacks }

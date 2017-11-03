@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'count'
 	],
-	#category : 'Collections-Tests-Atomic'
+	#category : #Collections-Tests-Atomic
 }
 
 { #category : #'instance creation' }

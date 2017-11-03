@@ -10,7 +10,7 @@ Class {
 		'next',
 		'previous'
 	],
-	#category : 'NECompletion-OCompletion'
+	#category : #NECompletion-OCompletion
 }
 
 { #category : #operations }

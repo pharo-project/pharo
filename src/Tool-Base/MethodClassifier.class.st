@@ -12,7 +12,7 @@ Class {
 		'keywordSuffixMapping',
 		'pragmaMapping'
 	],
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #private }

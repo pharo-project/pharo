@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'gen'
 	],
-	#category : 'Random-Tests'
+	#category : #Random-Tests
 }
 
 { #category : #running }

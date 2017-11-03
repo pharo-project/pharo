@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'contents'
 	],
-	#category : 'FuelTests-Mocks'
+	#category : #FuelTests-Mocks
 }
 
 { #category : #'instance creation' }

@@ -101,7 +101,7 @@ Class {
 		'askOkToClose',
 		'titleHolder'
 	],
-	#category : 'Spec-Core'
+	#category : #Spec-Core
 }
 
 { #category : #defaults }

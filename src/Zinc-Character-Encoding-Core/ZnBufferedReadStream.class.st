@@ -18,7 +18,7 @@ Class {
 		'position',
 		'limit'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #'instance creation' }

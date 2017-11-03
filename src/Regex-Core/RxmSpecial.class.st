@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'matchSelector'
 	],
-	#category : 'Regex-Core'
+	#category : #Regex-Core
 }
 
 { #category : #initialize-release }

@@ -4,7 +4,7 @@ I open commit tool to create a PATCH version of target configuration.
 Class {
 	#name : #VSCommitPatchCommand,
 	#superclass : #VSCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

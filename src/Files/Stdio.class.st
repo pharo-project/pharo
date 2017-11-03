@@ -20,7 +20,7 @@ Class {
 		'Stdin',
 		'Stdout'
 	],
-	#category : 'Files-Core'
+	#category : #Files-Core
 }
 
 { #category : #'system startup' }

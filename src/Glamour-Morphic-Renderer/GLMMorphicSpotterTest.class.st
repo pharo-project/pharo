@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicSpotterTest,
 	#superclass : #TestCase,
-	#category : 'Glamour-Morphic-Renderer-Spotter'
+	#category : #Glamour-Morphic-Renderer-Spotter
 }
 
 { #category : #'as yet unclassified' }

@@ -32,7 +32,7 @@ Class {
 		'nextSibling',
 		'icon'
 	],
-	#category : 'Morphic-Widgets-List'
+	#category : #Morphic-Widgets-List
 }
 
 { #category : #'drag and drop' }

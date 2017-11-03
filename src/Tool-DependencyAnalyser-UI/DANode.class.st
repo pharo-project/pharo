@@ -10,7 +10,7 @@ Class {
 		'packageTreeNautilusUI',
 		'cycle'
 	],
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #building-menu }

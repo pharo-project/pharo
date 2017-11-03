@@ -31,7 +31,7 @@ Class {
 		'absoluteValue',
 		'labelHolder'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

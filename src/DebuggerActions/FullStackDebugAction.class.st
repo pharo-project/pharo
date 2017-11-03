@@ -5,7 +5,7 @@ A FullStackDebugAction displays the entire stack in the stack widget.
 Class {
 	#name : #FullStackDebugAction,
 	#superclass : #DebugAction,
-	#category : 'DebuggerActions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

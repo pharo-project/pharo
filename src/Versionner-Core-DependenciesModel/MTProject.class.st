@@ -23,7 +23,7 @@ Class {
 		'devWorkflow',
 		'announcer'
 	],
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #'instance creation' }

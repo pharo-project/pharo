@@ -1,7 +1,7 @@
 Class {
 	#name : #HowToContributeHelp,
 	#superclass : #CustomHelp,
-	#category : 'HowToContributeHelp'
+	#category : #HowToContributeHelp
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 		'rootTopic',
 		'isOpen'
 	],
-	#category : 'HelpSystem-Tests-Core-UI'
+	#category : #HelpSystem-Tests-Core-UI
 }
 
 { #category : #initialization }

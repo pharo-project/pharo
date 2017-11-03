@@ -7,7 +7,7 @@ self new open
 Class {
 	#name : #OSWindowGenericRendererDrawingExample,
 	#superclass : #OSWindowGenericRendererExample,
-	#category : 'OSWindow-SDL2-Examples-Basic'
+	#category : #OSWindow-SDL2-Examples-Basic
 }
 
 { #category : #drawing }

@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : 'Nautilus-Tree'
+	#category : #Nautilus-Tree
 }
 
 { #category : #cleanup }

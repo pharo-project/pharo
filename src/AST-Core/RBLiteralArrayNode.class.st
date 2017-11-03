@@ -13,7 +13,7 @@ Class {
 		'isByteArray',
 		'contents'
 	],
-	#category : 'AST-Core-Nodes'
+	#category : #AST-Core-Nodes
 }
 
 { #category : #'instance creation' }

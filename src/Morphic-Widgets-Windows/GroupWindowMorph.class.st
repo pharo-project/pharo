@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'tabGroup'
 	],
-	#category : 'Morphic-Widgets-Windows-Widgets'
+	#category : #Morphic-Widgets-Windows-Widgets
 }
 
 { #category : #layout }

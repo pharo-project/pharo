@@ -25,7 +25,7 @@ Class {
 		'left',
 		'right'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ Class {
 		'title',
 		'lesson'
 	],
-	#category : 'ProfStef-Core'
+	#category : #ProfStef-Core
 }
 
 { #category : #'instance creation' }

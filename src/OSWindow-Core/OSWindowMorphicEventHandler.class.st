@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'OSKeySymbols'
 	],
-	#category : 'OSWindow-Core-Morphic'
+	#category : #OSWindow-Core-Morphic
 }
 
 { #category : #'as yet unclassified' }

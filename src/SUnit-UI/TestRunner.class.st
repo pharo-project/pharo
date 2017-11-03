@@ -35,7 +35,7 @@ Class {
 		'packagePattern',
 		'packageIndex'
 	],
-	#category : 'SUnit-UI'
+	#category : #SUnit-UI
 }
 
 { #category : #'world menu' }

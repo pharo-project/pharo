@@ -4,7 +4,7 @@ Command to inspect a configuration in versionner
 Class {
 	#name : #MBInspectConfigurationCommand,
 	#superclass : #MBConfigurationInfoCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

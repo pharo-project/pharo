@@ -58,7 +58,7 @@ Class {
 		'CaseFlag',
 		'IfNilFlag'
 	],
-	#category : 'Compiler-Kernel'
+	#category : #Compiler-Kernel
 }
 
 { #category : #public }

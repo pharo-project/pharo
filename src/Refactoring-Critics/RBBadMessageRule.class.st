@@ -4,7 +4,7 @@ This smell arises when methods send messages that perform low level things. You 
 Class {
 	#name : #RBBadMessageRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

@@ -10,7 +10,7 @@ Class {
 		'runningIndex',
 		'sccs'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #accessing }

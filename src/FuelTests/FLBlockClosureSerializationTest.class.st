@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'interval'
 	],
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #'closures for testing' }

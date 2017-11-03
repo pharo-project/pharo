@@ -5,7 +5,7 @@ Class {
 		'resolvedReference',
 		'externalReference'
 	],
-	#category : 'Metacello-MC-Directives'
+	#category : #Metacello-MC-Directives
 }
 
 { #category : #accessing }

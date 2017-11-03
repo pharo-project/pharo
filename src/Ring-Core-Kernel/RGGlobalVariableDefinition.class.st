@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #'managing container' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classOrMetaclass'
 	],
-	#category : 'Rubric-Editing-Code'
+	#category : #Rubric-Editing-Code
 }
 
 { #category : #menu }

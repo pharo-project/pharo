@@ -9,7 +9,7 @@ Class {
 		'start',
 		'duration'
 	],
-	#category : 'Kernel-Chronology'
+	#category : #Kernel-Chronology
 }
 
 { #category : #'instance creation' }

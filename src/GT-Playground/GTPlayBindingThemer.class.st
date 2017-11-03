@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlayBindingThemer,
 	#superclass : #GLMBrickThemerModule,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #rows }

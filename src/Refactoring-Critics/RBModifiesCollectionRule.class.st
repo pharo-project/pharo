@@ -12,7 +12,7 @@ aCol copy do: [ :each |  ... aCol remove:... ]
 Class {
 	#name : #RBModifiesCollectionRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

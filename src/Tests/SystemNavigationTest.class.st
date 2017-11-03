@@ -11,7 +11,7 @@ Class {
 		'navigator',
 		'oldSystemAnnouncer'
 	],
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #testing }

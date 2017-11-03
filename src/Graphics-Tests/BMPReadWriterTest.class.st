@@ -4,7 +4,7 @@ SUnit tests for class BMPReadWriter
 Class {
 	#name : #BMPReadWriterTest,
 	#superclass : #TestCase,
-	#category : 'Graphics-Tests-Files'
+	#category : #Graphics-Tests-Files
 }
 
 { #category : #data }

@@ -22,7 +22,7 @@ Class {
 		'collection5Elements',
 		'collectionWith3Elements'
 	],
-	#category : 'Collections-Tests-Unordered'
+	#category : #Collections-Tests-Unordered
 }
 
 { #category : #'tests - includes' }

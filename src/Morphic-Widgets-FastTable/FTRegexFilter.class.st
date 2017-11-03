@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'regex'
 	],
-	#category : 'Morphic-Widgets-FastTable-Functions'
+	#category : #Morphic-Widgets-FastTable-Functions
 }
 
 { #category : #matching }

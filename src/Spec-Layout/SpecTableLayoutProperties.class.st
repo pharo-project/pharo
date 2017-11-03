@@ -16,7 +16,7 @@ Class {
 		'minCellSize',
 		'maxCellSize'
 	],
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #'table defaults' }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'selector'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #'instance creation' }

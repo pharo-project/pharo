@@ -9,7 +9,7 @@ Class {
 		'methods',
 		'name'
 	],
-	#category : 'Kernel-Protocols'
+	#category : #Kernel-Protocols
 }
 
 { #category : #'instance creation' }

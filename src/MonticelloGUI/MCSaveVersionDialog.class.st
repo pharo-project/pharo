@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'PreviousMessages'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #history }

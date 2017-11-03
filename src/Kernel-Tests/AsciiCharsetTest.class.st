@@ -5,7 +5,7 @@ have behaviour consisetent with Unicode.
 Class {
 	#name : #AsciiCharsetTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Charset'
+	#category : #Kernel-Tests-Charset
 }
 
 { #category : #helper }

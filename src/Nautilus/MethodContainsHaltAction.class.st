@@ -4,7 +4,7 @@ Action when the method contains a halt
 Class {
 	#name : #MethodContainsHaltAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

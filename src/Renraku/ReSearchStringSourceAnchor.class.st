@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'searchString'
 	],
-	#category : 'Renraku-SourceAnchors'
+	#category : #Renraku-SourceAnchors
 }
 
 { #category : #'instance creation' }

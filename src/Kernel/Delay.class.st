@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Scheduler'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #testing }

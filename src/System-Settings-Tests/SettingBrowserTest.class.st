@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'settingBrowser'
 	],
-	#category : 'System-Settings-Tests'
+	#category : #System-Settings-Tests
 }
 
 { #category : #tests }

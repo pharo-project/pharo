@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'variableReferences'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #analyzing }

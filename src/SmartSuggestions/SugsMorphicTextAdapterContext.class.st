@@ -5,7 +5,7 @@ A SugsMorphicTextAdapterContext is a context that know how to work with the Morp
 Class {
 	#name : #SugsMorphicTextAdapterContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #accessing }

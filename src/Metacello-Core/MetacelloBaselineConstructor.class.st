@@ -11,7 +11,7 @@ MetacelloBaselineConstructor on: BaselineOfExample
 Class {
 	#name : #MetacelloBaselineConstructor,
 	#superclass : #MetacelloAbstractVersionConstructor,
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #'instance creation' }

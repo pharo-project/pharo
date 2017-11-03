@@ -9,7 +9,7 @@ For details see  Object documentation whatIsAPrimitive.
 Class {
 	#name : #MirrorPrimitives,
 	#superclass : #Object,
-	#category : 'ReflectionMirrors-Primitives'
+	#category : #ReflectionMirrors-Primitives
 }
 
 { #category : #'class relationship' }

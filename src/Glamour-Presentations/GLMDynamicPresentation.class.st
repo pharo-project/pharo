@@ -10,7 +10,7 @@ Class {
 		'presentationTransformation',
 		'cachedPresentation'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #rendering }

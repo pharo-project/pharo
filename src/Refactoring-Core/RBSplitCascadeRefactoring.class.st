@@ -19,7 +19,7 @@ Class {
 		'afterNodes',
 		'ancestorNode'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #instance-creation }

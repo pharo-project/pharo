@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'limit'
 	],
-	#category : 'Zinc-Resource-Meta-Core'
+	#category : #Zinc-Resource-Meta-Core
 }
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'Primitives'
 	],
-	#category : 'FileSystem-Core-Kernel'
+	#category : #FileSystem-Core-Kernel
 }
 
 { #category : #'instance creation' }

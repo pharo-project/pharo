@@ -29,7 +29,7 @@ Class {
 		'selector',
 		'classIsMeta'
 	],
-	#category : 'Shout-Examples'
+	#category : #Shout-Examples
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'versions2',
 		'savedName'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #asserting }

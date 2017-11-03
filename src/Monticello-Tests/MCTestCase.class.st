@@ -1,7 +1,7 @@
 Class {
 	#name : #MCTestCase,
 	#superclass : #TestCase,
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #'as yet unclassified' }

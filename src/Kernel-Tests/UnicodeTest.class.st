@@ -12,7 +12,7 @@ Class {
 		'nonCharacters',
 		'unicodeGenerator'
 	],
-	#category : 'Kernel-Tests-Charset'
+	#category : #Kernel-Tests-Charset
 }
 
 { #category : #accessing }

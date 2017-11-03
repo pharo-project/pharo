@@ -3,7 +3,7 @@ A trait for test purposes
 "
 Trait {
 	#name : #TDictionaryEnumeratingTest,
-	#category : 'Collections-Tests-Unordered'
+	#category : #Collections-Tests-Unordered
 }
 
 { #category : #requirements }

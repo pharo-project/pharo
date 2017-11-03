@@ -4,7 +4,7 @@ I am an abstract superclass for FileLocator and FileReference. By implementing m
 Class {
 	#name : #AbstractFileReference,
 	#superclass : #Object,
-	#category : 'FileSystem-Core-Public'
+	#category : #FileSystem-Core-Public
 }
 
 { #category : #copying }

@@ -16,7 +16,7 @@ Class {
 		'FixedColor',
 		'Period'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'GZipConstants'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #filein/out }

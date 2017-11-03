@@ -34,7 +34,7 @@ Class {
 	#classVars : [
 		'RefactoringOptions'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #'as yet unclassified' }

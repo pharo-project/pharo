@@ -6,7 +6,7 @@ SUnit tests for class DelayMicrosecondScheduler
 Class {
 	#name : #DelayMicrosecondSchedulerTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #support }

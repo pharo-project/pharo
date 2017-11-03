@@ -9,7 +9,7 @@ Class {
 		'selector',
 		'layoutProperties'
 	],
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #'instance creation' }

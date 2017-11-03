@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'stepTime'
 	],
-	#category : 'Morphic-Base-Events'
+	#category : #Morphic-Base-Events
 }
 
 { #category : #'instance creation' }

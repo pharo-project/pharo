@@ -38,7 +38,7 @@ Class {
 		'ImageSeparator',
 		'Terminator'
 	],
-	#category : 'Graphics-Files'
+	#category : #Graphics-Files
 }
 
 { #category : #examples }

@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'ast'
 	],
-	#category : 'OpalCompiler-Core-Translator'
+	#category : #OpalCompiler-Core-Translator
 }
 
 { #category : #'instance creation' }

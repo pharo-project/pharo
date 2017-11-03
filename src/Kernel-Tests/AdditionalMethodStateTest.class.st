@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'atState'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #running }

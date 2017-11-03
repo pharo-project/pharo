@@ -14,7 +14,7 @@ Class {
 		'getLabelSelector',
 		'label'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #'as yet unclassified' }

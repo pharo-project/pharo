@@ -6,7 +6,7 @@ Furthermore, the methods #new and #initialize are ignored once they are often ov
 Class {
 	#name : #RBEquivalentSuperclassMethodsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

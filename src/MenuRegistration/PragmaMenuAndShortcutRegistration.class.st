@@ -10,7 +10,7 @@ Class {
 		'platform',
 		'model'
 	],
-	#category : 'MenuRegistration-Core'
+	#category : #MenuRegistration-Core
 }
 
 { #category : #'instance creation' }

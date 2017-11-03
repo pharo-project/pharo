@@ -1,7 +1,7 @@
 Class {
 	#name : #STCommandLineHandlerTest,
 	#superclass : #ClassTestCase,
-	#category : 'Tests-System-CommandLine'
+	#category : #Tests-System-CommandLine
 }
 
 { #category : #coverage }

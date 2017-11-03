@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'prototype'
 	],
-	#category : 'SUnit-Core-Utilities'
+	#category : #SUnit-Core-Utilities
 }
 
 { #category : #default }

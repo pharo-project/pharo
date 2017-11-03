@@ -19,7 +19,7 @@ Class {
 	#classInstVars : [
 		'manageRemotesIcon'
 	],
-	#category : 'Komitter-UI'
+	#category : #Komitter-UI
 }
 
 { #category : #specs }

@@ -11,7 +11,7 @@ Class {
 		'stepparents',
 		'roots'
 	],
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #adding }

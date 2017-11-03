@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'LookupComment'
 	],
-	#category : 'Refactoring-Core-Model'
+	#category : #Refactoring-Core-Model
 }
 
 { #category : #'instance creation' }

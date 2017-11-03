@@ -8,7 +8,7 @@ Class {
 		'name',
 		'platforms'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #'instance creation' }

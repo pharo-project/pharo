@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'attributes'
 	],
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #accessing }

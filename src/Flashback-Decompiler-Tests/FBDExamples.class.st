@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'CVar'
 	],
-	#category : 'Flashback-Decompiler-Tests'
+	#category : #Flashback-Decompiler-Tests
 }
 
 { #category : #examples }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entries'
 	],
-	#category : 'Epicea-Log'
+	#category : #Epicea-Log
 }
 
 { #category : #accessing }

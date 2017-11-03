@@ -8,7 +8,7 @@ I am used to control the maximum size of entities being read from streams.
 Class {
 	#name : #ZnMaximumEntitySize,
 	#superclass : #DynamicVariable,
-	#category : 'Zinc-HTTP-Variables'
+	#category : #Zinc-HTTP-Variables
 }
 
 { #category : #accessing }

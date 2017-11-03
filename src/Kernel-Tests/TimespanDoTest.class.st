@@ -14,7 +14,7 @@ Class {
 		'aDuration',
 		'aDate'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #running }

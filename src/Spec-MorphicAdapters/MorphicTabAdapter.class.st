@@ -4,7 +4,7 @@ I am the adapter used to bridge a TabPresenter and a Tab
 Class {
 	#name : #MorphicTabAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #initialization }

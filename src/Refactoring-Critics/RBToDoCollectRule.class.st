@@ -4,7 +4,7 @@ Checks for users of to:do: when the shorter collect: would work.
 Class {
 	#name : #RBToDoCollectRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

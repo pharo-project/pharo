@@ -4,7 +4,7 @@ I open commit tool to create a MAJOR version of target configuration.
 Class {
 	#name : #VSCommitMajorCommand,
 	#superclass : #VSCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

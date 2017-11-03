@@ -12,7 +12,7 @@ Class {
 		'ipad',
 		'epad'
 	],
-	#category : 'System-Hashing-Core'
+	#category : #System-Hashing-Core
 }
 
 { #category : #'instance creation' }

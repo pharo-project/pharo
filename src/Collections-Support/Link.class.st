@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'nextLink'
 	],
-	#category : 'Collections-Support'
+	#category : #Collections-Support
 }
 
 { #category : #'instance creation' }

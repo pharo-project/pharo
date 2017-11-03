@@ -8,7 +8,7 @@ Class {
 		'pagerModel',
 		'showScrollBarWhenNeeded'
 	],
-	#category : 'Glamour-Morphic-Pager-Brick'
+	#category : #Glamour-Morphic-Pager-Brick
 }
 
 { #category : #examples }

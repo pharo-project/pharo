@@ -4,7 +4,7 @@ Set the description on the selected development version
 Class {
 	#name : #VSSetDescriptionCommand,
 	#superclass : #VSVersionCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

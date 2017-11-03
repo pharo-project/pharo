@@ -4,5 +4,5 @@ This is deprecated class because the original class CheckBoxModel was renamed to
 Class {
 	#name : #CheckBoxModel,
 	#superclass : #CheckBoxPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

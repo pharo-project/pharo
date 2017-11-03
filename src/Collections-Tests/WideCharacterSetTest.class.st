@@ -4,7 +4,7 @@ WideCharacterSetTest holds tests for WideCharacterSet
 Class {
 	#name : #WideCharacterSetTest,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Support'
+	#category : #Collections-Tests-Support
 }
 
 { #category : #tests }

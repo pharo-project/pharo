@@ -1,7 +1,7 @@
 Class {
 	#name : #HEScaledDecimal,
 	#superclass : #HEFraction,
-	#category : 'Hermes-Model'
+	#category : #Hermes-Model
 }
 
 { #category : #'as yet unclassified' }

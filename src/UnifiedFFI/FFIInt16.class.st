@@ -4,7 +4,7 @@ I'm an signed short type.
 Class {
 	#name : #FFIInt16,
 	#superclass : #FFIUInt16,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

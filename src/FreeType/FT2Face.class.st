@@ -47,7 +47,7 @@ Class {
 		'encodingId',
 		'size'
 	],
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #rendering }

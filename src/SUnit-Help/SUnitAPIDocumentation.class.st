@@ -4,7 +4,7 @@ SUnit API documentation for help system
 Class {
 	#name : #SUnitAPIDocumentation,
 	#superclass : #SUnitHelp,
-	#category : 'SUnit-Help'
+	#category : #SUnit-Help
 }
 
 { #category : #accessing }

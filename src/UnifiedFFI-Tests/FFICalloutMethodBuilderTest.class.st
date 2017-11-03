@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'architecture'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #factory }

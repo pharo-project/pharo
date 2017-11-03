@@ -17,7 +17,7 @@ Class {
 		'repositoryGroup',
 		'requiredPackages'
 	],
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #private }

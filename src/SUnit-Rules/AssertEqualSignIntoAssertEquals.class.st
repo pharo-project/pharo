@@ -4,7 +4,7 @@ Using assert:equals: produces better context on rule failure
 Class {
 	#name : #AssertEqualSignIntoAssertEquals,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'SUnit-Rules'
+	#category : #SUnit-Rules
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'compactClassIndex'
 	],
-	#category : 'Slot-Layout'
+	#category : #Slot-Layout
 }
 
 { #category : #'instance creation' }

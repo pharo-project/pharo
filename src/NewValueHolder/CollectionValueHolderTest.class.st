@@ -6,7 +6,7 @@ Class {
 		'withItems',
 		'fired'
 	],
-	#category : 'NewValueHolder-Tests'
+	#category : #NewValueHolder-Tests
 }
 
 { #category : #running }

@@ -25,7 +25,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #'instance creation' }

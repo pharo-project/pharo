@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMBoundPort,
 	#superclass : #GLMPort,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #comparing }

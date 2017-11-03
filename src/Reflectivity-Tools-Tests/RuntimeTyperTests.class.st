@@ -41,7 +41,7 @@ e.g. “a := 1” we know the type of a) and add these annotations to al the var
 Class {
 	#name : #RuntimeTyperTests,
 	#superclass : #TestCase,
-	#category : 'Reflectivity-Tools-Tests'
+	#category : #Reflectivity-Tools-Tests
 }
 
 { #category : #example }

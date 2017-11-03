@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
-	#category : 'BaselineOfUnifiedFFI'
+	#category : #BaselineOfUnifiedFFI
 }
 
 { #category : #baseline }

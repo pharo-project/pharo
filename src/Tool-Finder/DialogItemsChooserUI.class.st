@@ -30,7 +30,7 @@ Class {
 		'alreadySearchedSelectedItemsListMaxSize',
 		'alreadySearchedUnselectedItemsListMaxSize'
 	],
-	#category : 'Tool-Finder'
+	#category : #Tool-Finder
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'bindings'
 	],
-	#category : 'Spec-Core'
+	#category : #Spec-Core
 }
 
 { #category : #initialize }

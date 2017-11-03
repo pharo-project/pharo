@@ -8,7 +8,7 @@ Class {
 		'pane',
 		'oldMatchingPresentations'
 	],
-	#category : 'Glamour-Announcements'
+	#category : #Glamour-Announcements
 }
 
 { #category : #accessing-convenience }

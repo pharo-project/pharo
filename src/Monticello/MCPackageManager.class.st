@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'registry'
 	],
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'message'
 	],
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #running }

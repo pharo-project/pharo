@@ -8,7 +8,7 @@ Class {
 		'content',
 		'stamp'
 	],
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #'instance creation' }

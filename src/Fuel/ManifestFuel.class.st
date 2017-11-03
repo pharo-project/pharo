@@ -4,7 +4,7 @@ Manifest for Fuel package
 Class {
 	#name : #ManifestFuel,
 	#superclass : #PackageManifest,
-	#category : 'Fuel'
+	#category : #Fuel
 }
 
 { #category : #'meta data' }

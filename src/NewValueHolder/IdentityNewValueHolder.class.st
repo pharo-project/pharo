@@ -4,7 +4,7 @@ I am a special because I announce changes only if the new value set is different
 Class {
 	#name : #IdentityNewValueHolder,
 	#superclass : #NewValueHolder,
-	#category : 'NewValueHolder'
+	#category : #NewValueHolder
 }
 
 { #category : #accessing }

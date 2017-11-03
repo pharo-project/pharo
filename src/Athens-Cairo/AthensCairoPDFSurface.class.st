@@ -7,7 +7,7 @@ as output.
 Class {
 	#name : #AthensCairoPDFSurface,
 	#superclass : #AthensCairoSurface,
-	#category : 'Athens-Cairo'
+	#category : #Athens-Cairo
 }
 
 { #category : #private }

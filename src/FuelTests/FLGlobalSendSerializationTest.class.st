@@ -4,7 +4,7 @@ SUnit tests for fuel serialization of global sends
 Class {
 	#name : #FLGlobalSendSerializationTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }

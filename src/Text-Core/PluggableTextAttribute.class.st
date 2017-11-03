@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'evalBlock'
 	],
-	#category : 'Text-Core'
+	#category : #Text-Core
 }
 
 { #category : #'instance creation' }

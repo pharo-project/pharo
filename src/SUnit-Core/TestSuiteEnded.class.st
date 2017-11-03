@@ -4,7 +4,7 @@ This announcment is thrown when a test suite just finished (more precisly when h
 Class {
 	#name : #TestSuiteEnded,
 	#superclass : #TestCaseAnnouncement,
-	#category : 'SUnit-Core-Announcements'
+	#category : #SUnit-Core-Announcements
 }
 
 { #category : #'instance creation' }

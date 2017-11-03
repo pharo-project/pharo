@@ -21,7 +21,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : 'EmergencyEvaluator'
+	#category : #EmergencyEvaluator
 }
 
 { #category : #launching }

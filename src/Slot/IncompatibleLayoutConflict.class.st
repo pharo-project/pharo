@@ -8,7 +8,7 @@ Class {
 		'layout',
 		'subType'
 	],
-	#category : 'Slot-Exception'
+	#category : #Slot-Exception
 }
 
 { #category : #accessing }

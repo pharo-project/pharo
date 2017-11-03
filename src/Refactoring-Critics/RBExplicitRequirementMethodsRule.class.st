@@ -4,7 +4,7 @@ Classes that use traits with explicit requirement methods should either implemen
 Class {
 	#name : #RBExplicitRequirementMethodsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

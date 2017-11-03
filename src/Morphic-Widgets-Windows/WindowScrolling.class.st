@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'step'
 	],
-	#category : 'Morphic-Widgets-Windows-Announcements'
+	#category : #Morphic-Widgets-Windows-Announcements
 }
 
 { #category : #testing }

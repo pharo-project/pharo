@@ -17,7 +17,7 @@ Class {
 		'lineColor',
 		'selected'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #'drag and drop' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MethodConstantTests,
 	#superclass : #TestCase,
-	#category : 'Reflectivity-Tools-Tests'
+	#category : #Reflectivity-Tools-Tests
 }
 
 { #category : #tests }

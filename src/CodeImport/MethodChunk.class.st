@@ -10,7 +10,7 @@ Class {
 		'categoryName',
 		'stamp'
 	],
-	#category : 'CodeImport'
+	#category : #CodeImport
 }
 
 { #category : #'instance creation' }

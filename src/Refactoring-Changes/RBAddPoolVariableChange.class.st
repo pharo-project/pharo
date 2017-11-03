@@ -4,7 +4,7 @@ I am a refactoring for a pool  variable addition. My changes are executed on the
 Class {
 	#name : #RBAddPoolVariableChange,
 	#superclass : #RBRefactoryVariableChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #converting }

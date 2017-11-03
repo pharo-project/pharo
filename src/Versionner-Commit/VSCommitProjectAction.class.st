@@ -9,7 +9,7 @@ Class {
 		'commitVersion',
 		'nextVersion'
 	],
-	#category : 'Versionner-Commit'
+	#category : #Versionner-Commit
 }
 
 { #category : #'instance creation' }

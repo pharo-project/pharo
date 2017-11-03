@@ -9,7 +9,7 @@ Class {
 		'targetNode',
 		'requestor'
 	],
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #testing }

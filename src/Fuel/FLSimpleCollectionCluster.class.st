@@ -4,7 +4,7 @@ A FLSimpleCollectionCluster is a special optional cluster that rather than using
 Class {
 	#name : #FLSimpleCollectionCluster,
 	#superclass : #FLAbstractCollectionCluster,
-	#category : 'Fuel-Clusters-Optionals'
+	#category : #Fuel-Clusters-Optionals
 }
 
 { #category : #serialize/materialize }

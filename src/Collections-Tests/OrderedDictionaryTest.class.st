@@ -8,7 +8,7 @@ Class {
 		'nonIdentityOrderedAssociations',
 		'identityOrderedAssociations'
 	],
-	#category : 'Collections-Tests-Sequenceable'
+	#category : #Collections-Tests-Sequenceable
 }
 
 { #category : #testing }

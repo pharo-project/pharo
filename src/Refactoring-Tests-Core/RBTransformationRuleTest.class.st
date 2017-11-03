@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'RecursiveSelfRule'
 	],
-	#category : 'Refactoring-Tests-Core-Data'
+	#category : #Refactoring-Tests-Core-Data
 }
 
 { #category : #transformations }

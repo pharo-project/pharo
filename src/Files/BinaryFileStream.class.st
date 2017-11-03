@@ -9,7 +9,7 @@ stream upToEnd
 Class {
 	#name : #BinaryFileStream,
 	#superclass : #AbstractBinaryFileStream,
-	#category : 'Files-Streams'
+	#category : #Files-Streams
 }
 
 { #category : #testing }

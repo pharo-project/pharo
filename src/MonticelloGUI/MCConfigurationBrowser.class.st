@@ -9,7 +9,7 @@ Class {
 		'dependencyIndex',
 		'repositoryIndex'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #opening }

@@ -4,7 +4,7 @@ This debugger action is responsible for saving the current method from a debugge
 Class {
 	#name : #GTSaveDebugAction,
 	#superclass : #GTCodeDebugAction,
-	#category : 'GT-Debugger-Actions'
+	#category : #GT-Debugger-Actions
 }
 
 { #category : #registration }

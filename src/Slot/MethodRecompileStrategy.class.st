@@ -4,7 +4,7 @@ I am simple update strategy that recompiles all methods.
 Class {
 	#name : #MethodRecompileStrategy,
 	#superclass : #AbstractMethodUpdateStrategy,
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #updating }

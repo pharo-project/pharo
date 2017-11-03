@@ -16,7 +16,7 @@ Class {
 		'greenSlider',
 		'blueSlider'
 	],
-	#category : 'Spec-PolyWidgets-Support'
+	#category : #Spec-PolyWidgets-Support
 }
 
 { #category : #specs }

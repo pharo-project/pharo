@@ -8,7 +8,7 @@ Class {
 		'event',
 		'source'
 	],
-	#category : 'Keymapping-Core-Announcements'
+	#category : #Keymapping-Core-Announcements
 }
 
 { #category : #'instance creation' }

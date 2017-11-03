@@ -10,7 +10,7 @@ Class {
 		'editingModeMorph',
 		'lineNumbersDisplayMorph'
 	],
-	#category : 'Tool-Workspace'
+	#category : #Tool-Workspace
 }
 
 { #category : #querying }

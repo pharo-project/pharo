@@ -4,7 +4,7 @@ I am designed specifically for dictionaries.
 Class {
 	#name : #DictionaryValueHolder,
 	#superclass : #NewValueHolder,
-	#category : 'NewValueHolder'
+	#category : #NewValueHolder
 }
 
 { #category : #override }

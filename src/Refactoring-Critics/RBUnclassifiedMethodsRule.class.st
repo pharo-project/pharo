@@ -4,7 +4,7 @@ All methods should be put into a protocol (method category) for better readabili
 Class {
 	#name : #RBUnclassifiedMethodsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

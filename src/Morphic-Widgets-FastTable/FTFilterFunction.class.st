@@ -19,7 +19,7 @@ Class {
 		'isEditingSemaphore',
 		'filterClass'
 	],
-	#category : 'Morphic-Widgets-FastTable-Functions'
+	#category : #Morphic-Widgets-FastTable-Functions
 }
 
 { #category : #updating }

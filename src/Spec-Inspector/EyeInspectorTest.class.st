@@ -1,7 +1,7 @@
 Class {
 	#name : #EyeInspectorTest,
 	#superclass : #TestCase,
-	#category : 'Spec-Inspector-Test'
+	#category : #Spec-Inspector-Test
 }
 
 { #category : #accessing }

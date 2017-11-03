@@ -4,7 +4,7 @@ self new open
 Class {
 	#name : #GLMSegmentWithHelpAndMouseUpActionExample,
 	#superclass : #GLMRubricExample,
-	#category : 'Glamour-Rubric-Presentations-Examples'
+	#category : #Glamour-Rubric-Presentations-Examples
 }
 
 { #category : #accessing }

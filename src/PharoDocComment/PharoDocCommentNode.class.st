@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'DocCommentEnabled'
 	],
-	#category : 'PharoDocComment'
+	#category : #PharoDocComment
 }
 
 { #category : #settings }

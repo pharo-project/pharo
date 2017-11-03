@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'report'
 	],
-	#category : 'Tool-DependencyAnalyser-Report'
+	#category : #Tool-DependencyAnalyser-Report
 }
 
 { #category : #private }

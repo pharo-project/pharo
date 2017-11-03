@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'storeString'
 	],
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #testing }

@@ -12,7 +12,7 @@ Class {
 		'username',
 		'password'
 	],
-	#category : 'Zinc-HTTP-Support'
+	#category : #Zinc-HTTP-Support
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'vectorName'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #emitting }

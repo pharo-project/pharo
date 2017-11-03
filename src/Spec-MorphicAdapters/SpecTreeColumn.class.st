@@ -4,7 +4,7 @@ I am a Tree column made especially to be used by the Spec framework
 Class {
 	#name : #SpecTreeColumn,
 	#superclass : #MorphTreeColumn,
-	#category : 'Spec-MorphicAdapters-Support'
+	#category : #Spec-MorphicAdapters-Support
 }
 
 { #category : #compatibility }

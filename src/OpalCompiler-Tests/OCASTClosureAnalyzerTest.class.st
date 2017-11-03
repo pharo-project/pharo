@@ -1,7 +1,7 @@
 Class {
 	#name : #OCASTClosureAnalyzerTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-AST'
+	#category : #OpalCompiler-Tests-AST
 }
 
 { #category : #'testing - variables' }

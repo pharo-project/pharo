@@ -17,7 +17,7 @@ Class {
 		'lowercasePattern',
 		'indexes'
 	],
-	#category : 'FuzzyMatcher'
+	#category : #FuzzyMatcher
 }
 
 { #category : #'utilities api' }

@@ -10,7 +10,7 @@ Class {
 		'index',
 		'container'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #'instance creation' }

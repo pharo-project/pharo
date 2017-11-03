@@ -5,7 +5,7 @@ Class {
 	#name : #WideSymbol,
 	#superclass : #Symbol,
 	#type : #words,
-	#category : 'Collections-Strings'
+	#category : #Collections-Strings
 }
 
 { #category : #converting }

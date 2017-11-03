@@ -20,7 +20,7 @@ Class {
 		'binary',
 		'allowReadingUpToEnd'
 	],
-	#category : 'Zinc-HTTP-Streaming'
+	#category : #Zinc-HTTP-Streaming
 }
 
 { #category : #accessing }

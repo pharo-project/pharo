@@ -4,7 +4,7 @@ Superclass for mouse events
 Class {
 	#name : #MouseEvent,
 	#superclass : #UserInputEvent,
-	#category : 'Morphic-Core-Events'
+	#category : #Morphic-Core-Events
 }
 
 { #category : #constants }

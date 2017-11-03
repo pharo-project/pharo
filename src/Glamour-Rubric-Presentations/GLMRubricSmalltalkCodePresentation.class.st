@@ -8,7 +8,7 @@ Class {
 		'highlightSmalltalkContext',
 		'variableBindingsBlock'
 	],
-	#category : 'Glamour-Rubric-Presentations'
+	#category : #Glamour-Rubric-Presentations
 }
 
 { #category : #'actions browsing' }

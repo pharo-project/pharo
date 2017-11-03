@@ -8,7 +8,7 @@ This baseline includes several utility methods required to prepare data for the 
 Class {
 	#name : #BaselineOfPharoBootstrap,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfPharoBootstrap'
+	#category : #BaselineOfPharoBootstrap
 }
 
 { #category : #accessing }

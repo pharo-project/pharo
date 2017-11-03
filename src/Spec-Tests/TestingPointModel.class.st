@@ -8,7 +8,7 @@ Class {
 		'x',
 		'y'
 	],
-	#category : 'Spec-Tests-Utils'
+	#category : #Spec-Tests-Utils
 }
 
 { #category : #'instance creation' }

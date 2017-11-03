@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'versions'
 	],
-	#category : 'Monticello-Loading'
+	#category : #Monticello-Loading
 }
 
 { #category : #signalling }

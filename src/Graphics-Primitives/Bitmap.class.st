@@ -5,7 +5,7 @@ Class {
 	#name : #Bitmap,
 	#superclass : #ArrayedCollection,
 	#type : #words,
-	#category : 'Graphics-Primitives'
+	#category : #Graphics-Primitives
 }
 
 { #category : #'instance creation' }

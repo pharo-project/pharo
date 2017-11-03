@@ -4,7 +4,7 @@ A FinderSingleMethodNode is a node used to display a selector implemented only o
 Class {
 	#name : #FinderSingleMethodNode,
 	#superclass : #FinderMethodNode,
-	#category : 'Tool-Finder'
+	#category : #Tool-Finder
 }
 
 { #category : #accessing }

@@ -17,7 +17,7 @@ Class {
 		'toClasses',
 		'ignore'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #'instance creation' }

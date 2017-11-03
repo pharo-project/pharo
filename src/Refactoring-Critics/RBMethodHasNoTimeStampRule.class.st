@@ -4,7 +4,7 @@ For proper versioning, every method should have a timestamp.
 Class {
 	#name : #RBMethodHasNoTimeStampRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ I modelt the scope of a block
 Class {
 	#name : #OCBlockScope,
 	#superclass : #OCAbstractMethodScope,
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #testing }

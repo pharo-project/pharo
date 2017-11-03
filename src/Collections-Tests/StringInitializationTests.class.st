@@ -4,7 +4,7 @@ SUnit tests for String initialization
 Class {
 	#name : #StringInitializationTests,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Strings'
+	#category : #Collections-Tests-Strings
 }
 
 { #category : #tests }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMRubTextScrollPane,
 	#superclass : #RubTextScrollPane,
-	#category : 'Glamour-Morphic-Brick-Morphic'
+	#category : #Glamour-Morphic-Brick-Morphic
 }
 
 { #category : #drawing }

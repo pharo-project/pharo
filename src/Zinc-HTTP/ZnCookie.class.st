@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'attributes'
 	],
-	#category : 'Zinc-HTTP-Support'
+	#category : #Zinc-HTTP-Support
 }
 
 { #category : #'instance creation' }

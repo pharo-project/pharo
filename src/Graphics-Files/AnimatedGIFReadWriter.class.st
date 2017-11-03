@@ -16,7 +16,7 @@ Class {
 		'delays',
 		'comments'
 	],
-	#category : 'Graphics-Files'
+	#category : #Graphics-Files
 }
 
 { #category : #'image reading/writing' }

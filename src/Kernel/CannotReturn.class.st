@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'result'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #testing }

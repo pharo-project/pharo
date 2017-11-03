@@ -4,7 +4,7 @@ This class defines AST node menus for conditional  breakpoints
 Class {
 	#name : #SugsBreakConditionSuggestion,
 	#superclass : #SugsBreakpointSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #breakpoints }

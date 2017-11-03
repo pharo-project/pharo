@@ -7,7 +7,7 @@ Instance Variables
 Class {
 	#name : #UndoRedoGroup,
 	#superclass : #HistoryNode,
-	#category : 'System-History'
+	#category : #System-History
 }
 
 { #category : #undo-undo }

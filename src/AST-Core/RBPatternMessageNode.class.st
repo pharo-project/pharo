@@ -12,7 +12,7 @@ Class {
 		'isList',
 		'isCascadeList'
 	],
-	#category : 'AST-Core-Pattern'
+	#category : #AST-Core-Pattern
 }
 
 { #category : #'instance creation' }

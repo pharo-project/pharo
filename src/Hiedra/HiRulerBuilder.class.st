@@ -11,7 +11,7 @@ Class {
 		'linkBuilders',
 		'values'
 	],
-	#category : 'Hiedra-Builders'
+	#category : #Hiedra-Builders
 }
 
 { #category : #'accessing - building API' }

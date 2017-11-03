@@ -112,7 +112,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : 'RPackage-Core'
+	#category : #RPackage-Core
 }
 
 { #category : #singleton }

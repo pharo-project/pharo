@@ -4,7 +4,7 @@ Use uncapitalized instead of withFirstCharacterDownshifted since withFirstCharac
 Class {
 	#name : #RBDeprecateWithFirstCharacterDownshifted,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

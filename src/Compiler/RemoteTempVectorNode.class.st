@@ -9,7 +9,7 @@ Class {
 		'readNode',
 		'writeNode'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

@@ -10,7 +10,7 @@ Class {
 		'rule',
 		'tinyHint'
 	],
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #'instance creation' }

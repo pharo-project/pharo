@@ -4,7 +4,7 @@ Class used to display packages in a tree.
 Class {
 	#name : #VSPackageNode,
 	#superclass : #TreeNodePresenter,
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #accessing }

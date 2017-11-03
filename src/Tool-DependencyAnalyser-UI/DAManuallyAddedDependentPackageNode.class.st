@@ -4,7 +4,7 @@ I'm a node  representing a dependency not computed automatically but added manua
 Class {
 	#name : #DAManuallyAddedDependentPackageNode,
 	#superclass : #DADependentPackageNode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #browse-nautilus }

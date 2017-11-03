@@ -10,7 +10,7 @@ Class {
 		'definitions',
 		'dependencies'
 	],
-	#category : 'Monticello-Storing'
+	#category : #Monticello-Storing
 }
 
 { #category : #reading }

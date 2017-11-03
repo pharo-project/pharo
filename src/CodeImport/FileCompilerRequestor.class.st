@@ -10,7 +10,7 @@ Class {
 		'fileReference',
 		'interactive'
 	],
-	#category : 'CodeImport'
+	#category : #CodeImport
 }
 
 { #category : #accessing }

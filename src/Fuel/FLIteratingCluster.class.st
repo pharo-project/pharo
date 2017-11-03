@@ -8,7 +8,7 @@ Class {
 		'objects',
 		'references'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #analyzing }

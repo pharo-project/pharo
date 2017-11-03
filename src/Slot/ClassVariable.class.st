@@ -9,7 +9,7 @@ You can subclass me and implement #read and #write: for creating special kinds o
 Class {
 	#name : #ClassVariable,
 	#superclass : #LiteralVariable,
-	#category : 'Slot-Variables'
+	#category : #Slot-Variables
 }
 
 { #category : #printing }

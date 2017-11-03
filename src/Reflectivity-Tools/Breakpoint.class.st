@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'AllBreakpoints'
 	],
-	#category : 'Reflectivity-Tools-Breakpoints'
+	#category : #Reflectivity-Tools-Breakpoints
 }
 
 { #category : #all }

@@ -8,7 +8,7 @@ Class {
 		'stream',
 		'store'
 	],
-	#category : 'Ombu-Persistence'
+	#category : #Ombu-Persistence
 }
 
 { #category : #'instance creation' }

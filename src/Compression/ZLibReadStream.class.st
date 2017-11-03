@@ -4,7 +4,7 @@ A ZLib read stream
 Class {
 	#name : #ZLibReadStream,
 	#superclass : #FastInflateStream,
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #initialization }

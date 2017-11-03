@@ -9,7 +9,7 @@ Class {
 		'wrappers',
 		'covered'
 	],
-	#category : 'JenkinsTools-ExtraReports'
+	#category : #JenkinsTools-ExtraReports
 }
 
 { #category : #private }

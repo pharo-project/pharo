@@ -22,7 +22,7 @@ See RunArray class scanFrom: where decoding is done.
 Class {
 	#name : #TextAttribute,
 	#superclass : #Object,
-	#category : 'Text-Core'
+	#category : #Text-Core
 }
 
 { #category : #accessing }

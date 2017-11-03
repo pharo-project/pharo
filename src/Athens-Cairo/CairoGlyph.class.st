@@ -15,7 +15,7 @@ Class {
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : 'Athens-Cairo-Text'
+	#category : #Athens-Cairo-Text
 }
 
 { #category : #'fields description' }

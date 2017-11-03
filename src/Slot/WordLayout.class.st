@@ -4,7 +4,7 @@ I am a raw data layout that holds words (32 / 64 bit depending on the platform).
 Class {
 	#name : #WordLayout,
 	#superclass : #BitsLayout,
-	#category : 'Slot-Layout'
+	#category : #Slot-Layout
 }
 
 { #category : #'instance creation' }

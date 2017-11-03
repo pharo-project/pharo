@@ -15,7 +15,7 @@ collection anySatisfy: [ :each | .... ])
 Class {
 	#name : #RBDetectIfNoneRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }
