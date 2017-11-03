@@ -4,7 +4,7 @@ I represent the morph which shows the current selection
 Class {
 	#name : #RubPrimarySelectionMorph,
 	#superclass : #RubPlainSegmentMorph,
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #initialization }

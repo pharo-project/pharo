@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'label'
 	],
-	#category : 'Spec-Tests'
+	#category : #Spec-Tests
 }
 
 { #category : #accessing }

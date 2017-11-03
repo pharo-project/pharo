@@ -4,7 +4,7 @@ Notify about an undefined variable
 Class {
 	#name : #UndefinedVariableDetected,
 	#superclass : #ParserNotification,
-	#category : 'Compiler-Exceptions'
+	#category : #Compiler-Exceptions
 }
 
 { #category : #correcting }

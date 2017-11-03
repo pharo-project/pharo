@@ -8,7 +8,7 @@ Class {
 		'packages',
 		'browsedEnvironment'
 	],
-	#category : 'Nautilus-GroupManager'
+	#category : #Nautilus-GroupManager
 }
 
 { #category : #'instance creation' }

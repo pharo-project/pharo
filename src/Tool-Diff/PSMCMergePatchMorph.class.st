@@ -1,7 +1,7 @@
 Class {
 	#name : #PSMCMergePatchMorph,
 	#superclass : #PSMCPatchMorph,
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #'as yet unclassified' }

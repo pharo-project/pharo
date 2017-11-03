@@ -11,7 +11,7 @@ Class {
 		'nodes',
 		'treeModel'
 	],
-	#category : 'Hiedra-Spec'
+	#category : #Hiedra-Spec
 }
 
 { #category : #private-refreshing }

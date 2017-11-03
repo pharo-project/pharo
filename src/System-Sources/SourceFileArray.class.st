@@ -16,7 +16,7 @@ Class {
 		'readOnlyQueue',
 		'flushChanges'
 	],
-	#category : 'System-Sources'
+	#category : #System-Sources
 }
 
 { #category : #'class initialization' }

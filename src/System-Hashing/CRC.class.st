@@ -98,7 +98,7 @@ Class {
 		'runMethodSelector',
 		'lowestByteShift'
 	],
-	#category : 'System-Hashing-Checksums'
+	#category : #System-Hashing-Checksums
 }
 
 { #category : #'instance creation' }

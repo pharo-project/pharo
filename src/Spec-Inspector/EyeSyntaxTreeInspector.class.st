@@ -10,7 +10,7 @@ As an example, inspect
 Class {
 	#name : #EyeSyntaxTreeInspector,
 	#superclass : #EyeTreeInspector,
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ This event is generated when a joystick layout is remapped.
 Class {
 	#name : #OSJoyDeviceRemappedEvent,
 	#superclass : #OSJoyDeviceEvent,
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

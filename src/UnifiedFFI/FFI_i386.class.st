@@ -4,7 +4,7 @@ I represent i386 architectures.
 Class {
 	#name : #FFI_i386,
 	#superclass : #FFIArchitecture,
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #testing }

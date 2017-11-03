@@ -12,7 +12,7 @@ CurrentSpecDefaultBindings value: SpecStubAdapterBindings during: [
 Class {
 	#name : #SpecStubAdapterBindings,
 	#superclass : #SpecAdapterBindings,
-	#category : 'Spec-StubAdapter-Support'
+	#category : #Spec-StubAdapter-Support
 }
 
 { #category : #font }

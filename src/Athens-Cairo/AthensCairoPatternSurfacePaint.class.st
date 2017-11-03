@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : 'Athens-Cairo-Paints'
+	#category : #Athens-Cairo-Paints
 }
 
 { #category : #'as yet unclassified' }

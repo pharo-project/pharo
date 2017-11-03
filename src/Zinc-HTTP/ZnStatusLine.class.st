@@ -13,7 +13,7 @@ Class {
 		'code',
 		'reason'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

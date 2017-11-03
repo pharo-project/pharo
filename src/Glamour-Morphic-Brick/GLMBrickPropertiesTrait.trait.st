@@ -5,7 +5,7 @@ Trait {
 	#name : #GLMBrickPropertiesTrait,
 	#traits : 'GLMBrickExtensionTrait',
 	#classTraits : 'GLMBrickExtensionTrait classTrait',
-	#category : 'Glamour-Morphic-Brick-Traits'
+	#category : #Glamour-Morphic-Brick-Traits
 }
 
 { #category : #brick-properties-events }

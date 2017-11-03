@@ -10,7 +10,7 @@ this single selector printOn:indent: is scanned as one RBMultiKeywordLiteralToke
 Class {
 	#name : #RBMultiKeywordLiteralToken,
 	#superclass : #RBLiteralToken,
-	#category : 'AST-Core-Tokens'
+	#category : #AST-Core-Tokens
 }
 
 { #category : #testing }

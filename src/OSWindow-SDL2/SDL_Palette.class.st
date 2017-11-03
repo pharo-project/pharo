@@ -10,7 +10,7 @@ Class {
 		'OFFSET_REFCOUNT',
 		'OFFSET_VERSION'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'fields description' }

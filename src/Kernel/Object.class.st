@@ -62,7 +62,7 @@ Class {
 	#classVars : [
 		'DependentsFields'
 	],
-	#category : 'Kernel-Objects'
+	#category : #Kernel-Objects
 }
 
 { #category : #'class initialization' }

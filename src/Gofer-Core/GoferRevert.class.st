@@ -4,7 +4,7 @@ Revert work
 Class {
 	#name : #GoferRevert,
 	#superclass : #GoferUpdate,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #running }

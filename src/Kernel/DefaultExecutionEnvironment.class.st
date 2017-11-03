@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #controlling }

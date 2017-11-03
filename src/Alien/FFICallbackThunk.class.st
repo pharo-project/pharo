@@ -17,7 +17,7 @@ Class {
 		'AllocatedThunks',
 		'ExecutablePages'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'executable page management' }

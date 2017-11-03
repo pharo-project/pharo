@@ -11,5 +11,5 @@ ZnConnectionTimeout
 Class {
 	#name : #ZnConnectionTimeout,
 	#superclass : #DynamicVariable,
-	#category : 'Zinc-HTTP-Variables'
+	#category : #Zinc-HTTP-Variables
 }

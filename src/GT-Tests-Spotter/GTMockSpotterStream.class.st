@@ -1,7 +1,7 @@
 Class {
 	#name : #GTMockSpotterStream,
 	#superclass : #GTSpotterUIThreadStream,
-	#category : 'GT-Tests-Spotter-Scripting-Mocks'
+	#category : #GT-Tests-Spotter-Scripting-Mocks
 }
 
 { #category : #performing }

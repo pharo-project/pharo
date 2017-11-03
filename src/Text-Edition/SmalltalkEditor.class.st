@@ -4,7 +4,7 @@ The editor built specifically for Smalltalk code
 Class {
 	#name : #SmalltalkEditor,
 	#superclass : #TextEditor,
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #shortcuts }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'weakRegistry'
 	],
-	#category : 'Collections-Tests-Weak'
+	#category : #Collections-Tests-Weak
 }
 
 { #category : #finalization }

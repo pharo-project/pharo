@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'endianness'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

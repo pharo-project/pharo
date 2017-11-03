@@ -4,7 +4,7 @@ I am KeyNotFound, an exception indicating that a key was not found in a Dictiona
 Class {
 	#name : #KeyNotFound,
 	#superclass : #NotFound,
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #accessing }

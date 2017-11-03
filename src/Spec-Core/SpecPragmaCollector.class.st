@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'behavior'
 	],
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #'instance creation' }

@@ -22,7 +22,7 @@ Class {
 		'cmdActions',
 		'shiftCmdActions'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #shortcuts }

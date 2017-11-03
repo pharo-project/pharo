@@ -60,7 +60,7 @@ Class {
 		'mouseDownInterval',
 		'secondarySelectionToken'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #undo-redo }

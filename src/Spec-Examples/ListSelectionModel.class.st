@@ -4,5 +4,5 @@ This is deprecated class because the original class ListSelectionModel was renam
 Class {
 	#name : #ListSelectionModel,
 	#superclass : #ListSelectionPresenter,
-	#category : 'Spec-Examples-Deprecated'
+	#category : #Spec-Examples-Deprecated
 }

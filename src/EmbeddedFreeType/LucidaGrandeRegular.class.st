@@ -5,7 +5,7 @@ As is, it works just for macs, but the idea is to use it for showing shortcut sy
 Class {
 	#name : #LucidaGrandeRegular,
 	#superclass : #EmbeddedFreeTypeFontFontDescription,
-	#category : 'EmbeddedFreeType'
+	#category : #EmbeddedFreeType
 }
 
 { #category : #testing }

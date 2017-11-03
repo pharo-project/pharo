@@ -8,7 +8,7 @@ I dynamically build and display  the list of actions  available for a debugger.
 Class {
 	#name : #GTDebuggerHelp,
 	#superclass : #CustomHelp,
-	#category : 'GT-Debugger-Model'
+	#category : #GT-Debugger-Model
 }
 
 { #category : #documentation }

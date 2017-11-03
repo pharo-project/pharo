@@ -4,5 +4,5 @@ An OmTimeStampSuffixStrategyTest is a test class for testing the behavior of OmT
 Class {
 	#name : #OmTimeStampSuffixStrategyTest,
 	#superclass : #OmSessionStoreNameStrategyTest,
-	#category : 'OmbuTests'
+	#category : #OmbuTests
 }

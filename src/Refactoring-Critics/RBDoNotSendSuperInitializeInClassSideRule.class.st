@@ -14,7 +14,7 @@ ZnServer class>>initialize
 Class {
 	#name : #RBDoNotSendSuperInitializeInClassSideRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

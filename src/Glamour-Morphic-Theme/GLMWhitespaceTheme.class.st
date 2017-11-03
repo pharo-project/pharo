@@ -18,7 +18,7 @@ The theme is developed in the context of the Glamour project, and its goal is to
 Class {
 	#name : #GLMWhitespaceTheme,
 	#superclass : #UITheme,
-	#category : 'Glamour-Morphic-Theme'
+	#category : #Glamour-Morphic-Theme
 }
 
 { #category : #accessing }

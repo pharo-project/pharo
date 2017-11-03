@@ -39,7 +39,7 @@ Class {
 		'state',
 		'keepRefreshing'
 	],
-	#category : 'Athens-Morphic'
+	#category : #Athens-Morphic
 }
 
 { #category : #colors }

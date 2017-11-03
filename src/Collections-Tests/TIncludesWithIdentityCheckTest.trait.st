@@ -5,7 +5,7 @@ Trait {
 	#name : #TIncludesWithIdentityCheckTest,
 	#traits : 'TIncludesTest',
 	#classTraits : 'TIncludesTest classTrait',
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #requirements }

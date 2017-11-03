@@ -9,7 +9,7 @@ Class {
 		'readBeforeWritten',
 		'written'
 	],
-	#category : 'Compiler-Support'
+	#category : #Compiler-Support
 }
 
 { #category : #initialization }

@@ -16,7 +16,7 @@ Class {
 		'LinkSelectorFilterEnabled',
 		'NilSelectorsFilterEnabled'
 	],
-	#category : 'Spec-Debugger'
+	#category : #Spec-Debugger
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'unpacking',
 		'checkedEvents'
 	],
-	#category : 'GT-Spotter-EventRecorder-Tests'
+	#category : #GT-Spotter-EventRecorder-Tests
 }
 
 { #category : #serializing }

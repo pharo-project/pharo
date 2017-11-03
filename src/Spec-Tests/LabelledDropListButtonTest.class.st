@@ -1,7 +1,7 @@
 Class {
 	#name : #LabelledDropListButtonTest,
 	#superclass : #DropListButtonTest,
-	#category : 'Spec-Tests-PolyWidgets-Labelled'
+	#category : #Spec-Tests-PolyWidgets-Labelled
 }
 
 { #category : #running }

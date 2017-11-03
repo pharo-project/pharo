@@ -4,7 +4,7 @@ Notify that a group has been unregistered
 Class {
 	#name : #AGroupHasBeenUnregistered,
 	#superclass : #AbstractGroupAnnouncement,
-	#category : 'Nautilus-GroupManager-Announcements'
+	#category : #Nautilus-GroupManager-Announcements
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'author'
 	],
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #tests }

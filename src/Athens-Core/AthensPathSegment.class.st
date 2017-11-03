@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #visitor }

@@ -1,7 +1,7 @@
 Class {
 	#name : #TextInputFieldPresenterTest,
 	#superclass : #TextPresenterTest,
-	#category : 'Spec-Tests-Core-Widgets'
+	#category : #Spec-Tests-Core-Widgets
 }
 
 { #category : #running }

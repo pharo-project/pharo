@@ -8,7 +8,7 @@ Class {
 		'remotesUI',
 		'packageName'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #'instance creation' }

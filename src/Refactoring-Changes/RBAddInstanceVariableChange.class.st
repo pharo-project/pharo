@@ -4,7 +4,7 @@ I am a refactoring for a instance  variable addition. My changes are executed on
 Class {
 	#name : #RBAddInstanceVariableChange,
 	#superclass : #RBRefactoryVariableChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #converting }

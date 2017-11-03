@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'CalloutAPIClass'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #accessing }

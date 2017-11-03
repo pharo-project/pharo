@@ -24,7 +24,7 @@ Class {
 		'aTimeZone',
 		'localTimeZoneToRestore'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #running }

@@ -5,7 +5,7 @@ A StepThroughDebugAction through the execution until control returns to the curr
 Class {
 	#name : #StepThroughDebugAction,
 	#superclass : #DebugAction,
-	#category : 'DebuggerActions'
+	#category : #DebuggerActions
 }
 
 { #category : #registration }

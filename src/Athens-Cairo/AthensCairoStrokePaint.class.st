@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : 'Athens-Cairo-Paints'
+	#category : #Athens-Cairo-Paints
 }
 
 { #category : #drawing }

@@ -8,7 +8,7 @@ Class {
 		'specInterpreter',
 		'specInterpreterClass'
 	],
-	#category : 'Spec-Tests'
+	#category : #Spec-Tests
 }
 
 { #category : #running }

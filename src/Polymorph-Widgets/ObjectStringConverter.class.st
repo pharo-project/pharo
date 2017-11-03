@@ -12,7 +12,7 @@ Class {
 		'stringTransformBlock',
 		'objectTransformBlock'
 	],
-	#category : 'Polymorph-Widgets'
+	#category : #Polymorph-Widgets
 }
 
 { #category : #'as yet unclassified' }

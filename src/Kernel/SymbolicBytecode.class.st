@@ -14,7 +14,7 @@ Class {
 		'offset',
 		'bytes'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #comparing }

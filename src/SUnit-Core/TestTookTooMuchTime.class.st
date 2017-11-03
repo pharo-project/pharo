@@ -6,5 +6,5 @@ TestCase subclass can reimplement defaultTimeLimit in its class side to specify 
 Class {
 	#name : #TestTookTooMuchTime,
 	#superclass : #Error,
-	#category : 'SUnit-Core-Kernel'
+	#category : #SUnit-Core-Kernel
 }

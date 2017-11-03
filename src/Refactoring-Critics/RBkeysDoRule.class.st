@@ -11,7 +11,7 @@ This array can be quite large and using the keysDo: does not create such interme
 Class {
 	#name : #RBkeysDoRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

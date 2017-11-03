@@ -5,7 +5,7 @@ As it's name suggest it is used for anonymous classes, for instance in Tests.
 Class {
 	#name : #AnonymousClassInstaller,
 	#superclass : #AbstractClassInstaller,
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #notifications }

@@ -34,7 +34,7 @@ Class {
 		'DefaultAlphabet',
 		'DefaultInverse'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #'class initialization' }

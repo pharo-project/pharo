@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'System-Support'
+	#category : #System-Support
 }
 
 { #category : #settings }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'filterBlock'
 	],
-	#category : 'System-VMEvents'
+	#category : #System-VMEvents
 }
 
 { #category : #accessing }

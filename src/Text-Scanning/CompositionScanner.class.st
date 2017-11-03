@@ -59,7 +59,7 @@ Class {
 		'lastBreakIsNotASpace',
 		'nextIndexAfterLineBreak'
 	],
-	#category : 'Text-Scanning'
+	#category : #Text-Scanning
 }
 
 { #category : #testing }

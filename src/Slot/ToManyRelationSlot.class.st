@@ -4,7 +4,7 @@ I'm a relation slot  that  describes  slots that contain collections.
 Class {
 	#name : #ToManyRelationSlot,
 	#superclass : #RelationSlot,
-	#category : 'Slot-Examples-Associations'
+	#category : #Slot-Examples-Associations
 }
 
 { #category : #internal }

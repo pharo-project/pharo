@@ -17,7 +17,7 @@ Class {
 	#classInstVars : [
 		'logger'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #'class initialization' }

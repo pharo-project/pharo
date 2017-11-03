@@ -4,7 +4,7 @@ SUnit tests for accessor creation
 Class {
 	#name : #SugsSuggestionCreateAccessorsTest,
 	#superclass : #SugsSuggestionTest,
-	#category : 'SmartSuggestions-Tests-Tests'
+	#category : #SmartSuggestions-Tests-Tests
 }
 
 { #category : #private }

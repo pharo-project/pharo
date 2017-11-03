@@ -10,7 +10,7 @@ Class {
 		'OFFSET_G',
 		'OFFSET_R'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'fields descriptions' }

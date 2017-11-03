@@ -11,7 +11,7 @@ Class {
 		'color',
 		'iconSymbol'
 	],
-	#category : 'Morphic-Base-Widgets'
+	#category : #Morphic-Base-Widgets
 }
 
 { #category : #actions }

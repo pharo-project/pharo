@@ -8,7 +8,7 @@ ProtoObject has no instance variables, nor should any be added.
 Class {
 	#name : #ProtoObject,
 	#superclass : #nil,
-	#category : 'Kernel-Objects'
+	#category : #Kernel-Objects
 }
 
 { #category : #comparing }

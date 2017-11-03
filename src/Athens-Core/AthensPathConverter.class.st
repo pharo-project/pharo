@@ -29,7 +29,7 @@ Class {
 		'dest',
 		'endPoint'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #'instance creation' }

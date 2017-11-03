@@ -9,7 +9,7 @@ Class {
 		'username',
 		'password'
 	],
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #'instance creation' }

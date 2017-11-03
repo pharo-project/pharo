@@ -15,7 +15,7 @@ Class {
 		'cacheDirectory',
 		'stashDirectory'
 	],
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #accessing }

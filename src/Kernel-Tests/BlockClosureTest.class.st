@@ -8,7 +8,7 @@ Class {
 		'aBlockContext',
 		'contextOfaBlockContext'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #helpers }

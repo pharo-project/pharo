@@ -8,7 +8,7 @@ Class {
 		'aStopwatch',
 		'aDelay'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #testing }

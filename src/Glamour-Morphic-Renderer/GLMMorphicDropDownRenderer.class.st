@@ -5,7 +5,7 @@ Class {
 		'listModel',
 		'dropDownMorph'
 	],
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #'as yet unclassified' }

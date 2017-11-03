@@ -5,7 +5,7 @@ See class side.
 Class {
 	#name : #FTExamples,
 	#superclass : #Object,
-	#category : 'Morphic-Widgets-FastTable-Examples'
+	#category : #Morphic-Widgets-FastTable-Examples
 }
 
 { #category : #examples }

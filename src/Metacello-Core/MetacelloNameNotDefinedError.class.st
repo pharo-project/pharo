@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloNameNotDefinedError,
 	#superclass : #Error,
-	#category : 'Metacello-Core-Exceptions-Errors'
+	#category : #Metacello-Core-Exceptions-Errors
 }
 
 { #category : #Accessing }

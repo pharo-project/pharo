@@ -17,7 +17,7 @@ Class {
 		'filesystem',
 		'path'
 	],
-	#category : 'FileSystem-Core-Public'
+	#category : #FileSystem-Core-Public
 }
 
 { #category : #'cross platform' }

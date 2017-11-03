@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'orientation'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #drawing }

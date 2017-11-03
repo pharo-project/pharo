@@ -12,7 +12,7 @@ Class {
 		'loadDirective',
 		'silently'
 	],
-	#category : 'Metacello-MC-Loaders'
+	#category : #Metacello-MC-Loaders
 }
 
 { #category : #'instance creation' }

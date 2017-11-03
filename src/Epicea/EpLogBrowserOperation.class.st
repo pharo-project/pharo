@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entryReferences'
 	],
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #triggering }

@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'instVarName'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #signalling }

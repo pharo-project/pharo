@@ -4,7 +4,7 @@ Command to open help for Versionner
 Class {
 	#name : #MBHelpCommand,
 	#superclass : #MBDevCycleCommands,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

@@ -9,7 +9,7 @@ Class {
 		'externalFileName',
 		'stream'
 	],
-	#category : 'Compression-Archives'
+	#category : #Compression-Archives
 }
 
 { #category : #'instance creation' }

@@ -27,7 +27,7 @@ Examples:
 Class {
 	#name : #InitializePackagesCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : 'InitializePackagesCommandLineHandler'
+	#category : #InitializePackagesCommandLineHandler
 }
 
 { #category : #accessing }

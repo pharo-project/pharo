@@ -7,7 +7,7 @@ I should not be used directly
 Class {
 	#name : #ContainerPresenter,
 	#superclass : #AbstractWidgetPresenter,
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #specs }

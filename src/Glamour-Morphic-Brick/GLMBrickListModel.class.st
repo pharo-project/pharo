@@ -24,7 +24,7 @@ Class {
 		'countLogic',
 		'morphLogic'
 	],
-	#category : 'Glamour-Morphic-Brick-Model'
+	#category : #Glamour-Morphic-Brick-Model
 }
 
 { #category : #'instance creation' }

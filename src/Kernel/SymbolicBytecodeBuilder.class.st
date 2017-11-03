@@ -12,7 +12,7 @@ Class {
 		'oldPC',
 		'symbolicBytecodes'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #api }

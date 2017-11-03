@@ -53,7 +53,7 @@ Class {
 		'showSourceCodeAnnotation',
 		'inlineCritiques'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #'instance creation' }

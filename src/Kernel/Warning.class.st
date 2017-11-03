@@ -4,7 +4,7 @@ A Warning is a Notification which by default should be brought to the attention 
 Class {
 	#name : #Warning,
 	#superclass : #Notification,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #exceptionDescription }

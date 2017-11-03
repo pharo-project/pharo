@@ -8,7 +8,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnResourceMetaUtils,
 	#superclass : #Object,
-	#category : 'Zinc-Resource-Meta-Core'
+	#category : #Zinc-Resource-Meta-Core
 }
 
 { #category : #conversions }

@@ -4,7 +4,7 @@ SUnit tests for self evaluting objects
 Class {
 	#name : #SelfEvaluatingObjectTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Objects'
+	#category : #Kernel-Tests-Objects
 }
 
 { #category : #utilities }

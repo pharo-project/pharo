@@ -66,7 +66,7 @@ Class {
 		'data',
 		'resourceClass'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #finalization }

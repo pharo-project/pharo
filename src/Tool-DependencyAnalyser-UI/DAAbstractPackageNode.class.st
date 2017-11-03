@@ -4,7 +4,7 @@ Abstract class from package node displaying in the tree.
 Class {
 	#name : #DAAbstractPackageNode,
 	#superclass : #DANode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #browse-nautilus }

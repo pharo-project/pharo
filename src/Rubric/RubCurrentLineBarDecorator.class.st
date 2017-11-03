@@ -1,7 +1,7 @@
 Class {
 	#name : #RubCurrentLineBarDecorator,
 	#superclass : #RubParagraphDecorator,
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #querying }

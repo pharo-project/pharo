@@ -25,7 +25,7 @@ Class {
 		'announcementClass',
 		'conditionBlock'
 	],
-	#category : 'Announcements-Core'
+	#category : #Announcements-Core
 }
 
 { #category : #'instance creation' }

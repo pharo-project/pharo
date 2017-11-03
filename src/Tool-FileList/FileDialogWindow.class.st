@@ -22,7 +22,7 @@ Class {
 		'previewType',
 		'previewMorph'
 	],
-	#category : 'Tool-FileList'
+	#category : #Tool-FileList
 }
 
 { #category : #icons }

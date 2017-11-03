@@ -9,7 +9,7 @@ Class {
 		'varName',
 		'vars'
 	],
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

@@ -40,7 +40,7 @@ Class {
 		'blur',
 		'offset'
 	],
-	#category : 'Athens-Core-Paints'
+	#category : #Athens-Core-Paints
 }
 
 { #category : #converting }

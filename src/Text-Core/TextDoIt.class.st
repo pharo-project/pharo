@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'evalString'
 	],
-	#category : 'Text-Core'
+	#category : #Text-Core
 }
 
 { #category : #'instance creation' }

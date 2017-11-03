@@ -8,7 +8,7 @@ Class {
 		'pointerArity',
 		'loader'
 	],
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #converting }

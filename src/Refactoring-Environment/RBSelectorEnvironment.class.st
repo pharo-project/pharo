@@ -10,7 +10,7 @@ Class {
 		'classSelectors',
 		'metaClassSelectors'
 	],
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #'instance creation' }

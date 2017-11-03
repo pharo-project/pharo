@@ -4,7 +4,7 @@ SUnit tests for class LayoutFrame
 Class {
 	#name : #LayoutFrameTest,
 	#superclass : #TestCase,
-	#category : 'Morphic-Tests-Layouts'
+	#category : #Morphic-Tests-Layouts
 }
 
 { #category : #'tests - conversion' }

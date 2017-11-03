@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'prefValueCase'
 	],
-	#category : 'NECompletion-Tests'
+	#category : #NECompletion-Tests
 }
 
 { #category : #running }

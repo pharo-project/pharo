@@ -4,7 +4,7 @@ SUnit tests for Job class
 Class {
 	#name : #JobTest,
 	#superclass : #TestCase,
-	#category : 'Jobs-Tests'
+	#category : #Jobs-Tests
 }
 
 { #category : #running }

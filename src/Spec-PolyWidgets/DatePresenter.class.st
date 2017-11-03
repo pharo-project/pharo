@@ -22,7 +22,7 @@ Class {
 		'dateModel',
 		'date'
 	],
-	#category : 'Spec-PolyWidgets-Widgets'
+	#category : #Spec-PolyWidgets-Widgets
 }
 
 { #category : #example }

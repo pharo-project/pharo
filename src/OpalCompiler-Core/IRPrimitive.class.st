@@ -14,7 +14,7 @@ Class {
 		'primitiveNum',
 		'spec'
 	],
-	#category : 'OpalCompiler-Core-Bytecode'
+	#category : #OpalCompiler-Core-Bytecode
 }
 
 { #category : #initialization }

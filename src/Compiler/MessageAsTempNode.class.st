@@ -4,7 +4,7 @@ This node represents accesses to temporary variables for do-its in the debugger.
 Class {
 	#name : #MessageAsTempNode,
 	#superclass : #MessageNode,
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #'access to remote temps' }

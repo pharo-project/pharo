@@ -13,7 +13,7 @@ Class {
 		'primitivesBucket',
 		'postBaselevelBucket'
 	],
-	#category : 'Fuel-Core'
+	#category : #Fuel-Core
 }
 
 { #category : #'cluster buckets' }

@@ -7,7 +7,7 @@ In Pharo you do not increment or decrement counter but should use the message to
 Class {
 	#name : #RBToDoWithIncrementRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ having an empty block is a bad idea because the program silently fails.
 Class {
 	#name : #RBEmptyExceptionHandlerRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Provides for another morph to occupy the full screen area (less docking bars).
 Class {
 	#name : #FullscreenMorph,
 	#superclass : #Morph,
-	#category : 'Morphic-Widgets-Windows-Widgets'
+	#category : #Morphic-Widgets-Windows-Widgets
 }
 
 { #category : #accessing }

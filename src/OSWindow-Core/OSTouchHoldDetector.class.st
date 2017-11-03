@@ -13,7 +13,7 @@ Class {
 		'MaxDistanceTravelled',
 		'WaitingTime'
 	],
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #'class initialization' }

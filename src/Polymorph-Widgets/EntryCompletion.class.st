@@ -34,7 +34,7 @@ Class {
 		'chooser',
 		'previousToken'
 	],
-	#category : 'Polymorph-Widgets'
+	#category : #Polymorph-Widgets
 }
 
 { #category : #examples }

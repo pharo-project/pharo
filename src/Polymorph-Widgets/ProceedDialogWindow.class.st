@@ -4,7 +4,7 @@ Yes/no dialog. Test result as to whether the dialog is cancelled (no) or not (ye
 Class {
 	#name : #ProceedDialogWindow,
 	#superclass : #MessageDialogWindow,
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #icons }

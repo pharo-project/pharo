@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'TestToPush'
 	],
-	#category : 'OpalCompiler-Tests-IR'
+	#category : #OpalCompiler-Tests-IR
 }
 
 { #category : #'as yet unclassified' }

@@ -31,7 +31,7 @@ Class {
 	#classInstVars : [
 		'lifoCallbackSemaphore'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'primitives-memory management' }

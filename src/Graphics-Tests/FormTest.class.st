@@ -4,7 +4,7 @@ SUnit tests for class Form
 Class {
 	#name : #FormTest,
 	#superclass : #ClassTestCase,
-	#category : 'Graphics-Tests-Primitives'
+	#category : #Graphics-Tests-Primitives
 }
 
 { #category : #'tests - 32 bit' }

@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'NECompletion-View'
+	#category : #NECompletion-View
 }
 
 { #category : #testing }

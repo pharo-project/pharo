@@ -4,7 +4,7 @@ SUnit tests for weak value dictionaries
 Class {
 	#name : #WeakValueDictionaryTest,
 	#superclass : #DictionaryTest,
-	#category : 'Collections-Tests-Weak'
+	#category : #Collections-Tests-Weak
 }
 
 { #category : #'building suites' }

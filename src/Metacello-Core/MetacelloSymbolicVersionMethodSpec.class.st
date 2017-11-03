@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloSymbolicVersionMethodSpec,
 	#superclass : #MetacelloMethodSpec,
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #adding }

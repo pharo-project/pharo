@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #signaledexception }

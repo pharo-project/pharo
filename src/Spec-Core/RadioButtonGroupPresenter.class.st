@@ -35,7 +35,7 @@ Class {
 		'canDeselectByClick',
 		'currentActivated'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

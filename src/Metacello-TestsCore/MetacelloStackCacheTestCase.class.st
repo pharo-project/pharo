@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloStackCacheTestCase,
 	#superclass : #TestCase,
-	#category : 'Metacello-TestsCore'
+	#category : #Metacello-TestsCore
 }
 
 { #category : #tests }

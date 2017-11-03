@@ -20,7 +20,7 @@ Class {
 		'strongArray',
 		'owner'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'tabs'
 	],
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

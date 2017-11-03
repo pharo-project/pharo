@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'isBinary'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #converting }

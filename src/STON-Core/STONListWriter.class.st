@@ -5,7 +5,7 @@ STONArrayWriter helps in writing array based STON representations.
 Class {
 	#name : #STONListWriter,
 	#superclass : #STONStreamWriter,
-	#category : 'STON-Core'
+	#category : #STON-Core
 }
 
 { #category : #accessing }

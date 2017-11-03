@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'definitions'
 	],
-	#category : 'Monticello-Base'
+	#category : #Monticello-Base
 }
 
 { #category : #instance-creation }

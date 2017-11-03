@@ -4,7 +4,7 @@ This chapter of the refactoring help book is about how to manually use the refac
 Class {
 	#name : #RBRefactoringExamplesHelp,
 	#superclass : #RefactoringHelp,
-	#category : 'Refactoring-Help'
+	#category : #Refactoring-Help
 }
 
 { #category : #accessing }

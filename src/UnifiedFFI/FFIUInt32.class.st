@@ -4,7 +4,7 @@ I'm an unsigned int type (32 bits)
 Class {
 	#name : #FFIUInt32,
 	#superclass : #FFIIntegerType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

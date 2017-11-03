@@ -10,7 +10,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnCharacterReadStream,
 	#superclass : #ZnEncodedReadStream,
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

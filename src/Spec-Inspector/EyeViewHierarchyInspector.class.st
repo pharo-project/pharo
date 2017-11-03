@@ -4,7 +4,7 @@ A special tree inspector that displays the submorph hierarchy of the inspected m
 Class {
 	#name : #EyeViewHierarchyInspector,
 	#superclass : #EyeTreeInspector,
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #accessing }

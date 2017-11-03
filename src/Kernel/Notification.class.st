@@ -4,7 +4,7 @@ A Notification is an indication that something interesting has occurred.  If it 
 Class {
 	#name : #Notification,
 	#superclass : #Exception,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #exceptiondescription }

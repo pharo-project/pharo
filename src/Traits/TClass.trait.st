@@ -3,7 +3,7 @@ Kernel trait for Class
 "
 Trait {
 	#name : #TClass,
-	#category : 'Traits-Kernel-Traits'
+	#category : #Traits-Kernel-Traits
 }
 
 { #category : #fileIn/Out }

@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'lineReader'
 	],
-	#category : 'Zodiac-Extra'
+	#category : #Zodiac-Extra
 }
 
 { #category : #constants }

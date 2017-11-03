@@ -17,7 +17,7 @@ Class {
 		'ghostText',
 		'selectDialog'
 	],
-	#category : 'Spec-PolyWidgets-Widgets'
+	#category : #Spec-PolyWidgets-Widgets
 }
 
 { #category : #specs }

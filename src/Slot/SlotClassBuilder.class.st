@@ -28,7 +28,7 @@ Class {
 		'comment',
 		'commentStamp'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #private }

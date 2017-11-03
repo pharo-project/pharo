@@ -13,7 +13,7 @@ Installs:
 Class {
 	#name : #BaselineOfSUnit,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfSUnit'
+	#category : #BaselineOfSUnit
 }
 
 { #category : #baseline }

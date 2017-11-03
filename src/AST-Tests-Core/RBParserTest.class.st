@@ -4,7 +4,7 @@ SUnit tests for RBParser
 Class {
 	#name : #RBParserTest,
 	#superclass : #TestCase,
-	#category : 'AST-Tests-Core'
+	#category : #AST-Tests-Core
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ Class {
 	#superclass : #TestCase,
 	#traits : 'TTutorialTest',
 	#classTraits : 'TTutorialTest classTrait',
-	#category : 'ProfStef-Tests-Tests'
+	#category : #ProfStef-Tests-Tests
 }
 
 { #category : #tests }

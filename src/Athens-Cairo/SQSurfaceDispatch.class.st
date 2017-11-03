@@ -34,7 +34,7 @@ Class {
 		'OFFSET_SHOWSURFACEFN',
 		'OFFSET_UNLOCKSURFACEFN'
 	],
-	#category : 'Athens-Cairo'
+	#category : #Athens-Cairo
 }
 
 { #category : #'field definition' }

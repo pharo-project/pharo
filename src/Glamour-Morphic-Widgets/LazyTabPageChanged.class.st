@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'oldPage'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #accessing }

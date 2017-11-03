@@ -42,7 +42,7 @@ Class {
 		'tagsBlock',
 		'tagsFilterBlock'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #validation }

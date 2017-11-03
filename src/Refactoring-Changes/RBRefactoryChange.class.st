@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ SUnit tests for MailMessage
 Class {
 	#name : #MailMessageTest,
 	#superclass : #TestCase,
-	#category : 'Network-Tests-Mail'
+	#category : #Network-Tests-Mail
 }
 
 { #category : #tests }

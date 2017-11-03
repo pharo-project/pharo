@@ -5,7 +5,7 @@ STONShortArrayWriter helps in writing short array based STON representations.
 Class {
 	#name : #STONShortListWriter,
 	#superclass : #STONListWriter,
-	#category : 'STON-Core'
+	#category : #STON-Core
 }
 
 { #category : #accessing }

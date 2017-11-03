@@ -35,7 +35,7 @@ Class {
 		'tableModel',
 		'tableMorph'
 	],
-	#category : 'Glamour-FastTable-Morphic-Renderer'
+	#category : #Glamour-FastTable-Morphic-Renderer
 }
 
 { #category : #callbacks }

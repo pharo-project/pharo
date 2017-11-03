@@ -10,7 +10,7 @@ Class {
 		'branch',
 		'versionNumber'
 	],
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #accessing }

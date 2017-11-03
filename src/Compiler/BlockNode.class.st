@@ -21,7 +21,7 @@ Class {
 		'closureCreationNode',
 		'startOfLastStatement'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #'instance creation' }

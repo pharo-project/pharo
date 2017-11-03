@@ -23,7 +23,7 @@ Class {
 		'removeProjectButton',
 		'editProjectButton'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #spec }

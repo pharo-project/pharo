@@ -19,7 +19,7 @@ Class {
 		'collectorForAssignment',
 		'collectorForBlock'
 	],
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #cleanup }

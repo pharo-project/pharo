@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'packageSpec'
 	],
-	#category : 'Metacello-Core-Exceptions-Notifications'
+	#category : #Metacello-Core-Exceptions-Notifications
 }
 
 { #category : #signalling }

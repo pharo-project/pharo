@@ -4,7 +4,7 @@ I know how to inline the method from a message
 Class {
 	#name : #SugsInline,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

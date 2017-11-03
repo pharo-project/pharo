@@ -1,7 +1,7 @@
 Class {
 	#name : #GTEventRecorderHelp,
 	#superclass : #CustomHelp,
-	#category : 'GT-EventRecorder-Help'
+	#category : #GT-EventRecorder-Help
 }
 
 { #category : #pages }

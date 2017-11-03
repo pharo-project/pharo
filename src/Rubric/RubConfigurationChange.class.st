@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'configurationBlock'
 	],
-	#category : 'Rubric-Editing-Announcements'
+	#category : #Rubric-Editing-Announcements
 }
 
 { #category : #accessing }

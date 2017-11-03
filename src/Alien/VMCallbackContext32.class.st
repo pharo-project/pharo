@@ -25,7 +25,7 @@ Class {
 	#name : #VMCallbackContext32,
 	#superclass : #Alien,
 	#type : #bytes,
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'instance creation' }

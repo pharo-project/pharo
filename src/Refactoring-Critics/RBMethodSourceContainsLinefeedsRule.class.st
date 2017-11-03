@@ -4,7 +4,7 @@ Pharo code should not contain linefeed characters.
 Class {
 	#name : #RBMethodSourceContainsLinefeedsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

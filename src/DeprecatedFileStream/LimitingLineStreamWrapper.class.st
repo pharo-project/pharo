@@ -18,7 +18,7 @@ Class {
 		'limitingBlock',
 		'position'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #examples }

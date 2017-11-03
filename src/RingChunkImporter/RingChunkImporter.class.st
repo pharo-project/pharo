@@ -17,7 +17,7 @@ Class {
 		'package',
 		'doIts'
 	],
-	#category : 'RingChunkImporter'
+	#category : #RingChunkImporter
 }
 
 { #category : #'instance creation' }

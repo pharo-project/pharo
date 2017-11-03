@@ -4,7 +4,7 @@ SUnit tests for method pragmas
 Class {
 	#name : #MethodPragmaTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Misc'
+	#category : #OpalCompiler-Tests-Misc
 }
 
 { #category : #utilities }

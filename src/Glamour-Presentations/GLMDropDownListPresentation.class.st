@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'selectedIndex'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #rendering }

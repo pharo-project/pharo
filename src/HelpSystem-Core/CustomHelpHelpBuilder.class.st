@@ -13,7 +13,7 @@ The help topic description object has to understand the following messages:
 Class {
 	#name : #CustomHelpHelpBuilder,
 	#superclass : #HelpBuilder,
-	#category : 'HelpSystem-Core-Builders'
+	#category : #HelpSystem-Core-Builders
 }
 
 { #category : #building }

@@ -4,7 +4,7 @@ At May 09, 2003 Tim Olson sent a bug report to the Squeak developers list that i
 Class {
 	#name : #TextAndTextStreamTest,
 	#superclass : #TestCase,
-	#category : 'Text-Tests'
+	#category : #Text-Tests
 }
 
 { #category : #examples }

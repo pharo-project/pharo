@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Glamour-Morphic-Pager-Morphic'
+	#category : #Glamour-Morphic-Pager-Morphic
 }
 
 { #category : #cleanup }

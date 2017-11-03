@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'searchedTextListMaxSize'
 	],
-	#category : 'Tool-Finder'
+	#category : #Tool-Finder
 }
 
 { #category : #'event subscriptions' }

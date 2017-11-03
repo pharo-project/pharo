@@ -22,7 +22,7 @@ Class {
 		'MonotonSubdivisions',
 		'OverflowSubdivisions'
 	],
-	#category : 'Balloon-Simulation'
+	#category : #Balloon-Simulation
 }
 
 { #category : #initialization }

@@ -4,7 +4,7 @@ A variable definition
 Class {
 	#name : #RGVariableDefinition,
 	#superclass : #RGElementDefinition,
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #comparing }

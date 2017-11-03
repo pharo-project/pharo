@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnStaticFileServerDelegateTests,
 	#superclass : #TestCase,
-	#category : 'Zinc-Tests'
+	#category : #Zinc-Tests
 }
 
 { #category : #private }

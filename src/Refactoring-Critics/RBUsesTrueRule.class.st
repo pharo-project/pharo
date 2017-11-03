@@ -10,7 +10,7 @@ Class {
 		'trueBinding',
 		'falseBinding'
 	],
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

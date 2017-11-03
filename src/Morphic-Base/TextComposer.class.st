@@ -22,7 +22,7 @@ Class {
 		'actualHeight',
 		'wantsColumnBreaks'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #defaults }

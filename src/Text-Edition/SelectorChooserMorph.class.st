@@ -21,7 +21,7 @@ Class {
 		'prefix',
 		'requestorPos'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #opening }

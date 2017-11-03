@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentStrategy'
 	],
-	#category : 'Renraku-Test'
+	#category : #Renraku-Test
 }
 
 { #category : #helpers }

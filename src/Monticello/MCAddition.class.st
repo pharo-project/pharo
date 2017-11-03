@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'definition'
 	],
-	#category : 'Monticello-Patching'
+	#category : #Monticello-Patching
 }
 
 { #category : #instance-creation }

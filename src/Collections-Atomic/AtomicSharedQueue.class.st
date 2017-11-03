@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'availSema'
 	],
-	#category : 'Collections-Atomic'
+	#category : #Collections-Atomic
 }
 
 { #category : #initialization }

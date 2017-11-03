@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'storeValue'
 	],
-	#category : 'Morphic-Widgets-TickList'
+	#category : #Morphic-Widgets-TickList
 }
 
 { #category : #event }

@@ -4,7 +4,7 @@ I serialize or materialize objects using STON framework. Create instance of me c
 Class {
 	#name : #GlobalIdentifierStonPersistence,
 	#superclass : #GlobalIdentifierPersistence,
-	#category : 'System-Identification'
+	#category : #System-Identification
 }
 
 { #category : #configuration }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'exclusions'
 	],
-	#category : 'Traits-Composition'
+	#category : #Traits-Composition
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ SUnit tests for AbstractTutorial
 Class {
 	#name : #AbstractTutorialTest,
 	#superclass : #TestCase,
-	#category : 'ProfStef-Tests-Tests'
+	#category : #ProfStef-Tests-Tests
 }
 
 { #category : #tests }

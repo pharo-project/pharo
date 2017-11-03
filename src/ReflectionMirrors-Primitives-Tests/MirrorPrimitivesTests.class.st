@@ -1,7 +1,7 @@
 Class {
 	#name : #MirrorPrimitivesTests,
 	#superclass : #TestCase,
-	#category : 'ReflectionMirrors-Primitives-Tests'
+	#category : #ReflectionMirrors-Primitives-Tests
 }
 
 { #category : #'tests-class relationship' }

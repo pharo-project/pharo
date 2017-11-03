@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'newSource'
 	],
-	#category : 'OpalCompiler-Core-Exception'
+	#category : #OpalCompiler-Core-Exception
 }
 
 { #category : #signaling }

@@ -20,7 +20,7 @@ Class {
 		'soleInstance',
 		'session'
 	],
-	#category : 'Athens-Cairo'
+	#category : #Athens-Cairo
 }
 
 { #category : #'session management' }

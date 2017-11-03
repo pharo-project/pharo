@@ -4,7 +4,7 @@ I am a trivial tritic that does not provide any more information other than my t
 Class {
 	#name : #ReTrivialCritique,
 	#superclass : #ReAbstractCritique,
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #accessing }

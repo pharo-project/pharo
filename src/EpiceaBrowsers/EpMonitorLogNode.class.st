@@ -8,7 +8,7 @@ Class {
 		'theLog',
 		'headReference'
 	],
-	#category : 'EpiceaBrowsers-UI-Graph'
+	#category : #EpiceaBrowsers-UI-Graph
 }
 
 { #category : #'instance creation' }

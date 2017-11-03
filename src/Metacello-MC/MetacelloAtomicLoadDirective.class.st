@@ -6,7 +6,7 @@ Class {
 		'preloads',
 		'postloads'
 	],
-	#category : 'Metacello-MC-Directives'
+	#category : #Metacello-MC-Directives
 }
 
 { #category : #enumerating }

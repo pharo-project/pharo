@@ -10,7 +10,7 @@ Class {
 		'classTrait',
 		'category'
 	],
-	#category : 'Traits-Kernel'
+	#category : #Traits-Kernel
 }
 
 { #category : #'instance creation' }

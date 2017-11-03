@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'subject'
 	],
-	#category : 'Zinc-HTTP-Logging'
+	#category : #Zinc-HTTP-Logging
 }
 
 { #category : #'instance creation' }

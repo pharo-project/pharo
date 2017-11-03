@@ -44,7 +44,7 @@ Class {
 	#instVars : [
 		'direction'
 	],
-	#category : 'SortFunctions-Core'
+	#category : #SortFunctions-Core
 }
 
 { #category : #'instance creation' }

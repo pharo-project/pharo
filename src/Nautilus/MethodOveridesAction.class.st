@@ -9,7 +9,7 @@ Class {
 		'isOverride',
 		'result'
 	],
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsUnordered,
 	#superclass : #PackageManifest,
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #meta-data }

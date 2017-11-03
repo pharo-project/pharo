@@ -8,7 +8,7 @@ You can find more information on Zodiac's website
 Class {
 	#name : #ZdcPluginMissing,
 	#superclass : #Error,
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #printing }

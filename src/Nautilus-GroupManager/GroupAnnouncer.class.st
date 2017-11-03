@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'announcer'
 	],
-	#category : 'Nautilus-GroupManager-Announcements'
+	#category : #Nautilus-GroupManager-Announcements
 }
 
 { #category : #initialization }

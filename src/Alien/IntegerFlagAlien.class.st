@@ -5,7 +5,7 @@ Class {
 	#name : #IntegerFlagAlien,
 	#superclass : #Alien,
 	#type : #bytes,
-	#category : 'Alien-Win32'
+	#category : #Alien-Win32
 }
 
 { #category : #'instance creation' }

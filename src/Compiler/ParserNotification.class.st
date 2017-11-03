@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Compiler-Exceptions'
+	#category : #Compiler-Exceptions
 }
 
 { #category : #'as yet unclassified' }

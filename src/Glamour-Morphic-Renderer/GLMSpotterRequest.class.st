@@ -6,7 +6,7 @@ Class {
 		'prompt',
 		'default'
 	],
-	#category : 'Glamour-Morphic-Renderer-Spotter'
+	#category : #Glamour-Morphic-Renderer-Spotter
 }
 
 { #category : #initialize-release }

@@ -6,7 +6,7 @@ GLMErrorPopper simpleErrorPopper
 Class {
 	#name : #GLMErrorPopper,
 	#superclass : #GLMPopper,
-	#category : 'Glamour-Morphic-Widgets-Popper'
+	#category : #Glamour-Morphic-Widgets-Popper
 }
 
 { #category : #examples }

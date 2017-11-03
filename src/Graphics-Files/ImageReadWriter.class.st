@@ -27,7 +27,7 @@ Class {
 		'ImageNotStoredSignal',
 		'MagicNumberErrorSignal'
 	],
-	#category : 'Graphics-Files'
+	#category : #Graphics-Files
 }
 
 { #category : #'image reading/writing' }

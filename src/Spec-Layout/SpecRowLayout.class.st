@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'width'
 	],
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #commands }

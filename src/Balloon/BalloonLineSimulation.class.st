@@ -13,7 +13,7 @@ Class {
 		'errorAdjUp',
 		'errorAdjDown'
 	],
-	#category : 'Balloon-Simulation'
+	#category : #Balloon-Simulation
 }
 
 { #category : #computing }

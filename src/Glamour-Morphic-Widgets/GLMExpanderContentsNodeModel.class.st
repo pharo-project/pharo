@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'containerNode'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'alpha'
 	],
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #accessing }

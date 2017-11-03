@@ -19,7 +19,7 @@ Class {
 		'AthensCairoDefs',
 		'FT2Constants'
 	],
-	#category : 'Athens-Cairo-Text'
+	#category : #Athens-Cairo-Text
 }
 
 { #category : #finalizing }

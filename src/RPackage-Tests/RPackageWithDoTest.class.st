@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'x'
 	],
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #accessing }

@@ -25,7 +25,7 @@ Class {
 		'propertyValuable',
 		'undefinedDirection'
 	],
-	#category : 'SortFunctions-Core'
+	#category : #SortFunctions-Core
 }
 
 { #category : #'instance creation' }

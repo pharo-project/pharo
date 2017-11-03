@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'Collections-Support'
+	#category : #Collections-Support
 }
 
 { #category : #'instance creation' }

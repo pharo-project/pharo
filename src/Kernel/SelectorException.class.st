@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selector'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #signaling }

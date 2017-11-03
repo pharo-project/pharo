@@ -4,7 +4,7 @@ SUnit tests for shared queues
 Class {
 	#name : #SharedQueueTest,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Sequenceable'
+	#category : #Collections-Tests-Sequenceable
 }
 
 { #category : #tests }

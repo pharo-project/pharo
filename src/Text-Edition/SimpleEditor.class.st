@@ -14,7 +14,7 @@ Class {
 		'CmdActions',
 		'ShiftCmdActions'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #initialization }

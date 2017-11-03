@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'QualityAssistantRecording'
+	#category : #QualityAssistantRecording
 }
 
 { #category : #'class initialization' }

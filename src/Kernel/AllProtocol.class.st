@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'protocolOrganizer'
 	],
-	#category : 'Kernel-Protocols'
+	#category : #Kernel-Protocols
 }
 
 { #category : #data }

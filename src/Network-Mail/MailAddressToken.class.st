@@ -8,7 +8,7 @@ Class {
 		'type',
 		'text'
 	],
-	#category : 'Network-Mail'
+	#category : #Network-Mail
 }
 
 { #category : #'instance creation' }

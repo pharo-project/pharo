@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'useAutoRefresh'
 	],
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #inspecting }

@@ -13,7 +13,7 @@ Additionally, popup can be aligned differently
 Class {
 	#name : #GLMPopupBrickLayout,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
 }
 
 { #category : #building }

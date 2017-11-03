@@ -11,7 +11,7 @@ Class {
 		'className',
 		'isMeta'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #comparing }

@@ -18,7 +18,7 @@ Class {
 	#pools : [
 		'SDL2Types'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'field definition' }

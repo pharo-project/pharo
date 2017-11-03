@@ -21,7 +21,7 @@ Subclasses must implement (at least) the following methods:
 Class {
 	#name : #Canvas,
 	#superclass : #Object,
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #converting }

@@ -4,7 +4,7 @@ Check for possible uses of the result returned by an add: or addAll: messages. T
 Class {
 	#name : #RBUsesAddRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'width',
 		'height'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

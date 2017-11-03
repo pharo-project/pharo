@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Versionner-Core-Model'
+	#category : #Versionner-Core-Model
 }
 
 { #category : #accessing }

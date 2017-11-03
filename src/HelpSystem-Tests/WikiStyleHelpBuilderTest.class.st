@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : 'HelpSystem-Tests-Builders'
+	#category : #HelpSystem-Tests-Builders
 }
 
 { #category : #accessing }

@@ -49,7 +49,7 @@ Class {
 		'registry',
 		'updateAnnouncementBlock'
 	],
-	#category : 'GT-EventRecorder-Core'
+	#category : #GT-EventRecorder-Core
 }
 
 { #category : #examples }

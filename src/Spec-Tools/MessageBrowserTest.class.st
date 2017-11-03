@@ -4,7 +4,7 @@ A MessageBrowserTest is a test class for testing the behavior of MessageBrowser
 Class {
 	#name : #MessageBrowserTest,
 	#superclass : #TestCase,
-	#category : 'Spec-Tools-Senders-Tests'
+	#category : #Spec-Tools-Senders-Tests
 }
 
 { #category : #tests }

@@ -5,7 +5,7 @@ I'm probably ment to create diffs of class definitions.
 Class {
 	#name : #ClassDiffBuilder,
 	#superclass : #TextDiffBuilder,
-	#category : 'Text-Diff'
+	#category : #Text-Diff
 }
 
 { #category : #private }

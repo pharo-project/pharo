@@ -7,7 +7,7 @@ self openOn: (self>>#compose) parseTree
 Class {
 	#name : #GTSimpleRBTreeBrowser,
 	#superclass : #GLMCompositePresentation,
-	#category : 'GT-InspectorExtensions-Core'
+	#category : #GT-InspectorExtensions-Core
 }
 
 { #category : #building }

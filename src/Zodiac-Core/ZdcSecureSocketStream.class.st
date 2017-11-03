@@ -19,7 +19,7 @@ Class {
 		'out',
 		'connecting'
 	],
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #ssl }

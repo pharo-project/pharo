@@ -3,7 +3,7 @@ Kernel trait for applying on the class side
 "
 Trait {
 	#name : #TApplyingOnClassSide,
-	#category : 'Traits-Kernel-Traits'
+	#category : #Traits-Kernel-Traits
 }
 
 { #category : #compiling }

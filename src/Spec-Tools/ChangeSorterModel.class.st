@@ -4,7 +4,7 @@ A ChangeSorterModel is a model used by Change Sorter UIs for computation
 Class {
 	#name : #ChangeSorterModel,
 	#superclass : #AbstractTool,
-	#category : 'Spec-Tools-ChangeSorter'
+	#category : #Spec-Tools-ChangeSorter
 }
 
 { #category : #'change set' }

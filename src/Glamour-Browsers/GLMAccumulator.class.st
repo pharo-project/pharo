@@ -16,7 +16,7 @@ Output ports:
 Class {
 	#name : #GLMAccumulator,
 	#superclass : #GLMImplicitBrowser,
-	#category : 'Glamour-Browsers-Other'
+	#category : #Glamour-Browsers-Other
 }
 
 { #category : #'accessing ports' }

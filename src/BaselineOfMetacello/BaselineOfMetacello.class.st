@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfMetacello,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfMetacello'
+	#category : #BaselineOfMetacello
 }
 
 { #category : #baseline }

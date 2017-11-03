@@ -4,7 +4,7 @@ Class used to display projects with specific icons and no child in a tree.
 Class {
 	#name : #VSProjectNode,
 	#superclass : #TreeNodePresenter,
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #accessing }

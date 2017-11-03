@@ -4,7 +4,7 @@ ZdcReferenceSocketStreamTests test the reference SocketStream in the image
 Class {
 	#name : #ZdcReferenceSocketStreamTests,
 	#superclass : #ZdcAbstractSocketStreamTests,
-	#category : 'Zodiac-Tests'
+	#category : #Zodiac-Tests
 }
 
 { #category : #testing }

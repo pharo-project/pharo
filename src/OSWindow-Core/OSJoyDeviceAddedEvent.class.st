@@ -6,7 +6,7 @@ This event is generated when a joystick is connected to the computer.
 Class {
 	#name : #OSJoyDeviceAddedEvent,
 	#superclass : #OSJoyDeviceEvent,
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

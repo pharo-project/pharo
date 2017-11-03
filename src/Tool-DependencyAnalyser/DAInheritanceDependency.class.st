@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'superclass'
 	],
-	#category : 'Tool-DependencyAnalyser-Core'
+	#category : #Tool-DependencyAnalyser-Core
 }
 
 { #category : #testing }

@@ -38,7 +38,7 @@ Class {
 		'ticksPerMSec',
 		'totalTicks'
 	],
-	#category : 'Tool-Profilers'
+	#category : #Tool-Profilers
 }
 
 { #category : #LICENSE }

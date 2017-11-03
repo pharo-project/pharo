@@ -10,7 +10,7 @@ Class {
 		'OFFSET_SYM',
 		'OFFSET_UNUSED'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'fields description' }

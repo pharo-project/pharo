@@ -9,7 +9,7 @@ Class {
 		'contents',
 		'stream'
 	],
-	#category : 'Compression-Archives'
+	#category : #Compression-Archives
 }
 
 { #category : #'instance creation' }

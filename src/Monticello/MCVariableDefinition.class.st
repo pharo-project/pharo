@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Monticello-Modeling'
+	#category : #Monticello-Modeling
 }
 
 { #category : #instance-creation }

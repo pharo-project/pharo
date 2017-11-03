@@ -18,7 +18,7 @@ Class {
 		'buffer',
 		'position'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #'instance creation' }

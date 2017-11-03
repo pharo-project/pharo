@@ -4,7 +4,7 @@ Checks that all temporary variables are both read and written. If an temporary v
 Class {
 	#name : #RBOnlyReadOrWrittenTemporaryRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Action when the method comes from a trait
 Class {
 	#name : #MethodFromTraitAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

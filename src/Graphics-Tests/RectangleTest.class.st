@@ -8,7 +8,7 @@ Class {
 		'emptyRectangle',
 		'rectangle1'
 	],
-	#category : 'Graphics-Tests-Primitives'
+	#category : #Graphics-Tests-Primitives
 }
 
 { #category : #running }

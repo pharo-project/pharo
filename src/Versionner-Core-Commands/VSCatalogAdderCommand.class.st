@@ -6,7 +6,7 @@ A VSCatalogAdderCommand adds methods to ConfigurationOf class to declare catalog
 Class {
 	#name : #VSCatalogAdderCommand,
 	#superclass : #VSConfigurationCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #accessing }

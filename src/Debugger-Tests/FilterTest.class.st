@@ -12,7 +12,7 @@ Class {
 		'otherProcess',
 		'otherSession'
 	],
-	#category : 'Debugger-Tests'
+	#category : #Debugger-Tests
 }
 
 { #category : #running }

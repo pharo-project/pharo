@@ -13,7 +13,7 @@ Class {
 		'columnDisplayMorph',
 		'lineNumbersDisplayMorph'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #querying }

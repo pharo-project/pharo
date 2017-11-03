@@ -4,7 +4,7 @@ SUnit tests for packages
 Class {
 	#name : #RGPackageTest,
 	#superclass : #TestCase,
-	#category : 'Ring-Tests-Containers'
+	#category : #Ring-Tests-Containers
 }
 
 { #category : #testing }

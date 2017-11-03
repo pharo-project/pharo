@@ -5,7 +5,7 @@ A prior conversion to an Array or OrderedCollection is not necessary when adding
 Class {
 	#name : #RBAsOrderedCollectionNotNeededRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

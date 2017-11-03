@@ -4,7 +4,7 @@ I represent an accessor for a sequence of objects that can only read objects fro
 Class {
 	#name : #ReadStream,
 	#superclass : #PositionableStream,
-	#category : 'Collections-Streams'
+	#category : #Collections-Streams
 }
 
 { #category : #modes }

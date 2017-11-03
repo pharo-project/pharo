@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'anchoredMorph'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #comparing }

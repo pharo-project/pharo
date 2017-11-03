@@ -25,7 +25,7 @@ Class {
 		'CpuWatcherEnabled',
 		'CurrentCPUWatcher'
 	],
-	#category : 'Tool-ProcessBrowser'
+	#category : #Tool-ProcessBrowser
 }
 
 { #category : #setting }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'controller'
 	],
-	#category : 'NECompletion-Tests'
+	#category : #NECompletion-Tests
 }
 
 { #category : #running }

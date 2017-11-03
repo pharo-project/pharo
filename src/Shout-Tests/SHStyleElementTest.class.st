@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'element'
 	],
-	#category : 'Shout-Tests-Styling'
+	#category : #Shout-Tests-Styling
 }
 
 { #category : #running }

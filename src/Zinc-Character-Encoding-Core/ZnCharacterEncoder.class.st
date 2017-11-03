@@ -37,7 +37,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnCharacterEncoder,
 	#superclass : #Object,
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #convenience }

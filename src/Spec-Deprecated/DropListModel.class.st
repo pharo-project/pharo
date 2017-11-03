@@ -4,5 +4,5 @@ This is deprecated class because the original class DropListModel was renamed to
 Class {
 	#name : #DropListModel,
 	#superclass : #DropListPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

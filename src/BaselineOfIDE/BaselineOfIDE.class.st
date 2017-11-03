@@ -24,7 +24,7 @@ Installs:
 Class {
 	#name : #BaselineOfIDE,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfIDE'
+	#category : #BaselineOfIDE
 }
 
 { #category : #actions }

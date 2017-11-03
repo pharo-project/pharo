@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #'instance creation' }

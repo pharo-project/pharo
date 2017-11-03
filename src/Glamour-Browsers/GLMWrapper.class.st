@@ -6,7 +6,7 @@ The pane takes only entity as input.
 Class {
 	#name : #GLMWrapper,
 	#superclass : #GLMImplicitBrowser,
-	#category : 'Glamour-Browsers-Other'
+	#category : #Glamour-Browsers-Other
 }
 
 { #category : #initialize-release }

@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'replaceTree'
 	],
-	#category : 'AST-Core-Matching'
+	#category : #AST-Core-Matching
 }
 
 { #category : #'instance creation' }

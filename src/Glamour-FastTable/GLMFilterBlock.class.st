@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'filterBlock'
 	],
-	#category : 'Glamour-FastTable-Model'
+	#category : #Glamour-FastTable-Model
 }
 
 { #category : #'instance creation' }

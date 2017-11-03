@@ -15,7 +15,7 @@ Class {
 		'CSParens',
 		'CSSpecials'
 	],
-	#category : 'Network-Mail'
+	#category : #Network-Mail
 }
 
 { #category : #'instance creation' }

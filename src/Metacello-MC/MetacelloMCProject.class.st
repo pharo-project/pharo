@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloMCProject,
 	#superclass : #MetacelloProject,
-	#category : 'Metacello-MC-Model'
+	#category : #Metacello-MC-Model
 }
 
 { #category : #scripting }

@@ -12,7 +12,7 @@ Class {
 		'index',
 		'panel'
 	],
-	#category : 'NautilusCommon-Plugin'
+	#category : #NautilusCommon-Plugin
 }
 
 { #category : #position }

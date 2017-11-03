@@ -4,7 +4,7 @@ I know how to find accesses to an instance var
 Class {
 	#name : #SugsAccessesToInstVar,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

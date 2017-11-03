@@ -4,7 +4,7 @@ Check for methods sending the yourself message when it is not necessary.
 Class {
 	#name : #RBYourselfNotUsedRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

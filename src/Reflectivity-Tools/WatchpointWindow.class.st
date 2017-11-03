@@ -11,7 +11,7 @@ Class {
 		'list',
 		'inspectIt'
 	],
-	#category : 'Reflectivity-Tools-Watchpoints'
+	#category : #Reflectivity-Tools-Watchpoints
 }
 
 { #category : #specs }

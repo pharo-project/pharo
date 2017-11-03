@@ -8,7 +8,7 @@ Class {
 		'images',
 		'currentImageIndex'
 	],
-	#category : 'Komitter-Support'
+	#category : #Komitter-Support
 }
 
 { #category : #'as yet unclassified' }

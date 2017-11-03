@@ -15,7 +15,7 @@ Class {
 		'instanceModification',
 		'methodUpdateStrategy'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #example }

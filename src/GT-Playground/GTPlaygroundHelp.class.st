@@ -4,7 +4,7 @@ A utility class containing the help for the GT Playground.
 Class {
 	#name : #GTPlaygroundHelp,
 	#superclass : #CustomHelp,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #accessing }

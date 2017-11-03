@@ -5,7 +5,7 @@ I'm available under Linux and OSX, but not under Windows for obvious reasons :)
 Class {
 	#name : #LibC,
 	#superclass : #FFILibrary,
-	#category : 'UnifiedFFI-Libraries'
+	#category : #UnifiedFFI-Libraries
 }
 
 { #category : #misc }

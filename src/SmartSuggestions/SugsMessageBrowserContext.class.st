@@ -4,7 +4,7 @@ I know how to use a Text model that came from a SmalltalkEditor and extract the 
 Class {
 	#name : #SugsMessageBrowserContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #selection }

@@ -4,7 +4,7 @@ I'm in charge to style  the editor for  a ""haltOnce"". Clicking on it re-enable
 Class {
 	#name : #HaltOnceIconStyler,
 	#superclass : #HaltIconStyler,
-	#category : 'Reflectivity-Tools-Breakpoints'
+	#category : #Reflectivity-Tools-Breakpoints
 }
 
 { #category : #defaults }

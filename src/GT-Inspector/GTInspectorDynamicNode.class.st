@@ -9,7 +9,7 @@ Class {
 		'value',
 		'tag'
 	],
-	#category : 'GT-Inspector'
+	#category : #GT-Inspector
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'data'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

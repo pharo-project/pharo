@@ -10,7 +10,7 @@ Class {
 		'loadButton',
 		'openButton'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #spec }

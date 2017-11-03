@@ -16,7 +16,7 @@ Class {
 	#classVars : [
 		'OuterMargin'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #initialization }

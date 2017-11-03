@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'definitions'
 	],
-	#category : 'Monticello-Patching'
+	#category : #Monticello-Patching
 }
 
 { #category : #public }

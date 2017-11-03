@@ -76,7 +76,7 @@ Class {
 		'model',
 		'position'
 	],
-	#category : 'NautilusCommon-Plugin'
+	#category : #NautilusCommon-Plugin
 }
 
 { #category : #position }

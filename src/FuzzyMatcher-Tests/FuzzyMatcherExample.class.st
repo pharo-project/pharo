@@ -14,7 +14,7 @@ Class {
 		'pattern',
 		'stringMorph'
 	],
-	#category : 'FuzzyMatcher-Tests'
+	#category : #FuzzyMatcher-Tests
 }
 
 { #category : #'as yet unclassified' }

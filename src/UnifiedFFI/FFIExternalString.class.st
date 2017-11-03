@@ -5,7 +5,7 @@ Represented as char* on C side.
 Class {
 	#name : #FFIExternalString,
 	#superclass : #FFIExternalType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

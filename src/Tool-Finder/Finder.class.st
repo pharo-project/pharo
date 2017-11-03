@@ -17,7 +17,7 @@ Class {
 		'resultDictionary',
 		'useRegEx'
 	],
-	#category : 'Tool-Finder'
+	#category : #Tool-Finder
 }
 
 { #category : #menu }

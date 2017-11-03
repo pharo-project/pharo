@@ -10,7 +10,7 @@ Class {
 		'circuits',
 		'circuitNodes'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #updating }

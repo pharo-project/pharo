@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'checker'
 	],
-	#category : 'Tool-DependencyAnalyser-Test'
+	#category : #Tool-DependencyAnalyser-Test
 }
 
 { #category : #running }

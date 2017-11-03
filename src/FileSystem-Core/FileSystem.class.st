@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'store'
 	],
-	#category : 'FileSystem-Core-Public'
+	#category : #FileSystem-Core-Public
 }
 
 { #category : #initializing }

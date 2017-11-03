@@ -7,7 +7,7 @@ Class {
 		'selector',
 		'isSource'
 	],
-	#category : 'FuelPlatform-Core'
+	#category : #FuelPlatform-Core
 }
 
 { #category : #instance-creation }

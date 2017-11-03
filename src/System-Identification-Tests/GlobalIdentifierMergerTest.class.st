@@ -9,7 +9,7 @@ Class {
 		'stored',
 		'merger'
 	],
-	#category : 'System-Identification-Tests'
+	#category : #System-Identification-Tests
 }
 
 { #category : #running }

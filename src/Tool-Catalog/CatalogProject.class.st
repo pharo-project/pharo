@@ -29,7 +29,7 @@ Class {
 	#classInstVars : [
 		'repositoryURLToNameMappings'
 	],
-	#category : 'Tool-Catalog-Base'
+	#category : #Tool-Catalog-Base
 }
 
 { #category : #private }

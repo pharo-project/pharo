@@ -8,7 +8,7 @@ Class {
 		'selectedColor',
 		'hsvaMorph'
 	],
-	#category : 'Morphic-Widgets-ColorPicker'
+	#category : #Morphic-Widgets-ColorPicker
 }
 
 { #category : #accessing }

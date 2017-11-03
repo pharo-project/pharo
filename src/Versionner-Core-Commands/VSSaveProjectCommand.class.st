@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'ValidateBeforeSaving'
 	],
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #settings }

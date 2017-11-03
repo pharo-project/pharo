@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : 'Shout-Styling'
+	#category : #Shout-Styling
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : 'Glamour-Tests-Core'
+	#category : #Glamour-Tests-Core
 }
 
 { #category : #running }

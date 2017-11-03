@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'issue'
 	],
-	#category : 'Metacello-Core-Exceptions-Notifications'
+	#category : #Metacello-Core-Exceptions-Notifications
 }
 
 { #category : #exceptioninstantiator }

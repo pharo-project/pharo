@@ -4,7 +4,7 @@ I'm a font setting for Source Code Pro fonts.
 Class {
 	#name : #SourceCodeFonts,
 	#superclass : #Object,
-	#category : 'EmbeddedFreeType'
+	#category : #EmbeddedFreeType
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'SpecialConstants'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #'class initialization' }

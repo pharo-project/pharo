@@ -37,7 +37,7 @@ Class {
 		'expectedErrorPositions',
 		'failure'
 	],
-	#category : 'OpalCompiler-Tests-FromOld'
+	#category : #OpalCompiler-Tests-FromOld
 }
 
 { #category : #private }

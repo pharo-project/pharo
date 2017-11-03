@@ -4,7 +4,7 @@ I store meta-data for a package assembly. I'm the common superclass of all packa
 Class {
 	#name : #AssemblyManifest,
 	#superclass : #Object,
-	#category : 'Kernel'
+	#category : #Kernel
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 		'label',
 		'icon'
 	],
-	#category : 'Morphic-Widgets-Taskbar'
+	#category : #Morphic-Widgets-Taskbar
 }
 
 { #category : #'intance creation' }

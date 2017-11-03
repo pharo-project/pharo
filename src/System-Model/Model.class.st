@@ -8,7 +8,7 @@ Class {
 		'dependents',
 		'announcer'
 	],
-	#category : 'System-Model'
+	#category : #System-Model
 }
 
 { #category : #dependents-private }

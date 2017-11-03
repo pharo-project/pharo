@@ -16,7 +16,7 @@ Class {
 		't2',
 		'p6'
 	],
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #setup }

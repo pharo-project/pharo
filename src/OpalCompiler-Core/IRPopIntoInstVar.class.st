@@ -4,7 +4,7 @@ Pop into instance variable.
 Class {
 	#name : #IRPopIntoInstVar,
 	#superclass : #IRInstVarAccess,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

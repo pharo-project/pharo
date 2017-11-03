@@ -9,7 +9,7 @@ Class {
 		'substitutionCharacter',
 		'displaySelector'
 	],
-	#category : 'Fonts-Abstract'
+	#category : #Fonts-Abstract
 }
 
 { #category : #accessing }

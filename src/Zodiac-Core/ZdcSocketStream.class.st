@@ -9,7 +9,7 @@ to transparently bypass the internal buffers when this makes sense.
 Class {
 	#name : #ZdcSocketStream,
 	#superclass : #ZdcOptimizedSocketStream,
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #'stream out' }

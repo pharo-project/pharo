@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMPagerWidgetThemer,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Pager-Theme'
+	#category : #Glamour-Morphic-Pager-Theme
 }
 
 { #category : #'as yet unclassified' }

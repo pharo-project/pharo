@@ -16,7 +16,7 @@ Class {
 		'checkNewTemps',
 		'scopeStack'
 	],
-	#category : 'AST-Core-Visitors'
+	#category : #AST-Core-Visitors
 }
 
 { #category : #accessing }

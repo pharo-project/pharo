@@ -61,7 +61,7 @@ Class {
 		'lastDisplayableIndex',
 		'stopConditionsMustBeReset'
 	],
-	#category : 'Text-Scanning'
+	#category : #Text-Scanning
 }
 
 { #category : #queries }

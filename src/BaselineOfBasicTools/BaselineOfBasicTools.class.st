@@ -24,7 +24,7 @@ Installs:
 Class {
 	#name : #BaselineOfBasicTools,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfBasicTools'
+	#category : #BaselineOfBasicTools
 }
 
 { #category : #baseline }

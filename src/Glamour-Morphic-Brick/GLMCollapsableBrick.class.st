@@ -5,7 +5,7 @@ Class {
 		'headerBrick',
 		'contentBrick'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI'
+	#category : #Glamour-Morphic-Brick-Widgets-UI
 }
 
 { #category : #'instance creation' }

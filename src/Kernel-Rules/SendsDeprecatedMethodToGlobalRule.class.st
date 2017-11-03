@@ -4,7 +4,7 @@ Checks for sends of deprecated messages that might be removed in upcoming releas
 Class {
 	#name : #SendsDeprecatedMethodToGlobalRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'Kernel-Rules'
+	#category : #Kernel-Rules
 }
 
 { #category : #running }

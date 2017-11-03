@@ -12,7 +12,7 @@ Class {
 		'head',
 		'tail'
 	],
-	#category : 'Collections-DoubleLinkedList'
+	#category : #Collections-DoubleLinkedList
 }
 
 { #category : #adding }

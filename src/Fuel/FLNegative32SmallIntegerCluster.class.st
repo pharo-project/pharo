@@ -4,7 +4,7 @@ A cluster of unsigned int 32bit
 Class {
 	#name : #FLNegative32SmallIntegerCluster,
 	#superclass : #FLSmallIntegerCluster,
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #serialize/materialize }

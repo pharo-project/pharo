@@ -30,7 +30,7 @@ Class {
 		'collectionWithDuplicateElement',
 		'collectionWith4Elements'
 	],
-	#category : 'Collections-Tests-Sequenceable'
+	#category : #Collections-Tests-Sequenceable
 }
 
 { #category : #requirements }

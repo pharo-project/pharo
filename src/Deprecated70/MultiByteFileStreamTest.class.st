@@ -5,7 +5,7 @@ SUnit tests for MultiByteFileStream
 Class {
 	#name : #MultiByteFileStreamTest,
 	#superclass : #TestCase,
-	#category : 'Deprecated70'
+	#category : #Deprecated70
 }
 
 { #category : #support }

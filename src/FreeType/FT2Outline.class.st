@@ -25,7 +25,7 @@ Class {
 		'tags',
 		'contours'
 	],
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #private }

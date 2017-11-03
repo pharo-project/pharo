@@ -9,7 +9,7 @@ Class {
 		'crossedX',
 		'endOfRun'
 	],
-	#category : 'Rubric-TextScanning'
+	#category : #Rubric-TextScanning
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'changes'
 	],
-	#category : 'Refactoring-Tests-Changes'
+	#category : #Refactoring-Tests-Changes
 }
 
 { #category : #accessing }

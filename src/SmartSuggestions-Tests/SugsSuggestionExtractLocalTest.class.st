@@ -4,7 +4,7 @@ SUnit tests for extract locale suggestion
 Class {
 	#name : #SugsSuggestionExtractLocalTest,
 	#superclass : #SugsSuggestionTest,
-	#category : 'SmartSuggestions-Tests-Tests'
+	#category : #SmartSuggestions-Tests-Tests
 }
 
 { #category : #'tests - valid' }

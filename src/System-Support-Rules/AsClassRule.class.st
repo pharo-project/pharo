@@ -10,7 +10,7 @@ because they do not take into account an environment. Instead use `self class en
 Class {
 	#name : #AsClassRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'System-Support-Rules'
+	#category : #System-Support-Rules
 }
 
 { #category : #accessing }

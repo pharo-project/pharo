@@ -102,7 +102,7 @@ Class {
 		'WindowMask',
 		'WindowSize'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #'pool initialization' }

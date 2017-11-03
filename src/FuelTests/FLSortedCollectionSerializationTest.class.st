@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'ClassVariableForTesting'
 	],
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #'sorted collections for testing' }

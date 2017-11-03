@@ -11,7 +11,7 @@ self installFullTheme.
 Class {
 	#name : #Pharo3DarkTheme,
 	#superclass : #UITheme,
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }

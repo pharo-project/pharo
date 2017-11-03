@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'temporaryVariable'
 	],
-	#category : 'Refactoring-Tests-Critics'
+	#category : #Refactoring-Tests-Critics
 }
 
 { #category : #'accessing - good' }

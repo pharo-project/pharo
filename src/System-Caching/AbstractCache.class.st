@@ -23,7 +23,7 @@ Class {
 		'weight',
 		'access'
 	],
-	#category : 'System-Caching'
+	#category : #System-Caching
 }
 
 { #category : #accessing }

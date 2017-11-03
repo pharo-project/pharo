@@ -4,7 +4,7 @@ Access to the web browser on Windows
 Class {
 	#name : #WBWindowsWebBrowser,
 	#superclass : #WebBrowser,
-	#category : 'WebBrowser-Core-OS-Windows'
+	#category : #WebBrowser-Core-OS-Windows
 }
 
 { #category : #examples }

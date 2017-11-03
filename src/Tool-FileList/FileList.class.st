@@ -32,7 +32,7 @@ Class {
 	#classInstVars : [
 		'searchList'
 	],
-	#category : 'Tool-FileList'
+	#category : #Tool-FileList
 }
 
 { #category : #utility }

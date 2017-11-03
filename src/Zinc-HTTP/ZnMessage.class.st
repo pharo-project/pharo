@@ -10,7 +10,7 @@ Class {
 		'headers',
 		'entity'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

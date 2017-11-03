@@ -11,7 +11,7 @@ Class {
 		'button',
 		'bottom'
 	],
-	#category : 'Spec-Examples'
+	#category : #Spec-Examples
 }
 
 { #category : #specs }

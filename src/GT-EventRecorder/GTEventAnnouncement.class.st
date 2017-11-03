@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'dictionary'
 	],
-	#category : 'GT-EventRecorder-Announcements'
+	#category : #GT-EventRecorder-Announcements
 }
 
 { #category : #examples }

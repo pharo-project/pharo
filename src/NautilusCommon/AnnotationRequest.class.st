@@ -9,7 +9,7 @@ Class {
 		'annotationRequests',
 		'method'
 	],
-	#category : 'NautilusCommon-Plugin'
+	#category : #NautilusCommon-Plugin
 }
 
 { #category : #instance-creation }

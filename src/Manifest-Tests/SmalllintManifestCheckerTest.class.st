@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'checker'
 	],
-	#category : 'Manifest-Tests'
+	#category : #Manifest-Tests
 }
 
 { #category : #running }

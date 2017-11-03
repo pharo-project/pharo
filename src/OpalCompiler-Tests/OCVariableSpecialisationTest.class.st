@@ -1,7 +1,7 @@
 Class {
 	#name : #OCVariableSpecialisationTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Misc'
+	#category : #OpalCompiler-Tests-Misc
 }
 
 { #category : #tests }

@@ -9,5 +9,5 @@ SystemAnnouncer uniqueInstance
 Class {
 	#name : #JobEnd,
 	#superclass : #JobAnnouncement,
-	#category : 'Jobs-Announcements'
+	#category : #Jobs-Announcements
 }

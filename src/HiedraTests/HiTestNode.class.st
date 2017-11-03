@@ -10,7 +10,7 @@ Class {
 		'owner',
 		'origin'
 	],
-	#category : 'HiedraTests'
+	#category : #HiedraTests
 }
 
 { #category : #'instance creation' }

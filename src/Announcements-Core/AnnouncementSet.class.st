@@ -10,7 +10,7 @@ Motivation example: Often the UI is built after/independently from the model. Yo
 Class {
 	#name : #AnnouncementSet,
 	#superclass : #Set,
-	#category : 'Announcements-Core'
+	#category : #Announcements-Core
 }
 
 { #category : #adding }

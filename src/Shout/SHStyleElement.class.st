@@ -9,7 +9,7 @@ Class {
 		'color',
 		'emphasis'
 	],
-	#category : 'Shout-Styling'
+	#category : #Shout-Styling
 }
 
 { #category : #settings }

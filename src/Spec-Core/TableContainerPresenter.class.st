@@ -8,7 +8,7 @@ I should not be used directly
 Class {
 	#name : #TableContainerPresenter,
 	#superclass : #ContainerPresenter,
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #specs }

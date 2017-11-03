@@ -10,7 +10,7 @@ can be more efficiently expressed as
 Class {
 	#name : #RBUnoptimizedToDoRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

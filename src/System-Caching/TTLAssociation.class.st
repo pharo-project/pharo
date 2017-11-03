@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'timestamp'
 	],
-	#category : 'System-Caching'
+	#category : #System-Caching
 }
 
 { #category : #testing }

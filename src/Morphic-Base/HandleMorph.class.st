@@ -8,7 +8,7 @@ Class {
 		'pointBlock',
 		'lastPointBlock'
 	],
-	#category : 'Morphic-Base-Widgets'
+	#category : #Morphic-Base-Widgets
 }
 
 { #category : #initialize }

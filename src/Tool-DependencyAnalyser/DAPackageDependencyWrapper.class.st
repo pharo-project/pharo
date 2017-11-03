@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'daPackage'
 	],
-	#category : 'Tool-DependencyAnalyser-Core'
+	#category : #Tool-DependencyAnalyser-Core
 }
 
 { #category : #'instance creation' }

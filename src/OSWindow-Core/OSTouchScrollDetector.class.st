@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'PersistentDirection'
 	],
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #'class initialization' }

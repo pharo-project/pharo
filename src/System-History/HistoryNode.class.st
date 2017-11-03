@@ -77,7 +77,7 @@ Class {
 		'history',
 		'opened'
 	],
-	#category : 'System-History'
+	#category : #System-History
 }
 
 { #category : #adding }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'visited'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #initialization }

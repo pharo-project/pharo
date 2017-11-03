@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'myCanvas'
 	],
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #'instance creation' }

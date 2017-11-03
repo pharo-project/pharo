@@ -8,7 +8,7 @@ Class {
 		'model',
 		'key'
 	],
-	#category : 'Hiedra-Spec'
+	#category : #Hiedra-Spec
 }
 
 { #category : #'instance creation' }

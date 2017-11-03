@@ -20,7 +20,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'FontInfrastructure'
+	#category : #FontInfrastructure
 }
 
 { #category : #accessing }

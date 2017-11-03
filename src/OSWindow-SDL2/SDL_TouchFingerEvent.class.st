@@ -15,7 +15,7 @@ Class {
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'fields description' }

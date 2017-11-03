@@ -4,7 +4,7 @@ Three fingers are swiping
 Class {
 	#name : #OSTouchThreeFingersSwipeMoveEvent,
 	#superclass : #OSTouchThreeFingersSwipeEvent,
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #visitor }

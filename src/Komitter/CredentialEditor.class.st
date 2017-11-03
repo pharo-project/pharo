@@ -11,7 +11,7 @@ Class {
 		'passwordLabel',
 		'showPassword'
 	],
-	#category : 'Komitter-Support'
+	#category : #Komitter-Support
 }
 
 { #category : #specs }

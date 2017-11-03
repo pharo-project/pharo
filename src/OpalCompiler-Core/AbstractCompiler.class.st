@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'compileWithErrors'
 	],
-	#category : 'OpalCompiler-Core-FrontEnd'
+	#category : #OpalCompiler-Core-FrontEnd
 }
 
 { #category : #settings }

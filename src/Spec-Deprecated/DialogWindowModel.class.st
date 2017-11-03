@@ -4,5 +4,5 @@ This is deprecated class because the original class DialogWindowModel was rename
 Class {
 	#name : #DialogWindowModel,
 	#superclass : #DialogWindowPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

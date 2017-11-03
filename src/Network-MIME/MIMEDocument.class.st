@@ -10,7 +10,7 @@ Class {
 		'contentStream',
 		'uri'
 	],
-	#category : 'Network-MIME'
+	#category : #Network-MIME
 }
 
 { #category : #'instance creation' }

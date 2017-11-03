@@ -4,7 +4,7 @@ I stores metadata on true and false positive critics. These meta data are used b
 Class {
 	#name : #ManifestManifestCore,
 	#superclass : #PackageManifest,
-	#category : 'Manifest-Core'
+	#category : #Manifest-Core
 }
 
 { #category : #'meta data' }

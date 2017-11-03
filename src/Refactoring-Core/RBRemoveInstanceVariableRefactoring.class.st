@@ -6,7 +6,7 @@ My precondition verifies that there is no reference to this instance  variable.
 Class {
 	#name : #RBRemoveInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #'as yet unclassified' }

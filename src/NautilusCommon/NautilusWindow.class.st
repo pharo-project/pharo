@@ -6,7 +6,7 @@ Maybe I'm useless, but right now I'm not on the top of the to do list
 Class {
 	#name : #NautilusWindow,
 	#superclass : #StandardWindow,
-	#category : 'NautilusCommon'
+	#category : #NautilusCommon
 }
 
 { #category : #about }

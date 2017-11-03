@@ -21,7 +21,7 @@ Warnings:
 Class {
 	#name : #MCLazyVersionInfo,
 	#superclass : #MCVersionInfo,
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #instance-creation }

@@ -4,7 +4,7 @@ Command for a check point in Versionner
 Class {
 	#name : #MBCheckpointDevCommand,
 	#superclass : #MBDevCycleCommands,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

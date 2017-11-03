@@ -12,7 +12,7 @@ Is adopted as the theme for Pharo3, but it was renamed to avoid collisions with 
 Class {
 	#name : #Pharo3Theme,
 	#superclass : #UITheme,
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }

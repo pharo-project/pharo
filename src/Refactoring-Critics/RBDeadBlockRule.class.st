@@ -5,7 +5,7 @@ Often this is a left over from using blocks to comment out code.
 Class {
 	#name : #RBDeadBlockRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

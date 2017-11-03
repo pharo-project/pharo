@@ -8,7 +8,7 @@ Class {
 		'surface',
 		'session'
 	],
-	#category : 'Athens-Morphic'
+	#category : #Athens-Morphic
 }
 
 { #category : #accessing }

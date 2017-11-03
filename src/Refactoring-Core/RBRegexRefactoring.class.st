@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'matchers'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ A utility class containing the help for GT SUnitDebugger.
 Class {
 	#name : #GTSUnitDebuggerHelp,
 	#superclass : #GTDebuggerHelp,
-	#category : 'GT-SUnitDebugger'
+	#category : #GT-SUnitDebugger
 }
 
 { #category : #accessing }

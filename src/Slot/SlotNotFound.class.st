@@ -8,7 +8,7 @@ Class {
 		'name',
 		'targetClass'
 	],
-	#category : 'Slot-Exception'
+	#category : #Slot-Exception
 }
 
 { #category : #signalling }

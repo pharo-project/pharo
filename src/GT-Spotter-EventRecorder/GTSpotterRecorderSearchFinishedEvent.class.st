@@ -9,7 +9,7 @@ Class {
 		'query',
 		'processors'
 	],
-	#category : 'GT-Spotter-EventRecorder-Events'
+	#category : #GT-Spotter-EventRecorder-Events
 }
 
 { #category : #visitor }

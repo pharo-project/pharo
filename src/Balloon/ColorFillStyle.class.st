@@ -8,7 +8,7 @@ Class {
 		'origin',
 		'extent'
 	],
-	#category : 'Balloon-Fills'
+	#category : #Balloon-Fills
 }
 
 { #category : #accessing }

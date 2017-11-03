@@ -4,7 +4,7 @@ This strategy sets presentations only if none exits in the pane of the destinati
 Class {
 	#name : #GLMPresentIfNoneStrategy,
 	#superclass : #GLMPresentStrategy,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #transmitting }

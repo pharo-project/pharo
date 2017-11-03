@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'repository'
 	],
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #signalling }

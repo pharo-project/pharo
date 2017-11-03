@@ -15,7 +15,7 @@ Class {
 		'textEditor',
 		'showPassword'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #protocol }

@@ -12,7 +12,7 @@ The defined inheritance depth can be edited in #inheritanceDepth.
 Class {
 	#name : #RBExcessiveInheritanceRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

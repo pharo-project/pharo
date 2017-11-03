@@ -6,7 +6,7 @@ SmallIntegers are typically implemented as tagged pointers and thus require a sp
 Class {
 	#name : #ImmediateLayout,
 	#superclass : #ObjectLayout,
-	#category : 'Slot-Layout'
+	#category : #Slot-Layout
 }
 
 { #category : #'instance creation' }

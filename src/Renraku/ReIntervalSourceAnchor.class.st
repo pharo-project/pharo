@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'interval'
 	],
-	#category : 'Renraku-SourceAnchors'
+	#category : #Renraku-SourceAnchors
 }
 
 { #category : #'instance creation' }

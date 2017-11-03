@@ -16,7 +16,7 @@ Class {
 		'showInstance',
 		'showCategories'
 	],
-	#category : 'NautilusCommon'
+	#category : #NautilusCommon
 }
 
 { #category : #'instance creation' }

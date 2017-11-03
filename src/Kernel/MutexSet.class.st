@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'array'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'stamp'
 	],
-	#category : 'CodeImport'
+	#category : #CodeImport
 }
 
 { #category : #'instance creation' }

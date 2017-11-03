@@ -7,7 +7,7 @@ Class {
 		'headerMorph',
 		'tabSelectorWidth'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #adding }

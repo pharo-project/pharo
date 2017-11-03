@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'Nautilus-Tree'
+	#category : #Nautilus-Tree
 }
 
 { #category : #'drag and drop' }

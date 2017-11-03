@@ -8,7 +8,7 @@ Class {
 		'suspendAll',
 		'suspendedAnnouncemets'
 	],
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #announce }

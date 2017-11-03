@@ -8,7 +8,7 @@ env1 not -> a RBNotEnvironment.
 Class {
 	#name : #RBNotEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #testing }

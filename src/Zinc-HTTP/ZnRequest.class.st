@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'requestLine'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

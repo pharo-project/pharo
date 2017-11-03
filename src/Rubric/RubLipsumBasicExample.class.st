@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'textModel'
 	],
-	#category : 'Rubric-Editing-Widgets-Examples'
+	#category : #Rubric-Editing-Widgets-Examples
 }
 
 { #category : #examples }

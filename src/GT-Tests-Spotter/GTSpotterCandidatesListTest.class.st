@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'candidates'
 	],
-	#category : 'GT-Tests-Spotter'
+	#category : #GT-Tests-Spotter
 }
 
 { #category : #'as yet unclassified' }

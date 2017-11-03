@@ -4,7 +4,7 @@ See my #longDescription .
 Class {
 	#name : #RBRemoveAssignmentWithoutEffectRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #accessing }

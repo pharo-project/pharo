@@ -24,7 +24,7 @@ Class {
 		'variableBindingsBlock',
 		'isForScripting'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #actions }

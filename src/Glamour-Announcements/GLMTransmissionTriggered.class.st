@@ -7,5 +7,5 @@ Class {
 	#instVars : [
 		'transmission'
 	],
-	#category : 'Glamour-Announcements'
+	#category : #Glamour-Announcements
 }

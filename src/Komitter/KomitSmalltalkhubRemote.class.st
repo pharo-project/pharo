@@ -4,7 +4,7 @@ I encapsulate a repository stored on smalltalkhub
 Class {
 	#name : #KomitSmalltalkhubRemote,
 	#superclass : #KomitRemote,
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #'*Komitter-UI' }

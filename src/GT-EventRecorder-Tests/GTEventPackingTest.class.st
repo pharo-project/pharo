@@ -15,7 +15,7 @@ Class {
 		'storage',
 		'file'
 	],
-	#category : 'GT-EventRecorder-Tests-Support'
+	#category : #GT-EventRecorder-Tests-Support
 }
 
 { #category : #testing }

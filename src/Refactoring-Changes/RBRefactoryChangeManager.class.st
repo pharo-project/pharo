@@ -16,7 +16,7 @@ Class {
 		'Instance',
 		'UndoSize'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #change-factory }

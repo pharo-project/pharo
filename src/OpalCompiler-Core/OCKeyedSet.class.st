@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'keyBlock'
 	],
-	#category : 'OpalCompiler-Core-Extras'
+	#category : #OpalCompiler-Core-Extras
 }
 
 { #category : #'instance creation' }

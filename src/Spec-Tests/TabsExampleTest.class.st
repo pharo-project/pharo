@@ -1,7 +1,7 @@
 Class {
 	#name : #TabsExampleTest,
 	#superclass : #SpecTestCase,
-	#category : 'Spec-Tests-Examples'
+	#category : #Spec-Tests-Examples
 }
 
 { #category : #running }

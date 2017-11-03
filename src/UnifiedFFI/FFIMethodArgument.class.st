@@ -8,7 +8,7 @@ Class {
 		'index',
 		'argName'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #accessing }

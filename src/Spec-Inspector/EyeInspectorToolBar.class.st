@@ -10,7 +10,7 @@ Class {
 		'inspectorChoice',
 		'isUpdating'
 	],
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #specs }

@@ -13,7 +13,7 @@ Class {
 		'stopPosition',
 		'source'
 	],
-	#category : 'AST-Core-Tokens'
+	#category : #AST-Core-Tokens
 }
 
 { #category : #'instance creation' }

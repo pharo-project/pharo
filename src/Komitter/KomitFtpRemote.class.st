@@ -1,7 +1,7 @@
 Class {
 	#name : #KomitFtpRemote,
 	#superclass : #KomitRemote,
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #'*Komitter-UI' }

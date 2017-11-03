@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestGraphicsDisplayObjects,
 	#superclass : #PackageManifest,
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #'meta-data - dependency analyser' }

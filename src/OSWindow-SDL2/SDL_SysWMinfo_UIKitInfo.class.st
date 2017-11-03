@@ -10,7 +10,7 @@ Class {
 		'OFFSET_RESOLVEFRAMEBUFFER',
 		'OFFSET_WINDOW'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'field definition' }

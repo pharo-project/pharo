@@ -4,7 +4,7 @@ I am a themer for a text edit popup
 Class {
 	#name : #GLMBrickPopupEditThemer,
 	#superclass : #GLMBrickPopupThemer,
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup-Themer
 }
 
 { #category : #brick-popup }

@@ -36,7 +36,7 @@ Class {
 	#instVars : [
 		'table'
 	],
-	#category : 'Morphic-Widgets-FastTable-DataSource'
+	#category : #Morphic-Widgets-FastTable-DataSource
 }
 
 { #category : #accessing }

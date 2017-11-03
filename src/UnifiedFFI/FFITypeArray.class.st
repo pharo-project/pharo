@@ -27,7 +27,7 @@ Class {
 		'type',
 		'numberOfElements'
 	],
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #converting }

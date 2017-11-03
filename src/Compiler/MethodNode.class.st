@@ -17,7 +17,7 @@ Class {
 		'locationCounter',
 		'localsPool'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

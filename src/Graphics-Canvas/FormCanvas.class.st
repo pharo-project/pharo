@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'TranslucentPatterns'
 	],
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #'instance creation' }

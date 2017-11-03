@@ -8,7 +8,7 @@ Class {
 		'description',
 		'dict'
 	],
-	#category : 'Monticello-Repositories'
+	#category : #Monticello-Repositories
 }
 
 { #category : #comparing }

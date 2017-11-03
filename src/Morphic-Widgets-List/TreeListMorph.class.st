@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'font'
 	],
-	#category : 'Morphic-Widgets-List'
+	#category : #Morphic-Widgets-List
 }
 
 { #category : #private }

@@ -80,7 +80,7 @@ Class {
 		'width',
 		'miterLimit'
 	],
-	#category : 'Athens-Core-Paints'
+	#category : #Athens-Core-Paints
 }
 
 { #category : #converting }

@@ -11,7 +11,7 @@ Class {
 		'tempVector',
 		'id'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #'temp vars' }

@@ -4,7 +4,7 @@ I serialize or materialize objects using FUEL framework. Create instance of me c
 Class {
 	#name : #GlobalIdentifierFuelPersistence,
 	#superclass : #GlobalIdentifierPersistence,
-	#category : 'System-Identification'
+	#category : #System-Identification
 }
 
 { #category : #configuration }

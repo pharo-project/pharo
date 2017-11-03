@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'DoItCharacter'
 	],
-	#category : 'Compiler-Kernel'
+	#category : #Compiler-Kernel
 }
 
 { #category : #'class initialization' }

@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'storedSettings'
 	],
-	#category : 'System-Settings-Persistence-Ston-StoredSettings-Builder'
+	#category : #System-Settings-Persistence-Ston-StoredSettings-Builder
 }
 
 { #category : #adding }

@@ -8,7 +8,7 @@ Class {
 		'iVar',
 		'collection'
 	],
-	#category : 'OpalCompiler-Tests-AST'
+	#category : #OpalCompiler-Tests-AST
 }
 
 { #category : #compiler }

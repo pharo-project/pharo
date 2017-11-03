@@ -16,7 +16,7 @@ Class {
 		'initialExtent',
 		'watcherPane'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #constants }

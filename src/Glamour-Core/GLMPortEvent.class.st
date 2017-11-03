@@ -15,7 +15,7 @@ Class {
 		'oldValue',
 		'transmissionContext'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 		'keys',
 		'values'
 	],
-	#category : 'Fuel-Collections'
+	#category : #Fuel-Collections
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'contents',
 		'toolbar'
 	],
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #specs }

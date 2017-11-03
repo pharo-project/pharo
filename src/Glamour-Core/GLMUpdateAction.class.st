@@ -18,7 +18,7 @@ Class {
 		'announcerObjects',
 		'transformation'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #'announcement handling' }

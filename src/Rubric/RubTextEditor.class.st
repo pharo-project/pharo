@@ -8,7 +8,7 @@ Class {
 		'defaultKeymappingIndex',
 		'textArea'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #keymapping }

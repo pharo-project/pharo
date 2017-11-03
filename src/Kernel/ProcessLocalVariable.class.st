@@ -4,7 +4,7 @@ My subclasses have values specific to the active process. They can be read with 
 Class {
 	#name : #ProcessLocalVariable,
 	#superclass : #ProcessSpecificVariable,
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #accessing }

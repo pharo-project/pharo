@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : 'Ring-Core-Containers'
+	#category : #Ring-Core-Containers
 }
 
 { #category : #adding/removing }

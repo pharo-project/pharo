@@ -1,5 +1,5 @@
 Class {
 	#name : #MetacelloCleanLoadNotification,
 	#superclass : #MetacelloCleanNotification,
-	#category : 'Metacello-Core-Exceptions-Notifications'
+	#category : #Metacello-Core-Exceptions-Notifications
 }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'traitName'
 	],
-	#category : 'Hermes-Model'
+	#category : #Hermes-Model
 }
 
 { #category : #'instance creation' }

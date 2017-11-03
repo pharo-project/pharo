@@ -1,7 +1,7 @@
 Class {
 	#name : #BenchmarkResultTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #tests }

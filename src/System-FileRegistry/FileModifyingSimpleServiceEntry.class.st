@@ -8,7 +8,7 @@ Such changes include:
 Class {
 	#name : #FileModifyingSimpleServiceEntry,
 	#superclass : #SimpleServiceEntry,
-	#category : 'System-FileRegistry'
+	#category : #System-FileRegistry
 }
 
 { #category : #'performing service' }

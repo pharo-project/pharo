@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #querying }

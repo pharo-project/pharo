@@ -4,7 +4,7 @@ i a m the event handler linked to SDL2AthensDrawingExample
 Class {
 	#name : #OSWindowAthensDrawingExampleEventHandler,
 	#superclass : #OSWindowAthensExampleEventHandler,
-	#category : 'OSWindow-SDL2-Examples-Basic'
+	#category : #OSWindow-SDL2-Examples-Basic
 }
 
 { #category : #visiting }

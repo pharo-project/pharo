@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMockPagerModel,
 	#superclass : #GLMPagerModel,
-	#category : 'GT-Tests-Spotter-Scripting-Mocks'
+	#category : #GT-Tests-Spotter-Scripting-Mocks
 }
 
 { #category : #panes }

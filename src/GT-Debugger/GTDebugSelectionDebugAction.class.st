@@ -4,7 +4,7 @@ This action encapsulates the logic of debugging a selected piece of code from th
 Class {
 	#name : #GTDebugSelectionDebugAction,
 	#superclass : #GTCodeDebugAction,
-	#category : 'GT-Debugger-Actions'
+	#category : #GT-Debugger-Actions
 }
 
 { #category : #registration }

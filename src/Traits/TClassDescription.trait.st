@@ -3,7 +3,7 @@ Kernel trait for ClassDescription
 "
 Trait {
 	#name : #TClassDescription,
-	#category : 'Traits-Kernel-Traits'
+	#category : #Traits-Kernel-Traits
 }
 
 { #category : #compiling }

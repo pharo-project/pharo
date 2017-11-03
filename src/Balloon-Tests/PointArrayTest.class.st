@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'pointArray'
 	],
-	#category : 'Balloon-Tests-Collections'
+	#category : #Balloon-Tests-Collections
 }
 
 { #category : #running }

@@ -5,7 +5,7 @@ A FuelOutStackDebugAction is	a debugging action that serialize a portion of the 
 Class {
 	#name : #FuelOutStackDebugAction,
 	#superclass : #DebugAction,
-	#category : 'FuelTools-Debugger'
+	#category : #FuelTools-Debugger
 }
 
 { #category : #registration }

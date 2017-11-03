@@ -29,7 +29,7 @@ Class {
 	#classVars : [
 		'EditableStringMorph'
 	],
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #'instance creation' }

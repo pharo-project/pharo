@@ -11,7 +11,7 @@ Initialization is done with:
 Class {
 	#name : #UnicodeDefinitions,
 	#superclass : #Object,
-	#category : 'PharoBootstrap-Initialization'
+	#category : #PharoBootstrap-Initialization
 }
 
 { #category : #accessing }

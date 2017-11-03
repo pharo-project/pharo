@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMBrickLayoutState,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Brick-Layouts'
+	#category : #Glamour-Morphic-Brick-Layouts
 }
 
 { #category : #testing }

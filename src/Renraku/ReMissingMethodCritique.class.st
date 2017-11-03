@@ -9,7 +9,7 @@ Class {
 		'class',
 		'source'
 	],
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #'as yet unclassified' }

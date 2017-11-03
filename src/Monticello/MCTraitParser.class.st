@@ -4,7 +4,7 @@ A MCTraitParser extracts an MCTraitDefinition from the source.
 Class {
 	#name : #MCTraitParser,
 	#superclass : #MCDoItParser,
-	#category : 'Monticello-Chunk Format'
+	#category : #'Monticello-Chunk Format'
 }
 
 { #category : #'factory identification hook' }

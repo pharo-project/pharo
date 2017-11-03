@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'groups'
 	],
-	#category : 'Nautilus-GroupManager'
+	#category : #Nautilus-GroupManager
 }
 
 { #category : #adding }

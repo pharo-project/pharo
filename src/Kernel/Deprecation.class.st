@@ -37,7 +37,7 @@ Class {
 		'RaiseWarning',
 		'ShowWarning'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #logging }

@@ -8,7 +8,7 @@ Class {
 		'obsoletion',
 		'modification'
 	],
-	#category : 'Monticello-Patching'
+	#category : #Monticello-Patching
 }
 
 { #category : #instance-creation }

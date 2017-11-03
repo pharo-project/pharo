@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'Collections-Weak'
+	#category : #Collections-Weak
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'entity',
 		'titleBrick'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Phlow'
+	#category : #Glamour-Morphic-Brick-Widgets-Phlow
 }
 
 { #category : #phlow }

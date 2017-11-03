@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'uncollapsedMorph'
 	],
-	#category : 'Morphic-Widgets-Windows-Widgets'
+	#category : #Morphic-Widgets-Windows-Widgets
 }
 
 { #category : #collapse/expand }

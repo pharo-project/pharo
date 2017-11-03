@@ -4,7 +4,7 @@ When an image is launched, a session starts. After that, the session can be snap
 Class {
 	#name : #EpSessionSnapshot,
 	#superclass : #EpSessionEvent,
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #visitor }

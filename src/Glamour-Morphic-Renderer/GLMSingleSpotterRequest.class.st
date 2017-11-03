@@ -9,7 +9,7 @@ Class {
 		'labelBlock',
 		'iconBlock'
 	],
-	#category : 'Glamour-Morphic-Renderer-Spotter'
+	#category : #Glamour-Morphic-Renderer-Spotter
 }
 
 { #category : #utilities }

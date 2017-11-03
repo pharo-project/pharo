@@ -4,7 +4,7 @@ I store meta-data for a package. I'm the common superclass of all package Manife
 Class {
 	#name : #PackageManifest,
 	#superclass : #Object,
-	#category : 'Kernel'
+	#category : #Kernel
 }
 
 { #category : #meta-data }

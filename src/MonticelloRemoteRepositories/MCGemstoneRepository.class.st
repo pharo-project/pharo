@@ -4,7 +4,7 @@ An explicit subclass of MCHttpRepository to provide a template for gemstone repo
 Class {
 	#name : #MCGemstoneRepository,
 	#superclass : #MCHttpRepository,
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #accessing }

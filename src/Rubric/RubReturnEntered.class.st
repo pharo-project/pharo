@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'accepted'
 	],
-	#category : 'Rubric-Editing-Announcements'
+	#category : #Rubric-Editing-Announcements
 }
 
 { #category : #accessing }

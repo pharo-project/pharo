@@ -10,7 +10,7 @@ Class {
 		'stream',
 		'encoder'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

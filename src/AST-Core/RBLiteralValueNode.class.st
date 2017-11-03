@@ -15,7 +15,7 @@ Class {
 		'value',
 		'sourceText'
 	],
-	#category : 'AST-Core-Nodes'
+	#category : #AST-Core-Nodes
 }
 
 { #category : #'instance creation' }

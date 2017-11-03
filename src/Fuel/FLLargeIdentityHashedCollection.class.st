@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'PermutationMap'
 	],
-	#category : 'Fuel-Collections'
+	#category : #Fuel-Collections
 }
 
 { #category : #initialize-release }

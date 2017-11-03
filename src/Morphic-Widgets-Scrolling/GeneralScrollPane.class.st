@@ -9,7 +9,7 @@ Class {
 		'hScrollbar',
 		'vScrollbar'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #accessing }

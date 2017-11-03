@@ -11,7 +11,7 @@ Class {
 		'CVar',
 		'InitializationOrder'
 	],
-	#category : 'MonticelloMocks'
+	#category : #MonticelloMocks
 }
 
 { #category : #'as yet unclassified' }

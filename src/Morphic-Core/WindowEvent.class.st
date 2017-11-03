@@ -8,7 +8,7 @@ Class {
 		'action',
 		'rectangle'
 	],
-	#category : 'Morphic-Core-Events'
+	#category : #Morphic-Core-Events
 }
 
 { #category : #accessing }

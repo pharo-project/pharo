@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'objects'
 	],
-	#category : 'GT-Tests-Spotter'
+	#category : #GT-Tests-Spotter
 }
 
 { #category : #'as yet unclassified' }

@@ -4,7 +4,7 @@ A wrapper that provides a single interface to produce a new node from the matche
 Class {
 	#name : #ReRewriteWrapper,
 	#superclass : #Object,
-	#category : 'Renraku-Rules-Rewrite'
+	#category : #Renraku-Rules-Rewrite
 }
 
 { #category : #actions }

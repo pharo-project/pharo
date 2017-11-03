@@ -5,7 +5,7 @@ I am NeoLRUCacheTests.
 Class {
 	#name : #LRUCacheTests,
 	#superclass : #TestCase,
-	#category : 'System-Caching-Tests'
+	#category : #System-Caching-Tests
 }
 
 { #category : #accessing }

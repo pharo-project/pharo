@@ -4,7 +4,7 @@ Command to load a package in versionner
 Class {
 	#name : #MBLoadPackageCommand,
 	#superclass : #MBAbstractPackageCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

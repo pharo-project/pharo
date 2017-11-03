@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'LastSaveOrder'
 	],
-	#category : 'Balloon-Collections'
+	#category : #Balloon-Collections
 }
 
 { #category : #initialize-release }

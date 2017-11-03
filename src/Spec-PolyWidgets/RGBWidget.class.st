@@ -19,7 +19,7 @@ Class {
 		'sliders',
 		'extentForPreview'
 	],
-	#category : 'Spec-PolyWidgets-RGBAndShape'
+	#category : #Spec-PolyWidgets-RGBAndShape
 }
 
 { #category : #specs }

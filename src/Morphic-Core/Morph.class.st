@@ -45,7 +45,7 @@ Class {
 	#classInstVars : [
 		'announcer'
 	],
-	#category : 'Morphic-Core-Kernel'
+	#category : #Morphic-Core-Kernel
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'canvas',
 		'clipRect'
 	],
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #'instance creation' }

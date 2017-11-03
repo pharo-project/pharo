@@ -14,7 +14,7 @@ For now we impose upon you to synchronise any and all changes between these two 
 Class {
 	#name : #EncoderForV3PlusClosures,
 	#superclass : #EncoderForV3,
-	#category : 'Kernel-BytecodeEncoders'
+	#category : #Kernel-BytecodeEncoders
 }
 
 { #category : #'bytecode decoding' }

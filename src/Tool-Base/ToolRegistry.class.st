@@ -43,7 +43,7 @@ Class {
 	#instVars : [
 		'tools'
 	],
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #misc }

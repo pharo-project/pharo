@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'collectors'
 	],
-	#category : 'GT-EventRecorder-Support'
+	#category : #GT-EventRecorder-Support
 }
 
 { #category : #accessing }

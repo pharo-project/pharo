@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #cleanup }

@@ -25,7 +25,7 @@ Class {
 		'ArrowImagesCache',
 		'BoxesImagesCache'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #images }

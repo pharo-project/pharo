@@ -6,7 +6,7 @@ Be aware that when you use this, you broke Spec plateform independency and force
 Class {
 	#name : #MorphicGenericAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #'instance creation' }

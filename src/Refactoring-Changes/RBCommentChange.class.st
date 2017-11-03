@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'comment'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #'instance creation' }

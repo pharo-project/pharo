@@ -20,7 +20,7 @@ or more concisely...
 Class {
 	#name : #RBStringConcatenationRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

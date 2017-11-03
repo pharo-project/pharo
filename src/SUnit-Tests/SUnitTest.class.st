@@ -14,7 +14,7 @@ Class {
 		'hasSetup',
 		'hasRanOnce'
 	],
-	#category : 'SUnit-Tests-Core'
+	#category : #SUnit-Tests-Core
 }
 
 { #category : #history }

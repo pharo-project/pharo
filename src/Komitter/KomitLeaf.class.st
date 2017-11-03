@@ -1,7 +1,7 @@
 Class {
 	#name : #KomitLeaf,
 	#superclass : #KomitNode,
-	#category : 'Komitter-UI'
+	#category : #Komitter-UI
 }
 
 { #category : #accessing }

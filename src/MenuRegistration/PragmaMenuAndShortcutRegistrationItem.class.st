@@ -28,7 +28,7 @@ Class {
 		'shortcutName',
 		'keyText'
 	],
-	#category : 'MenuRegistration-Core'
+	#category : #MenuRegistration-Core
 }
 
 { #category : #accessing }

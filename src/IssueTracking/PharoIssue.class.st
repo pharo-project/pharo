@@ -19,7 +19,7 @@ Class {
 		'number',
 		'title'
 	],
-	#category : 'IssueTracking'
+	#category : #IssueTracking
 }
 
 { #category : #'instance creation' }

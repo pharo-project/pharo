@@ -16,7 +16,7 @@ Class {
 		'xOnByte',
 		'xOffByte'
 	],
-	#category : 'System-Serial Port'
+	#category : #'System-Serial Port'
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : 'Athens-Cairo'
+	#category : #Athens-Cairo
 }
 
 { #category : #modes }

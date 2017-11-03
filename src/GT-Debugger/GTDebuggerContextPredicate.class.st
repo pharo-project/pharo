@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'result'
 	],
-	#category : 'GT-Debugger-Model'
+	#category : #GT-Debugger-Model
 }
 
 { #category : #testing }

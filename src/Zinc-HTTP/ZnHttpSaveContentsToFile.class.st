@@ -11,7 +11,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnHttpSaveContentsToFile,
 	#superclass : #ZnUrlOperation,
-	#category : 'Zinc-HTTP-Client-Server'
+	#category : #Zinc-HTTP-Client-Server
 }
 
 { #category : #accessing }

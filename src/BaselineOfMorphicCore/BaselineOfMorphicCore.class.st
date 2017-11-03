@@ -13,7 +13,7 @@ Installs:
 Class {
 	#name : #BaselineOfMorphicCore,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfMorphicCore'
+	#category : #BaselineOfMorphicCore
 }
 
 { #category : #baseline }

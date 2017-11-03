@@ -4,7 +4,7 @@ I announce when a method is selected, and also contain an information about sele
 Class {
 	#name : #NautilusMethodSelected,
 	#superclass : #NautilusSelectionAnnouncement,
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }
 
 { #category : #'instance creation' }

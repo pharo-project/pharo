@@ -7,7 +7,7 @@ Class {
 		'class',
 		'visitor'
 	],
-	#category : 'Versionner-Tests-Core-DependenciesModel'
+	#category : #Versionner-Tests-Core-DependenciesModel
 }
 
 { #category : #tests }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'argName'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #accessing }

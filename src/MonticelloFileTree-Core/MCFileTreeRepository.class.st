@@ -12,7 +12,7 @@ Class {
 		'defaultPackageExtension',
 		'defaultPropertyFileExtension'
 	],
-	#category : 'MonticelloFileTree-Core'
+	#category : #MonticelloFileTree-Core
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ A group node in the morph tree
 Class {
 	#name : #GroupNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : 'Nautilus-GroupManagerUI'
+	#category : #Nautilus-GroupManagerUI
 }
 
 { #category : #accessing }

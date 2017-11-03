@@ -6,7 +6,7 @@ The defined number of instance variables can be edited in #variablesCount.
 Class {
 	#name : #RBExcessiveVariablesRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

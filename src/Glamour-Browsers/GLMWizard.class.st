@@ -84,7 +84,7 @@ Class {
 		'stepsDictionary',
 		'stepsAndPanes'
 	],
-	#category : 'Glamour-Browsers-Wizards'
+	#category : #Glamour-Browsers-Wizards
 }
 
 { #category : #examples }

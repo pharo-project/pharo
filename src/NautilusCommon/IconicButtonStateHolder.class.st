@@ -17,7 +17,7 @@ Class {
 		'helpText',
 		'borderWidth'
 	],
-	#category : 'NautilusCommon'
+	#category : #NautilusCommon
 }
 
 { #category : #'instance creation' }

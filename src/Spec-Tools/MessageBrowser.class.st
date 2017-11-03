@@ -22,7 +22,7 @@ Class {
 		'textConverterHolder',
 		'browsedEnvironment'
 	],
-	#category : 'Spec-Tools-Senders'
+	#category : #Spec-Tools-Senders
 }
 
 { #category : #'instance creation' }

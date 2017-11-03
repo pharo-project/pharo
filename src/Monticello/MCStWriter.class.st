@@ -17,7 +17,7 @@ Class {
 		'initializers',
 		'writeInitializers'
 	],
-	#category : 'Monticello-Storing'
+	#category : #Monticello-Storing
 }
 
 { #category : #accessing }

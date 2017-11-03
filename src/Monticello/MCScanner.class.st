@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : 'Monticello-Chunk Format'
+	#category : #'Monticello-Chunk Format'
 }
 
 { #category : #'public api' }

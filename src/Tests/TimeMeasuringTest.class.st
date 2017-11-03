@@ -5,7 +5,7 @@ Class {
 		'realTime',
 		'shouldProfile'
 	],
-	#category : 'Tests-Traits'
+	#category : #Tests-Traits
 }
 
 { #category : #debugging }

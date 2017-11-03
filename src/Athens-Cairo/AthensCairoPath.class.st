@@ -6,7 +6,7 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#category : 'Athens-Cairo-Paths'
+	#category : #Athens-Cairo-Paths
 }
 
 { #category : #'instance creation' }

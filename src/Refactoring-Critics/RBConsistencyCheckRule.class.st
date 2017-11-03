@@ -4,7 +4,7 @@ Checks for code using equality tests instead of the message sends. Since the cod
 Class {
 	#name : #RBConsistencyCheckRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Icons'
 	],
-	#category : 'Morphic-Widgets-Tabs'
+	#category : #Morphic-Widgets-Tabs
 }
 
 { #category : #icons }

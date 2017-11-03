@@ -7,7 +7,7 @@ The interactionModel can represents your model or a model of the higher level (A
 "
 Trait {
 	#name : #TViewModel,
-	#category : 'Rubric-Editing-Core-Support'
+	#category : #Rubric-Editing-Core-Support
 }
 
 { #category : #accessing }

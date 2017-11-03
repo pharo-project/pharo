@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestSystemBasicCommandLineHandler,
 	#superclass : #PackageManifest,
-	#category : 'System-BasicCommandLineHandler'
+	#category : #System-BasicCommandLineHandler
 }
 
 { #category : #'meta-data - dependency analyser' }

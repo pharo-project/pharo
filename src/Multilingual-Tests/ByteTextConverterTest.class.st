@@ -4,7 +4,7 @@ SUnit tests for ByteTextConverter
 Class {
 	#name : #ByteTextConverterTest,
 	#superclass : #TestCase,
-	#category : 'Multilingual-Tests-TextConversion'
+	#category : #Multilingual-Tests-TextConversion
 }
 
 { #category : #testing }

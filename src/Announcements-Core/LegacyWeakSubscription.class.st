@@ -6,7 +6,7 @@ Class {
 	#name : #LegacyWeakSubscription,
 	#superclass : #WeakAnnouncementSubscription,
 	#type : #weak,
-	#category : 'Announcements-Core'
+	#category : #Announcements-Core
 }
 
 { #category : #converting }

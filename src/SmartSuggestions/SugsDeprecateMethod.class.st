@@ -5,7 +5,7 @@ I know how to deprecate method.
 Class {
 	#name : #SugsDeprecateMethod,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

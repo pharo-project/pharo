@@ -9,7 +9,7 @@ Class {
 		'item',
 		'model'
 	],
-	#category : 'Morphic-Widgets-List'
+	#category : #Morphic-Widgets-List
 }
 
 { #category : #'as yet unclassified' }

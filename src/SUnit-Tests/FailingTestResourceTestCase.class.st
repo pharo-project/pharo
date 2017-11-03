@@ -4,7 +4,7 @@ SUnit tests for failing test resources
 Class {
 	#name : #FailingTestResourceTestCase,
 	#superclass : #SimpleTestResourceTestCase,
-	#category : 'SUnit-Tests-Core'
+	#category : #SUnit-Tests-Core
 }
 
 { #category : #utility }

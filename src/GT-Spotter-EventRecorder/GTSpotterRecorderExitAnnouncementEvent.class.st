@@ -11,7 +11,7 @@ timestamp
 Class {
 	#name : #GTSpotterRecorderExitAnnouncementEvent,
 	#superclass : #GTSpotterRecorderEvent,
-	#category : 'GT-Spotter-EventRecorder-Events'
+	#category : #GT-Spotter-EventRecorder-Events
 }
 
 { #category : #visitor }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fallback'
 	],
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #converting }

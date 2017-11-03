@@ -1,7 +1,7 @@
 Class {
 	#name : #OCScannerTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-FromOld'
+	#category : #OpalCompiler-Tests-FromOld
 }
 
 { #category : #testing }

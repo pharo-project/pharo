@@ -9,7 +9,7 @@ For mouseOver action, #taskbarCanShowThumbnail must be implemented to return tru
 "
 Trait {
 	#name : #TShowInTaskbar,
-	#category : 'Morphic-Widgets-Taskbar'
+	#category : #Morphic-Widgets-Taskbar
 }
 
 { #category : #taskbar-private }

@@ -32,7 +32,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'FreeType-FontManager'
+	#category : #FreeType-FontManager
 }
 
 { #category : #accessing }

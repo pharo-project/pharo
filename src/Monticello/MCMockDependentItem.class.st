@@ -9,7 +9,7 @@ Class {
 		'provides',
 		'requires'
 	],
-	#category : 'Monticello-Mocks'
+	#category : #Monticello-Mocks
 }
 
 { #category : #comparing }

@@ -4,7 +4,7 @@ I'm a style module related to tab label
 Class {
 	#name : #GLMBrickTabLabelThemer,
 	#superclass : #GLMBrickThemerModule,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-tab-label }

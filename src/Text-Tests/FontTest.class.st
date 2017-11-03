@@ -5,7 +5,7 @@ FontTest buildSuite run
 Class {
 	#name : #FontTest,
 	#superclass : #TestCase,
-	#category : 'Text-Tests-Fonts'
+	#category : #Text-Tests-Fonts
 }
 
 { #category : #testing }

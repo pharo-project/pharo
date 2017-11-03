@@ -4,7 +4,7 @@ MCClassTraitParser identifies classTrait.
 Class {
 	#name : #MCClassTraitParser,
 	#superclass : #MCDoItParser,
-	#category : 'Monticello-Chunk Format'
+	#category : #'Monticello-Chunk Format'
 }
 
 { #category : #'factory identification hook' }

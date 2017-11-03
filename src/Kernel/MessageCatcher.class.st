@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'accumulator'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #'reflective operations' }

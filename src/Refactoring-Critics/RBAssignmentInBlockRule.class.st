@@ -4,7 +4,7 @@ Checks ensure:, ifCurtailed:, and showWhile: blocks for assignments or returns t
 Class {
 	#name : #RBAssignmentInBlockRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

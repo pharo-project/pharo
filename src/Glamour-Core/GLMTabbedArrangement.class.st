@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMTabbedArrangement,
 	#superclass : #GLMCompositeArrangement,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #rendering }

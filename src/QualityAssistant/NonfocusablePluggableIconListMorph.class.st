@@ -4,7 +4,7 @@ Same as PluggableIconListMorph list but does not accept focus
 Class {
 	#name : #NonfocusablePluggableIconListMorph,
 	#superclass : #PluggableIconListMorph,
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #display }

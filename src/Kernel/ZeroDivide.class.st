@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'dividend'
 	],
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #exceptioninstantiator }

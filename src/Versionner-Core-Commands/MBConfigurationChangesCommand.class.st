@@ -4,7 +4,7 @@ Command to browse changes on a configuration in versionner
 Class {
 	#name : #MBConfigurationChangesCommand,
 	#superclass : #MBConfigurationInfoCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

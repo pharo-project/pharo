@@ -8,7 +8,7 @@ Class {
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #finalization }

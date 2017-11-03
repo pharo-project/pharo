@@ -20,7 +20,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #'error handling' }

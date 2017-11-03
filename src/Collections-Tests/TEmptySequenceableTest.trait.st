@@ -3,7 +3,7 @@ A trait for test purposes
 "
 Trait {
 	#name : #TEmptySequenceableTest,
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #parameters }

@@ -10,7 +10,7 @@ Class {
 		'currentContext',
 		'previousContext'
 	],
-	#category : 'GT-Tests-Spotter-Scripting'
+	#category : #GT-Tests-Spotter-Scripting
 }
 
 { #category : #convenience }

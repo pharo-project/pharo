@@ -5,7 +5,7 @@ the concrete ""instance variable"" renaming.
 Class {
 	#name : #RBRenameInstanceVariableChange,
 	#superclass : #RBRenameVariableChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ Checks for assignements to temporaries that are not used afterwards.
 Class {
 	#name : #RBUnnecessaryAssignmentRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

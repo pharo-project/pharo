@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'FFI-Kernel'
+	#category : #FFI-Kernel
 }
 
 { #category : #accessing }

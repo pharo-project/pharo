@@ -22,7 +22,7 @@ Class {
 		'cachedItems',
 		'showEntryItemMenu'
 	],
-	#category : 'EpiceaBrowsers-UI-Log'
+	#category : #EpiceaBrowsers-UI-Log
 }
 
 { #category : #accessing }

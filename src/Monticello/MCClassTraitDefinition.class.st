@@ -9,7 +9,7 @@ Class {
 		'classTraitComposition',
 		'category'
 	],
-	#category : 'Monticello-Modeling'
+	#category : #Monticello-Modeling
 }
 
 { #category : #'instance creation' }

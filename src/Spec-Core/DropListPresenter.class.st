@@ -14,7 +14,7 @@ Class {
 		'displayBlock',
 		'iconHolder'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

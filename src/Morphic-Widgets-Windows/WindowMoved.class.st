@@ -11,7 +11,7 @@ Class {
 		'oldPosition',
 		'newPosition'
 	],
-	#category : 'Morphic-Widgets-Windows-Announcements'
+	#category : #Morphic-Widgets-Windows-Announcements
 }
 
 { #category : #testing }

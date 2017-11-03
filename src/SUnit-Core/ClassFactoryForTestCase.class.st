@@ -28,7 +28,7 @@ Class {
 	#classVars : [
 		'Counter'
 	],
-	#category : 'SUnit-Core-Extensions'
+	#category : #SUnit-Core-Extensions
 }
 
 { #category : #cleaning }

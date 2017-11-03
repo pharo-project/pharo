@@ -10,7 +10,7 @@ Class {
 		'target',
 		'checkpoints'
 	],
-	#category : 'Hiedra-Rendering'
+	#category : #Hiedra-Rendering
 }
 
 { #category : #'instance creation' }

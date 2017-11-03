@@ -13,7 +13,7 @@ Class {
 		'methodName',
 		'selectorField'
 	],
-	#category : 'NautilusRefactoring-Utilities'
+	#category : #NautilusRefactoring-Utilities
 }
 
 { #category : #'instance creation' }

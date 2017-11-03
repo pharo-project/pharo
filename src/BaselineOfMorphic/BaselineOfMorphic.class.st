@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'initializersEnabled'
 	],
-	#category : 'BaselineOfMorphic'
+	#category : #BaselineOfMorphic
 }
 
 { #category : #baseline }

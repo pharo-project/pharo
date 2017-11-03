@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selectedPosition'
 	],
-	#category : 'NautilusCommon-Plugin-Manager'
+	#category : #NautilusCommon-Plugin-Manager
 }
 
 { #category : #private }

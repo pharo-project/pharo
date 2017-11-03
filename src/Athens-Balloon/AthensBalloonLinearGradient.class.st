@@ -8,7 +8,7 @@ Class {
 		'origin',
 		'corner'
 	],
-	#category : 'Athens-Balloon'
+	#category : #Athens-Balloon
 }
 
 { #category : #rendering }

@@ -13,7 +13,7 @@ Historical note: #ensureCr and #reset were removed since they were not used
 "
 Trait {
 	#name : #TTranscript,
-	#category : 'Transcript-Core'
+	#category : #Transcript-Core
 }
 
 { #category : #streaming }

@@ -7,7 +7,7 @@ See the comment of IdentitySet for more information.
 Class {
 	#name : #IdentityBag,
 	#superclass : #Bag,
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #'instance creation' }

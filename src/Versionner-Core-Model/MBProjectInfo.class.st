@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentVersion'
 	],
-	#category : 'Versionner-Core-Model'
+	#category : #Versionner-Core-Model
 }
 
 { #category : #accessing }

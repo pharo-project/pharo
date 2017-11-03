@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'methods'
 	],
-	#category : 'Nautilus-GroupManager'
+	#category : #Nautilus-GroupManager
 }
 
 { #category : #'instance creation' }

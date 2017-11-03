@@ -4,7 +4,7 @@ This action is responsible for evaluating the selection in a code pane of a debu
 Class {
 	#name : #GTSelectionGoDebugAction,
 	#superclass : #GTCodeDebugAction,
-	#category : 'GT-Debugger-Actions'
+	#category : #GT-Debugger-Actions
 }
 
 { #category : #registration }

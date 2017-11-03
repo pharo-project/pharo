@@ -6,7 +6,7 @@ This smell arises when a method protocol is not equivalent to the one defined in
 Class {
 	#name : #RBInconsistentMethodClassificationRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

@@ -20,7 +20,7 @@ Here are some example of my protocol:
 Class {
 	#name : #Magnitude,
 	#superclass : #Object,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #testing }

@@ -16,7 +16,7 @@ Class {
 		'classVariables',
 		'sharedPools'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #'instance creation' }

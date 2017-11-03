@@ -4,7 +4,7 @@ SUnit tests for class Delay
 Class {
 	#name : #DelayTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #tests }

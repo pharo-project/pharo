@@ -4,7 +4,7 @@ Fetch packages using Gofer
 Class {
 	#name : #GoferFetch,
 	#superclass : #GoferSynchronize,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #private }

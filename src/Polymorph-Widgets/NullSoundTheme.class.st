@@ -4,7 +4,7 @@ A silent sound theme
 Class {
 	#name : #NullSoundTheme,
 	#superclass : #SoundTheme,
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #'as yet unclassified' }

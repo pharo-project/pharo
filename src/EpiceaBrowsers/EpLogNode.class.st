@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'referencedNodes'
 	],
-	#category : 'EpiceaBrowsers-UI-Graph'
+	#category : #EpiceaBrowsers-UI-Graph
 }
 
 { #category : #accessing }

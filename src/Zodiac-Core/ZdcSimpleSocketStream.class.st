@@ -11,7 +11,7 @@ funneling all access through #next and #nextPut.
 Class {
 	#name : #ZdcSimpleSocketStream,
 	#superclass : #ZdcAbstractSocketStream,
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #'instance creation' }

@@ -35,7 +35,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'GT-EventRecorder-Core'
+	#category : #GT-EventRecorder-Core
 }
 
 { #category : #cleanup }

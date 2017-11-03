@@ -14,7 +14,7 @@ Class {
 		'passed',
 		'skipped'
 	],
-	#category : 'SUnit-Core-Kernel'
+	#category : #SUnit-Core-Kernel
 }
 
 { #category : #exceptions }

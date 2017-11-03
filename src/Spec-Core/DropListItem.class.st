@@ -10,7 +10,7 @@ Class {
 		'displayBlock',
 		'icon'
 	],
-	#category : 'Spec-Core-Widgets-Support'
+	#category : #Spec-Core-Widgets-Support
 }
 
 { #category : #'instance creation' }

@@ -21,7 +21,7 @@ Class {
 		'type',
 		'errorBlock'
 	],
-	#category : 'Refactoring-Core-Conditions'
+	#category : #Refactoring-Core-Conditions
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 		'rules',
 		'name'
 	],
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #accessing }

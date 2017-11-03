@@ -16,7 +16,7 @@ Part of Zinc HTTP Components
 Class {
 	#name : #ZnTestRunnerDelegate,
 	#superclass : #Object,
-	#category : 'Zinc-HTTP-Client-Server'
+	#category : #Zinc-HTTP-Client-Server
 }
 
 { #category : #public }

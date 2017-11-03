@@ -11,7 +11,7 @@ Class {
 		'nameOfItem',
 		'name'
 	],
-	#category : 'StartupPreferences'
+	#category : #StartupPreferences
 }
 
 { #category : #'instance creation' }

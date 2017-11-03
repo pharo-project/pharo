@@ -5,7 +5,7 @@ Class {
 		'primarySelectionInterval',
 		'hasUnacceptedEdits'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'text managing' }

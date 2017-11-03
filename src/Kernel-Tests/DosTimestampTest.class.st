@@ -4,7 +4,7 @@ SUnit tests for class  DosTimeStamp
 Class {
 	#name : #DosTimestampTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #tests }

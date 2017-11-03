@@ -18,7 +18,7 @@ Class {
 		'DumbbellCursor',
 		'SkipOverMultipleSpaces'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #settings }

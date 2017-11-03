@@ -11,7 +11,7 @@ Class {
 		'defaultShortcut',
 		'description'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #'instance creation' }

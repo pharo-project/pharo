@@ -43,7 +43,7 @@ Class {
 		'Zs',
 		'nonCharacters'
 	],
-	#category : 'Multilingual-Encodings'
+	#category : #Multilingual-Encodings
 }
 
 { #category : #comments }

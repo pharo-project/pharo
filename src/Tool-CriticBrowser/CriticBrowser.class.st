@@ -24,7 +24,7 @@ Class {
 		'resetButton',
 		'logButton'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #menu }

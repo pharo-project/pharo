@@ -4,7 +4,7 @@ I provide a test suite for SmallInteger values. Examine my tests to see how Smal
 Class {
 	#name : #SmallIntegerTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #'tests - Class Methods' }

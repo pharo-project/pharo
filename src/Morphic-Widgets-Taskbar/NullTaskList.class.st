@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'world'
 	],
-	#category : 'Morphic-Widgets-Taskbar'
+	#category : #Morphic-Widgets-Taskbar
 }
 
 { #category : #'instance creation' }

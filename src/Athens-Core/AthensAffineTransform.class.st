@@ -15,7 +15,7 @@ Class {
 		'sy',
 		'y'
 	],
-	#category : 'Athens-Core-Matrices'
+	#category : #Athens-Core-Matrices
 }
 
 { #category : #transformations }

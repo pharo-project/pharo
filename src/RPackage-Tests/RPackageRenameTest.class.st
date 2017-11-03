@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'oldSystemAnnouncer'
 	],
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #running }

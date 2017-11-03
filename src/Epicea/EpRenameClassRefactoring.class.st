@@ -8,7 +8,7 @@ Class {
 		'newName',
 		'oldName'
 	],
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #'instance creation' }

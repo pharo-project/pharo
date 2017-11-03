@@ -5,7 +5,7 @@ Trait {
 	#name : #EpTEventVisitor,
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
-	#category : 'Epicea-Visitors'
+	#category : #Epicea-Visitors
 }
 
 { #category : #visitor }

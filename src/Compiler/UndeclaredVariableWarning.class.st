@@ -9,7 +9,7 @@ Class {
 		'selector',
 		'class'
 	],
-	#category : 'Compiler-Support'
+	#category : #Compiler-Support
 }
 
 { #category : #exceptionDescription }

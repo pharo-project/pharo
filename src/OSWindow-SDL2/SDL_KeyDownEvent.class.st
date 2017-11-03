@@ -4,7 +4,7 @@ SDL2 library structure
 Class {
 	#name : #SDL_KeyDownEvent,
 	#superclass : #SDL_KeyboardEvent,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

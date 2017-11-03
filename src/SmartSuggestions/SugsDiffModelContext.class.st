@@ -1,7 +1,7 @@
 Class {
 	#name : #SugsDiffModelContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions'
+	#category : #SmartSuggestions
 }
 
 { #category : #accessing }

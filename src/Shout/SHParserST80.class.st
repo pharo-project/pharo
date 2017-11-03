@@ -22,7 +22,7 @@ Class {
 		'environment',
 		'isMethod'
 	],
-	#category : 'Shout-Parsing'
+	#category : #Shout-Parsing
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ See other implementors of #asAthensPaintOn:, such as Color and Form.
 Class {
 	#name : #AthensAbstractPaint,
 	#superclass : #Object,
-	#category : 'Athens-Core-Paints'
+	#category : #Athens-Core-Paints
 }
 
 { #category : #converting }

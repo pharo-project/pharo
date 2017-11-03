@@ -8,7 +8,7 @@ Class {
 		'receiver',
 		'messages'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

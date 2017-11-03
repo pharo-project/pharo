@@ -15,7 +15,7 @@ The server runs until it receives quit as message. If necessary, use the Process
 Class {
 	#name : #UDPSocketEchoTest,
 	#superclass : #TestCase,
-	#category : 'Network-Tests-Kernel'
+	#category : #Network-Tests-Kernel
 }
 
 { #category : #testing }

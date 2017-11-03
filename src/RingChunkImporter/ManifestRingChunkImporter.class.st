@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestRingChunkImporter,
 	#superclass : #PackageManifest,
-	#category : 'RingChunkImporter'
+	#category : #RingChunkImporter
 }
 
 { #category : #'meta-data - dependency analyser' }

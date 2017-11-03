@@ -10,7 +10,7 @@ Class {
 		'tab',
 		'storedIcon'
 	],
-	#category : 'Morphic-Widgets-Tabs-Support'
+	#category : #Morphic-Widgets-Tabs-Support
 }
 
 { #category : #'instance creation' }

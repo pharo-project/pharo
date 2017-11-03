@@ -15,7 +15,7 @@ Class {
 		'timeout',
 		'debug'
 	],
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #'instance creation' }

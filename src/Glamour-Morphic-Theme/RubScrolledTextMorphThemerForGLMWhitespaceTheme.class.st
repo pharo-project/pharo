@@ -1,7 +1,7 @@
 Class {
 	#name : #RubScrolledTextMorphThemerForGLMWhitespaceTheme,
 	#superclass : #RubScrolledTextMorphThemer,
-	#category : 'Glamour-Morphic-Theme'
+	#category : #Glamour-Morphic-Theme
 }
 
 { #category : #border-styles }

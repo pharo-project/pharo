@@ -1,7 +1,7 @@
 Class {
 	#name : #Slice,
 	#superclass : #KomitableObject,
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #protocol }

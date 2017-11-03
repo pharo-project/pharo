@@ -13,7 +13,7 @@ Class {
 		'right',
 		'failed'
 	],
-	#category : 'Refactoring-Core-Conditions'
+	#category : #Refactoring-Core-Conditions
 }
 
 { #category : #checking }

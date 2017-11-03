@@ -19,7 +19,7 @@ Class {
 		'EscapedLetterSelectors',
 		'NamedClassSelectors'
 	],
-	#category : 'Regex-Core'
+	#category : #Regex-Core
 }
 
 { #category : #'instance creation' }

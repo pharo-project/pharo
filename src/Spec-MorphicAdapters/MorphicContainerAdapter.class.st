@@ -4,7 +4,7 @@ I am the adapter providing the correct container class: PanelMorph
 Class {
 	#name : #MorphicContainerAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #factory }

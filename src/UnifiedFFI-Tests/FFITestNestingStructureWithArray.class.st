@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'OFFSET_NESTED'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #'as yet unclassified' }

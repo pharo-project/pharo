@@ -5,7 +5,7 @@ Class {
 		'transformedEntity',
 		'columns'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Phlow'
+	#category : #Glamour-Morphic-Brick-Widgets-Phlow
 }
 
 { #category : #examples }

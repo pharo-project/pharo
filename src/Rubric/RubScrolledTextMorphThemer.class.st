@@ -1,7 +1,7 @@
 Class {
 	#name : #RubScrolledTextMorphThemer,
 	#superclass : #Object,
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #border-styles }

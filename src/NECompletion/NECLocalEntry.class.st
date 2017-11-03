@@ -4,7 +4,7 @@ I represent a local variable
 Class {
 	#name : #NECLocalEntry,
 	#superclass : #NECEntry,
-	#category : 'NECompletion-Model'
+	#category : #NECompletion-Model
 }
 
 { #category : #operations }

@@ -18,7 +18,7 @@ Class {
 		'DoubleTouchSpeed',
 		'MaxDistance'
 	],
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #accessing }

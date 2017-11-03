@@ -5,7 +5,7 @@ Trait {
 	#name : #TSequencedStructuralEqualityTest,
 	#traits : 'TStructuralEqualityTest',
 	#classTraits : 'TStructuralEqualityTest classTrait',
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #'tests - equality' }

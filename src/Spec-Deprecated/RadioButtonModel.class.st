@@ -4,5 +4,5 @@ This is deprecated class because the original class RadioButtonModel was renamed
 Class {
 	#name : #RadioButtonModel,
 	#superclass : #RadioButtonPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

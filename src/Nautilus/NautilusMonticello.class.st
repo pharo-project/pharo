@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #singleton }

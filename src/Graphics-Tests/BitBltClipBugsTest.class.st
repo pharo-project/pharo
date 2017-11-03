@@ -5,7 +5,7 @@ SUnit tests for BitBlt clipping bugs
 Class {
 	#name : #BitBltClipBugsTest,
 	#superclass : #TestCase,
-	#category : 'Graphics-Tests-Primitives'
+	#category : #Graphics-Tests-Primitives
 }
 
 { #category : #'tests - drawing' }

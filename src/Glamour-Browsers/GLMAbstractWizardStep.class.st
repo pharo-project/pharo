@@ -34,7 +34,7 @@ Class {
 		'numberOfDisplay',
 		'input'
 	],
-	#category : 'Glamour-Browsers-Wizards'
+	#category : #Glamour-Browsers-Wizards
 }
 
 { #category : #testing }

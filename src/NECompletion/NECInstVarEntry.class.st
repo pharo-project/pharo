@@ -4,7 +4,7 @@ I represent an instance variable.
 Class {
 	#name : #NECInstVarEntry,
 	#superclass : #NECEntry,
-	#category : 'NECompletion-Model'
+	#category : #NECompletion-Model
 }
 
 { #category : #operations }

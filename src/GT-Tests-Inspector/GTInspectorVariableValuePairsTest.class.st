@@ -1,7 +1,7 @@
 Class {
 	#name : #GTInspectorVariableValuePairsTest,
 	#superclass : #TestCase,
-	#category : 'GT-Tests-Inspector'
+	#category : #GT-Tests-Inspector
 }
 
 { #category : #object }

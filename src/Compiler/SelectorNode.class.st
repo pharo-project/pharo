@@ -4,7 +4,7 @@ I am a parse tree leaf representing a selector.
 Class {
 	#name : #SelectorNode,
 	#superclass : #LeafNode,
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

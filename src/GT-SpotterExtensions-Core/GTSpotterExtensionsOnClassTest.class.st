@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterExtensionsOnClassTest,
 	#superclass : #TestCase,
-	#category : 'GT-SpotterExtensions-Core'
+	#category : #GT-SpotterExtensions-Core
 }
 
 { #category : #tests }

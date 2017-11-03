@@ -11,7 +11,7 @@ ZnDefaultCharacterEncoder
 Class {
 	#name : #ZnDefaultCharacterEncoder,
 	#superclass : #DynamicVariable,
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

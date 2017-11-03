@@ -4,7 +4,7 @@ I am signaled when the name of a Slot is an invalid variable name.
 Class {
 	#name : #InvalidSlotName,
 	#superclass : #ClassBuilderWarning,
-	#category : 'Slot-Exception'
+	#category : #Slot-Exception
 }
 
 { #category : #signalling }

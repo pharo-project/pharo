@@ -1,7 +1,7 @@
 Class {
 	#name : #GTInspectorProtoObjectTest,
 	#superclass : #GLMMorphicTest,
-	#category : 'GT-Tests-Inspector'
+	#category : #GT-Tests-Inspector
 }
 
 { #category : #tests }

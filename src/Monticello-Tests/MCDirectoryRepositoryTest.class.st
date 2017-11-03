@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'directory'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #actions }

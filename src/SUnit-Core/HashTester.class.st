@@ -6,7 +6,7 @@ I am given an object that should be tested and I treat it like a prototype.  I t
 Class {
 	#name : #HashTester,
 	#superclass : #PrototypeTester,
-	#category : 'SUnit-Core-Utilities'
+	#category : #SUnit-Core-Utilities
 }
 
 { #category : #operation }

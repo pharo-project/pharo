@@ -34,7 +34,7 @@ Class {
 		'FromCharTable',
 		'ToCharTable'
 	],
-	#category : 'Network-MIME'
+	#category : #Network-MIME
 }
 
 { #category : #encoding }

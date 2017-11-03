@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : 'Athens-Cairo-Transforms'
+	#category : #Athens-Cairo-Transforms
 }
 
 { #category : #'instance creation' }

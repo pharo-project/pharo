@@ -3,7 +3,7 @@ A trait for morphs able to rotate
 "
 Trait {
 	#name : #TAbleToRotate,
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #t-rotating }

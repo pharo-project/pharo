@@ -6,7 +6,7 @@ Class {
 		'OFFSET_ONE',
 		'OFFSET_TWO'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #'field definition' }

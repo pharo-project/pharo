@@ -5,7 +5,7 @@ Class {
 	#name : #GLMMultiValue,
 	#superclass : #OrderedCollection,
 	#type : #variable,
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #testing }

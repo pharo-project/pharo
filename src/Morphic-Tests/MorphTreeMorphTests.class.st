@@ -5,7 +5,7 @@ A MorphTreeMorphTests tests aspects of a MorphTreeMorph
 Class {
 	#name : #MorphTreeMorphTests,
 	#superclass : #TestCase,
-	#category : 'Morphic-Tests-Widgets'
+	#category : #Morphic-Tests-Widgets
 }
 
 { #category : #tests }

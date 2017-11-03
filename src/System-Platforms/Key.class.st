@@ -14,7 +14,7 @@ Class {
 		'UnixVirtualKeyTable',
 		'WindowsVirtualKeyTable'
 	],
-	#category : 'System-Platforms'
+	#category : #System-Platforms
 }
 
 { #category : #'class initialization' }

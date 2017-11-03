@@ -2,7 +2,7 @@ Class {
 	#name : #MCMockClassE,
 	#superclass : #Object,
 	#type : #variable,
-	#category : 'MonticelloMocks'
+	#category : #MonticelloMocks
 }
 
 { #category : #'as yet unclassified' }

@@ -11,7 +11,7 @@ Class {
 		'nodes',
 		'edges'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #private }

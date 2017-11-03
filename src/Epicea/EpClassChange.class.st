@@ -4,7 +4,7 @@ I represent a change in the definition of a class.
 Class {
 	#name : #EpClassChange,
 	#superclass : #EpBehaviorChange,
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #testing }

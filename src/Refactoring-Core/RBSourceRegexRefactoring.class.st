@@ -4,7 +4,7 @@ I am a regex refactoring replacing method sources.
 Class {
 	#name : #RBSourceRegexRefactoring,
 	#superclass : #RBRegexRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #private }

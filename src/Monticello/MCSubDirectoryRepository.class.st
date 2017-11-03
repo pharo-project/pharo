@@ -4,7 +4,7 @@ A MCDirectoryRepository that looks in subdirectories too.
 Class {
 	#name : #MCSubDirectoryRepository,
 	#superclass : #MCDirectoryRepository,
-	#category : 'Monticello-Repositories'
+	#category : #Monticello-Repositories
 }
 
 { #category : #'user interface' }

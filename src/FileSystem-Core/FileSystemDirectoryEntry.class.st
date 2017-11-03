@@ -30,7 +30,7 @@ Class {
 		'size',
 		'posixPermissions'
 	],
-	#category : 'FileSystem-Core-Public'
+	#category : #FileSystem-Core-Public
 }
 
 { #category : #accessing }

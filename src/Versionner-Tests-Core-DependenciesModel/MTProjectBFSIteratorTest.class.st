@@ -1,7 +1,7 @@
 Class {
 	#name : #MTProjectBFSIteratorTest,
 	#superclass : #TestCase,
-	#category : 'Versionner-Tests-Core-DependenciesModel'
+	#category : #Versionner-Tests-Core-DependenciesModel
 }
 
 { #category : #tests }

@@ -5,7 +5,7 @@ Class {
 		'versionString',
 		'projectVersion'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'package',
 		'workingCopy'
 	],
-	#category : 'Monticello-Announcements'
+	#category : #Monticello-Announcements
 }
 
 { #category : #'instance creation' }

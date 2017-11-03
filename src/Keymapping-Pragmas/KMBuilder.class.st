@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'platform'
 	],
-	#category : 'Keymapping-Pragmas'
+	#category : #Keymapping-Pragmas
 }
 
 { #category : #'instance creation' }

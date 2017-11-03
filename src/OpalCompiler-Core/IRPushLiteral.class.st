@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'literal'
 	],
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

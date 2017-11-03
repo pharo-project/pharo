@@ -4,7 +4,7 @@ This announcement is emitted when a window leaves a collapsed mode. This happens
 Class {
 	#name : #WindowExpanded,
 	#superclass : #WindowAnnouncement,
-	#category : 'Morphic-Widgets-Windows-Announcements'
+	#category : #Morphic-Widgets-Windows-Announcements
 }
 
 { #category : #testing }

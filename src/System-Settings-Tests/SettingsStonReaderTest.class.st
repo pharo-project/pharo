@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'reader'
 	],
-	#category : 'System-Settings-Tests'
+	#category : #System-Settings-Tests
 }
 
 { #category : #running }

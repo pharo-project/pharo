@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'themer'
 	],
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #accessing }

@@ -7,5 +7,5 @@ Class {
 	#classVars : [
 		'FooValue1'
 	],
-	#category : 'Tests-System'
+	#category : #Tests-System
 }

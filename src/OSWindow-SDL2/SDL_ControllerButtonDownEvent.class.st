@@ -4,7 +4,7 @@ SDL2 library structure representing a game controller button down event data.
 Class {
 	#name : #SDL_ControllerButtonDownEvent,
 	#superclass : #SDL_ControllerButtonEvent,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

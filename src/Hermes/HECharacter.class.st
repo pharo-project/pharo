@@ -1,7 +1,7 @@
 Class {
 	#name : #HECharacter,
 	#superclass : #HEByteString,
-	#category : 'Hermes-Model'
+	#category : #Hermes-Model
 }
 
 { #category : #accessing }

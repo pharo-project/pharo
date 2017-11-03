@@ -6,7 +6,7 @@ I have been introduced since it's currently the best solution to prevent to add 
 Class {
 	#name : #SpecWindow,
 	#superclass : #StandardWindow,
-	#category : 'Spec-MorphicAdapters-Support'
+	#category : #Spec-MorphicAdapters-Support
 }
 
 { #category : #protocol }

@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'MinDistToBorder'
 	],
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #'class initialization' }

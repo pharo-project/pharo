@@ -4,7 +4,7 @@ If a class has a method in its trait composition, the method should not be imple
 Class {
 	#name : #RBLocalMethodsOfAClassNotInItsTraitComposition,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

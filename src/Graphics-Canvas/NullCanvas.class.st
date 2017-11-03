@@ -4,7 +4,7 @@ A canvas which ignores all drawing commands.
 Class {
 	#name : #NullCanvas,
 	#superclass : #PluggableCanvas,
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #drawing-support }

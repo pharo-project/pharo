@@ -3,7 +3,7 @@ Kernel trait for Behavior categorization
 "
 Trait {
 	#name : #TBehaviorCategorization,
-	#category : 'Traits-Kernel-Traits'
+	#category : #Traits-Kernel-Traits
 }
 
 { #category : #organization }

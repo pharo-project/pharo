@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'label'
 	],
-	#category : 'GT-Inspector'
+	#category : #GT-Inspector
 }
 
 { #category : #'instance creation' }

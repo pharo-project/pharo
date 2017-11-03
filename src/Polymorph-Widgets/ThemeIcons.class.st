@@ -31,7 +31,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }

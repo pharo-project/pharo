@@ -17,7 +17,7 @@ var := [ statements.
 Class {
 	#name : #RBUnwindBlocksRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

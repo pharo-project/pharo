@@ -18,7 +18,7 @@ Class {
 		'enabled',
 		'highlights'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #'instance creation' }

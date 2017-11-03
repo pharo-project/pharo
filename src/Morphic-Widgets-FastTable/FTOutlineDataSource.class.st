@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'items'
 	],
-	#category : 'Morphic-Widgets-FastTable-DataSource'
+	#category : #Morphic-Widgets-FastTable-DataSource
 }
 
 { #category : #'instance creation' }
