@@ -1,7 +1,7 @@
 Class {
 	#name : #FileTest,
 	#superclass : #TestCase,
-	#category : 'Files-Tests'
+	#category : #Files-Tests
 }
 
 { #category : #running }
@@ -15,7 +15,7 @@ FileTest >> testCheckExistenceOfExistingFileThrowsException [
 
 	| file |
 	file := File named: 'asd.txt'.
-	file writeStream.
+	file writeStream close.
 	self should: [file checkDoesNotExist] raise: FileAlreadyExistsException.
 ]
 
