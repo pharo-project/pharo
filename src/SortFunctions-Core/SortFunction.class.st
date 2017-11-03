@@ -29,7 +29,7 @@ Using #undefinedFirst and #undefinedLast it is possible to deal with nil values,
 
 Different scenarios are implemented by my different subclasses:
 - SortByPropertyFunction implement property comparison by selector or block
-- PluggableSortFunction represent two args collator block
+- CollatorBlockFunction represent two args collator block
 - and ChainedSortFunction implements composition of collators created by comma message
 
 Applications can implement their own domain sort functinos defining the method:
