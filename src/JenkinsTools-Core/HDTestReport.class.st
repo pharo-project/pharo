@@ -11,7 +11,8 @@ Class {
 		'suiteTime',
 		'suiteFailures',
 		'suiteErrors',
-		'progressFile'
+		'progressFile',
+		'nodeName'
 	],
 	#category : #JenkinsTools-Core
 }
@@ -46,24 +47,46 @@ HDTestReport class >> runSuite: aTestSuite [
 { #category : #private }
 HDTestReport >> beginTestCase: aTestCase runBlock: aBlock [
 	| time |
-	progressFile 
-		nextPutAll: 'starting testcase: ' ; 
-		nextPutAll: aTestCase class name; 
-		nextPutAll:'>>';
-		nextPutAll: aTestCase selector; 
-		nextPutAll: ' ... '; 
+	progressFile
+		nextPutAll: 'starting testcase: ';
+		nextPutAll: aTestCase class name;
+		nextPutAll: '>>';
+		nextPutAll: aTestCase selector;
+		nextPutAll: ' ... ';
 		flush.
-		
 	time := aBlock timeToRun.
-	stream tab; 
-		nextPutAll: '<testcase classname="'; 
-		nextPutAll: (self encode: (aTestCase class category copyReplaceAll: '-' with: '.')); 
-		nextPut: $.; nextPutAll: (self encode: aTestCase class name); 
-		nextPutAll: '" name="'; nextPutAll: (self encode: aTestCase selector); 
-		nextPutAll: '" time="'; print: (time asMilliSeconds / 1000.0); 
-		nextPutAll: '">'; lf
-	
+	stream
+		tab;
+		nextPutAll: '<testcase classname="';
+		nextPutAll:
+			(self encode: (self generateTestName: aTestCase));
+		nextPut: $.;
+		nextPutAll: (self encode: aTestCase class name);
+		nextPutAll: '" name="';
+		nextPutAll: (self encode: aTestCase selector);
+		nextPutAll: '" time="';
+		print: time asMilliSeconds / 1000.0;
+		nextPutAll: '">';
+		lf
+]
 
+{ #category : #private }
+HDTestReport >> calculateNodeName [
+	| environmentClass name bitString |
+	bitString := Smalltalk vm is32bit
+		ifTrue: [ '32' ]
+		ifFalse: [ '64' ].
+
+	name := Smalltalk os family , bitString , '.'.
+
+	" If the environment class is not available, because it needs FFI, I use the node name,
+	because for sure I am in the Bootstrap process."
+	environmentClass := Smalltalk at: #OSEnvironment ifAbsent: [ ^ name ].
+
+	^ environmentClass current
+		at: 'JENKINS_HOME'
+		ifPresent: [ :value | name ]
+		ifAbsent: [ '' ]
 ]
 
 { #category : #running }
@@ -77,6 +100,11 @@ HDTestReport >> endTestCase [
 	stream tab; nextPutAll: '</testcase>'; lf.
 	progressFile nextPutAll: 'finished' ; crlf; flush.
 
+]
+
+{ #category : #private }
+HDTestReport >> generateTestName: aTestCase [
+	^ nodeName , (aTestCase class category copyReplaceAll: '-' with: '.')
 ]
 
 { #category : #testing }
@@ -107,7 +135,9 @@ HDTestReport >> initialize [
 	aFile delete.
 	progressFile := ZnCharacterWriteStream
 			on: (aFile writeStream setToEnd; yourself)
-			encoding: 'utf8'.	
+			encoding: 'utf8'.
+			
+	nodeName := self calculateNodeName.
 ]
 
 { #category : #initialization }
