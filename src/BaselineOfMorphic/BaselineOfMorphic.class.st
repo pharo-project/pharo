@@ -51,7 +51,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'FreeType'.
 		spec package: 'Fuel'.
 		spec package: 'FuelPlatform-Core'.
-		spec package: 'FuelPlatform-Pharo-Core'.
 		spec package: 'FuelPlatform-Pharo-06'.
 	
 		spec package: 'FuelCommandLineHandler'.
