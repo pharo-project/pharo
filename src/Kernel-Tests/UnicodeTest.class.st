@@ -48,6 +48,7 @@ UnicodeTest >> checkCorrespondanceOf: aSelector and: aCategoryTag [
 
 { #category : #running }
 UnicodeTest >> setUp [
+	super setUp.
 	unicodeGenerator := UnicodeTestRNG current
 ]
 

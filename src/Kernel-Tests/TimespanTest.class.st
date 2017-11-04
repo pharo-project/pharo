@@ -29,7 +29,7 @@ TimespanTest >> classToBeTested [
 
 { #category : #running }
 TimespanTest >> setUp [
-
+	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
 	DateAndTime localTimeZone: TimeZone default.
 

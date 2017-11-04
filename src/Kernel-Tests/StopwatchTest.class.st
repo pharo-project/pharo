@@ -36,6 +36,7 @@ StopwatchTest >> selectorsToBeIgnored [
 
 { #category : #running }
 StopwatchTest >> setUp [
+	super setUp.
 	aStopwatch := Stopwatch new.
 	aDelay := Delay forMilliseconds: 1.
 ]
