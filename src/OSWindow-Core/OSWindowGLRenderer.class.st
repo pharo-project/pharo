@@ -4,7 +4,7 @@ i am abstract OpenGL renderer facade.
 Class {
 	#name : #OSWindowGLRenderer,
 	#superclass : #OSWindowRenderer,
-	#category : 'OSWindow-Core-OpenGL'
+	#category : #OSWindow-Core-OpenGL
 }
 
 { #category : #misc }

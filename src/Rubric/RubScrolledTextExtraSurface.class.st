@@ -1,7 +1,7 @@
 Class {
 	#name : #RubScrolledTextExtraSurface,
 	#superclass : #RubScrolledTextExtra,
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #accessing }

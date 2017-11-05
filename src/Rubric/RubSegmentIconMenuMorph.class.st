@@ -1,7 +1,7 @@
 Class {
 	#name : #RubSegmentIconMenuMorph,
 	#superclass : #EmbeddedMenuMorph,
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #'adding item' }

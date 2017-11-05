@@ -11,7 +11,7 @@ I provide shortcuts for the most common methods of the list api to avoid the use
 Class {
 	#name : #LabelledList,
 	#superclass : #LabelledContainer,
-	#category : 'Spec-PolyWidgets-Labelled'
+	#category : #Spec-PolyWidgets-Labelled
 }
 
 { #category : #example }

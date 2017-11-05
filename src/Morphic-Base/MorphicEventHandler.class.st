@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'subscriptions'
 	],
-	#category : 'Morphic-Base-Events'
+	#category : #Morphic-Base-Events
 }
 
 { #category : #events }

@@ -11,7 +11,7 @@ Class {
 		'drawingEnabled',
 		'textArea'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #querying }

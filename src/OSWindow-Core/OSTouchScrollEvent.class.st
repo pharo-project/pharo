@@ -8,7 +8,7 @@ Class {
 		'dDist',
 		'direction'
 	],
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #'as yet unclassified' }

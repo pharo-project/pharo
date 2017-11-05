@@ -12,7 +12,7 @@ Class {
 		'window',
 		'suppressDefaultAction'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #'as yet unclassified' }

@@ -8,7 +8,7 @@ Class {
 		'wrapped',
 		'editorClass'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'event handling' }

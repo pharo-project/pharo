@@ -9,7 +9,7 @@ Using null driver allows most of the code which relies on existance of at least 
 Class {
 	#name : #OSNullWindowDriver,
 	#superclass : #OSWindowDriver,
-	#category : 'OSWindow-Core'
+	#category : #OSWindow-Core
 }
 
 { #category : #'as yet unclassified' }

@@ -15,7 +15,7 @@ WidgetExamples exampleWindowWithToolbars.
 Class {
 	#name : #WidgetExamples,
 	#superclass : #Model,
-	#category : 'Morphic-Examples-Widgets'
+	#category : #Morphic-Examples-Widgets
 }
 
 { #category : #'private - accessing' }
@@ -441,9 +441,9 @@ WidgetExamples class >> exampleWindowWithToolbars [
 		addMorphBack: tools.
 	win
 		addMorph: dock
-			fullFrame: ((0 @ 0 corner: 1 @ 0) asLayoutFrame bottomOffset: dock minExtent y);
+			fullFrame: (LayoutFrame identity bottomFraction: 0;  bottomOffset: dock minExtent y);
 		addMorph: text
-			fullFrame: ((0 @ 0 corner: 1 @ 1) asLayoutFrame topOffset: dock minExtent y).
+			fullFrame: (LayoutFrame identity topOffset: dock minExtent y).
 	win
 		themeChanged;
 		openInWorld

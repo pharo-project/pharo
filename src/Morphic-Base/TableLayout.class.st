@@ -47,7 +47,7 @@ Class {
 		'properties',
 		'minExtentCache'
 	],
-	#category : 'Morphic-Base-Layouts'
+	#category : #Morphic-Base-Layouts
 }
 
 { #category : #nil }

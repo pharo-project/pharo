@@ -4,7 +4,7 @@ How to create help topics from code
 Class {
 	#name : #HelpHowToHelpTopicsFromCode,
 	#superclass : #HelpHowToHelpTopics,
-	#category : 'HelpSystem-Core-Help'
+	#category : #HelpSystem-Core-Help
 }
 
 { #category : #accessing }

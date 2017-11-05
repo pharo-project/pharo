@@ -7,7 +7,7 @@ Instance Variables
 Class {
 	#name : #HelpTopicListItemWrapper,
 	#superclass : #PluggableListItemWrapper,
-	#category : 'HelpSystem-Core-UI'
+	#category : #HelpSystem-Core-UI
 }
 
 { #category : #accessing }

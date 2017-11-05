@@ -1,7 +1,7 @@
 Class {
 	#name : #TextLineTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : 'Morphic-Tests-Text Support'
+	#category : #'Morphic-Tests-Text Support'
 }
 
 { #category : #running }

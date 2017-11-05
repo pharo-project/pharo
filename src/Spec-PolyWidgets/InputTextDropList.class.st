@@ -12,7 +12,7 @@ Class {
 		'dropList',
 		'input'
 	],
-	#category : 'Spec-PolyWidgets-Elementary'
+	#category : #Spec-PolyWidgets-Elementary
 }
 
 { #category : #specs }

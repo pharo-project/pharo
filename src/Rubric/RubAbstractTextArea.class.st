@@ -104,7 +104,7 @@ Class {
 		'LineNumbersTextColor',
 		'WalkAlongDisplayedLine'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #settings }

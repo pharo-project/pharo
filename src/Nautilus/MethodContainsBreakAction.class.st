@@ -4,7 +4,7 @@ I show an action for methods with breakpoints in the browser
 Class {
 	#name : #MethodContainsBreakAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

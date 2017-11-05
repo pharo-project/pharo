@@ -11,7 +11,7 @@ Class {
 		'selectedPackage',
 		'selectedVersion'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #'as yet unclassified' }

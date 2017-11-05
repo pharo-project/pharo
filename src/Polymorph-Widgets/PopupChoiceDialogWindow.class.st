@@ -13,7 +13,7 @@ Class {
 		'filter',
 		'filterMorph'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #'instance creation' }

@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'CopyPlusIcon'
 	],
-	#category : 'Morphic-Base-Events'
+	#category : #Morphic-Base-Events
 }
 
 { #category : #initialization }

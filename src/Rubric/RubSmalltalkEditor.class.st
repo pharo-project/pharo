@@ -8,7 +8,7 @@ Class {
 		'selectorChooser',
 		'notificationStrategy'
 	],
-	#category : 'Rubric-Editing-Code'
+	#category : #Rubric-Editing-Code
 }
 
 { #category : #keymapping }

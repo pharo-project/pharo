@@ -6,7 +6,7 @@ Class {
 	#superclass : #MorphicModel,
 	#traits : 'TEasilyThemed',
 	#classTraits : 'TEasilyThemed classTrait',
-	#category : 'Morphic-Examples-Widgets'
+	#category : #Morphic-Examples-Widgets
 }
 
 { #category : #services }

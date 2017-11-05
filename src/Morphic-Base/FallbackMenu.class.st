@@ -13,7 +13,7 @@ Class {
 		'builder',
 		'client'
 	],
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #'instance creation' }

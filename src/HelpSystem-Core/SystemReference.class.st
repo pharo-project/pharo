@@ -11,7 +11,7 @@ Just run ""HelpBrowser openOn: SystemReference"".
 Class {
 	#name : #SystemReference,
 	#superclass : #Object,
-	#category : 'HelpSystem-Core-Utilities'
+	#category : #HelpSystem-Core-Utilities
 }
 
 { #category : #'help topic creation' }

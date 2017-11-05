@@ -4,7 +4,7 @@ I represent the mode to use for editing class comments
 Class {
 	#name : #RubSmalltalkCommentMode,
 	#superclass : #RubAbstractSmalltalkMode,
-	#category : 'Rubric-Editing-Code'
+	#category : #Rubric-Editing-Code
 }
 
 { #category : #accessing }

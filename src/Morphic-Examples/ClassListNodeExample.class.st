@@ -4,7 +4,7 @@ Example for a class list node
 Class {
 	#name : #ClassListNodeExample,
 	#superclass : #MorphTreeNodeModel,
-	#category : 'Morphic-Examples-MorphTreeWidget'
+	#category : #Morphic-Examples-MorphTreeWidget
 }
 
 { #category : #accessing }

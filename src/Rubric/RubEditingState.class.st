@@ -15,7 +15,7 @@ Class {
 		'scrollPivot',
 		'textArea'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #undo-redo }

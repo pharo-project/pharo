@@ -14,7 +14,7 @@ Class {
 		'indent',
 		'kern'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #accessing }

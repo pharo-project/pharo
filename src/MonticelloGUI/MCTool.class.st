@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'MCVersionCache'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #'class initialization' }

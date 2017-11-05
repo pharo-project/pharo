@@ -13,7 +13,7 @@ Class {
 		'baselineAtBreak',
 		'breakAtSpace'
 	],
-	#category : 'Rubric-TextScanning'
+	#category : #Rubric-TextScanning
 }
 
 { #category : #scanning }

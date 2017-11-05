@@ -8,7 +8,7 @@ myMethodReturningAForm
 Class {
 	#name : #MethodIsScriptWithArgumentAction,
 	#superclass : #MethodIsScriptAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #testing }

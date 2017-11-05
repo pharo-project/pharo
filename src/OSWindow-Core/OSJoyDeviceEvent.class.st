@@ -13,7 +13,7 @@ Class {
 		'mapped',
 		'hasMapping'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #accessing }

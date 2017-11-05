@@ -7,7 +7,7 @@ Instance Variables
 Class {
 	#name : #HelpAPIDocumentation,
 	#superclass : #HelpOnHelp,
-	#category : 'HelpSystem-Core-Help'
+	#category : #HelpSystem-Core-Help
 }
 
 { #category : #accessing }

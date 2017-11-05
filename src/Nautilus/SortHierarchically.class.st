@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'hierarchy'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #'instance creation' }

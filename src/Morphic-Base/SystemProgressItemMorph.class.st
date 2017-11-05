@@ -19,7 +19,7 @@ Class {
 		'BarHeight',
 		'BarWidth'
 	],
-	#category : 'Morphic-Base-ProgressBar'
+	#category : #Morphic-Base-ProgressBar
 }
 
 { #category : #'instance creation' }

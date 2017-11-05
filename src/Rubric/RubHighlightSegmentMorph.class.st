@@ -5,7 +5,7 @@ A RubHighlightSegmentMorph is a volatile segment that deletes itself whenever th
 Class {
 	#name : #RubHighlightSegmentMorph,
 	#superclass : #RubTextSegmentMorph,
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'event handling' }

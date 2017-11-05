@@ -4,7 +4,7 @@ Specialized list item wrapper for dependents
 Class {
 	#name : #MCDependentsWrapper,
 	#superclass : #ListItemWrapper,
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #comparing }

@@ -4,7 +4,7 @@ Welcome to Pharo Smalltalk Help System
 Class {
 	#name : #HelpOnHelp,
 	#superclass : #CustomHelp,
-	#category : 'HelpSystem-Core-Help'
+	#category : #HelpSystem-Core-Help
 }
 
 { #category : #accessing }

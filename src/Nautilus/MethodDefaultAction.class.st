@@ -4,7 +4,7 @@ Action by default, empty icon
 Class {
 	#name : #MethodDefaultAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

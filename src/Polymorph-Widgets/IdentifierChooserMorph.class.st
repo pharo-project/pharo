@@ -76,7 +76,7 @@ Class {
 		'scrollPaneWidth',
 		'baseColor'
 	],
-	#category : 'Polymorph-Widgets'
+	#category : #Polymorph-Widgets
 }
 
 { #category : #accessing }

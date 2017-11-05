@@ -4,7 +4,7 @@ Three fingers aborted to swipe
 Class {
 	#name : #OSTouchThreeFingersSwipeAbortEvent,
 	#superclass : #OSTouchThreeFingersSwipeEvent,
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #visitor }

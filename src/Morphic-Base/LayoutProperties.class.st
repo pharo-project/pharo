@@ -9,7 +9,7 @@ Class {
 		'vResizing',
 		'disableLayout'
 	],
-	#category : 'Morphic-Base-Layouts'
+	#category : #Morphic-Base-Layouts
 }
 
 { #category : #converting }

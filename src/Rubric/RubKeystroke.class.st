@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'event'
 	],
-	#category : 'Rubric-Editing-Announcements'
+	#category : #Rubric-Editing-Announcements
 }
 
 { #category : #'instance creation' }

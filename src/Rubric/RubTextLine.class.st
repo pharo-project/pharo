@@ -21,7 +21,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'instance creation' }
