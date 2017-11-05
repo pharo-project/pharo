@@ -7,7 +7,7 @@ Class {
 	#category : #Tools-Test-PointerFinder
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PointerFinderTest >> testBasic1 [
 
 	| myObject myArray |
@@ -16,7 +16,7 @@ PointerFinderTest >> testBasic1 [
 	self assert: (myObject pointersTo) asArray = {myArray}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PointerFinderTest >> testCycle [
 
 	| myObject myArray myArray2 pointingObjects |
@@ -35,7 +35,7 @@ PointerFinderTest >> testCycle [
 "
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 PointerFinderTest >> testNoPointingObject [
 
 	| myObject |

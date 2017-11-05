@@ -51,7 +51,7 @@ PopupChoiceDialogWindow class >> taskbarIconName [
 	^#smallQuestionIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> activate: evt [
 	"Backstop."
 	
@@ -99,7 +99,7 @@ PopupChoiceDialogWindow >> choicesMorph: anObject [
 	choicesMorph := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> choose: index [
 	"Set the given choice and ok."
 
@@ -109,7 +109,7 @@ PopupChoiceDialogWindow >> choose: index [
 	self ok
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #compatibility }
 PopupChoiceDialogWindow >> deleteIfPopUp: evt [
 	"For compatibility with MenuMorph."
 ]
@@ -236,7 +236,7 @@ PopupChoiceDialogWindow >> lines: anObject [
 	lines := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
@@ -244,7 +244,7 @@ PopupChoiceDialogWindow >> newButtons [
 	^{self filterMorph. self newCancelButton}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> newChoiceButtonFor: index [
 	"Answer a new choice button."
 
@@ -260,7 +260,7 @@ PopupChoiceDialogWindow >> newChoiceButtonFor: index [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> newChoicesMorph [
 	"Answer a row of columns of buttons and separators based on the model."
 
@@ -288,7 +288,7 @@ PopupChoiceDialogWindow >> newChoicesMorph [
 	^answer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> newContentMorph [
 	"Answer a new content morph."
 
@@ -308,7 +308,7 @@ PopupChoiceDialogWindow >> newContentMorph [
 	^self newGroupboxFor: sp
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> newFilterEntry [
 	"Answer a new filter entry field."
 
@@ -325,7 +325,7 @@ PopupChoiceDialogWindow >> newFilterEntry [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> newMenuWith: morphs [
 	"Answer menu with the given morphs."
 
@@ -349,21 +349,21 @@ PopupChoiceDialogWindow >> processEnter: anEvent [
 	^false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PopupChoiceDialogWindow >> rootMenu [
 	"Answer the root menu. Answer self."
 
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PopupChoiceDialogWindow >> scrollPane [
 	"Answer the scroll pane."
 
 	^self findDeeplyA: GeneralScrollPane
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> selectFirstEnabledItem [
 	"Select the first enabled item in any of the embedded menus"
 
@@ -380,7 +380,7 @@ PopupChoiceDialogWindow >> selectFirstEnabledItem [
 					found := true]]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> selectLastEnabledItem [
 	"Select the last enabled item in any of the embedded menus"
 
@@ -397,7 +397,7 @@ PopupChoiceDialogWindow >> selectLastEnabledItem [
 					found := true]]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> switchToNextColumn [
 	"Give the next embedded menu keyboard focus."
 
@@ -407,7 +407,7 @@ PopupChoiceDialogWindow >> switchToNextColumn [
 	self choiceMenus detect: [ :m | m hasKeyboardFocus ] ifNone: [ self choiceMenus first takeKeyboardFocus ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindow >> switchToPreviousColumn [
 	"Give the previous embedded menu keyboard focus."
 
