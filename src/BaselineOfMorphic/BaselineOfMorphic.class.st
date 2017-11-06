@@ -197,7 +197,7 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 
 	familyName := 'Bitmap DejaVu Sans'.
 	pointSizes := #(7 9 12 14 18 24).
-	directoryName := 'resources/fonts/'.
+	directoryName := '../resources/fonts/'.
 
 	fonts := pointSizes collect: [ :pointSize | 	
 		| regular bold italic boldItalic |
