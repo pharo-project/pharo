@@ -1,6 +1,6 @@
 Extension { #name : #IRMethod }
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 IRMethod >> gtInspectorBytecodeIn: composite [
 	<gtInspectorPresentationOrder: 40> 
 	composite text 
@@ -8,7 +8,7 @@ IRMethod >> gtInspectorBytecodeIn: composite [
 		display: [ self compiledMethod symbolic ]
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 IRMethod >> gtInspectorIrIn: composite [
 	<gtInspectorPresentationOrder: 35> 
 	composite text 
@@ -18,13 +18,13 @@ IRMethod >> gtInspectorIrIn: composite [
 				string copyFrom: 2 to: string size ]
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 IRMethod >> gtInspectorSourceCodeIn: composite [ 
 	<gtInspectorPresentationOrder: 40>
 	self sourceNode gtInspectorSourceCodeIn: composite
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 IRMethod >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 	^ (GTIRBrowser new treeIn: composite)
