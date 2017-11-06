@@ -41,7 +41,7 @@ PopupChoiceDialogWindowWithMessage >> iconMorph: anObject [
 	iconMorph := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #api }
 PopupChoiceDialogWindowWithMessage >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/2 the display width."
@@ -69,7 +69,7 @@ PopupChoiceDialogWindowWithMessage >> message: aStringOrText [
 	message := aStringOrText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindowWithMessage >> newContentMorph [
 	| top bottom |
 	self textMorph: self newTextMorph.
@@ -80,14 +80,14 @@ PopupChoiceDialogWindowWithMessage >> newContentMorph [
 	^ self newGroupboxFor: (self newColumn: {top. bottom}).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindowWithMessage >> newIconMorph [
 	"Answer an icon for the receiver."
 	
 	^ImageMorph new form: self icon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PopupChoiceDialogWindowWithMessage >> newTextMorph [
 	"Answer a text morph."
 	

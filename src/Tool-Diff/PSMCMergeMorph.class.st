@@ -12,7 +12,7 @@ Class {
 	#category : #Tool-Diff
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 PSMCMergeMorph class >> forMerger: aMerger [
 	"Answer a new instance of the receiver
 	with the given merger as the model."
@@ -20,7 +20,7 @@ PSMCMergeMorph class >> forMerger: aMerger [
 	^ self new model: aMerger
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 PSMCMergeMorph >> allConflictsResolved [
 	"Answer whether all conflicts were resolved."
 	
@@ -55,7 +55,7 @@ PSMCMergeMorph >> compositeText [
 	^self patchMorph compositeText
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PSMCMergeMorph >> compositeText: aString [
 	"Save the new method text for the selected method.
 	Yet to be implemented."
@@ -63,14 +63,14 @@ PSMCMergeMorph >> compositeText: aString [
 	UIManager default inform: 'Saving of replacement methods is not yet imlemented.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PSMCMergeMorph >> conflictCount [
 	"Answer the number of conflicts that are unresolved."
 
 	^(self model ifNil: [^0]) conflicts count: [:c | c isResolved not]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PSMCMergeMorph >> conflictCountString [
 	"Answer a string describing the number of conflicts."
 
@@ -81,7 +81,7 @@ PSMCMergeMorph >> conflictCountString [
 		ifFalse: ['{1} conflicts' translated format: {count}]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PSMCMergeMorph >> defaultTitle [
 	"Answer the default title label for the receiver."
 
@@ -231,7 +231,7 @@ PSMCMergeMorph >> newPatchMorph [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 PSMCMergeMorph >> notAllConflictsResolved [
 	"Answer whether any conflicts are unresolved."
 	
@@ -252,7 +252,7 @@ PSMCMergeMorph >> patchMorph: anObject [
 	patchMorph := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PSMCMergeMorph >> selectNextConflict [
 	"Select the next conflict in the tree."
 	
@@ -281,7 +281,7 @@ PSMCMergeMorph >> update: aspect [
 				changed: #notAllConflictsResolved]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 PSMCMergeMorph >> updateCode [
 	"Update the code morph to match selected differences."
 

@@ -35,7 +35,7 @@ ProportionalSplitterMorph class >> showSplitterHandles: aBoolean [
 	ShowHandles := aBoolean
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - defaults' }
 ProportionalSplitterMorph class >> splitterWidth [
 
 	^ 4
