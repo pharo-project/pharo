@@ -1,7 +1,7 @@
-Extension { #name : #Pharo3DarkTheme }
+Extension { #name : #PharoDarkTheme }
 
 { #category : #'*Glamour-Morphic-Brick' }
-Pharo3DarkTheme >> brickThemer [
+PharoDarkTheme >> brickThemer [
 
 	^ GLMBrickDarkThemer new
 ]

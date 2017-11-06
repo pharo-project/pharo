@@ -9,88 +9,88 @@ You can have ""the full experience"", executing:
 self installFullTheme.
 "
 Class {
-	#name : #Pharo3DarkTheme,
+	#name : #PharoDarkTheme,
 	#superclass : #UITheme,
 	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }
-Pharo3DarkTheme class >> baseColor [
+PharoDarkTheme class >> baseColor [
 	^ Color veryDarkGray
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> basePassiveBackgroundColor [
+PharoDarkTheme class >> basePassiveBackgroundColor [
 	^ Color darkGray
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> baseSelectionColor [
+PharoDarkTheme class >> baseSelectionColor [
 	^ Color r: 97 g: 163 b: 225 range: 255
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> darkBaseColor [
+PharoDarkTheme class >> darkBaseColor [
 	^ Color veryDarkGray
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> isAbstract [
+PharoDarkTheme class >> isAbstract [
 	"Answer whether the receiver is considered to be abstract."
 
 	^false
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> lightBaseColor [
+PharoDarkTheme class >> lightBaseColor [
 	^ Color darkGray
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> lightSelectionColor [
+PharoDarkTheme class >> lightSelectionColor [
 	^ Color r: 175 g: 213 b: 250 range: 255
 ]
 
 { #category : #settings }
-Pharo3DarkTheme class >> setPreferredPreferences [
+PharoDarkTheme class >> setPreferredPreferences [
 	"NECPreferences 
 		expandPrefixes: true;
 		popupShowWithShortcut: Character tab asShortcut."
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> themeName [
+PharoDarkTheme class >> themeName [
 	^ 'Pharo3 Dark'
 ]
 
 { #category : #accessing }
-Pharo3DarkTheme class >> veryLightSelectionColor [
+PharoDarkTheme class >> veryLightSelectionColor [
 	^ self lightSelectionColor muchLighter
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> backgroundColor [
+PharoDarkTheme >> backgroundColor [
 	^ Color r: 0.130 g: 0.130 b: 0.130
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> balloonBackgroundColor [
+PharoDarkTheme >> balloonBackgroundColor [
 
 	^Color veryDarkGray lighter
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> borderColor [ 
+PharoDarkTheme >> borderColor [ 
 	^ Color darkGray darker darker darker
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> buttonColor [
+PharoDarkTheme >> buttonColor [
 	^ self backgroundColor lighter lighter
 ]
 
 { #category : #border-styles-buttons }
-Pharo3DarkTheme >> buttonNormalBorderStyleFor: aButton [
+PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 	
 	(aButton valueOfProperty: #noBorder ifAbsent: [ false ]) 
@@ -105,7 +105,7 @@ Pharo3DarkTheme >> buttonNormalBorderStyleFor: aButton [
 ]
 
 { #category : #fill-styles-buttons }
-Pharo3DarkTheme >> buttonNormalFillStyleFor: aButton [
+PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
 	(aButton valueOfProperty: #noFill ifAbsent: [false]) 
@@ -115,7 +115,7 @@ Pharo3DarkTheme >> buttonNormalFillStyleFor: aButton [
 ]
 
 { #category : #fill-styles-buttons }
-Pharo3DarkTheme >> buttonSelectedFillStyleFor: aButton [
+PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
 	^ SolidFillStyle color: self selectionColor.
@@ -133,17 +133,17 @@ Pharo3DarkTheme >> buttonSelectedFillStyleFor: aButton [
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> caretColor [
+PharoDarkTheme >> caretColor [
 	^ Color lightBlue.
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> classExtensionColor [
+PharoDarkTheme >> classExtensionColor [
 	^ Color gray lighter lighter
 ]
 
 { #category : #configure }
-Pharo3DarkTheme >> configureMorphTreeMorph: aMorph [
+PharoDarkTheme >> configureMorphTreeMorph: aMorph [
 	aMorph preferedPaneColor: self backgroundColor.
 	aMorph 
 		rowColorForEven: self backgroundColor
@@ -151,7 +151,7 @@ Pharo3DarkTheme >> configureMorphTreeMorph: aMorph [
 ]
 
 { #category : #configure }
-Pharo3DarkTheme >> configurePluggableTextMorph: textMorph [ 
+PharoDarkTheme >> configurePluggableTextMorph: textMorph [ 
 	textMorph 	
 		color: self backgroundColor;
 		textColor: self textColor;
@@ -159,24 +159,24 @@ Pharo3DarkTheme >> configurePluggableTextMorph: textMorph [
 ]
 
 { #category : #configure }
-Pharo3DarkTheme >> configureScrollPane: aMorph [ 
+PharoDarkTheme >> configureScrollPane: aMorph [ 
 	"aMorph color: self backgroundColor"
 ]
 
 { #category : #configure }
-Pharo3DarkTheme >> configureSystemWindow: aWindow [
+PharoDarkTheme >> configureSystemWindow: aWindow [
 	
 ]
 
 { #category : #configure }
-Pharo3DarkTheme >> configureTextMorph: textMorph [ 
+PharoDarkTheme >> configureTextMorph: textMorph [ 
 	textMorph 
 		"backgroundColor: self backgroundColor;"
 		color: self textColor.
 ]
 
 { #category : #border-styles }
-Pharo3DarkTheme >> configureWindowBorderFor: aWindow [
+PharoDarkTheme >> configureWindowBorderFor: aWindow [
 "	super configureWindowBorderFor: aWindow.
 	aWindow roundedCorners: #()"
 	| aStyle |
@@ -190,7 +190,7 @@ Pharo3DarkTheme >> configureWindowBorderFor: aWindow [
 ]
 
 { #category : #fill-styles-buttons }
-Pharo3DarkTheme >> controlButtonNormalFillStyleFor: aButton [
+PharoDarkTheme >> controlButtonNormalFillStyleFor: aButton [
 	"Return the normal control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
 	
@@ -198,7 +198,7 @@ Pharo3DarkTheme >> controlButtonNormalFillStyleFor: aButton [
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> dangerTextColor [
+PharoDarkTheme >> dangerTextColor [
 	^ Color
 		r: 239
 		g: 83
@@ -207,49 +207,49 @@ Pharo3DarkTheme >> dangerTextColor [
 ]
 
 { #category : #fill-styles }
-Pharo3DarkTheme >> desktopColor [
+PharoDarkTheme >> desktopColor [
 
 	^Color darkGray darker
 ]
 
 { #category : #basic-colors-diffs }
-Pharo3DarkTheme >> diffAdditionalLineBackgroundColor [
+PharoDarkTheme >> diffAdditionalLineBackgroundColor [
 	"Answer the color used to highlight additional text lines in a diff view."
 	^ Color r: 0.0 g: 0.76 b: 0.0 alpha: 0.2
 ]
 
 { #category : #basic-colors-diffs }
-Pharo3DarkTheme >> diffEdgeColor [
+PharoDarkTheme >> diffEdgeColor [
 	"Answer the color used to show the border of the changes."
 	^ Color white alpha: 0.5
 ]
 
 { #category : #basic-colors-diffs }
-Pharo3DarkTheme >> diffModificatedLineBackgroundColor [
+PharoDarkTheme >> diffModificatedLineBackgroundColor [
 	"Answer the color used to highlight changed text lines in a diff view."
 	^ Color gray alpha: 0.2
 ]
 
 { #category : #basic-colors-diffs }
-Pharo3DarkTheme >> diffRemovedLinesBackgroundColor [
+PharoDarkTheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to highlight removed text lines in a diff view."
 	^ Color r: 0.84 g: 0.0 b: 0.0 alpha: 0.2
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> disabledColor [ 
+PharoDarkTheme >> disabledColor [ 
 	^ Color gray lighter
 ]
 
 { #category : #fill-styles }
-Pharo3DarkTheme >> dropListNormalFillStyleFor: aDropList [
+PharoDarkTheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
 	
 	^ self backgroundColor
 ]
 
 { #category : #border-styles }
-Pharo3DarkTheme >> dropListNormalListBorderStyleFor: aDropList [
+PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 	"Return the normal borderStyle for the list of the given given drop list"
 
 	^BorderStyle inset
@@ -258,56 +258,56 @@ Pharo3DarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 ]
 
 { #category : #fill-styles }
-Pharo3DarkTheme >> dropListNormalListFillStyleFor: aDropList [
+PharoDarkTheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
 	
 	^ self backgroundColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> enabledColor [ 
+PharoDarkTheme >> enabledColor [ 
 	^ self textColor
 ]
 
 { #category : #basic-colors }
-Pharo3DarkTheme >> errorPopperBackgroundColor [
+PharoDarkTheme >> errorPopperBackgroundColor [
 	^ Color red muchDarker 
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousBaseColorFor: aButton [
+PharoDarkTheme >> glamorousBaseColorFor: aButton [
 	^ self class baseColor
 	"unfortunately, it looks like paneColor does not always return the wanted color"
 	"aButton paneColorOrNil ifNil: [Color r: 200 g: 200 b: 200 range: 255]"
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousBasePassiveBackgroundColorFor: aButton [
+PharoDarkTheme >> glamorousBasePassiveBackgroundColorFor: aButton [
 	^ self class basePassiveBackgroundColor
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousBaseSelectionColorFor: aButton [
+PharoDarkTheme >> glamorousBaseSelectionColorFor: aButton [
 	^ self class baseSelectionColor
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousDarkBaseColorFor: aButton [
+PharoDarkTheme >> glamorousDarkBaseColorFor: aButton [
 	^ self class darkBaseColor
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousLightColorFor: aButton [
+PharoDarkTheme >> glamorousLightColorFor: aButton [
 	^ self class lightBaseColor
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousLightSelectionColorFor: aMorph [
+PharoDarkTheme >> glamorousLightSelectionColorFor: aMorph [
 	^ self class lightSelectionColor
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
+PharoDarkTheme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
 	"Return the normal button fillStyle for the given button."
 	
 "	| baseColor |
@@ -319,7 +319,7 @@ Pharo3DarkTheme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
 ]
 
 { #category : #private }
-Pharo3DarkTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
+PharoDarkTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
 	| top bottom |
 	top := aColor darker.
 	bottom := aColor.
@@ -332,7 +332,7 @@ Pharo3DarkTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph hei
 ]
 
 { #category : #initialize-release }
-Pharo3DarkTheme >> initialize [
+PharoDarkTheme >> initialize [
 	"self beCurrent"
 
 	super initialize.
@@ -341,154 +341,154 @@ Pharo3DarkTheme >> initialize [
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> lessConspicuousColorFrom: aColor [
+PharoDarkTheme >> lessConspicuousColorFrom: aColor [
 
 	^	aColor slightlyLighter
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> lightBackgroundColor [ 
+PharoDarkTheme >> lightBackgroundColor [ 
 	^ Color r: 0.218 g: 0.217 b: 0.217
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> lineNumberColor [ 
+PharoDarkTheme >> lineNumberColor [ 
 	^ Color gray lighter lighter
 ]
 
 { #category : #fill-styles }
-Pharo3DarkTheme >> listNormalFillStyleFor: aList [
+PharoDarkTheme >> listNormalFillStyleFor: aList [
 	"Return the normal fillStyle for the given list."
 	
 	^ self backgroundColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> listTextColor [
+PharoDarkTheme >> listTextColor [
 	"Answer the list text color to use."
 
 	^ self textColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> menuBorderColor [
+PharoDarkTheme >> menuBorderColor [
 	^ self borderColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> menuBorderWidth [
+PharoDarkTheme >> menuBorderWidth [
 	^ self borderWidth
 ]
 
 { #category : #defaults }
-Pharo3DarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
+PharoDarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
 
 	^ Color lightGray
 ]
 
 { #category : #initialize-release }
-Pharo3DarkTheme >> newRadioMarkerForm [
+PharoDarkTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 
 	^Form extent: 12@12 depth: 32
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> scrollbarColor [ 
+PharoDarkTheme >> scrollbarColor [ 
 	^ self buttonColor
 ]
 
 { #category : #border-styles-scrollbars }
-Pharo3DarkTheme >> scrollbarNormalFillStyleFor: aScrollbar [
+PharoDarkTheme >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 	
 	^ SolidFillStyle color: self backgroundColor lighter.
 ]
 
 { #category : #border-styles-scrollbars }
-Pharo3DarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
+PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
 	
 	^ self buttonSelectedFillStyleFor: aScrollbar
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> secondarySelectionColor [
+PharoDarkTheme >> secondarySelectionColor [
 	^ Color r: 0.31 g: 0.31 b: 0.36
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> selectionColor [
+PharoDarkTheme >> selectionColor [
 	^ Color r: 16r07 g: 16r63 b: 16rAD range: 255
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> selectionTextColor [
+PharoDarkTheme >> selectionTextColor [
 	^ Color r: 16rE0 g: 16rE2 b: 16rE4 range: 255
 ]
 
 { #category : #defaults }
-Pharo3DarkTheme >> shStyleTable [
+PharoDarkTheme >> shStyleTable [
 
 	^SHTextStylerST80 darkStyleTable
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> spotlightWindowColor [ 
+PharoDarkTheme >> spotlightWindowColor [ 
 	^ self windowColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> successTextColor [
+PharoDarkTheme >> successTextColor [
 	^ Color green darker darker darker
 ]
 
 { #category : #basic-colors }
-Pharo3DarkTheme >> taskbarButtonLabelColorForCollapsed: aButton [
+PharoDarkTheme >> taskbarButtonLabelColorForCollapsed: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
 	^ self textColor
 ]
 
 { #category : #basic-colors }
-Pharo3DarkTheme >> taskbarButtonLabelColorForExpanded: aButton [
+PharoDarkTheme >> taskbarButtonLabelColorForExpanded: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is expanded."
 
 	^ self textColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> textColor [
+PharoDarkTheme >> textColor [
 	^ Color white
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> textColorForNonStandardBackground [
+PharoDarkTheme >> textColorForNonStandardBackground [
 	^ Color black
 ]
 
 { #category : #fill-styles }
-Pharo3DarkTheme >> textEditorNormalFillStyleFor: aTextEditor [
+PharoDarkTheme >> textEditorNormalFillStyleFor: aTextEditor [
 	^ self backgroundColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> unfocusedSelectionColor [
+PharoDarkTheme >> unfocusedSelectionColor [
 	^ self secondarySelectionColor
 ]
 
 { #category : #'accessing colors' }
-Pharo3DarkTheme >> warningTextColor [
+PharoDarkTheme >> warningTextColor [
 	^ Color yellow darker darker
 ]
 
 { #category : #fill-styles }
-Pharo3DarkTheme >> windowActiveLabelFillStyleFor: aWindow [
+PharoDarkTheme >> windowActiveLabelFillStyleFor: aWindow [
 	^ self textColor
 ]
 
 { #category : #label-styles }
-Pharo3DarkTheme >> windowLabelForText: aTextOrString [
+PharoDarkTheme >> windowLabelForText: aTextOrString [
 	^ (super windowLabelForText: aTextOrString)
 		color: self textColor;
 		yourself.

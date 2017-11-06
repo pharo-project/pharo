@@ -10,57 +10,57 @@ self beCurrent.
 Is adopted as the theme for Pharo3, but it was renamed to avoid collisions with the glamour team,
 "
 Class {
-	#name : #Pharo3Theme,
+	#name : #PharoLightTheme,
 	#superclass : #UITheme,
 	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }
-Pharo3Theme class >> baseColor [
+PharoLightTheme class >> baseColor [
 	^ Color r: 210 g: 210 b: 210 range: 255
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> basePassiveBackgroundColor [
+PharoLightTheme class >> basePassiveBackgroundColor [
 	^ Color r: 245 g: 245 b: 245 range: 255
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> baseSelectionColor [
+PharoLightTheme class >> baseSelectionColor [
 	^ Color r: 97 g: 163 b: 225 range: 255
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> darkBaseColor [
+PharoLightTheme class >> darkBaseColor [
 	^ Color r: 200 g: 200 b: 200 range: 255
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> isAbstract [
+PharoLightTheme class >> isAbstract [
 	"Answer whether the receiver is considered to be abstract."
 
 	^false
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> lightBaseColor [
+PharoLightTheme class >> lightBaseColor [
 	^ Color r: 230 g: 230 b: 230 range: 255
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> lightSelectionColor [
+PharoLightTheme class >> lightSelectionColor [
 	^ Color r: 175 g: 213 b: 250 range: 255
 ]
 
 { #category : #settings }
-Pharo3Theme class >> setPreferredPreferences [
+PharoLightTheme class >> setPreferredPreferences [
 	"NECPreferences 
 		expandPrefixes: true;
 		popupShowWithShortcut: Character tab asShortcut."
 ]
 
 { #category : #settings }
-Pharo3Theme class >> setPreferredShoutColors [
+PharoLightTheme class >> setPreferredShoutColors [
 	"self setPreferredShoutColors"
 
 	SHTextStylerST80 styleTable: 
@@ -177,23 +177,23 @@ Pharo3Theme class >> setPreferredShoutColors [
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> themeName [
+PharoLightTheme class >> themeName [
 	^ 'Pharo3'
 ]
 
 { #category : #accessing }
-Pharo3Theme class >> veryLightSelectionColor [
+PharoLightTheme class >> veryLightSelectionColor [
 	^ self lightSelectionColor muchLighter
 ]
 
 { #category : #'accessing colors' }
-Pharo3Theme >> balloonBackgroundColor [
+PharoLightTheme >> balloonBackgroundColor [
 
 	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
 ]
 
 { #category : #border-styles-buttons }
-Pharo3Theme >> buttonNormalBorderStyleFor: aButton [
+PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
 	| outerColor |
@@ -206,7 +206,7 @@ Pharo3Theme >> buttonNormalBorderStyleFor: aButton [
 ]
 
 { #category : #border-styles }
-Pharo3Theme >> configureWindowBorderFor: aWindow [
+PharoLightTheme >> configureWindowBorderFor: aWindow [
 "	super configureWindowBorderFor: aWindow.
 	aWindow roundedCorners: #()"
 	| aStyle |
@@ -220,39 +220,39 @@ Pharo3Theme >> configureWindowBorderFor: aWindow [
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousBaseColorFor: aButton [
+PharoLightTheme >> glamorousBaseColorFor: aButton [
 	^ self class baseColor
 	"unfortunately, it looks like paneColor does not always return the wanted color"
 	"aButton paneColorOrNil ifNil: [Color r: 200 g: 200 b: 200 range: 255]"
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousBasePassiveBackgroundColorFor: aButton [
+PharoLightTheme >> glamorousBasePassiveBackgroundColorFor: aButton [
 	^ self class basePassiveBackgroundColor
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousBaseSelectionColorFor: aButton [
+PharoLightTheme >> glamorousBaseSelectionColorFor: aButton [
 	^ self class baseSelectionColor
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousDarkBaseColorFor: aButton [
+PharoLightTheme >> glamorousDarkBaseColorFor: aButton [
 	^ self class darkBaseColor
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousLightColorFor: aButton [
+PharoLightTheme >> glamorousLightColorFor: aButton [
 	^ self class lightBaseColor
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousLightSelectionColorFor: aMorph [
+PharoLightTheme >> glamorousLightSelectionColorFor: aMorph [
 	^ self class lightSelectionColor
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
+PharoLightTheme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
 	"Return the normal button fillStyle for the given button."
 	
 "	| baseColor |
@@ -264,7 +264,7 @@ Pharo3Theme >> glamorousNormalFillStyleFor: aMorph height: anInteger [
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
+PharoLightTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height: anInteger [	
 	| top bottom |
 	top := aColor darker.
 	bottom := aColor.
@@ -277,7 +277,7 @@ Pharo3Theme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph height:
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousSelectedFillStyleFor: aMorph height: anInteger [
+PharoLightTheme >> glamorousSelectedFillStyleFor: aMorph height: anInteger [
 	
 
 	^ SolidFillStyle color: (self glamorousLightSelectionColorFor:  aMorph)
@@ -285,7 +285,7 @@ Pharo3Theme >> glamorousSelectedFillStyleFor: aMorph height: anInteger [
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousVeryLightFillStyleFor: aMorph height: anInteger [
+PharoLightTheme >> glamorousVeryLightFillStyleFor: aMorph height: anInteger [
 	"Return the very light button fillStyle for the given button."
 	
 "	| baseColor |
@@ -296,19 +296,19 @@ Pharo3Theme >> glamorousVeryLightFillStyleFor: aMorph height: anInteger [
 ]
 
 { #category : #private }
-Pharo3Theme >> glamorousVeyLightSelectionColorFor: aMorph [
+PharoLightTheme >> glamorousVeyLightSelectionColorFor: aMorph [
 	^ self class veryLightSelectionColor
 ]
 
 { #category : #initialize-release }
-Pharo3Theme >> newRadioMarkerForm [
+PharoLightTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 
 	^Form extent: 12@12 depth: 32
 ]
 
 { #category : #forms }
-Pharo3Theme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
+PharoLightTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the pressed scrollbar thumb fillStyle for the given scrollbar."
 		"Return the normal scrollbar fillStyle for the given scrollbar."
 	
