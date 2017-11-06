@@ -134,7 +134,7 @@ HelpBrowser >> helpTopic [
 
 { #category : #ui }
 HelpBrowser >> initWindow [
-	| toolbar dock contentMorph |
+	| toolbar dock contentMorph | 
 	window := StandardWindow new.
 	window model: self.
 	window title: 'Help Browser'.
@@ -152,14 +152,20 @@ HelpBrowser >> initWindow [
 	dock addMorphBack: toolbar.
 	window
 		addMorph: dock
-		fullFrame: ((0 @ 0 corner: 1 @ 0) asLayoutFrame bottomOffset: dock minExtent y).	"Tree"
+		fullFrame:
+			(LayoutFrame identity
+				bottomFraction: 0;
+				bottomOffset: dock minExtent y).	"Tree"
 	treeMorph := PluggableTreeMorph new.
 	treeMorph
 		model: self;
 		setSelectedSelector: #onItemClicked:.
 	window
 		addMorph: treeMorph
-		fullFrame: ((0 @ 0 corner: 0.3 @ 1) asLayoutFrame topOffset: dock minExtent y).	"Text"
+		fullFrame:
+			(LayoutFrame identity
+				rightFraction: 0.3;
+				topOffset: dock minExtent y).	"Text"
 	contentMorph := self sourceTextModel newScrolledText
 		beForSmalltalkScriptingWithDefaultFont;
 		beWrapped;
@@ -167,7 +173,10 @@ HelpBrowser >> initWindow [
 	contentMorph menuProvider: self selector: #shoutMorphFillMenu:.
 	window
 		addMorph: contentMorph
-		fullFrame: ((0.3 @ 0 corner: 1 @ 1) asLayoutFrame topOffset: dock minExtent y)
+		fullFrame:
+			(LayoutFrame identity
+				leftFraction: 0.3;
+				topOffset: dock minExtent y)
 ]
 
 { #category : #initialization }

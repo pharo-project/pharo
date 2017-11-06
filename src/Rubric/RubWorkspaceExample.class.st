@@ -33,7 +33,7 @@ RubWorkspaceExample class >> exampleWithCustomShortcut [
         text setText: text text asString reverse].
 
     window := StandardWindow new.
-    window addMorph: text fullFrame: (0@0 corner: 1@1) asLayoutFrame.
+    window addMorph: text fullFrame: LayoutFrame identity.
     window title: 'Custom shortcuts example'.
     window openInWorld.
 ]
@@ -62,7 +62,7 @@ RubWorkspaceExample class >> windowWithScrolledText: aScrolledText [
 	w := StandardWindow new.
 	w title: self title.
 	self spyAnnouncer ifTrue: [aScrolledText textArea announcer open].
-	w addMorph: aScrolledText fullFrame: (0@0 corner: 1@1) asLayoutFrame.
+	w addMorph: aScrolledText fullFrame: LayoutFrame identity.
 	^w
 ]
 

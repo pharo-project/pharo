@@ -1288,7 +1288,7 @@ UITheme >> configureWindowLabelAreaFrameFor: aWindow [
 		hResizing: #spaceFill;
 		wrapCentering: #topLeft;
 		layoutInset: (Margin left: 0 top: windowBorderWidth right: 0 bottom: 1).
-	frame := (0@0 corner: 1@0) asLayoutFrame topOffset: aWindow labelHeight negated.
+	frame := LayoutFrame identity bottomFraction: 0 ; topOffset: aWindow labelHeight negated.
 	aWindow labelArea layoutFrame: frame
 ]
 

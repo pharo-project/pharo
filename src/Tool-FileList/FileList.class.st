@@ -152,29 +152,30 @@ FileList class >> morphicViewOnDirectory: aFileDirectory [
 
 { #category : #'morphic ui' }
 FileList class >> morphicViewOnFile: aFile contents: contents fileList: aFileList [
-	|  window fileListBottom midLine fileListTopOffset buttonPane fileContentsView |
-
-	window := (SystemWindow labelled: aFile fullName) model: aFileList.
-
-	fileListTopOffset := (TextStyle defaultFont pointSize * 2) + 11.
+	| window fileListBottom midLine fileListTopOffset buttonPane fileContentsView |
+ 	window := (SystemWindow labelled: aFile fullName) model: aFileList.
+	fileListTopOffset := TextStyle defaultFont pointSize * 2 + 11.
 	fileListBottom := 0.4.
 	midLine := 0.2.
-	buttonPane := aFileList optionalButtonRow addMorph:
-		(aFileList morphicPatternPane).
-		
-	self addFullPanesTo: window from: {
-		{aFileList morphicDirectoryTreePane. (0@0 corner: midLine@1) asLayoutFrame }.
-		{buttonPane. (midLine@0 corner: 1@0) asLayoutFrame bottomOffset: (fileListTopOffset-3)}.
-		{aFileList morphicFileListPane. (midLine @ 0 corner: 1@fileListBottom) asLayoutFrame topOffset: fileListTopOffset}.
-		{fileContentsView := aFileList morphicFileContentsPane. (midLine@fileListBottom corner: 1@1) asLayoutFrame}.
-	}.
-	
-	contents ifNotNil: [
-		fileContentsView editString: contents.
-		fileContentsView hasUnacceptedEdits: true].
-	
+	buttonPane := aFileList optionalButtonRow addMorph: aFileList morphicPatternPane.
+	self
+		addFullPanesTo: window
+		from:
+			{{aFileList morphicDirectoryTreePane.
+			(LayoutFrame identity rightFraction: midLine)}.
+			{buttonPane.
+			(LayoutFrame identity leftFraction: midLine; bottomFraction: 0;  bottomOffset: fileListTopOffset - 3)}.
+			
+			{aFileList morphicFileListPane.
+			(LayoutFrame identity leftFraction: midLine; bottomFraction: fileListBottom; topOffset: fileListTopOffset)}.
+			
+			{(fileContentsView := aFileList morphicFileContentsPane).
+			(LayoutFrame identity leftFraction: midLine; topFraction: fileListBottom)}}.
+	contents
+		ifNotNil: [ fileContentsView editString: contents.
+			fileContentsView hasUnacceptedEdits: true ].
 	aFileList postOpen.
-	^ window 
+	^ window
 ]
 
 { #category : #'instance creation' }
@@ -984,8 +985,8 @@ FileList >> morphicViewFolderSelector: aDir [
 	fileListTopOffset := (TextStyle defaultFont pointSize * 2) + 11.
 	
 	self addFullPanesTo: window from: {
-		{self morphicDirectoryTreePane. (0@0 corner: 1@1) asLayoutFrame topOffset: (fileListTopOffset)}.
-		{buttonRow  . (0@0 corner: 1@0) asLayoutFrame bottomOffset: (fileListTopOffset-3)}.
+		{self morphicDirectoryTreePane.  (LayoutFrame identity topOffset: fileListTopOffset) }.
+		{buttonRow  . (LayoutFrame identity bottomFraction: 0; bottomOffset: fileListTopOffset-3)}.
 	}.
 	
 	self postOpen.
@@ -1008,29 +1009,29 @@ FileList >> morphicViewOnDirectory: aFileDirectory baseLabel: aString [
 
 { #category : #'morphic ui' }
 FileList >> morphicViewOnFile: aFile [
-	|  window fileListBottom midLine fileListTopOffset buttonPane fileContentsView |
-
+	| window fileListBottom midLine fileListTopOffset buttonPane fileContentsView |
 	window := (SystemWindow labelled: self labelString) model: self.
-
-	fileListTopOffset := (TextStyle defaultFont pointSize * 2) + 11.
+	fileListTopOffset := TextStyle defaultFont pointSize * 2 + 11.
 	fileListBottom := 0.4.
 	midLine := 0.2.
-	buttonPane := self optionalButtonRow addMorph: (self morphicPatternPane).
-		
-	self addFullPanesTo: window from: {
-		{self morphicDirectoryTreePane. (0@0 corner: midLine@1) asLayoutFrame }.
-		{buttonPane. (midLine@0 corner: 1@0) asLayoutFrame bottomOffset: (fileListTopOffset-3)}.
-		{self morphicFileListPane. (midLine @ 0 corner: 1@fileListBottom) asLayoutFrame topOffset: fileListTopOffset}.
-		{fileContentsView := self morphicFileContentsPane. (midLine@fileListBottom corner: 1@1) asLayoutFrame}.
-	}.
-	
-	contents ifNotNil: [
-		
-		fileContentsView setText: contents asText.
-		fileContentsView hasUnacceptedEdits: true].
-	
+	buttonPane := self optionalButtonRow addMorph: self morphicPatternPane.
+	self
+		addFullPanesTo: window
+		from:
+			{{self morphicDirectoryTreePane.
+			(LayoutFrame identity rightFraction: midLine )}.
+			{buttonPane.
+			(LayoutFrame identity leftFraction: midLine ; bottomFraction: 0 ; bottomOffset: fileListTopOffset - 3)}.
+			{self morphicFileListPane.
+			(LayoutFrame identity leftFraction: midLine ; bottomFraction: fileListBottom ; topOffset: fileListTopOffset)}.
+			{(fileContentsView := self morphicFileContentsPane).
+			(LayoutFrame identity leftFraction: midLine ; topFraction: fileListBottom)}.
+			}.
+	contents
+		ifNotNil: [ fileContentsView setText: contents asText.
+			fileContentsView hasUnacceptedEdits: true ].
 	self postOpen.
-	^ window 
+	^ window
 ]
 
 { #category : #'file list menu' }
