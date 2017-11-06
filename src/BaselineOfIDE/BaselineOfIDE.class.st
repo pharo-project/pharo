@@ -251,7 +251,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'MonticelloMocks'.
 		spec package: 'NodeNavigation'.
-		spec package: 'OpalTools'.
+		spec package: 'OpalCompiler-Tools'.
 
 		spec package: 'OSWindow-Core'.
 		spec package: 'OSWindow-SDL2'.
@@ -705,7 +705,7 @@ spec group: 'GT-Core-Group' with: #(
 	'SmartSuggestions-Group' "dependency"
 	'Glamour-Core-Group'	"dependency"
 	"'Morphic-Core' 'System-Settings' is dependent on this group, needs clenup"
-	'OpalTools'
+	'OpalCompiler-Tools'
 	'GT-Inspector'
 	'GT-InspectorExtensions-Core'
 	'GT-Playground'

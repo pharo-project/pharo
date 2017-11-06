@@ -1,6 +1,6 @@
 Extension { #name : #LiteralVariable }
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 LiteralVariable >> gtInspectorUsersIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	| users |

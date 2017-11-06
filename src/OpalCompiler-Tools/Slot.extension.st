@@ -1,6 +1,6 @@
 Extension { #name : #Slot }
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 Slot >> gtInspectorUsersIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	| users |

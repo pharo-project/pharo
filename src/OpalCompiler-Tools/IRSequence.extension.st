@@ -1,6 +1,6 @@
 Extension { #name : #IRSequence }
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 IRSequence >> gtInspectorSourceCodeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 
@@ -13,7 +13,7 @@ IRSequence >> gtInspectorSourceCodeIn: composite [
 		act: [ self method compiledMethod browse ] icon: GLMUIThemeExtraIcons glamorousBrowse entitled: 'Browse'
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 IRSequence >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 	^composite tree

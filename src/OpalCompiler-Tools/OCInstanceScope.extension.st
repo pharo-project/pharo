@@ -1,6 +1,6 @@
 Extension { #name : #OCInstanceScope }
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 OCInstanceScope >> gtInspectorSourceCodeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 

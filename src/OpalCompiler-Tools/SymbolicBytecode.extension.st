@@ -1,6 +1,6 @@
 Extension { #name : #SymbolicBytecode }
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 SymbolicBytecode >> gtInspectorSourceCodeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 
@@ -13,7 +13,7 @@ SymbolicBytecode >> gtInspectorSourceCodeIn: composite [
 		act: [ self method compiledMethod browse ] icon: GLMUIThemeExtraIcons glamorousBrowse entitled: 'Browse'
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 SymbolicBytecode >> gtInspectorTreeIn: composite [
 	<gtInspectorPresentationOrder: 30> 
 	^composite tree
@@ -28,7 +28,7 @@ SymbolicBytecode >> gtInspectorTreeIn: composite [
 		format: [ :each | each printString ]
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 SymbolicBytecode >> gtSpotterCodePreviewIn: aComposite [
 	<spotterPreview: 1>
 	^ (aComposite pharoMethod
@@ -39,7 +39,7 @@ SymbolicBytecode >> gtSpotterCodePreviewIn: aComposite [
 			entity: self) 
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 SymbolicBytecode >> spotterActDefault [
 	self method compiledMethod browse
 ]
