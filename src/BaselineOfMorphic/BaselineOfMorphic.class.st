@@ -255,7 +255,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SparseLargeTable recompile. 
 	
-	self loadBitmapDejaVuFonts.
+	self loadBitmapDejaVuSans.
 	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
 
