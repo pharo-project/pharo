@@ -255,6 +255,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SparseLargeTable recompile. 
 	
+	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
 	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
@@ -268,7 +269,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
 	JPEGReadStream JPEGReadWriter 
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
-	PNGReadWriter RxMatcher RxParser RxsPredicate
+	RxMatcher RxParser RxsPredicate
 	SHA1 ShortIntegerArray SimpleEditor
 	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
 	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
