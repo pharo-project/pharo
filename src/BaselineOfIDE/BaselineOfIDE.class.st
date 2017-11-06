@@ -56,7 +56,7 @@ BaselineOfIDE >> additionalInitialization [
 
 	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
-	FreeTypeSystemSettings loadFt2Library: true.
+	FreeTypeSystemSettings loadFt2Library: false.
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
 	
