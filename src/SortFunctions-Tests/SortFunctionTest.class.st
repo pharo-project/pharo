@@ -46,23 +46,29 @@ SortFunctionTest >> testInversion [
 
 	| function |
 	function := #x ascending.
-	self assert: function isAscending.
-	self deny: function isDescending.
 	self assert: (function value: 0 @ 2 value: 1 @ 1).
 	self assert: (function value: 1 @ 2 value: 1 @ 1).
 	self deny: (function value: 2 @ 2 value: 1 @ 1).
 	function := function inverted.
-	self assert: function isDescending.
-	self deny: function isAscending.
 	self deny: (function value: 1 @ 2 value: 2 @ 1).
 	self assert: (function value: 1 @ 2 value: 1 @ 1).
 	self assert: (function value: 2 @ 2 value: 1 @ 1).
 	function := function inverted.
-	self assert: function isAscending.
-	self deny: function isDescending.
 	self assert: (function value: 0 @ 2 value: 1 @ 1).
 	self assert: (function value: 1 @ 2 value: 1 @ 1).
 	self deny: (function value: 2 @ 2 value: 1 @ 1)
+]
+
+{ #category : #'tests - sorting' }
+SortFunctionTest >> testPropertyWithOddCollator [
+
+	| oddFirst function data sorted |
+	oddFirst := [:a :b | (b bitAnd: 1) - (a bitAnd: 1)].
+	function := (#y collatedWith: oddFirst) , #y , #x.
+	data := { 1@10. 5@5. 10@4. 3@8. 1@1. 10@10 }.
+	sorted := data sorted: function.
+	self assert: sorted equals: { 1@1. 5@5. 10@4. 3@8. 1@10. 10@10 }.
+
 ]
 
 { #category : #tests }
@@ -71,14 +77,10 @@ SortFunctionTest >> testSingleArgBlock [
 	| function block |
 	block := [:point | point x / point y].
 	function := block ascending.
-	self assert: function isAscending.
-	self deny: function isDescending.
 	self assert: (function value: 0 @ 2 value: 1 @ 1).
 	self assert: (function value: 1 @ 2 value: 2 @ 4).
 	self deny: (function value: 2 @ 2 value: 1 @ 2).
 	function := block descending.
-	self assert: function isDescending.
-	self deny: function isAscending.
 	self deny: (function value: 1 @ 2 value: 2 @ 1).
 	self assert: (function value: 2 @ 2 value: 1 @ 1).
 	self assert: (function value: 3 @ 2 value: 1 @ 1)
@@ -148,15 +150,11 @@ SortFunctionTest >> testTwoArgBlock [
 			[:a :b |
 			a odd = b odd ifTrue: [0] ifFalse: [a odd ifTrue: [-1] ifFalse: [1]]].
 	function := block ascending.
-	self assert: function isAscending.
-	self deny: function isDescending.
 	self assert: (function value: 2 value: 4).
 	self assert: (function value: 1 value: 3).
 	self assert: (function value: 1 value: 4).
 	self deny: (function value: -2 value: 1).
 	function := block descending.
-	self assert: function isDescending.
-	self deny: function isAscending.
 	self assert: (function value: 2 value: 4).
 	self assert: (function value: 1 value: 3).
 	self deny: (function value: 1 value: 4).
@@ -168,14 +166,10 @@ SortFunctionTest >> testUnarySymbol [
 
 	| function |
 	function := #x ascending.
-	self assert: function isAscending.
-	self deny: function isDescending.
 	self assert: (function value: 0 @ 2 value: 1 @ 1).
 	self assert: (function value: 1 @ 2 value: 1 @ 1).
 	self deny: (function value: 2 @ 2 value: 1 @ 1).
 	function := #x descending.
-	self assert: function isDescending.
-	self deny: function isAscending.
 	self deny: (function value: 1 @ 2 value: 2 @ 1).
 	self assert: (function value: 1 @ 2 value: 1 @ 1).
 	self assert: (function value: 2 @ 2 value: 1 @ 1)
@@ -186,14 +180,10 @@ SortFunctionTest >> testUndefinedFirstUnary [
 
 	| function |
 	function := #y ascending undefinedFirst.
-	self assert: function isUndefinedFirst.
-	self deny: function isUndefinedLast.
 	self assert: (function value: 0 @ nil value: 1 @ 1).
 	self assert: (function value: 1 @ 2 value: 1 @ 2).
 	self deny: (function value: 2 @ 2 value: 1 @ 1).
 	function := #y descending undefinedFirst.
-	self assert: function isUndefinedFirst.
-	self deny: function isUndefinedLast.
 	self assert: (function value: 1 @ nil value: 2 @ 1).
 	self deny: (function value: 1 @ 2 value: 1 @ 3).
 	self deny: (function value: 2 @ 2 value: 1 @ 3)
@@ -204,14 +194,10 @@ SortFunctionTest >> testUndefinedLastUnary [
 
 	| function |
 	function := #y ascending undefinedLast.
-	self assert: function isUndefinedLast.
-	self deny: function isUndefinedFirst.
 	self assert: (function value: 0 @ 2 value: 1 @ nil).
 	self assert: (function value: 1 @ 2 value: 1 @ 2).
 	self deny: (function value: 2 @ 2 value: 1 @ 1).
 	function := #y descending undefinedLast.
-	self assert: function isUndefinedLast.
-	self deny: function isUndefinedFirst.
 	self assert: (function value: 1 @ 2 value: 2 @ nil).
 	self deny: (function value: 1 @ 2 value: 1 @ 3).
 	self deny: (function value: 2 @ 2 value: 1 @ 3)
