@@ -54,7 +54,6 @@ rid of it risks breaking code.  If it is there but does not harm then why get ri
 
 best Eliot Miranda 
 
-
 "
 Class {
 	#name : #Object,
@@ -134,7 +133,6 @@ Object class >> initialize [
 Object class >> initializeDependentsFields [
 	"Object initialize"
 	DependentsFields := WeakIdentityKeyDictionary new.
-
 ]
 
 { #category : #'instance creation' }
@@ -154,7 +152,6 @@ Object class >> reInitializeDependentsFields [
 	DependentsFields := WeakIdentityKeyDictionary new.
 	oldFields keysAndValuesDo:[:obj :deps|
 		deps do:[:d| obj addDependent: d]].
-
 ]
 
 { #category : #'instance creation' }
@@ -249,7 +246,7 @@ Object >> = anObject [
 	object. If = is redefined in any subclass, consider also redefining the 
 	message hash."
 
-	^self == anObject 
+	^self == anObject
 ]
 
 { #category : #finalization }
@@ -342,14 +339,13 @@ Object >> asSetElement [
 	"Answer an object, which can be put into a Set as element , wrapped
 	by one of SetElement instance, if necessary. 
 	Default implementation is to answer self"
-
 ]
 
 { #category : #converting }
 Object >> asString [
 	"Answer a string that represents the receiver."
 
-	^ self printString 
+	^ self printString
 ]
 
 { #category : #asserting }
@@ -467,7 +463,7 @@ Object >> basicSize [
 
 	<primitive: 62>
 	"The number of indexable fields of fixed-length objects is 0"
-	^0	
+	^0
 ]
 
 { #category : #'write barrier' }
@@ -677,7 +673,6 @@ Object >> copySameFrom: otherObject [
 			[self instVarAt: index put: (otherObject instVarAt: match)]].
 	1 to: (self basicSize min: otherObject basicSize) do: [:i |
 		self basicAt: i put: (otherObject basicAt: i)].
-
 ]
 
 { #category : #logging-Deprecated }
@@ -771,7 +766,6 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 		version: version;
 		rule: aRule;
 		transform.
-		
 ]
 
 { #category : #deprecation }
@@ -783,7 +777,6 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 		explanation: anExplanationString;
 		rule: aRule;
 		transform.
-		
 ]
 
 { #category : #displaying }
@@ -792,7 +785,6 @@ Object >> displayString [
 	"asString should not be implemented in Object, and kept for conversion between strings, symbols, text and characters."
 	
 	^ self printString
-
 ]
 
 { #category : #'reflective operations' }
@@ -818,7 +810,6 @@ Object >> enclosedSetElement [
 	instead of its wrapper.
 	Only SetElement instance or its subclasses allowed to answer something different than receiver itself"
 	
-
 ]
 
 { #category : #'error handling' }
@@ -985,7 +976,7 @@ Object >> hash [
 	"Answer a SmallInteger whose value is related to the receiver's identity.
 	May be overridden, and should be overridden in any classes that define = "
 
-	^ self identityHash 
+	^ self identityHash
 ]
 
 { #category : #evaluating }
@@ -993,7 +984,6 @@ Object >> in: aBlock [
 	"Evaluate the given block with the receiver as its argument."
 
 	^ aBlock value: self
-
 ]
 
 { #category : #introspection }
@@ -1054,7 +1044,6 @@ Object >> isBlock [
 Object >> isCharacter [
 
 	^ false.
-
 ]
 
 { #category : #testing }
@@ -1083,7 +1072,6 @@ Object >> isColor [
 	"Answer true if receiver is a Color. False by default."
 
 	^ false
-
 ]
 
 { #category : #testing }
@@ -1171,7 +1159,6 @@ Object >> isMemberOf: aClass [
 { #category : #testing }
 Object >> isMessageSend [
 	^false
-
 ]
 
 { #category : #testing }
@@ -1255,7 +1242,6 @@ Object >> isSelfEvaluating [
 Object >> isStream [
 	"Return true if the receiver responds to the stream protocol"
 	^false
-
 ]
 
 { #category : #testing }
@@ -1266,7 +1252,7 @@ Object >> isString [
 
 { #category : #testing }
 Object >> isSymbol [
-	^ false 
+	^ false
 ]
 
 { #category : #testing }
@@ -1301,7 +1287,6 @@ Object >> isTrait [
 Object >> isVariableBinding [
 	"Return true if I represent a literal variable binding"
 	^false
-	
 ]
 
 { #category : #comparing }
@@ -1340,21 +1325,18 @@ Object >> logCrTab: aString [
 Object >> logEntry [
 
 	Transcript show: 'Entered ', thisContext sender printString; cr.
-
 ]
 
 { #category : #flagging }
 Object >> logExecution [
 
 	Transcript show: 'Executing ', thisContext sender printString; cr.
-
 ]
 
 { #category : #flagging }
 Object >> logExit [
 
 	Transcript show:  'Exited ', thisContext sender printString; cr.
-
 ]
 
 { #category : #printing }
@@ -1410,7 +1392,7 @@ Object >> longPrintStringLimitedTo: aLimitValue [
 
 { #category : #'user interface' }
 Object >> modelWakeUpIn: aWindow [
-	"A window with me as model is being entered or expanded.  Default response is no-op" 
+	"A window with me as model is being entered or expanded.  Default response is no-op"
 ]
 
 { #category : #'block support' }
@@ -1474,7 +1456,6 @@ This will serve two purposes:
 	(2)	You can locate all such methods by browsing senders of #nominallyUnsent:"
 
 	false ifTrue: [self flag: #nominallyUnsent:]    "So that this method itself will appear to be sent"
-
 ]
 
 { #category : #testing }
@@ -1661,7 +1642,7 @@ Object >> pointsOnlyWeaklyTo: anObject [
 Object >> postCopy [
 	"I'm a hook method in the sense of Design Patterns TemplateHook/Methods. I'm called by copy. self is a shallow copy, subclasses should copy fields as necessary to complete the full copy"
 
-	^ self 
+	^ self
 ]
 
 { #category : #'reflective operations' }
@@ -1754,7 +1735,6 @@ Object >> release [
 	should be overridden by subclasses with any cycles, in which case the 
 	subclass should also include the expression super release."
 
-	
 ]
 
 { #category : #dependencies }
@@ -1806,7 +1786,6 @@ Object >> setIsReadOnlyObject: aBoolean [
 	 to process scheduling (Processor, Process instances, Semaphore instances, ...)"
 	<primitive: 164 error: ec>
 	^self primitiveFailed
-	
 ]
 
 { #category : #pinning }
@@ -1971,7 +1950,6 @@ Object >> storeOn: aStream [
 			store: (self basicAt: i);
 			nextPut: $;].
 	aStream nextPutAll: ' yourself)'
-
 ]
 
 { #category : #printing }
@@ -2140,7 +2118,6 @@ Object >> veryDeepCopyWith: deepCopier [
 		currentClass := currentClass superclass ].
 		
 	^ copyOfSelf
-
 ]
 
 { #category : #copying }
@@ -2174,7 +2151,6 @@ Object >> wantsStepsIn: aSystemWindow [
 { #category : #'model - updating' }
 Object >> windowIsClosing [
 	"This message is used to inform a models that its window is closing. Most models do nothing, but some, such as the Debugger, must do some cleanup. Note that this mechanism must be used with care by models that support multiple views, since one view may be closed while others left open."
-
 ]
 
 { #category : #'user interface' }

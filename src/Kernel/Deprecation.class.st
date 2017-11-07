@@ -20,7 +20,6 @@ foo
 The  transformWith:  part is optional. It allows to transform the deprecated method automatically when called.
 If the transformation is defined, the Warning will not signalled.
 
-
 "
 Class {
 	#name : #Deprecation,
@@ -131,7 +130,7 @@ Deprecation >> deprecationDate [
 
 { #category : #accessing }
 Deprecation >> explanation: aString [
-	explanationString := aString 
+	explanationString := aString
 ]
 
 { #category : #accessing }

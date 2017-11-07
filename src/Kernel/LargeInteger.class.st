@@ -1,5 +1,5 @@
 "
-I represent integers of more than 30 bits.  These values are beyond the range of SmallInteger, and are encoded here as an array of 8-bit digits. 
+I represent integers of more than 30 bits.  These values are beyond the range of SmallInteger, and are encoded here as an array of 8-bit digits.
 "
 Class {
 	#name : #LargeInteger,
@@ -131,7 +131,6 @@ LargeInteger >> \\ aNumber [
 					ifTrue: [r + aNumber]
 					ifFalse: [r]].
 	^super \\ aNumber
-	
 ]
 
 { #category : #arithmetic }

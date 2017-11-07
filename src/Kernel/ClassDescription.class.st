@@ -67,7 +67,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 { #category : #organization }
 ClassDescription >> addCategory: newName before: aCategory [
 
-	^ self organization addCategory: newName before: aCategory 
+	^ self organization addCategory: newName before: aCategory
 ]
 
 { #category : #'instance variables' }
@@ -104,7 +104,7 @@ ClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 { #category : #'instance variables' }
 ClassDescription >> addSlot: aSlot [
 
-	^self subclassResponsibility 
+	^self subclassResponsibility
 ]
 
 { #category : #'instance variables' }
@@ -197,7 +197,7 @@ ClassDescription >> baseClass [
 
 { #category : #organization }
 ClassDescription >> basicOrganization [
-	^ organization 
+	^ organization
 ]
 
 { #category : #organization }
@@ -816,7 +816,7 @@ ClassDescription >> isMeta [
 
 { #category : #testing }
 ClassDescription >> isTaggedWith: aSymbol [
-	^self tags includes: aSymbol 
+	^self tags includes: aSymbol
 ]
 
 { #category : #private }
@@ -904,7 +904,6 @@ ClassDescription >> noteChangesFrom: oldMethodDict [
 				currentMethod == oldMethod
 					ifFalse: [ self noteMethodChanged: oldMethod to: currentMethod]]
 			ifAbsent: [ self noteMethodRemoved: oldMethod ]].
-	
 ]
 
 { #category : #compiling }
@@ -1014,7 +1013,7 @@ ClassDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self theMetaClass numberOfMethods ] 
+		ifFalse: [ num + self theMetaClass numberOfMethods ]
 ]
 
 { #category : #initialize-release }
@@ -1035,7 +1034,6 @@ ClassDescription >> organization [
 						ifTrue: [ ClassOrganization new ]
 						ifFalse: [ ClassOrganization forClass: self ]) ].
 	^self basicOrganization setSubject: self.	"Making sure that subject is set correctly. It should not be necessary."
-	
 	
 ]
 
@@ -1190,7 +1188,6 @@ ClassDescription >> slotDefinitionString [
 				str nextPutAll: '. '.  
 				special ifTrue: [ str cr;tab;tab;tab;tab ]].
 		str nextPutAll: ' }'. ]
-
 ]
 
 { #category : #slots }
@@ -1372,7 +1369,6 @@ ClassDescription >> updateInstancesFrom: oldClass [
 	crashingBlock.
 	crashingBlock value.
 	"
-
 ]
 
 { #category : #'organization updating' }

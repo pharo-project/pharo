@@ -4,7 +4,6 @@ Extension { #name : #Number }
 Number >> asDuration [
  
  	^ Duration seconds: self asInteger
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -40,21 +39,18 @@ Number >> hours [
 Number >> milliSecond [
  
  	^ self milliSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> milliSeconds [
  
  	^ Duration milliSeconds: self
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> minute [
  
  	^ self minutes
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -67,7 +63,6 @@ Number >> minutes [
 Number >> nanoSecond [
  
  	^ self nanoSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -80,7 +75,6 @@ Number >> nanoSeconds [
 Number >> second [
  
  	^ self seconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -93,7 +87,6 @@ Number >> seconds [
 Number >> week [
  
  	^ self weeks
- 
 ]
 
 { #category : #'*Kernel-Chronology' }

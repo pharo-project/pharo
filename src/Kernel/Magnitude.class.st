@@ -15,7 +15,6 @@ Here are some example of my protocol:
      5 = 6
      100 max: 9
 	7 between: 5 and: 10 
-
 "
 Class {
 	#name : #Magnitude,

@@ -18,7 +18,7 @@ Class {
 { #category : #controlling }
 DefaultExecutionEnvironment class >> beActive [
 
-	CurrentExecutionEnvironment restoreDefault 
+	CurrentExecutionEnvironment restoreDefault
 ]
 
 { #category : #controlling }

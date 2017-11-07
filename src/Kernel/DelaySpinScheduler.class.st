@@ -40,5 +40,5 @@ DelaySpinScheduler >> unschedule: aDelay [
 		true.
 	] whileTrue.	
 
-  	"Probably the whileTrue loop is not needed, its just for safety." 
+  	"Probably the whileTrue loop is not needed, its just for safety."
 ]

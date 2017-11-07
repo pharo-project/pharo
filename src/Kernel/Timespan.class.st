@@ -1,6 +1,5 @@
 "
 I represent a duration starting on a specific DateAndTime.
-
 "
 Class {
 	#name : #Timespan,
@@ -15,7 +14,7 @@ Class {
 { #category : #'instance creation' }
 Timespan class >> current [ 
 
-	^ self starting: DateAndTime now 
+	^ self starting: DateAndTime now
 ]
 
 { #category : #'instance creation' }
@@ -23,13 +22,12 @@ Timespan class >> new [
 	"Answer a Timespan starting on the Squeak epoch: 1 January 1901"
 
 	^ self starting: DateAndTime new
-
 ]
 
 { #category : #'instance creation' }
 Timespan class >> starting: aDateAndTime [ 
 
-	^ self starting: aDateAndTime duration: Duration zero 
+	^ self starting: aDateAndTime duration: Duration zero
 ]
 
 { #category : #'instance creation' }
@@ -46,7 +44,7 @@ Timespan class >> starting: startDateAndTime ending: endDateAndTime [
 
 	^ self 
 		starting: startDateAndTime 
-		duration: (endDateAndTime asDateAndTime - startDateAndTime). 
+		duration: (endDateAndTime asDateAndTime - startDateAndTime).
 ]
 
 { #category : #arithmetic }
@@ -54,7 +52,6 @@ Timespan >> + operand [
 	"operand conforms to protocol Duration" 	
 
 	^ self class starting: (self start + operand) duration: self duration
-
 ]
 
 { #category : #arithmetic }
@@ -63,13 +60,13 @@ Timespan >> - operand [
 
 	^ (operand respondsTo: #asDateAndTime) 
 	 	ifTrue: [ self start - operand ]
-	 	ifFalse: [ self + (operand negated) ]. 
+	 	ifFalse: [ self + (operand negated) ].
 ]
 
 { #category : #arithmetic }
 Timespan >> < comparand [
 
-	^ self start < comparand	 
+	^ self start < comparand
 ]
 
 { #category : #comparing }
@@ -77,25 +74,24 @@ Timespan >> = comparand [
 	^ self species = comparand species 
 		and: [ self start = comparand start 
 				and: [ self duration = comparand duration ]]
-
 ]
 
 { #category : #accessing }
 Timespan >> asDate [ 
 
-	^ start asDate 
+	^ start asDate
 ]
 
 { #category : #accessing }
 Timespan >> asDateAndTime [
 
-	^ start 
+	^ start
 ]
 
 { #category : #conversion }
 Timespan >> asDosTimestamp [ 
 
-	^ start asDosTimestamp 
+	^ start asDosTimestamp
 ]
 
 { #category : #conversion }
@@ -107,7 +103,7 @@ Timespan >> asDuration [
 { #category : #conversion }
 Timespan >> asMonth [ 
 
-	^ start asMonth 
+	^ start asMonth
 ]
 
 { #category : #conversion }
@@ -126,7 +122,7 @@ Timespan >> asTime [
 { #category : #conversion }
 Timespan >> asWeek [
 
-	^ start asWeek 
+	^ start asWeek
 ]
 
 { #category : #conversion }
@@ -149,7 +145,7 @@ Timespan >> dates [
 { #category : #enumerating }
 Timespan >> datesDo: aBlock [ 
 
-	self do: aBlock with: start asDate. 
+	self do: aBlock with: start asDate.
 ]
 
 { #category : #accessing }
@@ -189,14 +185,14 @@ Timespan >> dayOfYear [
 { #category : #accessing }
 Timespan >> daysInMonth [ 
 
-	^ start daysInMonth 
+	^ start daysInMonth
 ]
 
 { #category : #accessing }
 Timespan >> daysInYear [
  	"Answer the number of days in the month represented by the receiver."
 
-	^ start daysInYear 
+	^ start daysInYear
 ]
 
 { #category : #accessing }
@@ -207,7 +203,7 @@ Timespan >> daysLeftInYear [
 { #category : #private }
 Timespan >> do: aBlock with: aFirstElement [
 
- 	self do: aBlock with: aFirstElement when: [ :t | true ]. 
+ 	self do: aBlock with: aFirstElement when: [ :t | true ].
 ]
 
 { #category : #private }
@@ -227,7 +223,7 @@ Timespan >> do: aBlock with: aFirstElement when: aConditionBlock [
 Timespan >> duration [
  	"Answer the Duration of this timespan"
 
-	^ duration 
+	^ duration
 ]
 
 { #category : #private }
@@ -235,7 +231,6 @@ Timespan >> duration: aDuration [
 	"Set the Duration of this timespan"
 
 	duration := aDuration
-
 ]
 
 { #category : #accessing }
@@ -256,7 +251,6 @@ Timespan >> every: aDuration do: aBlock [
 	
 	[ aBlock value: element.
 		element := element + aDuration. ]
-
 ]
 
 { #category : #accessing }
@@ -268,7 +262,7 @@ Timespan >> firstDayOfMonth [
 { #category : #comparing }
 Timespan >> hash [
 
-	^ start hash + duration hash 
+	^ start hash + duration hash
 ]
 
 { #category : #testing }
@@ -279,7 +273,6 @@ Timespan >> includes: aDateAndTime [
 				(self includes: aDateAndTime start)
 					and: [ self includes: aDateAndTime end ] ]
 			ifFalse: [ aDateAndTime asDateAndTime between: start and: self end ]
-
 ]
 
 { #category : #testing }
@@ -297,7 +290,6 @@ Timespan >> includesAllOf: aCollection [
 		transformWith: '`@receiver includesAllOf: `@statements' -> '`@receiver includesAll: `@statements'.
 	
 	^ self includesAll: aCollection
-
 ]
 
 { #category : #testing }
@@ -326,19 +318,18 @@ Timespan >> intersection: aTimespan [
 	 anEnd < aBegin ifTrue: [^nil].
 
 	 ^ self class starting: aBegin ending: anEnd.
-
 ]
 
 { #category : #accessing }
 Timespan >> isLeapYear [
 
-	^ start isLeapYear 
+	^ start isLeapYear
 ]
 
 { #category : #accessing }
 Timespan >> julianDayNumber [ 
 
-	^ start julianDayNumber 
+	^ start julianDayNumber
 ]
 
 { #category : #accessing }
@@ -349,25 +340,25 @@ Timespan >> julianDayNumberUTC [
 { #category : #accessing }
 Timespan >> month [
 
-	^ start month 
+	^ start month
 ]
 
 { #category : #accessing }
 Timespan >> monthAbbreviation [ 
 
-	^ start monthAbbreviation 
+	^ start monthAbbreviation
 ]
 
 { #category : #accessing }
 Timespan >> monthIndex [
 
-	^ self month 
+	^ self month
 ]
 
 { #category : #accessing }
 Timespan >> monthName [ 
 
-	^ start monthName 
+	^ start monthName
 ]
 
 { #category : #enumerating }
@@ -388,7 +379,7 @@ Timespan >> monthsDo: aBlock [
 { #category : #accessing }
 Timespan >> next [
 
-	^ self class starting: (start + duration) duration: duration 
+	^ self class starting: (start + duration) duration: duration
 ]
 
 { #category : #accessing }
@@ -410,7 +401,7 @@ Timespan >> offset: anOffset [
 { #category : #accessing }
 Timespan >> previous [ 
 
-	^ self class starting: (start - duration) duration: duration 
+	^ self class starting: (start - duration) duration: duration
 ]
 
 { #category : #printing }
@@ -423,14 +414,13 @@ Timespan >> printOn: aStream [
 		nextPut: $D;
 		print: duration;
 		nextPut: $).
-
 ]
 
 { #category : #accessing }
 Timespan >> start [
  	"Answer the start DateAndTime of this timespan"
 
-	^ start 
+	^ start
 ]
 
 { #category : #accessing }
@@ -438,7 +428,6 @@ Timespan >> start: aDateAndTime [
 	"Store the start DateAndTime of this timespan"
 
 	start := aDateAndTime asDateAndTime
-
 ]
 
 { #category : #conversion }
@@ -448,7 +437,7 @@ Timespan >> to: anEnd [
 	end := (anEnd isKindOf: Timespan)
 		ifTrue: [ anEnd end ]
 		ifFalse: [ anEnd asDateAndTime ].
-	^ Timespan starting: (self start) ending: end. 
+	^ Timespan starting: (self start) ending: end.
 ]
 
 { #category : #conversion }
@@ -475,7 +464,6 @@ Timespan >> union: aTimespan [
 	aBegin := self start min: aTimespan start.
 	anEnd := self end max: aTimespan end.
 	^ Timespan starting: aBegin ending: (anEnd + DateAndTime clockPrecision).
-
 ]
 
 { #category : #enumerating }
@@ -498,13 +486,13 @@ Timespan >> weeksDo: aBlock [
 Timespan >> workDatesDo: aBlock [
  	"Exclude Saturday and Sunday"
 
-	self do: aBlock with: start asDate when: [ :d | d dayOfWeek < 6 ]. 
+	self do: aBlock with: start asDate when: [ :d | d dayOfWeek < 6 ].
 ]
 
 { #category : #accessing }
 Timespan >> year [ 
 
-	^ start year 
+	^ start year
 ]
 
 { #category : #enumerating }

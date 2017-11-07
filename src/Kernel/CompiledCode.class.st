@@ -120,7 +120,6 @@ CompiledCode >> accessesSlot: aSlot [
 				(node binding slot ==  aSlot)
 					 ifTrue: [^true]]]]. 
 	^false
-	
 ]
 
 { #category : #literals }
@@ -223,7 +222,6 @@ CompiledCode >> encoderClass [
 CompiledCode >> endPC [
 	"Answer the index of the last bytecode."
 	^ self trailer endPC
-
 ]
 
 { #category : #comparing }
@@ -250,7 +248,6 @@ CompiledCode >> frameSize [
 	(self header noMask: 16r20000)
 		ifTrue: [^ SmallFrame]
 		ifFalse: [^ LargeFrame]
-
 ]
 
 { #category : #scanning }
@@ -299,7 +296,7 @@ CompiledCode >> hasLiteralThorough: literal [
 		 or: [lit isArray and: [lit hasLiteral: literal]]) ifTrue:
 			[^ true].
 		(lit isMemberOf: CompiledBlock) ifTrue: [ (lit hasLiteralThorough: literal) ifTrue: [ ^true ] ] ].
-	^ false 
+	^ false
 ]
 
 { #category : #literals }
@@ -338,7 +335,6 @@ CompiledCode >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
-
 ]
 
 { #category : #literals }
@@ -540,7 +536,6 @@ CompiledCode >> localSendsAnySelectorOf: aCollection [
 	].
 
 	^ false 
-
 ]
 
 { #category : #scanning }
@@ -572,7 +567,6 @@ CompiledCode >> longPrintOn: aStream [
 		self printPrimitiveOn: aStream.
 	].
 	self symbolicBytecodes do: [ :each | each printOn: aStream ] separatedBy: [ aStream cr ]
-
 ]
 
 { #category : #scanning }
@@ -581,7 +575,7 @@ CompiledCode >> messages [
 	| aSet |
 	aSet := self localMessages.
 	self innerCompiledBlocksDo: [ :cb | aSet := aSet , cb messages ].
-	^ aSet 
+	^ aSet
 ]
 
 { #category : #initialize-release }
@@ -774,7 +768,6 @@ CompiledCode >> sendsAnySelectorOf: aCollection [
 	
 	(self localSendsAnySelectorOf: aCollection) ifTrue: [ ^ true ].
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsAnySelectorOf: aCollection ]
-
 ]
 
 { #category : #literals }
@@ -848,7 +841,6 @@ CompiledCode >> timeStamp [
 CompiledCode >> trailer [
 	"Answer the receiver's trailer"
 	^ CompiledMethodTrailer new method: self
-
 ]
 
 { #category : #testing }

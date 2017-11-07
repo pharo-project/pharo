@@ -7,7 +7,6 @@ By default if an Error or Exception is not handled by the code the default actio
 	UnhandledError signalForException: error
 	...
 	UIManager opens a debugger
-	
 "
 Class {
 	#name : #UnhandledError,

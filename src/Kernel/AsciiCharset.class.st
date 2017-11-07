@@ -2,7 +2,7 @@
 This class defines the attributes of the ASCII character set.  It's here to be used while boostrapping the image; eventually, it will be replaced by the
 Unicode character set.
 
-Character objects delegate behaviour to one of the  character sets AsciiCharSet, Latin1, or Unicode. 
+Character objects delegate behaviour to one of the  character sets AsciiCharSet, Latin1, or Unicode.
 "
 Class {
 	#name : #AsciiCharset,
@@ -35,7 +35,7 @@ AsciiCharset class >> isConnectorPunctuation: char [
 { #category : #'character classification' }
 AsciiCharset class >> isControlOther: char [
 	char charCode <= 16r1F ifTrue: [ ^ true ].
-	^ char = Character delete 
+	^ char = Character delete
 ]
 
 { #category : #'character classification' }
@@ -83,7 +83,7 @@ AsciiCharset class >> isInitialQuote: char [
 AsciiCharset class >> isLetter: aCharacter [
 
 	^ (aCharacter between: $a and: $z)
-		or: [ (aCharacter between: $A and: $Z) ]	
+		or: [ (aCharacter between: $A and: $Z) ]
 ]
 
 { #category : #'character classification' }
@@ -214,5 +214,5 @@ AsciiCharset class >> toUppercase: aCharacter [
 
 { #category : #'character classification' }
 AsciiCharset class >> ucsTable [
-	^ Latin1 ucsTable 
+	^ Latin1 ucsTable
 ]

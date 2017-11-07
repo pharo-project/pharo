@@ -12,7 +12,6 @@ You restart the execution flow with :
 executionFlow value: true
 
 
-
 "
 Class {
 	#name : #Continuation,

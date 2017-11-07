@@ -17,7 +17,6 @@ Now you can swap between different schedulers on the fly, have a go. Create your
 
 Tip: If while experimenting you have trouble with the UI locking (which prevents debugging), in WorldState>>doOneCycleFor: comment out the call to #interCyclePause: .
 
-
 "
 Class {
 	#name : #DelayScheduler,
@@ -39,7 +38,7 @@ Class {
 
 { #category : #snapshotting }
 DelayScheduler >> adjust: aDelay resumptionTimeOldBase: oldBaseTime newBase: newBaseTime [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -50,7 +49,7 @@ DelayScheduler >> anyActive [
 
 { #category : #'timer process' }
 DelayScheduler >> handleTimerEvent: nowTick [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'class initialization' }
@@ -68,12 +67,11 @@ DelayScheduler >> initialize [
 	Its also left in its original location for now, to be cleaned up later."
 	suspendedDelays := Heap 
 			sortBlock: [ :delay1 :delay2 | delay1 schedulerResumptionTime <= delay2 schedulerResumptionTime ].
-
 ]
 
 { #category : #printing }
 DelayScheduler >> millisecondsUntilResumptionTime: millisecondResumptionTime [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -91,47 +89,46 @@ DelayScheduler >> restartTimerEventLoop [
 	self stopTimerEventLoop.
 	self startTimerEventLoop.
 
-
 ]
 
 { #category : #snapshotting }
 DelayScheduler >> restoreResumptionTimes [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'timer process' }
 DelayScheduler >> runTimerEventLoop [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #snapshotting }
 DelayScheduler >> saveResumptionTimes [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'low priority processes' }
 DelayScheduler >> schedule: aDelay [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'timer process' }
 DelayScheduler >> scheduleDelay: aDelay [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'timer process' }
 DelayScheduler >> schedulingProcess [
-	^ timerEventLoop 
+	^ timerEventLoop
 ]
 
 { #category : #snapshotting }
 DelayScheduler >> shutDown [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'timer process' }
 DelayScheduler >> startTimerEventLoop [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #snapshotting }
@@ -146,12 +143,11 @@ DelayScheduler >> startUp [
 	activeDelayStartTime := Time millisecondClockValue.
 	self restoreResumptionTimes.
 	accessProtect signal.
-
 ]
 
 { #category : #'timer process' }
 DelayScheduler >> stopTimerEventLoop [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'low priority processes' }
@@ -161,10 +157,9 @@ DelayScheduler >> unschedule: aDelay [
 		timingSemaphore signal.
 		].
 
-
 ]
 
 { #category : #'timer process' }
 DelayScheduler >> unscheduleDelay: aDelay [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]

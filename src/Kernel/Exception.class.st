@@ -177,7 +177,6 @@ Exception >> outer [
 			prevOuterContext := outerContext.
 			outerContext := thisContext contextTag ].
 	self pass.
-
 ]
 
 { #category : #handling }
@@ -243,7 +242,6 @@ Exception >> resumeUnchecked: resumptionValue [
 			ctxt := outerContext.
 			outerContext := ctxt tempAt: 1. "prevOuterContext in #outer"
 			ctxt return: resumptionValue ]
-
 ]
 
 { #category : #handling }
@@ -258,7 +256,6 @@ Exception >> retryUsing: alternativeBlock [
 	"Abort an exception handler and evaluate a new block in place of the handler's protected block."
 
 	handlerContext restartWithNewReceiver: alternativeBlock
-
 ]
 
 { #category : #handling }

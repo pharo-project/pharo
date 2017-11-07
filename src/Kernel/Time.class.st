@@ -2,7 +2,6 @@
 This represents a particular point in time during any given day.  For example, '5:19:45 pm'.
 
 If you need a point in time on a particular day, use DateAndTime.  If you need a duration of time, use Duration.
-
 "
 Class {
 	#name : #Time,
@@ -161,7 +160,6 @@ Time class >> fromSeconds: secondCount [
 { #category : #'instance creation' }
 Time class >> fromString: aString [
 	^ self readFrom: aString readStream.
-
 ]
 
 { #category : #'instance creation' }
@@ -194,7 +192,7 @@ Time class >> hour: hour minute: minute second: second  nanoSecond: nanoCount [
 Time class >> microsecondClockValue [
 	"Answer the number of microseconds since Squeak Epoch"
 
-	^self primUTCMicrosecondsClock 
+	^self primUTCMicrosecondsClock
 ]
 
 { #category : #accessing }
@@ -218,7 +216,6 @@ Time class >> microsecondsToRun: timedBlock [
 Time class >> midnight [
 
 	^ self seconds: 0
-
 ]
 
 { #category : #primitives }
@@ -240,7 +237,6 @@ Time class >> milliseconds: currentTime since: lastTime [
 	^ delta < 0
 		ifTrue: [SmallInteger maxVal + delta]
 		ifFalse: [delta]
-
 ]
 
 { #category : #accessing }
@@ -269,7 +265,6 @@ Time class >> new [
 Time class >> noon [
 
 	^ self seconds: (SecondsInDay / 2)
-
 ]
 
 { #category : #'instance creation' }
@@ -400,7 +395,7 @@ Time class >> secondsWhenClockTicks [
 	lastSecond := self primUTCSecondsClock.
 	[ lastSecond = self primUTCSecondsClock ] whileTrue: [ (Delay forMilliseconds: 1) wait ].
  
-	^ lastSecond + 1 
+	^ lastSecond + 1
 ]
 
 { #category : #accessing }
@@ -454,14 +449,14 @@ Time >> asDateAndTime [
 Time >> asDuration [ 
 	"Answer the duration since midnight"
 
-	^ Duration seconds: seconds nanoSeconds: nanos 
+	^ Duration seconds: seconds nanoSeconds: nanos
 ]
 
 { #category : #converting }
 Time >> asMilliSeconds [
 	"Answer the number of milliseconds since midnight"
 
-	^ self asDuration asMilliSeconds 
+	^ self asDuration asMilliSeconds
 ]
 
 { #category : #converting }
@@ -474,7 +469,7 @@ Time >> asMonth [
 Time >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
-	^ self asDuration asNanoSeconds 
+	^ self asDuration asNanoSeconds
 ]
 
 { #category : #converting }
@@ -505,13 +500,13 @@ Time >> asYear [
 { #category : #accessing }
 Time >> duration [
 
-	^ Duration zero 
+	^ Duration zero
 ]
 
 { #category : #comparing }
 Time >> hash [
 
-	^ self ticks hash 
+	^ self ticks hash
 ]
 
 { #category : #printing }
@@ -526,7 +521,7 @@ Time >> hhmm24 [
 { #category : #accessing }
 Time >> hour [
 
-	^ self hour24 
+	^ self hour24
 ]
 
 { #category : #accessing }
@@ -561,13 +556,12 @@ Time >> intervalString [
 		d minutes > 0 ifTrue: [s space; print: d minutes; nextPutAll: ' minutes'].
 		d seconds > 0 ifTrue: [s space; print: d seconds; nextPutAll: ' seconds'] ].
 
-
 ]
 
 { #category : #accessing }
 Time >> meridianAbbreviation [
 
-	^ self hour < 12 ifTrue: ['AM'] ifFalse: ['PM']. 
+	^ self hour < 12 ifTrue: ['AM'] ifFalse: ['PM'].
 ]
 
 { #category : #accessing }
@@ -575,7 +569,7 @@ Time >> minute [
 	"Answer a number that represents the number of complete minutes in the receiver,
 	after the number of complete hours has been removed."
  
-	^ (seconds rem: SecondsInHour) quo: SecondsInMinute 
+	^ (seconds rem: SecondsInHour) quo: SecondsInMinute
 ]
 
 { #category : #accessing }
@@ -587,7 +581,7 @@ Time >> minutes [
 { #category : #accessing }
 Time >> nanoSecond [ 
 
-	^ nanos 
+	^ nanos
 ]
 
 { #category : #printing }
@@ -596,7 +590,6 @@ Time >> print24 [
  
  	^ String new: 8 streamContents: [ :aStream | 
 		self print24: true on: aStream ]
- 
  
 ]
 
@@ -662,7 +655,6 @@ Time >> printMinutes [
  
  	^ String new: 8 streamContents: [ :aStream | 
 		self print24: false showSeconds: false on: aStream ]
- 
 ]
 
 { #category : #printing }

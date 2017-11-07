@@ -10,7 +10,6 @@ It can be expressed as different objects:
 - Four numbers. They represent all the four directions.
 
 - A rectangle. (do not use this version because it is proposed just for migration and it may force you to create an unnecessary rectangle).
-
 "
 Class {
 	#name : #Margin,
@@ -49,19 +48,17 @@ Margin class >> fromRectangle: aRectangle [
 Margin class >> left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber [ 
 
 	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
-
 ]
 
 { #category : #'instance creation' }
 Margin class >> top: topNumber left: leftNumber bottom: bottomNumber right: rightNumber [ 
 
 	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
-
 ]
 
 { #category : #converting }
 Margin >> asMargin [
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
@@ -78,7 +75,6 @@ Margin >> expandRectangle: aRectangle [
 		right: aRectangle right + self right 
 		top: aRectangle top - self top 
 		bottom: aRectangle bottom + self bottom 
-
 ]
 
 { #category : #operations }
@@ -88,7 +84,6 @@ Margin >> extendRectangle: aRectangle [
 	^ Rectangle 
 		origin: aRectangle origin 
 		corner: aRectangle corner + (self width @ self height) 
-
 ]
 
 { #category : #initialization }
@@ -145,7 +140,6 @@ Margin >> insetRectangle: aRectangle [
 	b := top max: aRectangle bottom - self bottom.
 	
 	^ Rectangle left: l right: r top: t bottom: b
-	
 ]
 
 { #category : #testing }
@@ -176,7 +170,6 @@ Margin >> printOn: aStream [
 		print: bottom;
 		nextPutAll: ' right: ';
 		print: right. 
-	
 ]
 
 { #category : #accessing }

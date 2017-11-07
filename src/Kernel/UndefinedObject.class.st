@@ -68,7 +68,7 @@ UndefinedObject >> classBuilder [
 UndefinedObject >> classInstaller [
 	"Answer the class responsible of creating classes in the system."
 	
-	^ Smalltalk classInstaller 
+	^ Smalltalk classInstaller
 ]
 
 { #category : #copying }
@@ -201,7 +201,6 @@ UndefinedObject >> subclass: nameOfClass
 		classVariableNames: classVarNames
 		poolDictionaries: poolDictnames
 		category: category
-
 ]
 
 { #category : #'class hierarchy' }

@@ -483,14 +483,14 @@ SmallInteger >> nextInstance [
 	(SmallInteger minVal) to: (SmallInteger maxVal) do: [:integer | <your code here>].
 	"
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #'system primitives' }
 SmallInteger >> nextObject [
 	"SmallIntegers are immediate objects, and, as such, do not have successors in object memory."
 
-	self shouldNotImplement 
+	self shouldNotImplement
 ]
 
 { #category : #printing }
@@ -513,7 +513,6 @@ SmallInteger >> odd [
 SmallInteger >> pointsTo: anObject [
 	"Answers true if I hold a reference to anObject, or false otherwise. But since SmallIntegers do not have pointers, it always answers false"
 	^false
-
 ]
 
 { #category : #printing }

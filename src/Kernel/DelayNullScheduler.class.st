@@ -7,7 +7,6 @@ Select either from ""System > Settings > System > Delay Scheduler""
 or do... ""Delay delaySchedulerClass: DelayNullScheduler""
 
 
-
 "
 Class {
 	#name : #DelayNullScheduler,
@@ -19,7 +18,6 @@ Class {
 DelayNullScheduler >> schedule: aDelay [
 	aDelay delaySemaphore signal.
 	
-
 ]
 
 { #category : #snapshotting }
@@ -39,7 +37,6 @@ DelayNullScheduler >> startTimerEventLoop [
 		name: 'WARNING! Delay Scheduling Process NOT RUNNING!';
 		priority: Processor timingPriority.
 	timerEventLoop resume.
-
 ]
 
 { #category : #snapshotting }
@@ -53,7 +50,6 @@ DelayNullScheduler >> startUp [
 
 	 To get delays working again, go to System > Settings > System > Delay scheduler.	
 	 "
- 
 ]
 
 { #category : #'timer process' }
@@ -63,12 +59,10 @@ DelayNullScheduler >> stopTimerEventLoop [
 	timerEventLoop ifNotNil: [ timerEventLoop terminate ]. 
 	timerEventLoop := nil.
 
-
 ]
 
 { #category : #'low priority processes' }
 DelayNullScheduler >> unschedule: aDelay [
 	"Nothing to do"
 		
-
 ]

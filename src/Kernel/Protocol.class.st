@@ -69,7 +69,7 @@ Protocol >> addMethod: aSymbol [
 
 { #category : #private }
 Protocol >> canBeRemoved [
-	^ self isEmpty 
+	^ self isEmpty
 ]
 
 { #category : #testing }

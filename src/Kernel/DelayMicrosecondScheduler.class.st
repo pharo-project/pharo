@@ -55,7 +55,6 @@ DelayMicrosecondScheduler >> handleTimerEvent: microsecondNowTick [
 	activeDelay ifNotNil: [
 		microsecondNextTick := microsecondNextTick min: activeDelay schedulerResumptionTime ].
 	^microsecondNextTick.
-
 ]
 
 { #category : #printing }
@@ -80,7 +79,6 @@ DelayMicrosecondScheduler >> restoreResumptionTimes [
 		self adjust: delay resumptionTimeOldBase: 0 newBase: newBaseTime ].
 	activeDelay == nil ifFalse: [
 		self adjust: activeDelay resumptionTimeOldBase: 0 newBase: newBaseTime ].
-
 ]
 
 { #category : #'timer process' }
@@ -98,7 +96,6 @@ DelayMicrosecondScheduler >> runTimerEventLoop [
 		timingSemaphore consumeAllSignals.
 		self primSignal: timingSemaphore atUTCMicroseconds: microsecondNextTick.
 		].
-
 ]
 
 { #category : #snapshotting }
@@ -113,7 +110,6 @@ DelayMicrosecondScheduler >> saveResumptionTimes [
 		
 	suspendedDelays do: [ :delay |
 		self adjust: delay resumptionTimeOldBase: oldBaseTime newBase: 0 ].
-
 ]
 
 { #category : #'low priority processes' }
@@ -124,7 +120,6 @@ DelayMicrosecondScheduler >> schedule: aDelay [
 		timingSemaphore signal. "#handleTimerEvent: sets scheduledDelay:=nil"
 		].
 	
-
 ]
 
 { #category : #'timer process' }
@@ -140,7 +135,6 @@ DelayMicrosecondScheduler >> scheduleDelay: aDelay [
 					suspendedDelays add: activeDelay.
 					activeDelay := aDelay ]
 				ifFalse: [ suspendedDelays add: aDelay ]]
-
 ]
 
 { #category : #snapshotting }
@@ -151,7 +145,6 @@ DelayMicrosecondScheduler >> shutDown [
 	self primSignal: nil atUTCMicroseconds: 0.
 	self saveResumptionTimes.
 	delaySuspended := true.
-
 ]
 
 { #category : #'timer process' }
@@ -173,7 +166,6 @@ DelayMicrosecondScheduler >> startTimerEventLoop [
 	timerEventLoop resume.
 	
 	timingSemaphore signal. "get going"
-
 ]
 
 { #category : #snapshotting }
@@ -187,7 +179,6 @@ DelayMicrosecondScheduler >> startUp [
 	
 	self restoreResumptionTimes.
 	accessProtect signal.
-
 ]
 
 { #category : #'timer process' }
@@ -207,7 +198,6 @@ DelayMicrosecondScheduler >> stopTimerEventLoop [
 	activeDelay ifNotNil: [ activeDelay schedulerSignalWaitingProcess ].
 	[ suspendedDelayToClear := suspendedDelays removeFirstOrNil ]
 		whileNotNil: [ suspendedDelayToClear schedulerSignalWaitingProcess ].
-
 ]
 
 { #category : #'timer process' }

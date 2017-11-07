@@ -72,7 +72,6 @@ Behavior >> >> selector [
 	selector is not in the dictionary, create an error notification."
 
 	^self compiledMethodAt: selector
-
 ]
 
 { #category : #traits }
@@ -225,7 +224,6 @@ Behavior >> allLocalCallsOn: aSymbol [
 	"Answer a SortedCollection of all the methods that call on aSymbol, anywhere in my class hierarchy."
 
 	^(SystemNavigation new allLocalCallsOn: aSymbol ofClass: (self theNonMetaClass)).
-
 ]
 
 { #category : #'accessing method dictionary' }
@@ -257,7 +255,6 @@ Behavior >> allSelectorsAbove [
 	^ self allSelectorsAboveUntil: ProtoObject 
 	
 
-
 ]
 
 { #category : #'accessing method dictionary' }
@@ -270,7 +267,6 @@ Behavior >> allSelectorsAboveUntil: aRootClass [
 				aClass selectorsDo: [ :sel | coll add: sel ]].
 	^ coll
 	
-
 
 ]
 
@@ -285,7 +281,6 @@ Behavior >> allSelectorsBelow: topClass [
 				ifFalse: [aClass selectorsDo: [ :sel | coll add: sel ]]].
 	^ coll
 	
-
 
 ]
 
@@ -640,7 +635,6 @@ Behavior >> classesComposedWithMe [
 { #category : #cleanup }
 Behavior >> cleanUp [
 	"Clean out any caches and other state that should be flushed when trying to get an image into a pristine state. Subclasses may override #cleanUp: to provide different levels of cleanliness"
-
 ]
 
 { #category : #cleanup }
@@ -720,7 +714,6 @@ Behavior >> copiedFromSuperclass: method [
 					ifTrue: [ ^ {cls >> method selector}]
 					ifFalse: [ ^ #()]]].
 	^ #().
-	
 ]
 
 { #category : #queries }
@@ -841,7 +834,6 @@ Behavior >> ensureLocalSelectors [
 { #category : #accessing-properties }
 Behavior >> ensureProperties [
 	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary new
-		
 ]
 
 { #category : #naming }
@@ -872,7 +864,6 @@ Behavior >> firstPrecodeCommentFor:  selector [
 		ifTrue: [^ nil].
 	method := self compiledMethodAt: selector asSymbol ifAbsent: [^ nil].
 	^method ast firstPrecodeComment.
-	
 ]
 
 { #category : #traits }
@@ -1007,7 +998,6 @@ Behavior >> hasSelectorReferringTo: literal [
 	thorough "
 
 	^self methods anySatisfy: [ :method | method hasLiteral: literal ]
-		
 ]
 
 { #category : #traits }
@@ -1565,7 +1555,6 @@ Behavior >> new [
 	"Answer a new initialized instance of the receiver (which is a class) with no indexable variables. Fail if the class is indexable."
 
 	^ self basicNew initialize
-
 ]
 
 { #category : #'instance creation' }
@@ -1573,7 +1562,7 @@ Behavior >> new: sizeRequested [
 	"Answer an initialized instance of this class with the number of indexable
 	variables specified by the argument, sizeRequested."
 
-	^ (self basicNew: sizeRequested) initialize  
+	^ (self basicNew: sizeRequested) initialize
 ]
 
 { #category : #'accessing method dictionary' }
@@ -1625,7 +1614,6 @@ Behavior >> notifyUsersOfChangedSelectors: aCollection [
 { #category : #accessing }
 Behavior >> numberOfInstanceVariables [
 	^ self instVarNames size
-
 ]
 
 { #category : #initialization }
@@ -1700,7 +1688,6 @@ Behavior >> printOn: aStream [
 { #category : #accessing-properties }
 Behavior >> properties [
 	^ ClassProperties at: self ifAbsent: nil
-		
 ]
 
 { #category : #accessing-properties }
@@ -1752,7 +1739,6 @@ Behavior >> removeAlias: aSymbol of: aTrait [
 Behavior >> removeAllObsoleteSubclasses [
 	"Remove all the obsolete subclasses of the receiver"
 	self basicObsoleteSubclasses removeKey: self ifAbsent: [].
-
 ]
 
 { #category : #traits }
@@ -1765,7 +1751,6 @@ Behavior >> removeFromComposition: aTrait [
 Behavior >> removePropertiesIfEmpty [
 	^ ClassProperties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ ClassProperties removeKey: self ] ]
-		
 ]
 
 { #category : #accessing-properties }
@@ -1904,7 +1889,6 @@ Behavior >> setFormat: aFormatInstanceDescription [
 
 	format := aFormatInstanceDescription
 
-
 ]
 
 { #category : #traits }
@@ -1948,7 +1932,6 @@ Behavior >> shouldNotBeRedefined [
 { #category : #'system startup' }
 Behavior >> shutDown [
 	"This message is sent on system shutdown to registered classes"
-
 ]
 
 { #category : #'system startup' }
@@ -2023,7 +2006,6 @@ Behavior >> spaceUsed [
 { #category : #'system startup' }
 Behavior >> startUp [
 	"This message is sent to registered classes when the system is coming up."
- 
 ]
 
 { #category : #'system startup' }
@@ -2131,7 +2113,6 @@ Behavior >> thoroughHasSelectorReferringTo: literal [
 	specialIndex := Smalltalk specialSelectorIndexOrNil: literal.
 	^self methods anySatisfy: [ :method | 
 		method hasSelector: literal specialSelectorIndex: specialIndex]
-		
 ]
 
 { #category : #'testing method dictionary' }
@@ -2187,7 +2168,7 @@ Behavior >> traitOrClassOfSelector: aSymbol [
 
 { #category : #traits }
 Behavior >> traitTransformations [ 
-	^ self traitComposition transformations 
+	^ self traitComposition transformations
 ]
 
 { #category : #traits }
@@ -2394,7 +2375,6 @@ Behavior >> withAllSubAndSuperclassesDo: aBlock [
 
 	self withAllSubclassesDo: aBlock.
 	self allSuperclassesDo: aBlock.
-
 ]
 
 { #category : #'accessing class hierarchy' }

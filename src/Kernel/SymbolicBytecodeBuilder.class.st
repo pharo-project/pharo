@@ -1,7 +1,6 @@
 "
 I parse a method and create a collection of SymbolicBytecode objects for introspection.
 
-
 "
 Class {
 	#name : #SymbolicBytecodeBuilder,
@@ -18,7 +17,6 @@ Class {
 { #category : #api }
 SymbolicBytecodeBuilder class >> decode: aMethod [
 	^(self new method: aMethod) decode
-	
 ]
 
 { #category : #private }
@@ -39,7 +37,6 @@ SymbolicBytecodeBuilder >> addBytecode: description [
 		offset: oldPC.
 	symbolicBytecodes add: symbolic.
 	oldPC := scanner pc.
-
 ]
 
 { #category : #'instruction decoding' }
@@ -210,7 +207,6 @@ SymbolicBytecodeBuilder >> pushConstant: obj [
 					ifTrue: [obj key
 						ifNotNil: [s nextPutAll: '##'; nextPutAll: obj key]
 						ifNil: [s nextPutAll: '###'; nextPutAll: obj value soleInstance name]]]).
-
 ]
 
 { #category : #'instruction decoding' }
@@ -300,5 +296,4 @@ SymbolicBytecodeBuilder >> storeIntoTemporaryVariable: offset [
 SymbolicBytecodeBuilder >> trap [ 
 	"send the class trap message to the current context."
 	self addBytecode: 'trap'
-
 ]

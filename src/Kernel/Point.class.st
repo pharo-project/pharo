@@ -30,7 +30,6 @@ I define many nice messages that deal with point such as:
 - transformation such as negated, translatedBy:, scaleBy:
 - rounding with roundTo:, roundUpTo:, truncateTo:, truncated
 
-
 "
 Class {
 	#name : #Point,
@@ -236,7 +235,6 @@ Point >> bearingToPoint: anotherPoint [
         ifTrue: [ ^ deltaY > 0 ifTrue: [ 180 ] ifFalse: [ 0 ]].
     ^ ((deltaX >= 0 ifTrue: [90] ifFalse: [270])
             - ((deltaY / deltaX) arcTan negated radiansToDegrees)) rounded
-
 ]
 
 { #category : #private }
@@ -251,7 +249,6 @@ Point >> ceiling [
 
 	self isIntegerPoint ifTrue: [ ^ self ].
 	^ x ceiling @ y ceiling
-
 ]
 
 { #category : #comparing }
@@ -339,7 +336,6 @@ Point >> dotProduct: aPoint [
 Point >> eightNeighbors [
 	^ { self + (1 @ 0) . self + (1 @ 1) .  self + (0 @ 1) . self + (-1 @ 1) . self + (-1 @ 0) .
 		 self + (-1 @ -1) . self + (0 @ -1) . self + (1 @ -1)}
-
 ]
 
 { #category : #'rectangle creation' }
@@ -363,7 +359,6 @@ Point >> floor [
 
 	self isIntegerPoint ifTrue: [ ^ self ].
 	^ x floor @ y floor
-
 ]
 
 { #category : #'point functions' }
@@ -376,7 +371,6 @@ Point >> fourDirections [
 			with: self rightRotated
 			with: self 
 		
-
 ]
 
 { #category : #'point functions' }
@@ -385,7 +379,6 @@ Point >> fourNeighbors [
 		with: self + (0 @ 1)
 		with: self + (-1 @ 0)
 		with: self + (0 @ -1)
-
 ]
 
 { #category : #'point functions' }
@@ -457,7 +450,7 @@ Point >> isInsideCircle: a with: b with: c [
 Point >> isIntegerPoint [
 	"Return true if both of my x and y coordinates
 	are represented by integer values, otherwise false"
-	^ x isInteger and: [ y isInteger ] 
+	^ x isInteger and: [ y isInteger ]
 ]
 
 { #category : #testing }
@@ -528,7 +521,6 @@ Point >> nearestPointAlongLineFrom: p1 to: p2 [
 	y21 := p2 y asFloat - y1.
 	t := ((y asFloat - y1) / x21 + ((x asFloat - x1) / y21)) / (x21 / y21 + (y21 / x21)).
 	^ (x1 + (t * x21)) @ (y1 + (t * y21))
-	
 ]
 
 { #category : #'point functions' }
@@ -626,7 +618,6 @@ Point >> quadrantOf: otherPoint [
 	^ x <= otherPoint x
 		ifTrue: [ y < otherPoint y ifTrue: [1] ifFalse: [4] ]
 		ifFalse: [ y <= otherPoint y ifTrue: [2] ifFalse: [3] ]
-
 ]
 
 { #category : #'polar coordinates' }
@@ -641,7 +632,6 @@ Point >> reciprocal [
 	"Answer a Point with coordinates that are the reciprocals of mine."
 
 	^ x reciprocal @ y reciprocal.
-
 ]
 
 { #category : #'rectangle creation' }
@@ -724,7 +714,6 @@ Point >> rounded [
 
 	self isIntegerPoint ifTrue: [ ^ self] .
 	^ x rounded @ y rounded
-
 ]
 
 { #category : #transforming }
@@ -790,7 +779,6 @@ Point >> storeOn: aStream [
 	aStream nextPut: $(.
 	self printOn: aStream.
 	aStream nextPut: $).
-
 ]
 
 { #category : #'polar coordinates' }
@@ -875,7 +863,6 @@ Point >> truncated [
 
 	self isIntegerPoint ifTrue: [ ^ self ].
 	^ x truncated @ y truncated
-
 ]
 
 { #category : #copying }

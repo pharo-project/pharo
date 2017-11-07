@@ -19,7 +19,6 @@ My implementation uses three SmallIntegers and a Duration:
 
 The offset is used to print the date and time in a local time zone, but the date and time are handled in UTC internally.
 The nanosecond attribute is often zero but it defined for full ISO compliance and is suitable for timestamping.
-
 "
 Class {
 	#name : #DateAndTime,
@@ -44,7 +43,7 @@ Class {
 DateAndTime class >> clock [ 
 	 "the provider of real time seconds/milliseconds."
 
-	^ ClockProvider 
+	^ ClockProvider
 ]
 
 { #category : #'system queries' }
@@ -52,14 +51,12 @@ DateAndTime class >> clockPrecision [
 	"One nanosecond precision"
 
 	^ Duration seconds: 0 nanoSeconds: 1
-
 ]
 
 { #category : #'instance creation queries' }
 DateAndTime class >> current [
 
 	^ self now
-
 ]
 
 { #category : #'instance creation' }
@@ -90,7 +87,6 @@ DateAndTime class >> epoch [
   "Answer a DateAndTime representing the Squeak epoch: 1 January 1901"
 
   ^ (self julianDayNumber: SqueakEpoch) offset: 0.
-  
 ]
 
 { #category : #'instance creation' }
@@ -184,7 +180,6 @@ DateAndTime class >> fuzzyReadFrom: aStream [
 		nanoSecond:  nanos
 
 		offset: offset.
-
 ]
 
 { #category : #initialize-release }
@@ -218,7 +213,6 @@ DateAndTime class >> localOffset [
 	"Answer the duration we are offset from UTC"
 
 	^ self localTimeZone offset
-
 ]
 
 { #category : #'time zones' }
@@ -226,7 +220,6 @@ DateAndTime class >> localTimeZone [
 	"Answer the local time zone"
 
 	^ LocalTimeZone ifNil: [ LocalTimeZone := TimeZone default ]
-
 
 ]
 
@@ -242,14 +235,12 @@ DateAndTime class >> localTimeZone: aTimeZone [
 	LocalTimeZone := aTimeZone
 
 
-
 ]
 
 { #category : #'instance creation queries' }
 DateAndTime class >> midnight [
 
 	^ self now midnight
-
 ]
 
 { #category : #primitives }
@@ -263,7 +254,6 @@ DateAndTime class >> new [
 	"Answer a DateAndTime representing the Squeak epoch: 1 January 1901"
 
 	^ self epoch offset: self localOffset 
-	
 ]
 
 { #category : #'instance creation queries' }
@@ -403,7 +393,6 @@ DateAndTime class >> readTwoDigitIntegerFrom: stream [
 DateAndTime class >> today [
 
 	^ self midnight
-
 ]
 
 { #category : #'instance creation queries' }
@@ -449,7 +438,6 @@ DateAndTime class >> year: year day: dayOfYear hour: hour minute: minute second:
 		minute: minute
 		second: second
 		offset: self localOffset.
-
 ]
 
 { #category : #'instance creation' }
@@ -520,7 +508,6 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		minute: minute
 		second: second
 		offset: self localOffset
-
 ]
 
 { #category : #'instance creation' }
@@ -571,7 +558,6 @@ DateAndTime class >> year: year month: month day: day hour: hour minute: minute 
 		second: second
 		nanoSecond: 0
 		offset: offset
-
 ]
 
 { #category : #'instance creation' }
@@ -583,14 +569,13 @@ DateAndTime class >> year: year month: month day: day offset: anOffset [
 		day: day
 		hour: 0
 		minute: 0
-		offset: anOffset 
+		offset: anOffset
 ]
 
 { #category : #'instance creation queries' }
 DateAndTime class >> yesterday [
 
 	^ self today asDate previous asDateAndTime
-
 ]
 
 { #category : #arithmetic }
@@ -654,14 +639,12 @@ DateAndTime >> asDate [
 DateAndTime >> asDateAndTime [
 
 	^ self
-
 ]
 
 { #category : #converting }
 DateAndTime >> asDosTimestamp [
 
 	^ (DosTimestamp fromDateAndTime: self) value.
-
 ]
 
 { #category : #converting }
@@ -669,7 +652,6 @@ DateAndTime >> asDuration [
 	"Answer the duration since midnight."
 
 	^ Duration seconds: self secondsSinceMidnightLocalTime nanoSeconds: nanos
-
 ]
 
 { #category : #converting }
@@ -688,14 +670,12 @@ DateAndTime >> asLocal [
 	^ (self offset = self class localOffset)
 		ifTrue: [self]
 		ifFalse: [self offset: self class localOffset]
-
 ]
 
 { #category : #converting }
 DateAndTime >> asMonth [
 
 	^ Month starting: self
-
 ]
 
 { #category : #converting }
@@ -703,7 +683,6 @@ DateAndTime >> asNanoSeconds [
 	"Answer the number of nanoseconds since midnight"
 
 	^ self asDuration asNanoSeconds
-
 ]
 
 { #category : #converting }
@@ -731,7 +710,6 @@ DateAndTime >> asUTC [
 	^ offset isZero
 		ifTrue: [ self ]
 		ifFalse: [ self offset: 0 ]
-
 ]
 
 { #category : #converting }
@@ -744,7 +722,6 @@ DateAndTime >> asUnixTime [
 DateAndTime >> asWeek [
 
 	^ Week starting: self 
-
 ]
 
 { #category : #converting }
@@ -814,7 +791,6 @@ DateAndTime >> dayOfWeekAbbreviation [
 DateAndTime >> dayOfWeekName [
 
 	^ Week nameOfDay: self dayOfWeek
-
 ]
 
 { #category : #accessing }
@@ -845,7 +821,6 @@ DateAndTime >> daysInYear [
  	"Answer the number of days in the year represented by the receiver."
  
  	^ self asYear daysInYear
- 
 ]
 
 { #category : #accessing }
@@ -853,7 +828,6 @@ DateAndTime >> daysLeftInYear [
  	"Answer the number of days in the year after the date of the receiver."
  
  	^ self daysInYear - self dayOfYear
- 
 ]
 
 { #category : #accessing }
@@ -875,7 +849,6 @@ DateAndTime >> hasEqualTicks: aDateAndTime [
 		and: [ (seconds = aDateAndTime secondsSinceMidnightUTC)
 			and: [ nanos = aDateAndTime nanoSecond ] ]
 
-
 ]
 
 { #category : #comparing }
@@ -887,7 +860,6 @@ DateAndTime >> hash [
 DateAndTime >> hour [
 
 	^ self hour24
-
 ]
 
 { #category : #accessing }
@@ -916,7 +888,6 @@ DateAndTime >> hours [
 DateAndTime >> isLeapYear [
 
 	^ Year isLeapYear: self year.
-
 ]
 
 { #category : #accessing }
@@ -957,7 +928,6 @@ DateAndTime >> middleOf: aDuration [
 	| duration |
 	duration := aDuration asDuration.
 	^ Timespan starting: (self - (duration / 2)) duration: duration.
-		
 ]
 
 { #category : #maintime }
@@ -995,7 +965,6 @@ DateAndTime >> month [
 DateAndTime >> monthAbbreviation [
 
 	^ self monthName copyFrom: 1 to: 3
-
 ]
 
 { #category : #accessing }
@@ -1003,21 +972,18 @@ DateAndTime >> monthIndex [
  
  
  	^ self month
- 
 ]
 
 { #category : #accessing }
 DateAndTime >> monthName [
 
 	^ Month nameOfMonth: self month
-
 ]
 
 { #category : #accessing }
 DateAndTime >> nanoSecond [
 
 	^ nanos
-
 ]
 
 { #category : #accessing }
@@ -1038,14 +1004,12 @@ DateAndTime >> normalizeSecondsAndNanos [
 		ifTrue: [
 			julianDayNumber := julianDayNumber + (seconds // SecondsInDay).
 			seconds := seconds \\ SecondsInDay].
-
 ]
 
 { #category : #accessing }
 DateAndTime >> offset [
 
 	^ offset
-
 ]
 
 { #category : #accessing }
@@ -1057,7 +1021,6 @@ DateAndTime >> offset: anOffset [
 	^ self class basicNew 
 		ticks: self ticks offset: anOffset asDuration;
 		yourself
-		
 ]
 
 { #category : #printing }
@@ -1113,7 +1076,6 @@ DateAndTime >> printOn: aStream [
 		'YYYY-MM-DDThh:mm:ss.s+ZZ:zz:z' (for positive years) or '-YYYY-MM-DDThh:mm:ss.s+ZZ:zz:z' (for negative years)"
 
 	^self printOn: aStream withLeadingSpace: false
-
 ]
 
 { #category : #printing }
@@ -1160,7 +1122,6 @@ DateAndTime >> printYMDOn: aStream [
 	If the year is negative, prints out '-YYYY-MM-DD'."
 
 	^ self printYMDOn: aStream withLeadingSpace: false.
-
 ]
 
 { #category : #printing }
@@ -1255,14 +1216,12 @@ DateAndTime >> timeZone [
 DateAndTime >> timeZoneAbbreviation [
 
 	^ self timeZone abbreviation
-
 ]
 
 { #category : #accessing }
 DateAndTime >> timeZoneName [
 
 	^ self timeZone name
-
 ]
 
 { #category : #enumerating }
@@ -1270,7 +1229,6 @@ DateAndTime >> to: anEnd [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
 	^ Timespan starting: self ending: (anEnd asDateAndTime).
-
 ]
 
 { #category : #enumerating }
@@ -1280,7 +1238,6 @@ DateAndTime >> to: anEnd by: aDuration [
 	^ (Schedule starting: self ending: (anEnd asDateAndTime))
 		schedule: (Array with: aDuration asDuration);
 		yourself.
-
 ]
 
 { #category : #enumerating }
@@ -1288,7 +1245,6 @@ DateAndTime >> to: anEnd by: aDuration do: aBlock [
 	"Answer a Timespan. anEnd conforms to protocol DateAndTime or protocol Timespan"
 
 	^ (self to: anEnd by: aDuration) scheduleDo: aBlock
-
 ]
 
 { #category : #offset }
@@ -1316,7 +1272,7 @@ DateAndTime >> translateTo: anOffset [
 { #category : #offset }
 DateAndTime >> translateToUTC [
 	" Move this represenation to UTC"
-	^ self translateTo: 0 asDuration 
+	^ self translateTo: 0 asDuration
 ]
 
 { #category : #truncation }
@@ -1329,7 +1285,7 @@ DateAndTime >> truncated [
 { #category : #offset }
 DateAndTime >> withoutOffset [
 
-	^ self offset: 0 
+	^ self offset: 0
 ]
 
 { #category : #accessing }

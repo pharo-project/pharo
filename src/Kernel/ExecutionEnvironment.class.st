@@ -35,5 +35,5 @@ ExecutionEnvironment >> deactivated [
 
 { #category : #controlling }
 ExecutionEnvironment >> prepareForNewProcess: aProcess [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
