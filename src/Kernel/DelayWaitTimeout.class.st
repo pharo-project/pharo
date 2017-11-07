@@ -28,7 +28,6 @@ DelayWaitTimeout >> schedulerSignalWaitingProcess [
 		expired := true.
 		process suspend; resume.
 		].
-
 ]
 
 { #category : #private }
@@ -50,7 +49,6 @@ DelayWaitTimeout >> wait [
 		ifTrue:[delaySemaphore wait]
 		ifFalse:[expired := true]] ensure:[self unschedule].
 	^self isExpired
-
 ]
 
 { #category : #waiting }

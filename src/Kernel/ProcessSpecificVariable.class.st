@@ -7,7 +7,6 @@ for read and write in all methods inside the process), and dynamic variables
 
 My subclasses could supply inheritable values which will be installed on forked (child) processes. To enable this classes should return true from  #isInheritable method (on class side).
 Also subclasses could provide specific logic for installing variables into new processes which allows interesting hooks to control forked processes
-
 "
 Class {
 	#name : #ProcessSpecificVariable,
@@ -93,5 +92,5 @@ ProcessSpecificVariable >> value [
 { #category : #accessing }
 ProcessSpecificVariable >> valueOrNil [
 	"a faster version, which doesn't using ifAbsent: to avoid using block closure"
-	^ Processor activeProcess psValueAt: index 
+	^ Processor activeProcess psValueAt: index
 ]

@@ -264,7 +264,7 @@ Metaclass >> instanceVariableNames: instVarString [
 
 { #category : #testing }
 Metaclass >> isAnonymous [
-	^self soleInstance isAnonymous 
+	^self soleInstance isAnonymous
 ]
 
 { #category : #testing }
@@ -289,7 +289,7 @@ Metaclass >> isMetaclassOfClassOrNil [
 	
 	^ self theNonMetaClass 
 		ifNil: [ true ] 
-		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ] 
+		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ]
 ]
 
 { #category : #testing }
@@ -377,7 +377,6 @@ Metaclass >> obsoleteSubclasses [
 Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
 	^ self theNonMetaClass possibleVariablesFor: misspelled continuedFrom: oldResults
-
 ]
 
 { #category : #copying }

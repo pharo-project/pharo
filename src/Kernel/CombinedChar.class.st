@@ -32,7 +32,6 @@ CombinedChar class >> isCompositionCharacter: charCode [
 CombinedChar class >> isDiacriticals: unicode [
 
 	^ Diacriticals includes: unicode.
-
 ]
 
 { #category : #initialization }
@@ -76,7 +75,6 @@ CombinedChar class >> parseCompositionMappingFrom: stream [
 			].
 		].
 	].
-
 ]
 
 { #category : #composition }
@@ -92,21 +90,18 @@ CombinedChar >> add: char [
 	codes := codes copyWith: char.
 	combined := Character leadingChar: self base leadingChar code: elem.
 	^ true
-
 ]
 
 { #category : #accessing }
 CombinedChar >> base [
 
 	^ codes first
-
 ]
 
 { #category : #accessing }
 CombinedChar >> combined [
 
 	^ combined
-
 ]
 
 { #category : #composition }
@@ -117,7 +112,6 @@ CombinedChar >> combinesWith: char [
 	dict := Compositions at: combined charCode ifAbsent: [^false].
 	dict at: char charCode ifAbsent: [^false].
 	^true
-
 ]
 
 { #category : #composition }
@@ -133,5 +127,4 @@ CombinedChar >> simpleAdd: char [
 	combined := Character leadingChar: self base leadingChar code: elem.
 	codes at: 1 put: combined.
 	^ true
-
 ]

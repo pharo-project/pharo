@@ -43,5 +43,4 @@ DelayTicklessScheduler >> handleTimerEvent: microsecondNowTick [
 	activeDelay ifNotNil: [
 		microsecondNextTick := activeDelay schedulerResumptionTime ].
 	^microsecondNextTick.
-
 ]

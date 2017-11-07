@@ -31,7 +31,6 @@ Accessing variables of the my enclosing context is different depending on variab
 
 Optimized block closures: 
 Common blocks (2/3 of the blocks) are optimized directly in the compiler and have special behaviors. These blocks are the arguments/receiver of control structures: #ifNil:, #ifNotNil:, #ifTrue:, #ifFalse:, #whileTrue:, #whileFalse:, #to:do:, #to:by:do: .
-
 "
 Class {
 	#name : #BlockClosure,
@@ -75,7 +74,6 @@ BlockClosure >> argumentCount [
 
 	^numArgs
 	
-
 ]
 
 { #category : #accessing }
@@ -114,7 +112,6 @@ BlockClosure >> asMinimalRepresentation [
 BlockClosure >> assert [
 
 	self value ifFalse: [AssertionFailure signal: 'Assertion failed']
-
 ]
 
 { #category : #exceptions }
@@ -136,7 +133,7 @@ BlockClosure >> bench [
 	
 	| benchmarkResult |
 	benchmarkResult := self benchFor: 5 seconds.
-	^ benchmarkResult shortPrintString 
+	^ benchmarkResult shortPrintString
 ]
 
 { #category : #evaluating }
@@ -195,7 +192,6 @@ BlockClosure >> cull: anArg [
 	^numArgs = 0 
 		ifTrue: [self value]
 		ifFalse: [self value: anArg]
-	
 ]
 
 { #category : #evaluating }
@@ -210,7 +206,6 @@ BlockClosure >> cull: firstArg cull: secondArg [
 	^numArgs < 2 
 		ifTrue: [self cull: firstArg]
 		ifFalse: [self value: firstArg value: secondArg]
-	
 ]
 
 { #category : #evaluating }
@@ -218,7 +213,6 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg [
 	^numArgs < 3 
 		ifTrue: [self cull: firstArg cull: secondArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg]
-	
 ]
 
 { #category : #evaluating }
@@ -228,7 +222,6 @@ BlockClosure >> cull: firstArg cull: secondArg cull: thirdArg cull: fourthArg [
 	^numArgs < 4 
 		ifTrue: [self cull: firstArg cull: secondArg cull: thirdArg]
 		ifFalse: [self value: firstArg value: secondArg value: thirdArg value: fourthArg]
-	
 ]
 
 { #category : #controlling }
@@ -258,7 +251,6 @@ BlockClosure >> durationToRun [
 	"Answer the duration taken to execute this block."
 
 	^ self timeToRun
-
 
 
 
@@ -301,7 +293,6 @@ BlockClosure >> forkAndWait [
 	semaphore := Semaphore new.
 	[self ensure: [semaphore signal]] fork.
 	semaphore wait.
-
 ]
 
 { #category : #scheduling }
@@ -569,7 +560,6 @@ BlockClosure >> on: exception fork: handlerAction [
 		thisContext privSender: thisCtx.
 		nil
 	]
-
 ]
 
 { #category : #exceptions }
@@ -673,7 +663,6 @@ BlockClosure >> startpc [
 { #category : #accessing }
 BlockClosure >> tempNames [
 	^ self sourceNode temporaryNames
-
 ]
 
 { #category : #evaluating }
@@ -1036,14 +1025,12 @@ BlockClosure >> whileFalse: aBlock [
 BlockClosure >> whileNil: aBlock [ 
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value isNil] whileTrue: [aBlock value]
-	
 ]
 
 { #category : #controlling }
 BlockClosure >> whileNotNil: aBlock [ 
 	"Unlike #whileTrue/False: this is not compiled inline."
 	^ [self value notNil] whileTrue: [aBlock value]
-	
 ]
 
 { #category : #controlling }

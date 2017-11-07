@@ -116,7 +116,6 @@ Integer class >> largePrimesUpTo: max do: aBlock [
 			].
 		].
 	].
-
 ]
 
 { #category : #'instance creation' }
@@ -163,7 +162,6 @@ Integer class >> primesUpTo: max do: aBlock [
 				flags at: k put: false.
 				k := k + prime].
 			aBlock value: prime]].
-
 ]
 
 { #category : #'bit manipulation' }
@@ -393,7 +391,6 @@ Integer >> asArray [
 	self digitLength to: 1 by: -1 do: [:digitIndex |
 		stream nextPut: (self digitAt: digitIndex)].
 	^ stream contents
-
 ]
 
 { #category : #converting-arrays }
@@ -404,7 +401,6 @@ Integer >> asByteArray [
 	self digitLength to: 1 by: -1 do: [:digitIndex |
 		stream nextPut: (self digitAt: digitIndex)].
 	^ stream contents
-
 ]
 
 { #category : #converting-arrays }
@@ -456,7 +452,6 @@ Integer >> asInteger [
 	"Answer with the receiver itself."
 
 	^self
-
 
 ]
 
@@ -558,7 +553,7 @@ Integer >> asWords [
 { #category : #converting }
 Integer >> asYear [
 
- 	^ Year year: self  
+ 	^ Year year: self
 ]
 
 { #category : #benchmarks }
@@ -571,7 +566,6 @@ Integer >> benchFib [  "Handy send-heavy benchmark"
 	^ self < 2
 		ifTrue: [1] 
 		ifFalse: [(self-1) benchFib + (self-2) benchFib + 1]
-
 ]
 
 { #category : #benchmarks }
@@ -1546,7 +1540,6 @@ Integer >> numberOfDigits [
 	This does not count any place for minus sign, radix prefix or whatever."
 
 	^ self numberOfDigitsInBase: 10 
-
 ]
 
 { #category : #printing }
@@ -1624,7 +1617,6 @@ Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimu
 				ifFalse: [aStream nextPutAll: (String new: padLength withAll: Character space); nextPutAll: prefix]]
 		ifFalse: [aStream nextPutAll: prefix].
 	aStream nextPutAll: positiveNumberString
-	
 ]
 
 { #category : #printing }
@@ -1639,7 +1631,6 @@ Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 	prefix := self negative ifTrue: ['-'] ifFalse: [ '' ].
 	
 	self print: (self abs printStringBase: base) on: aStream prefix: prefix length: minimum padded: zeroFlag
-
 ]
 
 { #category : #printing-numerative }
@@ -1754,7 +1745,6 @@ Integer >> printStringHex [
 { #category : #printing-numerative }
 Integer >> printStringLength: minimal [
 	^self printStringLength: minimal padded: false
-
 ]
 
 { #category : #printing-numerative }
@@ -1765,7 +1755,6 @@ Integer >> printStringLength: minimal padded: zeroFlag [
 { #category : #printing-numerative }
 Integer >> printStringPadded: minimal [
 	^self printStringLength: minimal padded: true
-
 ]
 
 { #category : #printing }
@@ -2044,7 +2033,6 @@ Integer >> storeOn: aStream base: base [
 		ifFalse: [self].
 	base = 10 ifFalse: [aStream nextPutAll: base printString; nextPut: $r].
 	aStream nextPutAll: (integer printStringBase: base).
-
 ]
 
 { #category : #printing-numerative }
@@ -2053,7 +2041,6 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 	prefix := self negative ifTrue: ['-'] ifFalse: [String new].
 	base = 10 ifFalse: [prefix := prefix, base printString, 'r'].
 	self print: (self abs printStringBase: base) on: aStream prefix: prefix length: minimum padded: zeroFlag
-
 ]
 
 { #category : #printing-numerative }

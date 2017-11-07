@@ -147,7 +147,7 @@ ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [
 
 { #category : #initialization }
 ProtoObject >> initialize [
-	"Subclasses should redefine this method to perform initializations on instance creation" 
+	"Subclasses should redefine this method to perform initializations on instance creation"
 ]
 
 { #category : #introspection }
@@ -233,7 +233,6 @@ ProtoObject >> rearmOneShot [
 	self class environment at: #OneShotArmed put: true
 
 	"self rearmOneShot"
-
 ]
 
 { #category : #'apply primitives' }

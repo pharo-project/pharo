@@ -26,7 +26,6 @@ InstructionStream class >> initialize [
 		(Array with: true with: false with: nil)
 			, (Array with: -1 with: 0 with: 1 with: 2)	
 	"InstructionStream initialize."
-
 ]
 
 { #category : #compiling }
@@ -122,13 +121,11 @@ InstructionStream >> interpret [
 { #category : #decoding }
 InstructionStream >> interpretJump [
 	^ self method encoderClass interpretJumpIn: self
-
 ]
 
 { #category : #decoding }
 InstructionStream >> interpretJumpIfCond [
 	^ self method encoderClass interpretJumpIfCondIn: self
-
 ]
 
 { #category : #decoding }
@@ -497,7 +494,6 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 	extB = 1
 		ifTrue: [^ client pushActiveProcess].
 	self error: 'undefined extended push'
-
 ]
 
 { #category : #decoding }
@@ -536,7 +532,6 @@ InstructionStream >> interpretSistaV1Jump [
 			^ (extB bitShift: 8)
 				+ byte].
 	^ nil
-
 ]
 
 { #category : #decoding }
@@ -579,7 +574,6 @@ InstructionStream >> interpretSistaV1JumpIfCond [
 			^ (extB bitShift: 8)
 				+ byte].
 	^ nil
-
 ]
 
 { #category : #'as yet unclassified' }
@@ -839,7 +833,7 @@ InstructionStream >> secondByte [
 InstructionStream >> selectorToSendOrSelf [
 	"If this instruction is a send, answer the selector, otherwise answer self."
  
-	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc 
+	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc
 ]
 
 { #category : #scanning }
@@ -888,7 +882,6 @@ InstructionStream >> willJump [
 	"unconditionally"
 
 	^ self method encoderClass isJumpAt: pc in: self method
-	
 ]
 
 { #category : #testing }

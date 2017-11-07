@@ -25,19 +25,16 @@ Class {
 { #category : #'instance creation' }
 WeakMessageSend class >> new [
 	^self new: 1
-
 ]
 
 { #category : #'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol [
 	^ self receiver: anObject selector: aSymbol arguments: #()
-
 ]
 
 { #category : #'instance creation' }
 WeakMessageSend class >> receiver: anObject selector: aSymbol argument: aParameter [
 	^ self receiver: anObject selector: aSymbol arguments: (Array with: aParameter)
-
 ]
 
 { #category : #'instance creation' }
@@ -46,7 +43,6 @@ WeakMessageSend class >> receiver: anObject selector: aSymbol arguments: anArray
 		receiver: anObject;
 		selector: aSymbol;
 		arguments: anArray
-
 ]
 
 { #category : #comparing }
@@ -56,13 +52,11 @@ WeakMessageSend >> = anObject [
 		and: [self receiver == anObject receiver
 		and: [selector == anObject selector
 		and: [(Array withAll: arguments) = (Array withAll: anObject arguments)]]]
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> arguments [
 	^arguments ifNil: [ Array new ]
-
 ]
 
 { #category : #accessing }
@@ -70,13 +64,11 @@ WeakMessageSend >> arguments: anArray [
 	arguments := WeakArray withAll: anArray.
 	"no reason this should be a WeakArray"
 	shouldBeNil := Array withAll: (anArray collect: [ :ea | ea isNil ]).
-
 ]
 
 { #category : #converting }
 WeakMessageSend >> asMessageSend [
 	^MessageSend receiver: self receiver selector: selector arguments: (Array withAll: self arguments) 
-
 ]
 
 { #category : #converting }
@@ -102,7 +94,6 @@ WeakMessageSend >> collectArguments: anArgArray [
                     to: (anArgArray size min: staticArgs size)
                     with: anArgArray
                     startingAt: 1]
-
 ]
 
 { #category : #evaluating }
@@ -135,7 +126,6 @@ WeakMessageSend >> ensureArguments [
 		]
 	].
 	^true
-
 ]
 
 { #category : #private }
@@ -145,7 +135,6 @@ WeakMessageSend >> ensureReceiver [
   (self receiver class isObsolete) ifTrue: [^ false].
   (self receiver isBehavior and: [self receiver isObsolete]) ifTrue: [^ false].
   ^ true.
-
 ]
 
 { #category : #private }
@@ -155,7 +144,6 @@ WeakMessageSend >> ensureReceiver: anObject [
   (anObject class isObsolete) ifTrue: [^ false].
   (anObject isBehavior and: [anObject isObsolete]) ifTrue: [^ false].
   ^ true.
-
 ]
 
 { #category : #private }
@@ -174,7 +162,6 @@ WeakMessageSend >> ensureReceiverAndArguments [
   ].
 
   ^true
-
 ]
 
 { #category : #private }
@@ -193,14 +180,12 @@ WeakMessageSend >> ensureReceiverAndArguments: aReceiver [
   ].
 
   ^true
-
 ]
 
 { #category : #comparing }
 WeakMessageSend >> hash [
 	"work like MessageSend>>hash"
 	^self receiver hash bitXor: selector hash
-
 ]
 
 { #category : #private }
@@ -213,20 +198,17 @@ WeakMessageSend >> isAnyArgumentGarbage [
 		]
 	].
 	^false
-
 ]
 
 { #category : #testing }
 WeakMessageSend >> isMessageSend [
 	^true
-
 ]
 
 { #category : #private }
 WeakMessageSend >> isReceiverGarbage [
 	"Make sure that my receiver hasn't gone away"
 	^self receiver isNil
-
 ]
 
 { #category : #private }
@@ -234,13 +216,11 @@ WeakMessageSend >> isReceiverOrAnyArgumentGarbage [
 	"Make sure that my receiver hasn't gone away"
 	^self isReceiverGarbage 
 		or: [self isAnyArgumentGarbage]
-
 ]
 
 { #category : #testing }
 WeakMessageSend >> isValid [
 	^self isReceiverOrAnyArgumentGarbage not
-
 ]
 
 { #category : #printing }
@@ -254,31 +234,26 @@ WeakMessageSend >> printOn: aStream [
 		nextPutAll: ' -> ';
 		print: self receiver;
 		nextPut: $).
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> receiver [
 	^self at: 1
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> receiver: anObject [
 	self at: 1 put: anObject
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> selector [
 	^selector
-
 ]
 
 { #category : #accessing }
 WeakMessageSend >> selector: aSymbol [
 	selector := aSymbol
-
 ]
 
 { #category : #evaluating }
@@ -295,7 +270,6 @@ WeakMessageSend >> value [
 				ifTrue: [strongReceiver
 						perform: selector
 						withArguments: (Array withAll: arguments)] ifFalse: []].
-
 ]
 
 { #category : #evaluating }
@@ -376,5 +350,4 @@ WeakMessageSend >> valueWithEnoughArguments: anArray [
 			startingAt: 1.
 	].
 	^ strongReceiver perform: selector withArguments: args
-
 ]

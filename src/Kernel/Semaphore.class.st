@@ -67,7 +67,6 @@ Semaphore >> critical: mutuallyExcludedBlock [
 		blockValue := mutuallyExcludedBlock value
 	] ensure: [caught ifTrue: [self signal]].
 	^blockValue
-
 ]
 
 { #category : #'mutual exclusion' }
@@ -76,7 +75,6 @@ Semaphore >> critical: mutuallyExcludedBlock ifCurtailed: terminationBlock [
 	the process of running the critical: message. If the receiver is, evaluate 
 	mutuallyExcludedBlock after the other critical: message is finished."
 	^self critical:[mutuallyExcludedBlock ifCurtailed: terminationBlock]
-
 ]
 
 { #category : #'mutual exclusion' }
@@ -164,7 +162,6 @@ Semaphore >> signal [
 		ifTrue: [excessSignals := excessSignals+1]    
 		ifFalse: [Processor resume: self removeFirstLink]"
 
-
 ]
 
 { #category : #initialize-release }
@@ -187,7 +184,6 @@ Semaphore >> wait [
 	"excessSignals>0  
 		ifTrue: [excessSignals := excessSignals-1]  
 		ifFalse: [self addLastLink: Processor activeProcess suspend]"
-
 ]
 
 { #category : #communication }
@@ -223,7 +219,6 @@ Semaphore >> waitTimeoutSeconds: anInteger [
 	"Wait on this semaphore for up to the given number of seconds, then timeout.
 	Return true if the deadline expired, false otherwise."
 	^self waitTimeoutMSecs: anInteger * 1000.
-
 ]
 
 { #category : #communication }

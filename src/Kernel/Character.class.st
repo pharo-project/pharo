@@ -23,7 +23,6 @@ Class {
 Character class >> allByteCharacters [
 	"Answer all the characters that can be encoded in a byte"
 	^ (0 to: 255) collect: [:v | Character value: v] as: String
-
 ]
 
 { #category : #'instance creation' }
@@ -31,7 +30,6 @@ Character class >> allCharacters [
 	"This name is obsolete since only the characters that will fit in a byte can be queried"
 	^self allByteCharacters
 	
-
 ]
 
 { #category : #constants }
@@ -89,7 +87,6 @@ Character class >> characterTable [
 Character class >> codePoint: anInteger [ 
 	"Just for ANSI Compliance"	
 	^self value: anInteger
-	
 ]
 
 { #category : #private }
@@ -367,7 +364,6 @@ Character >> asUppercase [
 	"If the receiver is lowercase, answer its matching uppercase Character."
 	^ self characterSet toUppercase: self
 	
-
 ]
 
 { #category : #accessing }
@@ -375,6 +371,13 @@ Character >> asciiValue [
 	"Answer the receiver's character code.
 	 This will be ascii for characters with value <= 127,
 	 and Unicode for those with higher values."
+	<primitive: 171>
+	^self primitiveFailed
+]
+
+{ #category : #'reflective operations' }
+Character >> basicIdentityHash [
+	"Answer the receiver's character code."
 	<primitive: 171>
 	^self primitiveFailed
 ]
@@ -395,14 +398,12 @@ Character >> basicSqueakToIso [
 Character >> canBeGlobalVarInitial [
 
 	^ self characterSet canBeGlobalVarInitial: self.
-
 ]
 
 { #category : #testing }
 Character >> canBeNonGlobalVarInitial [
 
 	^ self characterSet canBeNonGlobalVarInitial: self.
-
 ]
 
 { #category : #accessing }
@@ -453,13 +454,6 @@ Character >> hex [
 	^ self asInteger hex
 ]
 
-{ #category : #comparing }
-Character >> identityHash [
-	"Answer the receiver's character code."
-	<primitive: 171>
-	^self primitiveFailed
-]
-
 { #category : #testing }
 Character >> isAlphaNumeric [
 	"Answer whether the receiver is a letter or a digit."
@@ -482,7 +476,6 @@ Character >> isCasedLetter [
 Character >> isCharacter [
 
 	^ true.
-
 ]
 
 { #category : #testing }
@@ -499,7 +492,6 @@ Character >> isConnectorPunctuation [
 Character >> isControlOther [
 
 	^ self characterSet isControlOther: self.
-
 ]
 
 { #category : #testing }
@@ -521,7 +513,6 @@ Character >> isDecimalDigit [
 Character >> isDigit [
 
 	^ self characterSet isDigit: self.
-
 ]
 
 { #category : #testing }
@@ -548,7 +539,6 @@ Character >> isInitialQuote [
 Character >> isLetter [
 
 	^ self characterSet isLetter: self.
-
 ]
 
 { #category : #testing }
@@ -576,7 +566,6 @@ Character >> isLiteral [
 Character >> isLowercase [
 
 	^ self characterSet isLowercase: self.
-
 ]
 
 { #category : #testing }
@@ -680,7 +669,6 @@ Character >> isTitlecaseLetter [
 Character >> isUppercase [
 
 	^ self characterSet isUppercase: self.
-
 ]
 
 { #category : #testing }
@@ -733,7 +721,7 @@ Character >> printStringHex [
 { #category : #comparing }
 Character >> sameAs: aCharacter [ 
 	"Answer whether the receiver is equal to aCharacter, ignoring case"
-	^ (self asLowercase = aCharacter asLowercase)	
+	^ (self asLowercase = aCharacter asLowercase)
 ]
 
 { #category : #private }

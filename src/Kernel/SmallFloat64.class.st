@@ -140,6 +140,13 @@ SmallFloat64 >> arcTan [
 	^ theta
 ]
 
+{ #category : #'reflective operations' }
+SmallFloat64 >> basicIdentityHash [
+	"Answer an integer unique to the receiver."
+	<primitive: 171>
+	^self primitiveFailed
+]
+
 { #category : #copying }
 SmallFloat64 >> clone [
 	"Answer the receiver, because SmallFloat64s are unique."
@@ -220,13 +227,6 @@ SmallFloat64 >> fractionPart [
 
 	<primitive: 552>
 	^self - self truncated asFloat
-]
-
-{ #category : #comparing }
-SmallFloat64 >> identityHash [
-	"Answer an integer unique to the receiver."
-	<primitive: 171>
-	^self primitiveFailed
 ]
 
 { #category : #'mathematical functions' }
@@ -371,7 +371,6 @@ SmallFloat64 >> truncated [
 
 		
 
-		
 ]
 
 { #category : #copying }

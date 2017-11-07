@@ -60,7 +60,6 @@ Number class >> readExponent: baseValue base: base from: aStream [
 	exp := (Integer readFrom: aStream base: 10) * sign.
 	value := baseValue * (base raisedTo: exp).
 	^ value
-
 ]
 
 { #category : #deprecated }
@@ -303,7 +302,6 @@ Number >> arcTan: denominator [
 Number >> asDuration [
  
  	^ Duration seconds: self asInteger
- 
 ]
 
 { #category : #converting }
@@ -345,7 +343,6 @@ Number >> asScaledDecimal [
 	#Numeric.
 
 	^ self asScaledDecimal: 8
-
 ]
 
 { #category : #converting }
@@ -591,21 +588,18 @@ Number >> log: aNumber [
 Number >> milliSecond [
  
  	^ self milliSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> milliSeconds [
  
  	^ Duration milliSeconds: self
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
 Number >> minute [
  
  	^ self minutes
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -618,7 +612,6 @@ Number >> minutes [
 Number >> nanoSecond [
  
  	^ self nanoSeconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -869,7 +862,6 @@ Number >> rounded [
 Number >> second [
  
  	^ self seconds
- 
 ]
 
 { #category : #'*Kernel-Chronology' }
@@ -1024,7 +1016,6 @@ Number >> truncated [
 Number >> week [
  
  	^ self weeks
- 
 ]
 
 { #category : #'*Kernel-Chronology' }

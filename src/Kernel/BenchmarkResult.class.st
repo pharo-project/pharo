@@ -13,7 +13,6 @@ BenchmarkResult new
 	iterations: 20000;
 	elapsedTime: 10 seconds;
 	yourself.
-
 "
 Class {
 	#name : #BenchmarkResult,

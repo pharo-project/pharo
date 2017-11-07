@@ -1,5 +1,5 @@
 "
-I am NaNException, an ArithmeticException signaled when Float nan was encountered where it was not allowed. 
+I am NaNException, an ArithmeticException signaled when Float nan was encountered where it was not allowed.
 "
 Class {
 	#name : #NaNException,

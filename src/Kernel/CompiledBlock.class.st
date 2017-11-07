@@ -6,7 +6,6 @@ CompiledBlock are used only in the recent BlockClosure implementation by Eliot M
 In addition the execution mechanics, a compiled block have an extra optional literal. The last literal is the compiled code referring to the compiled block. 
 
 
-
 "
 Class {
 	#name : #CompiledBlock,
@@ -45,7 +44,6 @@ CompiledBlock >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
-
 ]
 
 { #category : #testing }

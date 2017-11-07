@@ -23,7 +23,6 @@ MonitorDelay >> schedulerSignalWaitingProcess [
 
 	beingWaitedOn := false.
 	monitor signalLock: delaySemaphore inQueue: queue.
-
 ]
 
 { #category : #private }

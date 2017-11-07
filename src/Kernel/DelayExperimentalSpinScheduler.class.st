@@ -38,7 +38,6 @@ DelayExperimentalSpinScheduler >> schedule: aDelay [
 				].
 		true.
 	] whileTrue.	
-
 ]
 
 { #category : #'low priority processes' }
@@ -51,5 +50,4 @@ DelayExperimentalSpinScheduler >> unschedule: aDelay [
 				].
 		true.
 	] whileTrue.	
-
 ]

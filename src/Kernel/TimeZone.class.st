@@ -35,7 +35,6 @@ TimeZone class >> default [
  
  	^ self timeZones detect: [ :timeZone |
 		timeZone offset = Duration zero ]
- 
 ]
 
 { #category : #accessing }
@@ -79,35 +78,30 @@ TimeZone class >> timeZones [
 		self offset: -4 hours name: 'Eastern Daylight Time'       abbreviation: 'EDT'.
 	}
 
-
 ]
 
 { #category : #accessing }
 TimeZone >> abbreviation [
  
  	^ abbreviation
- 
 ]
 
 { #category : #accessing }
 TimeZone >> abbreviation: aString [
 
 	abbreviation := aString
-
 ]
 
 { #category : #accessing }
 TimeZone >> name [
  
  	^ name
- 
 ]
 
 { #category : #accessing }
 TimeZone >> name: aString [
 
 	name := aString
-
 ]
 
 { #category : #accessing }

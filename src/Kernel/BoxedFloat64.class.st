@@ -354,7 +354,6 @@ BoxedFloat64 >> truncated [
 
 		
 
-		
 ]
 
 { #category : #comparing }

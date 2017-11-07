@@ -41,7 +41,6 @@ DateParser class >> readingFrom: anInputStream pattern: aPattern [
 	
 	^self new initializeReadingFrom: anInputStream pattern: aPattern
 
-
 ]
 
 { #category : #'parsing - private' }
@@ -73,7 +72,6 @@ DateParser >> initializeReadingFrom: anInputStream pattern: aPattern [
 
 	inputStream := anInputStream.
 	pattern := aPattern.
-	
 ]
 
 { #category : #'parsing day - private' }
@@ -194,7 +192,7 @@ DateParser >> parseIfError: aBlock [
 DateParser >> parseMonth [
 
 	self isTwoDigitMonthPattern ifTrue: [ ^self parseTwoDigitMonth ].
-	self parseVariableDigitMonth 
+	self parseVariableDigitMonth
 ]
 
 { #category : #'parsing - private' }

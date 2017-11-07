@@ -70,7 +70,6 @@ SourcePointer, k = 111111
 the trailer is encoded source pointer. Total trailer size is 4-bytes 
 (this kind of encoding is backwards compatible with most of existing compiled methods)
 
-
 "
 Class {
 	#name : #CompiledMethodTrailer,
@@ -235,7 +234,6 @@ CompiledMethodTrailer >> decodeClearedTrailer [
 	"Size is set in #decodeLengthField"
 
 	self decodeLengthField.
-
 ]
 
 { #category : #decoding }
@@ -262,7 +260,6 @@ CompiledMethodTrailer >> decodeExtendedKind [
 
 	"reserved for future use"
 	self shouldBeImplemented.
-
 ]
 
 { #category : #private }
@@ -288,7 +285,7 @@ CompiledMethodTrailer >> decodeLengthField [
 { #category : #decoding }
 CompiledMethodTrailer >> decodeNoTrailer [
 	"Not much to decode here"
-	size := 4. 
+	size := 4.
 ]
 
 { #category : #decoding }
@@ -302,7 +299,6 @@ CompiledMethodTrailer >> decodeSourcePointer [
 	data := (method at: msz) - 251 << 8 + (method at: msz-1) << 8
 	 + (method at: msz-2) << 8 + (method at: msz-3).
 	
-
 ]
 
 { #category : #decoding }
@@ -527,7 +523,6 @@ CompiledMethodTrailer >> method: aMethod [
 	ifFalse: [ 
 		"slow but general decoding using perform"
 		self perform: ('decode' , kind) asSymbol ]]].
-
 ]
 
 { #category : #private }
@@ -565,7 +560,6 @@ CompiledMethodTrailer >> qCompress: string [
 	oddNibble ifNotNil: "4 = 'ear tonsil' indexOf: Character space"
 		[stream nextPut: oddNibble * 16 + 4].
 	^ stream
-
 ]
 
 { #category : #decoding }
@@ -634,7 +628,6 @@ CompiledMethodTrailer >> sourcePointer [
 	^ (kind == #SourcePointer or: [ kind == #VarLengthSourcePointer ] )
 		ifTrue: [ data ]
 		ifFalse: [ 0 ]
-
 ]
 
 { #category : #accessing }
@@ -645,7 +638,6 @@ CompiledMethodTrailer >> sourcePointer: ptr [
 	"see if we can encode pointer using 4-byte trailer"
 	kind := (ptr between: 16r1000000 and: 16r4FFFFFF) 
 		ifTrue: [ #SourcePointer ] ifFalse: [ #VarLengthSourcePointer ].
-	
 ]
 
 { #category : #testing }

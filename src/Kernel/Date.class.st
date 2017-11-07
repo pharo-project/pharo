@@ -33,7 +33,6 @@ Date class >> daysInMonth [
 Date class >> daysInMonth: monthName forYear: yearInteger [ 
 
 	^ Month daysInMonth: monthName forYear: yearInteger.
-
 ]
 
 { #category : #accessing }
@@ -77,7 +76,6 @@ Date class >> firstWeekdayOfMonth: month year: year [
 	"Answer the weekday index of the first day in <month> in the <year>."
 
 	^ (self year: year month: month day: 1) weekdayIndex
-
 ]
 
 { #category : #'instance creation' }
@@ -105,7 +103,6 @@ Date class >> fromString: aString [
 Date class >> indexOfMonth: aMonthName [ 
 
 	^ Month indexOfMonth: aMonthName.
-
 ]
 
 { #category : #'instance creation' }
@@ -129,14 +126,13 @@ Date class >> monthNames [
 { #category : #accessing }
 Date class >> nameOfDay: dayIndex [ 
 
-	^ Week nameOfDay: dayIndex 
+	^ Week nameOfDay: dayIndex
 ]
 
 { #category : #accessing }
 Date class >> nameOfMonth: anIndex [ 
 
 	^ Month nameOfMonth: anIndex.
-
 ]
 
 { #category : #'instance creation' }
@@ -234,7 +230,6 @@ Date class >> readFrom: aStream [
 		year: year
 		month: month
 		day: day
-
 ]
 
 { #category : #importing }
@@ -243,14 +238,12 @@ Date class >> readFrom: aStringOrStream pattern: pattern [
 	DateParser comment"
 
 	^ (DateParser readingFrom: aStringOrStream readStream pattern: pattern) parse
-
 ]
 
 { #category : #'instance creation' }
 Date class >> starting: aDateAndTime [
 
 	^ super starting: (aDateAndTime midnight) duration: (Duration days: 1)
-
 ]
 
 { #category : #'instance creation' }
@@ -275,14 +268,12 @@ Date class >> week: week day: dayOfWeek [
 Date class >> year: year day: dayOfYear [
 
 	^ self starting: (DateAndTime year: year day: dayOfYear)
-
 ]
 
 { #category : #'instance creation' }
 Date class >> year: year month: month day: day [
 
 	^ self starting: (DateAndTime year: year month: month day: day)
-
 ]
 
 { #category : #'instance creation' }
@@ -331,7 +322,6 @@ Date >> ddmmyyyy [
 	"Print the receiver  in standard French format dd/mm/yyyy."
 
 	^ self printFormat: #(1 2 3 $/ 1 1)
-
 ]
 
 { #category : #printing }
@@ -357,14 +347,12 @@ Date >> monthIndex [
 Date >> onNextMonth [
 
 	^ self addMonths: 1
-
 ]
 
 { #category : #utils }
 Date >> onPreviousMonth [
 
 	^ self addMonths: -1
-
 ]
 
 { #category : #accessing }
@@ -375,7 +363,6 @@ Date >> previous: dayName [
 	days := 7 + self weekdayIndex - (self class dayOfWeek: dayName) \\ 7.
 	days = 0 ifTrue: [ days := 7 ].
 	^ self subtractDays: days
-
 ]
 
 { #category : #printing }

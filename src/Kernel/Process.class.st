@@ -200,7 +200,6 @@ Process >> debug: context title: title [
 	"Open debugger on self with context shown on top"
 
 	^ self debug: context title: title full: false.
-
 ]
 
 { #category : #debugging }
@@ -220,7 +219,6 @@ Process >> debugWithTitle: title [
 	| context |
 	context := self isActiveProcess ifTrue: [thisContext] ifFalse: [self suspendedContext].
 	^ self debug: context title: title full: true.
-
 ]
 
 { #category : #accessing }
@@ -230,7 +228,7 @@ Process >> effectiveProcess [
 	 correctly maintained when debugging code.  The debugger uses evaluate:onBehalfOf: to assign the
 	 debugged process as the effectiveProcess of the process executing the code, preserving process
 	 identity."
-	^effectiveProcess ifNil: [self] 
+	^effectiveProcess ifNil: [self]
 ]
 
 { #category : #private }
@@ -303,7 +301,6 @@ Process >> isTerminated [
 				"The pc of the suspendedContext is set to nil in #terminate explicitly.
 				Leaving this line in for safety."
   	  			suspendedContext pc > suspendedContext startpc ] ] ]
-
 ]
 
 { #category : #testing }
@@ -475,7 +472,6 @@ Process >> pvtSignal: anException list: aList [
 	blocker wait.
 
 
-
 ]
 
 { #category : #'process specific' }
@@ -503,7 +499,6 @@ Process >> restartTopWith: method [
 	method isQuick 
 		ifTrue: [ self popTo: suspendedContext sender ]
 		ifFalse: [ suspendedContext privRefreshWith: method ].
-
 ]
 
 { #category : #'changing process state' }
@@ -568,7 +563,6 @@ Process >> signalException: anException [
 	process is resumed, it will signal the exception"
 
 	oldList ifNotNil: [self resume].
-
 ]
 
 { #category : #'changing suspended state' }

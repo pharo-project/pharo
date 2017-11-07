@@ -7,7 +7,7 @@ I add a number of facilities to those in ClassDescription:
 
 My instances describe the representation and behavior of objects. I add more comprehensive programming support facilities to the basic attributes of Behavior and the descriptive facilities of ClassDescription.
 
-The slot 'subclasses' is a redundant structure.  It is never used during execution, but is used by the development system to simplify or speed certain operations.  
+The slot 'subclasses' is a redundant structure.  It is never used during execution, but is used by the development system to simplify or speed certain operations.
 "
 Class {
 	#name : #Class,
@@ -42,7 +42,7 @@ Class class >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unprocessedCl
 Class class >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache [ 
 	^ (self hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache) and: [
 		aClass isMeta not or: [
-			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
+			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]]
 ]
 
 { #category : #fileIn/Out }
@@ -56,7 +56,6 @@ Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cach
 { #category : #fileIn/Out }
 Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [ 
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
-	
 ]
 
 { #category : #inquiries }
@@ -93,7 +92,7 @@ Class class >> superclassOrder: classes [
 Class class >> template: aSystemCategoryName [ 
 	"Answer an expression that can be edited and evaluated in order to define a new class."
 
-	^ self templateForSubclassOf: Object name category: aSystemCategoryName 
+	^ self templateForSubclassOf: Object name category: aSystemCategoryName
 ]
 
 { #category : #'instance creation' }
@@ -170,7 +169,6 @@ Class >> addInstVarNamed: aString [
 
 	aString substrings do: [ :each|
 		self addSlot: (InstanceVariableSlot named: each asSymbol)]
-
 ]
 
 { #category : #'pool variables' }
@@ -938,7 +936,6 @@ Class >> newAnonymousSubclass [
 		builder
 			superclass: self ;
 			layoutClass: self classLayout class ].
-
 ]
 
 { #category : #'subclass creation' }
@@ -1002,7 +999,6 @@ Class >> private_subclass: t instanceVariableNames: f classVariableNames: d pool
 			category: cat;
 			environment: self environment;
 			copyClassSlotsFromExistingClass ].
-
 ]
 
 { #category : #'class variables' }
@@ -1063,7 +1059,6 @@ Class >> removeClassVariable: aGlobal [
 	"Remove the class variable"
 	self removeClassVarNamed: aGlobal name
 
-	
 ]
 
 { #category : #initialize-release }
@@ -1259,12 +1254,12 @@ Class >> sharing: poolString [
 
 { #category : #'subclass creation' }
 Class >> subclass: t [
-	^ self subclass: t instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Unclassified' 
+	^ self subclass: t instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Unclassified'
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
-	^ self subclass: t instanceVariableNames: ins classVariableNames: '' poolDictionaries: '' category: 'Unclassified' 
+	^ self subclass: t instanceVariableNames: ins classVariableNames: '' poolDictionaries: '' category: 'Unclassified'
 ]
 
 { #category : #'subclass creation' }
@@ -1322,7 +1317,6 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass slots: slotDefinition cl
 		slots: slotDefinition;
 		sharedVariables: classVarDefinition;
 		category: aCategorySymbol ].
-
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1336,7 +1330,6 @@ Class >> subclass: aSubclassSymbol  layout: layoutClass  slots: slotDefinition c
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
 		category: aCategorySymbol ].
-
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1361,7 +1354,6 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 		sharedVariables:  classVarDefinition;
 		sharedPools: someSharedPoolNames;
 		category: aCategorySymbol ].
-
 ]
 
 { #category : #'subclass creation' }
@@ -1386,7 +1378,7 @@ Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNam
 		instanceVariableNames: instVarNames
 		classVariableNames: classVarNames
 		poolDictionaries: ''
-		category: cat 
+		category: cat
 ]
 
 { #category : #'subclass creation' }
@@ -1558,7 +1550,7 @@ Class >> subclassesDo: aBlock [
 Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
-	self subclasses: nil. 
+	self subclasses: nil.
 ]
 
 { #category : #accessing }
@@ -1703,7 +1695,6 @@ Class >> variableSubclass: className instanceVariableNames: instVarNames classVa
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		category: cat
-
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1752,7 +1743,6 @@ Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVar
 Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
 
 	^ self variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat
-
 ]
 
 { #category : #'subclass creation - variable' }
@@ -1948,7 +1938,6 @@ Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariable
 		classVariableNames: classVarNames 
 		poolDictionaries: ''
 		category: cat
-
 ]
 
 { #category : #'subclass creation - weak' }

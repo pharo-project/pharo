@@ -34,21 +34,18 @@ Duration class >> days: days hours: hours minutes: minutes seconds: seconds nano
 							+ (minutes * SecondsInMinute) 
 								+ seconds)
 		nanoSeconds: nanos
-
 ]
 
 { #category : #'instance creation' }
 Duration class >> days: days seconds: seconds [
 
 	^ self basicNew seconds: days * SecondsInDay + seconds nanoSeconds: 0
-
 ]
 
 { #category : #'instance creation' }
 Duration class >> fromString: aString [
 
 	^ self readFrom: aString readStream
-
 ]
 
 { #category : #'instance creation simple' }
@@ -76,7 +73,6 @@ Duration class >> month: aMonth [
 	"aMonth is an Integer or a String"
 	
 	^ (Month month: aMonth) duration
-
 ]
 
 { #category : #'instance creation simple' }
@@ -117,7 +113,6 @@ Duration class >> readFrom: aStream [
 Duration class >> seconds: seconds [
 
 	^ self seconds: seconds nanoSeconds: 0
-
 ]
 
 { #category : #'instance creation' }
@@ -131,42 +126,36 @@ Duration class >> seconds: seconds nanoSeconds: nanos [
 Duration class >> weeks: aNumber [
 
 	^ self days: (aNumber * 7) seconds: 0
-
 ]
 
 { #category : #'instance creation simple' }
 Duration class >> years: aNumber [
 
 	^ self days: (aNumber * 365) seconds: 0
-
 ]
 
 { #category : #'instance creation simple' }
 Duration class >> zero [
 
 	^ self basicNew seconds: 0 nanoSeconds: 0
-
 ]
 
 { #category : #arithmetic }
 Duration >> * operand [
 	"operand is a Number"
 	^ self class nanoSeconds: ( (self asNanoSeconds * operand) asInteger)
-
 ]
 
 { #category : #arithmetic }
 Duration >> + operand [
   	"operand is a Duration"
 	^ self class nanoSeconds: (self asNanoSeconds + operand asNanoSeconds)
- 
 ]
 
 { #category : #arithmetic }
 Duration >> - operand [
 	"operand is a Duration"
 	^ self + operand negated
- 
 ]
 
 { #category : #arithmetic }
@@ -176,7 +165,6 @@ Duration >> / operand [
  	^ operand isNumber
  		ifTrue: [ self class nanoSeconds: (self asNanoSeconds / operand) asInteger ]
  		ifFalse: [ self asNanoSeconds / operand asDuration asNanoSeconds ]
- 
  
 ]
 
@@ -189,14 +177,12 @@ Duration >> // operand [
  	^ operand isNumber
  		ifTrue: [ self class nanoSeconds: (self asNanoSeconds // operand) asInteger ]
  		ifFalse: [ self asNanoSeconds // operand asDuration asNanoSeconds ]
- 
 ]
 
 { #category : #arithmetic }
 Duration >> < comparand [
  
  	^ self asNanoSeconds < comparand asNanoSeconds
- 
 ]
 
 { #category : #comparing }
@@ -221,14 +207,12 @@ Duration >> \\ operand [
  	^ operand isNumber
  		ifTrue: [ self class nanoSeconds: (self asNanoSeconds \\ operand) ]
  		ifFalse: [ self - (operand * (self // operand)) ]
- 
 ]
 
 { #category : #accessing }
 Duration >> abs [
  
  	^ self class seconds: seconds abs nanoSeconds: nanos abs
- 
 ]
 
 { #category : #converting }
@@ -247,7 +231,6 @@ Duration >> asDelay [
 Duration >> asDuration [
  
  	^ self
- 
 ]
 
 { #category : #converting }
@@ -261,7 +244,6 @@ Duration >> asMicroseconds [
  
  
  	^ ((seconds * NanosInSecond) + nanos) // (10 raisedToInteger: 3)
- 
 ]
 
 { #category : #converting }
@@ -269,7 +251,6 @@ Duration >> asMilliSeconds [
  
  
  	^ ((seconds * NanosInSecond) + nanos) // (10 raisedToInteger: 6)
- 
 ]
 
 { #category : #converting }
@@ -282,27 +263,23 @@ Duration >> asMinutes [
 Duration >> asNanoSeconds [
  
  	^ (seconds * NanosInSecond) + nanos
- 
 ]
 
 { #category : #converting }
 Duration >> asSeconds [
  	"Answer the number of seconds in the receiver."
  	^ seconds
- 
 ]
 
 { #category : #accessing }
 Duration >> days [
  	"Answer a number that represents the number of complete days in the receiver"
 	^ seconds quo: SecondsInDay
-
 ]
 
 { #category : #comparing }
 Duration >> hash [
 	^seconds bitXor: nanos
- 
 ]
 
 { #category : #accessing }
@@ -310,7 +287,6 @@ Duration >> hours [
  	"Answer a number that represents the number of complete hours in the receiver, after the number of complete days has been removed."
  
  	^ (seconds rem: SecondsInDay) quo: SecondsInHour
- 
 ]
 
 { #category : #printing }
@@ -329,21 +305,18 @@ Duration >> humanReadablePrintString [
 Duration >> initialize [
 	super initialize.
 	self seconds: 0 nanoSeconds: 0.
-
 ]
 
 { #category : #testing }
 Duration >> isZero [
 
 	^ seconds = 0 and: [ nanos = 0 ]
-
 ]
 
 { #category : #accessing }
 Duration >> minutes [
   	"Answer a number that represents the number of complete minutes in the receiver, after the number of complete hours has been removed."
  	^ (seconds rem: SecondsInHour) quo: SecondsInMinute
- 
 ]
 
 { #category : #converting }
@@ -351,14 +324,12 @@ Duration >> nanoSeconds [
  
  
  	^ nanos
- 
 ]
 
 { #category : #accessing }
 Duration >> negated [
  
  	^ self class seconds: seconds negated nanoSeconds: nanos negated
- 
 ]
 
 { #category : #accessing }
@@ -366,7 +337,6 @@ Duration >> negative [
  
  
  	^ self positive not
- 
 ]
 
 { #category : #accessing }
@@ -374,7 +344,6 @@ Duration >> positive [
  
  
  	^ seconds = 0 ifTrue: [ nanos positive ] ifFalse: [ seconds positive ]
- 
 ]
 
 { #category : #printing }
@@ -424,7 +393,6 @@ Duration >> printOn: aStream [
 		ps := n printString padLeftTo: 9 with: $0. 
 		z := ps findLast: [ :c | c asciiValue > $0 asciiValue ].
 		ps from: 1 to: z do: [ :c | aStream nextPut: c ] ].
-
 ]
 
 { #category : #operations }
@@ -432,7 +400,6 @@ Duration >> roundTo: aDuration [
  	"e.g. if the receiver is 5 minutes, 37 seconds, and aDuration is 2 minutes, answer 6 minutes."
  
  	^ self class nanoSeconds: (self asNanoSeconds roundTo: aDuration asNanoSeconds)
- 
  
 ]
 
@@ -458,7 +425,6 @@ Duration >> seconds: secondCount nanoSeconds: nanoCount [
 	[ seconds < 0 and: [ nanos > 0 ] ]
 		whileTrue: [ seconds := seconds + 1.
 			nanos := nanos - NanosInSecond ]
-
 ]
 
 { #category : #private }
@@ -472,7 +438,6 @@ Duration >> storeOn: aStream [
  		nextPutAll: ' nanoSeconds: ';
  		print: nanos;
  		nextPut: $).
- 
 ]
 
 { #category : #private }
@@ -506,7 +471,6 @@ Duration >> truncateTo: aDuration [
  
  	^ self class
  		nanoSeconds: (self asNanoSeconds truncateTo: aDuration asNanoSeconds)
- 
  
 ]
 

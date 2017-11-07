@@ -11,7 +11,6 @@ Class {
 Year class >> daysInYear: yearInteger [
 
 	^ 365 + ((self isLeapYear: yearInteger) ifTrue: [1] ifFalse: [0]).
-
 ]
 
 { #category : #accessing }
@@ -47,13 +46,13 @@ Year class >> year: aYear [
 { #category : #conversion }
 Year >> asYear [ 
 
-	^ self 
+	^ self
 ]
 
 { #category : #accessing }
 Year >> daysInMonth [ 
 
-	^ Date daysInMonth  
+	^ Date daysInMonth
 ]
 
 { #category : #accessing }
@@ -82,5 +81,4 @@ Year >> printOn: aStream [
 	aStream nextPutAll: 'a Year ('.
  	self start year printOn: aStream. 
 	aStream nextPutAll: ')'.
-
 ]

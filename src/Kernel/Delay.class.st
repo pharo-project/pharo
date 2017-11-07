@@ -11,7 +11,6 @@ The maximum possible delay depends on which DelayScheduler is used:
   * DelayMicrosecondScheduler is 64-bit and rolls over every 50,000 years. 
 
 A delay in progress when an image snapshot is saved and resumed when the snapshot is re-started. 
-
 "
 Class {
 	#name : #Delay,
@@ -33,7 +32,6 @@ Class {
 Delay class >> anyActive [
 	"Return true if there is any delay currently active"
 		^Scheduler anyActive
-
 ]
 
 { #category : #settings }
@@ -53,14 +51,12 @@ Delay class >> delaySchedulerClass: aSchedulerClass [
 	Scheduler startTimerEventLoop.
 	self inform: 'Delay scheduler set to ' , aSchedulerClass printString.
 	
-	
 ]
 
 { #category : #'instance creation' }
 Delay class >> forDuration: aDuration [
  	"Return a new Delay for the given duration."
  	^ self forMilliseconds: aDuration asMilliSeconds
- 
 ]
 
 { #category : #'instance creation' }
@@ -68,14 +64,12 @@ Delay class >> forMilliseconds: aNumber [
 	"Return a new Delay for the given number of milliseconds. Sending 'wait' to this Delay will cause the sender's process to be suspended for approximately that length of time."
 
 	^ self new setDelay: aNumber forSemaphore: Semaphore new
-
 ]
 
 { #category : #'instance creation' }
 Delay class >> forSeconds: aNumber [
 	"Return a new Delay for the given number of Seconds"
 	^ self forMilliseconds: aNumber * 1000
-
 ]
 
 { #category : #initialize-release }
@@ -87,14 +81,12 @@ Delay class >> initialize [
 	SessionManager default 
 		registerSystemClassNamed: self name 
 		atPriority: 20.
-
 ]
 
 { #category : #testing }
 Delay class >> nextWakeUpTime [
 
 	^ Scheduler nextWakeUpTime.
-
 
 
 ]
@@ -109,21 +101,18 @@ Delay class >> restartTimerEventLoop [
 Delay class >> schedulingProcess [
 
 	^ Scheduler schedulingProcess.
-
 ]
 
 { #category : #snapshotting }
 Delay class >> shutDown [
 
 	Scheduler shutDown.
-
 ]
 
 { #category : #'timer process' }
 Delay class >> startTimerEventLoop [
 
 	Scheduler startTimerEventLoop.
-
 ]
 
 { #category : #snapshotting }
@@ -132,14 +121,12 @@ Delay class >> startUp [
 
 	Scheduler startUp.
 
-
 ]
 
 { #category : #'timer process' }
 Delay class >> stopTimerEventLoop [
 
 	^ Scheduler stopTimerEventLoop.
-
 ]
 
 { #category : #settings }
@@ -153,7 +140,6 @@ Delay class >> systemSettingOn: aBuilder [
 		domainValues: DelayScheduler allSubclasses ;
 		description: 'Choose the class to use for Delay scheduling.' , 
 			String crlf, 'You can observe which is running from Tools > Process Browser.'
-	
 ]
 
 { #category : #'instance creation' }
@@ -162,7 +148,6 @@ Delay class >> timeoutSemaphore: aSemaphore afterMSecs: anInteger [
 	"Details: This mechanism is used to provide a timeout when waiting for an external event, such as arrival of data over a network connection, to signal a semaphore. The timeout ensures that the semaphore will be signalled within a reasonable period of time even if the event fails to occur. Typically, the waiting process cancels the timeout request when awoken, then determines if the awaited event has actually occurred."
 
 	^ (self new setDelay: anInteger forSemaphore: aSemaphore) schedule; yourself
-
 ]
 
 { #category : #public }
@@ -175,7 +160,6 @@ Delay >> delaySemaphore [
 Delay >> isExpired [
 
 	^delaySemaphore isSignaled.
-
 ]
 
 { #category : #public }
@@ -211,7 +195,6 @@ Delay >> schedule [
 	"Schedule this delay."
 	
 	Scheduler schedule: self.
-
 ]
 
 { #category : #'private - scheduler' }
@@ -238,7 +221,6 @@ Delay >> schedulerBeingWaitedOn: aBoolean [
 	"Important! Must only be called from the single timing priority process, e.g...
 		DelayScheduler>>scheduleDelay: 
 		DelayScheduler>>unscheduleDelay: "
-
 ]
 
 { #category : #'private - scheduler' }
@@ -247,7 +229,6 @@ Delay >> schedulerResumptionTime [
 	The semantics of whether this is a millisecond or microsecond value depends on which scheduler is in use."
 	
 	^ schedulerResumptionTime 
-
 ]
 
 { #category : #'private - scheduler' }
@@ -257,7 +238,6 @@ Delay >> schedulerResumptionTime: anInteger [
 	
 	schedulerResumptionTime := anInteger
 	
-
 ]
 
 { #category : #'private - scheduler' }
@@ -291,7 +271,6 @@ Delay >> setDelay: milliseconds forSemaphore: aSemaphore [
 { #category : #private }
 Delay >> unschedule [
 	Scheduler unschedule: self.
-
 ]
 
 { #category : #delaying }
@@ -300,5 +279,4 @@ Delay >> wait [
 
 	self schedule.
 	[delaySemaphore wait] ifCurtailed:[self unschedule].
-
 ]

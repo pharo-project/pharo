@@ -26,7 +26,6 @@ Dependents are now fixed up.  Suppose a model has a dependent view.  In the Depe
 	If only the view is copied, it is inserted into DependentFields on the right side.  model -> (view  copiedView ...).  
 	If both are copied, the new model has the new view as its dependent.
 	If additional things depend on a model that is copied, the caller must add them to its dependents.
-
 "
 Class {
 	#name : #DeepCopier,
@@ -83,7 +82,6 @@ DeepCopier >> checkBasicClasses [
 	"Check that no indexes of instance vars have changed in certain classes.  If you get an error in this method, an implementation of veryDeepCopyWith: needs to be updated.  The idea is to catch a change while it is still in the system of the programmer who made it.  
 	DeepCopier new checkAllClasses"
 	Object instSize = 0 ifFalse: [ self error: 'Many implementers of veryDeepCopyWith: are out of date' ].
-
 
 
 ]
@@ -149,7 +147,6 @@ DeepCopier >> fixDependents [
 				[:newDep| | newModel |
 				newModel := references at: pair key ifAbsent: [pair key].
 				newModel addDependent: newDep]]].
-
 ]
 
 { #category : #initialization }
@@ -157,14 +154,12 @@ DeepCopier >> initialize [
 
 	super initialize.
 	self initialize: 4096.
-
 ]
 
 { #category : #initialization }
 DeepCopier >> initialize: size [
 
 	references := IdentityDictionary new: size.
-	
 ]
 
 { #category : #checking }

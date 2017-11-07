@@ -8,7 +8,6 @@ Examples: (note the parentheses required to get the right answers in Smalltalk a
 (2/3) + (2/3)
 (2/3) + (1/2)		 ""answers shows the reduced fraction"" 
 (2/3) raisedToInteger: 5		 ""fractions also can have exponents""
-
 "
 Class {
 	#name : #Fraction,
@@ -340,7 +339,6 @@ Fraction >> printOn: aStream [
 	aStream nextPut: $/.
 	denominator printOn: aStream.
 	aStream nextPut: $).
-
 ]
 
 { #category : #printing }
@@ -351,7 +349,6 @@ Fraction >> printOn: aStream base: base [
 	aStream nextPut: $/.
 	denominator printOn: aStream base: base.
 	aStream nextPut: $).
-
 ]
 
 { #category : #printing }
@@ -450,7 +447,6 @@ Fraction >> storeOn: aStream base: base [
 	aStream nextPut: $/.
 	denominator storeOn: aStream base: base.
 	aStream nextPut: $).
-
 ]
 
 { #category : #'truncation and round off' }
