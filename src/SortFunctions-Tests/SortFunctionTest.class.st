@@ -64,7 +64,7 @@ SortFunctionTest >> testPropertyWithOddCollator [
 
 	| oddFirst function data sorted |
 	oddFirst := [:a :b | (b bitAnd: 1) - (a bitAnd: 1)].
-	function := (#y collatedWith: oddFirst) , #y , #x.
+	function := (#y collatedBy: oddFirst) , #y , #x.
 	data := { 1@10. 5@5. 10@4. 3@8. 1@1. 10@10 }.
 	sorted := data sorted: function.
 	self assert: sorted equals: { 1@1. 5@5. 10@4. 3@8. 1@10. 10@10 }.
