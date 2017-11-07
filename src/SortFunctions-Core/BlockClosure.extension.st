@@ -1,6 +1,6 @@
 Extension { #name : #BlockClosure }
 
-{ #category : #'*SortFunctions-Core-controlling' }
+{ #category : #'*SortFunctions-Core-converting' }
 BlockClosure >> asSortFunction [
 	"Return a SortFunction around the receiver. If the receiver is a 2 arg block, it is assumed it will do the collation directly itself, returning -1, 0, or 1. If the receiver is a one arg block, it will be evaluated for each a and b and of the sort input, and the result of sending <=> to those will be used"
 	
@@ -10,14 +10,14 @@ BlockClosure >> asSortFunction [
 	self error: 'Cant be converted to sort function. It should has one or two args'	
 ]
 
-{ #category : #'*SortFunctions-Core-controlling' }
+{ #category : #'*SortFunctions-Core-converting' }
 BlockClosure >> ascending [
 	"Return a SortFunction around the receiver. If the receiver is a 2 arg block, it is assumed it will do the collation directly itself, returning -1, 0, or 1. If the receiver is a one arg block, it will be evaluated for each a and b and of the sort input, and the result of sending <=> to those will be used."
 
 	^self asSortFunction
 ]
 
-{ #category : #'*SortFunctions-Core-controlling' }
+{ #category : #'*SortFunctions-Core-converting' }
 BlockClosure >> collatedBy: aSortFunction [
 	"Return a SortFunction around the receiver. If the receiver is a 2 arg block, it is assumed it will do the collation directly itself, returning -1, 0, or 1. If the receiver is a one arg block, it will be evaluated for each a and b and of the sort input, and the result of using aSortFunction on those will be used"
 	
@@ -25,7 +25,7 @@ BlockClosure >> collatedBy: aSortFunction [
 	self error: 'Cant be converted to sort function. It should hava one arg'	
 ]
 
-{ #category : #'*SortFunctions-Core-controlling' }
+{ #category : #'*SortFunctions-Core-converting' }
 BlockClosure >> descending [
 	"Opposite direction as ascending."
 

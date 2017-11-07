@@ -1,7 +1,7 @@
 "
 A ComposedSortFunction is an abstract class wrapping over another SortFunction for the sake of composition.
 
-Subclasses have to define the composition behavior.
+Subclasses have to define the composition behavior via collate:with: message.
 
 Instances variables:
 	baseSortFunction		<SortFunction>	the wrapped sort function
@@ -14,6 +14,11 @@ Class {
 	],
 	#category : #SortFunctions-Core
 }
+
+{ #category : #'instance creation' }
+ComposedSortFunction class >> on: aSortFunction [
+	^self new baseSortFunction: aSortFunction
+]
 
 { #category : #comparing }
 ComposedSortFunction >> = aSortFunction [
@@ -39,5 +44,5 @@ ComposedSortFunction >> hash [
 { #category : #initailize-release }
 ComposedSortFunction >> initialize [
 	super initialize.
-	baseSortFunction := Default
+	baseSortFunction := self class default
 ]

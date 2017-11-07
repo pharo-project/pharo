@@ -32,11 +32,9 @@ Different scenarios are implemented by my different subclasses:
 - CollatorBlockFunction represent two args collator block
 - and ChainedSortFunction implements composition of collators created by comma message
 
-Applications can implement their own domain sort functinos defining the method:
-	threeWayCompare: anObject1 with: anObject2
+Applications can implement their own domain sort functions defining the method:
+	collate: anObject1 with: anObject2
 
-Instance Variables
-	direction	<SmallInteger>	1 for ascending, -1 for descending
 "
 Class {
 	#name : #SortFunction,
@@ -46,6 +44,11 @@ Class {
 	],
 	#category : #SortFunctions-Core
 }
+
+{ #category : #accessing }
+SortFunction class >> default [
+	^Default
+]
 
 { #category : #converting }
 SortFunction >> , aSortFunction [
@@ -73,20 +76,21 @@ SortFunction >> collate: anObject1 with: anObject2 [
 
 { #category : #converting }
 SortFunction >> reversed [
-	"Return new sort function with inverted direction then my, 
-	if I'm currently ascending, I will return descending instance, and vice-versa."
+	"Return new sort function with reverse sort order."
 
-	^ReverseSortFunction new baseSortFunction: self
+	^ReverseSortFunction on: self
 ]
 
 { #category : #converting }
 SortFunction >> undefinedFirst [
-	^(UndefinedSortFunction new baseSortFunction: self) undefinedFirst
+	"Return a new SortFunction that sort all the nil first, an non nil with myself."
+	^(UndefinedSortFunction on: self) undefinedFirst
 ]
 
 { #category : #converting }
 SortFunction >> undefinedLast [
-	^(UndefinedSortFunction new baseSortFunction: self) undefinedLast
+	"Return a new SortFunction that sort all the nil last, an non nil with myself."
+	^(UndefinedSortFunction on: self) undefinedLast
 ]
 
 { #category : #evaluating }

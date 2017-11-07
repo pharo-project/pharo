@@ -1,5 +1,5 @@
 "
-I add to my parent the idea of a ""next"" function to use when two objects are equal by my primary collator.
+I add to my parent the idea of a ""next"" function to use when two objects are equal by my primary sort function.
 
 Usage
 
