@@ -6,15 +6,12 @@ It is known to work on String and Magnitude.
 Class {
 	#name : #DefaultSortFunction,
 	#superclass : #SortFunction,
-	#classVars : [
-		'UniqueInstance'
-	],
 	#category : #SortFunctions-Core
 }
 
-{ #category : #'instance creation' }
-DefaultSortFunction class >> new [
-	^UniqueInstance ifNil: [UniqueInstance := self basicNew initialize]
+{ #category : #'class initialization' }
+DefaultSortFunction class >> initialize [
+	Default := self new
 ]
 
 { #category : #evaluating }

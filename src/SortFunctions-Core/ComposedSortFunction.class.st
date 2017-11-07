@@ -39,5 +39,5 @@ ComposedSortFunction >> hash [
 { #category : #initailize-release }
 ComposedSortFunction >> initialize [
 	super initialize.
-	baseSortFunction := DefaultSortFunction new
+	baseSortFunction := Default
 ]

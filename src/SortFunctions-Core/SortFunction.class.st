@@ -41,6 +41,9 @@ Instance Variables
 Class {
 	#name : #SortFunction,
 	#superclass : #Object,
+	#classVars : [
+		'Default'
+	],
 	#category : #SortFunctions-Core
 }
 
