@@ -21,7 +21,7 @@ UndefinedSortFunction >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ collator = anObject collator
+	^ baseSortFunction = anObject baseSortFunction
 		and: [ direction = anObject direction ]
 ]
 
@@ -29,7 +29,7 @@ UndefinedSortFunction >> = anObject [
 UndefinedSortFunction >> collate: anObject with: another [
 	anObject ifNil: [^another ifNil: [0] ifNotNil: [direction]].
 	another ifNil: [^direction negated].
-	^collator collate: anObject with: another
+	^baseSortFunction collate: anObject with: another
 ]
 
 { #category : #accessing }

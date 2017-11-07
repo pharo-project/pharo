@@ -33,7 +33,7 @@ PropertySortFunction class >> property: selectorOrOneArgBlock [
 PropertySortFunction class >> property: selectorOrOneArgBlock collatedWith: aSortFunction [
 	^self new 
 		property: selectorOrOneArgBlock;
-		collator: aSortFunction
+		baseSortFunction: aSortFunction
 ]
 
 { #category : #comparing }
@@ -44,13 +44,13 @@ PropertySortFunction >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ collator = anObject collator
+	^ baseSortFunction = anObject baseSortFunction
 		and: [ property = anObject property ]
 ]
 
 { #category : #evaluating }
 PropertySortFunction >> collate: anObject with: another [
-	^ collator collate: (property value: anObject) with: (property value: another)
+	^ baseSortFunction collate: (property value: anObject) with: (property value: another)
 ]
 
 { #category : #comparing }
@@ -75,7 +75,7 @@ PropertySortFunction >> undefinedFirst [
 	"apply on the property"
 	^self class
 		property: property
-		collatedWith: collator undefinedFirst
+		collatedWith: baseSortFunction undefinedFirst
 ]
 
 { #category : #converting }
@@ -83,5 +83,5 @@ PropertySortFunction >> undefinedLast [
 	"apply on the property"
 	^self class
 		property: property
-		collatedWith: collator undefinedLast
+		collatedWith: baseSortFunction undefinedLast
 ]

@@ -37,7 +37,7 @@ ChainedSortFunction class >> startWith: aSortFunction then: aSortFunction2 [
 { #category : #converting }
 ChainedSortFunction >> , aSortFunction [
 
-	^self class startWith: collator then: nextFunction , aSortFunction
+	^self class startWith: baseSortFunction then: nextFunction , aSortFunction
 ]
 
 { #category : #comparing }
@@ -57,7 +57,7 @@ ChainedSortFunction >> collate: anObject1 with: anObject2 [
 	"If the result of current function is 0, then pass on to the next function to work it out"
 
 	| result |
-	result := collator collate: anObject1 with: anObject2.
+	result := baseSortFunction collate: anObject1 with: anObject2.
 	^result isZero
 		ifTrue: [nextFunction collate: anObject1 with: anObject2.]
 		ifFalse: [result]
@@ -82,10 +82,10 @@ ChainedSortFunction >> nextFunction: anObject [
 
 { #category : #accessing }
 ChainedSortFunction >> startFunction [
-	^ collator
+	^ baseSortFunction
 ]
 
 { #category : #accessing }
 ChainedSortFunction >> startFunction: anObject [
-	collator := anObject
+	baseSortFunction := anObject
 ]

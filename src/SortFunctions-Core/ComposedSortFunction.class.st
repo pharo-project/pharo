@@ -4,13 +4,13 @@ A ComposedSortFunction is an abstract class wrapping over another SortFunction f
 Subclasses have to define the composition behavior.
 
 Instances variables:
-	collator		<SortFunction>	the wrapped sort function
+	baseSortFunction		<SortFunction>	the wrapped sort function
 "
 Class {
 	#name : #ComposedSortFunction,
 	#superclass : #SortFunction,
 	#instVars : [
-		'collator'
+		'baseSortFunction'
 	],
 	#category : #SortFunctions-Core
 }
@@ -18,26 +18,26 @@ Class {
 { #category : #comparing }
 ComposedSortFunction >> = aSortFunction [
 	self == aSortFunction ifTrue: [ ^true ].
-	^self class = aSortFunction class and: [ collator = aSortFunction collator ]
+	^self class = aSortFunction class and: [ baseSortFunction = aSortFunction baseSortFunction ]
 ]
 
 { #category : #accessing }
-ComposedSortFunction >> collator [
-	^collator
+ComposedSortFunction >> baseSortFunction [
+	^baseSortFunction
 ]
 
 { #category : #accessing }
-ComposedSortFunction >> collator: aSortFunction [
-	collator := aSortFunction
+ComposedSortFunction >> baseSortFunction: aSortFunction [
+	baseSortFunction := aSortFunction
 ]
 
 { #category : #comparing }
 ComposedSortFunction >> hash [
-	^collator hash hashMultiply
+	^baseSortFunction hash hashMultiply
 ]
 
 { #category : #initailize-release }
 ComposedSortFunction >> initialize [
 	super initialize.
-	collator := DefaultSortFunction new
+	baseSortFunction := DefaultSortFunction new
 ]

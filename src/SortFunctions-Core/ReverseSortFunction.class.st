@@ -9,22 +9,22 @@ Class {
 
 { #category : #evaluating }
 ReverseSortFunction >> collate: anObject with: another [
-	^(collator collate: anObject with: another) negated
+	^(baseSortFunction collate: anObject with: another) negated
 ]
 
 { #category : #converting }
 ReverseSortFunction >> inverted [
-	^collator
+	^baseSortFunction
 ]
 
 { #category : #converting }
 ReverseSortFunction >> undefinedFirst [
 	"apply on the original"
-	^collator undefinedLast inverted
+	^baseSortFunction undefinedLast inverted
 ]
 
 { #category : #converting }
 ReverseSortFunction >> undefinedLast [
 	"apply on the original"
-	^collator undefinedFirst inverted
+	^baseSortFunction undefinedFirst inverted
 ]

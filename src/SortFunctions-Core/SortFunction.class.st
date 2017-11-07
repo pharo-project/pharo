@@ -73,17 +73,17 @@ SortFunction >> inverted [
 	"Return new sort function with inverted direction then my, 
 	if I'm currently ascending, I will return descending instance, and vice-versa."
 
-	^ReverseSortFunction new collator: self
+	^ReverseSortFunction new baseSortFunction: self
 ]
 
 { #category : #converting }
 SortFunction >> undefinedFirst [
-	^(UndefinedSortFunction new collator: self) undefinedFirst
+	^(UndefinedSortFunction new baseSortFunction: self) undefinedFirst
 ]
 
 { #category : #converting }
 SortFunction >> undefinedLast [
-	^(UndefinedSortFunction new collator: self) undefinedLast
+	^(UndefinedSortFunction new baseSortFunction: self) undefinedLast
 ]
 
 { #category : #evaluating }
