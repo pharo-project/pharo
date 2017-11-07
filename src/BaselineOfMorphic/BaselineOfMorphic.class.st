@@ -178,7 +178,7 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 			font := style asLogicalFontOfPointSize: pointSize.
 			font := font realFont.
 
-			fileName := font familyName, ' ', font pointSize asString, ' ', styleName.
+			fileName := font familyName, ' ', pointSize asString, ' ', styleName.
 
 			font glyphs writePNGFileNamed: fileName, '.png'.
 
@@ -193,10 +193,22 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 { #category : #fonts }
 BaselineOfMorphic >> loadBitmapDejaVuSans [
 
-	| dejavu familyName pointSizes fonts styleNames fileName textStyle directoryName |
+	| dejaVu |
 
-	familyName := 'Bitmap DejaVu Sans'.
-	pointSizes := #(7 9 12 14 18 24).
+	dejaVu := self loadBitmapFontFamily: 'Bitmap DejaVu Sans' sizes: #(7 9 12 14 18 24).
+
+	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejaVu.
+	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejaVu.
+	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejaVu.
+	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
+
+]
+
+{ #category : #fonts }
+BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
+
+	| fonts styleNames fileName directoryName |
+
 	directoryName := '../resources/fonts/'.
 
 	fonts := pointSizes collect: [ :pointSize | 	
@@ -223,12 +235,21 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 		regular
 	].
 
-	dejavu := TextStyle fontArray: fonts.		
+	^ TextStyle fontArray: fonts.		
 
-	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejavu.
-	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejavu.
-	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejavu.
-	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejavu.
+	
+]
+
+{ #category : #fonts }
+BaselineOfMorphic >> loadBitmapSourcePro [
+
+	| sansPro codePro |
+
+	sansPro := self loadBitmapFontFamily: 'Bitmap Source Sans Pro' sizes: #(9 10 11 12 14 18 24).
+	TextConstants TextSharedInformation at: #'Bitmap Source Sans Pro' put: sansPro.
+
+	codePro := self loadBitmapFontFamily: 'Bitmap Source Code Pro' sizes: #(9 10 11 12 14 18 24).
+	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
 
 ]
 
@@ -257,6 +278,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	
 	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
+	self loadBitmapSourcePro.
 	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
 
