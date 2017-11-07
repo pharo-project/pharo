@@ -4,7 +4,7 @@ This smell arises when a class is not referenced either directly or indirectly b
 Class {
 	#name : #RBClassNotReferencedRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Check for methods sending the yourself message when it is not necessary.
 Class {
 	#name : #RBYourselfNotUsedRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

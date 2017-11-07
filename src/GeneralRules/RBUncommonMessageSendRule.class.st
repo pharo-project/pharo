@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'literalNames'
 	],
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

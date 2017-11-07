@@ -14,7 +14,7 @@ ZnServer class>>initialize
 Class {
 	#name : #RBDoNotSendSuperInitializeInClassSideRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

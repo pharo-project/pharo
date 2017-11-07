@@ -4,7 +4,7 @@ Classes that use traits with explicit requirement methods should either implemen
 Class {
 	#name : #RBExplicitRequirementMethodsRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

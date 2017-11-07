@@ -4,7 +4,7 @@ Rewrite super messages to self messages when both refer to same method
 Class {
 	#name : #RBSuperSendsRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

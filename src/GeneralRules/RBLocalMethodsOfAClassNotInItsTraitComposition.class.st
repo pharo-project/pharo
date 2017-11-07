@@ -4,7 +4,7 @@ If a class has a method in its trait composition, the method should not be imple
 Class {
 	#name : #RBLocalMethodsOfAClassNotInItsTraitComposition,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

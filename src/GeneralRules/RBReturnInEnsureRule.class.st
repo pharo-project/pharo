@@ -4,7 +4,7 @@ Checks for return statements within ensure: blocks that can have unintended side
 Class {
 	#name : #RBReturnInEnsureRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

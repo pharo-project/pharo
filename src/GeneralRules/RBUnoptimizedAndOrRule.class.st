@@ -4,7 +4,7 @@ Checks for inefficient nesting of logical conditions.
 Class {
 	#name : #RBUnoptimizedAndOrRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

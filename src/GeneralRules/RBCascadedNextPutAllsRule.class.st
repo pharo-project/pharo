@@ -13,7 +13,7 @@ String streamContents: [ :s|
 Class {
 	#name : #RBCascadedNextPutAllsRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

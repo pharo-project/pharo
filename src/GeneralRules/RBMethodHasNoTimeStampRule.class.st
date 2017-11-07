@@ -4,7 +4,7 @@ For proper versioning, every method should have a timestamp.
 Class {
 	#name : #RBMethodHasNoTimeStampRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

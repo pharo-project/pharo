@@ -12,7 +12,7 @@ The defined number of statements can be edited in #longMethodSize. In the future
 Class {
 	#name : #RBLongMethodsRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

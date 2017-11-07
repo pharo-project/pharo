@@ -10,7 +10,7 @@ can be more efficiently expressed as
 Class {
 	#name : #RBUnoptimizedToDoRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

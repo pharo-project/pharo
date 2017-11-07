@@ -35,7 +35,7 @@ be avoided.
 Class {
 	#name : #RBShouldntRaiseErrorRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

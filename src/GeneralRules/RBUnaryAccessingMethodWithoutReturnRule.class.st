@@ -4,7 +4,7 @@ Checks for any unary ""accessing"" methods without explicit return statements.
 Class {
 	#name : #RBUnaryAccessingMethodWithoutReturnRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

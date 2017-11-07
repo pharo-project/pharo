@@ -4,7 +4,7 @@ Checks for bytecodePrimEqual  using the do: method instead of using the contains
 Class {
 	#name : #RBDetectContainsRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

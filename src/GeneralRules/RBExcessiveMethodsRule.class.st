@@ -10,7 +10,7 @@ The defined number of methods can be edited in #methodsCount.
 Class {
 	#name : #RBExcessiveMethodsRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

@@ -11,7 +11,7 @@ The block argument ""x"" should not be written. This is considered bad style. An
 Class {
 	#name : #RBAssignmentOnBlockArgumentRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Checks for messages that are sent but not implemented by a global. Reported meth
 Class {
 	#name : #RBSendsUnknownMessageToGlobalRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

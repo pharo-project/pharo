@@ -4,7 +4,7 @@ Floating point types are imprecise. Using the operators = or ~= might not yield 
 Class {
 	#name : #RBFloatEqualityComparisonRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Checks for the common code fragment: ""(aCollection detect: [:each | ''some cond
 Class {
 	#name : #RBContainsRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Do not explicitly refer to UITheme current but use Smalltalk ui theme. Similarly
 Class {
 	#name : #RBThemeAPIUpdateRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

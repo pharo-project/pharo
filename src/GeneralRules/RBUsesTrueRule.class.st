@@ -10,7 +10,7 @@ Class {
 		'trueBinding',
 		'falseBinding'
 	],
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

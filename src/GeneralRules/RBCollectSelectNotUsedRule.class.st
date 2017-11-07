@@ -6,7 +6,7 @@ For example, check that the result of a select: or detect: is used.
 Class {
 	#name : #RBCollectSelectNotUsedRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

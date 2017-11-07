@@ -6,7 +6,7 @@ This smell arises when a method protocol is not equivalent to the one defined in
 Class {
 	#name : #RBInconsistentMethodClassificationRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

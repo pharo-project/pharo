@@ -4,7 +4,7 @@ Check for a =, ==, ~=, or ~~ message being sent to true/false or with true/false
 Class {
 	#name : #RBEqualsTrueRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

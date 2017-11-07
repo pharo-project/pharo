@@ -4,7 +4,7 @@ Replaces ""a >= b and: [a <= c]"" by ""a between: b and: c.
 Class {
 	#name : #RBBetweenAndRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Check for methods that return the value of an ifTrue: or ifFalse: message. These
 Class {
 	#name : #RBReturnsIfTrueRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

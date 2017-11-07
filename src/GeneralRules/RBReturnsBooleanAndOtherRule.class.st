@@ -4,7 +4,7 @@ This smell arises when a method return a boolean value (true or false) and retur
 Class {
 	#name : #RBReturnsBooleanAndOtherRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

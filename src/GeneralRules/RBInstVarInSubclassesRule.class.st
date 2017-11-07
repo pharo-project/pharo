@@ -6,7 +6,7 @@ This smell arises when instance variables are defined in all subclasses. Many ti
 Class {
 	#name : #RBInstVarInSubclassesRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

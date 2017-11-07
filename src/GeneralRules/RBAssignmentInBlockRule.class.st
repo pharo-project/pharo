@@ -4,7 +4,7 @@ Checks ensure:, ifCurtailed:, and showWhile: blocks for assignments or returns t
 Class {
 	#name : #RBAssignmentInBlockRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

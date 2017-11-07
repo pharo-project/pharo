@@ -4,7 +4,7 @@ Checks that a class does not override a message that is essential to the base sy
 Class {
 	#name : #RBOverridesSpecialMessageRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Finds methods whose temporary variables override an instance variable. This caus
 Class {
 	#name : #RBTempVarOverridesInstVarRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing-interest }

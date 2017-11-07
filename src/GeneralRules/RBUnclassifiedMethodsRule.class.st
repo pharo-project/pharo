@@ -4,7 +4,7 @@ All methods should be put into a protocol (method category) for better readabili
 Class {
 	#name : #RBUnclassifiedMethodsRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

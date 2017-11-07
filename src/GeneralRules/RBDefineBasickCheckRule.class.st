@@ -8,7 +8,7 @@ It is recommended to reuse #basicCheck: functionality in #checkClass: and #check
 Class {
 	#name : #RBDefineBasickCheckRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

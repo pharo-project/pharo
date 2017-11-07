@@ -4,7 +4,7 @@ Checks for repeated literal equalitity tests that should rather be implemented a
 Class {
 	#name : #RBSearchingLiteralRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

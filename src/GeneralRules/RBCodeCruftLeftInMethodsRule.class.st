@@ -4,7 +4,7 @@ This smell arises when a breakpoint,  logging statement,  etc is found in a meth
 Class {
 	#name : #RBCodeCruftLeftInMethodsRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

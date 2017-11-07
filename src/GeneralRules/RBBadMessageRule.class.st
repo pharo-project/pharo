@@ -4,7 +4,7 @@ This smell arises when methods send messages that perform low level things. You 
 Class {
 	#name : #RBBadMessageRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

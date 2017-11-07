@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'matcher'
 	],
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

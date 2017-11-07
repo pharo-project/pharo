@@ -25,7 +25,7 @@ aCollection reject: [ :each | ... anObject ]
 Class {
 	#name : #RBNotEliminationRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

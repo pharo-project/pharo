@@ -12,7 +12,7 @@ var :=  test
 Class {
 	#name : #RBAssignmentInIfTrueRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

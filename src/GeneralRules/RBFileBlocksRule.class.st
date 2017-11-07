@@ -20,7 +20,7 @@ This code can be changed to
 Class {
 	#name : #RBFileBlocksRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

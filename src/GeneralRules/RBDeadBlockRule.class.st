@@ -5,7 +5,7 @@ Often this is a left over from using blocks to comment out code.
 Class {
 	#name : #RBDeadBlockRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ A warning is raised when the statement self new initialize is found in a method.
 Class {
 	#name : #RBSuperSendsNewRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ This smell arises when a statement such as x := x is found. This statement has n
 Class {
 	#name : #RBAssignmentWithoutEffectRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

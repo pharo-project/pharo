@@ -4,7 +4,7 @@ Checks for unconditional recursion that might cause the image to hang when execu
 Class {
 	#name : #RBUnconditionalRecursionRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

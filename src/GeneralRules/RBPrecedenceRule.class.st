@@ -4,7 +4,7 @@ Checks for mathematical expressions that might be evaluated different (from left
 Class {
 	#name : #RBPrecedenceRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }

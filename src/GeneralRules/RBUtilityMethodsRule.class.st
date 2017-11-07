@@ -4,7 +4,7 @@ List methods that have one or more arguments and do no refer to self or an insta
 Class {
 	#name : #RBUtilityMethodsRule,
 	#superclass : #ReAbstractRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Checks for methods that appear to be modifying a collection that is owned by ano
 Class {
 	#name : #RBCollectionMessagesToExternalObjectRule,
 	#superclass : #ReNodeMatchRule,
-	#category : 'GeneralRules-Migrated'
+	#category : #GeneralRules-Migrated
 }
 
 { #category : #accessing }
