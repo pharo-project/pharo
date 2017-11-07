@@ -13,7 +13,7 @@ OCAbstractScope >> gtInspectorSourceCodeIn: composite [
 		act: [ self method compiledMethod browse ] icon: GLMUIThemeExtraIcons glamorousBrowse entitled: 'Browse'
 ]
 
-{ #category : #'*OpalTools' }
+{ #category : #'*OpalCompiler-Tools' }
 OCAbstractScope >> sourceInterval [
 	^self node 
 		ifNil: [0 to: 0]

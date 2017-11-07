@@ -307,7 +307,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: MorphicUIManager new.
 	World displayWorldSafely.
 	UIManager default uiProcess resume.
-	Pharo3Theme beCurrent.
+	PharoLightTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
 	self cleanUpAfterMorphicInitialization.
 
