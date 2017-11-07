@@ -7,23 +7,27 @@ Class {
 	#category : #Kernel-Rules
 }
 
+{ #category : #accessing }
+SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
+	"This number should be unique and should change only when the rule completely change semantics"
+	
+	^'SendsDeprecatedMethodToGlobalRule'
+]
+
 { #category : #running }
 SendsDeprecatedMethodToGlobalRule >> check: aNode forCritiquesDo: aCriticBlock [
-
-	| receiver |
+	| messageReceiver |
 
 	aNode isMessage ifFalse: [ ^ self ].
-	receiver := aNode receiver.
-
-	receiver isVariable ifFalse: [ ^ self ].
-	receiver binding ifNil: [ receiver doSemanticAnalysis ].
-	receiver isGlobal ifFalse: [ ^ self ]. 
-		
+	
+	messageReceiver := aNode receiver.
+	messageReceiver isVariable ifFalse: [ ^ self ].
+	messageReceiver isGlobal ifFalse: [ ^ self ].
 	(self
 		check: aNode selector
-		forDeprecationIn: receiver name ) ifFalse: [ ^ self ]. 
-				
-	aCriticBlock cull: (self critiqueFor: aNode) 
+		forDeprecationIn: messageReceiver name) ifFalse: [ ^ self ].
+		
+	self critiqueFor: aNode
 ]
 
 { #category : #running }
@@ -33,13 +37,6 @@ SendsDeprecatedMethodToGlobalRule >> check: aSelector forDeprecationIn: aGlobalN
 		classAndMethodFor: aSelector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
-]
-
-{ #category : #helpers }
-SendsDeprecatedMethodToGlobalRule >> critiqueFor: aMessageNode [
-	^ (super critiqueFor: aMessageNode)
-		tinyHint: aMessageNode selector;
-		yourself
 ]
 
 { #category : #accessing }

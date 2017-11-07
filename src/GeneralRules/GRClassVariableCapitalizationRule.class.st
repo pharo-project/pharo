@@ -4,7 +4,7 @@ Class and pool variable names should start with an uppercase letter.
 Class {
 	#name : #GRClassVariableCapitalizationRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #testing-interest }

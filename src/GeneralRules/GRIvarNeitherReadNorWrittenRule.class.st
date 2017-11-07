@@ -4,7 +4,7 @@ This smell arises when an instance variable is not both read and written. If an 
 Class {
 	#name : #GRIvarNeitherReadNorWrittenRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #testing-interest }

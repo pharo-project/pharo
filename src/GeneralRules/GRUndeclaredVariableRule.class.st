@@ -4,7 +4,7 @@ You are referencing a variable that is not declared anywhere. There is no temp, 
 Class {
 	#name : #GRUndeclaredVariableRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #running }

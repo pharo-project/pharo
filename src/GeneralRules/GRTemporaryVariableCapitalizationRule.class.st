@@ -4,7 +4,7 @@ Temporary and argument variable names should start with a lowercase letter.
 Class {
 	#name : #GRTemporaryVariableCapitalizationRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #running }

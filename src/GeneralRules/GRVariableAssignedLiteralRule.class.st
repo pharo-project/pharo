@@ -4,7 +4,7 @@ If a variable is only assigned a single literal value then that variable is eith
 Class {
 	#name : #GRVariableAssignedLiteralRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #testing-interest }

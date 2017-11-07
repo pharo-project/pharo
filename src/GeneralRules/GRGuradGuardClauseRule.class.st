@@ -21,7 +21,7 @@ foo
 Class {
 	#name : #GRGuradGuardClauseRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #accessing }

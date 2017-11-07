@@ -4,7 +4,7 @@ Instance variable names on the instance- and class-side should start with a lowe
 Class {
 	#name : #GRInstanceVariableCapitalizationRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules
+	#category : 'GeneralRules'
 }
 
 { #category : #testing-interest }
