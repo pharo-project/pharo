@@ -159,6 +159,79 @@ BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 	Author reset.
 ]
 
+{ #category : #fonts }
+BaselineOfMorphic >> exportBitmapDejaVuSans [
+
+	| familyName styleNames pointSizes family font fileName fontCopy style |
+
+	familyName := 'Bitmap DejaVu Sans'.
+	styleNames := #('Regular' 'Bold' 'Italic' 'Bold Italic').
+	pointSizes := #(7 9 12 14 18 24).
+
+	family := LogicalFontManager current allFamilies detect: [ :f | 
+		f familyName = 	familyName ] ifNone: [  ].
+
+	pointSizes do: [ :pointSize | 
+		styleNames do: [ :styleName |
+
+			style := family members detect: [ :m | m styleName = styleName ].
+			font := style asLogicalFontOfPointSize: pointSize.
+			font := font realFont.
+
+			fileName := font familyName, ' ', font pointSize asString, ' ', styleName.
+
+			font glyphs writePNGFileNamed: fileName, '.png'.
+
+			fontCopy := font copy.
+			fontCopy instVarNamed: #derivativeFonts put: nil.
+			fontCopy setGlyphs: fileName.
+
+			STON put: fontCopy onStream: (fileName, '.ston') asFileReference writeStream ]].
+
+]
+
+{ #category : #fonts }
+BaselineOfMorphic >> loadBitmapDejaVuSans [
+
+	| dejavu familyName pointSizes fonts styleNames fileName textStyle directoryName |
+
+	familyName := 'Bitmap DejaVu Sans'.
+	pointSizes := #(7 9 12 14 18 24).
+	directoryName := '../resources/fonts/'.
+
+	fonts := pointSizes collect: [ :pointSize | 	
+		| regular bold italic boldItalic |
+		styleNames := #('Regular' 'Bold' 'Italic' 'Bold Italic').
+
+		fileName := familyName, ' ', pointSize asString.
+		regular := STON fromStream: (directoryName, fileName, ' Regular.ston') asFileReference readStream.
+		regular setGlyphs: (PNGReadWriter formFromFileNamed: (directoryName, fileName, ' Regular.png')).
+
+		bold := STON fromStream: (directoryName, fileName, ' Bold.ston') asFileReference readStream.
+		bold setGlyphs: (PNGReadWriter formFromFileNamed: (directoryName, fileName, ' Bold.png')).
+		
+		italic := STON fromStream: (directoryName, fileName, ' Italic.ston') asFileReference readStream.
+		italic setGlyphs: (PNGReadWriter formFromFileNamed: (directoryName, fileName, ' Italic.png')).
+
+		boldItalic := STON fromStream: (directoryName, fileName, ' Bold Italic.ston') asFileReference readStream.
+		boldItalic setGlyphs: (PNGReadWriter formFromFileNamed: (directoryName, fileName, ' Bold Italic.png')).
+		
+		regular instVarNamed: #derivativeFonts put: ({bold. italic. boldItalic}, (Array new: 29)).
+		bold instVarNamed: #derivativeFonts put: (Array new: 32).
+		italic instVarNamed: #derivativeFonts put: (Array new: 32).
+		boldItalic instVarNamed: #derivativeFonts put: (Array new: 32).
+		regular
+	].
+
+	dejavu := TextStyle fontArray: fonts.		
+
+	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejavu.
+	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejavu.
+	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejavu.
+	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejavu.
+
+]
+
 { #category : #actions }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
@@ -182,13 +255,9 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SparseLargeTable recompile. 
 	
-	dejavu := FLMaterializer materializeFromFileNamed: 'BitmapDejaVuSans.fuel'.
-
-	TextConstants TextSharedInformation at: #'DefaultTextStyle' put: dejavu.
-	TextConstants TextSharedInformation at: #'Bitmap DejaVu Sans' put: dejavu.
-	TextConstants TextSharedInformation at: #'DefaultMultiStyle' put: dejavu.
-	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejavu.
-
+	PNGReadWriter initialize.
+	self loadBitmapDejaVuSans.
+	
 	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
 
 	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
@@ -200,7 +269,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
 	JPEGReadStream JPEGReadWriter 
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
-	PNGReadWriter RxMatcher RxParser RxsPredicate
+	RxMatcher RxParser RxsPredicate
 	SHA1 ShortIntegerArray SimpleEditor
 	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
 	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
