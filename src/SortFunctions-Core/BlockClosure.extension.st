@@ -29,5 +29,5 @@ BlockClosure >> collatedBy: aSortFunction [
 BlockClosure >> descending [
 	"Opposite direction as ascending."
 
-	^self asSortFunction inverted
+	^self asSortFunction reversed
 ]

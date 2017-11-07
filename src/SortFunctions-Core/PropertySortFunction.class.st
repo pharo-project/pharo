@@ -17,7 +17,6 @@ Class {
 	#name : #PropertySortFunction,
 	#superclass : #ComposedSortFunction,
 	#instVars : [
-		'undefinedDirection',
 		'property'
 	],
 	#category : #SortFunctions-Core

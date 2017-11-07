@@ -13,18 +13,18 @@ ReverseSortFunction >> collate: anObject with: another [
 ]
 
 { #category : #converting }
-ReverseSortFunction >> inverted [
+ReverseSortFunction >> reversed [
 	^baseSortFunction
 ]
 
 { #category : #converting }
 ReverseSortFunction >> undefinedFirst [
 	"apply on the original"
-	^baseSortFunction undefinedLast inverted
+	^baseSortFunction undefinedLast reversed
 ]
 
 { #category : #converting }
 ReverseSortFunction >> undefinedLast [
 	"apply on the original"
-	^baseSortFunction undefinedFirst inverted
+	^baseSortFunction undefinedFirst reversed
 ]
