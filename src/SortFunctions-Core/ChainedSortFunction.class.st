@@ -14,7 +14,7 @@ customers sort: #lastName ascending, #firstName, #age descending
 (note the missing ascending on the #firstName argument)
 
 Instance Variables
-	collator	<SortFunction> the primary SortFunction to collate given objects
+	baseSortFunction	<SortFunction> the primary SortFunction to collate given objects
 	next	Function	<SortFunction>	the next SortFunction to evaluate in the event primary collation results are equal values
 "
 Class {
@@ -28,10 +28,10 @@ Class {
 }
 
 { #category : #'instance creation' }
-ChainedSortFunction class >> startWith: aSortFunction then: aSortFunction2 [
+ChainedSortFunction class >> startWith: aSortFunction then: nextSortFunction [
 	^self new
-		startFunction: aSortFunction;
-		nextFunction: aSortFunction2
+		baseSortFunction: aSortFunction;
+		nextFunction: nextSortFunction
 ]
 
 { #category : #converting }
@@ -48,7 +48,7 @@ ChainedSortFunction >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ self startFunction = anObject startFunction
+	^ baseSortFunction = anObject baseSortFunction
 			and: [ nextFunction = anObject nextFunction ]
 ]
 
@@ -78,14 +78,4 @@ ChainedSortFunction >> nextFunction [
 { #category : #accessing }
 ChainedSortFunction >> nextFunction: anObject [
 	nextFunction := anObject
-]
-
-{ #category : #accessing }
-ChainedSortFunction >> startFunction [
-	^ baseSortFunction
-]
-
-{ #category : #accessing }
-ChainedSortFunction >> startFunction: anObject [
-	baseSortFunction := anObject
 ]
