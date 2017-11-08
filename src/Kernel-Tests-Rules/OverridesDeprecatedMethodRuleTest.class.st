@@ -38,7 +38,7 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck [
 	testMethod := testSubclass >> (
 		testSubclass compile: self methodName).
 		
-	self assert: (OverridesDeprecatedMethodRule new basicCheck: testMethod)
+	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isNotEmpty 
 ]
 
 { #category : #tests }
@@ -48,5 +48,5 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck1 [
 	testMethod := testSubclass >> (
 		testSubclass compile: self methodName, '1').
 		
-	self deny: (OverridesDeprecatedMethodRule new basicCheck: testMethod)
+	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isEmpty
 ]
