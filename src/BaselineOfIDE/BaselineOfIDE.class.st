@@ -905,7 +905,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	MCMethodDefinition initializersEnabled: false.
 	
-	repo := MCFileTreeRepository new
+	repo := TonelRepository new
 	directory: './pharo-core/src' asFileReference;
 	yourself.
 		
@@ -925,6 +925,11 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
 
 	Smalltalk cleanOutUndeclared. 
+
+	FileStream stdout nextPutAll: ' ------------ Obsolete ------------'; lf.
+	FileStream stdout nextPutAll: SystemNavigation default obsoleteClasses asString; lf.
+	FileStream stdout nextPutAll: ' ............ Obsolete ............'; lf.
+
 	Smalltalk fixObsoleteReferences.
 	
 	EpMonitor current enable.
