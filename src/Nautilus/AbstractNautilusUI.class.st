@@ -1609,7 +1609,7 @@ AbstractNautilusUI >> buildCodePanelWithCommentOnRight [
 						leftOffset: delta negated ; rightOffset: delta).
 	sourceCodePanel 
 		addMorph: commentWidget
-		fullFrame: (LayoutFrame identity leftFraction: 0.5@0 ;
+		fullFrame: (LayoutFrame identity leftFraction: 0.5 ;
 						leftOffset: delta).
 ]
 
