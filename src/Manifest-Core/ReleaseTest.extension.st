@@ -1,7 +1,7 @@
 Extension { #name : #ReleaseTest }
 
 { #category : #'*Manifest-Core' }
-ReleaseTest >> assertValidLintRule: aLintRule [
+ReleaseTest >> assertValidLintRule: aLintRule [ 
 	| runner |
 	runner := ReSmalllintChecker new.
 	runner 

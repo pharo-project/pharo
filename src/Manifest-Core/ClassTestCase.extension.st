@@ -2,13 +2,14 @@ Extension { #name : #ClassTestCase }
 
 { #category : #'*Manifest-Core' }
 ClassTestCase >> assertValidLintRule: aLintRule [
-	| checker |
-	checker := SmalllintManifestChecker new 
-		rule: aLintRule; 
-		environment: self targetClassEnvironment;
+	| runner |
+	runner := ReSmalllintChecker new.
+	runner 
+		rule: {aLintRule};
+		environment: RBBrowserEnvironment default;
 		run.
-	self 
-		assert: aLintRule result isEmpty
+	self
+		assert: (runner criticsOf: aLintRule) isEmpty
 		description: [ aLintRule rationale ]
 ]
 
