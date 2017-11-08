@@ -6,7 +6,7 @@ ClassTestCase >> assertValidLintRule: aLintRule [
 	runner := ReSmalllintChecker new.
 	runner 
 		rule: {aLintRule};
-		environment: RBBrowserEnvironment default;
+		environment: self targetClassEnvironment;
 		run.
 	self
 		assert: (runner criticsOf: aLintRule) isEmpty
