@@ -905,7 +905,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	MCMethodDefinition initializersEnabled: false.
 	
-	repo := MCFileTreeRepository new
+	repo := TonelRepository new
 	directory: './pharo-core/src' asFileReference;
 	yourself.
 		
