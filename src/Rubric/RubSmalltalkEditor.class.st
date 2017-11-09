@@ -449,6 +449,12 @@ RubSmalltalkEditor >> findClassFromAST [
 
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
 	
+	node ifNil: [ 
+		self selectLine.
+		^ self hasSelection 
+			ifTrue: [ (self selection string copyWithoutAll: CharacterSet crlf) trimBoth ]
+			ifFalse: [ nil ] ].
+	
 	[node isVariable] whileFalse: [ 
 	 	(node := node parent) ifNil: fallbackBlock ].
 	
