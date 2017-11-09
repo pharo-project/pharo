@@ -165,7 +165,7 @@ ShortcutReminder >> defaultBackgroundColor [
 { #category : #defaults }
 ShortcutReminder >> defaultFontFamiliyName [
 
-	^'Source Sans Pro'
+	^'Bitmap Source Sans Pro'
 ]
 
 { #category : #defaults }

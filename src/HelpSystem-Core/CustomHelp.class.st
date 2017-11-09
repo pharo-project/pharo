@@ -138,7 +138,7 @@ CustomHelp class >> heading: aString [
 
 	| font color |
 	
-	font := (LogicalFont familyName: 'Source Sans Pro' pointSize: 20).
+	font := (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 24).
 	color := Color fromHexString: '3196D3'.
 
 	aString ifEmpty: [ self errorEmptyString ].
@@ -227,7 +227,7 @@ CustomHelp class >> subheading: aString [
 
 	| text font color |
 	
-	font := (LogicalFont familyName: 'Source Sans Pro' pointSize:16).
+	font := (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 18).
 	color := Color fromHexString: '3196D3'.
 	text := (String cr asText, String cr, aString, String cr, String cr).
 	

@@ -629,7 +629,7 @@ GTSpotterWidgetThemer >> resultsPaneWidth [
 { #category : #values }
 GTSpotterWidgetThemer >> searchFieldFamilyName [
 
-	^ 'Source Sans Pro'
+	^ 'Bitmap Source Sans Pro'
 ]
 
 { #category : #values }
