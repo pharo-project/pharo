@@ -64,6 +64,11 @@ DiffPresenter class >> exampleWithoutOptions [
 
 ]
 
+{ #category : #undo-redo }
+DiffPresenter >> clearUndoManager [
+	self widget ifNotNil: #clearUndoManager
+]
+
 { #category : #accessing }
 DiffPresenter >> contextClass [
 
