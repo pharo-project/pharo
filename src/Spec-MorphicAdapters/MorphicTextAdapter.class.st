@@ -97,6 +97,11 @@ MorphicTextAdapter >> classOrMetaClass: aClass [
 	self setEditingModeFor: self widget withBehavior: aClass
 ]
 
+{ #category : #undo-redo }
+MorphicTextAdapter >> clearUndoManager [
+	self widget clearUndoManager
+]
+
 { #category : #'widget API' }
 MorphicTextAdapter >> clearUserEditFlag [
 

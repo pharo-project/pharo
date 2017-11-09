@@ -42,6 +42,11 @@ RubPluggableTextMorph >> askBeforeDiscardingEdits: aBoolean [
 	askBeforeDiscardingEdits := aBoolean
 ]
 
+{ #category : #undo-redo }
+RubPluggableTextMorph >> clearUndoManager [
+	self textArea editingState clearUndoManager: nil
+]
+
 { #category : #accessing }
 RubPluggableTextMorph >> getEnabledSelector [
 	"Answer the value of getEnabledSelector"
