@@ -175,6 +175,17 @@ zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
+
+# fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
+# in older versions we must use octal representation
+printf "\231\002\320\003" > displaySize.bin
+if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
+  SEEK=24
+else
+  SEEK=40
+fi
+dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
+
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.3'; load: 'core'"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://../src'; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
@@ -187,15 +198,5 @@ ${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
 
 # clean bak sources files
 rm -f *.bak
-
-# fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
-# in older versions we must use octal representation
-printf "\231\002\320\003" > displaySize.bin
-if [[ ${ARCH_DESCRIPTION} -eq "32" ]]; then
-  SEEK=24
-else
-  SEEK=40
-fi
-dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
 
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*
