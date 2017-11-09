@@ -240,6 +240,11 @@ TextPresenter >> clearSelection [
 	self setSelection: (0 to: 0)
 ]
 
+{ #category : #undo-redo }
+TextPresenter >> clearUndoManager [
+	self widget ifNotNil: #clearUndoManager
+]
+
 { #category : #api }
 TextPresenter >> codePaneMenu: aMenu shifted: shifted [ 
 	"Note that unless we override perform:orSendTo:, 
