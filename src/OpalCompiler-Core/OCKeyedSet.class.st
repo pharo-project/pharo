@@ -43,7 +43,7 @@ OCKeyedSet >> addAll: aCollection [
 OCKeyedSet >> at: key [ 
  	"Answer the value associated with the key."
  
- 	^ self at: key ifAbsent: [self errorKeyNotFound]
+ 	^ self at: key ifAbsent: [self errorKeyNotFound: key]
 ]
 
 { #category : #accessing }
@@ -92,9 +92,9 @@ OCKeyedSet >> copyEmpty [
 ]
 
 { #category : #private }
-OCKeyedSet >> errorKeyNotFound [
- 
- 	self error: 'key not found'
+OCKeyedSet >> errorKeyNotFound: aKey [
+
+	KeyNotFound signalFor: aKey
 ]
 
 { #category : #private }
@@ -219,9 +219,9 @@ OCKeyedSet >> removeAll [
 ]
 
 { #category : #removing }
-OCKeyedSet >> removeKey: key [ 
+OCKeyedSet >> removeKey: key [
  
- 	^ self removeKey: key ifAbsent: [self errorKeyNotFound]
+ 	^ self removeKey: key ifAbsent: [self errorKeyNotFound: key]
 ]
 
 { #category : #removing }

@@ -224,7 +224,7 @@ SmallDictionary >> at: firstKey at: secondKey [
 	>>>
 	2"
 
-	^ self at: firstKey at: secondKey ifAbsent: [ self errorKeyNotFound ]
+	^ self at: firstKey at: secondKey ifAbsent: [ self errorKeyNotFound: secondKey ]
 ]
 
 { #category : #'nested dictionaries' }
