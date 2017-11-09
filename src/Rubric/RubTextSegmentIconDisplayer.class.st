@@ -2,7 +2,9 @@ Class {
 	#name : #RubTextSegmentIconDisplayer,
 	#superclass : #RubScrolledTextSideRuler,
 	#instVars : [
-		'previouslyIn'
+		'previouslyIn',
+		'redButtonAction',
+		'yellowButtonAction'
 	],
 	#category : #Rubric-Editing-Widgets
 }
@@ -185,11 +187,6 @@ RubTextSegmentIconDisplayer >> itemWidth [
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> level [
 	^ 1
-]
-
-{ #category : #'event handling' }
-RubTextSegmentIconDisplayer >> mouseDown: anEvent [
-	super mouseDown: anEvent
 ]
 
 { #category : #'event handling' }

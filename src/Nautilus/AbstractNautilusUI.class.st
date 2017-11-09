@@ -1105,13 +1105,14 @@ AbstractNautilusUI >> acceptSourceCodeFromView [
 
 { #category : #'build ui' }
 AbstractNautilusUI >> addAll: aWindow [
-	| topHeight middleHeight bottomMorph bottomHeight delta |
+	| topHeight middleHeight bottomMorph bottomHeight delta textSegmentIcons |
 	delta := 0.
 	bottomHeight := 0.
 	middleHeight := 0.
 	topHeight := 0.
 	sourceTextWidget := self buildCodePane.
 	sourceTextWidget announcer when: RubTextAccepted send: #whenTextAcceptedInView: to: self.
+	
 	self buildTopPlugins
 		ifNotNil:
 			[ :top | 
@@ -1173,7 +1174,11 @@ AbstractNautilusUI >> addAll: aWindow [
 					(LayoutFrame identity 
 						topFraction: 1;
 						topOffset: bottomHeight negated).
-			bottomMorph color: Color transparent ]
+			bottomMorph color: Color transparent ].
+		
+	textSegmentIcons := sourceTextWidget rulerNamed: #textSegmentIcons.
+	textSegmentIcons on: #click send: #whenTextSegmentIconsClicked: to: self.
+
 ]
 
 { #category : #'menus behavior' }
@@ -4512,6 +4517,31 @@ AbstractNautilusUI >> whenTextAcceptedInView: anAnnouncement [
 AbstractNautilusUI >> whenTextAreaSelectionChanged: aSelectionChangedAnnounce [
 	self selectionInterval: aSelectionChangedAnnounce morph textArea selectionInterval.
 	contentSelection :=  aSelectionChangedAnnounce morph textArea selection
+]
+
+{ #category : #'source text events' }
+AbstractNautilusUI >> whenTextSegmentIconsClicked: anEvent [
+	
+	| aMethod anAST aCode aNode position line ruler |
+
+	aMethod := self selectedMethod.
+	aMethod ifNil: [ ^ self ].
+	self sourceTextModel hasUnacceptedEdits ifTrue: [ 
+		self inform: 'You need to save the method to install the Breakpoint'.
+		^ self ].
+	
+	ruler := sourceTextWidget rulerNamed: #textSegmentIcons.
+	line := ruler lineIndexForPoint: anEvent cursorPoint.
+
+	aCode := aMethod sourceCode.
+	anAST := aMethod ast.
+	
+	position := ((aCode lines first: ((line-1) max: 1)) sum: [ :each | each size ])+line.
+	aNode := anAST bestNodeFor: (position to: (position+1 min: aCode size)).
+
+	Breakpoint new node: aNode; always; install.
+	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.
+	
 ]
 
 { #category : #'comment pane' }
