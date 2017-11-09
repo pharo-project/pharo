@@ -188,11 +188,6 @@ RubTextSegmentIconDisplayer >> level [
 ]
 
 { #category : #'event handling' }
-RubTextSegmentIconDisplayer >> mouseDown: anEvent [
-	super mouseDown: anEvent
-]
-
-{ #category : #'event handling' }
 RubTextSegmentIconDisplayer >> mouseEnter: anEvent [
 	super mouseEnter: anEvent
 ]
