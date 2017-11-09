@@ -4538,10 +4538,10 @@ AbstractNautilusUI >> whenTextSegmentIconsClicked: anEvent [
 	
 	position := ((aCode lines first: ((line-1) max: 1)) sum: [ :each | each size ])+line.
 	aNode := anAST bestNodeFor: (position to: (position+1 min: aCode size)).
+	aNode := aNode ifNil: [ anAST ].
 
 	Breakpoint new node: aNode; always; install.
-	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.
-	
+	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.	
 ]
 
 { #category : #'comment pane' }
