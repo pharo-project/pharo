@@ -23,7 +23,7 @@ Class {
 	#category : #Graphics-Shapes
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 PathShape class >> vertices: aCollection [
 	"Answer a new instance of the receiver with the
 	given vertices."

@@ -1118,8 +1118,7 @@ AbstractNautilusUI >> addAll: aWindow [
 			topHeight := top height.
 			aWindow
 				addMorph: top
-				fullFrame:
-					((0 @ 0 corner: 1 @ 0) asLayoutFrame bottomOffset: topHeight).
+				fullFrame: (LayoutFrame identity bottomFraction: 0;  bottomOffset: topHeight).
 			delta := 4.
 			topHeight := topHeight + delta.
 			top color: Color transparent ].
@@ -1134,8 +1133,9 @@ AbstractNautilusUI >> addAll: aWindow [
 			aWindow
 				addMorph: middle
 				fullFrame:
-					((0 @ self navigationAreaProportion
-						corner: 1 @ self navigationAreaProportion) asLayoutFrame
+					(LayoutFrame identity
+						topFraction: self navigationAreaProportion;
+						bottomFraction: self navigationAreaProportion; 
 						bottomOffset: middleHeight).
 			middle color: Color transparent ].
 	sourceCodePanel := PanelMorph new.
@@ -1160,7 +1160,8 @@ AbstractNautilusUI >> addAll: aWindow [
 	aWindow
 		addMorph: sourceCodeContainer
 		fullFrame:
-			((0 @ self navigationAreaProportion corner: 1 @ 1) asLayoutFrame
+			(LayoutFrame identity
+				topFraction: self navigationAreaProportion;
 				topOffset: middleHeight;
 				bottomOffset: bottomHeight negated).
 	bottomMorph
@@ -1169,7 +1170,9 @@ AbstractNautilusUI >> addAll: aWindow [
 			aWindow
 				addMorph: bottomMorph
 				fullFrame:
-					((0 @ 1 corner: 1 @ 1) asLayoutFrame topOffset: bottomHeight negated).
+					(LayoutFrame identity 
+						topFraction: 1;
+						topOffset: bottomHeight negated).
 			bottomMorph color: Color transparent ]
 ]
 
@@ -1528,17 +1531,19 @@ AbstractNautilusUI >> buildButtonsBar [
 	| arrows buttons |
 	arrows := PanelMorph new
 		changeProportionalLayout;
-		addMorph: self buildNavigationPreviousButton fullFrame: (0 @ 0 corner: 0.5 @ 1) asLayoutFrame;
-		addMorph: self buildNavigationNextButton fullFrame: (0.5 @ 0 corner: 1 @ 1) asLayoutFrame;
+		addMorph: self buildNavigationPreviousButton fullFrame: (LayoutFrame identity rightFraction: 0.5);
+		addMorph: self buildNavigationNextButton fullFrame: (LayoutFrame identity leftFraction: 0.5);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		yourself.
 	buttons := PanelMorph new
 		changeProportionalLayout;
 		addMorph: self buildBrowseScopedButton
-			fullFrame: ((0 @ 0 corner: 0.1 @ 1) asLayoutFrame topLeftOffset: 2 @ 0);
+			fullFrame: 
+			 (LayoutFrame identity rightFraction: 0.1 ;topLeftOffset: 2 @ 0);
 		addMorph: self buildBrowseVariablesButton
-			fullFrame: ((0.1 @ 0 corner: 0.2 @ 1) asLayoutFrame topLeftOffset: 2 @ 0);
+			fullFrame: 
+			 (LayoutFrame identity leftFraction: 0.1 ; rightFraction: 0.2 ; topLeftOffset: 2 @ 0);
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		yourself.
@@ -1597,16 +1602,15 @@ AbstractNautilusUI >> buildCodePanelWithCommentOnRight [
 
 	sourceCodePanel
 		addMorph: sourceTextWidget
-		fullFrame: ( (0@0 corner: 0.5@1) asLayoutFrame
-						  bottomRightOffset: (delta negated)@0).
+		fullFrame: (LayoutFrame identity rightFraction: 0.5 ; rightOffset: delta negated).
 	sourceCodePanel
 		addMorph: splitter
-		fullFrame: ( (0.5@0 corner: 0.5@1) asLayoutFrame
-						topLeftOffset: (delta negated)@0 ; bottomRightOffset: delta@0).
+		fullFrame: (LayoutFrame identity leftFraction: 0.5; rightFraction: 0.5 ;
+						leftOffset: delta negated ; rightOffset: delta).
 	sourceCodePanel 
 		addMorph: commentWidget
-		fullFrame: ( (0.5@0 corner: 1@1) asLayoutFrame
-						topLeftOffset: delta@0 ; bottomRightOffset: 0@0).
+		fullFrame: (LayoutFrame identity leftFraction: 0.5@0 ;
+						leftOffset: delta).
 ]
 
 { #category : #'code panel' }
@@ -1622,19 +1626,35 @@ AbstractNautilusUI >> buildColumns: aWindow height: height [
 	aWindow
 		addMorph: (self buildFirstColumn: aWindow)
 		fullFrame:
-			((0 @ 0 corner: 0.22 @ self navigationAreaProportion) asLayoutFrame topOffset: height).
+			(LayoutFrame identity
+				rightFraction: 0.22;
+				bottomFraction: self navigationAreaProportion;
+				topOffset: height).
 	aWindow
 		addMorph: (self buildSecondColumn: aWindow)
 		fullFrame:
-			((0.22 @ 0 corner: 0.50 @ self navigationAreaProportion) asLayoutFrame topOffset: height).
+			(LayoutFrame identity
+				leftFraction: 0.22;
+				rightFraction: 0.50;
+				bottomFraction: self navigationAreaProportion;
+				topOffset: height).
 	aWindow
 		addMorph: (self buildThirdColumn: aWindow)
 		fullFrame:
-			((0.50 @ 0 corner: 0.72 @ self navigationAreaProportion) asLayoutFrame topOffset: height).
+			(LayoutFrame identity
+				leftFraction: 0.50;
+				rightFraction: 0.72;
+				bottomFraction: self navigationAreaProportion;
+				topOffset: height).
 	aWindow
 		addMorph: (self buildFourthColumn: aWindow)
 		fullFrame:
-			((0.72 @ 0 corner: 1 @ self navigationAreaProportion) asLayoutFrame topOffset: height)
+			(LayoutFrame identity
+				leftFraction: 0.72;
+				bottomFraction: self navigationAreaProportion;
+				topOffset: height).
+				
+		
 ]
 
 { #category : #'build ui buttons' }
@@ -1831,18 +1851,40 @@ AbstractNautilusUI >> buildSecondColumn: aWindow [
 	buttons := PanelMorph new.
 	buttons
 		changeProportionalLayout;
-		addMorph: self buildHierarchyButton fullFrame: ((0 @ 0 corner: 0.33 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize).
+		addMorph: self buildHierarchyButton
+			fullFrame:
+			(LayoutFrame identity
+				rightFraction: 0.33;
+				bottomFraction: 0;
+				bottomOffset: buttonSize;
+				rightOffset: -2).
 	instanceButtonWidget := self buildInstanceButton.
 	buttons
-		addMorph: instanceButtonWidget fullFrame: ((0.33 @ 0 corner: 0.67 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize);
-		addMorph: self buildCommentButton fullFrame: ((0.67 @ 0 corner: 1 @ 0) asLayoutFrame bottomRightOffset: -2 @ buttonSize);
+		addMorph: instanceButtonWidget
+			fullFrame:
+			(LayoutFrame identity
+				leftFraction: 0.33;
+				rightFraction: 0.67;
+				bottomFraction: 0;
+				bottomOffset: buttonSize;
+				rightOffset: -2);
+		addMorph: self buildCommentButton
+			fullFrame:
+			(LayoutFrame identity
+				leftFraction: 0.67;
+				bottomFraction: 0;
+				bottomOffset: buttonSize;
+				rightOffset: -2);
 		hResizing: #spaceFill;
 		vResizing: #rigid;
 		height: 25.
 	^ PanelMorph new
 		changeProportionalLayout;
-		addMorph: self buildClassWidget fullFrame: (LayoutFrame identity bottomOffset: 1 - (buttonSize + 4));
-		addMorph: buttons fullFrame: ((0 @ 1 corner: 1 @ 1) asLayoutFrame topOffset: 1 - (buttonSize + 1));
+		addMorph: self buildClassWidget
+			fullFrame: (LayoutFrame identity bottomOffset: 1 - (buttonSize + 4));
+		addMorph: buttons
+			fullFrame: (LayoutFrame identity topFraction: 1;
+							 topOffset: 1 - (buttonSize + 1));
 		hResizing: #spaceFill;
 		vResizing: #spaceFill;
 		yourself

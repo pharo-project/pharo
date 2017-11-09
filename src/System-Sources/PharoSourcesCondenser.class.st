@@ -86,7 +86,7 @@ PharoSourcesCondenser >> updateQuitPosition [
 	Smalltalk lastQuitLogPosition: 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #writing }
 PharoSourcesCondenser >> writeClassComment: aClass [
 	| organizer commentRemoteString stamp |
 	

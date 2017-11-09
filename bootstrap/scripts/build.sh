@@ -122,9 +122,6 @@ zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
 ../bootstrap/scripts/download_vm.sh
 
-echo "Prepare fonts"
-unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
-
 echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
