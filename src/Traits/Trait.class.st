@@ -576,17 +576,6 @@ Trait >> hasSubclasses [
 	^false
 ]
 
-{ #category : #'subclass creation' }
-Trait >> immediateByteSubclass: className instanceVariableNames: instvarNames classVariableNames: classVarNames package: package [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		immediateSubclass: className
-		instanceVariableNames: instvarNames
-		classVariableNames: classVarNames
-		package: package
-]
-
 { #category : #'subclass creation - immediate' }
 Trait >> immediateSubclass: className instanceVariableNames: instvarNames 
 	classVariableNames: classVarNames package: cat [
