@@ -89,7 +89,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion')
+	^ #(#BaselineOfBasicTools #BaselineOfDisplay #BaselineOfIDE #BaselineOfMorphic #BaselineOfMorphicCore #BaselineOfSUnit #BaselineOfUI #BaselineOfUnifiedFFI #Compiler #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion').
 ]
 
 { #category : #'known dependencies' }
