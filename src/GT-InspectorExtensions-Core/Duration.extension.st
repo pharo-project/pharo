@@ -4,9 +4,10 @@ Extension { #name : #Duration }
 Duration >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
-		title: [ 'Details' ];
+		title: 'Details';
 		display: [ 
-					{'days' -> self days.
+					{'human readable' -> self humanReadablePrintString.
+					'days' -> self days.
 					'hours' -> self hours.
 					'minutes' -> self minutes.
 					'seconds' -> self seconds .
