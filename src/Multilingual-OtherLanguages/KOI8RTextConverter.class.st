@@ -37,7 +37,7 @@ KOI8RTextConverter class >> encodingNames [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 KOI8RTextConverter class >> initialize [
 	self initializeTables
 ]

@@ -10,7 +10,7 @@ Class {
 	#category : #Keymapping-Core
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #logging }
 KMLog class >> log: aKeyEvent [
 
 	debug == true ifFalse: [ ^self ].
@@ -21,7 +21,7 @@ KMLog class >> log: aKeyEvent [
 		flush.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #logging }
 KMLog class >> logCompleteMatch: aKeymap [
 
 	debug == true ifFalse: [ ^self ].
@@ -33,7 +33,7 @@ KMLog class >> logCompleteMatch: aKeymap [
 		flush.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #logging }
 KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
 
 	debug == true ifFalse: [ ^self ].
@@ -46,7 +46,7 @@ KMLog class >> logCompleteMatchBetween: aMorph and: aKeymap [
 		flush.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #logging }
 KMLog class >> logPartialMatch: anEvent [
 
 	debug == true ifFalse: [ ^self ].
@@ -58,18 +58,18 @@ KMLog class >> logPartialMatch: anEvent [
 		flush.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 KMLog class >> logger [
 
 	^Transcript
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #debugging }
 KMLog class >> removeDebug [
 	debug := false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #debugging }
 KMLog class >> setDebug [
 	debug := true
 ]
