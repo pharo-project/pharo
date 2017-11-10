@@ -1178,6 +1178,7 @@ AbstractNautilusUI >> addAll: aWindow [
 		
 	textSegmentIcons := sourceTextWidget rulerNamed: #textSegmentIcons.
 	textSegmentIcons on: #click send: #whenTextSegmentIconsClicked: to: self.
+	textSegmentIcons on: #mouseUp send: #whenTextSegmentIconsMouseUp: to: self.
 
 ]
 
@@ -1303,6 +1304,75 @@ AbstractNautilusUI >> asYetUnclassifiedString [
 AbstractNautilusUI >> basicRenameClass: aClass [
 
 	self renameClass: aClass
+]
+
+{ #category : #breakpoints }
+AbstractNautilusUI >> breakOn: aNode [
+
+	| aMethod |
+	
+	aNode halt.
+	aMethod := self selectedMethod.
+
+	Breakpoint new node: aNode; always; install.
+	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.	
+]
+
+{ #category : #breakpoints }
+AbstractNautilusUI >> breakOnConditionOn: aNode [
+
+	| aMethod |
+	
+	aMethod := self selectedMethod.
+	
+	(UIManager default request: 'Break on what condition?' translated)	
+		ifNotNil: [ :condition | 
+			Breakpoint new 
+				node: aNode;
+				condition: (Smalltalk compiler evaluate: condition);
+				install.
+				
+			SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.	 ]
+	
+]
+
+{ #category : #breakpoints }
+AbstractNautilusUI >> breakOnceOn: aNode [
+
+	| aMethod |
+	
+	aMethod := self selectedMethod.
+
+	Breakpoint new node: aNode; once; install.
+	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.	
+]
+
+{ #category : #breakpoints }
+AbstractNautilusUI >> breakpointInstallationNodeFor: aCursorPoint [
+
+	| aMethod anAST aCode aNode startPosition endPosition line ruler selection |
+
+	ruler := sourceTextWidget rulerNamed: #textSegmentIcons.
+	line := ruler lineIndexForPoint: aCursorPoint.
+
+	aMethod := self selectedMethod.
+	aCode := aMethod sourceCode.
+	anAST := aMethod ast.
+	
+	startPosition := ((aCode lines first: ((((line-1) max: 1)) min: aCode lines size)) sum: [ :each | each size ])+line.
+	endPosition := ((aCode lines first: ((((line) max: 1)) min: aCode lines size)) sum: [ :each | each size ])+line.
+	
+	selection := self selectionInterval.
+	((selection notNil and: [ selection first >= startPosition ]) and: [ selection last <= endPosition ]) 
+		ifTrue: [ 
+			startPosition := selection first max: 1.
+			endPosition := selection last min: aCode size]
+		ifFalse: [ 
+			endPosition := (startPosition+1 min: aCode size) ].
+	{ startPosition. endPosition } logCr.
+	aNode := anAST bestNodeFor: (startPosition to: endPosition).
+	
+	^ aNode ifNil: [ anAST ].
 ]
 
 { #category : #'plugins announcements' }
@@ -1995,6 +2065,20 @@ AbstractNautilusUI >> buildVariableMenuFor: aMenu variablesFrom: aBlockOrSymbol 
 { #category : #'build ui' }
 AbstractNautilusUI >> buttonsBarHeight [
 	^ StandardFonts defaultFont pixelSize + 14
+]
+
+{ #category : #breakpoints }
+AbstractNautilusUI >> canInstallMethodBreakpoint [
+
+	| result |
+	
+	self selectedMethod ifNil: [ ^ false ].
+
+	result := self sourceTextModel hasUnacceptedEdits not.
+	
+	result ifFalse: [ self inform: 'You need to save the method to install a Breakpoint' ].
+	
+	^ result
 ]
 
 { #category : #'menus behavior' }
@@ -3172,6 +3256,22 @@ AbstractNautilusUI >> open [
 	window announcer when: WindowClosed send: #unregisterToAnnouncements to: self.
 	window openInWorld
 	
+]
+
+{ #category : #breakpoints }
+AbstractNautilusUI >> openBreakpointMenuFor: aNode [
+
+	| menu |
+	
+	menu := MenuMorph new defaultTarget: self.
+	menu add: 'Break' translated selector: #breakOn: argument: aNode.
+	menu lastItem icon: (self iconNamed: #stop).
+	menu add: 'Break once' translated selector: #breakOnceOn: argument: aNode.
+	menu lastItem icon: (self iconNamed: #stop).
+	menu add: 'Break on condition' translated selector: #breakOnConditionOn: argument: aNode.
+	menu lastItem icon: (self iconNamed: #stop).
+	
+	menu popUpInWorld
 ]
 
 { #category : #'plugins announcements' }
@@ -4522,26 +4622,27 @@ AbstractNautilusUI >> whenTextAreaSelectionChanged: aSelectionChangedAnnounce [
 { #category : #'source text events' }
 AbstractNautilusUI >> whenTextSegmentIconsClicked: anEvent [
 	
-	| aMethod anAST aCode aNode position line ruler |
+	| aNode |
 
-	aMethod := self selectedMethod.
-	aMethod ifNil: [ ^ self ].
-	self sourceTextModel hasUnacceptedEdits ifTrue: [ 
-		self inform: 'You need to save the method to install the Breakpoint'.
-		^ self ].
+	(self canInstallMethodBreakpoint )
+		ifFalse: [ ^ self ].
+
+	aNode := self breakpointInstallationNodeFor: anEvent cursorPoint.
+
+	self breakOn: aNode	
+]
+
+{ #category : #'source text events' }
+AbstractNautilusUI >> whenTextSegmentIconsMouseUp: anEvent [
+
+	| aNode|
+
+	(anEvent yellowButtonChanged and: [self canInstallMethodBreakpoint ])
+		ifFalse: [ ^ self ].
 	
-	ruler := sourceTextWidget rulerNamed: #textSegmentIcons.
-	line := ruler lineIndexForPoint: anEvent cursorPoint.
-
-	aCode := aMethod sourceCode.
-	anAST := aMethod ast.
+	aNode := self breakpointInstallationNodeFor: anEvent cursorPoint.
 	
-	position := ((aCode lines first: ((line-1) max: 1)) sum: [ :each | each size ])+line.
-	aNode := anAST bestNodeFor: (position to: (position+1 min: aCode size)).
-	aNode := aNode ifNil: [ anAST ].
-
-	Breakpoint new node: aNode; always; install.
-	SystemAnnouncer uniqueInstance methodChangedFrom: aMethod to: aMethod oldProtocol: aMethod protocol.	
+	self openBreakpointMenuFor: aNode.
 ]
 
 { #category : #'comment pane' }
