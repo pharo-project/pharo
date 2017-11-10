@@ -1311,7 +1311,8 @@ AbstractNautilusUI >> breakOn: aNode [
 
 	| aMethod |
 	
-	aNode halt.
+	aNode hasBreakpoint ifTrue: [ Breakpoint removeFrom: aNode ].
+	
 	aMethod := self selectedMethod.
 
 	Breakpoint new node: aNode; always; install.
@@ -1323,6 +1324,8 @@ AbstractNautilusUI >> breakOnConditionOn: aNode [
 
 	| aMethod |
 	
+	aNode hasBreakpoint ifTrue: [ Breakpoint removeFrom: aNode ].
+
 	aMethod := self selectedMethod.
 	
 	(UIManager default request: 'Break on what condition?' translated)	
@@ -1341,6 +1344,8 @@ AbstractNautilusUI >> breakOnceOn: aNode [
 
 	| aMethod |
 	
+	aNode hasBreakpoint ifTrue: [ Breakpoint removeFrom: aNode ].
+
 	aMethod := self selectedMethod.
 
 	Breakpoint new node: aNode; once; install.
@@ -1350,26 +1355,25 @@ AbstractNautilusUI >> breakOnceOn: aNode [
 { #category : #breakpoints }
 AbstractNautilusUI >> breakpointInstallationNodeFor: aCursorPoint [
 
-	| aMethod anAST aCode aNode startPosition endPosition line ruler selection |
+	| aMethod anAST aCode aNode startPosition endPosition line lineIndex ruler selection |
 
 	ruler := sourceTextWidget rulerNamed: #textSegmentIcons.
-	line := ruler lineIndexForPoint: aCursorPoint.
+	lineIndex := ruler lineIndexForPoint: aCursorPoint.
+	line := ruler paragraph lines at: lineIndex.
 
 	aMethod := self selectedMethod.
 	aCode := aMethod sourceCode.
 	anAST := aMethod ast.
 	
-	startPosition := ((aCode lines first: ((((line-1) max: 1)) min: aCode lines size)) sum: [ :each | each size ])+line.
-	endPosition := ((aCode lines first: ((((line) max: 1)) min: aCode lines size)) sum: [ :each | each size ])+line.
+	startPosition := line first.
+	endPosition := line last.
 	
 	selection := self selectionInterval.
 	((selection notNil and: [ selection first >= startPosition ]) and: [ selection last <= endPosition ]) 
 		ifTrue: [ 
 			startPosition := selection first max: 1.
-			endPosition := selection last min: aCode size]
-		ifFalse: [ 
-			endPosition := (startPosition+1 min: aCode size) ].
-	{ startPosition. endPosition } logCr.
+			endPosition := selection last min: aCode size].
+		
 	aNode := anAST bestNodeFor: (startPosition to: endPosition).
 	
 	^ aNode ifNil: [ anAST ].
