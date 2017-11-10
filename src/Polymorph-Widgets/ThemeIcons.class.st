@@ -237,15 +237,8 @@ ThemeIcons >> doesNotUnderstand: aMessage [
 
 { #category : #loading }
 ThemeIcons >> downloadFromUrl [
-	| dir |
-	dir := self class destinationPath ensureCreateDirectory. 
-	^ self downloadTo: dir
-]
-
-{ #category : #private }
-ThemeIcons >> downloadTo: dir [
 	| zipArchive |
-	
+	self class destinationPath ensureCreateDirectory. 	
 	zipArchive := self class destinationPath / (self name, '.zip').
 	zipArchive exists 
 		ifFalse: [ 
