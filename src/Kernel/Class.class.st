@@ -772,17 +772,6 @@ Class >> hasSubclasses [
 	^subclasses notNil
 ]
 
-{ #category : #'subclass creation' }
-Class >> immediateByteSubclass: className instanceVariableNames: instvarNames classVariableNames: classVarNames package: package [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		immediateSubclass: className
-		instanceVariableNames: instvarNames
-		classVariableNames: classVarNames
-		package: package
-]
-
 { #category : #'subclass creation - immediate' }
 Class >> immediateSubclass: className instanceVariableNames: instvarNames 
 	classVariableNames: classVarNames package: cat [
