@@ -336,6 +336,11 @@ SpecPreDebugWindow >> setTitle: aString [
 	self updateTitle 
 ]
 
+{ #category : #accessing }
+SpecPreDebugWindow >> stackPane [
+	^widgets at: #stackPane
+]
+
 { #category : #api }
 SpecPreDebugWindow >> title [
 
