@@ -17,12 +17,12 @@ Class {
 	#category : #Morphic-Base-ProgressBar
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JobProgressBarMorph >> decrement [
 	^ progressBar decrement
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JobProgressBarMorph >> increment [
 	^ progressBar increment
 ]
@@ -48,12 +48,12 @@ JobProgressBarMorph >> initialize [
 		addMorphBack: button
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JobProgressBarMorph >> progress [
 	^ progressBar value / 100
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JobProgressBarMorph >> progress: aNormalizedNumber [
 	^ progressBar value: aNormalizedNumber * 100
 ]
@@ -63,7 +63,7 @@ JobProgressBarMorph >> value [
 	^ progressBar value
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JobProgressBarMorph >> value: aNumber [
 	^ progressBar value: aNumber
 ]
