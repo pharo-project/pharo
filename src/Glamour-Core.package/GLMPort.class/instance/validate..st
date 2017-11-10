@@ -1,4 +1,0 @@
-validation
-validate: anObject 
-
-	^true

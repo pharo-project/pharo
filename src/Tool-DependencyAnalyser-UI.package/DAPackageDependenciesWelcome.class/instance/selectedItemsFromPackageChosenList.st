@@ -1,3 +1,0 @@
-accessing
-selectedItemsFromPackageChosenList
-	^ self packageChosenList selectedItems

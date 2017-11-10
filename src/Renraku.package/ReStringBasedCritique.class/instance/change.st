@@ -1,3 +1,0 @@
-accessing
-change
-	^ self shouldNotImplement

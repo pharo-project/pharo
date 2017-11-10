@@ -1,1 +1,0 @@
-I represent an operation done in a EpLogBrowser.

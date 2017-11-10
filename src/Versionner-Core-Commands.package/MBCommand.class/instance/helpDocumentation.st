@@ -1,3 +1,0 @@
-documentation
-helpDocumentation
-	^self documentation

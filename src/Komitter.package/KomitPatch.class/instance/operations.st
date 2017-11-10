@@ -1,4 +1,0 @@
-protocol
-operations
-
-	^ patch operations

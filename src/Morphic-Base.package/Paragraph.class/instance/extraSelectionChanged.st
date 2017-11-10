@@ -1,3 +1,0 @@
-selection
-extraSelectionChanged
-	refreshExtraSelection := true

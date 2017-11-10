@@ -1,1 +1,0 @@
-A super test case that (re)stores  the setting value

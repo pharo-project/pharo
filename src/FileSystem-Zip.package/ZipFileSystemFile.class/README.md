@@ -1,1 +1,0 @@
-I represent a zip file system entry for a file. Together with ZipFileSystemDirectory I take care of lazily accessing archive members.

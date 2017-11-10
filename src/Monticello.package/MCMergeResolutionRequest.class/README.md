@@ -1,1 +1,0 @@
-Notify to resolve conflicts by merging

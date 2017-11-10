@@ -1,3 +1,0 @@
-accessing
-projectPackage
-    self subclassResponsibility

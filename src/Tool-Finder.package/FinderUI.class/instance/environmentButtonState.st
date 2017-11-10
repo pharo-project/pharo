@@ -1,3 +1,0 @@
-buttons behavior
-environmentButtonState
-	^false.

@@ -1,4 +1,0 @@
-accessing
-selector
-
-	^ method selector

@@ -1,4 +1,0 @@
-tests-collections
-testEmptyOrderedCollection
-
-	self assertSerializationEqualityOf: OrderedCollection new

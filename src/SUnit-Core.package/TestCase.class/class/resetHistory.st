@@ -1,3 +1,0 @@
-history
-resetHistory
-	history := nil

@@ -1,3 +1,0 @@
-accessing
-numEntries
-	^ entries size

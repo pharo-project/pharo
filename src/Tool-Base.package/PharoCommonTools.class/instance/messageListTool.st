@@ -1,3 +1,0 @@
-tools
-messageListTool
-	^ self messageList

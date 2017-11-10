@@ -1,1 +1,0 @@
-Window edge gripper allowing resizing of a window by a particular side.

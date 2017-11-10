@@ -1,1 +1,0 @@
-I am signaled when trying to build a class with a duplicated slot.

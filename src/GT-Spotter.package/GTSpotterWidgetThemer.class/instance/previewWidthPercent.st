@@ -1,4 +1,0 @@
-values
-previewWidthPercent
-
-	^ 40

@@ -1,3 +1,0 @@
-delegate
-pathSegments
-	^ reference pathSegments

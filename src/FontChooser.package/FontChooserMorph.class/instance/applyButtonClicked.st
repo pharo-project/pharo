@@ -1,4 +1,0 @@
-actions
-applyButtonClicked
-	self apply.
-	

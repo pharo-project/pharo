@@ -1,3 +1,0 @@
-accessing
-traditionalBinaryPrecedenceArray
-	^ context traditionalBinaryPrecedenceArray

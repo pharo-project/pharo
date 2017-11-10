@@ -1,3 +1,0 @@
-geometry
-totalSliderArea
-	^ self innerBounds

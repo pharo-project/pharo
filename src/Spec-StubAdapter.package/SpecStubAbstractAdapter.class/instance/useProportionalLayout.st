@@ -1,2 +1,0 @@
-factory
-useProportionalLayout

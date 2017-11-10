@@ -1,1 +1,0 @@
-I represent a completion entry that is management by a ECModel and shown in the ECMenuMorph as a menu entry.

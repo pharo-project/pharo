@@ -1,3 +1,0 @@
-accessing
-defaultElement
-	^0

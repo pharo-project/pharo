@@ -1,1 +1,0 @@
-I'm a specific store for memory file system

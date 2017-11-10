@@ -1,1 +1,0 @@
-This class tests the OrderedDictionary class. It is separate from DictionaryTest to test that accessing, enumerating, and printing methods preserve the order that keys were inserted in.

@@ -1,3 +1,0 @@
-testing
-beBlockArg
-	argType := #block

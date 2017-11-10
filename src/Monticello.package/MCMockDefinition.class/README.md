@@ -1,1 +1,0 @@
-A mock definition used for testing purposes

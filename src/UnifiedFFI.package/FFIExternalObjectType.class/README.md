@@ -1,1 +1,0 @@
-I'm en external object type (a pointer)

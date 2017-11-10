@@ -1,4 +1,0 @@
-evaluating
-value
-
-	^self

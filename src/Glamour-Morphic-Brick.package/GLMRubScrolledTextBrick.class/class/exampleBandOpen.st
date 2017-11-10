@@ -1,4 +1,0 @@
-examples
-exampleBandOpen
-
-	self gtExampleBand openInBrickWindow

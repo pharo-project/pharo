@@ -1,3 +1,0 @@
-private
-resizeWidget
-	"Do nothing"

@@ -1,3 +1,0 @@
-updating
-step
-	self refreshItems 

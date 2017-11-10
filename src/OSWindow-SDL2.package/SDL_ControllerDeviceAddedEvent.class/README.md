@@ -1,1 +1,0 @@
-SDL2 library structure representing a controller device added event data.

@@ -1,4 +1,0 @@
-*GT-Debugger
-availableAutomatically
-
-	^ false

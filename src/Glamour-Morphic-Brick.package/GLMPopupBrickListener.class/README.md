@@ -1,1 +1,0 @@
-I am an internal popup brick event listener. I know a popup I belong to

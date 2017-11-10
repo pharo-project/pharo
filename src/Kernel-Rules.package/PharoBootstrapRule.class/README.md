@@ -1,1 +1,0 @@
-A package from the bootstrap layer (minimal image) is depending on an external package.

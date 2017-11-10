@@ -1,3 +1,0 @@
-finalization
-finalizeValues 
-	self rehash

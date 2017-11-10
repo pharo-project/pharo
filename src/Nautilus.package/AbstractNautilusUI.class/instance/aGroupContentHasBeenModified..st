@@ -1,3 +1,0 @@
-group announcements
-aGroupContentHasBeenModified: anAnnouncement
-	self updateGroupView

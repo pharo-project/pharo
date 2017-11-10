@@ -1,4 +1,0 @@
-accessing
-familyName 
-
-	^face familyName 

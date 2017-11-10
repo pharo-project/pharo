@@ -1,3 +1,0 @@
-scripting
-asProjectSpecForVersion: vrsn
-  ^ self

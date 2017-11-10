@@ -1,3 +1,0 @@
-testing
-isResized
-	^ false

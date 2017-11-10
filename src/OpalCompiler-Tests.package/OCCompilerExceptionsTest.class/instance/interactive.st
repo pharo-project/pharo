@@ -1,3 +1,0 @@
-compiling
-interactive 
-	^ true

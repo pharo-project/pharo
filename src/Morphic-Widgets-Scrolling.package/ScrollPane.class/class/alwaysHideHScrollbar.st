@@ -1,3 +1,0 @@
-settings
-alwaysHideHScrollbar
-	^ false

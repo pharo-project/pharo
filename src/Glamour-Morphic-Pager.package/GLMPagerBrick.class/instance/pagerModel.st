@@ -1,3 +1,0 @@
-pager-accessing
-pagerModel
-	^ pagerModel

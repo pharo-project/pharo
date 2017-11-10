@@ -1,3 +1,0 @@
-installing
-isExtensionMethod
-	^ category beginsWith: '*'

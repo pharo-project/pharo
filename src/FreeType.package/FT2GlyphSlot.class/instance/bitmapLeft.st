@@ -1,3 +1,0 @@
-accessing-fields
-bitmapLeft
-	^bitmapLeft

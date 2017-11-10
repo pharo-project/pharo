@@ -1,3 +1,0 @@
-*NautilusCommon
-correspondingTestCase
-	^ nil

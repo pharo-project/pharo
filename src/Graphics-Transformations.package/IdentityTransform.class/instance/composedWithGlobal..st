@@ -1,3 +1,0 @@
-composing
-composedWithGlobal: aTransformation
-	^aTransformation

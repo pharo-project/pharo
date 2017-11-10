@@ -1,4 +1,0 @@
-accessing
-tabSelector
-
-	^ tabSelector

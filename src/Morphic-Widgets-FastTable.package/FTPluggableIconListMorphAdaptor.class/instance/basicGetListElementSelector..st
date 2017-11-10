@@ -1,3 +1,0 @@
-accessing selectors
-basicGetListElementSelector: aSelector
-	self getListElementSelector: aSelector

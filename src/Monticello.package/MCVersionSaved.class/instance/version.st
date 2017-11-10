@@ -1,4 +1,0 @@
-accessing
-version
-
-	^ version

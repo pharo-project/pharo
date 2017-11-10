@@ -1,3 +1,0 @@
-protocol
-closeAllTabs
-	toolbar closeAllTabs

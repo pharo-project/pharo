@@ -1,5 +1,0 @@
-running
-failureLog	
-	^Transcript
-
-			

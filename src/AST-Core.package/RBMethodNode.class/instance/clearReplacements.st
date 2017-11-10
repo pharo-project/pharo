@@ -1,3 +1,0 @@
-replacing
-clearReplacements
-	replacements := nil

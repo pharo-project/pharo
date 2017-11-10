@@ -1,3 +1,0 @@
-extending
-extendByte
-	^ ByteLayout new

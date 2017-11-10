@@ -1,3 +1,0 @@
-accessing
-methodSignatureOnMultipleLines
-	^ context methodSignatureOnMultipleLines

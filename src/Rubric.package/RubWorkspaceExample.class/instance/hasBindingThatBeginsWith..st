@@ -1,3 +1,0 @@
-shout
-hasBindingThatBeginsWith: aString
-	^false

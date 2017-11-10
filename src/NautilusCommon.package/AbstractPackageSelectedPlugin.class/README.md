@@ -1,1 +1,0 @@
-AbstractKeyPressedPlugin is an abstraction of plugin which react when a package is selected

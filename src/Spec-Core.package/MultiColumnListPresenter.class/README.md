@@ -1,1 +1,0 @@
-A MultiColumnListPresenter is a spec presenter for Multi columns list

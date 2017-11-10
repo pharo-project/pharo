@@ -1,4 +1,0 @@
-queries
-classes
-
-	^ self subclassResponsibility

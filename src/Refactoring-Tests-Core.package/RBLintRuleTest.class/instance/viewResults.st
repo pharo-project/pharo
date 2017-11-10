@@ -1,3 +1,0 @@
-private
-viewResults
-	self subclassResponsibility

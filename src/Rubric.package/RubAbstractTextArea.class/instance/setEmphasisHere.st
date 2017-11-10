@@ -1,3 +1,0 @@
-private
-setEmphasisHere
-	self editor setEmphasisHere

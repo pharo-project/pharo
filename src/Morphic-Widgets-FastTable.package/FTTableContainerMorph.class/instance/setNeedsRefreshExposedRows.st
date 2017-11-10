@@ -1,3 +1,0 @@
-private
-setNeedsRefreshExposedRows
-	needsRefreshExposedRows := true

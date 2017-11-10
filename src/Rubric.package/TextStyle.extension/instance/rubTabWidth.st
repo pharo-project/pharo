@@ -1,3 +1,0 @@
-*Rubric
-rubTabWidth
-	 ^ tabsArray first

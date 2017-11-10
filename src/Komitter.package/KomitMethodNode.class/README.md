@@ -1,1 +1,0 @@
-I am a node in the Komit tree representing a method

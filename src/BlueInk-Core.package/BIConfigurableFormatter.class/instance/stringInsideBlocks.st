@@ -1,3 +1,0 @@
-accessing
-stringInsideBlocks
-	^ context stringInsideBlocks

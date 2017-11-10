@@ -1,1 +1,0 @@
-A NautilusKeyPressed is raised each time a key is pressed on a Nautilus ui

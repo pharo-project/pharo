@@ -1,1 +1,0 @@
-I detect gestures which needs all fingers to go on the same direction

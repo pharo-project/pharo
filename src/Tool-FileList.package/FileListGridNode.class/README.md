@@ -1,1 +1,0 @@
-A node in the file list grid

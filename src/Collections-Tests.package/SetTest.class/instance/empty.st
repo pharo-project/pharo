@@ -1,4 +1,0 @@
-tests - empty
-empty
-	
-	^ empty

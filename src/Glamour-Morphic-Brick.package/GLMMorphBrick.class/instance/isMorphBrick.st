@@ -1,4 +1,0 @@
-morph-common
-isMorphBrick
-
-	^ true

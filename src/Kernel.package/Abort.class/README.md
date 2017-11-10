@@ -1,1 +1,0 @@
-Notify to abort a task

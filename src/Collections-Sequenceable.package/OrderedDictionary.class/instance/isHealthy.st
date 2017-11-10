@@ -1,3 +1,0 @@
-testing
-isHealthy
-	^ dictionary isHealthy

@@ -1,4 +1,0 @@
-api
-hState
-
-	^ GLMBrickLayoutDummState new

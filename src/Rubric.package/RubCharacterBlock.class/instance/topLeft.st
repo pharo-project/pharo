@@ -1,3 +1,0 @@
-accessing
-topLeft
-	^ surface topLeft

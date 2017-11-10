@@ -1,3 +1,0 @@
-convenience
-default
-	^ self applicationOctetStream 

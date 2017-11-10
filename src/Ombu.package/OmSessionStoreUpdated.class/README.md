@@ -1,1 +1,0 @@
-I am announced when a OmSessionStore updated its current #store.

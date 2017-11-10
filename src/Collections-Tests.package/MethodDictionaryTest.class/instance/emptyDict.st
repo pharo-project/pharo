@@ -1,3 +1,0 @@
-requirements
-emptyDict
-	^ self empty

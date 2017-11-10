@@ -1,4 +1,0 @@
-resources
-directoryForTests
-
-	^ FileSystem workingDirectory

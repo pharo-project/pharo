@@ -1,2 +1,0 @@
-writing
-doWriteInto: aWriter

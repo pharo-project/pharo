@@ -1,4 +1,0 @@
-api
-currentText
-
-	 ^ textPresenter getText

@@ -1,3 +1,0 @@
-testing
-isMacOS
-	^ false

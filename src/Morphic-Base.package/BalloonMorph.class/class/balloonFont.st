@@ -1,3 +1,0 @@
-utility
-balloonFont
-	^ StandardFonts balloonFont

@@ -1,3 +1,0 @@
-testing
-isOn
-	^ state == #on

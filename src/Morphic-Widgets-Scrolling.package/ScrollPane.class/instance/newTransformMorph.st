@@ -1,3 +1,0 @@
-initialization
-newTransformMorph
-	^TransformMorph new 

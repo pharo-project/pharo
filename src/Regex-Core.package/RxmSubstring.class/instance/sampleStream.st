@@ -1,4 +1,0 @@
-private
-sampleStream
-
-	^sample readStream

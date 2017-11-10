@@ -1,3 +1,0 @@
-origins
-library
-	^ self userLibrary

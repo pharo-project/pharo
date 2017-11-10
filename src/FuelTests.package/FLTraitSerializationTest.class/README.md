@@ -1,1 +1,0 @@
-I have the common behavior for testing trait serialization.

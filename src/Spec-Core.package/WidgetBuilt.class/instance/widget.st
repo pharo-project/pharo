@@ -1,3 +1,0 @@
-accessing
-widget
-	^ widget

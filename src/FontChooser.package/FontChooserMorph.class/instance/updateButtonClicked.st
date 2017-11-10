@@ -1,4 +1,0 @@
-actions
-updateButtonClicked
-
-	self updateFontList.

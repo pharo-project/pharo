@@ -1,4 +1,0 @@
-accessing
-okButton
-
-	^ okButton

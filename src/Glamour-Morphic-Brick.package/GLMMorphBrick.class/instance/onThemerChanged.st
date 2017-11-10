@@ -1,3 +1,0 @@
-brick-properties-events
-onThemerChanged
-	

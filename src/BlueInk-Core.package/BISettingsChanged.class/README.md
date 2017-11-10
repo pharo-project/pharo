@@ -1,1 +1,0 @@
-I am raised when a setting of BlueInk is changed

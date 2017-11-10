@@ -1,3 +1,0 @@
-debugging
-debug
-	^ process debug

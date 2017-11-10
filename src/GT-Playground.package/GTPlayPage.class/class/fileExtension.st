@@ -1,3 +1,0 @@
-accessing-dynamic
-fileExtension
-	^ 'ph'

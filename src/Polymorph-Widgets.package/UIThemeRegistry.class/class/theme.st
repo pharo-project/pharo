@@ -1,3 +1,0 @@
-accessing
-theme 
-	^ UITheme current

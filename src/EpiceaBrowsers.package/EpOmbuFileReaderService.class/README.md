@@ -1,1 +1,0 @@
-I implement a service for browsing Epicea logs.

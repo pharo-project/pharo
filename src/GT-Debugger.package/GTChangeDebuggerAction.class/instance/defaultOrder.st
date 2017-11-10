@@ -1,4 +1,0 @@
-initialization
-defaultOrder
-
-	^ 100

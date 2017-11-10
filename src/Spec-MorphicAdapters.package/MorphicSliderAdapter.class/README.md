@@ -1,1 +1,0 @@
-I am the adapter used to bridget a SliderPresenter and a PluggableSliderMorph

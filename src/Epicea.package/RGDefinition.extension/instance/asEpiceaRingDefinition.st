@@ -1,4 +1,0 @@
-*Epicea-Ring
-asEpiceaRingDefinition
-
-	^ self

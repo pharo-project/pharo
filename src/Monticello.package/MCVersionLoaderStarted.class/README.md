@@ -1,1 +1,0 @@
-Announcement sent when a Version is starting to load

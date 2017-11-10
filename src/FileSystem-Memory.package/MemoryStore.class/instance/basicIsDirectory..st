@@ -1,3 +1,0 @@
-private
-basicIsDirectory: aMemoryFileSystemEntry
-	^ aMemoryFileSystemEntry isDirectory

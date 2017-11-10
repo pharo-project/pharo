@@ -1,3 +1,0 @@
-private
-resizeWidget
-	self subclassResponsibility 

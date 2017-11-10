@@ -1,2 +1,0 @@
-handles
-addDupHandle: haloSpec

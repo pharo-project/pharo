@@ -1,4 +1,0 @@
-private
-packageOrganizer
-
-	^ RPackageOrganizer default

@@ -1,3 +1,0 @@
-tests
-testNoClassComment
-	self classAndMetaClassRuleFor: self currentSelector

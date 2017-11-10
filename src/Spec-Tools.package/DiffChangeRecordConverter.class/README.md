@@ -1,1 +1,0 @@
-A DiffChangeRecordConverter is a converter used to show the diff between two methodreferences

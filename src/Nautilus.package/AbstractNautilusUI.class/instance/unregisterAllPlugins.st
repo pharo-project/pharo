@@ -1,4 +1,0 @@
-announcement registration
-unregisterAllPlugins
-
-	self announcer subscriptions reset

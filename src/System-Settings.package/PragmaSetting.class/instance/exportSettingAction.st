@@ -1,4 +1,0 @@
-export
-exportSettingAction
-	
-	^ nil

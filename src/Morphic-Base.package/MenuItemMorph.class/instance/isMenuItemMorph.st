@@ -1,3 +1,0 @@
-testing
-isMenuItemMorph
-	^ true

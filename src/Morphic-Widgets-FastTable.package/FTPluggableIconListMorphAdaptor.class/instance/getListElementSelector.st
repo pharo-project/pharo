@@ -1,3 +1,0 @@
-accessing selectors
-getListElementSelector
-	^ self dataSource getListElementSelector

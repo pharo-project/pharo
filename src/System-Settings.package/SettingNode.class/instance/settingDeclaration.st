@@ -1,3 +1,0 @@
-accessing
-settingDeclaration
-	^ self item

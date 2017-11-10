@@ -1,3 +1,0 @@
-accessing
-expand
-	expand := true.

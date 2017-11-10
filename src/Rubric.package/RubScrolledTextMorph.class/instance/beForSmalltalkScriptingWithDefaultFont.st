@@ -1,3 +1,0 @@
-accessing
-beForSmalltalkScriptingWithDefaultFont
-    self textArea beForSmalltalkScriptingWithDefaultFont

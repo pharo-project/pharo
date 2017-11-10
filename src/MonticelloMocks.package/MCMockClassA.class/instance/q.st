@@ -1,2 +1,0 @@
-drag'n'drop
-q

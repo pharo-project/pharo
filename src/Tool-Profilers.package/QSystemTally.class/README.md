@@ -1,1 +1,0 @@
-Tally for assembling system profiles. It's a subclass of Link so we can chain tallies together in the receivers list.

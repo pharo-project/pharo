@@ -1,3 +1,0 @@
-tests
-testThisContext
-	self checkCorrectDecompilation: #exampleThisContext

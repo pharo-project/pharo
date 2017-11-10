@@ -1,3 +1,0 @@
-accessing
-alreadySearchedSelectedItemsListMaxSize
-	^self class alreadySearchedSelectedItemsListMaxSize

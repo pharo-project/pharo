@@ -1,3 +1,0 @@
-public
-handleFatalException: anException
-	GTSpotterExceptionsTest fatals add: anException

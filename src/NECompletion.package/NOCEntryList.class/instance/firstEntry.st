@@ -1,3 +1,0 @@
-accessing
-firstEntry
-	^ entryHead previous

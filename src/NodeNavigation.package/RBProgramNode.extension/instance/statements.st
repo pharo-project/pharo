@@ -1,3 +1,0 @@
-*NodeNavigation
-statements
-	^ #().

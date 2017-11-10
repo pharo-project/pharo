@@ -1,5 +1,0 @@
-setup
-result
-
-	^ collectResult.
-	

@@ -1,4 +1,0 @@
-accessing
-labelGraphic
-
-	^ graphicalMorph form

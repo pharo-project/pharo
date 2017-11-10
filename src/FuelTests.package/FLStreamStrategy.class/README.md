@@ -1,1 +1,0 @@
-I am a strategy that help tests for writing (and then reading) on streams.

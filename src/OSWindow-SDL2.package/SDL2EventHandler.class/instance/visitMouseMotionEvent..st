@@ -1,2 +1,0 @@
-visitor
-visitMouseMotionEvent: mouseMotionEvent

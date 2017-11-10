@@ -1,3 +1,0 @@
-testing
-testAsRingDefinition
-	self assert: OrderedCollection asRingDefinition asRingDefinition isRingObject

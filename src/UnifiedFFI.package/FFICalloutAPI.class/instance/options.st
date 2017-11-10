@@ -1,3 +1,0 @@
-accessing
-options
-	^ options

@@ -1,3 +1,0 @@
-accessing colors
-menuKeyboardFocusColor
-	^ self settings menuKeyboardFocusColor

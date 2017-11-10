@@ -1,4 +1,0 @@
-tests - creation
-collectionClass 
-	
-	^ Array

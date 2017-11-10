@@ -1,3 +1,0 @@
-accessing
-disableCache
-	useCache := false

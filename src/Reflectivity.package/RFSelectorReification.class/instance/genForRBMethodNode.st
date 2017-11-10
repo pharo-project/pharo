@@ -1,3 +1,0 @@
-generate
-genForRBMethodNode
-	^entity selector asLiteralNode

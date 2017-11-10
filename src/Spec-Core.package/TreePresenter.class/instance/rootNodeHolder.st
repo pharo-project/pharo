@@ -1,4 +1,0 @@
-api
-rootNodeHolder
-
-	^ rootNodeHolder value

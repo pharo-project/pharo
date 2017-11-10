@@ -1,3 +1,0 @@
-protocol
-hasFocus
-	^ packagesList hasKeyboardFocus 

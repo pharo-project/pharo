@@ -1,1 +1,0 @@
-A non-primary pointer has gone down.

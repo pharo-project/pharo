@@ -1,3 +1,0 @@
-computing
-subdivide
-	^nil

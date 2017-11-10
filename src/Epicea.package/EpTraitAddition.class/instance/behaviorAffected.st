@@ -1,3 +1,0 @@
-accessing
-behaviorAffected
-	^ self traitAdded

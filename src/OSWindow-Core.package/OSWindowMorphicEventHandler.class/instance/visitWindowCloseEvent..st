@@ -1,4 +1,0 @@
-visiting
-visitWindowCloseEvent: anEvent
-	anEvent suppressDefaultAction.
-	morphicWorld osWindowCloseButtonPressed

@@ -1,1 +1,0 @@
-I am a dictionary holding only weakly on my values. Clients may expect to get a nil value for any object they request.

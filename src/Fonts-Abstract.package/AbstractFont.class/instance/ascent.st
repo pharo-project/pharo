@@ -1,4 +1,0 @@
-accessing
-ascent
-
-	self subclassResponsibility.

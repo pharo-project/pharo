@@ -1,4 +1,0 @@
-accessing
-actionWhenActivatedHolder
-	
-	^ actionWhenActivatedHolder

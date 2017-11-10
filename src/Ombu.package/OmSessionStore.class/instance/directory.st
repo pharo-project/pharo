@@ -1,4 +1,0 @@
-accessing
-directory
-
-	^ baseLocator asFileReference

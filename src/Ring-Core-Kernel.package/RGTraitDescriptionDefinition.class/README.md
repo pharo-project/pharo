@@ -1,1 +1,0 @@
-RGTraitDescriptionDefinition is the common parent for traits and metatraits that know their users (ie. classes/metaclasses)

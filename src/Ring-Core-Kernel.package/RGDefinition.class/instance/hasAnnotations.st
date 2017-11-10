@@ -1,4 +1,0 @@
-annotations
-hasAnnotations
-
-	^annotations notNil

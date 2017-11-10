@@ -1,3 +1,0 @@
-accessing-token
-leftBar
-	^ leftBar

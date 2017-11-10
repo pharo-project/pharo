@@ -1,3 +1,0 @@
-accessing
-pragmas
-	^ pragmas ifNil: [ #() ]

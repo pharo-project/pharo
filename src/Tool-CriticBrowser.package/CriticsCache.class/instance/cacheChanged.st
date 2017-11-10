@@ -1,3 +1,0 @@
-private
-cacheChanged 
-	change := true

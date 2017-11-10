@@ -1,4 +1,0 @@
-initialization
-unsubscribeListeners
-
-	self activeHand removeEventListener: self

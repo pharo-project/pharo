@@ -1,3 +1,0 @@
-stack list
-exploreContext
-	selectedContext explore

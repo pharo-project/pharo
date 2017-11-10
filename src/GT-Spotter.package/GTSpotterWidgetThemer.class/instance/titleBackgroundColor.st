@@ -1,4 +1,0 @@
-values
-titleBackgroundColor
-
-	^ Color transparent

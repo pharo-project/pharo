@@ -1,4 +1,0 @@
-constructor
-codeThisContext
-
-	^NodeThisContext

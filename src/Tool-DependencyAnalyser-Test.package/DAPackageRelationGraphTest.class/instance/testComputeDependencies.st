@@ -1,4 +1,0 @@
-tests
-testComputeDependencies
-	aPackageRelationGraph computeStaticDependencies: packageCollectionAbstract.
-	self deny: (packageCollectionAbstract dependencies isEmpty)

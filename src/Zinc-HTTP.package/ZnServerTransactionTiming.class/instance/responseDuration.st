@@ -1,3 +1,0 @@
-accessing
-responseDuration
-	^ responseDuration

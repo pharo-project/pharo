@@ -1,4 +1,0 @@
-accessing
-numberOfArgumentsForMultiLine: anInteger
-	DefaultPrettyPrintContext numberOfArgumentsForMultiLine: anInteger.
-	self announceASettingChange

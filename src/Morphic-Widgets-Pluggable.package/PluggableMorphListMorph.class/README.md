@@ -1,1 +1,0 @@
-A type of PluggableListMorph that supports morphs for items. Useful for lists with icons etc.

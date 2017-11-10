@@ -1,3 +1,0 @@
-initialization
-defaultColor
-	^ Color red

@@ -1,4 +1,0 @@
-accessing
-quickRetNode
-	^ IRReturnReceiver new
-	

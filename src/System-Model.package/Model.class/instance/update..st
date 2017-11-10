@@ -1,4 +1,0 @@
-updating
-update: anAspect
-
-	^ self

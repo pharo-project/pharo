@@ -1,3 +1,0 @@
-enumerating
-allSlotsReverseDo: aBlock
-	self subclassResponsibility

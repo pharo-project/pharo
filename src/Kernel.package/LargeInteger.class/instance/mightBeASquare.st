@@ -1,3 +1,0 @@
-testing
-mightBeASquare
-	self subclassResponsibility

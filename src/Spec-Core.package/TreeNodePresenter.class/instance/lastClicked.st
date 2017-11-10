@@ -1,4 +1,0 @@
-api
-lastClicked
-	
-	^ lastClicked value

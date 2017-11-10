@@ -1,4 +1,0 @@
-*renraku
-checksAST
-
-	^ false

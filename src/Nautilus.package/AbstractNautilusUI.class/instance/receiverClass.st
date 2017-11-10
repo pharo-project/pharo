@@ -1,4 +1,0 @@
-NOCompletion
-receiverClass
-
-	^ self selectedClass

@@ -1,3 +1,0 @@
-initialize
-defaultColor
-	^ Color transparent

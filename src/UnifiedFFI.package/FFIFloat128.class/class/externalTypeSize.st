@@ -1,3 +1,0 @@
-accessing
-externalTypeSize
-	^ 16

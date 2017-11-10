@@ -1,4 +1,0 @@
-*Epicea
-isEpEvent
-	
-	^ false

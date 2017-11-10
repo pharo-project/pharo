@@ -1,3 +1,0 @@
-private
-getName
-	^ self name

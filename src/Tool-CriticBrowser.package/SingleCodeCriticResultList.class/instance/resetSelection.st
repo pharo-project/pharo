@@ -1,3 +1,0 @@
-api
-resetSelection
-	self criticsModel resetSelection

@@ -1,3 +1,0 @@
-accessing
-packageSet
-	^ package packageSet

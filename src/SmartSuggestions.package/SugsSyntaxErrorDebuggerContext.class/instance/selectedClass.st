@@ -1,3 +1,0 @@
-refactoring
-selectedClass
-	^model selectedClass

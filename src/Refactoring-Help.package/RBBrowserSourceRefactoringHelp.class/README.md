@@ -1,1 +1,0 @@
-This is the chapter of the refactoring help book about source code refactorings available from System Browsers code pane.

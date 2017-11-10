@@ -1,1 +1,0 @@
-I represent the creation of a class.

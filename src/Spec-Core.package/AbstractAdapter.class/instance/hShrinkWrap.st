@@ -1,4 +1,0 @@
-protocol
-hShrinkWrap
-
-	self subclassResponsibility

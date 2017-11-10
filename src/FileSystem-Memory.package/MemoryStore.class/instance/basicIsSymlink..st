@@ -1,3 +1,0 @@
-private
-basicIsSymlink: aNode
-	^false

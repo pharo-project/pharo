@@ -1,3 +1,0 @@
-selection
-selectedClass
-	^ model selectedBehavior

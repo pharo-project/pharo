@@ -1,3 +1,0 @@
-initialization
-finish
-	self flush

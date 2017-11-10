@@ -1,3 +1,0 @@
-accessing
-blockSize
-	^ 64

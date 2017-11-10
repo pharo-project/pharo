@@ -1,4 +1,0 @@
-accessing
-resetWithNextStoreName
-
-	self resetWithStoreNamed: self nextStoreName

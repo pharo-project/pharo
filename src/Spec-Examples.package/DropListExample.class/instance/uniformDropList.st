@@ -1,4 +1,0 @@
-accessing
-uniformDropList
-
-	^ uniformDropList

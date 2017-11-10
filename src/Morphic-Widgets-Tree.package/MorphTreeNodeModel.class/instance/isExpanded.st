@@ -1,4 +1,0 @@
-protocol
-isExpanded
-
-	^ false

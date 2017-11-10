@@ -1,5 +1,0 @@
-examples
-readXandY
-	
-	^ x + y
-	

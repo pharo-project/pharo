@@ -1,3 +1,0 @@
-private
-canBeRemoved
-	^ self isEmpty 

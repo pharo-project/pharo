@@ -1,1 +1,0 @@
-I am responsible for the full name used to identify the current code author.

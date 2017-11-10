@@ -1,1 +1,0 @@
-AbstractGroup3 is an abstraction of what a group is.

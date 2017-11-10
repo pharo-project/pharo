@@ -1,3 +1,0 @@
-converting
-asSet
-	^ contents asSet

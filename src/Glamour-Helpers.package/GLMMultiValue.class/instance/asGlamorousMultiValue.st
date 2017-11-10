@@ -1,3 +1,0 @@
-testing
-asGlamorousMultiValue
-	^ self

@@ -1,4 +1,0 @@
-setup
-nonEmpty
-	
-	^ nonEmpty

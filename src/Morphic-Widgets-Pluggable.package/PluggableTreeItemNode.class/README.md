@@ -1,1 +1,0 @@
-Tree item for PluggableTreeMorph.

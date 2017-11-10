@@ -1,3 +1,0 @@
-selection
-resetClassesList
-	self classWidget resetClassList

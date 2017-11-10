@@ -1,1 +1,0 @@
-A PDCycleNode is used to display a trait dependency in a tree.

@@ -1,1 +1,0 @@
-I am a parse tree leaf representing a temporary variable

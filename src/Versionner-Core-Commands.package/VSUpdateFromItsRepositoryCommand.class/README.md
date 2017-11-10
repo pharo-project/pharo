@@ -1,1 +1,0 @@
-Update the configuration from the version contained in its repository.

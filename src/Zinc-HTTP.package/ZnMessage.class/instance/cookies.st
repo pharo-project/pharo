@@ -1,3 +1,0 @@
-accessing
-cookies
-	self subclassResponsibility 

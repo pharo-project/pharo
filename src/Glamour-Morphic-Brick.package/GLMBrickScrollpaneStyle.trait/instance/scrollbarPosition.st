@@ -1,4 +1,0 @@
-brick-scrollbar
-scrollbarPosition
-
-	^ #right

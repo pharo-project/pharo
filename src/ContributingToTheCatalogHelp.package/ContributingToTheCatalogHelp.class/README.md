@@ -1,1 +1,0 @@
-Help file on how to contribute to catalog

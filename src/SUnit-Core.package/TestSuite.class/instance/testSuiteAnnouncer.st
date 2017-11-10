@@ -1,3 +1,0 @@
-announcements
-testSuiteAnnouncer
-	^ self announcer

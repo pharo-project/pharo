@@ -1,3 +1,0 @@
-delegate
-readStream
-	^ reference readStream

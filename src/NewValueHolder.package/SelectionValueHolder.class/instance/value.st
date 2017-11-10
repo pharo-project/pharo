@@ -1,4 +1,0 @@
-accessing
-value
-
-	^ {index. selection}

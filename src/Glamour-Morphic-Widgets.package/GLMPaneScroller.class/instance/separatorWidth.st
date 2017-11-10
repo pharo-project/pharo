@@ -1,3 +1,0 @@
-layout
-separatorWidth
-	^ 20

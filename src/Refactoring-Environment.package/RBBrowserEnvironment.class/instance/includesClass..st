@@ -1,3 +1,0 @@
-testing
-includesClass: aClass
-	^ true

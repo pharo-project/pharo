@@ -1,1 +1,0 @@
-I am a node used to render a Hiedra ruler.

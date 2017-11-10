@@ -1,3 +1,0 @@
-testing
-isCritique
-	^ false

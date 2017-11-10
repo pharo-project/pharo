@@ -1,1 +1,0 @@
-I am a refactoring for moving a instance  variable up to the superclass.

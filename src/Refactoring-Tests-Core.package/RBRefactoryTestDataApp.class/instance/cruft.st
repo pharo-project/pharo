@@ -1,3 +1,0 @@
-lint
-cruft
-	self halt

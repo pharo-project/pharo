@@ -1,4 +1,4 @@
 accessing
 originRepository
 
-	^ MCFileTreeRepository new directory: 'src' asFileReference
+	^ TonelRepository new directory: 'src' asFileReference

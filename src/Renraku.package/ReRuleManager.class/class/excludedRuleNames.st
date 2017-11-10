@@ -1,4 +1,0 @@
-helpers
-excludedRuleNames
-
-	^ #(RBImplementedNotSentRule)

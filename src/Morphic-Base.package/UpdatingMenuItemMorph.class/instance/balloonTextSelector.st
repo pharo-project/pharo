@@ -1,3 +1,0 @@
-accessing
-balloonTextSelector
-	^ balloonTextSelector

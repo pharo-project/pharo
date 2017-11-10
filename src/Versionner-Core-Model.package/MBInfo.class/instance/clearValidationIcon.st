@@ -1,4 +1,0 @@
-actions
-clearValidationIcon
-
-	validationIcon := nil

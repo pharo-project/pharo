@@ -1,3 +1,0 @@
-accessing
-buildPanel
-	self subclassResponsibility

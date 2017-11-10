@@ -1,3 +1,0 @@
-private
-currentScope 
-	^currentScope top

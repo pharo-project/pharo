@@ -1,4 +1,0 @@
-tests
-testFailingAssestionThroughAHelperMethod
-
-	self intermediaryCheckWithFailure

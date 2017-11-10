@@ -1,4 +1,0 @@
-accessing
-debugHighlightStart
-
-	^ self start 

@@ -1,4 +1,0 @@
-testing
-isSpecialConstant
-
-	^expr isSpecialConstant

@@ -1,3 +1,0 @@
-accessing
-showWidget
-	"Do nothing"

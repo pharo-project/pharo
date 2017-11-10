@@ -1,1 +1,0 @@
-An abstract class for method announcements.

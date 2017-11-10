@@ -1,3 +1,0 @@
-global state
-world
-	^ ActiveWorld 

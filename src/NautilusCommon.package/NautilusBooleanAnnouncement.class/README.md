@@ -1,1 +1,0 @@
-Announcement raised when a boolean value changed

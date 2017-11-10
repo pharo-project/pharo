@@ -1,3 +1,0 @@
-events
-waitForInput
-	inputSemaphore wait.

@@ -1,3 +1,0 @@
-accessing
-vmFileName
-	^ self fileName

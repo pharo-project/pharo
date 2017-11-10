@@ -1,4 +1,0 @@
-private
-bars
-	
-	^ self submorphs.

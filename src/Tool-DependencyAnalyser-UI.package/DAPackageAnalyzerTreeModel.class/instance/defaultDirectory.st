@@ -1,3 +1,0 @@
-saving
-defaultDirectory
-	^ 'saving'

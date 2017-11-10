@@ -1,4 +1,0 @@
-accessing
-selected
-	
-	^ state selected

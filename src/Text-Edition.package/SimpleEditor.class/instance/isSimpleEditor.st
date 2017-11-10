@@ -1,3 +1,0 @@
-testing
-isSimpleEditor 
-	^ true 

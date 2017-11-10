@@ -1,4 +1,0 @@
-accessing
-oldSourceCode
-
-	^ oldMethod sourceCode

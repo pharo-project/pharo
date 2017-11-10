@@ -1,4 +1,0 @@
-compatibility
-category
-
-	^ self selectedProtocol

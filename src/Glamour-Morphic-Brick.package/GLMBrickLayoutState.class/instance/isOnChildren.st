@@ -1,4 +1,0 @@
-testing
-isOnChildren
-
-	^ false

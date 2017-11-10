@@ -1,3 +1,0 @@
-private
-setupStream
-	self setupStreamForSSL

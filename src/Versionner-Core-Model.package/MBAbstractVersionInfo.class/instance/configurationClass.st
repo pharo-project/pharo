@@ -1,3 +1,0 @@
-accessing
-configurationClass
-	^ self configurationInfo configurationClass

@@ -1,4 +1,0 @@
-subdivision callbacks
-curveCollinearityEpsilon
-
-	^ CurveCollinearityEpsilon 

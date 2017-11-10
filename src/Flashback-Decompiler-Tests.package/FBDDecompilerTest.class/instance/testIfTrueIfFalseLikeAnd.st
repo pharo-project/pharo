@@ -1,3 +1,0 @@
-tests
-testIfTrueIfFalseLikeAnd
-	self checkCorrectDecompilation: #exampleIfTrueIfFalseLikeAnd.

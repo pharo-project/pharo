@@ -1,3 +1,0 @@
-callbacks
-contents
-	^ self childrenItems

@@ -1,1 +1,0 @@
-A structure that contains X11 specific information about a window. 

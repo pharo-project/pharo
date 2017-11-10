@@ -1,1 +1,0 @@
-A critique which know which node should be replaced by another one. This critiques are used first of all in rewrite rules.

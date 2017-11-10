@@ -1,4 +1,0 @@
-accessing
-textPresenter
-
-	^ textPresenter

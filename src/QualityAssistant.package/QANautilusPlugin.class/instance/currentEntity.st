@@ -1,4 +1,0 @@
-properties
-currentEntity
-
-	^ currentEntity

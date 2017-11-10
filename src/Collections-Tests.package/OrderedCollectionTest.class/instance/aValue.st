@@ -1,4 +1,0 @@
-helpers
-aValue
-
-	^ 33

@@ -1,3 +1,0 @@
-accessing
-predicates
-	^ predicates

@@ -1,3 +1,0 @@
-accessing
-functionName
-	^ functionName

@@ -1,3 +1,0 @@
-generate
-genForRBArgumentNode
-	^self genForRBTemporaryNode

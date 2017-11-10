@@ -1,3 +1,0 @@
-generate
-genForRBTemporaryNode
-	^self genForRBVariableNode

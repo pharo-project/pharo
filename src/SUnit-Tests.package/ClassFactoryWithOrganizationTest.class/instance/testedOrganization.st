@@ -1,3 +1,0 @@
-accessing
-testedOrganization
-	^factory organization

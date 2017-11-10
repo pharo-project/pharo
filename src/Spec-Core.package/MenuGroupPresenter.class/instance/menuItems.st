@@ -1,4 +1,0 @@
-api
-menuItems
-
-	^ items value

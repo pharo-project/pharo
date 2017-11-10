@@ -1,4 +1,0 @@
-testing
-isMethod
-
-	^true

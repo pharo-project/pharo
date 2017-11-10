@@ -1,3 +1,0 @@
-drawing
-clear
-	^ self clearForm

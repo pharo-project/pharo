@@ -1,3 +1,0 @@
-accessing
-searchPattern
-	^ searchPattern

@@ -1,4 +1,0 @@
-api
-color
-
-	^ color value

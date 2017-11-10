@@ -1,3 +1,0 @@
-accessing
-numberOfArgumentsForMultiLine: anInteger
-	context numberOfArgumentsForMultiLine: anInteger

@@ -1,1 +1,0 @@
-A class variable definition

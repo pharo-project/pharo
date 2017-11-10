@@ -1,3 +1,0 @@
-testing
-hasCondition	
-	^condition notNil

@@ -1,4 +1,0 @@
-widget method
-methodWidget
-
-	^ methodWidget

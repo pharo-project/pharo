@@ -1,4 +1,0 @@
-api
-issueNumberText
-
-	^ issueNumber text

@@ -1,4 +1,0 @@
-geometry
-globalBounds
-
-	^ self bounds

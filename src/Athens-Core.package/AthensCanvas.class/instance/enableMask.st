@@ -1,3 +1,0 @@
-masking
-enableMask
-	^ surface enableMask

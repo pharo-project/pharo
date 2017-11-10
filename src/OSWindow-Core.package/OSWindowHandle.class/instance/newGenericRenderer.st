@@ -1,3 +1,0 @@
-factory
-newGenericRenderer
-	self subclassResponsibility

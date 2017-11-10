@@ -1,4 +1,0 @@
-*NewValueHolder
-isValueHolder
-
-	^ false

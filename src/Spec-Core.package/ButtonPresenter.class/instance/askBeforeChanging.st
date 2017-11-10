@@ -1,4 +1,0 @@
-api
-askBeforeChanging
-
-	^ askBeforeChangingHolder value

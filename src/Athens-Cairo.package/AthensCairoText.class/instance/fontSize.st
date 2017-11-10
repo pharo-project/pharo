@@ -1,4 +1,0 @@
-font description
-fontSize
-
-	^ fontSize

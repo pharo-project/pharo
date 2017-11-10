@@ -1,3 +1,0 @@
-modes
-screen
-	self notAvailable

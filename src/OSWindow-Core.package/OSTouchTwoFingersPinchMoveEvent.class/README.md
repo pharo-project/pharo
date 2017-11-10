@@ -1,1 +1,0 @@
-Two fingers are pinching

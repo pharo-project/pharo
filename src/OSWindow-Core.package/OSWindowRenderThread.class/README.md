@@ -1,1 +1,0 @@
-I am a pharo process that performs all rendering calls. 

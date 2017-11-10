@@ -1,4 +1,0 @@
-api
-isCheckList
-
-	^ isCheckList value

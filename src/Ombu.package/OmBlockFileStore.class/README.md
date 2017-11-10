@@ -1,1 +1,0 @@
-I am a single-file store of entries. Each new entry is appended at the end. Entries are lazily read in blocks (represented by OmBlock) from file on demand.

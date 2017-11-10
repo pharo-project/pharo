@@ -1,1 +1,0 @@
-I am an abstract superclass for some visitors that answer Strings describing EpEvent instances.

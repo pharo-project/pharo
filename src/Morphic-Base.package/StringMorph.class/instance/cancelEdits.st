@@ -1,4 +1,0 @@
-editing
-cancelEdits
-
-	self doneWithEdits

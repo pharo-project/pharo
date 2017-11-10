@@ -1,4 +1,0 @@
-accessing
-gloups
-
-	^  Gloups

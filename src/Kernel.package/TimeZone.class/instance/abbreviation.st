@@ -1,5 +1,0 @@
-accessing
-abbreviation
- 
- 	^ abbreviation
- 

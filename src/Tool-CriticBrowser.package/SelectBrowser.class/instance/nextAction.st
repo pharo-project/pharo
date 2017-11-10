@@ -1,3 +1,0 @@
-api
-nextAction
-	self subclassResponsibility

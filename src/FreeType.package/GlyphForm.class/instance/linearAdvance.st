@@ -1,3 +1,0 @@
-accessing
-linearAdvance
-	^linearAdvance

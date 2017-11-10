@@ -1,3 +1,0 @@
-testing
-isButton
-	^self hasIcon

@@ -1,1 +1,0 @@
-A chapter with a more in-depth description of the core components of the refactoring engine.

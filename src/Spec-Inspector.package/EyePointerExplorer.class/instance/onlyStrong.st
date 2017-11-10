@@ -1,3 +1,0 @@
-api
-onlyStrong
-	onlyStrong := true

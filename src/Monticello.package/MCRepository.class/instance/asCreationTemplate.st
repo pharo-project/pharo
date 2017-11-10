@@ -1,3 +1,0 @@
-converting
-asCreationTemplate
-	^ self creationTemplate

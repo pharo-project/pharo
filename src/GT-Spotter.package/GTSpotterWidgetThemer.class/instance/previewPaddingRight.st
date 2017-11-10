@@ -1,5 +1,0 @@
-values
-previewPaddingRight
-
-	^ self previewPaddingLeft
-

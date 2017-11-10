@@ -1,3 +1,0 @@
-action
-title
-	^clazz name

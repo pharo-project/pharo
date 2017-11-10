@@ -1,3 +1,0 @@
-initialize
-resetEngine
-	engine := nil.

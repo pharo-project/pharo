@@ -1,3 +1,0 @@
-*Network-Mail
-asEmailHeaderString
-	^ self

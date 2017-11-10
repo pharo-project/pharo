@@ -1,4 +1,0 @@
-*Fuel
-fuelAfterMaterialization
-
-	self rehash

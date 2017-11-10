@@ -1,4 +1,0 @@
-accessing
-newLineBeforeFirstKeyword: aBoolean
-	DefaultPrettyPrintContext newLineBeforeFirstKeyword: aBoolean.
-	self announceASettingChange

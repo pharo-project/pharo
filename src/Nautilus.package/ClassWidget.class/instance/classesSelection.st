@@ -1,4 +1,0 @@
-private
-classesSelection
-	
-	^ classesSelection

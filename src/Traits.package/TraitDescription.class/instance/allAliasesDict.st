@@ -1,3 +1,0 @@
-enquiries
-allAliasesDict
-	^IdentityDictionary new

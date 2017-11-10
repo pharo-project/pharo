@@ -1,1 +1,0 @@
-Reader for an MCD format

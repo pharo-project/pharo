@@ -1,1 +1,0 @@
-My instances decide if an OmEntry is accepted applying a pluggable block closure.

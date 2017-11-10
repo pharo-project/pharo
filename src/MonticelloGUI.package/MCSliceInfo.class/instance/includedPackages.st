@@ -1,4 +1,0 @@
-accessing
-includedPackages
-
-	^ includedPackages ifNil: [#()]

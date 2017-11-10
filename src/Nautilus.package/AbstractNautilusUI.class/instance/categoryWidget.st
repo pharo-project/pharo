@@ -1,3 +1,0 @@
-widget category
-categoryWidget
-	self subclassResponsibility 

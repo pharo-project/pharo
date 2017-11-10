@@ -1,1 +1,0 @@
-I'm announced when an IconSet has been changed. 

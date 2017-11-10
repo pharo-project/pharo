@@ -1,2 +1,0 @@
-geometry
-manageLayoutInBounds: aRectangle

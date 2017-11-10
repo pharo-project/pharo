@@ -1,1 +1,0 @@
-I am a raw data layout that holds bytes (8 bit).

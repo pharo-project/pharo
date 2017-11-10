@@ -1,3 +1,0 @@
-scopes
-popScope
-	currentScope pop.

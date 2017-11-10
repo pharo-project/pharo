@@ -1,3 +1,0 @@
-accessing
-origin
-	^myCanvas origin

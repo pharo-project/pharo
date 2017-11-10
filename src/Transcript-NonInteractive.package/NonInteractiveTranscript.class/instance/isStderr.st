@@ -1,4 +1,0 @@
-testing
-isStderr
-	
-	^ fileName = #stderr

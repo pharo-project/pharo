@@ -1,1 +1,0 @@
-I am signaled if a new class introduces a circular class hierarchy.

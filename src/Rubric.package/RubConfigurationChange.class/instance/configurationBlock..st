@@ -1,3 +1,0 @@
-accessing
-configurationBlock: aBlockWithAScrolledTextMorphAsArgument
-	configurationBlock := aBlockWithAScrolledTextMorphAsArgument

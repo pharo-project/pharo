@@ -1,4 +1,0 @@
-elements-annotations
-isExtensionKey 
-
-	^#isExtension

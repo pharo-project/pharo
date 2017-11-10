@@ -1,3 +1,0 @@
-accessing
-accessorCode
-	^ 'self class'

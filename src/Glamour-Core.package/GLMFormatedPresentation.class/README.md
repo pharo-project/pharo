@@ -1,1 +1,0 @@
-GLMFormatedPresentation is an abstract presentation that offers a format block to be used for formatting the rendering of the presentation. The renderer will use the formatDisplayValueOf: method.

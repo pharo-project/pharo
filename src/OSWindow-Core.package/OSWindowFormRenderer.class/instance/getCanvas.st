@@ -1,3 +1,0 @@
-accessing
-getCanvas
-	^ form getCanvas

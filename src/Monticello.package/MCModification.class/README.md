@@ -1,1 +1,0 @@
-A MCModification represents the operation to modify an entity to a snapshot. 

@@ -1,4 +1,0 @@
-testing
-isReturnSelf
-
-	^expr == NodeSelf

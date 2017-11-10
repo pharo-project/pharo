@@ -1,1 +1,0 @@
-A PluginTreeNode is a node of a NautilusPluginManagerTree

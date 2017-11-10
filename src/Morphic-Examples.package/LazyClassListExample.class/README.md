@@ -1,1 +1,0 @@
-LazyClassListExample new openOn: Object

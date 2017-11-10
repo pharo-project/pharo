@@ -1,3 +1,0 @@
-creation
-createHoldEvent
-	self subclassResponsibility

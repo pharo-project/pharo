@@ -1,1 +1,0 @@
-I encapsulate a gemstone repository

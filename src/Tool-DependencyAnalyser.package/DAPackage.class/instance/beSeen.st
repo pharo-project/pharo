@@ -1,3 +1,0 @@
-accessing
-beSeen
-	seen := true

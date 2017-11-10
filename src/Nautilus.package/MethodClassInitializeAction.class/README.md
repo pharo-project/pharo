@@ -1,1 +1,0 @@
-Action when the method is a class initialize method

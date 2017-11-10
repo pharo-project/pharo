@@ -1,3 +1,0 @@
-private
-applyChanges
-	self valid

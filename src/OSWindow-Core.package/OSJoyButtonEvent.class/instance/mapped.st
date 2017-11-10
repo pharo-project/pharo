@@ -1,3 +1,0 @@
-accessing
-mapped
-	^ mapped

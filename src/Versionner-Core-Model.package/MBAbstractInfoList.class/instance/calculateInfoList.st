@@ -1,4 +1,0 @@
-private
-calculateInfoList
-
-	^self subclassResponsibility 

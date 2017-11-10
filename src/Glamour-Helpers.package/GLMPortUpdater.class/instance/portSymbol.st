@@ -1,4 +1,0 @@
-accessing
-portSymbol 
-	 
-	^portSymbol

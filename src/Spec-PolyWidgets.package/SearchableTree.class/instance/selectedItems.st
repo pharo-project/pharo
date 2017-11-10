@@ -1,4 +1,0 @@
-api
-selectedItems
-	
-	^ tree selectedItems

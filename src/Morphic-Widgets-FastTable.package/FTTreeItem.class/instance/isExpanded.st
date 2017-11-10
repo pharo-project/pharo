@@ -1,3 +1,0 @@
-updating
-isExpanded
-	^ self subclassResponsibility 

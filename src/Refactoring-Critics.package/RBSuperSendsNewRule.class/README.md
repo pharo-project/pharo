@@ -1,2 +1,0 @@
-This rule checks for method that wrongly initialize an object twice. Contrary to other Smalltalk implementations Pharo automatically calls #initiailize on object creation.
-A warning is raised when the statement self new initialize is found in a method.

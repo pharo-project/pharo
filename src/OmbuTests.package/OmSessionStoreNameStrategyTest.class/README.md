@@ -1,1 +1,0 @@
-An OmSessionStoreNameStrategyTest is a test class for testing the behavior of OmSessionStoreNameStrategy

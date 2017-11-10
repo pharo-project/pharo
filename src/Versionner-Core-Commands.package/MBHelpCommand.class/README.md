@@ -1,1 +1,0 @@
-Command to open help for Versionner

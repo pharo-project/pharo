@@ -1,3 +1,0 @@
-private-classes
-pragmaNodeClass
-	^RBPatternPragmaNode

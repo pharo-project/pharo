@@ -1,3 +1,0 @@
-initialization
-size
-	^ collection size

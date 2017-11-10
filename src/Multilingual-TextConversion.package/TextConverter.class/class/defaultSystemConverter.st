@@ -1,4 +1,0 @@
-instance creation
-defaultSystemConverter
-
-	^LanguageEnvironment defaultSystemConverter

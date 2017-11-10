@@ -1,1 +1,0 @@
-Trait for testing tutorials

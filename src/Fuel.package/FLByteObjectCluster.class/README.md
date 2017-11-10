@@ -1,1 +1,0 @@
-I am the generic cluster for storing and loading variable byte objects.

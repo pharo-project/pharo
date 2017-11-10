@@ -1,4 +1,0 @@
-constants
-windowBorderWidth
-
-	^ 0

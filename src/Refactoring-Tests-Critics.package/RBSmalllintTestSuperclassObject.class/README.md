@@ -1,1 +1,0 @@
-A superclass for classes used to test critics.

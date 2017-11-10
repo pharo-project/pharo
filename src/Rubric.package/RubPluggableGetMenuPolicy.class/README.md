@@ -1,1 +1,0 @@
-I am used to get the correct menu of common text areas

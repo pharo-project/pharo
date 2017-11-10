@@ -1,3 +1,0 @@
-compatibility
-properties
-	^ nil->nil

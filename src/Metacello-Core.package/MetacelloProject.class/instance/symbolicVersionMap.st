@@ -1,4 +1,0 @@
-accessing
-symbolicVersionMap
-
-	^symbolicVersionMap

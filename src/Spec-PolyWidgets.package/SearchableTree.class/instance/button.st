@@ -1,4 +1,0 @@
-accessing
-button
-
-	^ button

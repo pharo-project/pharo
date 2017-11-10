@@ -1,1 +1,0 @@
-Represents an action that is to be taken when a target object (not referenced by the ObjectFinalizer) is garbage-collected.

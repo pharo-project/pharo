@@ -1,1 +1,0 @@
-I am a trait defining the basic methods for visiting a chunk object.

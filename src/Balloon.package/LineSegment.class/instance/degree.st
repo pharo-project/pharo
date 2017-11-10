@@ -1,3 +1,0 @@
-accessing
-degree
-	^1

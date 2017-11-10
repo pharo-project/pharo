@@ -1,1 +1,0 @@
-I represent the execution of a "rename instance variable" (RBRenameInstanceVariableRefactoring) refactoring.

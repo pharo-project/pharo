@@ -1,4 +1,0 @@
-protocol
-rightOffset
-
-	^ layoutFrame rightOffset

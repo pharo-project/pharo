@@ -1,3 +1,0 @@
-accessing
-creation
-	^ self creationTime 

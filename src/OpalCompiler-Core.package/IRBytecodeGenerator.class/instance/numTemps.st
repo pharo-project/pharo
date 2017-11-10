@@ -1,4 +1,0 @@
-accessing
-numTemps
-
-	^ numberOfTemps

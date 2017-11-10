@@ -1,4 +1,0 @@
-api
-transform
-	
-	self subclassResponsibility.

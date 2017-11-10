@@ -1,3 +1,0 @@
-accessing
-closeActionSymbol
-	^ self eventType

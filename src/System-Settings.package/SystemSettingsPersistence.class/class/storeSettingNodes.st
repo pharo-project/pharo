@@ -1,3 +1,0 @@
-storing
-storeSettingNodes
-	self default storeSettingNodes

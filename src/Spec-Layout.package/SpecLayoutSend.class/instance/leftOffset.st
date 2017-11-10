@@ -1,4 +1,0 @@
-protocol
-leftOffset
-
-	^ 0

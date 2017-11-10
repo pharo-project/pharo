@@ -1,3 +1,0 @@
-testing
-isForByteArray
-	^value last = $[

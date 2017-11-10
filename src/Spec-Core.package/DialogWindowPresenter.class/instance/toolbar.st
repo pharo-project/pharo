@@ -1,4 +1,0 @@
-api
-toolbar
-
-	^ toolbar value

@@ -1,1 +1,0 @@
-I represent a Monticello "Save Version" operation performed in the system.

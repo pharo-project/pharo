@@ -1,3 +1,0 @@
-exception description
-defaultAction
-    ^ nil

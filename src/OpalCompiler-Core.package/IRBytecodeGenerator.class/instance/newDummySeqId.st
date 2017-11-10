@@ -1,4 +1,0 @@
-private
-newDummySeqId
-
-	^ Object new

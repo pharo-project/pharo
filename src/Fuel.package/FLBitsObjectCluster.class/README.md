@@ -1,1 +1,0 @@
-I have the common behavior for generic storing and loading variable bits objects.

@@ -1,3 +1,0 @@
-accessing
-corner
-	^ surface corner

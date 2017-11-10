@@ -1,3 +1,0 @@
-actions
-beRemoved
-	removed := true

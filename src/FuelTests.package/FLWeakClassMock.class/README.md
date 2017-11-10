@@ -1,1 +1,0 @@
-Test mock for a weak class

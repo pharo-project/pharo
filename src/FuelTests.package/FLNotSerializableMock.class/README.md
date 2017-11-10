@@ -1,1 +1,0 @@
-A test mock which is not serializable

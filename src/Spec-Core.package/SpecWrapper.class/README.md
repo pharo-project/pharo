@@ -1,1 +1,0 @@
-I am a small wrapper used to encapsulate data created and used during spec interpretation

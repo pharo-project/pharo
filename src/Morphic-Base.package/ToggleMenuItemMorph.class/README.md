@@ -1,1 +1,0 @@
-A menu item that supports on/off state (using standard icons), enablement and display of "accelerator" key text.

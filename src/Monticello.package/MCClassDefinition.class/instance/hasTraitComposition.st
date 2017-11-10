@@ -1,3 +1,0 @@
-testing
-hasTraitComposition
-	^self traitCompositionString ~= '{}'

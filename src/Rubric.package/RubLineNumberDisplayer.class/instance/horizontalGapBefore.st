@@ -1,3 +1,0 @@
-geometry
-horizontalGapBefore
-	^ 3

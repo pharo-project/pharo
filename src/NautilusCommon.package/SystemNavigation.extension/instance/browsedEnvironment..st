@@ -1,4 +1,0 @@
-*NautilusCommon
-browsedEnvironment: aBrowserEnvironment
-
-	environment := aBrowserEnvironment asSystemNavigationEnvironment

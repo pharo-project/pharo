@@ -1,4 +1,0 @@
-to deprecate
-sampledSoundChoices
-
-	self subclassResponsibility

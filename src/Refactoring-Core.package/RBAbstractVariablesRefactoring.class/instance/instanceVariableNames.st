@@ -1,3 +1,0 @@
-transforming
-instanceVariableNames
-	^fromClass allInstanceVariableNames asSet

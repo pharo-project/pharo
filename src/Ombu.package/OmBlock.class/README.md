@@ -1,1 +1,0 @@
-I represent a portion of a .ombu file. I'm a collaborator of OmBlockFileStore.

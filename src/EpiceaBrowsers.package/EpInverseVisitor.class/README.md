@@ -1,1 +1,0 @@
-I convert a code change to it's inverse operation. For example, a class addition into a class removal.

@@ -1,4 +1,0 @@
-macpal
-flashFillStyle
-
-	^Color black

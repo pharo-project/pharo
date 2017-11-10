@@ -1,3 +1,0 @@
-buttons creations
-cancelButtonState
-	^false

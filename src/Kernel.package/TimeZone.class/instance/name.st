@@ -1,5 +1,0 @@
-accessing
-name
- 
- 	^ name
- 

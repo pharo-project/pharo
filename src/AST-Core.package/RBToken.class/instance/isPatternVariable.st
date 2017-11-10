@@ -1,3 +1,0 @@
-testing
-isPatternVariable
-	^false

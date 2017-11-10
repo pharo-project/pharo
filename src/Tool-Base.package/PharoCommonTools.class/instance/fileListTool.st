@@ -1,3 +1,0 @@
-tools
-fileListTool
-	^ self fileList

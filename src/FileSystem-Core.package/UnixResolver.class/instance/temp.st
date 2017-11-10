@@ -1,3 +1,0 @@
-origins
-temp
-	^ '/tmp' asFileReference

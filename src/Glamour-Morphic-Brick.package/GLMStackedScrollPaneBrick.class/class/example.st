@@ -1,4 +1,0 @@
-examples
-example
-
-	super example

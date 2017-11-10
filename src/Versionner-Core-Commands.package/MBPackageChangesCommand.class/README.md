@@ -1,1 +1,0 @@
-Command to browse package changes in versionner

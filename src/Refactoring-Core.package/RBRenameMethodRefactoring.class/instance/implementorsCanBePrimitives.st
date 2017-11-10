@@ -1,3 +1,0 @@
-testing
-implementorsCanBePrimitives
-	^self hasPermutedArguments not

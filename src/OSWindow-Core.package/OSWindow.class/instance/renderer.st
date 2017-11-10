@@ -1,3 +1,0 @@
-accessing
-renderer
-	^ handle renderer

@@ -1,1 +1,0 @@
-This class represents compilation errors in regular expressions.

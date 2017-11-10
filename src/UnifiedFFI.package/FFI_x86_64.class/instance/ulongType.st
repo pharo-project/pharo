@@ -1,3 +1,0 @@
-types
-ulongType
-	^ FFIUInt64

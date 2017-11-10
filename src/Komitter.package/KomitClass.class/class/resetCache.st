@@ -1,4 +1,0 @@
-protocol
-resetCache
-
-	classes removeAll

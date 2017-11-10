@@ -1,4 +1,0 @@
-api
-selectedChangeSetIndex
-
-	 ^ changesListPresenter selectedIndex

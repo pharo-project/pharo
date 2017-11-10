@@ -1,4 +1,0 @@
-accessing
-browseModel
-
-	^ browseModel

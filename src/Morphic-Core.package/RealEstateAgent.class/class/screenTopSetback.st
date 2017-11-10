@@ -1,3 +1,0 @@
-settings
-screenTopSetback
-	^ 0

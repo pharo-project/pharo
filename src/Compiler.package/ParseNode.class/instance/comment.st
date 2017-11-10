@@ -1,4 +1,0 @@
-comment
-comment
-
-	^comment

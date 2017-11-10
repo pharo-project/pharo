@@ -1,3 +1,0 @@
-traits
-traitUsers
-	^users

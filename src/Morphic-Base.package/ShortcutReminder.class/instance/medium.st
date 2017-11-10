@@ -1,4 +1,0 @@
-private
-medium
-
-	 ^27

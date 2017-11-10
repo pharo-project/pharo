@@ -1,1 +1,0 @@
-Multi-line text entry dialog.

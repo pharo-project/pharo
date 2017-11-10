@@ -1,1 +1,0 @@
-A DummyPackageSelectedPlugin is a dummy plugin which displays the selected package

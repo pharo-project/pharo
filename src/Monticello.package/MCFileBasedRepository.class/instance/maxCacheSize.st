@@ -1,3 +1,0 @@
-caching
-maxCacheSize
-	^ 512

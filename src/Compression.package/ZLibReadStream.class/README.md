@@ -1,1 +1,0 @@
-A ZLib read stream

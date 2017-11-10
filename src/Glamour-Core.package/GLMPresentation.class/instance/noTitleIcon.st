@@ -1,3 +1,0 @@
-scripting
-noTitleIcon
-	titleIcon := nil

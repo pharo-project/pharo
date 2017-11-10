@@ -1,1 +1,0 @@
-I am an error produced during serialization, signaled when trying to serialize an obsolete class as global. It is a prevention, because such class is lekely to be absent during materialization.

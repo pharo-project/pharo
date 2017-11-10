@@ -1,1 +1,0 @@
-A test mock for socket streams

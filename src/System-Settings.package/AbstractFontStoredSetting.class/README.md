@@ -1,1 +1,0 @@
-I am an abstract class and my subclasses are responsible for storing information about a font object. 

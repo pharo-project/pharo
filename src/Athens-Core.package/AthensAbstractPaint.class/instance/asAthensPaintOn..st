@@ -1,3 +1,0 @@
-converting
-asAthensPaintOn: aCanvas	
-	^ self

@@ -1,1 +1,0 @@
-Simple fillstyle that draws a color at the specified origin with option extent.

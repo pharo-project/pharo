@@ -1,1 +1,0 @@
-An attribute which evaluates an arbitrary block when it is selected.

@@ -1,3 +1,0 @@
-origins
-home
-	^ self subclassResponsibility

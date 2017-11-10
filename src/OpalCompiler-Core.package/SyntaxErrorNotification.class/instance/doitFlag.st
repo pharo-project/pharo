@@ -1,3 +1,0 @@
-accessing
-doitFlag
-	^doitFlag

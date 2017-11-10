@@ -1,3 +1,0 @@
-This class represents a transformation for points, that is a combination of scale, offset, and rotation. It is implemented as a 2x3 matrix containing the transformation from the local coordinate system in the global coordinate system. Thus, transforming points from local to global coordinates is fast and cheap whereas transformations from global to local coordinate systems are relatively expensive.
-
-Implementation Note: It is assumed that the transformation deals with Integer points. All transformations will return Integer coordinates (even though float points may be passed in here).

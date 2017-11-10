@@ -1,3 +1,0 @@
-composing
-composedWith: aTransform
-	^aTransform

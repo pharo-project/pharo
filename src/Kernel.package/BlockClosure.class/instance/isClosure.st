@@ -1,3 +1,0 @@
-testing
-isClosure
-	^true

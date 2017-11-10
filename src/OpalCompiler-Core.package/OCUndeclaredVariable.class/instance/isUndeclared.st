@@ -1,4 +1,0 @@
-testing
-isUndeclared
-
-	^ true

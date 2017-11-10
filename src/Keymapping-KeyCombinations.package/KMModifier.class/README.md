@@ -1,1 +1,0 @@
-I'm an abstract class representing a key modifier. A modifier is a key that is pressed to modify the value of a following key. For example, valid modifiers are Alt, Ctrl, Cmd (only for macosx), Shift. Additionally, I could be a composed modifier, combining several of the named above. For example, I could have a value of Alt + Ctrl.

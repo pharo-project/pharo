@@ -1,4 +1,0 @@
-factory
-buildWidget
-
-	^ SpecStubTreeView new

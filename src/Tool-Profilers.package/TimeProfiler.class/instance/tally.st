@@ -1,3 +1,0 @@
-accessing
-tally
-	^ rootMessageTally tally

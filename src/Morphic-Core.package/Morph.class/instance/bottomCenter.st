@@ -1,4 +1,0 @@
-geometry
-bottomCenter
-
-	^ bounds bottomCenter

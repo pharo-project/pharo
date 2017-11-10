@@ -1,3 +1,0 @@
-initialization
-defaultBorderColor 
-	^ Color gray 

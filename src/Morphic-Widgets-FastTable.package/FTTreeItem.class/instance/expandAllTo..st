@@ -1,3 +1,0 @@
-expanding-collapsing
-expandAllTo: aDepth
-	self subclassResponsibility

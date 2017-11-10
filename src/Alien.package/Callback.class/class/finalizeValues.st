@@ -1,3 +1,0 @@
-finalization
-finalizeValues
-	FlushThunkToCallbackMap := true

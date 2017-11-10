@@ -1,2 +1,0 @@
-input events
-scrollBarMenuButtonPressed: anObject

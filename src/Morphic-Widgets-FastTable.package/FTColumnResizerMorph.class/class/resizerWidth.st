@@ -1,3 +1,0 @@
-accessing
-resizerWidth
-	^ 8

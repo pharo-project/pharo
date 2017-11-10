@@ -1,4 +1,0 @@
-API
-current
-
-	^ bar value.

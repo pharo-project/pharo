@@ -1,4 +1,0 @@
-accessing
-hours
-
-	^ self hour

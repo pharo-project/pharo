@@ -1,1 +1,0 @@
-I log when the middle mouse button has been clicked on me, which is useful for testing.

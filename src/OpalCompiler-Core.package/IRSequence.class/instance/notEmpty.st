@@ -1,3 +1,0 @@
-testing
-notEmpty
-	^sequence notEmpty

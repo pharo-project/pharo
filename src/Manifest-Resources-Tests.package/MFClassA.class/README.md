@@ -1,1 +1,0 @@
-I'm a dummy class just to have a package that is not empty.

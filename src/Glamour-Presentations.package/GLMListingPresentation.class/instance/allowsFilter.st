@@ -1,3 +1,0 @@
-testing
-allowsFilter
-	^ filterBlock notNil

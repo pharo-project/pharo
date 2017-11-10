@@ -1,5 +1,0 @@
-coverage
-classToBeTested
-
-	^ DateAndTime
-

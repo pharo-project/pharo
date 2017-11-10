@@ -1,1 +1,0 @@
-ColorComponentSelector showing a hue rainbow palette.

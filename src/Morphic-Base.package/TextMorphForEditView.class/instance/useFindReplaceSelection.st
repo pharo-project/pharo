@@ -1,3 +1,0 @@
-private
-useFindReplaceSelection
-	^ TextEditor useFindReplaceSelection

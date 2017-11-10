@@ -1,1 +1,0 @@
-SUnit tests for serialization with ignored variables

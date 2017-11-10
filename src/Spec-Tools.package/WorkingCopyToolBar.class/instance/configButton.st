@@ -1,4 +1,0 @@
-accessing
-configButton
-	
-	^ configButton

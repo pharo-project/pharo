@@ -1,3 +1,0 @@
-tests
-testIfTrueWithNilAssertion
-	self checkCorrectDecompilation: #exampleIfTrueWithNilAssertion

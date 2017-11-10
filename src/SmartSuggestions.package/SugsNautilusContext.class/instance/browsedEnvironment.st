@@ -1,3 +1,0 @@
-refactoring
-browsedEnvironment
-	^ model browsedEnvironment

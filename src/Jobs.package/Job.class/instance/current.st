@@ -1,4 +1,0 @@
-compatibility
-current
-
-	^ self currentValue.

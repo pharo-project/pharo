@@ -1,3 +1,0 @@
-private
-doContinueFilterInContext: aSpotterContext
-	^ aSpotterContext doContinueFilterForProcessor: self

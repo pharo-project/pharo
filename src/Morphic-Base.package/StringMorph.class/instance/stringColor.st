@@ -1,4 +1,0 @@
-accessing
-stringColor
-
-	^ self color

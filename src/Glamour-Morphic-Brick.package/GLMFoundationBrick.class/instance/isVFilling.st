@@ -1,4 +1,0 @@
-testing
-isVFilling
-
-	^ vResizing = #spaceFill

@@ -1,3 +1,0 @@
-linked frames
-successor
-	^ successor

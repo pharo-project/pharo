@@ -1,3 +1,0 @@
-converting
-asColor
-	^self subclassResponsibility 

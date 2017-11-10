@@ -1,3 +1,0 @@
-private
-includeSpecNamesForPackageOrdering: aVersionSpec
-  ^ #()

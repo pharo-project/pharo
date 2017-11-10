@@ -1,3 +1,0 @@
-selection
-maximumSelection
-	^ self getListSize

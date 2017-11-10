@@ -1,3 +1,0 @@
-scripting
-beSingle
-	allowsMultipleSelection := false

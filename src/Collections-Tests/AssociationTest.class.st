@@ -1,0 +1,57 @@
+"
+SUnit tests for Associations
+"
+Class {
+	#name : #AssociationTest,
+	#superclass : #ClassTestCase,
+	#instVars : [
+		'a',
+		'b'
+	],
+	#category : #Collections-Tests-Support
+}
+
+{ #category : #running }
+AssociationTest >> setUp [
+
+	a := 1 -> 'one'.
+	b := 1 -> 'een'.
+]
+
+{ #category : #tests }
+AssociationTest >> testComparison [
+	self assert: ((#a -> 'foo') < (#b -> 'zork'))
+]
+
+{ #category : #tests }
+AssociationTest >> testEquality [
+	
+	self 
+		assert: (a key = b key);
+		deny: (a value = b value);
+		deny: (a = b)
+
+
+]
+
+{ #category : #tests }
+AssociationTest >> testHash [
+
+	self 
+		assert: (a hash = a copy hash);
+		assert: (a hash = b hash)
+]
+
+{ #category : #tests }
+AssociationTest >> testIsSelfEvaluating [
+	| anotherAssociation |
+	self assert: (a isSelfEvaluating).
+	
+	self assert: (a printString = '1->''one''').
+	
+	anotherAssociation := Object new -> Object new.
+	anotherAssociation isSelfEvaluating ifTrue: [self
+		assert: (self class compiler evaluate: anotherAssociation printString) = anotherAssociation
+		description: 'a self evaluating should evaluate as self'].
+
+]

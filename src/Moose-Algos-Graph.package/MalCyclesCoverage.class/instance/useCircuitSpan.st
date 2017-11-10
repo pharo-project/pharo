@@ -1,4 +1,0 @@
-running
-useCircuitSpan
-
-	sccExtractorClass := MalCircuitSpanningEdges  

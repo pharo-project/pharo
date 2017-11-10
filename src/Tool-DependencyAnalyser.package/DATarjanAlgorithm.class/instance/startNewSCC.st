@@ -1,3 +1,0 @@
-private
-startNewSCC
-	^ DAPackageRelationGraph new

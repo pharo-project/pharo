@@ -1,1 +1,0 @@
-A node for "lazy drawing" in a morphic based tree

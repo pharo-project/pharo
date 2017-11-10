@@ -1,3 +1,0 @@
-accessing
-useBasicCommentFormat 
-	^ context useBasicCommentFormat 

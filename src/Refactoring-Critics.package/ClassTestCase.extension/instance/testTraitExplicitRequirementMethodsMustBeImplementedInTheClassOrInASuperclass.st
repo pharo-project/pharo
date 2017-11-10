@@ -1,4 +1,0 @@
-*Refactoring-Critics
-testTraitExplicitRequirementMethodsMustBeImplementedInTheClassOrInASuperclass
-
-	self assertValidLintRule: RBExplicitRequirementMethodsRule new

@@ -1,3 +1,0 @@
-accessing
-pagerColor
-	^ treeMorph pagerColor

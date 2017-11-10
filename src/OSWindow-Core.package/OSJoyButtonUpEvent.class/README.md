@@ -1,1 +1,0 @@
-This event is delivered when user releases a previously pressed joystick button.

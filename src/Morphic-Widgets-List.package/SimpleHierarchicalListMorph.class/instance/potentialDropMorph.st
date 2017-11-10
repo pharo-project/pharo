@@ -1,3 +1,0 @@
-dropping/grabbing
-potentialDropMorph
-	^potentialDropMorph

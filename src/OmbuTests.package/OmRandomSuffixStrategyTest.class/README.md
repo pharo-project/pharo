@@ -1,1 +1,0 @@
-An OmRandomSuffixStrategyTest is a test class for testing the behavior of OmRandomSuffixStrategy

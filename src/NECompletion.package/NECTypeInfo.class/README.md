@@ -1,1 +1,0 @@
-I'm used in ECInstVarTypeGuesser to store found type informations.

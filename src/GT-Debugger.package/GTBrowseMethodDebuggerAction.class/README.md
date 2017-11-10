@@ -1,1 +1,0 @@
-I am a debugging action for browsing the currently selected class.

@@ -1,3 +1,0 @@
-groups
-configurationsGroupName
-	^ 'Configurations'

@@ -1,3 +1,0 @@
-methods
-fullBlocks
-	^[thisContext]

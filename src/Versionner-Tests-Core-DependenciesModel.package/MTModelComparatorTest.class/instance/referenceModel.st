@@ -1,3 +1,0 @@
-private
-referenceModel
-	^ MTProjectExampleBuilder projectA

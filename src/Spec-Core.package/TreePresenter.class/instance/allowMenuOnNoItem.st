@@ -1,4 +1,0 @@
-api
-allowMenuOnNoItem
-
-	^ allowMenuOnNoItem value

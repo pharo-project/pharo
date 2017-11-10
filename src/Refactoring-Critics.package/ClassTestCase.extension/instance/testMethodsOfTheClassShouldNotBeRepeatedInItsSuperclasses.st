@@ -1,4 +1,0 @@
-*Refactoring-Critics
-testMethodsOfTheClassShouldNotBeRepeatedInItsSuperclasses
-		
-	self assertValidLintRule: RBEquivalentSuperclassMethodsRule new

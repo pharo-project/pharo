@@ -1,1 +1,0 @@
-I'm a HelpSystem book which list all Pharo tutorials

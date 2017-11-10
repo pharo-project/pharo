@@ -1,4 +1,0 @@
-source code area
-acceptSourceCodeFromView
-
-	self sourceTextModel acceptEditsInView

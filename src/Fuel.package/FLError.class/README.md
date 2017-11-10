@@ -1,1 +1,0 @@
-I represent an error produced during Fuel operation.

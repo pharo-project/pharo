@@ -1,4 +1,0 @@
-rename
-thisName
-
-	^ thisName

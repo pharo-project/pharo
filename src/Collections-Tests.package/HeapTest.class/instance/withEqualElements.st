@@ -1,3 +1,0 @@
-requirements
-withEqualElements
-	^ sameAtEndAndBegining 

@@ -1,3 +1,0 @@
-unix
-unixVirtualKeyTable
-	^KeyTable

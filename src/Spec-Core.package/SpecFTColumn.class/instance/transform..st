@@ -1,3 +1,0 @@
-accessing
-transform: anObject
-	^ anObject

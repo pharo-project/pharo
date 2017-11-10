@@ -1,3 +1,0 @@
-accessing
-clearRealFont
-	realFont := nil

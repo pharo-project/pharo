@@ -1,3 +1,0 @@
-plugin interface
-key
-	^#newValue

@@ -1,3 +1,0 @@
-tests
-testIfFalseIfTrue6
-	self checkCorrectDecompilation: #exampleIfFalseIfTrue6

@@ -1,3 +1,0 @@
-accessing
-hasFocus
-	^ self subclassResponsibility

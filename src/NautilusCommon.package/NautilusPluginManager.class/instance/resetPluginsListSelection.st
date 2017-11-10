@@ -1,4 +1,0 @@
-lists behavior
-resetPluginsListSelection
-
-	pluginsSelected removeAll

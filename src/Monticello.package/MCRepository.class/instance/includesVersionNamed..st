@@ -1,3 +1,0 @@
-interface
-includesVersionNamed: aString
-	self subclassResponsibility

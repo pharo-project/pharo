@@ -1,4 +1,0 @@
-structure
-activeHand
-
-	^ worldState activeHand

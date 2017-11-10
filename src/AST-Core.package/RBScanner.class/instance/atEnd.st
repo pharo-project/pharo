@@ -1,3 +1,0 @@
-testing
-atEnd
-	^characterType = #eof

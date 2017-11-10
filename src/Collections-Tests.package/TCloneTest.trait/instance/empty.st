@@ -1,4 +1,0 @@
-helper
-empty
-
-	^ self explicitRequirement

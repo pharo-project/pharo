@@ -1,2 +1,0 @@
-scroll bar events
-shiftedTextPaneMenuRequest

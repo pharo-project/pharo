@@ -1,3 +1,0 @@
-accessing
-secondButton
-	^ secondButton

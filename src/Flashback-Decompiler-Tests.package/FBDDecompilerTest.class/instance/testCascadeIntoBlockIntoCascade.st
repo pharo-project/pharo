@@ -1,3 +1,0 @@
-tests
-testCascadeIntoBlockIntoCascade
-	self checkCorrectDecompilation: #exampleCascadeIntoBlockIntoCascade.

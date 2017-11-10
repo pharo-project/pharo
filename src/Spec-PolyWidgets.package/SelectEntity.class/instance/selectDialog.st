@@ -1,3 +1,0 @@
-api
-selectDialog
-	^ selectDialog value

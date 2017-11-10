@@ -1,1 +1,0 @@
-Notify that a method can not be decompiled because of a native boost call

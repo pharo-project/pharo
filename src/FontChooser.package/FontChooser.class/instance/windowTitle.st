@@ -1,3 +1,0 @@
-accessing
-windowTitle
-	^ title translated

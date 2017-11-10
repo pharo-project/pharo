@@ -1,3 +1,0 @@
-initialization
-defaultPopupLayout
-	^ GLMPopupBrickDownwardLayout new

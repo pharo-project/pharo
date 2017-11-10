@@ -1,3 +1,0 @@
-testing
-hasPassword
-	^ password notNil

@@ -1,4 +1,0 @@
-menus
-menuKeyword 
-	^ #RubLineNumberMenu
-	

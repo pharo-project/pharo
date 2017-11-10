@@ -1,4 +1,0 @@
-accessing
-capacity
-
-	^ array size

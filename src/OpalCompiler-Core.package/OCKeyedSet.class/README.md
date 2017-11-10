@@ -1,1 +1,0 @@
-Like Set except a key of every element is used for hashing and searching instead of the element itself.  keyBlock gets the key of an element.

@@ -1,3 +1,0 @@
-running
-createFileSystem
-	^ FileSystem memory

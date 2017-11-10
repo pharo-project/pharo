@@ -1,3 +1,0 @@
-checking
-check
-	^block value

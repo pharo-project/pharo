@@ -1,3 +1,0 @@
-styling
-unstyledTextFrom: aText
-	^aText

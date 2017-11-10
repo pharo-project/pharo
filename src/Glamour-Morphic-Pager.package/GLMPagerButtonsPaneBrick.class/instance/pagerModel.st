@@ -1,4 +1,0 @@
-buttons-accessing
-pagerModel
-
-	^ pagerModel

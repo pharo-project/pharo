@@ -1,3 +1,0 @@
-accessing
-baseFont
-	^baseFont

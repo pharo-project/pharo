@@ -1,3 +1,0 @@
-searching
-secondarySelectionColor
-	^ self theme secondarySelectionColor

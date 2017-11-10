@@ -1,1 +1,0 @@
-I am an abstract class used to gather all the announcements related to class modifications.

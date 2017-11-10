@@ -1,1 +1,0 @@
-I'm the base class for tree models.  See ClassListExample for basic usage.

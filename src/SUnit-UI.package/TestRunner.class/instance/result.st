@@ -1,3 +1,0 @@
-accessing-testing
-result
-	^ result

@@ -1,4 +1,0 @@
-api
-windowIcon
-
-	^ windowIcon value

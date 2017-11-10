@@ -1,1 +1,0 @@
-Custom icon for methods which uses FFI

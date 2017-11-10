@@ -1,1 +1,0 @@
-Command to browse a package in versionner

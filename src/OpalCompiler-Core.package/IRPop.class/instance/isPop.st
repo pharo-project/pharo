@@ -1,3 +1,0 @@
-testing
-isPop
-	^true

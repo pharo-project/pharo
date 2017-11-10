@@ -1,4 +1,0 @@
-accessing
-startSequence
-
-	^ startSequence

@@ -1,4 +1,0 @@
-accessing
-index
-
-	^ self monthIndex 

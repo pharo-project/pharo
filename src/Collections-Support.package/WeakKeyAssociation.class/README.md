@@ -1,1 +1,0 @@
-I am an association holding only weakly on my key.

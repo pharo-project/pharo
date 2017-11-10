@@ -1,3 +1,0 @@
-position
-defaultPosition 
-	^ #top

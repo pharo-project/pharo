@@ -1,3 +1,0 @@
-refactoring
-contentSelection
-	^ model contentSelection

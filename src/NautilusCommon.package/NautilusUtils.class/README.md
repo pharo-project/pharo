@@ -1,1 +1,0 @@
-A class of utility methods used to implement *NautilusCommon extension methods on Kernel classes like CompiledMethod and their Ring equivalents like RGMethodDefinition.

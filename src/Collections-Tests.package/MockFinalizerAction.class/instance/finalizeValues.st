@@ -1,3 +1,0 @@
-finalization
-finalizeValues
-	finalizationAction value

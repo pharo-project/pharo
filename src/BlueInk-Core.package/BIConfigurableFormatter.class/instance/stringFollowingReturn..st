@@ -1,3 +1,0 @@
-accessing
-stringFollowingReturn: aString
-	context stringFollowingReturn: aString

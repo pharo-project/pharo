@@ -1,3 +1,0 @@
-delivery
-deliverNow
-	delivery now

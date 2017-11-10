@@ -1,3 +1,0 @@
-defaults
-defaultPopupDelay
-	^ 200

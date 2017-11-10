@@ -1,3 +1,0 @@
-accessing
-behaviorAffectedName
-	^ newClass name

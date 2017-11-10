@@ -1,4 +1,0 @@
-initialization
-defaultCategory 
-	
-	^ 'Available Debuggers'

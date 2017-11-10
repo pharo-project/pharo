@@ -1,3 +1,0 @@
-factory
-newOpenGLRenderer
-	^ handle newOpenGLRenderer

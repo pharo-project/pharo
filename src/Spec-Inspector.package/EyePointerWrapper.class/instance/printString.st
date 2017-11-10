@@ -1,3 +1,0 @@
-printing
-printString
-	^wrapped printString

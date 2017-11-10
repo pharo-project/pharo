@@ -1,3 +1,0 @@
-*Reflectivity
-visitStoreIntoTempNode: aNode
-	^ aNode

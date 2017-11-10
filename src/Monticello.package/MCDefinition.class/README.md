@@ -1,1 +1,0 @@
-A MCDefinition is the root of inheritance of entities representing code. 

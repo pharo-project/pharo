@@ -1,3 +1,0 @@
-accessing
-resultList
-	^ resultList

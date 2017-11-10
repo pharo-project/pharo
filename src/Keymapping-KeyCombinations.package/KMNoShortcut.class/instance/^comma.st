@@ -1,3 +1,0 @@
-combining
-, aShortcut
-	^ aShortcut

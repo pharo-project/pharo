@@ -1,3 +1,0 @@
-accessing
-penultimateLiteral
-	^ nil

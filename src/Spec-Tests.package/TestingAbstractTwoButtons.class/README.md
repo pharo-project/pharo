@@ -1,1 +1,0 @@
-A TestingAbstractTwoButtons is a stupid AbstractTwoButtons used to test it.

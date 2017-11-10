@@ -1,4 +1,0 @@
-commands
-cmdRemove
-	<command>
-	^ VSRemoveCommand

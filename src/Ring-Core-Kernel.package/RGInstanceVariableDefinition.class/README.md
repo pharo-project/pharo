@@ -1,1 +1,0 @@
-An instance variable definition

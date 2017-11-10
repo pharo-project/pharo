@@ -1,1 +1,0 @@
-I am event indicating to the renderer to execute the currently selected text and perform an action with the result.

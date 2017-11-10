@@ -1,3 +1,0 @@
-accessing
-receivers 
-	^ receivers 

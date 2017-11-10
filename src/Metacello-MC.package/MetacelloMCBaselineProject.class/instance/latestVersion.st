@@ -1,3 +1,0 @@
-versions
-latestVersion
-    ^ self version

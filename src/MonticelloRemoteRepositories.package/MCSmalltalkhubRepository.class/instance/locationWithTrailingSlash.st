@@ -1,3 +1,0 @@
-accessing
-locationWithTrailingSlash
-	^ self location

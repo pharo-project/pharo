@@ -1,1 +1,0 @@
-A LayoutPolicy defines how submorphs of some morph should be arranged. Subclasses of the receiver define concrete layout policies.

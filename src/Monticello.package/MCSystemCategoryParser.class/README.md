@@ -1,1 +1,0 @@
-A MCSystemCategoryParser extracts or set a category/protocol to the corresponding MCOrganizationDefinition.

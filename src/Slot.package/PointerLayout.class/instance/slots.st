@@ -1,3 +1,0 @@
-accessing
-slots
-	^ slotScope slots

@@ -1,4 +1,0 @@
-acessing
-boolean
-
-	^ boolean

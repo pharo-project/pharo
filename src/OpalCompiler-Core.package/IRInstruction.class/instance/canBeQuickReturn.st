@@ -1,3 +1,0 @@
-testing
-canBeQuickReturn
-	^ false

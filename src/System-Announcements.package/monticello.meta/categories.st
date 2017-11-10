@@ -1,9 +1,0 @@
-SystemOrganization addCategory: #'System-Announcements'!
-SystemOrganization addCategory: 'System-Announcements-Core'!
-SystemOrganization addCategory: 'System-Announcements-Logging'!
-SystemOrganization addCategory: 'System-Announcements-System-Base'!
-SystemOrganization addCategory: 'System-Announcements-System-Categories'!
-SystemOrganization addCategory: 'System-Announcements-System-Classes'!
-SystemOrganization addCategory: 'System-Announcements-System-Methods'!
-SystemOrganization addCategory: 'System-Announcements-System-Packages'!
-SystemOrganization addCategory: 'System-Announcements-System-Protocols'!

@@ -1,3 +1,0 @@
-accessing
-fileSize
-	^fileContents size

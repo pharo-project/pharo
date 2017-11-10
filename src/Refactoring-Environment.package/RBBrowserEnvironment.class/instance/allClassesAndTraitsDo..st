@@ -1,3 +1,0 @@
-private
-allClassesAndTraitsDo: aBlock
-	self systemDictionary allClassesAndTraitsDo: aBlock

@@ -1,2 +1,0 @@
-api-configuration
-commitConfiguration: commitComment

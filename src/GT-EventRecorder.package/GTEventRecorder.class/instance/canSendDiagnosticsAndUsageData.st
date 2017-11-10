@@ -1,3 +1,0 @@
-testing
-canSendDiagnosticsAndUsageData
-	^ privacy value

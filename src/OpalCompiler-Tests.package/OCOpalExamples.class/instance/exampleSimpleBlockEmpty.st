@@ -1,3 +1,0 @@
-examples-blocks
-exampleSimpleBlockEmpty
-	^[] value.

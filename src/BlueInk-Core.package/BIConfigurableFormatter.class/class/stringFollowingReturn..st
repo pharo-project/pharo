@@ -1,4 +1,0 @@
-accessing
-stringFollowingReturn: aString
-	DefaultPrettyPrintContext stringFollowingReturn: aString.
-	self announceASettingChange

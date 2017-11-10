@@ -1,1 +1,0 @@
-This is a specialization of the Announcer. The main added functionality is the ability to suspend the announcements from this announcer.

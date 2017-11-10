@@ -1,3 +1,0 @@
-initialize
-beLittleEndian
-	endianness := #little

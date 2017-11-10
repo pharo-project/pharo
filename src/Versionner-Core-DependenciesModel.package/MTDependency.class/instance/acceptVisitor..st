@@ -1,3 +1,0 @@
-visiting
-acceptVisitor: aMTProjectVisitor 
-	self subclassResponsibility

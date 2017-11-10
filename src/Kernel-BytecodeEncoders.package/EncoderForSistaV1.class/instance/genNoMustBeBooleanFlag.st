@@ -1,3 +1,0 @@
-extended bytecode generation
-genNoMustBeBooleanFlag
-	self genUnsignedSingleExtendA: 1

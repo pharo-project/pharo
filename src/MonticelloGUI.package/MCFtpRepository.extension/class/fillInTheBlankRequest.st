@@ -1,5 +1,0 @@
-*MonticelloGUI
-fillInTheBlankRequest
-	^ 'FTP Repository:'
-
-	

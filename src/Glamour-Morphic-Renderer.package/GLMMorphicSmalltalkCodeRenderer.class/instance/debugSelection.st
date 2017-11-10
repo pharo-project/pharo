@@ -1,4 +1,0 @@
-callbacks
-debugSelection
-
-	textMorph debugIt

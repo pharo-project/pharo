@@ -1,3 +1,0 @@
-accessing
-definitions
-	^ snapshot definitions

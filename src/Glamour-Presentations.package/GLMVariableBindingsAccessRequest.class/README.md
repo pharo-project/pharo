@@ -1,1 +1,0 @@
-Request to perform an action on the current bindings from the editor.

@@ -1,1 +1,0 @@
-Provides a superclass for classes that function as models.  The only behavior provided is fast dependents maintenance, which bypasses the generic DependentsFields mechanism.  1/23/96 sw

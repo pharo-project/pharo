@@ -1,3 +1,0 @@
-*GT-InspectorExtensions-Core
-gtInspectorChildren
-	^ #()

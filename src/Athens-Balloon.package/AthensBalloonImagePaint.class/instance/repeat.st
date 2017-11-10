@@ -1,3 +1,0 @@
-accessing
-repeat
-	tileFlag:=true

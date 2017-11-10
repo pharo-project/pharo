@@ -1,3 +1,0 @@
-pillaging
-id
-	^ id 

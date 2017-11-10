@@ -1,3 +1,0 @@
-contants
-nonAsciiMap
-	^NonAsciiMap

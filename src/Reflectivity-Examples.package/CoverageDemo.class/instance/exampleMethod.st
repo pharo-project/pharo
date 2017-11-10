@@ -1,4 +1,0 @@
-example
-exampleMethod
-
-	self openWithSpec.

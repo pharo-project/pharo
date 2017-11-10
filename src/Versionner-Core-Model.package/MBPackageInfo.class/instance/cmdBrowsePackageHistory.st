@@ -1,5 +1,0 @@
-commands
-cmdBrowsePackageHistory
-	<command>
-	^ MBPackageHistoryCommand
-	

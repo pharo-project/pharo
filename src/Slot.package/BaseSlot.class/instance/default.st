@@ -1,3 +1,0 @@
-initalize
-default
-	^ default

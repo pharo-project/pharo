@@ -1,3 +1,0 @@
-extending
-extendWord
-	^ WordLayout new

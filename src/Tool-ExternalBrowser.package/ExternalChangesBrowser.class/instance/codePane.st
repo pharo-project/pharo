@@ -1,4 +1,0 @@
-acccessing
-codePane
-
-	^ codePane

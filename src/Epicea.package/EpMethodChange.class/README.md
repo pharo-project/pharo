@@ -1,1 +1,0 @@
-I represent a change in the method dictionary of a class or a trait.

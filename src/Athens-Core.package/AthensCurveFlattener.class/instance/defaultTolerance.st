@@ -1,3 +1,0 @@
-accessing
-defaultTolerance
-	^ 1

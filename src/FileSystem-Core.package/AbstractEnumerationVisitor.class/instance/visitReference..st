@@ -1,3 +1,0 @@
-visiting
-visitReference: anEntry
-	self subclassResponsibility

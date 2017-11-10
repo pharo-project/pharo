@@ -1,1 +1,0 @@
-Replaces = nil and == nil by isNil, ~= nil and ~~ nil by notNil to make the code more readable.  

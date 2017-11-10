@@ -1,4 +1,0 @@
-testing
-isTransferable
-
-	^ true

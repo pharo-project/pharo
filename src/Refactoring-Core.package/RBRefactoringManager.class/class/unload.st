@@ -1,3 +1,0 @@
-public
-unload
-	self nuke

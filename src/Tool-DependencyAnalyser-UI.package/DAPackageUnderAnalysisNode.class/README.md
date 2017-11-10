@@ -1,1 +1,0 @@
-A PDPackageNode is used to display a package in a tree.

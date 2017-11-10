@@ -1,3 +1,0 @@
-private
-maxArguments
-	^30

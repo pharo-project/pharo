@@ -1,1 +1,0 @@
-A SpecLayoutAdd represents the action to add a subwidget into a spec layout

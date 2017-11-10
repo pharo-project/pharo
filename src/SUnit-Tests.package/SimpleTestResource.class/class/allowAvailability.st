@@ -1,3 +1,0 @@
-accessing
-allowAvailability
-	^preventAvailability isNil

@@ -1,3 +1,0 @@
-find-replace
-sharesFindReplace
-	^ false

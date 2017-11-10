@@ -1,1 +1,0 @@
-Command to add a configuration in Versionner

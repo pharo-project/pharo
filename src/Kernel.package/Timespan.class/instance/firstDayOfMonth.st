@@ -1,4 +1,0 @@
-accessing
-firstDayOfMonth
-
-	^ start firstDayOfMonth

@@ -1,3 +1,0 @@
-geometry updating
-updateClientExtent
-	textArea updateExtentFromParagraph.

@@ -1,3 +1,0 @@
-tests
-testIfNilIfNotNil
-	self checkCorrectDecompilation: #exampleIfNilIfNotNil

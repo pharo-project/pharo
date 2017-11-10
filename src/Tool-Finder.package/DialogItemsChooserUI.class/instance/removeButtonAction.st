@@ -1,3 +1,0 @@
-buttons creations
-removeButtonAction
-	self removeSelectedItems.

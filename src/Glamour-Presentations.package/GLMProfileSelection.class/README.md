@@ -1,1 +1,0 @@
-I am event indicating to the renderer to profile the currently selected text.

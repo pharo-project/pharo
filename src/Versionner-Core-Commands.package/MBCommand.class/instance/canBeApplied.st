@@ -1,3 +1,0 @@
-testing
-canBeApplied
-	^ true

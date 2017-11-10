@@ -1,3 +1,0 @@
-accessing
-bookName 
-	^'GT Debugger'

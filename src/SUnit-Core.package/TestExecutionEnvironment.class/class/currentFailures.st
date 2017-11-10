@@ -1,4 +1,0 @@
-controlling
-currentFailures
-
-	^CurrentExecutionEnvironment value failures

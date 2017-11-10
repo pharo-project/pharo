@@ -1,4 +1,0 @@
-accessing
-month
-
-	^ start month 

@@ -1,3 +1,0 @@
-requirements
-collectionOfCollectionsOfInts
-	^collectionOfCollectionsOfInts.

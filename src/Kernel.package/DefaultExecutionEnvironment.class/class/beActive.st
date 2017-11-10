@@ -1,4 +1,0 @@
-controlling
-beActive
-
-	CurrentExecutionEnvironment restoreDefault 

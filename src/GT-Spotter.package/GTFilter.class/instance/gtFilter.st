@@ -1,3 +1,0 @@
-public
-gtFilter
-	^ self

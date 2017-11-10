@@ -1,1 +1,0 @@
-I am an sunit test for SystemNavigation.

@@ -1,3 +1,0 @@
-methods
-sendsDifferentSuper
-	super printString

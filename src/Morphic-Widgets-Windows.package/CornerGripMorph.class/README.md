@@ -1,1 +1,0 @@
-I am the superclass of a hierarchy of morph specialized in allowing the user to resize windows.

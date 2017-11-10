@@ -1,4 +1,0 @@
-queries
-isColor
-
-	^ true

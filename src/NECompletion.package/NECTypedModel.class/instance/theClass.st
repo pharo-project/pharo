@@ -1,3 +1,0 @@
-action
-theClass
-	^clazz

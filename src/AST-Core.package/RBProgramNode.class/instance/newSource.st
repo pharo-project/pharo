@@ -1,3 +1,0 @@
-accessing
-newSource
-	^self formattedCode

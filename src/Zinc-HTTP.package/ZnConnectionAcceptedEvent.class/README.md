@@ -1,1 +1,0 @@
-ZnConnectionAcceptedEvent is signalled when an HTTP server accepts an incoming connection from a client at address.

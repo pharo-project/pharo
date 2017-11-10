@@ -1,3 +1,0 @@
-accessing
-inspector
-	^ inspector value

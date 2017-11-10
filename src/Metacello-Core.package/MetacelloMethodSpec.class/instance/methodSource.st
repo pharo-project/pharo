@@ -1,4 +1,0 @@
-method generation
-methodSource
-
-	self subclassResponsibility

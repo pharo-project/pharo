@@ -1,4 +1,0 @@
-private
-startupScriptName
-
-	^ 'startup.st'

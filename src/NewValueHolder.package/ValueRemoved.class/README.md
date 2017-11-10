@@ -1,1 +1,0 @@
-A ValueRemoved  is an announcement raised when an item (or a collection of items) was removed from CollectionValueHolder.

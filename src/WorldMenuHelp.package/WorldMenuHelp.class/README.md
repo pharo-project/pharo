@@ -1,1 +1,0 @@
-Provide help topic for world menu

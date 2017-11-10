@@ -1,1 +1,0 @@
-I'm a generic command for declare versions as stable or development.

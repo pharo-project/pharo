@@ -1,1 +1,0 @@
-The tiger shape (see VGTigerDemo runDemo)

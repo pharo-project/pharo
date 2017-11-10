@@ -1,3 +1,0 @@
-actions
-canMerge
-	^ merger isMerged

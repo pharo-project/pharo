@@ -1,1 +1,0 @@
-Welcome user interface to browse dependencies packages. Availaible via tools menu.

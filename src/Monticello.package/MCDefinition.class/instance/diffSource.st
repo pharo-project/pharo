@@ -1,3 +1,0 @@
-accessing
-diffSource
-	^ self source

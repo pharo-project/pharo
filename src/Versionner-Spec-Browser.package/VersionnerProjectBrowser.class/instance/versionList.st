@@ -1,3 +1,0 @@
-accessing
-versionList
-	^ versionList.

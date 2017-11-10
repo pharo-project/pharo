@@ -1,4 +1,0 @@
-testing
-isReturningIf
-
-	^false

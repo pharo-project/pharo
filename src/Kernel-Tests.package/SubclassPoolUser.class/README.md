@@ -1,1 +1,0 @@
-I should be able to access the pool variables defined in my superclass.

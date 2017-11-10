@@ -1,3 +1,0 @@
-accessing
-useTraditionalBinaryPrecedenceForParentheses
-	^ context useTraditionalBinaryPrecedenceForParentheses

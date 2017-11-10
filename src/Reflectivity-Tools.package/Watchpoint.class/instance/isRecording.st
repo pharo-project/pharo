@@ -1,3 +1,0 @@
-recording
-isRecording
-	^recording

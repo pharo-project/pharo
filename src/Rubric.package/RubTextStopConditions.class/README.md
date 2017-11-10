@@ -1,1 +1,0 @@
-I represent the conditions to stop the scan

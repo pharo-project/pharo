@@ -1,3 +1,0 @@
-*Epicea-Refactorings
-propagateTransformation
-	self renameMessageSends

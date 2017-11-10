@@ -1,4 +1,0 @@
-defaults
-staticSmallHeight
-
-	^ 50

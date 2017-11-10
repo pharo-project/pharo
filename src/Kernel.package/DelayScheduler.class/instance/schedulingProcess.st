@@ -1,3 +1,0 @@
-timer process
-schedulingProcess
-	^ timerEventLoop 

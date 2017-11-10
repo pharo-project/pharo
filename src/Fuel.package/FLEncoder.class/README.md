@@ -1,1 +1,0 @@
-I am an abstraction used by the serialization algorithm to encode the graph in a stream.

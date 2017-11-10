@@ -1,2 +1,0 @@
-visitor
-visitJoyButtonDownEvent: windowEvent

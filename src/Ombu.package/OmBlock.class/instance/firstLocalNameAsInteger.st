@@ -1,3 +1,0 @@
-accessing
-firstLocalNameAsInteger
-	^ self firstEntryReference localName asInteger

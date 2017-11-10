@@ -1,4 +1,0 @@
-geometry
-position
-
-	^ bounds topLeft

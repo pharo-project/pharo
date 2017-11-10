@@ -1,3 +1,0 @@
-accessing
-extent
-	^ width @ height

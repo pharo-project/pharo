@@ -1,1 +1,0 @@
-A PragmaMenuAndShortcutRegistrationItem is an item of a menu or keymap

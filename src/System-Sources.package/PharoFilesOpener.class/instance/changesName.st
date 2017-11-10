@@ -1,3 +1,0 @@
-delegated
-changesName
-	^ Smalltalk changesName

@@ -1,4 +1,0 @@
-tests
-isClassVariable
-
-	^type == #classVar

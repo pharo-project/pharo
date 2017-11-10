@@ -1,3 +1,0 @@
-private
-isMatchedItem: anItem
-	^ false

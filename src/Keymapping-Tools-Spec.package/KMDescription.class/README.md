@@ -1,1 +1,0 @@
-A KMDescription is a window showing the description of shortcuts for a specified set of symbols reprensenting KMCategories

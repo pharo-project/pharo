@@ -1,1 +1,0 @@
-Message dialog with a warning icon.

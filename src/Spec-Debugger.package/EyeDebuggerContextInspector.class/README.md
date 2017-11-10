@@ -1,1 +1,0 @@
-Specific context inspector for the bottom right of the debugger

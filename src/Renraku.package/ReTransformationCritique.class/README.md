@@ -1,1 +1,0 @@
-A critique which contains the AST that should replace the existing one of the criticized entity

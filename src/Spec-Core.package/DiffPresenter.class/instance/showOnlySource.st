@@ -1,4 +1,0 @@
-api
-showOnlySource
-
-	^ showOnlySource value

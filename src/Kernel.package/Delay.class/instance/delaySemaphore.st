@@ -1,4 +1,0 @@
-public
-delaySemaphore
-
-	^ delaySemaphore

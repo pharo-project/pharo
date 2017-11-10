@@ -1,7 +1,0 @@
-{
-	"commentStamp" : "TorstenBergmann 2/20/2014 15:32",
-	"traitcomposition" : "TAsStringCommaAndDelimiterTest",
-	"classtraitcomposition" : "TAsStringCommaAndDelimiterTest classTrait",
-	"category" : "Collections-Tests-Abstract",
-	"name" : "TAsStringCommaAndDelimiterSequenceableTest"
-}

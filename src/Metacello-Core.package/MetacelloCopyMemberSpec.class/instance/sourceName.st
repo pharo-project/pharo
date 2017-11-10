@@ -1,4 +1,0 @@
-accessing
-sourceName
-
-	^sourceName

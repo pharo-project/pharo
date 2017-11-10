@@ -1,1 +1,0 @@
-I implement a generic way of serializing and materializing an object, for those that do not need more special way of doing it.

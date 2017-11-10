@@ -1,1 +1,0 @@
-self new  openOn: GLMBasicExamples

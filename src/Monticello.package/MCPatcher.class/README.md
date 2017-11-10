@@ -1,1 +1,0 @@
-I can add or remove or modify definitions. My main purpose is to generate monticello snapshot out of multiple snapshots or definitions by using my most used method #apply:to:.

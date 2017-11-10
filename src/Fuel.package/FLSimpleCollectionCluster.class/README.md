@@ -1,1 +1,0 @@
-A FLSimpleCollectionCluster is a special optional cluster that rather than using the default (variable object) serialization, uses #do: to iterate objects and #add: during materialization. So far we use it for Set, IdentitySet and OrderedCollection.

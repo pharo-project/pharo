@@ -1,1 +1,0 @@
-I represent a bar with annotations for the text area, like editing mode, line numbers etc

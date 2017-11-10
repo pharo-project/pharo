@@ -1,3 +1,0 @@
-snapshotting
-shutDown
-	self subclassResponsibility 

@@ -1,3 +1,0 @@
-accessing
-browsedEnvironment
-	^manifestClass environment 

@@ -1,4 +1,0 @@
-*Spec-Core
-currentCharacter
-
-	^ key

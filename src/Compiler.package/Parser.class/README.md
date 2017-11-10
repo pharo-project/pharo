@@ -1,1 +1,0 @@
-I parse Smalltalk syntax and create a MethodNode that is the root of the parse tree. I look one token ahead.

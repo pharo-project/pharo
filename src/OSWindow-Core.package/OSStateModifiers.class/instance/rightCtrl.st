@@ -1,4 +1,0 @@
-accessing
-rightCtrl
-	
-	^ rightCtrl

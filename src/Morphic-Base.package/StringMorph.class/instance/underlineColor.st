@@ -1,4 +1,0 @@
-accessing
-underlineColor
-
-	^ self stringColor 

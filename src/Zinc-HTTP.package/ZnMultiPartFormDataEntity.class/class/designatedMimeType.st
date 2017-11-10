@@ -1,3 +1,0 @@
-testing
-designatedMimeType
-	^ ZnMimeType multiPartFormData  

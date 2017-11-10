@@ -1,4 +1,0 @@
-accessing
-interruptedProcess
-
-	^ interruptedProcess

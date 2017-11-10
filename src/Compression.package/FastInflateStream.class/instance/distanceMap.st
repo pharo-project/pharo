@@ -1,3 +1,0 @@
-huffman trees
-distanceMap
-	^DistanceMap

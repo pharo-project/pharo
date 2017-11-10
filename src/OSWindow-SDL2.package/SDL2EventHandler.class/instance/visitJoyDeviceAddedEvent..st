@@ -1,2 +1,0 @@
-visitor
-visitJoyDeviceAddedEvent: joyDeviceEvent

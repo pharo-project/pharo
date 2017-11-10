@@ -1,3 +1,0 @@
-accessing
-keepBlockInMessage
-	^ DefaultPrettyPrintContext keepBlockInMessage

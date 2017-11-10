@@ -1,2 +1,0 @@
-RubFindReplaceService default newDialog openInWorld
-RubFindReplaceService 

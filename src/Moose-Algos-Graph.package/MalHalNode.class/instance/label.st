@@ -1,4 +1,0 @@
-hal-algorithm
-label
-
-	^ 'Ha '

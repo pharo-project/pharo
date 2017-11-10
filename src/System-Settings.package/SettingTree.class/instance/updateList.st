@@ -1,3 +1,0 @@
-accessing
-updateList
-	nodeList := nil.

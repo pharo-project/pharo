@@ -1,1 +1,0 @@
-I know how to find stores into for an instance var

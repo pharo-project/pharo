@@ -1,3 +1,0 @@
-*Text-Scanning
-emphasizeScanner: scanner
-	

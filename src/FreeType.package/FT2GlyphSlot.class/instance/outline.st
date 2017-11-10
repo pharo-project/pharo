@@ -1,3 +1,0 @@
-accessing-fields
-outline
-	^outline

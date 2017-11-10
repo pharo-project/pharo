@@ -1,1 +1,0 @@
-Used for cleaning the image

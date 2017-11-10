@@ -1,4 +1,0 @@
-initialize-release
-updateTextAreaWhenPlugged
-	self withStyler.
-	super updateTextAreaWhenPlugged

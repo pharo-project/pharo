@@ -1,4 +1,0 @@
-accessing
-selectorAndArgumentCombinedMaxSize: anInteger
-	DefaultPrettyPrintContext selectorAndArgumentCombinedMaxSize: anInteger.
-	self announceASettingChange

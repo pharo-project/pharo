@@ -1,3 +1,0 @@
-accessing
-smartCharactersWithSingleSpace
-	^ smartCharactersWithSingleSpace

@@ -1,4 +1,0 @@
-refreshing
-refreshEntryContentModel
-
-	self refreshEntryContentModelWith: self selectedEntryItems

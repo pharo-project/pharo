@@ -1,4 +1,0 @@
-priv handling
-isResumable
-	
-	^ false

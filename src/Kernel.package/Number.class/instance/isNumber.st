@@ -1,3 +1,0 @@
-testing
-isNumber
-	^ true

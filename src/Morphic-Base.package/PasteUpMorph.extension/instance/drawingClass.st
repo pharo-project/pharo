@@ -1,4 +1,0 @@
-*Morphic-Base
-drawingClass
-
-	^ ImageMorph

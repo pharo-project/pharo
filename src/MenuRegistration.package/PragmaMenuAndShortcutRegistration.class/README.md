@@ -1,1 +1,0 @@
-A PragmaMenuAndShortcutRegistration is the list items holder

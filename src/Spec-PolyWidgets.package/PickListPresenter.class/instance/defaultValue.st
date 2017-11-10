@@ -1,4 +1,0 @@
-api
-defaultValue
-
-	^ defaultValueHolder value

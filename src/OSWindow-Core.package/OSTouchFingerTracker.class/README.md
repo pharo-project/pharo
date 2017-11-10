@@ -1,1 +1,0 @@
-I am recording all movements and informations from a finger

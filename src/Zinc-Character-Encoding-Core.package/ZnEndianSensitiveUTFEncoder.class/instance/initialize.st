@@ -1,3 +1,0 @@
-initialize
-initialize
-	endianness := #big

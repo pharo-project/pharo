@@ -1,3 +1,0 @@
-slots
-slots
-	self explicitRequirement

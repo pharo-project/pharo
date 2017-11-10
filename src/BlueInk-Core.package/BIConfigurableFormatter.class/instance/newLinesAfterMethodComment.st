@@ -1,3 +1,0 @@
-accessing
-newLinesAfterMethodComment
-	^ context newLinesAfterMethodComment

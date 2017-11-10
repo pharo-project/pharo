@@ -1,3 +1,0 @@
-accessing
-key
-	^ self name

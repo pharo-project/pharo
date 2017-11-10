@@ -1,3 +1,0 @@
-accessing
-packedStructureAlignment
-	^ 1

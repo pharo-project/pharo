@@ -1,3 +1,0 @@
-settings
-delaySchedulerClass
-	^Scheduler class

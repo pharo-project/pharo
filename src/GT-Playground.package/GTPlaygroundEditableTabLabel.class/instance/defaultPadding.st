@@ -1,4 +1,0 @@
-initialization
-defaultPadding
-
-	^ 5

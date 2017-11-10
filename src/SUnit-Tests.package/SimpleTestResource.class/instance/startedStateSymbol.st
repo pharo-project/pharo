@@ -1,4 +1,0 @@
-running
-startedStateSymbol
-
-	^#started

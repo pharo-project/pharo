@@ -1,3 +1,0 @@
-accessing
-originalFileName
-	^ 'LucidaGrande.ttc'

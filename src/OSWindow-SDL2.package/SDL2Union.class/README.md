@@ -1,1 +1,0 @@
-Common things for all SDL2 unions.

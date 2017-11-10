@@ -1,1 +1,0 @@
-Open an inspector on the remote repository.

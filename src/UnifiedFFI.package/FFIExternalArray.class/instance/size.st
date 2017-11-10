@@ -1,3 +1,0 @@
-initialization
-size
-	^ size

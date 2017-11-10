@@ -1,3 +1,0 @@
-accessing
-pages
-	^ #(addVariableRefactoring renameVariableRefactoring removeVariableRefactoring abstractVariableRefactoring  accessorVariableRefactoring moveToVariableRefactoring pullUpVariableRefactoring pushDownVariableRefactoring)

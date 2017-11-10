@@ -1,4 +1,0 @@
-private
-privatePort
-
-	^port

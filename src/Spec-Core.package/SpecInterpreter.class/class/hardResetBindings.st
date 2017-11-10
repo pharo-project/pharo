@@ -1,4 +1,0 @@
-accessing
-hardResetBindings
-
-	bindings := nil

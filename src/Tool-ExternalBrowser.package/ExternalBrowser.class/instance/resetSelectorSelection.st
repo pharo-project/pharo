@@ -1,4 +1,0 @@
-selection operation
-resetSelectorSelection
-
-	self selectors resetSelection

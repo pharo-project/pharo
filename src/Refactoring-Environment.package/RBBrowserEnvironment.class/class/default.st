@@ -1,3 +1,0 @@
-accessing
-default
-	^ RBBrowserEnvironment new

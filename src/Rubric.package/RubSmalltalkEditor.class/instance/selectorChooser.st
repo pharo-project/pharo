@@ -1,3 +1,0 @@
-basic-completion
-selectorChooser
-	^ selectorChooser

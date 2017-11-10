@@ -1,4 +1,0 @@
-accessing
-previousFocusKey
-
-	^ PreviousFocusKey

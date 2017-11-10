@@ -1,4 +1,0 @@
-initialization
-emptyMethodDictionary
-
-	^ MethodDictionary new

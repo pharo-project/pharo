@@ -1,3 +1,0 @@
-accessing
-packagesDiffUnderteminateSize
-	^ self packagesDiffUnderteminate size

@@ -1,3 +1,0 @@
-callbacks
-doubleClick
-	self ok

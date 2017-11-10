@@ -1,1 +1,0 @@
-Provides for another morph to occupy the full screen area (less docking bars).

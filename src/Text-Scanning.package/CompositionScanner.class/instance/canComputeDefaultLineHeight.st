@@ -1,3 +1,0 @@
-testing
-canComputeDefaultLineHeight
-	^ rightMargin notNil

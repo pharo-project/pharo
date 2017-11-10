@@ -1,3 +1,0 @@
-private
-handlesMouseDown: anEvent
-	^ true

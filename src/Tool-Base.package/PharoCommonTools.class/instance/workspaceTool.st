@@ -1,3 +1,0 @@
-tools
-workspaceTool
-	^ self workspace

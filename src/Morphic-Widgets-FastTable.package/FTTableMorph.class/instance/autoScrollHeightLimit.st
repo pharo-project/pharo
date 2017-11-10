@@ -1,4 +1,0 @@
-updating
-autoScrollHeightLimit
-
-	^20

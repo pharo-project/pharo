@@ -1,4 +1,0 @@
-commands
-cmdRevertPackage
-	<command>
-	^ MBRevertPackageCommand

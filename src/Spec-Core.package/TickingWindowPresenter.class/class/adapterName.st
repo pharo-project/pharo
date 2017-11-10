@@ -1,4 +1,0 @@
-specs
-adapterName
-
-	^ #TickingWindowAdapter

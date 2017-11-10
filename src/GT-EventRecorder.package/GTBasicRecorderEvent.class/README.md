@@ -1,1 +1,0 @@
-I represent a basic event for the event recorder.

@@ -1,4 +1,0 @@
-private
-resolveToLoadableSpec
-
-	^self copy

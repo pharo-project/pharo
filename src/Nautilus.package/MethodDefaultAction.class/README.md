@@ -1,1 +1,0 @@
-Action by default, empty icon

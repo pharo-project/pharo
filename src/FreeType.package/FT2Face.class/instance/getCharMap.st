@@ -1,3 +1,0 @@
-charmaps
-getCharMap
-	self primGetCharMap.

@@ -1,3 +1,0 @@
-protocol
-takeKeyboardFocus
-	contentMorph takeKeyboardFocus.

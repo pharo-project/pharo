@@ -1,4 +1,0 @@
-accessing ports
-cursorPosition 
-	 
-	^cursorPosition

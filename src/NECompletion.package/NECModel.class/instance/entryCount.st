@@ -1,3 +1,0 @@
-accessing
-entryCount
-	^entries size

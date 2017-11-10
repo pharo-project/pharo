@@ -1,3 +1,0 @@
-resize/collapse
-isCollapsed
-	^ isCollapsed

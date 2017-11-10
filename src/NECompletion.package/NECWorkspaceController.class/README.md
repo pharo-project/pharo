@@ -1,1 +1,0 @@
-I'm a specialized controller, that works with Workspaces.

@@ -1,4 +1,0 @@
-icons
-inspectIcon
-
-	^ GLMUIThemeExtraIcons glamorousInspect

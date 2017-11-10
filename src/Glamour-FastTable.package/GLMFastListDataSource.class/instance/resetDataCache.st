@@ -1,3 +1,0 @@
-cache
-resetDataCache
-	dataCache := nil

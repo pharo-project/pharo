@@ -1,4 +1,0 @@
-accessing
-project
-
-	^self projectWith: #()

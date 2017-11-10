@@ -1,1 +1,0 @@
-I am a gesture detector for gestures who has to travel a certain distance before being detected

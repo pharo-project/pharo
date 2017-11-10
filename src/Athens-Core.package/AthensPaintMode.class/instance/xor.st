@@ -1,3 +1,0 @@
-modes
-xor
-	self notAvailable

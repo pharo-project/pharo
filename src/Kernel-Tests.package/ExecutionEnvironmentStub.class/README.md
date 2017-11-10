@@ -1,1 +1,0 @@
-I am stub to test ExecutionEnvironment's

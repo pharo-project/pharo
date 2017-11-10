@@ -1,4 +1,0 @@
-loading
-load
-
-	self subclassResponsibility

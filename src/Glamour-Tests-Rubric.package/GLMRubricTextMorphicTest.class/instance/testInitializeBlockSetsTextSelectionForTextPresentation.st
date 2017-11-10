@@ -1,4 +1,0 @@
-tests
-testInitializeBlockSetsTextSelectionForTextPresentation
-	
-	self checkInitializeBlockSetsTextSelectionForPresentation: #text

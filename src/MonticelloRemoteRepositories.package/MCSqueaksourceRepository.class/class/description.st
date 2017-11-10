@@ -1,3 +1,0 @@
-accessing
-description
-	^ 'squeaksource.com'

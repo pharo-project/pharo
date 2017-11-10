@@ -1,3 +1,0 @@
-testing
-isMorphicEvent
-	^false

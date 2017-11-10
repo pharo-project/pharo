@@ -1,3 +1,0 @@
-accessing
-releaseNumber
-	^ releaseNumber

@@ -1,3 +1,0 @@
-defaults
-defaultBorderWidth
-	^ 0

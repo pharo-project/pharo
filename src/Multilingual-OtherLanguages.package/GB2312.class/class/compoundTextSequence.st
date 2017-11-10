@@ -1,3 +1,0 @@
-class methods
-compoundTextSequence
-	^ compoundTextSequence

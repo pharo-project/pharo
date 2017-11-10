@@ -1,1 +1,0 @@
-This class holds tests for PolygonMorph

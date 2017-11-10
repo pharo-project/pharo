@@ -1,3 +1,0 @@
-accessing
-menuShortcutString
-	^ self subclassResponsibility

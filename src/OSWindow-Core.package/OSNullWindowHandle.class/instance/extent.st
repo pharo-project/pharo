@@ -1,3 +1,0 @@
-accessing
-extent
-	^ attributes extent

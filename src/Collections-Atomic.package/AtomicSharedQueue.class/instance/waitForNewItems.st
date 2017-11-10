@@ -1,3 +1,0 @@
-signaling
-waitForNewItems
-	availSema wait

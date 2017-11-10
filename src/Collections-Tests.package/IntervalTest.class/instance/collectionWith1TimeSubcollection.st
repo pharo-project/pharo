@@ -1,3 +1,0 @@
-requirements
-collectionWith1TimeSubcollection
-	^ collectionWithSubCollection 

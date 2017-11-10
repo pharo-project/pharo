@@ -1,4 +1,0 @@
-api
-askBeforeDiscardingEdits
-
-	^ askBeforeDiscardingEdits value

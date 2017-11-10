@@ -1,4 +1,0 @@
-accessing scrollbars
-scrollbarsShowNever
-	self hScrollbarShowNever.
-	self vScrollbarShowNever

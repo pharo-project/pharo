@@ -1,3 +1,0 @@
-viewer
-externalName
-	^ externalName

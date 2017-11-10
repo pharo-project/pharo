@@ -1,1 +1,0 @@
-A metacello repository in a directory 

@@ -1,1 +1,0 @@
-A comparator that can be used to compare a whole dependency graph.

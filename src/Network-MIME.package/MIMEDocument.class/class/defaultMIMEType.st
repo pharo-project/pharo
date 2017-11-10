@@ -1,3 +1,0 @@
-accessing
-defaultMIMEType
-	^ ZnMimeType default

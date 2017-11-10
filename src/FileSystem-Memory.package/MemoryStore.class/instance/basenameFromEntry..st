@@ -1,3 +1,0 @@
-public
-basenameFromEntry: aMemoryFileSystemEntry
-	^ aMemoryFileSystemEntry basename

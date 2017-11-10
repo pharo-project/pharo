@@ -1,3 +1,0 @@
-commands
-addSpacer
-	self shouldNotImplement

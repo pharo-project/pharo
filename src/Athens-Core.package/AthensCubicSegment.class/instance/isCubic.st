@@ -1,3 +1,0 @@
-testing
-isCubic
-	^true

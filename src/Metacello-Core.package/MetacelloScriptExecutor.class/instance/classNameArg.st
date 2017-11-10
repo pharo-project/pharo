@@ -1,3 +1,0 @@
-args
-classNameArg
-    ^ classNameArg

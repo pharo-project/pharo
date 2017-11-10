@@ -1,4 +1,0 @@
-specs
-defaultSpec
-
-	^ self subclassResponsibility

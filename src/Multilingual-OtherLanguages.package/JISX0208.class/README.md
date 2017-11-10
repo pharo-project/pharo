@@ -1,1 +1,0 @@
-This class represents the domestic character encoding called JIS X 0208 used for Japanese.

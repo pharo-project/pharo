@@ -1,3 +1,0 @@
-*Fuel
-shouldBeSubstitutedByCleanCopy
-	^ self isClean 

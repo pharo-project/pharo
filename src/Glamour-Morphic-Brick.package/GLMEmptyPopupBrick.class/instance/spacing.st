@@ -1,3 +1,0 @@
-popup - properties
-spacing
-	^ spacing

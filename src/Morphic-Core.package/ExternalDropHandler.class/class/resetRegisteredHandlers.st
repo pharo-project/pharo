@@ -1,3 +1,0 @@
-private
-resetRegisteredHandlers
-	RegisteredHandlers := nil

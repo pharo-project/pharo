@@ -1,3 +1,0 @@
-accessing
-formatCommentWithStatements
-	^ DefaultPrettyPrintContext formatCommentWithStatements

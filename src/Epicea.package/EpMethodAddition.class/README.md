@@ -1,1 +1,0 @@
-I represent a addition of a method in a class or a trait.

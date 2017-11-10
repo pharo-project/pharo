@@ -1,4 +1,0 @@
-private
-getFalse: anArg
-
-	^false

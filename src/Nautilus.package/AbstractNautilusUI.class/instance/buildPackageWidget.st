@@ -1,3 +1,0 @@
-widget package
-buildPackageWidget
-	self subclassResponsibility

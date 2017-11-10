@@ -1,1 +1,0 @@
-A structure that contains Android specific information about a window. 

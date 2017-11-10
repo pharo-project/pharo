@@ -1,3 +1,0 @@
-accessing
-beResizable
-	resizable := true

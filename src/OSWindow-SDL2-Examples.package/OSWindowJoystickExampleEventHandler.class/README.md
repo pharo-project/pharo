@@ -1,1 +1,0 @@
-I am the event handler linked to OSWindowJoystickExample.

@@ -1,3 +1,0 @@
-testing
-isLiteralArrayToken
-	^true

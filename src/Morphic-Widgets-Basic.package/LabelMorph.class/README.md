@@ -1,1 +1,0 @@
-String morph with enablement support. When disabled the text will appear inset.

@@ -1,6 +1,0 @@
-accessing
-symbolicVersion
-	self subclassResponsibility
-
-	
-	

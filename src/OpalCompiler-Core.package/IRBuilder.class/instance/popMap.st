@@ -1,4 +1,0 @@
-mapping
-popMap
-
-	sourceMapNodes removeLast

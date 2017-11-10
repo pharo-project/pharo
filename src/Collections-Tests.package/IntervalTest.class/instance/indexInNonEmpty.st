@@ -1,3 +1,0 @@
-requirements
-indexInNonEmpty
-	^2.

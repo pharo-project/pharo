@@ -1,4 +1,0 @@
-utility
-uiManager
-
-	^ UIManager default

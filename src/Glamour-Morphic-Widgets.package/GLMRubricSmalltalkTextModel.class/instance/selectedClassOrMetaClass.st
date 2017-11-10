@@ -1,4 +1,0 @@
-accessing
-selectedClassOrMetaClass
-	
-	^ self selectedBehavior

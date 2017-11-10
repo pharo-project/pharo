@@ -1,4 +1,0 @@
-accessing
-modificationTime
-
-	^ self subclassResponsibility

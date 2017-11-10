@@ -1,1 +1,0 @@
-Specially themed "control" button. Used for drop-lists, expanders etc.

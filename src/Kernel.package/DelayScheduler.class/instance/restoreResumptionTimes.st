@@ -1,3 +1,0 @@
-snapshotting
-restoreResumptionTimes
-	self subclassResponsibility 

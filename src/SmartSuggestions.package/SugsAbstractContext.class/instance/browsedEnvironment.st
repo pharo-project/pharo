@@ -1,3 +1,0 @@
-refactoring
-browsedEnvironment
-	^RBBrowserEnvironment new

@@ -1,3 +1,0 @@
-test
-renameThisMethod: anArg
-	^self

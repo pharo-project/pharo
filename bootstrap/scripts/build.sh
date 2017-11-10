@@ -122,9 +122,6 @@ zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
 ../bootstrap/scripts/download_vm.sh
 
-echo "Prepare fonts"
-unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
-
 echo "Prepare icons"
 mkdir icon-packs
 cd icon-packs
@@ -178,17 +175,6 @@ zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'filetree://../src'; load"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
-${VM} "${PHARO_IMAGE_NAME}.image" clean --release
-
-echo "[Pharo] Configure resulting image"
-${VM} "${PHARO_IMAGE_NAME}.image" st ../bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
-
-${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
-
-# clean bak sources files
-rm -f *.bak
 
 # fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
 # in older versions we must use octal representation
@@ -199,5 +185,18 @@ else
   SEEK=40
 fi
 dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
+
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.3'; load: 'core'"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://../src'; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+${VM} "${PHARO_IMAGE_NAME}.image" clean --release
+
+echo "[Pharo] Configure resulting image"
+${VM} "${PHARO_IMAGE_NAME}.image" st ../bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
+
+${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
+
+# clean bak sources files
+rm -f *.bak
 
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*

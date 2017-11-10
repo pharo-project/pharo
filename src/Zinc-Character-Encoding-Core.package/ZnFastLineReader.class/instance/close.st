@@ -1,3 +1,0 @@
-initialize
-close
-	readStream close

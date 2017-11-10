@@ -1,4 +1,0 @@
-widget package
-packageWidget
-
-	^ packageWidget

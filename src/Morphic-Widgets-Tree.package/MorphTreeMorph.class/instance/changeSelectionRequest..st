@@ -1,3 +1,0 @@
-announce requests
-changeSelectionRequest: anAnnounce
-	self updateSelectionFromModel

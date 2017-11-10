@@ -1,3 +1,0 @@
-queries
-defaultFont
-	^ TextStyle defaultFont

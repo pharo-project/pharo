@@ -1,4 +1,0 @@
-brick-layout-properties
-useVerticalLinearLayout
-
-	self layout: GLMVerticalLinearLayout uniqueInstance

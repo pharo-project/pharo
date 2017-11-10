@@ -1,4 +1,0 @@
-accessing
-edgeClass
-
-	^ MalCseEdge 

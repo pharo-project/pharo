@@ -1,1 +1,0 @@
-List methods that have one or more arguments and do no refer to self or an instance variable. These methods might be better defined in some other class or as class methods.

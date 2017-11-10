@@ -1,3 +1,0 @@
-running
-setUpPersistenceStrategyAndChecker
-	self subclassResponsibility

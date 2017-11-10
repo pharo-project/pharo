@@ -1,3 +1,0 @@
-compatibility
-origin
-	^self class

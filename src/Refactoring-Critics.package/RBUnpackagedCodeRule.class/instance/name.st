@@ -1,3 +1,0 @@
-accessing
-name
-	^ 'Unpackaged code'

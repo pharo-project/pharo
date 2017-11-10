@@ -1,4 +1,0 @@
-initialize
-selectionColor
-
-	^selectionColor

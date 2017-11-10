@@ -1,4 +1,0 @@
-api
-columnInset
-
-	^ columnInset value

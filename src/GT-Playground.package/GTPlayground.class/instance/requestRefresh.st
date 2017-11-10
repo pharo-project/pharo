@@ -1,3 +1,0 @@
-updating
-requestRefresh
-	self inspectorPresentation refreshPanes

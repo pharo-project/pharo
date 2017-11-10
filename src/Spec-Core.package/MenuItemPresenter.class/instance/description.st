@@ -1,4 +1,0 @@
-api
-description
-
-	^ description value

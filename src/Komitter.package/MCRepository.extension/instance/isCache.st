@@ -1,3 +1,0 @@
-*Komitter-Models
-isCache
-	^ false

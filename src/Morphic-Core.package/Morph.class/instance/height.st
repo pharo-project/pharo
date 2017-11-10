@@ -1,4 +1,0 @@
-geometry
-height
-
-	^ bounds height

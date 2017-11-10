@@ -1,3 +1,0 @@
-operations
-renameTo: newBasename
-	self subclassResponsibility

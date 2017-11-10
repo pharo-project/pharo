@@ -1,3 +1,0 @@
-accessing
-matchingPresentations
-	^ cachedMatchingPresentations := presentations matchingPresentations

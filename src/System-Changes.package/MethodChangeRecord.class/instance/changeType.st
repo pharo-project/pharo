@@ -1,4 +1,0 @@
-accessing
-changeType
-
-	^ changeType

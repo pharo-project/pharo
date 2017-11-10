@@ -1,1 +1,0 @@
-This class stores a searchString which will be searched for in the entities source code on demand to find an interval of substring

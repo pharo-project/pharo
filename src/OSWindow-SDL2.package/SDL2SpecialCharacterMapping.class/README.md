@@ -1,1 +1,0 @@
-This class keeps a maps for key symbols that are represented by Morphic as special characters.

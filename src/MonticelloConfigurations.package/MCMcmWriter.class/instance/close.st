@@ -1,3 +1,0 @@
-writing
-close
-	stream close

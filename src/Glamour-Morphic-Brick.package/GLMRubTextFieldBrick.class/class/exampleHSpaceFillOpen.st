@@ -1,4 +1,0 @@
-examples-open
-exampleHSpaceFillOpen
-
-	self gtExampleHSpaceFill openCenteredInBrickWindow

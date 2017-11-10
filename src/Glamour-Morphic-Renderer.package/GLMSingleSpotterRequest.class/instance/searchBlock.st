@@ -1,3 +1,0 @@
-accessing
-searchBlock
-	^ searchBlock

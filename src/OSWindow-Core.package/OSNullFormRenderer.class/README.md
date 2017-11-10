@@ -1,1 +1,0 @@
-i just a stub for rendering nothing , so that all update requests (like from Morhpic), are simply ignored

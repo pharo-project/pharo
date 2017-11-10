@@ -1,1 +1,0 @@
-A ChangesBrowser is a browser used to browse a composite change wich gather all the wanted changes

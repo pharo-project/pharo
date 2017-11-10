@@ -1,3 +1,0 @@
-comparing
-fullTimeStamp
-	^ DateAndTime current

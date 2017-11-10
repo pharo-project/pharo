@@ -1,3 +1,0 @@
-accessing
-attributeKeys
-	^ attributes keys

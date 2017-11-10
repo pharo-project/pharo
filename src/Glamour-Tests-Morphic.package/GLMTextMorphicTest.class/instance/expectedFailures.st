@@ -1,3 +1,0 @@
-tests
-expectedFailures
-	^ #(testUpdatingTextPortUpdatesTheMorph)

@@ -1,1 +1,0 @@
-Empty top-level layout used to delimit the layout chains.

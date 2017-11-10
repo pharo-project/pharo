@@ -1,3 +1,0 @@
-queries
-isSolidFill
-	^true

@@ -1,4 +1,0 @@
-initialization
-initializeWidgets
-	
-	self subclassResponsibility

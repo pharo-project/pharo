@@ -1,4 +1,0 @@
-api
-getList
-
-	^ listHolder value

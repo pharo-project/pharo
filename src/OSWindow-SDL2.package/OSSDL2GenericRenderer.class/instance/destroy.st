@@ -1,3 +1,0 @@
-deleting
-destroy
-	renderer destroy

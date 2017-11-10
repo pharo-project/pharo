@@ -1,1 +1,0 @@
-Visual tests for correct rendering of text using Athens

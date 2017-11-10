@@ -1,3 +1,0 @@
-private
-systemDictionary
-	^ environment systemDictionary

@@ -1,3 +1,0 @@
-tests
-testToDoInsideTempNotInlined
-	self checkCorrectDecompilation: #exampleToDoInsideTempNotInlined

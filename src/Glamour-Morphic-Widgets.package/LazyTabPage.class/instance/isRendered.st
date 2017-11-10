@@ -1,3 +1,0 @@
-testing
-isRendered
-	^ actualPageMorph notNil

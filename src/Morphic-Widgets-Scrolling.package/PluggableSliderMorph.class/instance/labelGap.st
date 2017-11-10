@@ -1,4 +1,0 @@
-drawing
-labelGap
-	
-	^ 2

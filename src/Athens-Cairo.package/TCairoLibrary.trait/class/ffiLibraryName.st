@@ -1,3 +1,0 @@
-library path
-ffiLibraryName
-	^ CairoLibrary

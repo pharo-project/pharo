@@ -1,4 +1,0 @@
-running
-newMatcher
-
-	^ FuzzyMatcher new

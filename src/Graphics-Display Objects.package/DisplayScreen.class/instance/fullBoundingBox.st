@@ -1,3 +1,0 @@
-other
-fullBoundingBox
-	^ super boundingBox

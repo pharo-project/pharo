@@ -1,1 +1,0 @@
-Announcement sent when a Repository is removed from  a Repository group.

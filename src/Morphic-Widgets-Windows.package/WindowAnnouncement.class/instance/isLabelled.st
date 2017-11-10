@@ -1,3 +1,0 @@
-testing
-isLabelled
-	^ false

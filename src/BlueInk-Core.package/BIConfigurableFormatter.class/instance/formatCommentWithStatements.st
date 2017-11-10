@@ -1,3 +1,0 @@
-accessing
-formatCommentWithStatements
-	^ context formatCommentWithStatements

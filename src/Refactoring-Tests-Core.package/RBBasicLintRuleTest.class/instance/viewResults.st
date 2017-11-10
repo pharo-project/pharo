@@ -1,3 +1,0 @@
-private
-viewResults
-	result openEditor

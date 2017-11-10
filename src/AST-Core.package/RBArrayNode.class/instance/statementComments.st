@@ -1,3 +1,0 @@
-accessing
-statementComments
-	^self comments

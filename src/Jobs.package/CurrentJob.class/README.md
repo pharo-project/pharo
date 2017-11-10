@@ -1,1 +1,0 @@
-I am a DynamicVariable whose value is the current Job in a process.

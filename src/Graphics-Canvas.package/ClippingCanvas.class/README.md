@@ -1,1 +1,0 @@
-A modified canvas which clips all drawing commands.

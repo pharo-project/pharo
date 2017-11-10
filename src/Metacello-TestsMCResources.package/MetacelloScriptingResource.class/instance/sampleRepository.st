@@ -1,3 +1,0 @@
-accessing
-sampleRepository
-    ^ sampleRepository

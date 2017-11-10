@@ -1,1 +1,0 @@
-I tests the navigations directions

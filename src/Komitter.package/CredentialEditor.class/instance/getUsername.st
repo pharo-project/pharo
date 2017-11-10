@@ -1,4 +1,0 @@
-api
-getUsername
-	
-	^ username text

@@ -1,3 +1,0 @@
-accessing widgets
-openSettingsButtonModel
-	^ openSettingsButtonModel

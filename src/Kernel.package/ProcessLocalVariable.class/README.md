@@ -1,1 +1,0 @@
-My subclasses have values specific to the active process. They can be read with #value and set with #value:

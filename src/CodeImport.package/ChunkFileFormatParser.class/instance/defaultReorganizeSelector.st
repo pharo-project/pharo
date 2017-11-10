@@ -1,3 +1,0 @@
-initialization
-defaultReorganizeSelector
-	^ #reorganize

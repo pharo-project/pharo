@@ -1,3 +1,0 @@
-converting
-asAthensPaintOn: surf
-	^ self 

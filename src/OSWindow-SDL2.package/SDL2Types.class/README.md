@@ -1,1 +1,0 @@
-Various types used by SDL2

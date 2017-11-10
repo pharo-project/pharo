@@ -1,3 +1,0 @@
-initialization
-createDataSourceFrom: aPresentation
-	^ GLMFastTableDataSource new

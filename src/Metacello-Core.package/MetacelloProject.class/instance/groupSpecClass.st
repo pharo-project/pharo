@@ -1,4 +1,0 @@
-spec classes
-groupSpecClass
-
-	^MetacelloGroupSpec

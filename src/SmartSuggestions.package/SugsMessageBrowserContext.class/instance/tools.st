@@ -1,3 +1,0 @@
-tools
-tools
-	^ model systemNavigation

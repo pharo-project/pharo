@@ -1,4 +1,0 @@
-loading
-repositories
-
-	^self repositorySpecs

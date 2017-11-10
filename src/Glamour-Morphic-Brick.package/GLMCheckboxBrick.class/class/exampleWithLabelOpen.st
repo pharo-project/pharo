@@ -1,4 +1,0 @@
-examples
-exampleWithLabelOpen
-
-	self gtExampleWithLabel openCenteredInBrickWindow

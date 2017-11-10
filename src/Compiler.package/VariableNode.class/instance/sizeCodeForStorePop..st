@@ -1,3 +1,0 @@
-code generation
-sizeCodeForStorePop: encoder
-	self shouldNotImplement

@@ -1,3 +1,0 @@
-delegate
-fullName
-	^ reference fullName

@@ -1,3 +1,0 @@
-printing
-formattedCode
-	^ self fullPrintString 

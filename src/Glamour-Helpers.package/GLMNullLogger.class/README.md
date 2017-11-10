@@ -1,1 +1,0 @@
-This class simply implements the Null pattern.

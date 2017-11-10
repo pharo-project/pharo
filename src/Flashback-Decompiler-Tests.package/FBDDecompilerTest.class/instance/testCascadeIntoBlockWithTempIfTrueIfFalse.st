@@ -1,3 +1,0 @@
-tests
-testCascadeIntoBlockWithTempIfTrueIfFalse
-	self checkCorrectDecompilation: #exampleCascadeIntoBlockWithTempIfTrueIfFalse.

@@ -1,1 +1,0 @@
-A concrete wrapper implementation that uses a rewrite expression to create a new node

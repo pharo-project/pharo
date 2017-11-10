@@ -1,4 +1,0 @@
-protocol
-selectedTab
-
-	^ toolbar selectedTab

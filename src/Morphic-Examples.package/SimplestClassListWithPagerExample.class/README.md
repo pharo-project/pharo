@@ -1,1 +1,0 @@
-SimplestClassListWithPagerExample new openOn: Object

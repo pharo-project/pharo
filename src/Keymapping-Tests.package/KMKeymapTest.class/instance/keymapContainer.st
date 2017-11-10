@@ -1,3 +1,0 @@
-tests
-keymapContainer
-	^ KMRepository default

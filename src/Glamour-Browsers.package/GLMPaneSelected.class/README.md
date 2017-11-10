@@ -1,1 +1,0 @@
-A pane was selected

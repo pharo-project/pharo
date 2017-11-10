@@ -1,4 +1,0 @@
-requirements
-elementNotInForIndexAccessing
-
-	^elementNotInForCopy 

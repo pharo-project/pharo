@@ -1,1 +1,0 @@
-I represent a layout that places all children of some morph in their given LayoutFrame.

@@ -1,3 +1,0 @@
-accessing
-testCase
-	^ testCase

@@ -1,4 +1,0 @@
-class-annotations
-allSubclassesKey
-
-	^#allSubclasses

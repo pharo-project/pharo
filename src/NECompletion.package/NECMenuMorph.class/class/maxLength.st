@@ -1,3 +1,0 @@
-preferences
-maxLength
-	^ 20

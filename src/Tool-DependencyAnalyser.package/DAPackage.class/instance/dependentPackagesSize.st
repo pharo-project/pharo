@@ -1,3 +1,0 @@
-dependencies
-dependentPackagesSize
-	^ dependencies size

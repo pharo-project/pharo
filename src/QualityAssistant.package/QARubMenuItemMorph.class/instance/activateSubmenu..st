@@ -1,4 +1,0 @@
-events
-activateSubmenu: evt
-
-	^ false

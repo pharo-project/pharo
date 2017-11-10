@@ -1,3 +1,0 @@
-tests
-testIfTrueForEffectNested
-	self checkCorrectDecompilation: #exampleIfTrueForEffectNested

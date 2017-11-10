@@ -1,3 +1,0 @@
-constants
-compressionLevelNone
-	^CompressionLevelNone 

@@ -1,4 +1,0 @@
-converting
-asDateAndTime
-
-	^ self

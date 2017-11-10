@@ -1,3 +1,0 @@
-colors
-triangleColor
-	^ Color green

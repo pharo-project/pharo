@@ -1,3 +1,0 @@
-accessing
-duration
-	^ duration

@@ -1,4 +1,0 @@
-accessing
-autoRefresh
-
-	^ autoRefresh value

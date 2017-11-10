@@ -1,1 +1,0 @@
-A sepcific text attribute to run actions on a text

@@ -1,4 +1,0 @@
-cleanup
-cleanUp
-
-	Singleton := nil

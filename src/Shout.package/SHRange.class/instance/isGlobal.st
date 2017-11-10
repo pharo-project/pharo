@@ -1,4 +1,0 @@
-tests
-isGlobal
-
-	^type == #globalVar

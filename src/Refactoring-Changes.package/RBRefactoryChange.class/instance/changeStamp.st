@@ -1,3 +1,0 @@
-accessing
-changeStamp
-	^ Author changeStamp

@@ -1,1 +1,0 @@
-I represent the removal of a class.

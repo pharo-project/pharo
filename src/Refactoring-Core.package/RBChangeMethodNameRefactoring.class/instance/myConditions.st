@@ -1,3 +1,0 @@
-preconditions
-myConditions
-	"^self subclassResponsibility"

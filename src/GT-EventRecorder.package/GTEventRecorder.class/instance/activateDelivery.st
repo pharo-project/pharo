@@ -1,3 +1,0 @@
-delivery
-activateDelivery
-	^ delivery activate

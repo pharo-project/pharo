@@ -1,4 +1,0 @@
-private
-falsehoodMethodSource
-	^ 'falsehood
-	^ false'

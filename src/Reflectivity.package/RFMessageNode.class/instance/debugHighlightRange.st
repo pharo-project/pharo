@@ -1,3 +1,0 @@
-debugging
-debugHighlightRange
-	^parent debugHighlightRange 

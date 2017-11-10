@@ -1,1 +1,0 @@
-This baseline is used to store information about Monticello packages. It is not directly used for the packages loading during bootstrap.

@@ -1,1 +1,0 @@
-Do not send requests to "Smalltalk" (which models the whole image)  that are related to the envionment of defines classes and globals

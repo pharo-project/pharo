@@ -1,3 +1,0 @@
-accessing
-schemes
-	^ #( #http #https )

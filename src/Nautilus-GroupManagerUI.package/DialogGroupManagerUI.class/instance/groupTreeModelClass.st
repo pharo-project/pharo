@@ -1,3 +1,0 @@
-private
-groupTreeModelClass
-	^ GroupCreatorTreeModel

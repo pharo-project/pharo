@@ -1,3 +1,0 @@
-*SmartSuggestions
-specialCommands
-	^ SugsSuggestionFactory commandsForMessage

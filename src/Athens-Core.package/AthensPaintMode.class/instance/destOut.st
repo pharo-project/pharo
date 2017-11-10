@@ -1,4 +1,0 @@
-modes
-destOut
-	
-	self notAvailable

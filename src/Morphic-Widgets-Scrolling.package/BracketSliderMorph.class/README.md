@@ -1,1 +1,0 @@
-Abstract superclass for morphs that are used to select a component (R, G, B or A) of a colour.

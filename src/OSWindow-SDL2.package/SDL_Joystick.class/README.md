@@ -1,1 +1,0 @@
-I represent a handler for a joystick coming from SDL2.

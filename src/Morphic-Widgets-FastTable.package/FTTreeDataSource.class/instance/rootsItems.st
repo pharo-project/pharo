@@ -1,3 +1,0 @@
-accessing
-rootsItems
-	^ rootItem children

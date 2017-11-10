@@ -1,3 +1,0 @@
-resolving
-hasResolution
-	^ hasResolution

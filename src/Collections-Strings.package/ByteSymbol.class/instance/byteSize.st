@@ -1,3 +1,0 @@
-accessing
-byteSize
-	^self size

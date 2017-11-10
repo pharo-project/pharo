@@ -1,4 +1,0 @@
-accessing
-rationale
-
-	^ renrakuRule rationale

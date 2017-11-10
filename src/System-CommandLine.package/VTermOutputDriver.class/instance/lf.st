@@ -1,3 +1,0 @@
-writing
-lf
-	outStream lf

@@ -1,4 +1,0 @@
-defaults
-staticWidth
-
-	^ 100

@@ -1,4 +1,0 @@
-NOCompletion
-isCodeCompletionAllowed
-	
-	^ false

@@ -1,3 +1,0 @@
-system compatibility
-asRPackageSet
-	^self

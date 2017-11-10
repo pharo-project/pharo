@@ -1,3 +1,0 @@
-requirements
-selectedNumber
-	^ 4

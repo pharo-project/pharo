@@ -1,4 +1,0 @@
-accessing
-leftCmd
-	
-	^ leftCmd

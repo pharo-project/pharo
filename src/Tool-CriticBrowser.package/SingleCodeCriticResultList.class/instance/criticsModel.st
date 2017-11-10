@@ -1,3 +1,0 @@
-accessing
-criticsModel
-	^ criticsModel

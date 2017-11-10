@@ -1,3 +1,0 @@
-styling
-setInDriver: aVTermOutputDriver 
-	self subclassResponsibility

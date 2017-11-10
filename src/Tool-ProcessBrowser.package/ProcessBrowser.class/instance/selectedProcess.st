@@ -1,3 +1,0 @@
-accessing
-selectedProcess
-	^selectedProcess

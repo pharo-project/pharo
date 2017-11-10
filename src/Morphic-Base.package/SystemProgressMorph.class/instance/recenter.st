@@ -1,3 +1,0 @@
-updating
-recenter
-	self reposition

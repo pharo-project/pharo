@@ -1,1 +1,0 @@
-I am ZnFastLineReader, a helper to efficiently read CR, LF or CRLF terminated lines from a character stream.

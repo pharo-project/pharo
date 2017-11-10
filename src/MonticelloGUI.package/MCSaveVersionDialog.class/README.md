@@ -1,1 +1,0 @@
-Monticello's dialog that allows the user to change the version name and to enter a message for the commit log.

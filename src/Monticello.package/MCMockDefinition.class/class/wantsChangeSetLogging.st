@@ -1,3 +1,0 @@
-compiling
-wantsChangeSetLogging
-	^ false

@@ -1,4 +1,0 @@
-updating
-changed
-
-	hasChanged := true.

@@ -1,1 +1,0 @@
-I model the pushTemporary Bytecode

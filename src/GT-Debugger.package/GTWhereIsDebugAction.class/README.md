@@ -1,1 +1,0 @@
-This debugger action is responsible for reselecting the code corresponding with the current instruction to be executed.

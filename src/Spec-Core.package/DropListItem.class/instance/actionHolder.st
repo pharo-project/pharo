@@ -1,4 +1,0 @@
-accessing
-actionHolder
-	
-	^ actionHolder

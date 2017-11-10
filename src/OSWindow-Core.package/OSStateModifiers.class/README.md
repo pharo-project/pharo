@@ -1,1 +1,0 @@
-i holding a collection of various key/button modifier flags, usually carried by certain events and accessible through #modifiers message.

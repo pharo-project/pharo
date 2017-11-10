@@ -1,3 +1,0 @@
-accessing
-textStyle
-	^ textArea textStyle

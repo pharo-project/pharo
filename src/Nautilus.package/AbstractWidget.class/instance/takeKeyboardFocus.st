@@ -1,3 +1,0 @@
-accessing
-takeKeyboardFocus
-	^ self subclassResponsibility

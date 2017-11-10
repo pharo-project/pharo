@@ -1,4 +1,0 @@
-accessing
-fontArray
-
-	^ fontArray

@@ -1,3 +1,0 @@
-mutability
-mutable
-    mutable := true

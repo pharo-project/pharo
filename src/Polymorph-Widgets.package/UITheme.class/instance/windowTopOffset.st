@@ -1,4 +1,0 @@
-defaults
-windowTopOffset
-
-	^ 0

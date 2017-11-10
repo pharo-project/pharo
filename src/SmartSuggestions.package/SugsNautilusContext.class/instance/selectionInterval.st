@@ -1,3 +1,0 @@
-refactoring
-selectionInterval
-	^ model selectionInterval

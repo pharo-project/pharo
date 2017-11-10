@@ -1,4 +1,0 @@
-accessing
-globalName
-
-	^ self subclassResponsibility

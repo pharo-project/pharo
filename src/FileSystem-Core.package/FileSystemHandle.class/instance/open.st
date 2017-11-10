@@ -1,3 +1,0 @@
-public
-open
-	self subclassResponsibility

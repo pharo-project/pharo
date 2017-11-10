@@ -1,3 +1,0 @@
-private
-changeObject
-	^ self variable

@@ -1,3 +1,0 @@
-tests
-testExportingCollectionsTests
-	self skip.

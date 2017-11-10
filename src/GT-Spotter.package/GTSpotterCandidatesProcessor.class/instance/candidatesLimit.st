@@ -1,3 +1,0 @@
-compatibility
-candidatesLimit
-	^ self itemsLimit

@@ -1,3 +1,0 @@
-accessing
-transformationForSerializing: aBlockWithOneArgument 
-	transformationForSerializing := aBlockWithOneArgument

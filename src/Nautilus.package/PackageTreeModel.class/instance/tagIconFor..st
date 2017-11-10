@@ -1,3 +1,0 @@
-accessing
-tagIconFor: aTag 
-	^ nil

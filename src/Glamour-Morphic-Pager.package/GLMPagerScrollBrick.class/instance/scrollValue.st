@@ -1,4 +1,0 @@
-accessing
-scrollValue
-
-	^ currentScrollDelta

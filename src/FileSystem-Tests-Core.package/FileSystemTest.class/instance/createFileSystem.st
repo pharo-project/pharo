@@ -1,3 +1,0 @@
-initialize-release
-createFileSystem
-	self subclassResponsibility 

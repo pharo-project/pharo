@@ -1,1 +1,0 @@
-I am a visitor on MCDefinition objects. I will group a collection of definitions into a tree that will be shown in the PSMCPatchMorph.

@@ -1,3 +1,0 @@
-accessing
-showTitle
-	shouldShowTitle := true

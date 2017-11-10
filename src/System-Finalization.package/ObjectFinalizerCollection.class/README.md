@@ -1,1 +1,0 @@
-An ObjectFinalizerCollection is simple collection which is intended to hold ObjectFinalizers and be used by WeakRegistry.

@@ -1,3 +1,0 @@
-actions
-updateVariablesForContext
-	cachedVariables := self 

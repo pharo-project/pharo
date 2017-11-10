@@ -1,2 +1,0 @@
-manage swipe
-beginSwipe: anEvent

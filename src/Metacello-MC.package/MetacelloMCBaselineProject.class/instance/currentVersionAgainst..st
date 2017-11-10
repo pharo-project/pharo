@@ -1,3 +1,0 @@
-versions
-currentVersionAgainst: resolvedPackageAndProjectNames
-    ^ nil

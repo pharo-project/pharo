@@ -1,4 +1,0 @@
-accessing
-selectedItemsModel
-
-	^ selectedItemsModel

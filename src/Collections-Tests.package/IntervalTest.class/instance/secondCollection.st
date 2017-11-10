@@ -1,3 +1,0 @@
-requirements
-secondCollection
-	^anotherCollection 

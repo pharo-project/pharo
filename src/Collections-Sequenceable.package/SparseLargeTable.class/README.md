@@ -1,1 +1,0 @@
-Derivated from Stephan Pair's LargeArray, but to hold a sparse table, in which most of the entries are the same default value, it uses some tricks.

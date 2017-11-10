@@ -1,3 +1,0 @@
-morphic ui
-buttonState
-	^ false

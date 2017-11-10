@@ -1,3 +1,0 @@
-removing
-removeLiberatedCollectors
-	collectors removeLiberatedCollectors

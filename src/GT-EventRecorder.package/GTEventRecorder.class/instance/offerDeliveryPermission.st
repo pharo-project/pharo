@@ -1,3 +1,0 @@
-configuration
-offerDeliveryPermission
-	delivery offerPermission

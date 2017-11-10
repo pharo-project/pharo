@@ -1,1 +1,0 @@
-A structure that contains Cocoa specific information about a window. 

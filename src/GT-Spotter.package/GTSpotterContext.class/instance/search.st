@@ -1,3 +1,0 @@
-initializing
-search
-	^ search

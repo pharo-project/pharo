@@ -1,3 +1,0 @@
-accessing
-topRight
-	^ surface topRight

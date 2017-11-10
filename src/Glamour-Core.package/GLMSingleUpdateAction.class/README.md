@@ -1,1 +1,0 @@
-This class specifies that the updating announcement should come only from the single announcer object.

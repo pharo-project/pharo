@@ -1,4 +1,0 @@
-testing
-isStatic
-
-	^false

@@ -1,3 +1,0 @@
-accessing
-blockSize
-	^ self subclassResponsibility

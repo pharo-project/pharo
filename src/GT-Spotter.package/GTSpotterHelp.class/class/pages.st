@@ -1,3 +1,0 @@
-accessing
-pages
-	^#(overview keybindings basicExamples categoryFilterExamples diveInExamples diveInCategoryExamples extensionExamples extensions resettingSpotter)

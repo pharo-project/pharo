@@ -1,3 +1,0 @@
-testing
-checksMethod
-	^ true

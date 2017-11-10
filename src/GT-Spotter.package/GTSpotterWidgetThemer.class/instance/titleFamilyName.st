@@ -1,3 +1,0 @@
-values
-titleFamilyName
-	^ 'Open Sans'.

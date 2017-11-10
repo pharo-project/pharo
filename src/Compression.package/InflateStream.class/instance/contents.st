@@ -1,4 +1,0 @@
-accessing
-contents
-
-	^ self upToEnd

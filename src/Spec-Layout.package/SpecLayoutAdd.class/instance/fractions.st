@@ -1,3 +1,0 @@
-accessing
-fractions
-	^ layoutFrame fractionRectangle

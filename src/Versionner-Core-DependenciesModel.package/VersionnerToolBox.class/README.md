@@ -1,1 +1,0 @@
-This class is used to fill the gap between Versionner dependencies model and the flatten objects (collections, maps) expected by Metacello ToolBox.

@@ -1,3 +1,0 @@
-printing
-summary
-	^ name

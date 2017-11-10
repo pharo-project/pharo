@@ -1,3 +1,0 @@
-popup - properties
-inset
-	^ inset

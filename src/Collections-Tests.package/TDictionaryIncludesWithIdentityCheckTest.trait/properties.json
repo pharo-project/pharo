@@ -1,7 +1,0 @@
-{
-	"commentStamp" : "TorstenBergmann 2/20/2014 15:33",
-	"traitcomposition" : "TDictionaryIncludesTest",
-	"classtraitcomposition" : "TDictionaryIncludesTest classTrait",
-	"category" : "Collections-Tests-Unordered",
-	"name" : "TDictionaryIncludesWithIdentityCheckTest"
-}

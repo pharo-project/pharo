@@ -1,3 +1,0 @@
-accessing
-asText
-	^ text

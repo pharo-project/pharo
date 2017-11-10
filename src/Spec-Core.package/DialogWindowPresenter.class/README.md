@@ -1,1 +1,0 @@
-A DialogWindowPresenter is a presenter used to describe a DialogWindow

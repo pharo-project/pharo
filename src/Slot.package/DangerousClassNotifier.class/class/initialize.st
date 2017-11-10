@@ -1,3 +1,0 @@
-accessing
-initialize
-	enabled := true.

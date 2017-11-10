@@ -1,3 +1,0 @@
-accessing
-retainBlankLinesBeforeComments
-	^ retainBlankLinesBeforeComments

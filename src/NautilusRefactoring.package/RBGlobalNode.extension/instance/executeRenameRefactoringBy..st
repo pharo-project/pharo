@@ -1,4 +1,0 @@
-*NautilusRefactoring
-executeRenameRefactoringBy: aNautilusRefactoring
-
-	self binding variable executeRenameRefactoringBy: aNautilusRefactoring inClass: self methodNode methodClass

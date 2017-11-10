@@ -1,3 +1,0 @@
-accessing
-ptName
-	^#topRight

@@ -1,4 +1,0 @@
-api
-okAction
-
-	^ okAction value

@@ -1,1 +1,0 @@
-RGMetaclassDefinition is a concrete representation of metaclasses of classes (traits are excluded)

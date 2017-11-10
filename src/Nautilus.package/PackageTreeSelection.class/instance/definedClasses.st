@@ -1,3 +1,0 @@
-accessing
-definedClasses
-	^ self subclassResponsibility

@@ -1,4 +1,0 @@
-protocol
-useProportionalLayout
-
-	self subclassResponsibility

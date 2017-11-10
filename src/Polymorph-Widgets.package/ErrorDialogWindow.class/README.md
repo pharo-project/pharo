@@ -1,1 +1,0 @@
-A message dialog with an error icon.

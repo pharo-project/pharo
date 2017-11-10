@@ -1,3 +1,0 @@
-public access
-decompileMethod: aCompiledMethod
-	self subclassResponsibility

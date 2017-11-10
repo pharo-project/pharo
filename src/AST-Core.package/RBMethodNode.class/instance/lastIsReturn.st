@@ -1,3 +1,0 @@
-testing
-lastIsReturn
-	^body lastIsReturn

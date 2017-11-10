@@ -1,3 +1,0 @@
-event handling
-hasFocus
-	^ false

@@ -1,4 +1,0 @@
-accessing
-showOnlyDestination
-
-	^ showOnlyDestination

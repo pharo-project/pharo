@@ -1,1 +1,0 @@
-A NautilusChanged is raised when a NautilusUI send th message #changed:

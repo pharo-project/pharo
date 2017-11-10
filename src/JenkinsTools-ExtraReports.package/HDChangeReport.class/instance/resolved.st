@@ -1,3 +1,0 @@
-accessing
-resolved
-	^ gofer resolved

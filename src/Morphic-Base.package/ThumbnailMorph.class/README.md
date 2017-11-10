@@ -1,1 +1,0 @@
-A Morph that views another morph, its objectToView.

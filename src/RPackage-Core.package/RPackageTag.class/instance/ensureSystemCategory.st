@@ -1,3 +1,0 @@
-accessing
-ensureSystemCategory 
-	SystemOrganization addCategory: self categoryName

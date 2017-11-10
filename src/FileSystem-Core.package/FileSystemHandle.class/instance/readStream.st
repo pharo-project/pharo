@@ -1,3 +1,0 @@
-public
-readStream
-	self subclassResponsibility

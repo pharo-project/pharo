@@ -1,4 +1,0 @@
-classification
-isFlexMorph
-
-	^ true
