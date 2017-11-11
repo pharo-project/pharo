@@ -30,6 +30,8 @@ SystemDependenciesTest class >> rebuildDependenciesReport [
 { #category : #accessing }
 SystemDependenciesTest class >> resetDependenciesReport [
 
+	"self resetDependenciesReport"
+
 	dependenciesReport := nil
 ]
 
@@ -189,6 +191,12 @@ SystemDependenciesTest >> metacelloPackageNames [
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
 	  BaselineOfMetacello allPackageNames
+]
+
+{ #category : #accessing }
+SystemDependenciesTest >> specPackageNames [
+
+	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder)
 ]
 
 { #category : #tests }
@@ -414,7 +422,7 @@ SystemDependenciesTest >> testExternalSpecDependencies [
 	
 	dependencies := (self externalDependendiesOf: (
 			self metacelloPackageNames,
-			BaselineOfMorphic specPackageNames )) 
+			self specPackageNames )) 
 		copyWithoutAll: self knownMetacelloDependencies.
 	
 	self assert: dependencies isEmpty
@@ -444,11 +452,16 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	self longTestCase.
 	
 	dependencies := (self externalDependendiesOf: (
-			self metacelloPackageNames,
-			BaselineOfMorphic specPackageNames )) 
-		copyWithoutAll: self knownMetacelloDependencies.
+		self metacelloPackageNames,
+		self tonelCorePackageNames,
+		BaselineOfSUnit defaultPackageNames,
+		BaselineOfDisplay allPackageNames,
+		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfMorphicCore allPackageNames,
+		BaselineOfMorphic allPackageNames,
+		BaselineOfUI allPackageNames )).
 	
-	self assert: dependencies isEmpty
+	self assertCollection: dependencies equals: self knownUIDependencies.
 ]
 
 { #category : #accessing }

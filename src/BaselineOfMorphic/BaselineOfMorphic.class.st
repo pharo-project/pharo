@@ -24,12 +24,6 @@ Class {
 	#category : #BaselineOfMorphic
 }
 
-{ #category : #'as yet unclassified' }
-BaselineOfMorphic class >> specPackageNames [
-
-	^ self packagesOfGroupNamed: #Spec
-]
-
 { #category : #baseline }
 BaselineOfMorphic >> baseline: spec [ 
     
@@ -119,9 +113,6 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
-		
-		spec 
-			group: 'Spec' with: #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder).
 	].
 
 ]
