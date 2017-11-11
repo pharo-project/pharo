@@ -98,7 +98,7 @@ DatePresenter >> dateModel [
 
 { #category : #defaults }
 DatePresenter >> defaultDate [
-	^ Date today
+	^ Date today 
 ]
 
 { #category : #api }
