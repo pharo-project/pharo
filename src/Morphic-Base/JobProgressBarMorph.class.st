@@ -45,7 +45,7 @@ JobProgressBarMorph >> initialize [
 		vResizing: #shrinkWrap.
 	self
 		addMorphBack: progressBar;
-		addMorphBack: button
+		addMorphBack: button 
 ]
 
 { #category : #accessing }
