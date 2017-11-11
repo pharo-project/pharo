@@ -57,7 +57,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #Compiler #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools' #Shout)
+	^ #(#'Athens-Morphic' #Compiler #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools'  #Shout)
 ]
 
 { #category : #'known dependencies' }
@@ -65,7 +65,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -73,7 +73,7 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization')
+	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Network-Mail' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -81,7 +81,7 @@ SystemDependenciesTest >> knownFileSystemDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Monticello #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'Zinc-Resource-Meta-Core')
+	^ #(#Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'Zinc-Resource-Meta-Core')
 ]
 
 { #category : #'known dependencies' }
@@ -89,7 +89,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#BaselineOfBasicTools #BaselineOfDisplay #BaselineOfIDE #BaselineOfMorphic #BaselineOfMorphicCore #BaselineOfSUnit #BaselineOfUI #BaselineOfUnifiedFFI #Compiler #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion').
+	^ #(#Compiler).
 ]
 
 { #category : #'known dependencies' }
@@ -97,7 +97,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -105,7 +105,7 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'System-Localization')
+	^ #(#'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -113,7 +113,7 @@ SystemDependenciesTest >> knownMetacelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #'SUnit-Core' #'System-Localization')
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -121,7 +121,7 @@ SystemDependenciesTest >> knownMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Graphics-Files' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #'SUnit-Core' #'System-Localization')
+	^ #(#'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -129,7 +129,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization')
+	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Network-Mail' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -137,7 +137,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #FontChooser #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers')
+	^ #(#Compiler #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers')
 ]
 
 { #category : #'known dependencies' }
@@ -145,7 +145,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -153,7 +153,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -161,7 +161,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
+	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -169,7 +169,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #Compiler #Komitter #MonticelloGUI #'Morphic-Widgets-FastTable' #'Multilingual-Encodings' #'Multilingual-Languages' #'Multilingual-TextConversion' #NautilusCommon #NautilusRefactoring #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
+	^ #(#'Athens-Morphic' #Compiler #Komitter #MonticelloGUI #'Morphic-Widgets-FastTable' #NautilusCommon #NautilusRefactoring #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
 ]
 
 { #category : #utility }
@@ -185,6 +185,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 	^ BaselineOfPharoBootstrap kernelPackageNames,
 	  BaselineOfPharoBootstrap compilerPackageNames,
 	  BaselineOfPharoBootstrap fileSystemPackageNames,
+	  BaselineOfPharoBootstrap multilingualPackageNames,
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
 	  BaselineOfMetacello allPackageNames
@@ -199,13 +200,14 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
-		BaselineOfSUnit defaultPackageNames,
-		BaselineOfDisplay allPackageNames,
-		BaselineOfUnifiedFFI allPackageNames,
-		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames,
-		BaselineOfUI allPackageNames,
-		BaselineOfBasicTools allPackageNames ).
+		self tonelCorePackageNames,
+		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
+		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
+		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
+		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
+		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
+		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
+		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames ).
 	
 	self assertCollection: dependencies equals: self knownBasicToolsDependencies.
 ]
@@ -233,6 +235,7 @@ SystemDependenciesTest >> testExternalDisplayDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
+		self tonelCorePackageNames,
 		BaselineOfDisplay allPackageNames).
 	
 	self assertCollection: dependencies equals: self knownDisplayDependencies.
@@ -262,14 +265,19 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
-		BaselineOfSUnit allPackageNames, "ALL"
-		BaselineOfDisplay allPackageNames,
-		BaselineOfUnifiedFFI allPackageNames,
-		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames,
-		BaselineOfUI allPackageNames,
-		BaselineOfBasicTools allPackageNames,
-		BaselineOfIDE allPackageNames ).
+		self tonelCorePackageNames,
+		{ BaselineOfSUnit name }, BaselineOfSUnit allPackageNames, "ALL"
+		{ BaselineOfDisplay name }, BaselineOfDisplay allPackageNames,
+		{ BaselineOfUnifiedFFI name }, BaselineOfUnifiedFFI allPackageNames,
+		{ BaselineOfMorphicCore name }, BaselineOfMorphicCore allPackageNames,
+		{ BaselineOfMorphic name }, BaselineOfMorphic allPackageNames,
+		{ BaselineOfUI name }, BaselineOfUI allPackageNames,
+		{ BaselineOfBasicTools name }, BaselineOfBasicTools allPackageNames,
+		{ BaselineOfIDE name }, BaselineOfIDE allPackageNames,
+		{ BaselineOfPharoBootstrap name. 
+		  BaselineOfMonticello name.
+		  BaselineOfMetacello name }
+		 ).
 	
 	self assertCollection: dependencies equals: self knownIDEDependencies.
 ]
@@ -340,6 +348,7 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
+		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -357,6 +366,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
+		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
@@ -375,6 +385,7 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
+		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames).
 	
 	self assertCollection: dependencies equals: self knownSUnitDependencies.
@@ -395,6 +406,21 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 ]
 
 { #category : #tests }
+SystemDependenciesTest >> testExternalSpecDependencies [
+
+	| dependencies | 
+	
+	self longTestCase.
+	
+	dependencies := (self externalDependendiesOf: (
+			self metacelloPackageNames,
+			BaselineOfMorphic specPackageNames )) 
+		copyWithoutAll: self knownMetacelloDependencies.
+	
+	self assert: dependencies isEmpty
+]
+
+{ #category : #tests }
 SystemDependenciesTest >> testExternalUFFIDependencies [
 
 	| dependencies | 
@@ -403,6 +429,7 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 	
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
+		self tonelCorePackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfUnifiedFFI allPackageNames).
 	
@@ -416,14 +443,16 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	
 	self longTestCase.
 	
-	dependencies := self externalDependendiesOf: (
-		self metacelloPackageNames,
-		BaselineOfSUnit defaultPackageNames,
-		BaselineOfDisplay allPackageNames,
-		BaselineOfUnifiedFFI allPackageNames,
-		BaselineOfMorphicCore allPackageNames,
-		BaselineOfMorphic allPackageNames,
-		BaselineOfUI allPackageNames ).
+	dependencies := (self externalDependendiesOf: (
+			self metacelloPackageNames,
+			BaselineOfMorphic specPackageNames )) 
+		copyWithoutAll: self knownMetacelloDependencies.
 	
-	self assertCollection: dependencies equals: self knownUIDependencies.
+	self assert: dependencies isEmpty
+]
+
+{ #category : #accessing }
+SystemDependenciesTest >> tonelCorePackageNames [
+
+	^ { BaselineOfTonel name }, (BaselineOfTonel packagesOfGroupNamed: #core)
 ]
