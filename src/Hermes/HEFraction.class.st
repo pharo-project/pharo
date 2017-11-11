@@ -27,4 +27,4 @@ HEFraction >> doReadFrom: aReader [
 HEFraction >> doWriteInto: aWriter [
 	value numerator asExportedLiteral writeInto: aWriter.
 	value denominator asExportedLiteral writeInto: aWriter.	
-]
+] 
