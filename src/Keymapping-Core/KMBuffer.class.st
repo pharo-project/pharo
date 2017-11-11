@@ -18,7 +18,7 @@ Class {
 
 { #category : #initialize-release }
 KMBuffer class >> resetUniqueInstance [
-	uniqueInstance := nil
+	uniqueInstance := nil 
 ]
 
 { #category : #accessing }
