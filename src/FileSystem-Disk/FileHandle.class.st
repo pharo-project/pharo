@@ -18,7 +18,6 @@ Class {
 { #category : #'class initialization' }
 FileHandle class >> initialize [
 	self useFilePlugin.
-
 ]
 
 { #category : #'as yet unclassified' }
@@ -30,7 +29,6 @@ FileHandle class >> register: aFileHandle [
 { #category : #'as yet unclassified' }
 FileHandle class >> registry [
 	^Registry ifNil: [Registry := WeakRegistry new]
-
 ]
 
 { #category : #'class initialization' }
@@ -61,7 +59,6 @@ FileHandle >> at: index read: buffer startingAt: start count: count [
 	^ Primitives 
 		setPosition: id to: index - 1;
 		read: id into: buffer startingAt: start count: count
-
 ]
 
 { #category : #public }
@@ -73,7 +70,6 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 	Primitives 
 		setPosition: id to: index - 1;
 		write: id from: buffer startingAt: start count: count
-
 ]
 
 { #category : #streams-compatibility }
@@ -124,7 +120,6 @@ FileHandle >> open [
 FileHandle >> readStream [
 	^ (FileStream onHandle: self)
 		ifNil: [ self streamError ]
-	
 ]
 
 { #category : #finalization }

@@ -43,7 +43,6 @@ AbstractFileReference >> allChildrenMatching: aPattern [
     "Return all the files and folders recursively nested in the receiver and matching the pattern, aPattern"
     
     ^ self allChildren select: [ :each |  aPattern match: each basename ]
-
 ]
 
 { #category : #enumerating }
@@ -60,7 +59,6 @@ AbstractFileReference >> allDirectoriesMatching: aPattern [
 			breadthFirst: self resolve 
 			select: [:entry | entry isDirectory and: [ aPattern match: entry basename ] ])
         collect: [ :each | each reference ]
-
 ]
 
 { #category : #enumerating }
@@ -82,7 +80,7 @@ AbstractFileReference >> asAbsolute [
 
 { #category : #converting }
 AbstractFileReference >> asFileReference [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #delegated }
@@ -110,7 +108,7 @@ AbstractFileReference >> basename [
 { #category : #accessing }
 AbstractFileReference >> basenameWithIndicator [
 	"Returns the basename with the indicator appended, i.e. /foo/gloops.taz basenameWithIndicator is 'gloops.taz', whereras /foo basenameWithIndicator is 'foo/'" 
-	^ self basename, self indicator   
+	^ self basename, self indicator
 ]
 
 { #category : #accessing }
@@ -203,7 +201,7 @@ AbstractFileReference >> childrenMatching: patterns [
 	^ self 
 		childGeneratorBlock: [:reference : aBlock| 
 			reference fileSystem childNamesAt: reference path do: aBlock ]
-		matching:  patterns 
+		matching:  patterns
 ]
 
 { #category : #comparing }
@@ -252,12 +250,11 @@ AbstractFileReference >> createFile [
 	"Create if necessary a file for the receiver. If the parent does not exist return an exception"
 	self parent exists ifFalse:[DirectoryDoesNotExist signalWith: self parent path].
 	self writeStream close.
-	
 ]
 
 { #category : #accessing }
 AbstractFileReference >> creationTime [
-	^ self resolve creationTime 
+	^ self resolve creationTime
 ]
 
 { #category : #operations }
@@ -305,7 +302,7 @@ AbstractFileReference >> directoriesMatching: patterns [
 	^ self 
 		childGeneratorBlock: [:reference : aBlock| 
 			reference fileSystem directoryNamesAt: reference path do: aBlock ]
-		matching:  patterns 
+		matching:  patterns
 ]
 
 { #category : #enumerating }
@@ -324,7 +321,6 @@ AbstractFileReference >> ensureCreateFile [
 	"Create if necessary a file for the receiver. If the parent does not exist creates it"
 	self parent ensureCreateDirectory.
 	self writeStream close.
-	
 ]
 
 { #category : #operations }
@@ -342,7 +338,6 @@ AbstractFileReference >> ensureDeleteAll [
 	
 	self exists ifFalse: [ ^ self  ].
 	self deleteAll
-	
 ]
 
 { #category : #operations }
@@ -423,7 +418,7 @@ AbstractFileReference >> filesMatching: patterns [
 	^ self 
 		childGeneratorBlock: [:reference : aBlock| 
 			reference fileSystem fileNamesAt: reference path do: aBlock ]
-		matching:  patterns 
+		matching:  patterns
 ]
 
 { #category : #delegated }
@@ -435,7 +430,7 @@ AbstractFileReference >> fullName [
 { #category : #accessing }
 AbstractFileReference >> fullNameWithIndicator [
 	"Returns the basename with the indicator appended, i.e. /foo/gloops.taz basenameWithIndicator is '/foo/gloops.taz', whereras /foo basenameWithIndicator is '/foo/'" 
-	^ self fullName, self indicator   
+	^ self fullName, self indicator
 ]
 
 { #category : #accessing }
@@ -505,7 +500,7 @@ AbstractFileReference >> indicator [
 
 { #category : #testing }
 AbstractFileReference >> isAbsolute [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -536,7 +531,7 @@ AbstractFileReference >> isReadable [
 
 { #category : #testing }
 AbstractFileReference >> isRelative [ 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -566,7 +561,7 @@ AbstractFileReference >> mimeTypes [
 
 { #category : #accessing }
 AbstractFileReference >> modificationTime [
-	^ self resolve modificationTime 
+	^ self resolve modificationTime
 ]
 
 { #category : #operations }
@@ -674,7 +669,7 @@ AbstractFileReference >> renameTo: newBasename [
 
 { #category : #navigating }
 AbstractFileReference >> resolve [
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]
 
 { #category : #navigating }

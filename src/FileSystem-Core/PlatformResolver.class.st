@@ -34,7 +34,7 @@ PlatformResolver >> cache [
 
 { #category : #private }
 PlatformResolver >> cantFindOriginError [
-	^ Error signal: 'Can''t find the requested origin' 
+	^ Error signal: 'Can''t find the requested origin'
 ]
 
 { #category : #origins }
@@ -81,5 +81,5 @@ PlatformResolver >> supportedOrigins [
 { #category : #origins }
 PlatformResolver >> temp [
 	"Where to put files that are not supposed to last long"
-	^ self subclassResponsibility 
+	^ self subclassResponsibility
 ]

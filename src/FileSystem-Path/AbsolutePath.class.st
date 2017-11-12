@@ -50,7 +50,6 @@ AbsolutePath >> printPathOn: aStream delimiter: aCharacter [
 
 	aStream nextPut: aCharacter.
 	super printPathOn: aStream delimiter: aCharacter
-
 ]
 
 { #category : #enumerating }

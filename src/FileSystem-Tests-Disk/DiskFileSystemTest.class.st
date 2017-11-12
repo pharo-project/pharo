@@ -34,7 +34,6 @@ DiskFileSystemTest >> testIsDirectory [
 { #category : #tests }
 DiskFileSystemTest >> testIsDiskFileSystem [
 	self assert: filesystem isDiskFileSystem.
-	
 ]
 
 { #category : #tests }

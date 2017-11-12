@@ -57,7 +57,6 @@ FileReference >> = other [
 	^ self species = other species
 		and: [self fileSystem = other fileSystem
 			and: [self absolutePath = other absolutePath]]
-
 ]
 
 { #category : #accessing }
@@ -130,13 +129,12 @@ FileReference >> deleteIfAbsent: aBlock [
 FileReference >> ensureCreateDirectory [
 	"Create if necessary a directory for the receiver."
 	filesystem ensureCreateDirectory: path
-	
 ]
 
 { #category : #navigating }
 FileReference >> entries [
 	"Return the entries (meta data - file description) of the direct children of the receiver"
-	^ self fileSystem entriesAt: self path 
+	^ self fileSystem entriesAt: self path
 ]
 
 { #category : #accessing }
@@ -256,7 +254,7 @@ FileReference >> moveTo: aReference [
 		move: self path
 		to: aReference resolve.
 	result ifNotNil: [
-		self setFileSystem: result fileSystem path: result path ].		
+		self setFileSystem: result fileSystem path: result path ].
 ]
 
 { #category : #utility }
@@ -332,7 +330,6 @@ FileReference >> renameTo: newBasename [
 			setFileSystem: filesystem 
 			path: destinationPath ].
 	^ self
-		
 ]
 
 { #category : #accessing }

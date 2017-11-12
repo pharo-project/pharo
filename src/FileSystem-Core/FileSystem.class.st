@@ -12,7 +12,6 @@ FileSystem instances know two methods that return a Reference object: workingDir
 FileSystem disk workingDirectory
 FileSystem disk root
 
-
 "
 Class {
 	#name : #FileSystem,
@@ -270,7 +269,7 @@ FileSystem >> entriesAt: aResolvable do: aBlock [
 	^ self 
 		entriesAt: aResolvable 
 		ifAbsent: [ store signalDirectoryDoesNotExist: ( self resolve: aResolvable) ]
-		do: aBlock 
+		do: aBlock
 ]
 
 { #category : #public-enumerating }
@@ -495,7 +494,6 @@ FileSystem >> open: aResolvable writable: aBoolean [
 	^ store handleClass 
 		open: (FileReference fileSystem: self path: path) 
 		writable: aBoolean
-		
 ]
 
 { #category : #delegated }

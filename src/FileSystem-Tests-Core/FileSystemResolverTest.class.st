@@ -27,7 +27,7 @@ FileSystemResolverTest >> assertOriginResolves: aSymbol [
 
 { #category : #running }
 FileSystemResolverTest >> createResolver [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }

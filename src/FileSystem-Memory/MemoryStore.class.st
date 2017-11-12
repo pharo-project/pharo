@@ -123,7 +123,6 @@ MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPres
                 put: (sourceNode copy
                                         basename: destinationPath basename;
                                         yourself)
-
 ]
 
 { #category : #public }
@@ -169,7 +168,7 @@ MemoryStore >> forReferencePrintOn: aStream [
 
 { #category : #accessing }
 MemoryStore >> handleClass [
-	^ MemoryHandle 
+	^ MemoryHandle
 ]
 
 { #category : #initialization }
@@ -225,7 +224,6 @@ MemoryStore >> rename: sourcePath to: destinationPath [
 	
 	(self nodeAt: sourcePath parent)
 		fileEntryRemove: sourcePath basename 
-	
 ]
 
 { #category : #private }

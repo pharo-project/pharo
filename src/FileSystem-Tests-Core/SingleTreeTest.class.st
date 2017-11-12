@@ -29,5 +29,4 @@ SingleTreeTest >> createFile: aString [
 SingleTreeTest >> setUp [
 	super setUp.
 	filesystem := FileSystem memory.
-	
 ]

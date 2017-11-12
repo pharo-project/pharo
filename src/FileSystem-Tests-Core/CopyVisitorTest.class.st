@@ -26,7 +26,6 @@ CopyVisitorTest >> setUp [
 	source := FileSystem memory.
 	dest := FileSystem memory.
 	
-	
 ]
 
 { #category : #tests }

@@ -3,7 +3,6 @@ I am an abstract superclass for objects that can resolve origins into references
 
 next
 	The next resolver in the list, or nil
-
 "
 Class {
 	#name : #FileSystemResolver,

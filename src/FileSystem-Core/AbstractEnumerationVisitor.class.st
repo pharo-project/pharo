@@ -1,5 +1,5 @@
 "
-I'm an abstract superclass for enumeration operations on directory entries. 
+I'm an abstract superclass for enumeration operations on directory entries.
 "
 Class {
 	#name : #AbstractEnumerationVisitor,

@@ -11,7 +11,6 @@ API instance creation:
 API path manipulation:
 
 - #/ adds the supplied string to the receiver
-
 "
 Class {
 	#name : #Path,
@@ -57,7 +56,6 @@ Path class >> addElement: element to: result [
 { #category : #private }
 Path class >> addEmptyElementTo: result [
 	result isEmpty ifTrue: [result add: '']
-		
 ]
 
 { #category : #private }
@@ -65,7 +63,6 @@ Path class >> addParentElementTo: result [
 	(result isEmpty or: [ result last = '..' ])
 		ifTrue: [ result add: '..' ]
 		ifFalse: [ result removeLast ]
-		
 ]
 
 { #category : #private }
@@ -121,7 +118,7 @@ Path class >> isAbsolutePath: aString delimiter: aCharacter [
 
 { #category : #private }
 Path class >> isAbsoluteUnixPath: aString [
-	^aString first = $/ 
+	^aString first = $/
 ]
 
 { #category : #private }
@@ -131,7 +128,6 @@ Path class >> isAbsoluteWindowsPath: aString [
 	^ ((aString size > 2) and: [ aString first isLetter ])
 		ifTrue: [ (aString second = $:) and: [aString third = $\] ] "e.g. C:\..."
 		ifFalse: [ false ]
-
 ]
 
 { #category : #'instance creation' }
@@ -242,7 +238,7 @@ Path >> asResolvedBy: anObject [
 
 { #category : #accessing }
 Path >> base [
-	^self basenameWithoutExtension 
+	^self basenameWithoutExtension
 ]
 
 { #category : #accessing }
@@ -320,7 +316,6 @@ Path >> copyFrom: aPath [
 	| size |
 	size := aPath size min: self size.
 	1 to: size do: [:i | self at: i put: (aPath at: i)].
-	
 ]
 
 { #category : #accessing }
@@ -375,7 +370,7 @@ Path >> hash [
 
 { #category : #testing }
 Path >> isAbsolute [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #private }
@@ -407,7 +402,7 @@ Path >> isRelative [
 
 { #category : #testing }
 Path >> isRoot [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #testing }
@@ -468,7 +463,6 @@ Path >> pathString [
 { #category : #printing }
 Path >> printOn: aStream [ 
 	self printOn: aStream delimiter: self delimiter.
-
 ]
 
 { #category : #printing }
@@ -487,7 +481,6 @@ Path >> printPathOn: aStream [
 	>>> 'book-result/W01-Welcome'"
 
 	self printPathOn: aStream delimiter: self delimiter.
-
 ]
 
 { #category : #printing }
@@ -581,7 +574,7 @@ Path >> segments [
 		segments add: part
 	].
 	
-	^ segments asArray 
+	^ segments asArray
 ]
 
 { #category : #navigating }

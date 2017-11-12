@@ -24,7 +24,7 @@ FileSystemHandleTest class >> shouldInheritSelectors [
 
 { #category : #running }
 FileSystemHandleTest >> createFileSystem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #running }
@@ -79,7 +79,6 @@ FileSystemHandleTest >> testAtWriteBinaryAscii [
 FileSystemHandleTest >> testClose [
 	handle close.
 	self deny: handle isOpen
-	
 ]
 
 { #category : #tests }

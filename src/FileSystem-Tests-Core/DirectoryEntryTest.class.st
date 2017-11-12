@@ -19,7 +19,6 @@ DirectoryEntryTest >> testCreationTimeIsADateAndTimeInstance [
 	| creation |
 	creation := self entry creation.
 	self assert: creation class = DateAndTime.
-	
 ]
 
 { #category : #tests }
@@ -55,7 +54,6 @@ DirectoryEntryTest >> testModificationTimeIsADateAndTimeInstance [
 	| modification |
 	modification := self entry modification.
 	self assert: modification class = DateAndTime.
-	
 ]
 
 { #category : #tests }

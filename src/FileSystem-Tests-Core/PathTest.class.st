@@ -25,7 +25,6 @@ PathTest >> testAbsolutePath [
 	path := AbsolutePath from: '/' delimiter: $/.
 	self assert: path equals: Path root.
 	
-
 ]
 
 { #category : #tests }
@@ -122,7 +121,6 @@ PathTest >> testCanonicalization [
 
 	ref := (Path / 'a/b/../c') canonicalize.
 	self assert: ref segments equals: #('a' 'c').
-
 ]
 
 { #category : #tests }
@@ -200,7 +198,6 @@ PathTest >> testExtendingPath [
 	ref := '/a/b/c' asPath / 'd/./e'.
 	self assert: ref segments equals: #('a' 'b' 'c' 'd' 'e').
 
-
 ]
 
 { #category : #tests }
@@ -227,7 +224,6 @@ PathTest >> testFullName [
 	path := (FileSystem workingDirectory / 'book-result' / 'W01-Welcome')
 				relativeToReference: FileSystem workingDirectory.
 	self assert: path fullName equals: 'book-result/W01-Welcome'
-
 ]
 
 { #category : #tests }
@@ -356,7 +352,6 @@ PathTest >> testParentResolution [
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
 	self assert: absolute segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-
 ]
 
 { #category : #tests }
@@ -382,7 +377,6 @@ PathTest >> testParse [
 	self assert: (path at: 2) equals: 'child'.
 	self assert: (path at: 3) equals: 'grandChild'.
 	
-
 ]
 
 { #category : #tests }
@@ -395,7 +389,6 @@ PathTest >> testParseBogus [
 	self assert: (path at: 1) equals: 'parent?<>~ \child'.
 	self assert: (path at: 2) equals: 'grandChild'.
 	
-
 ]
 
 { #category : #tests }
@@ -416,7 +409,6 @@ PathTest >> testParseWindowsPathWithUnixDelimiters [
 	self
 		assertCollection: path segments
 		equals: #('C:' 'a' 'b' 'c')
-
 ]
 
 { #category : #tests }
@@ -428,7 +420,6 @@ PathTest >> testPathString [
 				relativeToReference: FileSystem workingDirectory.
 	self assert: path isRelative.
 	self assert: path pathString equals: 'book-result/W01-Welcome'
-
 ]
 
 { #category : #tests }
@@ -697,7 +688,6 @@ PathTest >> testSimpleResolution [
 	self assert: (absolute at: 1) equals: 'plonk'.
 	self assert: (absolute at: 2) equals: 'griffle'.
 	self assert: (absolute at: 3) equals: 'zonk'.
-
 ]
 
 { #category : #tests }
