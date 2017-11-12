@@ -96,9 +96,9 @@ DatePresenter >> dateModel [
 	^ dateModel.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 DatePresenter >> defaultDate [
-	^ Date today
+	^ Date today 
 ]
 
 { #category : #api }
