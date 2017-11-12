@@ -4,7 +4,7 @@ Class {
 	#category : #Hermes-Model
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 HEScaledDecimal class >> tag [ 
 	^ 25
 ]
