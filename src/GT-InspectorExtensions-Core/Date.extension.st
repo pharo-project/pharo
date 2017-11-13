@@ -4,15 +4,15 @@ Extension { #name : #Date }
 Date >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
-		title: [ 'Details' ];
+		title: 'Details';
 		display: [ 
-					{'year' -> self year.
+					{'iso' -> self yyyymmdd.
+					'year' -> self year.
 					'month' -> self monthIndex.
 					'month name' -> self monthName.
 					'day of month' -> self dayOfMonth.
 					'day of week' -> self dayOfWeekName.
-					'day of year' -> self dayOfYear.
-					'iso' -> self yyyymmdd } ];
+					'day of year' -> self dayOfYear } ];
 		column: 'Key' evaluated: #key;
 		column: 'Value' evaluated: #value;
 		send: #value
