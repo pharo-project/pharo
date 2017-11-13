@@ -385,6 +385,24 @@ StandardFonts class >> setFontsToVeryLarge [
 	self setFontsToStyleNamed: #verylarge
 ]
 
+{ #category : #choosing }
+StandardFonts class >> setSmallBitmapFonts [
+
+	| sans fixed |
+	
+	sans := 'Bitmap Source Sans Pro'.
+	fixed := 'Bitmap Source Code Pro'.
+	
+	StandardFonts defaultFont: (LogicalFont familyName: sans pointSize: 10).
+	StandardFonts codeFont: (LogicalFont familyName: fixed pointSize: 10).
+	StandardFonts listFont: (LogicalFont familyName: sans pointSize: 10).
+	StandardFonts menuFont: (LogicalFont familyName: sans pointSize: 10).
+	StandardFonts buttonFont: (LogicalFont familyName: sans pointSize: 10).
+ 	StandardFonts windowTitleFont: (LogicalFont familyName: sans pointSize: 11).
+	StandardFonts balloonFont: (LogicalFont familyName: sans pointSize: 9).
+ 	StandardFonts haloFont: (LogicalFont familyName: sans pointSize: 9).
+]
+
 { #category : #styles }
 StandardFonts class >> smallPointSizeForStyleNamed: aSymbol [
 	| all s idx |
