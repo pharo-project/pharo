@@ -1155,7 +1155,7 @@ GLMBasicExamples >> textPortAction [
 	
 	| browser morph |
    morph := StringMorph new.
-   morph font:(LogicalFont familyName: 'Source Code Pro' pointSize: 30).
+   morph font:(LogicalFont familyName: 'Bitmap Source Code Pro' pointSize: 30).
    browser := GLMTabulator new.
    browser
    		row: #main;

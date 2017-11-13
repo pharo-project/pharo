@@ -56,9 +56,18 @@ BaselineOfIDE >> additionalInitialization [
 
 	PolymorphSystemSettings desktopColor:  Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
-	FreeTypeSystemSettings loadFt2Library: true.
+	FreeTypeSystemSettings loadFt2Library: false.
 	FreeTypeSettings current monitorType: #LCD.
 	FreeTypeSettings current glyphContrast: 55.
+	
+	StandardFonts defaultFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 10).
+	StandardFonts codeFont: (LogicalFont familyName: 'Bitmap Source Code Pro' pointSize: 10).
+	StandardFonts listFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 10).
+	StandardFonts menuFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 10).
+	StandardFonts buttonFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 10).
+	StandardFonts windowTitleFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 11).
+	StandardFonts balloonFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 9).
+	StandardFonts haloFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 9).
 	
 	CatalogSettings displayCatalogProjectsInSpotter: false.
 
@@ -98,6 +107,8 @@ BaselineOfIDE >> additionalInitialization [
 		Undeclared removeUnreferencedKeys.].
 	
 	self loadIceberg.
+	
+	WelcomeHelp openForRelease.
 ]
 
 { #category : #baseline }

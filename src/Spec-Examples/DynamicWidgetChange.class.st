@@ -59,7 +59,7 @@ DynamicWidgetChange >> changeToButton [
 
 	self instantiatePresenters: 
 		#( bottom ButtonPresenter ).
-	button font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 9).
+	button font: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 9).
 		
 	bottom label: 'I am useless'.
 ]
@@ -70,7 +70,7 @@ DynamicWidgetChange >> changeToList [
 	self instantiatePresenters: 
 		#( bottom #ListPresenter ).
 
-	button font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10).
+	button font: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 10).
 		
 	bottom items: (1 to: 100) asOrderedCollection.
 ]

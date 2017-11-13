@@ -22,7 +22,7 @@ PluggableButtonMorphExample class >> exampleButton [
 PluggableButtonMorphExample class >> exampleButtonFont [
 	<example>
 	self new buildButton
-		font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 24);
+		font: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 24);
 	  openInWindow
 ]
 

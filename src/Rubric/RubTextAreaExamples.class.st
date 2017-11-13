@@ -66,7 +66,7 @@ RubTextAreaExamples class >> blueTextOnGrayBacgroundWrappedTo400 [
 		updateTextWith: self smallLoremIpsum;
 		backgroundColor: Color lightGray;
 		textColor: Color blue;
-		font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20);
+		font: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 18);
 		openInWorld
 ]
 
@@ -128,7 +128,7 @@ RubTextAreaExamples class >> nicolaiAttributeFix [
 	"self nicolaiAttributeFix"
 	| font1 font2 tMorph |
 	font1 := TextFontReference toFont: (StrikeFont familyName: 'Bitmap DejaVu Sans' size: 11).
-	font2 := TextFontReference toFont: (LogicalFont familyName: 'Source Sans Pro' pointSize: 10).
+	font2 := TextFontReference toFont: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 10).
 	{font1.
 	font2}
 		do: [ :f | 
@@ -181,7 +181,7 @@ RubTextAreaExamples class >> presentationInput [
 								backgroundColor: Color paleYellow;
 								cellInset: 50;
 								onAnnouncement: MorphLostFocus do: [ :ann | ann morph delete ];
-								font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20);
+								font: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 18);
 								openCenteredInWorld ]))
 ]
 
@@ -424,7 +424,7 @@ RubTextAreaExamples class >> textAreaWithBiggerFont [
 		updateTextWith: 'test';
 		takeKeyboardFocus;
 		onAnnouncement: MorphLostFocus do: [ :ann | ann morph delete ];
-		font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 20);
+		font: (LogicalFont familyName: 'Bitmap Source Sans Pro' pointSize: 18);
 		openCenteredInWorld
 ]
 

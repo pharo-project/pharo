@@ -67,7 +67,7 @@ ReflectivityCodeMorph >> drawTitleOn: aCanvas [
 
 { #category : #accessing }
 ReflectivityCodeMorph >> familyName [
-	^'Source Sans Pro'
+	^'Bitmap Source Sans Pro'
 ]
 
 { #category : #initialization }

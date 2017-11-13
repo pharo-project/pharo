@@ -120,7 +120,7 @@ FuzzyMatcherExample >> elements: aCollection [
 { #category : #private }
 FuzzyMatcherExample >> fontName [
 
-	^ 'Source Sans Pro'
+	^ 'Bitmap Source Sans Pro'
 ]
 
 { #category : #initialization }
