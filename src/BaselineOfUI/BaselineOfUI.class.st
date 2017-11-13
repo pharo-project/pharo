@@ -27,7 +27,7 @@ BaselineOfUI >> baseline: spec [
 
 	| repository |
 	 
-	repository := 'tonel://./pharo-core/src'.    
+	repository := self packageRepositoryURL.
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
