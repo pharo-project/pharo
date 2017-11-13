@@ -11,8 +11,11 @@ BaselineOf >> packageRepositoryURL [
 
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
+	
 
-	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) anyOne description.
+	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
+		ifNotEmpty: [ :repositories | repositories anyOne description ]
+		ifEmpty: [ '' ]
 
 
 	
