@@ -5329,15 +5329,6 @@ Morph >> resizeFromMenu [
 	self resizeMorph: ActiveEvent
 ]
 
-{ #category : #'event handling' }
-Morph >> restoreSuspendedEventHandler [
-	| savedHandler |
-	(savedHandler := self valueOfProperty: #suspendedEventHandler) ifNotNil:
-		[self eventHandler: savedHandler].
-	submorphs do: [:m | m restoreSuspendedEventHandler]
-
-]
-
 { #category : #'debug and other' }
 Morph >> resumeAfterDrawError [
 
@@ -6011,14 +6002,6 @@ Morph >> submorphsReverseDo: aBlock [
 { #category : #submorphs-accessing }
 Morph >> submorphsSatisfying: aBlock [
 	^ submorphs select: [:m | (aBlock value: m) == true]
-]
-
-{ #category : #'event handling' }
-Morph >> suspendEventHandler [
-	self eventHandler ifNotNil:
-		[self setProperty: #suspendedEventHandler toValue: self eventHandler.
-		self eventHandler: nil].
-	submorphs do: [:m | m suspendEventHandler].  "All those rectangles"
 ]
 
 { #category : #'event handling' }
