@@ -132,7 +132,7 @@ wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
 cd ..
 
 #Required for the correct work of metacello baselines and unicode initialization
-ln -s ${BOOTSTRAP_IMAGE_NAME} pharo-core
+ln -s ${REPOSITORY} pharo-core
 
 # Installing RPackage
 echo "[Compiler] Installing RPackage"
