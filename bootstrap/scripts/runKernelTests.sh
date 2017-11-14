@@ -13,18 +13,18 @@ fi
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
 
-find "${CACHE}"
+find ${CACHE}
 
 wget -O- get.pharo.org/${ARCHFLAG}vm70 | bash
 					
-IMAGE_ARCHIVE=$(find "${CACHE}" -name Pharo7.0-bootstrap-${1}bit-*.zip)
+IMAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-bootstrap-${1}bit-*.zip)
 unzip $IMAGE_ARCHIVE
 IMAGE_FILE=$(find . -name Pharo7.0-bootstrap-${1}bit-*.image)
 
-HERMES_ARCHIVE=$(find "${CACHE}" -name Pharo7.0-hermesPackages-${1}bit-*.zip)
+HERMES_ARCHIVE=$(find ${CACHE} -name Pharo7.0-hermesPackages-${1}bit-*.zip)
 unzip $HERMES_ARCHIVE
 
-RPACKAGE_ARCHIVE=$(find "${CACHE}" -name Pharo7.0-rpackage-${1}bit-*.zip)
+RPACKAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-rpackage-${1}bit-*.zip)
 unzip $RPACKAGE_ARCHIVE
 
 mv $IMAGE_FILE bootstrap.image
