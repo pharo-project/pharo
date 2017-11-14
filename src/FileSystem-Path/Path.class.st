@@ -247,14 +247,9 @@ Path >> base [
 
 { #category : #accessing }
 Path >> basename [
-	"Returns the base of the basename, 
-		i.e. 
-		/foo/gloops.taz basename is 'gloops.taz'
-		/ basename is '/'"
-	self size == 0
-		"the root node"
-		ifTrue: [ ^ '/'].
-	^ self at: self size
+	"Returns the base of the basename"
+
+	^self subclassResponsibility
 ]
 
 { #category : #accessing }

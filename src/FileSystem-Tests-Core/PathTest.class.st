@@ -75,6 +75,18 @@ PathTest >> testBasename [
 ]
 
 { #category : #tests }
+PathTest >> testBasenameNoParent [
+	| path |
+
+	path := Path / 'griffle'.
+	self assert: path parent basename equals: '/'.
+
+	path := Path * 'griffle'.
+	self assert: path parent basename equals: '.'.
+
+]
+
+{ #category : #tests }
 PathTest >> testBasenameWithoutExtension [
 	"self debug: #testBasenameWithoutExtension"
 	| path |

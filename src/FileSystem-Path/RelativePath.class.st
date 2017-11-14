@@ -8,6 +8,18 @@ Class {
 	#category : #FileSystem-Path
 }
 
+{ #category : #accessing }
+RelativePath >> basename [
+	"Returns the base of the basename, 
+		i.e. 
+		/foo/gloops.taz basename is 'gloops.taz'
+		. basename is '.'"
+	self size == 0
+		"the current directory"
+		ifTrue: [ ^ '.'].
+	^ self at: self size
+]
+
 { #category : #testing }
 RelativePath >> isAbsolute [
 	^ false
