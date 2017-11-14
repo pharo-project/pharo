@@ -99,10 +99,13 @@ MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
+CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
+REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
+
 VM=./vm/pharo
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
-cd bootstrap-cache
+cd "${CACHE}"
 
 #We need the old sources file next to the image because of sources condensation step
 wget http://files.pharo.org/sources/PharoV60.sources
@@ -129,7 +132,7 @@ wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
 cd ..
 
 #Required for the correct work of metacello baselines and unicode initialization
-ln -s .. pharo-core
+ln -s ${BOOTSTRAP_IMAGE_NAME} pharo-core
 
 # Installing RPackage
 echo "[Compiler] Installing RPackage"

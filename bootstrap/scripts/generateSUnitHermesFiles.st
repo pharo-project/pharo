@@ -25,7 +25,7 @@ toExport do: [ :packageName |
 	oldPackage := environment ask packageNamed: packageName.
 	hePackage := HERing2ToHermesBuilder new visitPackage: (oldPackage).
 	writer := HEBinaryReaderWriter new
-			stream: (File openForWriteFileNamed: 'bootstrap-cache/' , packageName, '.hermes');
+			stream: (((Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference / packageName, 'hermes'));
 			yourself.
 	hePackage writeInto: writer.
 	writer flush.

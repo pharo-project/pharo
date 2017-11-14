@@ -1,4 +1,4 @@
 accessing
 bootstrapCacheDirectory
 	
-	^ 'bootstrap-cache' asFileReference ensureCreateDirectory
+	^ (Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference ensureCreateDirectory
