@@ -66,7 +66,7 @@ DiffPresenter class >> exampleWithoutOptions [
 
 { #category : #undo-redo }
 DiffPresenter >> clearUndoManager [
-	self widget ifNotNil: #clearUndoManager
+	"The diff presenter does not allow edition, it does not have undo history. But this message is added to have polimorphism in the Message Browser"
 ]
 
 { #category : #accessing }
