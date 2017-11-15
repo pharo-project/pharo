@@ -1,9 +1,11 @@
-| toExport repository packageNames environment |
+| toExport repository packageNames environment repositoryReference |
 
 Transcript nextPutAll: '[Hermes] - Loading BaselineOfPharoBootstrap'; cr.
 
+repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference / 'src'.
+
 repository := TonelRepository new
-	directory: 'src' asFileReference;
+	directory: repositoryReference;
 	yourself.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
