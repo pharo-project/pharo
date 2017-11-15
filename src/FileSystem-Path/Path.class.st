@@ -247,9 +247,14 @@ Path >> base [
 
 { #category : #accessing }
 Path >> basename [
-	"Returns the base of the basename"
+	"Returns the base of the basename, 
+		i.e. 
+		/foo/gloops.taz basename is 'gloops.taz'
+		If empty, it is the emptyPathString"
 
-	^self subclassResponsibility
+	self isEmpty	ifTrue: 
+		[ ^ self emptyPathString ].
+	^ self at: self size
 ]
 
 { #category : #accessing }
@@ -331,6 +336,13 @@ Path >> do: aBlock [
 			[ :index || segment |
 			segment := self at: index.
 			segment isEmpty ifFalse: [ aBlock value: segment ] ]
+]
+
+{ #category : #accessing }
+Path >> emptyPathString [
+	"Answer the string representing an empty (size = 0) instance of the receiver"
+
+	^String with: self delimiter
 ]
 
 { #category : #accessing }

@@ -9,15 +9,11 @@ Class {
 }
 
 { #category : #accessing }
-RelativePath >> basename [
-	"Returns the base of the basename, 
-		i.e. 
-		/foo/gloops.taz basename is 'gloops.taz'
-		. basename is '.'"
-	self size == 0
-		"the current directory"
-		ifTrue: [ ^ '.'].
-	^ self at: self size
+RelativePath >> emptyPathString [
+	"Answer the string representing an empty (size = 0) instance of the receiver.
+	For a relative path, this is the current directory"
+
+	^'.'
 ]
 
 { #category : #testing }
