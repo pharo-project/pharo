@@ -1,1 +1,7 @@
-CombinedChar parseCompositionMappingFrom: (ZnCharacterReadStream on: (File named: '../resources/unicode/UnicodeData.txt') readStream encoding: 'utf8').
+
+| dataFilePath |
+
+dataFilePath := CommandLineArguments new arguments last.
+
+
+CombinedChar parseCompositionMappingFrom: (ZnCharacterReadStream on: (File named: dataFilePath) readStream encoding: 'utf8').
