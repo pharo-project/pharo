@@ -8,6 +8,14 @@ Class {
 	#category : #FileSystem-Path
 }
 
+{ #category : #accessing }
+RelativePath >> emptyPathString [
+	"Answer the string representing an empty (size = 0) instance of the receiver.
+	For a relative path, this is the current directory"
+
+	^'.'
+]
+
 { #category : #testing }
 RelativePath >> isAbsolute [
 	^ false
