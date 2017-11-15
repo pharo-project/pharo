@@ -79,9 +79,13 @@ fi
 PREFIX=Pharo7.0
 
 REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
-echo $REPOSITORY
 
-GIT_COMMIT_HASH=$(git -C ${REPOSITORY} show -s --format=%h)
+if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then
+  GIT_COMMIT_HASH=$(git show -s --format=%h)
+else
+  GIT_COMMIT_HASH=$(git -C ${REPOSITORY} show -s --format=%h)
+fi
+
 SUFFIX=${ARCH_DESCRIPTION}bit-${GIT_COMMIT_HASH}
 
 if [[ ${DESCRIBE} -eq "1" ]]; then
