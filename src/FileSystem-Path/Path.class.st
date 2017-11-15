@@ -342,7 +342,7 @@ Path >> do: aBlock [
 Path >> emptyPathString [
 	"Answer the string representing an empty (size = 0) instance of the receiver"
 
-	^String with: self delimiter
+	^self delimiter asString
 ]
 
 { #category : #accessing }
