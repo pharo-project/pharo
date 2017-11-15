@@ -200,27 +200,32 @@ MethodMapTests >> testSimpleSourceMapping [
 
 { #category : #'testing - source mapping' }
 MethodMapTests >> testSourceMappingBlock [
-	| method range highlight |
+	| method range highlight pcs |
 
 	method := MethodMapExamples>>#exampleTempNamedCopying.
-
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 42.
+	
+	"Cannot check for class since those encoders are changing names all the time..."
+	pcs := (method encoderClass name endsWith: 'SistaV1')
+		ifTrue: [ 41 to: 45 ]
+		ifFalse: [ 42 to: 46 ].
+	
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs first.
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'b'.
 
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 43.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs second.
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'a := b'.
 	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 44.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs third.
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals:'DebuggerMethodMapOpal'.
 	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 45.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs fourth.
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals:'thisContext'.
 	
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 46.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs fifth.
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'method'.
 ]
