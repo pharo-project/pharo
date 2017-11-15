@@ -252,7 +252,7 @@ Path >> basename [
 		/foo/gloops.taz basename is 'gloops.taz'
 		If empty, it is the emptyPathString"
 
-	self isEmpty	ifTrue: 
+	self isEmpty ifTrue: 
 		[ ^ self emptyPathString ].
 	^ self at: self size
 ]
