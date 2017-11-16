@@ -1,5 +1,5 @@
 [
-| options architecture repository packageNames environment fetcher buildNumber bootstrap |
+| options architecture repository packageNames environment fetcher buildNumber bootstrap repositoryReference |
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
@@ -17,8 +17,10 @@ bootstrap := PBBootstrap forArchitecture: architecture.
 bootstrap buildNumber: buildNumber;
 	prepareBootstrap.
 	
+repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference.
+	
 repository := TonelRepository new
-	directory: './src' asFileReference;
+	directory: repositoryReference / 'src';
 	yourself.
 
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
@@ -33,7 +35,7 @@ environment addGlobalsNamed: #(#Smalltalk #SourceFiles #Transcript #Undeclared #
 environment clean.
 
 fetcher := PBRing2GitFetcher new.
-fetcher gitRepositoryUrl: 'git@github.com:pharo-project/pharo.git' location: '.' subdirectory: 'src'.
+fetcher gitRepositoryUrl: 'git@github.com:pharo-project/pharo.git' location: repositoryReference subdirectory: 'src'.
 fetcher buildNumber: buildNumber.
 	
 environment bootstrapWith: fetcher architecture: architecture to: bootstrap imageReference.	
