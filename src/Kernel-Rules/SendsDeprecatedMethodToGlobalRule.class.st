@@ -27,7 +27,7 @@ SendsDeprecatedMethodToGlobalRule >> check: aNode forCritiquesDo: aCriticBlock [
 		check: aNode selector
 		forDeprecationIn: messageReceiver name) ifFalse: [ ^ self ].
 		
-	self critiqueFor: aNode
+	aCriticBlock cull: (self critiqueFor: aNode)
 ]
 
 { #category : #running }
