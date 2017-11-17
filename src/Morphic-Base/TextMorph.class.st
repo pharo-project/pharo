@@ -900,7 +900,6 @@ TextMorph >> handleInteraction: interactionBlock [
 { #category : #'event handling' }
 TextMorph >> handleKeystroke: anEvent [ 
 	"System level event handling."
-	| pasteUp |
 
 	anEvent wasHandled
 		ifTrue: [^ self].
