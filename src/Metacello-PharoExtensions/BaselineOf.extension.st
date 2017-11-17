@@ -28,7 +28,7 @@ BaselineOf >> packageRepositoryURL [
 
 	^ self packageRepository
 		ifNotNil: [ :aRepository | aRepository description ]
-		ifNil: [ nil ]
+		ifNil: [ '' ]
 
 
 	
