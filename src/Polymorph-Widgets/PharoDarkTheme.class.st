@@ -60,7 +60,7 @@ PharoDarkTheme class >> setPreferredPreferences [
 
 { #category : #accessing }
 PharoDarkTheme class >> themeName [
-	^ 'Pharo3 Dark'
+	^ 'Pharo Dark'
 ]
 
 { #category : #accessing }
