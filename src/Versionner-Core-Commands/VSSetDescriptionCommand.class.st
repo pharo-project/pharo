@@ -19,7 +19,7 @@ VSSetDescriptionCommand >> execute [
 
 { #category : #execute }
 VSSetDescriptionCommand >> executeWithMessage: message [
-	| toolbox updatedSpecs |
+	| toolbox |
 	toolbox := MetacelloToolBox configurationNamed: target configurationBasename.
 	toolbox
 		updateVersionMethodForVersion: target version versionString
