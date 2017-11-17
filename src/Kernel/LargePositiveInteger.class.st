@@ -28,6 +28,21 @@ LargePositiveInteger >> bitAt: anInteger [
 ]
 
 { #category : #'bit manipulation' }
+LargePositiveInteger >> hashMultiply [
+	"This is a multiplication of hashes by 1664525 mod 2^28 written to avoid overflowing into large integers.
+	 The primitive is able to perform the operation with modulo arihmetic.
+	
+	Example of usage:
+	  hash
+	    ^ (super hash + variableName hash) hashMultiply 	
+	"
+	
+	<primitive: 159>
+	"Truncate to 28 bits and try again"
+	^(self bitAnd: 16rFFFFFFF) hashMultiply
+]
+
+{ #category : #'bit manipulation' }
 LargePositiveInteger >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the  
 	receiver is zero. Raise an error if the receiver is negative, since  
