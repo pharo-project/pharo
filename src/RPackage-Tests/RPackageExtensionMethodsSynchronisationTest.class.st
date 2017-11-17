@@ -52,7 +52,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryM
 { #category : #testing }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackage [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
-	| class firstPackage t|
+	| class firstPackage |
 	
 	self addXCategory.
 	
@@ -70,7 +70,7 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryN
 { #category : #testing }
 RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryNotExistingCreateANewPackageAndInstallsMethodInIt [
 	"test that when we add a method  in an extension category ( beginning with *)that does not refer to an existing categorya new package with the name of this category is added, and that the method is added to this new package"
-	| class firstPackage t|
+	| class firstPackage |
 	
 	self addXCategory.
 	
@@ -129,9 +129,9 @@ RPackageExtensionMethodsSynchronisationTest >> testAddMethodInExtensionCategoryW
 RPackageExtensionMethodsSynchronisationTest >> testModifyMethodByChangingCode [
 	"test that when we modify the code of a method, everything work well: NOTHING SHOULD HAPPEN REGARDING THE PACKAGING"
 	
-	| class firstPackage secondPackage|
+	| class firstPackage |
 	self addXCategory.
-	firstPackage := self organizer  packageNamed: #XXXXX.
+	firstPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'stubMethod' inClass:  class inCategory: 'classic category'.
 
