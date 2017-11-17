@@ -1,5 +1,5 @@
 "
-This baseline is used to generate Pharo images from the local clone of pharo-core repository. 
+This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
 - ConfigurationOfUI
@@ -906,8 +906,8 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	MCMethodDefinition initializersEnabled: false.
 	
 	repo := TonelRepository new
-	directory: './pharo-core/src' asFileReference;
-	yourself.
+		directory: self packageRepository directory;
+		yourself.
 		
 	gofer := Gofer it repository: repo.
 	gofer package: #'Compiler'.
