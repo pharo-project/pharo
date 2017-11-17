@@ -70,7 +70,7 @@ MetacelloCoreSymbolicVersionTest >> stableVersion: spec [
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testBasicBleedingEdgeVersion [
-    | project version wc expected actual |
+    | project version expected actual |
     project := self projectWith: #(#'platformVersion1.x').
     version := project version: #'bleedingEdge'.
     expected := 'spec blessing: #''baseline''.
@@ -86,7 +86,7 @@ spec project: ''Example Project'' with: [
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testBasicStableVersion [
-    | project version wc expected actual |
+    | project version expected actual |
     project := self projectWith: #(#'platformVersion1.x').
     version := project version: #'stable'.
     expected := 'spec blessing: #''release''.
@@ -102,14 +102,14 @@ spec project: ''Example Project'' with: [
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testBleedingEdgeMethod [
-    | project version |
+    | project |
     project := self projectWith: #(#'platformVersion1.x').
     self assert: (project version: #'bleedingEdge') = project bleedingEdge
 ]
 
 { #category : #tests }
 MetacelloCoreSymbolicVersionTest >> testStableVersionMethod [
-    | project version |
+    | project |
     project := self projectWith: #(#'platformVersion1.x').
     self assert: (project version: #'stable') = project stableVersion
 ]
