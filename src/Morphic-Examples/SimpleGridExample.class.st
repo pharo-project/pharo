@@ -36,7 +36,7 @@ SimpleGridExample >> rootNodeClassFromItem: anItem [
 
 { #category : #'user interface' }
 SimpleGridExample >> treeMorph [
-	| treeMorph oddColor evenColor |
+	| treeMorph |
 	treeMorph := (self treeMorphClass on: self)
 		beCheckList;
 		beMultiple;
