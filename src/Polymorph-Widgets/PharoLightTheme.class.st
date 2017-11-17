@@ -37,9 +37,9 @@ PharoLightTheme class >> darkBaseColor [
 
 { #category : #accessing }
 PharoLightTheme class >> isAbstract [
-	"Answer whether the receiver is considered to be abstract."
+	"This will be set to false as soon Pharo3Theme will be removed"
 
-	^false
+	^true
 ]
 
 { #category : #accessing }
