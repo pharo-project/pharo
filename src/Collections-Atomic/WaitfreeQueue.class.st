@@ -283,7 +283,7 @@ WaitfreeQueue >> size [
 	This method having a non-deterministic results, because of nature of concurrent shared queue. 
 	"
 	
-	| first item count |
+	| item count |
 
 	item := dummy.
 
