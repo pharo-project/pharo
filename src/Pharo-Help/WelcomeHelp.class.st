@@ -168,7 +168,7 @@ WelcomeHelp class >> pages [
 { #category : #pages }
 WelcomeHelp class >> useExternalPackages [
 	^ HelpTopic 
-		title: 'Using Eternal Packages'
+		title: 'Using External Packages'
 		contents: (self heading: 'Using External Packages'), 'Pharo already comes pre-loaded with a rich set of packages that you can use to explore the system and develop your own applications. However there is also a huge library of user contributed projects that you can also load using the "Catalog Browser". To open it click on the following expression:
 		
 ', (self doItFrom: 'CatalogBrowser open.'), '
