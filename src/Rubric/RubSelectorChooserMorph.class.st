@@ -78,7 +78,7 @@ RubSelectorChooserMorph >> defaultBaseColor [
 
 { #category : #drawing }
 RubSelectorChooserMorph >> drawCommonPrefixAreasOn: aCanvas [
-	| firstMenu firstMenuItem topLeft bottomLeft lastMenuItem |
+
 	requestor ifNil: [^ self ].
 	prefix  
 		ifNotNil: [ self choiceMenus 
