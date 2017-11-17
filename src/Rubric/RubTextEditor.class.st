@@ -132,7 +132,7 @@ RubTextEditor >> accept: aKeyboardEvent [
 
 { #category : #'undo-redo private' }
 RubTextEditor >> addDeleteSelectionUndoRecord [
-	| undoText redoText undoRec |
+	| undoText redoText |
 	undoText := self selection.
 	redoText := self nullText.
 	self
@@ -601,7 +601,7 @@ RubTextEditor >> copySelection: aKeyboardEvent [
 RubTextEditor >> correctFrom: start to: stop with: aString [
 	"Make a correction in the model that the user has authorised from somewhere else in the system (such as from the compilier).  
 	The user's selection is not changed, only corrected."
-	| wasShowing userSelection delta loc |
+	| userSelection delta |
 	
 	userSelection := self selectionInterval.
 	self selectInvisiblyFrom: start to: stop.
@@ -1064,7 +1064,7 @@ RubTextEditor >> exchangeWith: prior [
 	 exchanged with a caret).  If both selections are carets, flash & do nothing.
 	 Don't affect the paste buffer.  Undoer: itself; Redoer: Undoer."
 
-	| start stop before currSelection priorSelection delta redoArgs altInterval undoArgs undoRec |
+	| start stop before currSelection priorSelection delta redoArgs altInterval undoArgs |
 	start := self startIndex.
 	stop := self stopIndex - 1.
 	((prior first <= prior last) | (start <= stop) "Something to exchange" and:
