@@ -906,8 +906,8 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	MCMethodDefinition initializersEnabled: false.
 	
 	repo := TonelRepository new
-	directory: './pharo-core/src' asFileReference;
-	yourself.
+		directory: self packageRepository directory;
+		yourself.
 		
 	gofer := Gofer it repository: repo.
 	gofer package: #'Compiler'.
