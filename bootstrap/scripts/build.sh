@@ -140,9 +140,6 @@ cd ..
 # Find st-cache path
 [[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
 
-# Required for the correct work of metacello baselines and unicode initialization
-ln -s ${REPOSITORY} pharo-core
-
 # Installing RPackage
 echo "[Compiler] Installing RPackage"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
