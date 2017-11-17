@@ -32,31 +32,22 @@ Different scenarios are implemented by my different subclasses:
 - CollatorBlockFunction represent two args collator block
 - and ChainedSortFunction implements composition of collators created by comma message
 
-Applications can implement their own domain sort functinos defining the method:
-	threeWayCompare: anObject1 with: anObject2
+Applications can implement their own domain sort functions defining the method:
+	collate: anObject1 with: anObject2
 
-Instance Variables
-	direction	<SmallInteger>	1 for ascending, -1 for descending
 "
 Class {
 	#name : #SortFunction,
 	#superclass : #Object,
-	#instVars : [
-		'direction'
+	#classVars : [
+		'Default'
 	],
 	#category : #SortFunctions-Core
 }
 
-{ #category : #'instance creation' }
-SortFunction class >> ascending [
-
-	^self new beAscending
-]
-
-{ #category : #'instance creation' }
-SortFunction class >> descending [
-
-	^self new beDescending
+{ #category : #accessing }
+SortFunction class >> default [
+	^Default
 ]
 
 { #category : #converting }
@@ -66,95 +57,14 @@ SortFunction >> , aSortFunction [
 	^ChainedSortFunction startWith: self then: aSortFunction asSortFunction
 ]
 
-{ #category : #comparing }
-SortFunction >> = anObject [
-	"Answer whether the receiver and anObject represent the same object."
-
-	self == anObject
-		ifTrue: [ ^ true ].
-	self class = anObject class
-		ifFalse: [ ^ false ].
-	^ direction = anObject direction
-]
-
 { #category : #converting }
 SortFunction >> asSortFunction [
 
 	^self
 ]
 
-{ #category : #initailize-release }
-SortFunction >> beAscending [
-
-	direction := 1
-]
-
-{ #category : #initailize-release }
-SortFunction >> beDescending [
-
-	direction := -1
-]
-
 { #category : #evaluating }
 SortFunction >> collate: anObject1 with: anObject2 [
-	"Do a three-way comparison between the anObject1 and anObject2 according to the given direction,
-	which can be:
-	1 - specifies native comparison logic.
-	-1 - specifies reversed comparison logic. 
-	Subclases implement native comparison logic in the method #threeWayCompare:with:. 
-	Look at it for details"
-
-	^(self threeWayCompare: anObject1 with: anObject2) * direction
-]
-
-{ #category : #accessing }
-SortFunction >> direction [
-	^ direction
-]
-
-{ #category : #initailize-release }
-SortFunction >> direction: oneOrMinusOne [
-
-	direction := oneOrMinusOne
-]
-
-{ #category : #comparing }
-SortFunction >> hash [
-	"Answer an integer value that is related to the identity of the receiver."
-
-	^ direction hash
-]
-
-{ #category : #initailize-release }
-SortFunction >> initialize [
-	super initialize.
-	
-	self beAscending
-]
-
-{ #category : #converting }
-SortFunction >> inverted [
-	"Return new sort function with inverted direction then my, 
-	if I'm currently ascending, I will return descending instance, and vice-versa."
-
-	^self copy 
-		direction: direction negated
-]
-
-{ #category : #testing }
-SortFunction >> isAscending [
-
-	^direction = 1
-]
-
-{ #category : #testing }
-SortFunction >> isDescending [
-
-	^direction = -1
-]
-
-{ #category : #evaluating }
-SortFunction >> threeWayCompare: anObject1 with: anObject2 [
 	"Do a three-way comparison between the anObject1 and anObject2, returning
 	-1 if anObject1 < anObject2
 	0 if anObject1 = anObject2
@@ -162,6 +72,25 @@ SortFunction >> threeWayCompare: anObject1 with: anObject2 [
 	This assumes a total order in accordance with the mathematical law of trichotomy.
 	See also:  http://en.wikipedia.org/wiki/Three-way_comparison"
 	self subclassResponsibility 
+]
+
+{ #category : #converting }
+SortFunction >> reversed [
+	"Return new sort function with reverse sort order."
+
+	^ReverseSortFunction on: self
+]
+
+{ #category : #converting }
+SortFunction >> undefinedFirst [
+	"Return a new SortFunction that sort all the nil first, an non nil with myself."
+	^(UndefinedSortFunction on: self) undefinedFirst
+]
+
+{ #category : #converting }
+SortFunction >> undefinedLast [
+	"Return a new SortFunction that sort all the nil last, an non nil with myself."
+	^(UndefinedSortFunction on: self) undefinedLast
 ]
 
 { #category : #evaluating }

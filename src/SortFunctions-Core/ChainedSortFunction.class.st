@@ -1,5 +1,5 @@
 "
-I add to my parent the idea of a ""next"" function to use when two objects are equal by my primary collator.
+I add to my parent the idea of a ""next"" function to use when two objects are equal by my primary sort function.
 
 Usage
 
@@ -14,30 +14,29 @@ customers sort: #lastName ascending, #firstName, #age descending
 (note the missing ascending on the #firstName argument)
 
 Instance Variables
-	startFunction	<SortFunction> the primary SortFunction to collate given objects
+	baseSortFunction	<SortFunction> the primary SortFunction to collate given objects
 	next	Function	<SortFunction>	the next SortFunction to evaluate in the event primary collation results are equal values
 "
 Class {
 	#name : #ChainedSortFunction,
-	#superclass : #SortFunction,
+	#superclass : #ComposedSortFunction,
 	#instVars : [
-		'nextFunction',
-		'startFunction'
+		'nextFunction'
 	],
 	#category : #SortFunctions-Core
 }
 
 { #category : #'instance creation' }
-ChainedSortFunction class >> startWith: aSortFunction then: aSortFunction2 [
+ChainedSortFunction class >> startWith: aSortFunction then: nextSortFunction [
 	^self new
-		startFunction: aSortFunction;
-		nextFunction: aSortFunction2
+		baseSortFunction: aSortFunction;
+		nextFunction: nextSortFunction
 ]
 
 { #category : #converting }
 ChainedSortFunction >> , aSortFunction [
 
-	^self class startWith: startFunction then: nextFunction , aSortFunction
+	^self class startWith: baseSortFunction then: nextFunction , aSortFunction
 ]
 
 { #category : #comparing }
@@ -48,17 +47,26 @@ ChainedSortFunction >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ direction = anObject direction
-		and: [ startFunction = anObject startFunction
-				and: [ nextFunction = anObject nextFunction ] ]
+	^ baseSortFunction = anObject baseSortFunction
+			and: [ nextFunction = anObject nextFunction ]
+]
+
+{ #category : #evaluating }
+ChainedSortFunction >> collate: anObject1 with: anObject2 [
+	"If the result of current function is 0, then pass on to the next function to work it out"
+
+	| result |
+	result := baseSortFunction collate: anObject1 with: anObject2.
+	^result isZero
+		ifTrue: [nextFunction collate: anObject1 with: anObject2.]
+		ifFalse: [result]
 ]
 
 { #category : #comparing }
 ChainedSortFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ direction hash
-		bitXor: (startFunction hash bitXor: nextFunction hash)
+	^ super hash + nextFunction hash
 ]
 
 { #category : #accessing }
@@ -69,25 +77,4 @@ ChainedSortFunction >> nextFunction [
 { #category : #accessing }
 ChainedSortFunction >> nextFunction: anObject [
 	nextFunction := anObject
-]
-
-{ #category : #accessing }
-ChainedSortFunction >> startFunction [
-	^ startFunction
-]
-
-{ #category : #accessing }
-ChainedSortFunction >> startFunction: anObject [
-	startFunction := anObject
-]
-
-{ #category : #evaluating }
-ChainedSortFunction >> threeWayCompare: anObject1 with: anObject2 [
-	"If the result of current function is 0, then pass on to the next function to work it out"
-
-	| result |
-	result := startFunction collate: anObject1 with: anObject2.
-	^result isZero
-		ifTrue: [nextFunction collate: anObject1 with: anObject2.]
-		ifFalse: [result]
 ]
