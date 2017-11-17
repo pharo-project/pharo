@@ -274,7 +274,7 @@ VersionnerProjectPackagesPanel >> removePackageButton [
 { #category : #actions }
 VersionnerProjectPackagesPanel >> removeSelectedPackage [
 	"remove the selected package from the model and the list."
-	| selectedPackage index |
+	| selectedPackage |
 
 	selectedPackage := packagesList selectedItem.
 	selectedPackage ifNil: [ ^self ].

@@ -148,7 +148,7 @@ RubMethodEditingExample >> okToChange [
 
 { #category : #view }
 RubMethodEditingExample >> open [
-	| window bar editor |
+	| window editor |
 	window := (StandardWindow labelled: 'Method editor with shout') model: self.
 	editor := self newScrolledText.
 	editor hResizing: #spaceFill; vResizing: #spaceFill.

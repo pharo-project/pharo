@@ -35,8 +35,13 @@ CollatorBlockFunction >> = anObject [
 		ifTrue: [ ^ true ].
 	self class = anObject class
 		ifFalse: [ ^ false ].
-	^ direction = anObject direction
-		and: [ collatorBlock = anObject collatorBlock ]
+	^collatorBlock = anObject collatorBlock
+]
+
+{ #category : #evaluating }
+CollatorBlockFunction >> collate: anObject1 with: anObject2 [
+
+	^collatorBlock value: anObject1 value: anObject2 
 ]
 
 { #category : #accessing }
@@ -53,11 +58,5 @@ CollatorBlockFunction >> collatorBlock: anObject [
 CollatorBlockFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ direction hash bitXor: collatorBlock hash
-]
-
-{ #category : #evaluating }
-CollatorBlockFunction >> threeWayCompare: anObject1 with: anObject2 [
-
-	^collatorBlock value: anObject1 value: anObject2 
+	^ collatorBlock hash
 ]

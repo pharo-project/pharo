@@ -202,6 +202,14 @@ EncoderForSistaV1 class >> bindingWriteScanBlockFor: litVarIndex using: scanner 
 	   and: [scanner followingByte + prevext = litVarIndex]]
 ]
 
+{ #category : #'block closure support' }
+EncoderForSistaV1 class >> blockCreationBytecodeMessageAt: startpc method: method [
+	"**	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
+	| numExts | 
+	numExts := (method at: startpc - 2) >> 6.
+	^ method abstractBytecodeMessageAt: startpc - 3 - (2 * numExts).
+]
+
 { #category : #'instruction stream support' }
 EncoderForSistaV1 class >> bytecodeSize: bytecode [
 	"Answer the number of bytes in the bytecode."

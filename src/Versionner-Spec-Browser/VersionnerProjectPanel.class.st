@@ -128,8 +128,8 @@ VersionnerProjectPanel >> browseSelectedProject [
 ]
 
 { #category : #api }
-VersionnerProjectPanel >> config: anMBConfigurationInfo [
-	| allGroups |
+VersionnerProjectPanel >> config: anMBConfigurationInfo [	
+
 	config := anMBConfigurationInfo.
 
 	"allGroups := config groups."

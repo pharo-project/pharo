@@ -2,7 +2,7 @@ Extension { #name : #StringMorph }
 
 { #category : #'*Athens-Morphic' }
 StringMorph >> drawOnAthensCanvas: canvas [
-	| pt bnd gap |
+	| bnd |
 "	bnd := self bounds.
 	gap := self layoutInset.
 "	bnd := self bounds topLeft + self layoutInset.
