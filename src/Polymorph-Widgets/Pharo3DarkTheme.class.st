@@ -1,10 +1,10 @@
 "
-Use PharoDarkTheme now
+DEPRECATED! Please use Pharo DarkTheme.
 "
 Class {
 	#name : #Pharo3DarkTheme,
 	#superclass : #PharoDarkTheme,
-	#category : #Deprecated70
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }

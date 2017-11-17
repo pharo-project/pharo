@@ -1,10 +1,10 @@
 "
-Use PharoLightTheme now
+DEPRECATED! Please use PharoLightTheme
 "
 Class {
 	#name : #Pharo3Theme,
 	#superclass : #PharoLightTheme,
-	#category : #Deprecated70
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }
