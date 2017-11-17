@@ -469,7 +469,7 @@ RPackageOrganizer >> initialize [
 
 { #category : #initialization-data }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
-	| package protocolName nonTraitMethods|
+	| package protocolName nonTraitMethods |
 	
 	protocolName := (aProtocol name allButFirst) trimBoth.
 	package := self packageMatchingExtensionName: protocolName.
