@@ -87,7 +87,7 @@ RPackageIncrementalTest >> tearDown [
 
 { #category : #'test class addition removal' }
 RPackageIncrementalTest >> testAddClassAfterMethods [
-	| p1 a1 b1 |
+	| p1 a1 |
 	p1 := self createNewPackageNamed: self p1Name.
 	"the class is created but not added to the package for now"
 	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
@@ -120,7 +120,7 @@ RPackageIncrementalTest >> testAddClassAfterMethods [
 
 { #category : #'test class addition removal' }
 RPackageIncrementalTest >> testAddClassAfterMethodsAtMetaclassToo [
-	| p1 a1 b1 |
+	| p1 a1 |
 	p1 := self createNewPackageNamed: self p1Name.
 	"the class is created but not added to the package for now"
 	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
@@ -686,7 +686,7 @@ RPackageIncrementalTest >> testIncludesOrTouches [
 
 { #category : #'test method addition removal' }
 RPackageIncrementalTest >> testMethodAddition [
-	| p1 a1 methodRef |
+	| p1 a1 |
 	p1 := self createNewPackageNamed: 'P1'.
 	a1 := self createNewClassNamed: #A1DefinedInP1 inPackage: p1.
 	a1 compileSilently: 'foo ^ 10'.
@@ -743,7 +743,7 @@ RPackageIncrementalTest >> testPackageOfClassForDefinedClasses [
 { #category : #'test registration' }
 RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
 	"Verify that when we register a class, the package organizer register it."
-	| p a1 b1 |
+	| p a1 |
 	p := self createNewPackageNamed: 'P1'.
 	a1 := self createNewClassNamed: #A1InPackageP1.
 	p definedClassNames add: #A1InPackageP1.
@@ -767,7 +767,7 @@ RPackageIncrementalTest >> testPrivateClassRegisterUnregister [
 
 { #category : #'test class addition removal' }
 RPackageIncrementalTest >> testRemoveClassAfterMethods [
-	| p1 a1 b1 |
+	| p1 a1 |
 	p1 := self createNewPackageNamed: self p1Name.
 	"the class is created but not added to the package for now"
 	a1 := self createNewClassNamed: #A1InPackageP1 inCategory: self p1Name.
@@ -794,7 +794,7 @@ RPackageIncrementalTest >> testRemoveClassAfterMethods [
 
 { #category : #'test class addition removal' }
 RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
-	| p1 p2 a1 b1 |
+	| p1 p2 a1 |
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	"the class is created but not added to the package for now"
@@ -816,7 +816,7 @@ RPackageIncrementalTest >> testRemoveClassRemovesExtensions [
 
 { #category : #'test class addition removal' }
 RPackageIncrementalTest >> testRemoveExtensionMethodRemovesExtensionsFromRPackage [
-	| p1 p2 a1 b1 |
+	| p1 p2 a1 |
 	p1 := self createNewPackageNamed: self p1Name.
 	p2 := self createNewPackageNamed: self p2Name.
 	"the class is created but not added to the package for now"

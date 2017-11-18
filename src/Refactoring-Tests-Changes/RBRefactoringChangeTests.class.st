@@ -345,7 +345,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveClassInteractively [
 
 { #category : #tests-perform }
 RBRefactoringChangeTests >> testPerformAddRemoveClassMethod [
-	| change source |
+	| change |
 	change := changes compile: 'method ^ 1' in: self changeMock class classified: #utilities.
 	self perform: change do: [ self assert: (self changeMock respondsTo: #method) ].
 	self deny: (self changeMock respondsTo: #method).
@@ -370,7 +370,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveInstanceVariable [
 
 { #category : #tests-perform }
 RBRefactoringChangeTests >> testPerformAddRemoveMethod [
-	| change source |
+	| change |
 	change := changes compile: 'method ^ 1' in: self changeMock classified: #utilities.
 	self perform: change do: [ self assert: (self changeMock canUnderstand: #method) ].
 	self deny: (self changeMock canUnderstand: #method).
@@ -379,7 +379,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveMethod [
 
 { #category : #tests-perform }
 RBRefactoringChangeTests >> testPerformAddRemoveMethodInteractively [
-	| change source |
+	| change |
 	change := RBRefactoryChangeManager changeFactory addMethodSource: 'method ^ 1' in: self changeMock classified: #utilities for: self. 
 	self perform: change do: [ self assert: (self changeMock canUnderstand: #method) ].
 	self deny: (self changeMock canUnderstand: #method).
