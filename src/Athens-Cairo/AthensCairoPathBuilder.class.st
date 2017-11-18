@@ -99,7 +99,7 @@ AthensCairoPathBuilder >> arcTo: newEndPoint angle: angle cw: aBool [
 { #category : #private }
 AthensCairoPathBuilder >> calcCenter: start end: end angle: angle [
 
-	| v  rot  center radius len sina cosa m |	
+	| v center radius len m |	
 
 	v := end - start.
 	
