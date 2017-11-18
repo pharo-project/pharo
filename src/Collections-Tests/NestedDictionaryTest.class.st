@@ -36,6 +36,24 @@ NestedDictionaryTest >> testAtAtIfAbsentPut [
 ]
 
 { #category : #tests }
+NestedDictionaryTest >> testAtAtOnIdentityDictinary [
+
+	| dct key1 key2 subDct |
+
+	dct := IdentityDictionary new.
+	key1 := 'a'.
+	key2 := key1 copy.
+	dct
+		at: #a at: key1 put: 1;
+		at: #a at: key2 put: 2.
+	subDct := dct at: #a.
+	TestCase new
+		assert: subDct size equals: 2;
+		assert: (subDct at: key1) equals: 1;
+		assert: (subDct at: key2) equals: 2
+]
+
+{ #category : #tests }
 NestedDictionaryTest >> testAtAtPut [
 	| d |
 	d := Dictionary new.
