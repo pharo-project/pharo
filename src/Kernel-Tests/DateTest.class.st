@@ -378,7 +378,7 @@ DateTest >> testPreviousByName [
 { #category : #tests }
 DateTest >> testPrintFormat [
 
-	| format monthTypes |
+	| format |
 	format := DatePrintFormatTester on: january23rd2004.
 	format dayPosition: 1 monthPosition: 2 yearPosition: 3 delimiter: $/ monthType: 1 yearType: 1.
 	format shouldEqual: '23/1/2004'.
