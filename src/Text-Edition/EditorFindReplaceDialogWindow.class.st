@@ -460,7 +460,7 @@ EditorFindReplaceDialogWindow >> title [
 
 { #category : #updating }
 EditorFindReplaceDialogWindow >> update: aSymbol [
-	| si |
+	 
 	model ifNotNil: [
 		aSymbol = #regexError
 				ifTrue: [self findTextFieldMorph textColor: Color  red].
