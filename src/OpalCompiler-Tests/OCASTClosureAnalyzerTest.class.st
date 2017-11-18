@@ -17,7 +17,7 @@ OCASTClosureAnalyzerTest >> testBlockArgumentIsArgumentVariable [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testDoubleRemoteAnidatedBlocks [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#doubleRemoteAnidatedBlocks) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -41,7 +41,7 @@ OCASTClosureAnalyzerTest >> testDoubleRemoteAnidatedBlocks [
 
 { #category : #'tests - blocks' }
 OCASTClosureAnalyzerTest >> testExampleBlockArgument [
-	| ast assignment vars blockScope blockScope2 |
+	| ast blockScope blockScope2 |
 	ast := (OCOpalExamples>>#exampleBlockArgument) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -92,7 +92,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#exampleSimpleBlockLocalWhile) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -122,7 +122,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalWhile [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testExampleSimpleBlockNested [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#exampleSimpleBlockNested) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -154,7 +154,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockNested [
 
 { #category : #'tests - blocks' }
 OCASTClosureAnalyzerTest >> testExampleWhileModificationBefore [
-	| ast assignment vars blockScope blockScope2 |
+	| ast |
 	ast := (OCOpalExamples>>#exampleWhileModificationBefore) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -244,7 +244,7 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase1 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#nestedBlocksRemoteInBlockCase2) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -281,7 +281,7 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase2 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#nestedBlocksRemoteInBlockCase3) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -318,7 +318,7 @@ OCASTClosureAnalyzerTest >> testNestedBlocksRemoteInBlockCase3 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNoRemoteBlockArgument [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#noRemoteBlockArgument) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -334,7 +334,7 @@ OCASTClosureAnalyzerTest >> testNoRemoteBlockArgument [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNoRemoteReadInBlock [
-	| ast assignment vars scopes |
+	| ast |
 	ast := (OCOpalExamples>>#noRemoteReadInBlock) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -354,7 +354,7 @@ OCASTClosureAnalyzerTest >> testNoRemoteReadInBlock [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testNoRemoteReadNestedBlocks [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#noRemoteReadNestedBlocks) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -377,7 +377,7 @@ OCASTClosureAnalyzerTest >> testNoRemoteReadNestedBlocks [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
-	| ast assignment vars scopes |
+	| ast |
 	ast := (OCOpalExamples>>#optimizedBlockReadInBlock) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -399,7 +399,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockReadInBlock [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInBlock [
-	| ast assignment vars scopes |
+	| ast |
 	ast := (OCOpalExamples>>#optimizedBlockWriteInBlock) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -421,7 +421,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInBlock [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlock [
-	| ast assignment vars scopes |
+	| ast |
 	ast := (OCOpalExamples>>#optimizedBlockWriteInNestedBlock) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -443,7 +443,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlock [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase2 [
-	| ast assignment vars scopes |
+	| ast |
 	ast := (OCOpalExamples>>#optimizedBlockWriteInNestedBlockCase2) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -466,7 +466,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase2 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#optimizedBlockWriteInNestedBlockCase3) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -492,7 +492,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase3 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#optimizedBlockWriteInNestedBlockCase4) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -518,7 +518,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWriteInNestedBlockCase4 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#optimizedBlockWrittenAfterClosedOverCase1) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -544,7 +544,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase1 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#optimizedBlockWrittenAfterClosedOverCase2) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -565,7 +565,7 @@ OCASTClosureAnalyzerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#singleRemoteDifferentBlocksSameArgumentName) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -580,7 +580,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteMethodArgument [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#singleRemoteMethodArgument) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -595,7 +595,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteMethodArgument [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testSingleRemoteReadNestedBlocks [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#singleRemoteReadNestedBlocks) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
@@ -627,7 +627,7 @@ OCASTClosureAnalyzerTest >> testSingleRemoteTempVar [
 
 { #category : #'tests - special cases' }
 OCASTClosureAnalyzerTest >> testWrittenAfterClosedOver [
-	| ast assignment vars scopes |
+	| ast |
 	ast := (OCOpalExamples>>#writtenAfterClosedOver) parseTree.
 	ast doSemanticAnalysis.
 	self assert: ast scope isMethodScope.
