@@ -103,7 +103,7 @@ KMDispatcher >> directKeymaps [
 
 { #category : #dispatching }
 KMDispatcher >> dispatch: anEventBuffer [
- 
+
 	self keymapObservers do: [ :aTarget | 
 		"nice hack to stop in the first listener"
 		aTarget 
