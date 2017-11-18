@@ -874,7 +874,7 @@ Decompiler >> statementsTo: end [
 	to the destination of the jump, or the end of the method; otherwise, set
 	exit = end. Leave pc = end."
 
-	| blockPos stackPos t |
+	| blockPos stackPos |
 	blockPos := statements size.
 	stackPos := stack size.
 	[pc < end]
