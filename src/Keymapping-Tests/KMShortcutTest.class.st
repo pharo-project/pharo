@@ -56,7 +56,7 @@ KMShortcutTest >> testCmdShiftSucceds [
 
 { #category : #tests }
 KMShortcutTest >> testComplexChainMatches [
-	|eCtrl eShift e f|
+	|eCtrl eShift f|
 	
 	f := self eventKey: $f.
 	eCtrl := self eventKey: $e ctrl: true.
