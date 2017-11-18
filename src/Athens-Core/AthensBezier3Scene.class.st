@@ -41,10 +41,10 @@ AthensBezier3Scene >> initFromArray: aControlPointsArray [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensBezier3Scene >> renderOn: canvas [
 
-	| path pathBlock polygonizedPath |
+	| path pathBlock |
 	
 	canvas surface clear:  Color black.
 	pathBlock :=  [ :builder |

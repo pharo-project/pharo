@@ -142,7 +142,7 @@ AthensDemoMorph >> drawOn: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure10: aCanvas [
-	| pt ellipsePath patternPaint rectangle |
+	| ellipsePath patternPaint rectangle |
 	ellipsePath := aCanvas createPath: [ :builder |
 		builder
 			moveTo: 0@200;
@@ -178,7 +178,7 @@ AthensDemoMorph >> figure1: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure2: aCanvas [
-	| pt path |
+	| path |
 	
 	path := aCanvas createPath: [:builder |
 		builder
@@ -202,7 +202,7 @@ AthensDemoMorph >> figure2: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure3: aCanvas [
-	| pt path |
+	| path |
 	
 	path := aCanvas createPath: [:builder |
 		builder
@@ -264,7 +264,7 @@ AthensDemoMorph >> figure5: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure6: aCanvas [
-	| pt c linearGradient |
+	| linearGradient |
 	
 	self figure5: aCanvas.
 	
@@ -332,7 +332,7 @@ AthensDemoMorph >> figure8: aCanvas [
 
 { #category : #figures }
 AthensDemoMorph >> figure9: aCanvas [
-	| pt ellipsePath patternPaint |
+	| ellipsePath patternPaint |
 	ellipsePath := aCanvas createPath: [ :builder |
 		builder
 			moveTo: 10@200;
