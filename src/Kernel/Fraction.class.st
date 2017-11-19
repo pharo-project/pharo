@@ -316,14 +316,11 @@ Fraction >> negative [
 Fraction >> nthRoot: aPositiveInteger [
 	"Answer the nth root of the receiver."
 
-	| d n |
-	n := numerator nthRoot: aPositiveInteger.
-	d := denominator nthRoot: aPositiveInteger.
-	"The #sqrt method in integer will only answer a Float if there's no exact square root.
-	So, we need a float anyway."
-	(n isInfinite or: [ d isInfinite ]) ifTrue: [
-		^self asFloat nthRoot: aPositiveInteger ].
-	^n / d
+	| guess |
+	guess := (numerator nthRootTruncated: aPositiveInteger) / (denominator nthRootTruncated: aPositiveInteger).
+	(guess raisedTo: aPositiveInteger) = self ifTrue: [^guess].
+	"There is no exact nth root, so answer a Float approximation"
+	^(self abs ln / aPositiveInteger) exp * self sign
 ]
 
 { #category : #private }
@@ -374,6 +371,14 @@ Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
 			integerPart printOn: aStream.
 			aStream nextPut: $..
 			roundedFractionPart printOn: aStream base: 10 length: placesDesired padded: true].
+]
+
+{ #category : #'mathematical functions' }
+Fraction >> raisedToFraction: aFraction [
+	| root |
+	root := (self numerator nthRootTruncated: aFraction denominator) / (self denominator nthRootTruncated: aFraction denominator).
+	(root raisedToInteger: aFraction denominator) = self ifTrue: [^root raisedToInteger: aFraction numerator].
+	^super raisedToFraction: aFraction
 ]
 
 { #category : #'mathematical functions' }
