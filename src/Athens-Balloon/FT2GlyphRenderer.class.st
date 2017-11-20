@@ -97,7 +97,7 @@ FT2GlyphRenderer >> loadSlotInfo [
 
 { #category : #private }
 FT2GlyphRenderer >> loadSurfaceTransform [
-	| m mt org xaxis yaxis sum xmin xmax ymin ymax formW formH fix face bbox |
+	| m org xaxis yaxis sum xmin xmax ymin ymax formW formH fix face bbox |
 	
 	face := font face.
 
@@ -157,7 +157,7 @@ FT2GlyphRenderer >> loadSurfaceTransform [
 { #category : #private }
 FT2GlyphRenderer >> loadUnicode: unicode [
 
-	| ext hintingFlags flags arr face |
+	| flags face |
 	
 	face := font face.
 
