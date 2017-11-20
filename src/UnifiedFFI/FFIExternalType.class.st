@@ -42,6 +42,41 @@ FFIExternalType class >> naturalPointerArity [
 	^ 0
 ]
 
+{ #category : #'instance creation' }
+FFIExternalType class >> newBuffer [
+	"This method is used to provide convencience buffer accessor to types. 
+	 This is useful when you need to pass a reference to an argument to take the value later. 
+	 For example: 
+	
+  void getDimensions(double *width, double *height) {
+    *width = 2.0;
+    *height = 3.0;
+  }
+  int main() {
+    double w, h;
+    get_dimensions( &w, &h);
+    printf(""%f %f"", w, h)
+  }
+==> 2.0 3.0
+
+would have an FFI declaration...
+
+  ffi_getDimensions__width: width height: height
+    ^ #( (void getDimensions( double *width, double *height) )
+
+  testMain
+        | widthBuffer heightBuffer width height |
+        widthBuffer := FFIFloat64 newBuffer.
+        heightBuffer := FFIFloat64 newBuffer.
+        ffi_getDimensions__width: widthBuffer height: heightBuffer.
+        width := widthBuffer doubleAt: 1.
+        height := heightBuffer doubleAt: 1.
+        Transcript crShow: width; tab; show: height.
+==> 2.0 3.0
+	"
+	^ ByteArray new: self externalTypeSize
+]
+
 { #category : #accessing }
 FFIExternalType class >> pointerAlignment [
 	^ OSPlatform current ffiPointerAlignment
@@ -225,6 +260,27 @@ FFIExternalType >> needsArityUnpacking [
 	 you cannot use instances of Float (since they are immutable in Pharo)... in that case you will
 	 need to use an FFIExternalValueHolder."
 	^ false
+]
+
+{ #category : #'instance creation' }
+FFIExternalType >> newBuffer [
+	"as its counterpart on class-side (newBuffer), this method get a memory segment that can be translated to C function as reference (to take later it's value). 
+	For example:  
+
+  ffi_getDimensions__width: width height: height
+    ^ #( (void getDimensions( double *width, double *height) )
+
+  testMain
+        | widthBuffer heightBuffer width height |
+        widthBuffer := (FFIExternalType resolveType: #double) newBuffer.
+        heightBuffer := (FFIExternalType resolveType: #double) newBuffer.
+        ffi_getDimensions__width: widthBuffer height: heightBuffer.
+        width := widthBuffer doubleAt: 1.
+        height := heightBuffer doubleAt: 1.
+        Transcript crShow: width; tab; show: height.
+==> 2.0 3.0
+	"
+	^ self class newBuffer
 ]
 
 { #category : #'emitting code' }
