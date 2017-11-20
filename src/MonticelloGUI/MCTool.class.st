@@ -165,8 +165,12 @@ MCTool >> defaultAnnotationPaneHeight [
 { #category : #'morphic ui' }
 MCTool >> fillMenu: aMenu fromSpecs: anArray [
 	anArray do:
-		[:pair |
-		aMenu add: pair first target: self selector: pair second].
+		[:spec |
+		aMenu
+			add: spec first
+			target: self
+			selector: spec second
+			argumentList: (spec allButFirst: 2)].
 	^ aMenu
 ]
 
