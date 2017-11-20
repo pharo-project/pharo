@@ -11,7 +11,7 @@ Class {
 		'integerRegisterCount',
 		'floatRegisterCount'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #building }

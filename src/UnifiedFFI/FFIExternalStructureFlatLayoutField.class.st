@@ -10,7 +10,7 @@ Class {
 		'size',
 		'alignment'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #accessing }

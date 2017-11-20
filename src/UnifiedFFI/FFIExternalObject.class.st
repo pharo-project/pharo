@@ -25,7 +25,7 @@ IMPORTANT: My instances represent a pointer in the C heap. If you need to repres
 Class {
 	#name : #FFIExternalObject,
 	#superclass : #FFIExternalReference,
-	#category : 'UnifiedFFI-Objects'
+	#category : #UnifiedFFI-Objects
 }
 
 { #category : #converting }

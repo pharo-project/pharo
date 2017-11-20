@@ -26,7 +26,7 @@ Class {
 		'handle',
 		'startOffset'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #'instance creation' }

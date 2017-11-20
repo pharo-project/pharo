@@ -8,7 +8,7 @@ I implement the option:  optIndirectCall
 Class {
 	#name : #FFIIndirectFunctionResolution,
 	#superclass : #FFIFunctionResolutionStrategy,
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #testing }

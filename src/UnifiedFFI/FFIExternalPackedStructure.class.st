@@ -5,7 +5,7 @@ I am packing tightly all of my fields.
 Class {
 	#name : #FFIExternalPackedStructure,
 	#superclass : #FFIExternalStructure,
-	#category : 'UnifiedFFI-Objects'
+	#category : #UnifiedFFI-Objects
 }
 
 { #category : #private }

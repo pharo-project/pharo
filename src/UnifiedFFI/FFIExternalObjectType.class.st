@@ -4,7 +4,7 @@ I'm en external object type (a pointer)
 Class {
 	#name : #FFIExternalObjectType,
 	#superclass : #FFIExternalReferenceType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #initialization }

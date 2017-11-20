@@ -5,7 +5,7 @@ Represented as float in C side.
 Class {
 	#name : #FFIFloat32,
 	#superclass : #FFIFloatType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

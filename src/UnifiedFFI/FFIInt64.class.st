@@ -5,7 +5,7 @@ I map to a longlong type.
 Class {
 	#name : #FFIInt64,
 	#superclass : #FFIUInt64,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

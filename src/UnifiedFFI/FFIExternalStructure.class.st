@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'externalStructureAlignment'
 	],
-	#category : 'UnifiedFFI-Objects'
+	#category : #UnifiedFFI-Objects
 }
 
 { #category : #converting }

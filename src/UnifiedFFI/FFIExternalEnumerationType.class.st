@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'representationType'
 	],
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #private }
