@@ -188,6 +188,13 @@ LargePositiveInteger >> sign [
 
 ]
 
+{ #category : #testing }
+LargePositiveInteger >> signBit [
+	"Optimization."
+
+	^0
+]
+
 { #category : #'mathematical functions' }
 LargePositiveInteger >> sqrt [
 	"If we know for sure no exact solution exists, then just answer the cheap float approximation without wasting time."

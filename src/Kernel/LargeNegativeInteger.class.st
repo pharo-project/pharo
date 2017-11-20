@@ -148,6 +148,14 @@ LargeNegativeInteger >> sign [
 
 ]
 
+{ #category : #testing }
+LargeNegativeInteger >> signBit [
+	"Optimization."
+
+	^1
+
+]
+
 { #category : #'mathematical functions' }
 LargeNegativeInteger >> sqrt [
 	"Answer the square root of the receiver."

@@ -634,9 +634,9 @@ Float >> arcTan: denominator [
 	Implementation note: use sign in order to catch cases of negativeZero"
 
 	^self = 0.0
-		ifTrue: [denominator sign >= 0
+		ifTrue: [denominator signBit = 0
 			ifTrue: [ 0 ]
-			ifFalse: [ self sign >= 0
+			ifFalse: [ self signBit = 0
 				ifTrue: [ Pi ]
 				ifFalse: [ Pi negated ]]]
 		ifFalse: [denominator = 0.0
@@ -1003,15 +1003,6 @@ Float >> closeTo: num precision: aPrecision [
 ]
 
 { #category : #'mathematical functions' }
-Float >> copySignTo: aNumber [
-	"Return a number with same magnitude as aNumber and same sign as self.
-	Implementation note: take care of Float negativeZero, which is considered as having a negative sign."
-
-	(self > 0.0 or: [(self at: 1) = 0]) ifTrue: [^ aNumber abs].
-	^aNumber withNegativeSign
-]
-
-{ #category : #'mathematical functions' }
 Float >> cos [
 	"Answer the cosine of the receiver taken as an angle in radians."
 
@@ -1145,7 +1136,7 @@ Float >> isZero [
 { #category : #comparing }
 Float >> literalEqual: other [
 
-	^ (super literalEqual: other) and: [ self isZero not or: [ self sign = other sign ] ]
+	^ (super literalEqual: other) and: [ self isZero not or: [ self signBit = other signBit ] ]
 ]
 
 { #category : #'mathematical functions' }
@@ -1249,7 +1240,7 @@ Float >> printOn: stream base: base [
 	self > 0.0
 		ifTrue: [ FloatPrintPolicy absPrint: self on: stream base: base ]
 		ifFalse: [
-			self sign = -1 ifTrue: [ stream nextPut: $- ].
+			self signBit = 1 ifTrue: [ stream nextPut: $- ].
 			self = 0.0
 				ifTrue: [ stream nextPutAll: '0.0' ]
 				ifFalse: [ FloatPrintPolicy absPrint: self negated on: stream base: base ] ]
@@ -1379,13 +1370,11 @@ Float >> shallowCopy [
 ]
 
 { #category : #'mathematical functions' }
-Float >> sign [
-	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0.
-	Handle IEEE-754 negative-zero by reporting a sign of -1"
+Float >> signBit [
+	"Answer 1 if the receiver has sign bit set (including case of IEEE-754 negative-zero).
+	Answer 0 otherwise"
 
-	self > 0 ifTrue: [^ 1].
-	(self < 0 or: [((self at: 1) bitShift: -31) = 1]) ifTrue: [^ -1].
-	^ 0
+	^((self at: 1) bitShift: -31)
 ]
 
 { #category : #'truncation and round off' }
@@ -1415,7 +1404,7 @@ Float >> storeOn: aStream [
 Float >> storeOn: aStream base: base [ 
 	"Print the Number exactly so it can be interpreted back unchanged"
 	self isFinite
-		ifTrue: [self sign = -1 ifTrue: [aStream nextPutAll: '-'].
+		ifTrue: [self signBit = 1 ifTrue: [aStream nextPutAll: '-'].
 			base = 10 ifFalse: [aStream print: base; nextPut: $r].
 			self = 0.0
 				ifTrue: [aStream nextPutAll: '0.0']
@@ -1467,12 +1456,4 @@ Float >> veryDeepCopyWith: deepCopier [
 	"Return self.  Do not record me."
 
 	^ self shallowCopy
-]
-
-{ #category : #converting }
-Float >> withNegativeSign [
-	"Same as super, but handle the subtle case of Float negativeZero"
-	
-	self = 0.0 ifTrue: [^self class negativeZero].  
-	^super withNegativeSign
 ]
