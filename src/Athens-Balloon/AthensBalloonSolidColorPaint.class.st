@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : 'Athens-Balloon'
+	#category : #Athens-Balloon
 }
 
 { #category : #rendering }

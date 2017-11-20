@@ -4,7 +4,7 @@ SUnit tests for Behavior
 Class {
 	#name : #BehaviorTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Classes'
+	#category : #Kernel-Tests-Classes
 }
 
 { #category : #tests }

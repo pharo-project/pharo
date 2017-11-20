@@ -13,7 +13,7 @@ Class {
 		'South',
 		'West'
 	],
-	#category : 'Glamour-Morphic-Brick-Utils-Geometry'
+	#category : #Glamour-Morphic-Brick-Utils-Geometry
 }
 
 { #category : #'instance creation' }

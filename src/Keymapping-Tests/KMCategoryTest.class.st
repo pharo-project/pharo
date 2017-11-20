@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'categoryContainer'
 	],
-	#category : 'Keymapping-Tests'
+	#category : #Keymapping-Tests
 }
 
 { #category : #accessing }

@@ -20,7 +20,7 @@ Class {
 		'source',
 		'selector'
 	],
-	#category : 'Refactoring-Core-Model'
+	#category : #Refactoring-Core-Model
 }
 
 { #category : #'instance creation' }

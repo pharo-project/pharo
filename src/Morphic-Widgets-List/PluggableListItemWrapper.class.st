@@ -16,7 +16,7 @@ Class {
 		'getStringSelector',
 		'hasContentsSelector'
 	],
-	#category : 'Morphic-Widgets-List'
+	#category : #Morphic-Widgets-List
 }
 
 { #category : #accessing }

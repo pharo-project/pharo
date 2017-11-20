@@ -8,7 +8,7 @@ Class {
 		'endPoint',
 		'angle'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #accessors }

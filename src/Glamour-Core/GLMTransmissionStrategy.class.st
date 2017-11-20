@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'transmission'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #'instance creation' }

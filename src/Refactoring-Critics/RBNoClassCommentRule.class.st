@@ -4,7 +4,7 @@ This smell arises when a class has no comment. Classes should have comments to e
 Class {
 	#name : #RBNoClassCommentRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

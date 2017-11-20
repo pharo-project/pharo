@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : 'Morphic-Tests-Event'
+	#category : #Morphic-Tests-Event
 }
 
 { #category : #running }

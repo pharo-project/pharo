@@ -15,7 +15,7 @@ Class {
 		'instanceVariables',
 		'organization'
 	],
-	#category : 'Kernel-Classes'
+	#category : #Kernel-Classes
 }
 
 { #category : #compiling }

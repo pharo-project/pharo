@@ -21,7 +21,7 @@ Class {
 		'WindowEventHandler',
 		'WorldAnnouncer'
 	],
-	#category : 'Morphic-Core-Worlds'
+	#category : #Morphic-Core-Worlds
 }
 
 { #category : #initialize-release }

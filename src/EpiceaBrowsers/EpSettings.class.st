@@ -4,7 +4,7 @@ My class-side protocol initializes System Settings' stuff.
 Class {
 	#name : #EpSettings,
 	#superclass : #Object,
-	#category : 'EpiceaBrowsers-Integration'
+	#category : #EpiceaBrowsers-Integration
 }
 
 { #category : #'system settings' }

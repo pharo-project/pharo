@@ -10,7 +10,7 @@ Integer division consists of:
 Class {
 	#name : #Integer,
 	#superclass : #Number,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #'instance creation' }
@@ -1867,6 +1867,14 @@ Integer >> raisedTo: n modulo: m [
 
 	"Demontgomerize the result (divide by R)"
 	^a montgomeryTimes: 1 modulo: m mInvModB: mInv
+]
+
+{ #category : #'mathematical functions' }
+Integer >> raisedToFraction: aFraction [
+	| root |
+	root := self nthRootTruncated: aFraction denominator.
+	(root raisedToInteger: aFraction denominator) = self ifTrue: [^root raisedToInteger: aFraction numerator].
+	^super raisedToFraction: aFraction
 ]
 
 { #category : #'mathematical functions' }

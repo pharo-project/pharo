@@ -9,7 +9,7 @@ Class {
 		'endPoint',
 		'contourStartPt'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #converting }

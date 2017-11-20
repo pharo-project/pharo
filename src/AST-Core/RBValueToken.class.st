@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'AST-Core-Tokens'
+	#category : #AST-Core-Tokens
 }
 
 { #category : #'instance creation' }

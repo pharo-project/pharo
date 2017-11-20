@@ -8,7 +8,7 @@ Class {
 	#pools : [
 		'VTermOutputStyles'
 	],
-	#category : 'System-CommandLine'
+	#category : #System-CommandLine
 }
 
 { #category : #comparing }

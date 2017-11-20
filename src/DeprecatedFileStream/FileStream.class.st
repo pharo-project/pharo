@@ -18,7 +18,7 @@ Class {
 		'Stdout',
 		'TheStdioHandles'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #'file reader services' }

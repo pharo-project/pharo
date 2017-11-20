@@ -1,5 +1,5 @@
 Class {
 	#name : #GLMBrickScrollPositionChanged,
 	#superclass : #GLMBrickAnnouncement,
-	#category : 'Glamour-Morphic-Brick-Announcements'
+	#category : #Glamour-Morphic-Brick-Announcements
 }

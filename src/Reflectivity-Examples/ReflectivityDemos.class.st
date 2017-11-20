@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'Link'
 	],
-	#category : 'Reflectivity-Examples'
+	#category : #Reflectivity-Examples
 }
 
 { #category : #cleanup }

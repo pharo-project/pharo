@@ -4,7 +4,7 @@ I'm the one who knowshow to navigate inside the child nodes
 Class {
 	#name : #NNavDirectionChild,
 	#superclass : #NNavDirection,
-	#category : 'NodeNavigation-Core'
+	#category : #NodeNavigation-Core
 }
 
 { #category : #private }

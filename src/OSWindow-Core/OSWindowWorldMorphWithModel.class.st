@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'OSWindow-Core-Morphic'
+	#category : #OSWindow-Core-Morphic
 }
 
 { #category : #accessing }

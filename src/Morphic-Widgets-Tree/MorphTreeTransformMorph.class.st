@@ -4,7 +4,7 @@ A custom transform morph for a morphic based tree
 Class {
 	#name : #MorphTreeTransformMorph,
 	#superclass : #TransformMorph,
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #submorphs-add/remove }

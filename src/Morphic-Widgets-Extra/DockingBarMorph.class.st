@@ -29,7 +29,7 @@ Class {
 		'selectedItem',
 		'activeSubMenu'
 	],
-	#category : 'Morphic-Widgets-Extra'
+	#category : #Morphic-Widgets-Extra
 }
 
 { #category : #example }

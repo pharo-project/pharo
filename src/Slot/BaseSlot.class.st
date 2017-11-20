@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : 'Slot-Examples'
+	#category : #Slot-Examples
 }
 
 { #category : #comparing }

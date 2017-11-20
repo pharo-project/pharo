@@ -11,7 +11,7 @@ fontSelector selectedFont inspect.
 Class {
 	#name : #FreeTypeFontSelectorDialogWindow,
 	#superclass : #AbstractFontSelectorDialogWindow,
-	#category : 'FontChooser'
+	#category : #FontChooser
 }
 
 { #category : #'as yet unclassified' }

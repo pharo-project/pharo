@@ -4,7 +4,7 @@ A type of PluggableListMorph that supports morphs for items. Useful for lists wi
 Class {
 	#name : #PluggableMorphListMorph,
 	#superclass : #PluggableListMorph,
-	#category : 'Morphic-Widgets-Pluggable'
+	#category : #Morphic-Widgets-Pluggable
 }
 
 { #category : #geometry }

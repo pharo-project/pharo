@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#category : 'Metacello-Tutorial'
+	#category : #Metacello-Tutorial
 }
 
 { #category : #private }

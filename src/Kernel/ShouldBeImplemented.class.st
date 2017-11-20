@@ -6,7 +6,7 @@ This is more like a placeholder during development.
 Class {
 	#name : #ShouldBeImplemented,
 	#superclass : #SelectorException,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #printing }

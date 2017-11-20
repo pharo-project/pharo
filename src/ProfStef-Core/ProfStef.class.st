@@ -67,7 +67,7 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'ProfStef-Core'
+	#category : #ProfStef-Core
 }
 
 { #category : #zen }

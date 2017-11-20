@@ -4,7 +4,7 @@ I am a cluster that serializes and materializes interacting directly with the st
 Class {
 	#name : #FLPrimitiveCluster,
 	#superclass : #FLIteratingCluster,
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #analyzing }

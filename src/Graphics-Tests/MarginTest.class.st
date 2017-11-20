@@ -4,7 +4,7 @@ SUnit tests for class Margin
 Class {
 	#name : #MarginTest,
 	#superclass : #TestCase,
-	#category : 'Graphics-Tests-Primitives'
+	#category : #Graphics-Tests-Primitives
 }
 
 { #category : #tests }

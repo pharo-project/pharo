@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloTestsGoferCleanup,
 	#superclass : #GoferCleanup,
-	#category : 'Metacello-TestsMC'
+	#category : #Metacello-TestsMC
 }
 
 { #category : #cleaning }

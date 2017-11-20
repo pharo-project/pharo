@@ -4,7 +4,7 @@ SUnit tests for integers
 Class {
 	#name : #IntegerTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #private }

@@ -30,7 +30,7 @@ Class {
 		'owner',
 		'highlighted'
 	],
-	#category : 'Morphic-Widgets-Extra'
+	#category : #Morphic-Widgets-Extra
 }
 
 { #category : #'instance creation' }

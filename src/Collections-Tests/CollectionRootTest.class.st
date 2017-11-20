@@ -7,7 +7,7 @@ Class {
 	#superclass : #ClassTestCase,
 	#traits : 'TIterateTest + TEmptyTest + TSizeTest',
 	#classTraits : 'TIterateTest classTrait + TEmptyTest classTrait + TSizeTest classTrait',
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ I know how to create accessors for a class var
 Class {
 	#name : #SugsCreateClassVarAccessors,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

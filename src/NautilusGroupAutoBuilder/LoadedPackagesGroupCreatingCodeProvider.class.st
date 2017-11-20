@@ -9,7 +9,7 @@ You can use it through the CatalogBrowser, Versionner or by hand with :
 Class {
 	#name : #LoadedPackagesGroupCreatingCodeProvider,
 	#superclass : #Object,
-	#category : 'NautilusGroupAutoBuilder'
+	#category : #NautilusGroupAutoBuilder
 }
 
 { #category : #'public access' }

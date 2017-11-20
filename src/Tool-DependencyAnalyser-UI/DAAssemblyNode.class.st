@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'dependencies'
 	],
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #'instance creation' }

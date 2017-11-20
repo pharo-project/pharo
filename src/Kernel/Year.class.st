@@ -4,7 +4,7 @@ I represent a year.
 Class {
 	#name : #Year,
 	#superclass : #Timespan,
-	#category : 'Kernel-Chronology'
+	#category : #Kernel-Chronology
 }
 
 { #category : #accessing }

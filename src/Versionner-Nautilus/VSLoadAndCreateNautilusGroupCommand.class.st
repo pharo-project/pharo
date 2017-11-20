@@ -5,7 +5,7 @@ After loading, it creates a group in Nautilus with all the loaded packages.
 Class {
 	#name : #VSLoadAndCreateNautilusGroupCommand,
 	#superclass : #VSLoadCommand,
-	#category : 'Versionner-Nautilus'
+	#category : #Versionner-Nautilus
 }
 
 { #category : #execute }

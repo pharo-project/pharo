@@ -4,7 +4,7 @@ Handling local changes
 Class {
 	#name : #GoferLocalChanges,
 	#superclass : #GoferChanges,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #queries }

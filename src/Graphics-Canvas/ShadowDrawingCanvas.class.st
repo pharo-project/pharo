@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shadowColor'
 	],
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #private }

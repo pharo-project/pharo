@@ -25,7 +25,7 @@ Class {
 		'subclassesAsSeparateTopic',
 		'addMethodsWithoutComment'
 	],
-	#category : 'HelpSystem-Core-Builders'
+	#category : #HelpSystem-Core-Builders
 }
 
 { #category : #building }

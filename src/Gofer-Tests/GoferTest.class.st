@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'gofer'
 	],
-	#category : 'Gofer-Tests-Tests'
+	#category : #Gofer-Tests-Tests
 }
 
 { #category : #testing }

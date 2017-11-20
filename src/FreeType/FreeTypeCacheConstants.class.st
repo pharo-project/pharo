@@ -11,7 +11,7 @@ Class {
 		'FreeTypeCacheLinearWidth',
 		'FreeTypeCacheWidth'
 	],
-	#category : 'FreeType-Cache'
+	#category : #FreeType-Cache
 }
 
 { #category : #'class initialization' }

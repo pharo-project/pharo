@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'pattern'
 	],
-	#category : 'Morphic-Widgets-FastTable-Functions'
+	#category : #Morphic-Widgets-FastTable-Functions
 }
 
 { #category : #'instance creation' }

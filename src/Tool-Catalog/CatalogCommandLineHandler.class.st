@@ -20,7 +20,7 @@ Class {
 		'version',
 		'projectName'
 	],
-	#category : 'Tool-Catalog-CommandLine'
+	#category : #Tool-Catalog-CommandLine
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ This class holds tests for PolygonMorph
 Class {
 	#name : #PolygonMorphTest,
 	#superclass : #MorphTest,
-	#category : 'Morphic-Tests-Basic'
+	#category : #Morphic-Tests-Basic
 }
 
 { #category : #tests }

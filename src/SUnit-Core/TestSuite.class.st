@@ -11,7 +11,7 @@ Class {
 		'resources',
 		'name'
 	],
-	#category : 'SUnit-Core-Kernel'
+	#category : #SUnit-Core-Kernel
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Browse the configuration class.
 Class {
 	#name : #VSBrowseConfigurationCommand,
 	#superclass : #VSConfigurationCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

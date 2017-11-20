@@ -8,7 +8,7 @@ Class {
 		'selectorChooser',
 		'notificationStrategy'
 	],
-	#category : 'Rubric-Editing-Code'
+	#category : #Rubric-Editing-Code
 }
 
 { #category : #keymapping }
@@ -448,6 +448,12 @@ RubSmalltalkEditor >> findClassFromAST [
 	fallbackBlock := [^nil].
 
 	node := self bestNodeInTextAreaOnError: fallbackBlock.
+	
+	node ifNil: [ 
+		self selectLine.
+		^ self hasSelection 
+			ifTrue: [ (self selection string copyWithoutAll: CharacterSet crlf) trimBoth ]
+			ifFalse: [ nil ] ].
 	
 	[node isVariable] whileFalse: [ 
 	 	(node := node parent) ifNil: fallbackBlock ].

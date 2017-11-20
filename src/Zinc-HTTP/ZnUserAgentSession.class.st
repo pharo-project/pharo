@@ -13,7 +13,7 @@ Class {
 		'credentials',
 		'currentRealm'
 	],
-	#category : 'Zinc-HTTP-Support'
+	#category : #Zinc-HTTP-Support
 }
 
 { #category : #'instance creation' }

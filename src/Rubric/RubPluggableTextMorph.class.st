@@ -10,7 +10,7 @@ Class {
 		'askBeforeDiscardingEdits',
 		'getEnabledSelector'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #'instance creation' }
@@ -40,6 +40,11 @@ RubPluggableTextMorph >> askBeforeDiscardingEdits: aBoolean [
 	"Set the flag that determines whether the user should be asked before discarding unaccepted edits."
 
 	askBeforeDiscardingEdits := aBoolean
+]
+
+{ #category : #undo-redo }
+RubPluggableTextMorph >> clearUndoManager [
+	self textArea editingState clearUndoManager: nil
 ]
 
 { #category : #accessing }

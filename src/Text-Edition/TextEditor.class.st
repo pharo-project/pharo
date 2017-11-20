@@ -22,7 +22,7 @@ Class {
 		'cmdActions',
 		'shiftCmdActions'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #shortcuts }
@@ -452,7 +452,7 @@ TextEditor >> acceptCR: aKeyboardEvent return: return [
 
 { #category : #'undo-redo private' }
 TextEditor >> addDeleteSelectionUndoRecord [
-	| undoText redoText undoRec |
+	| undoText redoText |
 	undoText := self selection.
 	redoText := self nullText.
 	self editingState
@@ -469,7 +469,7 @@ TextEditor >> addString: aString [
 
 { #category : #'undo-redo private' }
 TextEditor >> addTypeInUndoRecord [
-	| begin stop undoText redoText undoRec |
+	| begin stop undoText redoText |
 	begin := self startOfTyping min: self stopIndex. 
 	stop := self stopIndex max: self startOfTyping.
 	self editingState 
@@ -898,7 +898,7 @@ TextEditor >> copySelection [
 TextEditor >> correctFrom: start to: stop with: aString [
 	"Make a correction in the model that the user has authorised from somewhere else in the system (such as from the compilier).  
 	The user's selection is not changed, only corrected."
-	| wasShowing userSelection delta loc |
+	| userSelection delta |
 	
 	userSelection := self selectionInterval.
 	self selectInvisiblyFrom: start to: stop.
@@ -1017,7 +1017,7 @@ TextEditor >> deselect [
 
 { #category : #'typing support' }
 TextEditor >> dispatchCommandOn: aKeyboardEvent return: return [
-	|asciiValue honorCommandKeys char|
+	|asciiValue honorCommandKeys|
 
 	asciiValue := aKeyboardEvent keyValue.
 	honorCommandKeys := self cmdKeysInText.
@@ -1064,7 +1064,7 @@ TextEditor >> dispatchOn: aKeyboardEvent [
 	Type-ahead is passed so some routines can flush or use it."
 	"TODO rename to dispatch: "
 	
-	| char return keyEvents|
+	| char return |
  	return := [:val| ^ val].
 
 	self acceptCR: aKeyboardEvent return: return.
@@ -1791,7 +1791,7 @@ TextEditor >> mouseMove: evt [
 TextEditor >> mouseUp: evt [
 	"An attempt to break up the old processRedButton 
 	code into three phases"
-	| mouseDownInterval clickPoint b|
+	| mouseDownInterval |
 	
 	(mouseDownInterval := self editingState mouseDownInterval)
 		ifNil: [^ self]. 
@@ -2030,7 +2030,7 @@ TextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 	"Replace the text in oldInterval with newText and
 	execute selectingBlock to establish the new selection.
 	Create an UndoRecord to allow perfect undoing."
-	| prevSel currInterval undoRec |
+	| prevSel currInterval |
 	self selectInterval: xoldInterval.
 	prevSel := self selection.
 	currInterval := self selectionInterval.
@@ -2431,8 +2431,6 @@ TextEditor >> unapplyAttribute: aTextAttribute [
 	"The user selected aTextAttribute to be removed.
 	If there is a selection, unapply the attribute to the selection.
 	In any case do not use the attribute for the user input (emphasisHere)"
-
-	| thisSel interval |
 
 	self editingState emphasisHere: (self emphasisHere copyWithout: aTextAttribute).
 	self selection

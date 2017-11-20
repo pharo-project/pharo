@@ -4,7 +4,7 @@ Unload the package with the selected configuration.
 Class {
 	#name : #VSUnloadConfigurationCommand,
 	#superclass : #VSConfigurationCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

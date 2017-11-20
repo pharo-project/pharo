@@ -11,7 +11,7 @@ Class {
 		'isClosedHolder',
 		'isResizeable'
 	],
-	#category : 'Spec-Core-Support'
+	#category : #Spec-Core-Support
 }
 
 { #category : #specs }

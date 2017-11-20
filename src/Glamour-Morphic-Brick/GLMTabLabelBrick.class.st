@@ -24,7 +24,7 @@ Class {
 		'normalLabel',
 		'selectedLabel'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI'
+	#category : #Glamour-Morphic-Brick-Widgets-UI
 }
 
 { #category : #brick-tab-label-actions }

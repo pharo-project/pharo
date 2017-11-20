@@ -15,7 +15,7 @@ Class {
 		'OFFSET_Y',
 		'OFFSET_YREL'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

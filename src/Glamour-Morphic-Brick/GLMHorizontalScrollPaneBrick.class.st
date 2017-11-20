@@ -6,7 +6,7 @@ Acceleration mechanism is used for scrolling, as longer user scrolls faster it b
 Class {
 	#name : #GLMHorizontalScrollPaneBrick,
 	#superclass : #GLMScrollPaneBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Scrollpane'
+	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
 }
 
 { #category : #'as yet unclassified' }

@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'System-Platforms'
+	#category : #System-Platforms
 }
 
 { #category : #accessing }

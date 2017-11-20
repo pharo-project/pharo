@@ -1,7 +1,7 @@
 Class {
 	#name : #SystemDictionaryTest,
 	#superclass : #DictionaryTest,
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #'building suites' }

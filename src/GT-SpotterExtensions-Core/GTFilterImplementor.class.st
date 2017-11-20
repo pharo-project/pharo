@@ -1,7 +1,7 @@
 Class {
 	#name : #GTFilterImplementor,
 	#superclass : #GTFilterSubstring,
-	#category : 'GT-SpotterExtensions-Core'
+	#category : #GT-SpotterExtensions-Core
 }
 
 { #category : #public }

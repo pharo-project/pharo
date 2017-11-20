@@ -4,7 +4,7 @@ I am a specialized layout which does not hold slots but only raw data (bytes or 
 Class {
 	#name : #BitsLayout,
 	#superclass : #ObjectLayout,
-	#category : 'Slot-Layout'
+	#category : #Slot-Layout
 }
 
 { #category : #extending }

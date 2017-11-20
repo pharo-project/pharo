@@ -8,7 +8,7 @@ Class {
 		'startPoint',
 		'trail'
 	],
-	#category : 'Morphic-Core-Events'
+	#category : #Morphic-Core-Events
 }
 
 { #category : #comparing }

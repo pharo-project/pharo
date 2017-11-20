@@ -4,7 +4,7 @@ Do not send requests to ""Smalltalk"" (which models the whole image)  that are r
 Class {
 	#name : #RBSmalltalkGlobalsRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

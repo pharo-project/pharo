@@ -5,7 +5,7 @@ A GLMBrickRenderer is most simple separate renderer of Bricks. It support only b
 Class {
 	#name : #GLMBrickRenderer,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Brick-Renderer'
+	#category : #Glamour-Morphic-Brick-Renderer
 }
 
 { #category : #private-shadow }

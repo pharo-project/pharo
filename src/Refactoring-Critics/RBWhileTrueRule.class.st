@@ -14,7 +14,7 @@ statements2
 Class {
 	#name : #RBWhileTrueRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

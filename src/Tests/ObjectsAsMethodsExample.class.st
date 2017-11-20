@@ -1,7 +1,7 @@
 Class {
 	#name : #ObjectsAsMethodsExample,
 	#superclass : #AbstractObjectsAsMethod,
-	#category : 'Tests-ObjectsAsMethods'
+	#category : #Tests-ObjectsAsMethods
 }
 
 { #category : #'as yet unclassified' }

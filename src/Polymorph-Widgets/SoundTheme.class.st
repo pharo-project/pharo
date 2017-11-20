@@ -12,7 +12,7 @@ Class {
 		'Current',
 		'UseThemeSounds'
 	],
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }

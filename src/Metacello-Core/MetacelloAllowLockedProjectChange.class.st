@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'operationString'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #'exception handling' }

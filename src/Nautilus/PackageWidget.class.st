@@ -12,7 +12,7 @@ Class {
 		'packagesSelection',
 		'groupsSelection'
 	],
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #protocol }

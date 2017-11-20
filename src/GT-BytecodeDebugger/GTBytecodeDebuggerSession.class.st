@@ -5,7 +5,7 @@ I also make sure  that step over only goes over one single bytecode instruction.
 Class {
 	#name : #GTBytecodeDebuggerSession,
 	#superclass : #DebugSession,
-	#category : 'GT-BytecodeDebugger-Model'
+	#category : #GT-BytecodeDebugger-Model
 }
 
 { #category : #'debugging actions' }

@@ -18,7 +18,7 @@ Class {
 		'context',
 		'messages'
 	],
-	#category : 'AST-Core-Matching'
+	#category : #AST-Core-Matching
 }
 
 { #category : #private }

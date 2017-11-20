@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCompression,
 	#superclass : #PackageManifest,
-	#category : 'Compression'
+	#category : #Compression
 }
 
 { #category : #'meta-data - dependency analyser' }

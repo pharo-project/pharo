@@ -4,7 +4,7 @@ SUnit tests for weak announcements
 Class {
 	#name : #WeakAnnouncerTest,
 	#superclass : #AnnouncerTest,
-	#category : 'Announcements-Tests-Core-Tests'
+	#category : #Announcements-Tests-Core-Tests
 }
 
 { #category : #benchmarks }

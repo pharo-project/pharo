@@ -8,7 +8,7 @@ This baseline includes several utility methods required to prepare data for the 
 Class {
 	#name : #BaselineOfPharoBootstrap,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfPharoBootstrap'
+	#category : #BaselineOfPharoBootstrap
 }
 
 { #category : #accessing }
@@ -27,6 +27,12 @@ BaselineOfPharoBootstrap class >> fileSystemPackageNames [
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
+]
+
+{ #category : #accessing }
+BaselineOfPharoBootstrap class >> multilingualPackageNames [
+
+	^ self packagesOfGroupNamed: #MultilingualGroup
 ]
 
 { #category : #accessing }
@@ -145,7 +151,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Transcript-Core'.
 			'UIManager'.
 			'Zinc-Character-Encoding-Core'.
-			'InitializePackagesCommandLineHandler' }.
+			'InitializePackagesCommandLineHandler'.
+			
+			'Multilingual-Languages'.
+			'Multilingual-Encodings'.
+			'Multilingual-TextConversion' }.
 
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
@@ -164,6 +174,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'JenkinsTools-Core'}.
-	]
+
+		spec group: 'MultilingualGroup' with: {
+			'Multilingual-Languages'.
+			'Multilingual-Encodings'.
+			'Multilingual-TextConversion'}.	]
 
 ]

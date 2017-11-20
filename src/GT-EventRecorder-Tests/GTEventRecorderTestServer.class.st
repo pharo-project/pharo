@@ -11,7 +11,7 @@ Class {
 		'server',
 		'url'
 	],
-	#category : 'GT-EventRecorder-Tests-Core'
+	#category : #GT-EventRecorder-Tests-Core
 }
 
 { #category : #initialization }

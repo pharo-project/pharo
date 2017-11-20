@@ -4,7 +4,7 @@ Instruction ""pushDup""
 Class {
 	#name : #IRPushDup,
 	#superclass : #IRInstruction,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

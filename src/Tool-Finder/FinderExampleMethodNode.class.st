@@ -5,7 +5,7 @@ from an examples (by MethodFinder)
 Class {
 	#name : #FinderExampleMethodNode,
 	#superclass : #FinderMethodNode,
-	#category : 'Tool-Finder'
+	#category : #Tool-Finder
 }
 
 { #category : #private }

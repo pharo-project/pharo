@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'actionBlock'
 	],
-	#category : 'Glamour-Presentations-Announcements'
+	#category : #Glamour-Presentations-Announcements
 }
 
 { #category : #accessing }

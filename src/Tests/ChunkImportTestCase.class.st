@@ -1,7 +1,7 @@
 Class {
 	#name : #ChunkImportTestCase,
 	#superclass : #TestCase,
-	#category : 'Tests-CodeImport'
+	#category : #Tests-CodeImport
 }
 
 { #category : #auxiliar }

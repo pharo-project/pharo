@@ -14,7 +14,7 @@ Class {
 		'compoundTextSequence',
 		'ucsTable'
 	],
-	#category : 'Multilingual-Encodings'
+	#category : #Multilingual-Encodings
 }
 
 { #category : #'character classification' }

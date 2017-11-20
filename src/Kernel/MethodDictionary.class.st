@@ -28,7 +28,7 @@ Class {
 	#name : #MethodDictionary,
 	#superclass : #Dictionary,
 	#type : #variable,
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #initialization }

@@ -18,7 +18,7 @@ Class {
 		'options',
 		'size'
 	],
-	#category : 'Athens-Cairo-Text'
+	#category : #Athens-Cairo-Text
 }
 
 { #category : #examples }

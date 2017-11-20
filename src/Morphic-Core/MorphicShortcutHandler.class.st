@@ -4,7 +4,7 @@ I am a null shortcut handler for morphic. I register myself as a tool to be repl
 Class {
 	#name : #MorphicShortcutHandler,
 	#superclass : #Object,
-	#category : 'Morphic-Core-Events'
+	#category : #Morphic-Core-Events
 }
 
 { #category : #tools }

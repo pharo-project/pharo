@@ -5,7 +5,7 @@ Do not explicitly refer to UITheme current but use Smalltalk ui theme. Similarly
 Class {
 	#name : #RBThemeAPIUpdateRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

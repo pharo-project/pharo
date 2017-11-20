@@ -26,7 +26,7 @@ Class {
 		'OFFSET_RMASK',
 		'OFFSET_RSHIFT'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'fields description' }

@@ -4,7 +4,7 @@ This smell arises when the class name is found in a selector. This is redundant 
 Class {
 	#name : #RBClassNameInSelectorRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

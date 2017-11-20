@@ -4,7 +4,7 @@ Nobody should directly access the method dictionary. It is purely an implementat
 Class {
 	#name : #RBSendsMethodDictRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

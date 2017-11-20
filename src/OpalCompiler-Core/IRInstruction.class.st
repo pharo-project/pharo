@@ -25,7 +25,7 @@ Class {
 		'bytecodeIndex',
 		'sequence'
 	],
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #'instance creation' }

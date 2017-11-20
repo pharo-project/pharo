@@ -4,7 +4,7 @@ Action when the method is an example
 Class {
 	#name : #MethodIsExampleAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

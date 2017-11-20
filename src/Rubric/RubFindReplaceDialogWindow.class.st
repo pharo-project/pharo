@@ -11,7 +11,7 @@ Class {
 		'Finds',
 		'Replacements'
 	],
-	#category : 'Rubric-Editing-FindReplaceService'
+	#category : #Rubric-Editing-FindReplaceService
 }
 
 { #category : #accessing }

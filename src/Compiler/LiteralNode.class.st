@@ -4,7 +4,7 @@ I am a parse tree leaf representing a literal string or number.
 Class {
 	#name : #LiteralNode,
 	#superclass : #LeafNode,
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

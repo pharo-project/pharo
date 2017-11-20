@@ -33,7 +33,7 @@ Class {
 		'StdTypers',
 		'ThenFlag'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #'class initialization' }

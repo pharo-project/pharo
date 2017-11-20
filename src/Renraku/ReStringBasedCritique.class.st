@@ -4,7 +4,7 @@ I am a critic that provides a selection interval by searching a 'faulty substrin
 Class {
 	#name : #ReStringBasedCritique,
 	#superclass : #ReAbstractCritique,
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #'as yet unclassified' }

@@ -14,7 +14,7 @@ For now we impose upon you to synchronise any and all changes between these two 
 Class {
 	#name : #LegacyEncoderForV3PlusClosures,
 	#superclass : #LegacyEncoderForV3,
-	#category : 'Compiler-Kernel'
+	#category : #Compiler-Kernel
 }
 
 { #category : #'bytecode decoding' }

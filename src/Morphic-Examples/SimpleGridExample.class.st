@@ -4,7 +4,7 @@ SimpleGridExample new open
 Class {
 	#name : #SimpleGridExample,
 	#superclass : #MorphTreeModel,
-	#category : 'Morphic-Examples-MorphTreeWidget'
+	#category : #Morphic-Examples-MorphTreeWidget
 }
 
 { #category : #examples }
@@ -36,7 +36,7 @@ SimpleGridExample >> rootNodeClassFromItem: anItem [
 
 { #category : #'user interface' }
 SimpleGridExample >> treeMorph [
-	| treeMorph oddColor evenColor |
+	| treeMorph |
 	treeMorph := (self treeMorphClass on: self)
 		beCheckList;
 		beMultiple;

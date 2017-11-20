@@ -10,7 +10,7 @@ Class {
 		'text',
 		'critique'
 	],
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #accessing }

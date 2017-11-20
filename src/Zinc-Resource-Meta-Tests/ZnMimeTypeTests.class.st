@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnMimeTypeTests,
 	#superclass : #TestCase,
-	#category : 'Zinc-Resource-Meta-Tests'
+	#category : #Zinc-Resource-Meta-Tests
 }
 
 { #category : #accessing }

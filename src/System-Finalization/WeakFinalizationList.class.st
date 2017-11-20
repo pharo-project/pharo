@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'HasNewFinalization'
 	],
-	#category : 'System-Finalization'
+	#category : #System-Finalization
 }
 
 { #category : #'vm capability test' }

@@ -4,7 +4,7 @@ We subclass panel morph to improve performance of pane color adaptation and redu
 Class {
 	#name : #GLMPanelMorph,
 	#superclass : #PanelMorph,
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'change reporting' }

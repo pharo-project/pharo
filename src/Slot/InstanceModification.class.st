@@ -4,7 +4,7 @@ I collect and provide the information to migrate instances when a class changed.
 Class {
 	#name : #InstanceModification,
 	#superclass : #AbstractModification,
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #installing }

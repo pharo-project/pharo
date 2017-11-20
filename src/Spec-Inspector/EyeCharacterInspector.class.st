@@ -10,7 +10,7 @@ I show the Unicode code point in standard notation, like U+0041 for $A.
 Class {
 	#name : #EyeCharacterInspector,
 	#superclass : #EyeInspector,
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #list }

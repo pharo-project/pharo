@@ -9,7 +9,7 @@ hSpaceFill - doesn't really makes sense, since text area still shrinks to fit te
 Class {
 	#name : #GLMRubEditingAreaBrick,
 	#superclass : #GLMRubScrolledTextBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Basic'
+	#category : #Glamour-Morphic-Brick-Widgets-Basic
 }
 
 { #category : #examples-open }

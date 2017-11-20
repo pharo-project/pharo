@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'touchExample'
 	],
-	#category : 'OSWindow-SDL2-Examples-Touch'
+	#category : #OSWindow-SDL2-Examples-Touch
 }
 
 { #category : #api }

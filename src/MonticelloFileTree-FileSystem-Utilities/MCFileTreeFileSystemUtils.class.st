@@ -1,7 +1,7 @@
 Class {
 	#name : #MCFileTreeFileSystemUtils,
 	#superclass : #MCFileTreeFileUtils,
-	#category : 'MonticelloFileTree-FileSystem-Utilities'
+	#category : #MonticelloFileTree-FileSystem-Utilities
 }
 
 { #category : #utilities }

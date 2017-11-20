@@ -10,7 +10,7 @@ Class {
 		'classTrait',
 		'category'
 	],
-	#category : 'Traits-Kernel'
+	#category : #Traits-Kernel
 }
 
 { #category : #'instance creation' }
@@ -574,17 +574,6 @@ Trait >> hasSubclasses [
 	"for compatibility with classes"
 	
 	^false
-]
-
-{ #category : #'subclass creation' }
-Trait >> immediateByteSubclass: className instanceVariableNames: instvarNames classVariableNames: classVarNames package: package [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		immediateSubclass: className
-		instanceVariableNames: instvarNames
-		classVariableNames: classVarNames
-		package: package
 ]
 
 { #category : #'subclass creation - immediate' }

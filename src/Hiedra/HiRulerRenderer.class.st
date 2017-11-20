@@ -10,7 +10,7 @@ Class {
 		'ruler',
 		'rulerBuilder'
 	],
-	#category : 'Hiedra-Rendering'
+	#category : #Hiedra-Rendering
 }
 
 { #category : #'instance creation' }

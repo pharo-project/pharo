@@ -20,7 +20,7 @@ Class {
 		'ShiftTable',
 		'SinTable'
 	],
-	#category : 'System-Hashing-MD5'
+	#category : #System-Hashing-MD5
 }
 
 { #category : #'class initialization' }

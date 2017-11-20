@@ -6,7 +6,7 @@ For example, check that the result of a select: or detect: is used.
 Class {
 	#name : #RBCollectSelectNotUsedRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

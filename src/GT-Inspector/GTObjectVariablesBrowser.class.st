@@ -7,7 +7,7 @@ self openOn: Smalltalk
 Class {
 	#name : #GTObjectVariablesBrowser,
 	#superclass : #GTRawObjectVariablesBrowser,
-	#category : 'GT-Inspector'
+	#category : #GT-Inspector
 }
 
 { #category : #'private building' }

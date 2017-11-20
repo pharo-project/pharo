@@ -14,7 +14,7 @@ Class {
 		'strokes',
 		'currentStroke'
 	],
-	#category : 'OSWindow-SDL2-Examples-Basic'
+	#category : #OSWindow-SDL2-Examples-Basic
 }
 
 { #category : #'managing strokes' }

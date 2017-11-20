@@ -1,7 +1,7 @@
 Class {
 	#name : #PSMCPatchOperationWrapper,
 	#superclass : #PSMCChangeWrapper,
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #converting }

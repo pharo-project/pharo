@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'matcher'
 	],
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #testing }

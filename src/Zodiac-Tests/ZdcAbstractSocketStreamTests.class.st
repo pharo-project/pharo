@@ -6,7 +6,7 @@ This is an abstract class, subclasses should implement #socketStreamClass
 Class {
 	#name : #ZdcAbstractSocketStreamTests,
 	#superclass : #TestCase,
-	#category : 'Zodiac-Tests'
+	#category : #Zodiac-Tests
 }
 
 { #category : #testing }

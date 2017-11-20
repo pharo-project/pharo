@@ -1,7 +1,7 @@
 Class {
 	#name : #TextMorphTest,
 	#superclass : #ClassTestCase,
-	#category : 'Morphic-Tests-Basic'
+	#category : #Morphic-Tests-Basic
 }
 
 { #category : #testing }

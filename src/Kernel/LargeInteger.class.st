@@ -5,7 +5,7 @@ Class {
 	#name : #LargeInteger,
 	#superclass : #Integer,
 	#type : #bytes,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #arithmetic }

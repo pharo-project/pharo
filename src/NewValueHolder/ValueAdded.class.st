@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'newValue'
 	],
-	#category : 'NewValueHolder'
+	#category : #NewValueHolder
 }
 
 { #category : #'instance creation' }

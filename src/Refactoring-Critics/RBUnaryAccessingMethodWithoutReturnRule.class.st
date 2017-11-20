@@ -4,7 +4,7 @@ Checks for any unary ""accessing"" methods without explicit return statements.
 Class {
 	#name : #RBUnaryAccessingMethodWithoutReturnRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

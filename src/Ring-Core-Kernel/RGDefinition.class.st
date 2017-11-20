@@ -9,7 +9,7 @@ Class {
 		'annotations',
 		'name'
 	],
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #annotations }

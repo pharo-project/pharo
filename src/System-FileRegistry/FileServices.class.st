@@ -13,7 +13,7 @@ MyClass class>>fileReaderServicesForFile: fullName suffix: suffix
 Class {
 	#name : #FileServices,
 	#superclass : #Object,
-	#category : 'System-FileRegistry'
+	#category : #System-FileRegistry
 }
 
 { #category : #accessing }

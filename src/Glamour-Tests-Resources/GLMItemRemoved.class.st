@@ -1,5 +1,5 @@
 Class {
 	#name : #GLMItemRemoved,
 	#superclass : #Announcement,
-	#category : 'Glamour-Tests-Resources'
+	#category : #Glamour-Tests-Resources
 }

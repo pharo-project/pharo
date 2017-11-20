@@ -13,7 +13,7 @@ Class {
 		'substitutionCharacter',
 		'displaySelector'
 	],
-	#category : 'Graphics-Fonts'
+	#category : #Graphics-Fonts
 }
 
 { #category : #accessing }

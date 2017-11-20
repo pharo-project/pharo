@@ -4,7 +4,7 @@ A GLMBrickedMorph is a direct subclass of Morph with removed layouting mechanism
 Class {
 	#name : #GLMBrickedMorph,
 	#superclass : #Morph,
-	#category : 'Glamour-Morphic-Brick-Morphic'
+	#category : #Glamour-Morphic-Brick-Morphic
 }
 
 { #category : #layout }

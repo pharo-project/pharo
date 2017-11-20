@@ -8,7 +8,7 @@ Class {
 		'oldName',
 		'newName'
 	],
-	#category : 'RPackage-Core'
+	#category : #RPackage-Core
 }
 
 { #category : #'instance creation' }

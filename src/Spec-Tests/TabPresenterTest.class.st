@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'manager'
 	],
-	#category : 'Spec-Tests-Core-Widgets'
+	#category : #Spec-Tests-Core-Widgets
 }
 
 { #category : #running }

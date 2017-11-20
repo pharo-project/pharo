@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'collection'
 	],
-	#category : 'Glamour-Tests-Resources'
+	#category : #Glamour-Tests-Resources
 }
 
 { #category : #initialization }

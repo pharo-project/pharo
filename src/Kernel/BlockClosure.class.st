@@ -42,7 +42,7 @@ Class {
 		'startpc',
 		'numArgs'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #'instance creation' }
@@ -160,8 +160,7 @@ BlockClosure >> benchFor: duration [
 { #category : #scanning }
 BlockClosure >> blockCreationBytecodeMessage [
 	"Answer the abstract bytecode message that created the receiver."
-	| blockCreationBytecodeSize |
-	^self method abstractBytecodeMessageAt: startpc - (blockCreationBytecodeSize := 4)
+	^self method encoderClass blockCreationBytecodeMessageAt: startpc method: self method
 
 	"(SortedCollection sortBlock: [:a :b| a compare: b caseSensitive: false]) sortBlock blockCreationBytecodeMessage"
 ]

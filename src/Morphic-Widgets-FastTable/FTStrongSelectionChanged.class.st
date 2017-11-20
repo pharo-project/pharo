@@ -32,7 +32,7 @@ Class {
 		'selectedRowIndex',
 		'event'
 	],
-	#category : 'Morphic-Widgets-FastTable-Announcement'
+	#category : #Morphic-Widgets-FastTable-Announcement
 }
 
 { #category : #'instance creation' }

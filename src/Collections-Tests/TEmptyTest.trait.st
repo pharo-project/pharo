@@ -6,7 +6,7 @@ bind me to know how to access it.
 "
 Trait {
 	#name : #TEmptyTest,
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #requirements }

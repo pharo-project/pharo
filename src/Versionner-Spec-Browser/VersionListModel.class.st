@@ -11,7 +11,7 @@ Class {
 		'changedBlock',
 		'selectionVersionString'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #checking }

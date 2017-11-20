@@ -4,7 +4,7 @@ Replace _ by :=
 Class {
 	#name : #RBUnderscoreAssignmentRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

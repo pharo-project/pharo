@@ -98,7 +98,7 @@ Class {
 		'preReleaseVersion',
 		'buildVersion'
 	],
-	#category : 'Metacello-Core-Model'
+	#category : #Metacello-Core-Model
 }
 
 { #category : #private }

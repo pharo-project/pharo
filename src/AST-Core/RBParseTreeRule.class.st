@@ -14,7 +14,7 @@ Class {
 		'searchTree',
 		'owner'
 	],
-	#category : 'AST-Core-Matching'
+	#category : #AST-Core-Matching
 }
 
 { #category : #'instance creation' }

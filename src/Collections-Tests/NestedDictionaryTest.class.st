@@ -4,7 +4,7 @@ SUnit test class for nested dictionaries
 Class {
 	#name : #NestedDictionaryTest,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Unordered'
+	#category : #Collections-Tests-Unordered
 }
 
 { #category : #tests }
@@ -33,6 +33,24 @@ NestedDictionaryTest >> testAtAtIfAbsentPut [
 	self assert: (d at: #first42 at: #second) equals: 42.
 	self assert: (d at: #first42 at: #second42) equals: 0.
 	
+]
+
+{ #category : #tests }
+NestedDictionaryTest >> testAtAtOnIdentityDictinary [
+
+	| dct key1 key2 subDct |
+
+	dct := IdentityDictionary new.
+	key1 := 'a'.
+	key2 := key1 copy.
+	dct
+		at: #a at: key1 put: 1;
+		at: #a at: key2 put: 2.
+	subDct := dct at: #a.
+	TestCase new
+		assert: subDct size equals: 2;
+		assert: (subDct at: key1) equals: 1;
+		assert: (subDct at: key2) equals: 2
 ]
 
 { #category : #tests }

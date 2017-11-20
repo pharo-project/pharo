@@ -5,7 +5,7 @@ The Quartz surface is used to render cairo graphics targeting the Apple OS X Qua
 Class {
 	#name : #AthensQuartzSurface,
 	#superclass : #AthensCairoSurface,
-	#category : 'Athens-Cairo-Quartz'
+	#category : #Athens-Cairo-Quartz
 }
 
 { #category : #'as yet unclassified' }

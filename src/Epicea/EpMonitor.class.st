@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'Epicea-Monitor'
+	#category : #Epicea-Monitor
 }
 
 { #category : #accessing }

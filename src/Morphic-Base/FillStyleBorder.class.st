@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fillStyle'
 	],
-	#category : 'Morphic-Base-Borders'
+	#category : #Morphic-Base-Borders
 }
 
 { #category : #geometry }

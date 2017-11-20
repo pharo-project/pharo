@@ -4,7 +4,7 @@ I build HelpSystem topics to browse PharoTutorial tutorials
 Class {
 	#name : #PharoTutorialHelpTutorialBuilder,
 	#superclass : #HelpBuilder,
-	#category : 'ProfStef-Help'
+	#category : #ProfStef-Help
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Command to browse a package in versionner
 Class {
 	#name : #MBBrowsePackageCommand,
 	#superclass : #MBAbstractPackageCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #documentation }

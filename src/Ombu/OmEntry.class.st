@@ -8,7 +8,7 @@ Class {
 		'tags',
 		'content'
 	],
-	#category : 'Ombu-Entries'
+	#category : #Ombu-Entries
 }
 
 { #category : #'instance creation' }

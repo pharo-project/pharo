@@ -4,7 +4,7 @@ self new  openOn: GLMBasicExamples
 Class {
 	#name : #GLMExamplesBrowser,
 	#superclass : #GLMCompositePresentation,
-	#category : 'Glamour-Examples'
+	#category : #Glamour-Examples
 }
 
 { #category : #'user interface' }

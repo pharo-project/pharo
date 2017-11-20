@@ -8,7 +8,7 @@ Class {
 		'aStopwatch',
 		'aDelay'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #testing }
@@ -36,6 +36,7 @@ StopwatchTest >> selectorsToBeIgnored [
 
 { #category : #running }
 StopwatchTest >> setUp [
+	super setUp.
 	aStopwatch := Stopwatch new.
 	aDelay := Delay forMilliseconds: 1.
 ]

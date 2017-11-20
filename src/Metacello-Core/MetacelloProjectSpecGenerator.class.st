@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'target'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #accessing }

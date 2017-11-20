@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'exception'
 	],
-	#category : 'UIManager'
+	#category : #UIManager
 }
 
 { #category : #signalling }

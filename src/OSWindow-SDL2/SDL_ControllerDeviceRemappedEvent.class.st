@@ -4,7 +4,7 @@ SDL2 library structure representing a controller device remapped event data.
 Class {
 	#name : #SDL_ControllerDeviceRemappedEvent,
 	#superclass : #SDL_ControllerDeviceEvent,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

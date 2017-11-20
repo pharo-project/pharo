@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #printing }

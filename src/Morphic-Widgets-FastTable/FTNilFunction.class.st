@@ -10,7 +10,7 @@ FTNilFunction table: (FTTableMorph with: (1 to: 200))
 Class {
 	#name : #FTNilFunction,
 	#superclass : #FTFunction,
-	#category : 'Morphic-Widgets-FastTable-Functions'
+	#category : #Morphic-Widgets-FastTable-Functions
 }
 
 { #category : #accessing }

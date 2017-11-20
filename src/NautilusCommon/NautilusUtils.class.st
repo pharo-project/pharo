@@ -4,7 +4,7 @@ A class of utility methods used to implement *NautilusCommon extension methods o
 Class {
 	#name : #NautilusUtils,
 	#superclass : #Object,
-	#category : 'NautilusCommon'
+	#category : #NautilusCommon
 }
 
 { #category : #utilities }

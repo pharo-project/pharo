@@ -8,7 +8,7 @@ Class {
 		'package',
 		'dependency'
 	],
-	#category : 'Tool-DependencyAnalyser-Core'
+	#category : #Tool-DependencyAnalyser-Core
 }
 
 { #category : #signaling }

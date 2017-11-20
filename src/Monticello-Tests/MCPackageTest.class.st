@@ -1,7 +1,7 @@
 Class {
 	#name : #MCPackageTest,
 	#superclass : #MCTestCase,
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #private }

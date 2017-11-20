@@ -9,7 +9,7 @@ Class {
 		'position',
 		'event'
 	],
-	#category : 'Rubric-Tests'
+	#category : #Rubric-Tests
 }
 
 { #category : #'instance creation' }

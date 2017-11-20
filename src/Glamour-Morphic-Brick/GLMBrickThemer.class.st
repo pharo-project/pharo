@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'modules'
 	],
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #theme-actions }

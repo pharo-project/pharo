@@ -7,7 +7,7 @@ My  namespace usally knows me and my non meta class.
 Class {
 	#name : #RBMetaclass,
 	#superclass : #RBAbstractClass,
-	#category : 'Refactoring-Core-Model'
+	#category : #Refactoring-Core-Model
 }
 
 { #category : #'instance creation' }

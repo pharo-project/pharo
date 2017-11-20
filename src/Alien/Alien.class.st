@@ -31,7 +31,7 @@ Class {
 	#classInstVars : [
 		'lifoCallbackSemaphore'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'primitives-memory management' }
@@ -446,7 +446,7 @@ Alien class >> newC: byteSize [
 Alien class >> newCString: aString [ "<String> ^<Alien>"
 	"Answer an Alien pointing to a null-terminated copy of aString on the external C heap."
 
-	| size cString |
+	| size |
 	size := aString size.
 	^(Alien rawNewC: size + 1)
 		replaceFrom: 1 to: size with: aString startingAt: 1;

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'display'
 	],
-	#category : 'OSWindow-Core-Morphic'
+	#category : #OSWindow-Core-Morphic
 }
 
 { #category : #'as yet unclassified' }

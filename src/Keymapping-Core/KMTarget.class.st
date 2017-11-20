@@ -11,7 +11,7 @@ Class {
 		'directKeymaps',
 		'perInstanceCategories'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #'instance creation' }

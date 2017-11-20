@@ -20,7 +20,7 @@ Class {
 		'addedSelectorAndMethodClassLiterals',
 		'optimizedSelectors'
 	],
-	#category : 'Compiler-Kernel'
+	#category : #Compiler-Kernel
 }
 
 { #category : #visiting }

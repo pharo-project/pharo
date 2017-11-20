@@ -37,7 +37,7 @@ Class {
 		'font',
 		'tabs'
 	],
-	#category : 'Glamour-Morphic-Brick-Morphic'
+	#category : #Glamour-Morphic-Brick-Morphic
 }
 
 { #category : #adding/removing }

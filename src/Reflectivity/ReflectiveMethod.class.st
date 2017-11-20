@@ -232,7 +232,7 @@ ReflectiveMethod >> printOn: aStream [
 
 { #category : #evaluation }
 ReflectiveMethod >> recompileAST [
-	| links |
+ 
 	OCASTSemanticCleaner clean: ast.
 	ast compilationContext 
 		semanticAnalyzerClass: RFSemanticAnalyzer;

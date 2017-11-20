@@ -45,7 +45,7 @@ Class {
 		'index',
 		'result'
 	],
-	#category : 'Morphic-Widgets-FastTable-Tree'
+	#category : #Morphic-Widgets-FastTable-Tree
 }
 
 { #category : #action }

@@ -11,7 +11,7 @@ rubricMorph
 Class {
 	#name : #GLMRubScrolledTextBrick,
 	#superclass : #GLMMorphBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Core'
+	#category : #Glamour-Morphic-Brick-Widgets-Core
 }
 
 { #category : #examples }

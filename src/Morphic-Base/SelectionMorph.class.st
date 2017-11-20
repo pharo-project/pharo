@@ -25,7 +25,7 @@ Class {
 		'otherSelection',
 		'undoProperties'
 	],
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #dropping/grabbing }

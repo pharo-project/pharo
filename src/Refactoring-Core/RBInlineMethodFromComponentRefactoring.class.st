@@ -8,7 +8,7 @@ If the method implementation has some direct variable references, accessor for t
 Class {
 	#name : #RBInlineMethodFromComponentRefactoring,
 	#superclass : #RBInlineMethodRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #transforming }

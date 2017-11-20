@@ -5,7 +5,7 @@ RBPatternParser is a subclass of RBParser that allows the extended syntax that c
 Class {
 	#name : #RBPatternParser,
 	#superclass : #RBParser,
-	#category : 'AST-Core-Parser'
+	#category : #AST-Core-Parser
 }
 
 { #category : #private-classes }

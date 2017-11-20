@@ -25,7 +25,7 @@ Class {
 		'provisions',
 		'methodAdditions'
 	],
-	#category : 'Monticello-Loading'
+	#category : #Monticello-Loading
 }
 
 { #category : #public }

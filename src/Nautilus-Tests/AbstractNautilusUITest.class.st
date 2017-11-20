@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'Nautilus-Tests'
+	#category : #Nautilus-Tests
 }
 
 { #category : #running }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'fullscreen'
 	],
-	#category : 'OSWindow-VM'
+	#category : #OSWindow-VM
 }
 
 { #category : #accessing }

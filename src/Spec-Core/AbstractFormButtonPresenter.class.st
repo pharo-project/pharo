@@ -24,7 +24,7 @@ Class {
 		'labelHolder',
 		'actionWhenDeactivatedHolder'
 	],
-	#category : 'Spec-Core-Widgets-Support'
+	#category : #Spec-Core-Widgets-Support
 }
 
 { #category : #api }

@@ -14,7 +14,7 @@ If the class already contains that accessor, I will create another one with a nu
 Class {
 	#name : #RBAccessorClassRefactoring,
 	#superclass : #RBClassRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #preconditions }

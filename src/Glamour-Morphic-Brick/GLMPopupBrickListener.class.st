@@ -8,7 +8,7 @@ Class {
 		'popup',
 		'predicates'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
 }
 
 { #category : #'instance creation' }

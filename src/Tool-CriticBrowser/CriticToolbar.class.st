@@ -35,7 +35,7 @@ Class {
 		'falsepositiveModel',
 		'transformModel'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #specs }

@@ -35,7 +35,7 @@ Class {
 		'acceptOnFocusChange',
 		'selectionColor'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #editing }

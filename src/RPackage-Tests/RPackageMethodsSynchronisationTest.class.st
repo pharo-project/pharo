@@ -4,7 +4,7 @@ SUnit tests for RPackage method synchronization
 Class {
 	#name : #RPackageMethodsSynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #'tests - operations on methods' }
@@ -43,7 +43,7 @@ RPackageMethodsSynchronisationTest >> testAddMethodInClassicCategoryAddMethodToT
 RPackageMethodsSynchronisationTest >> testModifyMethodByMovingFromClassicCategoryToClassicCategoryDoesNothing [
 	"test that when we move a method from a classic category (not begining with *) to another classic category , the packaging keeps the same"
 	
-	| class firstPackage secondPackage|
+	| class firstPackage |
 	self addXCategory.
 	firstPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.

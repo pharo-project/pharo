@@ -64,7 +64,7 @@ Class {
 		'SuspendedProcesses',
 		'WellKnownProcesses'
 	],
-	#category : 'Tool-ProcessBrowser'
+	#category : #Tool-ProcessBrowser
 }
 
 { #category : #initialization }

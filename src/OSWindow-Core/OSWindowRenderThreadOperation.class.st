@@ -10,7 +10,7 @@ Class {
 		'blocking',
 		'failed'
 	],
-	#category : 'OSWindow-Core-Extras'
+	#category : #OSWindow-Core-Extras
 }
 
 { #category : #'instance creation' }

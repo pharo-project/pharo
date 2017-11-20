@@ -7,7 +7,7 @@ Approximates the height of band depending on average height of all visible items
 Class {
 	#name : #GLMApproximateScrollbarBrick,
 	#superclass : #GLMScrollbarBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Scrollpane'
+	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
 }
 
 { #category : #scrollbar-calculations }

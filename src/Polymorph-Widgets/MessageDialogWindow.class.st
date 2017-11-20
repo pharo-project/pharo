@@ -9,7 +9,7 @@ Class {
 		'textFont',
 		'iconMorph'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #icons }

@@ -1,7 +1,7 @@
 Class {
 	#name : #HermesCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : 'Hermes-CommandLineHandler'
+	#category : #Hermes-CommandLineHandler
 }
 
 { #category : #accessing }

@@ -12,7 +12,7 @@ The parser does not know about this type of variables until you call doSemanticA
 Class {
 	#name : #RBGlobalNode,
 	#superclass : #RBVariableNode,
-	#category : 'AST-Core-Nodes'
+	#category : #AST-Core-Nodes
 }
 
 { #category : #visiting }

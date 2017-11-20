@@ -4,7 +4,7 @@ A FLAbstractCollectionCluster is the common behavior for all cluster collections
 Class {
 	#name : #FLAbstractCollectionCluster,
 	#superclass : #FLObjectCluster,
-	#category : 'Fuel-Clusters-Optionals'
+	#category : #Fuel-Clusters-Optionals
 }
 
 { #category : #analyzing }

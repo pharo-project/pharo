@@ -4,7 +4,7 @@ A MetacelloCommandLineHandlerTest is a test class for testing the behavior of Me
 Class {
 	#name : #MetacelloCommandLineHandlerTest,
 	#superclass : #TestCase,
-	#category : 'MetacelloCommandLineHandler-Tests'
+	#category : #MetacelloCommandLineHandler-Tests
 }
 
 { #category : #convenience }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphic,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'utils - morph creation' }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'Nautilus-Acceptors'
+	#category : #Nautilus-Acceptors
 }
 
 { #category : #'instance creation' }

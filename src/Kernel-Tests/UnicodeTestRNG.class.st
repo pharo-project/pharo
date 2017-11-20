@@ -8,7 +8,7 @@ Class {
 		'generator',
 		'nonCharacters'
 	],
-	#category : 'Kernel-Tests-Charset'
+	#category : #Kernel-Tests-Charset
 }
 
 { #category : #private }
@@ -60,5 +60,6 @@ UnicodeTestRNG >> randomCodePointBetween: lower and: upper [
 
 { #category : #running }
 UnicodeTestRNG >> setUp [
+	super setUp.
 	generator := Random seed: 14159265.
 ]

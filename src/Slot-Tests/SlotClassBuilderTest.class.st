@@ -8,7 +8,7 @@ Class {
 		'yetAnotherClass',
 		'yetYetAnotherClass'
 	],
-	#category : 'Slot-Tests'
+	#category : #Slot-Tests
 }
 
 { #category : #helpers-names }

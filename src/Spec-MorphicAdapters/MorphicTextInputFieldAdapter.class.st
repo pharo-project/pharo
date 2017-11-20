@@ -4,7 +4,7 @@ I am the adapter used to bridge a TextInputFieldPresenter and a PluggableTextFie
 Class {
 	#name : #MorphicTextInputFieldAdapter,
 	#superclass : #MorphicTextAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #'widget API' }

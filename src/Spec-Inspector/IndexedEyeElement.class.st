@@ -4,7 +4,7 @@ I am an eye element for indexable fields. (at:)
 Class {
 	#name : #IndexedEyeElement,
 	#superclass : #BasicIndexedEyeElement,
-	#category : 'Spec-Inspector-Element'
+	#category : #Spec-Inspector-Element
 }
 
 { #category : #accessing }

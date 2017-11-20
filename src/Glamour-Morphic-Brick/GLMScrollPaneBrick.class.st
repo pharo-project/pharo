@@ -34,7 +34,7 @@ Class {
 		'verticalScrollbar',
 		'velocity'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Scrollpane'
+	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
 }
 
 { #category : #'as yet unclassified' }

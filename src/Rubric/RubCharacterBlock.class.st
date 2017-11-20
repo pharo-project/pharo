@@ -6,7 +6,7 @@ Class {
 		'stringIndex',
 		'textLine'
 	],
-	#category : 'Rubric-TextScanning'
+	#category : #Rubric-TextScanning
 }
 
 { #category : #comparing }

@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'bindings'
 	],
-	#category : 'Spec-Core'
+	#category : #Spec-Core
 }
 
 { #category : #accessing }

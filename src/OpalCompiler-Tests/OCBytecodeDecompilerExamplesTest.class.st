@@ -1,7 +1,7 @@
 Class {
 	#name : #OCBytecodeDecompilerExamplesTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Bytecode'
+	#category : #OpalCompiler-Tests-Bytecode
 }
 
 { #category : #tests-blocks }

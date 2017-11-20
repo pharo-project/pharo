@@ -5,7 +5,7 @@ SUnit tests for class CustomHelp
 Class {
 	#name : #CustomHelpTest,
 	#superclass : #TestCase,
-	#category : 'HelpSystem-Tests-Core-Utilities'
+	#category : #HelpSystem-Tests-Core-Utilities
 }
 
 { #category : #testing }

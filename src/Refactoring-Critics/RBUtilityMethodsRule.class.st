@@ -4,7 +4,7 @@ List methods that have one or more arguments and do no refer to self or an insta
 Class {
 	#name : #RBUtilityMethodsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

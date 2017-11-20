@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'presentation'
 	],
-	#category : 'Glamour-Announcements'
+	#category : #Glamour-Announcements
 }
 
 { #category : #accessing }

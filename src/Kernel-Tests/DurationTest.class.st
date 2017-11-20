@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'aDuration'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #coverage }
@@ -31,6 +31,7 @@ DurationTest >> selectorsToBeIgnored [
 
 { #category : #running }
 DurationTest >> setUp [
+	super setUp.
 	aDuration := Duration days: 1 hours: 2 minutes: 3 seconds: 4 nanoSeconds: 5 
 ]
 

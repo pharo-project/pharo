@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlaygroundPlayPagesList,
 	#superclass : #GLMFallbackScrollListBrick,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #actions }

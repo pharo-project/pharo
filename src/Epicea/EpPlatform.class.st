@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'Epicea-Support'
+	#category : #Epicea-Support
 }
 
 { #category : #accessing }

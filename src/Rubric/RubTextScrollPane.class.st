@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'drawFocusBorder'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #dropping/grabbing }

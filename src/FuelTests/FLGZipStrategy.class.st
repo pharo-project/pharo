@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetStrategy'
 	],
-	#category : 'FuelTests-StreamStrategies'
+	#category : #FuelTests-StreamStrategies
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ TestLocalVariable is a test class using in ProcessSpecificTest.
 Class {
 	#name : #TestLocalVariable,
 	#superclass : #ProcessLocalVariable,
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #defaults }

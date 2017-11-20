@@ -4,5 +4,5 @@ This is deprecated class because the original class MenuItemModel was renamed to
 Class {
 	#name : #MenuItemModel,
 	#superclass : #MenuItemPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

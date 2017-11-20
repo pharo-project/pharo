@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : 'AST-Core-Parser'
+	#category : #AST-Core-Parser
 }
 
 { #category : #accessing }

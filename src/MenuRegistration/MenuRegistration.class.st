@@ -169,7 +169,7 @@ Class {
 		'ordering',
 		'precondition'
 	],
-	#category : 'MenuRegistration-Core'
+	#category : #MenuRegistration-Core
 }
 
 { #category : #'instance creation' }

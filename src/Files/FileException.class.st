@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileName'
 	],
-	#category : 'Files-Core'
+	#category : #Files-Core
 }
 
 { #category : #exceptioninstantiator }

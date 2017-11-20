@@ -1,5 +1,5 @@
 "
-This baseline is used to generate Pharo images from the local clone of pharo-core repository. 
+This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
 - ConfigurationOfUI
@@ -24,7 +24,7 @@ Installs:
 Class {
 	#name : #BaselineOfIDE,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfIDE'
+	#category : #BaselineOfIDE
 }
 
 { #category : #actions }
@@ -87,7 +87,7 @@ BaselineOfIDE >> additionalInitialization [
 	
 	RubAbstractTextArea highlightMessageSend: true.
 	
-	Pharo3DarkTheme beCurrent.
+	PharoDarkTheme beCurrent.
 	
 	Smalltalk ui theme settings secondarySelectionColor: (Color r: 0.31 g: 0.31 b: 0.36 alpha: 1.0).
 	
@@ -107,7 +107,7 @@ BaselineOfIDE >> baseline: spec [
 
  	| repository | 
 	
-	repository := 'tonel://./pharo-core/src'.     
+	repository := self packageRepositoryURL.
        
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.
@@ -251,7 +251,7 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec package: 'MonticelloMocks'.
 		spec package: 'NodeNavigation'.
-		spec package: 'OpalTools'.
+		spec package: 'OpalCompiler-Tools'.
 
 		spec package: 'OSWindow-Core'.
 		spec package: 'OSWindow-SDL2'.
@@ -394,6 +394,7 @@ spec group: 'Optional-Group' with: #(
 	'Gofer-UI'	"standalone"
 	'MessageBrowserRefactoringAddition' 	"standalone"
 	'PerformMessageCommandLineHandler' 	"standalone"
+	'Files-Prompt'
 ).	
 	
 spec group: 'NodeNavigation-Group' with: #(
@@ -704,7 +705,7 @@ spec group: 'GT-Core-Group' with: #(
 	'SmartSuggestions-Group' "dependency"
 	'Glamour-Core-Group'	"dependency"
 	"'Morphic-Core' 'System-Settings' is dependent on this group, needs clenup"
-	'OpalTools'
+	'OpalCompiler-Tools'
 	'GT-Inspector'
 	'GT-InspectorExtensions-Core'
 	'GT-Playground'
@@ -904,9 +905,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	MCMethodDefinition initializersEnabled: false.
 	
-	repo := MCFileTreeRepository new
-	directory: './pharo-core/src' asFileReference;
-	yourself.
+	repo := TonelRepository new
+		directory: self packageRepository directory;
+		yourself.
 		
 	gofer := Gofer it repository: repo.
 	gofer package: #'Compiler'.
@@ -924,6 +925,11 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk tools register: GTGenericStackDebugger as: #debugger.	
 
 	Smalltalk cleanOutUndeclared. 
+
+	FileStream stdout nextPutAll: ' ------------ Obsolete ------------'; lf.
+	FileStream stdout nextPutAll: SystemNavigation default obsoleteClasses asString; lf.
+	FileStream stdout nextPutAll: ' ............ Obsolete ............'; lf.
+
 	Smalltalk fixObsoleteReferences.
 	
 	EpMonitor current enable.

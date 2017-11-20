@@ -32,7 +32,7 @@ Class {
 		'stops',
 		'colorRamp'
 	],
-	#category : 'Athens-Core-Paints'
+	#category : #Athens-Core-Paints
 }
 
 { #category : #accessing }

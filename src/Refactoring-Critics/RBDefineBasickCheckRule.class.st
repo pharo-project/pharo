@@ -8,7 +8,7 @@ It is recommended to reuse #basicCheck: functionality in #checkClass: and #check
 Class {
 	#name : #RBDefineBasickCheckRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

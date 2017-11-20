@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'currentFill'
 	],
-	#category : 'Athens-Balloon'
+	#category : #Athens-Balloon
 }
 
 { #category : #drawing }
@@ -25,7 +25,7 @@ AthensBalloonEngine >> copyBits [
 
 { #category : #drawing }
 AthensBalloonEngine >> drawImage: aForm transform: m [ 
-	| orig dir normal tr corner rect |
+	| orig dir normal tr rect |
 
 	rect := aForm boundingBox.
 	orig := 0@0. 

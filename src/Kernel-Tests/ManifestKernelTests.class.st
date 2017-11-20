@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestKernelTests,
 	#superclass : #PackageManifest,
-	#category : 'Kernel-Tests'
+	#category : #Kernel-Tests
 }
 
 { #category : #metadata }

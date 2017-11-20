@@ -4,7 +4,7 @@ Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or en
 Class {
 	#name : #RBTrueFalseDuplicationRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

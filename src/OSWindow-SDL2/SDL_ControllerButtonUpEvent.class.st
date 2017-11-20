@@ -4,7 +4,7 @@ SDL2 library structure representing a game controller button up event data.
 Class {
 	#name : #SDL_ControllerButtonUpEvent,
 	#superclass : #SDL_ControllerButtonEvent,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

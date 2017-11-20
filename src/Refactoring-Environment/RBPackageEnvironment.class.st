@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #'instance creation' }

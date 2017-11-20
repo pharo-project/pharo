@@ -4,7 +4,7 @@ I know how to replace the call of a class variable for the use of an accessor an
 Class {
 	#name : #SugsUseAccessorsForClassVar,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

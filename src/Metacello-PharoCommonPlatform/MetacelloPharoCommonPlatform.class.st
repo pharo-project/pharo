@@ -4,7 +4,7 @@ MetacelloPharoPlatform contains all Pharo specific code to load Metacello.
 Class {
 	#name : #MetacelloPharoCommonPlatform,
 	#superclass : #MetacelloPlatform,
-	#category : 'Metacello-PharoCommonPlatform'
+	#category : #Metacello-PharoCommonPlatform
 }
 
 { #category : #utilities }

@@ -4,7 +4,7 @@ Checks for instance variables that might better be defined as temporary variable
 Class {
 	#name : #RBVariableReferencedOnceRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

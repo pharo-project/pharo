@@ -34,7 +34,7 @@ Class {
 		'horizontalPosition',
 		'verticalPosition'
 	],
-	#category : 'Morphic-Base-ProgressBar'
+	#category : #Morphic-Base-ProgressBar
 }
 
 { #category : #cleanup }

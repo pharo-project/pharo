@@ -76,7 +76,7 @@ Class {
 		'continue',
 		'home'
 	],
-	#category : 'Collections-Streams'
+	#category : #Collections-Streams
 }
 
 { #category : #examples }

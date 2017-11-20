@@ -6,7 +6,7 @@ Class {
 		'version',
 		'workingCopy'
 	],
-	#category : 'Metacello-MC-Gofer'
+	#category : #Metacello-MC-Gofer
 }
 
 { #category : #'instance creation' }

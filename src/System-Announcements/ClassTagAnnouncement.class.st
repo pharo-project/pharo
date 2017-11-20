@@ -8,7 +8,7 @@ Class {
 		'package',
 		'tag'
 	],
-	#category : 'System-Announcements-System-Packages'
+	#category : #System-Announcements-System-Packages
 }
 
 { #category : #'instance creation' }

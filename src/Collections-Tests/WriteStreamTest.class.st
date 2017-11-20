@@ -4,7 +4,7 @@ A trait for test purposes
 Class {
 	#name : #WriteStreamTest,
 	#superclass : #ClassTestCase,
-	#category : 'Collections-Tests-Streams'
+	#category : #Collections-Tests-Streams
 }
 
 { #category : #testing }

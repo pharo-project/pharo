@@ -8,7 +8,7 @@ Class {
 		'targetMethodName',
 		'condition'
 	],
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #'instance creation' }

@@ -11,7 +11,7 @@ Class {
 		'remoteStringMap',
 		'sourceStreams'
 	],
-	#category : 'System-Sources'
+	#category : #System-Sources
 }
 
 { #category : #helper }

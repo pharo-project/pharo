@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : 'Morphic-Core-Borders'
+	#category : #Morphic-Core-Borders
 }
 
 { #category : #'instance creation' }

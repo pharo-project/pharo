@@ -48,7 +48,7 @@ Class {
 		'title',
 		'message'
 	],
-	#category : 'Spec-Debugger'
+	#category : #Spec-Debugger
 }
 
 { #category : #accessing }
@@ -334,6 +334,11 @@ SpecPreDebugWindow >> setTitle: aString [
 
 	title := aString.
 	self updateTitle 
+]
+
+{ #category : #accessing }
+SpecPreDebugWindow >> stackPane [
+	^widgets at: #stackPane
 ]
 
 { #category : #api }

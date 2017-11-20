@@ -4,7 +4,7 @@ I'm a group selection for group.
 Class {
 	#name : #PackageTreeGroupSelection,
 	#superclass : #PackageTreeSelection,
-	#category : 'Nautilus-Tree'
+	#category : #Nautilus-Tree
 }
 
 { #category : #'instance creation' }

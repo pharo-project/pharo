@@ -4,7 +4,7 @@ I am a debugger that provides the ability to step through the execution at the b
 Class {
 	#name : #GTBytecodeDebugger,
 	#superclass : #GTGenericStackDebugger,
-	#category : 'GT-BytecodeDebugger-UI'
+	#category : #GT-BytecodeDebugger-UI
 }
 
 { #category : #accessing }

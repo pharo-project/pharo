@@ -42,7 +42,7 @@ Class {
 		'oldColor',
 		'label'
 	],
-	#category : 'Morphic-Widgets-Basic-Buttons'
+	#category : #Morphic-Widgets-Basic-Buttons
 }
 
 { #category : #'instance creation' }

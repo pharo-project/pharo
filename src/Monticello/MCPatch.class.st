@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'operations'
 	],
-	#category : 'Monticello-Patching'
+	#category : #Monticello-Patching
 }
 
 { #category : #instance-creation }

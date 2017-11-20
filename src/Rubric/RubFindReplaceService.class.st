@@ -20,7 +20,7 @@ Class {
 	#classVars : [
 		'Singleton'
 	],
-	#category : 'Rubric-Editing-FindReplaceService'
+	#category : #Rubric-Editing-FindReplaceService
 }
 
 { #category : #cleanup }

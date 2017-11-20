@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shadowedVar'
 	],
-	#category : 'OpalCompiler-Core-Exception'
+	#category : #OpalCompiler-Core-Exception
 }
 
 { #category : #correcting }

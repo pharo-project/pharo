@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'dispatcher'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #dispatching }

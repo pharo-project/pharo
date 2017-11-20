@@ -8,7 +8,7 @@ Class {
 		'className',
 		'renamedName'
 	],
-	#category : 'Kernel-Tests-Classes'
+	#category : #Kernel-Tests-Classes
 }
 
 { #category : #setup }

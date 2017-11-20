@@ -6,7 +6,7 @@ Class {
 		'dstOffset',
 		'mappings'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #'accessing - defaults' }

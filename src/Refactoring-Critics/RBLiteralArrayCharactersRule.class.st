@@ -4,7 +4,7 @@ Literal arrays containing only characters can more efficiently represented as st
 Class {
 	#name : #RBLiteralArrayCharactersRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

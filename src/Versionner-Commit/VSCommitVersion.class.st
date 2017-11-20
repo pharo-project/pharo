@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Versionner-Commit'
+	#category : #Versionner-Commit
 }
 
 { #category : #accessing }

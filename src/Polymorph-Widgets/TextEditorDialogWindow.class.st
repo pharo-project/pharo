@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'AutoAccept'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #icons }

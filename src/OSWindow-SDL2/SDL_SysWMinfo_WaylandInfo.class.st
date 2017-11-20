@@ -9,7 +9,7 @@ Class {
 		'OFFSET_SHELL_SURFACE',
 		'OFFSET_SURFACE'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'field definition' }

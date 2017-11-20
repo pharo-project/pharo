@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'paints'
 	],
-	#category : 'Athens-Morphic'
+	#category : #Athens-Morphic
 }
 
 { #category : #drawing }

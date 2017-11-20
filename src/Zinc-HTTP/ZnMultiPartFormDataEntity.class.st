@@ -14,7 +14,7 @@ Class {
 		'parts',
 		'representation'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #testing }

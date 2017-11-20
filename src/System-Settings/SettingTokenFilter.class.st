@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'token'
 	],
-	#category : 'System-Settings-Filter'
+	#category : #System-Settings-Filter
 }
 
 { #category : #filtering }

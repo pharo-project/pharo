@@ -4,7 +4,7 @@ SUnit tests for fuel serializations, here signatures
 Class {
 	#name : #FLSignatureTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }

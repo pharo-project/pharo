@@ -6,7 +6,7 @@ A generic syntax tree node, provides some common responses to the standard tests
 Class {
 	#name : #RxsNode,
 	#superclass : #Object,
-	#category : 'Regex-Core'
+	#category : #Regex-Core
 }
 
 { #category : #constants }

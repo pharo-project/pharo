@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'page'
 	],
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #testing }

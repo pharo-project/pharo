@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'variablesMapping'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #serialize/materialize }

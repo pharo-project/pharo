@@ -4,7 +4,7 @@ A rule to check for multiple periods terminating the same statement, which is un
 Class {
 	#name : #RBMultiplePeriodsTerminatingStatementRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

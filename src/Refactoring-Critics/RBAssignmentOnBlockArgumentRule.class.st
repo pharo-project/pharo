@@ -11,7 +11,7 @@ The block argument ""x"" should not be written. This is considered bad style. An
 Class {
 	#name : #RBAssignmentOnBlockArgumentRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

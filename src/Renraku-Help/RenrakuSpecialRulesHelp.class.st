@@ -4,7 +4,7 @@ There are certain special rules with predefined functionality that allows to eas
 Class {
 	#name : #RenrakuSpecialRulesHelp,
 	#superclass : #RenrakuRuleCreationHelp,
-	#category : 'Renraku-Help'
+	#category : #Renraku-Help
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ See parent class comment for more info.
 Class {
 	#name : #DelayMicrosecondScheduler,
 	#superclass : #DelayScheduler,
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #snapshotting }

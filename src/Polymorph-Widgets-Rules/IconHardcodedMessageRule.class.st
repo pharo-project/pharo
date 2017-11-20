@@ -10,7 +10,7 @@ Instead of
 Class {
 	#name : #IconHardcodedMessageRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : 'Polymorph-Widgets-Rules'
+	#category : #Polymorph-Widgets-Rules
 }
 
 { #category : #accessing }

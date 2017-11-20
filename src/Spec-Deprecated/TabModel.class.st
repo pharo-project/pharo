@@ -4,5 +4,5 @@ This is deprecated class because the original class TabModel was renamed to TabP
 Class {
 	#name : #TabModel,
 	#superclass : #TabPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

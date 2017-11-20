@@ -4,7 +4,7 @@ This baseline is used to store information about Monticello packages. It is not 
 Class {
 	#name : #BaselineOfMonticello,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfMonticello'
+	#category : #BaselineOfMonticello
 }
 
 { #category : #accessing }
@@ -37,7 +37,6 @@ BaselineOfMonticello >> baseline: spec [
 			
 			package: 'Network-Kernel';
 			package: 'Network-MIME';
-			package: 'Network-Url';
 			package: 'Network-Protocols';
 			package: 'MonticelloRemoteRepositories';
 			package: 'Zinc-HTTP';
@@ -45,7 +44,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Zodiac-Core'.
 		spec 
 			group: 'Core' with: #('RingChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Core-Kernel' 'Ring-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Ring-Monticello');
-			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Url' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zinc-FileSystem' 'Zodiac-Core' );
+			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zinc-FileSystem' 'Zodiac-Core' );
 
 			group: 'default' with: #('Core' 'RemoteRepositories' ). ].		
 

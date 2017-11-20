@@ -13,7 +13,7 @@ Class {
 		'Standout',
 		'Underline'
 	],
-	#category : 'System-CommandLine'
+	#category : #System-CommandLine
 }
 
 { #category : #'class initialization' }

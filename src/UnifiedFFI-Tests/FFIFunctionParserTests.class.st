@@ -1,7 +1,7 @@
 Class {
 	#name : #FFIFunctionParserTests,
 	#superclass : #TestCase,
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #factory }

@@ -1,7 +1,7 @@
 Class {
 	#name : #EpAnnouncementsTest,
 	#superclass : #EpMonitorIntegrationTest,
-	#category : 'EpiceaTests-Integration'
+	#category : #EpiceaTests-Integration
 }
 
 { #category : #tests }

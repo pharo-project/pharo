@@ -23,7 +23,7 @@ Class {
 		'sourceTextModel',
 		'destTextModel'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #'instance creation' }

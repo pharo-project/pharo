@@ -4,7 +4,7 @@ I know how to map an object to its default cluster. I can map every object.
 Class {
 	#name : #FLLightGeneralMapper,
 	#superclass : #FLMapper,
-	#category : 'Fuel-Mappers'
+	#category : #Fuel-Mappers
 }
 
 { #category : #protected-mapping }

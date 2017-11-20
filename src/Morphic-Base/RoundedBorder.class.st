@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'cornerRadius'
 	],
-	#category : 'Morphic-Base-Borders'
+	#category : #Morphic-Base-Borders
 }
 
 { #category : #accessing }

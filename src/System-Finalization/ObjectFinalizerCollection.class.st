@@ -4,7 +4,7 @@ An ObjectFinalizerCollection is simple collection which is intended to hold Obje
 Class {
 	#name : #ObjectFinalizerCollection,
 	#superclass : #OrderedCollection,
-	#category : 'System-Finalization'
+	#category : #System-Finalization
 }
 
 { #category : #finalization }

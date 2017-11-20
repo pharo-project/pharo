@@ -23,7 +23,7 @@ Class {
 		'testSelector',
 		'testResult'
 	],
-	#category : 'SUnit-Core-Announcements'
+	#category : #SUnit-Core-Announcements
 }
 
 { #category : #testing }

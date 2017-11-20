@@ -4,7 +4,7 @@ SUnit tests for LIFO queues
 Class {
 	#name : #LIFOQueueTests,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Atomic'
+	#category : #Collections-Tests-Atomic
 }
 
 { #category : #'instance creation' }

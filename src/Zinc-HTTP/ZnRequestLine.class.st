@@ -13,7 +13,7 @@ Class {
 		'uri',
 		'version'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

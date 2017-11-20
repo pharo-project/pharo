@@ -71,7 +71,7 @@ Class {
 	#classVars : [
 		'SearchStrategies'
 	],
-	#category : 'Morphic-Widgets-FastTable-Tree'
+	#category : #Morphic-Widgets-FastTable-Tree
 }
 
 { #category : #accessing }

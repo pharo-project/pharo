@@ -112,7 +112,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : 'RPackage-Core'
+	#category : #RPackage-Core
 }
 
 { #category : #singleton }
@@ -469,7 +469,7 @@ RPackageOrganizer >> initialize [
 
 { #category : #initialization-data }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
-	| package protocolName nonTraitMethods|
+	| package protocolName nonTraitMethods |
 	
 	protocolName := (aProtocol name allButFirst) trimBoth.
 	package := self packageMatchingExtensionName: protocolName.
@@ -968,7 +968,7 @@ RPackageOrganizer >> systemClassRecategorizedActionFrom: ann [
 RPackageOrganizer >> systemClassRemovedActionFrom: ann [
 	"A class has been removed, we should update the package adequately."
 	
-	| class className rPackage categoryName |	
+	| class className |	
 	class := ann classRemoved.
 	className  := class originalName.
 		

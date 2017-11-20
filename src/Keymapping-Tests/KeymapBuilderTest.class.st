@@ -1,7 +1,7 @@
 Class {
 	#name : #KeymapBuilderTest,
 	#superclass : #AbstractKeymappingTest,
-	#category : 'Keymapping-Tests'
+	#category : #Keymapping-Tests
 }
 
 { #category : #tests }

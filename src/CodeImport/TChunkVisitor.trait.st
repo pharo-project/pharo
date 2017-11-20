@@ -3,7 +3,7 @@ I am a trait defining the basic methods for visiting a chunk object.
 "
 Trait {
 	#name : #TChunkVisitor,
-	#category : 'CodeImport'
+	#category : #CodeImport
 }
 
 { #category : #visitor }

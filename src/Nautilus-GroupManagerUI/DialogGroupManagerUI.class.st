@@ -10,7 +10,7 @@ Class {
 		'groupTreeModel',
 		'groupTree'
 	],
-	#category : 'Nautilus-GroupManagerUI'
+	#category : #Nautilus-GroupManagerUI
 }
 
 { #category : #'instance creation' }

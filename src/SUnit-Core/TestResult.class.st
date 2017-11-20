@@ -14,7 +14,7 @@ Class {
 		'passed',
 		'skipped'
 	],
-	#category : 'SUnit-Core-Kernel'
+	#category : #SUnit-Core-Kernel
 }
 
 { #category : #exceptions }
@@ -355,6 +355,9 @@ TestResult >> runCaseForDebug: aTestCase [
 	aTestCase announce: TestCaseStarted withResult: self.
 	aTestCase runCaseManaged.
 	aTestCase announce: TestCaseEnded  withResult: self.
+	"To not affect performance of big test suites following logic is not inside addPass: method"
+	errors remove: aTestCase ifAbsent: [].
+	failures remove: aTestCase ifAbsent: [].
 	self addPass: aTestCase]
 		on: self class failure , self class skip, self class warning, self class error
 		do: [:ex | ex sunitAnnounce: aTestCase toResult: self. ex pass]

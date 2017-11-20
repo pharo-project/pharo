@@ -52,7 +52,7 @@ Class {
 	#instVars : [
 		'parameters'
 	],
-	#category : 'Glamour-FastTable-Presentations'
+	#category : #Glamour-FastTable-Presentations
 }
 
 { #category : #testing }

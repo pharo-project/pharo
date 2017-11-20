@@ -29,7 +29,7 @@ Class {
 		'label',
 		'searchStrings'
 	],
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #accessing }

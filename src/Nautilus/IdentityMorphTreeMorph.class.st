@@ -5,7 +5,7 @@ An IdentityMorphTreeMorph is a MorphTreeMorph which always check for identity be
 Class {
 	#name : #IdentityMorphTreeMorph,
 	#superclass : #MorphTreeMorph,
-	#category : 'Nautilus-MorphTreeWidget-Extension'
+	#category : #Nautilus-MorphTreeWidget-Extension
 }
 
 { #category : #expanding-collapsing }

@@ -4,7 +4,7 @@ A unit test class for class Locale
 Class {
 	#name : #LocaleTest,
 	#superclass : #TestCase,
-	#category : 'System-Localization-Tests'
+	#category : #System-Localization-Tests
 }
 
 { #category : #tests }

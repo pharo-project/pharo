@@ -12,7 +12,7 @@ Class {
 		'additionHighlightColor',
 		'removalHighlightColor'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #adding }
@@ -64,7 +64,7 @@ JoinSection >> borderColor: aColor [
 	self updateHighlights
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JoinSection >> borderColorToUse [
 	"Answer the border color to use."
 	
@@ -89,7 +89,7 @@ JoinSection >> borderWidth: anInteger [
 		self dst highlight borderWidth: anInteger]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 JoinSection >> clicked [
 	"The receiver or a highlight was clicked."
 
@@ -105,7 +105,7 @@ JoinSection >> containsPoint: aPoint [
 	^self shape containsPoint: aPoint
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 JoinSection >> createHighlights [
 	"Create and store the src and dst highlights."
 
@@ -126,7 +126,7 @@ JoinSection >> createHighlights [
 	self dst highlights: d
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 	"Create and store the src and dst highlights.
 	Use the given paragraphs to determine inline
@@ -187,7 +187,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 						color: self removalHighlightColor ] ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #drawing }
 JoinSection >> drawMapOn: aCanvas in: rect scale: scale [
 	"Draw the join on the given canvas scaled into the given rectangle."
 	
@@ -268,7 +268,7 @@ JoinSection >> dstRange: anInterval [
 	self updateShape
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JoinSection >> fillStyleFor: rect [
 	"Answer the fillStyle to use for the given rectangle."
 	
@@ -400,7 +400,7 @@ JoinSection >> updateHighlights [
 		self dst highlight borderColor: bc]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #updating }
 JoinSection >> updateShape [
 	"Update the receiver's shape."
 
@@ -410,7 +410,7 @@ JoinSection >> updateShape [
 		(self width @ self dst range last) + self dst offset. (0@self src range last) + self src offset})
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 JoinSection >> wantsClick [
 	"Don't if we are transparent for now."
 

@@ -37,7 +37,7 @@ I also added a dummy test to check specifically for the timing bug. It fails on 
 Class {
 	#name : #RenderBugsTest,
 	#superclass : #MorphicUIBugTest,
-	#category : 'Morphic-Tests-Bugs'
+	#category : #Morphic-Tests-Bugs
 }
 
 { #category : #private }

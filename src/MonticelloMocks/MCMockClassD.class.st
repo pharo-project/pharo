@@ -1,7 +1,7 @@
 Class {
 	#name : #MCMockClassD,
 	#superclass : #Object,
-	#category : 'MonticelloMocks'
+	#category : #MonticelloMocks
 }
 
 { #category : #'as yet unclassified' }

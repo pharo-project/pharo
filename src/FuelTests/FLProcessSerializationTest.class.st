@@ -1,7 +1,7 @@
 Class {
 	#name : #FLProcessSerializationTest,
 	#superclass : #FLBasicSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #running }

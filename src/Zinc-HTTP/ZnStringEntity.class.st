@@ -17,7 +17,7 @@ Class {
 		'string',
 		'encoder'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #testing }

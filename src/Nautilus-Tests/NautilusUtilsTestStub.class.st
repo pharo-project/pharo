@@ -8,7 +8,7 @@ Class {
 		'one',
 		'two'
 	],
-	#category : 'Nautilus-Tests'
+	#category : #Nautilus-Tests
 }
 
 { #category : #'instance creation' }

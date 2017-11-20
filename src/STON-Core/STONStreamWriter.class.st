@@ -9,7 +9,7 @@ Class {
 		'writer',
 		'first'
 	],
-	#category : 'STON-Core'
+	#category : #STON-Core
 }
 
 { #category : #'instance creation' }

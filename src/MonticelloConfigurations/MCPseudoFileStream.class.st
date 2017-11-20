@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'localName'
 	],
-	#category : 'MonticelloConfigurations'
+	#category : #MonticelloConfigurations
 }
 
 { #category : #accessing }

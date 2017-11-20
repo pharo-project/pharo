@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entity'
 	],
-	#category : 'Renraku-Announcements'
+	#category : #Renraku-Announcements
 }
 
 { #category : #accessing }

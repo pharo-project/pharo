@@ -14,7 +14,7 @@ Class {
 		'ByteUTF8Encoding',
 		'Default'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

@@ -21,7 +21,7 @@ Class {
 		'prefix',
 		'requestorPos'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #opening }
@@ -93,7 +93,7 @@ SelectorChooserMorph >> defaultBaseColor [
 
 { #category : #drawing }
 SelectorChooserMorph >> drawCommonPrefixAreasOn: aCanvas [
-	| firstMenu firstMenuItem topLeft bottomLeft lastMenuItem |
+	 
 	requestor ifNil: [^ self].
 	prefix 
 		ifNotNil: [ self choiceMenus 

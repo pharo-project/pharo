@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'paneMorphs'
 	],
-	#category : 'Spec-MorphicAdapters-Support'
+	#category : #Spec-MorphicAdapters-Support
 }
 
 { #category : #submorphs-add/remove }

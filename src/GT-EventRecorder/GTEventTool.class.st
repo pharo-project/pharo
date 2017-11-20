@@ -6,7 +6,7 @@ You likely want to use #ensureLocalDirectory that downloads and extracts server 
 Class {
 	#name : #GTEventTool,
 	#superclass : #Object,
-	#category : 'GT-EventRecorder-Core'
+	#category : #GT-EventRecorder-Core
 }
 
 { #category : #accessing }

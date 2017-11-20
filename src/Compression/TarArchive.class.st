@@ -4,7 +4,7 @@ This is a kind of archive that uses the TAR format (popular in Unix). It is here
 Class {
 	#name : #TarArchive,
 	#superclass : #Archive,
-	#category : 'Compression-Archives'
+	#category : #Compression-Archives
 }
 
 { #category : #private }

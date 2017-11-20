@@ -1,7 +1,7 @@
 Class {
 	#name : #ComposablePresenterWithModelTest,
 	#superclass : #TestCase,
-	#category : 'Spec-Tests-Core'
+	#category : #Spec-Tests-Core
 }
 
 { #category : #testing }

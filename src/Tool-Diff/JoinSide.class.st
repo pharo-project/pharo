@@ -9,7 +9,7 @@ Class {
 		'color',
 		'text'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #accessing }
@@ -26,7 +26,7 @@ JoinSide >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 JoinSide >> highlight [
 	"Answer the primary highlight."
 

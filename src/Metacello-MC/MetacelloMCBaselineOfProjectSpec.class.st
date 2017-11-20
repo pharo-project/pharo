@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloMCBaselineOfProjectSpec,
 	#superclass : #MetacelloMCProjectSpec,
-	#category : 'Metacello-MC-Specs'
+	#category : #Metacello-MC-Specs
 }
 
 { #category : #scripting }

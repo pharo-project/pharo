@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'stack'
 	],
-	#category : 'DebuggerFilters'
+	#category : #DebuggerFilters
 }
 
 { #category : #operators }

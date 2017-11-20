@@ -32,7 +32,7 @@ Class {
 	#classVars : [
 		'LogDebuggerStackToFile'
 	],
-	#category : 'DebuggerModel'
+	#category : #DebuggerModel
 }
 
 { #category : #'actions registration' }

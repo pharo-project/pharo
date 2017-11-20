@@ -17,7 +17,7 @@ Class {
 		'managers',
 		'default'
 	],
-	#category : 'Renraku-Utility'
+	#category : #Renraku-Utility
 }
 
 { #category : #utility }

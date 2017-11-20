@@ -24,7 +24,7 @@ Class {
 		'subcollection3ElementsSorted',
 		'arrayWithCharacters'
 	],
-	#category : 'Collections-Tests-Strings'
+	#category : #Collections-Tests-Strings
 }
 
 { #category : #requirements }

@@ -1,7 +1,7 @@
 Class {
 	#name : #EpCommentTest,
 	#superclass : #EpLogBrowserOperationFactoryTest,
-	#category : 'EpiceaBrowsersTests-Integration'
+	#category : #EpiceaBrowsersTests-Integration
 }
 
 { #category : #tests }

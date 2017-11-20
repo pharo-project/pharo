@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'expectedCrc'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #crc }

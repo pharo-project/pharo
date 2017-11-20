@@ -4,7 +4,7 @@ Floating point types are imprecise. Using the operators = or ~= might not yield 
 Class {
 	#name : #RBFloatEqualityComparisonRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

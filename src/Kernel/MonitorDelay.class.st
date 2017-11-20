@@ -8,7 +8,7 @@ Class {
 		'monitor',
 		'queue'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'instance creation' }

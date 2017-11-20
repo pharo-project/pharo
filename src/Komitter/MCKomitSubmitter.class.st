@@ -4,7 +4,7 @@ I am a class dedicated to the transformation of a Komit object into a MCCommit a
 Class {
 	#name : #MCKomitSubmitter,
 	#superclass : #Object,
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ self pharoMethodPresentationExample
 Class {
 	#name : #GLMPharoMethodPresentation,
 	#superclass : #GLMRubricSmalltalkCodePresentation,
-	#category : 'Glamour-Rubric-Presentations'
+	#category : #Glamour-Rubric-Presentations
 }
 
 { #category : #examples }

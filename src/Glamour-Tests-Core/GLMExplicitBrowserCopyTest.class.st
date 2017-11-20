@@ -5,7 +5,7 @@ Class {
 		'browser',
 		'copiedBrowser'
 	],
-	#category : 'Glamour-Tests-Core'
+	#category : #Glamour-Tests-Core
 }
 
 { #category : #running }

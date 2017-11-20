@@ -6,7 +6,7 @@ Instances of this class are used to terminate matcher's chains. When a match rea
 Class {
 	#name : #RxmTerminator,
 	#superclass : #Object,
-	#category : 'Regex-Core'
+	#category : #Regex-Core
 }
 
 { #category : #matching }

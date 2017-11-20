@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMRubTextAreaBrick,
 	#superclass : #GLMRubEditingAreaBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Core'
+	#category : #Glamour-Morphic-Brick-Widgets-Core
 }
 
 { #category : #initialization }

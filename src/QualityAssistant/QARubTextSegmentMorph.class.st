@@ -8,7 +8,7 @@ Class {
 		'entity',
 		'critique'
 	],
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #actions }

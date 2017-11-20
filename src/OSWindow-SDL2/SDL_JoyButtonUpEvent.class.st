@@ -4,7 +4,7 @@ SDL2 library structure representing a joystick button up event data.
 Class {
 	#name : #SDL_JoyButtonUpEvent,
 	#superclass : #SDL_JoyButtonEvent,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

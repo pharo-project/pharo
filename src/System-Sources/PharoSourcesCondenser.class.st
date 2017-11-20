@@ -6,7 +6,7 @@ Additionally I will empty the current .changes file.
 Class {
 	#name : #PharoSourcesCondenser,
 	#superclass : #PharoChangesCondenser,
-	#category : 'System-Sources'
+	#category : #System-Sources
 }
 
 { #category : #helper }
@@ -86,7 +86,7 @@ PharoSourcesCondenser >> updateQuitPosition [
 	Smalltalk lastQuitLogPosition: 0.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #writing }
 PharoSourcesCondenser >> writeClassComment: aClass [
 	| organizer commentRemoteString stamp |
 	

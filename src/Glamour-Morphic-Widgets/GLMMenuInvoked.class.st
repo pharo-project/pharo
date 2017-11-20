@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'menuMorph'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'instance creation' }

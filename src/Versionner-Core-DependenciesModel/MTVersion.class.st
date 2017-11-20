@@ -19,7 +19,7 @@ Class {
 		'timestamp',
 		'project'
 	],
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #'instance creation' }

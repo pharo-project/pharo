@@ -15,7 +15,7 @@ Class {
 		'OFFSET_VALUE',
 		'OFFSET_WHICH'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

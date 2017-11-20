@@ -11,7 +11,7 @@ ZnSignalProgress
 Class {
 	#name : #ZnSignalProgress,
 	#superclass : #DynamicVariable,
-	#category : 'Zinc-HTTP-Variables'
+	#category : #Zinc-HTTP-Variables
 }
 
 { #category : #accessing }

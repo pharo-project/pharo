@@ -18,7 +18,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Graphics-Fonts'
+	#category : #Graphics-Fonts
 }
 
 { #category : #compiling }

@@ -7,14 +7,14 @@ Class {
 	#instVars : [
 		'atState'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #running }
 AdditionalMethodStateTest >> setUp [
 
 	| pragma |
-
+	super setUp.
 	pragma := (Object compiledMethodAt: #at:) penultimateLiteral at: #primitive:.
 	
 	atState := AdditionalMethodState selector: #at: with: pragma copy.

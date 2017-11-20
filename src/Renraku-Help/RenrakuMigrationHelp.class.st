@@ -6,7 +6,7 @@ Lately Pharo tools moved to Renraku framework which requires a slightly differen
 Class {
 	#name : #RenrakuMigrationHelp,
 	#superclass : #RenrakuHelp,
-	#category : 'Renraku-Help'
+	#category : #Renraku-Help
 }
 
 { #category : #'as yet unclassified' }

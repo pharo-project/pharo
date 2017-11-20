@@ -9,7 +9,7 @@ Class {
 		'model',
 		'selectionPreviousHighligth'
 	],
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #'instance creation' }

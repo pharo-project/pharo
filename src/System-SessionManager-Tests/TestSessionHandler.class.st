@@ -9,7 +9,7 @@ Class {
 		'startupHandler',
 		'shutdownHandler'
 	],
-	#category : 'System-SessionManager-Tests'
+	#category : #System-SessionManager-Tests
 }
 
 { #category : #instance-creation }

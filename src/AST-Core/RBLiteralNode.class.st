@@ -12,7 +12,7 @@ Class {
 		'start',
 		'stop'
 	],
-	#category : 'AST-Core-Nodes'
+	#category : #AST-Core-Nodes
 }
 
 { #category : #'instance creation' }

@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'columnToSortBy'
 	],
-	#category : 'Glamour-FastTable-Model'
+	#category : #Glamour-FastTable-Model
 }
 
 { #category : #'as yet unclassified' }

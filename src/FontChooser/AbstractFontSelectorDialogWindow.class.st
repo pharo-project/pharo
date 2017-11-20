@@ -16,7 +16,7 @@ Class {
 		'isStruckOut',
 		'previewText'
 	],
-	#category : 'FontChooser'
+	#category : #FontChooser
 }
 
 { #category : #icons }

@@ -92,7 +92,7 @@ Class {
 	#classVars : [
 		'InsertionPointColor'
 	],
-	#category : 'Morphic-Base-Text Support'
+	#category : #'Morphic-Base-Text Support'
 }
 
 { #category : #settings }

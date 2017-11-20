@@ -4,7 +4,7 @@ I am a non interactive UI manager that is used only during image startup, where 
 Class {
 	#name : #StartupUIManager,
 	#superclass : #NonInteractiveUIManager,
-	#category : 'System-SessionManager'
+	#category : #System-SessionManager
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ I am a context that know how to work with the SmalltalkEditor.
 Class {
 	#name : #SugsSmalltalkEditorContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #selection }

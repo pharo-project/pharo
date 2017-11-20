@@ -17,7 +17,7 @@ Class {
 		'icon',
 		'description'
 	],
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #evaluating }

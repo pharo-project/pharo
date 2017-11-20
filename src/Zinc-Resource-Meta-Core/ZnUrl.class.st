@@ -88,7 +88,7 @@ Class {
 		'username',
 		'password'
 	],
-	#category : 'Zinc-Resource-Meta-Core'
+	#category : #Zinc-Resource-Meta-Core
 }
 
 { #category : #accessing }

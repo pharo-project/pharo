@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloAllowConflictingProjectUpgrade,
 	#superclass : #MetacelloResolveProjectUpgrade,
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #'exception handling' }

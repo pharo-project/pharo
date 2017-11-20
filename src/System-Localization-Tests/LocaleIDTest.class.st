@@ -4,7 +4,7 @@ A unit test class for class LocaleID
 Class {
 	#name : #LocaleIDTest,
 	#superclass : #TestCase,
-	#category : 'System-Localization-Tests'
+	#category : #System-Localization-Tests
 }
 
 { #category : #'tests - test data' }

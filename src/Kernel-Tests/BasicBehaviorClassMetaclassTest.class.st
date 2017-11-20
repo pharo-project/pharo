@@ -9,7 +9,7 @@ This class contains some tests regarding the classes
 Class {
 	#name : #BasicBehaviorClassMetaclassTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Classes'
+	#category : #Kernel-Tests-Classes
 }
 
 { #category : #tests }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'snapshot'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #accessing }

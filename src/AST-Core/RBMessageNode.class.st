@@ -18,7 +18,7 @@ Class {
 		'keywordsPositions',
 		'arguments'
 	],
-	#category : 'AST-Core-Nodes'
+	#category : #AST-Core-Nodes
 }
 
 { #category : #'instance creation' }

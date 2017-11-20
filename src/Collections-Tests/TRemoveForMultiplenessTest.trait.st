@@ -5,7 +5,7 @@ Trait {
 	#name : #TRemoveForMultiplenessTest,
 	#traits : 'TRemoveTest',
 	#classTraits : 'TRemoveTest classTrait',
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #requirements }

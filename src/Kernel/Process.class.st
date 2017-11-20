@@ -35,7 +35,7 @@ Class {
 		'PSKeys',
 		'PSKeysSema'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'process specific' }

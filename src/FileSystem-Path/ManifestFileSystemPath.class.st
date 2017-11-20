@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestFileSystemPath,
 	#superclass : #PackageManifest,
-	#category : 'FileSystem-Path'
+	#category : #FileSystem-Path
 }
 
 { #category : #'meta-data - dependency analyser' }

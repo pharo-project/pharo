@@ -8,7 +8,7 @@ Class {
 		'rootClass',
 		'mode'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #transforming }

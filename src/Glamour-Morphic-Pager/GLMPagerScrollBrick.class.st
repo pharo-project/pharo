@@ -10,7 +10,7 @@ Class {
 		'currentScrollDelta',
 		'animation'
 	],
-	#category : 'Glamour-Morphic-Pager-Brick'
+	#category : #Glamour-Morphic-Pager-Brick
 }
 
 { #category : #accessing }

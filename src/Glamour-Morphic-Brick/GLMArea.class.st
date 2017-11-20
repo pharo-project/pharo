@@ -6,7 +6,7 @@ Class {
 		'vector',
 		'vertices'
 	],
-	#category : 'Glamour-Morphic-Brick-Utils-Geometry'
+	#category : #Glamour-Morphic-Brick-Utils-Geometry
 }
 
 { #category : #initialization }

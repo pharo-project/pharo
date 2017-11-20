@@ -35,7 +35,7 @@ Class {
 	#classVars : [
 		'LastVersionLoad'
 	],
-	#category : 'Metacello-MC-Model'
+	#category : #Metacello-MC-Model
 }
 
 { #category : #'development support' }

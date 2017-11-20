@@ -12,7 +12,7 @@ Class {
 		'imagePatch',
 		'mergePatch'
 	],
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #instance-creation }

@@ -8,7 +8,7 @@ someMethod
 Class {
 	#name : #MethodIsScriptAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

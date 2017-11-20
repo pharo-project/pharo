@@ -9,7 +9,7 @@ Class {
 		'start',
 		'width'
 	],
-	#category : 'Athens-Text'
+	#category : #Athens-Text
 }
 
 { #category : #adding }

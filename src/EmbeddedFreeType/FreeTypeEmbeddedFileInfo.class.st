@@ -8,7 +8,7 @@ Class {
 		'fileContents',
 		'baseName'
 	],
-	#category : 'EmbeddedFreeType'
+	#category : #EmbeddedFreeType
 }
 
 { #category : #accessing }

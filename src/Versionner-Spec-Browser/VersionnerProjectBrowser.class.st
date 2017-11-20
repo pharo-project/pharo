@@ -23,7 +23,7 @@ Class {
 		'versionsLabel',
 		'versionDescriptionLabel'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #spec }

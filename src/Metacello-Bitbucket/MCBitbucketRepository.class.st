@@ -1,7 +1,7 @@
 Class {
 	#name : #MCBitbucketRepository,
 	#superclass : #MCGitBasedNetworkRepository,
-	#category : 'Metacello-Bitbucket'
+	#category : #Metacello-Bitbucket
 }
 
 { #category : #accessing }

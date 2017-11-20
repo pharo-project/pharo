@@ -10,7 +10,7 @@ Class {
 		'recipient',
 		'valueParameter'
 	],
-	#category : 'Morphic-Base-Events'
+	#category : #Morphic-Base-Events
 }
 
 { #category : #'instance creation' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'class'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #'instance creation' }

@@ -5,7 +5,7 @@ but I check my key based on identity.
 Class {
 	#name : #SmallIdentityDictionary,
 	#superclass : #SmallDictionary,
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #private }

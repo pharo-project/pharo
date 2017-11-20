@@ -51,7 +51,7 @@ Class {
 		'FFITypeUnsignedShort',
 		'FFITypeVoid'
 	],
-	#category : 'FFI-Pools'
+	#category : #FFI-Pools
 }
 
 { #category : #'pool initialization' }

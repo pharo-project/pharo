@@ -25,7 +25,7 @@ Class {
 		'lruList',
 		'keyIndex'
 	],
-	#category : 'System-Caching'
+	#category : #System-Caching
 }
 
 { #category : #private }

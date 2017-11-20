@@ -11,7 +11,7 @@ Class {
 		'localHeaderRelativeOffset',
 		'dataOffset'
 	],
-	#category : 'Compression-Archives'
+	#category : #Compression-Archives
 }
 
 { #category : #'instance creation' }

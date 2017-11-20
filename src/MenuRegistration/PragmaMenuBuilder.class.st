@@ -56,7 +56,7 @@ Class {
 		'pragmaCollector',
 		'currentRoot'
 	],
-	#category : 'MenuRegistration-Core'
+	#category : #MenuRegistration-Core
 }
 
 { #category : #private }

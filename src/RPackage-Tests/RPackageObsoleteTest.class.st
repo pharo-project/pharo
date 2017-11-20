@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'notRun'
 	],
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #accessing }

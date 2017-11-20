@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'previousContents'
 	],
-	#category : 'Rubric-Editing-Announcements'
+	#category : #Rubric-Editing-Announcements
 }
 
 { #category : #accessing }

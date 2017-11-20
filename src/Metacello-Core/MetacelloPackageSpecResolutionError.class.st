@@ -6,7 +6,7 @@ Class {
 		'repositories',
 		'repositoryError'
 	],
-	#category : 'Metacello-Core-Exceptions-Errors'
+	#category : #Metacello-Core-Exceptions-Errors
 }
 
 { #category : #accessing }

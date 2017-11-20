@@ -4,7 +4,7 @@ SUnit tests for smart suggestions delegates
 Class {
 	#name : #SugsSuggestionDelegateTest,
 	#superclass : #SugsSuggestionTest,
-	#category : 'SmartSuggestions-Tests-Tests'
+	#category : #SmartSuggestions-Tests-Tests
 }
 
 { #category : #private }

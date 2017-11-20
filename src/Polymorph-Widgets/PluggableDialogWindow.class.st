@@ -11,10 +11,10 @@ Class {
 		'applyChangesSelector',
 		'defaultFocusMorph'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PluggableDialogWindow >> applyChanges [
 	"Apply the changes."
 
@@ -65,12 +65,12 @@ PluggableDialogWindow >> contentMorph: anObject [
 	contentMorph := anObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'focus handling' }
 PluggableDialogWindow >> defaultFocusMorph [
 	^ defaultFocusMorph ifNil: [super defaultFocusMorph]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'focus handling' }
 PluggableDialogWindow >> defaultFocusMorph: aMorph [
 	defaultFocusMorph := aMorph
 ]
@@ -84,31 +84,31 @@ PluggableDialogWindow >> initialize [
 		buttons: super newButtons
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PluggableDialogWindow >> newButtons [
 	"Answer  the plugged buttons."
 
 	^self buttons
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PluggableDialogWindow >> newContentMorph [
 	"Answer the plugged content."
 	
 	^self contentMorph  
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PluggableDialogWindow >> statusValue [
 	^statusValue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PluggableDialogWindow >> statusValue: val [
 	statusValue := val
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PluggableDialogWindow >> useDefaultOKButton [
 	"Set the buttons to be just an OK button.
 	Only effective before the model is set."
@@ -116,7 +116,7 @@ PluggableDialogWindow >> useDefaultOKButton [
 	self buttons: {self newOKButton isDefault: true}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PluggableDialogWindow >> useDefaultOKCancelButton [
 	"Set the buttons to be a default OK button and a cancel button.
 	Only effective before the model is set."
@@ -124,7 +124,7 @@ PluggableDialogWindow >> useDefaultOKCancelButton [
 	self buttons: super newButtons
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 PluggableDialogWindow >> useOKDefaultCancelButton [
 	"Set the buttons to be an OK button and a default cancel button.
 	Only effective before the model is set."

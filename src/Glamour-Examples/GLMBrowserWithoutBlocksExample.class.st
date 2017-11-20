@@ -4,7 +4,7 @@ self openOn: 42
 Class {
 	#name : #GLMBrowserWithoutBlocksExample,
 	#superclass : #GLMCompositePresentation,
-	#category : 'Glamour-Examples'
+	#category : #Glamour-Examples
 }
 
 { #category : #'as yet unclassified' }

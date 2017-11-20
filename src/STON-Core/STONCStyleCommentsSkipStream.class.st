@@ -29,7 +29,7 @@ Class {
 		'delimiter',
 		'escape'
 	],
-	#category : 'STON-Core'
+	#category : #STON-Core
 }
 
 { #category : #'instance creation' }

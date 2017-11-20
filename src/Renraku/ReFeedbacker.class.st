@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'uuid'
 	],
-	#category : 'Renraku-Utility'
+	#category : #Renraku-Utility
 }
 
 { #category : #actions }

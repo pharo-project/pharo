@@ -17,7 +17,7 @@ Class {
 		'versionArg',
 		'repositoryArg'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #execution }

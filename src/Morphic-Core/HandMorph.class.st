@@ -44,7 +44,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : 'Morphic-Core-Kernel'
+	#category : #Morphic-Core-Kernel
 }
 
 { #category : #utilities }

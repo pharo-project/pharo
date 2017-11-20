@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'modeActivated'
 	],
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #preconditions }

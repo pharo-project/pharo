@@ -1,7 +1,7 @@
 Class {
 	#name : #MCRepositoryAuthorizationTest,
 	#superclass : #TestCase,
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #asserting }

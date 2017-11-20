@@ -5,7 +5,7 @@ My user need to define the #tagToFilterBy which should return a collection of ta
 "
 Trait {
 	#name : #TGLMFastTableTag,
-	#category : 'Glamour-FastTable-Model'
+	#category : #Glamour-FastTable-Model
 }
 
 { #category : #factory }

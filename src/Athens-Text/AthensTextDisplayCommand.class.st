@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : 'Athens-Text'
+	#category : #Athens-Text
 }
 
 { #category : #accessing }

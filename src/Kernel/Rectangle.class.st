@@ -27,7 +27,7 @@ Class {
 		'origin',
 		'corner'
 	],
-	#category : 'Kernel-BasicObjects'
+	#category : #Kernel-BasicObjects
 }
 
 { #category : #'instance creation' }

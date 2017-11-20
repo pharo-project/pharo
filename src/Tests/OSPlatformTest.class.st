@@ -1,7 +1,7 @@
 Class {
 	#name : #OSPlatformTest,
 	#superclass : #TestCase,
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #testing }

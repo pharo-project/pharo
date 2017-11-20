@@ -3,7 +3,7 @@ I'm a style module related to a rubric text fields and its componenets
 "
 Trait {
 	#name : #GLMBrickRubricStyle,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-rubric }

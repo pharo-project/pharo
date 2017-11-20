@@ -15,7 +15,7 @@ Class {
 		'closeCallback',
 		'isResizeable'
 	],
-	#category : 'OSWindow-Core-Morphic'
+	#category : #OSWindow-Core-Morphic
 }
 
 { #category : #adding }

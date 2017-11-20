@@ -7,7 +7,7 @@ You can add files in subdirectories to a ZipArchive without using any ZipDirecto
 Class {
 	#name : #ZipDirectoryMember,
 	#superclass : #ZipFileMember,
-	#category : 'Compression-Archives'
+	#category : #Compression-Archives
 }
 
 { #category : #'instance creation' }

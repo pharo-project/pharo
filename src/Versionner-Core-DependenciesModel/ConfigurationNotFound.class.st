@@ -4,5 +4,5 @@ Error raised when a configuration class for a project is not loaded and / or can
 Class {
 	#name : #ConfigurationNotFound,
 	#superclass : #Error,
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }

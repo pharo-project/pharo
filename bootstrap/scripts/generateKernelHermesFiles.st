@@ -1,9 +1,11 @@
-| toExport repository packageNames environment |
+| toExport repository packageNames environment repositoryReference |
 
 Transcript nextPutAll: '[Hermes] - Loading BaselineOfPharoBootstrap'; cr.
 
+repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference / 'src'.
+
 repository := TonelRepository new
-	directory: 'src' asFileReference;
+	directory: repositoryReference;
 	yourself.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
@@ -25,7 +27,7 @@ toExport do: [ :packageName |
 	oldPackage := environment ask packageNamed: packageName.
 	hePackage := HERing2ToHermesBuilder new visitPackage: (oldPackage).
 	writer := HEBinaryReaderWriter new
-			stream: (File openForWriteFileNamed: 'bootstrap-cache/' , packageName, '.hermes');
+			stream: (File openForWriteFileNamed: ((Smalltalk os environment at: 'BOOTSTRAP_CACHE' ifAbsent: ['bootstrap-cache']) asFileReference / packageName, 'hermes') fullName) ;
 			yourself.
 	hePackage writeInto: writer.
 	writer flush.

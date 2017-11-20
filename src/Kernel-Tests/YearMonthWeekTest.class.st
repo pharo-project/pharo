@@ -9,11 +9,12 @@ Class {
 		'restoredStartDay',
 		'restoredTimeZone'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #running }
 YearMonthWeekTest >> setUp [
+	super setUp.
 	restoredStartDay := Week startDay.
 	restoredTimeZone := DateAndTime localTimeZone.
 
@@ -25,6 +26,7 @@ YearMonthWeekTest >> setUp [
 YearMonthWeekTest >> tearDown [
 	Week startDay: restoredStartDay.
 	DateAndTime localTimeZone: restoredTimeZone.
+	super tearDown 
 ]
 
 { #category : #tests }

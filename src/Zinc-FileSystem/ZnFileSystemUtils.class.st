@@ -7,7 +7,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnFileSystemUtils,
 	#superclass : #Object,
-	#category : 'Zinc-FileSystem'
+	#category : #Zinc-FileSystem
 }
 
 { #category : #paths }

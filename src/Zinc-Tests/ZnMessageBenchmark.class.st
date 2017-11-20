@@ -33,7 +33,7 @@ Class {
 		'representation',
 		'buffer'
 	],
-	#category : 'Zinc-Tests'
+	#category : #Zinc-Tests
 }
 
 { #category : #accessing }

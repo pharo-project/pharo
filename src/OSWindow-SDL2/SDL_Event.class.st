@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'EventTypeMap'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'class initialization' }

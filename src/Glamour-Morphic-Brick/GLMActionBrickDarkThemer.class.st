@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMActionBrickDarkThemer,
 	#superclass : #GLMBrickDarkThemer,
-	#category : 'Glamour-Morphic-Brick-Theme'
+	#category : #Glamour-Morphic-Brick-Theme
 }
 
 { #category : #brick-scrollbar }

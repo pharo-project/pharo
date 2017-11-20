@@ -4,7 +4,7 @@ I hold settings for quality assistant
 Class {
 	#name : #QASettings,
 	#superclass : #Object,
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #settings-accessing }

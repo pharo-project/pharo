@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'posixPermission'
 	],
-	#category : 'FileSystem-Core-Public'
+	#category : #FileSystem-Core-Public
 }
 
 { #category : #'instance creation' }

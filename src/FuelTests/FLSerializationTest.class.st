@@ -11,7 +11,7 @@ Class {
 		'streamFactory',
 		'traits'
 	],
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #accessing }

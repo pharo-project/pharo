@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'button'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #accessing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloPackagesSpecTestCase,
 	#superclass : #MetacelloSpecTestCase,
-	#category : 'Metacello-TestsCore-Specs'
+	#category : #Metacello-TestsCore-Specs
 }
 
 { #category : #tests }
@@ -392,7 +392,7 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupA [
 MetacelloPackagesSpecTestCase >> testRemoveGroupB [
     "used by MetacelloAbstractVersionConstructor>>removeGroup:"
 
-    | packages group removed |
+    | packages removed |
     packages := self packagesSpec.
     packages
         add:
@@ -428,7 +428,7 @@ MetacelloPackagesSpecTestCase >> testRemoveGroupB [
 MetacelloPackagesSpecTestCase >> testRemoveGroupC [
     "used by MetacelloAbstractVersionConstructor>>removeGroup:"
 
-    | packages group removed |
+    | packages removed |
     packages := self packagesSpec.
     packages
         add:

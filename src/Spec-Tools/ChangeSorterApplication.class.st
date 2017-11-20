@@ -18,7 +18,7 @@ Class {
 		'classesListPresenter',
 		'textPresenter'
 	],
-	#category : 'Spec-Tools-ChangeSorter'
+	#category : #Spec-Tools-ChangeSorter
 }
 
 { #category : #menu }

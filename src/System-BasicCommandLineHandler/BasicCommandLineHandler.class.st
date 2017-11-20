@@ -7,7 +7,7 @@ My usage is the same as PharoCommandLineHandler, see his comment as better expla
 Class {
 	#name : #BasicCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : 'System-BasicCommandLineHandler'
+	#category : #System-BasicCommandLineHandler
 }
 
 { #category : #accessing }

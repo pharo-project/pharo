@@ -25,7 +25,7 @@ Class {
 		'LineEndStrings',
 		'LookAheadCount'
 	],
-	#category : 'DeprecatedFileStream'
+	#category : #DeprecatedFileStream
 }
 
 { #category : #defaults }

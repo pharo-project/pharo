@@ -41,7 +41,7 @@ Class {
 	#classVars : [
 		'Resolver'
 	],
-	#category : 'FileSystem-Core-Public'
+	#category : #FileSystem-Core-Public
 }
 
 { #category : #windows-origins }

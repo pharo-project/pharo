@@ -12,7 +12,7 @@ Class {
 		'initialShortcut',
 		'edited'
 	],
-	#category : 'Keymapping-Settings'
+	#category : #Keymapping-Settings
 }
 
 { #category : #'instance creation' }

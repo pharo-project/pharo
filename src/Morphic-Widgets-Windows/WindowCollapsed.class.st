@@ -4,7 +4,7 @@ This announcement is emitted when a window is collapsed, by pressing the '-' top
 Class {
 	#name : #WindowCollapsed,
 	#superclass : #WindowAnnouncement,
-	#category : 'Morphic-Widgets-Windows-Announcements'
+	#category : #Morphic-Widgets-Windows-Announcements
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ A TimeStampMessageConverter is a wrapper wich display the timestamp of the provi
 Class {
 	#name : #TimeStampMethodConverter,
 	#superclass : #AbstractMethodConverter,
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #private }

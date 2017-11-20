@@ -4,7 +4,7 @@ I know how to add a parameter to a method
 Class {
 	#name : #SugsAddParameter,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

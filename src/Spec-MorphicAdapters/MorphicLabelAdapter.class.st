@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'emphasisOptions'
 	],
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #factory }

@@ -7,7 +7,7 @@ Class {
 		'includes',
 		'answers'
 	],
-	#category : 'Metacello-Core-Specs'
+	#category : #Metacello-Core-Specs
 }
 
 { #category : #adding }

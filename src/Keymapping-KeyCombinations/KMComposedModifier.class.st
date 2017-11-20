@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'modifiers'
 	],
-	#category : 'Keymapping-KeyCombinations'
+	#category : #Keymapping-KeyCombinations
 }
 
 { #category : #combining }

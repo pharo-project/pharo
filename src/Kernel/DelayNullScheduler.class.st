@@ -12,7 +12,7 @@ or do... ""Delay delaySchedulerClass: DelayNullScheduler""
 Class {
 	#name : #DelayNullScheduler,
 	#superclass : #DelayScheduler,
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'low priority processes' }

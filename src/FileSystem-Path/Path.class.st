@@ -17,7 +17,7 @@ Class {
 	#name : #Path,
 	#superclass : #Object,
 	#type : #variable,
-	#category : 'FileSystem-Path'
+	#category : #FileSystem-Path
 }
 
 { #category : #'instance creation' }
@@ -250,10 +250,10 @@ Path >> basename [
 	"Returns the base of the basename, 
 		i.e. 
 		/foo/gloops.taz basename is 'gloops.taz'
-		/ basename is '/'"
-	self size == 0
-		"the root node"
-		ifTrue: [ ^ '/'].
+		If empty, it is the emptyPathString"
+
+	self isEmpty ifTrue: 
+		[ ^ self emptyPathString ].
 	^ self at: self size
 ]
 
@@ -336,6 +336,13 @@ Path >> do: aBlock [
 			[ :index || segment |
 			segment := self at: index.
 			segment isEmpty ifFalse: [ aBlock value: segment ] ]
+]
+
+{ #category : #accessing }
+Path >> emptyPathString [
+	"Answer the string representing an empty (size = 0) instance of the receiver"
+
+	^self delimiter asString
 ]
 
 { #category : #accessing }

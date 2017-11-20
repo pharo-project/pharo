@@ -8,7 +8,7 @@ Class {
 		'versionLoader',
 		'label'
 	],
-	#category : 'Monticello-Announcements'
+	#category : #Monticello-Announcements
 }
 
 { #category : #accessing }

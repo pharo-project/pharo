@@ -4,7 +4,7 @@ unsigned, 32-bit integer
 Class {
 	#name : #FLPositive32SmallIntegerCluster,
 	#superclass : #FLSmallIntegerCluster,
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #serialize/materialize }

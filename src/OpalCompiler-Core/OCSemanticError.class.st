@@ -8,7 +8,7 @@ Class {
 		'compilationContext',
 		'node'
 	],
-	#category : 'OpalCompiler-Core-Exception'
+	#category : #OpalCompiler-Core-Exception
 }
 
 { #category : #accessing }

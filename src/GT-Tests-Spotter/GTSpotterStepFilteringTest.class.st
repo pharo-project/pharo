@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterStepFilteringTest,
 	#superclass : #GTSpotterStepTest,
-	#category : 'GT-Tests-Spotter-Scripting'
+	#category : #GT-Tests-Spotter-Scripting
 }
 
 { #category : #running }

@@ -22,7 +22,7 @@ Class {
 		'textConverterHolder',
 		'browsedEnvironment'
 	],
-	#category : 'Spec-Tools-Senders'
+	#category : #Spec-Tools-Senders
 }
 
 { #category : #'instance creation' }
@@ -471,6 +471,7 @@ MessageBrowser >> initializePresenter [
 			textModel behavior: (item ifNil: [ nil ] ifNotNil: [ item methodClass ]).
 			textModel doItReceiver: textModel behavior.
 			textModel text: (self textConverter method: item; getText).
+			textModel clearUndoManager.
 			self installIconStylerFor: item].
 	listModel whenListChanged: [ self updateTitle ].
 		

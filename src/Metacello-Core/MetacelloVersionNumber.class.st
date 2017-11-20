@@ -42,7 +42,7 @@ Class {
 	#name : #MetacelloVersionNumber,
 	#superclass : #Magnitude,
 	#type : #variable,
-	#category : 'Metacello-Core-Model'
+	#category : #Metacello-Core-Model
 }
 
 { #category : #private }

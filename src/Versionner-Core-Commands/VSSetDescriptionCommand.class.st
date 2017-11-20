@@ -4,7 +4,7 @@ Set the description on the selected development version
 Class {
 	#name : #VSSetDescriptionCommand,
 	#superclass : #VSVersionCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }
@@ -19,7 +19,7 @@ VSSetDescriptionCommand >> execute [
 
 { #category : #execute }
 VSSetDescriptionCommand >> executeWithMessage: message [
-	| toolbox updatedSpecs |
+	| toolbox |
 	toolbox := MetacelloToolBox configurationNamed: target configurationBasename.
 	toolbox
 		updateVersionMethodForVersion: target version versionString

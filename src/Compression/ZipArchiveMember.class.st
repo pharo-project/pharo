@@ -35,7 +35,7 @@ Class {
 	#pools : [
 		'ZipFileConstants'
 	],
-	#category : 'Compression-Archives'
+	#category : #Compression-Archives
 }
 
 { #category : #'instance creation' }

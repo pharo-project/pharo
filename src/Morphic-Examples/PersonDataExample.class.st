@@ -10,7 +10,7 @@ Class {
 		'age',
 		'married'
 	],
-	#category : 'Morphic-Examples-MorphTreeWidget'
+	#category : #Morphic-Examples-MorphTreeWidget
 }
 
 { #category : #'instance creation' }

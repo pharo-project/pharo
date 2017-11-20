@@ -7,7 +7,7 @@ Class {
 		'announcer',
 		'glamourPresentation'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ SUnit tests for hooked serialization using fuel
 Class {
 	#name : #FLHookedSubstitutionTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }

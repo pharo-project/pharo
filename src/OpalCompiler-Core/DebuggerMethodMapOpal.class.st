@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'methodNode'
 	],
-	#category : 'OpalCompiler-Core-FrontEnd'
+	#category : #OpalCompiler-Core-FrontEnd
 }
 
 { #category : #'instance creation' }

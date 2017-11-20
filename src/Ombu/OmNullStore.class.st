@@ -4,7 +4,7 @@ I represent the null OmStore (Null Object design pattern).
 Class {
 	#name : #OmNullStore,
 	#superclass : #OmStore,
-	#category : 'Ombu-Stores'
+	#category : #Ombu-Stores
 }
 
 { #category : #enumerating }

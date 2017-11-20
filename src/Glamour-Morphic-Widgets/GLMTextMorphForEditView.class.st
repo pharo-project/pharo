@@ -4,7 +4,7 @@ GLMTextMorphForEditView is meant to work with GLMPluggableTextMorph.
 Class {
 	#name : #GLMTextMorphForEditView,
 	#superclass : #TextMorphForEditView,
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #editing }

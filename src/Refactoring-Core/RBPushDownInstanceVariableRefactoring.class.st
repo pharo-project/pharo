@@ -6,7 +6,7 @@ My precondition verifies that the moved variable is not referenced in the method
 Class {
 	#name : #RBPushDownInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #preconditions }

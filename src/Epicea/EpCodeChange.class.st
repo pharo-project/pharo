@@ -4,7 +4,7 @@ I represent a change in a code entity.
 Class {
 	#name : #EpCodeChange,
 	#superclass : #EpEvent,
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #accessing }

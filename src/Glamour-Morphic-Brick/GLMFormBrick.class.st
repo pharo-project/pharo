@@ -5,7 +5,7 @@ A GLMFormBrick is scriptable html-like form with possibility to submit it.
 Class {
 	#name : #GLMFormBrick,
 	#superclass : #GLMBandBrick,
-	#category : 'Glamour-Morphic-Brick-Widgets-Basic'
+	#category : #Glamour-Morphic-Brick-Widgets-Basic
 }
 
 { #category : #examples }

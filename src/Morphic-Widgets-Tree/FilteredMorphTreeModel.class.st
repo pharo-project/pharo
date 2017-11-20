@@ -53,7 +53,7 @@ Class {
 		'initialRootItems',
 		'autoAccept'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #example }

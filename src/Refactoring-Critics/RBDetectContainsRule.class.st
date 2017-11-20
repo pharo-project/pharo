@@ -4,7 +4,7 @@ Checks for bytecodePrimEqual  using the do: method instead of using the contains
 Class {
 	#name : #RBDetectContainsRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

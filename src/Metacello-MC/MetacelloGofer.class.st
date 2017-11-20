@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloGofer,
 	#superclass : #Gofer,
-	#category : 'Metacello-MC-Gofer'
+	#category : #Metacello-MC-Gofer
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ Test class for MTProject
 Class {
 	#name : #MTProjectTest,
 	#superclass : #TestCase,
-	#category : 'Versionner-Tests-Core-DependenciesModel'
+	#category : #Versionner-Tests-Core-DependenciesModel
 }
 
 { #category : #tests }

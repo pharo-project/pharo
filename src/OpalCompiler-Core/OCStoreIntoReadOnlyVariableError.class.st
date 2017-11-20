@@ -5,7 +5,7 @@ Error when trying to assign to a non writeble Variable.
 Class {
 	#name : #OCStoreIntoReadOnlyVariableError,
 	#superclass : #OCSemanticError,
-	#category : 'OpalCompiler-Core-Exception'
+	#category : #OpalCompiler-Core-Exception
 }
 
 { #category : #accessing }

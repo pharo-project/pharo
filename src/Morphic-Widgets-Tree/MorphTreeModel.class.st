@@ -14,7 +14,7 @@ Class {
 		'isCheckList',
 		'enabled'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #examples }

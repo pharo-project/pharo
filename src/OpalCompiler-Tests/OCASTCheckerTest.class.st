@@ -1,7 +1,7 @@
 Class {
 	#name : #OCASTCheckerTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-AST'
+	#category : #OpalCompiler-Tests-AST
 }
 
 { #category : #tools }
@@ -15,7 +15,7 @@ OCASTCheckerTest >> nameAnalysisNoClosureIn: class for: ast [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testDoubleRemoteAnidatedBlocks [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#doubleRemoteAnidatedBlocks) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -57,7 +57,7 @@ OCASTCheckerTest >> testExampleInlineBlockCollectionLR3 [
 
 { #category : #'testing - primitives' }
 OCASTCheckerTest >> testExamplePrimitiveErrorCode [
-	| method ast ir newMethod |
+	| ast |
 	ast := (OCOpalExamples>>#examplePrimitiveErrorCode) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 
@@ -68,7 +68,7 @@ OCASTCheckerTest >> testExamplePrimitiveErrorCode [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testExampleSelf [
-	| ast assignment vars |
+	| ast assignment |
 	ast := (OCOpalExamples>>#exampleSelf) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -81,7 +81,7 @@ OCASTCheckerTest >> testExampleSelf [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testExampleSuper [
-	| ast assignment vars |
+	| ast assignment |
 	ast := (OCOpalExamples>>#exampleSuper) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -94,7 +94,7 @@ OCASTCheckerTest >> testExampleSuper [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testExampleThisContext [ 
-	| ast assignment vars |
+	| ast assignment |
 	ast := (OCOpalExamples>>#exampleThisContext) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -116,7 +116,7 @@ OCASTCheckerTest >> testExampleToDoArgument [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testInstanceVar [
-	| ast assignment vars |
+	| ast assignment |
 	ast := (OCOpalExamples>>#exampleiVar) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -131,7 +131,7 @@ OCASTCheckerTest >> testInstanceVar [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testNoRemoteBlockArgument [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#noRemoteBlockArgument) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -147,7 +147,7 @@ OCASTCheckerTest >> testNoRemoteBlockArgument [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testNoRemoteBlockReturn [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#noRemoteBlockReturn) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -160,7 +160,7 @@ OCASTCheckerTest >> testNoRemoteBlockReturn [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testNoRemoteBlockTemp [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#noRemoteBlockTemp) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -176,7 +176,7 @@ OCASTCheckerTest >> testNoRemoteBlockTemp [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testNoRemoteMethodTemp [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#noRemoteMethodTemp) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -230,7 +230,7 @@ OCASTCheckerTest >> testOptimizedBlockWrittenAfterClosedOverCase2 [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testOptimizedBlocksAndSameNameTemps [
-	| ast assignment vars scopes |
+	| ast scopes |
 	ast := (OCOpalExamples>>#optimizedBlocksAndSameNameTemps) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -276,7 +276,7 @@ OCASTCheckerTest >> testSemanticAnalysisOnNonMethodNode [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#singleRemoteDifferentBlocksSameArgumentName) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.
@@ -292,7 +292,7 @@ OCASTCheckerTest >> testSingleRemoteDifferentBlocksSameArgumentName [
 
 { #category : #'testing - variables' }
 OCASTCheckerTest >> testSingleRemoteMethodArgument [
-	| ast assignment vars |
+	| ast |
 	ast := (OCOpalExamples>>#singleRemoteMethodArgument) parseTree.
 	self nameAnalysisNoClosureIn: OCOpalExamples for: ast.
 	self assert: ast scope isMethodScope.

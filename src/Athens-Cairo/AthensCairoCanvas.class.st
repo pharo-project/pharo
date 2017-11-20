@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : 'Athens-Cairo'
+	#category : #Athens-Cairo
 }
 
 { #category : #converting }
@@ -62,7 +62,10 @@ AthensCairoCanvas >> clipBy: aRectangle during: aBlock [
 
 { #category : #accessing }
 AthensCairoCanvas >> clipRect [
-	^ currentClipRect ifNil: [ 0 @ 0 extent: self surface extent ]
+   ^ currentClipRect
+        ifNil: [ pathTransform
+                ifNotNil: [ (pathTransform inverted transform: 0 @ 0) extent: self surface extent ]
+                ifNil: (0 @ 0 extent: self surface extent) ]
 ]
 
 { #category : #private }

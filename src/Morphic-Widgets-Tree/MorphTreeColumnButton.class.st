@@ -8,7 +8,7 @@ Class {
 		'model',
 		'icon'
 	],
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #accessing }

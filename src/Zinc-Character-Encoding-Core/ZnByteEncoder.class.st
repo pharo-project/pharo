@@ -15,7 +15,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnByteEncoder,
 	#superclass : #ZnSimplifiedByteEncoder,
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #mappings }

@@ -5,7 +5,7 @@ A BrowseDebugAction is a debugging actions sending a unary message to the stack 
 Class {
 	#name : #BrowseDebugAction,
 	#superclass : #MessageSendDebugAction,
-	#category : 'DebuggerActions'
+	#category : #DebuggerActions
 }
 
 { #category : #'actions creation' }

@@ -8,7 +8,7 @@ Class {
 		'center',
 		'radius'
 	],
-	#category : 'Athens-Balloon'
+	#category : #Athens-Balloon
 }
 
 { #category : #rendering }

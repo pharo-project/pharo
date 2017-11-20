@@ -9,7 +9,7 @@ Class {
 		'OFFSET_SUBSYSTEM',
 		'OFFSET_VERSION'
 	],
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'field definition' }

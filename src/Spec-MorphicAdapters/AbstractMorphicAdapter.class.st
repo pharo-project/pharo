@@ -4,7 +4,7 @@ I am an abstract class providing all the properties shared amongs all the morphi
 Class {
 	#name : #AbstractMorphicAdapter,
 	#superclass : #AbstractAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #specs }

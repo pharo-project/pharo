@@ -189,7 +189,7 @@ Class {
 		'searchedTextList',
 		'regexpSearch'
 	],
-	#category : 'System-Settings-Browser'
+	#category : #System-Settings-Browser
 }
 
 { #category : #'private helpers' }

@@ -4,7 +4,7 @@ An OmNullStoreTest is a test class for testing the behavior of OmNullStore
 Class {
 	#name : #OmStoreFactoryTest,
 	#superclass : #TestCase,
-	#category : 'OmbuTests'
+	#category : #OmbuTests
 }
 
 { #category : #resources }

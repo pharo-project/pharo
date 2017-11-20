@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'searchList'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #'instance creation' }

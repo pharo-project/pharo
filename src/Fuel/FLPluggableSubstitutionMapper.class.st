@@ -11,7 +11,7 @@ Class {
 		'condition',
 		'substitutionFactory'
 	],
-	#category : 'Fuel-Mappers'
+	#category : #Fuel-Mappers
 }
 
 { #category : #'instance creation' }

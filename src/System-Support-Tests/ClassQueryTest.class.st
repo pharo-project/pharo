@@ -1,7 +1,7 @@
 Class {
 	#name : #ClassQueryTest,
 	#superclass : #TestCase,
-	#category : 'System-Support-Tests'
+	#category : #System-Support-Tests
 }
 
 { #category : #tests }

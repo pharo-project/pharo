@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloScriptNotification,
 	#superclass : #Notification,
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #handlers }

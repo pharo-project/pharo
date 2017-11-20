@@ -18,7 +18,7 @@ a min: b
 Class {
 	#name : #RBMinMaxRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

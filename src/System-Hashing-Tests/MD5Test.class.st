@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'hash'
 	],
-	#category : 'System-Hashing-Tests-MD5'
+	#category : #System-Hashing-Tests-MD5
 }
 
 { #category : #testing }

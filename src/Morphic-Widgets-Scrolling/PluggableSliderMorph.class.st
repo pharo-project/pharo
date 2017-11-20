@@ -14,10 +14,10 @@ Class {
 		'getLabelSelector',
 		'label'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 PluggableSliderMorph class >> on: anObject getValue: getSel setValue: setSel [
 	"Answer a new instance of the receiver with
 	the given selectors as the interface."
@@ -28,7 +28,7 @@ PluggableSliderMorph class >> on: anObject getValue: getSel setValue: setSel [
 		setValue: setSel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 PluggableSliderMorph class >> on: anObject getValue: getSel setValue: setSel min: min max: max quantum: quantum [
 	"Answer a new instance of the receiver with
 	the given selectors as the interface."

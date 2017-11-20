@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'version'
 	],
-	#category : 'Zinc-HTTP-Exceptions'
+	#category : #Zinc-HTTP-Exceptions
 }
 
 { #category : #'instance creation' }

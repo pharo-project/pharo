@@ -12,7 +12,7 @@ Class {
 		'propagations',
 		'newClass'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #accessing }

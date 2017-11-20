@@ -12,7 +12,7 @@ Class {
 		'slotShift',
 		'modificationMap'
 	],
-	#category : 'Slot-ClassBuilder'
+	#category : #Slot-ClassBuilder
 }
 
 { #category : #'instance creation' }

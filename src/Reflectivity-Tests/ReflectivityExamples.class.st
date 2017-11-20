@@ -12,7 +12,7 @@ Class {
 		'ClassVar',
 		'singleton'
 	],
-	#category : 'Reflectivity-Tests'
+	#category : #Reflectivity-Tests
 }
 
 { #category : #options }

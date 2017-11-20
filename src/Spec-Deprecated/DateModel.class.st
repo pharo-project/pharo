@@ -4,5 +4,5 @@ This is deprecated class because the original class DateModel was renamed to Dat
 Class {
 	#name : #DateModel,
 	#superclass : #DatePresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

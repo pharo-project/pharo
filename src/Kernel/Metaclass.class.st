@@ -18,7 +18,7 @@ Class {
 		'traitComposition',
 		'localSelectors'
 	],
-	#category : 'Kernel-Classes'
+	#category : #Kernel-Classes
 }
 
 { #category : #compiling }

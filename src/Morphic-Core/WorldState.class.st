@@ -34,7 +34,7 @@ Class {
 		'ServerMode',
 		'ShowUpdateOptionInWorldMenu'
 	],
-	#category : 'Morphic-Core-Worlds'
+	#category : #Morphic-Core-Worlds
 }
 
 { #category : #accessing }

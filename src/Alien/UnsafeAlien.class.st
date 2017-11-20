@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'nonPointerObject'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #'class initialization' }

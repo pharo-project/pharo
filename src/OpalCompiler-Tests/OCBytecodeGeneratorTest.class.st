@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'a'
 	],
-	#category : 'OpalCompiler-Tests-Bytecode'
+	#category : #OpalCompiler-Tests-Bytecode
 }
 
 { #category : #accessing }

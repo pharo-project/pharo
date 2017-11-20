@@ -5,7 +5,7 @@ Class {
 	#name : #ColorArray,
 	#superclass : #ArrayedCollection,
 	#type : #words,
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #converting }

@@ -4,7 +4,7 @@ This smell arises when a class defines a method in all subclasses, but not in it
 Class {
 	#name : #RBMissingSubclassResponsibilityRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

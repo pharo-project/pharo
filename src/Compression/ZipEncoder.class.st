@@ -12,7 +12,7 @@ Class {
 	#pools : [
 		'ZipConstants'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #positioning }

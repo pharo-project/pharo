@@ -24,7 +24,7 @@ Class {
 		'showClassSide',
 		'model'
 	],
-	#category : 'Tool-ExternalBrowser'
+	#category : #Tool-ExternalBrowser
 }
 
 { #category : #'public access' }

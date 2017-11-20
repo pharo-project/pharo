@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'Nautilus-GroupManagerUI'
+	#category : #Nautilus-GroupManagerUI
 }
 
 { #category : #'drag and drop' }

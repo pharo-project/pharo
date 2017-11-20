@@ -8,7 +8,7 @@ The defined number of arguments can be edited in #argumentsCount.
 Class {
 	#name : #RBExcessiveArgumentsRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

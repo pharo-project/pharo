@@ -4,7 +4,7 @@ Checks for unconditional recursion that might cause the image to hang when execu
 Class {
 	#name : #RBUnconditionalRecursionRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

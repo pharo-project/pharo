@@ -9,7 +9,7 @@ Class {
 		'newCategory',
 		'class'
 	],
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #'instance creation' }

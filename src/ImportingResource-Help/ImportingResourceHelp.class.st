@@ -4,7 +4,7 @@ A help topic on how to import resources into the image
 Class {
 	#name : #ImportingResourceHelp,
 	#superclass : #CustomHelp,
-	#category : 'ImportingResource-Help'
+	#category : #ImportingResource-Help
 }
 
 { #category : #accessing }

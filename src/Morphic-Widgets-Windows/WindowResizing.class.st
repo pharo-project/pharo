@@ -12,7 +12,7 @@ Class {
 		'oldSize',
 		'newSize'
 	],
-	#category : 'Morphic-Widgets-Windows-Announcements'
+	#category : #Morphic-Widgets-Windows-Announcements
 }
 
 { #category : #testing }

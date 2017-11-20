@@ -4,7 +4,7 @@ I am a predicate that defines a boolean function used to decide whether an opene
 Class {
 	#name : #GLMPopupBrickPredicate,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
 }
 
 { #category : #predicate }

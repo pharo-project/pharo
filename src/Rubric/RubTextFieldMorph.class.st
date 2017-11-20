@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'hasValidText'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #drawing }

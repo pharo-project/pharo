@@ -5,7 +5,7 @@ Class {
 		'spec',
 		'loader'
 	],
-	#category : 'Metacello-MC-Directives'
+	#category : #Metacello-MC-Directives
 }
 
 { #category : #'instance creation' }

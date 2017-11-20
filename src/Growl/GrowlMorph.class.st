@@ -31,7 +31,7 @@ Class {
 		'DefaultBackgroundColor',
 		'Position'
 	],
-	#category : 'Growl'
+	#category : #Growl
 }
 
 { #category : #'instance creation' }

@@ -5,7 +5,7 @@ For simplicity we extend from MetaLinkIconStyler
 Class {
 	#name : #CoverageRubricStyler,
 	#superclass : #MetalinkIconStyler,
-	#category : 'Reflectivity-Examples'
+	#category : #Reflectivity-Examples
 }
 
 { #category : #styling }

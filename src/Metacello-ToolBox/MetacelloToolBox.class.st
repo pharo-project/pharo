@@ -10,7 +10,7 @@ Class {
 		'project',
 		'methodSpec'
 	],
-	#category : 'Metacello-ToolBox'
+	#category : #Metacello-ToolBox
 }
 
 { #category : #private }

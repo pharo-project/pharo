@@ -9,7 +9,7 @@ more efficiently to work with buffer sized chunks, bypassing #next and #nextPut:
 Class {
 	#name : #ZdcOptimizedSocketStream,
 	#superclass : #ZdcSimpleSocketStream,
-	#category : 'Zodiac-Core'
+	#category : #Zodiac-Core
 }
 
 { #category : #'stream out' }

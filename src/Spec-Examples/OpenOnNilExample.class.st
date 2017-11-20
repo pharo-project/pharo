@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'text'
 	],
-	#category : 'Spec-Examples-Wrapper'
+	#category : #Spec-Examples-Wrapper
 }
 
 { #category : #specs }

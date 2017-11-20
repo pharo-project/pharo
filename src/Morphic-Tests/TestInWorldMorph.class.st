@@ -8,7 +8,7 @@ Class {
 		'intoWorldCount',
 		'outOfWorldCount'
 	],
-	#category : 'Morphic-Tests-Kernel'
+	#category : #Morphic-Tests-Kernel
 }
 
 { #category : #initialization }

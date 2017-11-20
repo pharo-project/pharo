@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'recentTools'
 	],
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #initialization }

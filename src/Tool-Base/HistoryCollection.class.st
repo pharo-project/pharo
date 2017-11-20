@@ -14,7 +14,7 @@ Class {
 		'storage',
 		'maxSize'
 	],
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #'instance creation' }

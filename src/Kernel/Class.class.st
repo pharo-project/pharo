@@ -22,7 +22,7 @@ Class {
 		'traitComposition',
 		'localSelectors'
 	],
-	#category : 'Kernel-Classes'
+	#category : #Kernel-Classes
 }
 
 { #category : #fileIn/Out }
@@ -770,17 +770,6 @@ Class >> hasSharedPools [
 { #category : #'accessing class hierarchy' }
 Class >> hasSubclasses [
 	^subclasses notNil
-]
-
-{ #category : #'subclass creation' }
-Class >> immediateByteSubclass: className instanceVariableNames: instvarNames classVariableNames: classVarNames package: package [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		immediateSubclass: className
-		instanceVariableNames: instvarNames
-		classVariableNames: classVarNames
-		package: package
 ]
 
 { #category : #'subclass creation - immediate' }

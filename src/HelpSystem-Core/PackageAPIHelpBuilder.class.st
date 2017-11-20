@@ -4,7 +4,7 @@ A builder for the API of the various packages
 Class {
 	#name : #PackageAPIHelpBuilder,
 	#superclass : #HelpBuilder,
-	#category : 'HelpSystem-Core-Builders'
+	#category : #HelpSystem-Core-Builders
 }
 
 { #category : #building }

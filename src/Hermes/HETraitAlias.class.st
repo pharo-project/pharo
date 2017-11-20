@@ -1,7 +1,7 @@
 Class {
 	#name : #HETraitAlias,
 	#superclass : #HETraitTransformation,
-	#category : 'Hermes-Model'
+	#category : #Hermes-Model
 }
 
 { #category : #accessing }

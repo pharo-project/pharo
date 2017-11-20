@@ -157,7 +157,7 @@ In particular, you may also be interested in:
 Class {
 	#name : #PharoEnvironmentHelp,
 	#superclass : #Object,
-	#category : 'Pharo-Help'
+	#category : #Pharo-Help
 }
 
 { #category : #help-text }

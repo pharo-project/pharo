@@ -9,7 +9,7 @@ Class {
 		'january23rd2004',
 		'june2nd1973'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #coverage }
@@ -51,7 +51,7 @@ DateTest >> selectorsToBeIgnored [
 
 { #category : #running }
 DateTest >> setUp [
-
+	super setUp.
 	june2nd1973 := self dateClass year: 1973 day: 153.
 	january23rd2004 := Date readFrom: '01-23-2004' readStream.
 	aTime := Time readFrom: '12:34:56 pm' readStream
@@ -378,7 +378,7 @@ DateTest >> testPreviousByName [
 { #category : #tests }
 DateTest >> testPrintFormat [
 
-	| format monthTypes |
+	| format |
 	format := DatePrintFormatTester on: january23rd2004.
 	format dayPosition: 1 monthPosition: 2 yearPosition: 3 delimiter: $/ monthType: 1 yearType: 1.
 	format shouldEqual: '23/1/2004'.

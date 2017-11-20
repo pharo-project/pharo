@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloMCProjectSpecTestCase,
 	#superclass : #MetacelloProjectSpecTestCase,
-	#category : 'Metacello-TestsMCCore'
+	#category : #Metacello-TestsMCCore
 }
 
 { #category : #accessing }
@@ -11,7 +11,7 @@ MetacelloMCProjectSpecTestCase >> projectClass [
 
 { #category : #tests }
 MetacelloMCProjectSpecTestCase >> testMCProjectMergeSpec [
-    | projectA projectB project packageA packageB repository |
+    | projectA projectB project repository |
     projectA := self projectSpec
         name: 'Project';
         projectPackage: self project packageSpec;

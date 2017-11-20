@@ -4,7 +4,7 @@ I am an acceptor in the context of code rewriting using RBTreeRewriting
 Class {
 	#name : #CodeRewritingAcceptor,
 	#superclass : #AbstractAcceptor,
-	#category : 'Nautilus-Acceptors'
+	#category : #Nautilus-Acceptors
 }
 
 { #category : #protocol }

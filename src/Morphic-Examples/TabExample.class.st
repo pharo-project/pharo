@@ -15,7 +15,7 @@ Class {
 		'listModel',
 		'window'
 	],
-	#category : 'Morphic-Examples-Tabs'
+	#category : #Morphic-Examples-Tabs
 }
 
 { #category : #'instance creation' }

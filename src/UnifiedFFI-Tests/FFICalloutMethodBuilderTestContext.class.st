@@ -10,7 +10,7 @@ Class {
 		'argumentNames',
 		'methodClass'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #accessing }

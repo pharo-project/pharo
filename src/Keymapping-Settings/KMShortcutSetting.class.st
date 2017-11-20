@@ -9,10 +9,10 @@ Class {
 		'category',
 		'action'
 	],
-	#category : 'Keymapping-Settings'
+	#category : #Keymapping-Settings
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 KMShortcutSetting class >> for: aShortcutName in: aCategory [
 	^ (self new)
 		shortcutName: aShortcutName;
@@ -20,7 +20,7 @@ KMShortcutSetting class >> for: aShortcutName in: aCategory [
 		yourself
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 KMShortcutSetting class >> settingInputWidgetForNode: aSettingNode [
 	| catcherMorph theme |
 	theme := UITheme builder.

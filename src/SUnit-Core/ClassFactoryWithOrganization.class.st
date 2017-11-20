@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'organization'
 	],
-	#category : 'SUnit-Core-Extensions'
+	#category : #SUnit-Core-Extensions
 }
 
 { #category : #'instance creation' }

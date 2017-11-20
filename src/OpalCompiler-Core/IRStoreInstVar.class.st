@@ -4,7 +4,7 @@ store inst var
 Class {
 	#name : #IRStoreInstVar,
 	#superclass : #IRInstVarAccess,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

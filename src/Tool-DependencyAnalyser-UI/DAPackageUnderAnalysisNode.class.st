@@ -4,7 +4,7 @@ A PDPackageNode is used to display a package in a tree.
 Class {
 	#name : #DAPackageUnderAnalysisNode,
 	#superclass : #DAAbstractPackageNode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #comparing }

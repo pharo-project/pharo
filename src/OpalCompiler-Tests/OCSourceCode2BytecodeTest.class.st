@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'ClassVar'
 	],
-	#category : 'OpalCompiler-Tests-Source'
+	#category : #OpalCompiler-Tests-Source
 }
 
 { #category : #compiling }

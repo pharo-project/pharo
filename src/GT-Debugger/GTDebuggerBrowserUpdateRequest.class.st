@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'debugActionExecutedAnnouncement'
 	],
-	#category : 'GT-Debugger-UI'
+	#category : #GT-Debugger-UI
 }
 
 { #category : #instance-creation }

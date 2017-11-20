@@ -4,7 +4,7 @@ This is the default strategy that does nothing (an implementation of the Null pa
 Class {
 	#name : #GLMNoStrategy,
 	#superclass : #GLMTransmissionStrategy,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #transmitting }

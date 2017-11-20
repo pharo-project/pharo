@@ -9,7 +9,7 @@ I send these event back to my handler:
 Class {
 	#name : #OSTouchThreeFingersSwipeDetector,
 	#superclass : #OSTouchSwipeDetector,
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #abstract }

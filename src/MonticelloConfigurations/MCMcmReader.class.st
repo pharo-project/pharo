@@ -8,7 +8,7 @@ Class {
 		'fileName',
 		'configuration'
 	],
-	#category : 'MonticelloConfigurations'
+	#category : #MonticelloConfigurations
 }
 
 { #category : #accessing }

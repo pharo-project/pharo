@@ -8,7 +8,7 @@ Class {
 		'bytes',
 		'size'
 	],
-	#category : 'FileSystem-Memory'
+	#category : #FileSystem-Memory
 }
 
 { #category : #stream-protocol }

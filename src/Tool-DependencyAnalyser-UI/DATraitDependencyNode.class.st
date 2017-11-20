@@ -4,7 +4,7 @@ A PDCycleNode is used to display a trait dependency in a tree.
 Class {
 	#name : #DATraitDependencyNode,
 	#superclass : #DAClassNode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #browse-nautilus }

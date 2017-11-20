@@ -9,7 +9,7 @@ Class {
 		'normalLabel',
 		'selectedLabel'
 	],
-	#category : 'Morphic-Widgets-PolyTabs'
+	#category : #Morphic-Widgets-PolyTabs
 }
 
 { #category : #accessing }

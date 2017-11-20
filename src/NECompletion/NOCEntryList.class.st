@@ -11,7 +11,7 @@ Class {
 		'entries',
 		'entryHead'
 	],
-	#category : 'NECompletion-OCompletion'
+	#category : #NECompletion-OCompletion
 }
 
 { #category : #'instance creation' }

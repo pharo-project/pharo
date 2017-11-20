@@ -8,7 +8,7 @@ Class {
 		'timespans',
 		'state'
 	],
-	#category : 'Kernel-Chronology'
+	#category : #Kernel-Chronology
 }
 
 { #category : #actions }

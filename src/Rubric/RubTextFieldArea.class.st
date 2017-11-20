@@ -4,7 +4,7 @@ I am a TextArea that only has one line of text.
 Class {
 	#name : #RubTextFieldArea,
 	#superclass : #RubAbstractTextArea,
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #defaults }

@@ -9,7 +9,7 @@ Abstract superClass for fontProviders
 Class {
 	#name : #FontProviderAbstract,
 	#superclass : #Object,
-	#category : 'FontInfrastructure'
+	#category : #FontInfrastructure
 }
 
 { #category : #accessing }

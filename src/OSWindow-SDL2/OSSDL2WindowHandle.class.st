@@ -14,7 +14,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : 'OSWindow-SDL2'
+	#category : #OSWindow-SDL2
 }
 
 { #category : #'instance creation' }
@@ -334,7 +334,6 @@ OSSDL2WindowHandle >> show [
 { #category : #cursor }
 OSSDL2WindowHandle >> showCursor: aBoolean [
 	SDL2 showCursor: (aBoolean ifTrue: [SDL_ENABLE] ifFalse: [SDL_DISABLE]).
-                 
 ]
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ I represent the absense of a key modifier. I fulfill the role of a null pattern,
 Class {
 	#name : #KMNoModifier,
 	#superclass : #KMModifier,
-	#category : 'Keymapping-KeyCombinations'
+	#category : #Keymapping-KeyCombinations
 }
 
 { #category : #initialization }

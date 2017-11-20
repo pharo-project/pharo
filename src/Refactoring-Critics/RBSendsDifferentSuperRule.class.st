@@ -11,7 +11,7 @@ If the new method is not defined in the class, you should probably rewrite this 
 Class {
 	#name : #RBSendsDifferentSuperRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

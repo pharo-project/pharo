@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'indentation'
 	],
-	#category : 'Morphic-Widgets-FastTable'
+	#category : #Morphic-Widgets-FastTable
 }
 
 { #category : #layout }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'answer'
 	],
-	#category : 'System-Identification-Tests'
+	#category : #System-Identification-Tests
 }
 
 { #category : #accessing }

@@ -24,7 +24,7 @@ MyClass class>>aMethod
 Class {
 	#name : #WikiStyleHelpBuilder,
 	#superclass : #HelpBuilder,
-	#category : 'HelpSystem-Core-Builders'
+	#category : #HelpSystem-Core-Builders
 }
 
 { #category : #'private accessing' }

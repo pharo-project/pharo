@@ -6,7 +6,7 @@ I implement a null object pattern related to NOCModel in order to mark the end o
 Class {
 	#name : #NOCEmptyModel,
 	#superclass : #Object,
-	#category : 'NECompletion-OCompletion'
+	#category : #NECompletion-OCompletion
 }
 
 { #category : #accessing }

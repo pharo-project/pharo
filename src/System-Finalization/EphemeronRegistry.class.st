@@ -31,7 +31,7 @@ Class {
 	#instVars : [
 		'ephemeronCollection'
 	],
-	#category : 'System-Finalization'
+	#category : #System-Finalization
 }
 
 { #category : #registration }

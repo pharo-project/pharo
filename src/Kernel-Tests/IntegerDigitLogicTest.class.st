@@ -4,7 +4,7 @@ SUnit test to test digit logic of integers
 Class {
 	#name : #IntegerDigitLogicTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #tests }

@@ -11,7 +11,7 @@ Class {
 		'pressure',
 		'fingerId'
 	],
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #accessing }

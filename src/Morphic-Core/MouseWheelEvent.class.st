@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'direction'
 	],
-	#category : 'Morphic-Core-Events'
+	#category : #Morphic-Core-Events
 }
 
 { #category : #'instance creation' }

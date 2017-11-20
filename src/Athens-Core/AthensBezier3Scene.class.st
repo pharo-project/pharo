@@ -10,7 +10,7 @@ Class {
 		'pt3',
 		'pt4'
 	],
-	#category : 'Athens-Core-PathsGeometry'
+	#category : #Athens-Core-PathsGeometry
 }
 
 { #category : #'instance creation' }
@@ -41,10 +41,10 @@ AthensBezier3Scene >> initFromArray: aControlPointsArray [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #rendering }
 AthensBezier3Scene >> renderOn: canvas [
 
-	| path pathBlock polygonizedPath |
+	| path pathBlock |
 	
 	canvas surface clear:  Color black.
 	pathBlock :=  [ :builder |

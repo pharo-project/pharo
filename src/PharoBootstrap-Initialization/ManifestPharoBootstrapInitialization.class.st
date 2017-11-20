@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestPharoBootstrapInitialization,
 	#superclass : #PackageManifest,
-	#category : 'PharoBootstrap-Initialization'
+	#category : #PharoBootstrap-Initialization
 }
 
 { #category : #'as yet unclassified' }

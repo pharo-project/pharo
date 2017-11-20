@@ -4,7 +4,7 @@ Checks for the common code fragment: ""(aCollection detect: [:each | ''some cond
 Class {
 	#name : #RBContainsRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

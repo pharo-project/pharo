@@ -7,7 +7,7 @@ Class {
 		'importedVersions',
 		'versionStatus'
 	],
-	#category : 'Metacello-Core-Model'
+	#category : #Metacello-Core-Model
 }
 
 { #category : #'instance creation' }

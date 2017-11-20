@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'thisContextSample'
 	],
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #'closures for testing' }

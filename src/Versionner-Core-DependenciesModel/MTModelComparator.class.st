@@ -4,7 +4,7 @@ A comparator that can be used to compare a whole dependency graph.
 Class {
 	#name : #MTModelComparator,
 	#superclass : #Object,
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #protocol }

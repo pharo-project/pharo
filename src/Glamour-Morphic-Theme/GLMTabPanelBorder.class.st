@@ -4,7 +4,7 @@ Specialized border for TabGroup. Does not draw border beneath the selectd tab an
 Class {
 	#name : #GLMTabPanelBorder,
 	#superclass : #TabPanelBorder,
-	#category : 'Glamour-Morphic-Theme'
+	#category : #Glamour-Morphic-Theme
 }
 
 { #category : #drawing }

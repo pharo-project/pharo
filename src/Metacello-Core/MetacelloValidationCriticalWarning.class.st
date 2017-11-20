@@ -4,7 +4,7 @@ MetacelloValidationCriticalWarning indicates that there is a logical inconsisten
 Class {
 	#name : #MetacelloValidationCriticalWarning,
 	#superclass : #MetacelloValidationIssue,
-	#category : 'Metacello-Core-Validation'
+	#category : #Metacello-Core-Validation
 }
 
 { #category : #testing }

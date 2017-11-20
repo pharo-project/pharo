@@ -5,7 +5,7 @@ Class {
 		'conflictBlock',
 		'conflicts'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #asserting }

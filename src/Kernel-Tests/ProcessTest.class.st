@@ -4,7 +4,7 @@ A ProcessTest holds test cases for generic Process-related behaviour.
 Class {
 	#name : #ProcessTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #tests }

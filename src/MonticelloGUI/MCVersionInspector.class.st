@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'version'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #icons }

@@ -1,7 +1,7 @@
 Class {
 	#name : #ManifestKomitter,
 	#superclass : #PackageManifest,
-	#category : 'Komitter'
+	#category : #Komitter
 }
 
 { #category : #code-critics }

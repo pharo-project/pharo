@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'Y'
 	],
-	#category : 'MonticelloMocks'
+	#category : #MonticelloMocks
 }
 
 { #category : #'as yet unclassified' }

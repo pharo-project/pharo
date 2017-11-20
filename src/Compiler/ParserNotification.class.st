@@ -7,15 +7,15 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Compiler-Exceptions'
+	#category : #Compiler-Exceptions
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 ParserNotification class >> name: aString [
 	^ (self new setName: aString) signal
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ParserNotification >> defaultAction [
 	
 	self openMenuIn: 
@@ -23,12 +23,12 @@ ParserNotification >> defaultAction [
 		UIManager default chooseFrom: labels lines: lines title: caption]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #correcting }
 ParserNotification >> openMenuIn: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ParserNotification >> setName: aString [
 	name := aString
 ]

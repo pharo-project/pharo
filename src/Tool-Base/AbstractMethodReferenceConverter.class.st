@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'referencesList'
 	],
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #'instance creation' }

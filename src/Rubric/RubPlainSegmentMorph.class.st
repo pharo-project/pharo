@@ -1,7 +1,7 @@
 Class {
 	#name : #RubPlainSegmentMorph,
 	#superclass : #RubTextSegmentMorph,
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #initialization }

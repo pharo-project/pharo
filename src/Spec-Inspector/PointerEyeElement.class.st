@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'Spec-Inspector-Element'
+	#category : #Spec-Inspector-Element
 }
 
 { #category : #'instance creation' }

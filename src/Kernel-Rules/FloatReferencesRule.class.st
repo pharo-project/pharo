@@ -4,7 +4,7 @@ The rule detects if any Float system classes are refferenced by an AST
 Class {
 	#name : #FloatReferencesRule,
 	#superclass : #ReBasicTreeRule,
-	#category : 'Kernel-Rules'
+	#category : #Kernel-Rules
 }
 
 { #category : #running }

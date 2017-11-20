@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'matchers'
 	],
-	#category : 'Renraku-Rules-Rewrite'
+	#category : #Renraku-Rules-Rewrite
 }
 
 { #category : #testing }

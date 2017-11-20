@@ -4,7 +4,7 @@ I am a special kind of rule where the verification is specified using a block. T
 Class {
 	#name : #RBBlockLintRule,
 	#superclass : #RBBasicLintRule,
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #testing }

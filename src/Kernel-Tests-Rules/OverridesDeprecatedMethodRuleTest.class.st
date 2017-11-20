@@ -5,7 +5,7 @@ Class {
 		'testClass',
 		'testSubclass'
 	],
-	#category : 'Kernel-Tests-Rules'
+	#category : #Kernel-Tests-Rules
 }
 
 { #category : #properties }
@@ -16,7 +16,7 @@ OverridesDeprecatedMethodRuleTest >> methodName [
 
 { #category : #running }
 OverridesDeprecatedMethodRuleTest >> setUp [
-
+	super setUp.
 	testClass := Object newAnonymousSubclass.
 	testSubclass := testClass newAnonymousSubclass.
 	
@@ -27,7 +27,8 @@ OverridesDeprecatedMethodRuleTest >> setUp [
 OverridesDeprecatedMethodRuleTest >> tearDown [
 
 	testClass := nil.
-	testSubclass := nil
+	testSubclass := nil.
+	super tearDown 
 ]
 
 { #category : #tests }

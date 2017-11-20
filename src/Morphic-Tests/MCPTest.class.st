@@ -1,7 +1,7 @@
 Class {
 	#name : #MCPTest,
 	#superclass : #TestCase,
-	#category : 'Morphic-Tests-Kernel'
+	#category : #Morphic-Tests-Kernel
 }
 
 { #category : #constants }

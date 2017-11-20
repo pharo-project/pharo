@@ -5,7 +5,7 @@ In the current scanner/parser, this assignment operator is not used or allowed a
 Class {
 	#name : #RBShortAssignmentToken,
 	#superclass : #RBAssignmentToken,
-	#category : 'AST-Core-Tokens'
+	#category : #AST-Core-Tokens
 }
 
 { #category : #private }

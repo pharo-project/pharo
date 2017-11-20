@@ -8,7 +8,7 @@ Class {
 		'ClassSideOnlyVariable',
 		'ClassVariable'
 	],
-	#category : 'Refactoring-Tests-Environment'
+	#category : #Refactoring-Tests-Environment
 }
 
 { #category : #accessing }

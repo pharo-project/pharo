@@ -4,7 +4,7 @@ I represent a layout that places all children of some morph in their given Layou
 Class {
 	#name : #ProportionalLayout,
 	#superclass : #LayoutPolicy,
-	#category : 'Morphic-Base-Layouts'
+	#category : #Morphic-Base-Layouts
 }
 
 { #category : #testing }

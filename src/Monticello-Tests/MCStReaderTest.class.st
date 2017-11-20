@@ -1,7 +1,7 @@
 Class {
 	#name : #MCStReaderTest,
 	#superclass : #MCTestCase,
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #util }

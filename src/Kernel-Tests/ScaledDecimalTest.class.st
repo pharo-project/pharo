@@ -4,7 +4,7 @@ I provide a test suite for ScaledDecimal values. Examine my tests to see how Sma
 Class {
 	#name : #ScaledDecimalTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #tests }

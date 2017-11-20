@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'verificationBlock'
 	],
-	#category : 'AST-Core-Matching'
+	#category : #AST-Core-Matching
 }
 
 { #category : #matching }

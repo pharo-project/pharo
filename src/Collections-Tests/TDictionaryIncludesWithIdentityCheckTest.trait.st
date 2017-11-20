@@ -5,7 +5,7 @@ Trait {
 	#name : #TDictionaryIncludesWithIdentityCheckTest,
 	#traits : 'TDictionaryIncludesTest',
 	#classTraits : 'TDictionaryIncludesTest classTrait',
-	#category : 'Collections-Tests-Unordered'
+	#category : #Collections-Tests-Unordered
 }
 
 { #category : #requirements }

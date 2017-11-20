@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : 'GT-Inspector'
+	#category : #GT-Inspector
 }
 
 { #category : #accessing }

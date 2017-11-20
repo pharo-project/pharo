@@ -1,7 +1,7 @@
 Class {
 	#name : #BIConfigurableFormatterFormattingTest,
 	#superclass : #RBFormatterTest,
-	#category : 'BlueInk-Tests'
+	#category : #BlueInk-Tests
 }
 
 { #category : #testing }

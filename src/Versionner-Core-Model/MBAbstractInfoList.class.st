@@ -17,7 +17,7 @@ Class {
 		'groups',
 		'infoList'
 	],
-	#category : 'Versionner-Core-Model'
+	#category : #Versionner-Core-Model
 }
 
 { #category : #private }

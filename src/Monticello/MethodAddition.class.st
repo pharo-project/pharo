@@ -16,7 +16,7 @@ Class {
 		'priorMethodOrNil',
 		'priorCategoryOrNil'
 	],
-	#category : 'Monticello-Loading'
+	#category : #Monticello-Loading
 }
 
 { #category : #compilation }

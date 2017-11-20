@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : 'Announcements-Tests-Core-Tests'
+	#category : #Announcements-Tests-Core-Tests
 }
 
 { #category : #testing }

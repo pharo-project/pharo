@@ -16,7 +16,7 @@ Class {
 		'notIgnoredVariables',
 		'references'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 		'aBlockContext',
 		'contextOfaBlockContext'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #helpers }
@@ -417,9 +417,7 @@ BlockClosureTest >> testTallyInstructions [
 	
 	"We test class name and not the class because there are multiple versions of the encoders depending on the compiler used."
 	| expectedResult |
-	expectedResult := (aBlockContext method encoderClass name endsWith: 'SistaV1')
-		ifTrue: [ 26 ]
-		ifFalse: [ 27 ].
+	expectedResult := 27.
 	self assert: (Context tallyInstructions: aBlockContext ) size equals: expectedResult
 ]
 

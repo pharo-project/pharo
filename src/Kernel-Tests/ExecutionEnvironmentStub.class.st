@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'forkedProcesses'
 	],
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #accessing }

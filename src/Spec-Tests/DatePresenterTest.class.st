@@ -1,7 +1,7 @@
 Class {
 	#name : #DatePresenterTest,
 	#superclass : #SpecTestCase,
-	#category : 'Spec-Tests-PolyWidgets-Widgets'
+	#category : #Spec-Tests-PolyWidgets-Widgets
 }
 
 { #category : #running }

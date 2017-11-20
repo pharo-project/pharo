@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'elements'
 	],
-	#category : 'Ring-Core-Containers'
+	#category : #Ring-Core-Containers
 }
 
 { #category : #adding/removing }

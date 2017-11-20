@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'originalVar'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #'temp vector' }

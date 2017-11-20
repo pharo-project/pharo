@@ -4,7 +4,7 @@ Update the configuration from the version contained in its repository.
 Class {
 	#name : #VSUpdateFromItsRepositoryCommand,
 	#superclass : #VSConfigurationCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

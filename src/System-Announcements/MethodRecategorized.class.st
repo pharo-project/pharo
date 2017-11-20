@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'oldProtocol'
 	],
-	#category : 'System-Announcements-System-Methods'
+	#category : #System-Announcements-System-Methods
 }
 
 { #category : #'instance creation' }

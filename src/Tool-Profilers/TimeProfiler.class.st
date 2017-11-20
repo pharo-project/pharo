@@ -27,7 +27,7 @@ Class {
 		'result',
 		'withToolBar'
 	],
-	#category : 'Tool-Profilers'
+	#category : #Tool-Profilers
 }
 
 { #category : #opening }

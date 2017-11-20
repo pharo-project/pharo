@@ -8,7 +8,7 @@ Class {
 		'stateIcons',
 		'allowClick'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #accessing }

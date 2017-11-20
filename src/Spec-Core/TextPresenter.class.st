@@ -69,7 +69,7 @@ Class {
 		'askBeforeDiscardingEdits',
 		'isForSmalltalkCodeHolder'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }
@@ -238,6 +238,11 @@ TextPresenter >> clearSelection [
    "Remove selection from the text model"
 
 	self setSelection: (0 to: 0)
+]
+
+{ #category : #undo-redo }
+TextPresenter >> clearUndoManager [
+	self widget ifNotNil: #clearUndoManager
 ]
 
 { #category : #api }

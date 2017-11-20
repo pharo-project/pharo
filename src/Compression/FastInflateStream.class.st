@@ -19,7 +19,7 @@ Class {
 		'FixedLitTable',
 		'LiteralLengthMap'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #initialization }

@@ -82,7 +82,7 @@ Class {
 		'stamp',
 		'package'
 	],
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #'instance creation' }

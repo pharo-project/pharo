@@ -4,7 +4,7 @@ ZdcSocketStreamTests tests ZdcSocketStream
 Class {
 	#name : #ZdcSocketStreamTests,
 	#superclass : #ZdcAbstractSocketStreamTests,
-	#category : 'Zodiac-Tests'
+	#category : #Zodiac-Tests
 }
 
 { #category : #testing }

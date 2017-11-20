@@ -4,7 +4,7 @@ Message dialog with a warning icon.
 Class {
 	#name : #AlertDialogWindow,
 	#superclass : #MessageDialogWindow,
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #icons }

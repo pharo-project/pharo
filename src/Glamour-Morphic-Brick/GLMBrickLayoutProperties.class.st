@@ -78,7 +78,7 @@ Class {
 		'hState',
 		'vState'
 	],
-	#category : 'Glamour-Morphic-Brick-Layouts'
+	#category : #Glamour-Morphic-Brick-Layouts
 }
 
 { #category : #accessing }

@@ -10,7 +10,7 @@ Class {
 		'value',
 		'oldValue'
 	],
-	#category : 'Glamour-Announcements'
+	#category : #Glamour-Announcements
 }
 
 { #category : #testing }

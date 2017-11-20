@@ -4,7 +4,7 @@ Checks arithmetic statements for possible three element points (i.e., a point th
 Class {
 	#name : #RBThreeElementPointRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : 'Refactoring-Critics-ParseTreeRules'
+	#category : #Refactoring-Critics-ParseTreeRules
 }
 
 { #category : #accessing }

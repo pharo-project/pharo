@@ -22,7 +22,7 @@ Class {
 		'dateModel',
 		'date'
 	],
-	#category : 'Spec-PolyWidgets-Widgets'
+	#category : #Spec-PolyWidgets-Widgets
 }
 
 { #category : #example }
@@ -96,9 +96,9 @@ DatePresenter >> dateModel [
 	^ dateModel.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #defaults }
 DatePresenter >> defaultDate [
-	^ Date today
+	^ Date today 
 ]
 
 { #category : #api }

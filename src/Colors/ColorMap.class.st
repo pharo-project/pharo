@@ -13,7 +13,7 @@ Class {
 		'masks',
 		'colors'
 	],
-	#category : 'Colors'
+	#category : #Colors
 }
 
 { #category : #'instance creation' }

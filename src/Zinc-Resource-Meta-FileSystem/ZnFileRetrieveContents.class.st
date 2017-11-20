@@ -10,7 +10,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnFileRetrieveContents,
 	#superclass : #ZnUrlOperation,
-	#category : 'Zinc-Resource-Meta-FileSystem'
+	#category : #Zinc-Resource-Meta-FileSystem
 }
 
 { #category : #accessing }

@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'organization'
 	],
-	#category : 'Traits-Kernel'
+	#category : #Traits-Kernel
 }
 
 { #category : #composition }

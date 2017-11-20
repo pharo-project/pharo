@@ -24,7 +24,7 @@ Class {
 		'scrollpane',
 		'shouldLayoutMorphs'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Scrollpane'
+	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
 }
 
 { #category : #accessing }

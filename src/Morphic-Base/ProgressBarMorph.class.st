@@ -39,7 +39,7 @@ Class {
 		'DefaultHeight',
 		'DefaultWidth'
 	],
-	#category : 'Morphic-Base-ProgressBar'
+	#category : #Morphic-Base-ProgressBar
 }
 
 { #category : #initialization }

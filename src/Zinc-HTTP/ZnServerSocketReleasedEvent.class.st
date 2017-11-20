@@ -8,7 +8,7 @@ Class {
 		'address',
 		'port'
 	],
-	#category : 'Zinc-HTTP-Logging'
+	#category : #Zinc-HTTP-Logging
 }
 
 { #category : #accessing }

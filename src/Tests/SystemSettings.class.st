@@ -1,7 +1,7 @@
 Class {
 	#name : #SystemSettings,
 	#superclass : #TestCase,
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #tests }

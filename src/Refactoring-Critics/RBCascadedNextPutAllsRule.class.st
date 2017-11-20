@@ -13,7 +13,7 @@ String streamContents: [ :s|
 Class {
 	#name : #RBCascadedNextPutAllsRule,
 	#superclass : #RBTransformationRule,
-	#category : 'Refactoring-Critics-TransformationRules'
+	#category : #Refactoring-Critics-TransformationRules
 }
 
 { #category : #accessing }

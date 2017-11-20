@@ -10,7 +10,7 @@ Class {
 		'package',
 		'infos'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #accessing }

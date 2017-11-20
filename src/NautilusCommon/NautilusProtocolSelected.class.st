@@ -4,7 +4,7 @@ I announce when a protocol is selected, and also contain an information about se
 Class {
 	#name : #NautilusProtocolSelected,
 	#superclass : #NautilusSelectionAnnouncement,
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 		'week',
 		'restoredStartDay'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #coverage }

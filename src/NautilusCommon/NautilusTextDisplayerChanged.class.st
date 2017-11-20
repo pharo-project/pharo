@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'displayerSymbol'
 	],
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }
 
 { #category : #'instance creation' }

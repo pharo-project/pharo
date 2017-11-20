@@ -12,7 +12,7 @@ Class {
 		'requestor',
 		'compilationContext'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #'temp vars' }

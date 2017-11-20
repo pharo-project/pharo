@@ -4,5 +4,5 @@ AsssertionFailure is the exception signaled from Object>>assert: when the assert
 Class {
 	#name : #AssertionFailure,
 	#superclass : #Error,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }

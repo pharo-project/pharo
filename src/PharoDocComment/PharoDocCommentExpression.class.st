@@ -8,7 +8,7 @@ Class {
 		'expressionInterval',
 		'source'
 	],
-	#category : 'PharoDocComment'
+	#category : #PharoDocComment
 }
 
 { #category : #operation }

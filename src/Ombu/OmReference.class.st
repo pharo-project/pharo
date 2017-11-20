@@ -8,7 +8,7 @@ Class {
 		'localName',
 		'globalName'
 	],
-	#category : 'Ombu-Entries'
+	#category : #Ombu-Entries
 }
 
 { #category : #'ston persistence' }

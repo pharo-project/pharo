@@ -4,7 +4,7 @@ I'm a test case of SlotClassBuilder integration in the system. Tipically, my tes
 Class {
 	#name : #SlotIntegrationTest,
 	#superclass : #SlotSilentTest,
-	#category : 'Slot-Tests'
+	#category : #Slot-Tests
 }
 
 { #category : #tests }

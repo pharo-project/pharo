@@ -8,7 +8,7 @@ Class {
 		'CatalogSourceURL',
 		'DisplayCatalogProjectsInSpotter'
 	],
-	#category : 'Tool-Catalog-Settings'
+	#category : #Tool-Catalog-Settings
 }
 
 { #category : #settings }

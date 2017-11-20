@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'critiques'
 	],
-	#category : 'Renraku-Announcements'
+	#category : #Renraku-Announcements
 }
 
 { #category : #accessing }

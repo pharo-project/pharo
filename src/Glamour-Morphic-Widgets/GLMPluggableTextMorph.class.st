@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #'interactive error protocol' }

@@ -5,7 +5,7 @@ serving just to cover complete protocol, which user(s) will need to implement in
 Class {
 	#name : #OSWindowEventVisitor,
 	#superclass : #Object,
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #events }

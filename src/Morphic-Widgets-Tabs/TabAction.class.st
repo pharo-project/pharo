@@ -14,7 +14,7 @@ Class {
 		'icon',
 		'label'
 	],
-	#category : 'Morphic-Widgets-Tabs'
+	#category : #Morphic-Widgets-Tabs
 }
 
 { #category : #'instance creation' }

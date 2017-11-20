@@ -10,7 +10,7 @@ Class {
 		'relationGraph',
 		'packageLabel'
 	],
-	#category : 'Tool-DependencyAnalyser-UI-Core'
+	#category : #Tool-DependencyAnalyser-UI-Core
 }
 
 { #category : #specs }

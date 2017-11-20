@@ -8,7 +8,7 @@ Class {
 		'morph',
 		'currentEntity'
 	],
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #position }

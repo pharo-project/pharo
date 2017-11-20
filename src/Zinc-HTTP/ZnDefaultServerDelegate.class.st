@@ -29,7 +29,7 @@ Class {
 		'prefixMap',
 		'byteArray'
 	],
-	#category : 'Zinc-HTTP-Client-Server'
+	#category : #Zinc-HTTP-Client-Server
 }
 
 { #category : #'instance creation' }

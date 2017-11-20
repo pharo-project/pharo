@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'definitions'
 	],
-	#category : 'Monticello-Storing'
+	#category : #Monticello-Storing
 }
 
 { #category : #accessing }

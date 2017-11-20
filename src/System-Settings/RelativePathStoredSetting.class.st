@@ -4,7 +4,7 @@ I am responsible for storing information about RelativePath objects.
 Class {
 	#name : #RelativePathStoredSetting,
 	#superclass : #StoredSetting,
-	#category : 'System-Settings-Persistence-Ston-StoredSettings'
+	#category : #System-Settings-Persistence-Ston-StoredSettings
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'literalNames'
 	],
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'changes'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #'instance creation' }

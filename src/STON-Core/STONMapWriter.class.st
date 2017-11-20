@@ -4,7 +4,7 @@ STONDictionaryWriter helps in writing dictionary based STON representations.
 Class {
 	#name : #STONMapWriter,
 	#superclass : #STONStreamWriter,
-	#category : 'STON-Core'
+	#category : #STON-Core
 }
 
 { #category : #accessing }

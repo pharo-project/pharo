@@ -16,7 +16,7 @@ Class {
 		'controller',
 		'definedSelector'
 	],
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #'instance creation' }

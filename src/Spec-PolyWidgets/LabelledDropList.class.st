@@ -11,7 +11,7 @@ I provide shortcuts for the most common methods of the droplist api to avoid the
 Class {
 	#name : #LabelledDropList,
 	#superclass : #LabelledContainer,
-	#category : 'Spec-PolyWidgets-Labelled'
+	#category : #Spec-PolyWidgets-Labelled
 }
 
 { #category : #specs }

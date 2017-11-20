@@ -18,7 +18,7 @@ Class {
 		'protocols',
 		'source'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #'instance creation' }

@@ -3,7 +3,7 @@ I declare an api to store and read extention properties. It should be inplemente
 "
 Trait {
 	#name : #GLMBrickExtensionTrait,
-	#category : 'Glamour-Morphic-Brick-Traits'
+	#category : #Glamour-Morphic-Brick-Traits
 }
 
 { #category : #private-extension }

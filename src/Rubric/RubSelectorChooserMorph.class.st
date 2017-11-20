@@ -5,7 +5,7 @@ Class {
 		'prefix',
 		'requestorPos'
 	],
-	#category : 'Rubric-Editing-Core-Support'
+	#category : #Rubric-Editing-Core-Support
 }
 
 { #category : #opening }
@@ -78,7 +78,7 @@ RubSelectorChooserMorph >> defaultBaseColor [
 
 { #category : #drawing }
 RubSelectorChooserMorph >> drawCommonPrefixAreasOn: aCanvas [
-	| firstMenu firstMenuItem topLeft bottomLeft lastMenuItem |
+
 	requestor ifNil: [^ self ].
 	prefix  
 		ifNotNil: [ self choiceMenus 

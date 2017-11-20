@@ -4,7 +4,7 @@ I am activated when user presses `Escape` key
 Class {
 	#name : #GLMPopupBrickEscPredicate,
 	#superclass : #GLMPopupBrickPredicate,
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
 }
 
 { #category : #predicate }

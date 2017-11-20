@@ -35,7 +35,7 @@ We prefer evaluating cosd(90-x) thus providing a branch free implementation.
 Class {
 	#name : #Number,
 	#superclass : #Magnitude,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #constants }
@@ -761,16 +761,28 @@ Number >> raisedTo: aNumber [
 		^ self raisedToInteger: aNumber].
 	aNumber isFraction ifTrue: [
 		"Special case for fraction power"
-		^ (self nthRoot: aNumber denominator) raisedToInteger: aNumber numerator ].
+		^ self raisedToFraction: aNumber].
 	self < 0 ifTrue: [
 		^ ArithmeticError signal: 'Negative numbers can''t be raised to float powers.' ].
 	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
 		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: self) signal]
+			ifTrue: [^ (ZeroDivide dividend: 1) signal]
 			ifFalse: [^ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
+]
+
+{ #category : #'mathematical functions' }
+Number >> raisedToFraction: aFraction [
+	self isZero
+		ifTrue:
+			[aFraction negative ifTrue: [^ (ZeroDivide dividend: 1) signal].
+			^self].
+	self negative ifFalse: [^(self ln * aFraction) exp].
+	aFraction denominator even
+		ifTrue: [^ ArithmeticError signal: 'nth root only defined for positive Integer n.'].
+	^(self negated ln * aFraction) exp negated
 ]
 
 { #category : #'mathematical functions' }

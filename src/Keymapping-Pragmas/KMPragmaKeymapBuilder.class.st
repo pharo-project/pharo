@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'UniqueInstace'
 	],
-	#category : 'Keymapping-Pragmas'
+	#category : #Keymapping-Pragmas
 }
 
 { #category : #private }

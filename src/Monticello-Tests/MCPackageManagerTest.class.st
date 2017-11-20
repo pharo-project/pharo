@@ -7,7 +7,7 @@ Class {
 		'mcPackage1',
 		'mcPackage2'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #running }

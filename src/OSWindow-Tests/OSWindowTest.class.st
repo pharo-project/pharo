@@ -4,7 +4,7 @@ An OSWindowTest is a test class for testing the behavior of OSWindow
 Class {
 	#name : #OSWindowTest,
 	#superclass : #TestCase,
-	#category : 'OSWindow-Tests'
+	#category : #OSWindow-Tests
 }
 
 { #category : #tests }

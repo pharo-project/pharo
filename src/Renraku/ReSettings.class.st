@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Renraku-Utility'
+	#category : #Renraku-Utility
 }
 
 { #category : #cleanup }

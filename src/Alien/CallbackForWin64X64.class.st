@@ -4,7 +4,7 @@ A CallbackForWin64X64 is a callback for platforms with x64/x86_64 processors usi
 Class {
 	#name : #CallbackForWin64X64,
 	#superclass : #Callback,
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #accessing }

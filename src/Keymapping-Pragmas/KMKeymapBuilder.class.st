@@ -8,10 +8,10 @@ Class {
 		'shortcutName',
 		'platform'
 	],
-	#category : 'Keymapping-Pragmas'
+	#category : #Keymapping-Pragmas
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 KMKeymapBuilder class >> for: aShortcutName platform: aPlatform [
 	^self new 
 		shortcutName: aShortcutName;

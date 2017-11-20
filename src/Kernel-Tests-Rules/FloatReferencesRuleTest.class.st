@@ -4,19 +4,20 @@ Class {
 	#instVars : [
 		'testClass'
 	],
-	#category : 'Kernel-Tests-Rules'
+	#category : #Kernel-Tests-Rules
 }
 
 { #category : #running }
 FloatReferencesRuleTest >> setUp [
-
+	super setUp.
 	testClass := Object newAnonymousSubclass.
 ]
 
 { #category : #running }
 FloatReferencesRuleTest >> tearDown [
 
-	testClass := nil
+	testClass := nil.
+	super tearDown 
 ]
 
 { #category : #tests }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'NECompletion-Tests'
+	#category : #NECompletion-Tests
 }
 
 { #category : #running }

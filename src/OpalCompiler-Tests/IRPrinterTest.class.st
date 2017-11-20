@@ -1,7 +1,7 @@
 Class {
 	#name : #IRPrinterTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-IR'
+	#category : #OpalCompiler-Tests-IR
 }
 
 { #category : #testing }

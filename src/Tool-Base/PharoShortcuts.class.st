@@ -14,7 +14,7 @@ NEXT Steps: Allow one to configure the shortcuts and to define several shortcut 
 Class {
 	#name : #PharoShortcuts,
 	#superclass : #Object,
-	#category : 'Tool-Base'
+	#category : #Tool-Base
 }
 
 { #category : #accessing }

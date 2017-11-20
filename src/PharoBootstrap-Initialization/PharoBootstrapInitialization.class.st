@@ -24,7 +24,7 @@ To run the initialization, run:
 Class {
 	#name : #PharoBootstrapInitialization,
 	#superclass : #Object,
-	#category : 'PharoBootstrap-Initialization'
+	#category : #PharoBootstrap-Initialization
 }
 
 { #category : #temporary-patch }

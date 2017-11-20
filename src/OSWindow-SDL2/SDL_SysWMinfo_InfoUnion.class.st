@@ -4,7 +4,7 @@ I am union inside of SDL_SysWMinfo used to hold platform specific information ab
 Class {
 	#name : #SDL_SysWMinfo_InfoUnion,
 	#superclass : #SDL2Union,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'field definition' }

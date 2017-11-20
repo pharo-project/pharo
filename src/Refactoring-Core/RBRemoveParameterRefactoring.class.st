@@ -13,7 +13,7 @@ Class {
 		'parameterIndex',
 		'argument'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #'instance creation' }

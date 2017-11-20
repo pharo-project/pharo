@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'NautilusCommon-Plugin-Manager'
+	#category : #NautilusCommon-Plugin-Manager
 }
 
 { #category : #'instance creation' }

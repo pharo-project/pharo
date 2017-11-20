@@ -4,7 +4,7 @@ Checks that all temporaries are assigned before they are used. This can help fin
 Class {
 	#name : #RBTempsReadBeforeWrittenRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

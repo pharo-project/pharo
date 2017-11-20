@@ -16,7 +16,7 @@ Class {
 		'code',
 		'codeEditing'
 	],
-	#category : 'Shout-Examples'
+	#category : #Shout-Examples
 }
 
 { #category : #accessing }

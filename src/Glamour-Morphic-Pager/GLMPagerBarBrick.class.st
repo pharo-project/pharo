@@ -6,7 +6,7 @@ Class {
 		'pagerModel',
 		'sliderBrick'
 	],
-	#category : 'Glamour-Morphic-Pager-Brick'
+	#category : #Glamour-Morphic-Pager-Brick
 }
 
 { #category : #bar-accessing }

@@ -4,7 +4,7 @@ Class {
 	#pools : [
 		'FFITestEnumeration'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #accessing }

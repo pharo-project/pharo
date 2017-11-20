@@ -4,7 +4,7 @@ I am the bridget between a TreeNodePresenter and a SpecTreeNodeModel
 Class {
 	#name : #MorphicTreeNodeAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #factory }

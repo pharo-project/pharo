@@ -4,7 +4,7 @@ The abstract protocol for most display primitives that are used by Views for pre
 Class {
 	#name : #DisplayObject,
 	#superclass : #Object,
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #transforming }

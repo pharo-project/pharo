@@ -11,7 +11,7 @@ Class {
 		'pagerModel',
 		'leftPosition'
 	],
-	#category : 'Glamour-Morphic-Pager-Brick'
+	#category : #Glamour-Morphic-Pager-Brick
 }
 
 { #category : #'as yet unclassified' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMListPresentationTest,
 	#superclass : #TestCase,
-	#category : 'Glamour-Tests-Core'
+	#category : #Glamour-Tests-Core
 }
 
 { #category : #tests }

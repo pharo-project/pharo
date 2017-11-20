@@ -4,7 +4,7 @@ Browser for working history
 Class {
 	#name : #MCWorkingHistoryBrowser,
 	#superclass : #MCVersionHistoryBrowser,
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #accessing }

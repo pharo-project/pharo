@@ -4,7 +4,7 @@ I announce when a package is selected
 Class {
 	#name : #NautilusPackageSelected,
 	#superclass : #NautilusSelectionAnnouncement,
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }
 
 { #category : #'instance creation' }

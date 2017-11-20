@@ -4,5 +4,5 @@ I am a public announcement sent when a new RPackage is unregistred ( kind  of re
 Class {
 	#name : #RPackageUnregistered,
 	#superclass : #RPackageAnnouncement,
-	#category : 'RPackage-Core'
+	#category : #RPackage-Core
 }

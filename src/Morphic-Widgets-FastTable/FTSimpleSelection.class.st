@@ -5,7 +5,7 @@ I allow tables using me to manage single selection rows.
 Class {
 	#name : #FTSimpleSelection,
 	#superclass : #FTSelectionStrategy,
-	#category : 'Morphic-Widgets-FastTable-Selection'
+	#category : #Morphic-Widgets-FastTable-Selection
 }
 
 { #category : #testing }

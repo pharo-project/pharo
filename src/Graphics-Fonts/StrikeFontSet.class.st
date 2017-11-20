@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Graphics-Fonts'
+	#category : #Graphics-Fonts
 }
 
 { #category : #'instance creation' }

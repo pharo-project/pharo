@@ -7,7 +7,7 @@ This driver is used by image, when it detects there's no other more suitable dri
 Class {
 	#name : #VMWindowDriver,
 	#superclass : #OSWindowDriver,
-	#category : 'OSWindow-VM'
+	#category : #OSWindow-VM
 }
 
 { #category : #testing }

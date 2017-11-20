@@ -8,7 +8,7 @@ Class {
 		'toolbarBox',
 		'hasInitialStep'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #callbacks }

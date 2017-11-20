@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'newColor'
 	],
-	#category : 'Morphic-Widgets-ColorPicker'
+	#category : #Morphic-Widgets-ColorPicker
 }
 
 { #category : #'instance creation' }

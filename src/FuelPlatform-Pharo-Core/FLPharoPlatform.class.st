@@ -1,7 +1,7 @@
 Class {
 	#name : #FLPharoPlatform,
 	#superclass : #FLPlatform,
-	#category : 'FuelPlatform-Pharo-Core-FuelPlatform-Pharo-Core'
+	#category : #FuelPlatform-Pharo-Core
 }
 
 { #category : #testing }

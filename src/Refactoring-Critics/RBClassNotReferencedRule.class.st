@@ -4,7 +4,7 @@ This smell arises when a class is not referenced either directly or indirectly b
 Class {
 	#name : #RBClassNotReferencedRule,
 	#superclass : #RBBlockLintRule,
-	#category : 'Refactoring-Critics-BlockRules'
+	#category : #Refactoring-Critics-BlockRules
 }
 
 { #category : #testing }

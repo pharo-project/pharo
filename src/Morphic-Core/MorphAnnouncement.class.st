@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : 'Morphic-Core-Announcements'
+	#category : #Morphic-Core-Announcements
 }
 
 { #category : #'instance creation' }

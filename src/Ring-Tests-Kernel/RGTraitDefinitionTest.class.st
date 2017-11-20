@@ -4,7 +4,7 @@ SUnit tests for trait definitions
 Class {
 	#name : #RGTraitDefinitionTest,
 	#superclass : #TestCase,
-	#category : 'Ring-Tests-Kernel'
+	#category : #Ring-Tests-Kernel
 }
 
 { #category : #testing }

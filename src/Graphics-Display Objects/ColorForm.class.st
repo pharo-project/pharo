@@ -22,7 +22,7 @@ Class {
 		'cachedDepth',
 		'cachedColormap'
 	],
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #'instance creation' }

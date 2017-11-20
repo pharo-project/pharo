@@ -10,7 +10,7 @@ Class {
 		'stack',
 		'stronglyConnectedComponents'
 	],
-	#category : 'Tool-DependencyAnalyser-Core'
+	#category : #Tool-DependencyAnalyser-Core
 }
 
 { #category : #initialization }

@@ -5,7 +5,7 @@ Class {
 		'repositories',
 		'packages'
 	],
-	#category : 'Metacello-MC-Specs'
+	#category : #Metacello-MC-Specs
 }
 
 { #category : #accessing }
