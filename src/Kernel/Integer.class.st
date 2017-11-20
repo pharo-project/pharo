@@ -1870,6 +1870,14 @@ Integer >> raisedTo: n modulo: m [
 ]
 
 { #category : #'mathematical functions' }
+Integer >> raisedToFraction: aFraction [
+	| root |
+	root := self nthRootTruncated: aFraction denominator.
+	(root raisedToInteger: aFraction denominator) = self ifTrue: [^root raisedToInteger: aFraction numerator].
+	^super raisedToFraction: aFraction
+]
+
+{ #category : #'mathematical functions' }
 Integer >> raisedToInteger: exp modulo: m [
 	(exp = 0) ifTrue: [^ 1].
 	exp even

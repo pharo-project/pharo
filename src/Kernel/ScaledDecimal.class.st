@@ -187,6 +187,15 @@ ScaledDecimal >> raisedTo: aNumber [
 ]
 
 { #category : #'mathematical functions' }
+ScaledDecimal >> raisedToFraction: aFraction [
+	| result |
+	result := self asFraction raisedToFraction: aFraction.
+	^result isFloat
+		ifTrue: [result]
+		ifFalse: [result asScaledDecimal: scale]
+]
+
+{ #category : #'mathematical functions' }
 ScaledDecimal >> raisedToInteger: aNumber [
 	^self class newFromNumber: (super raisedToInteger: aNumber) scale: scale
 ]
