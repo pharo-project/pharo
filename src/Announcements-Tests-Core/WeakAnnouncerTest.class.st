@@ -57,10 +57,19 @@ WeakAnnouncerTest >> benchWeakSubscriptionStatic [
 	] timeToRun
 ]
 
+{ #category : #utility }
+WeakAnnouncerTest >> longTestCase [
+
+	self timeLimit: 60 seconds.
+
+]
+
 { #category : #tests }
 WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 
-	5 timesRepeat: [ Smalltalk garbageCollect ].
+	self longTestCase.
+
+	5 timesRepeat: [ Smalltalk garbageCollect ].		
 	
 	self assert: (WeakAnnouncementSubscription allSubInstances select: [ :sub | sub subscriber isNil ]) size isZero.
 	
@@ -74,6 +83,9 @@ WeakAnnouncerTest >> testNoWeakBlock [
 	<expectedFailure>
 
 	| counter |
+
+	self longTestCase.
+
 	counter := 0.
 
 	(announcer subscribe: AnnouncementMockA do: [ :ann | counter := counter + 1 ]) makeWeak.
@@ -92,6 +104,8 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 
 	| a1 a2 o |
 	
+	self longTestCase.
+
 	a1 := Announcer new.
 	a2 := Announcer new.
 	
@@ -126,6 +140,9 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 { #category : #tests }
 WeakAnnouncerTest >> testWeakObject [
 	| counter collector forwarder |
+
+	self longTestCase.
+
 	counter := 0.
 	collector := [ counter := counter + 1 ].
 	forwarder := MessageSend receiver: collector selector: #value.
@@ -146,6 +163,8 @@ WeakAnnouncerTest >> testWeakObject [
 { #category : #tests }
 WeakAnnouncerTest >> testWeakSubscription [
 	| obj  subscription |
+
+	self longTestCase.
 	
 	obj := Object new.
 	
