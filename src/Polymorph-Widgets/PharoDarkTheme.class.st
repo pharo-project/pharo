@@ -34,11 +34,11 @@ PharoDarkTheme class >> darkBaseColor [
 	^ Color veryDarkGray
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 PharoDarkTheme class >> isAbstract [
-	"Answer whether the receiver is considered to be abstract."
-
-	^false
+	"This will be set to false as soon Pharo3DarkTheme will be removed"
+	
+	^ true
 ]
 
 { #category : #accessing }
