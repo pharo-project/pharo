@@ -69,7 +69,7 @@ WeakAnnouncerTest >> testNoDeadWeakSubscriptions [
 
 	self longTestCase.
 
-	Smalltalk garbageCollect.
+	5 timesRepeat: [ Smalltalk garbageCollect ].		
 	
 	self assert: (WeakAnnouncementSubscription allSubInstances select: [ :sub | sub subscriber isNil ]) size isZero.
 	
@@ -122,7 +122,7 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 	assert: a1 subscriptions numberOfSubscriptions = 1;
 	assert: a2 subscriptions numberOfSubscriptions = 1.
 	
-	Smalltalk garbageCollect.
+	3 timesRepeat: [ Smalltalk garbageCollect ].
 	
 	self 
 	assert: a1 subscriptions numberOfSubscriptions = 1;
@@ -130,7 +130,7 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 
 	o := nil.
 	
-	Smalltalk garbageCollect.
+	3 timesRepeat: [ Smalltalk garbageCollect ].
 	
 	self 
 	assert: a1 subscriptions numberOfSubscriptions isZero;
