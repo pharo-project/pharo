@@ -178,7 +178,7 @@ PharoLightTheme class >> setPreferredShoutColors [
 
 { #category : #accessing }
 PharoLightTheme class >> themeName [
-	^ 'Pharo3'
+	^ 'Pharo Light'
 ]
 
 { #category : #accessing }
