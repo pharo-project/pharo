@@ -13,6 +13,12 @@ ReleaseTest class >> actualProcesses [
 ]
 
 { #category : #accessing }
+ReleaseTest class >> defaultTimeLimit [
+
+	^ 1 minute
+]
+
+{ #category : #accessing }
 ReleaseTest class >> knownProcesses [
 	"Return a dynamic list of know processes"
 	
