@@ -133,6 +133,26 @@ FFIExternalStructureReferenceHandle >> isNull [
 ]
 
 { #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset [
+	^ handle platformLongAt: startOffset + byteOffset
+]
+
+{ #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformLongAt: byteOffset put: value [
+	^ handle platformLongAt: startOffset + byteOffset put: value
+]
+
+{ #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformUnsignedLongAt: byteOffset [
+	^ handle platformUnsignedLongAt: startOffset + byteOffset
+]
+
+{ #category : #accessing }
+FFIExternalStructureReferenceHandle >> platformUnsignedLongAt: byteOffset put: value [
+	^ handle platformUnsignedLongAt: startOffset + byteOffset put: value
+]
+
+{ #category : #accessing }
 FFIExternalStructureReferenceHandle >> pointerAt: byteOffset [
 	^ handle pointerAt: startOffset + byteOffset
 ]
