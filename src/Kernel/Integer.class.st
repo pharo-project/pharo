@@ -1713,7 +1713,7 @@ Integer >> printSeparatedBy: aDelimiter every: offset signed: printSigned base: 
 	| digits |
 	digits := self abs printStringBase: base.
 	
-	self sign = -1 
+	self signBit = 1 
 		ifTrue: [ aStream nextPut: $- ] 
 		ifFalse: [ printSigned ifTrue: [ aStream nextPut: $+ ] ].
 	

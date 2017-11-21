@@ -411,9 +411,9 @@ Number >> closeTo: num precision: aPrecision [
 Number >> copySignTo: aNumber [
 	"Return a number with same magnitude as aNumber and same sign as self."
 
-	^ self positive
+	^ self signBit = 0
 		ifTrue: [aNumber abs]
-		ifFalse: [aNumber withNegativeSign].
+		ifFalse: [aNumber abs negated].
 ]
 
 { #category : #'mathematical functions' }
@@ -896,7 +896,7 @@ Number >> sign [
 
 	self > 0 ifTrue: [^1].
 	self < 0 ifTrue: [^-1].
-	^0
+	^self
 ]
 
 { #category : #'mathematical functions' }
@@ -904,6 +904,14 @@ Number >> sign: aNumber [
  	"Return a Number with the same sign as aNumber"
  
  	^ aNumber copySignTo: self.
+]
+
+{ #category : #'mathematical functions' }
+Number >> signBit [
+	"Answer 1 if the receiver is negative, zero otherwise."
+
+	self < 0 ifTrue: [^1].
+	^0
 ]
 
 { #category : #'mathematical functions' }
@@ -1043,12 +1051,6 @@ Number >> week [
 Number >> weeks [
  
  	^ Duration weeks: self
-]
-
-{ #category : #converting }
-Number >> withNegativeSign [
-	"Answer a number with same magnitude than receiver and negative sign."
-	^self abs negated
 ]
 
 { #category : #'*Kernel-Chronology' }
