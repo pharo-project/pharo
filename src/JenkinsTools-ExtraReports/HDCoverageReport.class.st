@@ -85,7 +85,7 @@ HDCoverageReport >> generatePackage: aPackage class: aClass on: aStream [
 
 { #category : #generating }
 HDCoverageReport >> generatePackage: aPackage method: aReference on: aStream [
-	| items |
+ 
 	aStream tab: 5; nextPutAll: '<method name="'; nextPutAll: (self encode: aReference selector); nextPutAll: '">'; nextPut: Character lf.
 	self
 		generateType: 'method' indent: 6
