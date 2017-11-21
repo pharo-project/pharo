@@ -4,7 +4,7 @@ ColorComponentSelector showing a hue rainbow palette.
 Class {
 	#name : #HColorSelectorMorph,
 	#superclass : #BracketSliderMorph,
-	#category : 'Morphic-Widgets-ColorPicker'
+	#category : #Morphic-Widgets-ColorPicker
 }
 
 { #category : #accessing }

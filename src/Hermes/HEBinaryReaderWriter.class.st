@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : 'Hermes'
+	#category : #Hermes
 }
 
 { #category : #sizes }

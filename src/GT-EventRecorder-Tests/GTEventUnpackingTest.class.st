@@ -11,7 +11,7 @@ Class {
 		'initialData',
 		'bundle'
 	],
-	#category : 'GT-EventRecorder-Tests-Support'
+	#category : #GT-EventRecorder-Tests-Support
 }
 
 { #category : #running }

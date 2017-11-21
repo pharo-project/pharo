@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'replaceBlock'
 	],
-	#category : 'AST-Core-Matching'
+	#category : #AST-Core-Matching
 }
 
 { #category : #'instance creation' }

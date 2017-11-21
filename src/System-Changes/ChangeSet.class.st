@@ -25,7 +25,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'System-Changes'
+	#category : #System-Changes
 }
 
 { #category : #enumerating }

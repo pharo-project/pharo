@@ -12,7 +12,7 @@ Class {
 		'semaphore',
 		'owner'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'mutual exclusion' }

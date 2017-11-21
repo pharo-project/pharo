@@ -5,7 +5,7 @@ I can return the default color of the background and the default color of the fo
 Class {
 	#name : #VTermDefaultColor,
 	#superclass : #Object,
-	#category : 'System-CommandLine'
+	#category : #System-CommandLine
 }
 
 { #category : #terminfo }

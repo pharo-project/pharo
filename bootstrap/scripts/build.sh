@@ -78,7 +78,14 @@ fi
 
 PREFIX=Pharo7.0
 
-GIT_COMMIT_HASH=$(git show -s --format=%h)
+REPOSITORY="${BOOTSTRAP_REPOSITORY:-..}"
+
+if [[ -z "${BOOTSTRAP_REPOSITORY}" ]]; then
+  GIT_COMMIT_HASH=$(git show -s --format=%h)
+else
+  GIT_COMMIT_HASH=$(git -C ${REPOSITORY} show -s --format=%h)
+fi
+
 SUFFIX=${ARCH_DESCRIPTION}bit-${GIT_COMMIT_HASH}
 
 if [[ ${DESCRIBE} -eq "1" ]]; then
@@ -99,10 +106,12 @@ MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
 PHARO_IMAGE_NAME=${PREFIX}-${SUFFIX}
 
+CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
+
 VM=./vm/pharo
 
 #Get inside the bootstrap-cache folder. Pharo interprets relatives as relatives to the image and not the 'working directory'
-cd bootstrap-cache
+cd "${CACHE}"
 
 #We need the old sources file next to the image because of sources condensation step
 wget http://files.pharo.org/sources/PharoV60.sources
@@ -120,10 +129,7 @@ zip "${HERMES_ARCHIVE_NAME}.zip" OpalCompiler-Core.hermes CodeExport.hermes Code
 # Archive RPackage definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
-../bootstrap/scripts/download_vm.sh
-
-echo "Prepare fonts"
-unzip ../resources/fonts/BitmapDejaVuSans.fuel -d .
+${REPOSITORY}/bootstrap/scripts/download_vm.sh
 
 echo "Prepare icons"
 mkdir icon-packs
@@ -131,8 +137,8 @@ cd icon-packs
 wget http://github.com/pharo-project/pharo-icon-packs/archive/idea11.zip
 cd ..
 
-#Required for the correct work of metacello baselines and unicode initialization
-ln -s .. pharo-core
+# Find st-cache path
+[[ -z "${BOOTSTRAP_CACHE}" ]] && ST_CACHE='st-cache' || ST_CACHE="${BOOTSTRAP_CACHE}/st-cache"
 
 # Installing RPackage
 echo "[Compiler] Installing RPackage"
@@ -143,15 +149,15 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKer
 echo "[Compiler] Installing compiler through Hermes"
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
-${VM} "${COMPILER_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
-${VM} "${COMPILER_IMAGE_NAME}.image" st st-cache/Multilingual.st st-cache/DeprecatedFileStream.st st-cache/FileSystem.st --no-source --quit --save
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
+${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/Multilingual.st ${ST_CACHE}/DeprecatedFileStream.st ${ST_CACHE}/FileSystem.st --no-source --quit --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
 ${VM} "${COMPILER_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
-${VM} "${CORE_IMAGE_NAME}.image" st ../bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit
+${VM} "${CORE_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/UnicodeData.txt"
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
@@ -159,37 +165,25 @@ echo "[Monticello] Bootstrap Monticello Core and Local repositories"
 
 #${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
 cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st st-cache/Monticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
-${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${ST_CACHE}/Monticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories
 echo "[Monticello] Loading Networking Packages and Remote Repositories"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" save $MC_IMAGE_NAME
-${VM} "${MC_IMAGE_NAME}.image" st ../bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
+${VM} "${MC_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/03-bootstrapMonticelloRemote.st --save --quit
 zip "${MC_IMAGE_NAME}.zip" ${MC_IMAGE_NAME}.*
 
 #Bootstrap Metacello
 echo "[Metacello] Bootstrapping Metacello"
 ${VM} "${MC_IMAGE_NAME}.image" save ${METACELLO_IMAGE_NAME}
-${VM} "${METACELLO_IMAGE_NAME}.image" st ../bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
+${VM} "${METACELLO_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/03-metacello-bootstrap/01-loadMetacello.st --save --quit
 zip "${METACELLO_IMAGE_NAME}.zip" ${METACELLO_IMAGE_NAME}.*
 
 echo "[Pharo] Reloading rest of packages"
 ${VM} "${METACELLO_IMAGE_NAME}.image" save "${PHARO_IMAGE_NAME}"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.4'; load: 'core'"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://../src'; load"
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
-${VM} "${PHARO_IMAGE_NAME}.image" clean --release
-
-echo "[Pharo] Configure resulting image"
-${VM} "${PHARO_IMAGE_NAME}.image" st ../bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
-
-${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
-
-# clean bak sources files
-rm -f *.bak
 
 # fix the display size in the image header (position 40 [zero based], 24 for 32-bit image)
 # in older versions we must use octal representation
@@ -200,5 +194,18 @@ else
   SEEK=40
 fi
 dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
+
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.3'; load: 'core'"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://${REPOSITORY}/src'; load"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+${VM} "${PHARO_IMAGE_NAME}.image" clean --release
+
+echo "[Pharo] Configure resulting image"
+${VM} "${PHARO_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/04-configure-resulting-image/fixPackageVersions.st --save --quit
+
+${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
+
+# clean bak sources files
+rm -f *.bak
 
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*

@@ -46,7 +46,7 @@ Class {
 		'depth',
 		'recentlyChanged'
 	],
-	#category : 'Morphic-Widgets-FastTable-Tree'
+	#category : #Morphic-Widgets-FastTable-Tree
 }
 
 { #category : #expanding-collapsing }

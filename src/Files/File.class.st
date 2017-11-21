@@ -46,7 +46,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : 'Files-Core'
+	#category : #Files-Core
 }
 
 { #category : #'file creation' }

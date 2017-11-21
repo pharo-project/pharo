@@ -14,7 +14,7 @@ Class {
 		'okToolbar',
 		'categoryList'
 	],
-	#category : 'Keymapping-Tools-Spec'
+	#category : #Keymapping-Tools-Spec
 }
 
 { #category : #specs }

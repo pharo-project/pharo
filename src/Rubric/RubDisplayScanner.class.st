@@ -13,7 +13,7 @@ Class {
 		'ignoreColorChanges',
 		'defaultTextColor'
 	],
-	#category : 'Rubric-TextScanning'
+	#category : #Rubric-TextScanning
 }
 
 { #category : #queries }

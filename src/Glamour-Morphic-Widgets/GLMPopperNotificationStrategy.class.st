@@ -4,7 +4,7 @@ I opened a new popper window that displays the given notification. (I do not alt
 Class {
 	#name : #GLMPopperNotificationStrategy,
 	#superclass : #RubNotificationStrategy,
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #notification }

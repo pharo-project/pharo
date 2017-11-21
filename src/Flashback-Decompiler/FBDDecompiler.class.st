@@ -34,7 +34,7 @@ Class {
 		'jumpSize',
 		'loopsArray'
 	],
-	#category : 'Flashback-Decompiler'
+	#category : #Flashback-Decompiler
 }
 
 { #category : #'instruction decoding forward' }
@@ -514,7 +514,7 @@ FBDDecompiler >> quickMethod [
 		ifTrue: [ 
 			^ self
 				methodReturnConstant:
-					(instructionStream method encoderClass specialLiterals at: instructionStream method primitive - 256) ].
+					(instructionStream method encoderClass quickPrimSpecialConstants at: instructionStream method primitive - 256) ].
 	instructionStream method isReturnField
 		ifTrue: [ 
 			self pushReceiverVariable: instructionStream method returnField.

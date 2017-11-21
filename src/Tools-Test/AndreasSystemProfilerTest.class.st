@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tally'
 	],
-	#category : 'Tools-Test-Profilers'
+	#category : #Tools-Test-Profilers
 }
 
 { #category : #running }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'ignoreMe'
 	],
-	#category : 'FuelTests-Mocks'
+	#category : #FuelTests-Mocks
 }
 
 { #category : #comparing }

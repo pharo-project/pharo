@@ -9,7 +9,7 @@ Class {
 		'previousEditorClass',
 		'acceptAllowed'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #keymap }

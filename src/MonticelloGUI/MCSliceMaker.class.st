@@ -27,7 +27,7 @@ Class {
 		'window',
 		'okToDoSlice'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #opening }
@@ -211,7 +211,8 @@ MCSliceMaker >> window [
 		addAllMorphs:
 			{cancelBtn.
 			okBtn}.
-	window addMorph: sliceInfoRow fullFrame: ((0 @ 0 corner: 1 @ 0) asLayoutFrame bottomOffset: sliceInfoRow height).
+	window addMorph: sliceInfoRow fullFrame: 
+		(LayoutFrame identity bottomFraction: 0; bottomOffset: sliceInfoRow height).
 	tree := MorphTreeModel new
 		rootItems: self rootItems;
 		beCheckList;
@@ -230,6 +231,8 @@ MCSliceMaker >> window [
 			(LayoutFrame identity
 				topOffset: sliceInfoRow height;
 				bottomOffset: buttonsRow height negated).
-	window addMorph: buttonsRow fullFrame: ((0 @ 1 corner: 1 @ 1) asLayoutFrame topOffset: buttonsRow height negated).
+	window addMorph: buttonsRow fullFrame: 
+		(LayoutFrame identity topFraction: 1; 
+		topOffset: buttonsRow height negated).
 	^ window
 ]

@@ -5,7 +5,7 @@ I am a debugging action that inspects the currently selected bytecode.
 Class {
 	#name : #GTGoAndInspectBytecodeDebugAction,
 	#superclass : #DebugAction,
-	#category : 'GT-BytecodeDebugger-Actions'
+	#category : #GT-BytecodeDebugger-Actions
 }
 
 { #category : #registration }

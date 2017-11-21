@@ -12,7 +12,7 @@ Class {
 		'globalEnvironment',
 		'substitutionIndexes'
 	],
-	#category : 'Fuel-Core'
+	#category : #Fuel-Core
 }
 
 { #category : #'instance creation' }

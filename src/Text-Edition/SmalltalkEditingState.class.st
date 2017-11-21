@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'selectorChooser'
 	],
-	#category : 'Text-Edition'
+	#category : #Text-Edition
 }
 
 { #category : #selector-chooser }

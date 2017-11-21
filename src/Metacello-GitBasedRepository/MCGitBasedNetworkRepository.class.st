@@ -13,7 +13,7 @@ Class {
 		'siteUsername',
 		'sitePassword'
 	],
-	#category : 'Metacello-GitBasedRepository'
+	#category : #Metacello-GitBasedRepository
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : 'STON-Core'
+	#category : #STON-Core
 }
 
 { #category : #'instance creation' }

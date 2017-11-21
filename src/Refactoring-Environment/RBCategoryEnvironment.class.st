@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'categories'
 	],
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #'instance creation' }

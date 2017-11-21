@@ -4,7 +4,7 @@ PackageTreeExample new open
 Class {
 	#name : #PackageTreeExample,
 	#superclass : #MorphTreeModel,
-	#category : 'Morphic-Examples-MorphTreeWidget'
+	#category : #Morphic-Examples-MorphTreeWidget
 }
 
 { #category : #examples }
@@ -13,7 +13,7 @@ PackageTreeExample class >> example [
 	^PackageTreeExample new open
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #view }
 PackageTreeExample >> defaultTreeMorph [
 	^ super defaultTreeMorph
 			doubleClickSelector: #doubleClick;
@@ -22,18 +22,18 @@ PackageTreeExample >> defaultTreeMorph [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 PackageTreeExample >> doubleClick [
 	self selectedNode ifNotNil: [:n | n doubleClick]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PackageTreeExample >> keyStroke: anEvent from: aTreeMorph [ 
 	self selectedNode
 		ifNotNil: [:current | current keyStroke: anEvent from: aTreeMorph]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PackageTreeExample >> menu: menu shifted: b [ 
 	"Set up the menu to apply to the receiver's, 
 	honoring the #shifted boolean"
@@ -41,18 +41,18 @@ PackageTreeExample >> menu: menu shifted: b [
 	^ menu
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #showing }
 PackageTreeExample >> open [
 	^ self openDialogWindowIn: World title: 'Packages'.
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PackageTreeExample >> rootItems [
 	^ RPackageOrganizer default packages 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PackageTreeExample >> rootNodeClassFromItem: anItem [
 	^ PackageNodeExample
 ]

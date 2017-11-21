@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fileName'
 	],
-	#category : 'Graphics-Tests-Files'
+	#category : #Graphics-Tests-Files
 }
 
 { #category : #'tests - decoding' }

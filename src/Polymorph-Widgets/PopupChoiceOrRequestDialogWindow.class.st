@@ -4,10 +4,10 @@ Class {
 	#instVars : [
 		'okButton'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PopupChoiceOrRequestDialogWindow class >> minWidth [
 	^250
 ]

@@ -27,7 +27,7 @@ Class {
 		'normalNames',
 		'italicNames'
 	],
-	#category : 'FreeType-FontManager'
+	#category : #FreeType-FontManager
 }
 
 { #category : #'known names' }

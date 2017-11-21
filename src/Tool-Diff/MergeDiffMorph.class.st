@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'allowJoinClicks'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #accessing }

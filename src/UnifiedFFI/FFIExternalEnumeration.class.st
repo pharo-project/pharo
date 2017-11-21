@@ -34,7 +34,7 @@ Class {
 	#classInstVars : [
 		'representationType'
 	],
-	#category : 'UnifiedFFI-Objects'
+	#category : #UnifiedFFI-Objects
 }
 
 { #category : #converting }

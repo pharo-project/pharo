@@ -10,7 +10,7 @@ Class {
 		'textModel',
 		'textEditBrick'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
 }
 
 { #category : #examples }

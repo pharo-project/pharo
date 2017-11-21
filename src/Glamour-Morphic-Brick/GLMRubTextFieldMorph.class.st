@@ -55,7 +55,7 @@ Class {
 	#instVars : [
 		'customHeight'
 	],
-	#category : 'Glamour-Morphic-Brick-Morphic'
+	#category : #Glamour-Morphic-Brick-Morphic
 }
 
 { #category : #geometry }

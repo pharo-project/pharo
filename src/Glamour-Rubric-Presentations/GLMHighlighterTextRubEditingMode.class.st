@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'stylerDecorator'
 	],
-	#category : 'Glamour-Rubric-Presentations'
+	#category : #Glamour-Rubric-Presentations
 }
 
 { #category : #'instance creation' }

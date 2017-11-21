@@ -32,7 +32,7 @@ Class {
 		'argumentGetter',
 		'buttonLabel'
 	],
-	#category : 'System-FileRegistry'
+	#category : #System-FileRegistry
 }
 
 { #category : #'instance creation' }

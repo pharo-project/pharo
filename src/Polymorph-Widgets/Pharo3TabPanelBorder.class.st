@@ -4,7 +4,7 @@ Specialized border for TabGroup. Does not draw border beneath the selectd tab an
 Class {
 	#name : #Pharo3TabPanelBorder,
 	#superclass : #TabPanelBorder,
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #drawing }

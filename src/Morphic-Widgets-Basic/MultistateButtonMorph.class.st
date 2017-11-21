@@ -17,7 +17,7 @@ Class {
 		'stateMap',
 		'upAction'
 	],
-	#category : 'Morphic-Widgets-Basic-Buttons'
+	#category : #Morphic-Widgets-Basic-Buttons
 }
 
 { #category : #accessing }

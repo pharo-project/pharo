@@ -8,7 +8,7 @@ Class {
 		'previousBreakpoints',
 		'cls'
 	],
-	#category : 'Reflectivity-Tools-Tests'
+	#category : #Reflectivity-Tools-Tests
 }
 
 { #category : #utils }
@@ -36,6 +36,19 @@ BreakpointTest >> tearDown [
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
 	pkg ifNotNil: [ pkg removeFromSystem ]
+]
+
+{ #category : #tests }
+BreakpointTest >> testModifyMethodWithBreakpoint [
+	cls compile: 'dummy ^42'.
+	self assert: Breakpoint all isEmpty.
+	Breakpoint new
+		node: (cls >> #dummy) ast;
+		once;
+		install.
+	self assert: (cls >> #dummy) hasBreakpoint.
+	cls compile: 'dummy ^43'.
+	self assert: Breakpoint all isEmpty
 ]
 
 { #category : #tests }

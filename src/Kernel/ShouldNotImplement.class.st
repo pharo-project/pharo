@@ -6,7 +6,7 @@ This can happen when an implementation is inherited.
 Class {
 	#name : #ShouldNotImplement,
 	#superclass : #SelectorException,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #printing }

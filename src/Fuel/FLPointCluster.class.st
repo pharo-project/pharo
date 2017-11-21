@@ -4,7 +4,7 @@ FLPointCluster is an optional class that optimizes Point instances, since there 
 Class {
 	#name : #FLPointCluster,
 	#superclass : #FLOptimizedObjectCluster,
-	#category : 'Fuel-Clusters-Optionals'
+	#category : #Fuel-Clusters-Optionals
 }
 
 { #category : #serialize/materialize }

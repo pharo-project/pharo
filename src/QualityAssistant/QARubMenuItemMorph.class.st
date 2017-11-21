@@ -4,7 +4,7 @@ I simulate the functionality of MenuItemMorph while providing more sophisticated
 Class {
 	#name : #QARubMenuItemMorph,
 	#superclass : #Morph,
-	#category : 'QualityAssistant'
+	#category : #QualityAssistant
 }
 
 { #category : #events }

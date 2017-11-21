@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : 'Metacello-Core-Model'
+	#category : #Metacello-Core-Model
 }
 
 { #category : #accessing }

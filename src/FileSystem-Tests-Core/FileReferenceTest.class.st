@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'filesystem'
 	],
-	#category : 'FileSystem-Tests-Core'
+	#category : #FileSystem-Tests-Core
 }
 
 { #category : #support }
@@ -324,7 +324,7 @@ FileReferenceTest >> testDeleteAll [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	<publicTest>
 	"self debug: #testDeleteAll"
-	| ref children |
+	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
 	filesystem createDirectory: '/alpha/beta/delta'.
@@ -344,7 +344,7 @@ FileReferenceTest >> testDeleteAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 	<publicTest>
 	"self debug: #testDeleteAllChildren"
-	| ref children |
+	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
 	filesystem createDirectory: '/alpha/beta/delta'.
@@ -532,7 +532,7 @@ FileReferenceTest >> testGrandchildOfReference [
 FileReferenceTest >> testHasChildren [
 	<publicTest>
 	"self debug: #testHasChildren"
-	| ref children |
+	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
 	filesystem createDirectory: '/alpha/beta/delta'.
@@ -550,7 +550,7 @@ FileReferenceTest >> testHasChildren [
 FileReferenceTest >> testHasDirectories [
 	<publicTest>
 	"self debug: #testHasDirectories"
-	| ref children |
+	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
 	
@@ -568,7 +568,7 @@ FileReferenceTest >> testHasDirectories [
 FileReferenceTest >> testHasFiles [
 	<publicTest>
 	"self debug: #testHasFiles"
-	| ref children |
+	| ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
 	(filesystem / 'alpha' / 'beta' / 'delta') ensureCreateFile.
@@ -828,7 +828,7 @@ FileReferenceTest >> testRelativeToReference [
 { #category : #tests }
 FileReferenceTest >> testRename [
 
-	| file newName tmp originalPwd originalFullName |
+	| file tmp originalPwd originalFullName |
 	[
 		file := (FileLocator imageDirectory / 'oldName') ensureCreateFile.
 		originalFullName := file fullName.

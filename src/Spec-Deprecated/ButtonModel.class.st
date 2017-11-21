@@ -4,5 +4,5 @@ This is deprecated class because the original class ButtonModel was renamed to B
 Class {
 	#name : #ButtonModel,
 	#superclass : #ButtonPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

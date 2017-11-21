@@ -4,7 +4,7 @@ I am the adapter used to bridge a DialogWindowPresenter and a DialogWindow
 Class {
 	#name : #MorphicDialogWindowAdapter,
 	#superclass : #MorphicWindowAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #factory }

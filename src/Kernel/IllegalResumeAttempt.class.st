@@ -4,7 +4,7 @@ This class is private to the EHS implementation.  An instance of it is signaled 
 Class {
 	#name : #IllegalResumeAttempt,
 	#superclass : #Exception,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #comment }

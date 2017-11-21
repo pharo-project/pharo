@@ -4,7 +4,7 @@ I'm in charge to style an ast when there are watchpoints
 Class {
 	#name : #WatchpointIconStyler,
 	#superclass : #IconStyler,
-	#category : 'Reflectivity-Tools-Watchpoints'
+	#category : #Reflectivity-Tools-Watchpoints
 }
 
 { #category : #defaults }

@@ -1,4 +1,9 @@
 accessing
 originRepository
 
-	^ TonelRepository new directory: 'src' asFileReference
+	| repositoryReference |
+	
+	repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference / 'src'.
+
+
+	^ TonelRepository new directory: repositoryReference

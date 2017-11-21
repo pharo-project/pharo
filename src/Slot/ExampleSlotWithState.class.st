@@ -46,7 +46,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'Slot-Examples'
+	#category : #Slot-Examples
 }
 
 { #category : #meta-object-protocol }

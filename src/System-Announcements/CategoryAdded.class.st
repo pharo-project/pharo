@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'categoryName'
 	],
-	#category : 'System-Announcements-System-Categories'
+	#category : #System-Announcements-System-Categories
 }
 
 { #category : #'instance creation' }

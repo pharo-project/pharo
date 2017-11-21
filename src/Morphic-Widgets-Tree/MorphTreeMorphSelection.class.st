@@ -4,7 +4,7 @@ Superclass for selections in a morphic based tree
 Class {
 	#name : #MorphTreeMorphSelection,
 	#superclass : #Object,
-	#category : 'Morphic-Widgets-Tree'
+	#category : #Morphic-Widgets-Tree
 }
 
 { #category : #accessing }

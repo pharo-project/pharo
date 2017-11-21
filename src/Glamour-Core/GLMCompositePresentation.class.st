@@ -8,7 +8,7 @@ Class {
 		'presentations',
 		'arrangement'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #examples }

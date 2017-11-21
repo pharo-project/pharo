@@ -16,7 +16,7 @@ Class {
 		'CharacterTable',
 		'DigitValues'
 	],
-	#category : 'Kernel-BasicObjects'
+	#category : #Kernel-BasicObjects
 }
 
 { #category : #'instance creation' }

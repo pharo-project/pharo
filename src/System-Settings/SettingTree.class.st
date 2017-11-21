@@ -20,7 +20,7 @@ Class {
 		'nodeList',
 		'persistence'
 	],
-	#category : 'System-Settings-Browser'
+	#category : #System-Settings-Browser
 }
 
 { #category : #'instance creation' }

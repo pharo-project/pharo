@@ -4,7 +4,7 @@ I provide a test suite for Float values. Examine my tests to see how Floats shou
 Class {
 	#name : #FloatTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #'tests - IEEE 754' }
@@ -578,7 +578,7 @@ FloatTest >> testFractionAsFloatWithUnderflow [
 	underflowPower := Float emin - Float precision.
 	self assert: (2 raisedTo: underflowPower) asFloat = 0.0.	
 	self assert: (2 raisedTo: underflowPower) negated asFloat = 0.0.
-	self assert: (2 raisedTo: underflowPower) negated asFloat sign = -1 description: 'a negative underflow should return a negative zero'.
+	self assert: (2 raisedTo: underflowPower) negated asFloat signBit = 1 description: 'a negative underflow should return a negative zero'.
 ]
 
 { #category : #tests }
@@ -813,7 +813,8 @@ FloatTest >> testNegativeZeroAbs [
 
 { #category : #'tests - zero behavior' }
 FloatTest >> testNegativeZeroSign [
-	self assert: Float negativeZero sign = -1
+	self assert: Float negativeZero sign = 0. "Like any other zero, a negative zero has its sign being zero"
+	self assert: Float negativeZero signBit = 1 "But it can be distinguished with its signBit"
 ]
 
 { #category : #'tests - printing' }
@@ -926,7 +927,7 @@ FloatTest >> testSign [
 
       "The sign of zeros"
       self assert: zero sign = 0.
-      self assert: negz sign = -1. "remark though that negz >= 0.0, and is thus considered positive... Weird"
+      self assert: negz sign = 0.
 
       "Test the copy sign functions"
       positives do: [:aPositiveSign |
@@ -935,15 +936,19 @@ FloatTest >> testSign [
               negatives do: [:aNegative |
                       self assert: (aNegative sign: aPositiveSign) = aNegative negated].
               (zero sign: aPositiveSign) sign = 0.
-              (negz sign: aPositiveSign) sign = 0].
+              (negz sign: aPositiveSign) sign = 0.
+              (zero sign: aPositiveSign) signBit = 0.
+              (negz sign: aPositiveSign) signBit = 0].
 
       negatives do: [:aNegativeSign |
               positives do: [:aPositive |
                       self assert: (aPositive sign: aNegativeSign) = aPositive negated].
               negatives do: [:aNegative |
                       self assert: (aNegative sign: aNegativeSign) = aNegative].
-              (zero sign: aNegativeSign) sign = -1.
-              (negz sign: aNegativeSign) sign = -1].
+              (zero sign: aNegativeSign) sign = 0.
+              (negz sign: aNegativeSign) sign = 0.
+              (zero sign: aNegativeSign) signBit = 1.
+              (negz sign: aNegativeSign) signBit = 1].
 ]
 
 { #category : #'tests - printing' }

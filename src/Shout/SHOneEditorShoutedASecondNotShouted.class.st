@@ -18,7 +18,7 @@ Class {
 		'code',
 		'comment'
 	],
-	#category : 'Shout-Examples'
+	#category : #Shout-Examples
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ I am modelling the push self bytecode
 Class {
 	#name : #IRPushReceiver,
 	#superclass : #IRAccess,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

@@ -13,10 +13,10 @@ Class {
 		'hashBlock',
 		'equalBlock'
 	],
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 PluggableDictionary class >> integerDictionary [
 	^ self new hashBlock: [:integer | integer hash \\ 1064164 * 1009]
 ]

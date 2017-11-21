@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'dimension'
 	],
-	#category : 'Glamour-Morphic-Brick-Layouts'
+	#category : #Glamour-Morphic-Brick-Layouts
 }
 
 { #category : #initialization }

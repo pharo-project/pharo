@@ -10,7 +10,7 @@ Class {
 		'allMethodSignatures',
 		'selectedMethodSignatures'
 	],
-	#category : 'GT-Inspector'
+	#category : #GT-Inspector
 }
 
 { #category : #examples }

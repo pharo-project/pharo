@@ -8,7 +8,7 @@ Class {
 		'nullInstance',
 		'instance'
 	],
-	#category : 'Glamour-Helpers'
+	#category : #Glamour-Helpers
 }
 
 { #category : #accessing }

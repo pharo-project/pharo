@@ -15,7 +15,7 @@ Class {
 		'fields',
 		'parts'
 	],
-	#category : 'Network-Mail'
+	#category : #Network-Mail
 }
 
 { #category : #utilities }

@@ -4,7 +4,7 @@ Specialized version of inspector showing values only
 Class {
 	#name : #EyeSetInspector,
 	#superclass : #EyeCollectionInspector,
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #list }

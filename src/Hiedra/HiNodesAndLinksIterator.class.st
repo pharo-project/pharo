@@ -10,7 +10,7 @@ Class {
 		'nodeByValue',
 		'values'
 	],
-	#category : 'Hiedra-Rendering'
+	#category : #Hiedra-Rendering
 }
 
 { #category : #enumerating }

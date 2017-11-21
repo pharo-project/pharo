@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'monticelloRepository'
 	],
-	#category : 'Versionner-Tests-Resources'
+	#category : #Versionner-Tests-Resources
 }
 
 { #category : #accessing }

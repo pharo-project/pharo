@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlayBindingDarkThemer,
 	#superclass : #GTPlayBindingThemer,
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #rows }

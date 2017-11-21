@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloBaselineOfMethodSpec,
 	#superclass : #MetacelloVersionMethodSpec,
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #'method generation' }

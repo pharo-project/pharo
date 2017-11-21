@@ -13,7 +13,7 @@ Main methods:
 "
 Trait {
 	#name : #TGLMScriptingAPITablePresentation,
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #accessing }

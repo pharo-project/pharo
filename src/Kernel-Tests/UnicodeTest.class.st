@@ -12,7 +12,7 @@ Class {
 		'nonCharacters',
 		'unicodeGenerator'
 	],
-	#category : 'Kernel-Tests-Charset'
+	#category : #Kernel-Tests-Charset
 }
 
 { #category : #accessing }
@@ -48,6 +48,7 @@ UnicodeTest >> checkCorrespondanceOf: aSelector and: aCategoryTag [
 
 { #category : #running }
 UnicodeTest >> setUp [
+	super setUp.
 	unicodeGenerator := UnicodeTestRNG current
 ]
 

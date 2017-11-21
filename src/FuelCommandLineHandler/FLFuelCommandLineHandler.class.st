@@ -28,7 +28,7 @@ Class {
 	#instVars : [
 		'files'
 	],
-	#category : 'FuelCommandLineHandler'
+	#category : #FuelCommandLineHandler
 }
 
 { #category : #accessing }

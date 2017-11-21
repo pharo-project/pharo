@@ -1,7 +1,7 @@
 Class {
 	#name : #SmalltalkImageTest,
 	#superclass : #TestCase,
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #tests-arguments }

@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'tt'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #examples }

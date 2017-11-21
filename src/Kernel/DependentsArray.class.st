@@ -11,7 +11,7 @@ Class {
 	#name : #DependentsArray,
 	#superclass : #Collection,
 	#type : #weak,
-	#category : 'Kernel-Models'
+	#category : #Kernel-Models
 }
 
 { #category : #'instance creation' }

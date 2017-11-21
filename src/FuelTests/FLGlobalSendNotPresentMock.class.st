@@ -4,7 +4,7 @@ A test mock where a global send is not present
 Class {
 	#name : #FLGlobalSendNotPresentMock,
 	#superclass : #Object,
-	#category : 'FuelTests-Mocks'
+	#category : #FuelTests-Mocks
 }
 
 { #category : #serialization }

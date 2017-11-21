@@ -4,7 +4,7 @@ I am a specialized version for the 'self'
 Class {
 	#name : #RBSelfNode,
 	#superclass : #RBVariableNode,
-	#category : 'AST-Core-Nodes'
+	#category : #AST-Core-Nodes
 }
 
 { #category : #visiting }

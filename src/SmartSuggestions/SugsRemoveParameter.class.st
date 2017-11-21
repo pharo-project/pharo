@@ -4,7 +4,7 @@ I know how to remove a parameter from a method
 Class {
 	#name : #SugsRemoveParameter,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

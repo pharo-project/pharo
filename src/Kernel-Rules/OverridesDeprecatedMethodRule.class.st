@@ -3,8 +3,8 @@ The method overrided a deprecated method. This is a sign that an API has changed
 "
 Class {
 	#name : #OverridesDeprecatedMethodRule,
-	#superclass : #RBBlockLintRule,
-	#category : 'Kernel-Rules'
+	#superclass : #ReAbstractRule,
+	#category : #Kernel-Rules
 }
 
 { #category : #testing }
@@ -20,15 +20,11 @@ OverridesDeprecatedMethodRule class >> uniqueIdentifierName [
 ]
 
 { #category : #running }
-OverridesDeprecatedMethodRule >> basicCheck: aMethod [
-	^ aMethod overriddenMethods anySatisfy: #isDeprecated
-]
+OverridesDeprecatedMethodRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
-{ #category : #running }
-OverridesDeprecatedMethodRule >> checkMethod: aMethod [
+	(aMethod overriddenMethods anySatisfy: #isDeprecated) ifTrue: [ 
+		aCriticBlock cull: (self critiqueFor: aMethod) ]
 
-	(self basicCheck: aMethod) ifTrue: [ 
-			result addMethod: aMethod ]
 ]
 
 { #category : #accessing }
@@ -39,9 +35,4 @@ OverridesDeprecatedMethodRule >> group [
 { #category : #accessing }
 OverridesDeprecatedMethodRule >> name [
 	^ 'Overrides a deprecated method'
-]
-
-{ #category : #accessing }
-OverridesDeprecatedMethodRule >> rationale [
-	^ 'The method overrided a deprecated method. This is a sign that an API has changed in an upstream project and most likely the method should override another one'
 ]

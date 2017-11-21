@@ -31,7 +31,7 @@ Class {
 	#classVars : [
 		'LastContents'
 	],
-	#category : 'Tool-Workspace'
+	#category : #Tool-Workspace
 }
 
 { #category : #cleaning }

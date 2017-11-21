@@ -78,7 +78,7 @@ Class {
 	#classInstVars : [
 		'concreteClass'
 	],
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #accessing }

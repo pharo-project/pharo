@@ -69,7 +69,7 @@ Halt resetOnce
 Class {
 	#name : #Halt,
 	#superclass : #Exception,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #private }

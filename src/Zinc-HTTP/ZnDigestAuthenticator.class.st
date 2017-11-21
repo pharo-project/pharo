@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'nonces'
 	],
-	#category : 'Zinc-HTTP-Support'
+	#category : #Zinc-HTTP-Support
 }
 
 { #category : #testing }

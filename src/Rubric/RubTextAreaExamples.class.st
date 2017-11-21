@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'ModelForShout'
 	],
-	#category : 'Rubric-Editing-Core-Examples'
+	#category : #Rubric-Editing-Core-Examples
 }
 
 { #category : #examples }

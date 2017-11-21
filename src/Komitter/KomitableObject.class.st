@@ -12,7 +12,7 @@ Class {
 		'remote',
 		'unselectedEntities'
 	],
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #accessing }

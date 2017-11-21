@@ -15,7 +15,7 @@ Class {
 		'leafNodes',
 		'maxIterations'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #computing }

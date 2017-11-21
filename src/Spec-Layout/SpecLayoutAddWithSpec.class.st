@@ -4,7 +4,7 @@ A SpecLayoutAddWithSpec is an action representing an add in the spec layout with
 Class {
 	#name : #SpecLayoutAddWithSpec,
 	#superclass : #SpecLayoutAdd,
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #'instance creation' }

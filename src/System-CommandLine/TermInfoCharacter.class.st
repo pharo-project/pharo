@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'cache'
 	],
-	#category : 'System-CommandLine'
+	#category : #System-CommandLine
 }
 
 { #category : #TermStyle }

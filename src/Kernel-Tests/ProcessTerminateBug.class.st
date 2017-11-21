@@ -4,7 +4,7 @@ SUnit tests for Process termination
 Class {
 	#name : #ProcessTerminateBug,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #tests }

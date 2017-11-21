@@ -4,7 +4,7 @@ Writer for Metacello MCM
 Class {
 	#name : #MCMcmWriter,
 	#superclass : #MCWriter,
-	#category : 'MonticelloConfigurations'
+	#category : #MonticelloConfigurations
 }
 
 { #category : #writing }

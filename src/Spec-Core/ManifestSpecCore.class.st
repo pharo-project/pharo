@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestSpecCore,
 	#superclass : #PackageManifest,
-	#category : 'Spec-Core'
+	#category : #Spec-Core
 }
 
 { #category : #code-critics }

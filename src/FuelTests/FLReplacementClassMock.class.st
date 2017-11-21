@@ -1,7 +1,7 @@
 Class {
 	#name : #FLReplacementClassMock,
 	#superclass : #FLReplacementMock,
-	#category : 'FuelTests-Mocks'
+	#category : #FuelTests-Mocks
 }
 
 { #category : #accessing }

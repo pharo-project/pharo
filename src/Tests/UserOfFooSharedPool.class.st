@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'FooSharedPool'
 	],
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #'test mock' }

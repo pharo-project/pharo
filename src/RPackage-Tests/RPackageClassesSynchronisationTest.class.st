@@ -4,7 +4,7 @@ SUnit tests for RPackage classes synchronisation
 Class {
 	#name : #RPackageClassesSynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #'tests - adding classes' }
@@ -136,7 +136,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassRegisterTheClassMetho
 
 	"test that when we recategorize a class, the new package in which it is defined include all the methods defined in this class (not extensions)"
 	
-	| addedCount addedCat XPackage YPackage ZPackage class|
+	| XPackage YPackage ZPackage class|
 	self addXCategory.
 	self addYCategory.
 	self addZCategory.
@@ -225,7 +225,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 
 	"test that when we recategorize a class (having methods defined in both instance and class side), the new package in which it is defined include all the methods (from instance and class side) defined in this class (not extensions)"
 	
-	| addedCount addedCat XPackage YPackage ZPackage class|
+	| XPackage YPackage ZPackage class|
 	self addXCategory.
 	self addYCategory.
 	self addZCategory.
@@ -327,7 +327,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedInThePare
 	"test that when we rename a class, the classes Defined in the parent package includes the new name"
 	"self debug: #testRenameClassUpdateClassDefinedInTheParentPackage"
 	
-	|XPackage  class refactoring|
+	| XPackage class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	
@@ -342,7 +342,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedInThePare
 RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectorsInTheParentPackage [
 	"test that when we rename a class, the  'classDefinedSelectors' dictionary of the parent package is updated with the new name. There fore we test that we can correctly access the selector from the package by specifying the right name (the new name)"
 	
-	|XPackage  class refactoring|
+	| XPackage  class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
@@ -358,7 +358,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedSelectors
 RPackageClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'classExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Therfore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
 
-	|XPackage YPackage class refactoring|
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
@@ -375,7 +375,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateClassExtensionSelecto
 RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelectorsInTheParentPackage [
 	"test that when we rename a class, the  'metaclassDefinedSelectors' dictionary of the parent package is updated with the new name. Ther fore we test that we can correctly access the selector from the package by specifying the right name (the new name)"
 	
-	|XPackage  class refactoring|
+	| XPackage  class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' asSymbol inCategory: 'XXXXX'.
@@ -391,7 +391,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassDefinedSelec
 RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSelectorsInTheExtendingPackages [
 	"test that when we rename a class, the  'metaclassExtensionSelectors' dictionaries of the extending packages  are updated with the new name. Ther fore we test that we can correctly access the selectors from the package by specifying the right name (the new name)"
 	
-	|XPackage YPackage class refactoring|
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
@@ -408,7 +408,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateMetaclassExtensionSel
 RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendingPackagesMapping [
 	"test that when we rename a class, the classExtendingPackages dictionary of the organizer is updated with the new name, so that we can access the packages when specifying the new name"
 	
-	|XPackage YPackage class refactoring|
+	| XPackage YPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	YPackage := self organizer packageNamed: #YYYYY.
@@ -425,7 +425,7 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassExtendi
 RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackageMapping [
 	"test that when we rename a class, the classPackage dictionary of the organizer is updated with the new name, so that we can access the package when specifying the new name"
 	
-	|XPackage class refactoring|
+	| XPackage class |
 	self addXYCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'RPackageOldStubClass' inCategory: 'XXXXX'.
@@ -440,10 +440,9 @@ RPackageClassesSynchronisationTest >> testRenameClassUpdateOrganizerClassPackage
 RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtocol [
 	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
 	
-	|XPackage YPackage class| 
-
+	|class| 
 	self addXCategory.
-	XPackage := self organizer packageNamed: #XXXXX.
+	 
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	self createMethodNamed: 'newMethod' inClass: class inCategory: 'xxxxx'.  
 	class organization addCategory: '*yyyyy' before: nil.
@@ -455,7 +454,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByAddingExtensionProtoc
 RPackageClassesSynchronisationTest >> testReorganizeClassByAddingNewProtocolDoesNothing [
 	"test that when we reoganized a class by adding a category, nothing change from  RPackage point of vue."
 	
-	|XPackage YPackage class| 
+	|XPackage class| 
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.

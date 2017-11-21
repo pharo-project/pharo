@@ -49,7 +49,7 @@ Class {
 	#name : #Array,
 	#superclass : #ArrayedCollection,
 	#type : #variable,
-	#category : 'Collections-Sequenceable'
+	#category : #Collections-Sequenceable
 }
 
 { #category : #'brace support' }

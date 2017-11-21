@@ -4,7 +4,7 @@ SUnit tests for class BitBlt
 Class {
 	#name : #BitBltTest,
 	#superclass : #ClassTestCase,
-	#category : 'Graphics-Tests-Primitives'
+	#category : #Graphics-Tests-Primitives
 }
 
 { #category : #'tests - bugs' }

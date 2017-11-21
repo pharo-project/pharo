@@ -4,7 +4,7 @@ I am designed specifically for collections.
 Class {
 	#name : #CollectionValueHolder,
 	#superclass : #NewValueHolder,
-	#category : 'NewValueHolder'
+	#category : #NewValueHolder
 }
 
 { #category : #protocol }

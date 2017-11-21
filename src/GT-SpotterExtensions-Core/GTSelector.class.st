@@ -8,7 +8,7 @@ Class {
 		'name',
 		'methods'
 	],
-	#category : 'GT-SpotterExtensions-Core'
+	#category : #GT-SpotterExtensions-Core
 }
 
 { #category : #examples }

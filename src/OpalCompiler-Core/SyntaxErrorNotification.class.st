@@ -7,7 +7,7 @@ Class {
 		'doitFlag',
 		'location'
 	],
-	#category : 'OpalCompiler-Core-Exception'
+	#category : #OpalCompiler-Core-Exception
 }
 
 { #category : #exceptionInstantiator }

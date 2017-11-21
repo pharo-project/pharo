@@ -8,7 +8,7 @@ Class {
 		'smtp',
 		'socket'
 	],
-	#category : 'Network-Tests-Protocols'
+	#category : #Network-Tests-Protocols
 }
 
 { #category : #running }

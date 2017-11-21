@@ -10,7 +10,7 @@ Class {
 		'reversedNodes',
 		'linkBuilder'
 	],
-	#category : 'HiedraTests'
+	#category : #HiedraTests
 }
 
 { #category : #running }

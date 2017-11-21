@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnCharacterEncoderTests,
 	#superclass : #TestCase,
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : #Zinc-Character-Encoding-Tests
 }
 
 { #category : #accessing }

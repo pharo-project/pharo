@@ -11,7 +11,7 @@ Class {
 		'x',
 		'y'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #'tests - performing' }

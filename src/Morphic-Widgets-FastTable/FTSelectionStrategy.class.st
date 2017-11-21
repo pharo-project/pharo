@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'table'
 	],
-	#category : 'Morphic-Widgets-FastTable-Selection'
+	#category : #Morphic-Widgets-FastTable-Selection
 }
 
 { #category : #'instance creation' }

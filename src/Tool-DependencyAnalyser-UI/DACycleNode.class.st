@@ -4,7 +4,7 @@ A PDCycleNode is used to display a cycle in a tree.
 Class {
 	#name : #DACycleNode,
 	#superclass : #DANode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #building-menu }

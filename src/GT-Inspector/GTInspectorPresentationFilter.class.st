@@ -7,7 +7,7 @@ Subclasses need to implement  #shouldDisplayPresentationCreateBy: to indicate wh
 Class {
 	#name : #GTInspectorPresentationFilter,
 	#superclass : #Object,
-	#category : 'GT-Inspector'
+	#category : #GT-Inspector
 }
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 		'tally',
 		'senders'
 	],
-	#category : 'Tool-Profilers'
+	#category : #Tool-Profilers
 }
 
 { #category : #LICENSE }

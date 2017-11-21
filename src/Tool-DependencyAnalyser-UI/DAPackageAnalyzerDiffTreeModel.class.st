@@ -8,7 +8,7 @@ Class {
 		'treeDiff',
 		'packageRelationGraphDiff'
 	],
-	#category : 'Tool-DependencyAnalyser-UI-Core'
+	#category : #Tool-DependencyAnalyser-UI-Core
 }
 
 { #category : #specs }

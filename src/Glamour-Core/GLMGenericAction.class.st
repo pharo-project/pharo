@@ -4,7 +4,7 @@ This is an action that is supposed to work in any context (e.g., Morphic or Seas
 Class {
 	#name : #GLMGenericAction,
 	#superclass : #GLMAction,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #testing }

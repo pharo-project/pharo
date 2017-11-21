@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'list'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #'instance creation' }

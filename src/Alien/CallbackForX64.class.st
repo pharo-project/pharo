@@ -4,7 +4,7 @@ A CallbackForX64 is a callback for platforms with x64/x86_64 processors using th
 Class {
 	#name : #CallbackForX64,
 	#superclass : #Callback,
-	#category : 'Alien-Core'
+	#category : #Alien-Core
 }
 
 { #category : #accessing }

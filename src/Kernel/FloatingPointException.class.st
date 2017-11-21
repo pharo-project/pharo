@@ -8,5 +8,5 @@ ZeroDivide, DomainError and NaNException are examples of more specific Arithmeti
 Class {
 	#name : #FloatingPointException,
 	#superclass : #ArithmeticError,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }

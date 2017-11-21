@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'manifestClass'
 	],
-	#category : 'Manifest-Core'
+	#category : #Manifest-Core
 }
 
 { #category : #utils }

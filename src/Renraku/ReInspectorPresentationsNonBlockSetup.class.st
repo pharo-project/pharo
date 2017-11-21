@@ -6,7 +6,7 @@ This affects the performance of inspector.
 Class {
 	#name : #ReInspectorPresentationsNonBlockSetup,
 	#superclass : #ReAbstractRule,
-	#category : 'Renraku-Rules'
+	#category : #Renraku-Rules
 }
 
 { #category : #testing-interest }

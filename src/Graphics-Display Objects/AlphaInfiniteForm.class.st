@@ -8,7 +8,7 @@ Class {
 		'origin',
 		'extent'
 	],
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #displaying }

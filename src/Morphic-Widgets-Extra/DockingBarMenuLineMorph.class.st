@@ -5,7 +5,7 @@ A DockingBarMenuLineMorph is specialized version of its superclass for DockingBa
 Class {
 	#name : #DockingBarMenuLineMorph,
 	#superclass : #MenuLineMorph,
-	#category : 'Morphic-Widgets-Extra'
+	#category : #Morphic-Widgets-Extra
 }
 
 { #category : #layout }

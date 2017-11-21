@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'Watchpoints'
 	],
-	#category : 'Reflectivity-Tools-Watchpoints'
+	#category : #Reflectivity-Tools-Watchpoints
 }
 
 { #category : #accessing }

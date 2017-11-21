@@ -4,7 +4,7 @@ I'm a style module related to popup
 Class {
 	#name : #GLMBrickPopupThemer,
 	#superclass : #GLMBrickThemerModule,
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup-Themer'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup-Themer
 }
 
 { #category : #brick-popup }

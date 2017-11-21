@@ -4,7 +4,7 @@ Two fingers finished to pinch
 Class {
 	#name : #OSTouchTwoFingersPinchEndEvent,
 	#superclass : #OSTouchTwoFingersPinchEvent,
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #visitor }

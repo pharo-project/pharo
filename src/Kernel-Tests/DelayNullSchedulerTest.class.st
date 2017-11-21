@@ -4,7 +4,7 @@ SUnit tests for class DelayNullScheduler
 Class {
 	#name : #DelayNullSchedulerTest,
 	#superclass : #TestCase,
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #tests }

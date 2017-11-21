@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'treeWithItems'
 	],
-	#category : 'Spec-Tests'
+	#category : #Spec-Tests
 }
 
 { #category : #accessing }

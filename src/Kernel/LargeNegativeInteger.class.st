@@ -5,7 +5,7 @@ Class {
 	#name : #LargeNegativeInteger,
 	#superclass : #LargeInteger,
 	#type : #bytes,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #arithmetic }
@@ -145,6 +145,14 @@ LargeNegativeInteger >> sign [
 	"Optimization. Answer -1 since receiver is less than 0."
 
 	^ -1
+
+]
+
+{ #category : #testing }
+LargeNegativeInteger >> signBit [
+	"Optimization."
+
+	^1
 
 ]
 

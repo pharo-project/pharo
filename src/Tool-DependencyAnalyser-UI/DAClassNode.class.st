@@ -6,7 +6,7 @@ Indeed these two nodes have the same behavior to browse the dependency in the Na
 Class {
 	#name : #DAClassNode,
 	#superclass : #DANode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #browse-nautilus }

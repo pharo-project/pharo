@@ -18,7 +18,7 @@ Class {
 		'via',
 		'to'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #visitor }

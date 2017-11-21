@@ -14,7 +14,7 @@ FTEasyListMorph new
 Class {
 	#name : #FTEasyListMorph,
 	#superclass : #FTTableMorph,
-	#category : 'Morphic-Widgets-FastTable-Easy'
+	#category : #Morphic-Widgets-FastTable-Easy
 }
 
 { #category : #accessing }

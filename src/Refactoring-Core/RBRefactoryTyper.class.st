@@ -57,7 +57,7 @@ Class {
 		'methodName',
 		'selectorLookup'
 	],
-	#category : 'Refactoring-Core-Support'
+	#category : #Refactoring-Core-Support
 }
 
 { #category : #'instance creation' }

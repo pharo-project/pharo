@@ -5,7 +5,7 @@ Class {
 		'hand',
 		'waitingForClickInside'
 	],
-	#category : 'Morphic-Base-Widgets'
+	#category : #Morphic-Base-Widgets
 }
 
 { #category : #submorphs-add/remove }

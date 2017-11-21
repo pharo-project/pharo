@@ -11,7 +11,7 @@ Class {
 		'dependencies',
 		'completeSnapshot'
 	],
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #'instance creation' }

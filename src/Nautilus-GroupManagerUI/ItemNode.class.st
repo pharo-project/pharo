@@ -4,7 +4,7 @@ An item in the group UI
 Class {
 	#name : #ItemNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : 'Nautilus-GroupManagerUI'
+	#category : #Nautilus-GroupManagerUI
 }
 
 { #category : #accessing }

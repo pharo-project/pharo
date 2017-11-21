@@ -15,7 +15,7 @@ Class {
 		'processes',
 		'model'
 	],
-	#category : 'Morphic-Widgets-Tabs'
+	#category : #Morphic-Widgets-Tabs
 }
 
 { #category : #private-contents }

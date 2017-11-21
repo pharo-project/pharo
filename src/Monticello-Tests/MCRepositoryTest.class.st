@@ -5,7 +5,7 @@ Class {
 		'repository',
 		'ancestors'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #testing }

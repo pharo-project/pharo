@@ -45,7 +45,7 @@ Class {
 		'margins',
 		'defaultColor'
 	],
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #shortcuts }
@@ -900,7 +900,6 @@ TextMorph >> handleInteraction: interactionBlock [
 { #category : #'event handling' }
 TextMorph >> handleKeystroke: anEvent [ 
 	"System level event handling."
-	| pasteUp |
 
 	anEvent wasHandled
 		ifTrue: [^ self].

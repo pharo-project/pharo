@@ -4,7 +4,7 @@ SUnit test for stream bugs
 Class {
 	#name : #StreamBugsTest,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Streams'
+	#category : #Collections-Tests-Streams
 }
 
 { #category : #tests }

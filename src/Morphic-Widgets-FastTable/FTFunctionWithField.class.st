@@ -28,7 +28,7 @@ Class {
 	#instVars : [
 		'field'
 	],
-	#category : 'Morphic-Widgets-FastTable-Functions'
+	#category : #Morphic-Widgets-FastTable-Functions
 }
 
 { #category : #testing }

@@ -8,7 +8,7 @@ Class {
 		'identifier',
 		'preferences'
 	],
-	#category : 'System-Identification-Tests'
+	#category : #System-Identification-Tests
 }
 
 { #category : #testing }

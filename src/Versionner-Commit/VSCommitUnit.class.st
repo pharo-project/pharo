@@ -31,7 +31,7 @@ Class {
 		'projectActions',
 		'packageActions'
 	],
-	#category : 'Versionner-Commit'
+	#category : #Versionner-Commit
 }
 
 { #category : #'instance creation' }

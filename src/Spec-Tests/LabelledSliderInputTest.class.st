@@ -1,7 +1,7 @@
 Class {
 	#name : #LabelledSliderInputTest,
 	#superclass : #SliderInputTest,
-	#category : 'Spec-Tests-PolyWidgets-Labelled'
+	#category : #Spec-Tests-PolyWidgets-Labelled
 }
 
 { #category : #running }

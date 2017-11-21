@@ -14,7 +14,7 @@ Class {
 		'ClassProperties',
 		'ObsoleteSubclasses'
 	],
-	#category : 'Kernel-Classes'
+	#category : #Kernel-Classes
 }
 
 { #category : #testing }

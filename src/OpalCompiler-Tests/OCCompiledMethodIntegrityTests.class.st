@@ -1,7 +1,7 @@
 Class {
 	#name : #OCCompiledMethodIntegrityTests,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Misc'
+	#category : #OpalCompiler-Tests-Misc
 }
 
 { #category : #test }

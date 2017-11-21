@@ -15,7 +15,7 @@ The server runs until it receives quit as message. If necessary, use the Process
 Class {
 	#name : #UDPSocketEchoTest,
 	#superclass : #TestCase,
-	#category : 'Network-Tests-Kernel'
+	#category : #Network-Tests-Kernel
 }
 
 { #category : #testing }
@@ -54,7 +54,7 @@ UDPSocketEchoTest >> receiveUDPDataFrom: socket [
 	buffer := String new: 256.
 	socket waitForData.
 	result := socket receiveUDPDataInto: buffer.
-	^ { buffer copyFrom: 1 to: result first. result second. result third }
+	^ { buffer copyFrom: 1 to: result first. result second asSocketAddress. result third }
 ]
 
 { #category : #testing }

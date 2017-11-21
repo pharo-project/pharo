@@ -10,7 +10,7 @@ Class {
 		'commentByEntryReference',
 		'store'
 	],
-	#category : 'Epicea-Log'
+	#category : #Epicea-Log
 }
 
 { #category : #'instance creation' }

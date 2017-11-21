@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'reference'
 	],
-	#category : 'FileSystem-Zip'
+	#category : #FileSystem-Zip
 }
 
 { #category : #'instance creation' }

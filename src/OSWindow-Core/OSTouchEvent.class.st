@@ -17,7 +17,7 @@ Class {
 		'deviceId',
 		'timestamp'
 	],
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #accessing }

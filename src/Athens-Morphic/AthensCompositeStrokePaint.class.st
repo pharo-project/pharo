@@ -11,7 +11,7 @@ Class {
 		'strokePaints',
 		'withInset'
 	],
-	#category : 'Athens-Morphic'
+	#category : #Athens-Morphic
 }
 
 { #category : #converting }

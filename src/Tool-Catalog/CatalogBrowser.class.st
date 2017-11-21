@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'provider'
 	],
-	#category : 'Tool-Catalog-UI'
+	#category : #Tool-Catalog-UI
 }
 
 { #category : #utilities }

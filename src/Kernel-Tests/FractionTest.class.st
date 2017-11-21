@@ -4,7 +4,7 @@ SUnit tests for fractions
 Class {
 	#name : #FractionTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Numbers'
+	#category : #Kernel-Tests-Numbers
 }
 
 { #category : #private }

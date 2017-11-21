@@ -13,20 +13,20 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialize-release }
 KMBuffer class >> resetUniqueInstance [
-	uniqueInstance := nil
+	uniqueInstance := nil 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 KMBuffer class >> uniqueInstance [
 	^uniqueInstance ifNil: [ uniqueInstance := self new ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 KMBuffer class >> uniqueInstance: aBuffer [
 	uniqueInstance := aBuffer.
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicStackerRenderer,
 	#superclass : #GLMMorphicBrowserRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

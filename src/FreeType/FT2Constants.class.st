@@ -189,7 +189,7 @@ Class {
 		'StyleFlagBold',
 		'StyleFlagItalic'
 	],
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #'class initialization' }

@@ -6,7 +6,7 @@ ProfStef goOn: HowToMakeYourOwnTutorial.
 Class {
 	#name : #HowToMakeYourOwnTutorial,
 	#superclass : #AbstractTutorial,
-	#category : 'ProfStef-Core'
+	#category : #ProfStef-Core
 }
 
 { #category : #lessons }

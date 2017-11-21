@@ -5,7 +5,7 @@ Class {
 		'auth',
 		'hub'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ Class {
 		'objectsWriteStream',
 		'globalEnvironment'
 	],
-	#category : 'Fuel-Core'
+	#category : #Fuel-Core
 }
 
 { #category : #'instance creation' }

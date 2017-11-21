@@ -45,7 +45,7 @@ Class {
 		'stepCondition',
 		'wantsAutomaticRefresh'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #accessing }

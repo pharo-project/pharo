@@ -19,7 +19,7 @@ Class {
 	#classVars : [
 		'Properties'
 	],
-	#category : 'Slot-Variables'
+	#category : #Slot-Variables
 }
 
 { #category : #validating }

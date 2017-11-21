@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'manager'
 	],
-	#category : 'Spec-Examples'
+	#category : #Spec-Examples
 }
 
 { #category : #specs }

@@ -19,7 +19,7 @@ Class {
 	#classVars : [
 		'MaxBits'
 	],
-	#category : 'Graphics-Files'
+	#category : #Graphics-Files
 }
 
 { #category : #initialization }

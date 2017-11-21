@@ -14,7 +14,7 @@ Class {
 		'packages',
 		'classToPackage'
 	],
-	#category : 'Tool-DependencyAnalyser-Core'
+	#category : #Tool-DependencyAnalyser-Core
 }
 
 { #category : #'instance creation' }

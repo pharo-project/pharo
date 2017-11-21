@@ -19,7 +19,7 @@ Class {
 		'CurveDistanceEpsilon',
 		'SubdivisionLimit'
 	],
-	#category : 'Athens-Core-PathsGeometry'
+	#category : #Athens-Core-PathsGeometry
 }
 
 { #category : #'as yet unclassified' }

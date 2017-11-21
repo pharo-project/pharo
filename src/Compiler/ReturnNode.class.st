@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'expr'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

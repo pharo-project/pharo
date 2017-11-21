@@ -5,7 +5,7 @@ RBPatternScanner is a subclass of RBScanner that allows the extended syntax of p
 Class {
 	#name : #RBPatternScanner,
 	#superclass : #RBScanner,
-	#category : 'AST-Core-Parser'
+	#category : #AST-Core-Parser
 }
 
 { #category : #accessing }

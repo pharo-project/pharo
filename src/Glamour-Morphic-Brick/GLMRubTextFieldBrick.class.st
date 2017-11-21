@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'isCentered'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Basic'
+	#category : #Glamour-Morphic-Brick-Widgets-Basic
 }
 
 { #category : #examples-open }

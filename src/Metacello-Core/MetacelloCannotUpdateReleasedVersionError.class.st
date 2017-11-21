@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloCannotUpdateReleasedVersionError,
 	#superclass : #Error,
-	#category : 'Metacello-Core-Exceptions-Errors'
+	#category : #Metacello-Core-Exceptions-Errors
 }
 
 { #category : #private }

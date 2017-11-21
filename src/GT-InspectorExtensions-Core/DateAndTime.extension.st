@@ -4,9 +4,11 @@ Extension { #name : #DateAndTime }
 DateAndTime >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
-		title: [ 'Details' ];
+		title: 'Details';
 		display: [ 
-					{'year' -> self year.
+					{'iso' -> self printString.
+					'utc' -> self asUTC.
+					'year' -> self year.
 					'month' -> self monthIndex.
 					'month name' -> self monthName.
 					'day of month' -> self dayOfMonth.
@@ -19,9 +21,7 @@ DateAndTime >> gtInspectorDetailsIn: composite [
 					'meridian' -> self meridianAbbreviation.
 					'offset' -> self offset.
 					'date' -> self asDate.
-					'time' -> self asTime.
-					'iso' -> self printString.
-					'utc' -> self asUTC } ];
+					'time' -> self asTime } ];
 		column: 'Key' evaluated: #key;
 		column: 'Value' evaluated: #value;
 		send: #value

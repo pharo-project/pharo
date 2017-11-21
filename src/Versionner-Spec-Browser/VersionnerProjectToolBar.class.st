@@ -11,7 +11,7 @@ Class {
 		'releaseButton',
 		'commitButton'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #specs }

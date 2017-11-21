@@ -6,7 +6,7 @@ Specially, I'm intended to work as a replacement for environments when there is 
 Class {
 	#name : #PlatformIndependentEnvironment,
 	#superclass : #OSEnvironment,
-	#category : 'System-OSEnvironments'
+	#category : #System-OSEnvironments
 }
 
 { #category : #testing }

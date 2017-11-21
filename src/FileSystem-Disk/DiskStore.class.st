@@ -13,7 +13,7 @@ Class {
 		'DefaultWorkingDirectory',
 		'Primitives'
 	],
-	#category : 'FileSystem-Disk'
+	#category : #FileSystem-Disk
 }
 
 { #category : #current }
@@ -385,7 +385,7 @@ DiskStore >> openFileStream: path writable: writable [
 { #category : #public }
 DiskStore >> rename: sourcePath to: destinationPath [
 
-	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString result |
+	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
 	encodedSourcePathString := Primitives encode: sourcePathString.
 	targetPathString := self stringFromPath: destinationPath.

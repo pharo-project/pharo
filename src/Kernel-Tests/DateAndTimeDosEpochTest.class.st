@@ -10,11 +10,13 @@ Class {
 		'aTimeZone',
 		'localTimeZoneToRestore'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #running }
 DateAndTimeDosEpochTest >> setUp [
+
+	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
 	aDateAndTime :=  DateAndTime localTimeZone: TimeZone default; dosEpoch.
 	aTimeZone := TimeZone offset: (Duration minutes: 135) name: 'DOS Epoch Test Time Zone' abbreviation: 'DTZ'.

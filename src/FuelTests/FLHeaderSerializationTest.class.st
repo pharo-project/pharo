@@ -4,13 +4,12 @@ SUnit tests for header serialization in fuel
 Class {
 	#name : #FLHeaderSerializationTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }
 FLHeaderSerializationTest >> testAdditionalObjects [
 
-	| materialization |
 	self serializer at: #test putAdditionalObject: 'test'.
 	self serializer at: 42 putAdditionalObject: 68.
 	

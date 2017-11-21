@@ -18,7 +18,7 @@ Class {
 		'blockExtentsToTempRefs',
 		'startpcsToTempRefs'
 	],
-	#category : 'Compiler-Support'
+	#category : #Compiler-Support
 }
 
 { #category : #'instance creation' }

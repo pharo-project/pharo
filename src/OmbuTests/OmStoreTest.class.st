@@ -10,7 +10,7 @@ Class {
 		'aReference',
 		'otherStore'
 	],
-	#category : 'OmbuTests'
+	#category : #OmbuTests
 }
 
 { #category : #testing }

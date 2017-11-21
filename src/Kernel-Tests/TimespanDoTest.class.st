@@ -14,11 +14,12 @@ Class {
 		'aDuration',
 		'aDate'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #running }
 TimespanDoTest >> setUp [
+	super setUp.
 	aDate := DateAndTime
 				year: 2003
 				month: 01

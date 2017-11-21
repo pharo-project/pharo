@@ -9,7 +9,7 @@ Class {
 		'hits',
 		'misses'
 	],
-	#category : 'System-Caching'
+	#category : #System-Caching
 }
 
 { #category : #accessing }

@@ -4,5 +4,5 @@ This is deprecated class because the original class SliderModel was renamed to S
 Class {
 	#name : #SliderModel,
 	#superclass : #SliderPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

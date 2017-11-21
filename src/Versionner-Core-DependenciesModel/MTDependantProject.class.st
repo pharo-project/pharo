@@ -14,7 +14,7 @@ Class {
 		'repositories',
 		'symbolicVersionString'
 	],
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #instantiation }

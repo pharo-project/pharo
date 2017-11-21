@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'TestVariable'
 	],
-	#category : 'Slot-Tests'
+	#category : #Slot-Tests
 }
 
 { #category : #'tests  - properties' }

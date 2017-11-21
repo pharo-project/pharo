@@ -5,7 +5,7 @@ Class {
 		'smooth',
 		'callback'
 	],
-	#category : 'Glamour-Morphic-Pager-Announcement'
+	#category : #Glamour-Morphic-Pager-Announcement
 }
 
 { #category : #accessing }

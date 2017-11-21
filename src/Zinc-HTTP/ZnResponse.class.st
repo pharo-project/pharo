@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'statusLine'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

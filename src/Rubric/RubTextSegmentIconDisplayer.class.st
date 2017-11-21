@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'previouslyIn'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #querying }
@@ -185,11 +185,6 @@ RubTextSegmentIconDisplayer >> itemWidth [
 { #category : #accessing }
 RubTextSegmentIconDisplayer >> level [
 	^ 1
-]
-
-{ #category : #'event handling' }
-RubTextSegmentIconDisplayer >> mouseDown: anEvent [
-	super mouseDown: anEvent
 ]
 
 { #category : #'event handling' }

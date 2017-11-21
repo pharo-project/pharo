@@ -4,7 +4,7 @@ I am the adapter used to bridge a ListPresenter and a PluggableListMorph
 Class {
 	#name : #MorphicListAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #'widget API' }

@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestSystemLocalization,
 	#superclass : #PackageManifest,
-	#category : 'System-Localization'
+	#category : #System-Localization
 }
 
 { #category : #'meta-data - dependency analyser' }

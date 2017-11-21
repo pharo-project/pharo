@@ -4,7 +4,7 @@ SUnit tests for RPackage Monticello synchronization
 Class {
 	#name : #RPackageMonticelloSynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #'tests - operations on MCPackages' }
@@ -36,7 +36,6 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExist
 { #category : #'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
-	|XPackage class|
 
 	MCWorkingCopy forPackage: (MCPackage new name: 'XXXXX').
 	(self allManagers detect: [:each | each packageName = 'XXXXX']) unload.
@@ -49,7 +48,6 @@ RPackageMonticelloSynchronisationTest >> testUnloadMCPackageRemovesRPackage [
 RPackageMonticelloSynchronisationTest >> testUnregisterMCPackageKeepsRPackage [
 	"test that when we remove a MC Package, the corresponding RPackage is removed from the organizer"
 	
-	|XPackage class|
 	MCWorkingCopy forPackage: (MCPackage new name: 'XXXXX').
 	(self allManagers detect: [:each | each packageName = 'XXXXX']) unregister.
 	

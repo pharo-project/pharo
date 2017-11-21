@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'stopStepping'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #stepping }

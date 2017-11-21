@@ -5,7 +5,7 @@ Class {
 		'announcement',
 		'collectedAnnouncements'
 	],
-	#category : 'Slot-Tests'
+	#category : #Slot-Tests
 }
 
 { #category : #tests }

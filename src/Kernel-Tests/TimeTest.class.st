@@ -11,7 +11,7 @@ Class {
 		'aTime',
 		'localTimeZoneToRestore'
 	],
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #coverage }
@@ -37,7 +37,7 @@ TimeTest >> selectorsToBeIgnored [
 
 { #category : #running }
 TimeTest >> setUp [
-
+	super setUp.
 	localTimeZoneToRestore := DateAndTime localTimeZone.
 	DateAndTime localTimeZone: TimeZone default.
 	time := self timeClass fromSeconds: 14567.		"4:02:47 am"

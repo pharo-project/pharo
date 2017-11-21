@@ -6,7 +6,7 @@ Class {
 		'findReplaceShapes',
 		'secondarySelectionShapes'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #querying }

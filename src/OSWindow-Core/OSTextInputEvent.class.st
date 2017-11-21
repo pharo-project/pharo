@@ -9,7 +9,7 @@ Class {
 		'modifiers',
 		'position'
 	],
-	#category : 'OSWindow-Core-Events'
+	#category : #OSWindow-Core-Events
 }
 
 { #category : #visitor }

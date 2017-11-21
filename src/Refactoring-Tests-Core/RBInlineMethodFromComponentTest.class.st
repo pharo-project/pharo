@@ -1,7 +1,7 @@
 Class {
 	#name : #RBInlineMethodFromComponentTest,
 	#superclass : #RBRefactoringTest,
-	#category : 'Refactoring-Tests-Core'
+	#category : #Refactoring-Tests-Core
 }
 
 { #category : #tests }

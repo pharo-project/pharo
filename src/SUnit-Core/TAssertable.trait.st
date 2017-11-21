@@ -6,7 +6,7 @@ http://forum.world.st/template/NamlServlet.jtp?macro=search_page&node=1294837&qu
 "
 Trait {
 	#name : #TAssertable,
-	#category : 'SUnit-Core-Kernel'
+	#category : #SUnit-Core-Kernel
 }
 
 { #category : #asserting }

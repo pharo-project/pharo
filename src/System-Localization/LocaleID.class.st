@@ -8,7 +8,7 @@ Class {
 		'isoLanguage',
 		'isoCountry'
 	],
-	#category : 'System-Localization-Locales'
+	#category : #System-Localization-Locales
 }
 
 { #category : #accessing }

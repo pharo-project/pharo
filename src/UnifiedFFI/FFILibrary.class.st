@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'UnifiedFFI-Libraries'
+	#category : #UnifiedFFI-Libraries
 }
 
 { #category : #converting }

@@ -8,7 +8,7 @@ Class {
 		'oldNode',
 		'newNode'
 	],
-	#category : 'Renraku-Critiques'
+	#category : #Renraku-Critiques
 }
 
 { #category : #'instance creation' }

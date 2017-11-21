@@ -8,7 +8,7 @@ Class {
 		'firstLink',
 		'actions'
 	],
-	#category : 'StartupPreferences'
+	#category : #StartupPreferences
 }
 
 { #category : #actions }

@@ -5,7 +5,7 @@ Class {
 		'existingProjectRegistration',
 		'newProjectRegistration'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #'exception handling' }

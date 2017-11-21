@@ -5,7 +5,7 @@ Class {
 	#name : #WeakActionSequence,
 	#superclass : #Array,
 	#type : #variable,
-	#category : 'System-Object Events'
+	#category : #'System-Object Events'
 }
 
 { #category : #converting }

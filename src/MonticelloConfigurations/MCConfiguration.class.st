@@ -17,7 +17,7 @@ Class {
 		'DefaultLog',
 		'UpgradeIsMerge'
 	],
-	#category : 'MonticelloConfigurations'
+	#category : #MonticelloConfigurations
 }
 
 { #category : #utilities }

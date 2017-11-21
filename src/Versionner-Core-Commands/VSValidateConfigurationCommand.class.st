@@ -4,7 +4,7 @@ This command allows you to check inconsistencies in a Configuration class.
 Class {
 	#name : #VSValidateConfigurationCommand,
 	#superclass : #VSConfigurationCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

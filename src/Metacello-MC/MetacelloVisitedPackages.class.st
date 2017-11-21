@@ -6,7 +6,7 @@ Class {
 		'packages',
 		'projects'
 	],
-	#category : 'Metacello-MC-Specs'
+	#category : #Metacello-MC-Specs
 }
 
 { #category : #initialize-release }

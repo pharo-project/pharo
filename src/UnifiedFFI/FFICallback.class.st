@@ -17,7 +17,7 @@ Class {
 		'functionSpec',
 		'block'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #converting }

@@ -14,7 +14,7 @@ Class {
 		'openSettingsButtonModel',
 		'currentSessionInfoModel'
 	],
-	#category : 'EpiceaBrowsers-UI-Dashboard'
+	#category : #EpiceaBrowsers-UI-Dashboard
 }
 
 { #category : #'instance creation' }

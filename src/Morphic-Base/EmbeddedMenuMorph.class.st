@@ -4,7 +4,7 @@ Menu designed to be embedded in another morph rather than popped up directly.
 Class {
 	#name : #EmbeddedMenuMorph,
 	#superclass : #MenuMorph,
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #accessing }

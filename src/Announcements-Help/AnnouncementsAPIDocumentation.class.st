@@ -5,7 +5,7 @@ This is a custom help book providing the API documentation for the announcements
 Class {
 	#name : #AnnouncementsAPIDocumentation,
 	#superclass : #AnnouncementsHelp,
-	#category : 'Announcements-Help'
+	#category : #Announcements-Help
 }
 
 { #category : #accessing }

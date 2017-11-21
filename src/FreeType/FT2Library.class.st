@@ -5,7 +5,7 @@ It is provided for the use of Cairo APIs that take an FT_Library argument.
 Class {
 	#name : #FT2Library,
 	#superclass : #FT2Handle,
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #'instance creation' }

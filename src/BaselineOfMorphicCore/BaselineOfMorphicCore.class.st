@@ -1,5 +1,5 @@
 "
-This baseline is used to generate Pharo images from the local clone of pharo-core repository. 
+This baseline is used to generate Pharo images from the local clone of pharo-project/pharo repository. 
 
 Depends on:
 - SUnit, Display, UnifiedFFI
@@ -13,7 +13,7 @@ Installs:
 Class {
 	#name : #BaselineOfMorphicCore,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfMorphicCore'
+	#category : #BaselineOfMorphicCore
 }
 
 { #category : #baseline }
@@ -23,7 +23,7 @@ BaselineOfMorphicCore >> baseline: spec [
 
 	| repository | 
 	
-	repository := 'tonel://./pharo-core/src'. 
+	repository := self packageRepositoryURL.
 
 	spec for: #common do: [
 		spec postLoadDoIt: #'postload:package:'.

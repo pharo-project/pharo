@@ -4,7 +4,7 @@ Browse remote changes
 Class {
 	#name : #GoferBrowseRemoteChanges,
 	#superclass : #GoferRemoteChanges,
-	#category : 'Gofer-UI'
+	#category : #Gofer-UI
 }
 
 { #category : #running }

@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'Versions'
 	],
-	#category : 'System-Installers'
+	#category : #System-Installers
 }
 
 { #category : #versioninfo }

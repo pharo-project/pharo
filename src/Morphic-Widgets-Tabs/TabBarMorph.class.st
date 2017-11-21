@@ -10,7 +10,7 @@ Class {
 		'menuButton',
 		'numberOfSelectedTabs'
 	],
-	#category : 'Morphic-Widgets-Tabs'
+	#category : #Morphic-Widgets-Tabs
 }
 
 { #category : #private-constants }

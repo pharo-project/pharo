@@ -4,7 +4,7 @@ This inline a variable in an assignment sentence
 Class {
 	#name : #SugsInlineTemporary,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

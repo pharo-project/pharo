@@ -3,7 +3,7 @@ A TRBProgramNodeVisitor is a simple  that define visitor methods.
 "
 Trait {
 	#name : #TRBProgramNodeVisitor,
-	#category : 'AST-Core-Visitors'
+	#category : #AST-Core-Visitors
 }
 
 { #category : #visiting }

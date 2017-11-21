@@ -13,7 +13,7 @@ Class {
 		'removeAllButtonModel',
 		'nextButtonModel'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #specs }

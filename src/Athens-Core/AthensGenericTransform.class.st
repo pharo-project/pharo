@@ -12,7 +12,7 @@ Class {
 		'w1',
 		'w2'
 	],
-	#category : 'Athens-Core-Matrices'
+	#category : #Athens-Core-Matrices
 }
 
 { #category : #transformations }

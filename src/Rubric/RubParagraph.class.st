@@ -11,7 +11,7 @@ Class {
 		'drawingEnabled',
 		'textArea'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #querying }
@@ -559,7 +559,7 @@ RubParagraph >> selectionRects [
 RubParagraph >> selectionRectsFrom: characterBlock1 to: characterBlock2 [
 	"Return an array of rectangles representing the area between the two character blocks given as arguments."
 
-	| line1 line2 rects cb1 cb2 w |
+	| line1 line2 cb1 cb2 |
 	characterBlock1 = characterBlock2
 		ifTrue: [ ^ #() ].
 	characterBlock1 <= characterBlock2

@@ -49,7 +49,7 @@ Class {
 		'editPackageButton',
 		'savePackageButton'
 	],
-	#category : 'Versionner-Spec-Browser'
+	#category : #Versionner-Spec-Browser
 }
 
 { #category : #spec }
@@ -274,7 +274,7 @@ VersionnerProjectPackagesPanel >> removePackageButton [
 { #category : #actions }
 VersionnerProjectPackagesPanel >> removeSelectedPackage [
 	"remove the selected package from the model and the list."
-	| selectedPackage index |
+	| selectedPackage |
 
 	selectedPackage := packagesList selectedItem.
 	selectedPackage ifNil: [ ^self ].

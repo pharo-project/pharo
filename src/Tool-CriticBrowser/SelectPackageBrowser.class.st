@@ -9,7 +9,7 @@ Class {
 		'removeTestPackageModel',
 		'testPackage'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #specs }

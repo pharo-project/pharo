@@ -1,7 +1,7 @@
 Class {
 	#name : #ASTTransformationPluginTest,
 	#superclass : #TestCase,
-	#category : 'OpalCompiler-Tests-Plugins'
+	#category : #OpalCompiler-Tests-Plugins
 }
 
 { #category : #tests }

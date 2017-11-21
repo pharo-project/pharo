@@ -16,7 +16,7 @@ Class {
 		'SecondsInMinute',
 		'SqueakEpoch'
 	],
-	#category : 'Kernel-Chronology'
+	#category : #Kernel-Chronology
 }
 
 { #category : #'class initialization' }

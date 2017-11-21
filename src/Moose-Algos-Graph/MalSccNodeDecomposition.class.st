@@ -3,7 +3,7 @@ Class {
 	#superclass : #MalSccExtractor,
 	#traits : 'MalTNormalize',
 	#classTraits : 'MalTNormalize classTrait',
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #running }

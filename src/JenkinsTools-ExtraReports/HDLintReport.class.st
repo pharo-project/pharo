@@ -8,7 +8,7 @@ Class {
 		'environment',
 		'rules'
 	],
-	#category : 'JenkinsTools-ExtraReports'
+	#category : #JenkinsTools-ExtraReports
 }
 
 { #category : #running }
@@ -66,7 +66,7 @@ HDLintReport >> generateClass: aClass selector: aSelector source: sourceStream o
 
 { #category : #generating }
 HDLintReport >> generateClass: aClass source: sourceStream on: aStream [
-	| offset source matching selectors |
+	| offset source matching |
 	offset := self
 		lineAndColumn: sourceStream contents
 		at: sourceStream position.

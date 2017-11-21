@@ -12,7 +12,7 @@ Class {
 		'arrowPosition',
 		'label'
 	],
-	#category : 'NECompletion-View'
+	#category : #NECompletion-View
 }
 
 { #category : #private }

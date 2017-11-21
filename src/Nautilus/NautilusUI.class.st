@@ -13,7 +13,7 @@ Class {
 		'packagePattern',
 		'searchWidget'
 	],
-	#category : 'Nautilus'
+	#category : #Nautilus
 }
 
 { #category : #keymapping }

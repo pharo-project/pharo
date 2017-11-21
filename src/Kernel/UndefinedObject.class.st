@@ -4,7 +4,7 @@ I describe the behavior of my sole instance, nil. nil represents a prior value f
 Class {
 	#name : #UndefinedObject,
 	#superclass : #Object,
-	#category : 'Kernel-Objects'
+	#category : #Kernel-Objects
 }
 
 { #category : #accessing }

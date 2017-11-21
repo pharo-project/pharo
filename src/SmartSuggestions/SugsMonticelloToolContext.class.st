@@ -4,7 +4,7 @@ I am a general suggestion context for a monticello tools. I give the Suggestion 
 Class {
 	#name : #SugsMonticelloToolContext,
 	#superclass : #SugsAbstractContext,
-	#category : 'SmartSuggestions-Menu'
+	#category : #SmartSuggestions-Menu
 }
 
 { #category : #selection }

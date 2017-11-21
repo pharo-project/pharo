@@ -5,7 +5,7 @@ Class {
 		'textBrick',
 		'okButton'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI'
+	#category : #Glamour-Morphic-Brick-Widgets-UI
 }
 
 { #category : #open }

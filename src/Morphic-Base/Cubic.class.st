@@ -6,7 +6,7 @@ Class {
 	#name : #Cubic,
 	#superclass : #Array,
 	#type : #variable,
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #'instance creation' }

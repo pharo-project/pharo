@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'entryText'
 	],
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #accessing }

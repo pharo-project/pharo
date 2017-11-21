@@ -14,7 +14,7 @@ Class {
 		'contentType',
 		'contentLength'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #accessing }

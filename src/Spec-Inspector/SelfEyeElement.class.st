@@ -4,7 +4,7 @@ I am an eye element for self
 Class {
 	#name : #SelfEyeElement,
 	#superclass : #AbstractEyeElement,
-	#category : 'Spec-Inspector-Element'
+	#category : #Spec-Inspector-Element
 }
 
 { #category : #accessing }

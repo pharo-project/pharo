@@ -11,7 +11,7 @@ Class {
 		'literalValues',
 		'tempVars'
 	],
-	#category : 'Compiler-Support'
+	#category : #Compiler-Support
 }
 
 { #category : #visiting }

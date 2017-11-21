@@ -4,7 +4,7 @@ Yes/no dialog. Test result as to whether the dialog is cancelled (no) or not (ye
 Class {
 	#name : #ProceedDialogWindow,
 	#superclass : #MessageDialogWindow,
-	#category : 'Polymorph-Widgets-Windows'
+	#category : #Polymorph-Widgets-Windows
 }
 
 { #category : #icons }
@@ -14,7 +14,7 @@ ProceedDialogWindow class >> taskbarIconName [
 	^#smallQuestionIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 ProceedDialogWindow >> handlesKeyboard: evt [
 	"Return true if the receiver wishes to handle the given keyboard event"
 	
@@ -24,14 +24,14 @@ ProceedDialogWindow >> handlesKeyboard: evt [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ProceedDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
 	^ self iconNamed: #questionIcon
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'event handling' }
 ProceedDialogWindow >> keyStroke: evt [
 	"Additionally check for y and n keys (aliases for ok and cancel)."
 
@@ -41,21 +41,21 @@ ProceedDialogWindow >> keyStroke: evt [
 	^false
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #actions }
 ProceedDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newOKButton. self newCancelButton isDefault: true}
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ProceedDialogWindow >> no [
 	"Answer no."
 
 	self cancel
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ProceedDialogWindow >> yes [
 	"Answer yes."
 

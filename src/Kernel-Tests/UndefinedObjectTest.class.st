@@ -7,7 +7,7 @@ This is the unit test for the class UndefinedObject. Unit tests are a good way t
 Class {
 	#name : #UndefinedObjectTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Objects'
+	#category : #Kernel-Tests-Objects
 }
 
 { #category : #'tests - class methods' }

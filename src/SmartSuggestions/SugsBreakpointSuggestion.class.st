@@ -4,7 +4,7 @@ This class is an abstrat class for defining breakpoint commands
 Class {
 	#name : #SugsBreakpointSuggestion,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #breakpoints }

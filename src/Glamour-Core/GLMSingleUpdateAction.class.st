@@ -4,7 +4,7 @@ This class specifies that the updating announcement should come only from the si
 Class {
 	#name : #GLMSingleUpdateAction,
 	#superclass : #GLMUpdateAction,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #public }

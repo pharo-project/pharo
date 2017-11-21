@@ -4,7 +4,7 @@ STONLargeWriteReadTests test the optimalizations for large structures.
 Class {
 	#name : #STONLargeWriteReadTests,
 	#superclass : #STONWriteReadTests,
-	#category : 'STON-Tests'
+	#category : #STON-Tests
 }
 
 { #category : #private }

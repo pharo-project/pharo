@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'collector'
 	],
-	#category : 'PragmaCollector-Announcements'
+	#category : #PragmaCollector-Announcements
 }
 
 { #category : #'instance creation' }

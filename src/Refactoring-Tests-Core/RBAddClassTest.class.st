@@ -1,7 +1,7 @@
 Class {
 	#name : #RBAddClassTest,
 	#superclass : #RBRefactoringTest,
-	#category : 'Refactoring-Tests-Core'
+	#category : #Refactoring-Tests-Core
 }
 
 { #category : #running }

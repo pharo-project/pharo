@@ -13,7 +13,7 @@ Class {
 		'oldCategory',
 		'classRecategorized'
 	],
-	#category : 'System-Announcements-System-Classes'
+	#category : #System-Announcements-System-Classes
 }
 
 { #category : #'instance creation' }

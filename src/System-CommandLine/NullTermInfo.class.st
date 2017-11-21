@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'out'
 	],
-	#category : 'System-CommandLine'
+	#category : #System-CommandLine
 }
 
 { #category : #'instance creation' }

@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Disks'
 	],
-	#category : 'FileSystem-Disk'
+	#category : #FileSystem-Disk
 }
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ WindowsStore class >> separator [
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
 	
-	| fName badChars hasBadChars |
+	| fName badChars |
 	fName := super checkName: aFileName fixErrors: fixing.
 	badChars := (#( $: $< $> $| $/ $\ $? $* $"), ((0 to: 31) collect: [:n | n asCharacter])) asSet.
 	

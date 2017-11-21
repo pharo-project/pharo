@@ -11,7 +11,7 @@ Class {
 		'aaLevel',
 		'deferred'
 	],
-	#category : 'Balloon-Canvas'
+	#category : #Balloon-Canvas
 }
 
 { #category : #accessing }

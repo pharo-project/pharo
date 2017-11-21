@@ -5,7 +5,7 @@ Class {
 		'window',
 		'tabs'
 	],
-	#category : 'Glamour-Tests-Morphic'
+	#category : #Glamour-Tests-Morphic
 }
 
 { #category : #running }

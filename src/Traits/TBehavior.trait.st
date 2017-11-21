@@ -3,7 +3,7 @@ Kernel trait for Behavior
 "
 Trait {
 	#name : #TBehavior,
-	#category : 'Traits-Kernel-Traits'
+	#category : #Traits-Kernel-Traits
 }
 
 { #category : #'accessing method dictionary' }

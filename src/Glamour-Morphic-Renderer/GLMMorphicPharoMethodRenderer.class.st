@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicPharoMethodRenderer,
 	#superclass : #GLMMorphicPharoCodeRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #private }

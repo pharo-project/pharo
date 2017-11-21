@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'ProjectAttributes'
 	],
-	#category : 'Metacello-TestsMCResources'
+	#category : #Metacello-TestsMCResources
 }
 
 { #category : #accessing }
@@ -1219,7 +1219,7 @@ MetacelloConfigurationResource >> preloadDoItMethodSource [
 MetacelloConfigurationResource >> project [
 	"self reset"
 
-	| constructor project |
+	| project |
 	"Construct Metacello project"
 	project := MetacelloMCProject new.
 	"Allow for customization of #projectAttributes"

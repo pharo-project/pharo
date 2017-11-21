@@ -32,7 +32,7 @@ Class {
 		'menuHolder',
 		'shortcutHolder'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

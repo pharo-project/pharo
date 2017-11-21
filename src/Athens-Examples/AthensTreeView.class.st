@@ -10,7 +10,7 @@ Class {
 		'root',
 		'rows'
 	],
-	#category : 'Athens-Examples'
+	#category : #Athens-Examples
 }
 
 { #category : #examples }

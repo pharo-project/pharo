@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'slotClassDefinition'
 	],
-	#category : 'Slot-Variables'
+	#category : #Slot-Variables
 }
 
 { #category : #'instance creation' }

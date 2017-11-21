@@ -4,7 +4,7 @@ SUnit tests for Gofer API
 Class {
 	#name : #GoferApiTest,
 	#superclass : #GoferTest,
-	#category : 'Gofer-Tests-Tests'
+	#category : #Gofer-Tests-Tests
 }
 
 { #category : #asserting }

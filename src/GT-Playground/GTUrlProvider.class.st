@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'urlProvider'
 	],
-	#category : 'GT-Playground'
+	#category : #GT-Playground
 }
 
 { #category : #settings }

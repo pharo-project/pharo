@@ -12,7 +12,7 @@ Class {
 		'headers',
 		'stream'
 	],
-	#category : 'Zinc-HTTP-Streaming'
+	#category : #Zinc-HTTP-Streaming
 }
 
 { #category : #accessing }

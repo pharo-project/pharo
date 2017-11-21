@@ -99,7 +99,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 Class {
 	#name : #SourceSansProRegular,
 	#superclass : #EmbeddedFreeTypeFontFontDescription,
-	#category : 'EmbeddedFreeType'
+	#category : #EmbeddedFreeType
 }
 
 { #category : #accessing }

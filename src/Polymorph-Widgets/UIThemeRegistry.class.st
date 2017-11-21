@@ -4,7 +4,7 @@ Registry for UI themes
 Class {
 	#name : #UIThemeRegistry,
 	#superclass : #Object,
-	#category : 'Polymorph-Widgets-Themes'
+	#category : #Polymorph-Widgets-Themes
 }
 
 { #category : #accessing }

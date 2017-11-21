@@ -4,7 +4,7 @@ SUnit tests for basic serialization that is zipped
 Class {
 	#name : #FLGZippedBasicSerializationTest,
 	#superclass : #FLBasicSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #testing }

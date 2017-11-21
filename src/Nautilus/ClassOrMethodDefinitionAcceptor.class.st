@@ -6,7 +6,7 @@ For example if a package and a class is selected but the user does not define a 
 Class {
 	#name : #ClassOrMethodDefinitionAcceptor,
 	#superclass : #AbstractAcceptor,
-	#category : 'Nautilus-Acceptors'
+	#category : #Nautilus-Acceptors
 }
 
 { #category : #protocol }

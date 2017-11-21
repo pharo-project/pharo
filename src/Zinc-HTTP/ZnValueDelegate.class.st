@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : 'Zinc-HTTP-Client-Server'
+	#category : #Zinc-HTTP-Client-Server
 }
 
 { #category : #'instance creation' }

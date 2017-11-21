@@ -9,7 +9,7 @@ Class {
 		'color',
 		'width'
 	],
-	#category : 'Morphic-Base-Borders'
+	#category : #Morphic-Base-Borders
 }
 
 { #category : #accessing }

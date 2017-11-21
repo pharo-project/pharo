@@ -3,7 +3,7 @@ I declare api and logic to work with structure of a Brick as adding, removing, t
 "
 Trait {
 	#name : #GLMBrickStructureTrait,
-	#category : 'Glamour-Morphic-Brick-Traits'
+	#category : #Glamour-Morphic-Brick-Traits
 }
 
 { #category : #brick-structure-adding/removing }

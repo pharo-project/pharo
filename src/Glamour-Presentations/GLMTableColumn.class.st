@@ -20,7 +20,7 @@ Class {
 		'defaultSortBlock',
 		'modifiedBlock'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #accessing }

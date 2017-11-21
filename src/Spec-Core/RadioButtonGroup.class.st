@@ -21,7 +21,7 @@ Class {
 		'currentlyActivated',
 		'canDeselectByClick'
 	],
-	#category : 'Spec-Core-Widgets-Support'
+	#category : #Spec-Core-Widgets-Support
 }
 
 { #category : #api }

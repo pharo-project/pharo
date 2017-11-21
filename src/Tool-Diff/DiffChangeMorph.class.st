@@ -5,7 +5,7 @@ Class {
 		'diffMorph',
 		'descriptionMorph'
 	],
-	#category : 'Tool-Diff'
+	#category : #Tool-Diff
 }
 
 { #category : #'instance creation' }

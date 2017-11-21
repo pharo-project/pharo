@@ -8,7 +8,7 @@ Class {
 		'keys',
 		'dict'
 	],
-	#category : 'Collections-Tests-Weak'
+	#category : #Collections-Tests-Weak
 }
 
 { #category : #'building suites' }

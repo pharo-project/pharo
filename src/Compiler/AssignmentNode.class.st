@@ -8,7 +8,7 @@ Class {
 		'variable',
 		'value'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

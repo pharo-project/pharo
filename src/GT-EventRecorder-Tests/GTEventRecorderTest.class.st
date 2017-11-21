@@ -15,7 +15,7 @@ Class {
 		'event3',
 		'event4'
 	],
-	#category : 'GT-EventRecorder-Tests-Core'
+	#category : #GT-EventRecorder-Tests-Core
 }
 
 { #category : #asserting }

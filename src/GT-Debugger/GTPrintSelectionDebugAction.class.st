@@ -4,7 +4,7 @@ This action is responsible for printing a selected piece of code from the code p
 Class {
 	#name : #GTPrintSelectionDebugAction,
 	#superclass : #GTCodeDebugAction,
-	#category : 'GT-Debugger-Actions'
+	#category : #GT-Debugger-Actions
 }
 
 { #category : #registration }

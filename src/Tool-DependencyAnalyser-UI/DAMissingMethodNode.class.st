@@ -4,7 +4,7 @@ I'm a tree node representing a message send, at least one time, in the package u
 Class {
 	#name : #DAMissingMethodNode,
 	#superclass : #DAMethodDependencyNode,
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #browse-nautilus }

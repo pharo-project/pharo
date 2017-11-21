@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'circuits'
 	],
-	#category : 'Moose-Algos-Graph'
+	#category : #Moose-Algos-Graph
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'Renraku-Utility'
+	#category : #Renraku-Utility
 }
 
 { #category : #accessing }

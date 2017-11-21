@@ -48,7 +48,7 @@ Class {
 		'StateNewBlock',
 		'StateNoMoreData'
 	],
-	#category : 'Compression-Streams'
+	#category : #Compression-Streams
 }
 
 { #category : #initialization }

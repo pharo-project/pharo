@@ -4,13 +4,13 @@ SUnit tests for hooked serialization using fuel
 Class {
 	#name : #FLHookedSubstitutionTest,
 	#superclass : #FLSerializationTest,
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #tests }
 FLHookedSubstitutionTest >> testAvoidRecursion [
 
-	| aClass result original | 
+	| result original | 
 	original := FLClassWithRecursiveSubstitution new index: 1.
 	
 	result := self resultOfSerializeAndMaterialize: original.

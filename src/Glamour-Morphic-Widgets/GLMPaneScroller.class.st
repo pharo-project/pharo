@@ -8,7 +8,7 @@ Class {
 		'paneCount',
 		'maxPanes'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #layout }

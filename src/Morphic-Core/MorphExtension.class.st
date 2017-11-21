@@ -21,7 +21,7 @@ Class {
 		'actionMap',
 		'clipSubmorphs'
 	],
-	#category : 'Morphic-Core-Kernel'
+	#category : #Morphic-Core-Kernel
 }
 
 { #category : #accessing }

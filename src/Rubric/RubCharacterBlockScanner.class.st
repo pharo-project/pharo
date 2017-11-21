@@ -10,7 +10,7 @@ Class {
 		'nextLeftMargin',
 		'specialWidth'
 	],
-	#category : 'Rubric-TextScanning'
+	#category : #Rubric-TextScanning
 }
 
 { #category : #scanning }

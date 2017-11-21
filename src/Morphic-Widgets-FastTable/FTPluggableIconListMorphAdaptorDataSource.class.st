@@ -15,7 +15,7 @@ Class {
 		'dropItemSelector',
 		'wantsDropSelector'
 	],
-	#category : 'Morphic-Widgets-FastTable-PluggableAdaptor'
+	#category : #Morphic-Widgets-FastTable-PluggableAdaptor
 }
 
 { #category : #accessing }

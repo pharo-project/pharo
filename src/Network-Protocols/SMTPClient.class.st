@@ -34,7 +34,7 @@ TURN <CRLF>
 Class {
 	#name : #SMTPClient,
 	#superclass : #TelnetProtocolClient,
-	#category : 'Network-Protocols'
+	#category : #Network-Protocols
 }
 
 { #category : #accessing }

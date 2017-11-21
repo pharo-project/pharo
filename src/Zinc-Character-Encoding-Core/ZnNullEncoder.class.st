@@ -9,7 +9,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnNullEncoder,
 	#superclass : #ZnCharacterEncoder,
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

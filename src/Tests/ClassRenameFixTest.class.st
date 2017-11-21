@@ -7,7 +7,7 @@ Class {
 		'newClassName',
 		'originalName'
 	],
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #private }

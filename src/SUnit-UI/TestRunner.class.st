@@ -35,7 +35,7 @@ Class {
 		'packagePattern',
 		'packageIndex'
 	],
-	#category : 'SUnit-UI'
+	#category : #SUnit-UI
 }
 
 { #category : #'world menu' }
@@ -624,7 +624,6 @@ TestRunner >> generateDefaultFileOutResultsName [
 	| filename |
 	filename := String
 		streamContents: [ :st | 
-			| printedDate |
 			st nextPutAll: 'tests_'.
 			st nextPutAll: SystemVersion current version.
 			st nextPutAll: '_'.

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'items'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #menus }

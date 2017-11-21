@@ -4,7 +4,7 @@ I am a refactoring for removing a pool variable. My changes are executed on the 
 Class {
 	#name : #RBRemovePoolVariableChange,
 	#superclass : #RBRefactoryVariableChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #converting }

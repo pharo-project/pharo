@@ -4,7 +4,7 @@ Rules are constraint descriptions about entities. Think of a rule as a function 
 Class {
 	#name : #RenrakuRuleHelp,
 	#superclass : #RenrakuHelp,
-	#category : 'Renraku-Help'
+	#category : #Renraku-Help
 }
 
 { #category : #accessing }

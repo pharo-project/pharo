@@ -114,7 +114,7 @@ Class {
 		'AllowStartupScript',
 		'UniqueInstance'
 	],
-	#category : 'StartupPreferences'
+	#category : #StartupPreferences
 }
 
 { #category : #accessing }

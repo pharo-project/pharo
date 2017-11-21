@@ -4,7 +4,7 @@ Load into your image the selected version or baseline. If you already have a ver
 Class {
 	#name : #VSLoadCommand,
 	#superclass : #VSVersionCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

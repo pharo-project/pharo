@@ -1,7 +1,7 @@
 Class {
 	#name : #OmBlockFileStoreTest,
 	#superclass : #OmFileStoreTest,
-	#category : 'OmbuTests'
+	#category : #OmbuTests
 }
 
 { #category : #initialization }

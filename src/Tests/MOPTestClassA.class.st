@@ -3,5 +3,5 @@ Class {
 	#superclass : #Object,
 	#traits : 'Trait3',
 	#classTraits : 'Trait3 classTrait',
-	#category : 'Tests-Traits-MOP'
+	#category : #Tests-Traits-MOP
 }

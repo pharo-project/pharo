@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'state'
 	],
-	#category : 'System-Hashing-MD5'
+	#category : #System-Hashing-MD5
 }
 
 { #category : #accessing }

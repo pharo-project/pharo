@@ -4,7 +4,7 @@ I represent a change in a class or a trait.
 Class {
 	#name : #EpBehaviorChange,
 	#superclass : #EpCodeChange,
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #comparing }

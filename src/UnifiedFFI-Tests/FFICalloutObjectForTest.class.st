@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'handle'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #converting }

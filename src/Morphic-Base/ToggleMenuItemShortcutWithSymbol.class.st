@@ -11,7 +11,7 @@ Class {
 		'SymbolFont',
 		'SymbolTable'
 	],
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #testing }

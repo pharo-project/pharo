@@ -4,5 +4,5 @@ Class {
 	#classVars : [
 		'Foo'
 	],
-	#category : 'MonticelloMocks'
+	#category : #MonticelloMocks
 }

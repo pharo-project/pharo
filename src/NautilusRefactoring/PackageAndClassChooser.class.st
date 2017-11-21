@@ -10,7 +10,7 @@ Class {
 		'searchPattern',
 		'updateProcess'
 	],
-	#category : 'NautilusRefactoring-Utilities'
+	#category : #NautilusRefactoring-Utilities
 }
 
 { #category : #specs }

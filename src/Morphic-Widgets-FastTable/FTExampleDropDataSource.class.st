@@ -7,7 +7,7 @@ FTExamples exampleDragAndDrop1.
 Class {
 	#name : #FTExampleDropDataSource,
 	#superclass : #FTSimpleDataSource,
-	#category : 'Morphic-Widgets-FastTable-Examples'
+	#category : #Morphic-Widgets-FastTable-Examples
 }
 
 { #category : #'drag and drop' }

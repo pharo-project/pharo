@@ -15,7 +15,7 @@ Class {
 		'end',
 		'type'
 	],
-	#category : 'Shout-Parsing'
+	#category : #Shout-Parsing
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'contents'
 	],
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #'instance creation' }

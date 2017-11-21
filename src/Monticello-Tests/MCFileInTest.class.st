@@ -6,7 +6,7 @@ Class {
 		'expected',
 		'diff'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #testing }

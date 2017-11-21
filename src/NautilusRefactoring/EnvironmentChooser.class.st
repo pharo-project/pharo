@@ -12,7 +12,7 @@ Class {
 		'environmentsHolder',
 		'environmentHolder'
 	],
-	#category : 'NautilusRefactoring-Utilities'
+	#category : #NautilusRefactoring-Utilities
 }
 
 { #category : #specs }

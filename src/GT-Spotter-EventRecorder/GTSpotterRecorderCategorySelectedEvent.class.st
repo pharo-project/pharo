@@ -19,7 +19,7 @@ Class {
 		'categoryLabel',
 		'elementCount'
 	],
-	#category : 'GT-Spotter-EventRecorder-Events'
+	#category : #GT-Spotter-EventRecorder-Events
 }
 
 { #category : #visitor }

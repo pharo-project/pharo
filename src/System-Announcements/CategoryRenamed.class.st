@@ -11,7 +11,7 @@ Class {
 		'newCategoryName',
 		'oldCategoryName'
 	],
-	#category : 'System-Announcements-System-Categories'
+	#category : #System-Announcements-System-Categories
 }
 
 { #category : #'instance creation' }

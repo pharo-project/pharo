@@ -10,7 +10,7 @@ Class {
 		'clusters',
 		'analyzer'
 	],
-	#category : 'Fuel-Core'
+	#category : #Fuel-Core
 }
 
 { #category : #'instance creation' }

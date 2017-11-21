@@ -4,7 +4,7 @@ I am ZnUTFEncoder. I am a ZnCharacterEncoder. My subclasses deal with the full r
 Class {
 	#name : #ZnUTFEncoder,
 	#superclass : #ZnCharacterEncoder,
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #accessing }

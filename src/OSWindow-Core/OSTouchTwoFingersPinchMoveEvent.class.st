@@ -4,7 +4,7 @@ Two fingers are pinching
 Class {
 	#name : #OSTouchTwoFingersPinchMoveEvent,
 	#superclass : #OSTouchTwoFingersPinchEvent,
-	#category : 'OSWindow-Core-Events-Touch'
+	#category : #OSWindow-Core-Events-Touch
 }
 
 { #category : #visitor }

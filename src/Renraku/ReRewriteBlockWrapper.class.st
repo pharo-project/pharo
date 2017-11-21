@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : 'Renraku-Rules-Rewrite'
+	#category : #Renraku-Rules-Rewrite
 }
 
 { #category : #'instance creation' }

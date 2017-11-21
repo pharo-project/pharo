@@ -6,7 +6,7 @@ Try to put all the code in blocks in the setup messages, such as #title:, #displ
 Class {
 	#name : #ReInspectorPresentationsNonlazyCode,
 	#superclass : #ReAbstractRule,
-	#category : 'Renraku-Rules'
+	#category : #Renraku-Rules
 }
 
 { #category : #testing-interest }

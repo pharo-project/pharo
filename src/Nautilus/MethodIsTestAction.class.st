@@ -4,7 +4,7 @@ Aciton when the method is a test
 Class {
 	#name : #MethodIsTestAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #order }

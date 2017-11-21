@@ -4,7 +4,7 @@ Update
 Class {
 	#name : #GoferUpdate,
 	#superclass : #GoferWorking,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #private }

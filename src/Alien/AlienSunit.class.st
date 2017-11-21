@@ -1,7 +1,7 @@
 Class {
 	#name : #AlienSunit,
 	#superclass : #TestCase,
-	#category : 'Alien-CoreTest'
+	#category : #Alien-CoreTest
 }
 
 { #category : #testing }

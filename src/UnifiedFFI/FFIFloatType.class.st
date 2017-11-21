@@ -4,7 +4,7 @@ A generic (abstract) float type.
 Class {
 	#name : #FFIFloatType,
 	#superclass : #FFIExternalType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

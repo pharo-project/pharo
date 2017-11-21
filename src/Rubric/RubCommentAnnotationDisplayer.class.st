@@ -11,7 +11,7 @@ Class {
 		'lineNumbersDisplayMorph',
 		'extendCommentPolicyMorph'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #querying }

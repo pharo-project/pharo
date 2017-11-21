@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'byteTextConverters'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : #Zinc-Character-Encoding-Core
 }
 
 { #category : #mappings }

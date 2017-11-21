@@ -21,7 +21,7 @@ Class {
 		'properties',
 		'category'
 	],
-	#category : 'Compiler-Kernel'
+	#category : #Compiler-Kernel
 }
 
 { #category : #accessing }

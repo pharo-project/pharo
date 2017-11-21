@@ -11,7 +11,7 @@ Class {
 		'lineNumbersDisplayMorph',
 		'formatAsYouReadMorph'
 	],
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #querying }

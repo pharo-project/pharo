@@ -9,7 +9,7 @@ Class {
 		'tc',
 		'td'
 	],
-	#category : 'Tests-Traits'
+	#category : #Tests-Traits
 }
 
 { #category : #running }

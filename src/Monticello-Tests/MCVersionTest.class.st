@@ -5,7 +5,7 @@ Class {
 		'version',
 		'visited'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #asserting }

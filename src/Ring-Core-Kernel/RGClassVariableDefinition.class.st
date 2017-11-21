@@ -4,7 +4,7 @@ A class variable definition
 Class {
 	#name : #RGClassVariableDefinition,
 	#superclass : #RGVariableDefinition,
-	#category : 'Ring-Core-Kernel'
+	#category : #Ring-Core-Kernel
 }
 
 { #category : #testing }

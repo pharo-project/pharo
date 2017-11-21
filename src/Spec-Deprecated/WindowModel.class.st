@@ -4,5 +4,5 @@ This is deprecated class because the original class WindowModel was renamed to W
 Class {
 	#name : #WindowModel,
 	#superclass : #WindowPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

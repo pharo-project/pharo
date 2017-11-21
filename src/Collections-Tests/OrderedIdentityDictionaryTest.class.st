@@ -4,7 +4,7 @@ SUnit tests for OrderedIdentityDictionary
 Class {
 	#name : #OrderedIdentityDictionaryTest,
 	#superclass : #OrderedDictionaryTest,
-	#category : 'Collections-Tests-Sequenceable'
+	#category : #Collections-Tests-Sequenceable
 }
 
 { #category : #accessing }

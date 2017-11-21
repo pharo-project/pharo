@@ -9,7 +9,7 @@ Class {
 		'owner',
 		'project'
 	],
-	#category : 'MonticelloRemoteRepositories'
+	#category : #MonticelloRemoteRepositories
 }
 
 { #category : #accessing }

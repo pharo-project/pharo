@@ -4,7 +4,7 @@ I am a refactoring for moving a instance  variable up to the superclass.
 Class {
 	#name : #RBPullUpInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #preconditions }

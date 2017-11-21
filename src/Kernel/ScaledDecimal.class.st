@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'scale'
 	],
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #'instance creation' }
@@ -184,6 +184,15 @@ ScaledDecimal >> printOn: aStream base: base [
 { #category : #'mathematical functions' }
 ScaledDecimal >> raisedTo: aNumber [
 	^self coerce: (super raisedTo: aNumber)
+]
+
+{ #category : #'mathematical functions' }
+ScaledDecimal >> raisedToFraction: aFraction [
+	| result |
+	result := self asFraction raisedToFraction: aFraction.
+	^result isFloat
+		ifTrue: [result]
+		ifFalse: [result asScaledDecimal: scale]
 ]
 
 { #category : #'mathematical functions' }

@@ -4,7 +4,7 @@ Test clas for a dependant project
 Class {
 	#name : #MTDependantProjectTest,
 	#superclass : #TestCase,
-	#category : 'Versionner-Tests-Core-DependenciesModel'
+	#category : #Versionner-Tests-Core-DependenciesModel
 }
 
 { #category : #private }

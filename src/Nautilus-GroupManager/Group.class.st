@@ -10,7 +10,7 @@ Class {
 		'removable',
 		'isFillable'
 	],
-	#category : 'Nautilus-GroupManager'
+	#category : #Nautilus-GroupManager
 }
 
 { #category : #'instance creation' }

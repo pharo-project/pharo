@@ -35,7 +35,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : 'System-Identification'
+	#category : #System-Identification
 }
 
 { #category : #cleanup }

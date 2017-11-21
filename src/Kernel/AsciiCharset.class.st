@@ -7,7 +7,7 @@ Character objects delegate behaviour to one of the  character sets AsciiCharSet,
 Class {
 	#name : #AsciiCharset,
 	#superclass : #Object,
-	#category : 'Kernel-BasicObjects'
+	#category : #Kernel-BasicObjects
 }
 
 { #category : #testing }

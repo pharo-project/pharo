@@ -7,7 +7,7 @@ Class {
 		'newClass',
 		'newSelector'
 	],
-	#category : 'Hermes-ClassInstaller'
+	#category : #Hermes-ClassInstaller
 }
 
 { #category : #accessing }

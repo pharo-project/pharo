@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'peekBuffer'
 	],
-	#category : 'Files-Streams'
+	#category : #Files-Streams
 }
 
 { #category : #testing }

@@ -13,7 +13,7 @@ Class {
 		'worldmorph',
 		'wrappedWorldDisplay'
 	],
-	#category : 'Athens-Morphic'
+	#category : #Athens-Morphic
 }
 
 { #category : #initialization }

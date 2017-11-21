@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'log'
 	],
-	#category : 'Kernel-Tests-Methods'
+	#category : #Kernel-Tests-Methods
 }
 
 { #category : #private }

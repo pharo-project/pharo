@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'projectReference'
 	],
-	#category : 'Metacello-Core-Specs'
+	#category : #Metacello-Core-Specs
 }
 
 { #category : #merging }

@@ -19,7 +19,7 @@ Class {
 		'permutation',
 		'implementors'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #testing }

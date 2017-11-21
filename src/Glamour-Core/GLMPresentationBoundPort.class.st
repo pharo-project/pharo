@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'presentation'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #copying }

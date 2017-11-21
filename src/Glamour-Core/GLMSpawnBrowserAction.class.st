@@ -1,5 +1,5 @@
 Class {
 	#name : #GLMSpawnBrowserAction,
 	#superclass : #GLMGenericAction,
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }

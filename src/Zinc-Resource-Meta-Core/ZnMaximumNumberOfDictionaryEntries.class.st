@@ -10,7 +10,7 @@ Used by ZnMultiValueDictionary and thus for reading headers,  url query and appl
 Class {
 	#name : #ZnMaximumNumberOfDictionaryEntries,
 	#superclass : #DynamicVariable,
-	#category : 'Zinc-Resource-Meta-Core'
+	#category : #Zinc-Resource-Meta-Core
 }
 
 { #category : #accessing }

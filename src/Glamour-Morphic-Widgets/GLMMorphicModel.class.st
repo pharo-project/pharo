@@ -6,7 +6,7 @@ Class {
 	#instVars : [
 		'glamourPresentation'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #callbacks }

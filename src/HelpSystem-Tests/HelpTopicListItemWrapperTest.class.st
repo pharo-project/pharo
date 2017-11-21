@@ -4,7 +4,7 @@ SUnit tests for class HelpTopicListItemWrapper
 Class {
 	#name : #HelpTopicListItemWrapperTest,
 	#superclass : #TestCase,
-	#category : 'HelpSystem-Tests-Core-UI'
+	#category : #HelpSystem-Tests-Core-UI
 }
 
 { #category : #accessing }

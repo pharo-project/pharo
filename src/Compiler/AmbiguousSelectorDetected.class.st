@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'interval'
 	],
-	#category : 'Compiler-Exceptions'
+	#category : #Compiler-Exceptions
 }
 
 { #category : #'instance creation' }

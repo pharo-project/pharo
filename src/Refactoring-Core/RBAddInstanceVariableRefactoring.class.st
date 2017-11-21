@@ -6,7 +6,7 @@ My precondition verifies that the variable name is valid, not yet used in the wh
 Class {
 	#name : #RBAddInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #preconditions }

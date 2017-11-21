@@ -5,7 +5,7 @@ I am an interface (abstract) used for visiting the raw SDL2 events.
 Class {
 	#name : #SDL2EventHandler,
 	#superclass : #Object,
-	#category : 'OSWindow-SDL2'
+	#category : #OSWindow-SDL2
 }
 
 { #category : #visitor }

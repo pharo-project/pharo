@@ -19,7 +19,7 @@ Class {
 		'openSettingsButtonModel',
 		'hiedraCheckBoxModel'
 	],
-	#category : 'EpiceaBrowsers-UI-Graph'
+	#category : #EpiceaBrowsers-UI-Graph
 }
 
 { #category : #'instance creation' }

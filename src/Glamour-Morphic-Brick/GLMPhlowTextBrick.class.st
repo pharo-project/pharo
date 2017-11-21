@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'textBrick'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Phlow'
+	#category : #Glamour-Morphic-Brick-Widgets-Phlow
 }
 
 { #category : #examples }

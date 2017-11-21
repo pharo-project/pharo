@@ -5,7 +5,7 @@ Class {
 		'pagerModel',
 		'buttons'
 	],
-	#category : 'Glamour-Morphic-Pager-Brick'
+	#category : #Glamour-Morphic-Pager-Brick
 }
 
 { #category : #buttons-adding }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'sourceEntity'
 	],
-	#category : 'Renraku-SourceAnchors'
+	#category : #Renraku-SourceAnchors
 }
 
 { #category : #'instance creation' }

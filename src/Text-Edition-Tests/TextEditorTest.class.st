@@ -1,7 +1,7 @@
 Class {
 	#name : #TextEditorTest,
 	#superclass : #TestCase,
-	#category : 'Text-Edition-Tests'
+	#category : #Text-Edition-Tests
 }
 
 { #category : #'private - accessing' }

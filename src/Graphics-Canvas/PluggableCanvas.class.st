@@ -4,7 +4,7 @@ An abstract canvas which modifies the behavior of an underlying canvas in some w
 Class {
 	#name : #PluggableCanvas,
 	#superclass : #Canvas,
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #private }

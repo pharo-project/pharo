@@ -4,7 +4,7 @@ A pluggable functionality used to ban rules in the image scale
 Class {
 	#name : #ReImageRuleBaner,
 	#superclass : #Object,
-	#category : 'Renraku-Utility'
+	#category : #Renraku-Utility
 }
 
 { #category : #actions }

@@ -4,7 +4,7 @@ I am an abstract class that represents a system event.
 Class {
 	#name : #EpEvent,
 	#superclass : #Object,
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #announcements }

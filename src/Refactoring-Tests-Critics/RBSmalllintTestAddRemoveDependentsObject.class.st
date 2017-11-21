@@ -4,7 +4,7 @@ This class should trigger the RBAddRemoveDependentsRule critic.
 Class {
 	#name : #RBSmalllintTestAddRemoveDependentsObject,
 	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : 'Refactoring-Tests-Critics'
+	#category : #Refactoring-Tests-Critics
 }
 
 { #category : #adding }

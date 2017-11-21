@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'excessSignals'
 	],
-	#category : 'Kernel-Processes'
+	#category : #Kernel-Processes
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 	#superclass : #SystemWindow,
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
-	#category : 'Morphic-Widgets-Windows-Widgets'
+	#category : #Morphic-Widgets-Windows-Widgets
 }
 
 { #category : #'instance creation' }

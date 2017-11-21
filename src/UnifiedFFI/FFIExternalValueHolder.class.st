@@ -52,7 +52,7 @@ Class {
 	#classInstVars : [
 		'type'
 	],
-	#category : 'UnifiedFFI-Objects'
+	#category : #UnifiedFFI-Objects
 }
 
 { #category : #converting }

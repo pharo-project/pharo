@@ -8,7 +8,7 @@ Class {
 		'model',
 		'rootNodes'
 	],
-	#category : 'Spec-MorphicAdapters-Support'
+	#category : #Spec-MorphicAdapters-Support
 }
 
 { #category : #'instance creation' }

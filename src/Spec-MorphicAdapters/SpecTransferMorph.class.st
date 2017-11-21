@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'Spec-MorphicAdapters-Support'
+	#category : #Spec-MorphicAdapters-Support
 }
 
 { #category : #initialization }

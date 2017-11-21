@@ -5,7 +5,7 @@ SUnit tests for UTF16TextConverter
 Class {
 	#name : #UTF16TextConverterTest,
 	#superclass : #TestCase,
-	#category : 'Multilingual-Tests-TextConversion'
+	#category : #Multilingual-Tests-TextConversion
 }
 
 { #category : #helpers }

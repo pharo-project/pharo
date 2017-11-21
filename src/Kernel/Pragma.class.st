@@ -20,7 +20,7 @@ Class {
 		'arguments',
 		'keyword'
 	],
-	#category : 'Kernel-Pragmas'
+	#category : #Kernel-Pragmas
 }
 
 { #category : #finding }

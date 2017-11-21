@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'surface'
 	],
-	#category : 'Athens-Cairo'
+	#category : #Athens-Cairo
 }
 
 { #category : #accessing }

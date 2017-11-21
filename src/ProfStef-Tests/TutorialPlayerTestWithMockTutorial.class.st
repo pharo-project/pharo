@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'player'
 	],
-	#category : 'ProfStef-Tests-Tests'
+	#category : #ProfStef-Tests-Tests
 }
 
 { #category : #running }

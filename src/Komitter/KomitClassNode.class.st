@@ -9,7 +9,7 @@ Class {
 		'modifiedClassIcon',
 		'addedClassIcon'
 	],
-	#category : 'Komitter-UI'
+	#category : #Komitter-UI
 }
 
 { #category : #icons }

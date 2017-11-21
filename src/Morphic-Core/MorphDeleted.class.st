@@ -6,5 +6,5 @@ Take into account that when a morph is deleted, all it's children also get delet
 Class {
 	#name : #MorphDeleted,
 	#superclass : #MorphAnnouncement,
-	#category : 'Morphic-Core-Announcements'
+	#category : #Morphic-Core-Announcements
 }

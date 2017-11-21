@@ -6,7 +6,7 @@ Note: ScaledDecimalTest contains related tests for parsing ScaledDecimal.
 Class {
 	#name : #NumberParsingTest,
 	#superclass : #TestCase,
-	#category : 'AST-Tests-Core'
+	#category : #AST-Tests-Core
 }
 
 { #category : #'tests - Float' }

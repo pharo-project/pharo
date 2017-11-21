@@ -14,7 +14,7 @@ Class {
 		'writingScopes',
 		'remoteNode'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #visiting }

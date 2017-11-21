@@ -7,7 +7,7 @@ This is the unit test for the class ClassDescription. Unit tests are a good way 
 Class {
 	#name : #ClassDescriptionTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Classes'
+	#category : #Kernel-Tests-Classes
 }
 
 { #category : #tests }

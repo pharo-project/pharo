@@ -4,12 +4,18 @@ I contain tests that validate the integrity of the system.
 Class {
 	#name : #ReleaseTest,
 	#superclass : #TestCase,
-	#category : 'ReleaseTests-Release'
+	#category : #ReleaseTests-Release
 }
 
 { #category : #accessing }
 ReleaseTest class >> actualProcesses [
 	^ Process allSubInstances reject: [ :each | each isTerminated ]
+]
+
+{ #category : #accessing }
+ReleaseTest class >> defaultTimeLimit [
+
+	^ 1 minute
 ]
 
 { #category : #accessing }

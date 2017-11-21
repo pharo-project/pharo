@@ -1,7 +1,7 @@
 Class {
 	#name : #MethodWidgetTest,
 	#superclass : #TestCase,
-	#category : 'Nautilus-Tests'
+	#category : #Nautilus-Tests
 }
 
 { #category : #mock }

@@ -8,7 +8,7 @@ selected
 Class {
 	#name : #TickSelectionListNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : 'Morphic-Widgets-TickList'
+	#category : #Morphic-Widgets-TickList
 }
 
 { #category : #private }

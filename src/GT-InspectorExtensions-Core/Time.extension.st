@@ -4,14 +4,14 @@ Extension { #name : #Time }
 Time >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
-		title: [ 'Details' ];
+		title: 'Details';
 		display: [ 
-					{'hours' -> self hours.
+					{'iso' -> self print24.
+					'hours' -> self hours.
 					'minutes' -> self minutes.
 					'seconds' -> self seconds.
 					'nanoseconds' -> self nanoSecond.
-					'meridian' -> self meridianAbbreviation.
-					'iso' -> self print24 } ];
+					'meridian' -> self meridianAbbreviation } ];
 		column: 'Key' evaluated: #key;
 		column: 'Value' evaluated: #value;
 		send: #value

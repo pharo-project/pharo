@@ -1,7 +1,7 @@
 Class {
 	#name : #KMKeymapTest,
 	#superclass : #AbstractKeymappingTest,
-	#category : 'Keymapping-Tests'
+	#category : #Keymapping-Tests
 }
 
 { #category : #tests }
@@ -11,7 +11,7 @@ KMKeymapTest >> keymapContainer [
 
 { #category : #tests }
 KMKeymapTest >> testExecute [
-	| bm km flag category |
+	| bm flag category |
 	category := KMCategory named: #TestFoo.
 	KMRepository default addCategory: category.
 	bm := Morph new.

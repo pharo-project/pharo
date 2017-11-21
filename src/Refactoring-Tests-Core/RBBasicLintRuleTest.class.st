@@ -7,7 +7,7 @@ Class {
 		'classBlock',
 		'anInstVar'
 	],
-	#category : 'Refactoring-Tests-Core-Data'
+	#category : #Refactoring-Tests-Core-Data
 }
 
 { #category : #'possible bugs' }

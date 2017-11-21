@@ -15,7 +15,7 @@ Class {
 		'withSearch',
 		'pageSearchText'
 	],
-	#category : 'Morphic-Widgets-Tree-Pagination'
+	#category : #Morphic-Widgets-Tree-Pagination
 }
 
 { #category : #icons }

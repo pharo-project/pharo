@@ -12,7 +12,7 @@ I only rewrite nodes with ""reconstructed"" property to ensure that I reoptimize
 Class {
 	#name : #FBDOptimizedMessagesRewriter,
 	#superclass : #RBProgramNodeVisitor,
-	#category : 'Flashback-Decompiler'
+	#category : #Flashback-Decompiler
 }
 
 { #category : #'public api' }

@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : 'Monticello-Versioning'
+	#category : #Monticello-Versioning
 }
 
 { #category : #accessing }

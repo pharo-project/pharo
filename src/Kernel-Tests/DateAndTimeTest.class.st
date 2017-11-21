@@ -4,7 +4,7 @@ SUnit tests for date and time
 Class {
 	#name : #DateAndTimeTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Chronology'
+	#category : #Kernel-Tests-Chronology
 }
 
 { #category : #coverage }

@@ -4,7 +4,7 @@ I'm a tag node model.
 Class {
 	#name : #PackageTreeTagNodeModel,
 	#superclass : #PackageTreeNodeModel,
-	#category : 'Nautilus-Tree'
+	#category : #Nautilus-Tree
 }
 
 { #category : #converting }

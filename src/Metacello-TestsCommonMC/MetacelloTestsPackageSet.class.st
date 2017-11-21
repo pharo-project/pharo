@@ -5,7 +5,7 @@ This class is used to speed up Metacello tests.
 Class {
 	#name : #MetacelloTestsPackageSet,
 	#superclass : #RPackageSet,
-	#category : 'Metacello-TestsCommonMC'
+	#category : #Metacello-TestsCommonMC
 }
 
 { #category : #listing }

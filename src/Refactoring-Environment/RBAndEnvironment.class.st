@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'andedEnvironment'
 	],
-	#category : 'Refactoring-Environment'
+	#category : #Refactoring-Environment
 }
 
 { #category : #'instance creation' }

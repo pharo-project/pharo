@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMBrickMorphWrapper,
 	#superclass : #GLMBrickGeneralWrapper,
-	#category : 'Glamour-Morphic-Brick-Layouts-Utils'
+	#category : #Glamour-Morphic-Brick-Layouts-Utils
 }
 
 { #category : #api }

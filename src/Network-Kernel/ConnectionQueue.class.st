@@ -13,7 +13,7 @@ Class {
 		'socket',
 		'process'
 	],
-	#category : 'Network-Kernel'
+	#category : #Network-Kernel
 }
 
 { #category : #'instance creation' }

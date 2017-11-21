@@ -4,7 +4,7 @@ I know how to find senders from a message
 Class {
 	#name : #SugsFindSenders,
 	#superclass : #SugsSuggestion,
-	#category : 'SmartSuggestions-Suggestion'
+	#category : #SmartSuggestions-Suggestion
 }
 
 { #category : #execution }

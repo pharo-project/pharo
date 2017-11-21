@@ -4,7 +4,7 @@ Represents an action that is to be taken when a target object (not referenced by
 Class {
 	#name : #ObjectFinalizer,
 	#superclass : #MessageSend,
-	#category : 'System-Finalization'
+	#category : #System-Finalization
 }
 
 { #category : #finalization }

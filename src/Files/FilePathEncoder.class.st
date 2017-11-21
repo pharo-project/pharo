@@ -7,7 +7,7 @@ This class absorb the difference of internal and external representation of the 
 Class {
 	#name : #FilePathEncoder,
 	#superclass : #Object,
-	#category : 'Files-Directories'
+	#category : #Files-Directories
 }
 
 { #category : #encoding }

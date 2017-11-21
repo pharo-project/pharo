@@ -157,7 +157,7 @@ The following instructions can have the ExtB check flag (See (3)).
 Class {
 	#name : #EncoderForSistaV1,
 	#superclass : #BytecodeEncoder,
-	#category : 'Kernel-BytecodeEncoders'
+	#category : #Kernel-BytecodeEncoders
 }
 
 { #category : #'bytecode decoding' }
@@ -200,6 +200,14 @@ EncoderForSistaV1 class >> bindingWriteScanBlockFor: litVarIndex using: scanner 
 	   extension := b = 224 ifTrue: [scanner followingByte bitShift: 8] ifFalse: [0].
 	   (b = 241 or: [b = 244])
 	   and: [scanner followingByte + prevext = litVarIndex]]
+]
+
+{ #category : #'block closure support' }
+EncoderForSistaV1 class >> blockCreationBytecodeMessageAt: startpc method: method [
+	"**	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
+	| numExts | 
+	numExts := (method at: startpc - 2) >> 6.
+	^ method abstractBytecodeMessageAt: startpc - 3 - (2 * numExts).
 ]
 
 { #category : #'instruction stream support' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #HistoryNodeTest,
 	#superclass : #TestCase,
-	#category : 'System-History-Tests'
+	#category : #System-History-Tests
 }
 
 { #category : #tests }
@@ -89,7 +89,7 @@ HistoryNodeTest >> testReset [
 
 { #category : #tests }
 HistoryNodeTest >> testTwoConsecutiveCloseGroup [
-	| h i grp1 grp2  i2 i3 i4 | 
+	| h i grp1 grp2 i3 | 
 	h := HistoryNode new.
 	h addItem: (i := HistoryLeaf new).
 	self assert: h size = 1.
@@ -116,7 +116,7 @@ HistoryNodeTest >> testTwoConsecutiveCloseGroup [
 
 { #category : #tests }
 HistoryNodeTest >> testTwoGroups [
-	| h i grp1 grp2  i2 i3 i4 | 
+	| h i grp1 grp2  i2 i3 | 
 	h := HistoryNode new.
 	h addItem: (i := HistoryLeaf new).
 	self assert: h size = 1.

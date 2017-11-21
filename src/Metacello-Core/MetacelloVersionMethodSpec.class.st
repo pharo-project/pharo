@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'imports'
 	],
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #adding }

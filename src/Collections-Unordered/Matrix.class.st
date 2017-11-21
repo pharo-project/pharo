@@ -22,7 +22,7 @@ Class {
 		'numberOfColumns',
 		'numberOfRows'
 	],
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #'special instance creation' }

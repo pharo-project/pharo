@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicRubricHighlightedTextRenderer,
 	#superclass : #GLMMorphicRubricTextRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

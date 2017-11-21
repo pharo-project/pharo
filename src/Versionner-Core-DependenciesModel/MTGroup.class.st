@@ -8,7 +8,7 @@ Instance Variables
 Class {
 	#name : #MTGroup,
 	#superclass : #MTDependency,
-	#category : 'Versionner-Core-DependenciesModel'
+	#category : #Versionner-Core-DependenciesModel
 }
 
 { #category : #visiting }

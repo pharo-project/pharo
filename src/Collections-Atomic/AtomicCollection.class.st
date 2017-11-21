@@ -5,7 +5,7 @@ containing common behavior for various queue types
 Class {
 	#name : #AtomicCollection,
 	#superclass : #Object,
-	#category : 'Collections-Atomic'
+	#category : #Collections-Atomic
 }
 
 { #category : #copying }

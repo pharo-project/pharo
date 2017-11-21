@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : 'FreeType-Cache'
+	#category : #FreeType-Cache
 }
 
 { #category : #cleanup }

@@ -11,7 +11,7 @@ Class {
 		'presentation',
 		'glmPres'
 	],
-	#category : 'Glamour-SpecIntegration'
+	#category : #Glamour-SpecIntegration
 }
 
 { #category : #specs }
@@ -22,7 +22,6 @@ GlamourPresentationModel class >> defaultSpec [
 
 { #category : #example }
 GlamourPresentationModel class >> exampleGLMExamples [
-	<gtExample>
 	"open the Glamour Examples Browser"
 	|ui|
 	ui := GlamourPresentationModel new.
@@ -32,7 +31,6 @@ GlamourPresentationModel class >> exampleGLMExamples [
 
 { #category : #example }
 GlamourPresentationModel class >> exampleGLMPharoScript [
-	<gtExample>
 	^ GlamourPresentationModel new openWithSpec.
 ]
 

@@ -8,7 +8,7 @@ Class {
 		'resetModel',
 		'currentConfigurationModel'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #specs }

@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'LoadFT2Library'
 	],
-	#category : 'FreeType-Settings'
+	#category : #FreeType-Settings
 }
 
 { #category : #settings }
@@ -109,12 +109,14 @@ FreeTypeSystemSettings class >> loadFt2Library [
 { #category : #settings }
 FreeTypeSystemSettings class >> loadFt2Library: aBoolean [
 	(LoadFT2Library = aBoolean) 
-		ifTrue: [^ self].
+		ifTrue: [ ^ self ].
 	LoadFT2Library := aBoolean.
 	aBoolean 
-		ifTrue: [FreeTypeFontProvider current updateFromSystem]
-		ifFalse: [StandardFonts restoreDefaultFonts.
-			FreeTypeFontProvider unload]
+		ifTrue: [ 
+			FreeTypeFontProvider current updateFromSystem ]
+		ifFalse: [
+			StandardFonts setSmallBitmapFonts.
+			FreeTypeFontProvider unload ]
 
 ]
 

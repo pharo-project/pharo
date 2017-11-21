@@ -15,7 +15,7 @@ Class {
 		'CursorOwnerWorld',
 		'ExtraWorldList'
 	],
-	#category : 'Morphic-Core-Worlds'
+	#category : #Morphic-Core-Worlds
 }
 
 { #category : #'extra worlds' }

@@ -4,7 +4,7 @@ I implement a service for browsing Epicea logs.
 Class {
 	#name : #EpOmbuFileReaderService,
 	#superclass : #Object,
-	#category : 'EpiceaBrowsers-Integration'
+	#category : #EpiceaBrowsers-Integration
 }
 
 { #category : #private }

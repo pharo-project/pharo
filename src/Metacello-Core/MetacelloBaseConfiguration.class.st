@@ -8,5 +8,5 @@ Once the Metacello scripting API becomes prevalent (the api has it's own ensureM
 Class {
 	#name : #MetacelloBaseConfiguration,
 	#superclass : #ConfigurationOf,
-	#category : 'Metacello-Core-Deprecated'
+	#category : #Metacello-Core-Deprecated
 }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'messageSendAnalysis'
 	],
-	#category : 'Tool-DependencyAnalyser-UI-Nodes'
+	#category : #Tool-DependencyAnalyser-UI-Nodes
 }
 
 { #category : #browse-nautilus }

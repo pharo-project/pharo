@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'assoc'
 	],
-	#category : 'OpalCompiler-Core-Semantics'
+	#category : #OpalCompiler-Core-Semantics
 }
 
 { #category : #accessing }

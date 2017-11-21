@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicDiffRenderer,
 	#superclass : #GLMMorphicWidgetRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

@@ -5,7 +5,7 @@ Class {
 		'oldSystemAnnouncer',
 		'factory'
 	],
-	#category : 'Tests-SystemChangeNotification'
+	#category : #Tests-SystemChangeNotification
 }
 
 { #category : #running }

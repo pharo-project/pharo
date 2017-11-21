@@ -4,7 +4,7 @@ urce: 22651600
 Class {
 	#name : #Unix32Platform,
 	#superclass : #UnixPlatform,
-	#category : 'System-Platforms'
+	#category : #System-Platforms
 }
 
 { #category : #testing }

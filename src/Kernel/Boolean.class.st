@@ -6,7 +6,7 @@ Boolean redefines #new so no instances of Boolean can be created. It also redefi
 Class {
 	#name : #Boolean,
 	#superclass : #Object,
-	#category : 'Kernel-Objects'
+	#category : #Kernel-Objects
 }
 
 { #category : #'instance creation' }

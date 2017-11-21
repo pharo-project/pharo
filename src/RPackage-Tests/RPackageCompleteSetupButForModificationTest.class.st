@@ -14,7 +14,7 @@ Class {
 		'a3',
 		'b2'
 	],
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #running }

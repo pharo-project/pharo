@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentPageFirstIndex'
 	],
-	#category : 'Morphic-Widgets-Tree-Pagination'
+	#category : #Morphic-Widgets-Tree-Pagination
 }
 
 { #category : #accessing }

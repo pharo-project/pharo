@@ -4,7 +4,7 @@ This class provides tests for the regular expression matcher.
 Class {
 	#name : #RxMatcherTest,
 	#superclass : #TestCase,
-	#category : 'Regex-Tests-Core'
+	#category : #Regex-Tests-Core
 }
 
 { #category : #accessing }

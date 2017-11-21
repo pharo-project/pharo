@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : 'System-SessionManager'
+	#category : #System-SessionManager
 }
 
 { #category : #initialize-release }

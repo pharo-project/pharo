@@ -30,7 +30,7 @@ Class {
 		'closeBox',
 		'pinBox'
 	],
-	#category : 'Morphic-Base-Menus'
+	#category : #Morphic-Base-Menus
 }
 
 { #category : #construction-defined }

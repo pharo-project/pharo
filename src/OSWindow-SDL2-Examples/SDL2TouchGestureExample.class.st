@@ -8,7 +8,7 @@ Class {
 		'circleCenter',
 		'circleSize'
 	],
-	#category : 'OSWindow-SDL2-Examples-Gesture'
+	#category : #OSWindow-SDL2-Examples-Gesture
 }
 
 { #category : #examples }

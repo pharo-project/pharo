@@ -42,7 +42,7 @@ Class {
 	#classInstVars : [
 		'localeAnnouncer'
 	],
-	#category : 'System-Localization-Locales'
+	#category : #System-Localization-Locales
 }
 
 { #category : #settings }

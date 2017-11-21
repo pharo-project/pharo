@@ -4,5 +4,5 @@ This is deprecated class because the original class IconListModel was renamed to
 Class {
 	#name : #IconListModel,
 	#superclass : #IconListPresenter,
-	#category : 'Spec-Deprecated'
+	#category : #Spec-Deprecated
 }

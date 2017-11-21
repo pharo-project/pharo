@@ -8,7 +8,7 @@ I send these event back to my handler:
 Class {
 	#name : #OSTouchTwoFingersRotationDetector,
 	#superclass : #OSTouchRotationDetector,
-	#category : 'OSWindow-Core-Gestures'
+	#category : #OSWindow-Core-Gestures
 }
 
 { #category : #abstract }

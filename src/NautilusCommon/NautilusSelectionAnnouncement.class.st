@@ -10,7 +10,7 @@ Class {
 		'protocol',
 		'method'
 	],
-	#category : 'NautilusCommon-Announcements'
+	#category : #NautilusCommon-Announcements
 }
 
 { #category : #compatibility }

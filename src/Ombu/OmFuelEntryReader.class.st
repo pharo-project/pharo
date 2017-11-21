@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'materializer'
 	],
-	#category : 'Ombu-Persistence'
+	#category : #Ombu-Persistence
 }
 
 { #category : #enumerating }

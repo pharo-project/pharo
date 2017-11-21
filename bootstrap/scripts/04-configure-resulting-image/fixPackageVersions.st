@@ -1,19 +1,15 @@
 "This scripts sets the correct versionInfo for loaded Pharo packages. The purpose of it is to ensure 
  iceberg will find an ancestor in history and it will correctly calculate differences."
-| repo commit |
+| repo commit repositoryReference |
 
 "Create repository"
-[
-	repo := IceRepositoryCreator new
-		location: FileLocator image parent;
-		subdirectory: 'src';
-		createRepository.
-] ifError: [
-	"alternative location (on CI)"	
-	repo := IceRepositoryCreator new
-		location: FileLocator image parent parent;
-		subdirectory: 'src';
-		createRepository.].
+
+repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['..']) asFileReference.
+
+repo := IceRepositoryCreator new
+	location: repositoryReference;
+	subdirectory: 'src';
+	createRepository.
 
 repo name: 'pharo'.
 repo beSystemRepository.

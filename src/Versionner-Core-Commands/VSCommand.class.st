@@ -9,7 +9,7 @@ Class {
 		'requestor',
 		'workflow'
 	],
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Specialized version of inspector showing bytecodes symbolic representation, ast,
 Class {
 	#name : #EyeCompiledMethodInspector,
 	#superclass : #EyeInspector,
-	#category : 'Spec-Inspector'
+	#category : #Spec-Inspector
 }
 
 { #category : #accessing }

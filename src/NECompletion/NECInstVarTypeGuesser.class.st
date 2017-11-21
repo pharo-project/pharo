@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'varIndex'
 	],
-	#category : 'NECompletion-Model'
+	#category : #NECompletion-Model
 }
 
 { #category : #public }

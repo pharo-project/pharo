@@ -16,7 +16,7 @@ Class {
 		'preConditions',
 		'postConditions'
 	],
-	#category : 'Renraku-Rules'
+	#category : #Renraku-Rules
 }
 
 { #category : #example }

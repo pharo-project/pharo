@@ -17,7 +17,7 @@ Class {
 		'slider',
 		'input'
 	],
-	#category : 'Spec-PolyWidgets-Elementary'
+	#category : #Spec-PolyWidgets-Elementary
 }
 
 { #category : #example }

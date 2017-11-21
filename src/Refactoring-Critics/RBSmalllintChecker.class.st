@@ -14,7 +14,7 @@ Class {
 		'context',
 		'methodBlock'
 	],
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #'instance creation' }

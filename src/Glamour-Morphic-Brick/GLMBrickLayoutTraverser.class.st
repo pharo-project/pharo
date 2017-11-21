@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMBrickLayoutTraverser,
 	#superclass : #Object,
-	#category : 'Glamour-Morphic-Brick-Layouts-Utils'
+	#category : #Glamour-Morphic-Brick-Layouts-Utils
 }
 
 { #category : #private }

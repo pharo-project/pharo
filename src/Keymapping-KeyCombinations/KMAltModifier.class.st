@@ -4,7 +4,7 @@ I represent the Alt key modifier. Look at my superclass for a more detailed expl
 Class {
 	#name : #KMAltModifier,
 	#superclass : #KMModifier,
-	#category : 'Keymapping-KeyCombinations'
+	#category : #Keymapping-KeyCombinations
 }
 
 { #category : #accessing }

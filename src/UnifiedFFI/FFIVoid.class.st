@@ -5,7 +5,7 @@ I'm used always as pointer type, otherwise it does not have any sense.
 Class {
 	#name : #FFIVoid,
 	#superclass : #FFIExternalType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

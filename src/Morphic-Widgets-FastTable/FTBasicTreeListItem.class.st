@@ -33,7 +33,7 @@ Class {
 		'children',
 		'dataSource'
 	],
-	#category : 'Morphic-Widgets-FastTable-Tree-Basic'
+	#category : #Morphic-Widgets-FastTable-Tree-Basic
 }
 
 { #category : #querying }

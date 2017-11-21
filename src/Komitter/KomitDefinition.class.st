@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'definitions'
 	],
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #'instance creation' }

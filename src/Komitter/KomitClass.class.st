@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'classes'
 	],
-	#category : 'Komitter-Models'
+	#category : #Komitter-Models
 }
 
 { #category : #initialize }

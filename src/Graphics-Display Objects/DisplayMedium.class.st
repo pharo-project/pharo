@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'HighLightBitmaps'
 	],
-	#category : 'Graphics-Display Objects'
+	#category : #'Graphics-Display Objects'
 }
 
 { #category : #bordering }

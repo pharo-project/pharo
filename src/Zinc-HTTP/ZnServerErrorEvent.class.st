@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'exception'
 	],
-	#category : 'Zinc-HTTP-Logging'
+	#category : #Zinc-HTTP-Logging
 }
 
 { #category : #accessing }

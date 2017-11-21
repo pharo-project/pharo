@@ -92,7 +92,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #'instance creation' }

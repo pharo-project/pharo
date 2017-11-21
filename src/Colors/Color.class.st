@@ -85,7 +85,7 @@ Class {
 		'MaskingMap',
 		'RedShift'
 	],
-	#category : 'Colors'
+	#category : #Colors
 }
 
 { #category : #colormaps }

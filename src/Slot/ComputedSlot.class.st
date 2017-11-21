@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : 'Slot-Examples'
+	#category : #Slot-Examples
 }
 
 { #category : #comparing }

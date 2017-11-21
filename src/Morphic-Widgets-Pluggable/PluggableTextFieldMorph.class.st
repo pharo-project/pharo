@@ -13,7 +13,7 @@ Class {
 		'textMorphClass',
 		'textFont'
 	],
-	#category : 'Morphic-Widgets-Pluggable'
+	#category : #Morphic-Widgets-Pluggable
 }
 
 { #category : #'model access' }

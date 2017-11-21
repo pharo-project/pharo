@@ -21,7 +21,7 @@ Class {
 		'fadingFactor',
 		'resetable'
 	],
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #drawing }

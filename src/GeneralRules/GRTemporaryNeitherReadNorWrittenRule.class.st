@@ -4,7 +4,7 @@ There is something wrong in the method as you have variables that are either nor
 Class {
 	#name : #GRTemporaryNeitherReadNorWrittenRule,
 	#superclass : #ReNodeBasedRule,
-	#category : 'GeneralRules'
+	#category : #GeneralRules
 }
 
 { #category : #running }

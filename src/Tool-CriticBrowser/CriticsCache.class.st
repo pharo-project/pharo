@@ -50,7 +50,7 @@ Class {
 		'packages',
 		'change'
 	],
-	#category : 'Tool-CriticBrowser'
+	#category : #Tool-CriticBrowser
 }
 
 { #category : #private }

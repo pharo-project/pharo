@@ -11,7 +11,7 @@ should not show completion menu with entries like CP1250TextConverter, ExampleFo
 Class {
 	#name : #NECEmptyModel,
 	#superclass : #NECModel,
-	#category : 'NECompletion-Model'
+	#category : #NECompletion-Model
 }
 
 { #category : #accessing }

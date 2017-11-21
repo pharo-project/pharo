@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloLookupBaselineSpecForEnsureLoad,
 	#superclass : #MetacelloScriptProjectSpecNotification,
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #'exception description' }

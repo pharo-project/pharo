@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloMethodSectionPath,
 	#superclass : #Array,
 	#type : #variable,
-	#category : 'Metacello-Core-Constructors'
+	#category : #Metacello-Core-Constructors
 }
 
 { #category : #conversion }

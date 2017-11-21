@@ -25,7 +25,7 @@ Class {
 		'workingCopySearchList',
 		'repositorySearchList'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #'world menu' }

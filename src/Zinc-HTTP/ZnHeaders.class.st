@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'CommonHeaders'
 	],
-	#category : 'Zinc-HTTP-Core'
+	#category : #Zinc-HTTP-Core
 }
 
 { #category : #'instance creation' }

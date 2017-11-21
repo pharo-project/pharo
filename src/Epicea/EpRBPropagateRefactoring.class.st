@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'targetRefactoring'
 	],
-	#category : 'Epicea-Support'
+	#category : #Epicea-Support
 }
 
 { #category : #'instance creation' }

@@ -14,7 +14,7 @@ Examples:
 Class {
 	#name : #PerformMessageCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : 'PerformMessageCommandLineHandler'
+	#category : #PerformMessageCommandLineHandler
 }
 
 { #category : #testing }

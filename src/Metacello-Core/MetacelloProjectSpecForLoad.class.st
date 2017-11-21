@@ -6,7 +6,7 @@ Class {
 		'useDetermineVersionForLoad',
 		'overrideProjectSpec'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #testing }

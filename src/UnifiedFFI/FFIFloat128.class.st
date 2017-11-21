@@ -7,7 +7,7 @@ THIS IS NOT YET SUPPORTED
 Class {
 	#name : #FFIFloat128,
 	#superclass : #FFIFloatType,
-	#category : 'UnifiedFFI-Types'
+	#category : #UnifiedFFI-Types
 }
 
 { #category : #accessing }

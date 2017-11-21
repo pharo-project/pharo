@@ -40,7 +40,7 @@ Class {
 		'repositoryURL',
 		'configurationName'
 	],
-	#category : 'ConfigurationCommandLineHandler-Core'
+	#category : #ConfigurationCommandLineHandler-Core
 }
 
 { #category : #accessing }

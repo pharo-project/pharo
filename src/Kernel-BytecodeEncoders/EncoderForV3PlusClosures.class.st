@@ -14,7 +14,7 @@ For now we impose upon you to synchronise any and all changes between these two 
 Class {
 	#name : #EncoderForV3PlusClosures,
 	#superclass : #EncoderForV3,
-	#category : 'Kernel-BytecodeEncoders'
+	#category : #Kernel-BytecodeEncoders
 }
 
 { #category : #'bytecode decoding' }
@@ -53,6 +53,12 @@ EncoderForV3PlusClosures class >> bindingWriteScanBlockFor: litVarIndex using: s
 				[b = 132
 				 and: [scanner followingByte >= 224
 				 and: [scanner thirdByte = litVarIndex]]]]
+]
+
+{ #category : #'block closure support' }
+EncoderForV3PlusClosures class >> blockCreationBytecodeMessageAt: startpc method: method [
+	"143   10001111 llllkkkk jjjjjjjj iiiiiiii	Push Closure Num Copied llll Num Args kkkk BlockSize jjjjjjjjiiiiiiii"
+	^ method abstractBytecodeMessageAt: startpc - 4
 ]
 
 { #category : #'instruction stream support' }

@@ -4,7 +4,7 @@ I insert the notification directly in the text at the given position. (I alter t
 Class {
 	#name : #RubTextInsertionStrategy,
 	#superclass : #RubNotificationStrategy,
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'as yet unclassified' }

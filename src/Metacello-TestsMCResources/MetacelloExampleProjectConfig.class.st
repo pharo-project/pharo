@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloExampleProjectConfig,
 	#superclass : #MetacelloMCTestsAbstractConfig,
-	#category : 'Metacello-TestsMCResources'
+	#category : #Metacello-TestsMCResources
 }
 
 { #category : #baselines }

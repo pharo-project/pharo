@@ -4,5 +4,5 @@ I am a notification raised when a OmFileStore has a problem writing an entry int
 Class {
 	#name : #OmFileStoreWritingError,
 	#superclass : #Error,
-	#category : 'Ombu-Errors'
+	#category : #Ombu-Errors
 }

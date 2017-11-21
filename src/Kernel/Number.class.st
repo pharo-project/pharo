@@ -35,7 +35,7 @@ We prefer evaluating cosd(90-x) thus providing a branch free implementation.
 Class {
 	#name : #Number,
 	#superclass : #Magnitude,
-	#category : 'Kernel-Numbers'
+	#category : #Kernel-Numbers
 }
 
 { #category : #constants }
@@ -411,9 +411,9 @@ Number >> closeTo: num precision: aPrecision [
 Number >> copySignTo: aNumber [
 	"Return a number with same magnitude as aNumber and same sign as self."
 
-	^ self positive
+	^ self signBit = 0
 		ifTrue: [aNumber abs]
-		ifFalse: [aNumber withNegativeSign].
+		ifFalse: [aNumber abs negated].
 ]
 
 { #category : #'mathematical functions' }
@@ -761,16 +761,28 @@ Number >> raisedTo: aNumber [
 		^ self raisedToInteger: aNumber].
 	aNumber isFraction ifTrue: [
 		"Special case for fraction power"
-		^ (self nthRoot: aNumber denominator) raisedToInteger: aNumber numerator ].
+		^ self raisedToFraction: aNumber].
 	self < 0 ifTrue: [
 		^ ArithmeticError signal: 'Negative numbers can''t be raised to float powers.' ].
 	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
 		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: self) signal]
+			ifTrue: [^ (ZeroDivide dividend: 1) signal]
 			ifFalse: [^ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
+]
+
+{ #category : #'mathematical functions' }
+Number >> raisedToFraction: aFraction [
+	self isZero
+		ifTrue:
+			[aFraction negative ifTrue: [^ (ZeroDivide dividend: 1) signal].
+			^self].
+	self negative ifFalse: [^(self ln * aFraction) exp].
+	aFraction denominator even
+		ifTrue: [^ ArithmeticError signal: 'nth root only defined for positive Integer n.'].
+	^(self negated ln * aFraction) exp negated
 ]
 
 { #category : #'mathematical functions' }
@@ -884,7 +896,7 @@ Number >> sign [
 
 	self > 0 ifTrue: [^1].
 	self < 0 ifTrue: [^-1].
-	^0
+	^self
 ]
 
 { #category : #'mathematical functions' }
@@ -892,6 +904,14 @@ Number >> sign: aNumber [
  	"Return a Number with the same sign as aNumber"
  
  	^ aNumber copySignTo: self.
+]
+
+{ #category : #'mathematical functions' }
+Number >> signBit [
+	"Answer 1 if the receiver is negative, zero otherwise."
+
+	self < 0 ifTrue: [^1].
+	^0
 ]
 
 { #category : #'mathematical functions' }
@@ -1031,12 +1051,6 @@ Number >> week [
 Number >> weeks [
  
  	^ Duration weeks: self
-]
-
-{ #category : #converting }
-Number >> withNegativeSign [
-	"Answer a number with same magnitude than receiver and negative sign."
-	^self abs negated
 ]
 
 { #category : #'*Kernel-Chronology' }

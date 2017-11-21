@@ -22,7 +22,7 @@ Class {
 	#instVars : [
 		'image'
 	],
-	#category : 'Zinc-HTTP-Client-Server'
+	#category : #Zinc-HTTP-Client-Server
 }
 
 { #category : #public }

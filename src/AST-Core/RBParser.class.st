@@ -25,7 +25,7 @@ Class {
 		'comments',
 		'pragmas'
 	],
-	#category : 'AST-Core-Parser'
+	#category : #AST-Core-Parser
 }
 
 { #category : #accessing }

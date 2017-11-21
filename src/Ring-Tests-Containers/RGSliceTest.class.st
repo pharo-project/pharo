@@ -4,7 +4,7 @@ SUnit tests for slices
 Class {
 	#name : #RGSliceTest,
 	#superclass : #TestCase,
-	#category : 'Ring-Tests-Containers'
+	#category : #Ring-Tests-Containers
 }
 
 { #category : #testing }

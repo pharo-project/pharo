@@ -16,7 +16,7 @@ Class {
 		'inset',
 		'spacing'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-UI-Popup'
+	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
 }
 
 { #category : #examples }
@@ -85,8 +85,6 @@ GLMEmptyPopupBrick >> area [
 
 	firstBounds := self subbricks first outerBounds.
 	secondBounds := self subbricks second outerBounds.
-
-	(secondBounds origin x - firstBounds origin x) logCr.
 
 	^ GLMArea
 		origin: firstBounds origin

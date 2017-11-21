@@ -4,7 +4,7 @@ Push a version
 Class {
 	#name : #GoferPush,
 	#superclass : #GoferSynchronize,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #private }

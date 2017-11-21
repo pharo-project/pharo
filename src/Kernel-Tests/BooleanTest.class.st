@@ -8,7 +8,7 @@ This is the unit test for the class Boolean. Unit tests are a good way to exerci
 Class {
 	#name : #BooleanTest,
 	#superclass : #ClassTestCase,
-	#category : 'Kernel-Tests-Objects'
+	#category : #Kernel-Tests-Objects
 }
 
 { #category : #'tests - instance creation' }

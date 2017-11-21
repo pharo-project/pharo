@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #'system startup' }

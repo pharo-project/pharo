@@ -19,7 +19,7 @@ Class {
 		'buttonMakeDiff',
 		'relationGraph'
 	],
-	#category : 'Tool-DependencyAnalyser-UI-Core'
+	#category : #Tool-DependencyAnalyser-UI-Core
 }
 
 { #category : #specs }

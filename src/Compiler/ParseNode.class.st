@@ -57,7 +57,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #accessing }

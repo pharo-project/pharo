@@ -15,7 +15,7 @@ Class {
 		'd2',
 		'inFirstRegion'
 	],
-	#category : 'Graphics-Primitives'
+	#category : #Graphics-Primitives
 }
 
 { #category : #initialize }

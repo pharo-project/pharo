@@ -31,7 +31,7 @@ Class {
 		'transformDraggedItemBlock',
 		'allowsRecursiveSearch'
 	],
-	#category : 'Glamour-Presentations'
+	#category : #Glamour-Presentations
 }
 
 { #category : #'accessing values' }

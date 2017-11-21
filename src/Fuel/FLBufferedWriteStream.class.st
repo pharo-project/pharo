@@ -21,7 +21,7 @@ Class {
 		'position',
 		'streamRespondsToNextPutAllStartingAt'
 	],
-	#category : 'Fuel-Streams'
+	#category : #Fuel-Streams
 }
 
 { #category : #accessing }

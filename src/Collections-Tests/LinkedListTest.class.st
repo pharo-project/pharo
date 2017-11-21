@@ -29,7 +29,7 @@ Class {
 		'unsortedCollection',
 		'sortedCollection'
 	],
-	#category : 'Collections-Tests-Sequenceable'
+	#category : #Collections-Tests-Sequenceable
 }
 
 { #category : #requirements }

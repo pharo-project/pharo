@@ -4,7 +4,7 @@ push inst var
 Class {
 	#name : #IRPushInstVar,
 	#superclass : #IRInstVarAccess,
-	#category : 'OpalCompiler-Core-IR-Nodes'
+	#category : #OpalCompiler-Core-IR-Nodes
 }
 
 { #category : #visiting }

@@ -8,7 +8,7 @@ Class {
 		'theLog',
 		'rejectedEntryReferences'
 	],
-	#category : 'EpiceaBrowsers-Filters'
+	#category : #EpiceaBrowsers-Filters
 }
 
 { #category : #accessing }

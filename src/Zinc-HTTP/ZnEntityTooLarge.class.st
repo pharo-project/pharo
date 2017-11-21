@@ -6,7 +6,7 @@ This is a resumable exception
 Class {
 	#name : #ZnEntityTooLarge,
 	#superclass : #Error,
-	#category : 'Zinc-HTTP-Exceptions'
+	#category : #Zinc-HTTP-Exceptions
 }
 
 { #category : #testing }

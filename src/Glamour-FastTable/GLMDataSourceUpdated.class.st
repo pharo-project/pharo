@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'newDataSource'
 	],
-	#category : 'Glamour-FastTable-Announcement'
+	#category : #Glamour-FastTable-Announcement
 }
 
 { #category : #'instance creation' }

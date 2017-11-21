@@ -13,7 +13,7 @@ Class {
 		'formattedCheckBox',
 		'sourceCodePane'
 	],
-	#category : 'BlueInk-Extras'
+	#category : #BlueInk-Extras
 }
 
 { #category : #'build ui buttons' }

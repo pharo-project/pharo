@@ -40,7 +40,7 @@ Class {
 		'bottomFraction',
 		'bottomOffset'
 	],
-	#category : 'Morphic-Base-Layouts'
+	#category : #Morphic-Base-Layouts
 }
 
 { #category : #'instance creation' }
@@ -109,6 +109,12 @@ LayoutFrame >> bottomOffset: anInteger [
 
 { #category : #accessing }
 LayoutFrame >> bottomRightOffset: aPoint [
+	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e. 
+	bottomRightOffset: 100 @ 200
+	=> 
+	bottomOffset: 200.
+	rightOffset: 100. 
+	"
 
 	bottomOffset := aPoint y.
 	rightOffset := aPoint x.
@@ -307,7 +313,12 @@ LayoutFrame >> topFraction: aNumber offset: anInteger [
 
 { #category : #accessing }
 LayoutFrame >> topLeftOffset: aPoint [
-
+	"If you construct a point on purpose to call this method, better use directly the correct accessors, i.e. 
+	topLeftOffset: 100 @ 200
+	=> 
+	topOffset: 200.
+	leftOffset: 100. 
+	"
 	topOffset := aPoint y.
 	leftOffset := aPoint x.
 ]

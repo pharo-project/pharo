@@ -30,7 +30,7 @@ Class {
 		'recorder',
 		'maxSize'
 	],
-	#category : 'System-History'
+	#category : #System-History
 }
 
 { #category : #adding }

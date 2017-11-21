@@ -61,7 +61,7 @@ Class {
 		'handles',
 		'borderForm'
 	],
-	#category : 'Morphic-Base-Basic'
+	#category : #Morphic-Base-Basic
 }
 
 { #category : #'instance creation' }

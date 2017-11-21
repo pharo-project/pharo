@@ -8,7 +8,7 @@ Class {
 		'sorter',
 		'fileNames'
 	],
-	#category : 'Monticello-Repositories'
+	#category : #Monticello-Repositories
 }
 
 { #category : #initialization }

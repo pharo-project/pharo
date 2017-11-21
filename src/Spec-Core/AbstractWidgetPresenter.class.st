@@ -39,7 +39,7 @@ Class {
 		'transferBlock',
 		'color'
 	],
-	#category : 'Spec-Core-Widgets'
+	#category : #Spec-Core-Widgets
 }
 
 { #category : #specs }

@@ -6,7 +6,7 @@ I am a regex refactoring renaming class categories (package names).
 Class {
 	#name : #RBCategoryRegexRefactoring,
 	#superclass : #RBRegexRefactoring,
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #transforming }

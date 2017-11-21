@@ -4,7 +4,7 @@ I answer an icon for each EpEvent.
 Class {
 	#name : #EpIconVisitor,
 	#superclass : #EpEntryContentVisitor,
-	#category : 'EpiceaBrowsers-Visitors'
+	#category : #EpiceaBrowsers-Visitors
 }
 
 { #category : #private }

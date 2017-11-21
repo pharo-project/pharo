@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'bingo'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #initialize-release }

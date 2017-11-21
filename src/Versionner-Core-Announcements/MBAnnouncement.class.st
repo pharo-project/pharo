@@ -4,7 +4,7 @@ Common superclass for Versionner announcements
 Class {
 	#name : #MBAnnouncement,
 	#superclass : #Announcement,
-	#category : 'Versionner-Core-Announcements'
+	#category : #Versionner-Core-Announcements
 }
 
 { #category : #accessing }

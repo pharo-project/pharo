@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'bytes'
 	],
-	#category : 'FreeType-Base'
+	#category : #FreeType-Base
 }
 
 { #category : #'instance creation' }

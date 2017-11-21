@@ -9,7 +9,7 @@ Class {
 		'oldName',
 		'affectedClassName'
 	],
-	#category : 'Epicea-Model'
+	#category : #Epicea-Model
 }
 
 { #category : #'instance creation' }

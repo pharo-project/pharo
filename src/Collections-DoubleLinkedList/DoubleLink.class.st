@@ -11,7 +11,7 @@ Class {
 		'nextLink',
 		'previousLink'
 	],
-	#category : 'Collections-DoubleLinkedList'
+	#category : #Collections-DoubleLinkedList
 }
 
 { #category : #'instance creation' }

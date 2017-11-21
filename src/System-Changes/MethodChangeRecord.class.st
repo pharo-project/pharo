@@ -31,7 +31,7 @@ Class {
 		'changeType',
 		'infoFromRemoval'
 	],
-	#category : 'System-Changes'
+	#category : #System-Changes
 }
 
 { #category : #accessing }

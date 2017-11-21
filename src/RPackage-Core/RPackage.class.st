@@ -82,7 +82,7 @@ Class {
 		'PackageGlobalOrganizer',
 		'Properties'
 	],
-	#category : 'RPackage-Core'
+	#category : #RPackage-Core
 }
 
 { #category : #constants }

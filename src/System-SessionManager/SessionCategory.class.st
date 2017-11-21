@@ -10,7 +10,7 @@ Class {
 		'name',
 		'priorityLists'
 	],
-	#category : 'System-SessionManager'
+	#category : #System-SessionManager
 }
 
 { #category : #accessing }

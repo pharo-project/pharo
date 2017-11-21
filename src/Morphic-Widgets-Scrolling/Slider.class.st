@@ -9,7 +9,7 @@ Class {
 		'sliderColor',
 		'descending'
 	],
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #geometry }

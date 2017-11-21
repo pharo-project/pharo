@@ -19,7 +19,7 @@ Class {
 		'ResolverSemaphore',
 		'ResolverUninitialized'
 	],
-	#category : 'Network-Kernel'
+	#category : #Network-Kernel
 }
 
 { #category : #lookups }
@@ -161,7 +161,7 @@ NetNameResolver class >> localHostAddress [
 
 	self initializeNetwork.
 	primAddress := self primLocalAddress.
-	^ primAddress = #[0 0 0 0] ifTrue: [ #[127 0 0 1] ] ifFalse: [ primAddress ]
+	^ (primAddress = #[0 0 0 0] ifTrue: [ #[127 0 0 1] ] ifFalse: [ primAddress ]) asSocketAddress
 ]
 
 { #category : #lookups }

@@ -9,7 +9,7 @@ Class {
 		'extent',
 		'depth'
 	],
-	#category : 'Graphics-Canvas'
+	#category : #Graphics-Canvas
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'CLASSVAR',
 		'TYPEVAR'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #private }

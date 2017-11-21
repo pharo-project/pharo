@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'accessorsRefactoring'
 	],
-	#category : 'Refactoring-Core-Refactorings'
+	#category : #Refactoring-Core-Refactorings
 }
 
 { #category : #transforming }

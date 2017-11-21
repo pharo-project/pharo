@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'debugActionHolder'
 	],
-	#category : 'Spec-Debugger'
+	#category : #Spec-Debugger
 }
 
 { #category : #accessing }

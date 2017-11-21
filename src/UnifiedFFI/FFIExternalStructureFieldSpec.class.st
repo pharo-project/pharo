@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fields'
 	],
-	#category : 'UnifiedFFI'
+	#category : #UnifiedFFI
 }
 
 { #category : #accessing }

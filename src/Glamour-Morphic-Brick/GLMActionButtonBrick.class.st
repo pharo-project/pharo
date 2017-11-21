@@ -32,7 +32,7 @@ Class {
 		'unhoverAction',
 		'clickAction'
 	],
-	#category : 'Glamour-Morphic-Brick-Widgets-Basic'
+	#category : #Glamour-Morphic-Brick-Widgets-Basic
 }
 
 { #category : #examples }

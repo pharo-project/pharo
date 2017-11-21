@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicPharoCodeRenderer,
 	#superclass : #GLMMorphicRubricTextRenderer,
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #callbacks }

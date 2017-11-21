@@ -4,7 +4,7 @@ Command to copy a baseline in Versionner
 Class {
 	#name : #MBCopyBaselineCommand,
 	#superclass : #MBVersionCommand,
-	#category : 'Versionner-Core-Commands'
+	#category : #Versionner-Core-Commands
 }
 
 { #category : #execute }

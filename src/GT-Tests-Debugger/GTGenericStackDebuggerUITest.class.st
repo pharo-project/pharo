@@ -1,7 +1,7 @@
 Class {
 	#name : #GTGenericStackDebuggerUITest,
 	#superclass : #GLMMorphicTest,
-	#category : 'GT-Tests-Debugger'
+	#category : #GT-Tests-Debugger
 }
 
 { #category : #testing }

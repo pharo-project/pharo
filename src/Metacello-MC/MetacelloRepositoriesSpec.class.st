@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloRepositoriesSpec,
 	#superclass : #MetacelloMemberListSpec,
-	#category : 'Metacello-MC-Specs'
+	#category : #Metacello-MC-Specs
 }
 
 { #category : #actions }

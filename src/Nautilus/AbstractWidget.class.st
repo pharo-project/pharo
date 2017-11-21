@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : 'Nautilus-Widgets'
+	#category : #Nautilus-Widgets
 }
 
 { #category : #accessing }

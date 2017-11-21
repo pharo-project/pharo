@@ -13,7 +13,7 @@ Class {
 		'selectionStart',
 		'selectionStop'
 	],
-	#category : 'Athens-Morphic'
+	#category : #Athens-Morphic
 }
 
 { #category : #'as yet unclassified' }

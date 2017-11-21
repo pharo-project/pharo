@@ -9,7 +9,7 @@ Class {
 		'className',
 		'renamedName'
 	],
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #running }

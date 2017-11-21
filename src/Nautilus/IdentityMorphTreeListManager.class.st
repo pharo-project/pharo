@@ -5,7 +5,7 @@ An IdentityMorphTreeListManager is a MorphTreeListManager which always check for
 Class {
 	#name : #IdentityMorphTreeListManager,
 	#superclass : #MorphTreeListManager,
-	#category : 'Nautilus-MorphTreeWidget-Extension'
+	#category : #Nautilus-MorphTreeWidget-Extension
 }
 
 { #category : #accessing }

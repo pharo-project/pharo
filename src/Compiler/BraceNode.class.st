@@ -16,7 +16,7 @@ Class {
 		'sourceLocations',
 		'emitNode'
 	],
-	#category : 'Compiler-ParseNodes'
+	#category : #Compiler-ParseNodes
 }
 
 { #category : #examples }

@@ -4,7 +4,7 @@ SUnit tests for class Color
 Class {
 	#name : #ColorTest,
 	#superclass : #ClassTestCase,
-	#category : 'Graphics-Tests-Primitives'
+	#category : #Graphics-Tests-Primitives
 }
 
 { #category : #asserting }

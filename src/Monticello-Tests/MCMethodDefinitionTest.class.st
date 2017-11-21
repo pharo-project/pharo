@@ -5,7 +5,7 @@ Class {
 		'navigation',
 		'isModified'
 	],
-	#category : 'Monticello-Tests'
+	#category : #Monticello-Tests
 }
 
 { #category : #mocks }

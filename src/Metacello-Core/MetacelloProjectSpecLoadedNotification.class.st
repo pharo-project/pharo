@@ -4,7 +4,7 @@
 Class {
 	#name : #MetacelloProjectSpecLoadedNotification,
 	#superclass : #MetacelloScriptProjectSpecNotification,
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #'exception description' }

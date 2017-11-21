@@ -4,7 +4,7 @@ All exising RBRefactorings
 Class {
 	#name : #RBRefactoringClassesHelp,
 	#superclass : #RBClassesHelp,
-	#category : 'Refactoring-Help'
+	#category : #Refactoring-Help
 }
 
 { #category : #building }

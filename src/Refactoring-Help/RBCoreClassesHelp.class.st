@@ -4,7 +4,7 @@ A book chapter describing  important core classes from the class comments.
 Class {
 	#name : #RBCoreClassesHelp,
 	#superclass : #RefactoringHelp,
-	#category : 'Refactoring-Help'
+	#category : #Refactoring-Help
 }
 
 { #category : #accessing }

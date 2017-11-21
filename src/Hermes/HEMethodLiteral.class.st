@@ -5,7 +5,7 @@ Class {
 		'className',
 		'selector'
 	],
-	#category : 'Hermes-Model'
+	#category : #Hermes-Model
 }
 
 { #category : #accessing }

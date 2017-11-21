@@ -4,7 +4,7 @@ Loading for specific packages using Gofer
 Class {
 	#name : #GoferLoad,
 	#superclass : #GoferOperation,
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #private }

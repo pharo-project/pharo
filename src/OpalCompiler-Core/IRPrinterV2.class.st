@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : 'OpalCompiler-Core-IR-Manipulation'
+	#category : #OpalCompiler-Core-IR-Manipulation
 }
 
 { #category : #private }

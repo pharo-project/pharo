@@ -8,7 +8,7 @@ Class {
 		'strategy',
 		'name'
 	],
-	#category : 'OmbuTests'
+	#category : #OmbuTests
 }
 
 { #category : #testing }

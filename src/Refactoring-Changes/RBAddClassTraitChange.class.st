@@ -4,7 +4,7 @@ I am a refactoring change for a class trait  addition, the meta side of a trait 
 Class {
 	#name : #RBAddClassTraitChange,
 	#superclass : #RBRefactoryDefinitionChange,
-	#category : 'Refactoring-Changes'
+	#category : #Refactoring-Changes
 }
 
 { #category : #private }

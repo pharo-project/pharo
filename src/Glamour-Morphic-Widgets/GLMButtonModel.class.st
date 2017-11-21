@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'glamourAction'
 	],
-	#category : 'Glamour-Morphic-Widgets'
+	#category : #Glamour-Morphic-Widgets
 }
 
 { #category : #actions }

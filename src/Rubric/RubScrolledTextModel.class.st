@@ -14,7 +14,7 @@ Class {
 		'textSegments',
 		'interactionModel'
 	],
-	#category : 'Rubric-Editing-Widgets'
+	#category : #Rubric-Editing-Widgets
 }
 
 { #category : #'text managing' }

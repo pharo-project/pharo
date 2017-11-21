@@ -4,7 +4,7 @@ SimplestClassListWithChunkExample new openOn: Object
 Class {
 	#name : #SimplestClassListWithChunkExample,
 	#superclass : #SimplestPaginatedClassListExample,
-	#category : 'Morphic-Examples-MorphTreeWidget'
+	#category : #Morphic-Examples-MorphTreeWidget
 }
 
 { #category : #examples }

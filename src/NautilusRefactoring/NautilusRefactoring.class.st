@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'PromptOnRefactoring'
 	],
-	#category : 'NautilusRefactoring'
+	#category : #NautilusRefactoring
 }
 
 { #category : #shortcuts }

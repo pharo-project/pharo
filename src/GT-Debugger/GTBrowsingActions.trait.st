@@ -3,7 +3,7 @@ I provide various actions for browsing a Context object. These actions are loade
 "
 Trait {
 	#name : #GTBrowsingActions,
-	#category : 'GT-Debugger-Actions'
+	#category : #GT-Debugger-Actions
 }
 
 { #category : #actions }

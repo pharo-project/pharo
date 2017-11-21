@@ -27,7 +27,7 @@ Class {
 		'testToto',
 		'pt1'
 	],
-	#category : 'Collections-Tests-Unordered'
+	#category : #Collections-Tests-Unordered
 }
 
 { #category : #helpers }

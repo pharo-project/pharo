@@ -4,7 +4,7 @@ I represent an executable check applied on an environment (groups of classes, me
 Class {
 	#name : #RBLintRule,
 	#superclass : #Object,
-	#category : 'Refactoring-Critics'
+	#category : #Refactoring-Critics
 }
 
 { #category : #'instance creation' }

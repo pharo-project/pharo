@@ -19,7 +19,7 @@ Class {
 		'redoMessage',
 		'undoMessage'
 	],
-	#category : 'System-History'
+	#category : #System-History
 }
 
 { #category : #compatibility }

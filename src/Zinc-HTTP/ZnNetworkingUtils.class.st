@@ -21,7 +21,7 @@ Class {
 		'Default',
 		'DefaultSocketStreamTimeout'
 	],
-	#category : 'Zinc-HTTP-Support'
+	#category : #Zinc-HTTP-Support
 }
 
 { #category : #accessing }

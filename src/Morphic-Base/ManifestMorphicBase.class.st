@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestMorphicBase,
 	#superclass : #PackageManifest,
-	#category : 'Morphic-Base'
+	#category : #Morphic-Base
 }
 
 { #category : #code-critics }

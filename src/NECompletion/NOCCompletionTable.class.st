@@ -15,7 +15,7 @@ Class {
 		'classTable',
 		'table'
 	],
-	#category : 'NECompletion-OCompletion'
+	#category : #NECompletion-OCompletion
 }
 
 { #category : #accessing }

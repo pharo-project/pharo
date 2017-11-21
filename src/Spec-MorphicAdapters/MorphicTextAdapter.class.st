@@ -6,7 +6,7 @@ Class {
 	#superclass : #AbstractMorphicAdapter,
 	#traits : 'TViewModel',
 	#classTraits : 'TViewModel classTrait',
-	#category : 'Spec-MorphicAdapters'
+	#category : #Spec-MorphicAdapters
 }
 
 { #category : #'spec protocol' }
@@ -95,6 +95,11 @@ MorphicTextAdapter >> canChangeText [
 { #category : #'spec protocol' }
 MorphicTextAdapter >> classOrMetaClass: aClass [
 	self setEditingModeFor: self widget withBehavior: aClass
+]
+
+{ #category : #undo-redo }
+MorphicTextAdapter >> clearUndoManager [
+	self widget clearUndoManager
 ]
 
 { #category : #'widget API' }

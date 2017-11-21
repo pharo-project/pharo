@@ -4,7 +4,7 @@ SDL2 library structure representing a joystick device added event data.
 Class {
 	#name : #SDL_JoyDeviceAddedEvent,
 	#superclass : #SDL_JoyDeviceEvent,
-	#category : 'OSWindow-SDL2-Bindings'
+	#category : #OSWindow-SDL2-Bindings
 }
 
 { #category : #'event type' }

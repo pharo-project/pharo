@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'ShowHandles'
 	],
-	#category : 'Morphic-Widgets-Windows-Resizing'
+	#category : #Morphic-Widgets-Windows-Resizing
 }
 
 { #category : #preferences }
@@ -35,7 +35,7 @@ ProportionalSplitterMorph class >> showSplitterHandles: aBoolean [
 	ShowHandles := aBoolean
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'accessing - defaults' }
 ProportionalSplitterMorph class >> splitterWidth [
 
 	^ 4

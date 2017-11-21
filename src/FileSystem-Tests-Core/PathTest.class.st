@@ -5,7 +5,7 @@ Class {
 	#name : #PathTest,
 	#superclass : #TestCase,
 	#type : #variable,
-	#category : 'FileSystem-Tests-Core'
+	#category : #FileSystem-Tests-Core
 }
 
 { #category : #tests }
@@ -72,6 +72,18 @@ PathTest >> testBasename [
 	| path |
 	path := Path * 'plonk' / 'griffle'.
 	self assert: path basename equals: 'griffle'
+]
+
+{ #category : #tests }
+PathTest >> testBasenameNoParent [
+	| path |
+
+	path := Path / 'griffle'.
+	self assert: path parent basename equals: '/'.
+
+	path := Path * 'griffle'.
+	self assert: path parent basename equals: '.'.
+
 ]
 
 { #category : #tests }

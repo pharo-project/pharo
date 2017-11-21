@@ -4,7 +4,7 @@ A preamble evaluated before unloading/removing
 Class {
 	#name : #MCRemovalPreambleDefinition,
 	#superclass : #MCScriptDefinition,
-	#category : 'Monticello-Modeling'
+	#category : #Monticello-Modeling
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'testClass',
 		'testSubclass'
 	],
-	#category : 'Kernel-Tests-Rules'
+	#category : #Kernel-Tests-Rules
 }
 
 { #category : #properties }
@@ -16,7 +16,7 @@ OverridesDeprecatedMethodRuleTest >> methodName [
 
 { #category : #running }
 OverridesDeprecatedMethodRuleTest >> setUp [
-
+	super setUp.
 	testClass := Object newAnonymousSubclass.
 	testSubclass := testClass newAnonymousSubclass.
 	
@@ -27,7 +27,8 @@ OverridesDeprecatedMethodRuleTest >> setUp [
 OverridesDeprecatedMethodRuleTest >> tearDown [
 
 	testClass := nil.
-	testSubclass := nil
+	testSubclass := nil.
+	super tearDown 
 ]
 
 { #category : #tests }
@@ -37,7 +38,7 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck [
 	testMethod := testSubclass >> (
 		testSubclass compile: self methodName).
 		
-	self assert: (OverridesDeprecatedMethodRule new basicCheck: testMethod)
+	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isNotEmpty 
 ]
 
 { #category : #tests }
@@ -47,5 +48,5 @@ OverridesDeprecatedMethodRuleTest >> testBasicCheck1 [
 	testMethod := testSubclass >> (
 		testSubclass compile: self methodName, '1').
 		
-	self deny: (OverridesDeprecatedMethodRule new basicCheck: testMethod)
+	self assert: (OverridesDeprecatedMethodRule new check: testMethod) isEmpty
 ]

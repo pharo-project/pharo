@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'duplicateFailureLog'
 	],
-	#category : 'SUnit-Tests-Core'
+	#category : #SUnit-Tests-Core
 }
 
 { #category : #history }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'version'
 	],
-	#category : 'Gofer-Core'
+	#category : #Gofer-Core
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ I visit an IRMethod instructions and write them out to a print stream.
 Class {
 	#name : #IRVisitor,
 	#superclass : #Object,
-	#category : 'OpalCompiler-Core-IR-Manipulation'
+	#category : #OpalCompiler-Core-IR-Manipulation
 }
 
 { #category : #visiting }

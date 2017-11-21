@@ -15,7 +15,7 @@ Class {
 		'work',
 		'selectChildren'
 	],
-	#category : 'FileSystem-Core-Implementation'
+	#category : #FileSystem-Core-Implementation
 }
 
 { #category : #'instance creation' }

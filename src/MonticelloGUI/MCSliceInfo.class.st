@@ -9,7 +9,7 @@ Class {
 		'issue',
 		'title'
 	],
-	#category : 'MonticelloGUI'
+	#category : #MonticelloGUI
 }
 
 { #category : #accessing }

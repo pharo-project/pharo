@@ -4,7 +4,7 @@ UI merging SpecTreeModel package dependencies and Nautilus UI.
 Class {
 	#name : #DAPackageAnalyzerCycleDetectionWindow,
 	#superclass : #DAPackageAnalyzerWindow,
-	#category : 'Tool-DependencyAnalyser-UI-Core'
+	#category : #Tool-DependencyAnalyser-UI-Core
 }
 
 { #category : #examples }

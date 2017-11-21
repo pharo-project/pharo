@@ -19,7 +19,7 @@ Class {
 		'transformation',
 		'condition'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Error>defaultAction uses an explicit test for the presence of the Debugger class
 Class {
 	#name : #Error,
 	#superclass : #Exception,
-	#category : 'Kernel-Exceptions'
+	#category : #Kernel-Exceptions
 }
 
 { #category : #exceptiondescription }

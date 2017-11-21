@@ -5,7 +5,7 @@ Class {
 		'text',
 		'currentCompiler'
 	],
-	#category : 'OpalCompiler-Tests-FromOld'
+	#category : #OpalCompiler-Tests-FromOld
 }
 
 { #category : #compiling }

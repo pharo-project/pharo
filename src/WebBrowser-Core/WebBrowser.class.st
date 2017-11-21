@@ -4,7 +4,7 @@ General access to a webbrowser
 Class {
 	#name : #WebBrowser,
 	#superclass : #Object,
-	#category : 'WebBrowser-Core-Base'
+	#category : #WebBrowser-Core-Base
 }
 
 { #category : #example }

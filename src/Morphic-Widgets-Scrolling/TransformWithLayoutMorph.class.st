@@ -4,7 +4,7 @@ A transform morph that allows the use of a layout policy to arrange submorphs.
 Class {
 	#name : #TransformWithLayoutMorph,
 	#superclass : #TransformMorph,
-	#category : 'Morphic-Widgets-Scrolling'
+	#category : #Morphic-Widgets-Scrolling
 }
 
 { #category : #layout }

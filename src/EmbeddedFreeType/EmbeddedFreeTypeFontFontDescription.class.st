@@ -11,7 +11,7 @@ To do in the future:
 Class {
 	#name : #EmbeddedFreeTypeFontFontDescription,
 	#superclass : #Object,
-	#category : 'EmbeddedFreeType'
+	#category : #EmbeddedFreeType
 }
 
 { #category : #testing }

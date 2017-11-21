@@ -1,13 +1,13 @@
 Class {
 	#name : #FileDialogWindowTest,
 	#superclass : #TestCase,
-	#category : 'Tool-FileList-Tests'
+	#category : #Tool-FileList-Tests
 }
 
 { #category : #tests }
 FileDialogWindowTest >> testIssue6406 [
 
-	| aFolder dialog file invalidFolder |
+	| aFolder dialog invalidFolder |
 	aFolder := (FileSystem workingDirectory / 'folder') ensureCreateDirectory.
 	[ 
 	"Absolute folder paths work"

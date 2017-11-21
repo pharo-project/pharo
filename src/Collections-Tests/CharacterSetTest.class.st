@@ -4,7 +4,7 @@ CharacterSetTest holds tests for CharacterSet
 Class {
 	#name : #CharacterSetTest,
 	#superclass : #TestCase,
-	#category : 'Collections-Tests-Support'
+	#category : #Collections-Tests-Support
 }
 
 { #category : #tests }

@@ -5,7 +5,7 @@ A GLMInteractableBrickRenderer is more advanced Brick renderer, that is used in 
 Class {
 	#name : #GLMInteractableBrickRenderer,
 	#superclass : #GLMBrickRenderer,
-	#category : 'Glamour-Morphic-Brick-Renderer'
+	#category : #Glamour-Morphic-Brick-Renderer
 }
 
 { #category : #rendering }

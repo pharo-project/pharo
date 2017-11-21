@@ -1,7 +1,7 @@
 Class {
 	#name : #SystemNavigationOnNewlyCreatedEnvironmentTest,
 	#superclass : #SystemNavigationTest,
-	#category : 'Tests-System'
+	#category : #Tests-System
 }
 
 { #category : #'building suites' }

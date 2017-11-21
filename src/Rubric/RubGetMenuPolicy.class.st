@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'textArea'
 	],
-	#category : 'Rubric-Editing-Core'
+	#category : #Rubric-Editing-Core
 }
 
 { #category : #'accessing menu' }

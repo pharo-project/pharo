@@ -6,7 +6,7 @@ Class {
 		'vResizing',
 		'disableLayout'
 	],
-	#category : 'Spec-Layout'
+	#category : #Spec-Layout
 }
 
 { #category : #converting }

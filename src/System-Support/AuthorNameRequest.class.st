@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'initialAnswer'
 	],
-	#category : 'System-Support'
+	#category : #System-Support
 }
 
 { #category : #accessing }

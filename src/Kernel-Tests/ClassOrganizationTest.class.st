@@ -8,7 +8,7 @@ Class {
 		'organization',
 		'class'
 	],
-	#category : 'Kernel-Tests-Protocols'
+	#category : #Kernel-Tests-Protocols
 }
 
 { #category : #accessing }
@@ -24,6 +24,7 @@ ClassOrganizationTest >> runCase [
 
 { #category : #running }
 ClassOrganizationTest >> setUp [ 
+	super setUp.
 	class := Object subclass: #ClassForTests instanceVariableNames: '' classVariableNames: '' category: 'ClassOrganizer-Tests'.
 	organization := ClassOrganization forClass: class.
 	organization addCategory: 'empty'.

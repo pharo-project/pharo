@@ -4,7 +4,7 @@ SUnit tests for Button model
 Class {
 	#name : #ButtonPresenterTest,
 	#superclass : #SpecTestCase,
-	#category : 'Spec-Tests-Core-Widgets'
+	#category : #Spec-Tests-Core-Widgets
 }
 
 { #category : #running }

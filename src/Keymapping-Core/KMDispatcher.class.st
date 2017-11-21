@@ -13,7 +13,7 @@ Class {
 		'morph',
 		'directKeymaps'
 	],
-	#category : 'Keymapping-Core'
+	#category : #Keymapping-Core
 }
 
 { #category : #'instance creation' }
@@ -103,7 +103,7 @@ KMDispatcher >> directKeymaps [
 
 { #category : #dispatching }
 KMDispatcher >> dispatch: anEventBuffer [
-	| association match |
+
 	self keymapObservers do: [ :aTarget | 
 		"nice hack to stop in the first listener"
 		aTarget 

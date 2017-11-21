@@ -5,7 +5,7 @@ Class {
 		'baselineRegistry',
 		'configurationRegistry'
 	],
-	#category : 'Metacello-Core-Scripts'
+	#category : #Metacello-Core-Scripts
 }
 
 { #category : #accessing }

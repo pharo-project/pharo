@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'manager'
 	],
-	#category : 'System-SessionManager-Tests'
+	#category : #System-SessionManager-Tests
 }
 
 { #category : #asserting }

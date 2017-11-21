@@ -3,7 +3,7 @@ A trait for test purposes
 "
 Trait {
 	#name : #TSequencedConcatenationTest,
-	#category : 'Collections-Tests-Abstract'
+	#category : #Collections-Tests-Abstract
 }
 
 { #category : #requirements }
@@ -78,7 +78,7 @@ TSequencedConcatenationTest >> testNewStreamContentsReturnsCollectionOfCorrectSi
 
 { #category : #'tests - streaming' }
 TSequencedConcatenationTest >> testStreamContents [
-	| result index |
+	| result |
 	result:= self collectionClass streamContents: [ :s|
 		s 
 			nextPutAll: self firstCollection;
@@ -88,7 +88,7 @@ TSequencedConcatenationTest >> testStreamContents [
 
 { #category : #'tests - streaming' }
 TSequencedConcatenationTest >> testStreamContentsProtocol [
-	| result index |
+	| result |
 	result:= self collectionClass << [ :s|
 		s 
 			nextPutAll: self firstCollection;

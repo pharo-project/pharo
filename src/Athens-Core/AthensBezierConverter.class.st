@@ -15,7 +15,7 @@ Class {
 		'CurveAngleTolerance',
 		'DistanceEps'
 	],
-	#category : 'Athens-Core-Paths'
+	#category : #Athens-Core-Paths
 }
 
 { #category : #'as yet unclassified' }

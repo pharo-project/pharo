@@ -22,7 +22,7 @@ Class {
 		'substitutions',
 		'substitutes'
 	],
-	#category : 'Fuel-Clusters'
+	#category : #Fuel-Clusters
 }
 
 { #category : #analyzing }

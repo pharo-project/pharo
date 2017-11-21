@@ -23,7 +23,7 @@ Object >> split: aSequenceableCollection [
 	Example:
 		$/ split: '/foo/bar'"
 		
-	| result position oldPosition |
+	| result |
 	
 	result := OrderedCollection new: (aSequenceableCollection size / 2) asInteger.
 	self split: aSequenceableCollection do: [ :item |

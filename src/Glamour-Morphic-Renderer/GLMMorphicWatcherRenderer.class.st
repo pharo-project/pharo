@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'process'
 	],
-	#category : 'Glamour-Morphic-Renderer'
+	#category : #Glamour-Morphic-Renderer
 }
 
 { #category : #rendering }

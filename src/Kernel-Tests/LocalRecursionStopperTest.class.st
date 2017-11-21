@@ -8,7 +8,7 @@ Class {
 		'fork',
 		'value'
 	],
-	#category : 'Kernel-Tests-Processes'
+	#category : #Kernel-Tests-Processes
 }
 
 { #category : #accessing }
@@ -60,7 +60,7 @@ LocalRecursionStopperTest >> recursion [
 
 { #category : #running }
 LocalRecursionStopperTest >> setUp [
-
+	super setUp.
 	value := 0
 ]
 
@@ -68,6 +68,7 @@ LocalRecursionStopperTest >> setUp [
 LocalRecursionStopperTest >> tearDown [
 
 	fork ifNotNil: [ fork terminate. fork := nil ].
+	super tearDown 
 ]
 
 { #category : #tests }

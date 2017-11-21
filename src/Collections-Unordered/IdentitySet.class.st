@@ -32,7 +32,7 @@ An IdentitySet will include multiple equal objects if they are not identical:
 Class {
 	#name : #IdentitySet,
 	#superclass : #Set,
-	#category : 'Collections-Unordered'
+	#category : #Collections-Unordered
 }
 
 { #category : #converting }

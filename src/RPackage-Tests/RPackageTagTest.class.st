@@ -4,7 +4,7 @@ SUnit tests for RPackage tags
 Class {
 	#name : #RPackageTagTest,
 	#superclass : #RPackageTestCase,
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #running }

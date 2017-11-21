@@ -7,7 +7,7 @@ Class {
 		'OFFSET_POINTER',
 		'OFFSET_TWO'
 	],
-	#category : 'UnifiedFFI-Tests'
+	#category : #UnifiedFFI-Tests
 }
 
 { #category : #'field definition' }

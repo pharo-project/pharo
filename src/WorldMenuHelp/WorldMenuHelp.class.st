@@ -4,7 +4,7 @@ Provide help topic for world menu
 Class {
 	#name : #WorldMenuHelp,
 	#superclass : #CustomHelp,
-	#category : 'WorldMenuHelp'
+	#category : #WorldMenuHelp
 }
 
 { #category : #accessing }

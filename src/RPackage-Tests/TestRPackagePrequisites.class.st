@@ -4,7 +4,7 @@ SUnit tests for RPackage prerequisites
 Class {
 	#name : #TestRPackagePrequisites,
 	#superclass : #TestCase,
-	#category : 'RPackage-Tests'
+	#category : #RPackage-Tests
 }
 
 { #category : #tests }

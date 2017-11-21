@@ -12,7 +12,7 @@ Class {
 		'baseSlot',
 		'offset'
 	],
-	#category : 'Slot-Examples'
+	#category : #Slot-Examples
 }
 
 { #category : #accessing }

@@ -11,7 +11,7 @@ Class {
 		'method',
 		'selector'
 	],
-	#category : 'Kernel-Methods'
+	#category : #Kernel-Methods
 }
 
 { #category : #'instance creation' }

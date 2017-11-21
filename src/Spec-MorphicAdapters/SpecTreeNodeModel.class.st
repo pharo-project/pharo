@@ -11,7 +11,7 @@ Class {
 		'hasContents',
 		'childrenItemsBlock'
 	],
-	#category : 'Spec-MorphicAdapters-Support'
+	#category : #Spec-MorphicAdapters-Support
 }
 
 { #category : #compatibility }

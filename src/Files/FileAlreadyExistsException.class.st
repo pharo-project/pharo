@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'file'
 	],
-	#category : 'Files-Core'
+	#category : #Files-Core
 }
 
 { #category : #instance-creation }

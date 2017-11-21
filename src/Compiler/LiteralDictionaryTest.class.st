@@ -4,7 +4,7 @@ SUnit tests for literal dictionaries
 Class {
 	#name : #LiteralDictionaryTest,
 	#superclass : #DictionaryTest,
-	#category : 'Compiler-Tests'
+	#category : #Compiler-Tests
 }
 
 { #category : #'building suites' }

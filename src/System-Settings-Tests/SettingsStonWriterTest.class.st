@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'writer'
 	],
-	#category : 'System-Settings-Tests'
+	#category : #System-Settings-Tests
 }
 
 { #category : #running }

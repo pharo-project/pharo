@@ -8,7 +8,7 @@ Class {
 		'familyName',
 		'pixelSize'
 	],
-	#category : 'Graphics-Fonts'
+	#category : #Graphics-Fonts
 }
 
 { #category : #'instance creation' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentTimeZone'
 	],
-	#category : 'FuelTests'
+	#category : #FuelTests
 }
 
 { #category : #failures }

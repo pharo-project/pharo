@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'searchedTextListMaxSize'
 	],
-	#category : 'Tool-Finder'
+	#category : #Tool-Finder
 }
 
 { #category : #'event subscriptions' }
@@ -149,26 +149,37 @@ FinderUI class >> taskbarIconName [
 
 { #category : #'items creation' }
 FinderUI >> addAllItems: aWindow [
-	| toolbar height  btnFont  btnToolbar cst |
+	| toolbar height btnFont btnToolbar cst |
 	toolbar := self buildSearchModeToolBar: aWindow.
 	height := toolbar minExtent y.
 	cst := 15.
-	
-	aWindow 
+	aWindow
 		addMorph: toolbar
-		fullFrame: ( (0 @ 0 corner: 1 @ 0) asLayoutFrame bottomOffset: height).
+		fullFrame:
+			(LayoutFrame identity
+				bottomFraction: 0;
+				bottomOffset: height).
 	aWindow
 		addMorph: self buildPackagesTree buildContents
-		fullFrame: ((0@0 corner: 1@0.58) asLayoutFrame topOffset: height).
+		fullFrame:
+			(LayoutFrame identity
+				bottomFraction: 0.58;
+				topOffset: height).
 	btnFont := StandardFonts buttonFont.
 	btnToolbar := self buildBrowseToolBar: aWindow.
 	aWindow
 		addMorph: btnToolbar
-		fullFrame: ((0@0.58 corner: 1@0.58) asLayoutFrame bottomOffset: (btnFont height +cst)).
-	aWindow 
+		fullFrame:
+			(LayoutFrame identity
+				topFraction: 0.58;
+				bottomFraction: 0.58;
+				bottomOffset: btnFont height + cst).
+	aWindow
 		addMorph: self sourceTextArea
-		fullFrame: ((0@0.58 corner: 1@1) asLayoutFrame topOffset: btnFont height +cst)
-
+		fullFrame:
+			(LayoutFrame identity
+				topFraction: 0.58;
+				topOffset: btnFont height + cst)
 ]
 
 { #category : #accessing }

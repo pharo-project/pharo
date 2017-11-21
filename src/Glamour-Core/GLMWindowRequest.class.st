@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'action'
 	],
-	#category : 'Glamour-Core'
+	#category : #Glamour-Core
 }
 
 { #category : #'instance creation' }

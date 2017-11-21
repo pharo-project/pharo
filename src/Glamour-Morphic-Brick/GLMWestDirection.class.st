@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMWestDirection,
 	#superclass : #GLMDirection,
-	#category : 'Glamour-Morphic-Brick-Utils-Geometry'
+	#category : #Glamour-Morphic-Brick-Utils-Geometry
 }
 
 { #category : #arithmetic }

@@ -4,7 +4,7 @@ I'm an agroupation of ReflectivityCodeMorph
 Class {
 	#name : #ReflectivitySourceCodeAgroupation,
 	#superclass : #Morph,
-	#category : 'Reflectivity-Examples'
+	#category : #Reflectivity-Examples
 }
 
 { #category : #initialize }

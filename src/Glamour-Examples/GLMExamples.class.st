@@ -5,7 +5,7 @@ My subclasses should define each example within a method and annotated the metho
 Class {
 	#name : #GLMExamples,
 	#superclass : #Object,
-	#category : 'Glamour-Examples'
+	#category : #Glamour-Examples
 }
 
 { #category : #accessing }

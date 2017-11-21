@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'position'
 	],
-	#category : 'Regex-Core-Exceptions'
+	#category : #Regex-Core-Exceptions
 }
 
 { #category : #signaling }
