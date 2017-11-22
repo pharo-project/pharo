@@ -43,7 +43,6 @@ ReadWriteStream >> next [
 	bounds in the collection. Optional. See Object documentation
 	whatIsAPrimitive."
 
-	<primitive: 65>
 	"treat me as a FIFO"
 	position >= readLimit
 		ifTrue: [^nil]
