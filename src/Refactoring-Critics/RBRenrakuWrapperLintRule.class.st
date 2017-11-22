@@ -115,12 +115,6 @@ RBRenrakuWrapperLintRule >> initialize: aRule [
 ]
 
 { #category : #accessing }
-RBRenrakuWrapperLintRule >> longDescription [
-	
-	^ renrakuRule rationale
-]
-
-{ #category : #accessing }
 RBRenrakuWrapperLintRule >> name [
 
 	^ renrakuRule name

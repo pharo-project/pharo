@@ -26,12 +26,12 @@ RBRemoveAssignmentWithoutEffectRule >> initialize [
 		replace: 	'`var := `var' with: ''
 ]
 
-{ #category : #'as yet unclassified' }
-RBRemoveAssignmentWithoutEffectRule >> longDescription [ 
-	^ 'Remove assignment has no effect. For example, var := var is unless'
-]
-
 { #category : #accessing }
 RBRemoveAssignmentWithoutEffectRule >> name [
 	^ 'Remove assignment has no effect'
+]
+
+{ #category : #accessing }
+RBRemoveAssignmentWithoutEffectRule >> rationale [ 
+	^ 'Remove assignment has no effect. For example, var := var is unless'
 ]

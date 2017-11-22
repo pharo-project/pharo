@@ -141,8 +141,12 @@ RBLintRule >> leaves [
 
 { #category : #accessing }
 RBLintRule >> longDescription [
-	"A long version of the rationale, just delegate to the class comment. Therefore just enhance class comments!"
-	^ self class comment 
+	self
+		deprecated: 'Please use #rationale  instead'
+		transformWith: '`@receiver longDescription' 
+ 						-> '`@receiver rationale'.
+ 	
+ 	^ self rationale 
 ]
 
 { #category : #accessing }
