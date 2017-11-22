@@ -19,9 +19,6 @@ Class {
 	#instVars : [
 		'first'
 	],
-	#classVars : [
-		'HasNewFinalization'
-	],
 	#category : #System-Finalization
 }
 
@@ -29,18 +26,6 @@ Class {
 WeakFinalizationList class >> hasNewFinalization [
 	"new finalization is always false"
 	^ false
-]
-
-{ #category : #'class initialization' }
-WeakFinalizationList class >> initialize [ 
-	SessionManager default
-		registerSystemClassNamed: self name.
-]
-
-{ #category : #'system startup' }
-WeakFinalizationList class >> startUp: resuming [ 
-	resuming ifTrue: [ 
-		HasNewFinalization := Smalltalk vm isPharoVM ]
 ]
 
 { #category : #accessing }
