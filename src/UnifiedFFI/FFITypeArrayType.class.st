@@ -14,7 +14,7 @@ FFITypeArrayType >> annonymousClassCreator [
 			nextPutAll: '(FFITypeArray ofType: ';
 			print: (self objectClass type isPointer
 				ifTrue: [ self externalTypeWithArity printString ]
-				ifFalse: [ '#' , self objectClass type class ]);
+				ifFalse: [ self objectClass type class name ]);
 			nextPutAll: ' size: ';
 			print: self objectClass numberOfElements;
 			nextPutAll: ')' ]
