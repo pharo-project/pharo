@@ -182,7 +182,6 @@ WriteStream >> nextPut: anObject [
 	of the right type for the collection. Optional. See Object documentation
 	whatIsAPrimitive."
 
-	<primitive: 66>
 	position >= writeLimit
 		ifTrue: [^ self pastEndPut: anObject]
 		ifFalse: 
