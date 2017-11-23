@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tree'
 	],
-	#category : #Renraku-Rules-Rewrite
+	#category : #'Renraku-Rules-Rewrite'
 }
 
 { #category : #'instance creation' }

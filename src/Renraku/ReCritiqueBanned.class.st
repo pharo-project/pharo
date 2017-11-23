@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entityBanLevel'
 	],
-	#category : #Renraku-Announcements
+	#category : #'Renraku-Announcements'
 }
 
 { #category : #accessing }

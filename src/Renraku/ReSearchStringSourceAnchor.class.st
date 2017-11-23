@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'searchString'
 	],
-	#category : #Renraku-SourceAnchors
+	#category : #'Renraku-SourceAnchors'
 }
 
 { #category : #'instance creation' }
@@ -19,7 +19,7 @@ ReSearchStringSourceAnchor class >> entity: anEntity string: aString [
 		yourself
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 ReSearchStringSourceAnchor >> gtInspectorAnchorIn: composite [
 	<gtInspectorPresentationOrder: 0>
 

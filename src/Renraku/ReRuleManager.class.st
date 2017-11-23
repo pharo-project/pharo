@@ -17,7 +17,7 @@ Class {
 		'managers',
 		'default'
 	],
-	#category : #Renraku-Utility
+	#category : #'Renraku-Utility'
 }
 
 { #category : #utility }
@@ -85,7 +85,7 @@ ReRuleManager class >> initialize [
 	self subscribe.
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 ReRuleManager class >> managerFor: aCodeEntity [ 
 	^ self managers
 		at: aCodeEntity package
@@ -197,7 +197,7 @@ ReRuleManager class >> uniqueInstance [
 	^ self default
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ReRuleManager class >> unload [
 
 	self reset

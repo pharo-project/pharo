@@ -4,7 +4,7 @@ A base superclass for rules that check AST nodes.
 Class {
 	#name : #ReNodeBasedRule,
 	#superclass : #ReAbstractRule,
-	#category : #Renraku-Rules-Rewrite
+	#category : #'Renraku-Rules-Rewrite'
 }
 
 { #category : #testing }

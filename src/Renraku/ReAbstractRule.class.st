@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #Renraku-Rules
+	#category : #'Renraku-Rules'
 }
 
 { #category : #conversion }
@@ -23,25 +23,25 @@ ReAbstractRule class >> asRBRule [
 	^ self new asRBRule
 ]
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 ReAbstractRule class >> checksClass [
 
 	^ false
 ]
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 ReAbstractRule class >> checksMethod [
 
 	^ false
 ]
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 ReAbstractRule class >> checksNode [
 
 	^ false
 ]
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 ReAbstractRule class >> checksPackage [
 
 	^ false

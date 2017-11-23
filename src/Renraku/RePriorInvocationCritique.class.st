@@ -4,7 +4,7 @@ The critic tells that a required message is missing prior to the one in question
 Class {
 	#name : #RePriorInvocationCritique,
 	#superclass : #ReInvocationOrderCritique,
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #accessing }

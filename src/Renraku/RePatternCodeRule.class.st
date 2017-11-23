@@ -4,7 +4,7 @@ An abstract class containing common tools for match and rewrite rules
 Class {
 	#name : #RePatternCodeRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #Renraku-Rules-Rewrite
+	#category : #'Renraku-Rules-Rewrite'
 }
 
 { #category : #testing }

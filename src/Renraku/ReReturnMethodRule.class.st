@@ -5,7 +5,7 @@ Somewhere in the override hierarchy there is a pragma that tells that this metho
 Class {
 	#name : #ReReturnMethodRule,
 	#superclass : #ReAbstractRule,
-	#category : #Renraku-Rules
+	#category : #'Renraku-Rules'
 }
 
 { #category : #'as yet unclassified' }

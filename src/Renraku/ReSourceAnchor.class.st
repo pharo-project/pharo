@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'sourceEntity'
 	],
-	#category : #Renraku-SourceAnchors
+	#category : #'Renraku-SourceAnchors'
 }
 
 { #category : #'instance creation' }
@@ -22,7 +22,7 @@ ReSourceAnchor >> entity [
 	^ self sourceEntity
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 ReSourceAnchor >> gtInspectorAnchorIn: composite [
 	<gtInspectorPresentationOrder: 0>
 

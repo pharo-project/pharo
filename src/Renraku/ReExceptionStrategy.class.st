@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #Renraku-Utility
+	#category : #'Renraku-Utility'
 }
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ ReExceptionStrategy class >> exceptionStrategySettingsOn: aBuilder [
 	(aBuilder pickOne: #current)
 		label: 'Exception handling strategy';
 		target: self;
-		parent: #renraku;
+		parent: #qualityAssistant;
 		description: self settingDescription;
 		domainValues: (
 			self allSubclasses collect: [ :c |

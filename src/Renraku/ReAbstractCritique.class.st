@@ -10,7 +10,7 @@ Class {
 		'rule',
 		'tinyHint'
 	],
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #'instance creation' }
@@ -106,7 +106,7 @@ ReAbstractCritique >> description [
 	^ rule rationale
 ]
 
-{ #category : #gt-extension }
+{ #category : #'gt-extension' }
 ReAbstractCritique >> gtInspectorDescriptionIn: composite [
 	<gtInspectorPresentationOrder: 1>
 
@@ -115,7 +115,7 @@ ReAbstractCritique >> gtInspectorDescriptionIn: composite [
 		display: [ self description ]
 ]
 
-{ #category : #gt-extension }
+{ #category : #'gt-extension' }
 ReAbstractCritique >> gtInspectorSourceCodeIn: composite [
 	<gtInspectorPresentationOrder: 0>
 
@@ -182,7 +182,7 @@ ReAbstractCritique >> rule [
 	^ rule
 ]
 
-{ #category : #gt-extension }
+{ #category : #'gt-extension' }
 ReAbstractCritique >> spotterPreviewRationaleIn: aComposite [
 	<spotterPreview: 5>
 	aComposite text
