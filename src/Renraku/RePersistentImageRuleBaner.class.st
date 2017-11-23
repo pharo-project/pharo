@@ -4,7 +4,7 @@ Same as the superclass but also saves the banned rule with a setting
 Class {
 	#name : #RePersistentImageRuleBaner,
 	#superclass : #ReImageRuleBaner,
-	#category : #Renraku-Utility
+	#category : #'Renraku-Utility'
 }
 
 { #category : #actions }

@@ -8,7 +8,7 @@ Class {
 		'stack',
 		'message'
 	],
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #'instance creation' }

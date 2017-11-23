@@ -4,7 +4,7 @@ Report exception as a property (critique) which can be debuged afterwards
 Class {
 	#name : #ReLogExceptionStrategy,
 	#superclass : #ReExceptionStrategy,
-	#category : #Renraku-Utility
+	#category : #'Renraku-Utility'
 }
 
 { #category : #'error handling' }

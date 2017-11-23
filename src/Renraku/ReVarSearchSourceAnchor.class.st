@@ -4,7 +4,7 @@ Same as search string source anchor but uses specific heuristics for finding a b
 Class {
 	#name : #ReVarSearchSourceAnchor,
 	#superclass : #ReSearchStringSourceAnchor,
-	#category : #Renraku-SourceAnchors
+	#category : #'Renraku-SourceAnchors'
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'sourceAnchor'
 	],
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #actions }

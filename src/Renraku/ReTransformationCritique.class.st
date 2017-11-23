@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'newTree'
 	],
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #'as yet unclassified' }

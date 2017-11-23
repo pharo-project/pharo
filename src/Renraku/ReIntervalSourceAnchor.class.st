@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'interval'
 	],
-	#category : #Renraku-SourceAnchors
+	#category : #'Renraku-SourceAnchors'
 }
 
 { #category : #'instance creation' }
@@ -19,7 +19,7 @@ ReIntervalSourceAnchor class >> entity: anEntity interval: anInterval [
 		yourself
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 ReIntervalSourceAnchor >> gtInspectorAnchorIn: composite [
 	<gtInspectorPresentationOrder: 0>
 

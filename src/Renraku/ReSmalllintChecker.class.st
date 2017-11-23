@@ -11,7 +11,7 @@ Class {
 		'packageRules',
 		'critiques'
 	],
-	#category : #Renraku-CriticBrowser
+	#category : #'Renraku-CriticBrowser'
 }
 
 { #category : #adding }

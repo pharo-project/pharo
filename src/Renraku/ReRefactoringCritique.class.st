@@ -8,7 +8,7 @@ Class {
 		'refactoring',
 		'alreadyExecuted'
 	],
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #accessing }

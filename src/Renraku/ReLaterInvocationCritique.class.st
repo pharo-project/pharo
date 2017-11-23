@@ -4,7 +4,7 @@ A critic which represents that the method is missing some required messages afte
 Class {
 	#name : #ReLaterInvocationCritique,
 	#superclass : #ReInvocationOrderCritique,
-	#category : #Renraku-Critiques
+	#category : #'Renraku-Critiques'
 }
 
 { #category : #accessing }
