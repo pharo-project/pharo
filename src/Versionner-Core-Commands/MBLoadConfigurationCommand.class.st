@@ -19,7 +19,7 @@ MBLoadConfigurationCommand >> documentation [
 
 { #category : #execute }
 MBLoadConfigurationCommand >> execute [
-	| projectRepository configRef configurationInfo versionInfos versionInfo version configRefMap configNames configName |
+	| projectRepository configRef configRefMap configNames configName |
 	projectRepository := self askForProjectName.
 	projectRepository ifNil: [ ^ self ].
 	configRefMap := self configurationReferencesFrom: projectRepository.

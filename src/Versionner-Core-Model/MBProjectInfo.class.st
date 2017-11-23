@@ -18,7 +18,7 @@ MBProjectInfo class >> helpLabel [
 
 { #category : #converting }
 MBProjectInfo >> buildStringOrText [
-	| string cv projectClass info attributes specVersion |
+	| string cv projectClass attributes specVersion |
 	string := super buildStringOrText.
 	attributes := OrderedCollection new.
 	self isDirty
@@ -92,7 +92,7 @@ MBProjectInfo >> interestedInConfigurationInfo: configInfo [
 
 { #category : #testing }
 MBProjectInfo >> interestedInPackageNamed: aString [
-	| projectClass version info |
+	| projectClass info |
 	(projectClass := self spec projectClass) == nil
 		ifTrue: [ ^ false ].
 	(aString beginsWith: projectClass name asString)

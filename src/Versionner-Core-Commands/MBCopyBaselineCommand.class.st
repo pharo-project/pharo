@@ -11,7 +11,7 @@ Class {
 MBCopyBaselineCommand >> copyBaselineWithNumber: baselineNumberAsString [
 	"Copy myself into a new baseline, with a different number"
 
-	| sourceCode newSource newNumber newSelector comment |
+	| comment |
 	self 
 		assert: [ baselineNumberAsString ~= target versionString ] 
 		description: 'Cannot assign the same baseline number than me to my copy'.
