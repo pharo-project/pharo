@@ -15,7 +15,7 @@ MalSccNodeDecomposition >> nodeClass [
 { #category : #running }
 MalSccNodeDecomposition >> retrieveCircuit: aNode [
 
-	|c n i|
+	|c i|
 	c := OrderedCollection new.
 	i := aNode.
 	[ i notNil ] whileTrue: [
