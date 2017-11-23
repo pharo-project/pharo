@@ -70,7 +70,7 @@ DummyUIManager >> fontFromUser: priorFont [
 	self error: 'No user response possible'
 ]
 
-{ #category : #'error handing' }
+{ #category : #'error handling' }
 DummyUIManager >> handleError: anError log: shouldLog [
 
 	"NOOP"

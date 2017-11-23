@@ -7,7 +7,7 @@ Class {
 	#category : #'Renraku-Utility'
 }
 
-{ #category : #'error handing' }
+{ #category : #'error handling' }
 RePassExceptionStrategy class >> handle: anException about: anEntity forProppertiesDo: aBlock [
 
 	anException pass
