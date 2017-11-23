@@ -24,7 +24,6 @@ Morph >> glamourOptimalExtent [
 { #category : #'*glamour-morphic-widgets' }
 Morph >> returnToOldResizingStrategy: aCollection [
 
-	|tmpSubmorphResizing|
 	self submorphs with: aCollection third do: [:aMorph :resizingParameter |
 		aMorph returnToOldResizingStrategy: resizingParameter.
 		].
