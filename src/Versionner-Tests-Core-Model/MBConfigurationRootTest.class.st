@@ -200,7 +200,7 @@ MBConfigurationRootTest >> test0030BasicVersionLoad [
 		- load version 1.0
 		- check that that expected changes to the data structures occur ... in this case that the package is loaded"
 	
-	| configClass configClassName configInfo versions versionInfo packages packageInfo text x |
+	| configClass configClassName configInfo versions versionInfo packages packageInfo text |
 	gofer version: 'ConfigurationOfMBFooTests-dkh.1'.
 	gofer load.
 	configClassName := #ConfigurationOfMBFooTests.
@@ -612,7 +612,7 @@ MBConfigurationRootTest >> test0081BasicVersionLoad [
 		- validate package and configInfo state
 		- edit class
 		- validate #recalculate variant for currentVersion"
-	| configClass configClassName configInfo expected infos|
+	| configClass configClassName configInfo |
 	gofer version: 'ConfigurationOfMBFooTests-dkh.3'.
 	gofer load.
 	configClassName := #ConfigurationOfMBFooTests.
@@ -797,7 +797,7 @@ MBConfigurationRootTest >> test0091PackageMismatch [
 		- load MBFooTests-dkh.4
 		- validate package printString
 	"
-	| configClass configClassName configInfo expected infos revertGofer |
+	| configClass configClassName configInfo expected infos |
 	gofer version: 'ConfigurationOfMBFooTests-dkh.3'.
 	gofer load.
 	configClassName := #ConfigurationOfMBFooTests.
@@ -978,7 +978,7 @@ MBConfigurationRootTest >> test0120ConfigPackageSave [
 		- load version 1.2
 		- modify configuration and validate
 		- save configuration package and validate"
-	| configClass configClassName configInfo expected infos suggestedName signature |
+	| configClass configClassName configInfo suggestedName signature |
 	"load configuration dkh.3"
 	gofer version: 'ConfigurationOfMBFooTests-dkh.3'.
 	gofer load.
