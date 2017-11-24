@@ -265,7 +265,7 @@ EncoderForV3PlusClosures class >> isStorePopAt: pc in: method [
 ]
 
 { #category : #'compiled method support' }
-EncoderForV3PlusClosures class >> markerOrNilFor: compiledMethod [
+EncoderForV3PlusClosures class >> markerOrNilFor: aMethod [
 	"What is a marker method?  It is method with body like 
 		'self subclassResponsibility' or '^ self subclassResponsibility' 
 	used to indicate ('mark') a special property.
@@ -285,27 +285,13 @@ EncoderForV3PlusClosures class >> markerOrNilFor: compiledMethod [
 
 	for the second form."
 
-	| e |
-	e := compiledMethod endPC.
-	(#(19 20 35) includes: e) ifFalse: [ ^ nil ].
-	
-	"Should have exactly 3 literals"
-	(compiledMethod numLiterals = 3) ifFalse:[ ^ nil ].	
-	
-	"If we are on 32 bits"
-	(#(19 20) includes: e) ifTrue: [ 
-		(compiledMethod at: 17) =  16r70 ifFalse: [ ^ nil ].		"push self"
-		(compiledMethod at: 18) = 16rD0 ifFalse: [ ^ nil ].		"send <literal 1>"
-	].
-	
-		"If we are on 32 bits"
-	(e = 35) ifTrue: [ 
-		(compiledMethod at: 33) =  16r70 ifFalse: [ ^ nil].		"push self"
-		(compiledMethod at: 34) = 16rD0 ifFalse: [ ^ nil ].		"send <literal 1>"
-	].
-	
-	"If we reach this point, we have a marker method that sends self <literal 1>"
-	^ compiledMethod literalAt: 1
+	| expectedHeaderPlusLliteralSize e |
+  	expectedHeaderPlusLliteralSize := Smalltalk wordSize * 4.
+  	^(((e := aMethod endPC - expectedHeaderPlusLliteralSize) = 3 or: [e = 4]) 
+    	and: [aMethod numLiterals = 3
+    	and: [(aMethod at:  expectedHeaderPlusLliteralSize + 1) = 16r70 "push self"
+    	and: [(aMethod at: expectedHeaderPlusLliteralSize + 2) = 16rD0]]])  "send <literal 1>"
+    	ifTrue: [aMethod literalAt: 1]
 ]
 
 { #category : #'block closure support' }
