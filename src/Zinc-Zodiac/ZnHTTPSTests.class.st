@@ -206,6 +206,9 @@ ZnHTTPSTests >> testSNIPage [
 
 { #category : #testing }
 ZnHTTPSTests >> testTransfers [
+
+	self timeLimit: 300 seconds.
+
 	self ensureSocketStreamFactory.
 	self isNativeSSLPluginPresent ifFalse: [ ^ self ].
 	(Integer primesUpTo: 100) do: [ :each | | size client |

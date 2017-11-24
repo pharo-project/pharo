@@ -4,6 +4,8 @@ Extension { #name : #ReleaseTest }
 ReleaseTest >> testExplicitRequirementMethodsShouldBeImplementedInTheirUsers [
 	"If a class is using a trait with an explicit requirement method, this class should implement the method"
 	
+	self timeLimit: 300 seconds.
+
 	self assertValidLintRule: RBExplicitRequirementMethodsRule new
 	
 ]
