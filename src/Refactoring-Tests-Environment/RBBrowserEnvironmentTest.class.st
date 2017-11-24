@@ -475,6 +475,9 @@ RBBrowserEnvironmentTest >> testVariableEnvironmentClassVars [
 { #category : #testing }
 RBBrowserEnvironmentTest >> testVariableEnvironmentInstVars [
 	| refs writers readers classRefs |
+	
+	self timeLimit: 300 seconds.
+
 	refs := RBVariableEnvironment
 		referencesToInstanceVariable: 'universalEnvironment'
 		in: self class.

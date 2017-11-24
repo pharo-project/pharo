@@ -25,6 +25,9 @@ MCSnapshotTest >> testCreation [
 { #category : #tests }
 MCSnapshotTest >> testInstanceReuse [
 	| x m n y |
+	
+	self timeLimit: 300 seconds.
+	
 	x := (MCPackage new name: self mockCategoryName) snapshot.
 	Smalltalk garbageCollect.
 	n := MCDefinition allSubInstances size.
