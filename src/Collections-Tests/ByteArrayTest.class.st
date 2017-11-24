@@ -10,14 +10,14 @@ Class {
 { #category : #tests }
 ByteArrayTest >> testBooleanAt [
 	"self run: #testBooleanAt"
+	
+	"Checking the result of ByteArray>>#booleanAt on a few instances of ByteArray. It should return false on 0-valued bytes and true on all other bytes (according to the integer to boolean C convention)."
 
-	"Building a few instances of ByteArray and checking the result of ByteArray>>#booleanAt on their first position. The '00' case should be false (because it represents the 0 integer, which corresponds to false in the C convention), all other cases should be true (because they represent non-0 integers, which correspond to true in the C convention)"
-
-	self deny: ((ByteArray readHexFrom: '00') booleanAt: 1).
-	self assert: ((ByteArray readHexFrom: '01') booleanAt: 1).
-	self assert: ((ByteArray readHexFrom: '02') booleanAt: 1).
-	self assert: ((ByteArray readHexFrom: '15') booleanAt: 1).
-	self assert: ((ByteArray readHexFrom: 'FF') booleanAt: 1).
+	self deny: (#[0] booleanAt: 1).
+	self assert: (#[1] booleanAt: 1).
+	self assert: (#[255 2 3] booleanAt: 1).
+	self deny: (#[0 25] booleanAt: 1).
+	self assert: (#[255] booleanAt: 1).
 ]
 
 { #category : #tests }
