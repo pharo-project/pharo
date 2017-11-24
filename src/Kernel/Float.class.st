@@ -1404,7 +1404,7 @@ Float >> storeOn: aStream [
 Float >> storeOn: aStream base: base [ 
 	"Print the Number exactly so it can be interpreted back unchanged"
 	self isFinite
-		ifTrue: [self signBit = 1 ifTrue: [aStream nextPutAll: '-'].
+		ifTrue: [self signBit = 1 ifTrue: [aStream nextPutAll: ' -'].
 			base = 10 ifFalse: [aStream print: base; nextPut: $r].
 			self = 0.0
 				ifTrue: [aStream nextPutAll: '0.0']
