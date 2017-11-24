@@ -1,7 +1,7 @@
 Extension { #name : #FloatTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
-FloatTest >> testStoreOn [
+FloatTest >> testStoreOnRoundTrip [
 	"If storeOn: prints exactly and the parser avoid cumulating round off Errors,
 	then Float should be read back exactly.
 	Note: there is no guarantee to restore the bit pattern of NaN though"
