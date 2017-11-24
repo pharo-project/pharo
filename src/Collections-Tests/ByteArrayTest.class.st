@@ -11,14 +11,13 @@ Class {
 ByteArrayTest >> testBooleanAt [
 	"self run: #testBooleanAt"
 
-	| results |
-	results := Array new: 16.
-	1 to: 16 do: [ :inx | results at: inx put: (ByteArray readHexFrom: (inx - 1 printPaddedWith: $0 to: 2 base: 16)) ].
-	self deny: ((results at: 1) booleanAt: 1) description: 'booleanAt: 0 expected true'.
-	2 to: 16 do: [ :inx | 
-		self
-			assert: ((results at: inx) booleanAt: 1)
-			description: 'booleanAt: ' , (inx - 1) printString , ' expected false']
+	"Building a few instances of ByteArray and checking the result of ByteArray>>#booleanAt on their first position. The '00' case should be false (because it represents the 0 integer, which corresponds to false in the C convention), all other cases should be true (because they represent non-0 integers, which correspond to true in the C convention)"
+
+	self deny: ((ByteArray readHexFrom: '00') booleanAt: 1).
+	self assert: ((ByteArray readHexFrom: '01') booleanAt: 1).
+	self assert: ((ByteArray readHexFrom: '02') booleanAt: 1).
+	self assert: ((ByteArray readHexFrom: '15') booleanAt: 1).
+	self assert: ((ByteArray readHexFrom: 'FF') booleanAt: 1).
 ]
 
 { #category : #tests }
