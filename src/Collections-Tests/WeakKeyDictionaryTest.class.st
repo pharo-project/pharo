@@ -114,3 +114,13 @@ WeakKeyDictionaryTest >> testGrow [
 	"Keys are gone but not yet finalized."
 	dict grow.
 ]
+
+{ #category : #'tests - printing' }
+WeakKeyDictionaryTest >> testStoreOnWithNegativeInteger [
+	| dictionary |
+	dictionary := { 'x' -> -1 } as: self classToBeTested.
+	
+	self
+		assert: (String streamContents: [ :s | dictionary storeOn: s ])
+		equals: '((',self classToBeTested name,' new) add: (WeakKeyAssociation key: ''x'' value: -1); yourself)'
+]

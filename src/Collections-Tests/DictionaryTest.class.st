@@ -719,6 +719,16 @@ DictionaryTest >> testSelectIsNotShallowCopy [
  	   description: 'modifying a selection should not modify the original'
 ]
 
+{ #category : #'tests - printing' }
+DictionaryTest >> testStoreOnWithNegativeInteger [
+	| dictionary |
+	dictionary := { 'x' -> -1 } as: self classToBeTested.
+	
+	self
+		assert: (String streamContents: [ :s | dictionary storeOn: s ])
+		equals: '((',self classToBeTested name,' new) add: (''x''-> -1); yourself)'
+]
+
 { #category : #requirements }
 DictionaryTest >> valueNotIn [
 " return a value not included in nonEmpty "
