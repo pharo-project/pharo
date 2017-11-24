@@ -105,7 +105,7 @@ TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock resumable: r
 { #category : #asserting }
 TestAsserter >> assert: actual equals: expected [
 	^ self
-		assert: expected = actual
+		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
 ]
 

@@ -368,13 +368,6 @@ Object >> assert: aBlock description: aStringOrBlock [
 		ifFalse: [ AssertionFailure signal: aStringOrBlock value ]
 ]
 
-{ #category : #asserting }
-Object >> assert: aBlock descriptionBlock: descriptionBlock [
-	"Throw an assertion error if aBlock does not evaluate to true."
-	
-	aBlock value ifFalse: [AssertionFailure signal: descriptionBlock value asString ]
-]
-
 { #category : #accessing }
 Object >> at: index [ 
 	"Primitive. Assumes receiver is indexable. Answer the value of an 
