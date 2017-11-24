@@ -587,20 +587,6 @@ ClassDescription >> copyMethodDictionaryFrom: donorClass [
 	self organization: donorClass organization deepCopy.
 ]
 
-{ #category : #slots }
-ClassDescription >> definesSlot: aSlot [
-	"Return true whether the receiver defines an instance variable named aString"
-	
-	^ self slots identityIncludes: aSlot
-]
-
-{ #category : #slots }
-ClassDescription >> definesSlotNamed: aString [
-	"Return true whether the receiver defines an instance variable named aString."
-	
-	^ self slotNames includes: aString
-]
-
 { #category : #'filein/out' }
 ClassDescription >> definition [
 	"Answer a String that defines the receiver."

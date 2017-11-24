@@ -14,7 +14,8 @@ Class {
 	#name : #Slot,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		'name',
+		'definingClass'
 	],
 	#classVars : [
 		'Properties'
@@ -113,9 +114,12 @@ Slot >> changingIn: aClass [
 
 { #category : #queries }
 Slot >> definingClass [
-	^(Smalltalk globals allClasses flatCollect: [:each | {each . each classSide} ]) 
-		detect: [ :class | class classLayout definesSlot: self] 
-		ifNone: [ nil ]
+	^definingClass
+]
+
+{ #category : #queries }
+Slot >> definingClass: aClass [
+	definingClass := aClass
 ]
 
 { #category : #printing }

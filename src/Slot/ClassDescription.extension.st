@@ -3,6 +3,7 @@ Extension { #name : #ClassDescription }
 { #category : #'*Slot' }
 ClassDescription >> superclass: aSuperclass layout: aLayout [
 	layout := aLayout. 
+	layout slots do: [ :each | each definingClass: self ].
 	
 	self
 		superclass: aSuperclass
