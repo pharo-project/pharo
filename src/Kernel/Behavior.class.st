@@ -988,9 +988,9 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 
 { #category : #testing }
 Behavior >> hasAbstractMethods [
-	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
+	"Tells whether the receiver defines an abstract method, i.e., a method sending subclassResponsibility"
 	
-	^ (self methods anySatisfy: [:cm | cm sendsSelector: #subclassResponsibility ])
+	^ (self allMethods anySatisfy: [:cm | cm sendsSelector: #subclassResponsibility ])
 ]
 
 { #category : #'testing method dictionary' }
