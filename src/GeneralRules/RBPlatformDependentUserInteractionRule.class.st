@@ -6,7 +6,7 @@ This rule should be updated.
 Class {
 	#name : #RBPlatformDependentUserInteractionRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

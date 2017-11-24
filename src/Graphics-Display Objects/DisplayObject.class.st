@@ -38,14 +38,14 @@ DisplayObject >> computeBoundingBox [
 	self subclassResponsibility
 ]
 
-{ #category : #displaying-display }
+{ #category : #'displaying-display' }
 DisplayObject >> display [ 
 	"Display the receiver on the Display at location 0,0."
 
 	self displayOn: Display
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayAt: aDisplayPoint [ 
 	"Display the receiver located at aDisplayPoint with default settings for 
 	the displayMedium, rule and halftone."
@@ -57,7 +57,7 @@ DisplayObject >> displayAt: aDisplayPoint [
 		fillColor: nil
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayOn: aDisplayMedium [
 	"Simple default display in order to see the receiver in the upper left 
 	corner of screen."
@@ -65,7 +65,7 @@ DisplayObject >> displayOn: aDisplayMedium [
 	self displayOn: aDisplayMedium at: 0 @ 0
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [ 
 	"Display the receiver located at aDisplayPoint with default settings for 
 	rule and halftone."
@@ -77,7 +77,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint [
 		fillColor: nil
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle [ 
 	"Display the receiver located at aDisplayPoint with default settings for 
 	rule and halftone. Information to be displayed must be confined to the 
@@ -90,7 +90,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRe
 		fillColor: nil
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRectangle rule: ruleInteger fillColor: aForm [
 	"This is the basic display primitive for graphic display objects. Display 
 	the receiver located at aDisplayPoint with rule, ruleInteger, and mask, 
@@ -100,7 +100,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint clippingBox: clipRe
 	self subclassResponsibility
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
 	"Display the receiver located at aPoint with default setting for the 
 	halftone and clippingBox."
@@ -112,7 +112,7 @@ DisplayObject >> displayOn: aDisplayMedium at: aDisplayPoint rule: ruleInteger [
 		fillColor: nil
 ]
 
-{ #category : #displaying-generic }
+{ #category : #'displaying-generic' }
 DisplayObject >> displayOnPort: port at: location rule: rule [
 
 	port copyForm: self to: location rule: rule.
@@ -127,7 +127,7 @@ DisplayObject >> extent [
 	^self boundingBox extent
 ]
 
-{ #category : #displaying-display }
+{ #category : #'displaying-display' }
 DisplayObject >> follow: locationBlock while: durationBlock [
    "Move an image around on the Display. Restore the background
    continuously without causing flashing. The argument, locationBlock,
@@ -140,7 +140,7 @@ DisplayObject >> follow: locationBlock while: durationBlock [
    ^ self follow: locationBlock while: durationBlock bitsBehind: bitsBehind startingLoc: loc
 ]
 
-{ #category : #displaying-display }
+{ #category : #'displaying-display' }
 DisplayObject >> follow: locationBlock while: durationBlock bitsBehind: initialBitsBehind startingLoc: loc [
    "Move an image around on the Display. Restore the background continuously without causing flashing. The argument, locationBlock, supplies each new location, and the argument, durationBlock, supplies true to continue or false to stop. This variant takes the bitsBehind as an input argument, and returns the final saved saved bits as method value."
 
@@ -202,7 +202,7 @@ DisplayObject >> initialExtent [
 	^ self extent + (4@4) 
 ]
 
-{ #category : #displaying-display }
+{ #category : #'displaying-display' }
 DisplayObject >> isTransparent [
 	^ false
 ]
@@ -244,7 +244,7 @@ DisplayObject >> scaleBy: aPoint [
 	self offset: (self offset scaleBy: aPoint)
 ]
 
-{ #category : #displaying-display }
+{ #category : #'displaying-display' }
 DisplayObject >> slideFrom: startPoint to: stopPoint nSteps: nSteps delay: milliSecs [
 	"Slide this object across the display over the given number of steps, pausing for the given number of milliseconds after each step."
 	"Note: Does not display at the first point, but does at the last."
@@ -263,7 +263,7 @@ DisplayObject >> slideFrom: startPoint to: stopPoint nSteps: nSteps delay: milli
 
 ]
 
-{ #category : #displaying-display }
+{ #category : #'displaying-display' }
 DisplayObject >> slideWithFirstFrom: startPoint to: stopPoint nSteps: nSteps delay: milliSecs [ 
 	"Slide this object across the display over the given number of steps, 
 	pausing for the given number of milliseconds after each step."

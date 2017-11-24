@@ -4,7 +4,7 @@ SUnit tests for the class hierarchy
 Class {
 	#name : #ClassHierarchyTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Classes
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #fixing }

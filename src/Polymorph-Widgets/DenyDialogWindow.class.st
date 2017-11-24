@@ -4,7 +4,7 @@ Dialog window displaying a message with a single OK button. Escape/return will c
 Class {
 	#name : #DenyDialogWindow,
 	#superclass : #MessageDialogWindow,
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #icons }

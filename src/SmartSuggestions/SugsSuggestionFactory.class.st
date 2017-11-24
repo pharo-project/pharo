@@ -19,7 +19,7 @@ Class {
 		'collectorForAssignment',
 		'collectorForBlock'
 	],
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #cleanup }
@@ -137,12 +137,12 @@ SugsSuggestionFactory class >> commandsForClass [
 	^self collectCommandsFrom: self collectorForClass.
 ]
 
-{ #category : #class-var }
+{ #category : #'class-var' }
 SugsSuggestionFactory class >> commandsForClassVariable [
 	^self collectCommandsFrom: self collectorForClassVariable.
 ]
 
-{ #category : #inst-var }
+{ #category : #'inst-var' }
 SugsSuggestionFactory class >> commandsForInstanceVariable [
 	^self collectCommandsFrom: self collectorForInstancesVariable .
 	
@@ -167,17 +167,17 @@ SugsSuggestionFactory class >> commandsForSource [
 
 ]
 
-{ #category : #temp-var }
+{ #category : #'temp-var' }
 SugsSuggestionFactory class >> commandsForTemporaryVariable [
 	^self collectCommandsFrom: self collectorForTemporaryVariable .
 ]
 
-{ #category : #unknown-var }
+{ #category : #'unknown-var' }
 SugsSuggestionFactory class >> commandsForUndeclaredVariable [
 	^self collectCommandsFrom: self collectorForUndeclaredVariable  .
 ]
 
-{ #category : #inst-var }
+{ #category : #'inst-var' }
 SugsSuggestionFactory class >> createAccesorsFor [
 	<instVarCommand>
 	^ SugsCreateInstanceVarAccessors
@@ -185,7 +185,7 @@ SugsSuggestionFactory class >> createAccesorsFor [
 		position: 100
 ]
 
-{ #category : #inst-var }
+{ #category : #'inst-var' }
 SugsSuggestionFactory class >> createAccessesToVariable [
 	<instVarCommand>
 	^ SugsAccessesToInstVar
@@ -193,7 +193,7 @@ SugsSuggestionFactory class >> createAccessesToVariable [
 		position: 50
 ]
 
-{ #category : #class-var }
+{ #category : #'class-var' }
 SugsSuggestionFactory class >> createAccessors [
 	<classVarCommand>
 	^ SugsCreateClassVarAccessors
@@ -398,7 +398,7 @@ SugsSuggestionFactory class >> createRenameClass [
 		keyText: 'r'
 ]
 
-{ #category : #class-var }
+{ #category : #'class-var' }
 SugsSuggestionFactory class >> createRenameClassVariable [
 	<classVarCommand>
 	^ SugsRenameClassVar
@@ -416,7 +416,7 @@ SugsSuggestionFactory class >> createRenameMethod [
 		keyText: 'r,m'
 ]
 
-{ #category : #temp-var }
+{ #category : #'temp-var' }
 SugsSuggestionFactory class >> createRenameTemporaryVariable [
 	<tempVarCommand>
 	^ SugsRenameTemporaryVar
@@ -425,7 +425,7 @@ SugsSuggestionFactory class >> createRenameTemporaryVariable [
 		keyText: 'r'
 ]
 
-{ #category : #inst-var }
+{ #category : #'inst-var' }
 SugsSuggestionFactory class >> createRenameVariable [
 	<instVarCommand>
 	^ SugsRenameInstanceVar
@@ -442,7 +442,7 @@ SugsSuggestionFactory class >> createSwapMethod [
 		position: 50
 ]
 
-{ #category : #class-var }
+{ #category : #'class-var' }
 SugsSuggestionFactory class >> createUseAccessorToVar [
 	<classVarCommand>
 	^ SugsUseAccessorsForClassVar
@@ -450,7 +450,7 @@ SugsSuggestionFactory class >> createUseAccessorToVar [
 		position: 10
 ]
 
-{ #category : #unknown-var }
+{ #category : #'unknown-var' }
 SugsSuggestionFactory class >> createVariableCorrection [
 	"	<undeclaredVarCommand>"
 
@@ -466,7 +466,7 @@ SugsSuggestionFactory class >> createVariableCorrection [
 		icon: (self iconNamed: #smallFindIcon)
 ]
 
-{ #category : #inst-var }
+{ #category : #'inst-var' }
 SugsSuggestionFactory class >> createVariableStoresInto [
 	<instVarCommand>
 	^ SugsStoresIntoInstVar

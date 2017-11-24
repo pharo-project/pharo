@@ -34,7 +34,7 @@ Class {
 		'jumpSize',
 		'loopsArray'
 	],
-	#category : #Flashback-Decompiler
+	#category : #'Flashback-Decompiler'
 }
 
 { #category : #'instruction decoding forward' }

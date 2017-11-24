@@ -13,7 +13,7 @@ Class {
 		'newName',
 		'class'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -29,7 +29,7 @@ RBRenameClassRefactoring class >> rename: aClass to: aNewName [
 	^self new className: aClass name newName: aNewName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRenameClassRefactoring >> className: aName newName: aNewName [ 
 	className := aName asSymbol.
 	class := self model classNamed: className.

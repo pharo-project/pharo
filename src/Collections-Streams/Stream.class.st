@@ -4,7 +4,7 @@ I am an abstract class that represents an accessor for a sequence of objects. Th
 Class {
 	#name : #Stream,
 	#superclass : #Object,
-	#category : #Collections-Streams
+	#category : #'Collections-Streams'
 }
 
 { #category : #'instance creation' }
@@ -61,7 +61,7 @@ Stream >> binary [
 	^self 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 Stream >> close [
 	"Presumably sets the status of the receiver to be closed. This message does 
 	nothing at this level, but is included for FileStream compatibility."
@@ -197,7 +197,7 @@ Stream >> nextWordsPutAll: aCollection [
 	^ aCollection
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 Stream >> openReadOnly [
 	^self
 ]

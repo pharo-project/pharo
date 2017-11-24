@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'rightHalfSequence'
 	],
-	#category : #Multilingual-Encodings
+	#category : #'Multilingual-Encodings'
 }
 
 { #category : #'class methods' }

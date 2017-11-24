@@ -8,7 +8,7 @@ Class {
 		'style',
 		'trackPaneColor'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #accessing }

@@ -22,7 +22,7 @@ Class {
 	#classVars : [
 		'PixelRampCache'
 	],
-	#category : #Balloon-Fills
+	#category : #'Balloon-Fills'
 }
 
 { #category : #cleanup }

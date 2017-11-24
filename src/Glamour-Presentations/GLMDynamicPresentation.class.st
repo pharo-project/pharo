@@ -10,7 +10,7 @@ Class {
 		'presentationTransformation',
 		'cachedPresentation'
 	],
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #rendering }
@@ -36,7 +36,7 @@ GLMDynamicPresentation >> currentPresentation [
 "	^ self displayValue pane: self pane"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMDynamicPresentation >> initialize [ 
 	super initialize.
 	presentationTransformation := [ :aComposite :each | aComposite custom: each ]

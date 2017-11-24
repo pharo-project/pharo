@@ -17,7 +17,7 @@ Class {
 		'fontRenderer',
 		'paintMode'
 	],
-	#category : #Athens-Core
+	#category : #'Athens-Core'
 }
 
 { #category : #private }

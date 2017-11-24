@@ -8,7 +8,7 @@ Class {
 		'tempName',
 		'tempIndex'
 	],
-	#category : #Spec-Inspector-Element
+	#category : #'Spec-Inspector-Element'
 }
 
 { #category : #'instance creation' }

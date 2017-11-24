@@ -39,7 +39,7 @@ Class {
 		'state',
 		'keepRefreshing'
 	],
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #colors }
@@ -113,7 +113,7 @@ AthensSceneView >> inState: stateName do: aBlock [
 	^ (state at: stateName ifAbsent: nil) ifNotNil: aBlock 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensSceneView >> initialize [
 
 	super initialize.
@@ -154,7 +154,7 @@ AthensSceneView >> layoutChanged [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensSceneView >> minimumExtent [
 	^ 300@300
 ]

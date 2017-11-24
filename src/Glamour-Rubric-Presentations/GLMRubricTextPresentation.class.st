@@ -16,7 +16,7 @@ Class {
 		'primarySelectionInterval',
 		'withGhostText'
 	],
-	#category : #Glamour-Rubric-Presentations
+	#category : #'Glamour-Rubric-Presentations'
 }
 
 { #category : #accessing }

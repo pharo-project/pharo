@@ -12,7 +12,7 @@ Class {
 		'dropList',
 		'input'
 	],
-	#category : #Spec-PolyWidgets-Elementary
+	#category : #'Spec-PolyWidgets-Elementary'
 }
 
 { #category : #specs }
@@ -40,17 +40,17 @@ InputTextDropList class >> example [
 	^ ex
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> acceptOnCR: aBoolean [
 	self input acceptOnCR: aBoolean
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> beEncrypted [
 	self input beEncrypted
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> displayBlock: aBlock [
 	self dropList displayBlock: aBlock
 ]
@@ -60,22 +60,22 @@ InputTextDropList >> dropList [
 	^ dropList
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> emptyList [
 	self dropList emptyList
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> encrypted: aBoolean [
 	self input encrypted: aBoolean
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> entryCompletion: anEntryCompletion [
 	self input entryCompletion: anEntryCompletion
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> ghostText: aText [
 	self input ghostText: aText
 ]
@@ -94,52 +94,52 @@ InputTextDropList >> input [
 	^ input
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> items: aList [
 	self dropList items: aList
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> listSize [
 	self dropList listSize
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> resetSelection [
 	self dropList resetSelection
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> selectedItem [
 	self dropList selectedItem
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> setIndex: anIndex [
 	self dropList setIndex: anIndex
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> text [
 	self input text
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 InputTextDropList >> text: aText [
 	self input text: aText
 ]
 
-{ #category : #events-shortcuts }
+{ #category : #'events-shortcuts' }
 InputTextDropList >> whenSelectedItemChanged: aBlock [
 	self dropList whenSelectedItemChanged: aBlock
 ]
 
-{ #category : #events-shortcuts }
+{ #category : #'events-shortcuts' }
 InputTextDropList >> whenSelectionChanged: aBlock [
 	self dropList whenSelectionChanged: aBlock
 ]
 
-{ #category : #events-shortcuts }
+{ #category : #'events-shortcuts' }
 InputTextDropList >> whenSelectionIndexChanged: aBlock [
 	self dropList whenSelectionIndexChanged: aBlock
 ]

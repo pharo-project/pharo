@@ -16,7 +16,7 @@ Class {
 		'min',
 		'max'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #accessing }
@@ -42,14 +42,14 @@ RxsPiece >> dispatchTo: aMatcher [
 	^aMatcher syntaxPiece: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsPiece >> initializeAtom: anAtom [
 	"This piece is exactly one occurrence of the specified RxsAtom."
 
 	self initializeAtom: anAtom min: 1 max: 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsPiece >> initializeAtom: anAtom min: minOccurrences max: maxOccurrences [
 	"This piece is from <minOccurrences> to <maxOccurrences> 
 	occurrences of the specified RxsAtom."
@@ -59,21 +59,21 @@ RxsPiece >> initializeAtom: anAtom min: minOccurrences max: maxOccurrences [
 	max := maxOccurrences
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsPiece >> initializeOptionalAtom: anAtom [
 	"This piece is 0 or 1 occurrences of the specified RxsAtom."
 
 	self initializeAtom: anAtom min: 0 max: 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsPiece >> initializePlusAtom: anAtom [
 	"This piece is one or more occurrences of the specified RxsAtom."
 
 	self initializeAtom: anAtom min: 1 max: nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsPiece >> initializeStarAtom: anAtom [
 	"This piece is any number of occurrences of the atom."
 

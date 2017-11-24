@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'cases'
 	],
-	#category : #Morphic-Tests-Bugs
+	#category : #'Morphic-Tests-Bugs'
 }
 
 { #category : #running }

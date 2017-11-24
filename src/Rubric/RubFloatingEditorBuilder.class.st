@@ -34,7 +34,7 @@ Class {
 		'customizeValuable',
 		'escapeBlock'
 	],
-	#category : #Rubric-Editing-Core-Support
+	#category : #'Rubric-Editing-Core-Support'
 }
 
 { #category : #example }
@@ -169,7 +169,7 @@ RubFloatingEditorBuilder >> font: aFont [
 	font := aFont
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 RubFloatingEditorBuilder >> handleListenEvent: anEvent [
 	anEvent isMouse
 		ifFalse: [ ^ self ].

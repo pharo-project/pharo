@@ -1,7 +1,7 @@
 Class {
 	#name : #DropListExampleTest,
 	#superclass : #SpecTestCase,
-	#category : #Spec-Tests-Examples-Morphic
+	#category : #'Spec-Tests-Examples-Morphic'
 }
 
 { #category : #running }

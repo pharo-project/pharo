@@ -12,7 +12,7 @@ Class {
 		'baseSlot',
 		'offset'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #accessing }
@@ -95,7 +95,7 @@ BooleanSlot >> offset [
 	^offset
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 BooleanSlot >> read: anObject [
 	^((self baseSlotRead: anObject) bitAt: offset) == 1
 ]
@@ -109,7 +109,7 @@ BooleanSlot >> todo [
 	'
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 BooleanSlot >> write: aValue to: anObject [
 		| newInteger |
 		newInteger := (self baseSlotRead: anObject) bitAt: offset put: aValue asBit.

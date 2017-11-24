@@ -22,7 +22,7 @@ Class {
 		'url',
 		'bundles'
 	],
-	#category : #GT-EventRecorder-Support
+	#category : #'GT-EventRecorder-Support'
 }
 
 { #category : #visitor }

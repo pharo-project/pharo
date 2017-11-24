@@ -4,7 +4,7 @@ I am SubclassResponsibility, an exception signaled when an inherited method shou
 Class {
 	#name : #SubclassResponsibility,
 	#superclass : #SelectorException,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #printing }

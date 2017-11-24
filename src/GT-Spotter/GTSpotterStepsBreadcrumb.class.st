@@ -7,10 +7,10 @@ Class {
 		'band',
 		'animation'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterStepsBreadcrumb >> addItem: aBrick [
 
 	aBrick width: [ :itemBrick | self calculateItemWidth: itemBrick ].
@@ -25,7 +25,7 @@ GTSpotterStepsBreadcrumb >> addItem: aBrick [
 	self band doLayoutForce.
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterStepsBreadcrumb >> addSeparator [
 	|separator|
 	separator := self newSeparator.
@@ -141,7 +141,7 @@ GTSpotterStepsBreadcrumb >> notifyBreadcrumbVisibilityChanged [
 	self announcer announce: GTSpotterBreadcrumbVisibilityChanged new
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GTSpotterStepsBreadcrumb >> onChildrenLayouted [
 	super onChildrenLayouted.
 	
@@ -149,7 +149,7 @@ GTSpotterStepsBreadcrumb >> onChildrenLayouted [
 	self scrollToTheLastOne
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GTSpotterStepsBreadcrumb >> onStepAdded: ann [
 	|step origin previousStep selectedCandidate|
 	
@@ -172,21 +172,21 @@ GTSpotterStepsBreadcrumb >> onStepAdded: ann [
 				ifFalse: [ origin gtDisplayString] ]))
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GTSpotterStepsBreadcrumb >> onStepPopped [
 
 	self pop
 	
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterStepsBreadcrumb >> onThemerChanged [
 	super onThemerChanged.
 	
 	self band subbricks withIndexDo: [ :each :index | index even ifTrue: [ self themer spotterThemer breadcrumbSeparatorWidgetStyleFor: each ] ]
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterStepsBreadcrumb >> pop [
 	
 	self band layoutAfter: [
@@ -206,13 +206,13 @@ GTSpotterStepsBreadcrumb >> pop [
 			self changed ]
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterStepsBreadcrumb >> popSeparator [
 
 	self band removeBrick: self band lastSubbrick
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterStepsBreadcrumb >> push: aBrick [
 
 	self themer spotterThemer breadcrumbItemStyleFor: aBrick.

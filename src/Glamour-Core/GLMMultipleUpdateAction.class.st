@@ -4,7 +4,7 @@ This class simply specifies that the updating announcement could come from any o
 Class {
 	#name : #GLMMultipleUpdateAction,
 	#superclass : #GLMUpdateAction,
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #public }

@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'definition'
 	],
-	#category : #Monticello-Patching
+	#category : #'Monticello-Patching'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCRemoval class >> of: aDefinition [
 	^ self new intializeWithDefinition: aDefinition
 ]

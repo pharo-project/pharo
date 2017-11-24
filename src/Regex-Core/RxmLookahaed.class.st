@@ -11,7 +11,7 @@ Class {
 		'lookahead',
 		'positive'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #'instance creation' }

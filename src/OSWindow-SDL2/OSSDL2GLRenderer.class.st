@@ -10,7 +10,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #OSWindow-SDL2-OpenGL
+	#category : #'OSWindow-SDL2-OpenGL'
 }
 
 { #category : #misc }

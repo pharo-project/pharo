@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'ActOnClickBlock'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #accessing }

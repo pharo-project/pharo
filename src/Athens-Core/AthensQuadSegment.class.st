@@ -18,7 +18,7 @@ Class {
 		'via',
 		'to'
 	],
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #visitor }
@@ -31,7 +31,7 @@ AthensQuadSegment >> endPoint [
 	^ to
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensQuadSegment >> from: pt0 via: pt1 to: p [
 
 	via := pt1.

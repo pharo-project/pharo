@@ -22,15 +22,15 @@ Class {
 		'traitComposition',
 		'localSelectors'
 	],
-	#category : #Kernel-Classes
+	#category : #'Kernel-Classes'
 }
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 Class class >> allSuperclassesFor: aClass cache: cache [ 	
 	^ cache at: aClass ifAbsentPut: [aClass allSuperclasses asArray]
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 Class class >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -45,7 +45,7 @@ Class class >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache 
 			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -53,7 +53,7 @@ Class class >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cach
 				self hasNoSuperclassesOf: soleInstance in: unprocessedClasses cache: cache]
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 Class class >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [ 
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 	
@@ -66,7 +66,7 @@ Class class >> rootsOfTheWorld [
 	^(self environment select: [:each | each isBehavior and: [each superclass isNil]]) asOrderedCollection
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 Class class >> superclassOrder: classes [
     "Arrange the classes in the collection, classes, in superclass order so the 
     classes can be properly filed in. Do it in sets instead of ordered collections.
@@ -495,7 +495,7 @@ Class >> copy [
 	^ newClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
@@ -903,7 +903,7 @@ Class >> name: aSymbol [
 	self setName: aSymbol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> name: aString traitComposition: aComposition methodDict: aMethodDict localSelectors: aSet organization: aClassOrganization [
 
 	"Used by copy"
@@ -947,7 +947,7 @@ Class >> newSubclass [
 "Point newSubclass new"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> obsolete [
 	"Change the receiver and all of its subclasses to an obsolete class."
 	self == Object 
@@ -1055,14 +1055,14 @@ Class >> removeClassVariable: aGlobal [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> removeFromSystem [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
 	self removeFromSystem: true.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
@@ -1083,7 +1083,7 @@ Class >> removeFromSystem: logged [
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> removeFromSystemUnlogged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing instances will refer to an obsolete version of the receiver.  Do not log the removal either to the current change set nor to the system changes log"
 	^self removeFromSystem: false
@@ -1222,7 +1222,7 @@ Class >> sharedPools: aCollection [
 	sharedPools := aCollection
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> sharing: poolString [ 
 	"Set up sharedPools. Answer whether recompilation is advisable."
 	| oldPools |
@@ -1543,7 +1543,7 @@ Class >> subclassesDo: aBlock [
 	self subclasses do: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
@@ -1573,7 +1573,7 @@ Class >> traitComposition: aTraitComposition [
 	traitComposition := aTraitComposition
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Class >> unload [
 	"Sent when a the class is removed.  Does nothing, but may be overridden by (class-side) subclasses."
 ]

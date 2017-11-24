@@ -1,1 +1,1 @@
-Package { #name : #Tool-ImageCleaner }
+Package { #name : #'Tool-ImageCleaner' }

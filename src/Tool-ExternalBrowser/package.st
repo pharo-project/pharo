@@ -1,1 +1,1 @@
-Package { #name : #Tool-ExternalBrowser }
+Package { #name : #'Tool-ExternalBrowser' }

@@ -11,7 +11,7 @@ Class {
 		'parentheseLevel',
 		'bracketLevel'
 	],
-	#category : #Shout-Styling
+	#category : #'Shout-Styling'
 }
 
 { #category : #formatting }

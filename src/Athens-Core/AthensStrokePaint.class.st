@@ -80,7 +80,7 @@ Class {
 		'width',
 		'miterLimit'
 	],
-	#category : #Athens-Core-Paints
+	#category : #'Athens-Core-Paints'
 }
 
 { #category : #converting }
@@ -123,7 +123,7 @@ AthensStrokePaint >> fillPaint: anObject [
 	fillPaint := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensStrokePaint >> initialize [
 	self setDefaults.
 ]
@@ -152,7 +152,7 @@ AthensStrokePaint >> miterLimit: anObject [
 	miterLimit := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensStrokePaint >> setDefaults [
 
 	"Set the default values for strokes"

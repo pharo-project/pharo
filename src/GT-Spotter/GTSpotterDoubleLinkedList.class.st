@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterDoubleLinkedList,
 	#superclass : #DoubleLinkedList,
-	#category : #GT-Spotter-Utils
+	#category : #'GT-Spotter-Utils'
 }
 
 { #category : #accessing }

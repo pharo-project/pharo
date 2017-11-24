@@ -4,7 +4,7 @@ SUnit tests for monticello
 Class {
 	#name : #RGMonticelloTest,
 	#superclass : #TestCase,
-	#category : #Ring-Tests-Monticello
+	#category : #'Ring-Tests-Monticello'
 }
 
 { #category : #testing }

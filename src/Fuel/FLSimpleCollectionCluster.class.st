@@ -4,10 +4,10 @@ A FLSimpleCollectionCluster is a special optional cluster that rather than using
 Class {
 	#name : #FLSimpleCollectionCluster,
 	#superclass : #FLAbstractCollectionCluster,
-	#category : #Fuel-Clusters-Optionals
+	#category : #'Fuel-Clusters-Optionals'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLSimpleCollectionCluster >> materializeReferencesOf: anObject with: aDecoder [
 	aDecoder nextEncodedPositiveInteger "anObject size"
 		 timesRepeat: 
@@ -22,7 +22,7 @@ FLSimpleCollectionCluster >> referencesOf: anObject do: aBlock [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLSimpleCollectionCluster >> serializeReferencesOf: anObject with: anEncoder [
 	| refs |
 	refs := self references at: anObject ifAbsent: [ ^ self ].

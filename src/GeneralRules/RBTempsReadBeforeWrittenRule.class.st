@@ -4,7 +4,7 @@ Checks that all temporaries are assigned before they are used. This can help fin
 Class {
 	#name : #RBTempsReadBeforeWrittenRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

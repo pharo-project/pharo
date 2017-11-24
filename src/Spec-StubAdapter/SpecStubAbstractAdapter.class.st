@@ -5,7 +5,7 @@ I am an abstract class providing all the properties shared amongs all the stub a
 Class {
 	#name : #SpecStubAbstractAdapter,
 	#superclass : #AbstractAdapter,
-	#category : #Spec-StubAdapter-Adapters
+	#category : #'Spec-StubAdapter-Adapters'
 }
 
 { #category : #protocol }

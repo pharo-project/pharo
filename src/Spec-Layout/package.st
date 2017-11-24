@@ -1,1 +1,1 @@
-Package { #name : #Spec-Layout }
+Package { #name : #'Spec-Layout' }

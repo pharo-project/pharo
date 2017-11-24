@@ -4,7 +4,7 @@ Nobody should directly access the method dictionary. It is purely an implementat
 Class {
 	#name : #RBSendsMethodDictRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

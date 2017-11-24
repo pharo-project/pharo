@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'newSlot'
 	],
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #installing }

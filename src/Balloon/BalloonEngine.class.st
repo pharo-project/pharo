@@ -29,7 +29,7 @@ Class {
 	#pools : [
 		'BalloonEngineConstants'
 	],
-	#category : #Balloon-Engine
+	#category : #'Balloon-Engine'
 }
 
 { #category : #private }
@@ -504,7 +504,7 @@ BalloonEngine >> preFlushIfNeeded [
 		self reset].
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primAddActiveEdgeTableEntryFrom: edgeEntry [
 	"Add edge entry to the AET."
 	<primitive: 'primitiveAddActiveEdgeEntry' module: 'B2DPlugin'>
@@ -514,7 +514,7 @@ BalloonEngine >> primAddActiveEdgeTableEntryFrom: edgeEntry [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddBezierFrom: start to: end via: via leftFillIndex: leftFillIndex rightFillIndex: rightFillIndex [
 	<primitive: 'primitiveAddBezier' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -523,7 +523,7 @@ BalloonEngine >> primAddBezierFrom: start to: end via: via leftFillIndex: leftFi
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddBezierShape: points segments: nSegments fill: fillStyle lineWidth: lineWidth lineFill: lineFill [
 	<primitive: 'primitiveAddBezierShape' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -532,7 +532,7 @@ BalloonEngine >> primAddBezierShape: points segments: nSegments fill: fillStyle 
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddBitmapFill: form colormap: cmap tile: tileFlag from: origin along: direction normal: normal xIndex: xIndex [
 	<primitive: 'primitiveAddBitmapFill' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -541,7 +541,7 @@ BalloonEngine >> primAddBitmapFill: form colormap: cmap tile: tileFlag from: ori
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddCompressedShape: points segments: nSegments leftFills: leftFills rightFills: rightFills lineWidths: lineWidths lineFills: lineFills fillIndexList: fillIndexList [
 	<primitive: 'primitiveAddCompressedShape' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -550,7 +550,7 @@ BalloonEngine >> primAddCompressedShape: points segments: nSegments leftFills: l
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddExternalEdge: index initialX: initialX initialY: initialY initialZ: initialZ leftFillIndex: leftFillIndex rightFillIndex: rightFillIndex [
 	<primitive: 'primitiveRegisterExternalEdge' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -559,7 +559,7 @@ BalloonEngine >> primAddExternalEdge: index initialX: initialX initialY: initial
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddExternalFill: index [
 	<primitive: 'primitiveRegisterExternalFill' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -568,7 +568,7 @@ BalloonEngine >> primAddExternalFill: index [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddGradientFill: colorRamp from: origin along: direction normal: normal radial: isRadial [
 	<primitive: 'primitiveAddGradientFill' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -581,7 +581,7 @@ BalloonEngine >> primAddGradientFill: colorRamp from: origin along: direction no
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddLineFrom: start to: end leftFillIndex: leftFillIndex rightFillIndex: rightFillIndex [
 	<primitive: 'primitiveAddLine' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -590,7 +590,7 @@ BalloonEngine >> primAddLineFrom: start to: end leftFillIndex: leftFillIndex rig
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddOvalFrom: start to: end fillIndex: fillIndex borderWidth: width borderColor: pixelValue32 [
 	<primitive: 'primitiveAddOval' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -599,7 +599,7 @@ BalloonEngine >> primAddOvalFrom: start to: end fillIndex: fillIndex borderWidth
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddPolygon: points segments: nSegments fill: fillStyle lineWidth: lineWidth lineFill: lineFill [
 	<primitive: 'primitiveAddPolygon' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -608,7 +608,7 @@ BalloonEngine >> primAddPolygon: points segments: nSegments fill: fillStyle line
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-adding }
+{ #category : #'primitives-adding' }
 BalloonEngine >> primAddRectFrom: start to: end fillIndex: fillIndex borderWidth: width borderColor: pixelValue32 [
 	<primitive: 'primitiveAddRect' module: 'B2DPlugin'>
 	(self canProceedAfter: self primGetFailureReason) ifTrue:[
@@ -617,108 +617,108 @@ BalloonEngine >> primAddRectFrom: start to: end fillIndex: fillIndex borderWidth
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primChangeActiveEdgeTableEntryFrom: edgeEntry [
 	"Change the entry in the active edge table from edgeEntry"
 	<primitive: 'primitiveChangedActiveEdgeEntry' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primClipRectInto: rect [
 	<primitive: 'primitiveGetClipRect' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-misc }
+{ #category : #'primitives-misc' }
 BalloonEngine >> primCopyBufferFrom: oldBuffer to: newBuffer [
 	"Copy the contents of oldBuffer into the (larger) newBuffer"
 	<primitive: 'primitiveCopyBuffer' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primDisplaySpanBuffer [
 	"Display the current scan line if necessary"
 	<primitive: 'primitiveDisplaySpanBuffer' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primFinishedProcessing [
 	"Return true if there are no more entries in AET and GET and the last scan line has been displayed"
 	<primitive: 'primitiveFinishedProcessing' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primFlushNeeded [
 	<primitive: 'primitiveNeedsFlush' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primFlushNeeded: aBoolean [
 	<primitive: 'primitiveNeedsFlushPut' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetAALevel [
 	"Set the AA level"
 	<primitive: 'primitiveGetAALevel' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetBezierStats: statsArray [
 	<primitive: 'primitiveGetBezierStats' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetClipRect: rect [
 	<primitive: 'primitiveGetClipRect' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetCounts: statsArray [
 	<primitive: 'primitiveGetCounts' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetDepth [
 	<primitive: 'primitiveGetDepth' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetFailureReason [
 	<primitive: 'primitiveGetFailureReason' module: 'B2DPlugin'>
 	^0
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetOffset [
 	<primitive: 'primitiveGetOffset' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primGetTimes: statsArray [
 	<primitive: 'primitiveGetTimes' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-misc }
+{ #category : #'primitives-misc' }
 BalloonEngine >> primInitializeBuffer: buffer [
 	<primitive: 'primitiveInitializeBuffer' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primInitializeProcessing [
 	"Initialize processing in the GE.
 	Create the active edge table and sort it."
@@ -726,14 +726,14 @@ BalloonEngine >> primInitializeProcessing [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primMergeFill: fillBitmap from: fill [
 	"Merge the filled bitmap into the current output buffer."
 	<primitive: 'primitiveMergeFillFrom' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primNextActiveEdgeEntryInto: edgeEntry [
 	"Store the next entry of the AET at the current y-value in edgeEntry.
 	Return false if there is no entry, true otherwise."
@@ -741,7 +741,7 @@ BalloonEngine >> primNextActiveEdgeEntryInto: edgeEntry [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primNextFillEntryInto: fillEntry [
 	"Store the next fill entry of the active edge table in fillEntry.
 	Return false if there is no such entry, true otherwise"
@@ -749,7 +749,7 @@ BalloonEngine >> primNextFillEntryInto: fillEntry [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primNextGlobalEdgeEntryInto: edgeEntry [
 	"Store the next entry of the GET at the current y-value in edgeEntry.
 	Return false if there is no entry, true otherwise."
@@ -757,52 +757,52 @@ BalloonEngine >> primNextGlobalEdgeEntryInto: edgeEntry [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primRenderImage: edge with: fill [
 	"Start/Proceed rendering the current scan line"
 	<primitive: 'primitiveRenderImage' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-incremental }
+{ #category : #'primitives-incremental' }
 BalloonEngine >> primRenderScanline: edge with: fill [
 	"Start/Proceed rendering the current scan line"
 	<primitive: 'primitiveRenderScanline' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primSetAALevel: level [
 	"Set the AA level"
 	<primitive: 'primitiveSetAALevel' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primSetClipRect: rect [
 	<primitive: 'primitiveSetClipRect' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primSetColorTransform: transform [
 	<primitive: 'primitiveSetColorTransform' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primSetDepth: depth [
 	<primitive: 'primitiveSetDepth' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primSetEdgeTransform: transform [
 	<primitive: 'primitiveSetEdgeTransform' module: 'B2DPlugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-access }
+{ #category : #'primitives-access' }
 BalloonEngine >> primSetOffset: point [
 	<primitive: 'primitiveSetOffset' module: 'B2DPlugin'>
 	^self primitiveFailed

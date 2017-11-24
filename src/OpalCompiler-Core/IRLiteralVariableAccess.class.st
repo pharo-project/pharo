@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'association'
 	],
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #accessing }

@@ -32,7 +32,7 @@ Class {
 		'hasOnlySelfReturns',
 		'selfVariableName'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -176,7 +176,7 @@ RBMoveMethodRefactoring >> getArgumentNameForSelf [
 			whileTrue: []
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 	| definingClass type |
 	definingClass := class whoDefinesClassVariable: (variable ifNil: ['']).
@@ -188,7 +188,7 @@ RBMoveMethodRefactoring >> getClassForGlobalOrClassVariable [
 	moveToClasses ifNil: [ self refactoringFailure: 'Method not moved' ]
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBMoveMethodRefactoring >> getClassesForInstanceVariable [
 	| definingClass typer types |
 	definingClass := class whoDefinesInstanceVariable: variable.
@@ -202,7 +202,7 @@ RBMoveMethodRefactoring >> getClassesForInstanceVariable [
 	moveToClasses isNil ifTrue: [self refactoringFailure: 'Method not moved']
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 	| types |
 	types := RBRefactoryTyper 
@@ -215,7 +215,7 @@ RBMoveMethodRefactoring >> getClassesForTemporaryVariable [
 	moveToClasses isNil ifTrue: [self refactoringFailure: 'Method not moved']
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBMoveMethodRefactoring >> getClassesToMoveTo [
 	self isMovingToArgument 
 		ifTrue: [self getClassesForTemporaryVariable]
@@ -359,7 +359,7 @@ RBMoveMethodRefactoring >> replaceVariableReferences [
 	parseTree := replacer tree
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableName [ 
 	selector := aSymbol.
 	class := self classObjectFor: aClass.

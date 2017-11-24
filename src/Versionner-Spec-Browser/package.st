@@ -1,1 +1,1 @@
-Package { #name : #Versionner-Spec-Browser }
+Package { #name : #'Versionner-Spec-Browser' }

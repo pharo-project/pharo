@@ -8,7 +8,7 @@ Class {
 		'environment',
 		'rules'
 	],
-	#category : #JenkinsTools-ExtraReports
+	#category : #'JenkinsTools-ExtraReports'
 }
 
 { #category : #running }

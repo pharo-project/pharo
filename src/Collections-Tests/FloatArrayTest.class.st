@@ -22,7 +22,7 @@ Class {
 		'replacementCollectionSameSize',
 		'sortedCollection'
 	],
-	#category : #Collections-Tests-Arrayed
+	#category : #'Collections-Tests-Arrayed'
 }
 
 { #category : #requirements }

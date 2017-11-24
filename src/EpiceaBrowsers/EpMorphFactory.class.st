@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'defaultInstance'
 	],
-	#category : #EpiceaBrowsers-UI-Common
+	#category : #'EpiceaBrowsers-UI-Common'
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ test
 Class {
 	#name : #RBTrueFalseDuplicationRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Shows a warning if this class has abstract methods on its own.
 Class {
 	#name : #RBRealizeClassRefactoring,
 	#superclass : #RBClassRefactoring,
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #preconditions }

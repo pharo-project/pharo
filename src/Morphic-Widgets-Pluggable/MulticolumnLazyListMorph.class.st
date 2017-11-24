@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'columnWidths'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #'row management' }

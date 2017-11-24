@@ -8,7 +8,7 @@ Class {
 		'model',
 		'icon'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #accessing }
@@ -26,7 +26,7 @@ MorphTreeColumnButton >> asPotentialDropTarget [
 	self model asPotentialDropTarget
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeColumnButton >> handlesMouseOverDragging: evt [
 	^ true
 ]
@@ -83,7 +83,7 @@ MorphTreeColumnButton >> mouseDown: anEvent [
 	super mouseDown: anEvent
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeColumnButton >> mouseEnterDragging: evt [
 	(evt hand hasSubmorphs and:[self dropEnabled]) ifFalse: ["no d&d"
 		^ super mouseEnterDragging: evt].
@@ -93,12 +93,12 @@ MorphTreeColumnButton >> mouseEnterDragging: evt [
 		].
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeColumnButton >> mouseLeaveDragging: evt [
 	self noMorePotentialDropTarget 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeColumnButton >> mouseUp: evt [
 	self noMorePotentialDropTarget.
 	super mouseUp: evt

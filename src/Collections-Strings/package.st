@@ -1,1 +1,1 @@
-Package { #name : #Collections-Strings }
+Package { #name : #'Collections-Strings' }

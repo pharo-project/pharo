@@ -4,7 +4,7 @@ A PDReversePackageNode is a node to display a package in the tree during a rever
 Class {
 	#name : #DAReversePackageNode,
 	#superclass : #DAAbstractPackageNode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
 { #category : #api }

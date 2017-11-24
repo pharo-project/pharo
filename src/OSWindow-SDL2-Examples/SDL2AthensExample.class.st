@@ -9,7 +9,7 @@ Class {
 		'drawingProcess',
 		'window'
 	],
-	#category : #OSWindow-SDL2-Examples-Examples
+	#category : #'OSWindow-SDL2-Examples-Examples'
 }
 
 { #category : #'instance creation' }

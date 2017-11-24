@@ -32,7 +32,7 @@ Class {
 		'nodeReplacements',
 		'compilationContext'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -168,7 +168,7 @@ RBMethodNode >> body: stmtsNode [
 	body parent: self
 ]
 
-{ #category : #private-replacing }
+{ #category : #'private-replacing' }
 RBMethodNode >> changeSourceSelector: oldSelector keywordsIntervals: oldIntervals arguments: oldArguments [
 	"If this is the same number of arguments, we try a one to one replacement of selector parts and arguments. If this is not the c
 ase try to rewrite the signature as a whole, what unfortunately drops the comments within the signature."
@@ -540,7 +540,7 @@ RBMethodNode >> selector: aSelector [
 	selector := aSelector asSymbol.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	self 
 		arguments: valueNodes;

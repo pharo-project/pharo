@@ -27,7 +27,7 @@ Class {
 		'result',
 		'withToolBar'
 	],
-	#category : #Tool-Profilers
+	#category : #'Tool-Profilers'
 }
 
 { #category : #opening }
@@ -80,7 +80,7 @@ TimeProfiler class >> onBlock: block [
 	^ result
 ]
 
-{ #category : #tools-registry }
+{ #category : #'tools-registry' }
 TimeProfiler class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]" 
 	registry register: self as: #timeProfiler
@@ -234,7 +234,7 @@ TimeProfiler >> expandAll [
 	treeMorph expandAllSuchThat: [:node | node percentage > self minPercentageToExpand]
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> fullReport [
 	"Return the full report of the tally "
 	^ String streamContents: [:strm |
@@ -275,7 +275,7 @@ TimeProfiler >> keyStroke: anEvent from: aTreeMorph [
 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> leaveItems [
 	| res  |
 	res := OrderedCollection new.
@@ -430,13 +430,13 @@ TimeProfiler >> result: anObject [
 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> resultText [
 	^ result printString
 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> rootItems [
 	^ rootMessageTally
 		ifNil: [#()]
@@ -451,7 +451,7 @@ TimeProfiler >> rootNodeClassFromItem: anItem [
 	^ TimeProfilerNode 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> rootTallyItems [
 	| res sons groups |
 	res := OrderedCollection new.
@@ -530,7 +530,7 @@ TimeProfiler >> selectedClass [
 		ifNotNil: [ :currNode | currNode methodClass ]
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> selectedMethodCode [
 	^ self selectedNode 
 		ifNil: [ self helpMessage ]
@@ -633,7 +633,7 @@ TimeProfiler >> startState [
 	
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfiler >> summaryText [
 	^ String streamContents: [:strm | rootMessageTally 
 		ifNotNil: [rootMessageTally time > 0 

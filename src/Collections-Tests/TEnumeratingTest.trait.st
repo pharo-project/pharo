@@ -4,7 +4,7 @@ Test of basic functions in Collections that are in the protocol enumerating
 "
 Trait {
 	#name : #TEnumeratingTest,
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

@@ -10,7 +10,7 @@ Class {
 		'askBeforeDiscardingEdits',
 		'getEnabledSelector'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #'instance creation' }
@@ -42,7 +42,7 @@ RubPluggableTextMorph >> askBeforeDiscardingEdits: aBoolean [
 	askBeforeDiscardingEdits := aBoolean
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubPluggableTextMorph >> clearUndoManager [
 	self textArea editingState clearUndoManager: nil
 ]
@@ -74,7 +74,7 @@ RubPluggableTextMorph >> hasUnacceptedEdits: aBoolean [
 		ifFalse: [ hasEditingConflicts := false ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubPluggableTextMorph >> initialize [
 	super initialize.
 	hasUnacceptedEdits := false.

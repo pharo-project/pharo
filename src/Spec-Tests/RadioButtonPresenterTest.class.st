@@ -1,7 +1,7 @@
 Class {
 	#name : #RadioButtonPresenterTest,
 	#superclass : #SpecTestCase,
-	#category : #Spec-Tests-Core-Widgets
+	#category : #'Spec-Tests-Core-Widgets'
 }
 
 { #category : #running }

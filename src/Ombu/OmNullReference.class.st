@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #Ombu-Entries
+	#category : #'Ombu-Entries'
 }
 
 { #category : #'ston persistence' }

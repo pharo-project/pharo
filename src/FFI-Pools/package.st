@@ -1,1 +1,1 @@
-Package { #name : #FFI-Pools }
+Package { #name : #'FFI-Pools' }

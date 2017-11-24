@@ -5,7 +5,7 @@ the concrete ""classvariable"" renaming.
 Class {
 	#name : #RBRenameClassVariableChange,
 	#superclass : #RBRenameVariableChange,
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #private }

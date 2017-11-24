@@ -7,7 +7,7 @@ Class {
 		'unrelatedClasses',
 		'archivesClasses'
 	],
-	#category : #Nautilus-Tests
+	#category : #'Nautilus-Tests'
 }
 
 { #category : #private }

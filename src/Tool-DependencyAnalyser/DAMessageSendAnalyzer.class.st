@@ -16,7 +16,7 @@ Class {
 		'packageAnalysis',
 		'missingMethods'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #'instance creation' }

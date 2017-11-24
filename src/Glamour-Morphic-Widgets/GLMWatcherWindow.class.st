@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #'instance creation' }
@@ -110,7 +110,7 @@ GLMWatcherWindow >> defaultFillStyle [
 	^ SolidFillStyle color: Color transparent
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 GLMWatcherWindow >> delete [ 
 	super delete. 
 	isOpen := false
@@ -159,7 +159,7 @@ GLMWatcherWindow >> morphicLayerNumber [
 	^ 10
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 GLMWatcherWindow >> openInWorld [
 	super openInWorld.
 	isOpen := true.
@@ -185,7 +185,7 @@ GLMWatcherWindow >> taskbarTask [
 	^nil
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 GLMWatcherWindow >> toggleOpen [ 
 	isOpen ifFalse: [ ^ self openInWorld ].
 	self visible 

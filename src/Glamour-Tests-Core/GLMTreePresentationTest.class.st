@@ -5,7 +5,7 @@ Class {
 		'pane',
 		'presentation'
 	],
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #running }

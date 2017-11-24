@@ -4,7 +4,7 @@ I'm an unsigned byte.
 Class {
 	#name : #FFIUInt8,
 	#superclass : #FFIIntegerType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

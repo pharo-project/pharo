@@ -4,7 +4,7 @@ The clipboard for MacOS
 Class {
 	#name : #MacOSClipboard,
 	#superclass : #ExternalClipboard,
-	#category : #System-Clipboard
+	#category : #'System-Clipboard'
 }
 
 { #category : #private }

@@ -10,7 +10,7 @@ Class {
 		'bottomRightPaint',
 		'width'
 	],
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #'instance creation' }

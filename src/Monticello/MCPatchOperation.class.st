@@ -8,7 +8,7 @@ Class {
 		'isApplicable',
 		'isConflict'
 	],
-	#category : #Monticello-Patching
+	#category : #'Monticello-Patching'
 }
 
 { #category : #comparing }

@@ -4,7 +4,7 @@ Settings for the fonts
 Class {
 	#name : #GraphicFontSettings,
 	#superclass : #Model,
-	#category : #Settings-Graphics
+	#category : #'Settings-Graphics'
 }
 
 { #category : #fonts }

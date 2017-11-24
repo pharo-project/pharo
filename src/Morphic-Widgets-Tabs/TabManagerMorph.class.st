@@ -15,10 +15,10 @@ Class {
 		'processes',
 		'model'
 	],
-	#category : #Morphic-Widgets-Tabs
+	#category : #'Morphic-Widgets-Tabs'
 }
 
-{ #category : #private-contents }
+{ #category : #'private-contents' }
 TabManagerMorph >> addLastTabContents: aTab among: size delta: delta [
 	| process |
 	
@@ -63,7 +63,7 @@ TabManagerMorph >> addMorphs [
 				yourself).
 ]
 
-{ #category : #private-contents }
+{ #category : #'private-contents' }
 TabManagerMorph >> addSplitterOn: tabs delta: delta [
 	| leftProcess rightProcess |
 	tabs overlappingPairsWithIndexDo: [ :left :right :index | 
@@ -96,7 +96,7 @@ TabManagerMorph >> addTab: aTab [
 	
 ]
 
-{ #category : #private-contents }
+{ #category : #'private-contents' }
 TabManagerMorph >> addTabContents: tab at: index delta: delta [
 	| process |
 	process := tab
@@ -125,13 +125,13 @@ TabManagerMorph >> adoptPaneColor: aColor [
 	self color: aColor
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> barDeleted: aBar [
 
 	self close
 ]
 
-{ #category : #private-drawing }
+{ #category : #'private-drawing' }
 TabManagerMorph >> borderColor [
 	^ Smalltalk ui theme borderColor
 ]
@@ -160,7 +160,7 @@ TabManagerMorph >> closeAllTabs [
 	toolbar closeAllTabs
 ]
 
-{ #category : #private-drawing }
+{ #category : #'private-drawing' }
 TabManagerMorph >> containerColor [
 	^ Smalltalk ui theme lightBaseColor
 ]
@@ -172,7 +172,7 @@ TabManagerMorph >> delete [
 	self triggerEvent: #tabManagerDeleted with: self
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> deleteSelectedTabs [
 	toolbar selectedTab 
 		ifNotNil: [ toolbar deleteSelectedTabs ] 
@@ -282,25 +282,25 @@ TabManagerMorph >> registerShortcuts [
 	self bindKeyCombination: $0 meta toAction: [ self selectLastTab ]
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> selectLastTab [
 
 	toolbar selectLastTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> selectNext [
 
 	toolbar selectNext
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> selectPrevious [
 
 	toolbar selectPrevious
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> selectTabAt: index [
 
 	toolbar selectTabAt: index ifAbsent: [].
@@ -348,13 +348,13 @@ TabManagerMorph >> setTabs: aBlock [
 	self tabs: aBlock value
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabAddedToSelection: aTab [
 
 	self setMultipleContents
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabEmptyContents: aTab [
 	"My bar already filtered the tab, so here I am sure the tab is the selected tab"
 	
@@ -362,26 +362,26 @@ TabManagerMorph >> tabEmptyContents: aTab [
 	
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabRefreshed: aTab [
 	"Here we know that aTab is the selected tab"
 
 	self setMultipleContents
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabRemovedFromSelection: aTab [
 
 	self setMultipleContents
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabResetSelection: aTab [
 
 	self setTabContentFrom: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabSelected: aTab [
 
 	self setTabContentFrom: aTab.
@@ -394,7 +394,7 @@ TabManagerMorph >> tabs: aCollection [
 	toolbar tabs: aCollection
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabManagerMorph >> tabsChanged [
 	"Nothing to do"
 ]

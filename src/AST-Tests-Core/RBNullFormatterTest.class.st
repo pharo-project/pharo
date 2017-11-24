@@ -1,7 +1,7 @@
 Class {
 	#name : #RBNullFormatterTest,
 	#superclass : #TestCase,
-	#category : #AST-Tests-Core
+	#category : #'AST-Tests-Core'
 }
 
 { #category : #tests }

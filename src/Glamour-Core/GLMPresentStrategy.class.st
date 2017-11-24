@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'presentationsFactory'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMPresentStrategy >> addPresentation: aPresentation [
 	|currentPresentations|
 	
@@ -20,7 +20,7 @@ GLMPresentStrategy >> addPresentation: aPresentation [
 		composite add: aPresentation copy ]
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMPresentStrategy >> addPresentations: aCollection [
 	aCollection do: [:each | self addPresentation: each ]
 ]

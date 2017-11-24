@@ -5,7 +5,7 @@ ZnServerWriteErrorEvent signals an error during the writing of a response. These
 Class {
 	#name : #ZnServerWriteErrorEvent,
 	#superclass : #ZnServerErrorEvent,
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #printing }

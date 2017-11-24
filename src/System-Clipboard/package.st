@@ -1,1 +1,1 @@
-Package { #name : #System-Clipboard }
+Package { #name : #'System-Clipboard' }

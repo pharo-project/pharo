@@ -4,7 +4,7 @@ I am the selector of a message send or method
 Class {
 	#name : #RFSelectorReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

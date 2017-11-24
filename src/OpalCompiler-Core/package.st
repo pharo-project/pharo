@@ -1,1 +1,1 @@
-Package { #name : #OpalCompiler-Core }
+Package { #name : #'OpalCompiler-Core' }

@@ -8,7 +8,7 @@ Class {
 		'newName',
 		'oldName'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }
@@ -26,7 +26,7 @@ EpRenameClassRefactoring >> asRBRefactoring [
 		to: newName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpRenameClassRefactoring >> initializeFrom: anOldName to: aNewName [
 	self initialize.
 	

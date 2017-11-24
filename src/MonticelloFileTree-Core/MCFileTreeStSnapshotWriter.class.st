@@ -10,7 +10,7 @@ Class {
 		'classTraitDefinitions',
 		'methodDefinitions'
 	],
-	#category : #MonticelloFileTree-Core
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }
@@ -80,7 +80,7 @@ MCFileTreeStSnapshotWriter >> writeClassTraitDefinition: definition to: traitPat
         visit: [ self writeClassTraitDefinition: definition ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCFileTreeStSnapshotWriter >> writeDefinitions: aCollection [
   | basePath extensionClasses extensionMethodDefinitions methodHolders |
   self writeBasicDefinitions: aCollection.

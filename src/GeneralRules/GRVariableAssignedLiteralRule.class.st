@@ -7,7 +7,7 @@ Class {
 	#category : #GeneralRules
 }
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 GRVariableAssignedLiteralRule class >> checksClass [
 
 	^ true
@@ -23,7 +23,7 @@ GRVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 			forCritiquesDo: aCriticBlock ]
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCriticBlock [
 	| theMethod |
 
@@ -45,7 +45,7 @@ GRVariableAssignedLiteralRule >> check: aSlot of: aClass forCritiquesDo: aCritic
 				about: aSlot name) ]
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRVariableAssignedLiteralRule >> critiqueFor: aClass about: aVarName [
 	| crit |
 
@@ -65,7 +65,7 @@ GRVariableAssignedLiteralRule >> group [
 	^ 'Design Flaws'
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRVariableAssignedLiteralRule >> matchMethod: aCompiledMethod with: aVarName [
 
 	^ ((self matcherFor: aVarName) 
@@ -73,7 +73,7 @@ GRVariableAssignedLiteralRule >> matchMethod: aCompiledMethod with: aVarName [
 		initialAnswer: nil) isNotNil 
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRVariableAssignedLiteralRule >> matcherFor: aVarName [
 
 

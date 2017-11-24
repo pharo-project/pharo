@@ -47,7 +47,7 @@ Class {
 		'encodingId',
 		'size'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }
 
 { #category : #rendering }
@@ -355,7 +355,7 @@ FT2Face >> memoryFaceData [
 	self subclassResponsibility
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 	| memSize |
 
@@ -370,7 +370,7 @@ FT2Face >> newFaceFromExternalMemory: aFreeTypeExternalMemory index: anInteger [
 		ifTrue:[ self class register: self ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FT2Face >> newFaceFromFile: fileName index: anInteger [
 	self primNewFaceFromFile: fileName fullName index: anInteger.
 	self class register: self.
@@ -401,19 +401,19 @@ FT2Face >> postscriptName [
 	^self primGetPostscriptName
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primDestroyHandle [
 	<primitive: 'primitiveDoneFacePreserveFields' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primEmboldenGlyphSlotOutline: strengthInteger [
 	<primitive: 'primitiveEmboldenFaceGlyphSlotOutline' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primGetCharIndex: characterCode [
 	"Return the glyph index of a given character code"
 	<primitive: 'primitiveGetFaceCharIndex' module: 'FT2Plugin'>
@@ -421,50 +421,50 @@ FT2Face >> primGetCharIndex: characterCode [
 
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primGetCharMap [
 	<primitive: 'primitiveGetFaceCharMap' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primGetCharMapsInto: array [
 	<primitive: 'primitiveGetFaceCharMapsIntoArray' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primGetKerningLeft: leftGlyphIndex right: rightGlyphIndex [
 	"self primGetKerningLeft: $V asInteger  right: $a asInteger "
 	<primitive: 'primitiveGetKerningLeftRight' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primGetPostscriptName [ 
 	<primitive: 'primitiveGetPostscriptName' module: 'FT2Plugin'>
 	^nil
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primGetTrackKerningPointSize: pointSize degree: degree [
 	<primitive: 'primitiveGetTrackKerningPointSizeDegree' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primHasKerning [
 	<primitive: 'primitiveHasKerning' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primLoadBbox: aRectangle [
 	<primitive: 'primitiveLoadFaceBbox' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primLoadCharacter: index flags: flags [
 	<primitive: 'primitiveLoadCharacter' module: 'FT2Plugin'>
 	^self primitiveFailed
@@ -476,61 +476,61 @@ FT2Face >> primLoadFields [
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primLoadGlyph: index flags: flags [
 	<primitive: 'primitiveLoadGlyph' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primNewFaceFromExternalMemory: aFreeTypeExternalMemory size: anInteger index: anInteger2 [
 	<primitive: 'primitiveNewMemoryFaceFromExternalMemoryAndIndex' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primNewFaceFromFile: fileName index: anInteger [
 	<primitive: 'primitiveNewFaceFromFileAndIndex' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primNewMemoryFaceByteSize: anInteger index: anInteger2 [
 	<primitive: 'primitiveNewMemoryFaceByteSizeAndIndex' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primRenderGlyphIntoForm: aForm [
 	<primitive: 'primitiveRenderGlyphIntoForm' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primRenderGlyphIntoForm: aForm pixelMode: anInteger [
 	<primitive: 'primitiveRenderGlyphIntoFormWithRenderMode' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primSetBitmapLeft: x top: y [
 	<primitive: 'primitiveSetBitmapLefttop' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primSetCharMap: encodingString [
 	<primitive: 'primitiveSetFaceCharMap' module: 'FT2Plugin'>
 	^self primitiveFailed
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primSetPixelWidth: x height: y [
 	<primitive: 'primitiveSetPixelSizes' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 	"matrix is 16.16 fixed point
 		x' = x*m[0] + y*m[1]                                 
@@ -543,13 +543,13 @@ FT2Face >> primSetTransform: matrixWordArray delta: deltaWordArray [
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primTransformGlyphSlotOutline:  anIntegerArray [
 	<primitive: 'primitiveTransformFaceGlyphSlotOutline' module: 'FT2Plugin'>
 	^self primitiveFailed.
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FT2Face >> primTranslateGlyphSlotOutline:  anIntegerArray [
 	<primitive: 'primitiveTranslateFaceGlyphSlotOutline' module: 'FT2Plugin'>
 	^self primitiveFailed.

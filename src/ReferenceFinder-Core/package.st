@@ -1,1 +1,1 @@
-Package { #name : #ReferenceFinder-Core }
+Package { #name : #'ReferenceFinder-Core' }

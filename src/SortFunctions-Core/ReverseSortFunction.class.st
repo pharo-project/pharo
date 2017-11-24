@@ -4,7 +4,7 @@ A ReverseSortFunction wraps over another SortFunction so as to sort in reverse o
 Class {
 	#name : #ReverseSortFunction,
 	#superclass : #ComposedSortFunction,
-	#category : #SortFunctions-Core
+	#category : #'SortFunctions-Core'
 }
 
 { #category : #evaluating }

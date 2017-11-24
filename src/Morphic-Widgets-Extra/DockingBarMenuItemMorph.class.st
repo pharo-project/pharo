@@ -5,7 +5,7 @@ A DockingBarMenuItemMorph is a specialized version of its superclass for Docking
 Class {
 	#name : #DockingBarMenuItemMorph,
 	#superclass : #MenuItemMorph,
-	#category : #Morphic-Widgets-Extra
+	#category : #'Morphic-Widgets-Extra'
 }
 
 { #category : #selecting }
@@ -104,7 +104,7 @@ DockingBarMenuItemMorph >> mouseUp: evt [
 
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 DockingBarMenuItemMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
@@ -120,7 +120,7 @@ DockingBarMenuItemMorph >> ownerChanged [
 	self updateLayoutInDockingBar
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 DockingBarMenuItemMorph >> roundedCorners [
 	"Return a list of those corners to round"
 	owner isFloating

@@ -5,7 +5,7 @@ I allow tables using me to manage multiple selection rows.
 Class {
 	#name : #FTMultipleSelection,
 	#superclass : #FTSelectionStrategy,
-	#category : #Morphic-Widgets-FastTable-Selection
+	#category : #'Morphic-Widgets-FastTable-Selection'
 }
 
 { #category : #testing }

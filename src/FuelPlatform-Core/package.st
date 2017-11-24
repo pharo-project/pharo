@@ -1,1 +1,1 @@
-Package { #name : #FuelPlatform-Core }
+Package { #name : #'FuelPlatform-Core' }

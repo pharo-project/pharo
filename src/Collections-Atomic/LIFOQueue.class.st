@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'head'
 	],
-	#category : #Collections-Atomic
+	#category : #'Collections-Atomic'
 }
 
 { #category : #'stack-compliant protocol' }

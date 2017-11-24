@@ -7,17 +7,17 @@ Class {
 	#category : #Kernel
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 PharoKernelAssembly class >> description [
 	^ 'I represent the minimal kernel, i.e. the minimum set of packages needed, to get a usable Pharo image.'
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 PharoKernelAssembly class >> packageName [
 	^ #'Pharo-Kernel'
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 PharoKernelAssembly class >> parts [
 	^ {
 		(#Kernel -> #()) .
@@ -27,7 +27,7 @@ PharoKernelAssembly class >> parts [
 	}
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 PharoKernelAssembly class >> version [
 	^ '1.0-dev'
 ]

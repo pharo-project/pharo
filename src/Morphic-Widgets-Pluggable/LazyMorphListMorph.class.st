@@ -4,7 +4,7 @@ Support for morph lists in PluggableMorphListMorph.
 Class {
 	#name : #LazyMorphListMorph,
 	#superclass : #LazyListMorph,
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #'as yet unclassified' }

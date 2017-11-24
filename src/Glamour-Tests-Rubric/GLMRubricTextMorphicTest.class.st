@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMRubricTextMorphicTest,
 	#superclass : #GLMMorphicTest,
-	#category : #Glamour-Tests-Rubric
+	#category : #'Glamour-Tests-Rubric'
 }
 
 { #category : #private }

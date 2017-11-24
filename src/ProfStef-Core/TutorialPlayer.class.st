@@ -8,7 +8,7 @@ Class {
 		'tutorialPosition',
 		'tutorial'
 	],
-	#category : #ProfStef-Core
+	#category : #'ProfStef-Core'
 }
 
 { #category : #accessing }

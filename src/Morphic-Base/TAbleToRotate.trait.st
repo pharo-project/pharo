@@ -3,22 +3,22 @@ A trait for morphs able to rotate
 "
 Trait {
 	#name : #TAbleToRotate,
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> forwardDirection [
 	"Return the receiver's forward direction (in eToy terms)"
 	^self valueOfProperty: #forwardDirection ifAbsent:[0.0]
 ]
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> forwardDirection: newDirection [
 	"Set the receiver's forward direction (in eToy terms)"
 	self setProperty: #forwardDirection toValue: newDirection.
 ]
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> heading [
 	"Return the receiver's heading"
 	^ self owner 
@@ -26,7 +26,7 @@ TAbleToRotate >> heading [
 		ifNotNil: [self forwardDirection + self owner degreesOfFlex]
 ]
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> prepareForRotating [
 	"If I require a flex shell to rotate,
 	then wrap it in one and return it.
@@ -35,7 +35,7 @@ TAbleToRotate >> prepareForRotating [
 	^ self addFlexShell
 ]
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> rotationDegrees [
 	"Default implementation."
 
@@ -43,12 +43,12 @@ TAbleToRotate >> rotationDegrees [
 
 ]
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> rotationDegrees: degrees [	
 	"redefined in all morphs which are using myself"
 ]
 
-{ #category : #t-rotating }
+{ #category : #'t-rotating' }
 TAbleToRotate >> setDirectionFrom: aPoint [
 	| delta degrees |
 	delta := (self transformFromWorld globalPointToLocal: aPoint) - self referencePosition.

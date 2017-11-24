@@ -6,7 +6,7 @@ Through FloatPrintPolicy and double dispatch I force Float>>#printOn:base: to dy
 Class {
 	#name : #ExactFloatPrintPolicy,
 	#superclass : #Object,
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #printing }

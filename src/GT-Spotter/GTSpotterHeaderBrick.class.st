@@ -9,7 +9,7 @@ Class {
 		'settingsButton',
 		'helpButton'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }
@@ -128,7 +128,7 @@ GTSpotterHeaderBrick >> onRevealHints [
 	self themer spotterThemer hintRevealStyleFor: self helpButton
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterHeaderBrick >> onThemerChanged [
 	super onThemerChanged.
 	

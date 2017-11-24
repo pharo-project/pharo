@@ -29,7 +29,7 @@ Class {
 		'touchPoints',
 		'announcer'
 	],
-	#category : #Morphic-Widgets-Extra
+	#category : #'Morphic-Widgets-Extra'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ SUnit test for the push down suggestions
 Class {
 	#name : #SugsSuggestionPushDownTest,
 	#superclass : #SugsSuggestionTest,
-	#category : #SmartSuggestions-Tests-Tests
+	#category : #'SmartSuggestions-Tests-Tests'
 }
 
 { #category : #private }

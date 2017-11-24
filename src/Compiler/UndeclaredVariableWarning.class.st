@@ -9,7 +9,7 @@ Class {
 		'selector',
 		'class'
 	],
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #exceptionDescription }
@@ -39,7 +39,7 @@ UndeclaredVariableWarning >> messageText [
 		s nextPut: $(; print: name; nextPutAll: ' is Undeclared) ' ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 UndeclaredVariableWarning >> name: aString selector: aSymbolOrNil class: aBehavior [
 	name := aString.
 	selector := aSymbolOrNil.

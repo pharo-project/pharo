@@ -6,7 +6,7 @@ On shutdown, isQuitting indicates if we save and quit the image  or if we just s
 Class {
 	#name : #AbstractSessionHandler,
 	#superclass : #Object,
-	#category : #System-SessionManager
+	#category : #'System-SessionManager'
 }
 
 { #category : #accessing }

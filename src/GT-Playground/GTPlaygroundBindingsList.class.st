@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlaygroundBindingsList,
 	#superclass : #GLMFallbackScrollListBrick,
-	#category : #GT-Playground
+	#category : #'GT-Playground'
 }
 
 { #category : #actions }
@@ -140,7 +140,7 @@ GTPlaygroundBindingsList >> on: aBindingsCollection [
 	self model: model
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTPlaygroundBindingsList >> onThemerChanged [
 	super onThemerChanged.
 	

@@ -15,7 +15,7 @@ Class {
 		'doubleClickSelector',
 		'keystrokeActionSelector'
 	],
-	#category : #Morphic-Widgets-FastTable-PluggableAdaptor
+	#category : #'Morphic-Widgets-FastTable-PluggableAdaptor'
 }
 
 { #category : #'instance creation' }

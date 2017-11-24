@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'type'
 	],
-	#category : #FFI-Kernel
+	#category : #'FFI-Kernel'
 }
 
 { #category : #'class initialization' }

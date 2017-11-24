@@ -24,7 +24,7 @@ Class {
 		'queue',
 		'preSuspendingAction'
 	],
-	#category : #GT-EventRecorder-Support
+	#category : #'GT-EventRecorder-Support'
 }
 
 { #category : #activation }

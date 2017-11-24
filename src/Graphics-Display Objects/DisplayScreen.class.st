@@ -108,7 +108,7 @@ DisplayScreen class >> hostWindowTitle: aString [
 		string: (UTF8TextConverter default convertFromSystemString: aString)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DisplayScreen class >> initialize [
 	| display |
 	display := self new.

@@ -9,7 +9,7 @@ References held in the variable part are held weakly and might be nilled out by 
 Class {
 	#name : #WeakLayout,
 	#superclass : #PointerLayout,
-	#category : #Slot-Layout
+	#category : #'Slot-Layout'
 }
 
 { #category : #'instance creation' }

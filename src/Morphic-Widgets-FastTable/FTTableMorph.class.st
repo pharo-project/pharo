@@ -41,7 +41,7 @@ Class {
 		'function',
 		'resizable'
 	],
-	#category : #Morphic-Widgets-FastTable
+	#category : #'Morphic-Widgets-FastTable'
 }
 
 { #category : #accessing }

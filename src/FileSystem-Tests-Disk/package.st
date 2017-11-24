@@ -1,1 +1,1 @@
-Package { #name : #FileSystem-Tests-Disk }
+Package { #name : #'FileSystem-Tests-Disk' }

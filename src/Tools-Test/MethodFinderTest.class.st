@@ -5,7 +5,7 @@ To do:
 Class {
 	#name : #MethodFinderTest,
 	#superclass : #TestCase,
-	#category : #Tools-Test-Finder
+	#category : #'Tools-Test-Finder'
 }
 
 { #category : #'test examples' }

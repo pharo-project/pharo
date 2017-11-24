@@ -1,1 +1,1 @@
-Package { #name : #SUnit-UITesting }
+Package { #name : #'SUnit-UITesting' }

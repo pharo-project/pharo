@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'exclusions'
 	],
-	#category : #Announcements-Core
+	#category : #'Announcements-Core'
 }
 
 { #category : #private }

@@ -1,5 +1,5 @@
 Class {
 	#name : #RBSmalllintTestNoClassCommentObject,
 	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : #Refactoring-Tests-Critics
+	#category : #'Refactoring-Tests-Critics'
 }

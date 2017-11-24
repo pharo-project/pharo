@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'slot'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'instance creation' }

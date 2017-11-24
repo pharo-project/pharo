@@ -6,7 +6,7 @@ Class {
 		'tailLink',
 		'size'
 	],
-	#category : #GT-Spotter-Utils
+	#category : #'GT-Spotter-Utils'
 }
 
 { #category : #accessing }

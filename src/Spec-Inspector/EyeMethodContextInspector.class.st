@@ -4,7 +4,7 @@ I am an eye inspector specified for MethodContext
 Class {
 	#name : #EyeMethodContextInspector,
 	#superclass : #EyeInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #accessing }

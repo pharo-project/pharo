@@ -6,7 +6,7 @@ This error was born when testing the materialization of a BlockClosure defined i
 Class {
 	#name : #FLMethodChanged,
 	#superclass : #FLMaterializationError,
-	#category : #Fuel-Errors
+	#category : #'Fuel-Errors'
 }
 
 { #category : #signaling }

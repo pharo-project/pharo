@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #FreeType-Cache
+	#category : #'FreeType-Cache'
 }
 
 { #category : #cleanup }
@@ -50,7 +50,7 @@ FreeTypeCache class >> defaultMaximumSize [
 	^1024*5000 "5 Megabytes"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FreeTypeCache class >> initialize [
 	SessionManager default 
 		registerGuiClassNamed: self name
@@ -65,7 +65,7 @@ FreeTypeCache class >> shutDown: isImageQuitting [
 			current := nil ]
 ]
 
-{ #category : #add-remove }
+{ #category : #'add-remove' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag [ 
 	| entry charCodeTable typeTable |
 	(charCodeTable := fontTable at: aFreeTypeFont ifAbsent:[])
@@ -79,7 +79,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 	self error: 'Not found'
 ]
 
-{ #category : #add-remove }
+{ #category : #'add-remove' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag ifAbsentPut: aBlock [ 
 	| charCodeTable typeTable entry v vSize |
 	
@@ -108,7 +108,7 @@ FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag 
 	
 ]
 
-{ #category : #add-remove }
+{ #category : #'add-remove' }
 FreeTypeCache >> atFont: aFreeTypeFont charCode: charCodeInteger type: typeFlag put: anObject [ 
 	| charCodeTable typeTable anObjectSize oldEntry oldEntrySize entry |
 	
@@ -189,7 +189,7 @@ FreeTypeCache >> maximumSize: anIntegerOrNil [
 				self shrinkTo: maximumSize]]
 ]
 
-{ #category : #add-remove }
+{ #category : #'add-remove' }
 FreeTypeCache >> removeAll [
 	fontTable := self dictionaryClass new: 100.
 	fifo := self fifoClass new.
@@ -198,7 +198,7 @@ FreeTypeCache >> removeAll [
 	
 ]
 
-{ #category : #add-remove }
+{ #category : #'add-remove' }
 FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 	| toRemove |
 	
@@ -216,7 +216,7 @@ FreeTypeCache >> removeAllForFont: aFreeTypeFont [
 	
 ]
 
-{ #category : #add-remove }
+{ #category : #'add-remove' }
 FreeTypeCache >> removeAllForType: typeFlag [
 	| toRemove |
 	

@@ -20,7 +20,7 @@ Examples:
 Class {
 	#name : #TestCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : #JenkinsTools-Core
+	#category : #'JenkinsTools-Core'
 }
 
 { #category : #accessing }

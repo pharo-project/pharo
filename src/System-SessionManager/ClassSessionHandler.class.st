@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'registeredClassName'
 	],
-	#category : #System-SessionManager
+	#category : #'System-SessionManager'
 }
 
 { #category : #'instance creation' }

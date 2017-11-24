@@ -23,7 +23,7 @@ Class {
 		'testContext',
 		'assertionCallerContext'
 	],
-	#category : #GT-SUnitDebugger
+	#category : #'GT-SUnitDebugger'
 }
 
 { #category : #accessing }

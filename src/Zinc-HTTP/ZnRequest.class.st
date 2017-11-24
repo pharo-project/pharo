@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'requestLine'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -163,7 +163,7 @@ ZnRequest >> method [
 	^ self requestLine method 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnRequest >> method: method [
 	self requestLine method: method
 ]
@@ -182,7 +182,7 @@ ZnRequest >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnRequest >> readHeaderFrom: stream [
 	self requestLine: (ZnRequestLine readFrom: stream).
 	super readHeaderFrom: stream
@@ -264,7 +264,7 @@ ZnRequest >> url [
 	^ self uri 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnRequest >> url: url [
 	self requestLine uri: url.
 	self headers request: self url

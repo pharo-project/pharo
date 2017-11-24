@@ -8,7 +8,7 @@ Class {
 		'behavior',
 		'protocol'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }
@@ -38,7 +38,7 @@ EpProtocolChange >> doesOverride: aCodeChange [
 		aCodeChange protocol = self protocol ] ]
 ]
 
-{ #category : #initialization-release }
+{ #category : #'initialization-release' }
 EpProtocolChange >> initializeWithBehavior: aBehavior protocol: aProtocol [
 	self initialize.
 	behavior := aBehavior asEpiceaRingDefinition.

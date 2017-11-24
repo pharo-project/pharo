@@ -8,5 +8,5 @@ PackageA-B conflicts with PackageA(tagB)
 Class {
 	#name : #RPackageConflictError,
 	#superclass : #Error,
-	#category : #RPackage-Core
+	#category : #'RPackage-Core'
 }

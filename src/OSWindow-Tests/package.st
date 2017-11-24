@@ -1,1 +1,1 @@
-Package { #name : #OSWindow-Tests }
+Package { #name : #'OSWindow-Tests' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'activatorDockingBar'
 	],
-	#category : #Morphic-Widgets-Extra
+	#category : #'Morphic-Widgets-Extra'
 }
 
 { #category : #accessing }

@@ -27,7 +27,7 @@ Class {
 	#instVars : [
 		'code'
 	],
-	#category : #Shout-Examples
+	#category : #'Shout-Examples'
 }
 
 { #category : #'private bindings' }

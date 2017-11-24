@@ -1,1 +1,1 @@
-Package { #name : #HelpSystem-Core }
+Package { #name : #'HelpSystem-Core' }

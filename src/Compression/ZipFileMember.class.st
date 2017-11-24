@@ -11,7 +11,7 @@ Class {
 		'localHeaderRelativeOffset',
 		'dataOffset'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #'instance creation' }
@@ -19,7 +19,7 @@ ZipFileMember class >> newFrom: stream named: fileName [
 	^(self new) stream: stream externalFileName: fileName
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> canonicalizeFileName [
 	"For security reasons, make all paths relative and remove any ../ portions"
 
@@ -32,7 +32,7 @@ ZipFileMember >> close [
 	stream ifNotNil:[stream close].
 ]
 
-{ #category : #private-writing }
+{ #category : #'private-writing' }
 ZipFileMember >> copyDataTo: aStream [
 
 	self copyRawDataTo: aStream.
@@ -46,7 +46,7 @@ ZipFileMember >> initialize [
 	dataOffset := 0.
 ]
 
-{ #category : #private-writing }
+{ #category : #'private-writing' }
 ZipFileMember >> localHeaderRelativeOffset [
 	^localHeaderRelativeOffset
 ]
@@ -57,7 +57,7 @@ ZipFileMember >> looksLikeDirectory [
 		and: [ uncompressedSize = 0 ]
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	"Assumes aStream positioned after signature"
 
@@ -90,7 +90,7 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	self desiredCompressionMethod: compressionMethod
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> readFrom: aStream [ 
 	"assumes aStream positioned after CD header; leaves stream positioned after my CD entry"
 
@@ -101,7 +101,7 @@ ZipFileMember >> readFrom: aStream [
 
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [ 
 	"Positions stream as necessary. Will return stream to its original position"
 
@@ -142,12 +142,12 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 	aStream position: oldPos.
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> readRawChunk: n [
 	^stream next: n
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> rewindData [
 	super rewindData.
 	(stream isNil or: [ stream closed ])
@@ -156,7 +156,7 @@ ZipFileMember >> rewindData [
 	self skipLocalDirectoryFileHeaderFrom: stream.
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [ 
 	"Assumes that stream is positioned after signature."
 
@@ -176,7 +176,7 @@ ZipFileMember >> stream: aStream externalFileName: aFileName [
 	externalFileName := aFileName.
 ]
 
-{ #category : #private-writing }
+{ #category : #'private-writing' }
 ZipFileMember >> uncompressDataTo: aStream [
 
 	| decoder buffer crcErrorMessage |
@@ -198,7 +198,7 @@ ZipFileMember >> uncompressDataTo: aStream [
 
 ]
 
-{ #category : #private-writing }
+{ #category : #'private-writing' }
 ZipFileMember >> uncompressDataTo: aStream from: start to: finish [
 
 	| decoder buffer chunkSize |
@@ -216,7 +216,7 @@ ZipFileMember >> uncompressDataTo: aStream from: start to: finish [
 
 ]
 
-{ #category : #private-reading }
+{ #category : #'private-reading' }
 ZipFileMember >> unzipTimestamp: dosTimestampInteger [
 
 	^ [ DateAndTime fromDosTimestamp: dosTimestampInteger ]

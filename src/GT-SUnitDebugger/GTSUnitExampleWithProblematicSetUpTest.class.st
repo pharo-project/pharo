@@ -4,7 +4,7 @@ I am not a test! I provide usage examples for the SUnit debugger.
 Class {
 	#name : #GTSUnitExampleWithProblematicSetUpTest,
 	#superclass : #TestCase,
-	#category : #GT-SUnitDebugger
+	#category : #'GT-SUnitDebugger'
 }
 
 { #category : #testing }

@@ -5,7 +5,7 @@ Class {
 		'version',
 		'project'
 	],
-	#category : #Versionner-Tests-Core-DependenciesModel
+	#category : #'Versionner-Tests-Core-DependenciesModel'
 }
 
 { #category : #running }

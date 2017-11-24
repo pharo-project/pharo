@@ -18,7 +18,7 @@ Class {
 		'wantsDropSelector',
 		'dragItemSelector'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #morphic }

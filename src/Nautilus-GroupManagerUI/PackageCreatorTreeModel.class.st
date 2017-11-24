@@ -8,7 +8,7 @@ Class {
 		'groups',
 		'selectedElements'
 	],
-	#category : #Nautilus-GroupManagerUI
+	#category : #'Nautilus-GroupManagerUI'
 }
 
 { #category : #'drag and drop' }

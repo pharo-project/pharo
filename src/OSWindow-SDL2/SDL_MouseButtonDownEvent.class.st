@@ -2,9 +2,9 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_MouseButtonDownEvent,
-	#superclass : #SDL_MouseButtonEvent,
-	#category : #OSWindow-SDL2-Bindings
+	#name : #'SDL_MouseButtonDownEvent',
+	#superclass : #'SDL_MouseButtonEvent',
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

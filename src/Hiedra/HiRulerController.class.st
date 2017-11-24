@@ -11,10 +11,10 @@ Class {
 		'nodes',
 		'treeModel'
 	],
-	#category : #Hiedra-Spec
+	#category : #'Hiedra-Spec'
 }
 
-{ #category : #private-refreshing }
+{ #category : #'private-refreshing' }
 HiRulerController >> buildIndexesByNode [
 	indexesByNode := IdentityDictionary new.
 	nodes withIndexDo: [ :aNode :index |
@@ -23,7 +23,7 @@ HiRulerController >> buildIndexesByNode [
 			put: index ]
 ]
 
-{ #category : #private-refreshing }
+{ #category : #'private-refreshing' }
 HiRulerController >> buildRulerForm [
 	rulerForm := 
 		rulerBuilder
@@ -67,7 +67,7 @@ HiRulerController >> preferredWidth [
 	^ rulerForm width
 ]
 
-{ #category : #private-refreshing }
+{ #category : #'private-refreshing' }
 HiRulerController >> refreshRuler [
 	self buildIndexesByNode.
 	self buildRulerForm.
@@ -109,7 +109,7 @@ HiRulerController >> treeModel: anObject [
 	treeModel := anObject
 ]
 
-{ #category : #private-refreshing }
+{ #category : #'private-refreshing' }
 HiRulerController >> updateFromTree [
 	self values: treeModel roots
 ]

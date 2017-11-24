@@ -13,7 +13,7 @@ Class {
 		'hashBlock',
 		'equalBlock'
 	],
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
 { #category : #accessing }

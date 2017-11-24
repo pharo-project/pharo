@@ -7,7 +7,7 @@ Currently this class silences the SystemAnnouncer and sets the Author to the cla
 Class {
 	#name : #SlotSilentTest,
 	#superclass : #SlotClassBuilderTest,
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
 { #category : #running }

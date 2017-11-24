@@ -12,52 +12,52 @@ Class {
 	#instVars : [
 		'kind'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beAny [
 	"Matches anything but a newline."
 
 	kind := #syntaxAny
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beBeginningOfLine [
 	"Matches empty string at the beginning of a line."
 
 	kind := #syntaxBeginningOfLine
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beBeginningOfWord [
 	"Matches empty string at the beginning of a word."
 
 	kind := #syntaxBeginningOfWord
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beEndOfLine [
 	"Matches empty string at the end of a line."
 
 	kind := #syntaxEndOfLine
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beEndOfWord [
 	"Matches empty string at the end of a word."
 
 	kind := #syntaxEndOfWord
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beNonWordBoundary [
 	"Analog of \B."
 
 	kind := #syntaxNonWordBoundary
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsContextCondition >> beWordBoundary [
 	"Analog of \w (alphanumeric plus _)."
 

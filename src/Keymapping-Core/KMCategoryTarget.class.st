@@ -9,7 +9,7 @@ Class {
 		'category',
 		'morph'
 	],
-	#category : #Keymapping-Core
+	#category : #'Keymapping-Core'
 }
 
 { #category : #'instance creation' }

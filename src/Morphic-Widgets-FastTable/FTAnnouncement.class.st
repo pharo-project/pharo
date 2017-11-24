@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fastTable'
 	],
-	#category : #Morphic-Widgets-FastTable-Announcement
+	#category : #'Morphic-Widgets-FastTable-Announcement'
 }
 
 { #category : #accessing }

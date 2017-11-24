@@ -4,7 +4,7 @@ I contain tests that validate the integrity of the system.
 Class {
 	#name : #ReleaseTest,
 	#superclass : #TestCase,
-	#category : #ReleaseTests-Release
+	#category : #'ReleaseTests-Release'
 }
 
 { #category : #accessing }

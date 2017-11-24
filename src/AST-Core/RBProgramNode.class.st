@@ -38,7 +38,7 @@ Class {
 	#classVars : [
 		'FormatterClass'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #accessing }
@@ -163,7 +163,7 @@ RBProgramNode >> blockVariables [
 	^parent ifNil: [#()] ifNotNil: [parent blockVariables]
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBProgramNode >> canMatchMethod: aCompiledMethod [ 
 	^self sentMessages allSatisfy: 
 			[:each | 
@@ -417,7 +417,7 @@ RBProgramNode >> isLast: aNode [
 	^children notEmpty and: [children last == aNode]
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBProgramNode >> isList [
 	^false
 ]
@@ -442,7 +442,7 @@ RBProgramNode >> isMethod [
 	^false
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBProgramNode >> isPatternNode [
 	^false
 ]
@@ -664,7 +664,7 @@ RBProgramNode >> propertyAt: aKey put: anObject [
 		at: aKey put: anObject
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBProgramNode >> recurseInto [
 	^false
 ]
@@ -722,13 +722,13 @@ RBProgramNode >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
-{ #category : #private-replacing }
+{ #category : #'private-replacing' }
 RBProgramNode >> replaceSourceFrom: aNode [
 	self == aNode
 		ifFalse: [ self clearReplacements ]
 ]
 
-{ #category : #private-replacing }
+{ #category : #'private-replacing' }
 RBProgramNode >> replaceSourceWith: aNode [ 
 	aNode replaceSourceFrom: self
 ]

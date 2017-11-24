@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotBasicTest,
 	#superclass : #SlotSilentTest,
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
 { #category : #'tests-class slots' }
@@ -48,7 +48,7 @@ SlotBasicTest >> testAddSharedVariable [
 
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testBasicClassBuilding [
 
 	aClass := self make: [ :builder |
@@ -60,7 +60,7 @@ SlotBasicTest >> testBasicClassBuilding [
 
 ]
 
-{ #category : #tests-comments }
+{ #category : #'tests-comments' }
 SlotBasicTest >> testClassWithComment [
 
 	aClass := self make: [ :builder |
@@ -74,7 +74,7 @@ SlotBasicTest >> testClassWithComment [
 
 ]
 
-{ #category : #tests-comments }
+{ #category : #'tests-comments' }
 SlotBasicTest >> testClassWithCommentAndStamp [
 
 	aClass := self make: [ :builder |
@@ -89,7 +89,7 @@ SlotBasicTest >> testClassWithCommentAndStamp [
 
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testNewCompiledMethodClass [
 
 	aClass := self makeWithLayout: CompiledMethodLayout.
@@ -99,7 +99,7 @@ SlotBasicTest >> testNewCompiledMethodClass [
 	self deny: aClass isWeak.
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testNewPointerClass [
 
 	aClass := self makeWithLayout: FixedLayout.
@@ -108,7 +108,7 @@ SlotBasicTest >> testNewPointerClass [
 	self assert: aClass instVarNames isEmpty.
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testNewPointerClassWithSlots [
 
 	aClass := self 
@@ -119,7 +119,7 @@ SlotBasicTest >> testNewPointerClassWithSlots [
 	self assert: (aClass instVarNames includes: 'name').
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testNewVariableByteClass [
 
 	aClass := self makeWithLayout: ByteLayout.
@@ -129,7 +129,7 @@ SlotBasicTest >> testNewVariableByteClass [
 	self assert: aClass isVariable.
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testNewVariableWordClass [
 
 	aClass := self makeWithLayout: WordLayout.
@@ -139,7 +139,7 @@ SlotBasicTest >> testNewVariableWordClass [
 	self assert: aClass isVariable.
 ]
 
-{ #category : #tests-basic }
+{ #category : #'tests-basic' }
 SlotBasicTest >> testNewWeakClass [
 
 	aClass := self makeWithLayout: WeakLayout.

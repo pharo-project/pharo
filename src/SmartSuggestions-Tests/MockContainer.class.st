@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #SmartSuggestions-Tests-Mocks
+	#category : #'SmartSuggestions-Tests-Mocks'
 }
 
 { #category : #'instance creation' }

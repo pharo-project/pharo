@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classFactory'
 	],
-	#category : #Versionner-Tests-Core-DependenciesModel
+	#category : #'Versionner-Tests-Core-DependenciesModel'
 }
 
 { #category : #tests }

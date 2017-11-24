@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Scheduler'
 	],
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #testing }
@@ -78,7 +78,7 @@ Delay class >> forSeconds: aNumber [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Delay class >> initialize [
 	"Delay initialize"
 	Scheduler ifNotNil: [ Scheduler stopTimerEventLoop ].

@@ -4,7 +4,7 @@ I represent a Undo operation performed in a EpLogBrowser.
 Class {
 	#name : #EpUndo,
 	#superclass : #EpLogBrowserOperation,
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }

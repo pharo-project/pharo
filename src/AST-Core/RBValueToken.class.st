@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : #AST-Core-Tokens
+	#category : #'AST-Core-Tokens'
 }
 
 { #category : #'instance creation' }
@@ -48,7 +48,7 @@ RBValueToken >> value: anObject [
 	value := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBValueToken >> value: aString start: anInteger [ 
 	value := aString.
 	sourcePointer := anInteger

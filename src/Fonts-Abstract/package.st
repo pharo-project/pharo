@@ -1,1 +1,1 @@
-Package { #name : #Fonts-Abstract }
+Package { #name : #'Fonts-Abstract' }

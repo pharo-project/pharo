@@ -6,7 +6,7 @@ RBProgramNodeVisitor is an abstract visitor for the RBProgramNodes.
 Class {
 	#name : #RBProgramNodeVisitor,
 	#superclass : #Object,
-	#category : #AST-Core-Visitors
+	#category : #'AST-Core-Visitors'
 }
 
 { #category : #visiting }

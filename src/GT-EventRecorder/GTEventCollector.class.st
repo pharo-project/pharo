@@ -49,7 +49,7 @@ Class {
 		'registry',
 		'updateAnnouncementBlock'
 	],
-	#category : #GT-EventRecorder-Core
+	#category : #'GT-EventRecorder-Core'
 }
 
 { #category : #examples }
@@ -115,7 +115,7 @@ GTEventCollector >> flush [
 	recordedEvents flush
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventCollector >> gtInspectorActionHelp [
 	<gtInspectorAction>
 	^ GLMGenericAction new

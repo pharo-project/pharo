@@ -14,58 +14,58 @@ Class {
 		'methods',
 		'protocols'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> allSubclassesKey [
 
 	^#allSubclasses
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> allSuperclassesKey [
 
 	^#allSuperclasses
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> definitionSourceKey [
 
 	^#definitionSource
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> isPoolKey [
 
 	^#isPool
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> subclassesKey [
 
 	^#subclasses
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> superclassNameKey [
 	
 	^#superclassName
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> superclassesKey [
 
 	^#superclasses
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> traitCompositionSourceKey [
 
 	^#traitCompositionSource
 ]
 
-{ #category : #class-annotations }
+{ #category : #'class-annotations' }
 RGBehaviorDefinition class >> usersKey [
 
 	^#users
@@ -202,7 +202,7 @@ RGBehaviorDefinition >> compiledMethodNamed: selector [
 	ifFalse:[ nil ]
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 RGBehaviorDefinition >> definition [
 
 	^ self definitionSource

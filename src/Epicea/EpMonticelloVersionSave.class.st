@@ -8,7 +8,7 @@ Class {
 		'versionName',
 		'repositoryDescription'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }
@@ -53,7 +53,7 @@ EpMonticelloVersionSave >> hash [
 		bitXor: self repositoryDescription hash
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpMonticelloVersionSave >> initializeWithVersionName: aVersionName repositoryDescription: aRepositoryDescription [ 
 	self initialize.
 	

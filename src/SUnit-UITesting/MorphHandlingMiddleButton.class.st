@@ -9,22 +9,22 @@ Class {
 		'receivedBlueButtonUp',
 		'receivedBlueButtonDown'
 	],
-	#category : #SUnit-UITesting
+	#category : #'SUnit-UITesting'
 }
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 MorphHandlingMiddleButton >> blueButtonDown: anEvent [
 
 	receivedBlueButtonDown := true.
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 MorphHandlingMiddleButton >> blueButtonUp: anEvent [
 
 	receivedBlueButtonUp := true.
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 MorphHandlingMiddleButton >> handlerForBlueButtonDown: anEvent [
 
 	^ self.

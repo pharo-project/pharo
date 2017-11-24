@@ -25,7 +25,7 @@ Class {
 		'arguments',
 		'actWhen'
 	],
-	#category : #Morphic-Widgets-Basic-Buttons
+	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
 { #category : #'instance creation' }
@@ -54,7 +54,7 @@ ThreePhaseButtonMorph class >> radioButton [
 		yourself
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 ThreePhaseButtonMorph >> actWhen: condition [
 	"Accepts symbols:  #buttonDown, #buttonUp, and #whilePressed"
 	actWhen := condition

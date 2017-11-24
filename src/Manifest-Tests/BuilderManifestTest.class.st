@@ -4,7 +4,7 @@ A ManifestBuilderTest is a class to test the behavior of ManifestBuilder
 Class {
 	#name : #BuilderManifestTest,
 	#superclass : #TestCase,
-	#category : #Manifest-Tests
+	#category : #'Manifest-Tests'
 }
 
 { #category : #running }

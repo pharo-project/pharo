@@ -12,7 +12,7 @@ Class {
 		'subMenuSelector',
 		'balloonTextSelector'
 	],
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #accessing }

@@ -6,7 +6,7 @@ Class {
 		'issueNumber',
 		'madeUpTitleString'
 	],
-	#category : #IssueTracking-Tests
+	#category : #'IssueTracking-Tests'
 }
 
 { #category : #running }
@@ -28,7 +28,7 @@ PharoIssueTest >> testCreating [
 	PharoIssue number: 6489.
 ]
 
-{ #category : #tests-implementation }
+{ #category : #'tests-implementation' }
 PharoIssueTest >> testHeaderString [
 	self assert: issue headerString equals: 'Issue 6489: Spec-ify DropListModel / TextModel'
 ]

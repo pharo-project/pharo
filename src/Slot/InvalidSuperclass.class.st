@@ -4,7 +4,7 @@ I am a warning signaled when trying to build a class with an invalid superclass.
 Class {
 	#name : #InvalidSuperclass,
 	#superclass : #ClassBuilderWarning,
-	#category : #Slot-Exception
+	#category : #'Slot-Exception'
 }
 
 { #category : #signalling }

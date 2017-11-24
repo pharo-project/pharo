@@ -8,7 +8,7 @@ Class {
 		'newLocale',
 		'oldLocale'
 	],
-	#category : #System-Localization-Locales
+	#category : #'System-Localization-Locales'
 }
 
 { #category : #'instance creation' }

@@ -9,7 +9,7 @@ Class {
 		'start',
 		'width'
 	],
-	#category : #Athens-Text
+	#category : #'Athens-Text'
 }
 
 { #category : #adding }
@@ -29,7 +29,7 @@ AthensBackgroundChange >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensBackgroundChange >> initialize [
 	width :=0.
 	color := Color transparent.

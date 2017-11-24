@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'renrakuRule'
 	],
-	#category : #Refactoring-Critics-ArchitectureRules
+	#category : #'Refactoring-Critics-ArchitectureRules'
 }
 
 { #category : #testing }

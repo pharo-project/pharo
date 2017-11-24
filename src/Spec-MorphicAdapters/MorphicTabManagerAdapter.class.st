@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'isClosedHolder'
 	],
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'spec protocol' }

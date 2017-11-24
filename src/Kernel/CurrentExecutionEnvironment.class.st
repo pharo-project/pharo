@@ -6,7 +6,7 @@ Look at ExecutionEnvironment for details
 Class {
 	#name : #CurrentExecutionEnvironment,
 	#superclass : #ProcessLocalVariable,
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #controlling }

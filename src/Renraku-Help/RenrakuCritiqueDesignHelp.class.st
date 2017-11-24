@@ -4,7 +4,7 @@ This book contains explanations of the design behind critiques
 Class {
 	#name : #RenrakuCritiqueDesignHelp,
 	#superclass : #RenrakuCritiqueHelp,
-	#category : #Renraku-Help
+	#category : #'Renraku-Help'
 }
 
 { #category : #pages }

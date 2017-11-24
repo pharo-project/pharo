@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'via'
 	],
-	#category : #Balloon-Geometry
+	#category : #'Balloon-Geometry'
 }
 
 { #category : #'instance creation' }

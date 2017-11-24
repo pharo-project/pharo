@@ -10,7 +10,7 @@ Class {
 		'ruler',
 		'rulerBuilder'
 	],
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #'instance creation' }
@@ -33,7 +33,7 @@ HiRulerRenderer >> canvasPointsForAll: aCollectionOfNodes [
 		(rulerBuilder centerOfColumnIndex: rulerPoint x) @ (rulerBuilder centerOfRowIndex: rulerPoint y) ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 HiRulerRenderer >> initializeWithModel: aModel athensCanvas: aCanvas ruler: aRuler [
 	self initialize.
 		

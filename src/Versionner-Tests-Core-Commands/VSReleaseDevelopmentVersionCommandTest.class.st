@@ -6,7 +6,7 @@ Class {
 		'project',
 		'cmd'
 	],
-	#category : #Versionner-Tests-Core-Commands
+	#category : #'Versionner-Tests-Core-Commands'
 }
 
 { #category : #'expected results' }

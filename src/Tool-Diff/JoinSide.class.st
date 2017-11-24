@@ -9,7 +9,7 @@ Class {
 		'color',
 		'text'
 	],
-	#category : #Tool-Diff
+	#category : #'Tool-Diff'
 }
 
 { #category : #accessing }

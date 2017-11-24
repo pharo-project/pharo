@@ -10,7 +10,7 @@ Class {
 		'window',
 		'lastExposeTime'
 	],
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #deleting }

@@ -15,7 +15,7 @@ Class {
 		'sy',
 		'y'
 	],
-	#category : #Athens-Core-Matrices
+	#category : #'Athens-Core-Matrices'
 }
 
 { #category : #transformations }
@@ -25,12 +25,12 @@ AthensAffineTransform >> clearTranslation [
 	x := y := 0.0
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensAffineTransform >> initialize [
 	self loadIdentity
 ]
 
-{ #category : #vector-transform }
+{ #category : #'vector-transform' }
 AthensAffineTransform >> inverseTransform: aPoint [ 
 "  (we assume matrix is never degenerate)"
 	| px py y0 x0 |
@@ -305,7 +305,7 @@ AthensAffineTransform >> sy: number [
 	sy := number
 ]
 
-{ #category : #vector-transform }
+{ #category : #'vector-transform' }
 AthensAffineTransform >> transform: aPoint [ 
 	| px py |
 	
@@ -316,7 +316,7 @@ AthensAffineTransform >> transform: aPoint [
 		y: (shy*px + (sy*py) + y) 
 ]
 
-{ #category : #vector-transform }
+{ #category : #'vector-transform' }
 AthensAffineTransform >> transformX: px Y: py [
 	" transform x and y coordinates by receiver. Answer a Point"
 	^ Point 

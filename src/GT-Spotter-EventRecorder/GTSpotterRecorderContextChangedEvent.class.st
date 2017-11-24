@@ -16,7 +16,7 @@ Class {
 		'currentTextInfo',
 		'previousTextInfo'
 	],
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }
@@ -55,7 +55,7 @@ GTSpotterRecorderContextChangedEvent >> fromAnnouncement: anAnnouncement [
 		ifFalse: [ anAnnouncement previousText beginsWith: anAnnouncement currentText ]).
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTSpotterRecorderContextChangedEvent >> gtInspectorItems [
 	^ OrderedCollection new
 			add: (#isRefinement -> self isRefinement);

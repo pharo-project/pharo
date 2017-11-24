@@ -30,7 +30,7 @@ Class {
 		'size',
 		'posixPermissions'
 	],
-	#category : #FileSystem-Core-Public
+	#category : #'FileSystem-Core-Public'
 }
 
 { #category : #accessing }
@@ -106,7 +106,7 @@ FileSystemDirectoryEntry >> fullName [
 	^ reference fullName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileSystemDirectoryEntry >> initializeWithRef: ref 
 	creation: cTime 
 	modification: mTime 

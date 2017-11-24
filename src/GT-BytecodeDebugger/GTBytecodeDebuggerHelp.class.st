@@ -4,7 +4,7 @@ A utility class containing the help for GT BytecodeDebugger.
 Class {
 	#name : #GTBytecodeDebuggerHelp,
 	#superclass : #GTDebuggerHelp,
-	#category : #GT-BytecodeDebugger-Model
+	#category : #'GT-BytecodeDebugger-Model'
 }
 
 { #category : #accessing }

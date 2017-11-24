@@ -1,1 +1,1 @@
-Package { #name : #Reflectivity-Tests }
+Package { #name : #'Reflectivity-Tests' }

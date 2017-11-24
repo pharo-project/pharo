@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'job'
 	],
-	#category : #Jobs-Announcements
+	#category : #'Jobs-Announcements'
 }
 
 { #category : #'instance creation' }

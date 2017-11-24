@@ -9,7 +9,7 @@ Class {
 		'persistence',
 		'checker'
 	],
-	#category : #System-Identification-Tests
+	#category : #'System-Identification-Tests'
 }
 
 { #category : #testing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MTDevelopmentWorkfowTestWithXMLParser,
 	#superclass : #MTDevelopmentWorkfowTest,
-	#category : #Versionner-Tests-Core-DependenciesModel
+	#category : #'Versionner-Tests-Core-DependenciesModel'
 }
 
 { #category : #utility }

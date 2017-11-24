@@ -15,7 +15,7 @@ Class {
 		'yearType',
 		'date'
 	],
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #'instance creation' }

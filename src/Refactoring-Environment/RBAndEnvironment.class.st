@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'andedEnvironment'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -26,7 +26,7 @@ RBAndEnvironment >> andedEnvironment [
 	^andedEnvironment
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAndEnvironment >> andedEnvironment: aBrowserEnvironment [ 
 	andedEnvironment := aBrowserEnvironment
 ]

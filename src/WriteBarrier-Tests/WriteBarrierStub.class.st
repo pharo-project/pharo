@@ -13,7 +13,7 @@ Class {
 		'var9',
 		'var10'
 	],
-	#category : #WriteBarrier-Tests
+	#category : #'WriteBarrier-Tests'
 }
 
 { #category : #accessing }

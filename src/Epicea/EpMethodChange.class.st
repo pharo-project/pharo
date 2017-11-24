@@ -4,7 +4,7 @@ I represent a change in the method dictionary of a class or a trait.
 Class {
 	#name : #EpMethodChange,
 	#superclass : #EpCodeChange,
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #accessing }

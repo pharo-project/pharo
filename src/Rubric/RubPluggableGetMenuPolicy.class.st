@@ -8,7 +8,7 @@ Class {
 		'getMenuSelector',
 		'menuProvider'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #accessing }

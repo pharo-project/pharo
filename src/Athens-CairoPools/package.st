@@ -1,1 +1,1 @@
-Package { #name : #Athens-CairoPools }
+Package { #name : #'Athens-CairoPools' }

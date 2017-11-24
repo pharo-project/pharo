@@ -4,7 +4,7 @@ I am a specialized OSEnvironment version for *nix systems (Linux, OSX).
 Class {
 	#name : #UnixEnvironment,
 	#superclass : #OSEnvironment,
-	#category : #System-OSEnvironments
+	#category : #'System-OSEnvironments'
 }
 
 { #category : #testing }

@@ -11,7 +11,7 @@ Class {
 		'lineNumbersDisplayMorph',
 		'formatAsYouReadMorph'
 	],
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #querying }
@@ -31,7 +31,7 @@ NautilusAnnotationDisplayer >> backgroundColor [
 		ifFalse: [ clr lighter]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> changeLineNumbersDisplay [
 	self paragraphProvider lineNumbersRuler 
 		ifNil: [ self paragraphProvider withLineNumbers ]
@@ -40,7 +40,7 @@ NautilusAnnotationDisplayer >> changeLineNumbersDisplay [
 	self updateContents
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> changeWrappingPolicy [
 	self paragraphProvider wrapped 
 		ifTrue: [ self paragraphProvider beNotWrapped  ]
@@ -59,18 +59,18 @@ NautilusAnnotationDisplayer >> fontToUse [
 	^ self theme textFont
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> formatAsYouRead [
 	 
 	^ RBProgramNode formatterClass formatAsYouReadPolicy
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> formatAsYouReadLabel [
 	^ 'Format as you read'
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> formatAsYouReadMorph [
 	^ (CheckboxMorph on: self selected: #formatAsYouRead changeSelected: #toggleFormatAsYouRead)
 		getLabelSelector: #formatAsYouReadLabel;
@@ -82,7 +82,7 @@ NautilusAnnotationDisplayer >> formatAsYouReadMorph [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NautilusAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom
@@ -93,7 +93,7 @@ NautilusAnnotationDisplayer >> level [
 	^ 1
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> lineAnnotationMorph [
 	^ (RubTextFieldArea new
 		withoutAnyDecorator;
@@ -105,14 +105,14 @@ NautilusAnnotationDisplayer >> lineAnnotationMorph [
 		yourself
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> lineNumbersDisplayLabel [
 	^ self paragraphProvider lineNumbersRuler  
 		ifNil: [ '+L' ]
 		ifNotNil: [ 'L' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> lineNumbersDisplayLabelMorph [
 	^ (StringMorph contents: self lineNumbersDisplayLabel font: self fontToUse)
 		setBalloonText: 'Let you decide if the code pane should show the line numbers at the left of the code pane or not. +L: Click to add the lines number/L: Click to hide them.';
@@ -127,12 +127,12 @@ NautilusAnnotationDisplayer >> manageLayoutInBounds: aRectangle [
 	^ ret
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> nautilusUI [
 	^ self owner model interactionModel
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.
@@ -167,7 +167,7 @@ NautilusAnnotationDisplayer >> selectionChanged [
 	super selectionChanged
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> spacer: anInteger [
 	^ Morph new
 		borderWidth: 0;
@@ -212,7 +212,7 @@ NautilusAnnotationDisplayer >> themeChanged [
 	super themeChanged
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> toggleFormatAsYouRead [
 	| formatter |
 	formatter := RBProgramNode formatterClass new.
@@ -250,14 +250,14 @@ NautilusAnnotationDisplayer >> updateContents [
 	row width: self innerBounds width
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> wrappingPolicyLabel [
 	^ self paragraphProvider wrapped
 				ifTrue: [ 'W' ]
 				ifFalse: [ 'NW' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 NautilusAnnotationDisplayer >> wrappingPolicyLabelMorph [
 	^ (StringMorph contents: self wrappingPolicyLabel font: self fontToUse)
 		setBalloonText:

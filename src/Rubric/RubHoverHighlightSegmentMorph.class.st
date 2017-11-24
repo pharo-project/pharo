@@ -6,7 +6,7 @@ And my default behavior is to delete myself when the mouse focus leaves me.
 Class {
 	#name : #RubHoverHighlightSegmentMorph,
 	#superclass : #RubTextSegmentMorph,
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #initialization }

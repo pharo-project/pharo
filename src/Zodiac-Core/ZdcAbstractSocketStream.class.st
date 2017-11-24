@@ -15,7 +15,7 @@ Class {
 		'timeout',
 		'debug'
 	],
-	#category : #Zodiac-Core
+	#category : #'Zodiac-Core'
 }
 
 { #category : #'instance creation' }
@@ -51,7 +51,7 @@ ZdcAbstractSocketStream >> bufferSize: numberOfBytes [
 	"Not yet implemented. See #initializeBuffers."
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcAbstractSocketStream >> close [
 	"Close the stream, flush if necessary"
 
@@ -98,14 +98,14 @@ ZdcAbstractSocketStream >> flushWriteBuffer [
 	self subclassResponsibility 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcAbstractSocketStream >> initialize [ 
 	timeout := 5.
 	debug := false.
 	self initializeBuffers 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcAbstractSocketStream >> initializeBuffers [
 	readBuffer := ZdcIOBuffer onByteArrayOfSize: 4096.
 	writeBuffer := ZdcIOBuffer onByteArrayOfSize: 4096
@@ -239,7 +239,7 @@ ZdcAbstractSocketStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcAbstractSocketStream >> on: object [
 	socket := object
 ]

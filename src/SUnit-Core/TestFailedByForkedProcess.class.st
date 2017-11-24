@@ -9,7 +9,7 @@ Also I am signalled first when test itself is failed. By resuming it debugger wi
 Class {
 	#name : #TestFailedByForkedProcess,
 	#superclass : #Error,
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #initialization }

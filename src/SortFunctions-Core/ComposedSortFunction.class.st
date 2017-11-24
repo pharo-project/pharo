@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'baseSortFunction'
 	],
-	#category : #SortFunctions-Core
+	#category : #'SortFunctions-Core'
 }
 
 { #category : #'instance creation' }
@@ -41,7 +41,7 @@ ComposedSortFunction >> hash [
 	^baseSortFunction hash hashMultiply
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 ComposedSortFunction >> initialize [
 	super initialize.
 	baseSortFunction := self class default

@@ -4,7 +4,7 @@ I am the bridge between an ImagePresenter and a AlphaImageMorph
 Class {
 	#name : #MorphicImageAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #initialization }

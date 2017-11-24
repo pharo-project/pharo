@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fillStyles'
 	],
-	#category : #Balloon-Fills
+	#category : #'Balloon-Fills'
 }
 
 { #category : #build }

@@ -4,7 +4,7 @@ I'm a private and internal class to Gofer. I'm a command used to call the class 
 Class {
 	#name : #GoferReinitialize,
 	#superclass : #GoferWorking,
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #running }

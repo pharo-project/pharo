@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'workingCopy'
 	],
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #private }

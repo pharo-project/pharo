@@ -4,7 +4,7 @@ I know how to rename a class variable
 Class {
 	#name : #SugsRenameClassVar,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

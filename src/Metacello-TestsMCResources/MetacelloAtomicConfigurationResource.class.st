@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'monticelloRepository'
 	],
-	#category : #Metacello-TestsMCResources
+	#category : #'Metacello-TestsMCResources'
 }
 
 { #category : #accessing }

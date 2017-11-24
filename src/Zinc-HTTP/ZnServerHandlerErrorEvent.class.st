@@ -4,7 +4,7 @@ ZnServerHandlerErrorEvent signals an error that occurred during handling by the 
 Class {
 	#name : #ZnServerHandlerErrorEvent,
 	#superclass : #ZnServerErrorEvent,
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #printing }

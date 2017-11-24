@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'k'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #running }
@@ -19,7 +19,7 @@ MalHits >> computeHubsFor: aNode [
 	aNode hub: (aNode nextNodes inject: 0 into: [:s :n| s + n auth])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MalHits >> initialize [
 
 	super initialize.

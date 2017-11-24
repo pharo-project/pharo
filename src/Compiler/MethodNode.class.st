@@ -17,7 +17,7 @@ Class {
 		'locationCounter',
 		'localsPool'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -44,7 +44,7 @@ MethodNode >> arguments: aSequence [
 	arguments := aSequence
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MethodNode >> block [
 	^ block
 ]
@@ -472,13 +472,13 @@ MethodNode >> selector [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MethodNode >> selector: symbol [
 
 	selectorOrFalse := symbol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MethodNode >> selector: selOrFalse arguments: args precedence: p temporaries: temps block: blk encoder: anEncoder primitive: prim [ 
 	"Initialize the receiver with respect to the arguments given."
 
@@ -491,7 +491,7 @@ MethodNode >> selector: selOrFalse arguments: args precedence: p temporaries: te
 	primitive := prim
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MethodNode >> selector: selOrFalse arguments: args precedence: p temporaries: temps block: blk encoder: anEncoder primitive: prim properties: propDict [
 	"Initialize the receiver with respect to the arguments given."
 
@@ -514,7 +514,7 @@ MethodNode >> selectorNode [
 		ifFalse: [SelectorNode new key: selectorOrFalse]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MethodNode >> source: stringOrText [
 
 	sourceText := stringOrText
@@ -532,7 +532,7 @@ MethodNode >> sourceText [
 	^ sourceText ifNil: [self printString]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MethodNode >> sourceText: stringOrText [
 
 	sourceText := stringOrText

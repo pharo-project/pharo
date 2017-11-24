@@ -4,7 +4,7 @@ An organization with categories
 Class {
 	#name : #RGOrganization,
 	#superclass : #RGAbstractContainer,
-	#category : #Ring-Core-Containers
+	#category : #'Ring-Core-Containers'
 }
 
 { #category : #accessing }

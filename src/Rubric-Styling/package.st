@@ -1,1 +1,1 @@
-Package { #name : #Rubric-Styling }
+Package { #name : #'Rubric-Styling' }

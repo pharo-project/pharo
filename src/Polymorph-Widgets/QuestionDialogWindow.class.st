@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'answer'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #accessing }

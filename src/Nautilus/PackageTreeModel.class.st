@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #Nautilus-Tree
+	#category : #'Nautilus-Tree'
 }
 
 { #category : #'drag and drop' }
@@ -49,7 +49,7 @@ PackageTreeModel >> groupsAsNodes [
 		sorted: [ :a :b | a name < b name ]
 ]
 
-{ #category : #help-text }
+{ #category : #'help-text' }
 PackageTreeModel >> helpTextFor: aRPackage [
 	"We try to get a configuration class with the same name of the package"
 

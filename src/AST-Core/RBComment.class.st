@@ -30,7 +30,7 @@ Class {
 		'contents',
 		'start'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -69,7 +69,7 @@ RBComment >> stop [
 	^ start + self size - 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBComment >> with: aString at: startPosition [
 	start := startPosition.
 	contents := aString.

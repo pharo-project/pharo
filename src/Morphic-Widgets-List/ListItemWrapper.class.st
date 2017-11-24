@@ -9,7 +9,7 @@ Class {
 		'item',
 		'model'
 	],
-	#category : #Morphic-Widgets-List
+	#category : #'Morphic-Widgets-List'
 }
 
 { #category : #'as yet unclassified' }
@@ -24,7 +24,7 @@ ListItemWrapper class >> with: anObject model: aModel [
 	^self new setItem: anObject model: aModel
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 ListItemWrapper >> acceptDroppingObject: anotherItem [
 
 	^item acceptDroppingObject: anotherItem
@@ -106,7 +106,7 @@ ListItemWrapper >> preferredColor [
 	^ nil
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 ListItemWrapper >> sendSettingMessageTo: aModel [
 
 	aModel 

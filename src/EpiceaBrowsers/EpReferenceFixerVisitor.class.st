@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'referencesMap'
 	],
-	#category : #EpiceaBrowsers-Exporter
+	#category : #'EpiceaBrowsers-Exporter'
 }
 
 { #category : #instanceCreation }

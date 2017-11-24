@@ -4,7 +4,7 @@ I hold default rules used to check quality of code that is proposed for integrat
 Class {
 	#name : #PharoCriticRules,
 	#superclass : #Object,
-	#category : #Refactoring-Critics-DefaultRules
+	#category : #'Refactoring-Critics-DefaultRules'
 }
 
 { #category : #'default rules' }

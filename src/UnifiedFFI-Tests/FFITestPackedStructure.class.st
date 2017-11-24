@@ -9,7 +9,7 @@ Class {
 		'OFFSET_LONG',
 		'OFFSET_SHORT'
 	],
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #'field definition' }

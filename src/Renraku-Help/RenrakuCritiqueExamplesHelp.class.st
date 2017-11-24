@@ -4,7 +4,7 @@ In the topics of this book You will find references to the concrete critiques im
 Class {
 	#name : #RenrakuCritiqueExamplesHelp,
 	#superclass : #RenrakuCritiqueHelp,
-	#category : #Renraku-Help
+	#category : #'Renraku-Help'
 }
 
 { #category : #accessing }

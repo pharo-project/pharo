@@ -4,10 +4,10 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DAClassToDependencyNode >> browseInOtherNautilus [
 	self browseClass: self content browse
 ]

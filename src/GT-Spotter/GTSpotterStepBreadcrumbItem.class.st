@@ -7,7 +7,7 @@ Class {
 		'stepModel',
 		'isTriangleVisible'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #actions }
@@ -77,7 +77,7 @@ GTSpotterStepBreadcrumbItem >> newTriangleBrick [
 	^ GLMBrick new
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterStepBreadcrumbItem >> onThemerChanged [
 	super onThemerChanged.
 	

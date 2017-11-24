@@ -24,7 +24,7 @@ Class {
 		'seen',
 		'rPackageSet'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #'instance creation' }

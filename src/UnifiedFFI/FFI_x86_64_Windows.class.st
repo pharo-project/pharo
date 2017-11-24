@@ -9,8 +9,8 @@ Structures are never split into registers with this ABI.
 These ABI details are very important to keep in mind for receiving callbacks.
 "
 Class {
-	#name : #FFI_x86_64_Windows,
-	#superclass : #FFI_x86_64,
+	#name : #'FFI_x86_64_Windows',
+	#superclass : #'FFI_x86_64',
 	#category : #UnifiedFFI
 }
 

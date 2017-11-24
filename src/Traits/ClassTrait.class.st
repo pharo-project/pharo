@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'baseTrait'
 	],
-	#category : #Traits-Kernel
+	#category : #'Traits-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -45,7 +45,7 @@ ClassTrait >> addSubclass: aClass [
 	"Do nothing."
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ClassTrait >> adoptInstance: oldInstance from: oldMetaClass [ 
 	^self error: 'Traits cannot adopt instances'.
 ]
@@ -214,7 +214,7 @@ ClassTrait >> copy [
 		yourself
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 ClassTrait >> definition [
 	^String streamContents: [:stream |
 		stream
@@ -251,7 +251,7 @@ ClassTrait >> initializeWithBaseTrait: aTrait [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ClassTrait >> instanceVariableNames: instVarString [
 	"Compatibility purposes"
 ]
@@ -387,7 +387,7 @@ ClassTrait >> sharedPools [
 	^OrderedCollection new.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ClassTrait >> slots: slotDefinition [ 
 	"Compatibility purposes"
 ]
@@ -427,7 +427,7 @@ ClassTrait >> uses: aTraitCompositionOrArray [
 		classModificationAppliedTo: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ClassTrait >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
 	| newComposition newMetaClass copyOfOldMetaClass |
 	
@@ -442,7 +442,7 @@ ClassTrait >> uses: aTraitCompositionOrArray instanceVariableNames: instVarStrin
 		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ClassTrait >> uses: aTraitCompositionOrArray slots: slotArray [ 
 	| newComposition newMetaClass copyOfOldMetaClass |
 	

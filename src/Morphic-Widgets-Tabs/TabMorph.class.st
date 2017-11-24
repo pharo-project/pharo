@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'Icons'
 	],
-	#category : #Morphic-Widgets-Tabs
+	#category : #'Morphic-Widgets-Tabs'
 }
 
 { #category : #icons }
@@ -37,7 +37,7 @@ TabMorph class >> closeHalfOverIcon [
 		ifAbsentPut: [ self closeHalfOverIconContents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> closeHalfOverIconContents [
 
 	^ Form
@@ -55,7 +55,7 @@ TabMorph class >> closeIcon [
 		ifAbsentPut: [ self closeIconContents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> closeIconContents [
 
 	^ Form
@@ -73,7 +73,7 @@ TabMorph class >> closeOverIcon [
 		ifAbsentPut: [ self closeOverIconContents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> closeOverIconContents [
 
 	^ Form
@@ -158,7 +158,7 @@ TabMorph class >> refreshIcon10 [
 		ifAbsentPut: [ self refreshIcon10Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon10Contents [
 
 	^ Form
@@ -168,7 +168,7 @@ TabMorph class >> refreshIcon10Contents [
 		offset: 0@0
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon1Contents [
 
 	^ Form
@@ -186,7 +186,7 @@ TabMorph class >> refreshIcon2 [
 		ifAbsentPut: [ self refreshIcon2Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon2Contents [
 
 	^ Form
@@ -204,7 +204,7 @@ TabMorph class >> refreshIcon3 [
 		ifAbsentPut: [ self refreshIcon3Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon3Contents [
 
 	^ Form
@@ -222,7 +222,7 @@ TabMorph class >> refreshIcon4 [
 		ifAbsentPut: [ self refreshIcon4Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon4Contents [
 
 	^ Form
@@ -240,7 +240,7 @@ TabMorph class >> refreshIcon5 [
 		ifAbsentPut: [ self refreshIcon5Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon5Contents [
 
 	^ Form
@@ -258,7 +258,7 @@ TabMorph class >> refreshIcon6 [
 		ifAbsentPut: [ self refreshIcon6Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon6Contents [
 
 	^ Form
@@ -276,7 +276,7 @@ TabMorph class >> refreshIcon7 [
 		ifAbsentPut: [ self refreshIcon7Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon7Contents [
 
 	^ Form
@@ -294,7 +294,7 @@ TabMorph class >> refreshIcon8 [
 		ifAbsentPut: [ self refreshIcon8Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon8Contents [
 
 	^ Form
@@ -312,7 +312,7 @@ TabMorph class >> refreshIcon9 [
 		ifAbsentPut: [ self refreshIcon9Contents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 TabMorph class >> refreshIcon9Contents [
 
 	^ Form
@@ -322,7 +322,7 @@ TabMorph class >> refreshIcon9Contents [
 		offset: 0@0
 ]
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabMorph >> actionOffset [
 
 	^ 4
@@ -353,7 +353,7 @@ TabMorph >> addActions: aCollection [
 	actions addAll: aCollection
 ]
 
-{ #category : #icons-actions }
+{ #category : #'icons-actions' }
 TabMorph >> addActionsToIcon [
 
 	closeIcon 
@@ -362,7 +362,7 @@ TabMorph >> addActionsToIcon [
 		on: #mouseLeave send: #mouseLeaveIcon to: self
 ]
 
-{ #category : #private-icons }
+{ #category : #'private-icons' }
 TabMorph >> addIcon [
 
 	self
@@ -410,18 +410,18 @@ TabMorph >> addToSelection [
 	"No need to change here since the toolbar I belong to will do it"
 ]
 
-{ #category : #private-drawing }
+{ #category : #'private-drawing' }
 TabMorph >> backgroundColor [
 	^ state backgroundColor
 ]
 
-{ #category : #private-drawing }
+{ #category : #'private-drawing' }
 TabMorph >> borderColor [
 	"I do not use #borderColor because I want a light border"
 	^ Smalltalk ui theme lightBackgroundColor
 ]
 
-{ #category : #private-drawing }
+{ #category : #'private-drawing' }
 TabMorph >> buildBorderVertices [
 	
 	^ state buildBorderVertices
@@ -436,7 +436,7 @@ TabMorph >> buildLabel: text withIcon: icon [
 		yourself
 ]
 
-{ #category : #private-drawing }
+{ #category : #'private-drawing' }
 TabMorph >> buildVerticesFrom: borderVertices [
 	
 	^ state buildVerticesFrom: borderVertices
@@ -469,7 +469,7 @@ TabMorph >> defaultBounds [
 	^ 0@0 corner: 100@(self class defaultHeight)
 ]
 
-{ #category : #private-icons }
+{ #category : #'private-icons' }
 TabMorph >> defaultIcon [
 	^ self iconNamed: #blankIcon
 ]
@@ -576,7 +576,7 @@ TabMorph >> icon: anIcon [
 		ifNotNil: [ label icon: (AlphaImageMorph new image: anIcon) ]
 ]
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabMorph >> iconRightOffset [
 
 	^ 10
@@ -613,13 +613,13 @@ TabMorph >> label: aString [
 	label morph: aString asMorph
 ]
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabMorph >> labelBottomOffset [
 
 	^ 5
 ]
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabMorph >> labelRightOffset [
 
 	^ 12
@@ -643,7 +643,7 @@ TabMorph >> menu: aMenu [
 	menu := aMenu
 ]
 
-{ #category : #private-icons }
+{ #category : #'private-icons' }
 TabMorph >> menuIcon [
 	
 	^ self class menuIcon
@@ -690,7 +690,7 @@ TabMorph >> mouseDown: event [
 	self flag: 'ToDo: Add drag'
 ]
 
-{ #category : #icons-actions }
+{ #category : #'icons-actions' }
 TabMorph >> mouseEnterIcon [
 
 	closeable ifFalse: [ ^ self ].
@@ -698,7 +698,7 @@ TabMorph >> mouseEnterIcon [
 	closeIcon image: self class closeOverIcon
 ]
 
-{ #category : #icons-actions }
+{ #category : #'icons-actions' }
 TabMorph >> mouseLeaveIcon [
 
 	closeable ifFalse: [ ^ self ].

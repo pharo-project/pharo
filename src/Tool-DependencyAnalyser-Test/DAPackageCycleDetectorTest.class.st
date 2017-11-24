@@ -12,7 +12,7 @@ Class {
 		'cycleB',
 		'cycleC'
 	],
-	#category : #Tool-DependencyAnalyser-Test
+	#category : #'Tool-DependencyAnalyser-Test'
 }
 
 { #category : #utility }

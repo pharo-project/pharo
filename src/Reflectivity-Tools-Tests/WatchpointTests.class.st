@@ -1,7 +1,7 @@
 Class {
 	#name : #WatchpointTests,
 	#superclass : #TestCase,
-	#category : #Reflectivity-Tools-Tests
+	#category : #'Reflectivity-Tools-Tests'
 }
 
 { #category : #adding }

@@ -1,7 +1,7 @@
 Class {
 	#name : #LocaleChangedTest,
 	#superclass : #TestCase,
-	#category : #System-Localization-Tests
+	#category : #'System-Localization-Tests'
 }
 
 { #category : #'private accessing' }

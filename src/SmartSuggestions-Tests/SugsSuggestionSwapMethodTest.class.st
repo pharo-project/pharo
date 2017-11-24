@@ -4,7 +4,7 @@ SUnit tests for the swap method suggestion
 Class {
 	#name : #SugsSuggestionSwapMethodTest,
 	#superclass : #SugsSuggestionTest,
-	#category : #SmartSuggestions-Tests-Tests
+	#category : #'SmartSuggestions-Tests-Tests'
 }
 
 { #category : #tests }

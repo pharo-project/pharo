@@ -22,7 +22,7 @@ Class {
 	#pools : [
 		'ZipConstants'
 	],
-	#category : #Compression-Streams
+	#category : #'Compression-Streams'
 }
 
 { #category : #accessing }
@@ -213,7 +213,7 @@ ZipWriteStream class >> updateCrc: oldCrc from: start to: stop in: aCollection [
 	^ CRC update: oldCrc from: start to: stop in: aCollection
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 ZipWriteStream >> close [
 	self deflateBlock.
 	self flushBlock: true.

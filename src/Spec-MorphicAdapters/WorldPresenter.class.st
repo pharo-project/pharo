@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'widget'
 	],
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #specs }

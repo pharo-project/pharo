@@ -4,7 +4,7 @@ I am a repository of entries.
 Class {
 	#name : #OmStore,
 	#superclass : #Object,
-	#category : #Ombu-Stores
+	#category : #'Ombu-Stores'
 }
 
 { #category : #accessing }

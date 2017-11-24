@@ -4,7 +4,7 @@ I'm a package selection.
 Class {
 	#name : #PackageTreePackageSelection,
 	#superclass : #PackageTreeSelection,
-	#category : #Nautilus-Tree
+	#category : #'Nautilus-Tree'
 }
 
 { #category : #'instance creation' }

@@ -7,7 +7,7 @@ temporarirly rebind it in a nested manner.
 Class {
 	#name : #DynamicVariable,
 	#superclass : #ProcessSpecificVariable,
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #accessing }

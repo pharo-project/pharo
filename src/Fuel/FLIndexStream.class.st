@@ -8,7 +8,7 @@ Class {
 		'stream',
 		'digits'
 	],
-	#category : #Fuel-Streams
+	#category : #'Fuel-Streams'
 }
 
 { #category : #'instance creation' }
@@ -22,7 +22,7 @@ FLIndexStream class >> on: aStream digits: aNumberOfDigits [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLIndexStream >> initializeOn: aStream digits: aNumberOfDigits [
 
 	self initialize.

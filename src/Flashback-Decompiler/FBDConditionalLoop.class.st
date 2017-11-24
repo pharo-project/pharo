@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'exitCondition'
 	],
-	#category : #Flashback-Decompiler
+	#category : #'Flashback-Decompiler'
 }
 
 { #category : #accessing }

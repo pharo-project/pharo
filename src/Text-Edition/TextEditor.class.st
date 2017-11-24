@@ -22,7 +22,7 @@ Class {
 		'cmdActions',
 		'shiftCmdActions'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #shortcuts }
@@ -1172,7 +1172,7 @@ TextEditor >> encompassParagraph: anInterval [
 
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 TextEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
@@ -1295,7 +1295,7 @@ TextEditor >> findAgainAndReplace [
 
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findAll: aRegex endingAt: searchIdx [ 
 	| ranges |
 	ranges := aRegex matchingRangesIn: (self string copyFrom: 1 to: searchIdx).
@@ -1303,7 +1303,7 @@ TextEditor >> findAll: aRegex endingAt: searchIdx [
 			
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findAll: aRegex startingAt: searchIdx [ 
 	| ranges |
 	ranges := aRegex matchingRangesIn: (self string copyFrom: searchIdx to: self string size).
@@ -1311,7 +1311,7 @@ TextEditor >> findAll: aRegex startingAt: searchIdx [
 			
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchBackwards [
 	| oldSelectionInterval where |
 	self closeTypeIn.
@@ -1324,7 +1324,7 @@ TextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchB
 	^ where
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findAndSelectNextOccurenceOf: aRegex [
 	| where |
 	where := self findNext: aRegex startingAt: self stopIndex.
@@ -1333,7 +1333,7 @@ TextEditor >> findAndSelectNextOccurenceOf: aRegex [
 	^ where
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
 	| where |
 	where := self findPrevious: aRegex startingAt: self startIndex.
@@ -1342,7 +1342,7 @@ TextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
 	^ where
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findNext: aRegex startingAt: searchIdx [ 
 	| strm match range |
 	strm := (self string copyFrom: searchIdx to: self string size) readStream.
@@ -1352,14 +1352,14 @@ TextEditor >> findNext: aRegex startingAt: searchIdx [
 	^ range
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findNextString: aSubstring startingAt: searchIdx [ 
 	| idx |
 	idx := self string findString: aSubstring startingAt: searchIdx.
 	^ idx isZero ifFalse: [idx to: idx + aSubstring size - 1]
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findPrevious: aRegex startingAt: searchIdx [ 
 	| allRanges |
 	allRanges := self findAll: aRegex endingAt: searchIdx.
@@ -1373,17 +1373,17 @@ TextEditor >> findRegex [
 	^ self findReplaceService findRegex
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findReplaceService [
 	^ FindReplaceService default
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findText [
 	^ self findReplaceService findText
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> findText: aStringOrText [
 	self findReplaceService findText: aStringOrText 
 ]
@@ -1479,7 +1479,7 @@ TextEditor >> handleKeystrokeAction: aBlock [
 	self storeSelectionInParagraph
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> hasCaret [
 	^self editingState markBlock = self editingState pointBlock
 ]
@@ -1601,7 +1601,7 @@ TextEditor >> indent: delta fromStream: inStream toStream: outStream [
 				skip := ch == cr ifTrue: [delta] ifFalse: [skip + 1]]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TextEditor >> initWithMorph: aMorph [
 	morph := aMorph.
 	self resetState 
@@ -1706,17 +1706,17 @@ TextEditor >> makeUppercase: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> markBlock [
 	^ self editingState markBlock
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> markIndex [
 	^ self editingState markBlock stringIndex
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> markIndex: anIndex [
 	self editingState markBlock: (self paragraph characterBlockForIndex: anIndex)
 
@@ -1947,17 +1947,17 @@ TextEditor >> pluggableYellowButtonActivity: shiftKeyState [
 			^ true]
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> pointBlock [
 	^ self editingState pointBlock
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> pointIndex [
 	^ self editingState pointBlock stringIndex
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> pointIndex: anIndex [
 	self editingState pointBlock: (self paragraph characterBlockForIndex: anIndex)
 
@@ -2017,7 +2017,7 @@ TextEditor >> redo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #undoers-redoers }
+{ #category : #'undoers-redoers' }
 TextEditor >> redoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: self selectionInterval with: aText and:
@@ -2043,7 +2043,7 @@ TextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 			undoArray: {morph. #undoTypeIn:interval:. {prevSel. currInterval first to: currInterval first + newText size - 1}}]
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> replaceAll: aRegex with: aText [
 	| selec ranges |
 	self editingState undoManager openRecordGroup.
@@ -2056,7 +2056,7 @@ TextEditor >> replaceAll: aRegex with: aText [
 
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 TextEditor >> replaceAll: aRegex with: aText startingAt: startIdx [
 	| selec ranges |
 	self editingState undoManager openRecordGroup.
@@ -2075,7 +2075,7 @@ TextEditor >> replaceSelectionWith: aText [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TextEditor >> resetState [ 
 	"Establish the initial conditions for editing the paragraph: place caret 
 	before first character, set the emphasis to that of the first character,
@@ -2210,14 +2210,14 @@ TextEditor >> selectLine [
 	self selectInterval: (self encompassParagraph: self selectionInterval)
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 
 	^self text copyFrom: self startIndex to: self stopIndex - 1 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> selectionAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently 
 	selected."
@@ -2314,7 +2314,7 @@ TextEditor >> shiftedTextPaneMenuRequest [
 	^ self pluggableYellowButtonActivity: true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> startBlock [
 	^ self editingState pointBlock min: self editingState markBlock
 ]
@@ -2325,7 +2325,7 @@ TextEditor >> startDrag: event [
 	self morph startDrag: (event translatedBy: self morph editView topLeft)
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> startIndex [
 	^ self startBlock stringIndex
 ]
@@ -2340,23 +2340,23 @@ TextEditor >> startOfTyping: anIntegerIndex [
 	self editingState startOfTyping:  anIntegerIndex
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TextEditor >> stateArray [
 	^ Array with: self editingState
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TextEditor >> stateArrayPut: stateArray [
 	editingState := stateArray at: 1.
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> stopBlock [
 	^ self editingState pointBlock max: self editingState markBlock
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> stopIndex [
 	^ self stopBlock stringIndex
 ]
@@ -2505,14 +2505,14 @@ TextEditor >> undo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #undoers-redoers }
+{ #category : #'undoers-redoers' }
 TextEditor >> undoRedoExchange: aninterval with: anotherInterval [
 	self selectInvisiblyFrom: aninterval first to: aninterval last.
 	self exchangeWith: anotherInterval
 
 ]
 
-{ #category : #undoers-redoers }
+{ #category : #'undoers-redoers' }
 TextEditor >> undoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: anInterval with: aText and:
@@ -2520,7 +2520,7 @@ TextEditor >> undoTypeIn: aText interval: anInterval [
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 TextEditor >> unselect [
 	self markBlock: self pointBlock copy
 ]

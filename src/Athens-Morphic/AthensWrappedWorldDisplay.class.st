@@ -14,7 +14,7 @@ Class {
 		'realDisplay',
 		'wrapMorph'
 	],
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #'instance creation' }

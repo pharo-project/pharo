@@ -4,7 +4,7 @@ I'm in charge to style an ast when there are breakpoints
 Class {
 	#name : #BreakpointIconStyler,
 	#superclass : #IconStyler,
-	#category : #Reflectivity-Tools-Breakpoints
+	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
 { #category : #defaults }

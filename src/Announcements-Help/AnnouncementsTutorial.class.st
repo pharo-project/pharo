@@ -5,7 +5,7 @@ This is a custom help book providing a tutorial for the announcements framework.
 Class {
 	#name : #AnnouncementsTutorial,
 	#superclass : #AnnouncementsHelp,
-	#category : #Announcements-Help
+	#category : #'Announcements-Help'
 }
 
 { #category : #accessing }

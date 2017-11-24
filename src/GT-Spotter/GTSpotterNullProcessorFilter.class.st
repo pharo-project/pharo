@@ -4,7 +4,7 @@ I implement a filtering strategy for processors that always returns true. Use me
 Class {
 	#name : #GTSpotterNullProcessorFilter,
 	#superclass : #GTSpotterProcessorFilter,
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #testing }

@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'toolbarBox'
 	],
-	#category : #OSWindow-Core-Morphic
+	#category : #'OSWindow-Core-Morphic'
 }
 
 { #category : #callbacks }
@@ -22,7 +22,7 @@ GLMOSWindowWorldMorph >> actOnWindowRequest: ann [
 	ann action value: self	
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 GLMOSWindowWorldMorph >> delete [
 	self model notNil ifTrue: [self model unregisterFromAllAnnouncements].
 	super delete

@@ -4,7 +4,7 @@ I represent the mode to use for editing smalltalk script (class creation script 
 Class {
 	#name : #RubSmalltalkScriptingMode,
 	#superclass : #RubSmalltalkCodeMode,
-	#category : #Rubric-Editing-Code
+	#category : #'Rubric-Editing-Code'
 }
 
 { #category : #menu }
@@ -22,7 +22,7 @@ RubSmalltalkScriptingMode class >> label [
 	^ 'Smalltalk script'
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkScriptingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.
 	self textArea shoutStyler beForSmalltalkScripting

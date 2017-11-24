@@ -20,7 +20,7 @@ Class {
 		'deselectAllButton',
 		'fileInSelectedButton'
 	],
-	#category : #Tool-ExternalBrowser
+	#category : #'Tool-ExternalBrowser'
 }
 
 { #category : #browsing }

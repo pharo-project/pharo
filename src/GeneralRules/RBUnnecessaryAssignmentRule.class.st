@@ -4,7 +4,7 @@ Checks for assignements to temporaries that are not used afterwards.
 Class {
 	#name : #RBUnnecessaryAssignmentRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

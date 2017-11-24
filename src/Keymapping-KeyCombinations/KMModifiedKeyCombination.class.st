@@ -20,7 +20,7 @@ Class {
 		'modifier',
 		'character'
 	],
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #'instance creation' }

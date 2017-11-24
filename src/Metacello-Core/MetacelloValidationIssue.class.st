@@ -7,7 +7,7 @@ Class {
 		'reasonCode',
 		'callSite'
 	],
-	#category : #Metacello-Core-Validation
+	#category : #'Metacello-Core-Validation'
 }
 
 { #category : #'instance creation' }

@@ -23,7 +23,7 @@ Class {
 		'flags',
 		'nextCell'
 	],
-	#category : #Morphic-Base-Layouts
+	#category : #'Morphic-Base-Layouts'
 }
 
 { #category : #accessing }

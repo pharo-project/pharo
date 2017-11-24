@@ -5,7 +5,7 @@ I have no test fixtures.
 Class {
 	#name : #ReadStreamTest,
 	#superclass : #TestCase,
-	#category : #Collections-Tests-Streams
+	#category : #'Collections-Tests-Streams'
 }
 
 { #category : #'accessing - defaults' }

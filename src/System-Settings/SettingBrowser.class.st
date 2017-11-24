@@ -189,7 +189,7 @@ Class {
 		'searchedTextList',
 		'regexpSearch'
 	],
-	#category : #System-Settings-Browser
+	#category : #'System-Settings-Browser'
 }
 
 { #category : #'private helpers' }
@@ -646,7 +646,7 @@ SettingBrowser >> regexpSearch: aBoolean [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SettingBrowser >> release [
 	treeHolder release.
 	treeHolder := nil.

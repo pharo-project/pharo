@@ -8,7 +8,7 @@ Class {
 		'next',
 		'analysis'
 	],
-	#category : #Fuel-Mappers
+	#category : #'Fuel-Mappers'
 }
 
 { #category : #accessing }
@@ -18,7 +18,7 @@ FLMapper >> analysis: anAnalysis [
 	next ifNotNil: [ next analysis: anAnalysis ]
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: clusterFactory [
 
 	| bucket |
@@ -32,7 +32,7 @@ FLMapper >> clusterInstanceOf: aClusterClass keyInBucket: clusterKey factory: cl
 
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLMapper >> clusterKeyedByClusterName: aClusterClass [
 
 	^ self
@@ -40,7 +40,7 @@ FLMapper >> clusterKeyedByClusterName: aClusterClass [
 		factory:  [ aClusterClass newAnalyzing ]
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLMapper >> clusterKeyedByClusterName: aClusterClass factory: clusterFactory [
 
 	^ self
@@ -50,7 +50,7 @@ FLMapper >> clusterKeyedByClusterName: aClusterClass factory: clusterFactory [
 
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLMapper >> clusterKeyedByObjectClass: clusterClass class: objectClass [
 
 	^ self 
@@ -70,7 +70,7 @@ FLMapper >> mapAndTrace: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLMapper >> mapAndTraceByClusterName: anObject to: aClusterClass [
 
 	(self clusterKeyedByClusterName: aClusterClass)
@@ -78,7 +78,7 @@ FLMapper >> mapAndTraceByClusterName: anObject to: aClusterClass [
 
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLMapper >> mapAndTraceByObjectClass: anObject to: aClusterClass [
 
 	(self clusterKeyedByObjectClass: aClusterClass class: anObject class)

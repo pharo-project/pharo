@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'spotterModel'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #building }

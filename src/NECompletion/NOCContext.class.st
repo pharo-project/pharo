@@ -5,7 +5,7 @@ I do the same as my parent but for this specific algorithm
 Class {
 	#name : #NOCContext,
 	#superclass : #NECContext,
-	#category : #NECompletion-OCompletion
+	#category : #'NECompletion-OCompletion'
 }
 
 { #category : #'model creation' }

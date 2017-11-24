@@ -16,7 +16,7 @@ Class {
 		'newName',
 		'parseTree'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -39,7 +39,7 @@ RBRenameTemporaryRefactoring class >> renameTemporaryFrom: anInterval to: newNam
 		newName: newName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRenameTemporaryRefactoring >> class: aClass selector: aSelector interval: anInterval newName: aString [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

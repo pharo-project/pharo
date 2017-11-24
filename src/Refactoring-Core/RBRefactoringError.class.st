@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'actionBlock'
 	],
-	#category : #Refactoring-Core-Support
+	#category : #'Refactoring-Core-Support'
 }
 
 { #category : #signalling }

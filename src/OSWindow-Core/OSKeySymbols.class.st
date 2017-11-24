@@ -242,7 +242,7 @@ Class {
 		'OSK_y',
 		'OSK_z'
 	],
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #'as yet unclassified' }

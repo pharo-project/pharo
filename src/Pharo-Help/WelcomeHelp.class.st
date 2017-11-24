@@ -5,7 +5,7 @@ I pass through basic concepts to getting started with Pharo.
 Class {
 	#name : #WelcomeHelp,
 	#superclass : #CustomHelp,
-	#category : #Pharo-Help
+	#category : #'Pharo-Help'
 }
 
 { #category : #accessing }

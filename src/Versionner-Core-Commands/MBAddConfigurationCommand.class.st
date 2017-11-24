@@ -4,7 +4,7 @@ Command to add a configuration in Versionner
 Class {
 	#name : #MBAddConfigurationCommand,
 	#superclass : #MBDevCycleCommands,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

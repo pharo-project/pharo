@@ -10,10 +10,10 @@ Class {
 		'menuButton',
 		'numberOfSelectedTabs'
 	],
-	#category : #Morphic-Widgets-Tabs
+	#category : #'Morphic-Widgets-Tabs'
 }
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabBarMorph >> actionOffset [
 	^ 4
 ]
@@ -52,14 +52,14 @@ TabBarMorph >> addActionsFor: aTab [
 		rightOffset := rightOffset + each icon width + self actionOffset]
 ]
 
-{ #category : #private-history }
+{ #category : #'private-history' }
 TabBarMorph >> addFirstInHistory: aTab [
 
 	self removeFromHistory: aTab.
 	selectionHistory addFirst: aTab
 ]
 
-{ #category : #private-history }
+{ #category : #'private-history' }
 TabBarMorph >> addInHistory: aTab [
 
 	self removeFromHistory: aTab.
@@ -210,7 +210,7 @@ TabBarMorph >> delete [
 	self triggerEvent: #barDeleted with: self
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> deleteSelectedTabs [
 	
 	self selectedTabs do: [:e | e close ].
@@ -287,12 +287,12 @@ TabBarMorph >> isMultiSelection [
 	^ numberOfSelectedTabs > 1
 ]
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabBarMorph >> menuButtonHeight [
 	^ 16
 ]
 
-{ #category : #private-constants }
+{ #category : #'private-constants' }
 TabBarMorph >> menuButtonWidth [
 	^ 16
 ]
@@ -351,13 +351,13 @@ TabBarMorph >> registerActionsFor: aTab [
 		when: #tabEmptyContents send: #tabEmptyContents: to: self
 ]
 
-{ #category : #private-history }
+{ #category : #'private-history' }
 TabBarMorph >> removeFromHistory: aTab [
 
 	selectionHistory remove: aTab ifAbsent: [  ].
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> removeTab: aTab [
 	| nextSelection |
 
@@ -385,7 +385,7 @@ TabBarMorph >> selectLastTab [
 	tabs last selected: true
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> selectNext [
 	| index nextSelection |
 	
@@ -395,7 +395,7 @@ TabBarMorph >> selectNext [
 	nextSelection selected: true.
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> selectPrevious [
 	| index nextSelection |
 	
@@ -430,7 +430,7 @@ TabBarMorph >> selectedTabs [
 	^ (selectionHistory last: numberOfSelectedTabs) reversed
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabAddedToSelection: aTab [
 
 	aTab selected ifTrue: [ ^ self ].
@@ -442,13 +442,13 @@ TabBarMorph >> tabAddedToSelection: aTab [
 	self triggerEvent: #tabAddedToSelection with: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabDeleted: aTab [
 
 	self removeTab: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabEmptyContents: aTab [
 
 	self selectedTab = aTab ifFalse: [ ^ self ].
@@ -460,7 +460,7 @@ TabBarMorph >> tabEmptyContents: aTab [
 	self triggerEvent: #tabEmptyContents with: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabRefreshed: aTab [
 
 	self selectedTab = aTab ifFalse: [ ^ self ].
@@ -468,7 +468,7 @@ TabBarMorph >> tabRefreshed: aTab [
 	self triggerEvent: #tabRefreshed with: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabRemovedFromSelection: aTab [
 
 	numberOfSelectedTabs == 1 ifTrue: [ ^ self ].
@@ -484,7 +484,7 @@ TabBarMorph >> tabRemovedFromSelection: aTab [
 	self triggerEvent: #tabRemovedFromSelection with: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabResetSelection: aTab [
 	"Clicked on an already clicked tab, since it can happened after a multi selection, I have to clear the selection except for this tab"
 	
@@ -499,7 +499,7 @@ TabBarMorph >> tabResetSelection: aTab [
 	self triggerEvent: #tabResetSelection with: aTab
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabSelectTo: aTab [
 	| index selectedIndex |
 	
@@ -519,7 +519,7 @@ TabBarMorph >> tabSelectTo: aTab [
 	self adjustLayout.
 ]
 
-{ #category : #private-actions }
+{ #category : #'private-actions' }
 TabBarMorph >> tabSelected: aTab [
 
 	self isMultiSelection

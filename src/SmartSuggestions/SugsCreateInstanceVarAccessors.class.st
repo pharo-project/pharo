@@ -4,7 +4,7 @@ I know how to create accessors for an instance var
 Class {
 	#name : #SugsCreateInstanceVarAccessors,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

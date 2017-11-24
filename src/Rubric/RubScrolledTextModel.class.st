@@ -14,7 +14,7 @@ Class {
 		'textSegments',
 		'interactionModel'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #'text managing' }
@@ -57,7 +57,7 @@ RubScrolledTextModel >> cancelEdits [
 	self clearUserEdits  
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubScrolledTextModel >> clearUndoManager [
 	self reconfigureViewWith: [ :view | view textArea editingState clearUndoManager: nil ]
 ]
@@ -102,7 +102,7 @@ RubScrolledTextModel >> getText [
 	^ self text
 ]
 
-{ #category : #necompletion-extensions }
+{ #category : #'necompletion-extensions' }
 RubScrolledTextModel >> guessTypeForName: aString [
 	"Packaging notes:
 	Since this method is necessary for Ecompletion to work we had the following possibilities:
@@ -152,7 +152,7 @@ RubScrolledTextModel >> interactionModel: anObject [
 	interactionModel := anObject
 ]
 
-{ #category : #necompletion-extensions }
+{ #category : #'necompletion-extensions' }
 RubScrolledTextModel >> isCodeCompletionAllowed [
 	| allowed |
 	self reconfigureViewWith: [ :scrolledText | allowed := scrolledText textArea editingMode isCodeCompletionAllowed ].

@@ -23,7 +23,7 @@ Class {
 	#classInstVars : [
 		'lastMessage'
 	],
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #'world menu' }

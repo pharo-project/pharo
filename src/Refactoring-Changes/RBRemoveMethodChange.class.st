@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'selector'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }
@@ -62,7 +62,7 @@ RBRemoveMethodChange >> selector [
 	^ selector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRemoveMethodChange >> selector: aSymbol [
 	selector := aSymbol
 ]

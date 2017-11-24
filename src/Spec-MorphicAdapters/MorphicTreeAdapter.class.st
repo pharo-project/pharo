@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'treeModel'
 	],
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'drag and drop - private' }

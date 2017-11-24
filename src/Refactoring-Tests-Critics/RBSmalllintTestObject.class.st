@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'temporaryVariable'
 	],
-	#category : #Refactoring-Tests-Critics
+	#category : #'Refactoring-Tests-Critics'
 }
 
 { #category : #'accessing - good' }
@@ -519,7 +519,7 @@ RBSmalllintTestObject >> unaryAccessingMethodWithoutReturn [
 	
 ]
 
-{ #category : #non-accessing }
+{ #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn [
 	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
 
@@ -528,14 +528,14 @@ RBSmalllintTestObject >> unaryNonAccessingBranchingStatementMethodWithoutReturn 
 		ifFalse: [ '' ]
 ]
 
-{ #category : #non-accessing }
+{ #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMessageStatementMethodWithoutReturn [
 	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
 
 	self value
 ]
 
-{ #category : #non-accessing }
+{ #category : #'non-accessing' }
 RBSmalllintTestObject >> unaryNonAccessingMethodWithoutReturn [
 	"shouldn't trigger the RBUnaryAccessingMethodWithoutReturnRule rule"
 

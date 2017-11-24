@@ -5,7 +5,7 @@ I work at the package level and check dependencies among packages.
 Class {
 	#name : #RBArchitectureLintRule,
 	#superclass : #RBBasicLintRule,
-	#category : #Refactoring-Critics-ArchitectureRules
+	#category : #'Refactoring-Critics-ArchitectureRules'
 }
 
 { #category : #testing }

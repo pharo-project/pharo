@@ -10,7 +10,7 @@ Class {
 		'currentScrollDelta',
 		'animation'
 	],
-	#category : #Glamour-Morphic-Pager-Brick
+	#category : #'Glamour-Morphic-Pager-Brick'
 }
 
 { #category : #accessing }
@@ -63,7 +63,7 @@ GLMPagerScrollBrick >> convertScrollValue: aFloat [
 	^ (self width - ((self width / self pagerModel actualNumberOfVisiblePages + self paneMargin) * self band subbricksCount)) * aFloat
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> focusChanged: anEvent [
 	| pageIndex newFocus |
 	
@@ -131,30 +131,30 @@ GLMPagerScrollBrick >> newBand [
 	^ GLMScrollPaneBandBrick new
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GLMPagerScrollBrick >> onChildrenLayouted [
 	super onChildrenLayouted.
 	self band translateXTo: (self convertScrollValue: (self pagerModel convertIndexToValue: self pagerModel firstVisiblePageIndex))
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onPagePoped: popedAnnouncement [
 	self popPane: popedAnnouncement smooth.
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onPagePopedAndReplaced: ann [
 
 	self popAndReplace: ann brick
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onPagePreviewUpdate: updateAnnouncement [
 
 	GLMPagerPanePreviewMorph uniqueInstance updateFor: (self paneAt: updateAnnouncement pageIndex).
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onPagePushed: pushedAnnouncement [
 
 	"added new page to the end of pane"
@@ -166,7 +166,7 @@ GLMPagerScrollBrick >> onPagePushed: pushedAnnouncement [
 
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onPagesNumberChanged [
 
 	self maxPanes: pagerModel numberOfVisiblePages.
@@ -175,14 +175,14 @@ GLMPagerScrollBrick >> onPagesNumberChanged [
 	
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onPositionChanged: announcement [
 
 
 	self scrollToPane: pagerModel firstVisiblePageIndex smooth: announcement smooth callback: announcement callback
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onSelectedPageChanged [
 	
 	self panes do: [ :each | each borderColor: Color transparent ].
@@ -190,7 +190,7 @@ GLMPagerScrollBrick >> onSelectedPageChanged [
 	self theme pagerWidgetThemer selectedPaneStyleFor: (self panes at: pagerModel selectedPageIndex)
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GLMPagerScrollBrick >> onSynchronizeScroll: announcement [
 
 	"directly scrolls to value"

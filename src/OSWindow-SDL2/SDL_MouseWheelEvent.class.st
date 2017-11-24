@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_MouseWheelEvent,
+	#name : #'SDL_MouseWheelEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_TIMESTAMP',
@@ -12,7 +12,7 @@ Class {
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

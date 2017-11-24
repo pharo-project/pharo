@@ -9,7 +9,7 @@ Class {
 		'announcer',
 		'semaphore'
 	],
-	#category : #GT-EventRecorder-Tests-Support
+	#category : #'GT-EventRecorder-Tests-Support'
 }
 
 { #category : #converting }

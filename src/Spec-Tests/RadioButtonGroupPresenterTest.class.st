@@ -5,7 +5,7 @@ Class {
 		'radio1',
 		'radio2'
 	],
-	#category : #Spec-Tests-Core-Widgets
+	#category : #'Spec-Tests-Core-Widgets'
 }
 
 { #category : #running }

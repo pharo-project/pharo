@@ -4,7 +4,7 @@ I implement a service for browsing Epicea logs.
 Class {
 	#name : #EpOmbuFileReaderService,
 	#superclass : #Object,
-	#category : #EpiceaBrowsers-Integration
+	#category : #'EpiceaBrowsers-Integration'
 }
 
 { #category : #private }
@@ -12,7 +12,7 @@ EpOmbuFileReaderService class >> browseLogInFileNamed: fileName [
 	(EpLog freshFromFile: fileName asFileReference) browseEvents
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 EpOmbuFileReaderService class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
@@ -27,7 +27,7 @@ EpOmbuFileReaderService class >> fileSuffix [
 	^ OmFileStore defaultFileSuffix
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 EpOmbuFileReaderService class >> service [
 	^ SimpleServiceEntry 
 		provider: self 

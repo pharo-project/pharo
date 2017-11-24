@@ -4,7 +4,7 @@ This class shouldn't trigger the RBAddRemoveDependentsRule critic.
 Class {
 	#name : #RBSmalllintTestAddRemoveDependentsGoodObject,
 	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : #Refactoring-Tests-Critics
+	#category : #'Refactoring-Tests-Critics'
 }
 
 { #category : #adding }

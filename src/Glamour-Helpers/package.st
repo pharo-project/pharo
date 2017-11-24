@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Helpers }
+Package { #name : #'Glamour-Helpers' }

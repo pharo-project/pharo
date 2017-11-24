@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #NECompletion-View
+	#category : #'NECompletion-View'
 }
 
 { #category : #testing }
@@ -347,7 +347,7 @@ NECController >> setEditor: anObject [
 	editor morph onAnnouncement: MorphLostFocus send: #closeMenu to: self.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECController >> setModel: aStringHolder [ 
 	model := aStringHolder
 ]

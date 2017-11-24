@@ -4,15 +4,15 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsUnordered,
 	#superclass : #PackageManifest,
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsUnordered class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Support' #Kernel #'Collections-Sequenceable' #'Collections-Abstract')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsUnordered class >> description [
 	^ 'I contain collections that do not care about the order of the elements they contain.
 Main classes: Bag, Dictionary, Matrix, Set'
@@ -23,7 +23,7 @@ ManifestCollectionsUnordered class >> manuallyResolvedDependencies [
 	^ #(#Jobs #'Collections-Streams' #UIManager #'System-Support')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsUnordered class >> packageName [
 	^ #'Collections-Unordered'
 ]

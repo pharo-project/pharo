@@ -13,7 +13,7 @@ Class {
 		'monitorLog',
 		'refreshDeferrer'
 	],
-	#category : #EpiceaBrowsers-UI-Unified
+	#category : #'EpiceaBrowsers-UI-Unified'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ Remove from the configuration the selected version or baseline
 Class {
 	#name : #VSRemoveCommand,
 	#superclass : #VSVersionCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

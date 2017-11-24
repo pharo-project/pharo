@@ -26,7 +26,7 @@ Class {
 		'theBlock',
 		'theSelectBlock'
 	],
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #'instance creation' }
@@ -39,12 +39,12 @@ ParseNodeEnumerator class >> ofBlock: aBlock select: selectBlock [
 	^self new ofBlock: aBlock select: selectBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ParseNodeEnumerator >> ofBlock: aBlock [
 	theBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ParseNodeEnumerator >> ofBlock: aBlock select: aSelectBlock [
 	theBlock := aBlock.
 	theSelectBlock := aSelectBlock

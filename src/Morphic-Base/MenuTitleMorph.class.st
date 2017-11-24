@@ -30,10 +30,10 @@ Class {
 		'closeBox',
 		'pinBox'
 	],
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
-{ #category : #construction-defined }
+{ #category : #'construction-defined' }
 MenuTitleMorph >> bigTitle: aTitle [
 
 	self 
@@ -43,7 +43,7 @@ MenuTitleMorph >> bigTitle: aTitle [
 	withPinBox.
 ]
 
-{ #category : #private-creation }
+{ #category : #'private-creation' }
 MenuTitleMorph >> boxExtent [
 
 	^18 @ 18
@@ -87,7 +87,7 @@ MenuTitleMorph >> icon: aForm [
 	self addMorphFront: icon
 ]
 
-{ #category : #private-creation }
+{ #category : #'private-creation' }
 MenuTitleMorph >> iconButtonCalling: aSelector withForm: aForm helpText: aText [
 
 	^IconicButton new target: self;
@@ -114,7 +114,7 @@ MenuTitleMorph >> initialize [
 	clipSubmorphs: true
 ]
 
-{ #category : #construction-defined }
+{ #category : #'construction-defined' }
 MenuTitleMorph >> onlyCloseAndPinable [
 
 	self 

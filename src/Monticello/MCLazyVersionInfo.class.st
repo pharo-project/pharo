@@ -21,10 +21,10 @@ Warnings:
 Class {
 	#name : #MCLazyVersionInfo,
 	#superclass : #MCVersionInfo,
-	#category : #Monticello-Versioning
+	#category : #'Monticello-Versioning'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCLazyVersionInfo class >> from: aVersionInfo [
 	^ self new
 		initializeWithName: aVersionInfo name

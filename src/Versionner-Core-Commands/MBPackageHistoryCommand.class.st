@@ -4,7 +4,7 @@ Command to browse package history in versionner
 Class {
 	#name : #MBPackageHistoryCommand,
 	#superclass : #MBAbstractPackageCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #documentation }

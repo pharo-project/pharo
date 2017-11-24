@@ -4,7 +4,7 @@ SUnit tests for class TextFontChange
 Class {
 	#name : #TextFontChangeTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : #Text-Tests
+	#category : #'Text-Tests'
 }
 
 { #category : #running }

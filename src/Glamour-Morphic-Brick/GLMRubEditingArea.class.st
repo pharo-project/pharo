@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMRubEditingArea,
 	#superclass : #RubEditingArea,
-	#category : #Glamour-Morphic-Brick-Morphic
+	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
 { #category : #drawing }

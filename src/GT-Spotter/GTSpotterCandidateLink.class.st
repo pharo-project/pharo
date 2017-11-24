@@ -6,7 +6,7 @@ Class {
 		'weight',
 		'renderingProcessorLink'
 	],
-	#category : #GT-Spotter-Utils
+	#category : #'GT-Spotter-Utils'
 }
 
 { #category : #comparing }

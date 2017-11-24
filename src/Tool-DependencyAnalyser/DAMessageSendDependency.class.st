@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'implementedMethods'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #setting }

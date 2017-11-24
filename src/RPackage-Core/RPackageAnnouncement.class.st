@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : #RPackage-Core
+	#category : #'RPackage-Core'
 }
 
 { #category : #'instance creation' }

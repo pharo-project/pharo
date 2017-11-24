@@ -21,7 +21,7 @@ Subclasses must implement (at least) the following methods:
 Class {
 	#name : #Canvas,
 	#superclass : #Object,
-	#category : #Graphics-Canvas
+	#category : #'Graphics-Canvas'
 }
 
 { #category : #converting }
@@ -34,7 +34,7 @@ Canvas >> asShadowDrawingCanvas: aColor [
 	^(ShadowDrawingCanvas on: self) shadowColor: aColor
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> cache: aRectangle using: aCache during: aBlock [ 
 	"Cache the execution of aBlock by the given cache.
 	Note: At some point we may want to actually *create* the cache here;
@@ -46,7 +46,7 @@ Canvas >> cache: aRectangle using: aCache during: aBlock [
 	aBlock value: self
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
 	Note: In the future we may want to have more general clip shapes - not just rectangles"
@@ -84,12 +84,12 @@ Canvas >> doesRoundedCorners [
 	^ true
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> draw: anObject [
 	^anObject drawOn: self
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> drawImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm"
 
@@ -98,7 +98,7 @@ Canvas >> drawImage: aForm at: aPoint [
 		sourceRect: aForm boundingBox
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> drawImage: aForm at: aPoint sourceRect: sourceRect [
 	"Draw the given form."
 
@@ -108,7 +108,7 @@ Canvas >> drawImage: aForm at: aPoint sourceRect: sourceRect [
 		rule: Form over
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> drawMorph: aMorph [
 	"Draw the receiver morph on the receiver"
 	
@@ -118,68 +118,68 @@ Canvas >> drawMorph: aMorph [
 	self draw: aMorph
 ]
 
-{ #category : #drawing-polygons }
+{ #category : #'drawing-polygons' }
 Canvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
 	"Draw the given polygon."
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-polygons }
+{ #category : #'drawing-polygons' }
 Canvas >> drawPolygon: vertices fillStyle: aFillStyle [
 	"Fill the given polygon."
 	self drawPolygon: vertices fillStyle: aFillStyle borderWidth: 0 borderColor: Color transparent
 ]
 
-{ #category : #drawing-polygons }
+{ #category : #'drawing-polygons' }
 Canvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given polygon.
 	Note: The default implementation does not recognize any enhanced fill styles"
 	self drawPolygon: vertices color: aFillStyle asColor borderWidth: bw borderColor: bc
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s at: pt [
 
 	^ self drawString: s from: 1 to: s size at: pt font: nil color: Color black
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s at: pt font: aFont color: aColor [
 
 	^ self drawString: s from: 1 to: s size at: pt font: aFont color: aColor
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s from: firstIndex to: lastIndex at: pt font: font color: aColor [
 	self drawString: s from: firstIndex to: lastIndex in: (pt extent: 10000@10000) font: font color: aColor
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s from: firstIndex to: lastIndex at: pt font: font color: aColor underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	self drawString: s from: firstIndex to: lastIndex in: (pt extent: 10000@10000) font: font color: aColor underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s in: boundsRect [
 	^self drawString: s from: 1 to: s size in: boundsRect font: nil color: Color black
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s in: boundsRect font: fontOrNil color: c [
 	^self drawString: s from: 1 to: s size in: boundsRect font: fontOrNil color: c
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 Canvas >> drawString: s in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	^self drawString: s from: 1 to: s size in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc
 ]
@@ -203,33 +203,33 @@ Canvas >> fillColor: aColor [
 	^self fillRectangle: self clipRect color: (aColor alpha: 1.0).
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 Canvas >> fillOval: r color: c [
 
 	self fillOval: r color: c borderWidth: 0 borderColor: Color transparent.
 
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 Canvas >> fillOval: r color: c borderWidth: borderWidth borderColor: borderColor [
 	"Fill the given oval."
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 Canvas >> fillOval: aRectangle fillStyle: aFillStyle [
 	"Fill the given oval."
 	^self fillOval: aRectangle fillStyle: aFillStyle borderWidth: 0 borderColor: Color transparent
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 Canvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given oval.
 	Note: The default implementation does not recognize any enhanced fill styles"
 	self fillOval: aRectangle color: aFillStyle asColor borderWidth: bw borderColor: bc
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"Fill the given rectangle with the given, non-composite, fill style
 	Note: The default implementation does not recognize any enhanced fill styles."
@@ -237,7 +237,7 @@ Canvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	self fillRectangle: aRectangle color: aFillStyle asColor.
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> fillRectangle: r color: c [
 	"Fill the rectangle using the given color"
 	^self 
@@ -247,14 +247,14 @@ Canvas >> fillRectangle: r color: c [
 		borderColor: Color transparent
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle [
 	"Fill the given rectangle. Double-dispatched via the fill style."
 	
 	aFillStyle fillRectangle: aRectangle on: self
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderStyle [
 	"Fill the given rectangle."
        aFillStyle isTransparent ifFalse: [
@@ -292,13 +292,13 @@ Canvas >> form [
 
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	"Draw the rectangle using the given attributes"
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth topLeftColor: topLeftColor bottomRightColor: bottomRightColor [
 	"Draw the rectangle using the given attributes.
 	Note: This is a *very* simple implementation"
@@ -315,28 +315,28 @@ Canvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth
 	].
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 Canvas >> frameOval: r color: c [
 
 	self fillOval: r color: Color transparent borderWidth: 1 borderColor: c.
 
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 Canvas >> frameOval: r width: w color: c [
 
 	self fillOval: r color: Color transparent borderWidth: w borderColor: c.
 
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> frameRectangle: r color: c [
 
 	self frameRectangle: r width: 1 color: c.
 
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> frameRectangle: r width: w color: c [
 	"Draw a frame around the given rectangle"
 	^self frameAndFillRectangle: r
@@ -345,7 +345,7 @@ Canvas >> frameRectangle: r width: w color: c [
 			borderColor: c
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> frameRectangle: aRectangle width: width colors: colors dashes: dashes [
 	"Draw a rectangle with the given width, colors and dash lengths."
 
@@ -357,7 +357,7 @@ Canvas >> frameRectangle: aRectangle width: width colors: colors dashes: dashes 
 		offset: self origin
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 Canvas >> frameRectangle: aRectangle width: width colors: colors dashes: dashes offset: offset [
 	"Draw a rectangle with the given width, colors and dash lengths.
 	The offset specifies how the coordinate system is translated from the screen origin
@@ -434,12 +434,12 @@ Canvas >> frameRectangle: aRectangle width: width colors: colors dashes: dashes 
 			color: (InfiniteForm with: vf)]
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> fullDraw: anObject [
 	^anObject fullDrawOn: self
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> fullDrawMorph: aMorph [
 	"Hook method for potential other canvases. In the core, this method looks supefluous but PostscriptCanvases and other canvases can specialized it for Morph rendering. Therefore it should not be merged with fullDraw:."
 
@@ -646,7 +646,7 @@ Canvas >> origin [
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> paintImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm following the convention that zero is the transparent pixel value."
 
@@ -656,7 +656,7 @@ Canvas >> paintImage: aForm at: aPoint [
 
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> paintImage: aForm at: aPoint sourceRect: sourceRect [
 	"Draw the given Form, which is assumed to be a Form or ColorForm following the convention that zero is the transparent pixel value."
 
@@ -672,7 +672,7 @@ Canvas >> paragraph: paragraph bounds: bounds color: c [
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> preserveStateDuring: aBlock [
 	"Preserve the full canvas state during the execution of aBlock"
 	^aBlock value: self copy
@@ -683,22 +683,22 @@ Canvas >> render: anObject [
 	"Do some 3D operations with the object if possible"
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> roundCornersOf: aMorph during: aBlock [
 	^self roundCornersOf: aMorph in: aMorph bounds during: aBlock
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> roundCornersOf: aMorph in: bounds during: aBlock [
 	^aBlock value
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> roundShadowCornersOf: aMorph during: aBlock [
 	^self roundShadowCornersOf: aMorph in: aMorph bounds during: aBlock
 ]
 
-{ #category : #drawing-general }
+{ #category : #'drawing-general' }
 Canvas >> roundShadowCornersOf: aMorph in: bounds during: aBlock [
 	^aBlock value
 ]
@@ -721,7 +721,7 @@ Canvas >> shadowColor: aColor [
 	"Set a shadow color. If set this color overrides any client-supplied color."
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> stencil: stencilForm at: aPoint color: aColor [
 	"Flood this canvas with aColor wherever stencilForm has non-zero pixels"
 	^self stencil: stencilForm
@@ -730,20 +730,20 @@ Canvas >> stencil: stencilForm at: aPoint color: aColor [
 		color: aColor
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	"Flood this canvas with aColor wherever stencilForm has non-zero pixels"
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock [
 	"Transform the receiver by the given display transformation during the execution of aBlock. The given clip rectangle defines the *global* (e.g., outer) rectangle against which the receiver should clip (which would be equivalent to 'self clipRect: aClipRect; transformBy: aDisplayTransform')."
 	^ self transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: 1
 
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 	"Transform the receiver by the given display transformation during the execution of aBlock. The given clip rectangle defines the *global* (e.g., outer) rectangle against which the receiver should clip (which would be equivalent to 'self clipRect: aClipRect; transformBy: aDisplayTransform')."
 	^ self subclassResponsibility
@@ -754,13 +754,13 @@ Canvas >> translateBy:aPoint clippingTo:aRect during:aBlock [
 	^aBlock value:(self copyOffset:aPoint clipRect:aRect).
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> translateBy: delta during: aBlock [
 	"Set a translation only during the execution of aBlock."
 	^self subclassResponsibility
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 Canvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	"Set a new origin and clipping rectangle only during the execution of aBlock."
 	self translateBy: newOrigin - self origin 
@@ -768,7 +768,7 @@ Canvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 		during: aBlock
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> translucentImage: aForm at: aPoint [
 	"Draw a translucent image using the best available way of representing translucency."
 	self translucentImage: aForm
@@ -776,7 +776,7 @@ Canvas >> translucentImage: aForm at: aPoint [
 		sourceRect: aForm boundingBox
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 	"Draw a translucent image using the best available way of representing translucency.
 	Note: This will be fixed in the future."
@@ -789,20 +789,20 @@ Canvas >> translucentImage: aForm at: aPoint sourceRect: sourceRect [
 		rule: Form blend
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> warpImage: aForm transform: aTransform [
 	"Warp the given form using aTransform"
 	^self warpImage: aForm transform: aTransform at: 0@0
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> warpImage: aForm transform: aTransform at: extraOffset [
 	"Warp the given form using aTransform.
 	TODO: Use transform to figure out appropriate cell size"
 	^self warpImage: aForm transform: aTransform at: extraOffset sourceRect: aForm boundingBox cellSize: 1
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 Canvas >> warpImage: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
 	"Warp the given using the appropriate transform and offset."
 	^self subclassResponsibility

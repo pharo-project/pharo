@@ -5,7 +5,7 @@ Class {
 		'visited',
 		'bfsAncestor'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }

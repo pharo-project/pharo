@@ -19,7 +19,7 @@ Class {
 		'first',
 		'last'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,7 @@ RxsRange >> enumerateTo: aSet ignoringCase: aBoolean [
 		ifFalse: [aSet add: character]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsRange >> initializeFirst: aCharacter last: anotherCharacter [
 
 	first := aCharacter.

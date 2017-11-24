@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'shouldBasicInspect'
 	],
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

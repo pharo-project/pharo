@@ -10,7 +10,7 @@ Set, Bag, Dictionary.
 "
 Trait {
 	#name : #TIterateTest,
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'presenters'
 	],
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #accessing }

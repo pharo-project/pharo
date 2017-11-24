@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMPopupAction,
 	#superclass : #GLMAction,
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #actions }

@@ -4,7 +4,7 @@ This class shouldn't trigger the RBDefinesEqualNotHashRule critic.
 Class {
 	#name : #RBSmalllintTestDefinesEqualNotHashGoodObject,
 	#superclass : #RBSmalllintTestSuperclassObject,
-	#category : #Refactoring-Tests-Critics
+	#category : #'Refactoring-Tests-Critics'
 }
 
 { #category : #comparing }

@@ -8,7 +8,7 @@ Class {
 		'name',
 		'url'
 	],
-	#category : #System-Settings-Persistence-Ston-StoredSettings
+	#category : #'System-Settings-Persistence-Ston-StoredSettings'
 }
 
 { #category : #accessing }

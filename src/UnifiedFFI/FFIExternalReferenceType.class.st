@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'objectClass'
 	],
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

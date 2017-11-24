@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Paints
+	#category : #'Athens-Cairo-Paints'
 }
 
 { #category : #private }
@@ -84,7 +84,7 @@ AthensCairoPatternPaint >> athensLoadOn: anAthensCanvas [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoPatternPaint >> defaultExtend [
 "The default extend mode is CAIRO_EXTEND_NONE for surface patterns and CAIRO_EXTEND_PAD for gradient patterns.
 "
@@ -92,7 +92,7 @@ AthensCairoPatternPaint >> defaultExtend [
 	^  CAIRO_EXTEND_NONE
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoPatternPaint >> initialize [
 	handle value = 0 
 		ifTrue: [ self error: 'Error creating new paint' ].

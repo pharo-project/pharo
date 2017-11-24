@@ -19,7 +19,7 @@ Class {
 		'borderColor',
 		'borderWidth'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #'instance creation' }

@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #System-Platforms
+	#category : #'System-Platforms'
 }
 
 { #category : #accessing }
@@ -45,7 +45,7 @@ OSPlatform class >> determineActivePlatform [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 OSPlatform class >> initialize [
 	"OSPlatform initialize"
 

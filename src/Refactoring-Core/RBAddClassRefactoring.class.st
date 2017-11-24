@@ -16,7 +16,7 @@ Class {
 		'superclass',
 		'subclasses'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -39,7 +39,7 @@ RBAddClassRefactoring class >> model: aRBSmalltalk addClass: aName superclass: a
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddClassRefactoring >> addClass: aName superclass: aClass subclasses: aCollection category: aSymbol [ 
 	self className: aName.
 	superclass := self classObjectFor: aClass.

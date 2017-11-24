@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloAddMemberSpec,
 	#superclass : #MetacelloMemberSpec,
-	#category : #Metacello-Core-Members
+	#category : #'Metacello-Core-Members'
 }
 
 { #category : #actions }

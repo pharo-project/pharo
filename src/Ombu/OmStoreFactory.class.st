@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #Ombu-Stores
+	#category : #'Ombu-Stores'
 }
 
 { #category : #accessing }

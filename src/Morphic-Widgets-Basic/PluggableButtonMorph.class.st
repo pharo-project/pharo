@@ -60,7 +60,7 @@ Class {
 	#classVars : [
 		'UseGradientLook'
 	],
-	#category : #Morphic-Widgets-Basic-Buttons
+	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
 { #category : #shortcuts }

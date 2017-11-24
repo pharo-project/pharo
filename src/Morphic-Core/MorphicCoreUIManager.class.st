@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'UIProcess'
 	],
-	#category : #Morphic-Core-Support
+	#category : #'Morphic-Core-Support'
 }
 
 { #category : #'ui requests' }

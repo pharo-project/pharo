@@ -6,7 +6,7 @@ Class {
 		'pagerMorph',
 		'window'
 	],
-	#category : #Glamour-Tests-Morphic
+	#category : #'Glamour-Tests-Morphic'
 }
 
 { #category : #accessing }

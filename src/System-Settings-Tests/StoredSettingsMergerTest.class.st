@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'merger'
 	],
-	#category : #System-Settings-Tests
+	#category : #'System-Settings-Tests'
 }
 
 { #category : #running }

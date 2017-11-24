@@ -4,7 +4,7 @@ Tests verifiying the behaviour of the default SystemAnnouncer instance.
 Class {
 	#name : #SystemAnnouncerLiveTest,
 	#superclass : #TestCase,
-	#category : #Tests-SystemChangeNotification
+	#category : #'Tests-SystemChangeNotification'
 }
 
 { #category : #tests }

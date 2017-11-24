@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'condition'
 	],
-	#category : #Refactoring-Core-Conditions
+	#category : #'Refactoring-Core-Conditions'
 }
 
 { #category : #'instance creation' }
@@ -25,7 +25,7 @@ RBNegationCondition >> check [
 	^condition check not
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBNegationCondition >> condition: aCondition [ 
 	condition := aCondition.
 	self errorMacro: condition errorMacro

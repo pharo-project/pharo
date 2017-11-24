@@ -4,7 +4,7 @@ I'm the one who knows how to navigate in an horizontal way visiting node in the 
 Class {
 	#name : #NNavDirectionSibling,
 	#superclass : #NNavDirection,
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #'step over' }

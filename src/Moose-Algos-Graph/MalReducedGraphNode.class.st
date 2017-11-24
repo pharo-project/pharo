@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'mergedNodes'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }

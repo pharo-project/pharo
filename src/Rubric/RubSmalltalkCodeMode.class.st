@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classOrMetaclass'
 	],
-	#category : #Rubric-Editing-Code
+	#category : #'Rubric-Editing-Code'
 }
 
 { #category : #menu }
@@ -133,7 +133,7 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 	self updateStyler
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCodeMode >> formatMethodCode [
 	| source tree formatted |
 	source := self textArea text asString.
@@ -183,7 +183,7 @@ RubSmalltalkCodeMode >> updateStyler [
 	self textArea shoutStyler ifNotNil: [ :s | s classOrMetaClass: classOrMetaclass ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCodeMode >> updateTextAreaWhenPlugged [
 	self withShoutStyler.
 	super updateTextAreaWhenPlugged
@@ -191,7 +191,7 @@ RubSmalltalkCodeMode >> updateTextAreaWhenPlugged [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCodeMode >> updateTextAreaWhenUnplugged [
 	self textArea withoutShoutStyler.
 	super updateTextAreaWhenUnplugged

@@ -4,7 +4,7 @@ I am the state of a selected tab
 Class {
 	#name : #TabSelected,
 	#superclass : #TabEnabled,
-	#category : #Morphic-Widgets-Tabs-States
+	#category : #'Morphic-Widgets-Tabs-States'
 }
 
 { #category : #protocol }

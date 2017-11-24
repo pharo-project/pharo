@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'hasValidText'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #drawing }
@@ -47,7 +47,7 @@ RubTextFieldMorph >> hasValidText: aBoolean [
 	hasValidText := aBoolean
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubTextFieldMorph >> initialize [
 	super initialize.
 	self textArea announcer when: RubReturnEntered  send: #whenReturnEntered: to: self.
@@ -61,7 +61,7 @@ RubTextFieldMorph >> resetState [
 	super resetState
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubTextFieldMorph >> textAreaClass [
 	^ RubTextFieldArea
 ]

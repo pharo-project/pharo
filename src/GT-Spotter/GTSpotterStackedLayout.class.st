@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'allowedBounds'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }

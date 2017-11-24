@@ -4,7 +4,7 @@ I represent a selector
 Class {
 	#name : #NECSelectorEntry,
 	#superclass : #NECEntry,
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #private }

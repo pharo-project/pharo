@@ -9,7 +9,7 @@ Class {
 		'externalFileName',
 		'stream'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #'instance creation' }
@@ -51,7 +51,7 @@ ZipNewFileMember >> readRawChunk: n [
 	^stream next: n
 ]
 
-{ #category : #private-writing }
+{ #category : #'private-writing' }
 ZipNewFileMember >> rewindData [
 	super rewindData.
 	readDataRemaining := stream size.

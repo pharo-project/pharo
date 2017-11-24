@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #Monticello-Base
+	#category : #'Monticello-Base'
 }
 
 { #category : #'instance creation' }

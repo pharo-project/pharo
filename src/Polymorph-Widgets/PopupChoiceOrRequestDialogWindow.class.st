@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'okButton'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #accessing }

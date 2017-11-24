@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'definitions'
 	],
-	#category : #Monticello-Patching
+	#category : #'Monticello-Patching'
 }
 
 { #category : #public }
@@ -18,7 +18,7 @@ MCPatcher class >> apply: aPatch to: aSnapshot [
 	^ loader patchedSnapshot
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCPatcher class >> snapshot: aSnapshot [
 	^ self new initializeWithSnapshot: aSnapshot
 ]
@@ -28,7 +28,7 @@ MCPatcher >> addDefinition: aDefinition [
 	definitions add: aDefinition
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCPatcher >> initializeWithSnapshot: aSnapshot [
 	definitions := MCDefinitionIndex definitions: aSnapshot definitions
 ]

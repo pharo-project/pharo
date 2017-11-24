@@ -4,7 +4,7 @@ Instruction ""returnTop""
 Class {
 	#name : #IRReturn,
 	#superclass : #IRInstruction,
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #visiting }

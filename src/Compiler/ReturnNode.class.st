@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'expr'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -58,13 +58,13 @@ ReturnNode >> expr [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ReturnNode >> expr: e [
 
 	expr := e
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ReturnNode >> expr: e encoder: encoder sourceRange: range [
 
 	expr := e.

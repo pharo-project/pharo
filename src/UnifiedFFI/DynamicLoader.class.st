@@ -5,7 +5,7 @@ I provide dlopen in linux and mac and LoadLibrary in windows.
 Class {
 	#name : #DynamicLoader,
 	#superclass : #FFILibrary,
-	#category : #UnifiedFFI-Libraries
+	#category : #'UnifiedFFI-Libraries'
 }
 
 { #category : #accessing }

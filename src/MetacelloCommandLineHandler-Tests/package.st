@@ -1,1 +1,1 @@
-Package { #name : #MetacelloCommandLineHandler-Tests }
+Package { #name : #'MetacelloCommandLineHandler-Tests' }

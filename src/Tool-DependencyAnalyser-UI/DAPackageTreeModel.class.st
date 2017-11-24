@@ -11,7 +11,7 @@ Class {
 		'packageTreeNautilusUI',
 		'open'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #private }

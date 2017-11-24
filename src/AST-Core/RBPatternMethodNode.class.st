@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'isList'
 	],
-	#category : #AST-Core-Pattern
+	#category : #'AST-Core-Pattern'
 }
 
 { #category : #'instance creation' }
@@ -40,7 +40,7 @@ RBPatternMethodNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternMethodNode >> isPatternNode [
 	^true
 ]
@@ -97,7 +97,7 @@ RBPatternMethodNode >> matchingClass [
 	^RBMethodNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPatternMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [ 
 	super selector: aSymbol keywordsPositions: positionList arguments: valueNodes.
 	isList := (aSymbol keywords first value at: 2) == self listCharacter

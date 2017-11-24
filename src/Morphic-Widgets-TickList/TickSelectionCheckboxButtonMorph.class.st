@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #Morphic-Widgets-TickList
+	#category : #'Morphic-Widgets-TickList'
 }
 
 { #category : #accessing }

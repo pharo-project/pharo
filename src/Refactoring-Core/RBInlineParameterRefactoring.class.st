@@ -41,7 +41,7 @@ Class {
 	#instVars : [
 		'expressions'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -88,7 +88,7 @@ RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	^searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.

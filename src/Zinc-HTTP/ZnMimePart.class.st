@@ -14,7 +14,7 @@ Class {
 		'headers',
 		'entity'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -235,7 +235,7 @@ ZnMimePart >> printOn: stream [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMimePart >> readBinaryFrom: stream [
 	| entityReader |
 	self headers: (ZnHeaders readFrom: stream).
@@ -244,7 +244,7 @@ ZnMimePart >> readBinaryFrom: stream [
 	self entity: entityReader readEntity
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMimePart >> readFrom: stream [
 	self headers: (ZnHeaders readFrom: stream).
 	self entity: (self entityReaderOn: stream) readEntity

@@ -10,7 +10,7 @@ Class {
 		'rootNode',
 		'blockExtentsToLocals'
 	],
-	#category : #Kernel-BytecodeEncoders
+	#category : #'Kernel-BytecodeEncoders'
 }
 
 { #category : #'bytecode decoding' }
@@ -319,7 +319,7 @@ BytecodeEncoder >> stream: s [
 	stream := s
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BytecodeEncoder >> streamToMethod: aCompiledMethod [
 	stream := WriteStream with: aCompiledMethod.
 	stream position: aCompiledMethod initialPC - 1

@@ -13,7 +13,7 @@ Class {
 		'Replacements',
 		'Singleton'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #initializing }
@@ -55,7 +55,7 @@ EditorFindReplaceDialogWindow class >> singleton [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> buildWindowMenu [
 	"Build and answer the window menu."
 
@@ -91,7 +91,7 @@ EditorFindReplaceDialogWindow >> caseSensitive: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> defaultButton [
 	"Answer the default button."
 	^self
@@ -100,7 +100,7 @@ EditorFindReplaceDialogWindow >> defaultButton [
 		ifAbsent: [] 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> defaultFocusMorph [
 	^ self findTextFieldMorph textMorph
 ]
@@ -116,7 +116,7 @@ EditorFindReplaceDialogWindow >> entireWordsOnly: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> extent: anExtent [
 	^ super extent: anExtent x @ self initialExtent y
 ]
@@ -127,7 +127,7 @@ EditorFindReplaceDialogWindow >> find [
 	^ self state findInTextMorph: self model
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> findEnabled [
 	^ self findString isEmptyOrNil not 
 ]
@@ -164,12 +164,12 @@ EditorFindReplaceDialogWindow >> findText: aStringOrText [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> findTextFieldMorph [
 	^ textFieldMorph
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> initialExtent [ 
 	^ 400 @ super initialExtent y
 ]
@@ -185,7 +185,7 @@ EditorFindReplaceDialogWindow >> isRegex: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> isResizeable [
 	"Answer whether we are not we can be resized."
 
@@ -197,14 +197,14 @@ EditorFindReplaceDialogWindow >> maxPreviousListSize [
 	^ self class maxPreviousListSize
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newFindButton isDefault: true. self newReplaceButton. self newReplaceAllButton. self newCancelButton}
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newContentMorph [
 	^(self newColumn: {	
 			(self newGroupbox: nil for: 
@@ -229,7 +229,7 @@ EditorFindReplaceDialogWindow >> newContentMorph [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newFindButton [
 	^(self theme
 			newButtonIn: self
@@ -244,7 +244,7 @@ EditorFindReplaceDialogWindow >> newFindButton [
 		vResizing: #rigid
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newFindTextEntryMorph [
 	| entryCompletion pt |
 	entryCompletion := EntryCompletion new
@@ -282,7 +282,7 @@ EditorFindReplaceDialogWindow >> newFinding [
 		ifTrue: [self prevFinds removeLast]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newReplaceAllButton [
 	^ (self theme
 		newButtonIn: self
@@ -296,7 +296,7 @@ EditorFindReplaceDialogWindow >> newReplaceAllButton [
 		 vResizing: #rigid
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newReplaceButton [
 	^ (self theme
 		newButtonIn: self
@@ -310,7 +310,7 @@ EditorFindReplaceDialogWindow >> newReplaceButton [
 		 vResizing: #rigid
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 	| entryCompletion pt |
 	entryCompletion := EntryCompletion new
@@ -391,13 +391,13 @@ EditorFindReplaceDialogWindow >> replaceAll [
 	self state replaceAllInTextMorph: self model
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> replaceAllEnabled [
 	^ self model notNil
 		and: [self findText notEmpty]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> replaceEnabled [
 	^ self model notNil
 		and: [self findText notEmpty]
@@ -441,7 +441,7 @@ EditorFindReplaceDialogWindow >> state: aFindReplaceService [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> taskbarButtonFor: aTaskBar [
 	"No taskbar button because always on top"
 	^nil
@@ -452,7 +452,7 @@ EditorFindReplaceDialogWindow >> taskbarIcon [
 	^ self iconNamed: #smallFindIcon
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 EditorFindReplaceDialogWindow >> title [
 	^ 'Find & Replace' translated.
 

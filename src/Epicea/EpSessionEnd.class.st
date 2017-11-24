@@ -4,7 +4,7 @@ When an image is launched, a session starts. When it is quit, the session ends. 
 Class {
 	#name : #EpSessionEnd,
 	#superclass : #EpSessionEvent,
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #visitor }

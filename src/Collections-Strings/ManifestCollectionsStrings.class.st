@@ -4,15 +4,15 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsStrings,
 	#superclass : #PackageManifest,
-	#category : #Collections-Strings
+	#category : #'Collections-Strings'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsStrings class >> dependencies [
 	^ #(#'Collections-Streams' #'Collections-Weak' #'Collections-Native' #'Collections-Support' #Kernel #'Collections-Sequenceable' #'Multilingual-Encodings' #'Collections-Abstract')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsStrings class >> description [
 	^ 'Contains String, ByteString, Symbol, ByteSymbol, WideSymbol and WideString'
 ]
@@ -22,7 +22,7 @@ ManifestCollectionsStrings class >> manuallyResolvedDependencies [
 	^ #(#'System-Support' #'AST-Core' #'Random-Core' #'OpalCompiler-Core')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsStrings class >> packageName [
 	^ #'Collections-Strings'
 ]

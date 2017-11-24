@@ -4,7 +4,7 @@ This class provides tests for the regular expression parser.
 Class {
 	#name : #RxParserTest,
 	#superclass : #TestCase,
-	#category : #Regex-Tests-Core
+	#category : #'Regex-Tests-Core'
 }
 
 { #category : #tests }

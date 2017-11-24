@@ -6,7 +6,7 @@ Class {
 		'button1',
 		'button2'
 	],
-	#category : #Spec-Tests-Core-Support
+	#category : #'Spec-Tests-Core-Support'
 }
 
 { #category : #running }

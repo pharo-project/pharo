@@ -1,7 +1,7 @@
 Class {
 	#name : #BooleanSlotTest,
 	#superclass : #SlotSilentTest,
-	#category : #Slot-Tests-Examples
+	#category : #'Slot-Tests-Examples'
 }
 
 { #category : #tests }

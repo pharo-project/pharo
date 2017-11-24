@@ -10,7 +10,7 @@ Class {
 		'buttonAddPackage',
 		'packageAnalyzerTreeModel'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #specs }

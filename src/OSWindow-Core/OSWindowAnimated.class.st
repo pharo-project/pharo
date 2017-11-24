@@ -4,7 +4,7 @@ I am an animated window who interacts with the OSWindowRenderThread
 Class {
 	#name : #OSWindowAnimated,
 	#superclass : #OSWindow,
-	#category : #OSWindow-Core-Extras
+	#category : #'OSWindow-Core-Extras'
 }
 
 { #category : #private }

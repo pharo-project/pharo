@@ -58,7 +58,7 @@ Class {
 		'CaseFlag',
 		'IfNilFlag'
 	],
-	#category : #Compiler-Kernel
+	#category : #'Compiler-Kernel'
 }
 
 { #category : #public }
@@ -381,7 +381,7 @@ Decompiler >> doStore: stackOrBlock [
 		ifFalse: [constructor codeAssignTo: var value: expr])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Decompiler >> initSymbols: aClass [
 	constructor method: method class: aClass literals: method literals.
 	constTable := constructor codeConstants.
@@ -513,7 +513,7 @@ Decompiler >> jump: dist if: condition [
 	lastJumpIfPcStack removeLast.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Decompiler >> mapFromBlockStartsIn: aMethod toTempVarsFrom: schematicTempNamesString constructor: aDecompilerConstructor [
 	| map |
 	map := aMethod debuggerMap

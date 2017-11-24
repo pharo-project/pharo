@@ -4,7 +4,7 @@ self open
 Class {
 	#name : #GLMBasicExamples,
 	#superclass : #GLMExamples,
-	#category : #Glamour-Examples
+	#category : #'Glamour-Examples'
 }
 
 { #category : #accessing }

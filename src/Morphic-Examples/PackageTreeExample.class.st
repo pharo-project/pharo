@@ -4,7 +4,7 @@ PackageTreeExample new open
 Class {
 	#name : #PackageTreeExample,
 	#superclass : #MorphTreeModel,
-	#category : #Morphic-Examples-MorphTreeWidget
+	#category : #'Morphic-Examples-MorphTreeWidget'
 }
 
 { #category : #examples }

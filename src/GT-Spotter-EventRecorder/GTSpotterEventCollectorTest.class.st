@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'collector'
 	],
-	#category : #GT-Spotter-EventRecorder-Tests
+	#category : #'GT-Spotter-EventRecorder-Tests'
 }
 
 { #category : #running }

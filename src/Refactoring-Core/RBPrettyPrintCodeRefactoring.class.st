@@ -6,7 +6,7 @@ I have no precondition.
 Class {
 	#name : #RBPrettyPrintCodeRefactoring,
 	#superclass : #RBRefactoring,
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #preconditions }

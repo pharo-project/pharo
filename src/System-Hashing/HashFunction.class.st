@@ -4,7 +4,7 @@ Common superclass for hash functions
 Class {
 	#name : #HashFunction,
 	#superclass : #Object,
-	#category : #System-Hashing-Core
+	#category : #'System-Hashing-Core'
 }
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ Class {
 		'spec',
 		'configurationInfo'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #'instance creation' }

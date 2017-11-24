@@ -1,7 +1,7 @@
 Class {
 	#name : #MCAncestryTest,
 	#superclass : #MCTestCase,
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #asserting }

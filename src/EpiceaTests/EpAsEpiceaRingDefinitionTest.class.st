@@ -1,7 +1,7 @@
 Class {
 	#name : #EpAsEpiceaRingDefinitionTest,
 	#superclass : #TestCase,
-	#category : #EpiceaTests-Model
+	#category : #'EpiceaTests-Model'
 }
 
 { #category : #running }

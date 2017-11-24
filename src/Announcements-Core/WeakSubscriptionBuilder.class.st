@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : #Announcements-Core
+	#category : #'Announcements-Core'
 }
 
 { #category : #'instance creation' }
@@ -21,7 +21,7 @@ WeakSubscriptionBuilder class >> on: announcer [
 	^ self new announcer: announcer
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 WeakSubscriptionBuilder >> announcer: anAnnouncer [
 	announcer := anAnnouncer 
 ]

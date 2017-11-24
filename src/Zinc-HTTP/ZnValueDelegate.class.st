@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : #Zinc-HTTP-Client-Server
+	#category : #'Zinc-HTTP-Client-Server'
 }
 
 { #category : #'instance creation' }
@@ -29,7 +29,7 @@ ZnValueDelegate >> handleRequest: request [
 	^ object value: request
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnValueDelegate >> object: anObject [
 	object := anObject
 ]

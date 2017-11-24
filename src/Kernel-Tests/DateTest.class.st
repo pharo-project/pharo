@@ -9,7 +9,7 @@ Class {
 		'january23rd2004',
 		'june2nd1973'
 	],
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #coverage }

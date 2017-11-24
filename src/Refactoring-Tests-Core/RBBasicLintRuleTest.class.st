@@ -7,7 +7,7 @@ Class {
 		'classBlock',
 		'anInstVar'
 	],
-	#category : #Refactoring-Tests-Core-Data
+	#category : #'Refactoring-Tests-Core-Data'
 }
 
 { #category : #'possible bugs' }
@@ -1218,12 +1218,12 @@ RBBasicLintRuleTest class >> yourselfNotUsed [
 	^detector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> anInstVar: anObject [
 	anInstVar := anObject
 ]
@@ -1238,12 +1238,12 @@ RBBasicLintRuleTest >> checkMethod: aSmalllintContext [
 	^methodBlock value: aSmalllintContext value: result
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> classBlock [
 	^ self anInstVar + 5
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> classBlock: aBlock [
 	classBlock := aBlock testMethod1
 ]
@@ -1273,12 +1273,12 @@ RBBasicLintRuleTest >> method: anObject1 with: anObject2 lots: anObject3 of: anO
 	^ anObject5 + anObject1 > (anObject4 - anObject2 + anObject3)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> newResultClass: aClass [ 
 "New one:)"
 	result := aClass new
@@ -1289,7 +1289,7 @@ RBBasicLintRuleTest >> problemCount [
 	^result problemCount
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> resetResult [
 	result := result copyEmpty.
 	result label: name
@@ -1300,12 +1300,12 @@ RBBasicLintRuleTest >> result [
 	^result
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> result: aResult [ 
 	result := aResult copyEmpty
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBasicLintRuleTest >> resultClass: aClass [ 
 	result := aClass new
 ]

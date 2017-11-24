@@ -24,7 +24,7 @@ Class {
 		'stringMorph',
 		'morphDeleted'
 	],
-	#category : #Morphic-Tests-Processes
+	#category : #'Morphic-Tests-Processes'
 }
 
 { #category : #action }

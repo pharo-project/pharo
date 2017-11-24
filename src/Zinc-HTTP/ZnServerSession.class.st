@@ -15,7 +15,7 @@ Class {
 		'created',
 		'modified'
 	],
-	#category : #Zinc-HTTP-Support
+	#category : #'Zinc-HTTP-Support'
 }
 
 { #category : #accessing }
@@ -58,7 +58,7 @@ ZnServerSession >> id [
 	^ id
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnServerSession >> id: anObject [
 	id := anObject
 ]

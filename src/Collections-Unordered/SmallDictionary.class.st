@@ -55,7 +55,7 @@ Class {
 		'values',
 		'size'
 	],
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
 { #category : #'instance creation' }

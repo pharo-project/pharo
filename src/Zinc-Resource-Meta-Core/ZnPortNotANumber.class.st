@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'port'
 	],
-	#category : #Zinc-Resource-Meta-Core
+	#category : #'Zinc-Resource-Meta-Core'
 }
 
 { #category : #'instance creation' }

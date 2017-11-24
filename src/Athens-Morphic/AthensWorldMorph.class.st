@@ -5,7 +5,7 @@ It is within a real Morph in a real morphic world. The Morph it is in defines th
 Class {
 	#name : #AthensWorldMorph,
 	#superclass : #WorldMorph,
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #'world state' }

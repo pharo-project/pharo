@@ -21,7 +21,7 @@ To compare the different delay schedulers...
 Class {
 	#name : #DelayExperimentalCourageousScheduler,
 	#superclass : #DelayMicrosecondScheduler,
-	#category : #Morphic-Tests-Processes
+	#category : #'Morphic-Tests-Processes'
 }
 
 { #category : #'low priority processes' }

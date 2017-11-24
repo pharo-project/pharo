@@ -21,7 +21,7 @@ Class {
 		'position',
 		'streamRespondsToNextPutAllStartingAt'
 	],
-	#category : #Fuel-Streams
+	#category : #'Fuel-Streams'
 }
 
 { #category : #accessing }
@@ -112,7 +112,7 @@ FLBufferedWriteStream >> flushBufferIfFull [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLBufferedWriteStream >> initializeOn: writeStream bufferSize: aSize [
 
 	self initialize.
@@ -121,7 +121,7 @@ FLBufferedWriteStream >> initializeOn: writeStream bufferSize: aSize [
 	position := 0.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLBufferedWriteStream >> initializeStream: aWriteStream [
 	stream := aWriteStream.
 	"This is ugly, but it is an optimization for #flushBuffer"

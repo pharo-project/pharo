@@ -1,1 +1,1 @@
-Package { #name : #Versionner-Tests-Core-Model }
+Package { #name : #'Versionner-Tests-Core-Model' }

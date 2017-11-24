@@ -8,7 +8,7 @@ Class {
 		'identifier',
 		'name'
 	],
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #'instance creation' }

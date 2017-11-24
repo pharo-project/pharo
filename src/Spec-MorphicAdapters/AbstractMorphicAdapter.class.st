@@ -4,7 +4,7 @@ I am an abstract class providing all the properties shared amongs all the morphi
 Class {
 	#name : #AbstractMorphicAdapter,
 	#superclass : #AbstractAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #specs }
@@ -38,13 +38,13 @@ AbstractMorphicAdapter >> beginsWith: aString fromList: aMorph [
 	^ false
 ]
 
-{ #category : #protocol-shortcuts }
+{ #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> bindKeyCombination: aShortcut toAction: aBlock [
 
 	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
 ]
 
-{ #category : #protocol-shortcuts }
+{ #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> bindMenuKeyCombination: aShortcut toAction: aBlock [
 
 	self widget ifNotNil: [ :w | w bindKeyCombination: aShortcut toAction: aBlock ]
@@ -253,13 +253,13 @@ AbstractMorphicAdapter >> listRenderOn: aCanvas atRow: aRow bounds: drawBounds c
 		from: aMorph
 ]
 
-{ #category : #protocol-shortcuts }
+{ #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> removeKeyCombination: aShortcut [
 
 	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]
 ]
 
-{ #category : #protocol-shortcuts }
+{ #category : #'protocol-shortcuts' }
 AbstractMorphicAdapter >> removeMenuKeyCombination: aShortcut [
 
 	self widget ifNotNil: [ :w | w removeKeyCombination: aShortcut ]

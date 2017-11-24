@@ -10,7 +10,7 @@ Class {
 		'OFFSET_Y',
 		'OFFSET_Z'
 	],
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #'field definition' }

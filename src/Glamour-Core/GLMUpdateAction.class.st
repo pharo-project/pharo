@@ -18,7 +18,7 @@ Class {
 		'announcerObjects',
 		'transformation'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #'announcement handling' }
@@ -60,7 +60,7 @@ GLMUpdateAction >> condition: anObject [
 	condition := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMUpdateAction >> initialize [
 	super initialize.
 	condition := true

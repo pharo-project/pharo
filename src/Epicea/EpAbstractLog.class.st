@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : #Epicea-Log
+	#category : #'Epicea-Log'
 }
 
 { #category : #'tag keys' }

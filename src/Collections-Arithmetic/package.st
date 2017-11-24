@@ -1,1 +1,1 @@
-Package { #name : #Collections-Arithmetic }
+Package { #name : #'Collections-Arithmetic' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'bytes'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }
 
 { #category : #'instance creation' }
@@ -32,7 +32,7 @@ FT2MemoryFaceData >> bytes: aByteArray [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FT2MemoryFaceData >> free [
 	^self destroyHandle
 ]

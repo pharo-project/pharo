@@ -16,16 +16,16 @@ Class {
 	#instVars : [
 		'modules'
 	],
-	#category : #Glamour-Morphic-Brick-Theme
+	#category : #'Glamour-Morphic-Brick-Theme'
 }
 
-{ #category : #theme-actions }
+{ #category : #'theme-actions' }
 GLMBrickThemer >> actionThemer [
 
 	^ GLMActionBrickThemer new
 ]
 
-{ #category : #brick-modules }
+{ #category : #'brick-modules' }
 GLMBrickThemer >> addModule: aThemerModule named: aSymbol [
 
 	self modules at: aSymbol put: aThemerModule.
@@ -52,7 +52,7 @@ GLMBrickThemer >> contentBackgroundColor [
 	^ Color white
 ]
 
-{ #category : #brick-modules }
+{ #category : #'brick-modules' }
 GLMBrickThemer >> doesNotUnderstand: aMessage [
 
 	^ self modules at: aMessage selector ifAbsent: [ super doesNotUnderstand: aMessage ]
@@ -71,7 +71,7 @@ GLMBrickThemer >> focusedBorderWidth [
 	^ 1
 ]
 
-{ #category : #brick-modules }
+{ #category : #'brick-modules' }
 GLMBrickThemer >> modules [
 
 	^ modules ifNil: [ modules := Dictionary new ]
@@ -135,7 +135,7 @@ GLMBrickThemer >> popupThemer [
 		registerModule: GLMBrickPopupThemer new
 ]
 
-{ #category : #brick-modules }
+{ #category : #'brick-modules' }
 GLMBrickThemer >> registerModule: aModule [
 
 	^ self
@@ -144,7 +144,7 @@ GLMBrickThemer >> registerModule: aModule [
 		named: thisContext sender selector
 ]
 
-{ #category : #brick-modules }
+{ #category : #'brick-modules' }
 GLMBrickThemer >> registerModule: aModule to: aThemer [
 
 	^ self
@@ -153,7 +153,7 @@ GLMBrickThemer >> registerModule: aModule to: aThemer [
 		named: thisContext sender selector
 ]
 
-{ #category : #brick-modules }
+{ #category : #'brick-modules' }
 GLMBrickThemer >> registerModule: aModule to: aThemer named: aString [
 	"Registers aModule to aThemer. It stores modules in a dictionaty where a key is a selector of my caller method. It allows to customize bricks that are not added to the application (in this case they don't have access to custom themer normaly, because owner is nil) using the same api as added one."
 	^ self modules

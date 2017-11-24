@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'peeked'
 	],
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ I know how to format the code
 Class {
 	#name : #SugsFormatCode,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

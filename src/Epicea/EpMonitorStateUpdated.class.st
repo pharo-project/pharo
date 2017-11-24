@@ -4,5 +4,5 @@ The execution of either EpMonitor>>#enable or #disable will result in the announ
 Class {
 	#name : #EpMonitorStateUpdated,
 	#superclass : #Announcement,
-	#category : #Epicea-Announcements
+	#category : #'Epicea-Announcements'
 }

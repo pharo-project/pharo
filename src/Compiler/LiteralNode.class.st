@@ -4,7 +4,7 @@ I am a parse tree leaf representing a literal string or number.
 Class {
 	#name : #LiteralNode,
 	#superclass : #LeafNode,
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -46,7 +46,7 @@ LiteralNode >> literalValue [
 	^key
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LiteralNode >> name: literal key: object index: i type: type [
 	"For compatibility with Encoder>>name:key:class:type:set:"
 	^self key: object index: i type: type

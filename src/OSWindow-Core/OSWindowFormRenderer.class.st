@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'form'
 	],
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #'morphic integration' }

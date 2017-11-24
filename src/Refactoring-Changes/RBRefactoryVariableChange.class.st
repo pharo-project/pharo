@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'variable'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }
@@ -41,7 +41,7 @@ RBRefactoryVariableChange >> changeSymbol [
 	self subclassResponsibility
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRefactoryVariableChange >> class: aBehavior variable: aString [ 
 	self changeClass: aBehavior.
 	variable := aString

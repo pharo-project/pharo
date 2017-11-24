@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'lastRandomIndex'
 	],
-	#category : #SUnit-Core-Utilities
+	#category : #'SUnit-Core-Utilities'
 }
 
 { #category : #accessing }

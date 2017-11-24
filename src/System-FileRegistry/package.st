@@ -1,1 +1,1 @@
-Package { #name : #System-FileRegistry }
+Package { #name : #'System-FileRegistry' }

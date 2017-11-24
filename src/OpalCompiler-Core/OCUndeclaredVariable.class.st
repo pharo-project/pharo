@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }

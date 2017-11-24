@@ -17,7 +17,7 @@ Class {
 		'lookahead',
 		'elements'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #'instance creation' }
@@ -40,7 +40,7 @@ RxCharSetParser >> addRangeFrom: firstChar to: lastChar [
 	elements add: (RxsRange from: firstChar to: lastChar)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxCharSetParser >> initialize: aStream [
 
 	source := aStream.

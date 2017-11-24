@@ -16,7 +16,7 @@ Class {
 		'response',
 		'timing'
 	],
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #accessing }

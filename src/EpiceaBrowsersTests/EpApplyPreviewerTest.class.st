@@ -1,7 +1,7 @@
 Class {
 	#name : #EpApplyPreviewerTest,
 	#superclass : #EpLogBrowserOperationFactoryTest,
-	#category : #EpiceaBrowsersTests-Integration
+	#category : #'EpiceaBrowsersTests-Integration'
 }
 
 { #category : #resources }

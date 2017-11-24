@@ -78,7 +78,7 @@ Class {
 		'hState',
 		'vState'
 	],
-	#category : #Glamour-Morphic-Brick-Layouts
+	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
 { #category : #accessing }
@@ -182,7 +182,7 @@ GLMBrickLayoutProperties >> heightDependencies [
 	^ heightDependencies ifNil: [ heightDependencies := OrderedCollection new ]
 ]
 
-{ #category : #scripting-advanced }
+{ #category : #'scripting-advanced' }
 GLMBrickLayoutProperties >> heightDependency: anObject [
 
 	self heightDependencies add: anObject
@@ -369,7 +369,7 @@ GLMBrickLayoutProperties >> widthDependencies [
 	^ widthDependencies ifNil: [ widthDependencies := OrderedCollection new ]	
 ]
 
-{ #category : #scripting-advanced }
+{ #category : #'scripting-advanced' }
 GLMBrickLayoutProperties >> widthDependency: anObject [
 
 	self widthDependencies add: anObject

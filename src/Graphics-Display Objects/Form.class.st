@@ -210,7 +210,7 @@ Form class >> fromUser: gridPoint [
 	^ self fromDisplay: (rect origin extent: (rect extent max: gridPoint))
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Form class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
@@ -1404,7 +1404,7 @@ Form >> height [
 	^ height
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> hibernate [
 	"Replace my bitmap with a compactly encoded representation (a ByteArray).  It is vital that BitBlt and any other access to the bitmap (such as writing to a file) not be used when in this state.  Since BitBlt will fail if the bitmap size is wrong (not = bitsSize), we do not allow replacement by a byteArray of the same (or larger) size."
 
@@ -1947,7 +1947,7 @@ Form >> privateFloodFillValue: aColor [
 	^f2 pixelValueAt: 0@0.
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> readAttributesFrom: aBinaryStream [
 	| offsetX offsetY |
 	depth := aBinaryStream next.
@@ -1964,7 +1964,7 @@ Form >> readAttributesFrom: aBinaryStream [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> readBitsFrom: aBinaryStream [
 	
 	bits := Bitmap newFromStream: aBinaryStream.
@@ -1973,7 +1973,7 @@ Form >> readBitsFrom: aBinaryStream [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> readFrom: aBinaryStream [
 	"Reads the receiver from the given binary stream with the format:
 		depth, extent, offset, bits."
@@ -1981,7 +1981,7 @@ Form >> readFrom: aBinaryStream [
 	self readBitsFrom: aBinaryStream
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> readFromOldFormat: aBinaryStream [
 	"Read a Form in the original ST-80 format."
 
@@ -2149,7 +2149,7 @@ Form >> relativeTextAnchorPosition [
 	^nil		"so forms can be in TextAnchors"
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> replaceByResource: aForm [
 	"Replace the receiver by some resource that just got loaded"
 	(self extent = aForm extent and:[self depth = aForm depth]) ifTrue:[
@@ -2384,7 +2384,7 @@ Form >> smear: dir distance: dist [
 		skew := skew+skew]
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> store15To24HexBitsOn:aStream [
 
 	| buf lineWidth |
@@ -2422,17 +2422,17 @@ Form >> store15To24HexBitsOn:aStream [
 	].
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> store32To24HexBitsOn:aStream [
 	^self storeBits:20 to:0 on:aStream.
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> storeBits:startBit to:stopBit on:aStream [
 	bits storeBits:startBit to:stopBit on:aStream.
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> storeBitsOn:aStream base:anInteger [
 	bits do: [:word | 
 		anInteger = 10
@@ -2442,18 +2442,18 @@ Form >> storeBitsOn:aStream base:anInteger [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> storeHexBitsOn:aStream [
 	^self storeBits:28 to:0 on:aStream.
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> storeOn: aStream [
 
 	self storeOn: aStream base: 10
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> storeOn: aStream base: anInteger [ 
 	"Store the receiver out as an expression that can be evaluated to recreate a Form with the same contents as the original."
 
@@ -2561,7 +2561,7 @@ Form >> trimBordersOfColor: aColor [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> unhibernate [
 	"If my bitmap has been compressed into a ByteArray,
 	then expand it now, and return true."
@@ -2641,7 +2641,7 @@ Form >> wipeImage: otherImage at: topLeft delta: delta clippingBox: clipBox [
 			ifFalse: [nil]]
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> writeAttributesOn: file [
 	self unhibernate.
 	file nextPut: depth.
@@ -2656,12 +2656,12 @@ Form >> writeAttributesOn: file [
 	
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> writeBitsOn: file [
 	bits writeOn: file
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> writeOn: file [
 	"Write the receiver on the file in the format
 		depth, extent, offset, bits."
@@ -2669,7 +2669,7 @@ Form >> writeOn: file [
 	self writeBitsOn: file
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 Form >> writeUncompressedOn: file [
 	"Write the receiver on the file in the format depth, extent, offset, bits.  Warning:  Caller must put header info on file!  Use writeUncompressedOnFileNamed: instead."
 	self unhibernate.

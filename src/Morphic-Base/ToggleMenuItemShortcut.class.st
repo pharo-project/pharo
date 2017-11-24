@@ -21,7 +21,7 @@ Class {
 		'font',
 		'owner'
 	],
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #testing }

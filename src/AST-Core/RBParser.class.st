@@ -25,7 +25,7 @@ Class {
 		'comments',
 		'pragmas'
 	],
-	#category : #AST-Core-Parser
+	#category : #'AST-Core-Parser'
 }
 
 { #category : #accessing }
@@ -124,7 +124,7 @@ RBParser >> addCommentsTo: aNode [
 	comments := OrderedCollection new
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> addParserError: errorMessage to: aNode [
 	| errorNode |
 	errorNode := self parserError: errorMessage.
@@ -138,12 +138,12 @@ RBParser >> addPragma: aPragma [
 	pragmas addLast: aPragma
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> arrayNodeClass [
 	^ RBArrayNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> assignmentNodeClass [
 	^ RBAssignmentNode
 ]
@@ -153,7 +153,7 @@ RBParser >> atEnd [
 	^currentToken class == RBToken
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> basicParsePragma [
 	^ currentToken isIdentifier
 		ifTrue: [ self parseUnaryPragma ]
@@ -166,12 +166,12 @@ RBParser >> basicParsePragma [
 				ifFalse: [ self parseBinaryPragma ] ]
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> blockNodeClass [
 	^ RBBlockNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> cascadeNodeClass [
 	^ RBCascadeNode
 ]
@@ -213,27 +213,27 @@ RBParser >> initializeParserWith: aString [
 	self scanner: (self scannerClass on: (ReadStream on: aString) errorBlock: self errorBlock)		
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> literalArrayNodeClass [
 	^ RBLiteralArrayNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> literalNodeClass [
 	^ RBLiteralNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> literalValueNodeClass [
 	^ RBLiteralValueNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> messageNodeClass [
 	^ RBMessageNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> methodNodeClass [
 	^ RBMethodNode
 ]
@@ -243,7 +243,7 @@ RBParser >> nextToken [
 	^nextToken ifNil: [nextToken := scanner next] ifNotNil: [nextToken]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseArgs [
 	| args |
 	args := OrderedCollection new.
@@ -251,7 +251,7 @@ RBParser >> parseArgs [
 	^args
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseArray [
 	| position node |
 	position := currentToken start.
@@ -266,7 +266,7 @@ RBParser >> parseArray [
 	^ node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseAssignment [
 	"Need one token lookahead to see if we have a ':='. This method could 
 	make it possible to assign the literals true, false and nil."
@@ -283,7 +283,7 @@ RBParser >> parseAssignment [
 		position: position
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseBinaryMessage [
 	| node |
 	node := self parseUnaryMessage.
@@ -294,7 +294,7 @@ RBParser >> parseBinaryMessage [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseBinaryMessageWith: aNode [ 
 	| binaryToken |
 	binaryToken := currentToken.
@@ -306,7 +306,7 @@ RBParser >> parseBinaryMessageWith: aNode [
 		arguments: (Array with: self parseUnaryMessage)
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseBinaryPattern [
 	| binaryToken node args |
 	currentToken isBinary
@@ -323,7 +323,7 @@ RBParser >> parseBinaryPattern [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseBinaryPragma [
 	| binaryToken |
 	currentToken isBinary 
@@ -336,7 +336,7 @@ RBParser >> parseBinaryPragma [
 		arguments: (Array with: self parsePragmaLiteral)
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseBlock [
 	| position node |
 	position := currentToken start.
@@ -356,7 +356,7 @@ RBParser >> parseBlock [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseBlockArgsInto: node [ 
 	| verticalBar args colons |
 	args := OrderedCollection new: 2.
@@ -393,7 +393,7 @@ RBParser >> parseBlockArgsInto: node [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseCascadeMessage [
 	| node receiver messages semicolons |
 	node := self parseKeywordMessage.
@@ -448,7 +448,7 @@ RBParser >> parseExpression: aString [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseIncompleteExpression: priorStatementsNode [
 	"some incomplete expressions followed. Add a parserError node
  to the prior statements, but not if priopriorStatementsNode  is already 
@@ -462,12 +462,12 @@ RBParser >> parseIncompleteExpression: priorStatementsNode [
 			priorStatementsNode ]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseKeywordMessage [
 	^self parseKeywordMessageWith: self parseBinaryMessage
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseKeywordMessageWith: node [ 
 	| args isKeyword keywordsStartPositions selector|
 	args := OrderedCollection new: 3.
@@ -491,7 +491,7 @@ RBParser >> parseKeywordMessageWith: node [
 		ifFalse: [node]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseKeywordPattern [
 	| selector positions args node |
 	selector := ''.
@@ -512,7 +512,7 @@ RBParser >> parseKeywordPattern [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseKeywordPragma [
 	| selector positions arguments |
 	selector := ''.
@@ -529,7 +529,7 @@ RBParser >> parseKeywordPragma [
 		arguments: arguments.
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseLiteralArray [
 	| stream start stop |
 	start := currentToken start.
@@ -548,7 +548,7 @@ RBParser >> parseLiteralArray [
 		isByteArray: false
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseLiteralArrayObject [
 	currentToken isSpecial 
 		ifTrue: 
@@ -565,7 +565,7 @@ RBParser >> parseLiteralArrayObject [
 	^self parsePrimitiveLiteral
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseLiteralByteArray [
 	| stream start stop |
 	start := currentToken start.
@@ -584,7 +584,7 @@ RBParser >> parseLiteralByteArray [
 		isByteArray: true
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseLiteralByteArrayObject [
 	(currentToken isLiteralToken and: 
 			[currentToken value isInteger and: [currentToken value between: 0 and: 255]]) 
@@ -608,7 +608,7 @@ RBParser >> parseLiterals: aString [
 	^stream contents collect: [ :each | each value ]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseMessagePattern [
 	currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
 	^currentToken isIdentifier 
@@ -619,7 +619,7 @@ RBParser >> parseMessagePattern [
 				ifFalse: [self parseBinaryPattern]]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseMethod [
 	| methodNode sequenceNode | 
 	methodNode := self parseMessagePattern.
@@ -645,7 +645,7 @@ RBParser >> parseMethod: aString [
 	^ node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseNumberLiteral [
 	| token |
 	token := currentToken.
@@ -659,7 +659,7 @@ RBParser >> parseNumberLiteral [
 	
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseParenthesizedExpression [
 	| leftParen node |
 	leftParen := currentToken start.
@@ -673,7 +673,7 @@ RBParser >> parseParenthesizedExpression [
 		ifFalse: [ self parserError: ''')'' expected']
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePragma [
 	| start pragma |
 	start := currentToken start.
@@ -685,7 +685,7 @@ RBParser >> parsePragma [
 	self addPragma: pragma.
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePragmaLiteral [
 	currentToken isLiteralArrayToken 
 		ifTrue: 
@@ -696,14 +696,14 @@ RBParser >> parsePragmaLiteral [
 	^self parsePrimitiveLiteral
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePragmas [
 	[ currentToken isBinary and: [ currentToken value = #< ] ] whileTrue: [
 		self parsePragma.
 		self step ]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePrimitiveIdentifier [
 	| token node |
 	token := currentToken.
@@ -713,7 +713,7 @@ RBParser >> parsePrimitiveIdentifier [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePrimitiveKeywordPragma [
 	| selector positions arguments |
 	selector := ''.
@@ -730,7 +730,7 @@ RBParser >> parsePrimitiveKeywordPragma [
 		arguments: arguments.
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePrimitiveLiteral [
 
 	currentToken isNumberLiteralToken
@@ -738,7 +738,7 @@ RBParser >> parsePrimitiveLiteral [
 		ifFalse: [ ^ self parsePrimitiveValueLiteral ]
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePrimitiveObject [
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier].
 	(currentToken isLiteralToken and: [currentToken isMultiKeyword not]) 
@@ -756,7 +756,7 @@ RBParser >> parsePrimitiveObject [
 	^ self parserError: 'Variable or expression expected'
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parsePrimitiveValueLiteral [
 	| token |
 	token := currentToken.
@@ -770,7 +770,7 @@ RBParser >> parsePrimitiveValueLiteral [
 	
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseStatementList: pragmaBoolean into: sequenceNode [ 
 	| statements return periods returnPosition node |
 	return := false.
@@ -820,12 +820,12 @@ RBParser >> parseStatementList: pragmaBoolean into: sequenceNode [
 	^sequenceNode
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseStatements: pragmaBoolean [
 	^ self parseStatements: pragmaBoolean into: self sequenceNodeClass new
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseStatements: pragmaBoolean into: aSequenceNode [
 	| temps leftBar rightBar |
 	temps := #().
@@ -854,7 +854,7 @@ RBParser >> parseStatements: pragmaBoolean into: aSequenceNode [
 				rightBar: rightBar)
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseTemps [
 	| temps |
 	temps := OrderedCollection new.
@@ -862,7 +862,7 @@ RBParser >> parseTemps [
 	^temps
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseUnaryMessage [
 	| node |
 	node := self parsePrimitiveObject.
@@ -874,7 +874,7 @@ RBParser >> parseUnaryMessage [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseUnaryMessageWith: aNode [ 
 	| selector |
 	selector := currentToken.
@@ -886,7 +886,7 @@ RBParser >> parseUnaryMessageWith: aNode [
 		arguments: #()
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseUnaryPattern [
 	| selector |
 	selector := currentToken.
@@ -894,7 +894,7 @@ RBParser >> parseUnaryPattern [
 	^self methodNodeClass selector: selector value asSymbol keywordsPositions: (Array with: selector start) arguments: #()
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseUnaryPragma [
 	| selector |
 	selector := currentToken.
@@ -902,7 +902,7 @@ RBParser >> parseUnaryPragma [
 	^ self pragmaNodeClass selector: selector value asSymbol keywordsPositions: (Array with: selector start) arguments: #()
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> parseVariableNode [
 	currentToken isIdentifier 
 		ifFalse: [ ^ self parserError: 'Variable name expected' ].
@@ -1015,17 +1015,17 @@ RBParser >> patchNegativeLiteral [
 	nextToken start: nextToken start + 1
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> pragmaNodeClass [
 	^ RBPragmaNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> returnNodeClass [
 	^ RBReturnNode
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBParser >> saveCommentsDuring: aBlock [
 	| currentComments |
 	currentComments := comments copy.
@@ -1034,7 +1034,7 @@ RBParser >> saveCommentsDuring: aBlock [
 		ensure: [ comments := comments, currentComments ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBParser >> scanner: aScanner [ 
 	scanner := aScanner.
 	pragmas := nil.
@@ -1048,12 +1048,12 @@ RBParser >> scannerClass [
 	^RBScanner
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> selfNodeClass [
 	^ RBSelfNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> sequenceNodeClass [
 	^ RBSequenceNode
 ]
@@ -1069,17 +1069,17 @@ RBParser >> step [
 		ifFalse: [currentToken := scanner next].
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> superNodeClass [
 	^ RBSuperNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> thisContextNodeClass [
 	^ RBThisContextNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBParser >> variableNodeClass [
 	^ RBVariableNode
 ]

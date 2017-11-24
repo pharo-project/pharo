@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'nextJumpIsAroundBlock'
 	],
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #initialization }

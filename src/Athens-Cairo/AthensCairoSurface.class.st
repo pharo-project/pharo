@@ -28,7 +28,7 @@ Class {
 		'dispatch',
 		'dispatchStruct'
 	],
-	#category : #Athens-Cairo
+	#category : #'Athens-Cairo'
 }
 
 { #category : #converting }
@@ -625,7 +625,7 @@ AthensCairoSurface >> height [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoSurface >> initialize [
 	"the handle should be set already since we using an NB callout to create an instance"
 	handle value = 0 ifTrue: [ 
@@ -699,7 +699,7 @@ AthensCairoSurface >> privateHeight [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoSurface >> resourceData [
 	^ { handle value. id. context handle }
 ]

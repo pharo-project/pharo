@@ -4,7 +4,7 @@ SUnit tests for Workspace
 Class {
 	#name : #WorkspaceTest,
 	#superclass : #TestCase,
-	#category : #Tools-Test-Base
+	#category : #'Tools-Test-Base'
 }
 
 { #category : #tests }

@@ -1,1 +1,1 @@
-Package { #name : #Network-Kernel }
+Package { #name : #'Network-Kernel' }

@@ -6,7 +6,7 @@ I add #beforeHooks and #afterHooks anotation and make sure to visit them for sem
 Class {
 	#name : #RFSemanticAnalyzer,
 	#superclass : #OCASTSemanticAnalyzer,
-	#category : #Reflectivity-Compiler
+	#category : #'Reflectivity-Compiler'
 }
 
 { #category : #visiting }

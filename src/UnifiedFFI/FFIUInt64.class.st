@@ -5,7 +5,7 @@ I map to a ulonglong type.
 Class {
 	#name : #FFIUInt64,
 	#superclass : #FFIIntegerType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

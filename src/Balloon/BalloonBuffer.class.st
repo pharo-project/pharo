@@ -5,7 +5,7 @@ Class {
 	#name : #BalloonBuffer,
 	#superclass : #Object,
 	#type : #words,
-	#category : #Balloon-Engine
+	#category : #'Balloon-Engine'
 }
 
 { #category : #'instance creation' }

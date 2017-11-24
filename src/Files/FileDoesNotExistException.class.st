@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'readOnly'
 	],
-	#category : #Files-Core
+	#category : #'Files-Core'
 }
 
 { #category : #signalling }

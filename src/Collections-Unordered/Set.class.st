@@ -18,7 +18,7 @@ its argument is not present in array,
 Class {
 	#name : #Set,
 	#superclass : #HashedCollection,
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
 { #category : #'instance creation' }

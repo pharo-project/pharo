@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Morphic-Pager }
+Package { #name : #'Glamour-Morphic-Pager' }

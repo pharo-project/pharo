@@ -4,7 +4,7 @@ SUnit tests for objects
 Class {
 	#name : #ObjectTest,
 	#superclass : #ClassTestCase,
-	#category : #Kernel-Tests-Objects
+	#category : #'Kernel-Tests-Objects'
 }
 
 { #category : #private }

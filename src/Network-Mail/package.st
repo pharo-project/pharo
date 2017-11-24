@@ -1,1 +1,1 @@
-Package { #name : #Network-Mail }
+Package { #name : #'Network-Mail' }

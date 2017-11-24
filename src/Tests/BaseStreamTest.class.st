@@ -1,7 +1,7 @@
 Class {
 	#name : #BaseStreamTest,
 	#superclass : #TestCase,
-	#category : #Tests-Files
+	#category : #'Tests-Files'
 }
 
 { #category : #testing }

@@ -11,7 +11,7 @@ AnnouncementLogger  allInstancesDo: [:each | SystemAnnouncer announcer unsubscri
 Class {
 	#name : #AnnouncementLogger,
 	#superclass : #Object,
-	#category : #System-Announcements-Logging
+	#category : #'System-Announcements-Logging'
 }
 
 { #category : #logging }

@@ -1,7 +1,7 @@
 Class {
 	#name : #STONCStyleCommentsSkipStreamTests,
 	#superclass : #TestCase,
-	#category : #STON-Tests
+	#category : #'STON-Tests'
 }
 
 { #category : #testing }

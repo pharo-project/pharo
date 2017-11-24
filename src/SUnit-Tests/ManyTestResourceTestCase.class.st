@@ -4,7 +4,7 @@ SUnit tests for handling of many test resources
 Class {
 	#name : #ManyTestResourceTestCase,
 	#superclass : #SimpleTestResourceTestCase,
-	#category : #SUnit-Tests-Core
+	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #accessing }

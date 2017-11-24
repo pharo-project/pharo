@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'DefaultDirectoryName'
 	],
-	#category : #Monticello-Repositories
+	#category : #'Monticello-Repositories'
 }
 
 { #category : #accessing }
@@ -94,7 +94,7 @@ MCDirectoryRepository >> loadAllFileNames [
 	^ (directory entries sort: [:a :b | a modificationTime >= b modificationTime]) collect: [:ea | ea basename]
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	| val |
 	directory / aString readStreamDo: [ :stream|
@@ -102,7 +102,7 @@ MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	^ val
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace do: aBlock [
 
 	| file |

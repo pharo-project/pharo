@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMAccumulatorTest,
 	#superclass : #TestCase,
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #tests }

@@ -4,7 +4,7 @@ This test case collects examples for block uses that require full block closures
 Class {
 	#name : #BlockClosuresTestCase,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Methods
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #'jensen device examples' }

@@ -15,7 +15,7 @@ Class {
 		'morph2',
 		'morph3'
 	],
-	#category : #Spec-Examples-Morphic
+	#category : #'Spec-Examples-Morphic'
 }
 
 { #category : #specs }

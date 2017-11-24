@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'level'
 	],
-	#category : #Reflectivity-Contexts
+	#category : #'Reflectivity-Contexts'
 }
 
 { #category : #accessing }

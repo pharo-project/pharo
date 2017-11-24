@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'targetRefactoring'
 	],
-	#category : #Epicea-Support
+	#category : #'Epicea-Support'
 }
 
 { #category : #'instance creation' }
@@ -24,7 +24,7 @@ EpRBPropagateRefactoring >> asEpiceaEvent [
 	^ EpPropagateRefactoring target: targetRefactoring asEpiceaEvent
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpRBPropagateRefactoring >> initializeWith: aRefactoring [ 
 	self initialize.
 	targetRefactoring := aRefactoring 

@@ -25,7 +25,7 @@ Class {
 		'Unconnected',
 		'WaitingForConnection'
 	],
-	#category : #Network-Kernel
+	#category : #'Network-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -430,7 +430,7 @@ Socket >> accept [
 	^Socket acceptFrom: self.
 ]
 
-{ #category : #initialize-destroy }
+{ #category : #'initialize-destroy' }
 Socket >> acceptFrom: aSocket [
 	"Initialize a new socket handle from an accept call"
 
@@ -465,7 +465,7 @@ Socket >> address [
 	^self localAddress
 ]
 
-{ #category : #initialize-destroy }
+{ #category : #'initialize-destroy' }
 Socket >> bindTo: anAddress port: aPort [
 	^self primSocket: socketHandle bindTo: anAddress port: aPort 
 ]
@@ -563,7 +563,7 @@ Socket >> dataAvailable [
 
 ]
 
-{ #category : #initialize-destroy }
+{ #category : #'initialize-destroy' }
 Socket >> destroy [
 	"Destroy this socket. Its connection, if any, is aborted and its resources are freed. Do nothing if the socket has already been destroyed (i.e., if its socketHandle is nil)."
 
@@ -691,7 +691,7 @@ Socket >> initialize: socketType [
 		ifNotNil: [ self register ]
 ]
 
-{ #category : #initialize-destroy }
+{ #category : #'initialize-destroy' }
 Socket >> initializeNetwork [
 	self class initializeNetwork
 ]
@@ -868,7 +868,7 @@ Socket >> primAcceptFrom: aHandle receiveBufferSize: rcvBufSize sendBufSize: snd
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocket: socketID bindTo: socketAddress [
 
 	<primitive: 'primitiveSocketBindTo' module: 'SocketPlugin'>
@@ -883,7 +883,7 @@ Socket >> primSocket: socketID bindTo: anAddress port: aPort [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocket: socketID connectTo: socketAddress [
 
 	<primitive: 'primitiveSocketConnectTo' module: 'SocketPlugin'>
@@ -939,7 +939,7 @@ Socket >> primSocket: aHandle listenOn: portNumber backlogSize: backlog interfac
 	self destroy. "Accept not supported so clean up"
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocket: socketID listenWithBacklog: backlogSize [
 
 	<primitive: 'primitiveSocketListenWithBacklog' module: 'SocketPlugin'>
@@ -947,7 +947,7 @@ Socket >> primSocket: socketID listenWithBacklog: backlogSize [
 
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocket: socketID localAddressResult: socketAddress [
 
 	<primitive: 'primitiveSocketLocalAddressResult' module: 'SocketPlugin'>
@@ -974,7 +974,7 @@ Socket >> primSocket: socketID receiveUDPDataInto: aStringOrByteArray startingAt
 
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocket: socketID remoteAddressResult: socketAddress [
 
 	<primitive: 'primitiveSocketRemoteAddressResult' module: 'SocketPlugin'>
@@ -1124,7 +1124,7 @@ Socket >> primSocketLocalAddress: socketID [
 
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocketLocalAddressSize: handle [
 
 	<primitive: 'primitiveSocketLocalAddressSize' module: 'SocketPlugin'>
@@ -1158,7 +1158,7 @@ Socket >> primSocketRemoteAddress: socketID [
 
 ]
 
-{ #category : #primitives-ipv6 }
+{ #category : #'primitives-ipv6' }
 Socket >> primSocketRemoteAddressSize: handle [
 
 	<primitive: 'primitiveSocketRemoteAddressSize' module: 'SocketPlugin'>

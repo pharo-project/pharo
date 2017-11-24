@@ -1,1 +1,1 @@
-Package { #name : #MonticelloFileTree-Core }
+Package { #name : #'MonticelloFileTree-Core' }

@@ -4,7 +4,7 @@ I represent the mode to use for editing class comments
 Class {
 	#name : #RubSmalltalkCommentMode,
 	#superclass : #RubAbstractSmalltalkMode,
-	#category : #Rubric-Editing-Code
+	#category : #'Rubric-Editing-Code'
 }
 
 { #category : #accessing }
@@ -30,13 +30,13 @@ RubSmalltalkCommentMode class >> menuOn: aBuilder [
 	RubSmalltalkCodeMode menuOn: aBuilder 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCommentMode >> editorClass [
 	^ RubSmalltalkEditor.
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCommentMode >> formatMethodCode [
 	"do nothing for code comments"
 ]
@@ -46,13 +46,13 @@ RubSmalltalkCommentMode >> isCodeCompletionAllowed [
 	^ false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCommentMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSmalltalkCommentMode >> updateTextAreaWhenUnplugged [
 	super updateTextAreaWhenUnplugged
 

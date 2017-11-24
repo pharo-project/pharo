@@ -10,7 +10,7 @@ The LIBJPEG license allows it to be used free for any purpose so long as its ori
 Class {
 	#name : #PluginBasedJPEGReadWriter,
 	#superclass : #ImageReadWriter,
-	#category : #Graphics-Files
+	#category : #'Graphics-Files'
 }
 
 { #category : #'image reading/writing' }

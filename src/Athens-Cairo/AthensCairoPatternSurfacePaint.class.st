@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Paints
+	#category : #'Athens-Cairo-Paints'
 }
 
 { #category : #'as yet unclassified' }
@@ -58,7 +58,7 @@ AthensCairoPatternSurfacePaint >> extent: aPatternExtent [
 	extent:= aPatternExtent
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [ 
 	self initialize.
 	surface := anAthensCairoSurface .

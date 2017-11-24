@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlayPageFilePersistence,
 	#superclass : #GTPlayPagePersistence,
-	#category : #GT-Playground
+	#category : #'GT-Playground'
 }
 
 { #category : #private }
@@ -19,7 +19,7 @@ GTPlayPageFilePersistence >> fileName [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPageFilePersistence >> fileReference [
 	^ self fileDirectory / self fileName
 ]

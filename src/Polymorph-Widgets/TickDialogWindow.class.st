@@ -15,7 +15,7 @@ Class {
 		'resultStorage',
 		'wrapBlockOrSelector'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #example }

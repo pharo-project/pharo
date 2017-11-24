@@ -12,7 +12,7 @@ Class {
 		'slotShift',
 		'modificationMap'
 	],
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #'instance creation' }
@@ -20,7 +20,7 @@ AbstractModification class >> new: anInteger [
 	^ self new initialize: anInteger 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AbstractModification >> initialize: anInteger [
 	self initialize.
 	modificationMap := Array new: anInteger.

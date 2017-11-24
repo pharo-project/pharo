@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'binding'
 	],
-	#category : #Reflectivity-Compiler
+	#category : #'Reflectivity-Compiler'
 }
 
 { #category : #'instance creation' }

@@ -14,7 +14,7 @@ Usage:
 Class {
 	#name : #ImageCleanerCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : #Tool-ImageCleaner
+	#category : #'Tool-ImageCleaner'
 }
 
 { #category : #accessing }

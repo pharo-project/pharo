@@ -4,7 +4,7 @@ I know how to talk with a syntax error debugger and extract the information need
 Class {
 	#name : #SugsSyntaxErrorDebuggerContext,
 	#superclass : #SugsAbstractContext,
-	#category : #SmartSuggestions-Menu
+	#category : #'SmartSuggestions-Menu'
 }
 
 { #category : #refactoring }

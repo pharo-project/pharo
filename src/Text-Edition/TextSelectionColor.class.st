@@ -22,7 +22,7 @@ Class {
 		'PrimarySelection',
 		'SecondarySelection'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #cleaning }

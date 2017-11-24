@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'CommonHeaders'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -305,7 +305,7 @@ ZnHeaders >> printOn: stream [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnHeaders >> readFrom: stream [
 	| line reader |
 	reader := ZnLineReader on: stream.
@@ -349,7 +349,7 @@ ZnHeaders >> request: url [
   
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnHeaders >> unlimited [
 	self headers unlimited
 ]

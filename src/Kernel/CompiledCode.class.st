@@ -32,7 +32,7 @@ Class {
 		'SecondaryBytecodeSetEncoderClass',
 		'SmallFrame'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #'instance creation' }
@@ -584,7 +584,7 @@ CompiledCode >> messages [
 	^ aSet 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CompiledCode >> needsFrameSize: newFrameSize [
 	"Set the largeFrameBit to accomodate the newFrameSize"
 	(self numTemps + newFrameSize) > LargeFrame ifTrue:
@@ -789,7 +789,7 @@ CompiledCode >> sendsToSuper [
 	^ self innerCompiledBlocksAnySatisfy: [ :cb | cb sendsToSuper ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CompiledCode >> setFrameBit: boolean [ 
 	"true for large frame, else false"
 	| largeFrameBit newHeader |

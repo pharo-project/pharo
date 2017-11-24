@@ -14,7 +14,7 @@ Class {
 		'listSource',
 		'maxWidth'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #drawing }

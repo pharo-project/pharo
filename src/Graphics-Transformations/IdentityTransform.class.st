@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #Graphics-Transformations
+	#category : #'Graphics-Transformations'
 }
 
 { #category : #initialization }

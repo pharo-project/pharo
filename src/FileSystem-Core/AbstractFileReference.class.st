@@ -4,7 +4,7 @@ I am an abstract superclass for FileLocator and FileReference. By implementing m
 Class {
 	#name : #AbstractFileReference,
 	#superclass : #Object,
-	#category : #FileSystem-Core-Public
+	#category : #'FileSystem-Core-Public'
 }
 
 { #category : #copying }
@@ -127,12 +127,12 @@ AbstractFileReference >> basenameWithoutExtension: anExtension [
 	^ self fullPath basenameWithoutExtension: anExtension
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 AbstractFileReference >> binaryReadStream [
 	^ self subclassResponsibility
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 AbstractFileReference >> binaryReadStreamDo: aBlock [
 	| stream |
 	stream := self binaryReadStream.
@@ -140,14 +140,14 @@ AbstractFileReference >> binaryReadStreamDo: aBlock [
 		ensure: [ stream close ]
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 AbstractFileReference >> binaryReadStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self binaryReadStreamDo: doBlock ]
 		ifFalse: absentBlock
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self binaryReadStream ]

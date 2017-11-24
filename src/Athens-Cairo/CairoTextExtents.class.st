@@ -34,7 +34,7 @@ Class {
 		'OFFSET_Y_ADVANCE',
 		'OFFSET_Y_BEARING'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #'field definition' }

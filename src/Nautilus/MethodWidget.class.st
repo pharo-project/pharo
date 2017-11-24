@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'MethodsIconsCache'
 	],
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #shortcuts }

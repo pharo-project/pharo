@@ -19,7 +19,7 @@ Class {
 		'sliders',
 		'extentForPreview'
 	],
-	#category : #Spec-PolyWidgets-RGBAndShape
+	#category : #'Spec-PolyWidgets-RGBAndShape'
 }
 
 { #category : #specs }
@@ -78,7 +78,7 @@ RGBWidget >> sliders [
 	^ sliders
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 RGBWidget >> whenExtentForPreviewChanged: aBlock [
  extentForPreview whenChangedDo: aBlock 
 ]

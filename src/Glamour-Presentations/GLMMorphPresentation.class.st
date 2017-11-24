@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'morphBuilder'
 	],
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #initialization }

@@ -4,7 +4,7 @@ I am a null shortcut handler for morphic. I register myself as a tool to be repl
 Class {
 	#name : #MorphicShortcutHandler,
 	#superclass : #Object,
-	#category : #Morphic-Core-Events
+	#category : #'Morphic-Core-Events'
 }
 
 { #category : #tools }
@@ -13,7 +13,7 @@ MorphicShortcutHandler class >> registerToolsOn: aToolRegistry [
 	"aToolRegistry register: self new as: #shortcuts"
 ]
 
-{ #category : #shortcut-handling }
+{ #category : #'shortcut-handling' }
 MorphicShortcutHandler >> handleKeystroke: aKeystrokeEvent inMorph: aMorph [
 
 	"I do nothing. I'm a null object"

@@ -4,7 +4,7 @@ Check that the number of addDependent: message sends in a class is less than or 
 Class {
 	#name : #RBAddRemoveDependentsRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

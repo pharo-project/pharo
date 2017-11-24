@@ -20,7 +20,7 @@ Class {
 		'with2timeSubcollection',
 		'subcollection3ElementsSorted'
 	],
-	#category : #Collections-Tests-Strings
+	#category : #'Collections-Tests-Strings'
 }
 
 { #category : #requirements }

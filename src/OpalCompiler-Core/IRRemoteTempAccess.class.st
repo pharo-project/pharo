@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tempVectorName'
 	],
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #testing }

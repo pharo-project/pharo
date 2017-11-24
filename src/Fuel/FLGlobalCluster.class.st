@@ -4,7 +4,7 @@ I am a cluster for objects that are reachables from Smalltalk global dictionary.
 Class {
 	#name : #FLGlobalCluster,
 	#superclass : #FLPrimitiveCluster,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -13,7 +13,7 @@ FLGlobalCluster class >> clusterBucketIn: aClusterization [
 	^aClusterization globalsBucket 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalCluster >> materializeGlobalAssociationFrom: aDecoder [
 
 	| globalName |
@@ -24,7 +24,7 @@ FLGlobalCluster >> materializeGlobalAssociationFrom: aDecoder [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalCluster >> materializeGlobalClassFrom: aDecoder [
 
 	| className |
@@ -32,13 +32,13 @@ FLGlobalCluster >> materializeGlobalClassFrom: aDecoder [
 	^ aDecoder classNamed: className
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalCluster >> serializeGlobalAssociationKeyed: aSymbol on: anEncoder [
 	
 	anEncoder encodeString: aSymbol
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalCluster >> serializeGlobalClass: aClass on: anEncoder [
 	
 	aClass isObsolete ifTrue: [ FLObsolete signalWithName: aClass name ].

@@ -23,7 +23,7 @@ Class {
 		'collectionOfArrays',
 		'buffer'
 	],
-	#category : #Kernel-Tests-Methods
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #operating }

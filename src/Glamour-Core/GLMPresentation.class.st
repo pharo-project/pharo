@@ -45,7 +45,7 @@ Class {
 		'stepCondition',
 		'wantsAutomaticRefresh'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #accessing }
@@ -411,7 +411,7 @@ GLMPresentation >> hasTransformation [
 	^ transformation isNotNil and: [ transformation ~= #yourself ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMPresentation >> initialize [
 	super initialize.
 	updateActions := OrderedCollection new.
@@ -428,7 +428,7 @@ GLMPresentation >> initialize: aBlock [
 	initializationBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMPresentation >> initializePresentation [
 	initializationBlock ifNotNil: [ initializationBlock value: self ]
 ]

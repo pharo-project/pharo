@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'passAction'
 	],
-	#category : #Collections-Tests-Weak
+	#category : #'Collections-Tests-Weak'
 }
 
 { #category : #handling }

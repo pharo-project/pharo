@@ -2,9 +2,9 @@
 SDL2 library structure representing a controller device removed data.
 "
 Class {
-	#name : #SDL_ControllerDeviceRemovedEvent,
-	#superclass : #SDL_ControllerDeviceEvent,
-	#category : #OSWindow-SDL2-Bindings
+	#name : #'SDL_ControllerDeviceRemovedEvent',
+	#superclass : #'SDL_ControllerDeviceEvent',
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

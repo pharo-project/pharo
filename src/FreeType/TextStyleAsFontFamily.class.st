@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'textStyle'
 	],
-	#category : #FreeType-FontManager
+	#category : #'FreeType-FontManager'
 }
 
 { #category : #accessing }

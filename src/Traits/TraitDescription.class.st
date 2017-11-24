@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'organization'
 	],
-	#category : #Traits-Kernel
+	#category : #'Traits-Kernel'
 }
 
 { #category : #composition }
@@ -252,13 +252,13 @@ TraitDescription >> changedSelectorsComparedTo: aTraitTransformation [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 TraitDescription >> classComment: aString [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are orgainzing.  Empty string gets stored only if had a non-empty one before."
 	^ self classComment: aString stamp: '<historical>'
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 TraitDescription >> classComment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
@@ -445,7 +445,7 @@ TraitDescription >> commentInventory [
 	^ self environment organization commentInventory: (self category copyUpTo: $-), '*'
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 TraitDescription >> commentStamp: changeStamp [
 	self organization commentStamp: changeStamp
 ]
@@ -663,7 +663,7 @@ TraitDescription >> definesSlotNamed: aString [
 	^ self slotNames includes: aString
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 TraitDescription >> definition [
 	"Answer a String that defines the receiver"
 
@@ -1077,7 +1077,7 @@ TraitDescription >> numberOfMethods [
 		ifFalse: [ num + self theMetaClass numberOfMethods ] 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TraitDescription >> obsolete [
 	"Make the receiver obsolete."
 	self superclass removeSubclass: self.
@@ -1308,7 +1308,7 @@ TraitDescription >> subject [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TraitDescription >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
@@ -1400,7 +1400,7 @@ TraitDescription >> untagFrom: aSymbol [
 	package addClass: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TraitDescription >> updateInstances: oldInstances from: oldClass isMeta: isMeta [
 	"Recreate any existing instances of the argument, oldClass, as instances of the receiver,
 	 which is a newly changed class. Permute variables as necessary, and forward old instances
@@ -1424,7 +1424,7 @@ TraitDescription >> updateInstances: oldInstances from: oldClass isMeta: isMeta 
 	^ nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TraitDescription >> updateInstancesFrom: oldClass [
 	"Recreate any existing instances of the argument, oldClass, as instances of 
 	the receiver, which is a newly changed class. Permute variables as 

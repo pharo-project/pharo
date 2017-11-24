@@ -9,7 +9,7 @@ Class {
 		'end',
 		'fifo'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }

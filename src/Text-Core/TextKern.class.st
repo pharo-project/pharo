@@ -8,7 +8,7 @@ Class {
 		'kern',
 		'active'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #'instance creation' }

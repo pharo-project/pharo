@@ -12,7 +12,7 @@ Class {
 		'nonCharacters',
 		'unicodeGenerator'
 	],
-	#category : #Kernel-Tests-Charset
+	#category : #'Kernel-Tests-Charset'
 }
 
 { #category : #accessing }
@@ -52,69 +52,69 @@ UnicodeTest >> setUp [
 	unicodeGenerator := UnicodeTestRNG current
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsCasedLetter [
 	"The Cased letter category, LC, is empty"
 	self aRandomSelectionOfCharactersDo: [ :ch | 
 		self deny: (Unicode isCasedLetter: ch) ]
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsClosePunctuation [
 	self checkCorrespondanceOf: #isClosePunctuation: and: #Pe
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsConnectorPunctuation [
 	self checkCorrespondanceOf: #isConnectorPunctuation: and: #Pc
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsControlOther [
 	self checkCorrespondanceOf: #isControlOther: and: #Cc
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsCurrencySymbol [
 	self checkCorrespondanceOf: #isCurrencySymbol: and: #Sc
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsDashPunctuation [
 	self checkCorrespondanceOf: #isDashPunctuation: and: #Pd
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsDecimalDigit [
 	self checkCorrespondanceOf: #isDecimalDigit: and: #Nd
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsDigit [
 	self checkCorrespondanceOf: #isDigit: and: #Nd
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsEnclosingMark [
 	self checkCorrespondanceOf: #isEnclosingMark: and: #Me
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsFinalQuote [
 	self checkCorrespondanceOf: #isFinalQuote: and: #Pf
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsFormatOther [
 	self checkCorrespondanceOf: #isFormatOther: and: #Cf
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsInitialQuote [
 	self checkCorrespondanceOf: #isInitialQuote: and: #Pi
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsLetter [
 	| letterCategories methodAnswer catFromTable |
 	letterCategories := #(Ll Lm Lo Lt Lu) collect: [ :c | Unicode classPool at: c ].
@@ -124,109 +124,109 @@ UnicodeTest >> testIsLetter [
 			self assert: methodAnswer equals: (letterCategories includes: catFromTable) ]
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsLetterModifier [
 	self checkCorrespondanceOf: #isLetterModifier: and: #Lm
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsLetterNumber [
 	self checkCorrespondanceOf: #isLetterNumber: and: #Nl
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsLineSeparator [
 	self checkCorrespondanceOf: #isLineSeparator: and: #Zl
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsLowercase [
 	self checkCorrespondanceOf: #isLowercase: and: #Ll
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsMathSymbol [
 	self checkCorrespondanceOf: #isMathSymbol: and: #Sm
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsModifierSymbol [
 	self checkCorrespondanceOf: #isModifierSymbol: and: #Sk
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsNonspacingMark [
 	self checkCorrespondanceOf: #isNonspacingMark: and: #Mn
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsOpenPunctuation [
 	self checkCorrespondanceOf: #isOpenPunctuation: and: #Ps
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsOtherLetter [
 	self checkCorrespondanceOf: #isOtherLetter: and: #Lo
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsOtherNumber [
 	self checkCorrespondanceOf: #isOtherNumber: and: #No
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsOtherPunctuation [
 	self checkCorrespondanceOf: #isOtherPunctuation: and: #Po
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsOtherSymbol [
 	self checkCorrespondanceOf: #isOtherSymbol: and: #So
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsParagraphSeparator [
 	self checkCorrespondanceOf: #isParagraphSeparator: and: #Zp
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsPrivateOther [
 	self checkCorrespondanceOf: #isPrivateOther: and: #Co
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsSpaceSeparator [
 	self checkCorrespondanceOf: #isSpaceSeparator: and: #Zs
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsSpacingCombiningMark [
 	self checkCorrespondanceOf: #isSpacingCombiningMark: and: #Mc
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsSurrogateOther [
 	self checkCorrespondanceOf: #isSurrogateOther: and: #Cs
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsTitlecaseLetter [
 	self checkCorrespondanceOf: #isTitlecaseLetter: and: #Lt
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testIsUppercase [
 	self checkCorrespondanceOf: #isUppercase: and: #Lu
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testNonCharacterNegative [
 	self aRandomSelectionOfCharactersDo: [  :ch |
 		self deny: (Unicode isNonCharacter: ch) 
 	]
 ]
 
-{ #category : #tests-categorization }
+{ #category : #'tests-categorization' }
 UnicodeTest >> testNonCharacterPositive [
 	| nonCps |
 	nonCps := (16rFDD0 to: 16rFDEF) asSet. 

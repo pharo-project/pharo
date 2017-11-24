@@ -4,7 +4,7 @@ UI merging SpecTreeModel package dependencies and Nautilus UI.
 Class {
 	#name : #DAPackageAnalyzerCycleDetectionWindow,
 	#superclass : #DAPackageAnalyzerWindow,
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #examples }
@@ -13,7 +13,7 @@ DAPackageAnalyzerCycleDetectionWindow class >> collections [
 		open
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 DAPackageAnalyzerCycleDetectionWindow class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:	self systemPackages) 
 		open
@@ -25,26 +25,26 @@ DAPackageAnalyzerCycleDetectionWindow class >> system [
 		open
 ]
 
-{ #category : #initialization-filter }
+{ #category : #'initialization-filter' }
 DAPackageAnalyzerCycleDetectionWindow >> initializeCycleDetectionTreeModelWith: aCollection [
 
 	self initializeWithSystemCycles.
 	packageAnalyzerTreeModel filterWithPackages: aCollection
 ]
 
-{ #category : #initialization-filter }
+{ #category : #'initialization-filter' }
 DAPackageAnalyzerCycleDetectionWindow >> initializeWithFilter: aCollection [
 	self initializeCycleDetectionTreeModelWith: aCollection.
 	self buildandAddAllMorph
 ]
 
-{ #category : #initialization-union }
+{ #category : #'initialization-union' }
 DAPackageAnalyzerCycleDetectionWindow >> initializeWithPackageNames: aCollection [
 	packageAnalyzerTreeModel  := DAPackageCycleDetectionTreeModel  onPackagesNamed: aCollection.
 	self buildandAddAllMorph 
 ]
 
-{ #category : #initialization-filter }
+{ #category : #'initialization-filter' }
 DAPackageAnalyzerCycleDetectionWindow >> initializeWithSystemCycles [
 	packageAnalyzerTreeModel := DAPackageCycleDetectionTreeModel system.
 ]

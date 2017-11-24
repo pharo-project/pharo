@@ -5,7 +5,7 @@ I can be executed to perform certain operations (commit packages to their reposi
 Class {
 	#name : #VSCommitAction,
 	#superclass : #Object,
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #'*Versionner-Commit-UI' }

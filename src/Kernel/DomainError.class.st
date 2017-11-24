@@ -10,7 +10,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #signaling }

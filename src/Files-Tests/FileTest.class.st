@@ -1,7 +1,7 @@
 Class {
 	#name : #FileTest,
 	#superclass : #TestCase,
-	#category : #Files-Tests
+	#category : #'Files-Tests'
 }
 
 { #category : #running }

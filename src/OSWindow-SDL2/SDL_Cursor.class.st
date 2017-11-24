@@ -2,13 +2,13 @@
 I represent  handle of a mouse cursor.
 "
 Class {
-	#name : #SDL_Cursor,
+	#name : #'SDL_Cursor',
 	#superclass : #SDL2Handle,
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'freeing resources' }

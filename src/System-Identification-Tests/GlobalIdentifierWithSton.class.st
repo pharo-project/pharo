@@ -1,7 +1,7 @@
 Class {
 	#name : #GlobalIdentifierWithSton,
 	#superclass : #GlobalIdentifierTest,
-	#category : #System-Identification-Tests
+	#category : #'System-Identification-Tests'
 }
 
 { #category : #accessing }

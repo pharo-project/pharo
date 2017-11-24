@@ -42,7 +42,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #SortFunctions-Core
+	#category : #'SortFunctions-Core'
 }
 
 { #category : #accessing }

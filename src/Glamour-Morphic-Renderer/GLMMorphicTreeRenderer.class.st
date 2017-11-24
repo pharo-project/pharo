@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicTreeRenderer,
 	#superclass : #GLMMorphicListingRenderer,
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #rendering }

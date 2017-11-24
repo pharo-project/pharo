@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'members'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #'archive operations' }

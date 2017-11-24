@@ -16,7 +16,7 @@ Class {
 		'currentStrip',
 		'currentBackground'
 	],
-	#category : #Athens-Text
+	#category : #'Athens-Text'
 }
 
 { #category : #'as yet unclassified' }

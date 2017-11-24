@@ -10,20 +10,20 @@ Class {
 		'packageTreeNautilusUI',
 		'cycle'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #building-menu }
+{ #category : #'building-menu' }
 DANode >> addMenuEntriesOn: aMenuGroup [
 	"overide this method to add contextual menu on nodes"
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> browseClass: classToBrowse [
 	Smalltalk tools browser openOnClass: classToBrowse
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> browseClassInNautilus: aClass [
 	| nautilus |
 	
@@ -33,17 +33,17 @@ DANode >> browseClassInNautilus: aClass [
 	self rootNode packageTreeNautilusUI sourceTextModel announce: NautilusClassSelected.
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> browseInNautilus [
 	^ self subclassResponsibility
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> browseInOtherNautilus [
 	"do nothing by default"
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> browseMethodInNautilus: aMethod [
 	| classToBrowse nautilus compiledMethod nautilusUI |
 	nautilus := self rootNode packageTreeNautilus.
@@ -57,7 +57,7 @@ DANode >> browseMethodInNautilus: aMethod [
 	
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> browsePackageInNautilus: aPackage [
 	| classToBrowse classFromPackage classesToBrowse |
 	classFromPackage := aPackage classes.
@@ -127,7 +127,7 @@ DANode >> packageUnderAnalysis [
 	^ self rootNode daPackage rPackageSet packages first
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> refreshNautilus: nautilus [
 
 	| nautilusUI |
@@ -147,7 +147,7 @@ DANode >> rootNode [
 	^ currentNode.
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DANode >> setSelectionOnMethod: aMethod class: aClass with: nautilus [
 	| protocol nautilusUI |
 	aMethod ifNotNil: [ protocol := aMethod protocol ].

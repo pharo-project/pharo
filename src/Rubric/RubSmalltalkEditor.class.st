@@ -8,7 +8,7 @@ Class {
 		'selectorChooser',
 		'notificationStrategy'
 	],
-	#category : #Rubric-Editing-Code
+	#category : #'Rubric-Editing-Code'
 }
 
 { #category : #keymapping }
@@ -126,7 +126,7 @@ RubSmalltalkEditor >> atCompletionPosition [
 	^ (self text at: cursorPosition - 1) isCompletionCharacter
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> basicInspectIt [
 	self evaluateSelectionAndDo: [:result | result basicInspect]
 ]
@@ -217,7 +217,7 @@ RubSmalltalkEditor >> click: anEvent [
 
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 	| methodNode methodClass |
 	methodClass := evalContext
@@ -234,7 +234,7 @@ RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
 	^ methodNode generateWithSource
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 	
 	^ self compile: self selectionAsStream for: anObject in: evalContext
@@ -286,7 +286,7 @@ RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInter
 	^ commentInterval first + 1 to: commentInterval last - 1
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> debug: aStream [
 
 	| method receiver context |
@@ -305,7 +305,7 @@ RubSmalltalkEditor >> debug: aStream [
 	
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext [
 	| guineaPig context debugSession |
 	guineaPig := [ aCompiledMethod
@@ -322,7 +322,7 @@ RubSmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext 
 	
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> debugHighlight [
 	"Treat the current highlight as an expression; evaluate and debugg it in a new debugger."
 
@@ -330,7 +330,7 @@ RubSmalltalkEditor >> debugHighlight [
 	self debug: self highlightedTextAsStream
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> debugIt [
 
 	^ self debugSelection
@@ -344,7 +344,7 @@ RubSmalltalkEditor >> debugIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> debugSelection [
 	"Treat the current selection as an expression; evaluate and debugg it in a new debugger."
 	
@@ -370,7 +370,7 @@ RubSmalltalkEditor >> displayIfTrue: aKeyboardEvent [
 	^false
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> doIt [
 	"Set the context to include pool vars of the model.  Then evaluate."
 	^ self evaluateSelection
@@ -385,7 +385,7 @@ RubSmalltalkEditor >> doIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
@@ -404,14 +404,14 @@ RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
 	^ aBlock value: result
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> evaluateSelection [
 	"Treat the current selection as an expression; evaluate it and return the result"
 	
 	^self evaluateSelectionAndDo: [:result | result]
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result.
 	If no selection is present select the current line."
@@ -422,7 +422,7 @@ RubSmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 		andDo: aBlock
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> exploreIt [
 	self evaluateSelectionAndDo: [:result | result inspect]
 ]
@@ -490,12 +490,12 @@ RubSmalltalkEditor >> focusChanged [
 	self selectorChooserFocusChange 
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> format [
 	self model formatSourceCodeInView
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> highlightEvaluateAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	
@@ -544,7 +544,7 @@ RubSmalltalkEditor >> initializeShortcuts: aKMDispatcher [
 	aKMDispatcher attachCategory: RubSmalltalkEditor name
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> inspectIt [
 	self evaluateSelectionAndDo: [:result | result inspect]
 ]
@@ -730,7 +730,7 @@ RubSmalltalkEditor >> pasteInitials: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> printIt [
 	"Treat the current text selection as an expression; evaluate it. Insert the 
 	description of the result of evaluation after the selection and then make 
@@ -753,7 +753,7 @@ RubSmalltalkEditor >> printIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> querySymbol [
 	self selectorChooseQuerySymbol 
 ]
@@ -862,7 +862,7 @@ RubSmalltalkEditor >> selectedSymbol [
 	^ nil
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> selectionForDoitAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently
 	selected. "
@@ -887,7 +887,7 @@ RubSmalltalkEditor >> selectionPosition: aString [
 			ensure: [ self selectInvisiblyFrom: startIndex to: startIndex - 1 ]
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> selectionString [
 	"remove the initial and final quote marks, if present"
 	"'''h''' withoutWrappingDoubleQuotes"
@@ -900,7 +900,7 @@ RubSmalltalkEditor >> selectionString [
 		ifFalse: [ selection ].
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooseQuerySymbol [
 	| pref |
 	self hasSelection
@@ -914,13 +914,13 @@ RubSmalltalkEditor >> selectorChooseQuerySymbol [
 	selectorChooser := RubSelectorChooserMorph popUpPrefix: pref from: textArea
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooser [
 	^ selectorChooser
 
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserChosenSelector: aSelector [
 	| newStart replacement caret prevSelection |
 	self selectorChooserClose.
@@ -948,26 +948,26 @@ RubSmalltalkEditor >> selectorChooserChosenSelector: aSelector [
 			self selectFrom: caret to: caret - 1 ]
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserClose [
 	selectorChooser 
 		ifNotNil: [ [selectorChooser delete] ensure: [selectorChooser := nil] ]
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserFocusChange [
 	textArea hasFocus
 		ifTrue: [ selectorChooser ifNotNil: [ selectorChooser comeToFront ] ]
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserHandlesKeyboard: aKeyboardEvent [
 	"Return true or false on whether the code editor can handle keyboard event"
 	^ (selectorChooser notNil and: [ selectorChooser handlesKeyboard: aKeyboardEvent ])
 
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserKeystroke: aKeyboardEvent [
 	| asciiValue |
 	selectorChooser 
@@ -988,7 +988,7 @@ RubSmalltalkEditor >> selectorChooserKeystroke: aKeyboardEvent [
 	^ false
 ]
 
-{ #category : #basic-completion }
+{ #category : #'basic-completion' }
 RubSmalltalkEditor >> selectorChooserUpdate [
 	selectorChooser ifNil: [^ self].
 	self selectorChooserClose.
@@ -1022,7 +1022,7 @@ RubSmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> tally: aStream [
 	"Treat the current selection as an expression; evaluate and tally it."
 	| receiver context v compiledMethod profiler |
@@ -1040,7 +1040,7 @@ RubSmalltalkEditor >> tally: aStream [
 
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> tallyHighlight [
 	"Treat the current highlight as an expression; evaluate and tally it."
 	
@@ -1050,13 +1050,13 @@ RubSmalltalkEditor >> tallyHighlight [
 
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> tallyIt [
 
 	^ self tallySelection
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 RubSmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 

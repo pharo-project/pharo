@@ -8,7 +8,7 @@ Class {
 		'SoundEnabled',
 		'UseThemeSounds'
 	],
-	#category : #Settings-System
+	#category : #'Settings-System'
 }
 
 { #category : #settings }

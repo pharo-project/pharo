@@ -4,7 +4,7 @@ This action is responsible for canceling/clearing the changes in a code editor f
 Class {
 	#name : #GTClearEditorDebugAction,
 	#superclass : #DebugAction,
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

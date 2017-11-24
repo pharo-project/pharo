@@ -3,7 +3,7 @@ I provide an api for computing tags.
 "
 Trait {
 	#name : #GLMTBlockTags,
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #tags }

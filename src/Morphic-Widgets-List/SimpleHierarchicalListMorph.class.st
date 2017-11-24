@@ -26,7 +26,7 @@ Class {
 		'expandedForm',
 		'notExpandedForm'
 	],
-	#category : #Morphic-Widgets-List
+	#category : #'Morphic-Widgets-List'
 }
 
 { #category : #shortcuts }
@@ -145,7 +145,7 @@ SimpleHierarchicalListMorph class >> on: anObject list: getListSel selected: get
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SimpleHierarchicalListMorph >> acceptDroppingMorph: aMorph event: evt [
 
 	self model
@@ -560,7 +560,7 @@ SimpleHierarchicalListMorph >> hExtraScrollRange [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 SimpleHierarchicalListMorph >> handleMouseMove: anEvent [
 	"Reimplemented because we really want #mouseMove when a morph is dragged around"
 	anEvent wasHandled ifTrue:[^self]. "not interested"
@@ -897,12 +897,12 @@ SimpleHierarchicalListMorph >> on: anObject list: getListSel selected: getSelect
 	self list: self getList.
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SimpleHierarchicalListMorph >> potentialDropMorph [
 	^potentialDropMorph
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SimpleHierarchicalListMorph >> potentialDropMorph: aMorph [
 	potentialDropMorph := aMorph.
 	aMorph highlightForDrop
@@ -914,7 +914,7 @@ SimpleHierarchicalListMorph >> removeObsoleteEventHandlers [
 		m eventHandler: nil; highlightForMouseDown: false; resetExtension].
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SimpleHierarchicalListMorph >> resetPotentialDropMorph [
 	potentialDropMorph ifNotNil: [
 		potentialDropMorph resetHighlightForDrop.
@@ -1227,7 +1227,7 @@ SimpleHierarchicalListMorph >> vUnadjustedScrollRange [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SimpleHierarchicalListMorph >> wantsDroppedMorph: aMorph event: anEvent [ 
 	^ self model wantsDroppedMorph: aMorph event: anEvent inMorph: self
 ]

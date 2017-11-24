@@ -2,14 +2,14 @@
 SDL2 library structure representing a joystick device event data.
 "
 Class {
-	#name : #SDL_JoyDeviceEvent,
+	#name : #'SDL_JoyDeviceEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_TIMESTAMP',
 		'OFFSET_TYPE',
 		'OFFSET_WHICH'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

@@ -13,7 +13,7 @@ Class {
 		'hasSend',
 		'contextCount'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #private }

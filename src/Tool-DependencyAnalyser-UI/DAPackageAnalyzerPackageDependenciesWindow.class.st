@@ -4,7 +4,7 @@ UI merging SpecTreeModel cycles and Nautilus UI.
 Class {
 	#name : #DAPackageAnalyzerPackageDependenciesWindow,
 	#superclass : #DAPackageAnalyzerWindow,
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #nautilus }
@@ -21,7 +21,7 @@ DAPackageAnalyzerPackageDependenciesWindow class >> collections [
 	^ (self onPackagesMatch: '*Collections*') open
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 DAPackageAnalyzerPackageDependenciesWindow class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
 			(RPackageOrganizer default packages

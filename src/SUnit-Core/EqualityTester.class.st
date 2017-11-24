@@ -4,7 +4,7 @@ I provide a simple way to test the equality properties of any object.
 Class {
 	#name : #EqualityTester,
 	#superclass : #PrototypeTester,
-	#category : #SUnit-Core-Utilities
+	#category : #'SUnit-Core-Utilities'
 }
 
 { #category : #operation }

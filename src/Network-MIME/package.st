@@ -1,1 +1,1 @@
-Package { #name : #Network-MIME }
+Package { #name : #'Network-MIME' }

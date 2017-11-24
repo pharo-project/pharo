@@ -5,7 +5,7 @@ This is a custom help book providing the API documentation for the regular expre
 Class {
 	#name : #RegexAPIDocumentation,
 	#superclass : #RegexHelp,
-	#category : #Regex-Help
+	#category : #'Regex-Help'
 }
 
 { #category : #accessing }

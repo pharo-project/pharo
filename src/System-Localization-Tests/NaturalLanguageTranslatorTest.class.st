@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'previousRegistered'
 	],
-	#category : #System-Localization-Tests
+	#category : #'System-Localization-Tests'
 }
 
 { #category : #running }

@@ -8,7 +8,7 @@ Class {
 		'model',
 		'widget'
 	],
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #'instance creation' }

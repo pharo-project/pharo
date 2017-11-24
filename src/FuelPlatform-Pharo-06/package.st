@@ -1,1 +1,1 @@
-Package { #name : #FuelPlatform-Pharo-06 }
+Package { #name : #'FuelPlatform-Pharo-06' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #GTInspectorHelp,
 	#superclass : #CustomHelp,
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #accessing }

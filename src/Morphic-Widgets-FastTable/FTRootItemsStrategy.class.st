@@ -32,7 +32,7 @@ Example
 Class {
 	#name : #FTRootItemsStrategy,
 	#superclass : #FTTreeFunctionStrategy,
-	#category : #Morphic-Widgets-FastTable-Tree
+	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
 { #category : #action }

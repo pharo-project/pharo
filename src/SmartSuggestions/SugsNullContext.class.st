@@ -4,7 +4,7 @@ I define a default null suggestion context that provides no suggestions
 Class {
 	#name : #SugsNullContext,
 	#superclass : #SugsAbstractContext,
-	#category : #SmartSuggestions-Menu
+	#category : #'SmartSuggestions-Menu'
 }
 
 { #category : #selection }

@@ -5,7 +5,7 @@ Basically, I do not introspect any variable :P
 Class {
 	#name : #FFICalloutMethodBuilderTestRecuestor,
 	#superclass : #FFICallout,
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #'argument loaders' }

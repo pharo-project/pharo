@@ -4,7 +4,7 @@ Literal arrays containing only characters can more efficiently represented as st
 Class {
 	#name : #RBLiteralArrayCharactersRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

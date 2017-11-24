@@ -23,7 +23,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #Zinc-HTTP-Client-Server
+	#category : #'Zinc-HTTP-Client-Server'
 }
 
 { #category : #public }

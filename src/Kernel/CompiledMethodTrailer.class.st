@@ -82,7 +82,7 @@ Class {
 		'size',
 		'method'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #kinds }

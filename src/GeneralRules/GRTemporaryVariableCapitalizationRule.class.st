@@ -20,19 +20,19 @@ GRTemporaryVariableCapitalizationRule >> check: aNode forCritiquesDo: aCriticBlo
 	ifTrue: [ aCriticBlock cull: (self critiqueFor: aNode) ]
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRTemporaryVariableCapitalizationRule >> checkIsArgumentDefinition: aNode [
 
 	^ aNode isArgument and: [ aNode parent isMethod ]
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRTemporaryVariableCapitalizationRule >> checkIsTempDefinition: aNode [
 
 	^ aNode isTemp and: [ aNode parent isSequence ]
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRTemporaryVariableCapitalizationRule >> checkIsVariableWithParent: aNode [
 
 	^ aNode isVariable and: [

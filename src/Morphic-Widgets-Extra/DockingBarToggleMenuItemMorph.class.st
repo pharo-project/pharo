@@ -18,7 +18,7 @@ and DockingBarToggleMenuItemMorph is created by
 Class {
 	#name : #DockingBarToggleMenuItemMorph,
 	#superclass : #ToggleMenuItemMorph,
-	#category : #Morphic-Widgets-Extra
+	#category : #'Morphic-Widgets-Extra'
 }
 
 { #category : #selecting }
@@ -77,7 +77,7 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 			aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition]
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 	

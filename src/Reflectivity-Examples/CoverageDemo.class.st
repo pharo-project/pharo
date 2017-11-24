@@ -14,7 +14,7 @@ Class {
 		'compiledMethods',
 		'coverageCode'
 	],
-	#category : #Reflectivity-Examples
+	#category : #'Reflectivity-Examples'
 }
 
 { #category : #specs }

@@ -76,7 +76,7 @@ Class {
 		'scrollPaneWidth',
 		'baseColor'
 	],
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }
 
 { #category : #accessing }
@@ -186,7 +186,7 @@ IdentifierChooserMorph >> deleteIfPopUp: evt [
 	"For compatibility with MenuMorph."
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> forcesHeight: aHeight [
 	| sp |
 	(sp := self scrollPane) minHeight: aHeight.
@@ -280,7 +280,7 @@ IdentifierChooserMorph >> maxLines: anInteger [
 	maxLines := anInteger
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newChoiceButtonFor: index [
 	"Answer a new choice button."
 	^ (self labels at: index) 
@@ -295,7 +295,7 @@ IdentifierChooserMorph >> newChoiceButtonFor: index [
 		
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newChoicesMorph [
 	"Answer a row of columns of buttons and separators based on the model."
 
@@ -326,7 +326,7 @@ IdentifierChooserMorph >> newChoicesMorph [
 	^answer
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newContentMorph [
 	"Answer a new content morph."
 
@@ -345,14 +345,14 @@ IdentifierChooserMorph >> newContentMorph [
 	^ sp
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newMenu [ 
 	^ self theme
 		newEmbeddedMenuIn: self
 		for: self
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newMenuWith: menuItems [
 	"Answer menu with the given morphs."
 
@@ -371,7 +371,7 @@ IdentifierChooserMorph >> newMenuWith: menuItems [
 	^ menu
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newRow [
 	^ AlignmentMorph new
 		listDirection: #leftToRight;
@@ -383,14 +383,14 @@ IdentifierChooserMorph >> newRow [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newScrollPaneFor: aMorph [
 	^ self theme
 		newScrollPaneIn: self
 		for: aMorph
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> newVerticalSeparator [
 
 	^ SeparatorMorph new
@@ -400,14 +400,14 @@ IdentifierChooserMorph >> newVerticalSeparator [
 		vResizing: #spaceFill
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> oneMenuOfWidth: anInteger [
 	self maxLines: 999999999.
 	scrollPaneWidth := anInteger.
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> open [
 	self addMorph: self newContentMorph.
 	self openInWorld.
@@ -433,7 +433,7 @@ IdentifierChooserMorph >> requestor: aTextMorph [
 	requestor := aTextMorph
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> scrollPane [
 	"Answer the scroll pane."
 
@@ -499,7 +499,7 @@ IdentifierChooserMorph >> selectPreviousItem [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 IdentifierChooserMorph >> setColor: aColor [
 	self color: aColor.
 	self choiceMenus 

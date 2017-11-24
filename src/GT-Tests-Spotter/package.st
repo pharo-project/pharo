@@ -1,1 +1,1 @@
-Package { #name : #GT-Tests-Spotter }
+Package { #name : #'GT-Tests-Spotter' }

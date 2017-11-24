@@ -5,7 +5,7 @@ Class {
 		'eventType',
 		'selected'
 	],
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }
 
 { #category : #accessing }

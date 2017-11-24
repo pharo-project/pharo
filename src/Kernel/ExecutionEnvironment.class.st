@@ -12,7 +12,7 @@ For example SUnit installs special TestExecutionEnvironment to manage all forked
 Class {
 	#name : #ExecutionEnvironment,
 	#superclass : #Object,
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #controlling }

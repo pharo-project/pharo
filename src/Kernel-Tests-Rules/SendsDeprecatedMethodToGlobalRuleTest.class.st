@@ -5,7 +5,7 @@ Class {
 		'testClass',
 		'globalName'
 	],
-	#category : #Kernel-Tests-Rules
+	#category : #'Kernel-Tests-Rules'
 }
 
 { #category : #properties }

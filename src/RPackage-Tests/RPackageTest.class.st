@@ -4,7 +4,7 @@ SUnit tests for RPackage
 Class {
 	#name : #RPackageTest,
 	#superclass : #RPackageTestCase,
-	#category : #RPackage-Tests
+	#category : #'RPackage-Tests'
 }
 
 { #category : #running }
@@ -183,7 +183,7 @@ RPackageTest >> testDemoteToRPackageNamedWithExtension [
 
 ]
 
-{ #category : #tests-MC }
+{ #category : #'tests-MC' }
 RPackageTest >> testMcPackage [
 
 	| rPackage |
@@ -191,7 +191,7 @@ RPackageTest >> testMcPackage [
 	self assert: rPackage mcPackage equals: (MCPackage new name: #Test1).
 ]
 
-{ #category : #tests-MC }
+{ #category : #'tests-MC' }
 RPackageTest >> testMcWorkingCopy [
 
 	| rPackage |

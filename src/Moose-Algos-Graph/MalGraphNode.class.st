@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'model'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #'as yet unclassified' }

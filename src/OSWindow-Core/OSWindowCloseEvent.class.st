@@ -5,7 +5,7 @@ The default action (unless suppressed) will also destroy the window.
 Class {
 	#name : #OSWindowCloseEvent,
 	#superclass : #OSWindowEvent,
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #visitor }

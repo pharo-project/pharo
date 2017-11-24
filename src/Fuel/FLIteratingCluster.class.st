@@ -8,7 +8,7 @@ Class {
 		'objects',
 		'references'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -41,35 +41,35 @@ FLIteratingCluster >> addReferencesFrom: anObject to: aCollection [
 		self addReferenceFrom: anObject to: ref ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> clusterMaterializeStepWith: aMaterialization [
 
 	super clusterMaterializeStepWith: aMaterialization.
 	objects := Array new: aMaterialization decoder nextEncodedPositiveInteger
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> clusterSerializeStepWith: aSerialization [
 
 	super clusterSerializeStepWith: aSerialization.
 	aSerialization encoder encodePositiveInteger: objects size.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLIteratingCluster >> initializeAnalyzing [
 
 	super initializeAnalyzing.
 	objects := self newAnalyzingCollection.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> materializeInstanceWith: aDecoder [
 	"Hook method that each subclass should customize for its special way of materializing"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> materializeInstancesStepWith: aDecoder [
 
 	1 to: objects size do: [ :index |
@@ -115,7 +115,7 @@ FLIteratingCluster >> referencesOf: anObject do: aBlock [
 	"Evaluate a block with each object referenced by anObject"
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> registerIndexesOn: anEncoder [
 	| indexes |
 	indexes := anEncoder objectsIndexes.
@@ -125,12 +125,12 @@ FLIteratingCluster >> registerIndexesOn: anEncoder [
 			put: indexes size + 1 ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> serializeInstance: anObject with: anEncoder [
 	"Hook method that each subclass should customize for its special way of serializing"
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLIteratingCluster >> serializeInstancesStepWith: anEncoder [
 
 	objects do: [ :instance | self serializeInstance: instance with: anEncoder ]

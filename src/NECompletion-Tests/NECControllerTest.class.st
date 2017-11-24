@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'controller'
 	],
-	#category : #NECompletion-Tests
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #running }
@@ -26,7 +26,7 @@ NECControllerTest >> tearDown [
 	controller := nil.
 ]
 
-{ #category : #tests-keyboard }
+{ #category : #'tests-keyboard' }
 NECControllerTest >> testSmartNeedExtraRemoveInForOppositeAt [
 
 	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).

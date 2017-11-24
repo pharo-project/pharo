@@ -4,7 +4,7 @@ Default superclass for application about dialogs.
 Class {
 	#name : #AboutDialogWindow,
 	#superclass : #LongMessageDialogWindow,
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #'instance creation' }

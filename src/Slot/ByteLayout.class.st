@@ -4,7 +4,7 @@ I am a raw data layout that holds bytes (8 bit).
 Class {
 	#name : #ByteLayout,
 	#superclass : #BitsLayout,
-	#category : #Slot-Layout
+	#category : #'Slot-Layout'
 }
 
 { #category : #'instance creation' }

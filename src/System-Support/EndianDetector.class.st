@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'EndianCache'
 	],
-	#category : #System-Support
+	#category : #'System-Support'
 }
 
 { #category : #endian }

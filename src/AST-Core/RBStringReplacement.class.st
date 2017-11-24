@@ -16,7 +16,7 @@ Class {
 		'stopPosition',
 		'string'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -33,7 +33,7 @@ RBStringReplacement >> startPosition [
 	^startPosition
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplacement >> startPosition: anInteger [ 
 	startPosition := anInteger
 ]
@@ -43,7 +43,7 @@ RBStringReplacement >> stopPosition [
 	^stopPosition
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplacement >> stopPosition: anInteger [ 
 	stopPosition := anInteger
 ]
@@ -53,7 +53,7 @@ RBStringReplacement >> string [
 	^string
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplacement >> string: aString [ 
 	string := aString
 ]

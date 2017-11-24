@@ -8,7 +8,7 @@ Class {
 		'tabLineDashes',
 		'tabLineWidth'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }

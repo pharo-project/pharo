@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'direction'
 	],
-	#category : #SortFunctions-Core
+	#category : #'SortFunctions-Core'
 }
 
 { #category : #comparing }
@@ -45,18 +45,18 @@ UndefinedSortFunction >> hash [
 	^ super hash bitXor: direction hash
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 UndefinedSortFunction >> initialize [
 	super initialize.
 	direction := -1
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 UndefinedSortFunction >> undefinedFirst [
 	direction := -1
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 UndefinedSortFunction >> undefinedLast [
 	direction := 1
 ]

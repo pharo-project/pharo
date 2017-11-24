@@ -22,7 +22,7 @@ Class {
 		'dateModel',
 		'date'
 	],
-	#category : #Spec-PolyWidgets-Widgets
+	#category : #'Spec-PolyWidgets-Widgets'
 }
 
 { #category : #example }
@@ -63,7 +63,7 @@ DatePresenter >> chooseDate [
 		onChoiceSend: #onDateChosen: to: self.
 ]
 
-{ #category : #accessing-widgets }
+{ #category : #'accessing-widgets' }
 DatePresenter >> chooseDateButton [
 
 	^ chooseDateButton.
@@ -84,13 +84,13 @@ DatePresenter >> date: aDate [
 	self dateModel text: dateString.
 ]
 
-{ #category : #accessing-widgets }
+{ #category : #'accessing-widgets' }
 DatePresenter >> dateLabel [
 
 	^ dateLabel.
 ]
 
-{ #category : #accessing-widgets }
+{ #category : #'accessing-widgets' }
 DatePresenter >> dateModel [
 
 	^ dateModel.
@@ -159,7 +159,7 @@ DatePresenter >> onDateChosen: aChoseDate [
 	self date: aChoseDate date
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 DatePresenter >> whenDateChanged: aBlock [
 
 	dateModel whenTextChanged: [ :newText :oldText :announcement :anAnnouncer |

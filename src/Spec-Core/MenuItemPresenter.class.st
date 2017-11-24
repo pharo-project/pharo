@@ -36,7 +36,7 @@ Class {
 		'enabled',
 		'autoRefresh'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -101,7 +101,7 @@ MenuItemPresenter >> enabled: aBoolean [
 	enabled value: aBoolean
 ]
 
-{ #category : #api-building }
+{ #category : #'api-building' }
 MenuItemPresenter >> fromSpec: aSpec [
 
 	aSpec addToMenuItemModel: self

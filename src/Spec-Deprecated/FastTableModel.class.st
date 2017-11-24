@@ -4,5 +4,5 @@ This is deprecated class because the original class FastTableModel was renamed t
 Class {
 	#name : #FastTableModel,
 	#superclass : #FastTablePresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

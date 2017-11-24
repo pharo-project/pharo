@@ -1,7 +1,7 @@
 Class {
 	#name : #RxExtensionsTest,
 	#superclass : #TestCase,
-	#category : #Regex-Tests-Core
+	#category : #'Regex-Tests-Core'
 }
 
 { #category : #tests }

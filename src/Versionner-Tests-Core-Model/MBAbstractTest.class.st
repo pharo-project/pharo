@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'configuration'
 	],
-	#category : #Versionner-Tests-Core-Model
+	#category : #'Versionner-Tests-Core-Model'
 }
 
 { #category : #testing }

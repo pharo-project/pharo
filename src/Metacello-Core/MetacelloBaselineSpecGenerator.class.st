@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloBaselineSpecGenerator,
 	#superclass : #MetacelloProjectSpecGenerator,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #accessing }

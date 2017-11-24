@@ -12,7 +12,7 @@ Class {
 		'globalEnvironment',
 		'substitutionIndexes'
 	],
-	#category : #Fuel-Core
+	#category : #'Fuel-Core'
 }
 
 { #category : #'instance creation' }
@@ -188,7 +188,7 @@ FLEncoder >> globalEnvironment [
 	^ globalEnvironment
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLEncoder >> initializeOn: aStream globalEnvironment: aDictionary [
 	
 	self initialize.

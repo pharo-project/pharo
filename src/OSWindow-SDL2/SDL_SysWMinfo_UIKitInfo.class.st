@@ -2,7 +2,7 @@
 A structure that contains UIKit specific information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo_UIKitInfo,
+	#name : #'SDL_SysWMinfo_UIKitInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_COLORBUFFER',
@@ -10,7 +10,7 @@ Class {
 		'OFFSET_RESOLVEFRAMEBUFFER',
 		'OFFSET_WINDOW'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

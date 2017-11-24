@@ -4,7 +4,7 @@ This is the chapter of the refactoring help book about the class / instance vari
 Class {
 	#name : #RBBrowserVariableRefactoringHelp,
 	#superclass : #RBBrowserClassRefactoringHelp,
-	#category : #Refactoring-Help
+	#category : #'Refactoring-Help'
 }
 
 { #category : #pages }

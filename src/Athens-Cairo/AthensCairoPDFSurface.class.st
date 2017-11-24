@@ -7,7 +7,7 @@ as output.
 Class {
 	#name : #AthensCairoPDFSurface,
 	#superclass : #AthensCairoSurface,
-	#category : #Athens-Cairo
+	#category : #'Athens-Cairo'
 }
 
 { #category : #private }
@@ -39,7 +39,7 @@ AthensCairoPDFSurface class >> registerSurface: surface [
 	"do not register my instances with SurfacePlugin"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoPDFSurface >> resourceData [
 	^ handle value 
 ]

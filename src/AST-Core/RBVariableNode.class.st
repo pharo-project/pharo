@@ -17,7 +17,7 @@ Class {
 		'name',
 		'start'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -132,7 +132,7 @@ RBVariableNode >> name: aName [
 	name := aName asSymbol.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBVariableNode >> named: aName start: aPosition [
 
 	self name: aName.

@@ -14,7 +14,7 @@ Class {
 		'extractionInterval',
 		'extractedMethodSelector'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -35,7 +35,7 @@ RBExtractMethodToComponentRefactoring class >> model: aRBSmalltalk extract: anIn
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBExtractMethodToComponentRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

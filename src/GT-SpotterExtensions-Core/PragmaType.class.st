@@ -16,7 +16,7 @@ Class {
 		'keyword',
 		'pragmas'
 	],
-	#category : #GT-SpotterExtensions-Core
+	#category : #'GT-SpotterExtensions-Core'
 }
 
 { #category : #accessing }

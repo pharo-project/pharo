@@ -19,7 +19,7 @@ Class {
 		'AthensCairoDefs',
 		'FT2Constants'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #finalizing }
@@ -56,12 +56,12 @@ cairo_font_face_t * cairo_ft_font_face_create_for_ft_face
 	^ self nbCall: #( CairoFontFace cairo_ft_font_face_create_for_ft_face(void * aFace , int flags )) 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CairoFontFace >> initialize [ 
 	self autoRelease 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CairoFontFace >> initializeWithFreetypeFace: aFace [
 	ftFace := aFace.
 	

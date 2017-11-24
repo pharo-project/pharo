@@ -8,7 +8,7 @@ Class {
 		'class',
 		'variableName'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -35,7 +35,7 @@ RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBVariableRefactoring >> variable: aVarName class: aClass [ 
 	class := self classObjectFor: aClass.
 	variableName := aVarName

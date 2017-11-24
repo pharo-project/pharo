@@ -32,15 +32,15 @@ Class {
 	#instVars : [
 		'variables'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 RBGenerateEqualHashRefactoring class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 RBGenerateEqualHashRefactoring class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]

@@ -21,40 +21,40 @@ Class {
 	#instVars : [
 		'isCentered'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Basic
+	#category : #'Glamour-Morphic-Brick-Widgets-Basic'
 }
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleFullSpaceFillCenteredOpen [
 
 	self gtExampleFullSpaceFillCentered openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleFullSpaceFillOpen [
 
 	self gtExampleFullSpaceFill openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleHSpaceFillOpen [
 
 	self gtExampleHSpaceFill openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleOpen [
 
 	self gtExample openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleVSpaceFillCenteredOpen [
 
 	self gtExampleVSpaceFillCentered openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleVSpaceFillOpen [
 
 	self gtExampleVSpaceFill openCenteredInBrickWindow
@@ -140,7 +140,7 @@ GLMRubTextFieldBrick class >> gtExampleWithBorder [
 			borderColor: Color lightGray
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMRubTextFieldBrick >> beCentered [
 
 	isCentered := true.
@@ -157,19 +157,19 @@ GLMRubTextFieldBrick >> initialize [
 		hShrinkWrap
 ]
 
-{ #category : #rubric-testing }
+{ #category : #'rubric-testing' }
 GLMRubTextFieldBrick >> isCentered [
 
 	^ isCentered ifNil: [ isCentered := false ]
 ]
 
-{ #category : #rubric-brick-creation }
+{ #category : #'rubric-brick-creation' }
 GLMRubTextFieldBrick >> newRubricMorph [
 
 	^ GLMRubTextFieldMorph new
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMRubTextFieldBrick >> shrinkingWidth [
 
 	self rubric width: self rubric textArea width.
@@ -177,7 +177,7 @@ GLMRubTextFieldBrick >> shrinkingWidth [
 	^ self rubric textArea width
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMRubTextFieldBrick >> vSpaceFill: anInteger [
 	super vSpaceFill: anInteger.
 	

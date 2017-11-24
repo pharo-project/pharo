@@ -9,10 +9,10 @@ Class {
 		'provided',
 		'orderedItems'
 	],
-	#category : #Monticello-Loading
+	#category : #'Monticello-Loading'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCDependencySorter class >> items: aCollection [
 	^ self new addAll: aCollection
 ]

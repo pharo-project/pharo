@@ -4,7 +4,7 @@ Visual tests for correct rendering of text using Athens
 Class {
 	#name : #AthensTextRenderTest,
 	#superclass : #Object,
-	#category : #Athens-Text
+	#category : #'Athens-Text'
 }
 
 { #category : #'as yet unclassified' }

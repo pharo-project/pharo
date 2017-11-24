@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'groupContents'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }

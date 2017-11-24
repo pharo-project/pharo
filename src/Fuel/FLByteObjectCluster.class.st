@@ -4,10 +4,10 @@ I am the generic cluster for storing and loading variable byte objects.
 Class {
 	#name : #FLByteObjectCluster,
 	#superclass : #FLBitsObjectCluster,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLByteObjectCluster >> materializeInstanceWith: aDecoder [
 
 	| instance size |
@@ -18,7 +18,7 @@ FLByteObjectCluster >> materializeInstanceWith: aDecoder [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLByteObjectCluster >> serializeInstance: anObject with: anEncoder [
 
 	anEncoder encodePositiveInteger: anObject basicSize.

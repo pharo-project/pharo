@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMAccumulatorMorphicTest,
 	#superclass : #GLMMorphicTest,
-	#category : #Glamour-Tests-Morphic
+	#category : #'Glamour-Tests-Morphic'
 }
 
 { #category : #private }

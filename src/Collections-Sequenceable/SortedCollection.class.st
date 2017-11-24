@@ -71,7 +71,7 @@ Class {
 	#instVars : [
 		'sortBlock'
 	],
-	#category : #Collections-Sequenceable
+	#category : #'Collections-Sequenceable'
 }
 
 { #category : #'instance creation' }

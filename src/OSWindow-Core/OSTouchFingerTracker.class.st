@@ -14,7 +14,7 @@ Class {
 		'firstPosition',
 		'lastPosition'
 	],
-	#category : #OSWindow-Core-Gestures
+	#category : #'OSWindow-Core-Gestures'
 }
 
 { #category : #'instance creation' }

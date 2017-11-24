@@ -9,7 +9,7 @@ Class {
 		'edgeName',
 		'fitTargetOwner'
 	],
-	#category : #Morphic-Widgets-Windows-Resizing
+	#category : #'Morphic-Widgets-Windows-Resizing'
 }
 
 { #category : #'as yet unclassified' }

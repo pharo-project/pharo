@@ -4,7 +4,7 @@ I am an abstract renderer that provides a generic API for native window renderin
 Class {
 	#name : #OSWindowGenericRenderer,
 	#superclass : #OSWindowRenderer,
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #rendering }

@@ -13,7 +13,7 @@ Class {
 		'DefaultHandler',
 		'RegisteredHandlers'
 	],
-	#category : #Morphic-Core-Worlds
+	#category : #'Morphic-Core-Worlds'
 }
 
 { #category : #private }

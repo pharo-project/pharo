@@ -14,7 +14,7 @@ Class {
 		'id',
 		'creationTime'
 	],
-	#category : #System-SessionManager
+	#category : #'System-SessionManager'
 }
 
 { #category : #'deferred startup actions' }

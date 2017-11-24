@@ -5,7 +5,7 @@ A DockingBarMenuLineMorph is specialized version of its superclass for DockingBa
 Class {
 	#name : #DockingBarMenuLineMorph,
 	#superclass : #MenuLineMorph,
-	#category : #Morphic-Widgets-Extra
+	#category : #'Morphic-Widgets-Extra'
 }
 
 { #category : #layout }
@@ -27,7 +27,7 @@ DockingBarMenuLineMorph >> minWidth [
 		ifFalse: [ self theme menuBorderWidth ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 DockingBarMenuLineMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.

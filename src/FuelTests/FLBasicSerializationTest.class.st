@@ -27,7 +27,7 @@ FLBasicSerializationTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testAllRangeOfIntegers [
 
 		self assertSerializationIdentityOf: 100.
@@ -55,7 +55,7 @@ FLBasicSerializationTest >> testAllRangeOfIntegers [
 
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testArray [
 	self assertSerializationEqualityOf: #(1).
 	self assertSerializationEqualityOf: #(10 20).
@@ -75,7 +75,7 @@ FLBasicSerializationTest >> testAssociation [
 	self assertSerializationEqualityOf: nil-> true.
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testBag [
 	| bag materialized |
 	bag := Bag new.
@@ -91,7 +91,7 @@ FLBasicSerializationTest >> testBag [
 	
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testBitmap [
 	| bitmap materialized |
 	self assertSerializationEqualityOf: (Bitmap with: 0 with: 16rFFFFFFFF).
@@ -113,7 +113,7 @@ FLBasicSerializationTest >> testBitmap [
 
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testByteArrays [
 
 	self assertSerializationEqualityOf: { #[1 2 3 4 5 6]. #[1 2 3 4 5 6]. #[7 8 9 10 11 12]. #[7 8 9 10 11 12] }.
@@ -139,7 +139,7 @@ FLBasicSerializationTest >> testCharacter [
 	self assertSerializationEqualityOf: (Array with: $a with: (Character value: 12345)).
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testClassSideCompiledMethod [
 	"They should be considered as globals by default."
 	
@@ -155,13 +155,13 @@ FLBasicSerializationTest >> testColor [
 	
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testColorArray [
 
 	self assertSerializationEqualityOf: (ColorArray with: (Color r: 0.0 g: 0.031 b: 0.008) with: (Color r: 0.0 g: 0.07 b: 0.023))
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testCompiledMethod [
 	"They should be considered as globals by default."
 	
@@ -169,7 +169,7 @@ FLBasicSerializationTest >> testCompiledMethod [
 
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testConsiderCustomGlobal [
 	"A custom global variable is treated as global by Fuel, when we explicitly specify this."
 	
@@ -186,7 +186,7 @@ FLBasicSerializationTest >> testConsiderCustomGlobal [
 
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 	"The same than #testConsiderCustomGlobal but with a WideSymbol."
 	
@@ -209,7 +209,7 @@ FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 
 ]
 
-{ #category : #tests-cycles }
+{ #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicIdentitySet [
 
 	| aSet materializedSet |
@@ -221,7 +221,7 @@ FLBasicSerializationTest >> testCyclicIdentitySet [
 	self assert: (materializedSet includes: materializedSet) description: 'The materialized set has to include himself. Note aSet = materializedSet is false, bacause equality implementation checks that materializedSet *identity-includes* each element of aSet, which is false.'
 ]
 
-{ #category : #tests-cycles }
+{ #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicLink [
 
 	| a materializedA |
@@ -234,7 +234,7 @@ FLBasicSerializationTest >> testCyclicLink [
 	self assert: materializedA nextLink == materializedA
 ]
 
-{ #category : #tests-cycles }
+{ #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicLinks [
 
 	| a b c materializedA |
@@ -254,7 +254,7 @@ FLBasicSerializationTest >> testCyclicLinks [
 	self deny: materializedA nextLink nextLink == materializedA.
 ]
 
-{ #category : #tests-cycles }
+{ #category : #'tests-cycles' }
 FLBasicSerializationTest >> testCyclicLinksInArray [
 
 	| a b c materializedA materialized |
@@ -350,13 +350,13 @@ FLBasicSerializationTest >> testDateOffsetsChanging [
 	
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testDictionary [
 
 	self assertSerializationEqualityOf: (Dictionary with: 1->2).
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testDontConsiderCustomGlobal [
 	"A custom global variable is not treated as global by Fuel, unless we explicitly specify this."
 	
@@ -385,24 +385,24 @@ FLBasicSerializationTest >> testDuration [
 
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testEmptyArray [
 	self assertSerializationEqualityOf: #()
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testEmptyDictionary [
 
 	self assertSerializationEqualityOf: Dictionary new
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testEmptyOrderedCollection [
 
 	self assertSerializationEqualityOf: OrderedCollection new
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testEmptySet [
 
 	self assertSerializationEqualityOf: Set new
@@ -423,7 +423,7 @@ FLBasicSerializationTest >> testExceptions [
 
 ]
 
-{ #category : #tests-fuelAfterMaterialization }
+{ #category : #'tests-fuelAfterMaterialization' }
 FLBasicSerializationTest >> testExecuteAfterMaterialization [
 
 	| anObject result aClass |
@@ -446,7 +446,7 @@ FLBasicSerializationTest >> testFalse [
 	self assertSerializationIdentityOf: false
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testFloat [
 	
 	self assertSerializationEqualityOf: 180.0.
@@ -481,7 +481,7 @@ FLBasicSerializationTest >> testFraction [
 
 ]
 
-{ #category : #tests-graph-modification }
+{ #category : #'tests-graph-modification' }
 FLBasicSerializationTest >> testFuelReplacement [
 	| object |
 	self 
@@ -505,7 +505,7 @@ FLBasicSerializationTest >> testFuelReplacement [
 		equals: { object }
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testGlobalClass [
 	"A class should be global by default."
 	
@@ -513,7 +513,7 @@ FLBasicSerializationTest >> testGlobalClass [
 
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testGlobalMetaclass [
 	"A metaclass should be global by default."
 	
@@ -521,13 +521,13 @@ FLBasicSerializationTest >> testGlobalMetaclass [
 
 ]
 
-{ #category : #tests-not-so-basic }
+{ #category : #'tests-not-so-basic' }
 FLBasicSerializationTest >> testGradientFillStyle [
 
 	self assertSerializationEqualityOf: GradientFillStyle sample
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testInterval [
 
 	self assertSerializationEqualityOf: (-10 to: 10 by: 5).
@@ -538,14 +538,14 @@ FLBasicSerializationTest >> testInterval [
 	
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testLargeNegativeInteger [
 
 	self assertSerializationEqualityOf: -354314316134313999999999.
 	self assertSerializationEqualityOf: 0-100 factorial.
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testLargePositiveInteger [
 
 	self assertSerializationEqualityOf: 354314316134313999999999.
@@ -569,13 +569,13 @@ FLBasicSerializationTest >> testLotsOfNils [
 	self assertSerializationEqualityOf: (Array new: 1 << 16).
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testMethodDictionary [
 	self resultOfSerializeAndMaterializeMethodDictionary: FLPair methodDict.
 	
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testNestedDictionary [
 
 	| childDic dic |
@@ -597,7 +597,7 @@ FLBasicSerializationTest >> testNil [
 	self assertSerializationIdentityOf: nil
 ]
 
-{ #category : #tests-not-so-basic }
+{ #category : #'tests-not-so-basic' }
 FLBasicSerializationTest >> testNotSerializableObject [
 
 	self 
@@ -607,7 +607,7 @@ FLBasicSerializationTest >> testNotSerializableObject [
 		description: 'User can prevent some objects from serialization.'
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testOrderedCollection [
 
 	self assertSerializationEqualityOf: (OrderedCollection with: 10 with: 20)
@@ -634,7 +634,7 @@ FLBasicSerializationTest >> testPoint [
 	
 ]
 
-{ #category : #tests-streams }
+{ #category : #'tests-streams' }
 FLBasicSerializationTest >> testReadStream [
 
 	| aReadStream materialized |
@@ -657,7 +657,7 @@ FLBasicSerializationTest >> testRectangle [
 	self assertSerializationEqualityOf: (1.1@ -2.2 corner: -3.3@4.4).
 ]
 
-{ #category : #tests-cycles }
+{ #category : #'tests-cycles' }
 FLBasicSerializationTest >> testRecursiveArray [
 
 	| arr materialized |
@@ -674,7 +674,7 @@ FLBasicSerializationTest >> testRecursiveArray [
 	self assert: materialized third == materialized.
 ]
 
-{ #category : #tests-strings }
+{ #category : #'tests-strings' }
 FLBasicSerializationTest >> testRemoteString [
 	"Tests that the materialized RemoteString has *the same* location on file."
 
@@ -687,14 +687,14 @@ FLBasicSerializationTest >> testRemoteString [
 	self assert: aRemoteString sourcePointer == materializedRemoteString sourcePointer.
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testRunArray [
 
 	self assertSerializationEqualityOf: (RunArray runs: #(1 2 1) values: #(1 2 3))
 
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testScaledDecimal [
 
 	self assertSerializationEqualityOf: (13/11s6).
@@ -707,7 +707,7 @@ FLBasicSerializationTest >> testScaledDecimal [
 
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testSet [
 	| set materialized |
 	set := Set new.
@@ -724,19 +724,19 @@ FLBasicSerializationTest >> testSet [
 	self assert: (materialized includes: 30).	
 ]
 
-{ #category : #tests-collections-Pharo1.3 }
+{ #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetElement [
 
 	self assertSerializationEqualityOf: (SetElement with: 3)
 ]
 
-{ #category : #tests-collections-Pharo1.3 }
+{ #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetWithNil [
 
 	self assertSerializationEqualityOf: (Set with: nil)
 ]
 
-{ #category : #tests-collections-Pharo1.3 }
+{ #category : #'tests-collections-Pharo1.3' }
 FLBasicSerializationTest >> testSetWithSetElement [
 
 	self assertSerializationEqualityOf: (Set with: (SetElement with: 3))
@@ -763,7 +763,7 @@ FLBasicSerializationTest >> testSharedReferences [
 	
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallInteger [
 
 	self assertSerializationIdentityOf: -1212.
@@ -775,33 +775,33 @@ FLBasicSerializationTest >> testSmallInteger [
 
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerMaxValue [
 
 	self assertSerializationIdentityOf: SmallInteger maxVal .
 	
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerMinValue [
 
 	self assertSerializationIdentityOf: SmallInteger minVal 
 ]
 
-{ #category : #tests-numbers }
+{ #category : #'tests-numbers' }
 FLBasicSerializationTest >> testSmallIntegerNegative [
 
 	self assertSerializationIdentityOf: -42.
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testSmalltalkGlobals [
 	"Smalltalk globals should be global by default."
 
 	self assertSerializationIdentityOf: Smalltalk globals
 ]
 
-{ #category : #tests-strings }
+{ #category : #'tests-strings' }
 FLBasicSerializationTest >> testString [
 
 	self assertSerializationEqualityOf: 'testString'.
@@ -812,7 +812,7 @@ FLBasicSerializationTest >> testString [
 
 ]
 
-{ #category : #tests-strings }
+{ #category : #'tests-strings' }
 FLBasicSerializationTest >> testSymbol [
 
 	self assertSerializationIdentityOf: #testSymbol.
@@ -820,7 +820,7 @@ FLBasicSerializationTest >> testSymbol [
 	self assertSerializationIdentityOf: #'hello there'.
 ]
 
-{ #category : #tests-globals }
+{ #category : #'tests-globals' }
 FLBasicSerializationTest >> testSystemDictionary [
 	"We want to treat the <Smalltalk globals> instance of SystemDictionary
 	specially but want to serialize all others"
@@ -869,7 +869,7 @@ FLBasicSerializationTest >> testWideAndByteCharacters [
 	self assert: materialized second == aByteCharacter.
 ]
 
-{ #category : #tests-strings }
+{ #category : #'tests-strings' }
 FLBasicSerializationTest >> testWideString [
 	self 
 		shouldnt: [
@@ -881,7 +881,7 @@ FLBasicSerializationTest >> testWideString [
 		raise: Error
 ]
 
-{ #category : #tests-strings }
+{ #category : #'tests-strings' }
 FLBasicSerializationTest >> testWideStringClassName [
 	| class className |
 	className := 'Foox' asWideString
@@ -896,7 +896,7 @@ FLBasicSerializationTest >> testWideStringClassName [
 	] ensure:[ Smalltalk removeKey: class name ]
 ]
 
-{ #category : #tests-strings }
+{ #category : #'tests-strings' }
 FLBasicSerializationTest >> testWideStringGlobal [
 	| global globalValue |
 	global := 'Foox' asWideString
@@ -915,13 +915,13 @@ FLBasicSerializationTest >> testWideStringGlobal [
 	] ensure: [ Smalltalk removeKey: global ]
 ]
 
-{ #category : #tests-collections }
+{ #category : #'tests-collections' }
 FLBasicSerializationTest >> testWordArray [
 
 	self assertSerializationEqualityOf: (WordArray with: 10 with: 20)
 ]
 
-{ #category : #tests-streams }
+{ #category : #'tests-streams' }
 FLBasicSerializationTest >> testWriteStream [
 
 	| aWriteStream materialized |

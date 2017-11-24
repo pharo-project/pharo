@@ -10,7 +10,7 @@ Class {
 		'titleBrick',
 		'titleText'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #examples }
@@ -121,7 +121,7 @@ GLMPopupBrick >> newTitleBrick [
 		height: [ :b | b approximateHeight ]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMPopupBrick >> onCreated [
 	self contentBrick padding: #(5 0).
 	self titleBrick: self newTitleBrick.

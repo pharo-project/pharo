@@ -4,7 +4,7 @@ A GlobalIdentifierFuelPersistenceTest is a test class for testing the behavior o
 Class {
 	#name : #GlobalIdentifierFuelPersistenceTest,
 	#superclass : #GlobalIdentifierPersistenceTest,
-	#category : #System-Identification-Tests
+	#category : #'System-Identification-Tests'
 }
 
 { #category : #accessing }

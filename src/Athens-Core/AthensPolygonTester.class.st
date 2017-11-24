@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'polygon'
 	],
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #testing }

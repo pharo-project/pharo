@@ -55,7 +55,7 @@ Class {
 	#instVars : [
 		'customHeight'
 	],
-	#category : #Glamour-Morphic-Brick-Morphic
+	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
 { #category : #geometry }
@@ -76,7 +76,7 @@ GLMRubTextFieldMorph >> forceHeight: anObject [
 	customHeight := anObject.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMRubTextFieldMorph >> newScrollPane [
 	"using hacked ScrollPane to remove focus border"
 	| sp |

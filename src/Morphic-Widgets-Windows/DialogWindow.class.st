@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'cancelled'
 	],
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
 { #category : #actions }
@@ -184,7 +184,7 @@ DialogWindow >> inactiveFillStyle [
 	^self theme dialogWindowInactiveFillStyleFor: self
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 DialogWindow >> initialExtent [
 	"Answer the default extent for the receiver."
 

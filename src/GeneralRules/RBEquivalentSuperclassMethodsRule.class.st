@@ -6,7 +6,7 @@ Furthermore, the methods #new and #initialize are ignored once they are often ov
 Class {
 	#name : #RBEquivalentSuperclassMethodsRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

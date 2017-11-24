@@ -11,7 +11,7 @@ Class {
 		'modificationTime',
 		'fileSize'
 	],
-	#category : #FreeType-FontManager
+	#category : #'FreeType-FontManager'
 }
 
 { #category : #accessing }

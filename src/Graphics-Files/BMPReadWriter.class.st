@@ -28,7 +28,7 @@ Class {
 		'biClrUsed',
 		'biClrImportant'
 	],
-	#category : #Graphics-Files
+	#category : #'Graphics-Files'
 }
 
 { #category : #testing }

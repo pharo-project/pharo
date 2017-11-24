@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'command'
 	],
-	#category : #Versionner-Tests-Core-Commands
+	#category : #'Versionner-Tests-Core-Commands'
 }
 
 { #category : #'as yet unclassified' }

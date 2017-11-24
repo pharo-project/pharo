@@ -1,1 +1,1 @@
-Package { #name : #System-Support }
+Package { #name : #'System-Support' }

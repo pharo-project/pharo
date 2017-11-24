@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #GT-Tests-Spotter
+	#category : #'GT-Tests-Spotter'
 }
 
 { #category : #running }

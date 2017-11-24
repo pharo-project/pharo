@@ -1,7 +1,7 @@
 Class {
 	#name : #FFIOop,
 	#superclass : #FFIExternalType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

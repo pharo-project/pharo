@@ -4,7 +4,7 @@ Load a project configuration into the image. The project should have a configura
 Class {
 	#name : #VSLoadProjectCommand,
 	#superclass : #VSConfigurationCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #accessing }

@@ -20,7 +20,7 @@ Class {
 		'variant',
 		'lineReader'
 	],
-	#category : #Zodiac-Extra
+	#category : #'Zodiac-Extra'
 }
 
 { #category : #constants }
@@ -188,12 +188,12 @@ ZdcSecureSMTPClient >> stream: aStream [
 	lineReader := ZnLineReader on: self stream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcSecureSMTPClient >> useSSL [
 	variant := #ssl
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcSecureSMTPClient >> useStartTLS [
 	variant := #startTLS
 ]

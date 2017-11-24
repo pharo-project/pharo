@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'node'
 	],
-	#category : #Nautilus-Tree
+	#category : #'Nautilus-Tree'
 }
 
 { #category : #'instance creation' }

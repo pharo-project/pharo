@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'gradient'
 	],
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #rendering }

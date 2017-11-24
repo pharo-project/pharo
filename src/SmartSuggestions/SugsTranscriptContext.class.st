@@ -4,7 +4,7 @@ I know how to use a Transcript to extract the information needed for the suggest
 Class {
 	#name : #SugsTranscriptContext,
 	#superclass : #SugsAbstractContext,
-	#category : #SmartSuggestions-Menu
+	#category : #'SmartSuggestions-Menu'
 }
 
 { #category : #refactoring }

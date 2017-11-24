@@ -8,7 +8,7 @@ This example shows how Slots can change the class that they are part of.
 Class {
 	#name : #AccessorInstanceVariableSlot,
 	#superclass : #InstanceVariableSlot,
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #'class building' }

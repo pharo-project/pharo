@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'icons'
 	],
-	#category : #Glamour-Morphic-Theme
+	#category : #'Glamour-Morphic-Theme'
 }
 
 { #category : #icons }

@@ -8,7 +8,7 @@ Class {
 		'methodBrowser',
 		'textField'
 	],
-	#category : #Spec-Examples
+	#category : #'Spec-Examples'
 }
 
 { #category : #specs }

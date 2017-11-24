@@ -17,7 +17,7 @@ Class {
 		'filesystem',
 		'path'
 	],
-	#category : #FileSystem-Core-Public
+	#category : #'FileSystem-Core-Public'
 }
 
 { #category : #'cross platform' }
@@ -82,7 +82,7 @@ FileReference >> asFileReference [
 	^ self
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 FileReference >> binaryReadStream [
 	^ filesystem binaryReadStreamOn: self path
 ]
@@ -360,7 +360,7 @@ FileReference >> resolveString: aString [
 	^ filesystem referenceTo: (path resolve: thePath)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileReference >> setFileSystem: aFilesystem path: aPath [
 	filesystem := aFilesystem.
 	path := aPath

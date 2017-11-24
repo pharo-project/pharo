@@ -7,10 +7,10 @@ Class {
 		'selector',
 		'isSource'
 	],
-	#category : #FuelPlatform-Core
+	#category : #'FuelPlatform-Core'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 FLExtensionWrapper class >> fromPragma: aPragma [
 	^ self new
 		initializeWithPragma: aPragma;
@@ -53,7 +53,7 @@ FLExtensionWrapper >> extensionProtocolName [
 	^ FLPlatform extensionProtocolName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> initializeWithPragma: aPragma [
 	| argumentNamesAndValues |
 	argumentNamesAndValues := self readArgumentsFrom: aPragma.
@@ -103,14 +103,14 @@ FLExtensionWrapper >> method: aCompiledMethod [
 	method := aCompiledMethod
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> readArgumentsFrom: aPragma [
 	^ {
 		aPragma key keywords.
 		aPragma arguments }
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> readIsSourceFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
 	| index |
 	index := argumentNames
@@ -120,7 +120,7 @@ FLExtensionWrapper >> readIsSourceFrom: aPragma argumentNames: argumentNames arg
 	^ argumentValues at: index
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> readSelectorFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
 	| index |
 	index := argumentNames
@@ -130,7 +130,7 @@ FLExtensionWrapper >> readSelectorFrom: aPragma argumentNames: argumentNames arg
 	^ argumentValues at: index
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> readTargetClassFrom: aPragma argumentNames: argumentNames argumentValues: argumentValues [
 	| class |
 	class := Smalltalk
@@ -158,7 +158,7 @@ FLExtensionWrapper >> renameAndCompileInTarget [
 		under: self extensionProtocolName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLExtensionWrapper >> selector [
 	^ selector
 ]

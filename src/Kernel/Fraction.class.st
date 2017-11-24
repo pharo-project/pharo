@@ -17,7 +17,7 @@ Class {
 		'numerator',
 		'denominator'
 	],
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #'instance creation' }

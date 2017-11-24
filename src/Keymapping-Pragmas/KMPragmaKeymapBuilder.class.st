@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'UniqueInstace'
 	],
-	#category : #Keymapping-Pragmas
+	#category : #'Keymapping-Pragmas'
 }
 
 { #category : #private }
@@ -35,7 +35,7 @@ KMPragmaKeymapBuilder class >> pragmas [
 	^#(#keymap #keymap:)
 ]
 
-{ #category : #system-events }
+{ #category : #'system-events' }
 KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
 	<systemEventRegistration>
 	SystemAnnouncer uniqueInstance 
@@ -140,7 +140,7 @@ KMPragmaKeymapBuilder >> pragmaKeywords [
 	^  self class pragmas
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 KMPragmaKeymapBuilder >> release [
 	self pragmaCollector unsubscribe: self.
 	self pragmaCollector announcer initialize. "Hack because the announcer is not garbage collected."
@@ -151,7 +151,7 @@ KMPragmaKeymapBuilder >> release [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 KMPragmaKeymapBuilder >> reset [
 	pragmaCollector := nil.
 	"KeymapManager default: KeymapManager new."

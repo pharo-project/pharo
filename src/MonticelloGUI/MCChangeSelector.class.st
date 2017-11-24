@@ -32,12 +32,12 @@ MCChangeSelector >> kept [
 	^ kept ifNil: [kept := Set new]
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 MCChangeSelector >> listSelectionAt: aNumber [
 	^ self kept includes: (self items at: aNumber)
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 MCChangeSelector >> listSelectionAt: aNumber put: aBoolean [
 	| item |
 	item := self items at: aNumber.

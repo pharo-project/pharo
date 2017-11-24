@@ -4,7 +4,7 @@ I'm a windows platform dynamic library loader.
 Class {
 	#name : #WindowsDynamicLoader,
 	#superclass : #DynamicLoader,
-	#category : #UnifiedFFI-Libraries
+	#category : #'UnifiedFFI-Libraries'
 }
 
 { #category : #testing }

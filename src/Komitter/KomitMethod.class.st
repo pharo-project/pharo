@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'methods'
 	],
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #initialization }

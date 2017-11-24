@@ -12,7 +12,7 @@ Class {
 		'tree',
 		'textModel'
 	],
-	#category : #NautilusCommon-Plugin-Manager
+	#category : #'NautilusCommon-Plugin-Manager'
 }
 
 { #category : #'buttons behavior' }

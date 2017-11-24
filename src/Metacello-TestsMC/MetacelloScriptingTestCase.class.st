@@ -14,7 +14,7 @@ Class {
 		'externalDirectory',
 		'sampleDirectory'
 	],
-	#category : #Metacello-TestsMC
+	#category : #'Metacello-TestsMC'
 }
 
 { #category : #accessing }

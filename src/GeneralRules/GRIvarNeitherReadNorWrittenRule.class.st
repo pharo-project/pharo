@@ -7,7 +7,7 @@ Class {
 	#category : #GeneralRules
 }
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 GRIvarNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]

@@ -23,7 +23,7 @@ Class {
 		'CR1',
 		'CR2'
 	],
-	#category : #Graphics-Canvas
+	#category : #'Graphics-Canvas'
 }
 
 { #category : #all }

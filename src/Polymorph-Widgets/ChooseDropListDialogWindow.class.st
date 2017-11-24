@@ -8,7 +8,7 @@ Class {
 		'listMorph',
 		'list'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #icons }

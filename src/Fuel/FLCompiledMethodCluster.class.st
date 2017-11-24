@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'transformationForSerializing'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #cleanup }
@@ -63,7 +63,7 @@ FLCompiledMethodCluster class >> transformationForSerializing: aBlockWithOneArgu
 	transformationForSerializing := aBlockWithOneArgument
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCompiledMethodCluster >> materializeInstanceWith: aDecoder [
 
 	| compiledMethod header bytecodesPlusTrailerSize |
@@ -87,7 +87,7 @@ FLCompiledMethodCluster >> materializeLiteralsTo: compiledMethod with: aDecoder 
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCompiledMethodCluster >> materializeReferencesStepWith: aDecoder [
 
 	objects do: [ :aCompiledMethod | self materializeLiteralsTo: aCompiledMethod with: aDecoder ]
@@ -101,7 +101,7 @@ FLCompiledMethodCluster >> referencesOf: aCompiledMethod do: aBlock [
 		do: [ :index | aBlock value: (aCompiledMethod literalAt: index) ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCompiledMethodCluster >> serializeInstance: aCompiledMethodToSerialize with: anEncoder [
 	| header bytecodesPlusTrailerSize cmSize cmInitialPC aCompiledMethod |
 	"In 64 bit VMs the header is actually 64 bits wide but only 32 bits
@@ -129,7 +129,7 @@ FLCompiledMethodCluster >> serializeLiteralsOf: aCompiledMethod with: anEncoder 
 		do: [ :index | anEncoder encodeReferenceTo: (aCompiledMethod literalAt: index) ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCompiledMethodCluster >> serializeReferencesStepWith: anEncoder [
 
 	objects do: [ :aCompiledMethod | self serializeLiteralsOf: aCompiledMethod with: anEncoder ]

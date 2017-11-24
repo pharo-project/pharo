@@ -20,7 +20,7 @@ Class {
 		'addedSelectorAndMethodClassLiterals',
 		'optimizedSelectors'
 	],
-	#category : #Compiler-Kernel
+	#category : #'Compiler-Kernel'
 }
 
 { #category : #visiting }
@@ -278,7 +278,7 @@ LegacyEncoder >> evaluateShadowingNotInteractivelyOf: aNode [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LegacyEncoder >> fillDict: dict with: nodeClass mapping: keys to: codeArray [
 	| codeStream |
 	codeStream := codeArray readStream.
@@ -319,7 +319,7 @@ LegacyEncoder >> global: ref name: name [
 		set: litIndSet
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LegacyEncoder >> init: aClass context: aContext notifying: req [
 	requestor := req.
 	class := aClass.
@@ -353,7 +353,7 @@ LegacyEncoder >> init: aClass context: aContext notifying: req [
 	globalSourceRanges := OrderedCollection new: 32
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LegacyEncoder >> initScopeAndLiteralTables [
 
 	scopeTable := StdVariables copy.
@@ -459,7 +459,7 @@ LegacyEncoder >> noteSourceRange: range forNode: node [
 	sourceRanges at: node put: range
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LegacyEncoder >> noteSuper [
 
 	supered := true
@@ -519,7 +519,7 @@ LegacyEncoder >> reallyBind: name [
 	^node
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LegacyEncoder >> release [
 
 	requestor := nil
@@ -572,7 +572,7 @@ LegacyEncoder >> tempNodes [
 	^tempNodes
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LegacyEncoder >> temps: tempVars literals: lits class: cl [ 
 	"Decompile."
 

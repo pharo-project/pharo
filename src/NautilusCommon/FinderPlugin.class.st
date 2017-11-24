@@ -8,7 +8,7 @@ Class {
 		'finder',
 		'finderui'
 	],
-	#category : #NautilusCommon-Plugin
+	#category : #'NautilusCommon-Plugin'
 }
 
 { #category : #position }

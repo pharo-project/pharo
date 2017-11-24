@@ -16,7 +16,7 @@ Class {
 		'hasFocus',
 		'hScrollBar'
 	],
-	#category : #Morphic-Widgets-Scrolling
+	#category : #'Morphic-Widgets-Scrolling'
 }
 
 { #category : #settings }

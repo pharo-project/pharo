@@ -6,7 +6,7 @@ Just like RBGlobalNode, RBInstanceVariableNodes are only used in a RBMethodNode 
 Class {
 	#name : #RBInstanceVariableNode,
 	#superclass : #RBVariableNode,
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #visting }

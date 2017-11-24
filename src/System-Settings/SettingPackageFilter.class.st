@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : #System-Settings-Filter
+	#category : #'System-Settings-Filter'
 }
 
 { #category : #filtering }

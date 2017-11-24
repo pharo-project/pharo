@@ -9,7 +9,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'callback spec' }

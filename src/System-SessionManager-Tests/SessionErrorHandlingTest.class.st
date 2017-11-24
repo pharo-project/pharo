@@ -5,7 +5,7 @@ Class {
 		'manager',
 		'session'
 	],
-	#category : #System-SessionManager-Tests
+	#category : #'System-SessionManager-Tests'
 }
 
 { #category : #utility }

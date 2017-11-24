@@ -1,1 +1,1 @@
-Package { #name : #GT-BytecodeDebugger }
+Package { #name : #'GT-BytecodeDebugger' }

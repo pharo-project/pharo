@@ -25,7 +25,7 @@ Class {
 		'url',
 		'argument'
 	],
-	#category : #Zinc-Resource-Meta-Core
+	#category : #'Zinc-Resource-Meta-Core'
 }
 
 { #category : #operations }

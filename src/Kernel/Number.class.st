@@ -35,7 +35,7 @@ We prefer evaluating cosd(90-x) thus providing a branch free implementation.
 Class {
 	#name : #Number,
 	#superclass : #Magnitude,
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #constants }

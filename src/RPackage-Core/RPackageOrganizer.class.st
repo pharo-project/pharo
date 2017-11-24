@@ -112,7 +112,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #RPackage-Core
+	#category : #'RPackage-Core'
 }
 
 { #category : #singleton }
@@ -215,7 +215,7 @@ RPackageOrganizer >> announcer [
 	^SystemAnnouncer uniqueInstance private
 ]
 
-{ #category : #initialization-data }
+{ #category : #'initialization-data' }
 RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 
 	aPackagesList
@@ -467,7 +467,7 @@ RPackageOrganizer >> initialize [
 	self defineUnpackagedClassesPackage
 ]
 
-{ #category : #initialization-data }
+{ #category : #'initialization-data' }
 RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 	| package protocolName nonTraitMethods |
 	
@@ -483,7 +483,7 @@ RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 		do: [ :eachSelector | package addMethod: aBehavior >> eachSelector ]
 ]
 
-{ #category : #initialization-data }
+{ #category : #'initialization-data' }
 RPackageOrganizer >> initializeFor: aBehavior [
 	| package |
 		
@@ -499,14 +499,14 @@ RPackageOrganizer >> initializeFor: aBehavior [
 	self registerPackage: package forClass: aBehavior.
 ]
 
-{ #category : #initialization-data }
+{ #category : #'initialization-data' }
 RPackageOrganizer >> initializeFromPackagesList: aPackagesList [
  	RPackage 
 		withOrganizer: self  
 		do:  [  self basicInitializeFromPackagesList: aPackagesList ].
 ]
 
-{ #category : #initialization-data }
+{ #category : #'initialization-data' }
 RPackageOrganizer >> initializeMethodsFor: aBehavior [
 	| package |
 	

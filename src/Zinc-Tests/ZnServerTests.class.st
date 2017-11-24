@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnServerTests,
 	#superclass : #TestCase,
-	#category : #Zinc-Tests
+	#category : #'Zinc-Tests'
 }
 
 { #category : #testing }

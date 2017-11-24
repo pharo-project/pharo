@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'notUsed'
 	],
-	#category : #Refactoring-Tests-Core-Data
+	#category : #'Refactoring-Tests-Core-Data'
 }
 
 { #category : #performing }

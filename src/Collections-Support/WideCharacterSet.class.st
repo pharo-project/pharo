@@ -23,7 +23,7 @@ Class {
 		'map',
 		'byteArrayMap'
 	],
-	#category : #Collections-Support
+	#category : #'Collections-Support'
 }
 
 { #category : #'instance creation' }

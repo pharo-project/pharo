@@ -1,7 +1,7 @@
 Class {
 	#name : #FLSimpleStackTest,
 	#superclass : #TestCase,
-	#category : #FuelTests-Collections
+	#category : #'FuelTests-Collections'
 }
 
 { #category : #testing }
@@ -15,7 +15,7 @@ FLSimpleStackTest >> testCapacity [
 	self assert: 5 = stack capacity.
 ]
 
-{ #category : #tests-adding }
+{ #category : #'tests-adding' }
 FLSimpleStackTest >> testGrow [
 
 	| stack |

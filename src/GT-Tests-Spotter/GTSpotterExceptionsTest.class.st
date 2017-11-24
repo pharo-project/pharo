@@ -8,7 +8,7 @@ Class {
 		'exceptions',
 		'fatals'
 	],
-	#category : #GT-Tests-Spotter-Exceptions
+	#category : #'GT-Tests-Spotter-Exceptions'
 }
 
 { #category : #accessing }

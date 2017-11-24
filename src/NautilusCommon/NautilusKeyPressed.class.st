@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'key'
 	],
-	#category : #NautilusCommon-Announcements
+	#category : #'NautilusCommon-Announcements'
 }
 
 { #category : #'as yet unclassified' }

@@ -9,7 +9,7 @@ Class {
 		'remoteTemps',
 		'closureCopiedValues'
 	],
-	#category : #OpalCompiler-Core-Bytecode
+	#category : #'OpalCompiler-Core-Bytecode'
 }
 
 { #category : #instructions }

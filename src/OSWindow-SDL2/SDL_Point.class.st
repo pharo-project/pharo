@@ -2,13 +2,13 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_Point,
+	#name : #'SDL_Point',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

@@ -11,7 +11,7 @@ Class {
 		'titleWidget',
 		'valid'
 	],
-	#category : #Komitter-UI
+	#category : #'Komitter-UI'
 }
 
 { #category : #specs }

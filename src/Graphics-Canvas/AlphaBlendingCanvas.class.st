@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'alpha'
 	],
-	#category : #Graphics-Canvas
+	#category : #'Graphics-Canvas'
 }
 
 { #category : #accessing }
@@ -20,7 +20,7 @@ AlphaBlendingCanvas >> alpha: newAlpha [
 	alpha := newAlpha.
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 AlphaBlendingCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the given form. For the 'paint' combination rule use stenciling otherwise simply fill the source rectangle.
 	Do a blendAlpha if the rule is blend to cope with translucent images being drawn (via translucentImage:...)."

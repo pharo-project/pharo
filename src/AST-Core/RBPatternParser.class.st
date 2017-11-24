@@ -5,26 +5,26 @@ RBPatternParser is a subclass of RBParser that allows the extended syntax that c
 Class {
 	#name : #RBPatternParser,
 	#superclass : #RBParser,
-	#category : #AST-Core-Parser
+	#category : #'AST-Core-Parser'
 }
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBPatternParser >> messageNodeClass [
 	^RBPatternMessageNode
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBPatternParser >> methodNodeClass [
 	^RBPatternMethodNode
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parseError: aString [
 
 	self error: aString
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parseLiteralByteArrayObject [
 	| node |
 	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
@@ -37,7 +37,7 @@ RBPatternParser >> parseLiteralByteArrayObject [
 	^super parseLiteralByteArrayObject
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parsePatternBlock: aClass [ 
 	| position node |
 	position := currentToken start.
@@ -57,7 +57,7 @@ RBPatternParser >> parsePatternBlock: aClass [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parsePragmaLiteral [
 	| node |
 	currentToken isPatternBlock 
@@ -75,7 +75,7 @@ RBPatternParser >> parsePragmaLiteral [
 	^ super parsePragmaLiteral
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parsePrimitiveLiteral [
 	| node |
 	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
@@ -92,14 +92,14 @@ RBPatternParser >> parsePrimitiveLiteral [
 	^super parsePrimitiveLiteral
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parsePrimitiveObject [
 	currentToken isPatternBlock 
 		ifTrue: [^self parsePatternBlock: RBPatternBlockNode].
 	^super parsePrimitiveObject
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parseUnaryMessage [
 	| node |
 	node := self parsePrimitiveObject.
@@ -118,7 +118,7 @@ RBPatternParser >> parseUnaryMessage [
 	^node
 ]
 
-{ #category : #private-parsing }
+{ #category : #'private-parsing' }
 RBPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 	| node |
 
@@ -137,7 +137,7 @@ RBPatternParser >> patchLiteralArrayToken [
 	super patchLiteralArrayToken
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBPatternParser >> pragmaNodeClass [
 	^RBPatternPragmaNode
 ]
@@ -147,7 +147,7 @@ RBPatternParser >> scannerClass [
 	^RBPatternScanner
 ]
 
-{ #category : #private-classes }
+{ #category : #'private-classes' }
 RBPatternParser >> variableNodeClass [
 	^RBPatternVariableNode
 ]

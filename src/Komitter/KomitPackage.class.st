@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'packages'
 	],
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #initialization }

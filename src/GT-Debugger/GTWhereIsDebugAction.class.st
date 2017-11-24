@@ -4,7 +4,7 @@ This debugger action is responsible for reselecting the code corresponding with 
 Class {
 	#name : #GTWhereIsDebugAction,
 	#superclass : #WhereIsDebugAction,
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

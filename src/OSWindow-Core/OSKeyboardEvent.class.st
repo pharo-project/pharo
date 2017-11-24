@@ -22,7 +22,7 @@ Class {
 		'position',
 		'repeat'
 	],
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #accessing }

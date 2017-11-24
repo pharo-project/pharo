@@ -5,7 +5,7 @@ I'm the simplest mechanism and then, the default.
 Class {
 	#name : #ToggleMenuItemShortcutWithText,
 	#superclass : #ToggleMenuItemShortcut,
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #testing }

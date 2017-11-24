@@ -13,10 +13,10 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #Keymapping-Core
+	#category : #'Keymapping-Core'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 KMBuffer class >> resetUniqueInstance [
 	uniqueInstance := nil 
 ]

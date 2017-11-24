@@ -56,7 +56,7 @@ Class {
 		'backgroundColorBlock',
 		'autoDeselect'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -535,42 +535,42 @@ ListPresenter >> updateList [
 	self resetSelection
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenAllowToSelectChanged: aBlock [
 	"Set a block to value when the value of allowToSelect has changed"
 	
 	allowToSelect whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenAutoDeselectChanged: aBlock [
 	"Set a block to value when the value of autoDeselect has changed"
 	
 	autoDeselect whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenBackgroundColorBlockChanged: aBlock [
 	"Set a block to value when the backgroundColorBlock has changed"
 	
 	backgroundColorBlock whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenDisplayBlockChanged: aBlock [
 	"Set a block to value when the filtering block has changed"
 	
 	wrapBlockHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenFilteringBlockChanged: aBlock [
 	"Set a block to value when the filtering block block has changed"
 	
 	filteringBlockHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenListChanged: aBlock [
 	"Specify a block to value after the contents of the list has changed"
 	"Basically when you set a new list of items"
@@ -588,28 +588,28 @@ ListPresenter >> whenListChanged: aBlock [
 		do: block
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenMenuChanged: aBlock [
 	"Set a block to value when the menu block has changed"
 	
 	menuHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenMultiSelectionChanged: aBlock [
 	"Set a block to value when the multiSelection value has changed"
 	
 	multiSelection whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenSelectedItemChanged: aBlock [
 	"Set a block to value when the select item is changed"
 	
 	selectionHolder selection whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenSelectionChanged: aBlock [
 	"Set a block to value when the selection of the list has changed"
 
@@ -621,14 +621,14 @@ ListPresenter >> whenSelectionChanged: aBlock [
 	multiSelectionHolder whenChangedDo: aBlock.
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenSelectionIndexChanged: aBlock [
 	"Set a block to value when the selection index has changed"
 	
 	selectionHolder index whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ListPresenter >> whenSortingBlockChanged: aBlock [
 	"Set a block to value when the sorting block has changed"
 	

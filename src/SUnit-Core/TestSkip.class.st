@@ -4,7 +4,7 @@ I mark a test as being skipped.
 Class {
 	#name : #TestSkip,
 	#superclass : #Exception,
-	#category : #SUnit-Core-Extensions
+	#category : #'SUnit-Core-Extensions'
 }
 
 { #category : #'exception handling' }

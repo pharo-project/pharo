@@ -106,7 +106,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #System-SessionManager
+	#category : #'System-SessionManager'
 }
 
 { #category : #accessing }

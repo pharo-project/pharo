@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'className'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -30,7 +30,7 @@ RBClassRefactoring class >> model: aRBSmalltalk className: aName [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBClassRefactoring >> className: aName [
 	className := aName
 ]

@@ -4,7 +4,7 @@ I know how to pull up the method to my superclass
 Class {
 	#name : #SugsPullUpMethod,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

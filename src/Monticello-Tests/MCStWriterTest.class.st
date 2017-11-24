@@ -5,7 +5,7 @@ Class {
 		'stream',
 		'writer'
 	],
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #asserting }

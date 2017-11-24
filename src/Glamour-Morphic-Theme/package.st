@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Morphic-Theme }
+Package { #name : #'Glamour-Morphic-Theme' }

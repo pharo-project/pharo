@@ -31,7 +31,7 @@ Class {
 		'SpecialPrimitiveSimulators',
 		'TryNamedPrimitiveTemplateMethod'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #enumerating }
@@ -472,7 +472,7 @@ Context >> callPrimitive: primNumber [
 	self methodReturnTop
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> canHandleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then return true, otherwise forward this message to the next handler context.  If none left, return false (see nil>>canHandleSignal:)"
 
@@ -481,7 +481,7 @@ Context >> canHandleSignal: exception [
 
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> cannotReturn: result [
 	closureOrNil ifNotNil: [ 
 		^BlockCannotReturn result: result from: self home].
@@ -801,7 +801,7 @@ Context >> errorReportOn: stream [
 		aContext := aContext sender ].
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> evaluateSignal: exception [
 	"The following primitive is just a marker used to find the evaluation context. 
 	See MethodContext>>#isHandlerOrSignalingContext. "
@@ -858,7 +858,7 @@ Context >> findContextSuchThat: testBlock [
 	^ nil
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> findNextHandlerContext [
 	"Return the next handler marked context, returning nil if there is none.  Search starts with self and proceeds up to nil."
 
@@ -874,7 +874,7 @@ Context >> findNextHandlerContext [
 	^ context exception privHandlerContext nextHandlerContext
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> findNextHandlerOrSignalingContext [
 	"Return the next handler/signaling marked context, answering nil if there is none. 
 	Search starts with self and proceeds up to nil."
@@ -889,7 +889,7 @@ Context >> findNextHandlerOrSignalingContext [
 	^ nil
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> findNextUnwindContextUpTo: aContext [
 	"Return the next unwind marked above the receiver, returning nil if there is none.  Search proceeds up to but not including aContext."
 
@@ -930,7 +930,7 @@ Context >> findSimilarSender [
 		context method == method ]
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> handleSignal: exception [
 	"Sent to handler (on:do:) contexts only.  If my exception class (first arg) handles exception then execute my handle block (second arg), otherwise forward this message to the next handler context.  If none left, execute exception's defaultAction (see nil>>handleSignal:)."
 
@@ -1043,13 +1043,13 @@ Context >> isFailToken: anObject [
 			and: [ anObject size = 2 and: [(anObject at: 1) == PrimitiveFailToken]]
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> isHandlerContext [
 	"is this context for #on:do:?"
 	^self isHandlerOrSignalingContext and: [ self selector == #on:do: ]
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> isHandlerOrSignalingContext [
 	"Both BlockClosure>>on:do: (handler) and Context>>evaluateSignal: (signaling) 
 	are marked with primitive 199."
@@ -1063,7 +1063,7 @@ Context >> isPrimFailToken: anObject [
 		  and: [anObject first == PrimitiveFailToken]]
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> isUnwindContext [
 	"is this context for  method that is marked?"
 	^method primitive = 198
@@ -1190,7 +1190,7 @@ Context >> namedTempAt: index put: aValue [
 	^self debuggerMap namedTempAt: index put: aValue in: self
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> nextHandlerContext [
 
 	^ self sender findNextHandlerContext
@@ -1469,7 +1469,7 @@ Context >> printOn: aStream [
 			outerContext printOn: aStream ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Context >> privRefresh [
 	"Reinitialize the receiver so that it is in the state it was at its creation."
 	 closureOrNil
@@ -1485,7 +1485,7 @@ Context >> privRefresh [
 				[:i | self tempAt: i put: nil]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Context >> privRefreshWith: aCompiledMethod [ 
 	"Reinitialize the receiver as though it had been for a different method. 
 	 Used by a Debugger when one of the methods to which it refers is 
@@ -1687,7 +1687,7 @@ Context >> receiver [
 	^receiver
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> receiver: anObject [
 
 	receiver := anObject
@@ -1758,7 +1758,7 @@ Context >> restart [
 
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> restartWithNewReceiver: obj [
 
 	self
@@ -2332,7 +2332,7 @@ Context >> storeIntoTemporaryVariable: offset [
 	self at: offset + 1 put: self top
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> swapReceiver: newReceiver [
 
 	receiver := newReceiver
@@ -2524,7 +2524,7 @@ Context >> unwindComplete: aBoolean [
 
 ]
 
-{ #category : #private-exceptions }
+{ #category : #'private-exceptions' }
 Context >> unwindTo: aContext [
 
 	| context unwindBlock |

@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'clipboard'
 	],
-	#category : #System-Clipboard
+	#category : #'System-Clipboard'
 }
 
 { #category : #primitives }

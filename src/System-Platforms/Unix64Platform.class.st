@@ -10,7 +10,7 @@ OSPlatform current.
 Class {
 	#name : #Unix64Platform,
 	#superclass : #UnixPlatform,
-	#category : #System-Platforms
+	#category : #'System-Platforms'
 }
 
 { #category : #testing }

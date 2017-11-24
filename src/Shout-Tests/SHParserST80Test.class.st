@@ -4,7 +4,7 @@ SUnit tests for Shouts ST80 parser
 Class {
 	#name : #SHParserST80Test,
 	#superclass : #TestCase,
-	#category : #Shout-Tests-Parsing
+	#category : #'Shout-Tests-Parsing'
 }
 
 { #category : #utilities }

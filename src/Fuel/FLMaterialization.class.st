@@ -11,7 +11,7 @@ Class {
 		'decoder',
 		'header'
 	],
-	#category : #Fuel-Core
+	#category : #'Fuel-Core'
 }
 
 { #category : #'instance creation' }
@@ -66,7 +66,7 @@ FLMaterialization >> headerStep [
 	clusters resetTo: 1. "Hack that avoids OrderedCollection>>makeRoomAtLast"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLMaterialization >> initializeWith: aDecoder [
 
 	self initialize.

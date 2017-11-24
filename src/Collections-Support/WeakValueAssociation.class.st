@@ -5,7 +5,7 @@ Class {
 	#name : #WeakValueAssociation,
 	#superclass : #LookupKey,
 	#type : #weak,
-	#category : #Collections-Support
+	#category : #'Collections-Support'
 }
 
 { #category : #'instance creation' }

@@ -38,7 +38,7 @@ Class {
 		'ImageSeparator',
 		'Terminator'
 	],
-	#category : #Graphics-Files
+	#category : #'Graphics-Files'
 }
 
 { #category : #examples }
@@ -125,7 +125,7 @@ GIFReadWriter >> delay: aNumberOrNil [
 	delay := aNumberOrNil
 ]
 
-{ #category : #private-packing }
+{ #category : #'private-packing' }
 GIFReadWriter >> fillBuffer [
 	| packSize |
 	packSize := self next.
@@ -140,7 +140,7 @@ GIFReadWriter >> flushBits [
 	self flushBuffer
 ]
 
-{ #category : #private-packing }
+{ #category : #'private-packing' }
 GIFReadWriter >> flushBuffer [
 	bufStream isEmpty ifTrue: [ ^ self ].
 	self nextPut: bufStream size.
@@ -148,7 +148,7 @@ GIFReadWriter >> flushBuffer [
 	bufStream := (ByteArray new: 256) writeStream.
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> flushCode [
 	self flushBits
 ]
@@ -204,7 +204,7 @@ GIFReadWriter >> nextBitsPut: anInteger [
 	^ anInteger
 ]
 
-{ #category : #private-packing }
+{ #category : #'private-packing' }
 GIFReadWriter >> nextByte [
 	bufStream atEnd
 		ifTrue:
@@ -213,7 +213,7 @@ GIFReadWriter >> nextByte [
 	^bufStream next
 ]
 
-{ #category : #private-packing }
+{ #category : #'private-packing' }
 GIFReadWriter >> nextBytePut: aByte [
 	bufStream nextPut: aByte.
 	bufStream size >= 254 ifTrue: [self flushBuffer]
@@ -286,7 +286,7 @@ GIFReadWriter >> nextPutImage: aForm [
 
 ]
 
-{ #category : #private-packing }
+{ #category : #'private-packing' }
 GIFReadWriter >> peekByte [
 	bufStream atEnd
 		ifTrue:
@@ -295,7 +295,7 @@ GIFReadWriter >> peekByte [
 	^bufStream peek
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> readBitData [
 	"using modified Lempel-Ziv Welch algorithm."
 	| outCodes outCount bitMask initCodeSize code curCode oldCode inCode finChar i bytes f c packedBits hasLocalColor localColorSize maxOutCodes |
@@ -402,7 +402,7 @@ GIFReadWriter >> readBitData [
 	^ c
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> readBody [
 	"Read the GIF blocks. Modified to return a form.  "
 	| form extype block blocksize packedFields delay1 |
@@ -442,12 +442,12 @@ GIFReadWriter >> readBody [
 							self next: blocksize ] ] ] ]
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> readCode [
 	^self nextBits
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> readColorTable: numberOfEntries [ 
 	| array r g b |
 	array := Array new: numberOfEntries.
@@ -468,7 +468,7 @@ GIFReadWriter >> readColorTable: numberOfEntries [
 	^ array
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> readHeader [
 	| is89 byte hasColorMap |
 	(self hasMagicNumber: 'GIF87a' asByteArray) 
@@ -492,7 +492,7 @@ GIFReadWriter >> readHeader [
 			colorPalette := nil	"Palette monochromeDefault" ]
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> readPixelFrom: bits [ 
 	"Since bits is a Bitmap with 32 bit values, watch out for the
 padding at the end of each row.  But, GIF format already wants padding to
@@ -504,7 +504,7 @@ padding at the end of each row.  But, GIF format already wants padding to
 	^ pixel
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> readWord [
 	^self next + (self next bitShift: 8)
 ]
@@ -524,7 +524,7 @@ GIFReadWriter >> setStream: aStream [
 	stream := aStream
 ]
 
-{ #category : #private-decoding }
+{ #category : #'private-decoding' }
 GIFReadWriter >> skipBitData [
 	| misc blocksize |
 	self readWord.	"skip Image Left"
@@ -579,7 +579,7 @@ GIFReadWriter >> updatePixelPosition [
 	^ self error: 'can''t happen'
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> writeBitData: bits [ 
 	"using modified Lempel-Ziv Welch algorithm."
 	| maxBits maxMaxCode tSize initCodeSize ent tShift fCode pixel index disp nomatch |
@@ -665,18 +665,18 @@ GIFReadWriter >> writeBitData: bits [
 	self nextPut: 0	"zero-length packet"
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> writeCode: aCode [
 	self nextBitsPut: aCode
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> writeCodeAndCheckCodeSize: aCode [
 	self writeCode: aCode.
 	self checkCodeSize
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> writeHeader [
 	| byte |
 	stream position = 0 ifTrue: 
@@ -739,7 +739,7 @@ GIFReadWriter >> writeHeader [
 	self nextPut: byte
 ]
 
-{ #category : #private-encoding }
+{ #category : #'private-encoding' }
 GIFReadWriter >> writeWord: aWord [
 	self nextPut: (aWord bitAnd: 255).
 	self nextPut: ((aWord bitShift: -8) bitAnd: 255).

@@ -4,7 +4,7 @@ SUnit tests for HTTPEncoding
 Class {
 	#name : #HTTPEncodingTest,
 	#superclass : #TestCase,
-	#category : #Network-Tests-Protocols
+	#category : #'Network-Tests-Protocols'
 }
 
 { #category : #tests }

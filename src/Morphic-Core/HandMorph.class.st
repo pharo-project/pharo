@@ -44,7 +44,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #Morphic-Core-Kernel
+	#category : #'Morphic-Core-Kernel'
 }
 
 { #category : #utilities }
@@ -77,7 +77,7 @@ HandMorph class >> doubleClickTime: milliseconds [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph class >> eventStats [
 	^ EventStats ifNil: [ 'EventStats are disabled' ].
 ]
@@ -92,7 +92,7 @@ HandMorph class >> initialize [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph class >> logEventStats: evt [
 	EventStats ifNotNil: [
 		EventStats at: #count put: (EventStats at: #count ifAbsent:[0]) + 1.
@@ -113,12 +113,12 @@ HandMorph class >> logEventStatsEnabled: aBoolean [
 		ifFalse: [ self logEventStatsStop ].
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph class >> logEventStatsStart [
 	EventStats ifNil:[EventStats := IdentityDictionary new].
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph class >> logEventStatsStop [
 	EventStats := nil.
 ]
@@ -191,7 +191,7 @@ HandMorph >> anyModifierKeyPressed [
 	^recentModifiers anyMask: 16r0E	"cmd | opt | ctrl"
 ]
 
-{ #category : #grabbing/dropping }
+{ #category : #'grabbing/dropping' }
 HandMorph >> attachMorph: m [
 	"Position the center of the given morph under this hand, then grab it.
 	This method is used to grab far away or newly created morphs."
@@ -219,7 +219,7 @@ HandMorph >> balloonHelp: aBalloonMorph [
 		ifNotNil:[self setProperty: #balloonHelpMorph toValue: aBalloonMorph]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph >> captureEventsUntil: aBlock [
 "
 	Capture all input events, bypassing normal processing flow and redirect all events into block instead.
@@ -242,7 +242,7 @@ HandMorph >> captureEventsUntil: aBlock [
 	]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph >> captureEventsWhile: aBlock [
 "
 	Capture all input events, bypassing normal processing flow and redirect all events into block instead.
@@ -266,7 +266,7 @@ HandMorph >> colorForInsets [
 	^ owner colorForInsets
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 HandMorph >> copyToPasteBuffer: aMorph [
 	"Save this morph in the paste buffer. This is mostly useful for copying morphs between projects."
 	aMorph ifNil:[^PasteBuffer := nil].
@@ -317,7 +317,7 @@ HandMorph >> drawOn: aCanvas [
 	
 ]
 
-{ #category : #grabbing/dropping }
+{ #category : #'grabbing/dropping' }
 HandMorph >> dropMorph: aMorph event: anEvent [
 	"Drop the given morph which was carried by the hand"
 	| event dropped |
@@ -337,13 +337,13 @@ HandMorph >> dropMorph: aMorph event: anEvent [
 	self mouseOverHandler processMouseOver: anEvent.
 ]
 
-{ #category : #grabbing/dropping }
+{ #category : #'grabbing/dropping' }
 HandMorph >> dropMorphs [
 	"Drop the morphs at the hands position"
 	self dropMorphs: lastMouseEvent.
 ]
 
-{ #category : #grabbing/dropping }
+{ #category : #'grabbing/dropping' }
 HandMorph >> dropMorphs: anEvent [
 	"Drop the morphs at the hands position"
 	self submorphsReverseDo:[:m|
@@ -593,7 +593,7 @@ HandMorph >> generateWindowEvent: evtBuf [
 
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 HandMorph >> grabMorph: aMorph [
 	"Grab the given morph (i.e., add it to this hand and remove it from its current owner) without changing its position. This is used to pick up a morph under the hand's current position, versus attachMorph: which is used to pick up a morph that may not be near this hand."
 	
@@ -606,7 +606,7 @@ HandMorph >> grabMorph: aMorph [
 	^self grabMorph: grabbed from: grabbed owner
 ]
 
-{ #category : #grabbing/dropping }
+{ #category : #'grabbing/dropping' }
 HandMorph >> grabMorph: aMorph from: formerOwner [ 
 	"Grab the given morph (i.e., add it to this hand and remove it from its
 	current owner) without changing its position. This is used to pick up a
@@ -660,7 +660,7 @@ HandMorph >> halo: newHalo [
 		ifNotNil:[self setProperty: #halo toValue: newHalo]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph >> handleEvent: anEvent [
 	| evt  |
 	owner ifNil:[^self].
@@ -1315,7 +1315,7 @@ HandMorph >> shiftPressed [
 	^lastMouseEvent shiftPressed
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph >> showDebugEvent: evt [
 
 	ShowEvents == true ifTrue: [
@@ -1327,7 +1327,7 @@ HandMorph >> showDebugEvent: evt [
 		].
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph >> showMouseFocusEvent: evt [
 
 	ShowEvents == true ifTrue: [
@@ -1464,7 +1464,7 @@ HandMorph >> visible: aBoolean [
 	super visible: aBoolean
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HandMorph >> waitButton [
 	self captureEventsUntil: [:evt | self anyButtonPressed ]
 

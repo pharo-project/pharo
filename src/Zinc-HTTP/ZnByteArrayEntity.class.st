@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'bytes'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -74,7 +74,7 @@ ZnByteArrayEntity >> printContentsOn: stream [
 		stream space; print: self bytes ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnByteArrayEntity >> readFrom: stream [
 	self contentLength isNil
 		ifTrue: [ 

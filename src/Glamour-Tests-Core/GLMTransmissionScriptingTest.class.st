@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'browser'
 	],
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #running }

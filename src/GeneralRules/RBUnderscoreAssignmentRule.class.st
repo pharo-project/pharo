@@ -4,7 +4,7 @@ Replace _ by :=
 Class {
 	#name : #RBUnderscoreAssignmentRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

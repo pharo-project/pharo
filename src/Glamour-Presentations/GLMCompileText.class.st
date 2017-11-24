@@ -10,7 +10,7 @@ Class {
 		'presentation',
 		'action'
 	],
-	#category : #Glamour-Presentations-Announcements
+	#category : #'Glamour-Presentations-Announcements'
 }
 
 { #category : #accessing }

@@ -1,10 +1,10 @@
 Class {
 	#name : #SmalltalkImageTest,
 	#superclass : #TestCase,
-	#category : #Tests-System
+	#category : #'Tests-System'
 }
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractAllKinds [
 	| args extract keys |
 	args := #('ArgWithoutMinus1' '-ArgWithMinus1' 'ArgWithoutMinus2' 'ArgWithoutMinus3' '-ArgWithMinus2').
@@ -20,7 +20,7 @@ SmalltalkImageTest >> testExtractAllKinds [
 	self assert: (extract at: #ArgWithMinus2) isEmpty
 ]
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractEmpty [
 	| args extract |
 	args := #().
@@ -29,7 +29,7 @@ SmalltalkImageTest >> testExtractEmpty [
 	self assert: extract isEmpty
 ]
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractNil [
 	| args extract |
 	args := nil.
@@ -38,7 +38,7 @@ SmalltalkImageTest >> testExtractNil [
 	self assert: extract isEmpty
 ]
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractOneArgNoMinus [
 	| args extract |
 	args := #('ArgNoMinus').
@@ -49,7 +49,7 @@ SmalltalkImageTest >> testExtractOneArgNoMinus [
 	self assert: (extract at: #*) equals: args
 ]
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractOneArgWithMinus [
 	| args extract |
 	args := #('-ArgWithMinus').
@@ -60,7 +60,7 @@ SmalltalkImageTest >> testExtractOneArgWithMinus [
 	self assert: (extract at: #ArgWithMinus) isEmpty
 ]
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractOneArgWithMinusThenArgsWithout [
 	| args extract |
 	args := #('-ArgWithMinus' 'ArgWithoutMinus1' 'ArgWithoutMinus2').
@@ -71,7 +71,7 @@ SmalltalkImageTest >> testExtractOneArgWithMinusThenArgsWithout [
 	self assert: (extract at: #ArgWithMinus) equals: #('ArgWithoutMinus1' 'ArgWithoutMinus2')
 ]
 
-{ #category : #tests-arguments }
+{ #category : #'tests-arguments' }
 SmalltalkImageTest >> testExtractTwoArgsWithAndWithoutMinus [
 	| args extract keys |
 	args := #('ArgWithoutMinus' '-ArgWithMinus').

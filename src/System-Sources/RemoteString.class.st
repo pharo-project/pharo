@@ -23,7 +23,7 @@ Class {
 		'sourceFileNumber',
 		'filePositionHi'
 	],
-	#category : #System-Sources
+	#category : #'System-Sources'
 }
 
 { #category : #'instance creation' }

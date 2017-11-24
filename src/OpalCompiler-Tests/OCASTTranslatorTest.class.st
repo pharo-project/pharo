@@ -1,7 +1,7 @@
 Class {
 	#name : #OCASTTranslatorTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-AST
+	#category : #'OpalCompiler-Tests-AST'
 }
 
 { #category : #'testing - simple' }

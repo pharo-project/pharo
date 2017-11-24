@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'TIME_T_PTR'
 	],
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #primitives }

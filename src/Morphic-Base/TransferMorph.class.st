@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'CopyPlusIcon'
 	],
-	#category : #Morphic-Base-Events
+	#category : #'Morphic-Base-Events'
 }
 
 { #category : #initialization }
@@ -68,7 +68,7 @@ TransferMorph class >> withPassenger: anObject from: source hand: dragHand [
 		yourself
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransferMorph >> aboutToBeGrabbedBy: aHand [ 
 	"The receiver is being grabbed by a hand.                           
 	Perform necessary adjustments (if any) and return the actual morph    
@@ -82,7 +82,7 @@ TransferMorph >> aboutToBeGrabbedBy: aHand [
 	aHand newKeyboardFocus: self.
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransferMorph >> animationForMoveSuccess: success [ 
 	| start stop slideForm |
 	success
@@ -106,7 +106,7 @@ TransferMorph >> defaultColor [
 	^ Smalltalk ui theme selectionColor
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 TransferMorph >> delete [
 	"See also >>justDroppedInto:event:."
 	accepted ifFalse: [
@@ -196,7 +196,7 @@ TransferMorph >> isTransferable [
 	^ true
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransferMorph >> justDroppedInto: targetMorph event: anEvent [ 
 	"If only world wants this TransferMorph, treat it as unaccepted (see also >>delete)."
 	| formerPosition |
@@ -239,12 +239,12 @@ TransferMorph >> privateFullMoveBy: delta [
 	self changed: #position
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransferMorph >> result: result [ 
 	^ self result: result from: nil
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransferMorph >> result: aResult from: aResultGenerator [ 
 	"Send aResult of the drop operation computed by aResultGenerator to a   
 	resultRecipient, if it exists."

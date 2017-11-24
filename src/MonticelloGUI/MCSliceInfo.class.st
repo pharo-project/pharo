@@ -65,7 +65,7 @@ MCSliceInfo >> issueNumber: anInteger [
 	self changed: #issueNumber
 ]
 
-{ #category : #slice-making }
+{ #category : #'slice-making' }
 MCSliceInfo >> makeSlice [
 	| workingCopy package |
 	self canMakePackage ifFalse: [ ^ nil ].
@@ -76,7 +76,7 @@ MCSliceInfo >> makeSlice [
 	^ workingCopy
 ]
 
-{ #category : #accessing-MC }
+{ #category : #'accessing-MC' }
 MCSliceInfo >> mcPackageName [
 	^ self class namePrefix, self issueNumber asString, '-', self title.
 ]
@@ -115,7 +115,7 @@ MCSliceInfo >> title: aString [
 	self changed: #title
 ]
 
-{ #category : #accessing-MC }
+{ #category : #'accessing-MC' }
 MCSliceInfo >> workingCopy [
 	^ (RPackage named: self mcPackageName) mcWorkingCopy
 ]

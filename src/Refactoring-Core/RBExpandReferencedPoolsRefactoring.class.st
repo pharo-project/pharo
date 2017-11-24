@@ -16,7 +16,7 @@ Class {
 		'parseTree',
 		'toClasses'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -58,7 +58,7 @@ RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 	searcher executeTree: parseTree
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBExpandReferencedPoolsRefactoring >> forMethod: aParseTree fromClass: aClass toClasses: classCollection [ 
 	fromClass := self model classFor: aClass.
 	parseTree := aParseTree.

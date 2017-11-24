@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'preDebugWindow'
 	],
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

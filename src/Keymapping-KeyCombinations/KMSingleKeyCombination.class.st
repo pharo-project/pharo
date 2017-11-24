@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'specialKeys'
 	],
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #'instance creation' }

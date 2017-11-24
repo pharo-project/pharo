@@ -4,7 +4,7 @@ Action when the method is a explicitRequired
 Class {
 	#name : #MethodIsATraitExplicitRequirementAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #order }

@@ -6,16 +6,16 @@ Class {
 		'pagerModel',
 		'sliderBrick'
 	],
-	#category : #Glamour-Morphic-Pager-Brick
+	#category : #'Glamour-Morphic-Pager-Brick'
 }
 
-{ #category : #bar-accessing }
+{ #category : #'bar-accessing' }
 GLMPagerBarBrick >> buttonsBrick [
 
 	^ buttonsBrick
 ]
 
-{ #category : #bar-accessing }
+{ #category : #'bar-accessing' }
 GLMPagerBarBrick >> buttonsBrick: aBrick [
 
 	buttonsBrick := aBrick.
@@ -49,27 +49,27 @@ GLMPagerBarBrick >> newSliderBrick [
 	^ GLMPagerScrollSlidingBrick new
 ]
 
-{ #category : #bar-event-handling }
+{ #category : #'bar-event-handling' }
 GLMPagerBarBrick >> onPagePoped [
 
 	buttonsBrick onPagePoped.
 	self recomputeScrollBar.
 ]
 
-{ #category : #bar-event-handling }
+{ #category : #'bar-event-handling' }
 GLMPagerBarBrick >> onPagePushed: addedAnnouncement [
 
 	self buttonsBrick onPagePushed: addedAnnouncement.
 	self recomputeScrollBar
 ]
 
-{ #category : #bar-accessing }
+{ #category : #'bar-accessing' }
 GLMPagerBarBrick >> pagerModel [
 
 	^ pagerModel
 ]
 
-{ #category : #bar-accessing }
+{ #category : #'bar-accessing' }
 GLMPagerBarBrick >> pagerModel: aModel [
 	
 	pagerModel := aModel.
@@ -87,13 +87,13 @@ GLMPagerBarBrick >> recomputeScrollBar [
 	self sliderBrick ifNotNil: #setWidthAfterResizing
 ]
 
-{ #category : #bar-accessing }
+{ #category : #'bar-accessing' }
 GLMPagerBarBrick >> sliderBrick [
 
 	^ sliderBrick
 ]
 
-{ #category : #bar-accessing }
+{ #category : #'bar-accessing' }
 GLMPagerBarBrick >> sliderBrick: aBrick [
 
 	sliderBrick := aBrick.

@@ -11,7 +11,7 @@ Class {
 		'literalValues',
 		'tempVars'
 	],
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #visiting }
@@ -219,7 +219,7 @@ DecompilerConstructor >> isForClosures [
 	^false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DecompilerConstructor >> method: aMethod class: aClass literals: literals [
 
 	method := aMethod.

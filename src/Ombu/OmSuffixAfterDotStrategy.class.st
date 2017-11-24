@@ -6,7 +6,7 @@ My subclasses implement the concrete ways to do it.
 Class {
 	#name : #OmSuffixAfterDotStrategy,
 	#superclass : #OmSessionStoreNamingStrategy,
-	#category : #Ombu-Strategies
+	#category : #'Ombu-Strategies'
 }
 
 { #category : #accessing }

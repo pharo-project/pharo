@@ -22,7 +22,7 @@ Class {
 		'previewType',
 		'previewMorph'
 	],
-	#category : #Tool-FileList
+	#category : #'Tool-FileList'
 }
 
 { #category : #icons }
@@ -688,7 +688,7 @@ FileDialogWindow >> okEnabled [
 	^self selectedFileName notNil and: [self selectedFileEntry isDirectory not]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 FileDialogWindow >> openSelectedFile [
 	"Open a stream on the selected file if available and return it."
 

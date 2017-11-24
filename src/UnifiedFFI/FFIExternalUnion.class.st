@@ -5,7 +5,7 @@ I put all of my fields at the same offset, which is zero.
 Class {
 	#name : #FFIExternalUnion,
 	#superclass : #FFIExternalStructure,
-	#category : #UnifiedFFI-Objects
+	#category : #'UnifiedFFI-Objects'
 }
 
 { #category : #private }

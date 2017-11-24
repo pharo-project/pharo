@@ -72,7 +72,7 @@ Cursor class >> corner [
 	^CornerCursor
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Cursor class >> createStandardCursors [ 
 	self 
 		initOrigin;
@@ -823,7 +823,7 @@ Cursor class >> initXeq [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Cursor class >> initialize [
 	self createStandardCursors.
 	SessionManager default registerGuiClassNamed: self name.

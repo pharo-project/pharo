@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMActionsToolbarMorphicTest,
 	#superclass : #GLMMorphicTest,
-	#category : #Glamour-Tests-Morphic
+	#category : #'Glamour-Tests-Morphic'
 }
 
 { #category : #'as yet unclassified' }

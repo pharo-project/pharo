@@ -22,7 +22,7 @@ Class {
 		'KnownEnvironments',
 		'SystemConverter'
 	],
-	#category : #Multilingual-Languages
+	#category : #'Multilingual-Languages'
 }
 
 { #category : #accessing }

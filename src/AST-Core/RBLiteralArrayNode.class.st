@@ -13,7 +13,7 @@ Class {
 		'isByteArray',
 		'contents'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -62,7 +62,7 @@ RBLiteralArrayNode >> contents [
 	^contents
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBLiteralArrayNode >> contents: aRBLiteralNodeCollection [ 
 	contents := aRBLiteralNodeCollection.
 	contents do: [:each | each parent: self]
@@ -125,7 +125,7 @@ RBLiteralArrayNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #private-replacing }
+{ #category : #'private-replacing' }
 RBLiteralArrayNode >> replaceSourceWith: aNode [ 
 	(self class = aNode class and: 
 			[self isForByteArray = aNode isForByteArray 
@@ -136,7 +136,7 @@ RBLiteralArrayNode >> replaceSourceWith: aNode [
 		do: [:first :second | first = second ifFalse: [ first replaceSourceWith: second]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBLiteralArrayNode >> startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean [ 
 	start := startInteger.
 	self contents: anArray.

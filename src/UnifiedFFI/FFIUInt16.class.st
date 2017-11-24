@@ -4,7 +4,7 @@ I'm an unsigned short type.
 Class {
 	#name : #FFIUInt16,
 	#superclass : #FFIIntegerType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

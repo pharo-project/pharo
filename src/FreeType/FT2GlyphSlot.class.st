@@ -92,7 +92,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }
 
 { #category : #'instance creation' }
@@ -102,73 +102,73 @@ FT2GlyphSlot class >> fromFace: anFT2Face [
 		yourself.
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 FT2GlyphSlot >> advance [
 	^advanceX@advanceY
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> advanceX [
 	^advanceX
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> advanceY [
 	^advanceY
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> bitmapLeft [
 	^bitmapLeft
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> bitmapTop [
 	^bitmapTop
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 FT2GlyphSlot >> extent [
 	^width@height
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> format [
 	^format
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 FT2GlyphSlot >> hBearing [
 	^hBearingX@hBearingY
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> hBearingX [
 	^hBearingX
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> hBearingY [
 	^hBearingY
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> height [
 	^height
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 FT2GlyphSlot >> linearAdvance [
 	^"("(linearHorizontalAdvance @ linearVerticalAdvance) "* 2540) rounded"
 
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> linearHorizontalAdvance [
 	^linearHorizontalAdvance
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> linearVerticalAdvance [
 	^linearVerticalAdvance
 ]
@@ -192,12 +192,12 @@ FT2GlyphSlot >> loadFrom: anFT2Face [
 	vAdvance := vAdvance bitShift: -6.
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> outline [
 	^outline
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> outline: anOutline [
 	outline := anOutline
 ]
@@ -208,14 +208,14 @@ FT2GlyphSlot >> primLoadFrom: anFT2Face [
 	^self primitiveFailed.
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 FT2GlyphSlot >> roundedPixelLinearAdvance [
 	"Answer the scaled linearAdvance, rounded to whole pixels"
 	^linearHorizontalAdvance  rounded @ linearVerticalAdvance rounded
 
 ]
 
-{ #category : #accessing-fields }
+{ #category : #'accessing-fields' }
 FT2GlyphSlot >> width [
 	^width
 ]

@@ -37,7 +37,7 @@ Class {
 	#instVars : [
 		'table'
 	],
-	#category : #Morphic-Widgets-FastTable-Functions
+	#category : #'Morphic-Widgets-FastTable-Functions'
 }
 
 { #category : #testing }

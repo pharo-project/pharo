@@ -11,7 +11,7 @@ Class {
 		'keywords',
 		'condition'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -33,7 +33,7 @@ RBPragmaEnvironment >> addKeyword: aSymbol [
 	keywords add: aSymbol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPragmaEnvironment >> condition: aBlock [
 	condition := aBlock
 ]
@@ -86,7 +86,7 @@ RBPragmaEnvironment >> initialize [
 	condition := [ :pragma | true ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPragmaEnvironment >> keywords: aCollection [
 	keywords addAll: aCollection
 ]

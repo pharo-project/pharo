@@ -4,7 +4,7 @@ I register settings only needed for GTDebugger.
 Class {
 	#name : #GTDebuggerSystemSettings,
 	#superclass : #Object,
-	#category : #GT-Debugger-Model
+	#category : #'GT-Debugger-Model'
 }
 
 { #category : #settings }

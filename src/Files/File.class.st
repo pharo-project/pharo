@@ -46,7 +46,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : #Files-Core
+	#category : #'Files-Core'
 }
 
 { #category : #'file creation' }
@@ -124,7 +124,7 @@ File class >> unregister: anObject [
 	^self registry remove: anObject ifAbsent:[]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	^ self class
@@ -133,7 +133,7 @@ File >> basicOpenForWrite: writeMode [
 		forFileNamed: name
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> checkDoesNotExist [
 	"This method implements a backwards compatible logic to #newFileNamed:
 	
@@ -147,7 +147,7 @@ File >> checkDoesNotExist [
 		^ FileAlreadyExistsException signalOnFile: self ]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> delete [
 	"We retries with GC because in some platforms open files cannot be open"
 	self class
@@ -158,7 +158,7 @@ File >> delete [
 		ifTrue: [ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,'. Check the file is not open.') signal ].
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> exists [
 
 	| handle |
@@ -181,7 +181,7 @@ File >> named: fileName [
 	name := fileName
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> openForAppend [
 
 	| stream |
@@ -189,19 +189,19 @@ File >> openForAppend [
 	^ stream setToEnd; yourself
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> openForRead [
 
 	^ self openForWrite: false
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> openForWrite [
 
 	^ self openForWrite: true
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 File >> openForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	| fileHandle |

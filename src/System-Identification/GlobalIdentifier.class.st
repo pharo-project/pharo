@@ -35,7 +35,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #System-Identification
+	#category : #'System-Identification'
 }
 
 { #category : #cleanup }
@@ -66,7 +66,7 @@ GlobalIdentifier class >> new [
 	self shouldNotImplement
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GlobalIdentifier class >> reset [
 	"self reset"
 	uniqueInstance := nil

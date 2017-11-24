@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'parentheses'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #accessing }

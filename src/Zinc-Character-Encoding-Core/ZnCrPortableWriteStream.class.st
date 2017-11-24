@@ -13,7 +13,7 @@ Class {
 		'stream',
 		'previous'
 	],
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #'instance creation' }

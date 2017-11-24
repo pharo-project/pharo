@@ -17,7 +17,7 @@ Class {
 	#classInstVars : [
 		'logger'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #'class initialization' }
@@ -41,7 +41,7 @@ GLMLoggedObject >> announce: anAnnouncement [
 	super announce: anAnnouncement
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMLoggedObject >> initialize [ 
 	super initialize.
 	logger := GLMLogger instance 

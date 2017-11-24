@@ -50,7 +50,7 @@ Class {
 		'packages',
 		'change'
 	],
-	#category : #Tool-CriticBrowser
+	#category : #'Tool-CriticBrowser'
 }
 
 { #category : #private }
@@ -80,7 +80,7 @@ CriticsCache >> addAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aMani
 	
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> addCritic: aCritic forRule: aRule [
 
 	(critics includesKey: aRule) 
@@ -89,7 +89,7 @@ CriticsCache >> addCritic: aCritic forRule: aRule [
 	self updateBrowser
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> addFalsePositive: aCritic forRule: aRule [
 
 	(falsePositives includesKey: aRule) 
@@ -98,7 +98,7 @@ CriticsCache >> addFalsePositive: aCritic forRule: aRule [
 	self updateBrowser 	
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> addFalsePositiveClass: aClass [ 
 	
 	| fp |
@@ -110,7 +110,7 @@ CriticsCache >> addFalsePositiveClass: aClass [
 
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> addFalsePositiveRule: aRule forPackage: aPackage [
 	
 	| fp |
@@ -122,7 +122,7 @@ CriticsCache >> addFalsePositiveRule: aRule forPackage: aPackage [
 	fp do: [ :c | self addFalsePositive: c forRule: aRule ]
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> addToDo: aCritic forRule: aRule [
 
 	(toDos includesKey: aRule) 
@@ -181,7 +181,7 @@ CriticsCache >> falsePositiveOf: aRule [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CriticsCache >> initCache [
 
 	checker rule leaves do: [ :rule | 
@@ -218,7 +218,7 @@ CriticsCache >> isToDo: aCritic forRule: aRule [
 	^ (self toDosOf: aRule) includes: aCritic
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> itemRemoved: anItem [
 
 	{ critics . toDos . falsePositives } do: [ :ruleDict |
@@ -332,7 +332,7 @@ CriticsCache >> removeAllCriticToToDo: aCollectionOfCritic forRule: aRule on: aM
 	
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> removeCritic: aCritic forRule: aRule [
 
 	(critics includesKey: aRule) 
@@ -342,7 +342,7 @@ CriticsCache >> removeCritic: aCritic forRule: aRule [
 	
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> removeFalsePositive: aCritic forRule: aRule [
 
 	(falsePositives includesKey: aRule) 
@@ -355,7 +355,7 @@ CriticsCache >> removeFalsePositive: aCritic forRule: aRule [
 	self updateBrowser
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> removeFalsePositiveClass: aClass [
 	
 	| fp |
@@ -365,7 +365,7 @@ CriticsCache >> removeFalsePositiveClass: aClass [
 		fp do: [ :each | self removeFalsePositive: each forRule: rule ]].
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> removeFalsePositiveRule: aRule forPackage: aPackage [
 	| fp |
 	
@@ -382,14 +382,14 @@ CriticsCache >> removeFalsePositiveRule: aRule forPackage: aPackage [
 	self updateBrowser 
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> removeRule: aRule [
 
 	{ critics . toDos . falsePositives } do: [ :ruleDict |
 		ruleDict removeKey: aRule ]
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 CriticsCache >> removeToDo: aCritic forRule: aRule [
 
 	(toDos includesKey: aRule) 

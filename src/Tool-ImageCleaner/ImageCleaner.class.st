@@ -4,7 +4,7 @@ Used for cleaning the image
 Class {
 	#name : #ImageCleaner,
 	#superclass : #Object,
-	#category : #Tool-ImageCleaner
+	#category : #'Tool-ImageCleaner'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ SUnit tests for the remove argument suggestion
 Class {
 	#name : #SugsSuggestionRemoveArgTest,
 	#superclass : #SugsSuggestionTest,
-	#category : #SmartSuggestions-Tests-Tests
+	#category : #'SmartSuggestions-Tests-Tests'
 }
 
 { #category : #'tests - methods' }

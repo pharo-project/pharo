@@ -5,7 +5,7 @@ This is a custom help book for the regular expression framework.
 Class {
 	#name : #RegexHelp,
 	#superclass : #CustomHelp,
-	#category : #Regex-Help
+	#category : #'Regex-Help'
 }
 
 { #category : #accessing }

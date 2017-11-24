@@ -1,1 +1,1 @@
-Package { #name : #Metacello-PharoExtensions }
+Package { #name : #'Metacello-PharoExtensions' }

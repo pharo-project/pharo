@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'translations'
 	],
-	#category : #System-Localization-Tests
+	#category : #'System-Localization-Tests'
 }
 
 { #category : #initialization }

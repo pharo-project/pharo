@@ -4,10 +4,10 @@ SUnit tests for the disk filesystem
 Class {
 	#name : #DiskFileSystemTest,
 	#superclass : #FileSystemTest,
-	#category : #FileSystem-Tests-Disk
+	#category : #'FileSystem-Tests-Disk'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DiskFileSystemTest >> createFileSystem [
 	^ FileSystem store: (DiskStore activeClass createDefault)
 ]

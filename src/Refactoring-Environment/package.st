@@ -1,1 +1,1 @@
-Package { #name : #Refactoring-Environment }
+Package { #name : #'Refactoring-Environment' }

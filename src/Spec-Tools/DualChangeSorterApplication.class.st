@@ -14,7 +14,7 @@ Class {
 		'changeSorterRight',
 		'isRefreshing'
 	],
-	#category : #Spec-Tools-ChangeSorter
+	#category : #'Spec-Tools-ChangeSorter'
 }
 
 { #category : #menu }
@@ -115,7 +115,7 @@ DualChangeSorterApplication class >> open [
 	self new openWithSpec
 ]
 
-{ #category : #tools-registry }
+{ #category : #'tools-registry' }
 DualChangeSorterApplication class >> registerToolsOn: registry [
 
 	"Add ourselves to registry. See [Smalltalk tools]" 

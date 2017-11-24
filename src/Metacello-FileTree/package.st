@@ -1,1 +1,1 @@
-Package { #name : #Metacello-FileTree }
+Package { #name : #'Metacello-FileTree' }

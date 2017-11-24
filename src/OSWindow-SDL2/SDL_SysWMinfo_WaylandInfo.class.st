@@ -2,14 +2,14 @@
 A structure that contains Wayland specific information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo_WaylandInfo,
+	#name : #'SDL_SysWMinfo_WaylandInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_DISPLAY',
 		'OFFSET_SHELL_SURFACE',
 		'OFFSET_SURFACE'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

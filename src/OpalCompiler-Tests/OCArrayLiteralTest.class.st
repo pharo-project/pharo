@@ -1,7 +1,7 @@
 Class {
 	#name : #OCArrayLiteralTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #running }

@@ -4,7 +4,7 @@ ifNotNilDo: should not be used as ifNotNil: works for blocks with arguments, too
 Class {
 	#name : #RBRuleIfNotNilDo,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

@@ -16,7 +16,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #OSWindow-SDL2
+	#category : #'OSWindow-SDL2'
 }
 
 { #category : #'instance creation' }

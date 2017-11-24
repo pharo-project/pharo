@@ -20,7 +20,7 @@ Class {
 		'updateSelector',
 		'keystrokeSelector'
 	],
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }
 
 { #category : #accessing }

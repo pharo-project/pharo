@@ -1,5 +1,5 @@
 Class {
 	#name : #GTSpotterCurrentStepChanged,
 	#superclass : #Announcement,
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }

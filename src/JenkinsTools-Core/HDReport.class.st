@@ -4,7 +4,7 @@ A Hudson report
 Class {
 	#name : #HDReport,
 	#superclass : #Object,
-	#category : #JenkinsTools-Core
+	#category : #'JenkinsTools-Core'
 }
 
 { #category : #running }

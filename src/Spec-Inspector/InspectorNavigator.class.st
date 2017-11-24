@@ -11,7 +11,7 @@ Class {
 		'listOfOpenedInspectors',
 		'toolbar'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #specs }

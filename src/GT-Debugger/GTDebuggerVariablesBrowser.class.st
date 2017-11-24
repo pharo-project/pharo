@@ -10,7 +10,7 @@ Class {
 		'debugger',
 		'cachedVariables'
 	],
-	#category : #GT-Debugger-UI
+	#category : #'GT-Debugger-UI'
 }
 
 { #category : #'private building' }

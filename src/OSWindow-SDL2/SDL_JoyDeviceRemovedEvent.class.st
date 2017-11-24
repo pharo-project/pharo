@@ -2,9 +2,9 @@
 SDL2 library structure representing a joystick device removed event data.
 "
 Class {
-	#name : #SDL_JoyDeviceRemovedEvent,
-	#superclass : #SDL_JoyDeviceEvent,
-	#category : #OSWindow-SDL2-Bindings
+	#name : #'SDL_JoyDeviceRemovedEvent',
+	#superclass : #'SDL_JoyDeviceEvent',
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

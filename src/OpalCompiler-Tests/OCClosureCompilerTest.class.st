@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'currentCompiler'
 	],
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #'as yet unclassified' }

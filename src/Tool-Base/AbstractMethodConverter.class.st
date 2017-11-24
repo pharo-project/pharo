@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'method'
 	],
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #'instance creation' }

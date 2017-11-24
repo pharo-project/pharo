@@ -1,1 +1,1 @@
-Package { #name : #System-Localization }
+Package { #name : #'System-Localization' }

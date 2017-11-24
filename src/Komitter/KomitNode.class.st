@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'silent'
 	],
-	#category : #Komitter-UI
+	#category : #'Komitter-UI'
 }
 
 { #category : #comparing }

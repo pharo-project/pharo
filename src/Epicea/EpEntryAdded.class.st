@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entry'
 	],
-	#category : #Epicea-Announcements
+	#category : #'Epicea-Announcements'
 }
 
 { #category : #'instance creation' }
@@ -23,7 +23,7 @@ EpEntryAdded >> entry [
 	^ entry
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpEntryAdded >> initializeWith: anEntry [
 
 	self initialize.

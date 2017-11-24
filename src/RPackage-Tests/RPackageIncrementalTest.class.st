@@ -19,7 +19,7 @@ P3
 Class {
 	#name : #RPackageIncrementalTest,
 	#superclass : #RPackageTestCase,
-	#category : #RPackage-Tests
+	#category : #'RPackage-Tests'
 }
 
 { #category : #utility }

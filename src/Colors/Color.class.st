@@ -395,7 +395,7 @@ Color class >> indexedColors [
 	^ IndexedColors
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Color class >> initialize [
 	"self initialize
 	
@@ -423,7 +423,7 @@ Color class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Color class >> initializeColorRegistry [ 
 	| values|
 	ColorRegistry := IdentityDictionary new.
@@ -439,7 +439,7 @@ Color class >> initializeColorRegistry [
 	self registerColor: (self r: 0 g: 0 b: 0 alpha: 0.0) named: #transparent. 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Color class >> initializeGrayToIndexMap [
 	"Build an array of gray values available in the 8-bit colormap. This array is indexed by a gray level between black (1) and white (256) and returns the pixel value for the corresponding gray level."
 	"Note: This method must be called after initializeIndexedColors, since it uses IndexedColors."
@@ -481,7 +481,7 @@ Color class >> initializeGrayToIndexMap [
 				put: indexOfClosest ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Color class >> initializeIndexedColors [
 	"Build an array of colors corresponding to the fixed colormap used
 	 for display depths of 1, 2, 4, or 8 bits."
@@ -788,7 +788,7 @@ Color class >> red [
 	^  ColorRegistry at: #red
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Color class >> registerColor: aColor named: aName [
 	ColorRegistry at: aName put: aColor.
 	

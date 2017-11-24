@@ -8,7 +8,7 @@ Class {
 		'instanceVariables',
 		'organization'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #comparing }

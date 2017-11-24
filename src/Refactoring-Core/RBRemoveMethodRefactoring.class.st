@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'selectors'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -140,7 +140,7 @@ RBRemoveMethodRefactoring >> preconditions [
 						true])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRemoveMethodRefactoring >> removeMethods: selectorCollection from: aClass [ 
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection

@@ -9,7 +9,7 @@ By default the informations provided on the receiver class are converted into he
 Class {
 	#name : #CustomHelp,
 	#superclass : #Model,
-	#category : #HelpSystem-Core-Utilities
+	#category : #'HelpSystem-Core-Utilities'
 }
 
 { #category : #editing }

@@ -6,7 +6,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'EpTEventVisitor',
 	#classTraits : 'EpTEventVisitor classTrait',
-	#category : #EpiceaBrowsers-Visitors
+	#category : #'EpiceaBrowsers-Visitors'
 }
 
 { #category : #visitor }

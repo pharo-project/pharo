@@ -5,7 +5,7 @@ The receiver is a aCompiledMethod.
 Class {
 	#name : #VSBrowseVersionCommand,
 	#superclass : #VSVersionCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

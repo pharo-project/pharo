@@ -8,7 +8,7 @@ In future I can profice logging and user warning when evaluated code accesses un
 Class {
 	#name : #UndeclaredVariable,
 	#superclass : #LiteralVariable,
-	#category : #Slot-Variables
+	#category : #'Slot-Variables'
 }
 
 { #category : #queries }

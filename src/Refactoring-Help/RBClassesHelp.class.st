@@ -7,7 +7,7 @@ ignore any method / method comments.
 Class {
 	#name : #RBClassesHelp,
 	#superclass : #Model,
-	#category : #Refactoring-Help
+	#category : #'Refactoring-Help'
 }
 
 { #category : #building }

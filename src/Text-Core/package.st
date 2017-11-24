@@ -1,1 +1,1 @@
-Package { #name : #Text-Core }
+Package { #name : #'Text-Core' }

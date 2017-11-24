@@ -4,7 +4,7 @@ An URLPlugin is a plugin which shows the URL of the current navigation
 Class {
 	#name : #URLPlugin,
 	#superclass : #InformationLinePlugin,
-	#category : #NautilusCommon-Plugin
+	#category : #'NautilusCommon-Plugin'
 }
 
 { #category : #position }

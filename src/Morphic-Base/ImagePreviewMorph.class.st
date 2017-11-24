@@ -9,7 +9,7 @@ Class {
 		'textMorph',
 		'defaultImageForm'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #'as yet unclassified' }

@@ -11,7 +11,7 @@ Class {
 		'color',
 		'text'
 	],
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #example }

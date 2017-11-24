@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'iconHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -74,7 +74,7 @@ IconListPresenter >> initialize [
 	iconHolder := [:item | nil ] asValueHolder.
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 IconListPresenter >> whenIconsChanged: aBlock [ 
 	
 	iconHolder whenChangedDo: aBlock 

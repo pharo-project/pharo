@@ -8,7 +8,7 @@ Class {
 		'contours',
 		'currentContour'
 	],
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #conversion }

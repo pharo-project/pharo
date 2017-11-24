@@ -6,7 +6,7 @@ The defined number of instance variables can be edited in #variablesCount.
 Class {
 	#name : #RBExcessiveVariablesRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

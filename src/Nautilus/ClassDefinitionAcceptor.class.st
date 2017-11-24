@@ -5,7 +5,7 @@ My action is then to compile the definition as a class object
 Class {
 	#name : #ClassDefinitionAcceptor,
 	#superclass : #AbstractAcceptor,
-	#category : #Nautilus-Acceptors
+	#category : #'Nautilus-Acceptors'
 }
 
 { #category : #protocol }

@@ -18,7 +18,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #System-VMEvents
+	#category : #'System-VMEvents'
 }
 
 { #category : #events }
@@ -35,13 +35,13 @@ InputEventHandler >> isKbdEvent: bufEvt [
 	^ bufEvt first = EventTypeKeyboard and: [ bufEvt fourth = EventKeyChar ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InputEventHandler >> registerIn: anEventFetcher [
 	eventFetcher := anEventFetcher.
 	eventFetcher registerHandler: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InputEventHandler >> unregister [
 	eventFetcher ifNotNil: [
 			eventFetcher unregisterHandler: self.

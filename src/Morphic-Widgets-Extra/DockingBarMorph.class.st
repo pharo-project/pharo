@@ -29,7 +29,7 @@ Class {
 		'selectedItem',
 		'activeSubMenu'
 	],
-	#category : #Morphic-Widgets-Extra
+	#category : #'Morphic-Widgets-Extra'
 }
 
 { #category : #example }
@@ -72,7 +72,7 @@ DockingBarMorph class >> exampleWithMenu [
 	openInWorld.
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 DockingBarMorph >> aboutToBeGrabbedBy: aHand [ 
 	"The morph is about to be grabbed, make it float"
 	self beFloating.
@@ -83,7 +83,7 @@ DockingBarMorph >> aboutToBeGrabbedBy: aHand [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 DockingBarMorph >> activate: evt [ 
 	"Receiver should be activated; e.g., so that control passes  
 	correctly."
@@ -296,7 +296,7 @@ DockingBarMorph >> color: aColor [
 	self updateColor
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 DockingBarMorph >> delete [
 	activeSubMenu
 		ifNotNil: [activeSubMenu delete].
@@ -366,7 +366,7 @@ DockingBarMorph >> gradientRamp: colorRamp [
 	self updateColor
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 DockingBarMorph >> handleFocusEvent: evt [
 	"Handle focus events. Valid menu transitions are determined based on the menu currently holding the focus after the mouse went down on one of its children."
 
@@ -457,7 +457,7 @@ DockingBarMorph >> isVertical [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 DockingBarMorph >> justDroppedInto: aMorph event: anEvent [ 
 	| ownerBounds leftRegion droppedPosition rightRegion topRegion bottomRegion |
 	super justDroppedInto: aMorph event: anEvent.
@@ -493,7 +493,7 @@ DockingBarMorph >> morphicLayerNumber [
 	^ 11
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 DockingBarMorph >> mouseDown: anEvent [
 	"Release the mouse focus if clicked outside the receiver."
 
@@ -502,7 +502,7 @@ DockingBarMorph >> mouseDown: anEvent [
 	^super mouseDown: anEvent
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 DockingBarMorph >> noteNewOwner: aMorph [ 
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.

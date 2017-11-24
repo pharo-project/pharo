@@ -6,7 +6,7 @@ Class {
 	#superclass : #AbstractMorphicAdapter,
 	#traits : 'TViewModel',
 	#classTraits : 'TViewModel classTrait',
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'spec protocol' }
@@ -97,7 +97,7 @@ MorphicTextAdapter >> classOrMetaClass: aClass [
 	self setEditingModeFor: self widget withBehavior: aClass
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 MorphicTextAdapter >> clearUndoManager [
 	self widget clearUndoManager
 ]
@@ -156,7 +156,7 @@ MorphicTextAdapter >> hasUnacceptedEdits: aBoolean [
 	self model hasUnacceptedEdits: aBoolean
 ]
 
-{ #category : #protocol-shout }
+{ #category : #'protocol-shout' }
 MorphicTextAdapter >> isAboutToStyle [
 
 	^ self model isAboutToStyle
@@ -179,7 +179,7 @@ MorphicTextAdapter >> notify: errorMessage at: position in: sourceCode [
 	self widgetDo: [ :w | w notify: errorMessage at: position in: sourceCode ]
 ]
 
-{ #category : #private-shout }
+{ #category : #'private-shout' }
 MorphicTextAdapter >> okToStyle [
 
 	^ true

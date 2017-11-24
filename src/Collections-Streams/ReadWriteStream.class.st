@@ -4,7 +4,7 @@ I represent an accessor for a sequence of objects. My instances can both read an
 Class {
 	#name : #ReadWriteStream,
 	#superclass : #WriteStream,
-	#category : #Collections-Streams
+	#category : #'Collections-Streams'
 }
 
 { #category : #comparing }

@@ -6,7 +6,7 @@ Class {
 		'paneMorph',
 		'buttons'
 	],
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #rendering }

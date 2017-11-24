@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'instVarName'
 	],
-	#category : #Spec-Inspector-Element
+	#category : #'Spec-Inspector-Element'
 }
 
 { #category : #'instance creation' }

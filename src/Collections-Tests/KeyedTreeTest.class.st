@@ -4,7 +4,7 @@ SUnit tests for keyed trees
 Class {
 	#name : #KeyedTreeTest,
 	#superclass : #TestCase,
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #tests }

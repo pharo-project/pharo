@@ -4,5 +4,5 @@ This is deprecated class because the original class MultiColumnListModel was ren
 Class {
 	#name : #MultiColumnListModel,
 	#superclass : #MultiColumnListPresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

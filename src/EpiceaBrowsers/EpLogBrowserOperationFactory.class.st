@@ -9,7 +9,7 @@ Class {
 		'errorHandlerBlock',
 		'logBrowserModel'
 	],
-	#category : #EpiceaBrowsers-Integration
+	#category : #'EpiceaBrowsers-Integration'
 }
 
 { #category : #public }

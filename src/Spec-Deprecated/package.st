@@ -1,1 +1,1 @@
-Package { #name : #Spec-Deprecated }
+Package { #name : #'Spec-Deprecated' }

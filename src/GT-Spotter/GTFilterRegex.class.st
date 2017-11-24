@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'regex'
 	],
-	#category : #GT-Spotter-Filters
+	#category : #'GT-Spotter-Filters'
 }
 
 { #category : #private }

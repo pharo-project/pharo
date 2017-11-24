@@ -4,7 +4,7 @@ I am an abstract collection of elements with a fixed range of integers (from 1 t
 Class {
 	#name : #ArrayedCollection,
 	#superclass : #SequenceableCollection,
-	#category : #Collections-Abstract
+	#category : #'Collections-Abstract'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ This is a utility class for printing objects to Text or String.
 Class {
 	#name : #GTObjectPrinter,
 	#superclass : #Object,
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #converting }

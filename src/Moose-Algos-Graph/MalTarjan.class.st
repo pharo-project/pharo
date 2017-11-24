@@ -10,7 +10,7 @@ Class {
 		'runningIndex',
 		'sccs'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }
@@ -26,7 +26,7 @@ MalTarjan >> findNode: aModel ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MalTarjan >> initialize [
 	super initialize.
 	nodes := Dictionary new

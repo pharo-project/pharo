@@ -47,7 +47,7 @@ QANautilusPluginMorph >> adoptPaneColor: paneColor [
 		(Smalltalk ui theme listNormalBorderStyleFor: listMorph).
 ]
 
-{ #category : #list-morph }
+{ #category : #'list-morph' }
 QANautilusPluginMorph >> allowToSelect [
 	^ true
 ]
@@ -59,7 +59,7 @@ QANautilusPluginMorph >> classCommented: anAnnouncement [
 		self updateList ]
 ]
 
-{ #category : #list-morph }
+{ #category : #'list-morph' }
 QANautilusPluginMorph >> displayCritique: aCritique [
 	| listItem |
 	listItem := Morph new
@@ -125,18 +125,18 @@ QANautilusPluginMorph >> excecuteTask [
 	updateTask execute.
 ]
 
-{ #category : #list-morph }
+{ #category : #'list-morph' }
 QANautilusPluginMorph >> getCritiques [
 
 	^ critiques
 ]
 
-{ #category : #list-morph }
+{ #category : #'list-morph' }
 QANautilusPluginMorph >> iconFor: item at: anIndex [
 	^  item icon
 ]
 
-{ #category : #list-morph }
+{ #category : #'list-morph' }
 QANautilusPluginMorph >> iconMaxSize [
 
 	^ 16 @ 16
@@ -249,7 +249,7 @@ QANautilusPluginMorph >> pluginDelegate: anObject [
 	pluginDelegate := anObject
 ]
 
-{ #category : #list-morph }
+{ #category : #'list-morph' }
 QANautilusPluginMorph >> selected: index [
 	| critique |
 

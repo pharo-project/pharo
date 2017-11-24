@@ -17,7 +17,7 @@ Class {
 		'initializers',
 		'writeInitializers'
 	],
-	#category : #Monticello-Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #accessing }
@@ -38,7 +38,7 @@ MCStWriter >> chunkContents: aBlock [
 		cr
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCStWriter >> stream: aStream [
 
 	stream := ChunkWriteStream on: aStream

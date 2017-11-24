@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : #NautilusCommon-Plugin-Examples
+	#category : #'NautilusCommon-Plugin-Examples'
 }
 
 { #category : #position }

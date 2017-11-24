@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'stylerDecorator'
 	],
-	#category : #Glamour-Rubric-Presentations
+	#category : #'Glamour-Rubric-Presentations'
 }
 
 { #category : #'instance creation' }
@@ -42,13 +42,13 @@ GLMHighlighterTextRubEditingMode >> stylerDecorator: anObject [
 	stylerDecorator := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMHighlighterTextRubEditingMode >> updateTextAreaWhenPlugged [
 	self withStyler.
 	super updateTextAreaWhenPlugged
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMHighlighterTextRubEditingMode >> updateTextAreaWhenUnplugged [
 	self withoutStyler.
 	super updateTextAreaWhenUnplugged
@@ -56,12 +56,12 @@ GLMHighlighterTextRubEditingMode >> updateTextAreaWhenUnplugged [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMHighlighterTextRubEditingMode >> withStyler [
 	self textArea withDecorator: self stylerDecorator
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMHighlighterTextRubEditingMode >> withoutStyler [
 	self textArea withoutDecorator: self stylerDecorator
 ]

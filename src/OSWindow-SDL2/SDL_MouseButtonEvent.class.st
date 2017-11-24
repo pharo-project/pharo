@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_MouseButtonEvent,
+	#name : #'SDL_MouseButtonEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_BUTTON',
@@ -16,7 +16,7 @@ Class {
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

@@ -5,7 +5,7 @@ Class {
 	#name : #SmallFloat64,
 	#superclass : #Float,
 	#type : #immediate,
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #'instance creation' }

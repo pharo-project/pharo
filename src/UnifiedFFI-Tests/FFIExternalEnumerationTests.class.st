@@ -1,7 +1,7 @@
 Class {
 	#name : #FFIExternalEnumerationTests,
 	#superclass : #TestCase,
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #accessing }

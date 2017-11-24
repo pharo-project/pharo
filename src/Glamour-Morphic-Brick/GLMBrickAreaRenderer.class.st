@@ -4,7 +4,7 @@ I am a special renderer of non-rectangular but polygon bricks
 Class {
 	#name : #GLMBrickAreaRenderer,
 	#superclass : #GLMBrickRenderer,
-	#category : #Glamour-Morphic-Brick-Renderer
+	#category : #'Glamour-Morphic-Brick-Renderer'
 }
 
 { #category : #geometry }

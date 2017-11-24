@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'Versions'
 	],
-	#category : #System-Installers
+	#category : #'System-Installers'
 }
 
 { #category : #versioninfo }
@@ -21,12 +21,12 @@ MczInstaller class >> clearVersionInfo [
 	Versions := Dictionary new
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 MczInstaller class >> extension [
 	^ 'mcz'
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 	<fileService>
 	^({ self extension. '*' } includes: suffix)
@@ -35,7 +35,7 @@ MczInstaller class >> fileReaderServicesForFile: fileName suffix: suffix [
 
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 MczInstaller class >> initialize [
 	self clearVersionInfo
 ]
@@ -50,7 +50,7 @@ MczInstaller class >> installStream: aStream [
 	(self on: aStream) install
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 MczInstaller class >> loadVersionFile: fileName [
 	self installFileNamed: fileName
 
@@ -61,7 +61,7 @@ MczInstaller class >> on: aStream [
 	^ self new stream: aStream
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 MczInstaller class >> serviceLoadVersion [
 	^ SimpleServiceEntry
 		provider: self
@@ -70,7 +70,7 @@ MczInstaller class >> serviceLoadVersion [
 		description: 'Load a package version'
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 MczInstaller class >> services [
 	^ Array with: self serviceLoadVersion
 ]

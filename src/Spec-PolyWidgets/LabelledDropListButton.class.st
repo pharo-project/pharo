@@ -11,7 +11,7 @@ I provide shortcuts for the most common methods to avoid the use of the DoesNotU
 Class {
 	#name : #LabelledDropListButton,
 	#superclass : #LabelledContainer,
-	#category : #Spec-PolyWidgets-Labelled
+	#category : #'Spec-PolyWidgets-Labelled'
 }
 
 { #category : #specs }
@@ -47,7 +47,7 @@ LabelledDropListButton class >> exampleUse [
 	^ example
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> action: aBlock [
 	^self button action: aBlock
 ]
@@ -57,7 +57,7 @@ LabelledDropListButton >> button [
 	^ self dropListButton button
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> displayBlock: aBlock [
 	^self dropList displayBlock: aBlock
 ]
@@ -72,12 +72,12 @@ LabelledDropListButton >> dropListButton [
 	^ subwidget
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> emptyList [
 	^self dropList emptyList
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> icon: anIcon [
 ^	self button icon: anIcon
 ]
@@ -88,44 +88,44 @@ super initializeWidgets.
 	self content: DropListButton.
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> items: aList [
 	^self dropList items: aList
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> listSize [
 	^ self dropList listSize
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> resetSelection [
 ^	self dropList resetSelection
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> selectedItem [
 	^ self dropList selectedItem
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledDropListButton >> setIndex: anIndex [
 	^ self dropList setIndex: anIndex
 ]
 
-{ #category : #events-shortcuts }
+{ #category : #'events-shortcuts' }
 LabelledDropListButton >> whenSelectedItemChanged: aBlock [
 	self dropList
 		whenSelectedItemChanged: aBlock
 ]
 
-{ #category : #events-shortcuts }
+{ #category : #'events-shortcuts' }
 LabelledDropListButton >> whenSelectionChanged: aBlock [
 	self dropList
 		whenSelectionChanged: aBlock
 ]
 
-{ #category : #events-shortcuts }
+{ #category : #'events-shortcuts' }
 LabelledDropListButton >> whenSelectionIndexChanged: aBlock [
 	self dropList
 		whenSelectionIndexChanged: aBlock

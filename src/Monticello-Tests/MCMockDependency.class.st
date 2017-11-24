@@ -6,7 +6,7 @@ Class {
 		'children',
 		'hasResolution'
 	],
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #'instance creation' }

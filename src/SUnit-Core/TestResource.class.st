@@ -28,7 +28,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #running }

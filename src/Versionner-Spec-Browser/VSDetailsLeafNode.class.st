@@ -4,7 +4,7 @@ A VSDetailsLeafNode is used to display dependencies requirements or project load
 Class {
 	#name : #VSDetailsLeafNode,
 	#superclass : #TreeNodePresenter,
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #accessing }

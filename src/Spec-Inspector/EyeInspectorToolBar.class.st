@@ -10,7 +10,7 @@ Class {
 		'inspectorChoice',
 		'isUpdating'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #specs }
@@ -109,7 +109,7 @@ EyeInspectorToolBar >> previousButton [
 	^ previousButton
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspectorToolBar >> update [
 	self preventUpdatesDuring: [ 
 		self updateInspectorChoice.
@@ -118,7 +118,7 @@ EyeInspectorToolBar >> update [
 		self nextButton enabled: self history hasNext ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspectorToolBar >> updateInspectorChoice [
 	self inspectorTypes
 		ifNotNil: [ :variants | 
@@ -129,7 +129,7 @@ EyeInspectorToolBar >> updateInspectorChoice [
 				displayBlock: [ :label | label ]]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspectorToolBar >> updateInspectorType [
 	
 	

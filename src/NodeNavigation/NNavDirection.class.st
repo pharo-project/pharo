@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #private }

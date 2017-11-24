@@ -4,5 +4,5 @@ A RubAbstractTextAreaTest is a test class for testing the behavior of RubAbstrac
 Class {
 	#name : #RubAbstractTextAreaTest,
 	#superclass : #TestCase,
-	#category : #Rubric-Tests
+	#category : #'Rubric-Tests'
 }

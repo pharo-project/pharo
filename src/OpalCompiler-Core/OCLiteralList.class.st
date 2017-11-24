@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'equalitySet'
 	],
-	#category : #OpalCompiler-Core-Extras
+	#category : #'OpalCompiler-Core-Extras'
 }
 
 { #category : #adding }

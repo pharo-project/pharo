@@ -1,1 +1,1 @@
-Package { #name : #JenkinsTools-ExtraReports }
+Package { #name : #'JenkinsTools-ExtraReports' }

@@ -162,7 +162,7 @@ S y n t a x
 Class {
 	#name : #STON,
 	#superclass : #Object,
-	#category : #STON-Core
+	#category : #'STON-Core'
 }
 
 { #category : #accessing }

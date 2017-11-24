@@ -4,7 +4,7 @@ Checks for references to variables in the Undeclared dictionary. If you remove a
 Class {
 	#name : #RBUndeclaredReferenceRule,
 	#superclass : #RBBlockLintRule,
-	#category : #Refactoring-Critics-BlockRules
+	#category : #'Refactoring-Critics-BlockRules'
 }
 
 { #category : #testing }

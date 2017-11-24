@@ -15,7 +15,7 @@ Class {
 		'migrations',
 		'globalEnvironment'
 	],
-	#category : #Fuel-Core
+	#category : #'Fuel-Core'
 }
 
 { #category : #protected }
@@ -29,7 +29,7 @@ FLMaterializer class >> defaultSignature [
 	^ 'FUEL'
 ]
 
-{ #category : #materializing-shortcuts }
+{ #category : #'materializing-shortcuts' }
 FLMaterializer class >> materializationFromFileNamed: aFilename [
 	^ FLPlatform current
 		fileNamed: aFilename 
@@ -38,7 +38,7 @@ FLMaterializer class >> materializationFromFileNamed: aFilename [
 
 ]
 
-{ #category : #materializing-shortcuts }
+{ #category : #'materializing-shortcuts' }
 FLMaterializer class >> materializationHeaderFromFileNamed: aFilename [
 
 	^ FLPlatform current
@@ -48,20 +48,20 @@ FLMaterializer class >> materializationHeaderFromFileNamed: aFilename [
 
 ]
 
-{ #category : #materializing-shortcuts }
+{ #category : #'materializing-shortcuts' }
 FLMaterializer class >> materializeFromByteArray: byteArray [
 
 	^(self newDefault materializeFrom: byteArray readStream) root
 ]
 
-{ #category : #materializing-shortcuts }
+{ #category : #'materializing-shortcuts' }
 FLMaterializer class >> materializeFromFileNamed: aFilename [
 
 	^ (self materializationFromFileNamed: aFilename) root
 
 ]
 
-{ #category : #materializing-shortcuts }
+{ #category : #'materializing-shortcuts' }
 FLMaterializer class >> materializeHeaderFromFileNamed: aFilename [
 
 	^ self materializationHeaderFromFileNamed: aFilename
@@ -157,7 +157,7 @@ FLMaterializer >> materializeHeaderFrom: aStream [
 	^ self decodeHeaderWith: aDecoder
 ]
 
-{ #category : #configuring-migration }
+{ #category : #'configuring-migration' }
 FLMaterializer >> migrateClassNamed: aSymbol toClass: aClass [
 
 	self 
@@ -166,7 +166,7 @@ FLMaterializer >> migrateClassNamed: aSymbol toClass: aClass [
 		variables: #()
 ]
 
-{ #category : #configuring-migration }
+{ #category : #'configuring-migration' }
 FLMaterializer >> migrateClassNamed: aSymbol toClass: aClass variables: aDictionary [ 
 
 	migrations
@@ -174,7 +174,7 @@ FLMaterializer >> migrateClassNamed: aSymbol toClass: aClass variables: aDiction
 		put: (FLMigration fromClassNamed: aSymbol toClass: aClass variables: aDictionary)
 ]
 
-{ #category : #configuring-migration }
+{ #category : #'configuring-migration' }
 FLMaterializer >> migrateClassNamed: aSymbol variables: aDictionary [ 
 
 	self 

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'decompiler'
 	],
-	#category : #Flashback-Decompiler-Tests
+	#category : #'Flashback-Decompiler-Tests'
 }
 
 { #category : #testing }

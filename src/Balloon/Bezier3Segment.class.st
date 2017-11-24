@@ -11,7 +11,7 @@ Class {
 		'via1',
 		'via2'
 	],
-	#category : #Balloon-Geometry
+	#category : #'Balloon-Geometry'
 }
 
 { #category : #utilities }

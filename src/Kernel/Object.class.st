@@ -62,7 +62,7 @@ Class {
 	#classVars : [
 		'DependentsFields'
 	],
-	#category : #Kernel-Objects
+	#category : #'Kernel-Objects'
 }
 
 { #category : #'class initialization' }
@@ -680,12 +680,12 @@ Object >> copySameFrom: otherObject [
 
 ]
 
-{ #category : #logging-Deprecated }
+{ #category : #'logging-Deprecated' }
 Object >> crLog [
       self crTrace: self printString
 ]
 
-{ #category : #logging-Deprecated }
+{ #category : #'logging-Deprecated' }
 Object >> crLog: aString [
 	"Log the argument. Use self log: instead of Transcript cr; show: "
 	
@@ -1310,26 +1310,26 @@ Object >> literalEqual: other [
 	^ self class == other class and: [self = other]
 ]
 
-{ #category : #logging-Deprecated }
+{ #category : #'logging-Deprecated' }
 Object >> log: aString [
 	"Log the argument. Use self log: instead of Transcript show: "
 	
 	Transcript show: aString.
 ]
 
-{ #category : #logging-Deprecated }
+{ #category : #'logging-Deprecated' }
 Object >> logCr [
       self logCr: self printString
 ]
 
-{ #category : #logging-Deprecated }
+{ #category : #'logging-Deprecated' }
 Object >> logCr: aString [
 	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr "
 	
 	Transcript show: aString ; cr
 ]
 
-{ #category : #logging-Deprecated }
+{ #category : #'logging-Deprecated' }
 Object >> logCrTab: aString [
 	"Log the argument. Use self logCr: 'something' instead of Transcript show: 'something'  ; cr ; tab"
 	

@@ -4,7 +4,7 @@ A yes/no message dialog. Yes (return) is the default. Escape will answer no.
 Class {
 	#name : #QuestionWithoutCancelDialogWindow,
 	#superclass : #QuestionDialogWindow,
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #actions }

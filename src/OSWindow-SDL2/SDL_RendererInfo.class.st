@@ -4,7 +4,7 @@ A structure that contains information on the capabilities of a render driver or 
 https://wiki.libsdl.org/SDL_RendererInfo
 "
 Class {
-	#name : #SDL_RendererInfo,
+	#name : #'SDL_RendererInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_FLAGS',
@@ -18,7 +18,7 @@ Class {
 	#pools : [
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

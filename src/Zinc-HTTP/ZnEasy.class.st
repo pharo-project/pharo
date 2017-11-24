@@ -18,7 +18,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnEasy,
 	#superclass : #Object,
-	#category : #Zinc-HTTP-Client-Server
+	#category : #'Zinc-HTTP-Client-Server'
 }
 
 { #category : #private }

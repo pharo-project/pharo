@@ -4,17 +4,17 @@ FLPointCluster is an optional class that optimizes Point instances, since there 
 Class {
 	#name : #FLPointCluster,
 	#superclass : #FLOptimizedObjectCluster,
-	#category : #Fuel-Clusters-Optionals
+	#category : #'Fuel-Clusters-Optionals'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLPointCluster >> materializeInstanceWith: aDecoder [
 	"Since in Pharo #@ is associated with a special bytecode, it is faster than doing  Point basicNew"
 	^ 0@0 
 	
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLPointCluster >> materializeReferencesOf: aPoint with: aDecoder [
 
 		aPoint setX: aDecoder nextEncodedReference setY: aDecoder nextEncodedReference.	

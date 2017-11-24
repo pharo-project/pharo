@@ -8,7 +8,7 @@ Class {
 		'Instances',
 		'InstancesWriteLock'
 	],
-	#category : #Monticello-Base
+	#category : #'Monticello-Base'
 }
 
 { #category : #cleanup }

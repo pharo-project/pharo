@@ -15,7 +15,7 @@ I am propably too primitive to be used directly, see ZdcSecureSocketStream for a
 Class {
 	#name : #ZdcAbstractSSLSession,
 	#superclass : #Object,
-	#category : #Zodiac-Core
+	#category : #'Zodiac-Core'
 }
 
 { #category : #operations }

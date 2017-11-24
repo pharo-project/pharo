@@ -4,7 +4,7 @@ Go back to the brother before
 Class {
 	#name : #NNavDirectionPreviousBrother,
 	#superclass : #NNavDirectionSibling,
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #'step over' }

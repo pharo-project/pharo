@@ -17,7 +17,7 @@ Class {
 		'topFraction',
 		'topOffset'
 	],
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #'instance creation' }

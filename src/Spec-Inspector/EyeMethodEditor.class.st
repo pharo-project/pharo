@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'toolbar'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #spec }
@@ -29,7 +29,7 @@ EyeMethodEditor >> method [
 	^ self object
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeMethodEditor >> objectChanged [
 	self text 
 		text: self method sourceCode;

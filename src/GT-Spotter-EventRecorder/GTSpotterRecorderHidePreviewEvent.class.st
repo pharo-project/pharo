@@ -5,7 +5,7 @@ A GTSpotterRecorderHidePreviewEvent  models the action of explicitly hidding the
 Class {
 	#name : #GTSpotterRecorderHidePreviewEvent,
 	#superclass : #GTSpotterRecorderEvent,
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }

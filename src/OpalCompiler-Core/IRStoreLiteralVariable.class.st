@@ -4,7 +4,7 @@ store literal variable
 Class {
 	#name : #IRStoreLiteralVariable,
 	#superclass : #IRLiteralVariableAccess,
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #visiting }

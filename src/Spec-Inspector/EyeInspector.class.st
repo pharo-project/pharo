@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'useAutoRefresh'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #inspecting }
@@ -257,7 +257,7 @@ EyeInspector >> inspectionMenu: aMenu [
 	
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> keepScrollPositionOf: specHolder during: aBlock [
 	| scrollValue |
 	specHolder widget 
@@ -299,7 +299,7 @@ EyeInspector >> list [
 			doubleClickAction: [ self diveIntoSelectedObject ]. ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> objectChanged [
 	"triggered when the inspected object is changed"
 	
@@ -327,12 +327,12 @@ EyeInspector >> objectVariableSize [
 	^ self object basicSize
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> printDescription [
 	^ description text
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> printDescription: item [
 	self refreshDescription: item
 ]
@@ -342,7 +342,7 @@ EyeInspector >> printTimeout [
 	^ 10 seconds
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> refresh [
 	"refresh the object in the inspector, updating his modified instance variables"
 
@@ -352,12 +352,12 @@ EyeInspector >> refresh [
 		ifTrue: [ self refreshDescription; updateList ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> refreshDescription [
 	self refreshDescription: self selectedElement
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> refreshDescription: item [
 	"When you select an element in the list of the inspector, print on the description textModel the element selected"
 	| newDescription |
@@ -373,12 +373,12 @@ EyeInspector >> refreshDescription: item [
 		during: [ description text: newDescription ].
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> refreshPrintDescription [
 	self printDescription: self selectedElement
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> saveElement [
 	"When you press Cmd+s on the description TextPresenter, you can save the new value in the inspected object"
 
@@ -395,7 +395,7 @@ EyeInspector >> saveElement [
 	self objectChanged
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> saveElement: newText [
 	"When you press Cmd+s on the description TextPresenter, you can save the new value in the inspected object"
 
@@ -480,7 +480,7 @@ EyeInspector >> takeKeyboardFocus [
 	^ self list takeKeyboardFocus
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeInspector >> updateList [
 	"update the list of elements displayed according to the new object"
 

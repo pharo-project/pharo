@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterProfiler,
 	#superclass : #KMCategory,
-	#category : #GT-Spotter-Utils
+	#category : #'GT-Spotter-Utils'
 }
 
 { #category : #testing }

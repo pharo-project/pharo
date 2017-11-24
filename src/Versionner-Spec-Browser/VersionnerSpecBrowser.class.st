@@ -15,7 +15,7 @@ Class {
 		'toolbar',
 		'configurationList'
 	],
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #ui }

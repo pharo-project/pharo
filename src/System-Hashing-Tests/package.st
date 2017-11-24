@@ -1,1 +1,1 @@
-Package { #name : #System-Hashing-Tests }
+Package { #name : #'System-Hashing-Tests' }

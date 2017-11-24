@@ -8,7 +8,7 @@ Class {
 		'source',
 		'dest'
 	],
-	#category : #FileSystem-Core-Implementation
+	#category : #'FileSystem-Core-Implementation'
 }
 
 { #category : #'instance creation' }
@@ -37,7 +37,7 @@ CopyVisitor >> copyFile: aReference [
 	aReference copyTo: copy
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CopyVisitor >> initializeWithSource: srcReference dest: dstReference [
 	self initialize.
 	source := srcReference.

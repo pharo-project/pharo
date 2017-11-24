@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #Glamour-Tests-Morphic
+	#category : #'Glamour-Tests-Morphic'
 }
 
 { #category : #private }

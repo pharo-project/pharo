@@ -1,1 +1,1 @@
-Package { #name : #System-CommandLine-TextSupport }
+Package { #name : #'System-CommandLine-TextSupport' }

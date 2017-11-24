@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'serializer'
 	],
-	#category : #Ombu-Persistence
+	#category : #'Ombu-Persistence'
 }
 
 { #category : #initialization }

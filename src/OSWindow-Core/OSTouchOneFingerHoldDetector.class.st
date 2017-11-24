@@ -6,7 +6,7 @@ I send these event back to my handler:
 Class {
 	#name : #OSTouchOneFingerHoldDetector,
 	#superclass : #OSTouchHoldDetector,
-	#category : #OSWindow-Core-Gestures
+	#category : #'OSWindow-Core-Gestures'
 }
 
 { #category : #creation }

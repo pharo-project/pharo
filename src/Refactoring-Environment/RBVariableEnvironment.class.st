@@ -17,7 +17,7 @@ Class {
 		'classVariables',
 		'selectorCache'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }

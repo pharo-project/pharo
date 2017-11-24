@@ -4,7 +4,7 @@ I am the node that the link is installed on
 Class {
 	#name : #RFNodeReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

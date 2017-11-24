@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'file'
 	],
-	#category : #Files-Core
+	#category : #'Files-Core'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 FileAlreadyExistsException class >> signalOnFile: aFile [ 
 	
 	self new

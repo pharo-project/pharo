@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'aliases'
 	],
-	#category : #Traits-Composition
+	#category : #'Traits-Composition'
 }
 
 { #category : #'instance creation' }

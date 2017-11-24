@@ -30,7 +30,7 @@ Class {
 		'numberReplaced',
 		'numberNotReplaced'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -126,7 +126,7 @@ RBInlineAllSendersRefactoring >> selfSendIn: aTree [
 	^searcher executeTree: aTree initialAnswer: nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBInlineAllSendersRefactoring >> sendersOf: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

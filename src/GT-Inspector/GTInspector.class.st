@@ -24,7 +24,7 @@ Class {
 		'RememberPreferredExtent',
 		'StepRefreshRate'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'utilities api' }

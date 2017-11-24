@@ -1,1 +1,1 @@
-Package { #name : #SUnit-Help }
+Package { #name : #'SUnit-Help' }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'athensExample'
 	],
-	#category : #OSWindow-SDL2-Examples-Examples
+	#category : #'OSWindow-SDL2-Examples-Examples'
 }
 
 { #category : #accessing }

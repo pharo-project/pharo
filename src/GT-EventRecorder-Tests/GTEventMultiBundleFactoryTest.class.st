@@ -14,7 +14,7 @@ Class {
 		'multiBundle1',
 		'multiBundle2'
 	],
-	#category : #GT-EventRecorder-Tests-Support
+	#category : #'GT-EventRecorder-Tests-Support'
 }
 
 { #category : #accessing }

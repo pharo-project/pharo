@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'instVar1'
 	],
-	#category : #Kernel-Tests-Methods
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #example }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloMCTestsAbstractConfig,
 	#superclass : #ConfigurationOf,
-	#category : #Metacello-TestsMCResources
+	#category : #'Metacello-TestsMCResources'
 }
 
 { #category : #accessing }

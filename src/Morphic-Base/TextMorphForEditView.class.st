@@ -55,19 +55,19 @@ TextMorphForEditView >> acceptOnCR [
 	^ acceptOnCR == true
 ]
 
-{ #category : #accept/cancel }
+{ #category : #'accept/cancel' }
 TextMorphForEditView >> acceptOnCR: trueOrFalse [
 	acceptOnCR := trueOrFalse
 ]
 
-{ #category : #accept/cancel }
+{ #category : #'accept/cancel' }
 TextMorphForEditView >> acceptOnFocusChange [
 	"Answer the value of acceptOnFocusChange"
 
 	^ acceptOnFocusChange
 ]
 
-{ #category : #accept/cancel }
+{ #category : #'accept/cancel' }
 TextMorphForEditView >> acceptOnFocusChange: anObject [
 	"Set the value of acceptOnFocusChange"
 
@@ -115,7 +115,7 @@ TextMorphForEditView >> cancelEdits [
 	editView cancel
 ]
 
-{ #category : #accept/cancel }
+{ #category : #'accept/cancel' }
 TextMorphForEditView >> doAutoAccept: evt [
 	"Do the key stroke and check to see if it should be accepted."
 
@@ -164,7 +164,7 @@ TextMorphForEditView >> escapePressed [
 	^ self editView yellowButtonActivity: false. 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchBackwards [
 	| where |
 	self
@@ -177,7 +177,7 @@ TextMorphForEditView >> findAndSelect: aRegex startingAt: anIndex searchBackward
 	^ where
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> findNextString: aSubstring startingAt: searchIdx [
 	| where |
 	self
@@ -191,7 +191,7 @@ TextMorphForEditView >> findRegex [
 	^ self editor findRegex
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> findReplaceDialog [
 	^ EditorFindReplaceDialogWindow singleton
 ]
@@ -318,7 +318,7 @@ TextMorphForEditView >> mouseUp: event [
 	editView selectionInterval: editor selectionInterval.
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> openFindDialog [
 	self sharesFindReplace 
 		ifTrue: [ (self findReplaceDialog on: self) open]
@@ -371,21 +371,21 @@ TextMorphForEditView >> refreshExtraSelection [
 			self invalidRect: self bounds ]
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> replaceAll: aRegex with: aText [
 	self
 		handleEdit: [self editor replaceAll: aRegex with: aText].
 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> replaceAll: aRegex with: aText startingAt: startIdx [
 	self
 		handleEdit: [self editor replaceAll: aRegex with: aText startingAt: startIdx].
 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> replaceSelectionWith: aReplacementText [
 	self handleEdit: [self editor replaceSelectionWith: aReplacementText]
 ]
@@ -422,7 +422,7 @@ TextMorphForEditView >> setEditView: editPane [
 	editView := editPane
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForEditView >> sharesFindReplace [
 	^ true
 ]

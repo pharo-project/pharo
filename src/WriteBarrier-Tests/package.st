@@ -1,1 +1,1 @@
-Package { #name : #WriteBarrier-Tests }
+Package { #name : #'WriteBarrier-Tests' }

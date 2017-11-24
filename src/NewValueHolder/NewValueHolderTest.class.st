@@ -1,7 +1,7 @@
 Class {
 	#name : #NewValueHolderTest,
 	#superclass : #TestCase,
-	#category : #NewValueHolder-Tests
+	#category : #'NewValueHolder-Tests'
 }
 
 { #category : #tests }

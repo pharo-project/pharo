@@ -41,7 +41,7 @@ Class {
 		'array',
 		'includesNil'
 	],
-	#category : #Fuel-Collections
+	#category : #'Fuel-Collections'
 }
 
 { #category : #adding }

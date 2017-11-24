@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'session'
 	],
-	#category : #Zodiac-Tests
+	#category : #'Zodiac-Tests'
 }
 
 { #category : #running }

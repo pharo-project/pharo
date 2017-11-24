@@ -9,7 +9,7 @@ Class {
 		'aSchedule',
 		'restoredTimeZone'
 	],
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #coverage }

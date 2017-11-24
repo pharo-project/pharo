@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'CrLf'
 	],
-	#category : #Collections-Support
+	#category : #'Collections-Support'
 }
 
 { #category : #'instance creation' }

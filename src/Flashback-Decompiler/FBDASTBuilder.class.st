@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'methodClass'
 	],
-	#category : #Flashback-Decompiler
+	#category : #'Flashback-Decompiler'
 }
 
 { #category : #'instance creation' }

@@ -14,7 +14,7 @@ One pattern proposed by Kent Beck in Best Smalltalk Practices is to define hash 
 Class {
 	#name : #RBDefinesEqualNotHashRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

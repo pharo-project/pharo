@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'myCanvas'
 	],
-	#category : #Graphics-Canvas
+	#category : #'Graphics-Canvas'
 }
 
 { #category : #'instance creation' }
@@ -24,7 +24,7 @@ ColorMappingCanvas class >> on: aCanvas [
 	^self new on: aCanvas
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 ColorMappingCanvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
 	Note: In the future we may want to have more general clip shapes - not just rectangles"
@@ -46,7 +46,7 @@ ColorMappingCanvas >> depth [
 	^myCanvas depth
 ]
 
-{ #category : #drawing-polygons }
+{ #category : #'drawing-polygons' }
 ColorMappingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
 	"Draw the given polygon."
 	^myCanvas
@@ -56,7 +56,7 @@ ColorMappingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw border
 		borderColor: (self mapColor: bc)
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c [
 	"Draw the given string in the given font and color clipped to the given rectangle. If the font is nil, the default font is used."
 	myCanvas
@@ -66,7 +66,7 @@ ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRec
 		color: (self mapColor: c)
 ]
 
-{ #category : #drawing-text }
+{ #category : #'drawing-text' }
 ColorMappingCanvas >> drawString: s from: firstIndex to: lastIndex in: boundsRect font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
 	"Draw the given string in the given font and color clipped to the given rectangle. If the font is nil, the default font is used."
 	myCanvas
@@ -87,7 +87,7 @@ ColorMappingCanvas >> extent [
 	^myCanvas extent
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 ColorMappingCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor: borderColor [
 	"Fill the given oval."
 	myCanvas
@@ -107,7 +107,7 @@ ColorMappingCanvas >> form [
 	^myCanvas form
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 ColorMappingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	"Draw the rectangle using the given attributes"
 	myCanvas
@@ -117,7 +117,7 @@ ColorMappingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth:
 		borderColor: (self mapColor: borderColor)
 ]
 
-{ #category : #drawing-rectangles }
+{ #category : #'drawing-rectangles' }
 ColorMappingCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth topLeftColor: topLeftColor bottomRightColor: bottomRightColor [
 	"Draw the rectangle using the given attributes"
 	myCanvas
@@ -173,7 +173,7 @@ ColorMappingCanvas >> paragraph: paragraph bounds: bounds color: c [
 		color: (self mapColor: c)
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 ColorMappingCanvas >> preserveStateDuring: aBlock [
 	"Preserve the full canvas state during the execution of aBlock"
 	| oldCanvas result |
@@ -190,7 +190,7 @@ ColorMappingCanvas >> reset [
 	myCanvas reset.
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 ColorMappingCanvas >> stencil: aForm at: aPoint color: aColor [
 	myCanvas
 		stencil: aForm
@@ -198,7 +198,7 @@ ColorMappingCanvas >> stencil: aForm at: aPoint color: aColor [
 		color: (self mapColor: aColor)
 ]
 
-{ #category : #drawing-images }
+{ #category : #'drawing-images' }
 ColorMappingCanvas >> stencil: aForm at: aPoint sourceRect: aRect color: aColor [
 	myCanvas
 		stencil: aForm
@@ -207,7 +207,7 @@ ColorMappingCanvas >> stencil: aForm at: aPoint sourceRect: aRect color: aColor 
 		color: (self mapColor: aColor)
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 ColorMappingCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock	 smoothing: cellSize [
 
 	"Transform the receiver by the given display transformation during the execution of aBlock. The given clip rectangle defines the *global* (e.g., outer) rectangle against which the receiver should clip (which would be equivalent to 'self clipRect: aClipRect; transformBy: aDisplayTransform')."
@@ -233,7 +233,7 @@ ColorMappingCanvas >> translateBy: delta clippingTo: aRectangle during: aBlock [
 	myCanvas := oldCanvas.
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 ColorMappingCanvas >> translateBy: delta during: aBlock [
 	"Set a translation only during the execution of aBlock."
 	| oldCanvas |
@@ -244,7 +244,7 @@ ColorMappingCanvas >> translateBy: delta during: aBlock [
 	myCanvas := oldCanvas.
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 ColorMappingCanvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	"Set a new origin and clipping rectangle only during the execution of aBlock."
 	| oldCanvas |

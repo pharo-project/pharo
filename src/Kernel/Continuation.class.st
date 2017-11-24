@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'values'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #'instance creation' }

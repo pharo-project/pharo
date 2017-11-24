@@ -4,7 +4,7 @@ SUnit tests for a fix on #valueWithin:
 Class {
 	#name : #TestValueWithinFix,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #tests }

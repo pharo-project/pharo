@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'versionNames'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }

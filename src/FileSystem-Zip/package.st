@@ -1,1 +1,1 @@
-Package { #name : #FileSystem-Zip }
+Package { #name : #'FileSystem-Zip' }

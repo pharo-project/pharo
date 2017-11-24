@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'font'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #'instance creation' }

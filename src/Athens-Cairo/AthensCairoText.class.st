@@ -16,7 +16,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #accessing }

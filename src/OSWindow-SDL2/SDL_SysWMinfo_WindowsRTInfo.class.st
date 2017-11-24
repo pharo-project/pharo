@@ -2,12 +2,12 @@
 A structure that contains WindowsRT specific information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo_WindowsRTInfo,
+	#name : #'SDL_SysWMinfo_WindowsRTInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_WINDOW'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

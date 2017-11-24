@@ -12,7 +12,7 @@ Class {
 		'fields',
 		'representation'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #testing }
@@ -122,7 +122,7 @@ ZnApplicationFormUrlEncodedEntity >> printContentsOn: stream [
 	fields printElementsOn: stream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnApplicationFormUrlEncodedEntity >> readFrom: stream [
 	"We parse from stream, limited to content length if available."
 	

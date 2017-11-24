@@ -8,7 +8,7 @@ Class {
 		'start',
 		'end'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #backtracking }

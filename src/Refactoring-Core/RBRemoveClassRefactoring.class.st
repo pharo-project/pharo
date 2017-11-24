@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'classNames'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'error messages' }
@@ -32,7 +32,7 @@ RBRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRemoveClassRefactoring >> classNames: aClassNameCollection [ 
 	classNames := aClassNameCollection
 ]

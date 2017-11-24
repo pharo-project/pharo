@@ -12,7 +12,7 @@ Class {
 		'endPoint',
 		'lastControlPoint'
 	],
-	#category : #Athens-Cairo-Paths
+	#category : #'Athens-Cairo-Paths'
 }
 
 { #category : #'as yet unclassified' }

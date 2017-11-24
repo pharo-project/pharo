@@ -18,7 +18,7 @@ Class {
 		'shouldNestProjects',
 		'shouldCommitDirtyPackages'
 	],
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #initialization }

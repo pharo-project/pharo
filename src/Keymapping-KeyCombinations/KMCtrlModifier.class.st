@@ -4,7 +4,7 @@ I represent the Ctrl key modifier. Look at my superclass for a more detailed exp
 Class {
 	#name : #KMCtrlModifier,
 	#superclass : #KMModifier,
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #accessing }

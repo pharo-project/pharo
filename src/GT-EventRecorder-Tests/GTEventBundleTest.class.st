@@ -11,7 +11,7 @@ Class {
 		'url',
 		'entity'
 	],
-	#category : #GT-EventRecorder-Tests-Support
+	#category : #'GT-EventRecorder-Tests-Support'
 }
 
 { #category : #running }

@@ -4,7 +4,7 @@ I am a morphic item used to show ocompletion entries.
 Class {
 	#name : #NOCMenuMorph,
 	#superclass : #NECMenuMorph,
-	#category : #NECompletion-View
+	#category : #'NECompletion-View'
 }
 
 { #category : #accessing }

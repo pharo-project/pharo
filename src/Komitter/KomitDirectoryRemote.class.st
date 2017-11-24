@@ -4,7 +4,7 @@ I encapsulate a gemstone repository
 Class {
 	#name : #KomitDirectoryRemote,
 	#superclass : #KomitRemote,
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #'*Komitter-UI' }

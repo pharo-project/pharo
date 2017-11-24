@@ -9,7 +9,7 @@ Class {
 		'node',
 		'children'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #initializing }

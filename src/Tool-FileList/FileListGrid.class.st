@@ -8,7 +8,7 @@ Class {
 		'parent',
 		'treeMorph'
 	],
-	#category : #Tool-FileList
+	#category : #'Tool-FileList'
 }
 
 { #category : #menus }

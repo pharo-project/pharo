@@ -4,7 +4,7 @@ SUnit tests for CompiledMethodTrailer
 Class {
 	#name : #CompiledMethodTrailerTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Methods
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #tests }

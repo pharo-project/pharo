@@ -4,7 +4,7 @@ A PDDependencyItemDiff is a object which represent a dependent package who added
 Class {
 	#name : #DADependencyItemDiff,
 	#superclass : #DAAbstractItemDiff,
-	#category : #Tool-DependencyAnalyser-Diff
+	#category : #'Tool-DependencyAnalyser-Diff'
 }
 
 { #category : #testing }

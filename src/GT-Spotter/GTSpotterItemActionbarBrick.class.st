@@ -7,7 +7,7 @@ Class {
 		'actOnButton',
 		'candidateLink'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }
@@ -102,7 +102,7 @@ GTSpotterItemActionbarBrick >> onRevealHints [
 	self themer spotterThemer hintRevealStyleFor: self actOnButton
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterItemActionbarBrick >> onThemerChanged [
 	super onThemerChanged.
 	

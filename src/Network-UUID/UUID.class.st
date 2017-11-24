@@ -37,7 +37,7 @@ Class {
 	#name : #UUID,
 	#superclass : #ByteArray,
 	#type : #bytes,
-	#category : #Network-UUID
+	#category : #'Network-UUID'
 }
 
 { #category : #'instance creation' }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'weakRegistry'
 	],
-	#category : #Collections-Tests-Weak
+	#category : #'Collections-Tests-Weak'
 }
 
 { #category : #finalization }
@@ -16,7 +16,7 @@ VileFinalizer >> finalize [
 	weakRegistry remove: self ifAbsent: [].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VileFinalizer >> initialize: registry [
 	weakRegistry := registry.
 	weakRegistry add: self.

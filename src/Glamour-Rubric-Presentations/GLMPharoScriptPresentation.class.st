@@ -5,7 +5,7 @@ I provide support for displaying snippets of Smalltalk code  (e.g. dealing with 
 Class {
 	#name : #GLMPharoScriptPresentation,
 	#superclass : #GLMRubricSmalltalkCodePresentation,
-	#category : #Glamour-Rubric-Presentations
+	#category : #'Glamour-Rubric-Presentations'
 }
 
 { #category : #examples }

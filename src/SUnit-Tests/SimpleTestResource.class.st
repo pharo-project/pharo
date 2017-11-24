@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'preventAvailability'
 	],
-	#category : #SUnit-Tests-Core
+	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #accessing }

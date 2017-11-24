@@ -14,7 +14,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnMultiThreadedServer,
 	#superclass : #ZnSingleThreadedServer,
-	#category : #Zinc-HTTP-Client-Server
+	#category : #'Zinc-HTTP-Client-Server'
 }
 
 { #category : #'request handling' }

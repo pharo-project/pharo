@@ -14,7 +14,7 @@ Class {
 		'oldName',
 		'newName'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }

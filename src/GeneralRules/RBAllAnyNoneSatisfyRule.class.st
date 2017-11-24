@@ -18,7 +18,7 @@ collection allSatisfy: [ :each | condition ]
 Class {
 	#name : #RBAllAnyNoneSatisfyRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

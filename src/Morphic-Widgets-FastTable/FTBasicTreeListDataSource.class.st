@@ -15,7 +15,7 @@ Class {
 		'availableRows',
 		'rootItems'
 	],
-	#category : #Morphic-Widgets-FastTable-Tree-Basic
+	#category : #'Morphic-Widgets-FastTable-Tree-Basic'
 }
 
 { #category : #examples }
@@ -223,13 +223,13 @@ FTBasicTreeListDataSource >> elementAt: index [
 	SubscriptOutOfBounds signal: index.
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicTreeListDataSource >> expand: aNumber [
 
 	rootItems do: [ :each | each expandToDepth: aNumber ].
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicTreeListDataSource >> expandAll [
 
 	self expand: SmallInteger maxVal

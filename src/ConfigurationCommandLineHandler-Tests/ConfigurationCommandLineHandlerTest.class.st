@@ -4,7 +4,7 @@ SUnit tests for class ConfigurationCommandLineHandler
 Class {
 	#name : #ConfigurationCommandLineHandlerTest,
 	#superclass : #TestCase,
-	#category : #ConfigurationCommandLineHandler-Tests
+	#category : #'ConfigurationCommandLineHandler-Tests'
 }
 
 { #category : #convenience }

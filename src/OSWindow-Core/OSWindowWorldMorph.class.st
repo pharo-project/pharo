@@ -15,7 +15,7 @@ Class {
 		'closeCallback',
 		'isResizeable'
 	],
-	#category : #OSWindow-Core-Morphic
+	#category : #'OSWindow-Core-Morphic'
 }
 
 { #category : #adding }
@@ -37,7 +37,7 @@ OSWindowWorldMorph >> closeCallback: anObject [
 	closeCallback := anObject
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 OSWindowWorldMorph >> delete [
 	closeCallback value.
 	self class removeExtraWorld: self.

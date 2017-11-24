@@ -15,7 +15,7 @@ Class {
 		'compilationContext',
 		'compilationContextClass'
 	],
-	#category : #Compiler-Kernel
+	#category : #'Compiler-Kernel'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ SUnit tests for the Smart suggestions menu builder
 Class {
 	#name : #SugsMenuBuilderTest,
 	#superclass : #TestCase,
-	#category : #SmartSuggestions-Tests-Tests
+	#category : #'SmartSuggestions-Tests-Tests'
 }
 
 { #category : #'tests - nodes' }

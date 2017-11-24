@@ -44,7 +44,7 @@ Bytecode set specification:
 Class {
 	#name : #EncoderForV3,
 	#superclass : #BytecodeEncoder,
-	#category : #Kernel-BytecodeEncoders
+	#category : #'Kernel-BytecodeEncoders'
 }
 
 { #category : #'compiled method support' }

@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'tab'
 	],
-	#category : #Morphic-Widgets-Tabs-States
+	#category : #'Morphic-Widgets-Tabs-States'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ I am a popup closer responsible for closing a popup if any of my predicates are 
 Class {
 	#name : #GLMPopupBrickCloser,
 	#superclass : #GLMPopupBrickListener,
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #action }

@@ -35,7 +35,7 @@ NautilusWindow >> aboutTitle [
 	^'About Nautilus'
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 NautilusWindow >> delete [
 	
 	| mod |
@@ -51,7 +51,7 @@ NautilusWindow >> hasFocus [
 	^ ActiveHand keyboardFocus == self
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 NautilusWindow >> initialExtent [
 	^ 850@620
 ]

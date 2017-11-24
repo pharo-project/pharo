@@ -34,7 +34,7 @@ Class {
 		'headerRow',
 		'exposedRows'
 	],
-	#category : #Morphic-Widgets-FastTable
+	#category : #'Morphic-Widgets-FastTable'
 }
 
 { #category : #accessing }

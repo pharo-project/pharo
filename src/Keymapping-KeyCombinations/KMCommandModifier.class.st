@@ -4,7 +4,7 @@ I represent the default modifier key for the current platform, late bound to Met
 Class {
 	#name : #KMCommandModifier,
 	#superclass : #KMModifier,
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #accessing }

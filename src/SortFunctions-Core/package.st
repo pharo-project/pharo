@@ -1,1 +1,1 @@
-Package { #name : #SortFunctions-Core }
+Package { #name : #'SortFunctions-Core' }

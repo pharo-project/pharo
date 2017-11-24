@@ -4,7 +4,7 @@ You have to call scripting methods after #model: or it will not work
 Class {
 	#name : #RbScriptingSetBeforeModel,
 	#superclass : #ReInvocationSequenceRule,
-	#category : #Rubric-Rules
+	#category : #'Rubric-Rules'
 }
 
 { #category : #accessing }

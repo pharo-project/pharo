@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'height'
 	],
-	#category : #Spec-Layout
+	#category : #'Spec-Layout'
 }
 
 { #category : #commands }

@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'soleInstance'
 	],
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #'class initialization' }

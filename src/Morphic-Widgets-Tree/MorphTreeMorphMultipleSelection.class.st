@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selectedNodePathList'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #accessing }

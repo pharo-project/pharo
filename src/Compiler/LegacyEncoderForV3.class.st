@@ -4,7 +4,7 @@ I add behaviour to Encoder to size and emit bytecodes for the Squeak V3.x VM byt
 Class {
 	#name : #LegacyEncoderForV3,
 	#superclass : #LegacyBytecodeEncoder,
-	#category : #Compiler-Kernel
+	#category : #'Compiler-Kernel'
 }
 
 { #category : #'compiled method support' }

@@ -34,7 +34,7 @@ Class {
 	#classVars : [
 		'RefactoringOptions'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'as yet unclassified' }
@@ -232,7 +232,7 @@ RBRefactoring >> model [
 		ifFalse: [model]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRefactoring >> model: aRBNamespace [ 
 	model := aRBNamespace
 ]

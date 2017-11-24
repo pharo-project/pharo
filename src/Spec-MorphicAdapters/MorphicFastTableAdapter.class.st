@@ -4,7 +4,7 @@ I am the adapter used to bridge an FastTablePresenter and a FTPluggableIconListM
 Class {
 	#name : #MorphicFastTableAdapter,
 	#superclass : #MorphicListAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

@@ -10,7 +10,7 @@ Part of Zinc HTTP Components
 Class {
 	#name : #ZnHTTPSTests,
 	#superclass : #TestCase,
-	#category : #Zinc-Zodiac
+	#category : #'Zinc-Zodiac'
 }
 
 { #category : #accessing }

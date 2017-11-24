@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'testSize'
 	],
-	#category : #Collections-Tests-Stack
+	#category : #'Collections-Tests-Stack'
 }
 
 { #category : #'tests - empty' }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'announcements'
 	],
-	#category : #Glamour-Helpers
+	#category : #'Glamour-Helpers'
 }
 
 { #category : #accessing }
@@ -22,7 +22,7 @@ GLMMemoryLogger >> announcements: anObject [
 	announcements := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMMemoryLogger >> initialize [ 
 	announcements := OrderedCollection new
 ]

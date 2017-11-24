@@ -6,7 +6,7 @@ Class {
 		'title',
 		'style'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Phlow
+	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
 { #category : #accessing }

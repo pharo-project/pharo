@@ -1,1 +1,1 @@
-Package { #name : #Collections-Sequenceable }
+Package { #name : #'Collections-Sequenceable' }

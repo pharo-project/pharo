@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'addedSlots'
 	],
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 		'fields',
 		'parts'
 	],
-	#category : #Network-Mail
+	#category : #'Network-Mail'
 }
 
 { #category : #utilities }
@@ -204,7 +204,7 @@ MailMessage >> addMixedPart: bodyString contentType: aContentTypeString [
 
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> asSendableText [
 	"break lines in the given string into shorter lines"
 	| result atAttachment width aString pastHeader |
@@ -295,7 +295,7 @@ MailMessage >> bodyText [
 	^body content
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> bodyTextFormatted [
 	"Answer a version of the text in my body suitable for display.  This will parse multipart forms, decode HTML, and other such things"
 
@@ -343,7 +343,7 @@ MailMessage >> cc [
 	^self fieldsNamed: 'cc' separatedBy: ', '
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> cleanedHeader [
 	"Reply with a cleaned up version email header.  First show fields people would normally want to see (in a regular order for easy browsing), and then any other fields not explictly excluded"
 
@@ -389,7 +389,7 @@ MailMessage >> date [
 		printFormat: #(2 1 3 47 1 2)
 ]
 
-{ #category : #fields-convenience }
+{ #category : #'fields-convenience' }
 MailMessage >> date: aDate [
 	self setField: 'date' toString: aDate
 ]
@@ -404,7 +404,7 @@ MailMessage >> decoderClass [
 	^ nil
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> excerpt [
 	"Return a short excerpt of the text of the message"
 
@@ -469,7 +469,7 @@ MailMessage >> fieldsNamed: aString  separatedBy: separationString [
 
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> format [
 	"Replace the text of this message with a formatted version."
 	"NOTE: This operation discards extra header fields."
@@ -477,7 +477,7 @@ MailMessage >> format [
 	text := self formattedText.
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> formattedText [
 	"Answer a version of my text suitable for display.  This cleans up the header, decodes HTML, and things like that"
 
@@ -491,7 +491,7 @@ MailMessage >> from [
 	^(self fieldNamed: 'from' ifAbsent: [ ^'' ]) mainValue
 ]
 
-{ #category : #fields-convenience }
+{ #category : #'fields-convenience' }
 MailMessage >> from: senderString [
 	self setField: 'from' toString: senderString
 ]
@@ -729,7 +729,7 @@ MailMessage >> recipientList [
 	^ (self to findTokens: $,) collect: [ :e | e trimLeft ]
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> regenerateBodyFromParts [
 	"regenerate the message body from the multiple parts"
 	| bodyText |
@@ -755,7 +755,7 @@ MailMessage >> regenerateBodyFromParts [
 	text := nil.  "text needs to be reformatted"
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> regenerateText [
 	"regenerate the full text from the body and headers"
 	
@@ -850,7 +850,7 @@ MailMessage >> subject [
 		^(self fieldNamed: 'subject' ifAbsent: [ ^'' ])  mainValue
 ]
 
-{ #category : #fields-convenience }
+{ #category : #'fields-convenience' }
 MailMessage >> subject: aString [
 	self setField: 'subject' toString: aString
 ]
@@ -911,12 +911,12 @@ MailMessage >> to [
 	^self fieldsNamed: 'to' separatedBy: ', '
 ]
 
-{ #category : #fields-convenience }
+{ #category : #'fields-convenience' }
 MailMessage >> to: aStringOrCollection [
 	self setField: 'to' toString: aStringOrCollection asEmailHeaderString
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> viewBody [
 	"open a viewer on the body of this message"
 	self containsViewableImage
@@ -927,7 +927,7 @@ MailMessage >> viewBody [
 
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 MailMessage >> viewImageInBody [
 	| stream image |
 	stream := self body contentStream.

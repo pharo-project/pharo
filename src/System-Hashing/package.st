@@ -1,1 +1,1 @@
-Package { #name : #System-Hashing }
+Package { #name : #'System-Hashing' }

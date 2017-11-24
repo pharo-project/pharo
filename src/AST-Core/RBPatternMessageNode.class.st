@@ -12,7 +12,7 @@ Class {
 		'isList',
 		'isCascadeList'
 	],
-	#category : #AST-Core-Pattern
+	#category : #'AST-Core-Pattern'
 }
 
 { #category : #'instance creation' }
@@ -47,17 +47,17 @@ RBPatternMessageNode >> copyInContext: aDictionary [
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternMessageNode >> isList [
 	^isCascadeList and: [parent notNil and: [parent isCascade]]
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternMessageNode >> isPatternNode [
 	^true
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternMessageNode >> isSelectorList [
 	^isList
 ]
@@ -107,7 +107,7 @@ RBPatternMessageNode >> matchingClass [
 	^RBMessageNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	| message |
 	self

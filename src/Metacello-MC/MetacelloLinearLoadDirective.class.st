@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloLinearLoadDirective,
 	#superclass : #MetacelloVersionLoadDirective,
-	#category : #Metacello-MC-Directives
+	#category : #'Metacello-MC-Directives'
 }
 
 { #category : #actions }

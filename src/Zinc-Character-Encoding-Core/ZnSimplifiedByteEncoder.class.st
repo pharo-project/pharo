@@ -16,7 +16,7 @@ Class {
 	#classInstVars : [
 		'byteTextConverters'
 	],
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #mappings }
@@ -157,7 +157,7 @@ ZnSimplifiedByteEncoder >> backOnStream: stream [
 	stream back
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnSimplifiedByteEncoder >> beLenient [
 	"Don't be strict, which is the default.
 	This means that holes in the mapping are let to pass through."
@@ -172,7 +172,7 @@ ZnSimplifiedByteEncoder >> byteDomain [
 	^ (0 to: 127) asArray , ((byteToUnicode withIndexCollect: [ :each :index | each ifNotNil: [ index + 127 ] ]) reject: [ :each | each isNil ]) 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnSimplifiedByteEncoder >> byteToUnicode: map [
 	byteToUnicode := map
 ]
@@ -206,7 +206,7 @@ ZnSimplifiedByteEncoder >> identifier [
 	^ identifier
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnSimplifiedByteEncoder >> identifier: object [
 	identifier := object
 ]
@@ -285,7 +285,7 @@ ZnSimplifiedByteEncoder >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnSimplifiedByteEncoder >> unicodeToByte: map [
 	unicodeToByte := map
 ]

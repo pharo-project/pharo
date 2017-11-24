@@ -1,7 +1,7 @@
 Class {
 	#name : #SimpleBalloonMorph,
 	#superclass : #BalloonMorph,
-	#category : #Morphic-Base-Widgets
+	#category : #'Morphic-Base-Widgets'
 }
 
 { #category : #private }

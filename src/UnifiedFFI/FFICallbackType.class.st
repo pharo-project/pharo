@@ -9,7 +9,7 @@ The C side of a callback is void* (because is a pointer to a function)
 Class {
 	#name : #FFICallbackType,
 	#superclass : #FFIExternalObjectType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

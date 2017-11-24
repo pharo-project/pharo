@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #Graphics-Fonts
+	#category : #'Graphics-Fonts'
 }
 
 { #category : #'instance creation' }
@@ -57,7 +57,7 @@ StrikeFontSet class >> findMaximumLessThan: f in: array [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 StrikeFontSet class >> installNewFontAtIndex: newIndex fromOld: oldIndex [
 
 	
@@ -87,7 +87,7 @@ StrikeFontSet class >> newFontArray: anArray [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 StrikeFontSet class >> removeFontsForEncoding: leadingChar encodingName: encodingSymbol [
 
 	| insts |

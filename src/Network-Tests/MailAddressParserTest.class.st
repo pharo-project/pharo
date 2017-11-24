@@ -7,7 +7,7 @@ This is the unit test for the class MailAddressParser. Unit tests are a good way
 Class {
 	#name : #MailAddressParserTest,
 	#superclass : #TestCase,
-	#category : #Network-Tests-RFC822
+	#category : #'Network-Tests-RFC822'
 }
 
 { #category : #tests }

@@ -29,7 +29,7 @@ Class {
 	#classVars : [
 		'SubMenuMarker'
 	],
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #initialization }

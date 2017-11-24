@@ -15,7 +15,7 @@ Class {
 		'KeyboardFocusOnMouseDown',
 		'MouseOverForKeyboardFocus'
 	],
-	#category : #Morphic-Base-Kernel
+	#category : #'Morphic-Base-Kernel'
 }
 
 { #category : #settings }

@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'DefaultGraphics'
 	],
-	#category : #Morphic-Widgets-Basic-Buttons
+	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
 { #category : #initialize }

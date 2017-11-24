@@ -4,7 +4,7 @@ Check for possible uses of the result returned by an add: or addAll: messages. T
 Class {
 	#name : #RBUsesAddRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

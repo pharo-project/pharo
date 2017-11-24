@@ -10,7 +10,7 @@ Integer division consists of:
 Class {
 	#name : #Integer,
 	#superclass : #Number,
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #'instance creation' }
@@ -385,7 +385,7 @@ Integer >> as31BitSmallInt [
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting-arrays }
+{ #category : #'converting-arrays' }
 Integer >> asArray [
 
 	| stream |
@@ -396,7 +396,7 @@ Integer >> asArray [
 
 ]
 
-{ #category : #converting-arrays }
+{ #category : #'converting-arrays' }
 Integer >> asByteArray [
 
 	| stream |
@@ -407,7 +407,7 @@ Integer >> asByteArray [
 
 ]
 
-{ #category : #converting-arrays }
+{ #category : #'converting-arrays' }
 Integer >> asByteArrayOfSize: aSize [ 
 	"Answer a ByteArray of aSize with my value, most-significant byte first."
 	| answer digitPos |
@@ -1632,7 +1632,7 @@ Integer >> printOn: aStream [
 	^self printOn: aStream base: 10
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 	| prefix |
 	
@@ -1642,7 +1642,7 @@ Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
 
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printOn: aStream base: b nDigits: n [ 
 	"Append a representation of this number in base b on aStream using nDigits.
 	self must be positive."
@@ -1735,12 +1735,12 @@ Integer >> printString [
 	^String streamContents: [:str | self printOn: str base: 10]
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printStringBase: base length: minimum padded: zeroFlag [
 	^String streamContents: [:s| self printOn: s base: base length: minimum padded: zeroFlag]
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printStringHex [
 	"returns the hex digit part of the integer when printed in hexadecimal format.
 	30 printStringHex 
@@ -1751,18 +1751,18 @@ Integer >> printStringHex [
 	^self printStringBase: 16
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printStringLength: minimal [
 	^self printStringLength: minimal padded: false
 
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printStringLength: minimal padded: zeroFlag [
 	^self printStringBase: 10 length: minimal padded: zeroFlag
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printStringPadded: minimal [
 	^self printStringLength: minimal padded: true
 
@@ -1788,7 +1788,7 @@ Integer >> printStringRadix: baseInteger [
 	^ self storeStringBase: baseInteger
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> printStringRoman [
 	| stream integer |
 	stream := String new writeStream.
@@ -1833,7 +1833,7 @@ Integer >> quo: aNumber [
 	^ aNumber adaptToInteger: self andSend: #quo:
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> radix: base [ 
 	^ self printStringBase: base
 ]
@@ -2038,7 +2038,7 @@ Integer >> sqrtFloor [
 	^guess
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> storeOn: aStream base: base [
 	"Print a representation of the receiver on the stream
 	<aStream> in base <base> where
@@ -2055,7 +2055,7 @@ Integer >> storeOn: aStream base: base [
 
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 	| prefix |
 	prefix := self negative ifTrue: ['-'] ifFalse: [String new].
@@ -2064,13 +2064,13 @@ Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
 
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> storeStringBase: base length: minimum padded: zeroFlag [
 	^String streamContents: [:s| 
 		self storeOn: s base: base length: minimum padded: zeroFlag ]
 ]
 
-{ #category : #printing-numerative }
+{ #category : #'printing-numerative' }
 Integer >> storeStringHex [
 	^self storeStringBase: 16
 ]

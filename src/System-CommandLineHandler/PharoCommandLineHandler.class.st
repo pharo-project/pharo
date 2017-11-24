@@ -19,7 +19,7 @@ It first checks if another handler is available. If so it will activate the foun
 Class {
 	#name : #PharoCommandLineHandler,
 	#superclass : #BasicCommandLineHandler,
-	#category : #System-CommandLineHandler
+	#category : #'System-CommandLineHandler'
 }
 
 { #category : #'instance creation' }

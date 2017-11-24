@@ -7,17 +7,17 @@ Class {
 	#instVars : [
 		'paneMorphs'
 	],
-	#category : #Spec-MorphicAdapters-Support
+	#category : #'Spec-MorphicAdapters-Support'
 }
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 PanelMorphWithSplitters >> addMorph: aMorph [
 
 	paneMorphs add: aMorph.
 	^ super addMorph: aMorph
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 PanelMorphWithSplitters >> addMorph: aMorph fullFrame: aLayout [
 
 	paneMorphs add: aMorph.
@@ -172,7 +172,7 @@ PanelMorphWithSplitters >> initialize [
 	paneMorphs := OrderedCollection new.
 ]
 
-{ #category : #layout-properties }
+{ #category : #'layout-properties' }
 PanelMorphWithSplitters >> layoutFrame: aFrame [
 
 	self activate.

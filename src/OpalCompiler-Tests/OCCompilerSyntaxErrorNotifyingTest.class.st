@@ -8,7 +8,7 @@ This test intercept the Notification before the pop-up is raised.
 Class {
 	#name : #OCCompilerSyntaxErrorNotifyingTest,
 	#superclass : #OCCompilerNotifyingTest,
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #testing }

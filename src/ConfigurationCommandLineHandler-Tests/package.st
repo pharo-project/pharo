@@ -1,1 +1,1 @@
-Package { #name : #ConfigurationCommandLineHandler-Tests }
+Package { #name : #'ConfigurationCommandLineHandler-Tests' }

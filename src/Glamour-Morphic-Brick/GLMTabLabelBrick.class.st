@@ -24,10 +24,10 @@ Class {
 		'normalLabel',
 		'selectedLabel'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI
+	#category : #'Glamour-Morphic-Brick-Widgets-UI'
 }
 
-{ #category : #brick-tab-label-actions }
+{ #category : #'brick-tab-label-actions' }
 GLMTabLabelBrick >> beNormal [
 
 	self removeAllBricks.
@@ -36,7 +36,7 @@ GLMTabLabelBrick >> beNormal [
 	self changed
 ]
 
-{ #category : #brick-tab-label-actions }
+{ #category : #'brick-tab-label-actions' }
 GLMTabLabelBrick >> beSelected [
 
 	self removeAllBricks.
@@ -45,14 +45,14 @@ GLMTabLabelBrick >> beSelected [
 	self changed
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMTabLabelBrick >> deselect [
 	self owner ifNil: [ ^ self ].
 	self layoutProperties minWidth: 0.
 	self owner doLayoutForce
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> font: aFont [
 ]
 
@@ -63,7 +63,7 @@ GLMTabLabelBrick >> initialize [
 	self enable
 ]
 
-{ #category : #brick-tab-label-testing }
+{ #category : #'brick-tab-label-testing' }
 GLMTabLabelBrick >> isSelected [
 	"Answer whether the tab is selected."
 
@@ -72,7 +72,7 @@ GLMTabLabelBrick >> isSelected [
 		ifNotNil: [ :selector | selector selectedTab == self]
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> label [
 	"Answer the label contents."
 
@@ -81,14 +81,14 @@ GLMTabLabelBrick >> label [
 		ifFalse: [ self normalLabel userString ifNil: [ self firstSubmorph ] ]
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> label: aBrick [
 	"Change the label contents"
 	
 	self label: aBrick selected: aBrick
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> label: aBrick selected: aSelectedBrick [
 	"Change the label contents"
 
@@ -105,19 +105,19 @@ GLMTabLabelBrick >> label: aBrick selected: aSelectedBrick [
 	self doLayoutForce
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> normalLabel [
 
 	^ normalLabel
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> normalLabel: anObject [
 
 	normalLabel := anObject
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMTabLabelBrick >> select [
 	self owner ifNil: [ ^ self ].
 	self minWidth: [ self owner width min: (self hasSubbricks
@@ -126,7 +126,7 @@ GLMTabLabelBrick >> select [
 	self owner doLayoutForce
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> selected: aBoolean [
 	"Use the appropriate label."
 
@@ -135,25 +135,25 @@ GLMTabLabelBrick >> selected: aBoolean [
 		ifFalse: [ self beNormal ]
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> selectedLabel [
 
 	^ selectedLabel
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> selectedLabel: anObject [
 
 	selectedLabel := anObject
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> tabSelector [
 
 	^ tabSelector
 ]
 
-{ #category : #brick-tab-label-accessing }
+{ #category : #'brick-tab-label-accessing' }
 GLMTabLabelBrick >> tabSelector: anObject [
 
 	tabSelector := anObject

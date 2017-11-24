@@ -36,7 +36,7 @@ Class {
 		'code',
 		'index'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #'code generation (closures)' }
@@ -78,14 +78,14 @@ LeafNode >> key [
 	^key
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LeafNode >> key: object code: byte [
 
 	key := object.
 	code := byte
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LeafNode >> key: object index: i type: type [
 
 	key := object.
@@ -93,7 +93,7 @@ LeafNode >> key: object index: i type: type [
 	index := i
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LeafNode >> name: ignored key: object code: byte [
 
 	key := object.

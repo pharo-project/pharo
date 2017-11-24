@@ -1,7 +1,7 @@
 Class {
 	#name : #SystemNavigationOnNewlyCreatedEnvironmentTest,
 	#superclass : #SystemNavigationTest,
-	#category : #Tests-System
+	#category : #'Tests-System'
 }
 
 { #category : #'building suites' }
@@ -10,7 +10,7 @@ SystemNavigationOnNewlyCreatedEnvironmentTest class >> shouldInheritSelectors [
 ^true
 ]
 
-{ #category : #setUp-tearDown }
+{ #category : #'setUp-tearDown' }
 SystemNavigationOnNewlyCreatedEnvironmentTest >> createSystemNavigationToTest [
 	
 	| environment nav |

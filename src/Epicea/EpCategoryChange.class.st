@@ -8,7 +8,7 @@ Class {
 		'classCategoryName',
 		'affectedPackageName'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }

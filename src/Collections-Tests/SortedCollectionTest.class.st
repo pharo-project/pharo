@@ -26,7 +26,7 @@ Class {
 		'nonEmpty5Elements',
 		'collectionWith4Elements'
 	],
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #requirements }

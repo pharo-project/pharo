@@ -16,7 +16,7 @@ To get back to the normal situation, execute
 Class {
 	#name : #NoChangesLog,
 	#superclass : #ChangesLog,
-	#category : #System-Sources
+	#category : #'System-Sources'
 }
 
 { #category : #singleton }

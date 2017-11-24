@@ -4,7 +4,7 @@ Infos about a package
 Class {
 	#name : #MBPackageInfo,
 	#superclass : #MBAbstractPackageInfo,
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }

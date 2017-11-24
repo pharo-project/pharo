@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'loadDirectives'
 	],
-	#category : #Metacello-MC-Directives
+	#category : #'Metacello-MC-Directives'
 }
 
 { #category : #actions }

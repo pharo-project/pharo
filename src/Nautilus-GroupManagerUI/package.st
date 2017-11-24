@@ -1,1 +1,1 @@
-Package { #name : #Nautilus-GroupManagerUI }
+Package { #name : #'Nautilus-GroupManagerUI' }

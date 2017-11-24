@@ -4,7 +4,7 @@ I am a specialized OSEnvironment for Windows
 Class {
 	#name : #Win32Environment,
 	#superclass : #OSEnvironment,
-	#category : #System-OSEnvironments
+	#category : #'System-OSEnvironments'
 }
 
 { #category : #testing }

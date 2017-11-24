@@ -13,7 +13,7 @@ Class {
 		'latin1Map',
 		'latin1Encodings'
 	],
-	#category : #Multilingual-TextConversion
+	#category : #'Multilingual-TextConversion'
 }
 
 { #category : #utilities }
@@ -145,7 +145,7 @@ TextConverter >> initialize [
 	latin1Encodings := self class latin1Encodings.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TextConverter >> installLineEndConvention: lineEndStringOrNil [
 
 	

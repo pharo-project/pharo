@@ -4,7 +4,7 @@ A PDReverseDependentPackageNode is used to display a dependent package in a reve
 Class {
 	#name : #DAReverseDependentPackageNode,
 	#superclass : #DAAbstractPackageNode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
 { #category : #api }

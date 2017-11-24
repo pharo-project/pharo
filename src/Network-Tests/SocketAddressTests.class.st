@@ -4,7 +4,7 @@ Unit test for SocketAddress
 Class {
 	#name : #SocketAddressTests,
 	#superclass : #TestCase,
-	#category : #Network-Tests-Kernel
+	#category : #'Network-Tests-Kernel'
 }
 
 { #category : #testing }

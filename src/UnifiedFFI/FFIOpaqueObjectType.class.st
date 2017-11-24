@@ -4,7 +4,7 @@ I'm  an opaque object type (see ==FFIOpaqueObject== comment)
 Class {
 	#name : #FFIOpaqueObjectType,
 	#superclass : #FFIExternalReferenceType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #private }

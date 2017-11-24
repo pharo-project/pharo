@@ -1,1 +1,1 @@
-Package { #name : #Metacello-PharoCommonPlatform }
+Package { #name : #'Metacello-PharoCommonPlatform' }

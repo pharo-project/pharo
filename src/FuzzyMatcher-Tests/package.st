@@ -1,1 +1,1 @@
-Package { #name : #FuzzyMatcher-Tests }
+Package { #name : #'FuzzyMatcher-Tests' }

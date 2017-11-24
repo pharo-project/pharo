@@ -10,7 +10,7 @@ Class {
 		'move',
 		'color'
 	],
-	#category : #OSWindow-SDL2-Examples-Touch
+	#category : #'OSWindow-SDL2-Examples-Touch'
 }
 
 { #category : #'instance creation' }

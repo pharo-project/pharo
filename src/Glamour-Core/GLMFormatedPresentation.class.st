@@ -8,7 +8,7 @@ Class {
 		'format',
 		'icon'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #accessing }

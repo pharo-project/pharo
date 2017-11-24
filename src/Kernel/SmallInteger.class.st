@@ -9,7 +9,7 @@ Class {
 		'minVal',
 		'maxVal'
 	],
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #'instance creation' }
@@ -27,7 +27,7 @@ SmallInteger class >> guideToDivision [
 	quo:  truncated division, rounded towards zero."
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SmallInteger class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name

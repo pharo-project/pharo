@@ -7,17 +7,17 @@ Class {
 		'receiver',
 		'timestamp'
 	],
-	#category : #GT-Spotter-Utils
+	#category : #'GT-Spotter-Utils'
 }
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterUIThreadStream >> addObject: firstObject inProcessor: secondObject [
 
 	self performSymbol: self onAddedSelector withArguments: { firstObject. secondObject }.
 	Processor yield
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterUIThreadStream >> addObjects: aCollection inProcessor: aProcessor [
 
 	self performSymbol: #addAllCandidates:in: withArguments: { aCollection . aProcessor }.
@@ -65,7 +65,7 @@ GTSpotterUIThreadStream >> receiver: anObject [
 	receiver := anObject
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterUIThreadStream >> removeAllCandidates [
 
 	self performSymbol: #removeAllCandidates withArguments: { }.

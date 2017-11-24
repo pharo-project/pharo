@@ -10,7 +10,7 @@ I use a GLMFastListDataSource to manage the data of the table.
 Class {
 	#name : #GLMMorphicFastListRenderer,
 	#superclass : #GLMMorphicFTRenderer,
-	#category : #Glamour-FastTable-Morphic-Renderer
+	#category : #'Glamour-FastTable-Morphic-Renderer'
 }
 
 { #category : #initialization }

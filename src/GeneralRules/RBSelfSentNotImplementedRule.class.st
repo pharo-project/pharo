@@ -4,7 +4,7 @@ This smell arises when a message is sent to self by a method,  but no class in t
 Class {
 	#name : #RBSelfSentNotImplementedRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

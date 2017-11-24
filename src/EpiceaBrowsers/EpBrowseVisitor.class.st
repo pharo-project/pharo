@@ -6,7 +6,7 @@ Class {
 	#superclass : #EpLogBrowserOperationVisitor,
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
-	#category : #EpiceaBrowsers-Visitors
+	#category : #'EpiceaBrowsers-Visitors'
 }
 
 { #category : #visitor }

@@ -4,7 +4,7 @@ SUnit tests for exceptions
 Class {
 	#name : #ExceptionTests,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Exception
+	#category : #'Kernel-Tests-Exception'
 }
 
 { #category : #private }

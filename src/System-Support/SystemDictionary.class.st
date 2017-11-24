@@ -26,7 +26,7 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames'
 	],
-	#category : #System-Support
+	#category : #'System-Support'
 }
 
 { #category : #'instance creation' }

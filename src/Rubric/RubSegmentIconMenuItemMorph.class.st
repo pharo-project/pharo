@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'segment'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #selecting }

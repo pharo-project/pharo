@@ -3,7 +3,7 @@ Kernel trait for applying on the class side
 "
 Trait {
 	#name : #TApplyingOnClassSide,
-	#category : #Traits-Kernel-Traits
+	#category : #'Traits-Kernel-Traits'
 }
 
 { #category : #compiling }
@@ -34,7 +34,7 @@ TApplyingOnClassSide >> addSubclass: aClass [
 	"Do nothing."
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TApplyingOnClassSide >> adoptInstance: oldInstance from: oldMetaClass [ 
 	^self explicitRequirement.
 ]
@@ -109,7 +109,7 @@ TApplyingOnClassSide >> classVarNames [
 	^self theNonMetaClass classVarNames
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 TApplyingOnClassSide >> definition [
 	^self explicitRequirement.
 ]
@@ -127,7 +127,7 @@ TApplyingOnClassSide >> initializeFrom: anotherClassTrait [
 	self basicOrganization: self organization copy.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TApplyingOnClassSide >> instanceVariableNames: instVarString [
 	^self explicitRequirement.
 ]
@@ -241,7 +241,7 @@ TApplyingOnClassSide >> sharedPools [
 	^OrderedCollection new.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TApplyingOnClassSide >> slots: instVarString [
 	^self explicitRequirement.
 ]
@@ -281,7 +281,7 @@ TApplyingOnClassSide >> uses: aTraitCompositionOrArray [
 		classModificationAppliedTo: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TApplyingOnClassSide >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
 	| newComposition newMetaClass copyOfOldMetaClass |
 	
@@ -296,7 +296,7 @@ TApplyingOnClassSide >> uses: aTraitCompositionOrArray instanceVariableNames: in
 		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TApplyingOnClassSide >> uses: aTraitCompositionOrArray slots: slotArray [ 
 	| newComposition newMetaClass copyOfOldMetaClass |
 	

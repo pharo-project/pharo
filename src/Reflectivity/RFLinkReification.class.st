@@ -4,7 +4,7 @@ I reify the link itself.
 Class {
 	#name : #RFLinkReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

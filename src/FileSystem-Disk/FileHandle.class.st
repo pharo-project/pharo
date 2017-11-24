@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : #FileSystem-Disk
+	#category : #'FileSystem-Disk'
 }
 
 { #category : #'class initialization' }
@@ -76,7 +76,7 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 FileHandle >> binaryReadStream [
 	^ (FileStream onHandle: self)
 		ifNil: [ self streamError ]

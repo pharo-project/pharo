@@ -5,7 +5,7 @@ A GTSpotterRecorderActOnEvent models the action of pressing enter (or double cli
 Class {
 	#name : #GTSpotterRecorderActOnEvent,
 	#superclass : #GTSpotterRecorderEvent,
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }

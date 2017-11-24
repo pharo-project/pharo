@@ -4,7 +4,7 @@ GTUnprintableObjectTest is a test that checks that print string does not trigger
 Class {
 	#name : #GTUnprintableObjectTest,
 	#superclass : #GLMMorphicTest,
-	#category : #GT-Tests-Inspector
+	#category : #'GT-Tests-Inspector'
 }
 
 { #category : #printing }

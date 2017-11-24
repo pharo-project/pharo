@@ -8,7 +8,7 @@ I'm a composite brick that provides an api of creating different kind of scripta
 Class {
 	#name : #GLMCompositeBrick,
 	#superclass : #GLMBrick,
-	#category : #Glamour-Morphic-Brick-Widgets-Phlow
+	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
 { #category : #examples }

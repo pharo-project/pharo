@@ -1,7 +1,7 @@
 Class {
 	#name : #FFITestUnion,
 	#superclass : #FFIExternalUnion,
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #'as yet unclassified' }

@@ -7,7 +7,7 @@ This is the unit test for the class String. Unit tests are a good way to exercis
 Class {
 	#name : #WideStringTest,
 	#superclass : #ClassTestCase,
-	#category : #Collections-Tests-Strings
+	#category : #'Collections-Tests-Strings'
 }
 
 { #category : #'tests - converting' }

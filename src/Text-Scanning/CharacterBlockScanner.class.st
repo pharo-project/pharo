@@ -37,7 +37,7 @@ Class {
 		'specialWidth',
 		'lastCharacterWidth'
 	],
-	#category : #Text-Scanning
+	#category : #'Text-Scanning'
 }
 
 { #category : #scanning }

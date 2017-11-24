@@ -4,10 +4,10 @@ Class {
 	#instVars : [
 		'matcher'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBParseTreeEnvironment >> matcher: aParseTreeSearcher [
 	matcher := aParseTreeSearcher
 ]

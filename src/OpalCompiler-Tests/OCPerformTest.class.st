@@ -4,7 +4,7 @@ I test a primitive failure with perform:withArguments: which was raised when sel
 Class {
 	#name : #OCPerformTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #'helper methods' }

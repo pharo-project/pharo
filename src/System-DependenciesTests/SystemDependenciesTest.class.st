@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'dependenciesReport'
 	],
-	#category : #System-DependenciesTests
+	#category : #'System-DependenciesTests'
 }
 
 { #category : #accessing }

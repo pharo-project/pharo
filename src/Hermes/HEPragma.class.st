@@ -6,7 +6,7 @@ Class {
 		'arguments',
 		'keyword'
 	],
-	#category : #Hermes-Model
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }

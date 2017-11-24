@@ -4,7 +4,7 @@ This action is responsible for continuing the execution up to the point selected
 Class {
 	#name : #GTRunToSelectionDebugAction,
 	#superclass : #RunToSelectionDebugAction,
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

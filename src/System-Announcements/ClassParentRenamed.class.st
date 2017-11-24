@@ -13,7 +13,7 @@ Class {
 		'parentOldName',
 		'parentNewName'
 	],
-	#category : #System-Announcements-System-Classes
+	#category : #'System-Announcements-System-Classes'
 }
 
 { #category : #'instance creation' }

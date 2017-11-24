@@ -9,7 +9,7 @@ Class {
 		'list',
 		'text'
 	],
-	#category : #Spec-Tests-Utils
+	#category : #'Spec-Tests-Utils'
 }
 
 { #category : #spec }

@@ -4,7 +4,7 @@ I represent a ReDo operation performed in a EpLogBrowser.
 Class {
 	#name : #EpRedo,
 	#superclass : #EpLogBrowserOperation,
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }

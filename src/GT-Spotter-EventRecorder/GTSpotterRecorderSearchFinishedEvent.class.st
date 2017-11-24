@@ -9,7 +9,7 @@ Class {
 		'query',
 		'processors'
 	],
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }
@@ -33,7 +33,7 @@ GTSpotterRecorderSearchFinishedEvent >> fromAnnouncement: anAnnouncement [
 			with: eachProcessor allFilteredCandidates size ]) asArray
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTSpotterRecorderSearchFinishedEvent >> gtInspectorItems [
 	^ OrderedCollection new
 			add: (#query -> self query);

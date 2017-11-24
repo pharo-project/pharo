@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMPhlowPharoMethodBrick,
 	#superclass : #GLMPhlowTextBrick,
-	#category : #Glamour-Morphic-Brick-Widgets-Phlow
+	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
 { #category : #accessing }

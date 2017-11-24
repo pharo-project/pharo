@@ -5,7 +5,7 @@ MultiByteFileStreamFileOutTestClass is used in MultiByteFileStreamTest>>#testFil
 Class {
 	#name : #MultiByteFileStreamFileOutTestClass,
 	#superclass : #Object,
-	#category : #Multilingual-Tests-TextConversion
+	#category : #'Multilingual-Tests-TextConversion'
 }
 
 { #category : #accessing }

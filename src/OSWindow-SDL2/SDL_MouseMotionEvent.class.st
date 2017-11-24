@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_MouseMotionEvent,
+	#name : #'SDL_MouseMotionEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_STATE',
@@ -15,7 +15,7 @@ Class {
 		'OFFSET_Y',
 		'OFFSET_YREL'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

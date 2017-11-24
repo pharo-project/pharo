@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'metacelloToolBox'
 	],
-	#category : #Versionner-Core-DependenciesModel
+	#category : #'Versionner-Core-DependenciesModel'
 }
 
 { #category : #'spec creation' }

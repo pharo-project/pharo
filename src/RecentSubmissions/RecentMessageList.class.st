@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #RecentSubmissions-Core
+	#category : #'RecentSubmissions-Core'
 }
 
 { #category : #cleanup }

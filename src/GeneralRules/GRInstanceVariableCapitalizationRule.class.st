@@ -7,7 +7,7 @@ Class {
 	#category : #GeneralRules
 }
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 GRInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
@@ -22,7 +22,7 @@ GRInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlo
 				self critiqueFor: aClass about: each) ]
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 GRInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 	| crit |
 

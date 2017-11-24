@@ -13,7 +13,7 @@ Class {
 		'columnDisplayMorph',
 		'lineNumbersDisplayMorph'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }
@@ -35,7 +35,7 @@ RubAnnotationDisplayer >> backgroundColor [
 	^ self paragraphProvider backgroundColor darker
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> changeColumnDisplay [
 	self paragraphProvider columnRuler
 		ifNil: [ self paragraphProvider withColumns ]
@@ -44,7 +44,7 @@ RubAnnotationDisplayer >> changeColumnDisplay [
 	self updateContents
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> changeLineNumbersDisplay [
 	self paragraphProvider lineNumbersRuler 
 		ifNil: [ self paragraphProvider withLineNumbers ]
@@ -53,7 +53,7 @@ RubAnnotationDisplayer >> changeLineNumbersDisplay [
 	self updateContents
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> changeWrappingPolicy [
 	self paragraphProvider wrapped 
 		ifTrue: [ self paragraphProvider beNotWrapped  ]
@@ -62,31 +62,31 @@ RubAnnotationDisplayer >> changeWrappingPolicy [
 	self paragraphProvider changed
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> chooseEditingMode: anEvent [
 	self modeListMenu invokeAt: anEvent position in: self world.
 	self updateContents
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> chooseTabWidth: anEvent [
 	self tabWidthMenu invokeAt: anEvent position in: self world
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> chosenTabWidth: anInteger [
 	self paragraph tabWidth: anInteger.
 	self updateContents
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> columnDisplayLabel [
 	^ self paragraphProvider columnRuler 
 		ifNil: [ '+C' ]
 		ifNotNil: [ 'C' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> columnDisplayLabelMorph [
 	^ StringMorph
 		contents: self columnDisplayLabel
@@ -108,7 +108,7 @@ RubAnnotationDisplayer >> editingModeLabel [
 	^ self paragraphProvider editingMode label
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> editingModeLabelMorph [
 	^ StringMorph
 		contents: self editingModeLabel
@@ -120,7 +120,7 @@ RubAnnotationDisplayer >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom.
@@ -132,14 +132,14 @@ RubAnnotationDisplayer >> level [
 	^ 1
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> lineNumbersDisplayLabel [
 	^ self paragraphProvider lineNumbersRuler  
 		ifNil: [ '+L' ]
 		ifNotNil: [ 'L' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> lineNumbersDisplayLabelMorph [
 	^ StringMorph
 		contents: self lineNumbersDisplayLabel
@@ -161,7 +161,7 @@ RubAnnotationDisplayer >> modeListMenu [
 	^ (PragmaMenuBuilder pragmaKeyword: #RubEditingModeMenu model: self) menu
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.
@@ -209,7 +209,7 @@ RubAnnotationDisplayer >> selectionChanged [
 	super selectionChanged
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> spacer: anInteger [
 	^ Morph new
 		borderWidth: 0;
@@ -222,12 +222,12 @@ RubAnnotationDisplayer >> tabWidth [
 	^ self paragraph tabWidth
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> tabWidthLabel [
 	^ 'Tab width: ', self tabWidth printString
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> tabWidthLabelMorph [
 	^ StringMorph
 		contents: self tabWidthLabel
@@ -285,14 +285,14 @@ RubAnnotationDisplayer >> updateContents [
 	row width: self innerBounds width
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> wrappingPolicyLabel [
 	^ self paragraphProvider wrapped
 				ifTrue: [ 'W' ]
 				ifFalse: [ 'NW' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubAnnotationDisplayer >> wrappingPolicyLabelMorph [
 	^ StringMorph
 		contents: self wrappingPolicyLabel

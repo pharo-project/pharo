@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'textModel'
 	],
-	#category : #Reflectivity-Tools-Breakpoints
+	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
 { #category : #options }

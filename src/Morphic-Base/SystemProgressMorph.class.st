@@ -34,7 +34,7 @@ Class {
 		'horizontalPosition',
 		'verticalPosition'
 	],
-	#category : #Morphic-Base-ProgressBar
+	#category : #'Morphic-Base-ProgressBar'
 }
 
 { #category : #cleanup }
@@ -42,13 +42,13 @@ SystemProgressMorph class >> cleanUp [
 	self reset
 ]
 
-{ #category : #enabling/disabling }
+{ #category : #'enabling/disabling' }
 SystemProgressMorph class >> disable [
 
 	Job jobAnnouncer unsubscribe: self.
 ]
 
-{ #category : #enabling/disabling }
+{ #category : #'enabling/disabling' }
 SystemProgressMorph class >> enable [
 
 	Job jobAnnouncer when: JobStart send: #startJob: to: self.
@@ -248,7 +248,7 @@ SystemProgressMorph >> close: aSystemProgressItemMorph [
 	self refresh.
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SystemProgressMorph >> dismissViaHalo [
 
 	self class reset.

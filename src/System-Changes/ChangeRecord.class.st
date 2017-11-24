@@ -15,7 +15,7 @@ Class {
 		'meta',
 		'stamp'
 	],
-	#category : #System-Changes
+	#category : #'System-Changes'
 }
 
 { #category : #testing }

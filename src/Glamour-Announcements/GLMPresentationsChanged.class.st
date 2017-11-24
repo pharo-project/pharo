@@ -8,7 +8,7 @@ Class {
 		'pane',
 		'oldPresentations'
 	],
-	#category : #Glamour-Announcements
+	#category : #'Glamour-Announcements'
 }
 
 { #category : #accessing }
@@ -39,7 +39,7 @@ GLMPresentationsChanged >> pane: aPane [
 	pane := aPane
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMPresentationsChanged >> presentations [ 
 	"The presentationt that are currently present on the pane." 
 	 

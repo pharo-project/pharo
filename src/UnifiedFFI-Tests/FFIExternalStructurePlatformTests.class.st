@@ -1,7 +1,7 @@
 Class {
 	#name : #FFIExternalStructurePlatformTests,
 	#superclass : #TestCase,
-	#category : #UnifiedFFI-Tests
+	#category : #'UnifiedFFI-Tests'
 }
 
 { #category : #'private - testing' }

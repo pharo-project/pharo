@@ -8,7 +8,7 @@ Class {
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #accessing }
@@ -16,7 +16,7 @@ SDL2Handle class >> ffiLibraryName [
 	^ SDL2 ffiLibraryName
 ]
 
-{ #category : #nb-library }
+{ #category : #'nb-library' }
 SDL2Handle >> ffiLibraryName [
 	^self class ffiLibraryName
 ]

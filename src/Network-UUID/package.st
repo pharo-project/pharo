@@ -1,1 +1,1 @@
-Package { #name : #Network-UUID }
+Package { #name : #'Network-UUID' }

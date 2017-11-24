@@ -13,7 +13,7 @@ Class {
 		'right',
 		'failed'
 	],
-	#category : #Refactoring-Core-Conditions
+	#category : #'Refactoring-Core-Conditions'
 }
 
 { #category : #checking }
@@ -51,7 +51,7 @@ RBConjunctiveCondition >> errorStringFor: aBoolean [
 		ifFalse: [self perform: failed]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBConjunctiveCondition >> left: aCondition right: aCondition2 [ 
 	left := aCondition.
 	right := aCondition2.

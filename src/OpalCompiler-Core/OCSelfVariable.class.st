@@ -4,7 +4,7 @@ I model self variables
 Class {
 	#name : #OCSelfVariable,
 	#superclass : #OCSpecialVariable,
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }

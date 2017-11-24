@@ -8,7 +8,7 @@ Class {
 		'records',
 		'merger'
 	],
-	#category : #Monticello-Versioning
+	#category : #'Monticello-Versioning'
 }
 
 { #category : #action }

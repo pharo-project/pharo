@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'sessionHolder'
 	],
-	#category : #Spec-Debugger
+	#category : #'Spec-Debugger'
 }
 
 { #category : #specs }

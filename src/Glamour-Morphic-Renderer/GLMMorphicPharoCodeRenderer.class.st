@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicPharoCodeRenderer,
 	#superclass : #GLMMorphicRubricTextRenderer,
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #callbacks }
@@ -78,7 +78,7 @@ GLMMorphicPharoCodeRenderer >> modelFor: aPresentation [
 		yourself
 ]
 
-{ #category : #events-alarms }
+{ #category : #'events-alarms' }
 GLMMorphicPharoCodeRenderer >> popupPrint [
 	"Evaluates selected code and prints it in a popper"
 	textMorph textArea editor highlightEvaluateAndDo: [ :result | 

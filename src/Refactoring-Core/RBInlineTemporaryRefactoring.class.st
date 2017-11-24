@@ -14,7 +14,7 @@ Class {
 		'assignmentNode',
 		'definingNode'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -49,7 +49,7 @@ RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
 	^(searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

@@ -12,16 +12,16 @@ Class {
 	#instVars : [
 		'elements'
 	],
-	#category : #Ring-Core-Containers
+	#category : #'Ring-Core-Containers'
 }
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RGAbstractContainer >> addElement: anObject [
 
 	anObject addInContainer: self
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RGAbstractContainer >> addElement: anObject in: aCollection [
 
 	aCollection isDictionary
@@ -76,7 +76,7 @@ RGAbstractContainer >> elementsDo: aBlock [
 	elements valuesDo: [ :collection | collection do: [ :each | aBlock value: each ] ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RGAbstractContainer >> flushElements [
 
 	elements:= IdentityDictionary new
@@ -109,13 +109,13 @@ RGAbstractContainer >> initialize [
 	elements:= IdentityDictionary new.
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RGAbstractContainer >> removeElement: anObject [
 
 	anObject removeFromContainer: self
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RGAbstractContainer >> removeElement: anObject from: aCollection [
 
 	aCollection isDictionary

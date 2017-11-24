@@ -1,1 +1,1 @@
-Package { #name : #FreeType-Tests }
+Package { #name : #'FreeType-Tests' }

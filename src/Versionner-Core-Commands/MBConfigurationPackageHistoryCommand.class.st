@@ -4,7 +4,7 @@ Command to browse package history for configurations in versionner
 Class {
 	#name : #MBConfigurationPackageHistoryCommand,
 	#superclass : #MBConfigurationInfoCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #documentation }

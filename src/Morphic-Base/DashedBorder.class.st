@@ -8,7 +8,7 @@ Class {
 		'dashColors',
 		'dashLengths'
 	],
-	#category : #Morphic-Base-Borders
+	#category : #'Morphic-Base-Borders'
 }
 
 { #category : #'instance creation' }

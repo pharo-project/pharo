@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : #Hermes-ClassInstaller
+	#category : #'Hermes-ClassInstaller'
 }
 
 { #category : #converting }

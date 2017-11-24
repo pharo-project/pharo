@@ -4,7 +4,7 @@ I represent the mode to use to edit plain text (in menus, help browser etc)
 Class {
 	#name : #RubPlainTextMode,
 	#superclass : #RubEditingMode,
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #menu }

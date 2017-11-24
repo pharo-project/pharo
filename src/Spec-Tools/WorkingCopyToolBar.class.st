@@ -10,7 +10,7 @@ Class {
 		'packageButton',
 		'sliceButton'
 	],
-	#category : #Spec-Tools-Monticello
+	#category : #'Spec-Tools-Monticello'
 }
 
 { #category : #specs }

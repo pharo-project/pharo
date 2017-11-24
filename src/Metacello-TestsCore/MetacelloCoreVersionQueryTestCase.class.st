@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloCoreVersionQueryTestCase,
 	#superclass : #TestCase,
-	#category : #Metacello-TestsCore-Configs
+	#category : #'Metacello-TestsCore-Configs'
 }
 
 { #category : #baselines }

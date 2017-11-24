@@ -20,7 +20,7 @@ Class {
 		'dependencies',
 		'parent'
 	],
-	#category : #Versionner-Core-DependenciesModel
+	#category : #'Versionner-Core-DependenciesModel'
 }
 
 { #category : #instantiation }
@@ -84,7 +84,7 @@ MTDependency >> displayString [
 	self subclassResponsibility .
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MTDependency >> initialize [ 
 	dependencies  := OrderedCollection new.
 

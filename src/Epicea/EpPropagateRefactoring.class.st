@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetRefactoring'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }
@@ -22,7 +22,7 @@ EpPropagateRefactoring >> asRBRefactoring [
 	^ EpRBPropagateRefactoring target: targetRefactoring asRBRefactoring
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpPropagateRefactoring >> initializeWith: aTargetRefactoring [
 	self initialize.
 	

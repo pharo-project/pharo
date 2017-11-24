@@ -17,7 +17,7 @@ Class {
 		'size',
 		'orientation'
 	],
-	#category : #Spec-Layout
+	#category : #'Spec-Layout'
 }
 
 { #category : #'instance creation' }

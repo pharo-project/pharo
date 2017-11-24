@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'Singleton'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #accessing }

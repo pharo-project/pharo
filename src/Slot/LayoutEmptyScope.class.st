@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #Slot-Layout
+	#category : #'Slot-Layout'
 }
 
 { #category : #accessing }

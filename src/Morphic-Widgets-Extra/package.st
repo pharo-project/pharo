@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Widgets-Extra }
+Package { #name : #'Morphic-Widgets-Extra' }

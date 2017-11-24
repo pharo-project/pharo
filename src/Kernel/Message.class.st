@@ -11,7 +11,7 @@ Class {
 		'args',
 		'lookupClass'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #'instance creation' }

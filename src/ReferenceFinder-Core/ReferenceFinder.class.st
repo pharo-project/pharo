@@ -12,7 +12,7 @@ Class {
 		'testBlock',
 		'foundBlock'
 	],
-	#category : #ReferenceFinder-Core
+	#category : #'ReferenceFinder-Core'
 }
 
 { #category : #accessing }
@@ -176,7 +176,7 @@ ReferenceFinder >> ignore: anObject [
 	self addBacklinkFrom: anObject to: anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ReferenceFinder >> initialize [
 	self startFrom: Smalltalk
 ]
@@ -257,7 +257,7 @@ ReferenceFinder >> searchVariablesIn: anObject [
 	^nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ReferenceFinder >> startFrom: anObject [ 
 	backlinks := OrderedCollection new.
 	self addBacklinkLevel.

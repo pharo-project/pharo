@@ -18,7 +18,7 @@ Class {
 	#instVars : [
 		'moduleName'
 	],
-	#category : #UnifiedFFI-Libraries
+	#category : #'UnifiedFFI-Libraries'
 }
 
 { #category : #'instance creation' }

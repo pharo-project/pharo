@@ -9,7 +9,7 @@ Class {
 		'category',
 		'action'
 	],
-	#category : #Keymapping-Settings
+	#category : #'Keymapping-Settings'
 }
 
 { #category : #'instance creation' }

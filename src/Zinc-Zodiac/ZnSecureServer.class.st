@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'certificate'
 	],
-	#category : #Zinc-Zodiac
+	#category : #'Zinc-Zodiac'
 }
 
 { #category : #accessing }

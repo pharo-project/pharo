@@ -60,7 +60,7 @@ QAEventCollector class >> uniqueInstance [
 				yourself) ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 QAEventCollector class >> unload [
 
 	self uniqueInstance liberate

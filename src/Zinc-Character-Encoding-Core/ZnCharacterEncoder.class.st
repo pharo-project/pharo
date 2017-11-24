@@ -37,7 +37,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnCharacterEncoder,
 	#superclass : #Object,
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #convenience }
@@ -138,7 +138,7 @@ ZnCharacterEncoder >> backOnStream: stream [
 	self subclassResponsibility 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnCharacterEncoder >> beLenient [
 	"Don't be strict, which is the default"
 ]

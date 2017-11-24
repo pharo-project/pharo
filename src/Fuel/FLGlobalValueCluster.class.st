@@ -6,16 +6,16 @@ For example, Transcript could be serialized and materialized by me.
 Class {
 	#name : #FLGlobalValueCluster,
 	#superclass : #FLGlobalCluster,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalValueCluster >> materializeInstanceWith: aDecoder [
 
 	^(self materializeGlobalAssociationFrom: aDecoder) value
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalValueCluster >> serializeInstance: anObject with: anEncoder [
 	
 	self serializeGlobalAssociationKeyed: (anEncoder globalEnvironment keyAtValue: anObject) on: anEncoder

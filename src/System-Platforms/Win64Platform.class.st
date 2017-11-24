@@ -11,7 +11,7 @@ OSPlatform current.
 Class {
 	#name : #Win64Platform,
 	#superclass : #WinPlatform,
-	#category : #System-Platforms
+	#category : #'System-Platforms'
 }
 
 { #category : #testing }

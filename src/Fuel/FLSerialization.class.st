@@ -10,7 +10,7 @@ Class {
 		'clusters',
 		'analyzer'
 	],
-	#category : #Fuel-Core
+	#category : #'Fuel-Core'
 }
 
 { #category : #'instance creation' }
@@ -70,7 +70,7 @@ FLSerialization >> headerStep [
 	encoder encodePositiveInteger: clusters size.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLSerialization >> initializeWith: anEncoder root: anObject analyzer: anAnalyzer [
 			
 	self initialize.

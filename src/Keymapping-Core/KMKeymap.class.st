@@ -11,7 +11,7 @@ Class {
 		'defaultShortcut',
 		'description'
 	],
-	#category : #Keymapping-Core
+	#category : #'Keymapping-Core'
 }
 
 { #category : #'instance creation' }
@@ -83,7 +83,7 @@ KMKeymap >> description: aDescription [
 	description := aDescription asString
 ]
 
-{ #category : #enabling/disabling }
+{ #category : #'enabling/disabling' }
 KMKeymap >> disable [
 
 	self shortcut: KMNoShortcut new.
@@ -168,7 +168,7 @@ KMKeymap >> printOn: aStream [
 		cr.    
 ]
 
-{ #category : #enabling/disabling }
+{ #category : #'enabling/disabling' }
 KMKeymap >> reset [
 
 	self shortcut: self defaultShortcut.

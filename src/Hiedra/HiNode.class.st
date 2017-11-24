@@ -9,7 +9,7 @@ Class {
 		'columnIndex',
 		'rowIndex'
 	],
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #'instance creation' }

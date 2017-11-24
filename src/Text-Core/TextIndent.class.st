@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'amount'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #'instance creation' }

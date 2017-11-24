@@ -7,7 +7,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Paints
+	#category : #'Athens-Cairo-Paints'
 }
 
 { #category : #'as yet unclassified' }
@@ -83,14 +83,14 @@ AthensCairoGradientPaint >> addColorStopAt: anOffset colored: aColor [
 		
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoGradientPaint >> defaultExtend [
 "The default extend mode is CAIRO_EXTEND_NONE for surface patterns and CAIRO_EXTEND_PAD for gradient patterns.
 "
 	^  CAIRO_EXTEND_PAD
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoGradientPaint >> initializeRadialBetween: origin
 			extending: innerRadius
 			and: outerOrigin

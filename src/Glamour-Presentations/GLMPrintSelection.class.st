@@ -4,5 +4,5 @@ I am event indicating to the renderer to execute and print the currently selecte
 Class {
 	#name : #GLMPrintSelection,
 	#superclass : #Announcement,
-	#category : #Glamour-Presentations-Announcements
+	#category : #'Glamour-Presentations-Announcements'
 }

@@ -4,7 +4,7 @@ I filter given strings by checking substrings inclusion
 Class {
 	#name : #FTSubstringFilter,
 	#superclass : #FTFilter,
-	#category : #Morphic-Widgets-FastTable-Functions
+	#category : #'Morphic-Widgets-FastTable-Functions'
 }
 
 { #category : #matching }

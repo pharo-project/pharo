@@ -2,13 +2,13 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_CommonEvent,
+	#name : #'SDL_CommonEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_TIMESTAMP',
 		'OFFSET_TYPE'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

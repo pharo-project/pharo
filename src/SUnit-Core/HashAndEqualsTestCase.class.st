@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'prototypes'
 	],
-	#category : #SUnit-Core-Utilities
+	#category : #'SUnit-Core-Utilities'
 }
 
 { #category : #running }

@@ -5,7 +5,7 @@ A prior conversion to an Array or OrderedCollection is not necessary when adding
 Class {
 	#name : #RBAsOrderedCollectionNotNeededRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

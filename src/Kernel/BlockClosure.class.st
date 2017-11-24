@@ -42,7 +42,7 @@ Class {
 		'startpc',
 		'numArgs'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #'instance creation' }
@@ -587,7 +587,7 @@ BlockClosure >> outerContext [
 	^outerContext
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BlockClosure >> outerContext: aContext startpc: aStartpc numArgs: argCount copiedValues: anArrayOrNil [
 	outerContext := aContext.
 	startpc := aStartpc.

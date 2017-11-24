@@ -4,7 +4,7 @@ A GLMStacker is an explicit browser that allows us to stack panes on top of each
 Class {
 	#name : #GLMStacker,
 	#superclass : #GLMExplicitBrowser,
-	#category : #Glamour-Browsers-Other
+	#category : #'Glamour-Browsers-Other'
 }
 
 { #category : #scripting }

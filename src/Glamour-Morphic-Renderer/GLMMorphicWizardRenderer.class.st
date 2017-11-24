@@ -6,7 +6,7 @@ Class {
 		'container',
 		'parentRenderer'
 	],
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #rendering }

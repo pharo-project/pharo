@@ -10,7 +10,7 @@ Class {
 		'headers',
 		'entity'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -172,7 +172,7 @@ ZnMessage >> postCopy [
 	"Note that we don't copy the entity, see also #resetEntity: and ZnClient>>#resetEntity"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMessage >> readBinaryFrom: stream [
 	| entityReader |
 	self readHeaderFrom: stream.
@@ -181,26 +181,26 @@ ZnMessage >> readBinaryFrom: stream [
 	self entity: entityReader readEntity
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMessage >> readEntityFrom: stream [
 	self entity: (self entityReaderOn: stream) readEntity
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMessage >> readFrom: stream [
 	self readHeaderFrom: stream.
 	self readEntityFrom: stream
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMessage >> readHeaderFrom: stream [
 	self headers: (ZnHeaders readFrom: stream)
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMessage >> readStreamingFrom: stream [
 	| entityReader |
 	self readHeaderFrom: stream.

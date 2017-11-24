@@ -31,7 +31,7 @@ Class {
 		'sizes',
 		'smallSizesLookupTable'
 	],
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
 { #category : #public }

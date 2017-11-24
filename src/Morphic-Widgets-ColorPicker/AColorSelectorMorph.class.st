@@ -4,7 +4,7 @@ ColorComponentSelector showing an alpha gradient over a hatched background.
 Class {
 	#name : #AColorSelectorMorph,
 	#superclass : #BracketSliderMorph,
-	#category : #Morphic-Widgets-ColorPicker
+	#category : #'Morphic-Widgets-ColorPicker'
 }
 
 { #category : #accessing }

@@ -47,7 +47,7 @@ Class {
 		'STONCharacters',
 		'STONSimpleSymbolCharacters'
 	],
-	#category : #STON-Core
+	#category : #'STON-Core'
 }
 
 { #category : #'class initialization' }
@@ -95,12 +95,12 @@ STONWriter class >> on: writeStream [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> asciiOnly: boolean [
 	asciiOnly := boolean
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> close [
 	writeStream ifNotNil: [
 		writeStream close.
@@ -204,7 +204,7 @@ STONWriter >> error: aString [
 	^ STONWriterError signal: aString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> escape: char with: anObject [
 	"Instruct me to escape char with object, either a replacement string or #pass"
 	
@@ -245,7 +245,7 @@ STONWriter >> indentedDo: block [
 	level := level - 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> initialize [
 	super initialize.
 	stonCharacters := STONCharacters.
@@ -267,7 +267,7 @@ STONWriter >> isSimpleSymbol: symbol [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> jsonMode: boolean [
 	(jsonMode := boolean)
 		ifTrue: [ 
@@ -280,7 +280,7 @@ STONWriter >> jsonMode: boolean [
 				escape: $' with: '\''' ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> keepNewLines: boolean [
 	"If true, any newline CR, LF or CRLF inside strings or symbols will not be escaped
 	but will instead be converted to the newline convention chosen, see #newLine:
@@ -303,7 +303,7 @@ STONWriter >> mapElementSeparator [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> newLine: string [
 	"The sequence to use when ending a line, either CR, LF or CRLF"
 	
@@ -322,20 +322,20 @@ STONWriter >> nextPut: anObject [
 	anObject stonOn: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> on: aWriteStream [
 	writeStream := aWriteStream
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> optimizeForLargeStructures [
 	self class environment
 		at: #FLLargeIdentityDictionary
 		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> prettyPrint: boolean [
 	prettyPrint := boolean
 ]
@@ -346,14 +346,14 @@ STONWriter >> prettyPrintSpace [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> referencePolicy: policy [
 	self assert: ( #(#normal #ignore #error) includes: policy ).
 	referencePolicy := policy
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONWriter >> reset [
 	objects removeAll
 ]

@@ -13,7 +13,7 @@ Class {
 		'DefaultWorkingDirectory',
 		'Primitives'
 	],
-	#category : #FileSystem-Disk
+	#category : #'FileSystem-Disk'
 }
 
 { #category : #current }

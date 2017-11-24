@@ -8,7 +8,7 @@ Class {
 		'versionReferences',
 		'monticelloRepository'
 	],
-	#category : #Gofer-Tests-Resources
+	#category : #'Gofer-Tests-Resources'
 }
 
 { #category : #accessing }

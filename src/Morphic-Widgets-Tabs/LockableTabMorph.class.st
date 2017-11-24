@@ -4,7 +4,7 @@ I am a tab which can be locked/unlocked with according action and icon
 Class {
 	#name : #LockableTabMorph,
 	#superclass : #TabMorph,
-	#category : #Morphic-Widgets-Tabs
+	#category : #'Morphic-Widgets-Tabs'
 }
 
 { #category : #icons }
@@ -15,7 +15,7 @@ LockableTabMorph class >> lockedIcon [
 		ifAbsentPut: [ self lockedIconContents ]
 ]
 
-{ #category : #icons-contents }
+{ #category : #'icons-contents' }
 LockableTabMorph class >> lockedIconContents [
 
 	^ Form

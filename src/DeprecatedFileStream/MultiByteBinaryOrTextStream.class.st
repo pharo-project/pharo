@@ -297,7 +297,7 @@ MultiByteBinaryOrTextStream >> reset [
 	self converter. "ensure that we have a converter."
 ]
 
-{ #category : #fileIn/out }
+{ #category : #'fileIn/out' }
 MultiByteBinaryOrTextStream >> setConverterForCode [
 
 	| current |
@@ -314,7 +314,7 @@ MultiByteBinaryOrTextStream >> setConverterForCode [
 
 ]
 
-{ #category : #fileIn/out }
+{ #category : #'fileIn/out' }
 MultiByteBinaryOrTextStream >> setEncoderForSourceCodeNamed: streamName [
 
 	| l |

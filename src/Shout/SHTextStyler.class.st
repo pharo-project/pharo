@@ -37,7 +37,7 @@ Class {
 		'view',
 		'stylingEnabled'
 	],
-	#category : #Shout-Styling
+	#category : #'Shout-Styling'
 }
 
 { #category : #formatting }

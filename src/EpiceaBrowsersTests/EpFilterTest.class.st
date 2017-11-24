@@ -1,7 +1,7 @@
 Class {
 	#name : #EpFilterTest,
 	#superclass : #TestCase,
-	#category : #EpiceaBrowsersTests-Filters
+	#category : #'EpiceaBrowsersTests-Filters'
 }
 
 { #category : #running }

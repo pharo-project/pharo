@@ -4,7 +4,7 @@ I'm a simple InstructionClient that tries to guess the type of a given class var
 Class {
 	#name : #NECClassVarTypeGuesser,
 	#superclass : #NECVarTypeGuesser,
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #public }

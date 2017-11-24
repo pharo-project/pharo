@@ -16,7 +16,7 @@ Class {
 		'sourceLocations',
 		'emitNode'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #examples }
@@ -94,14 +94,14 @@ BraceNode >> elements [
 	^elements
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BraceNode >> elements: collection [
 	"Decompile."
 
 	elements := collection
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BraceNode >> elements: collection sourceLocations: locations [
 	"Compile."
 
@@ -124,7 +124,7 @@ BraceNode >> emitCodeForValue: stack encoder: encoder [
 	^emitNode emitCodeForValue: stack encoder: encoder
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BraceNode >> matchBraceStreamReceiver: receiver messages: messages [
 
 	((receiver isMessage: #braceStream: receiver: nil arguments: [:arg | arg isConstantNumber])
@@ -138,7 +138,7 @@ BraceNode >> matchBraceStreamReceiver: receiver messages: messages [
 		msg arguments first])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BraceNode >> matchBraceWithReceiver: receiver selector: selector arguments: arguments [
 
 	selector = (self selectorForShortForm: arguments size)

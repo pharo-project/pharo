@@ -11,7 +11,7 @@ Class {
 		'Right',
 		'Top'
 	],
-	#category : #Glamour-Morphic-Brick-Utils
+	#category : #'Glamour-Morphic-Brick-Utils'
 }
 
 { #category : #'class initialization' }

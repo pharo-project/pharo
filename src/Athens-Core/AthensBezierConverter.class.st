@@ -15,7 +15,7 @@ Class {
 		'CurveAngleTolerance',
 		'DistanceEps'
 	],
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #'as yet unclassified' }
@@ -57,7 +57,7 @@ AthensBezierConverter >> curveVia: pt1 to: pt2 [
 		x3: pt2 x y3: pt2 y
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensBezierConverter >> initialize [
 
 	distanceTolerance := 0.5.

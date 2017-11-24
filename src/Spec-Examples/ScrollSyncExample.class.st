@@ -11,7 +11,7 @@ Class {
 		'sideRuler',
 		'currentVerticalScrollPosition'
 	],
-	#category : #Spec-Examples-Morphic
+	#category : #'Spec-Examples-Morphic'
 }
 
 { #category : #specs }

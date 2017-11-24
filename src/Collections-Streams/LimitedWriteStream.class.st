@@ -10,7 +10,7 @@ Class {
 		'limit',
 		'limitBlock'
 	],
-	#category : #Collections-Streams
+	#category : #'Collections-Streams'
 }
 
 { #category : #accessing }

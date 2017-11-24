@@ -15,7 +15,7 @@ ex:
 Class {
 	#name : #TextStream,
 	#superclass : #WriteStream,
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #accessing }

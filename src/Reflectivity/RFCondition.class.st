@@ -14,7 +14,7 @@ Class {
 		'condition',
 		'linkCondition'
 	],
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'instance creation' }
@@ -35,12 +35,12 @@ RFCondition >> cull: arguments [
 		and: [ linkCondition perform: linkCondition valueSelector withArguments: {arguments} ]
 ]
 
-{ #category : #enable/disable }
+{ #category : #'enable/disable' }
 RFCondition >> disable [
 	condition := false.
 ]
 
-{ #category : #enable/disable }
+{ #category : #'enable/disable' }
 RFCondition >> enable [
 	condition := true
 ]

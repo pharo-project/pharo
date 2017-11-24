@@ -36,7 +36,7 @@ Class {
 		'HighBitOfByte',
 		'SmallPrimes'
 	],
-	#category : #System-Hashing-DSA
+	#category : #'System-Hashing-DSA'
 }
 
 { #category : #examples }

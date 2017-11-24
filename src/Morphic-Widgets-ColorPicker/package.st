@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Widgets-ColorPicker }
+Package { #name : #'Morphic-Widgets-ColorPicker' }

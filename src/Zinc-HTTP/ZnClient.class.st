@@ -38,7 +38,7 @@ Class {
 		'session',
 		'logLevel'
 	],
-	#category : #Zinc-HTTP-Client-Server
+	#category : #'Zinc-HTTP-Client-Server'
 }
 
 { #category : #'accessing request' }

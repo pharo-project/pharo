@@ -3,7 +3,7 @@ A trait for test purposes
 "
 Trait {
 	#name : #TDictionaryPrintingTest,
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #requirements }

@@ -4,7 +4,7 @@ Notify about an unused temporary variable
 Class {
 	#name : #UnusedVariableDetected,
 	#superclass : #ParserNotification,
-	#category : #Compiler-Exceptions
+	#category : #'Compiler-Exceptions'
 }
 
 { #category : #correcting }

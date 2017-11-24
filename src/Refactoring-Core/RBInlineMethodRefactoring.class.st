@@ -19,7 +19,7 @@ Class {
 		'sourceMessage',
 		'inlineClass'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -111,7 +111,7 @@ RBInlineMethodRefactoring >> hasMultipleReturns [
 	^false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBInlineMethodRefactoring >> inline: anInterval inMethod: aSelector forClass: aClass [ 
 	sourceSelector := aSelector.
 	class := self classObjectFor: aClass.

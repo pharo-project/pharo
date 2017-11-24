@@ -1,7 +1,7 @@
 Class {
 	#name : #GTMockSpotterTask,
 	#superclass : #GLMAsyncTask,
-	#category : #GT-Tests-Spotter-Scripting-Mocks
+	#category : #'GT-Tests-Spotter-Scripting-Mocks'
 }
 
 { #category : #public }

@@ -8,7 +8,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #Metacello-Core-Model
+	#category : #'Metacello-Core-Model'
 }
 
 { #category : #accessing }
@@ -18,17 +18,17 @@ MetacelloPlatform class >> current [
 	^ Current
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloPlatform class >> initialize [
   "noop ... use #select"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloPlatform class >> select [
   Current := self new
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloPlatform class >> unselect [
   MetacelloPlatform current class = self
     ifTrue: [ Current := nil ]

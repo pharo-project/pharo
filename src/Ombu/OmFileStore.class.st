@@ -18,7 +18,7 @@ Class {
 		'lock',
 		'lastStreamPosition'
 	],
-	#category : #Ombu-Stores
+	#category : #'Ombu-Stores'
 }
 
 { #category : #accessing }

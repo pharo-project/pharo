@@ -19,7 +19,7 @@ Class {
 		'transformation',
 		'condition'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #accessing }
@@ -223,7 +223,7 @@ GLMTransmission >> fromOutsidePort: aPortSymbol transformed: aBlock [
 	^ self from: #outer port: aPortSymbol transformed: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMTransmission >> initialize [
 	super initialize.
 	transmissionStrategy := GLMNoStrategy new.

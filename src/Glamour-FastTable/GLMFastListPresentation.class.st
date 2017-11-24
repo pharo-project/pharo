@@ -52,7 +52,7 @@ Class {
 	#instVars : [
 		'parameters'
 	],
-	#category : #Glamour-FastTable-Presentations
+	#category : #'Glamour-FastTable-Presentations'
 }
 
 { #category : #testing }
@@ -60,7 +60,7 @@ GLMFastListPresentation >> allowSeparators [
 	^ self parameters at: 'withSeparators' ifAbsent: [ false ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMFastListPresentation >> initialize [
 	super initialize.
 	parameters := Dictionary new

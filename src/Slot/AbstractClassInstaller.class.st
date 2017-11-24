@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #building }

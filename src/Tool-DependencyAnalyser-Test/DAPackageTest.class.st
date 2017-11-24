@@ -8,7 +8,7 @@ Class {
 		'packageB',
 		'packageC'
 	],
-	#category : #Tool-DependencyAnalyser-Test
+	#category : #'Tool-DependencyAnalyser-Test'
 }
 
 { #category : #running }

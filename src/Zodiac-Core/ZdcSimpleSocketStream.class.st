@@ -11,7 +11,7 @@ funneling all access through #next and #nextPut.
 Class {
 	#name : #ZdcSimpleSocketStream,
 	#superclass : #ZdcAbstractSocketStream,
-	#category : #Zodiac-Core
+	#category : #'Zodiac-Core'
 }
 
 { #category : #'instance creation' }
@@ -59,7 +59,7 @@ ZdcSimpleSocketStream >> atEnd [
 	^ self isConnected not
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcSimpleSocketStream >> connectTo: hostAddress port: portNumber [
 	"Connect our socket to hostAddress:portNumber.
 	Wait up to timeout for a connection"

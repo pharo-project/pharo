@@ -1,7 +1,7 @@
 Class {
 	#name : #RubEncryptedDisplayScanner,
 	#superclass : #RubDisplayScanner,
-	#category : #Rubric-TextScanning
+	#category : #'Rubric-TextScanning'
 }
 
 { #category : #scanning }

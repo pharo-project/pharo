@@ -2,7 +2,7 @@
 SDL2 library structure representing a game controller axis event data.
 "
 Class {
-	#name : #SDL_ControllerAxisEvent,
+	#name : #'SDL_ControllerAxisEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_AXIS',
@@ -15,7 +15,7 @@ Class {
 		'OFFSET_VALUE',
 		'OFFSET_WHICH'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

@@ -1,1 +1,1 @@
-Package { #name : #Graphics-Primitives }
+Package { #name : #'Graphics-Primitives' }

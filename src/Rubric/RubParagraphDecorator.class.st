@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'next'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #querying }
@@ -126,7 +126,7 @@ RubParagraphDecorator >> text [
 	^self paragraph text
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubParagraphDecorator >> unplug [
 	next
 		ifNotNil: [ 

@@ -3,15 +3,15 @@ Kernel trait for Class
 "
 Trait {
 	#name : #TClass,
-	#category : #Traits-Kernel-Traits
+	#category : #'Traits-Kernel-Traits'
 }
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 TClass classSide >> allSuperclassesFor: aClass cache: cache [ 	
 	^ cache at: aClass ifAbsentPut: [aClass allSuperclasses asArray]
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 TClass classSide >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -26,7 +26,7 @@ TClass classSide >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: c
 			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 TClass classSide >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache [ 
 	| soleInstance |
 	soleInstance := aClass soleInstance.
@@ -34,7 +34,7 @@ TClass classSide >> hasNoDependenciesForMetaclass: aClass in: unprocessedClasses
 				self hasNoSuperclassesOf: soleInstance in: unprocessedClasses cache: cache]
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 TClass classSide >> hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache [ 
 	^ (unprocessedClasses includesAnyOf: (self allSuperclassesFor: aClass cache: cache)) not
 	
@@ -47,7 +47,7 @@ TClass classSide >> rootsOfTheWorld [
 	^(self environment select: [:each | each isBehavior and: [each superclass isNil]]) asOrderedCollection
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 TClass classSide >> superclassOrder: classes [
     "Arrange the classes in the collection, classes, in superclass order so the 
     classes can be properly filed in. Do it in sets instead of ordered collections.
@@ -341,7 +341,7 @@ TClass >> copy [
 	^self explicitRequirement.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
@@ -618,7 +618,7 @@ TClass >> name: aSymbol [
 	self setName: aSymbol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> name: aString traitComposition: aComposition methodDict: aMethodDict localSelectors: aSet organization: aClassOrganization [
 
 	"Used by copy"
@@ -647,7 +647,7 @@ TClass >> newSubclass [
 "Point newSubclass new"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> obsolete [
 	"Change the receiver and all of its subclasses to an obsolete class."
 	self == Object 
@@ -742,14 +742,14 @@ TClass >> removeClassVariable: aGlobal [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> removeFromSystem [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
 	self removeFromSystem: true.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
@@ -770,7 +770,7 @@ TClass >> removeFromSystem: logged [
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> removeFromSystemUnlogged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing instances will refer to an obsolete version of the receiver.  Do not log the removal either to the current change set nor to the system changes log"
 	^self removeFromSystem: false
@@ -901,7 +901,7 @@ TClass >> sharedPools: aCollection [
 	^self explicitRequirement.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> sharing: poolString [ 
 	"Set up sharedPools. Answer whether recompilation is advisable."
 	| oldPools |
@@ -1218,14 +1218,14 @@ TClass >> subclassesDo: aBlock [
 	self subclasses do: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self subclasses: nil. 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TClass >> unload [
 	"Sent when a the class is removed.  Does nothing, but may be overridden by (class-side) subclasses."
 ]

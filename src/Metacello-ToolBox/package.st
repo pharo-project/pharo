@@ -1,1 +1,1 @@
-Package { #name : #Metacello-ToolBox }
+Package { #name : #'Metacello-ToolBox' }

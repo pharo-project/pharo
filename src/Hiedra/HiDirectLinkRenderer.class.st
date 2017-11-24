@@ -4,7 +4,7 @@ I draw links in a straight line. See comment in superclass.
 Class {
 	#name : #HiDirectLinkRenderer,
 	#superclass : #HiLinkRenderer,
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #rendering }

@@ -15,7 +15,7 @@ Class {
 	#classInstVars : [
 		'compiledSpec'
 	],
-	#category : #FFI-Kernel
+	#category : #'FFI-Kernel'
 }
 
 { #category : #'field definition' }
@@ -287,7 +287,7 @@ ExternalStructure class >> typedef [
 	^self externalType typedef
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
 	(handle ~~ nil and:[handle isExternalAddress]) ifTrue:[handle free].

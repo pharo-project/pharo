@@ -5,7 +5,7 @@ Class {
 		'textMorph',
 		'textModel'
 	],
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #private }

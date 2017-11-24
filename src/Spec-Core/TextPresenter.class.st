@@ -69,7 +69,7 @@ Class {
 		'askBeforeDiscardingEdits',
 		'isForSmalltalkCodeHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -102,7 +102,7 @@ TextPresenter class >> title [
 	^ 'Text'
 ]
 
-{ #category : #api-shout }
+{ #category : #'api-shout' }
 TextPresenter >> aboutToStyle: aBoolean [	
 	"<api: #boolean getter: #isAboutToStyle registration: #whenAboutToStyleChanged:>"
 	"Set if the text zone must be styled"
@@ -110,14 +110,14 @@ TextPresenter >> aboutToStyle: aBoolean [
 	aboutToStyleHolder value: [ aBoolean ]
 ]
 
-{ #category : #api-shout }
+{ #category : #'api-shout' }
 TextPresenter >> aboutToStyleBlock [
 	"Return the block used to know if the text must be styled"	
 	"<api:#inspect>"
 	^ aboutToStyleHolder value
 ]
 
-{ #category : #api-shout }
+{ #category : #'api-shout' }
 TextPresenter >> aboutToStyleBlock: aBlockReturningABoolean [
 	"<api: #block getter: #aboutToStyleBlock registration: #whenAboutToStyleBlockChanged:>"
 	"Set the block used to know if the text must be styled.
@@ -216,7 +216,7 @@ TextPresenter >> beForText [
 		isForSmalltalkCode: false
 ]
 
-{ #category : #api-shout }
+{ #category : #'api-shout' }
 TextPresenter >> behavior [
 	"<api: #inspect>"
 	"Return the class corresponding to the method class of the source code you are editing"
@@ -224,7 +224,7 @@ TextPresenter >> behavior [
 	^ behaviorHolder value
 ]
 
-{ #category : #api-shout }
+{ #category : #'api-shout' }
 TextPresenter >> behavior: aClass [
 	"< api: #st getter: #behavior registration: #whenBehaviorChanged:>"
 	"Set the class corresponding to the method class of the source code you are editing"
@@ -240,7 +240,7 @@ TextPresenter >> clearSelection [
 	self setSelection: (0 to: 0)
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 TextPresenter >> clearUndoManager [
 	self widget ifNotNil: #clearUndoManager
 ]
@@ -254,19 +254,19 @@ TextPresenter >> codePaneMenu: aMenu shifted: shifted [
 	^ menuHolder value cull: aMenu cull: shifted
 ]
 
-{ #category : #api-doIt }
+{ #category : #'api-doIt' }
 TextPresenter >> doItContext [
 
 	^ doItContext value
 ]
 
-{ #category : #api-doIt }
+{ #category : #'api-doIt' }
 TextPresenter >> doItContext: anObject [
 
 	doItContext value: anObject
 ]
 
-{ #category : #api-doIt }
+{ #category : #'api-doIt' }
 TextPresenter >> doItReceiver [
 	| receiver |
 	
@@ -275,7 +275,7 @@ TextPresenter >> doItReceiver [
 	^receiver
 ]
 
-{ #category : #api-doIt }
+{ #category : #'api-doIt' }
 TextPresenter >> doItReceiver: anObject [
 
 	doItReceiver value: anObject
@@ -375,7 +375,7 @@ TextPresenter >> initialize [
 	self registerEventsForShout
 ]
 
-{ #category : #api-shout }
+{ #category : #'api-shout' }
 TextPresenter >> isAboutToStyle [
 	"<api: #inspect>"
 	"Return if the text zone is shouted or not"
@@ -425,7 +425,7 @@ TextPresenter >> menuHolder: aBlock [
 	^ menuHolder value:  aBlock
 ]
 
-{ #category : #api-errors }
+{ #category : #'api-errors' }
 TextPresenter >> notify: errorMessage at: position in: sourceCode [
 
 	self changed: #notify:at:in: with: { errorMessage . position . sourceCode }
@@ -554,14 +554,14 @@ TextPresenter >> wantsVisualFeedback: aBoolean [
 	wantsVisualFeedback value: aBoolean
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenAboutToStyleBlockChanged: aBlock [
 	"Set a block to perform when the about to style block changed"
 	
 	aboutToStyleHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenAboutToStyleChanged: aBlock [
 	"<api: #event>"
 	"Set a block to perform when the about to style block changed"
@@ -570,63 +570,63 @@ TextPresenter >> whenAboutToStyleChanged: aBlock [
 		aBlock cull: (block value) cull: old cull: announcement cull: anAnnouncer ]
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenAcceptBlockChanged: aBlock [
 	"Set a block to perform when the accept block changed"
 	
 	actionToPerformHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenAutoAcceptChanged: aBlock [
 	"aBlock will be performed when autoAccept changed"
 	
 	autoAccept whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenBehaviorChanged: aBlock [
 	"Set a block to perform when the behavior class changed"
 	
 	behaviorHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenCodeCompletionAllowedChanged: aBlock [
 	"Set a block to perform when the code completion value changed"
 	
 	actionPerformedHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenMenuHolderChanged: aBlock [
 	"Set a block to perform when the block use to build menu changed"
 	
 	menuHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenReadSelectionIsChanged: aBlock [
 	"Set a block to perform when the read selection block changed"
 	
 	readSelectionHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenScrollValueChanged: aBlock [
 	"Set a block to perform when the scroll value changed"
 	
 	scrollValue whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenTextChanged: aBlock [
 	"Set a block to perform when the text changed"
 	
 	textHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextPresenter >> whenTextIsAccepted: aBlock [
 	"Set a block to perform when the text is accepted"
 	

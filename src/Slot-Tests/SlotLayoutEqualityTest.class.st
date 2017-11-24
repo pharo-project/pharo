@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotLayoutEqualityTest,
 	#superclass : #SlotSilentTest,
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
 { #category : #accessing }

@@ -1,1 +1,1 @@
-Package { #name : #Metacello-Reference }
+Package { #name : #'Metacello-Reference' }

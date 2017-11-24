@@ -4,7 +4,7 @@ I reify the receiver of a Message or a method
 Class {
 	#name : #RFEReceiverReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

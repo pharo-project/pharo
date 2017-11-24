@@ -4,7 +4,7 @@ I am the adapter used to bridget a DropListPresenter and a DropListMorph
 Class {
 	#name : #MorphicDropListAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

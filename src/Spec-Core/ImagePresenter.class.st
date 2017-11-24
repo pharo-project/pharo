@@ -17,7 +17,7 @@ Class {
 		'actionHolder',
 		'autoScaleHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -48,7 +48,7 @@ ImagePresenter >> action: aBlock [
 	actionHolder value: aBlock
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 ImagePresenter >> actionHolder [
 	"To be able to register action when the action is changed."
 	^ actionHolder
@@ -61,7 +61,7 @@ ImagePresenter >> autoScale [
 	^ autoScaleHolder value
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 ImagePresenter >> autoScaleHolder [
 	"To be able to register action when the autoscale is changed."
 
@@ -83,7 +83,7 @@ ImagePresenter >> image: aForm [
 	imageHolder value: aForm
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 ImagePresenter >> imageHolder [
 	"To be able to register action when the image is changed."
 	^ imageHolder

@@ -4,7 +4,7 @@ I am the event handler linked to OSWindowJoystickExample.
 Class {
 	#name : #OSWindowJoystickExampleEventHandler,
 	#superclass : #OSWindowGenericRendererExampleEventHandler,
-	#category : #OSWindow-SDL2-Examples-Joystick
+	#category : #'OSWindow-SDL2-Examples-Joystick'
 }
 
 { #category : #settings }

@@ -4,7 +4,7 @@ A TrivialCritique with and extended actions to open a dependency browser for Arc
 Class {
 	#name : #ArchitecturalCritique,
 	#superclass : #ReTrivialCritique,
-	#category : #Kernel-Rules
+	#category : #'Kernel-Rules'
 }
 
 { #category : #actions }

@@ -1,1 +1,1 @@
-Package { #name : #Keymapping-KeyCombinations }
+Package { #name : #'Keymapping-KeyCombinations' }

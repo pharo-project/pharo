@@ -4,7 +4,7 @@ I'm an signed byte.
 Class {
 	#name : #FFIInt8,
 	#superclass : #FFIUInt8,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

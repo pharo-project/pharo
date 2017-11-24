@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'baseSlot'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #'code generation' }
@@ -56,12 +56,12 @@ PropertySlot >> layoutChanged: aClass [
 	
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 PropertySlot >> read: anObject [
 	^ (baseSlot read: anObject) at: self name ifAbsent: nil
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 PropertySlot >> write: aValue to: anObject [
 	^ (baseSlot read: anObject) at: self name put: aValue
 ]

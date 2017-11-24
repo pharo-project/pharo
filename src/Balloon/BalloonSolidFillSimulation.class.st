@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : #Balloon-Simulation
+	#category : #'Balloon-Simulation'
 }
 
 { #category : #computing }

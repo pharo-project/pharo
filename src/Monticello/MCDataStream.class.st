@@ -33,7 +33,7 @@ Class {
 		'TypeMap',
 		'WriteSelectors'
 	],
-	#category : #Monticello-Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #cleanup }
@@ -71,12 +71,12 @@ MCDataStream class >> fileNamed: fileName do: aBlock [
 	^ self detectFile: [ self fileNamed: fileName ] do: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> initialize [
 	self initializeTypeMap 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> initializeTypeMap [
 	"TypeMap maps Smalltalk classes to type ID numbers which identify the data stream primitive formats.  nextPut: writes these IDs to the data stream.  NOTE: Changing these type ID numbers will invalidate all extant data stream files.  Adding new ones is OK.  
 	Classes named here have special formats in the file.  If such a class has a subclass, it will use type 9 and write correctly.  It will just be slow.  (Later write the class name in the special format, then subclasses can use the type also.)
@@ -191,25 +191,25 @@ MCDataStream class >> readOnlyFileNamed:  aString [
 	^ self on: (FileStream readOnlyFileNamed: aString)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> readSelectors [
 	ReadSelectors ifNil: [ self initializeTypeMap ].
 	^ReadSelectors 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> registerClass: aClass atIndex: anIndex usingReadSelector: readSelector usingWriteSelector: writeSelector [
 	self typeMap at: aClass put: anIndex.
 	self readSelectors at: anIndex put: readSelector.
 	self writeSelectors at: anIndex put: writeSelector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> registerReaderSelector: aSelector atIndex: index [
 	self readSelectors at: index put: aSelector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> registerWriterSelector: aSelector atIndex: anIndex [
 	self writeSelectors at: anIndex put: aSelector
 ]
@@ -224,7 +224,7 @@ MCDataStream class >> streamedRepresentationOf: anObject [
 	^file contents
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> typeMap [
 	TypeMap ifNil: [ self initializeTypeMap ].
 	^ TypeMap
@@ -236,7 +236,7 @@ MCDataStream class >> unStream: aString [
 	^(self on: ((RWBinaryOrTextStream with: aString) reset; binary)) next
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCDataStream class >> writeSelectors [
 	WriteSelectors ifNil: [ self initializeTypeMap ].
 	^ WriteSelectors

@@ -7,7 +7,7 @@ FTExamples example2.
 Class {
 	#name : #FTExampleDataSource,
 	#superclass : #FTSimpleDataSource,
-	#category : #Morphic-Widgets-FastTable-Examples
+	#category : #'Morphic-Widgets-FastTable-Examples'
 }
 
 { #category : #accessing }

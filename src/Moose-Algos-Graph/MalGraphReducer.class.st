@@ -10,7 +10,7 @@ Class {
 		'circuits',
 		'circuitNodes'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #updating }
@@ -30,7 +30,7 @@ MalGraphReducer >> findCircuits [
 			circuit collect: [ :each | self findNode: each model ] ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MalGraphReducer >> initialize [
 	super initialize.
 	circuitNodes := OrderedCollection new.

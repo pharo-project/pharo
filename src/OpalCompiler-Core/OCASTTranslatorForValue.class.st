@@ -4,7 +4,7 @@ I override some methods in my super to generate instructions for effect and valu
 Class {
 	#name : #OCASTTranslatorForValue,
 	#superclass : #OCASTTranslator,
-	#category : #OpalCompiler-Core-Translator
+	#category : #'OpalCompiler-Core-Translator'
 }
 
 { #category : #'inline messages' }

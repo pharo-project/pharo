@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#category : #Versionner-Core-DependenciesModel
+	#category : #'Versionner-Core-DependenciesModel'
 }
 
 { #category : #initialization }

@@ -7,7 +7,7 @@ Class {
 		'asyncTask',
 		'previewObject'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }

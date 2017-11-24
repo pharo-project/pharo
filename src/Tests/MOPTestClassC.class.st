@@ -3,7 +3,7 @@ Class {
 	#superclass : #Object,
 	#traits : 'Trait2',
 	#classTraits : 'Trait2 classTrait',
-	#category : #Tests-Traits-MOP
+	#category : #'Tests-Traits-MOP'
 }
 
 { #category : #local }

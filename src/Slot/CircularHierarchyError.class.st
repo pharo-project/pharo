@@ -4,7 +4,7 @@ I am signaled if a new class introduces a circular class hierarchy.
 Class {
 	#name : #CircularHierarchyError,
 	#superclass : #ClassBuilderError,
-	#category : #Slot-Exception
+	#category : #'Slot-Exception'
 }
 
 { #category : #signalling }

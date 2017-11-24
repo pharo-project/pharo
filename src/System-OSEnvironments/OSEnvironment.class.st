@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #System-OSEnvironments
+	#category : #'System-OSEnvironments'
 }
 
 { #category : #'instance creation' }
@@ -37,7 +37,7 @@ OSEnvironment class >> environmentFor: aPlatform [
 		ifFalse: [ PlatformIndependentEnvironment platform: aPlatform ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 OSEnvironment class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
@@ -164,7 +164,7 @@ OSEnvironment >> includesKey: aKey [
 	^ self at: aKey ifPresent: [ :value | true ] ifAbsent: [ false ].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 OSEnvironment >> initializeWith: anOSPlatform [
 	super initialize.
 	platform := anOSPlatform

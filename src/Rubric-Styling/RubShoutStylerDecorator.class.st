@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'MinTextSizeForStylingInBackground'
 	],
-	#category : #Rubric-Styling
+	#category : #'Rubric-Styling'
 }
 
 { #category : #querying }

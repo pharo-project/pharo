@@ -1,7 +1,7 @@
 Class {
 	#name : #RBReadBeforeWrittenTesterTest,
 	#superclass : #TestCase,
-	#category : #AST-Tests-Core
+	#category : #'AST-Tests-Core'
 }
 
 { #category : #tests }

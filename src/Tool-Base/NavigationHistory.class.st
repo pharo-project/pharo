@@ -10,7 +10,7 @@ Class {
 		'maxSize',
 		'paused'
 	],
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #accessing }

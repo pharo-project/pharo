@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloScriptEnsureProjectLoadedForDevelopment,
 	#superclass : #MetacelloScriptNotification,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #'exception handling' }

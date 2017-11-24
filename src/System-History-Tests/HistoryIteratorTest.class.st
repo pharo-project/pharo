@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'historyList'
 	],
-	#category : #System-History-Tests
+	#category : #'System-History-Tests'
 }
 
 { #category : #running }

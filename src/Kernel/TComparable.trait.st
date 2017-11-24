@@ -3,7 +3,7 @@ This trait is a protocol for comparable objects. Classes using it must implement
 "
 Trait {
 	#name : #TComparable,
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #comparing }

@@ -17,7 +17,7 @@ Class {
 		'numLock',
 		'buttons'
 	],
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #accessing }

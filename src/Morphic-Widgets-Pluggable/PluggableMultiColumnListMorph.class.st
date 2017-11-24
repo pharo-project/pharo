@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'gapSize'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #'instance creation' }

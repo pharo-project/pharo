@@ -13,7 +13,7 @@ Class {
 		'conditionBlock',
 		'targetsBlock'
 	],
-	#category : #Hiedra-Builders
+	#category : #'Hiedra-Builders'
 }
 
 { #category : #accessing }

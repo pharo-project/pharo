@@ -4,7 +4,7 @@ I draw links with curved lines. See comment in superclass.
 Class {
 	#name : #HiSnakeLinkRenderer,
 	#superclass : #HiLinkRenderer,
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #rendering }

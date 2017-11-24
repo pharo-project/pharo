@@ -139,7 +139,7 @@ MultiByteFileStream >> bareNext [
 
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 MultiByteFileStream >> basicChunk [
 	"If our buffer in collection contains an chunk with no embedded !'s, nor
 	any non-ascii characters, return that.
@@ -457,7 +457,7 @@ MultiByteFileStream >> next: anInteger putAll: aCollection startingAt: startInde
         ^self converter next: anInteger putAll: aCollection startingAt: startIndex toStream: self
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 MultiByteFileStream >> nextChunk [
 	"Answer the contents of the receiver, up to the next terminator
 	character. Doubled terminators indicate an embedded terminator
@@ -519,7 +519,7 @@ MultiByteFileStream >> nextMatchAll: aColl [
 
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 MultiByteFileStream >> nextPreamble [
 	"Assuming that preamble part does not contain ]lang[ tag"
 	self skipSeparators.
@@ -558,7 +558,7 @@ MultiByteFileStream >> nextPutAll: aCollection [
 		ifFalse: [ self converter nextPutAll: aCollection toStream: self ]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 MultiByteFileStream >> open: fileName forWrite: writeMode [ 
 	| result |
 	result := super open: fileName forWrite: writeMode.

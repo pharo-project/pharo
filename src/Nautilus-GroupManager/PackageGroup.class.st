@@ -8,7 +8,7 @@ Class {
 		'packages',
 		'browsedEnvironment'
 	],
-	#category : #Nautilus-GroupManager
+	#category : #'Nautilus-GroupManager'
 }
 
 { #category : #'instance creation' }
@@ -19,7 +19,7 @@ PackageGroup class >> named: aString packages: aCollectionOfPackages [
 		yourself
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 PackageGroup >> addPackages: aCollection [
 	aCollection do: [ :each | packages addIfNotPresent: each ].
 	GroupAnnouncer uniqueInstance announce: (AGroupContentHasBeenModified group: self)
@@ -66,13 +66,13 @@ PackageGroup >> packages: aCollection [
 	packages := aCollection
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 PackageGroup >> removeAllPackages [
 	packages removeAll.
 	GroupAnnouncer uniqueInstance announce: (AGroupContentHasBeenModified group: self)
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 PackageGroup >> removePackages: aCollection [
 	packages removeAll: aCollection.
 	GroupAnnouncer uniqueInstance announce: (AGroupContentHasBeenModified group: self)

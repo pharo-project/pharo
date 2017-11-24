@@ -6,7 +6,7 @@ I add some special behavior:
 Class {
 	#name : #InstanceVariableSlot,
 	#superclass : #IndexedSlot,
-	#category : #Slot-Variables
+	#category : #'Slot-Variables'
 }
 
 { #category : #cleanup }

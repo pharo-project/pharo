@@ -1,1 +1,1 @@
-Package { #name : #FuelSystem-FileRegistry }
+Package { #name : #'FuelSystem-FileRegistry' }

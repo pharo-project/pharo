@@ -1,1 +1,1 @@
-Package { #name : #NECompletion-Tests }
+Package { #name : #'NECompletion-Tests' }

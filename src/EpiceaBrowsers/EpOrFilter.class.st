@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'subFilters'
 	],
-	#category : #EpiceaBrowsers-Filters
+	#category : #'EpiceaBrowsers-Filters'
 }
 
 { #category : #'instance creation' }

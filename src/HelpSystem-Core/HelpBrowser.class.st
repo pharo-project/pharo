@@ -34,7 +34,7 @@ Class {
 	#classVars : [
 		'DefaultHelpBrowser'
 	],
-	#category : #HelpSystem-Core-UI
+	#category : #'HelpSystem-Core-UI'
 }
 
 { #category : #accessing }

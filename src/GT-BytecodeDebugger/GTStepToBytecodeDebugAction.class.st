@@ -4,7 +4,7 @@ I am a debugging action for stepping to a selected bytecode.
 Class {
 	#name : #GTStepToBytecodeDebugAction,
 	#superclass : #DebugAction,
-	#category : #GT-BytecodeDebugger-Actions
+	#category : #'GT-BytecodeDebugger-Actions'
 }
 
 { #category : #registration }

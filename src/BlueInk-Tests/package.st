@@ -1,1 +1,1 @@
-Package { #name : #BlueInk-Tests }
+Package { #name : #'BlueInk-Tests' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #Morphic-Tests-WindowNotification
+	#category : #'Morphic-Tests-WindowNotification'
 }
 
 { #category : #running }

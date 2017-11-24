@@ -8,7 +8,7 @@ Class {
 		'variable',
 		'value'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -77,7 +77,7 @@ AssignmentNode >> sizeCodeForValue: encoder [
 	+ (variable sizeCodeForStore: encoder)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AssignmentNode >> toDoIncrement: var [
 	var = variable ifFalse: [^ nil].
 	(value isMemberOf: MessageNode) 
@@ -85,7 +85,7 @@ AssignmentNode >> toDoIncrement: var [
 		ifFalse: [^ nil]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AssignmentNode >> value [
 	^ value
 ]
@@ -95,14 +95,14 @@ AssignmentNode >> variable [
 	^variable
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AssignmentNode >> variable: aVariable value: expression [
 
 	variable := aVariable.
 	value := expression
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AssignmentNode >> variable: aVariable value: expression from: encoder [
 
 	(aVariable isMemberOf: MessageAsTempNode)
@@ -112,7 +112,7 @@ AssignmentNode >> variable: aVariable value: expression from: encoder [
 	value := expression
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AssignmentNode >> variable: aVariable value: expression from: encoder sourceRange: range [
 
 	encoder noteSourceRange: range forNode: self.

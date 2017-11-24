@@ -4,7 +4,7 @@ I model argument variables. By definition, an argument variable is always initia
 Class {
 	#name : #OCArgumentVariable,
 	#superclass : #OCTempVariable,
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }

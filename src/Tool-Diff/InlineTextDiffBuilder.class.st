@@ -1,7 +1,7 @@
 Class {
 	#name : #InlineTextDiffBuilder,
 	#superclass : #TextDiffBuilder,
-	#category : #Tool-Diff
+	#category : #'Tool-Diff'
 }
 
 { #category : #'as yet unclassified' }

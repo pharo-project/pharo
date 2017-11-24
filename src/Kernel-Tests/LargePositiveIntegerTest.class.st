@@ -4,7 +4,7 @@ SUnit tests for large positive integers
 Class {
 	#name : #LargePositiveIntegerTest,
 	#superclass : #ClassTestCase,
-	#category : #Kernel-Tests-Numbers
+	#category : #'Kernel-Tests-Numbers'
 }
 
 { #category : #tests }

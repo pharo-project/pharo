@@ -20,7 +20,7 @@ or more concisely...
 Class {
 	#name : #RBStringConcatenationRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

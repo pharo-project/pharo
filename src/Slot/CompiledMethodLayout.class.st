@@ -7,7 +7,7 @@ See CompiledMethod for more details.
 Class {
 	#name : #CompiledMethodLayout,
 	#superclass : #ObjectLayout,
-	#category : #Slot-Layout
+	#category : #'Slot-Layout'
 }
 
 { #category : #'instance creation' }

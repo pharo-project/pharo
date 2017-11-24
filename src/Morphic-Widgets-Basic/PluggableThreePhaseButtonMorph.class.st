@@ -12,7 +12,7 @@ Class {
 		'pressedImageSelector',
 		'stateSelector'
 	],
-	#category : #Morphic-Widgets-Basic-Buttons
+	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
 { #category : #'instance creation' }

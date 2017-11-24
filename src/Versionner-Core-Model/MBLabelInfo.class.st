@@ -4,7 +4,7 @@ A label info
 Class {
 	#name : #MBLabelInfo,
 	#superclass : #MBInfo,
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }

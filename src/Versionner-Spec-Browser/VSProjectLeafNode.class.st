@@ -4,7 +4,7 @@ Abstract class used to display a project with its specific icons and no child in
 Class {
 	#name : #VSProjectLeafNode,
 	#superclass : #VSProjectNode,
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #accessing }

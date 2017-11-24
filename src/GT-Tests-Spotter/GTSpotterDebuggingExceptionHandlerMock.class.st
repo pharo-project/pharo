@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterDebuggingExceptionHandlerMock,
 	#superclass : #GTSpotterDebuggingExceptionHandler,
-	#category : #GT-Tests-Spotter-Exceptions-Mocks
+	#category : #'GT-Tests-Spotter-Exceptions-Mocks'
 }
 
 { #category : #public }

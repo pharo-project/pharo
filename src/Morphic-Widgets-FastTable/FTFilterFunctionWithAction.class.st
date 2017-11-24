@@ -31,7 +31,7 @@ Class {
 		'actionButton',
 		'actionBlock'
 	],
-	#category : #Morphic-Widgets-FastTable-Functions
+	#category : #'Morphic-Widgets-FastTable-Functions'
 }
 
 { #category : #'instance creation' }

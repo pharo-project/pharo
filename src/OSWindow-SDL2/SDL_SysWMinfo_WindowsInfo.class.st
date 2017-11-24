@@ -2,13 +2,13 @@
 A structure that contains Window specific information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo_WindowsInfo,
+	#name : #'SDL_SysWMinfo_WindowsInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_HDC',
 		'OFFSET_WINDOW'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

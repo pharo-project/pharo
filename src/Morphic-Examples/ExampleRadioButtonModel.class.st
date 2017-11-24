@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'option'
 	],
-	#category : #Morphic-Examples-Widgets
+	#category : #'Morphic-Examples-Widgets'
 }
 
 { #category : #'as yet unclassified' }

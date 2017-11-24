@@ -12,7 +12,7 @@ Class {
 		'start',
 		'stop'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -62,7 +62,7 @@ RBLiteralNode >> precedence [
 	^0
 ]
 
-{ #category : #private-replacing }
+{ #category : #'private-replacing' }
 RBLiteralNode >> replaceSourceFrom: aNode [ 
 	self addReplacement: (RBStringReplacement 
 				replaceFrom: aNode start
@@ -70,7 +70,7 @@ RBLiteralNode >> replaceSourceFrom: aNode [
 				with: self formattedCode)
 ]
 
-{ #category : #private-replacing }
+{ #category : #'private-replacing' }
 RBLiteralNode >> replaceSourceWith: aNode [ 
 	self addReplacement: (RBStringReplacement 
 				replaceFrom: self start

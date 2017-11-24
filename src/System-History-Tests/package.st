@@ -1,1 +1,1 @@
-Package { #name : #System-History-Tests }
+Package { #name : #'System-History-Tests' }

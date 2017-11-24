@@ -4,7 +4,7 @@ I represent the colored feedback to alert a too long method
 Class {
 	#name : #RubCodeSizeFeedback,
 	#superclass : #RubScrolledTextExtraSurface,
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }

@@ -21,7 +21,7 @@ Class {
 		'CloseBoxImage',
 		'PushPinImage'
 	],
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #'private - utilities' }
@@ -328,7 +328,7 @@ MenuMorph >> addIfNeededTitle: aTitle andIcon: anIcon [
 		ifTrue: [ self addTitle: aTitle icon: anIcon ]
 ]
 
-{ #category : #construction-UIManager }
+{ #category : #'construction-UIManager' }
 MenuMorph >> addItem [
 
 	| string sel |
@@ -380,7 +380,7 @@ MenuMorph >> addMenuItem: anItem [
 
 ]
 
-{ #category : #construction-UIManager }
+{ #category : #'construction-UIManager' }
 MenuMorph >> addTitle [
 
 	| string |
@@ -390,7 +390,7 @@ MenuMorph >> addTitle [
 
 ]
 
-{ #category : #construction-title }
+{ #category : #'construction-title' }
 MenuMorph >> addTitle: aString [
 	"Add a title line at the top of this menu."
 	
@@ -399,7 +399,7 @@ MenuMorph >> addTitle: aString [
 	
 ]
 
-{ #category : #construction-title }
+{ #category : #'construction-title' }
 MenuMorph >> addTitle: aString icon: aForm [
 	"Add a title line at the top of this menu."
 	
@@ -549,7 +549,7 @@ MenuMorph >> balloonTextForLastItem: balloonText [
 	submorphs last setBalloonText: balloonText
 ]
 
-{ #category : #construction-title }
+{ #category : #'construction-title' }
 MenuMorph >> buildTitle: aBlock [ 
 	
 "
@@ -591,7 +591,7 @@ MenuMorph >> commandKeyHandler: anObject [
 	self setProperty: #commandKeyHandler toValue: anObject
 ]
 
-{ #category : #construction-title }
+{ #category : #'construction-title' }
 MenuMorph >> createTitleMorph [
 
 	titleMorph ifNotNil: [ titleMorph delete ].
@@ -940,7 +940,7 @@ MenuMorph >> items [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MenuMorph >> justDroppedInto: aMorph event: evt [
 	| halo |
 	super justDroppedInto: aMorph event: evt.
@@ -1117,7 +1117,7 @@ MenuMorph >> mouseDown: evt [
 	self comeToFront
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MenuMorph >> mouseDownInTitle: evt [
 	"Handle a mouse down event in the title bar."
 	"Grab the menu and drag it to some other place"

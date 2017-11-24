@@ -11,7 +11,7 @@ Class {
 		'plus',
 		'minus'
 	],
-	#category : #Spec-Examples-Wrapper
+	#category : #'Spec-Examples-Wrapper'
 }
 
 { #category : #specs }

@@ -15,7 +15,7 @@ Internal Representation and Key Implementation Points.
 "
 Trait {
 	#name : #TGLMFastTableColumnsRenderer,
-	#category : #Glamour-FastTable-Model
+	#category : #'Glamour-FastTable-Model'
 }
 
 { #category : #rendering }

@@ -4,7 +4,7 @@ I represent an error which may happen while tracing in the graph an object that 
 Class {
 	#name : #FLNotSerializable,
 	#superclass : #FLSerializationError,
-	#category : #Fuel-Errors
+	#category : #'Fuel-Errors'
 }
 
 { #category : #signaling }

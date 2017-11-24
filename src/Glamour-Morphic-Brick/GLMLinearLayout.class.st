@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMLinearLayout,
 	#superclass : #LayoutPolicy,
-	#category : #Glamour-Morphic-Brick-Layouts
+	#category : #'Glamour-Morphic-Brick-Layouts'
 }
 
 { #category : #layout }

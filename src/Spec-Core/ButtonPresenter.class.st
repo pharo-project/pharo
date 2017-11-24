@@ -32,7 +32,7 @@ Class {
 		'menuHolder',
 		'shortcutHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -115,7 +115,7 @@ ButtonPresenter >> askBeforeChanging: aBoolean [
 	askBeforeChangingHolder value: aBoolean
 ]
 
-{ #category : #private-focus }
+{ #category : #'private-focus' }
 ButtonPresenter >> ensureKeyBindingsFor: widget [
 
 	super ensureKeyBindingsFor: widget.
@@ -281,34 +281,34 @@ ButtonPresenter >> unregisterShortcut: oldShortcut [
 		removeKeyCombination: oldShortcut 
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ButtonPresenter >> whenActionChangedDo: aBlock [ 
 
 	actionHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ButtonPresenter >> whenActionPerformedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
 	actionPerformedHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ButtonPresenter >> whenFontChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
 	fontHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ButtonPresenter >> whenLabelChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 
 	labelHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ButtonPresenter >> whenStateChangedDo: aBlock [
 	"set a block to perform after that the button has been aclicked, and its action performed"
 

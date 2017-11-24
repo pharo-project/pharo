@@ -20,7 +20,7 @@ Class {
 		'Decompositions',
 		'Diacriticals'
 	],
-	#category : #Kernel-BasicObjects
+	#category : #'Kernel-BasicObjects'
 }
 
 { #category : #testing }

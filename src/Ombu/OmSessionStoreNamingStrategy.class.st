@@ -4,7 +4,7 @@ My subclasses define a way to find a name for a new Ombu log.  Names should not 
 Class {
 	#name : #OmSessionStoreNamingStrategy,
 	#superclass : #Object,
-	#category : #Ombu-Strategies
+	#category : #'Ombu-Strategies'
 }
 
 { #category : #accessing }

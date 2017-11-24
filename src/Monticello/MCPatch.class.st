@@ -7,15 +7,15 @@ Class {
 	#instVars : [
 		'operations'
 	],
-	#category : #Monticello-Patching
+	#category : #'Monticello-Patching'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCPatch class >> fromBase: baseSnapshot target: targetSnapshot [
 	^ self new initializeWithBase: baseSnapshot target: targetSnapshot
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCPatch class >> operations: aCollection [
 	^ self basicNew initializeWithOperations: aCollection
 ]

@@ -31,7 +31,7 @@ Class {
 		'emphasisHere',
 		'cursorWidth'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #accessing }

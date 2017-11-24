@@ -4,7 +4,7 @@ I implement a simple Stack. #push: adds a new object of any kind on top of the s
 Class {
 	#name : #Stack,
 	#superclass : #LinkedList,
-	#category : #Collections-Stack
+	#category : #'Collections-Stack'
 }
 
 { #category : #removing }

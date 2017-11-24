@@ -15,7 +15,7 @@ Class {
 		'priority',
 		'arguments'
 	],
-	#category : #Glamour-Morphic-Brick-Async
+	#category : #'Glamour-Morphic-Brick-Async'
 }
 
 { #category : #accessing }

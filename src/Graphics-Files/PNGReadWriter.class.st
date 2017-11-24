@@ -38,7 +38,7 @@ Class {
 		'StandardColors',
 		'StandardSwizzleMaps'
 	],
-	#category : #Graphics-Files
+	#category : #'Graphics-Files'
 }
 
 { #category : #utilities }

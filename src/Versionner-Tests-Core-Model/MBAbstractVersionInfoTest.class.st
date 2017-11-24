@@ -4,7 +4,7 @@ Abstract superclass for version info tests for Versionner
 Class {
 	#name : #MBAbstractVersionInfoTest,
 	#superclass : #MBInfoTest,
-	#category : #Versionner-Tests-Core-Model
+	#category : #'Versionner-Tests-Core-Model'
 }
 
 { #category : #testing }

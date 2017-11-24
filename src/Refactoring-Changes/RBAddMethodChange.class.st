@@ -16,7 +16,7 @@ Class {
 		'controller',
 		'definedSelector'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }
@@ -77,14 +77,14 @@ RBAddMethodChange >> changeString [
 	^ self displayClassName , '>>' , self selector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddMethodChange >> class: aClass protocol: aProtocol source: aString [ 
 	self changeClass: aClass.
 	self protocols: aProtocol.
 	source := aString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controller: aController [ 
 	self changeClass: aClass.
 	self protocols: aProtocol.
@@ -92,7 +92,7 @@ RBAddMethodChange >> class: aClass protocol: aProtocol source: aString controlle
 	controller := aController
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddMethodChange >> class: aClass source: aString contoller: aController [
 	self changeClass: aClass.
 	source := aString.
@@ -105,7 +105,7 @@ RBAddMethodChange >> controller [
 	^ controller
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddMethodChange >> controller: aController [ 
 	controller := aController
 ]
@@ -158,7 +158,7 @@ RBAddMethodChange >> protocols [
 	^ protocols
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddMethodChange >> protocols: aCollectionOrString [
 	protocols := aCollectionOrString isString
 		ifTrue: [ 	

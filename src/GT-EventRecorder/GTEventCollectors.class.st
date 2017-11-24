@@ -20,7 +20,7 @@ Class {
 		'mutex',
 		'collectors'
 	],
-	#category : #GT-EventRecorder-Support
+	#category : #'GT-EventRecorder-Support'
 }
 
 { #category : #adding }
@@ -36,7 +36,7 @@ GTEventCollectors >> do: oneArgBlock [
 	mutex critical: [ collectors do: oneArgBlock ]
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventCollectors >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: 1>
 	^ collectors ifNotNil: [ 

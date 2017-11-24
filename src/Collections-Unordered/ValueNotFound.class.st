@@ -4,7 +4,7 @@ I am ValueNotFound, an exception indicating that a value was not found in a Dict
 Class {
 	#name : #ValueNotFound,
 	#superclass : #NotFound,
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
 { #category : #private }

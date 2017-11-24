@@ -15,7 +15,7 @@ Class {
 		'listPresenter',
 		'searchPresenter'
 	],
-	#category : #Spec-PolyWidgets-ListAndTree
+	#category : #'Spec-PolyWidgets-ListAndTree'
 }
 
 { #category : #specs }

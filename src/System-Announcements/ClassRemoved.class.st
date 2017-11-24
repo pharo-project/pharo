@@ -10,7 +10,7 @@ Class {
 		'classRemoved',
 		'ownerPackage'
 	],
-	#category : #System-Announcements-System-Classes
+	#category : #'System-Announcements-System-Classes'
 }
 
 { #category : #'instance creation' }

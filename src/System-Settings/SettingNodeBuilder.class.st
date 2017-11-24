@@ -8,7 +8,7 @@ Class {
 		'node',
 		'builder'
 	],
-	#category : #System-Settings-Browser
+	#category : #'System-Settings-Browser'
 }
 
 { #category : #'private tree building' }

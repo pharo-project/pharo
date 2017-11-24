@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'LoadFT2Library'
 	],
-	#category : #FreeType-Settings
+	#category : #'FreeType-Settings'
 }
 
 { #category : #settings }

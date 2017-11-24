@@ -8,7 +8,7 @@ Subclasses can return a configuration block from #configurationBlockForProcessor
 Class {
 	#name : #GTSpotterProcessorFilter,
 	#superclass : #Object,
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #accessing }

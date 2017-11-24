@@ -38,7 +38,7 @@ Class {
 	#classInstVars : [
 		'notifier'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #'textconstants access' }

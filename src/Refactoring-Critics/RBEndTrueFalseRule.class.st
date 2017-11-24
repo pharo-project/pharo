@@ -15,7 +15,7 @@ test
 Class {
 	#name : #RBEndTrueFalseRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : #Refactoring-Critics-ParseTreeRules
+	#category : #'Refactoring-Critics-ParseTreeRules'
 }
 
 { #category : #accessing }

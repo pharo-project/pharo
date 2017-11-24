@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'object'
 	],
-	#category : #Collections-Abstract
+	#category : #'Collections-Abstract'
 }
 
 { #category : #'instance creation' }

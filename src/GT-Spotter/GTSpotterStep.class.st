@@ -27,7 +27,7 @@ Class {
 		'lastSearchContext',
 		'event'
 	],
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #example }
@@ -278,7 +278,7 @@ GTSpotterStep >> isCategorySelected: aProcessor [
 	^ self hasSelected and: [ self selected processor == aProcessor ]
 ]
 
-{ #category : #zz-deprecated }
+{ #category : #'zz-deprecated' }
 GTSpotterStep >> isEmpty [
 	self deprecated: 'Use hasCandidates instead'.
 	^ self hasCandidates not

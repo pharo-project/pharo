@@ -8,5 +8,5 @@ I am not intended to be used elsewhere.
 Class {
 	#name : #TimedOut,
 	#superclass : #Notification,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }

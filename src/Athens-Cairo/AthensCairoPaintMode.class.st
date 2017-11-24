@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo
+	#category : #'Athens-Cairo'
 }
 
 { #category : #modes }
@@ -66,7 +66,7 @@ AthensCairoPaintMode >> availableModes [
 	)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoPaintMode >> canvas: aCanvas [
 	canvas := aCanvas
 ]

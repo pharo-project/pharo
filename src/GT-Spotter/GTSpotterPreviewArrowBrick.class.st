@@ -7,7 +7,7 @@ Class {
 		'spotterModel',
 		'isTriangleVisible'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #actions }
@@ -73,7 +73,7 @@ GTSpotterPreviewArrowBrick >> onCandidateSelected: ann [
 	self moveTo: self selectedItemBrick
 ]
 
-{ #category : #brick-drawing }
+{ #category : #'brick-drawing' }
 GTSpotterPreviewArrowBrick >> onDraw: aCanvas [
 	super onDraw: aCanvas.
 	
@@ -121,7 +121,7 @@ GTSpotterPreviewArrowBrick >> onStepAdded [
 	self spotterModel steps last candidates announcer when: GTSpotterAllCandidatesRemoved send: #onAllCandidatesRemoved to: self.
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterPreviewArrowBrick >> onThemerChanged [
 	super onThemerChanged.
 	

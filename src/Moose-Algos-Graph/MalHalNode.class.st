@@ -5,7 +5,7 @@ Class {
 		'hNumber',
 		'previousNodes'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }
@@ -41,20 +41,20 @@ MalHalNode >> isSource [
 	^ self previousNodes isEmpty 
 ]
 
-{ #category : #hal-algorithm }
+{ #category : #'hal-algorithm' }
 MalHalNode >> label [
 
 	^ 'Ha '
 ]
 
-{ #category : #hal-algorithm }
+{ #category : #'hal-algorithm' }
 MalHalNode >> markCycleWith: anInteger [
 
 	self cycleNodes do: [ :next | next hNumber: anInteger ].
 	^ self cycleNodes 
 ]
 
-{ #category : #hal-algorithm }
+{ #category : #'hal-algorithm' }
 MalHalNode >> markHNumber: anInteger [
 
 	self hNumber: anInteger.
@@ -74,7 +74,7 @@ MalHalNode >> previousNodes: anObject [
 	previousNodes := anObject
 ]
 
-{ #category : #hal-algorithm }
+{ #category : #'hal-algorithm' }
 MalHalNode >> removeCycleFromEdges [
 
 	self nextNodes removeAllFoundIn: self cycleNodes.

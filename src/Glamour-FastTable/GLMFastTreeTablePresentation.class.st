@@ -47,7 +47,7 @@ Class {
 	#instVars : [
 		'columns'
 	],
-	#category : #Glamour-FastTable-Presentations
+	#category : #'Glamour-FastTable-Presentations'
 }
 
 { #category : #accessing }

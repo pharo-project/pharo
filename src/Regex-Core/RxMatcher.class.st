@@ -37,7 +37,7 @@ Class {
 		'Cr',
 		'Lf'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #'instance creation' }
@@ -242,7 +242,7 @@ RxMatcher >> hookBranchOf: regexNode onto: endMarker [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxMatcher >> initialize: syntaxTreeRoot ignoreCase: aBoolean [
 	"Compile thyself for the regex with the specified syntax tree.
 	See comment and `building' protocol in this class and 

@@ -6,7 +6,7 @@ Ialso add support for on the fly refresh
 Class {
 	#name : #MorphicTreeColumnAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'widget API' }

@@ -551,7 +551,7 @@ NautilusUI >> defaultClassDescriptor [
 	^ self selectedPackage ifNotNil: [ :package | string , package categoryName , '''' ] ifNil: [ string , '''' ]
 ]
 
-{ #category : #menu-packages }
+{ #category : #'menu-packages' }
 NautilusUI >> demoteSelectedPackageAsPackageWithTag [
 
 	| packages |
@@ -1227,7 +1227,7 @@ NautilusUI >> previous [
 	self model previous
 ]
 
-{ #category : #menu-packages }
+{ #category : #'menu-packages' }
 NautilusUI >> promoteSelectedPackageTagAsPackage [
 	self selectedPackage item promoteAsRPackage
 ]

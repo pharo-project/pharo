@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'oldPreferences'
 	],
-	#category : #System-Identification-Tests
+	#category : #'System-Identification-Tests'
 }
 
 { #category : #accessing }

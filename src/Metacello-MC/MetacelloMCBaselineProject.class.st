@@ -24,7 +24,7 @@ The `<baseline>` pragma marks the method containing the baseline specification.
 Class {
 	#name : #MetacelloMCBaselineProject,
 	#superclass : #MetacelloMCProject,
-	#category : #Metacello-MC-Model
+	#category : #'Metacello-MC-Model'
 }
 
 { #category : #accessing }

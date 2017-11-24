@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloScriptRegistryExecutor,
 	#superclass : #MetacelloScriptExecutor,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #'actions api' }

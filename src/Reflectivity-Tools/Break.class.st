@@ -6,7 +6,7 @@ use class Breakpoint to insert me reflectively
 Class {
 	#name : #Break,
 	#superclass : #Halt,
-	#category : #Reflectivity-Tools-Breakpoints
+	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
 { #category : #break }

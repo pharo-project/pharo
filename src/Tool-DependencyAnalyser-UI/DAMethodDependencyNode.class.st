@@ -6,10 +6,10 @@ Indeed these two nodes have the same behavior to browse the dependency in the Na
 Class {
 	#name : #DAMethodDependencyNode,
 	#superclass : #DANode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DAMethodDependencyNode >> browseInNautilus [
 	self browseMethodInNautilus: self content method
 ]

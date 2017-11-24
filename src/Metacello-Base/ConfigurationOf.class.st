@@ -63,7 +63,7 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#category : #Metacello-Base
+	#category : #'Metacello-Base'
 }
 
 { #category : #private }

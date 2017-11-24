@@ -1,7 +1,7 @@
 Class {
 	#name : #ReSmalllintCheckerTest,
 	#superclass : #ReCodeBasedTestCase,
-	#category : #Renraku-Test
+	#category : #'Renraku-Test'
 }
 
 { #category : #tests }

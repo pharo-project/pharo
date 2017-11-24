@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #Epicea-Monitor
+	#category : #'Epicea-Monitor'
 }
 
 { #category : #accessing }
@@ -337,7 +337,7 @@ EpMonitor >> handleError: error [
 		ifFalse: [ 'EpMonitor could not log a change. You can enable debugging with "EpMonitor current debugMode: true".' logCr ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpMonitor >> initializeWithLog: aLog [
 
 	self initialize.

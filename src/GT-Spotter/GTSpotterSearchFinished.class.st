@@ -5,7 +5,7 @@ Class {
 		'processors',
 		'query'
 	],
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }
 
 { #category : #accessing }

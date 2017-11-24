@@ -16,7 +16,7 @@ Class {
 		'sourcePointer',
 		'comments'
 	],
-	#category : #AST-Core-Tokens
+	#category : #'AST-Core-Tokens'
 }
 
 { #category : #'instance creation' }
@@ -121,7 +121,7 @@ RBToken >> start [
 	^ sourcePointer ifNil: [ 0 ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBToken >> start: anInteger [ 
 	sourcePointer := anInteger
 ]

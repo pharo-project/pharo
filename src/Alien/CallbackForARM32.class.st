@@ -4,7 +4,7 @@ A CallbackForARM32 is a callback for platforms with ARMv4/v5/v6/v7 processors us
 Class {
 	#name : #CallbackForARM32,
 	#superclass : #Callback,
-	#category : #Alien-Core
+	#category : #'Alien-Core'
 }
 
 { #category : #accessing }

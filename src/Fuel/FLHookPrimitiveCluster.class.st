@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'theClass'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #'instance creation' }
@@ -18,7 +18,7 @@ FLHookPrimitiveCluster class >> newAnalyzing: aClass [
 		yourself.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLHookPrimitiveCluster >> clusterMaterializeStepWith: aMaterialization [
 
 	super clusterMaterializeStepWith: aMaterialization.
@@ -32,21 +32,21 @@ FLHookPrimitiveCluster >> clusterReferencesDo: aBlock [
 	aBlock value: theClass
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLHookPrimitiveCluster >> clusterSerializeStepWith: aSerialization [
 
 	super clusterSerializeStepWith: aSerialization.
 	aSerialization encoder encodeReferenceToClusterObjectClass: theClass.	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLHookPrimitiveCluster >> initializeAnalyzing: aClass [
 
 	self initializeAnalyzing.
 	theClass := aClass
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLHookPrimitiveCluster >> materializeInstanceWith: aDecoder [
 	
 	^theClass materializeFrom: aDecoder
@@ -63,7 +63,7 @@ FLHookPrimitiveCluster >> printNameOn: aStream [
 	aStream nextPut: $].
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLHookPrimitiveCluster >> serializeInstance: anObject with: anEncoder [
 
 	anObject serializeOn: anEncoder

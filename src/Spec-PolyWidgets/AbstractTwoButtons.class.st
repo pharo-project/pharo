@@ -15,7 +15,7 @@ Class {
 		'firstButton',
 		'secondButton'
 	],
-	#category : #Spec-PolyWidgets-Support
+	#category : #'Spec-PolyWidgets-Support'
 }
 
 { #category : #example }

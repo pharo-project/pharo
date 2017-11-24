@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloPostLoadDirective,
 	#superclass : #MetacelloPrePostLoadDirective,
-	#category : #Metacello-MC-Directives
+	#category : #'Metacello-MC-Directives'
 }
 
 { #category : #actions }

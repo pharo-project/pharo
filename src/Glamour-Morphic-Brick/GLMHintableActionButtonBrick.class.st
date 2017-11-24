@@ -11,7 +11,7 @@ Class {
 		'asyncTask',
 		'hintBrick'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI
+	#category : #'Glamour-Morphic-Brick-Widgets-UI'
 }
 
 { #category : #converting }
@@ -98,7 +98,7 @@ GLMHintableActionButtonBrick >> beSuccess [
 	self beMode: #beSuccess
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMHintableActionButtonBrick >> click: evt [
 	|result|
 	result := super click: evt.
@@ -178,7 +178,7 @@ GLMHintableActionButtonBrick >> isModifierPressed: anEvent [
 	^ false
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMHintableActionButtonBrick >> press [
 	super press.
 	

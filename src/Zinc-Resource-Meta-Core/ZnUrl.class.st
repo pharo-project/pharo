@@ -88,7 +88,7 @@ Class {
 		'username',
 		'password'
 	],
-	#category : #Zinc-Resource-Meta-Core
+	#category : #'Zinc-Resource-Meta-Core'
 }
 
 { #category : #accessing }
@@ -162,7 +162,7 @@ ZnUrl >> ? association [
 	^ self withQuery: association 
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> addPathSegment: segment [
 	"Modify the receiver's path by adding segment at the end"
 	
@@ -171,7 +171,7 @@ ZnUrl >> addPathSegment: segment [
 	segments add: segment
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> addPathSegments: pathSegments [
 	"Modify the receiver's path by adding the elements of pathSegments at the end"
 
@@ -237,13 +237,13 @@ ZnUrl >> authorityWithPort [
 			stream nextPutAll: self host; nextPut: $:; print: self portOrDefault ] 
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> clearPath [
 	self hasPath
 		ifTrue: [ segments removeAll ]
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> closePath [
 	self isDirectoryPath
 		ifFalse: [ self addPathSegment: #/ ]
@@ -254,7 +254,7 @@ ZnUrl >> decodePercent: string [
 	^ ZnResourceMetaUtils decodePercent: string
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> directory [
 	^ self isDirectoryPath
 		ifTrue: [ self path ]
@@ -298,14 +298,14 @@ ZnUrl >> equals: url [
 	^ true
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> file [
 	^ self isDirectoryPath
 		ifTrue: [ String new ]
 		ifFalse: [ segments last ]
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> firstPathSegment [
 	^ self isSlash
 		ifTrue: [ nil ]
@@ -476,7 +476,7 @@ ZnUrl >> isSlash [
 	^ self hasPath not or: [ segments size = 1 and: [ segments first = #/ ] ]
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> lastPathSegment [
 	^ self isSlash
 		ifTrue: [ nil ]
@@ -597,7 +597,7 @@ ZnUrl >> password: string [
 	password := string
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> path [
 	self hasPath ifFalse: [ ^ String new ].
 	^ String streamContents: [ :stream | 
@@ -620,7 +620,7 @@ ZnUrl >> pathQueryFragmentPrintString [
 			self printPathQueryFragmentOn: stream ]
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> pathSegments [
 	^ segments ifNil: [ #() ]
 ]
@@ -755,7 +755,7 @@ ZnUrl >> query: dictionary [
 	query := dictionary
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAddAll: keyedCollection [
 	"Add all key/value pairs in keyedCollection as query parameters to the receiver.
 	Note that we use #addAllMulti:"
@@ -767,7 +767,7 @@ ZnUrl >> queryAddAll: keyedCollection [
 	^ keyedCollection
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key [
 	"Return the value of the query parameter key in the receiver.
 	Signal a KeyNotFound exception if there is no such parameter"
@@ -775,7 +775,7 @@ ZnUrl >> queryAt: key [
 	^ self queryAt: key ifAbsent: [ KeyNotFound signalFor: key printString ]
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key add: value [
 	"Modify the receiver by adding a query variable key=value.
 	If key already exists, value is added to it."
@@ -785,7 +785,7 @@ ZnUrl >> queryAt: key add: value [
 	query at: key asString add: (value ifNotNil: [value asString])
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key ifAbsent: block [
 	"Return the value of the query parameter key in the receiver.
 	Execute block if there is no such parameter"
@@ -795,7 +795,7 @@ ZnUrl >> queryAt: key ifAbsent: block [
 		ifFalse: block
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key ifPresent: block [
 	"Execute block with the value of the query parameter named key as value.
 	Return nil if there is no such parameter"
@@ -804,7 +804,7 @@ ZnUrl >> queryAt: key ifPresent: block [
 		ifTrue: [ self query at: key asString ifPresent: block ]
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryAt: key put: value [
 	"Modify the receiver by setting a query variable key=value.
 	If key is already exists, it is overwritten."
@@ -814,7 +814,7 @@ ZnUrl >> queryAt: key put: value [
 	query at: key asString put: (value ifNotNil: [value asString])
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryDo: block [
 	"Execute block for each query key/value pair in the receiver"
 	
@@ -822,7 +822,7 @@ ZnUrl >> queryDo: block [
 		self query keysAndValuesDo: block ]
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryKeys [
 	"Return the collection of all query keys in the receiver"
 	
@@ -831,7 +831,7 @@ ZnUrl >> queryKeys [
 		ifFalse: [ #() ]
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryRemoveAll [
 	"Modify the receiver by removing all query parameters"
 	
@@ -839,7 +839,7 @@ ZnUrl >> queryRemoveAll [
 		ifTrue: [ self query removeAll ]
 ]
 
-{ #category : #accessing-query }
+{ #category : #'accessing-query' }
 ZnUrl >> queryRemoveKey: key [
 	"Modify the receiver by remove the query parameter named key.
 	Do nothing if there is no such parameter"
@@ -848,13 +848,13 @@ ZnUrl >> queryRemoveKey: key [
 		ifTrue: [ self query removeKey: key asString ifAbsent: [ ] ]
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> removeFirstPathSegment [
 	self hasPath
 		ifTrue: [ segments removeFirst ]
 ]
 
-{ #category : #accessing-path }
+{ #category : #'accessing-path' }
 ZnUrl >> removeLastPathSegment [
 	self hasPath
 		ifTrue: [ segments removeLast ]

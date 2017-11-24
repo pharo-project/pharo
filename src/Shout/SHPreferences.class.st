@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #Shout-Styling
+	#category : #'Shout-Styling'
 }
 
 { #category : #private }
@@ -22,22 +22,22 @@ SHPreferences class >> applyStyle [
 	SHRBTextStyler styleTable: table.
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> argsStyle [
 	^ Groups at: #args
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> argsStyle: aGroupStyle [ 
 	^ Groups at: #args put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> commentStyle [
 	^ Groups at: #comment
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> commentStyle: aGroupStyle [ 
 	^ Groups at: #comment put: aGroupStyle
 ]
@@ -53,12 +53,12 @@ SHPreferences class >> customStyleTable: anArray [
 	self initializeGroups
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> defaultStyle [
 	^ Groups at: #default
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> defaultStyle: aGroupStyle [ 
 	^ Groups at: #default put: aGroupStyle
 ]
@@ -74,22 +74,22 @@ SHPreferences class >> enabled: aBoolean [
 	enabled := aBoolean
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> errorStyle [
 	^ Groups at: #error
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> errorStyle: aGroupStyle [ 
 	^ Groups at: #error put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> globalVarStyle [
 	^ Groups at: #globalVar
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> globalVarStyle: aGroupStyle [ 
 	^ Groups at: #globalVar put: aGroupStyle
 ]
@@ -108,62 +108,62 @@ SHPreferences class >> initializeGroups [
 				put: (SHStyleElement withTokens: tokens)]
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> instanceVarStyle [
 	^ Groups at: #instanceVar
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> instanceVarStyle: aGroupStyle [ 
 	^ Groups at: #instanceVar put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> messageSendsStyle [
 	^ Groups at: #messageSends
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> messageSendsStyle: aGroupStyle [ 
 	^ Groups at: #messageSends put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> primitiveOrModuleStyle [
 	^ Groups at: #primitiveOrModule
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> primitiveOrModuleStyle: aGroupStyle [ 
 	^ Groups at: #primitiveOrModule put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> primitiveTypesStyle [
 	^ Groups at: #primitiveTypes
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> primitiveTypesStyle: aGroupStyle [ 
 	^ Groups at: #primitiveTypes put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> reservedWordsStyle [
 	^ Groups at: #reservedWords
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> reservedWordsStyle: aGroupStyle [ 
 	^ Groups at: #reservedWords put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> selectorPatternsStyle [
 	^ Groups at: #selectorPatterns
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> selectorPatternsStyle: aGroupStyle [ 
 	^ Groups at: #selectorPatterns put: aGroupStyle
 ]
@@ -258,22 +258,22 @@ SHPreferences class >> styleTableRow [
 					yourself ] ))
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> syntaxStyle [
 	^ Groups at: #syntax
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> syntaxStyle: aGroupStyle [ 
 	^ Groups at: #syntax put: aGroupStyle
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> variableStyle [
 	^ Groups at: #variable
 ]
 
-{ #category : #accessing-styles }
+{ #category : #'accessing-styles' }
 SHPreferences class >> variableStyle: aGroupStyle [ 
 	^ Groups at: #variable put: aGroupStyle
 ]

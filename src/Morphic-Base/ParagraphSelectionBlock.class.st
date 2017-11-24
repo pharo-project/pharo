@@ -37,7 +37,7 @@ ParagraphSelectionBlock >> first [
 	^ first
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ParagraphSelectionBlock >> first: firstCharBlock last: lastCharBlock color: aColor [
 	first := firstCharBlock.
 	last := lastCharBlock.

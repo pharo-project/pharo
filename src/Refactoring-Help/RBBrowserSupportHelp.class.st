@@ -4,7 +4,7 @@ This is the chapter of  the refactoring framework help about refactoring support
 Class {
 	#name : #RBBrowserSupportHelp,
 	#superclass : #RefactoringHelp,
-	#category : #Refactoring-Help
+	#category : #'Refactoring-Help'
 }
 
 { #category : #accessing }

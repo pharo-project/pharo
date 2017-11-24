@@ -11,7 +11,7 @@ Class {
 		'isClosedHolder',
 		'isResizeable'
 	],
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #specs }
@@ -298,7 +298,7 @@ WindowPresenter >> updateTitle [
 	self title: self title
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 WindowPresenter >> whenClosedDo: aBlock [
 
 	isClosedHolder whenChangedDo: [:value |

@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicPopupActionRenderer,
 	#superclass : #GLMMorphicActionRenderer,
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #accessing }

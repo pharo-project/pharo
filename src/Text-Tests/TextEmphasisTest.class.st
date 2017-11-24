@@ -4,7 +4,7 @@ SUnit tests for TextEmphasis
 Class {
 	#name : #TextEmphasisTest,
 	#superclass : #HashAndEqualsTestCase,
-	#category : #Text-Tests
+	#category : #'Text-Tests'
 }
 
 { #category : #running }

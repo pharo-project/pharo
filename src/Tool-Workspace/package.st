@@ -1,1 +1,1 @@
-Package { #name : #Tool-Workspace }
+Package { #name : #'Tool-Workspace' }

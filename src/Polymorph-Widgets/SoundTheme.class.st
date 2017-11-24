@@ -12,7 +12,7 @@ Class {
 		'Current',
 		'UseThemeSounds'
 	],
-	#category : #Polymorph-Widgets-Themes
+	#category : #'Polymorph-Widgets-Themes'
 }
 
 { #category : #accessing }
@@ -98,42 +98,42 @@ SoundTheme >> alertSound [
 	^self sounds at: #alert ifAbsent: [self defaultSound]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultAbortSound [
 	"Answer the default abort sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultAlertSound [
 	"Answer the default alert sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultDefaultSound [
 	"Answer the default default sound!"
 
 	^Beeper default
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultDenySound [
 	"Answer the default deny sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultMessageSound [
 	"Answer the default message sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultQuestionSound [
 	"Answer the default question sound."
 
@@ -147,42 +147,42 @@ SoundTheme >> defaultSound [
 	^self sounds at: #default ifAbsent: [self defaultDefaultSound]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultWindowCloseSound [
 	"Answer the default window close sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultWindowMaximizeSound [
 	"Answer the default window maximize sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultWindowMinimizeSound [
 	"Answer the default window minimize sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultWindowOpenSound [
 	"Answer the default window open sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultWindowRestoreDownSound [
 	"Answer the default window restore down sound."
 
 	^self defaultSound
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> defaultWindowRestoreUpSound [
 	"Answer the default window restore up sound."
 
@@ -204,7 +204,7 @@ SoundTheme >> initialize [
 	self initializeSounds
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SoundTheme >> initializeSounds [
 	"Initialize the receiver's event sounds."
 

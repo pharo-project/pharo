@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloTestsGoferUnload,
 	#superclass : #GoferUnload,
-	#category : #Metacello-TestsMC
+	#category : #'Metacello-TestsMC'
 }
 
 { #category : #running }

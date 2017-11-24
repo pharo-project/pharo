@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'category'
 	],
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }
 
 { #category : #accessing }

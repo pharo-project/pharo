@@ -19,7 +19,7 @@ Class {
 		'categoryLabel',
 		'elementCount'
 	],
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }
@@ -49,7 +49,7 @@ GTSpotterRecorderCategorySelectedEvent >> fromAnnouncement: anAnnouncement [
 	elementCount := anAnnouncement category allFilteredCandidates size.
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTSpotterRecorderCategorySelectedEvent >> gtInspectorItems [
 	^ OrderedCollection new
 			add: (#categoryLabel -> self categoryLabel);

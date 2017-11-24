@@ -16,7 +16,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #api }

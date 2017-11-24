@@ -9,7 +9,7 @@ Class {
 		'directoryEntry',
 		'log'
 	],
-	#category : #EpiceaBrowsers-UI-Graph
+	#category : #'EpiceaBrowsers-UI-Graph'
 }
 
 { #category : #convenience }

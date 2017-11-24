@@ -35,7 +35,7 @@ Class {
 		'useBasicCommentFormat',
 		'traditionalBinaryPrecedenceArray'
 	],
-	#category : #BlueInk-Core
+	#category : #'BlueInk-Core'
 }
 
 { #category : #accessing }

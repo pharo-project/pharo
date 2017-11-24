@@ -8,25 +8,25 @@ Class {
 		'yetAnotherClass',
 		'yetYetAnotherClass'
 	],
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> aCategory [
 	^ 'SlotTestsTmp'
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> aClassName [
 	^ #SlotTestsClassA
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> anotherCategory [
 	^ 'SlotTestsTmp-Another'
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> anotherClassName [
 	^ #SlotTestsClassB
 ]
@@ -48,17 +48,17 @@ SlotClassBuilderTest >> cleanUpTrait: trait [
 	trait classTrait traitUsers removeAll.
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> layoutClasses [
 	^ { ByteLayout. WordLayout. FixedLayout. VariableLayout. WeakLayout }
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> layoutClassesWithSlots [
 	^ { FixedLayout. VariableLayout. WeakLayout }
 ]
 
-{ #category : #helpers-building }
+{ #category : #'helpers-building' }
 SlotClassBuilderTest >> make: anUnaryBlock [
 	"I build a class for testing, providing basic default values, but eventually customized by the received unary block."
 
@@ -72,12 +72,12 @@ SlotClassBuilderTest >> make: anUnaryBlock [
 		].
 ]
 
-{ #category : #helpers-building }
+{ #category : #'helpers-building' }
 SlotClassBuilderTest >> makeWithLayout: aClassLayout [
 	^self makeWithLayout: aClassLayout andSlots: {}
 ]
 
-{ #category : #helpers-building }
+{ #category : #'helpers-building' }
 SlotClassBuilderTest >> makeWithLayout: aClassLayout andSlots: someSlots [
 	"
 	I create a class using the Slot class builder given a class layout and a collection of slots.
@@ -114,12 +114,12 @@ SlotClassBuilderTest >> tearDown [
 		unregister.
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> yetAnotherClassName [
 	^ #SlotTestsClassC
 ]
 
-{ #category : #helpers-names }
+{ #category : #'helpers-names' }
 SlotClassBuilderTest >> yetYetAnotherClassName [
 	^ #SlotTestsClassD
 ]

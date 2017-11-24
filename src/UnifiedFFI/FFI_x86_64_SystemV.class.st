@@ -8,8 +8,8 @@ Some small structures are split and passed in registers, according to an algorit
 These ABI details are very important to keep in mind for receiving callbacks.
 "
 Class {
-	#name : #FFI_x86_64_SystemV,
-	#superclass : #FFI_x86_64,
+	#name : #'FFI_x86_64_SystemV',
+	#superclass : #'FFI_x86_64',
 	#category : #UnifiedFFI
 }
 

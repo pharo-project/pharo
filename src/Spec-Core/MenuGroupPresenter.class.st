@@ -24,7 +24,7 @@ Class {
 		'items',
 		'autoRefresh'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -80,7 +80,7 @@ MenuGroupPresenter >> buildWithSpecLayout: aSpecLayout [
 	^ widget
 ]
 
-{ #category : #api-building }
+{ #category : #'api-building' }
 MenuGroupPresenter >> fromSpec: aSpec [
 
 	aSpec addToMenuGroupModel: self

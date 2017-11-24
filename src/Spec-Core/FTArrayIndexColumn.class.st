@@ -18,7 +18,7 @@ Class {
 		'width',
 		'index'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #'instance creation' }

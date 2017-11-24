@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'result'
 	],
-	#category : #Glamour-Morphic-Brick-Announcements
+	#category : #'Glamour-Morphic-Brick-Announcements'
 }
 
 { #category : #accessing }

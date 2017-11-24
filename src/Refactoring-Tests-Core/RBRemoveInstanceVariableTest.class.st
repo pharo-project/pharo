@@ -1,7 +1,7 @@
 Class {
 	#name : #RBRemoveInstanceVariableTest,
 	#superclass : #RBRefactoringTest,
-	#category : #Refactoring-Tests-Core
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #tests }

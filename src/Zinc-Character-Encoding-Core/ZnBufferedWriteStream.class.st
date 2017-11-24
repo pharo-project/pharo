@@ -18,7 +18,7 @@ Class {
 		'buffer',
 		'position'
 	],
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #'instance creation' }
@@ -59,7 +59,7 @@ ZnBufferedWriteStream >> bufferSize [
 		ifFalse: [ buffer size ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBufferedWriteStream >> close [
 	self flushBuffer.
 	stream close
@@ -80,7 +80,7 @@ ZnBufferedWriteStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBufferedWriteStream >> finish [
 	self flushBuffer
 ]
@@ -160,7 +160,7 @@ ZnBufferedWriteStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBufferedWriteStream >> on: writeStream [
 	stream := writeStream.
 	position := 0

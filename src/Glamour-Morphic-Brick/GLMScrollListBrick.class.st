@@ -6,7 +6,7 @@ Class {
 		'visibleIndex',
 		'isUpdating'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
+	#category : #'Glamour-Morphic-Brick-Widgets-Scrollpane'
 }
 
 { #category : #examples }
@@ -103,21 +103,21 @@ GLMScrollListBrick class >> exampleInfinity [
 		openInWindow
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMScrollListBrick >> addBrickBackNoLayout: aBrick [
 
 	self band doNotLayoutDuring: [ self band addBrickBack: aBrick ].
 	^ aBrick
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMScrollListBrick >> addBrickBackNoLayout: aBrick before: anotherBrick [
 
 	self band doNotLayoutDuring: [ self band addBrick: aBrick before: anotherBrick ].
 	^ aBrick
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMScrollListBrick >> addItemMorph: aMorph after: anotherMorph [
 
 	self addBrickBackNoLayout: aMorph.
@@ -126,7 +126,7 @@ GLMScrollListBrick >> addItemMorph: aMorph after: anotherMorph [
 	^ aMorph
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMScrollListBrick >> addItemMorph: aMorph before: anotherMorph [
 
 	self addBrickBackNoLayout: aMorph before: anotherMorph.
@@ -265,13 +265,13 @@ GLMScrollListBrick >> newVerticalScrollbar [
 	^ GLMApproximateScrollbarBrick new
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GLMScrollListBrick >> onChildrenLayouted [
 	
 	self doNotUpdateDuring: [ self update ]
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GLMScrollListBrick >> onLayouted [
 	
 	self doNotUpdateDuring: [ self update ]
@@ -294,7 +294,7 @@ GLMScrollListBrick >> preventOverscrolling [
 		ifTrue: [ self moveBandBottom. "self moveAllSubbricksBy: (self band height - self band lastSubbrick brickBounds bottom)." ^ self update ]
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMScrollListBrick >> removeBrickNoLayout: aBrick [
 
 	self band doNotLayoutDuring: [ self band removeBrick: aBrick ]

@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo
+	#category : #'Athens-Cairo'
 }
 
 { #category : #converting }
@@ -133,7 +133,7 @@ AthensCairoCanvas >> handle [
 	^ handle value
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoCanvas >> initializeWithSurface: anAthensSurface [	
 	super initializeWithSurface: anAthensSurface.
 	self paintMode default.

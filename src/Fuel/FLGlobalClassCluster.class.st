@@ -4,16 +4,16 @@ I am a cluster for classes that should be present when materializing. In other w
 Class {
 	#name : #FLGlobalClassCluster,
 	#superclass : #FLGlobalCluster,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalClassCluster >> materializeInstanceWith: aDecoder [
 
 	^self materializeGlobalClassFrom: aDecoder 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalClassCluster >> serializeInstance: aClass with: anEncoder [
 	
 	self serializeGlobalClass: aClass on: anEncoder

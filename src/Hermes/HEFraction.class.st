@@ -1,7 +1,7 @@
 Class {
 	#name : #HEFraction,
 	#superclass : #HEExportedLiteral,
-	#category : #Hermes-Model
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -27,4 +27,4 @@ HEFraction >> doReadFrom: aReader [
 HEFraction >> doWriteInto: aWriter [
 	value numerator asExportedLiteral writeInto: aWriter.
 	value denominator asExportedLiteral writeInto: aWriter.	
-] 
+]

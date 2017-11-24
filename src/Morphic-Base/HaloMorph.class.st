@@ -21,7 +21,7 @@ Class {
 		'HaloWithDebugHandle',
 		'ShowBoundsInHalo'
 	],
-	#category : #Morphic-Base-Widgets
+	#category : #'Morphic-Base-Widgets'
 }
 
 { #category : #'halo theme' }
@@ -637,7 +637,7 @@ HaloMorph >> basicBoxForSimpleHalos [
 
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 HaloMorph >> blueButtonDown: event [
 	"Transfer the halo to the next likely recipient"
 	target ifNil:[^self delete].
@@ -682,7 +682,7 @@ HaloMorph >> containsPoint: aPoint [
 	^ target ifNil: [super containsPoint: aPoint] ifNotNil: [false]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HaloMorph >> containsPoint: aPoint event: anEvent [
 	"Blue buttons are handled by the halo"
 	(anEvent isMouse and:[anEvent isMouseDown and:[anEvent blueButtonPressed]])
@@ -723,7 +723,7 @@ HaloMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 HaloMorph >> delete [
 	"Delete the halo.  Tell the target that it no longer has the halo; accept any pending edits to the name; and then  actually delete myself"
 
@@ -936,7 +936,7 @@ HaloMorph >> handleAllowanceForIconicHalos [
 	^ 12
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HaloMorph >> handleListenEvent: anEvent [
 	"We listen for possible drop events here to add back those handles after a dup/grab operation"
 
@@ -951,7 +951,7 @@ HaloMorph >> handleSize [
 	^ 20
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 HaloMorph >> handlerForBlueButtonDown: anEvent [
 	"Blue button was clicked within the receiver"
 	^self
@@ -1162,7 +1162,7 @@ HaloMorph >> prepareToTrackCenterOfRotation: evt with: rotationHandle [
 	evt hand showTemporaryCursor: Cursor blank
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 HaloMorph >> rejectsEvent: anEvent [
 	"Return true to reject the given event. Rejecting an event means neither the receiver nor any of it's submorphs will be given any chance to handle it."
 	(super rejectsEvent: anEvent) ifTrue:[^true].
@@ -1273,7 +1273,7 @@ HaloMorph >> simpleFudgeOffset [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 HaloMorph >> startDrag: evt with: dragHandle [
 	"Drag my target without removing it from its owner."
 

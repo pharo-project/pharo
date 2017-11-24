@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterExceptionHandler,
 	#superclass : #Object,
-	#category : #GT-Spotter-Exceptions
+	#category : #'GT-Spotter-Exceptions'
 }
 
 { #category : #public }

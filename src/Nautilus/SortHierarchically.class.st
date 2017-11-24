@@ -107,7 +107,7 @@ SortHierarchically >> indentationFor: anElement [
 	^ (hierarchy detect: [ :node | node element = anElement ]) indent
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SortHierarchically >> setHierarchy: nodes [
 	hierarchy := nodes
 ]

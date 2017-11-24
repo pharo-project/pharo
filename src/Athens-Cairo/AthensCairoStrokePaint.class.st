@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Paints
+	#category : #'Athens-Cairo-Paints'
 }
 
 { #category : #drawing }
@@ -65,7 +65,7 @@ AthensCairoStrokePaint >> dashes: anAlternateCollectionOfLenghts offset: anOffse
 	dashOffset := anOffset asFloat.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoStrokePaint >> initialize [
 	super initialize.
 

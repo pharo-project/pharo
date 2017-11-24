@@ -25,7 +25,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #Athens-Balloon
+	#category : #'Athens-Balloon'
 }
 
 { #category : #'as yet unclassified' }
@@ -56,7 +56,7 @@ FT2GlyphRenderer >> getAdvance [
 	^ pt
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 FT2GlyphRenderer >> initForFont: aFont surface: aSurface [
 
 	self assert: (aFont class == FreeTypeFont).

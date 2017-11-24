@@ -4,7 +4,7 @@ I am PrimitiveFailed, an exception signaled when a primitive fails.
 Class {
 	#name : #PrimitiveFailed,
 	#superclass : #SelectorException,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #printing }

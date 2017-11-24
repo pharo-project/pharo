@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'sourceName'
 	],
-	#category : #Metacello-Core-Members
+	#category : #'Metacello-Core-Members'
 }
 
 { #category : #actions }

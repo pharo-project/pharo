@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'ScreamerRule'
 	],
-	#category : #Renraku-Test
+	#category : #'Renraku-Test'
 }
 
 { #category : #running }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'link'
 	],
-	#category : #Reflectivity-Core
+	#category : #'Reflectivity-Core'
 }
 
 { #category : #accessing }

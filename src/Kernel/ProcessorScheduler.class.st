@@ -19,7 +19,7 @@ Class {
 		'UserInterruptPriority',
 		'UserSchedulingPriority'
 	],
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #'background process' }

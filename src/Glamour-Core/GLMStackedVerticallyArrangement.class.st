@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMStackedVerticallyArrangement,
 	#superclass : #GLMCompositeArrangement,
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #rendering }

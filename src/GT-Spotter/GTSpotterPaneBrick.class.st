@@ -6,7 +6,7 @@ Class {
 		'previewBrick',
 		'arrowBrick'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }

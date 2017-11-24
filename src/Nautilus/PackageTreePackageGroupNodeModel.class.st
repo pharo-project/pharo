@@ -4,7 +4,7 @@ I'm a group node model for the package groups
 Class {
 	#name : #PackageTreePackageGroupNodeModel,
 	#superclass : #PackageTreeGroupModel,
-	#category : #Nautilus-Tree
+	#category : #'Nautilus-Tree'
 }
 
 { #category : #testing }

@@ -1,1 +1,1 @@
-Package { #name : #QualityAssistant-Test }
+Package { #name : #'QualityAssistant-Test' }

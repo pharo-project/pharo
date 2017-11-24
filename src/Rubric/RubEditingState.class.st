@@ -15,10 +15,10 @@ Class {
 		'scrollPivot',
 		'textArea'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubEditingState >> clearUndoManager: aKeyboardEvent [
 	self undoManager reset.
 	^ true
@@ -34,7 +34,7 @@ RubEditingState >> emphasisHere: aListOfTextAttribute [
 	emphasisHere := aListOfTextAttribute ifNotNil: [ :l | l reject: [ :a | RubTextSelectionColor = a class ] ]
 ]
 
-{ #category : #private-debugging }
+{ #category : #'private-debugging' }
 RubEditingState >> exploreUndoManager: aKeyboardEvent [
 	self undoManager inspect.
 	^ true
@@ -111,12 +111,12 @@ RubEditingState >> previousInterval: anInterval [
 
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubEditingState >> redo [
 	^ self undoManager redo 
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubEditingState >> redoArray: doArray undoArray: undoArray [
 	self undoManager isPlugged 
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
@@ -158,7 +158,7 @@ RubEditingState >> textArea: aTextArea [
 
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubEditingState >> undo [
 	^ self undoManager undo 
 ]
@@ -170,7 +170,7 @@ RubEditingState >> undoManager [
 
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 RubEditingState >> undoRedoTransaction: aBlock [
 	self undoManager openRecordGroup.
 	aBlock ensure: [  self undoManager closeRecordGroup ].

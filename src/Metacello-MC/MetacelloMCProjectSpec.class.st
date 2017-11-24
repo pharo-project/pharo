@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'file'
 	],
-	#category : #Metacello-MC-Specs
+	#category : #'Metacello-MC-Specs'
 }
 
 { #category : #'instance creation' }

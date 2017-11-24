@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -139,7 +139,7 @@ RBPackageEnvironment >> packages [
 	^ packages
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPackageEnvironment >> packages: aCollection [
 	packages addAll: aCollection
 ]

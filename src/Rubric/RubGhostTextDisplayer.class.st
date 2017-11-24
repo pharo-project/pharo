@@ -5,7 +5,7 @@ Class {
 		'ghostText',
 		'textColor'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }
@@ -37,7 +37,7 @@ RubGhostTextDisplayer >> computedWidthFrom: aRectangle [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubGhostTextDisplayer >> defaultTextColor. [
 	^ Color lightGray
 ]
@@ -93,7 +93,7 @@ RubGhostTextDisplayer >> manageLayoutInBounds: aRectangle [
 	^ ret
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubGhostTextDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	ghostText := self paragraphProvider defaultGhostTextMorph.

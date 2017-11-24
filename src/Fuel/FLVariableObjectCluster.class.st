@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'variableReferences'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -40,40 +40,40 @@ FLVariableObjectCluster >> addVariableReferenceFrom: anObject to: anotherObject 
 	list add: anotherObject
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariableObjectCluster >> materializeInstanceWith: aDecoder [
 
 	^theClass fuelNew: aDecoder nextEncodedPositiveInteger
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariableObjectCluster >> materializeReferencesOf: anObject with: aDecoder [
 
 	super materializeReferencesOf: anObject with: aDecoder.
 	self materializeReferencesVariablePartOf: anObject with: aDecoder.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariableObjectCluster >> materializeReferencesVariablePartOf: anObject with: aDecoder [
 
 	1 to: anObject basicSize 
 		do: [ :index | anObject basicAt: index put: aDecoder nextEncodedReference ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariableObjectCluster >> serializeInstance: anObject with: anEncoder [
 
 	anEncoder encodePositiveInteger: anObject basicSize
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariableObjectCluster >> serializeReferencesOf: anObject with: anEncoder [
 
 	super serializeReferencesOf: anObject with: anEncoder.
 	self serializeReferencesVariablePartOf: anObject with: anEncoder. 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariableObjectCluster >> serializeReferencesVariablePartOf: anObject with: anEncoder [
 	
 	(self variableReferences at: anObject ifAbsent: [ ^ self ]) do: [ :value |

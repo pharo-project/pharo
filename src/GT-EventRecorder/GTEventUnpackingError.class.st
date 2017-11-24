@@ -11,7 +11,7 @@ Class {
 		'data',
 		'errors'
 	],
-	#category : #GT-EventRecorder-Exceptions
+	#category : #'GT-EventRecorder-Exceptions'
 }
 
 { #category : #'instance creation' }

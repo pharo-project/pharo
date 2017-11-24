@@ -4,7 +4,7 @@ Check for code that checks that a collection is non-empty before sending it an i
 Class {
 	#name : #RBSizeCheckRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

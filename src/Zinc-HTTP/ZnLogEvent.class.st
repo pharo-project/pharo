@@ -18,7 +18,7 @@ Class {
 		'IdCounter',
 		'LogEventAnnouncer'
 	],
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #accessing }

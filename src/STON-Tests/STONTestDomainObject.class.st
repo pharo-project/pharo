@@ -26,7 +26,7 @@ Class {
 		'bytes',
 		'boolean'
 	],
-	#category : #STON-Tests
+	#category : #'STON-Tests'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ STONTestDomainObject class >> dummy [
 
 ]
 
-{ #category : #ston-core }
+{ #category : #'ston-core' }
 STONTestDomainObject class >> stonName [
 	^ #TestDomainObject
 ]
@@ -152,7 +152,7 @@ STONTestDomainObject >> hash [
 								bitXor: (boolean hash bitXor: (float hash bitXor: (bytes hash bitXor: (integer hash bitXor: tags hash)))))))
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONTestDomainObject >> initialize [
 	created := modified := DateAndTime now.
 ]

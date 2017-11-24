@@ -10,7 +10,7 @@ Class {
 		'bindings',
 		'mustDeclareVariables'
 	],
-	#category : #Rubric-Editing-Widgets-Examples
+	#category : #'Rubric-Editing-Widgets-Examples'
 }
 
 { #category : #examples }

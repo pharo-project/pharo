@@ -5,7 +5,7 @@ My sublcasses implement different strategies to update affected methods.
 Class {
 	#name : #AbstractMethodUpdateStrategy,
 	#superclass : #Object,
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #updating }

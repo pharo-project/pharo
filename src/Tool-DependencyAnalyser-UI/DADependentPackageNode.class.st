@@ -4,7 +4,7 @@ A PDDependentPackageNode is used to display a dependent package in a tree.
 Class {
 	#name : #DADependentPackageNode,
 	#superclass : #DAAbstractPackageNode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
 { #category : #api }

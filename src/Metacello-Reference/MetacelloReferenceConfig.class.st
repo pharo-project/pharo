@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#category : #Metacello-Reference
+	#category : #'Metacello-Reference'
 }
 
 { #category : #accessing }

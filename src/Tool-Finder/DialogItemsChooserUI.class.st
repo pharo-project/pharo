@@ -30,7 +30,7 @@ Class {
 		'alreadySearchedSelectedItemsListMaxSize',
 		'alreadySearchedUnselectedItemsListMaxSize'
 	],
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #accessing }
@@ -74,7 +74,7 @@ DialogItemsChooserUI class >> dialogItemsChooserSettingsOn: aBuilder [
 					label: 'Number of the Selected Items in History'.]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DialogItemsChooserUI class >> initialize [
 	super initialize.
 	alreadySearchedUnselectedItemsListMaxSize := 15.

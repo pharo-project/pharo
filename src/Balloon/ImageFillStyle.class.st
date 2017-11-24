@@ -9,7 +9,7 @@ Class {
 		'extent',
 		'offset'
 	],
-	#category : #Balloon-Fills
+	#category : #'Balloon-Fills'
 }
 
 { #category : #'as yet unclassified' }

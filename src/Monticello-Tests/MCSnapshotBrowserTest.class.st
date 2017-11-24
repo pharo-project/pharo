@@ -5,7 +5,7 @@ Class {
 		'model',
 		'morph'
 	],
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #private }

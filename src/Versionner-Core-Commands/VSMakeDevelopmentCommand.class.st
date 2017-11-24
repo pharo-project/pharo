@@ -4,7 +4,7 @@ I'm a command to declare versions as development.
 Class {
 	#name : #VSMakeDevelopmentCommand,
 	#superclass : #VSMakeVersionCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #testing }

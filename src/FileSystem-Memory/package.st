@@ -1,1 +1,1 @@
-Package { #name : #FileSystem-Memory }
+Package { #name : #'FileSystem-Memory' }

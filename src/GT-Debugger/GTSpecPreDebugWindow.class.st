@@ -7,7 +7,7 @@ I receive a instance to a full debugger that I'll open if the user continues deb
 Class {
 	#name : #GTSpecPreDebugWindow,
 	#superclass : #SpecPreDebugWindow,
-	#category : #GT-Debugger-UI
+	#category : #'GT-Debugger-UI'
 }
 
 { #category : #actions }

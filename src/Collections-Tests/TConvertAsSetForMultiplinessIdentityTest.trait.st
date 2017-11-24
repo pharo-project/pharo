@@ -5,7 +5,7 @@ Trait {
 	#name : #TConvertAsSetForMultiplinessIdentityTest,
 	#traits : 'TConvertAsSetForMultiplinessTest',
 	#classTraits : 'TConvertAsSetForMultiplinessTest classTrait',
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

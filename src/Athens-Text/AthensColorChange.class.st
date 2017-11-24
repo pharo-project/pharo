@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : #Athens-Text
+	#category : #'Athens-Text'
 }
 
 { #category : #accessing }

@@ -7,7 +7,7 @@ A referenced type is  some variable that lives in the C heap and is seen in Phar
 Class {
 	#name : #FFIExternalReference,
 	#superclass : #ExternalObject,
-	#category : #UnifiedFFI-Objects
+	#category : #'UnifiedFFI-Objects'
 }
 
 { #category : #finalization }

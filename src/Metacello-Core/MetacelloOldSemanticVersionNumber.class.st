@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloOldSemanticVersionNumber,
 	#superclass : #MetacelloSemanticVersionNumber,
-	#category : #Metacello-Core-Model
+	#category : #'Metacello-Core-Model'
 }
 
 { #category : #private }

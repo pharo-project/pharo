@@ -8,7 +8,7 @@ Class {
 	#superclass : #SystemWindow,
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
 { #category : #'instance creation' }
@@ -34,7 +34,7 @@ StandardWindow >> defaultLabel [
 	^'Window' translated
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardWindow >> delete [
 	"If fullscreen remove the owner too."
 	
@@ -148,7 +148,7 @@ StandardWindow >> newTextEntryFor: aModel getText: getSel setText: setSel help: 
 		help: helpText
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 StandardWindow >> noteNewOwner: aMorph [ 
 	"Go fullscreen if needed."
 
@@ -162,14 +162,14 @@ StandardWindow >> noteNewOwner: aMorph [
 			ifTrue: [self submorphs first roundedCorners: #()]]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardWindow >> open [
 	"Where else would you want to open it?."
 
 	self openInWorld
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardWindow >> openAsIsIn: aWorld [
 	"Sad fixup for dodgy layout."
 
@@ -177,7 +177,7 @@ StandardWindow >> openAsIsIn: aWorld [
 	self allMorphs do: [:m | m layoutChanged]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardWindow >> openFullscreen [
 	"Open the receiver in a FullscreenMorph."
 

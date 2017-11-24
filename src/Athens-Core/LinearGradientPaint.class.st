@@ -18,7 +18,7 @@ Class {
 		'start',
 		'stop'
 	],
-	#category : #Athens-Core-Paints
+	#category : #'Athens-Core-Paints'
 }
 
 { #category : #'as yet unclassified' }

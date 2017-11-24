@@ -19,7 +19,7 @@ Class {
 		'privateObjectStack',
 		'privateFirstMapper'
 	],
-	#category : #Fuel-Core
+	#category : #'Fuel-Core'
 }
 
 { #category : #'instance creation' }
@@ -41,7 +41,7 @@ FLAnalysis >> fuelAccept: aGeneralMapper [
 	^ aGeneralMapper visitSubstitution: self by: nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLAnalysis >> initializeWith: aMapper private: privateMapper root: anObject [
 
 	self initialize.

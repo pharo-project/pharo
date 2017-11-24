@@ -4,7 +4,7 @@ A MCPoolImportDefinition represents a pool definition.
 Class {
 	#name : #MCPoolImportDefinition,
 	#superclass : #MCVariableDefinition,
-	#category : #Monticello-Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #accessing }

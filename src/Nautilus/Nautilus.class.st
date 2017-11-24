@@ -125,7 +125,7 @@ Nautilus class >> icon [
 	^ AbstractNautilusUI icon
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Nautilus class >> initialize [
 	SessionManager default registerToolClassNamed: self name
 ]

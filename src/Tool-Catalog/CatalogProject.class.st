@@ -29,7 +29,7 @@ Class {
 	#classInstVars : [
 		'repositoryURLToNameMappings'
 	],
-	#category : #Tool-Catalog-Base
+	#category : #'Tool-Catalog-Base'
 }
 
 { #category : #private }
@@ -57,7 +57,7 @@ CatalogProject class >> fromDictionary: aDictionary [
 		yourself
 ]
 
-{ #category : #GT-InspectorExtensions-Core }
+{ #category : #'GT-InspectorExtensions-Core' }
 CatalogProject class >> gtBasicExample [
 	<gtExample>
 	^ self new fromDictionary: 
@@ -137,7 +137,7 @@ CatalogProject >> fullDescription [
 				stream << self contactInfo ] ]
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 CatalogProject >> gtInspectorDetailsIn: composite [
 	<gtInspectorPresentationOrder: 30>
 	^ composite table
@@ -230,7 +230,7 @@ CatalogProject >> repositoryUrl [
 	^ repositoryUrl
 ]
 
-{ #category : #gt-spotter-extension }
+{ #category : #'gt-spotter-extension' }
 CatalogProject >> spotterPreviewIn: aComposite [
 	<spotterPreview: 10>
 	^ aComposite table

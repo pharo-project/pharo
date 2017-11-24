@@ -8,7 +8,7 @@ Class {
 		'ClassSideOnlyVariable',
 		'ClassVariable'
 	],
-	#category : #Refactoring-Tests-Environment
+	#category : #'Refactoring-Tests-Environment'
 }
 
 { #category : #accessing }
@@ -125,7 +125,7 @@ RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
 	
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testAndEnvironment [
 	| originalEnvironment objectPrintStringEnvironment andEnvironment |
 	originalEnvironment := universalEnvironment referencesTo: #printOn:.
@@ -146,7 +146,7 @@ RBBrowserEnvironmentTest >> testAndEnvironment [
 						asSortedCollection
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testAndEnvironmentWithStoreOn [
 	| originalEnvironment objectPrintStringEnvironment andEnvironment |
 	originalEnvironment := universalEnvironment referencesTo: #storeOn:.
@@ -167,12 +167,12 @@ RBBrowserEnvironmentTest >> testAndEnvironmentWithStoreOn [
 						asSortedCollection
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testBrowserEnvironment [
 	self universalTestFor: RBBrowserEnvironment new
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testCategoryEnvironment [
 	| aCategoryEnvironment |
 	self skip: 'Use RBPackageEnvironment instead.'.
@@ -183,7 +183,7 @@ RBBrowserEnvironmentTest >> testCategoryEnvironment [
 	self assert: (aCategoryEnvironment implementorsOf: #printString) numberSelectors equals: 1
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testClassEnvironment [
 	| aClassEnvironment |
 	aClassEnvironment := RBClassEnvironment 
@@ -260,7 +260,7 @@ RBBrowserEnvironmentTest >> testConstructedSelectorEnvironment [
 	self assert: newEnvironment numberClasses = 2
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	| printString wrapper |
 	printString := RBBrowserEnvironment new referencesTo: #printString.
@@ -291,7 +291,7 @@ RBBrowserEnvironmentTest >> testMatches [
 				= environmentEnvironment numberSelectors
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testNotEnvironment [
 	| notPrintStringEnvironment printStringEnvironment kernelEnvironment notKernelEnvironment|
 	printStringEnvironment := universalEnvironment referencesTo: #printString.
@@ -309,7 +309,7 @@ RBBrowserEnvironmentTest >> testNotEnvironment [
 	self assert: (notKernelEnvironment & kernelEnvironment) packages isEmpty
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testNotEnvironmentWithClassEnvironments [
 	| numberEnvironment notNumberEnvironment |
 	numberEnvironment := (RBBrowserEnvironment new) forClasses: Number withAllSubclasses.
@@ -321,7 +321,7 @@ RBBrowserEnvironmentTest >> testNotEnvironmentWithClassEnvironments [
 	self assert: (notNumberEnvironment not includesClass: Number)
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testOrEnvironment [
 	| env1 env2 orEnvironment |
 	env2 := #printOn:.
@@ -343,7 +343,7 @@ RBBrowserEnvironmentTest >> testOrEnvironment [
 
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testPackageEnvironment [
 	| aPackageEnvironment |
 	aPackageEnvironment := universalEnvironment
@@ -352,14 +352,14 @@ RBBrowserEnvironmentTest >> testPackageEnvironment [
 	self assert: (aPackageEnvironment implementorsOf: #testPackageEnvironment) numberSelectors equals: 1
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testPragmaEnvironment [
 	| aPragmaEnvironment |
 	aPragmaEnvironment := universalEnvironment forPragmas: #(primitive:).
 	self universalTestFor: aPragmaEnvironment
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testProtocolEnvironment [
 	| aProtocolEnvironment size |
 	aProtocolEnvironment := RBProtocolEnvironment 
@@ -407,7 +407,7 @@ RBBrowserEnvironmentTest >> testSelectMethods [
 				= (RBBrowserEnvironment new referencesTo: #environment) numberSelectors
 ]
 
-{ #category : #testing-environments }
+{ #category : #'testing-environments' }
 RBBrowserEnvironmentTest >> testSelectorEnvironment [
 	| printString |
 	printString := RBBrowserEnvironment new referencesTo: #printString.

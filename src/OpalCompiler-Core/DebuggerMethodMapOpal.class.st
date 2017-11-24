@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'methodNode'
 	],
-	#category : #OpalCompiler-Core-FrontEnd
+	#category : #'OpalCompiler-Core-FrontEnd'
 }
 
 { #category : #'instance creation' }
@@ -24,7 +24,7 @@ DebuggerMethodMapOpal class >> forMethod: aMethod [ "<CompiledMethod>"
 				
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DebuggerMethodMapOpal >> forMethod: aCompiledMethod [ 
 	methodNode := aCompiledMethod ast
 ]

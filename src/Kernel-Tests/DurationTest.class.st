@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'aDuration'
 	],
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #coverage }

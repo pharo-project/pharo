@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'test'
 	],
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #'instance creation' }

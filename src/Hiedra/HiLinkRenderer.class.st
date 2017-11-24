@@ -11,7 +11,7 @@ Class {
 		'linkBuilder',
 		'rulerBuilder'
 	],
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #accessing }

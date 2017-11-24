@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'users'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #'adding/removing users' }

@@ -4,7 +4,7 @@ A node in the file list grid
 Class {
 	#name : #FileListGridNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : #Tool-FileList
+	#category : #'Tool-FileList'
 }
 
 { #category : #'user interface' }

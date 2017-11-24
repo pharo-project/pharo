@@ -4,7 +4,7 @@ Abstract class used to display groups in a tree.
 Class {
 	#name : #VSGroupNode,
 	#superclass : #TreeNodePresenter,
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #accessing }

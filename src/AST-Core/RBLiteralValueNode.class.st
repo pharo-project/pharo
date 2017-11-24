@@ -15,7 +15,7 @@ Class {
 		'value',
 		'sourceText'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -81,7 +81,7 @@ RBLiteralValueNode >> value [
 	^ value
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 
 	value := aValue.
@@ -89,7 +89,7 @@ RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 	stop := anotherPosition.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [ 
 
 	self value: aValue start: aPosition stop: anotherPosition.

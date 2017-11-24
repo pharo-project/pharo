@@ -8,7 +8,7 @@ I contains some functionnalities used by all the Glamour related data sources li
 "
 Trait {
 	#name : #TGLMFastTable,
-	#category : #Glamour-FastTable-Model
+	#category : #'Glamour-FastTable-Model'
 }
 
 { #category : #'accessing - cache' }

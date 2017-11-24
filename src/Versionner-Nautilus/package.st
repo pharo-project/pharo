@@ -1,1 +1,1 @@
-Package { #name : #Versionner-Nautilus }
+Package { #name : #'Versionner-Nautilus' }

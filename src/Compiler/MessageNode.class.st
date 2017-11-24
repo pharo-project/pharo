@@ -33,7 +33,7 @@ Class {
 		'StdTypers',
 		'ThenFlag'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #'class initialization' }
@@ -710,7 +710,7 @@ MessageNode >> receiver: rcvr arguments: args precedence: p [
 	precedence := p
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MessageNode >> receiver: rcvr selector: selNode arguments: args precedence: p [ 
 	"Decompile."
 
@@ -726,7 +726,7 @@ MessageNode >> receiver: rcvr selector: selNode arguments: args precedence: p [
 	"We could test code being decompiled, but the compiler should've checked already. And where to send the complaint?"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MessageNode >> receiver: rcvr selector: aSelector arguments: args precedence: p from: encoder [ 
 	"Compile."
 
@@ -748,7 +748,7 @@ MessageNode >> receiver: rcvr selector: aSelector arguments: args precedence: p 
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MessageNode >> receiver: rcvr selector: selName arguments: args precedence: p from: encoder sourceRange: range [
 	"Compile."
 	encoder noteSourceRange: range forNode: self.
@@ -765,7 +765,7 @@ MessageNode >> selector [
 	^selector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MessageNode >> selector: sel [
 	selector := sel
 ]

@@ -1,1 +1,1 @@
-Package { #name : #ImportingResource-Help }
+Package { #name : #'ImportingResource-Help' }

@@ -9,7 +9,7 @@ Class {
 		'position',
 		'readLimit'
 	],
-	#category : #Collections-Streams
+	#category : #'Collections-Streams'
 }
 
 { #category : #'instance creation' }

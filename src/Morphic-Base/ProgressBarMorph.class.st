@@ -39,7 +39,7 @@ Class {
 		'DefaultHeight',
 		'DefaultWidth'
 	],
-	#category : #Morphic-Base-ProgressBar
+	#category : #'Morphic-Base-ProgressBar'
 }
 
 { #category : #initialization }
@@ -55,7 +55,7 @@ ProgressBarMorph class >> defaultWidth: aNumber [
 
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 ProgressBarMorph class >> from: startNumber to: endNumber [
 
 	^ self new

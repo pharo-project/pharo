@@ -11,7 +11,7 @@ Class {
 		'interactive',
 		'text'
 	],
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #running }

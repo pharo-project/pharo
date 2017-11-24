@@ -10,7 +10,7 @@ Class {
 		'#director => ToOneRelationSlot inverse: #directedMovies inClass: #SlotExamplePerson',
 		'#actors => ToManyRelationSlot inverse: #actedInMovies inClass: #SlotExamplePerson'
 	],
-	#category : #Slot-Tests-Associations
+	#category : #'Slot-Tests-Associations'
 }
 
 { #category : #'instance creation' }
@@ -31,7 +31,7 @@ SlotExampleMovie >> actors: anObject [
 	actors := anObject
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 SlotExampleMovie >> addActor: aPerson [
 
 	^actors add: aPerson
@@ -64,7 +64,7 @@ SlotExampleMovie >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 SlotExampleMovie >> removeActor: aPerson [
 
 	^actors remove: aPerson

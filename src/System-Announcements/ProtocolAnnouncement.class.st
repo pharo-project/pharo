@@ -8,7 +8,7 @@ Class {
 		'protocol',
 		'classReorganized'
 	],
-	#category : #System-Announcements-System-Protocols
+	#category : #'System-Announcements-System-Protocols'
 }
 
 { #category : #accessing }

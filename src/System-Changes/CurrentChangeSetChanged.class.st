@@ -8,7 +8,7 @@ Class {
 		'new',
 		'old'
 	],
-	#category : #System-Changes
+	#category : #'System-Changes'
 }
 
 { #category : #accessing }

@@ -1,1 +1,1 @@
-Package { #name : #GT-SpotterExtensions-Core }
+Package { #name : #'GT-SpotterExtensions-Core' }

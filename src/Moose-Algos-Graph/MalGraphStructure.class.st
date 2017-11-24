@@ -5,7 +5,7 @@ Class {
 		'nodeClass',
 		'edgeClass'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #configuration }

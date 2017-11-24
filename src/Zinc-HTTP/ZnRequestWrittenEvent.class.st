@@ -8,7 +8,7 @@ Class {
 		'request',
 		'duration'
 	],
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #accessing }

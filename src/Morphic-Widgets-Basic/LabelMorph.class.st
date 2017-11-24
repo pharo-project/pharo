@@ -11,7 +11,7 @@ Class {
 		'model',
 		'disabledStyle'
 	],
-	#category : #Morphic-Widgets-Basic
+	#category : #'Morphic-Widgets-Basic'
 }
 
 { #category : #examples }

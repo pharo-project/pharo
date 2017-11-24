@@ -19,7 +19,7 @@ Class {
 		'permutation',
 		'implementors'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #testing }
@@ -124,7 +124,7 @@ RBChangeMethodNameRefactoring >> renameMessageSends [
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBChangeMethodNameRefactoring >> renameMethod: aSelector in: aClass to: newSel permutation: aMap [ 
 	oldSelector := aSelector asSymbol.
 	newSelector := newSel asSymbol.

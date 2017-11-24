@@ -9,7 +9,7 @@ To bridge the gap between the two, Nautilus offers to inspect instance returned 
 Class {
 	#name : #MethodSampleInstanceAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #order }

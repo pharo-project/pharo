@@ -8,7 +8,7 @@ Class {
 		'mutex',
 		'forkedProcesses'
 	],
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #helpers }

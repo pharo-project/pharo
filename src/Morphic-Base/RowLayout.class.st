@@ -8,7 +8,7 @@ Class {
 		'cachedMinExtent',
 		'cachedMinExtents'
 	],
-	#category : #Morphic-Base-Layouts
+	#category : #'Morphic-Base-Layouts'
 }
 
 { #category : #'as yet unclassified' }

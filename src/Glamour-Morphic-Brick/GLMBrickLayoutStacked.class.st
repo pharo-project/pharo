@@ -5,7 +5,7 @@ Class {
 		'index',
 		'position'
 	],
-	#category : #Glamour-Morphic-Brick-Announcements
+	#category : #'Glamour-Morphic-Brick-Announcements'
 }
 
 { #category : #accessing }

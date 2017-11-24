@@ -2,14 +2,14 @@
 A structure that contains system-dependent information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo,
+	#name : #'SDL_SysWMinfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_INFO',
 		'OFFSET_SUBSYSTEM',
 		'OFFSET_VERSION'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

@@ -16,7 +16,7 @@ Class {
 		'buttonRemoveAll',
 		'textPackageField'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #specs }

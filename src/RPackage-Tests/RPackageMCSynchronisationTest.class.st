@@ -14,7 +14,7 @@ Class {
 		'emptyOrganizer',
 		'oldAnnouncer'
 	],
-	#category : #RPackage-Tests
+	#category : #'RPackage-Tests'
 }
 
 { #category : #utilities }

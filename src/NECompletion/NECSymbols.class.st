@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'cachedSymbols'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #private }

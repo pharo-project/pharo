@@ -7,7 +7,7 @@ self openOn: ProtoObject new
 Class {
 	#name : #GTProtoObjectVariablesBrowser,
 	#superclass : #GTRawObjectVariablesBrowser,
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'private building' }

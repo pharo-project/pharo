@@ -6,7 +6,7 @@ To specify a help topic a debugger has to override the class side method #helpCl
 Class {
 	#name : #GTHelpDebugAction,
 	#superclass : #DebugAction,
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

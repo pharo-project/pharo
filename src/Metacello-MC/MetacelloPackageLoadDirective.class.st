@@ -5,7 +5,7 @@ Class {
 		'resolvedReference',
 		'externalReference'
 	],
-	#category : #Metacello-MC-Directives
+	#category : #'Metacello-MC-Directives'
 }
 
 { #category : #accessing }
@@ -65,7 +65,7 @@ MetacelloPackageLoadDirective >> resolvedReference: anObject [
 	resolvedReference := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloPackageLoadDirective >> spec: aPackageSpec externalReference: anExternalReference loader: aLoader [
 
 	super spec: aPackageSpec loader: aLoader.

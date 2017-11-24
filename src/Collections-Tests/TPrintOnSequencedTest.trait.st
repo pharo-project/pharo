@@ -5,7 +5,7 @@ Trait {
 	#name : #TPrintOnSequencedTest,
 	#traits : 'TPrintTest',
 	#classTraits : 'TPrintTest classTrait',
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

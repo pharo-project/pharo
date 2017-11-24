@@ -11,7 +11,7 @@ Class {
 		'presentation',
 		'glmPres'
 	],
-	#category : #Glamour-SpecIntegration
+	#category : #'Glamour-SpecIntegration'
 }
 
 { #category : #specs }

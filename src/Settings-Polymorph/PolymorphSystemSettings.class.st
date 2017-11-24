@@ -16,7 +16,7 @@ Class {
 		'ShowDesktopLogo',
 		'UseDesktopGradientFill'
 	],
-	#category : #Settings-Polymorph
+	#category : #'Settings-Polymorph'
 }
 
 { #category : #settings }

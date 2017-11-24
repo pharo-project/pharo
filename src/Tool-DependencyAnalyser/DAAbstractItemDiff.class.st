@@ -11,7 +11,7 @@ Class {
 		'diff',
 		'removed'
 	],
-	#category : #Tool-DependencyAnalyser-Diff
+	#category : #'Tool-DependencyAnalyser-Diff'
 }
 
 { #category : #'instance creation' }

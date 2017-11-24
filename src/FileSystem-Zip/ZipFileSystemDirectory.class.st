@@ -4,7 +4,7 @@ I represent a zip file system entry for a directory. Together with ZipFileSystem
 Class {
 	#name : #ZipFileSystemDirectory,
 	#superclass : #MemoryFileSystemDirectory,
-	#category : #FileSystem-Zip
+	#category : #'FileSystem-Zip'
 }
 
 { #category : #creation }

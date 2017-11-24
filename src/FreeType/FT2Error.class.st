@@ -8,7 +8,7 @@ Class {
 		'errorCode',
 		'errorString'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }
 
 { #category : #accessing }

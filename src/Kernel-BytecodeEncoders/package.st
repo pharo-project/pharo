@@ -1,1 +1,1 @@
-Package { #name : #Kernel-BytecodeEncoders }
+Package { #name : #'Kernel-BytecodeEncoders' }

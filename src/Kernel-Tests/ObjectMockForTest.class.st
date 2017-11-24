@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'variable'
 	],
-	#category : #Kernel-Tests-Objects
+	#category : #'Kernel-Tests-Objects'
 }
 
 { #category : #accessing }

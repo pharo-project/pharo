@@ -1,1 +1,1 @@
-Package { #name : #Zinc-Resource-Meta-Core }
+Package { #name : #'Zinc-Resource-Meta-Core' }

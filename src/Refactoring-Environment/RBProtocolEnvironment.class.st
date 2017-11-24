@@ -11,7 +11,7 @@ Class {
 		'class',
 		'protocols'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -28,7 +28,7 @@ RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protoc
 		class: aClass protocols: aCollection; yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBProtocolEnvironment >> class: aClass protocols: aCollection [
 	class := aClass.
 	protocols := aCollection

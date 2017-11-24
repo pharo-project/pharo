@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'collection'
 	],
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #utilities }
@@ -63,7 +63,7 @@ OCClosureTests >> testBlockTemps [
 	self assert: block2 value = 2
 ]
 
-{ #category : #testing-empty }
+{ #category : #'testing-empty' }
 OCClosureTests >> testEmptyBlockOneArgument [
 	self
 		assert: (self class compiler evaluate: '[ :a ] value: 1') isNil
@@ -76,7 +76,7 @@ OCClosureTests >> testEmptyBlockOneArgument [
 		description: 'Empty blocks in ST-80 should return nil'
 ]
 
-{ #category : #testing-empty }
+{ #category : #'testing-empty' }
 OCClosureTests >> testEmptyBlockTwoArguments [
 	self
 		assert: (self class compiler evaluate: '[ :a :b ] value: 1 value: 2') isNil
@@ -89,7 +89,7 @@ OCClosureTests >> testEmptyBlockTwoArguments [
 		description: 'Empty blocks in ST-80 should return nil'
 ]
 
-{ #category : #testing-empty }
+{ #category : #'testing-empty' }
 OCClosureTests >> testEmptyBlockZeroArguments [
 	self
 		assert: (self class compiler evaluate: '[ ] value') isNil
@@ -132,14 +132,14 @@ OCClosureTests >> testMethodTemp [
 	self assert: block2 value = 2
 ]
 
-{ #category : #testing-todo }
+{ #category : #'testing-todo' }
 OCClosureTests >> testToDoArgument [
 	1 to: 5 do: [ :index |
 		collection add: [ index ] ].
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #testing-todo }
+{ #category : #'testing-todo' }
 OCClosureTests >> testToDoArgumentNotInlined [
 	| block |
 	block := [ :index |
@@ -148,7 +148,7 @@ OCClosureTests >> testToDoArgumentNotInlined [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #testing-todo }
+{ #category : #'testing-todo' }
 OCClosureTests >> testToDoInsideTemp [
 	1 to: 5 do: [ :index | 
 		| temp | 
@@ -157,7 +157,7 @@ OCClosureTests >> testToDoInsideTemp [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #testing-todo }
+{ #category : #'testing-todo' }
 OCClosureTests >> testToDoInsideTempNotInlined [
 	| block |
 	block := [ :index | 
@@ -168,7 +168,7 @@ OCClosureTests >> testToDoInsideTempNotInlined [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #testing-todo }
+{ #category : #'testing-todo' }
 OCClosureTests >> testToDoOutsideTemp [
 	| temp |
 	1 to: 5 do: [ :index | 
@@ -177,7 +177,7 @@ OCClosureTests >> testToDoOutsideTemp [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #testing-todo }
+{ #category : #'testing-todo' }
 OCClosureTests >> testToDoOutsideTempNotInlined [
 	| block temp |
 	block := [ :index | 
@@ -187,7 +187,7 @@ OCClosureTests >> testToDoOutsideTempNotInlined [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileModificationAfter [
 	| index |
 	index := 0.
@@ -197,7 +197,7 @@ OCClosureTests >> testWhileModificationAfter [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileModificationAfterNotInlined [
 	| index block |
 	index := 0.
@@ -208,7 +208,7 @@ OCClosureTests >> testWhileModificationAfterNotInlined [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileModificationBefore [
 	| index |
 	index := 0.
@@ -218,7 +218,7 @@ OCClosureTests >> testWhileModificationBefore [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileModificationBeforeNotInlined [
 	| index block |
 	index := 0.
@@ -229,7 +229,7 @@ OCClosureTests >> testWhileModificationBeforeNotInlined [
 	self assertValues: #(5 5 5 5 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileWithTemp [
 	| index |
 	index := 0.
@@ -240,7 +240,7 @@ OCClosureTests >> testWhileWithTemp [
 	self assertValues: #(1 2 3 4 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileWithTempIsNil [
 	"self debug: #testWhileWithTempIsNil"
 	| index |
@@ -253,7 +253,7 @@ OCClosureTests >> testWhileWithTempIsNil [
 	self assertValues: #(nil 1 nil 2 nil 3 nil 4 nil 5)
 ]
 
-{ #category : #testing-while }
+{ #category : #'testing-while' }
 OCClosureTests >> testWhileWithTempNotInlined [
 	| index block |
 	index := 0.

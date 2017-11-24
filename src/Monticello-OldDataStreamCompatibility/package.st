@@ -1,1 +1,1 @@
-Package { #name : #Monticello-OldDataStreamCompatibility }
+Package { #name : #'Monticello-OldDataStreamCompatibility' }

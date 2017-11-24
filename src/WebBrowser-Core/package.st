@@ -1,1 +1,1 @@
-Package { #name : #WebBrowser-Core }
+Package { #name : #'WebBrowser-Core' }

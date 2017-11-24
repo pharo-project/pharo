@@ -24,7 +24,7 @@ Class {
 		'scrollpane',
 		'shouldLayoutMorphs'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
+	#category : #'Glamour-Morphic-Brick-Widgets-Scrollpane'
 }
 
 { #category : #accessing }
@@ -41,7 +41,7 @@ GLMScrollPaneBandBrick >> layoutMorphs: aBoolean [
 	shouldLayoutMorphs := aBoolean 
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GLMScrollPaneBandBrick >> onChildrenLayouted [
 	super onChildrenLayouted.
 	

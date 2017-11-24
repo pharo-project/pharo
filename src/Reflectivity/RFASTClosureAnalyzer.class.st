@@ -4,7 +4,7 @@ We need to analyse the #after hook: it is a block
 Class {
 	#name : #RFASTClosureAnalyzer,
 	#superclass : #OCASTClosureAnalyzer,
-	#category : #Reflectivity-Compiler
+	#category : #'Reflectivity-Compiler'
 }
 
 { #category : #visiting }

@@ -7,7 +7,7 @@ Instance Variables
 Class {
 	#name : #StickynessBugsTest,
 	#superclass : #MorphicUIBugTest,
-	#category : #Morphic-Tests-Bugs
+	#category : #'Morphic-Tests-Bugs'
 }
 
 { #category : #tests }

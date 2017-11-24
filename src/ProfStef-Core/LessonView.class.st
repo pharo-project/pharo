@@ -11,7 +11,7 @@ Class {
 		'window',
 		'sourceTextModel'
 	],
-	#category : #ProfStef-Core
+	#category : #'ProfStef-Core'
 }
 
 { #category : #gui }

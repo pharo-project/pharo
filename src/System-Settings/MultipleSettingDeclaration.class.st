@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'domainValues'
 	],
-	#category : #System-Settings-Core
+	#category : #'System-Settings-Core'
 }
 
 { #category : #accessing }

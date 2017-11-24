@@ -2,13 +2,13 @@
 I represent a handler for a joystick coming from SDL2.
 "
 Class {
-	#name : #SDL_Joystick,
+	#name : #'SDL_Joystick',
 	#superclass : #SDL2Handle,
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #closing }

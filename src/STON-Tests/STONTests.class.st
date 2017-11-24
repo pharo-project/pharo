@@ -5,7 +5,7 @@ STONTests tests the API offered by STON.
 Class {
 	#name : #STONTests,
 	#superclass : #TestCase,
-	#category : #STON-Tests
+	#category : #'STON-Tests'
 }
 
 { #category : #utilities }

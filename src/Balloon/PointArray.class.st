@@ -7,7 +7,7 @@ Class {
 	#type : #words,
 	#traits : 'TPointAccess',
 	#classTraits : 'TPointAccess classTrait',
-	#category : #Balloon-Collections
+	#category : #'Balloon-Collections'
 }
 
 { #category : #'instance creation' }

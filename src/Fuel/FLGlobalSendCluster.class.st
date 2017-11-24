@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'globalSends'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #mapping }
@@ -38,13 +38,13 @@ FLGlobalSendCluster >> add: anObject name: globalName selector: selector traceWi
 		ifAbsentPut: [ Association key: globalName value: selector ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLGlobalSendCluster >> initializeAnalyzing [
 	super initializeAnalyzing.
 	globalSends := IdentityDictionary new.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalSendCluster >> materializeInstanceWith: aDecoder [
 
 	| global selector |
@@ -53,7 +53,7 @@ FLGlobalSendCluster >> materializeInstanceWith: aDecoder [
 	^ global perform: selector
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLGlobalSendCluster >> serializeInstance: anObject with: anEncoder [
 	
 	| globalSend |

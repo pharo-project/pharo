@@ -4,7 +4,7 @@ The method overrided a deprecated method. This is a sign that an API has changed
 Class {
 	#name : #OverridesDeprecatedMethodRule,
 	#superclass : #ReAbstractRule,
-	#category : #Kernel-Rules
+	#category : #'Kernel-Rules'
 }
 
 { #category : #testing }

@@ -11,7 +11,7 @@ Class {
 		'navigator',
 		'oldSystemAnnouncer'
 	],
-	#category : #Tests-System
+	#category : #'Tests-System'
 }
 
 { #category : #testing }
@@ -24,7 +24,7 @@ SystemNavigationTest >> classFactory [
 	^classFactory
 ]
 
-{ #category : #setUp-tearDown }
+{ #category : #'setUp-tearDown' }
 SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryWithOrganization newWithOrganization: self organizationToTest
 ]
@@ -35,7 +35,7 @@ SystemNavigationTest >> createMethodNamed: selector realParent: class [
 	^ RGMethodDefinition realClass: class selector: selector
 ]
 
-{ #category : #setUp-tearDown }
+{ #category : #'setUp-tearDown' }
 SystemNavigationTest >> createSystemNavigationToTest [
 	^SystemNavigation new
 ]

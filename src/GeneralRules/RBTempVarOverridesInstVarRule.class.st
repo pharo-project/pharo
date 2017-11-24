@@ -4,10 +4,10 @@ Finds methods whose temporary variables override an instance variable. This caus
 Class {
 	#name : #RBTempVarOverridesInstVarRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
-{ #category : #testing-interest }
+{ #category : #'testing-interest' }
 RBTempVarOverridesInstVarRule class >> checksMethod [
 	^ true
 ]
@@ -38,7 +38,7 @@ RBTempVarOverridesInstVarRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 ]
 
-{ #category : #running-helpers }
+{ #category : #'running-helpers' }
 RBTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
 
 	^ (ReTrivialCritique

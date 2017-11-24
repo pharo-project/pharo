@@ -7,7 +7,7 @@ It is similar to ShouldBeImplemented, with a slightly different meaning.
 Class {
 	#name : #NotYetImplemented,
 	#superclass : #SelectorException,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #printing }

@@ -4,7 +4,7 @@ I reify the sender for message sends and methods
 Class {
 	#name : #RFSenderReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parameter'
 	],
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #accessing }

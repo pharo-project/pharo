@@ -9,7 +9,7 @@ Class {
 		'charCode',
 		'scanCode'
 	],
-	#category : #Morphic-Core-Events
+	#category : #'Morphic-Core-Events'
 }
 
 { #category : #comparing }

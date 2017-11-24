@@ -18,7 +18,7 @@ a min: b
 Class {
 	#name : #RBMinMaxRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

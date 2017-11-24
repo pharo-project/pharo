@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMTreeBrick,
 	#superclass : #GLMBandBrick,
-	#category : #Glamour-Morphic-Brick-Widgets-UI
+	#category : #'Glamour-Morphic-Brick-Widgets-UI'
 }
 
 { #category : #examples }

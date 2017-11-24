@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'composite'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #'instance creation' }

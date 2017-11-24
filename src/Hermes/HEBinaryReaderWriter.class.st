@@ -19,7 +19,7 @@ HEBinaryReaderWriter >> byteStringSize: aString [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 HEBinaryReaderWriter >> close [
 	self stream close.
 ]

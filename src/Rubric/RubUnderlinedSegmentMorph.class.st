@@ -6,7 +6,7 @@ Class {
 		'straight',
 		'underlineShape'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #drawing }

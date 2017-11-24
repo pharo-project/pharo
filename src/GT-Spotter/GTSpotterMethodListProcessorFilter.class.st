@@ -14,7 +14,7 @@ Class {
 		'selectedMethodSignatures',
 		'configurationBlocks'
 	],
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #adding }

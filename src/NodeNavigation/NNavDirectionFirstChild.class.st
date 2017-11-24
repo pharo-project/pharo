@@ -4,7 +4,7 @@ I navigate throw the childs picking allways the firs one
 Class {
 	#name : #NNavDirectionFirstChild,
 	#superclass : #NNavDirectionChild,
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #builder }

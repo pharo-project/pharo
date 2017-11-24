@@ -4,7 +4,7 @@ I model thisContext variables
 Class {
 	#name : #OCThisContextVariable,
 	#superclass : #OCSpecialVariable,
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }

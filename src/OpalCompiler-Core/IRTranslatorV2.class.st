@@ -11,7 +11,7 @@ Class {
 		'tempVectorStack',
 		'compilationContext'
 	],
-	#category : #OpalCompiler-Core-IR-Manipulation
+	#category : #'OpalCompiler-Core-IR-Manipulation'
 }
 
 { #category : #'instance creation' }

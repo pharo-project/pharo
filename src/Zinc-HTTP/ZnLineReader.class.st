@@ -15,7 +15,7 @@ Class {
 		'position',
 		'limit'
 	],
-	#category : #Zinc-HTTP-Streaming
+	#category : #'Zinc-HTTP-Streaming'
 }
 
 { #category : #'instance creation' }
@@ -48,7 +48,7 @@ ZnLineReader >> nextLine [
 	^ buffer copyFrom: 1 to: position 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnLineReader >> on: readStream [
 	stream := readStream.
 	buffer := String new: 64.

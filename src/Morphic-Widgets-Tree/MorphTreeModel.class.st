@@ -14,7 +14,7 @@ Class {
 		'isCheckList',
 		'enabled'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #examples }
@@ -114,12 +114,12 @@ MorphTreeModel >> beCheckList [
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> collapseAll [
 	self  requestView:  MorphTreeChangeRequest collapseAll
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> collapseNodePath: aNodePath [
 	self  requestView: (MorphTreeChangeRequest collapseNodePath: aNodePath)
 ]
@@ -218,28 +218,28 @@ MorphTreeModel >> enabled: aBoolean [
 			self  requestView: MorphTreeChangeRequest enabled]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> expandAll [
 	self  requestView: MorphTreeChangeRequest expandAll 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> expandAllFromNode: aNode [
 	self  requestView: (MorphTreeChangeRequest expandAllFromNode: aNode)
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> expandItemPath: anItemPath [
 	self  requestView: (MorphTreeChangeRequest expandItemPath: anItemPath)
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> expandNodePath: aNodePath [
 	self requestView: (MorphTreeChangeRequest expandNodePath:  aNodePath)
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeModel >> expandRoots [
 	self requestView: (MorphTreeChangeRequest expandRoots)
 ]
@@ -256,7 +256,7 @@ MorphTreeModel >> headerLabel: aString [
 	headerLabel := aString
 ]
 
-{ #category : #help-text }
+{ #category : #'help-text' }
 MorphTreeModel >> helpText [
 
 	^ nil

@@ -4,7 +4,7 @@ Recompile
 Class {
 	#name : #GoferRecompile,
 	#superclass : #GoferWorking,
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #running }

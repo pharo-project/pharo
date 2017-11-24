@@ -8,7 +8,7 @@ Class {
 		'color',
 		'width'
 	],
-	#category : #Hiedra-Builders
+	#category : #'Hiedra-Builders'
 }
 
 { #category : #accessing }

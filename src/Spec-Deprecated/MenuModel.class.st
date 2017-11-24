@@ -4,5 +4,5 @@ This is deprecated class because the original class MenuModel was renamed to Men
 Class {
 	#name : #MenuModel,
 	#superclass : #MenuPresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

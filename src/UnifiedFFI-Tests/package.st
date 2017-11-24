@@ -1,1 +1,1 @@
-Package { #name : #UnifiedFFI-Tests }
+Package { #name : #'UnifiedFFI-Tests' }

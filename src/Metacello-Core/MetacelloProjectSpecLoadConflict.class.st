@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloProjectSpecLoadConflict,
 	#superclass : #MetacelloProjectSpecLoadError,
-	#category : #Metacello-Core-Exceptions-Errors
+	#category : #'Metacello-Core-Exceptions-Errors'
 }
 
 { #category : #private }

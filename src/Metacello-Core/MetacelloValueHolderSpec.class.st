@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : #Metacello-Core-Specs
+	#category : #'Metacello-Core-Specs'
 }
 
 { #category : #printing }

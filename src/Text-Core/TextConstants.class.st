@@ -89,7 +89,7 @@ Class {
 		'Tab',
 		'TextSharedInformation'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #accessing }

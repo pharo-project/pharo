@@ -4,7 +4,7 @@ SUnit test for HashTableSizes
 Class {
 	#name : #HashTableSizesTest,
 	#superclass : #TestCase,
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #tests }

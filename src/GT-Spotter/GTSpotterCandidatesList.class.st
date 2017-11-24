@@ -12,10 +12,10 @@ Class {
 		'announcer',
 		'processorLinksMap'
 	],
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterCandidatesList >> addAllCandidates: aCollection in: aProcessor [
 	| allLinks |
 	allLinks := OrderedCollection new.
@@ -36,7 +36,7 @@ GTSpotterCandidatesList >> addAllCandidates: aCollection in: aProcessor [
 				yourself)
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterCandidatesList >> addCandidate: anObjectOrLink in: aProcessor [
 	"before adding candidates we need to define all categories, because their order is important"
 	|processorLink candidateLink|
@@ -59,7 +59,7 @@ GTSpotterCandidatesList >> addCandidate: anObjectOrLink in: aProcessor [
 	
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterCandidatesList >> addProcessor: aProcessor [
 	|processorLink|
 	
@@ -293,7 +293,7 @@ GTSpotterCandidatesList >> processors [
 	^ categories ifNil: [ categories := GTSpotterDoubleLinkedList new ].
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterCandidatesList >> removeAllCandidates [
 
 	self processors linksDo: [ :each | each clear ].
@@ -301,7 +301,7 @@ GTSpotterCandidatesList >> removeAllCandidates [
 	self notifyAllCandidatesRemoved
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GTSpotterCandidatesList >> removeAllCandidatesOf: aProcessor [
 	|processorLink head tail current|
 	

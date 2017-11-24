@@ -11,7 +11,7 @@ Class {
 		'encoder',
 		'bs'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #accessing }

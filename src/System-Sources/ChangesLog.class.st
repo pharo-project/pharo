@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'DefaultInstance'
 	],
-	#category : #System-Sources
+	#category : #'System-Sources'
 }
 
 { #category : #accessing }
@@ -77,7 +77,7 @@ ChangesLog >> logChange: aStringOrText [
 	SourceFiles forceChangesToDisk
 ]
 
-{ #category : #event-listening }
+{ #category : #'event-listening' }
 ChangesLog >> logClassRemoved: annoucement [
 	annoucement classRemoved acceptsLoggingOfCompilation ifTrue: [
 		self logChange: 'Smalltalk globals removeClassNamed: #', annoucement classRemoved name	
@@ -85,7 +85,7 @@ ChangesLog >> logClassRemoved: annoucement [
 
 ]
 
-{ #category : #event-listening }
+{ #category : #'event-listening' }
 ChangesLog >> logClassRenamed: annoucement [
 	annoucement classRenamed acceptsLoggingOfCompilation ifTrue: [
 		self logChange: '(Smalltalk globals at: #', annoucement oldName, ') rename: #', annoucement newName.	
@@ -93,12 +93,12 @@ ChangesLog >> logClassRenamed: annoucement [
 
 ]
 
-{ #category : #event-listening }
+{ #category : #'event-listening' }
 ChangesLog >> logExpressionEvaluated: announcement [
 	self logChange: announcement expressionEvaluated.
 ]
 
-{ #category : #event-listening }
+{ #category : #'event-listening' }
 ChangesLog >> logMethodRemoved: announcement [
 	announcement methodClass acceptsLoggingOfCompilation ifTrue: [
 		self logChange: 
@@ -151,7 +151,7 @@ ChangesLog >> recordStartupStamp [
 
 ]
 
-{ #category : #event-listening }
+{ #category : #'event-listening' }
 ChangesLog >> registerToAnnouncements [
 	SystemAnnouncer uniqueInstance weak
 		when: ClassRemoved 

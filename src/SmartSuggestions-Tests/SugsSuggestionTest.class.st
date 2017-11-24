@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'emptyClass'
 	],
-	#category : #SmartSuggestions-Tests-Tests
+	#category : #'SmartSuggestions-Tests-Tests'
 }
 
 { #category : #testing }

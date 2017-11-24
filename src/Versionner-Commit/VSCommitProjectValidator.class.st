@@ -10,7 +10,7 @@ Class {
 		'project',
 		'basename'
 	],
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #'instance creation' }

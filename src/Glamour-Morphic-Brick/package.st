@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Morphic-Brick }
+Package { #name : #'Glamour-Morphic-Brick' }

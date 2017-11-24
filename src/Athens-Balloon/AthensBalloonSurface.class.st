@@ -15,7 +15,7 @@ Class {
 		'strokeTransform',
 		'engine'
 	],
-	#category : #Athens-Balloon
+	#category : #'Athens-Balloon'
 }
 
 { #category : #'as yet unclassified' }
@@ -216,7 +216,7 @@ AthensBalloonSurface >> imageTransform [
 	^ imageTransform
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensBalloonSurface >> initialize [
 	pathTransform := AthensAffineTransform new.
 	paintTransform := AthensAffineTransform new.

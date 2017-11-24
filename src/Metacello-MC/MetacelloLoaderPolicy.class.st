@@ -12,7 +12,7 @@ Class {
 		'loadDirective',
 		'silently'
 	],
-	#category : #Metacello-MC-Loaders
+	#category : #'Metacello-MC-Loaders'
 }
 
 { #category : #'instance creation' }
@@ -76,7 +76,7 @@ MetacelloLoaderPolicy >> ignoreImage: anObject [
 	ignoreImage := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloLoaderPolicy >> initialize [
 
 	self 

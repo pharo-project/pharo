@@ -33,7 +33,7 @@ Class {
 		'previousPersistence',
 		'checker'
 	],
-	#category : #System-Identification
+	#category : #'System-Identification'
 }
 
 { #category : #'instance creation' }

@@ -4,7 +4,7 @@ A command that apply to a project configuration.
 Class {
 	#name : #VSConfigurationCommand,
 	#superclass : #VSCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #accessing }

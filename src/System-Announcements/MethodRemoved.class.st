@@ -10,7 +10,7 @@ Class {
 		'protocol',
 		'methodOrigin'
 	],
-	#category : #System-Announcements-System-Methods
+	#category : #'System-Announcements-System-Methods'
 }
 
 { #category : #'instance creation' }

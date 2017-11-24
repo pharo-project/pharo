@@ -11,7 +11,7 @@ Class {
 		'lineNumbersDisplayMorph',
 		'extendCommentPolicyMorph'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }
@@ -31,12 +31,12 @@ RubCommentAnnotationDisplayer >> backgroundColor [
 		ifFalse: [ clr lighter]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> changeExtendCommentPolicy [
 	self paragraphProvider model announcer announce: NautilusExtendCommentSwitch
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> changeLineNumbersDisplay [
 	self paragraphProvider lineNumbersRuler 
 		ifNil: [ self paragraphProvider withLineNumbers ]
@@ -45,7 +45,7 @@ RubCommentAnnotationDisplayer >> changeLineNumbersDisplay [
 	self updateContents
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> changeWrappingPolicy [
 	self paragraphProvider wrapped 
 		ifTrue: [ self paragraphProvider beNotWrapped  ]
@@ -64,7 +64,7 @@ RubCommentAnnotationDisplayer >> computedWidthFrom: aRectangle [
 	^ aRectangle width
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> extendCommentPolicyMorph [
 	^ IconicButton new
 		labelGraphic: (self iconNamed: #expandBoxIcon);
@@ -77,7 +77,7 @@ RubCommentAnnotationDisplayer >> fontToUse [
 	^ UITheme current textFont
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubCommentAnnotationDisplayer >> initialize [
 	super initialize.
 	self side: #bottom
@@ -89,14 +89,14 @@ RubCommentAnnotationDisplayer >> level [
 	^ 0
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> lineNumbersDisplayLabel [
 	^ self paragraphProvider lineNumbersRuler  
 		ifNil: [ '+L' ]
 		ifNotNil: [ 'L' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> lineNumbersDisplayLabelMorph [
 	^ StringMorph
 		contents: self lineNumbersDisplayLabel
@@ -111,7 +111,7 @@ RubCommentAnnotationDisplayer >> manageLayoutInBounds: aRectangle [
 	^ ret
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.
@@ -151,7 +151,7 @@ RubCommentAnnotationDisplayer >> selectionChanged [
 	super selectionChanged
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> spacer: anInteger [
 	^ Morph new
 		borderWidth: 0;
@@ -214,14 +214,14 @@ RubCommentAnnotationDisplayer >> updateContents [
 	row width: self innerBounds width
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> wrappingPolicyLabel [
 	^ self paragraphProvider wrapped
 				ifTrue: [ 'W' ]
 				ifFalse: [ 'NW' ]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> wrappingPolicyLabelMorph [
 	^ StringMorph
 		contents: self wrappingPolicyLabel

@@ -4,7 +4,7 @@ I'm a minor version.
 Class {
 	#name : #VSCommitMinorVersion,
 	#superclass : #VSCommitVersion,
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #accessing }

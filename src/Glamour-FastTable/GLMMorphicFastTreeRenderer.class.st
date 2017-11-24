@@ -10,7 +10,7 @@ I use a GLMFastTreeDataSource to manage the data of the tree.
 Class {
 	#name : #GLMMorphicFastTreeRenderer,
 	#superclass : #GLMMorphicFTRenderer,
-	#category : #Glamour-FastTable-Morphic-Renderer
+	#category : #'Glamour-FastTable-Morphic-Renderer'
 }
 
 { #category : #initialization }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'container'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #spec }
@@ -41,7 +41,7 @@ EyeMorphViewer >> initializePresenter [
 	self whenWindowChanged: [ self objectChanged ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeMorphViewer >> objectChanged [
 
 	self text doItReceiver: self object. 
@@ -56,7 +56,7 @@ EyeMorphViewer >> step [
 	self objectChanged
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeMorphViewer >> thumbnailMorph [
 	^self object taskThumbnailOfSize: self thumbnailSize
 ]

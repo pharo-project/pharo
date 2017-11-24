@@ -69,7 +69,7 @@ Halt resetOnce
 Class {
 	#name : #Halt,
 	#superclass : #Exception,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #private }
@@ -167,12 +167,12 @@ Halt class >> once [
 
 ]
 
-{ #category : #once-reset }
+{ #category : #'once-reset' }
 Halt class >> resetHaltOnCount [
 	 #haltOnCount: senders do: [ :method | method ast removeProperty: #haltCount ifAbsent: [  ] ].
 ]
 
-{ #category : #once-reset }
+{ #category : #'once-reset' }
 Halt class >> resetOnce [
 	"Once stops an expression once and only once. Halt resetOnce will rearm and make sure that the execution of a method containing Halt once will stop another time."
 	 (#haltOnce senders, #inspectOnce senders) do: [ :method | 

@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'Order'
 	],
-	#category : #Spec-Tools-Monticello
+	#category : #'Spec-Tools-Monticello'
 }
 
 { #category : #utils }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloExternalScriptingTestCase,
 	#superclass : #MetacelloBasicScriptingTestCase,
-	#category : #Metacello-TestsMC
+	#category : #'Metacello-TestsMC'
 }
 
 { #category : #running }

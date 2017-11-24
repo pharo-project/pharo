@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cachedVersion'
 	],
-	#category : #Metacello-MC-Gofer
+	#category : #'Metacello-MC-Gofer'
 }
 
 { #category : #accessing }

@@ -30,7 +30,7 @@ Class {
 		'BytecodeBackend',
 		'UsesFullBlockClosure'
 	],
-	#category : #OpalCompiler-Core-FrontEnd
+	#category : #'OpalCompiler-Core-FrontEnd'
 }
 
 { #category : #accessing }

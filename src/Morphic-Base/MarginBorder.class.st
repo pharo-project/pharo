@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'margin'
 	],
-	#category : #Morphic-Base-Borders
+	#category : #'Morphic-Base-Borders'
 }
 
 { #category : #accessing }

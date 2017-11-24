@@ -4,7 +4,7 @@ I know how to browse references from a class
 Class {
 	#name : #SugsBrowseClassReferences,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

@@ -1,1 +1,1 @@
-Package { #name : #Transcript-NonInteractive }
+Package { #name : #'Transcript-NonInteractive' }

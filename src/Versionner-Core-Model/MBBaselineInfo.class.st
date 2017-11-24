@@ -6,7 +6,7 @@ A MBBaselineInfo holds information on a baselinf of a configuration.
 Class {
 	#name : #MBBaselineInfo,
 	#superclass : #MBAbstractVersionInfo,
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }

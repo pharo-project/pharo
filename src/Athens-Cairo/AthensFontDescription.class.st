@@ -18,7 +18,7 @@ Class {
 		'options',
 		'size'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #examples }
@@ -72,60 +72,60 @@ AthensFontDescription >> beOblique [
 	self slant: #oblique
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> family: aFamilyName [
 	"CSS2 generic family names: serif, sans-serif, cursive, fantasy, monospace"
 	family := aFamilyName.
 	
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> fontFamily [
 	^ family
 ]
 
-{ #category : #pango-options }
+{ #category : #'pango-options' }
 AthensFontDescription >> fontGravity [
 	^ options at: #gravity
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> fontSize [
 	^ size 
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> fontSize: aPointSize [
 	size := aPointSize
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> fontSlant [
 	^ options at: #slant 
 ]
 
-{ #category : #pango-options }
+{ #category : #'pango-options' }
 AthensFontDescription >> fontStretch [
 	^ options at: #stretch
 ]
 
-{ #category : #pango-options }
+{ #category : #'pango-options' }
 AthensFontDescription >> fontVariant [
 	^ options at: #variant 
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> fontWeight [
 	^ options at: #weight 
 ]
 
-{ #category : #pango-options }
+{ #category : #'pango-options' }
 AthensFontDescription >> gravity: aNumber [
 	options at: #gravity put: aNumber.		
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensFontDescription >> initialize [
 	super initialize.
 	family := 'monospace'.
@@ -137,25 +137,25 @@ AthensFontDescription >> initialize [
 	
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> slant: aNumber [
 	options at: #slant put: aNumber.		
 
 ]
 
-{ #category : #pango-options }
+{ #category : #'pango-options' }
 AthensFontDescription >> stretch: aNumber [
 	options at: #stretch put: aNumber.		
 
 ]
 
-{ #category : #pango-options }
+{ #category : #'pango-options' }
 AthensFontDescription >> variant: aNumber [
 	options at: #variant put: aNumber.		
 
 ]
 
-{ #category : #cairo-options }
+{ #category : #'cairo-options' }
 AthensFontDescription >> weight: aNumber [
 	options at: #weight put: aNumber.		
 

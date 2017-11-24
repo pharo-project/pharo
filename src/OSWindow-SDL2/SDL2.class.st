@@ -13,7 +13,7 @@ Class {
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'error handing' }
@@ -346,7 +346,7 @@ SDL2 class >> wasInit: flags [
 	^ self nbCall: #( int SDL_WasInit ( Uint32 flags ) )
 ]
 
-{ #category : #nb-library }
+{ #category : #'nb-library' }
 SDL2 >> ffiLibraryName [
 	^self class ffiLibraryName
 ]

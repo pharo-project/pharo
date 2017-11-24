@@ -6,7 +6,7 @@ You likely want to use #ensureLocalDirectory that downloads and extracts server 
 Class {
 	#name : #GTEventTool,
 	#superclass : #Object,
-	#category : #GT-EventRecorder-Core
+	#category : #'GT-EventRecorder-Core'
 }
 
 { #category : #accessing }
@@ -77,7 +77,7 @@ GTEventTool >> extract [
 	(ZipArchive new readFrom: self defaultDownloadFilename) extractAllTo: FileLocator workingDirectory.
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventTool >> gtInspectorActionHelp [
 	<gtInspectorAction>
 	^ GLMGenericAction new

@@ -11,7 +11,7 @@ I will configure the renderer and the data source  based on a GLMFastTreeTablePr
 Class {
 	#name : #GLMMorphicFastTreeWithColumnsRenderer,
 	#superclass : #GLMMorphicFastTreeRenderer,
-	#category : #Glamour-FastTable-Morphic-Renderer
+	#category : #'Glamour-FastTable-Morphic-Renderer'
 }
 
 { #category : #initialization }

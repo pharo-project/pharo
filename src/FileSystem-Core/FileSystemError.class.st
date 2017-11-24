@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'reference'
 	],
-	#category : #FileSystem-Core-Kernel
+	#category : #'FileSystem-Core-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -20,7 +20,7 @@ FileSystemError class >> signalWith: aReference [
 	^ (self reference: aReference) signal
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileSystemError >> initializeWithReference: aReference [
 	reference := aReference.
 	messageText := aReference printString

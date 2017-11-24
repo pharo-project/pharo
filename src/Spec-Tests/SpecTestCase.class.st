@@ -15,7 +15,7 @@ Class {
 		'window',
 		'testedInstance'
 	],
-	#category : #Spec-Tests-Utils
+	#category : #'Spec-Tests-Utils'
 }
 
 { #category : #testing }

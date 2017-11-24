@@ -5,7 +5,7 @@ serving just to cover the complete gesture protocol.
 Class {
 	#name : #OSWindowEventGestureVisitor,
 	#superclass : #OSWindowEventVisitor,
-	#category : #OSWindow-Core-Gestures
+	#category : #'OSWindow-Core-Gestures'
 }
 
 { #category : #visiting }

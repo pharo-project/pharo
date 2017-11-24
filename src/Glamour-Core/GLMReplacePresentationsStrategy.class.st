@@ -4,7 +4,7 @@ This strategy replaces the presentations from the pane of the destination port.
 Class {
 	#name : #GLMReplacePresentationsStrategy,
 	#superclass : #GLMPresentStrategy,
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #transmitting }

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #SUnit-Tests-Core
+	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #history }

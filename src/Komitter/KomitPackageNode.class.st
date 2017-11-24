@@ -4,7 +4,7 @@ I am a node in the Komit tree representing a package
 Class {
 	#name : #KomitPackageNode,
 	#superclass : #KomitNode,
-	#category : #Komitter-UI
+	#category : #'Komitter-UI'
 }
 
 { #category : #private }

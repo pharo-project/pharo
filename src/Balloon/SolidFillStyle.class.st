@@ -12,7 +12,7 @@ Class {
 		'color',
 		'pixelValue32'
 	],
-	#category : #Balloon-Fills
+	#category : #'Balloon-Fills'
 }
 
 { #category : #'instance creation' }

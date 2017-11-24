@@ -37,7 +37,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #Graphics-Fonts
+	#category : #'Graphics-Fonts'
 }
 
 { #category : #accessing }
@@ -208,7 +208,7 @@ StrikeFont class >> hostFontFromUser [
 	^ fontNames at: index
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 StrikeFont class >> initialize [
 	SessionManager default registerGuiClassNamed: self name
 ]

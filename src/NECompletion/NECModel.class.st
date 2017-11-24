@@ -10,7 +10,7 @@ Class {
 		'narrowString',
 		'entries'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
@@ -158,7 +158,7 @@ NECModel >> resetSelectors [
 		scoreA < scoreB ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECModel >> setClass: aClass [ 
 	clazz := aClass.
 	self initializeSelectors.
@@ -175,7 +175,7 @@ NECModel >> title [
 	^nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECModel >> toggleExpand [
 	
 ]

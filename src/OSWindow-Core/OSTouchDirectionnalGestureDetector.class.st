@@ -4,7 +4,7 @@ I detect gestures which needs all fingers to go on a certain direction (creating
 Class {
 	#name : #OSTouchDirectionnalGestureDetector,
 	#superclass : #OSTouchGestureNeedingThresholdDetector,
-	#category : #OSWindow-Core-Gestures
+	#category : #'OSWindow-Core-Gestures'
 }
 
 { #category : #'event field' }

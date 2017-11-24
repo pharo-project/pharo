@@ -4,7 +4,7 @@ This is just a stub test that tests a stub class so NautilusUtilsTest can test m
 Class {
 	#name : #NautilusUtilsTestStubTest,
 	#superclass : #TestCase,
-	#category : #Nautilus-Tests
+	#category : #'Nautilus-Tests'
 }
 
 { #category : #'instance creation' }

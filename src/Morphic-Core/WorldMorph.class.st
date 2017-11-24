@@ -15,7 +15,7 @@ Class {
 		'CursorOwnerWorld',
 		'ExtraWorldList'
 	],
-	#category : #Morphic-Core-Worlds
+	#category : #'Morphic-Core-Worlds'
 }
 
 { #category : #'extra worlds' }
@@ -49,7 +49,7 @@ WorldMorph class >> defaultWorldColor [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 WorldMorph class >> doOneCycle [
 	self extraWorldList do: [:world |
 		ActiveHand := world activeHand.
@@ -70,7 +70,7 @@ WorldMorph class >> extraWorldList [
 	^ ExtraWorldList
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 WorldMorph class >> initialize [
 	SessionManager default registerGuiClassNamed: self name.
 ]
@@ -108,13 +108,13 @@ WorldMorph >> activeHand: aHandMorph [
 
 ]
 
-{ #category : #alarms-scheduler }
+{ #category : #'alarms-scheduler' }
 WorldMorph >> addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime [
 	"Add a new alarm with the given set of parameters"
 	worldState addAlarm: aSelector withArguments: argArray for: aTarget at: scheduledTime.
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 WorldMorph >> addAllMorphs: array [
 
 	super addAllMorphs: array.
@@ -138,7 +138,7 @@ WorldMorph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 	self addWorldHaloMenuItemsTo: aMenu hand: aHandMorph
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 WorldMorph >> allMorphsDo: aBlock [
 	"Enumerate all morphs in the world, including those held in hands."
 
@@ -162,7 +162,7 @@ WorldMorph >> beCursorOwner [
 	self class cursorOwnerWorld: self
 ]
 
-{ #category : #meta-actions }
+{ #category : #'meta-actions' }
 WorldMorph >> buildMetaMenu: evt [
 	| menu |
 	menu := UIManager default newMenuIn: self for: self.
@@ -294,7 +294,7 @@ WorldMorph >> fullContainsPoint: pt [
 
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 WorldMorph >> fullRepaintNeeded [
 
 	worldState doFullRepaint.
@@ -378,7 +378,7 @@ WorldMorph >> listOfSteppingMorphs [
 "self currentWorld listOfSteppingMorphs"
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 WorldMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]
@@ -414,7 +414,7 @@ WorldMorph >> releaseCachedState [
 	self cleanseStepList.
 ]
 
-{ #category : #alarms-scheduler }
+{ #category : #'alarms-scheduler' }
 WorldMorph >> removeAlarm: aSelector for: aTarget [
 	"Remove the alarm with the given selector"
 	

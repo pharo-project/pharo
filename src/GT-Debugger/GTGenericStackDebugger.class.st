@@ -15,7 +15,7 @@ Class {
 		'LogDebuggerStackToFile',
 		'LogFileName'
 	],
-	#category : #GT-Debugger-UI
+	#category : #'GT-Debugger-UI'
 }
 
 { #category : #'settings api' }
@@ -239,7 +239,7 @@ GTGenericStackDebugger >> debuggingActionsPragmas [
 	^ #( debuggingAction )
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> formatStackClassColumnForContext: aContext [
 
 	^ Text 
@@ -248,7 +248,7 @@ GTGenericStackDebugger >> formatStackClassColumnForContext: aContext [
 	 
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> formatStackExtraColumnForContext: aContext [ 
 
 	^ Text 
@@ -256,7 +256,7 @@ GTGenericStackDebugger >> formatStackExtraColumnForContext: aContext [
 		attributes: (self textAttributesForStackEntry: aContext) 
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> formatStackMethodColumnForContext: aContext [ 
 
 	^ Text 
@@ -368,7 +368,7 @@ GTGenericStackDebugger >> openWithNotification: notificationString [
 		debugger: self
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> printStackClassColumnForContext: aContext [
 	| outer class methodClass |
 	
@@ -385,7 +385,7 @@ GTGenericStackDebugger >> printStackClassColumnForContext: aContext [
 						nextPut: $) ] ]  
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> printStackExtraColumnForContext: aContext [ 
 
 	| selector |
@@ -401,7 +401,7 @@ GTGenericStackDebugger >> printStackExtraColumnForContext: aContext [
 		ifNotNil: [ aContext closure printString  ]
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> printStackMethodColumnForContext: aContext [ 
 	| outer selector |
 	
@@ -535,7 +535,7 @@ GTGenericStackDebugger >> sugsContext [
 	^SugsDebuggerContext model: self
 ]
 
-{ #category : #printing/formatting }
+{ #category : #'printing/formatting' }
 GTGenericStackDebugger >> textAttributesForStackEntry: aContext [
 
 	(self selectedContext isNil or: self class enableStackColoring not) 

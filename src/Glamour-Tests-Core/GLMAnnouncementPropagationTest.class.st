@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMAnnouncementPropagationTest,
 	#superclass : #TestCase,
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #setup }

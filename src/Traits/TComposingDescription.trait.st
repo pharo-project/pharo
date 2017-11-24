@@ -3,7 +3,7 @@ Kernel trait for ComposingDescription
 "
 Trait {
 	#name : #TComposingDescription,
-	#category : #Traits-Kernel-Traits
+	#category : #'Traits-Kernel-Traits'
 }
 
 { #category : #composition }

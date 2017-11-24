@@ -1,1 +1,1 @@
-Package { #name : #Tool-CriticBrowser }
+Package { #name : #'Tool-CriticBrowser' }

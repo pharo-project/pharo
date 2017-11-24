@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'isInlinedLoop'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #initialization }

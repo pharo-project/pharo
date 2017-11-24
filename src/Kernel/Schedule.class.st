@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'schedule'
 	],
-	#category : #Kernel-Chronology
+	#category : #'Kernel-Chronology'
 }
 
 { #category : #enumerating }

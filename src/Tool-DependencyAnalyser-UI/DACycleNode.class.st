@@ -4,10 +4,10 @@ A PDCycleNode is used to display a cycle in a tree.
 Class {
 	#name : #DACycleNode,
 	#superclass : #DANode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #building-menu }
+{ #category : #'building-menu' }
 DACycleNode >> addMenuEntriesOn: aMenuGroup [
 	| graphvizGenerator |
 
@@ -22,7 +22,7 @@ DACycleNode >> addMenuEntriesOn: aMenuGroup [
 									self saveGraphAndOpenWith: graphvizGenerator ])
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DACycleNode >> browseInNautilus [
 	"we cannot browse a cycle in Nautilus"
 	^ self

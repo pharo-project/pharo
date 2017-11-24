@@ -4,7 +4,7 @@ A MultiColumnListPresenter is a spec presenter for Multi columns list
 Class {
 	#name : #MultiColumnListPresenter,
 	#superclass : #ListPresenter,
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }

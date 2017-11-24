@@ -17,7 +17,7 @@ var := [ statements.
 Class {
 	#name : #RBUnwindBlocksRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

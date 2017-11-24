@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'weakHolder'
 	],
-	#category : #GT-EventRecorder-Support
+	#category : #'GT-EventRecorder-Support'
 }
 
 { #category : #initialization }

@@ -11,7 +11,7 @@ Class {
 		'hasKerning',
 		'session'
 	],
-	#category : #FreeType-Fonts
+	#category : #'FreeType-Fonts'
 }
 
 { #category : #'font dirs' }
@@ -59,7 +59,7 @@ FreeTypeFace class >> fromFile: aFileName index: anInteger [
 FreeTypeFace class >> rememberFontDir: aDirecory [
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FreeTypeFace >> actAsExecutor [
 	super actAsExecutor.
 	filename := '<finalizer>'.

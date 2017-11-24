@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMHelperTest,
 	#superclass : #TestCase,
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #tests }

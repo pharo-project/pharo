@@ -1,1 +1,1 @@
-Package { #name : #OSWindow-SDL2 }
+Package { #name : #'OSWindow-SDL2' }

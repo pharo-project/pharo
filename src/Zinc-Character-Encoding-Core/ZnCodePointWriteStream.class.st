@@ -7,7 +7,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnCodePointWriteStream,
 	#superclass : #ZnEncodedWriteStream,
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #accessing }

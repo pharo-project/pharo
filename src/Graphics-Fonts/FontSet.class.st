@@ -18,7 +18,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #Graphics-Fonts
+	#category : #'Graphics-Fonts'
 }
 
 { #category : #compiling }
@@ -29,7 +29,7 @@ FontSet class >> acceptsLoggingOfCompilation [
 	^ self == FontSet
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 FontSet class >> fileOut [
 	"FileOut and then change the properties of the file so that it won't be
 	treated as text by, eg, email attachment facilities"

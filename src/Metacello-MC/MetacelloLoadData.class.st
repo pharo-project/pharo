@@ -6,7 +6,7 @@ Class {
 		'versionInfoMap',
 		'packageNameMap'
 	],
-	#category : #Metacello-MC-Loaders
+	#category : #'Metacello-MC-Loaders'
 }
 
 { #category : #accessing }

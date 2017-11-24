@@ -14,7 +14,7 @@ Class {
 		'currentTime',
 		'bullets'
 	],
-	#category : #OSWindow-SDL2-Examples-Joystick
+	#category : #'OSWindow-SDL2-Examples-Joystick'
 }
 
 { #category : #accessing }

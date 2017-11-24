@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_TextInputEvent,
+	#name : #'SDL_TextInputEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_TEXT0',
@@ -41,7 +41,7 @@ Class {
 		'OFFSET_TYPE',
 		'OFFSET_WINDOWID'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

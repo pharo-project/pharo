@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'specials'
 	],
-	#category : #MonticelloFileTree-Core
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #accessing }
@@ -146,7 +146,7 @@ MCFileTreeStCypressWriter >> fileNameMapFor: aMethodDefinitionCollection [
   ^ filenameMetaMap
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCFileTreeStCypressWriter >> propertyFileExtension [
   ^ self repository propertyFileExtension
 ]
@@ -210,7 +210,7 @@ MCFileTreeStCypressWriter >> writeClassDefinition: definition to: classPath [
           (self methodDefinitions at: definition className ifAbsent: [ #() ]) ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCFileTreeStCypressWriter >> writeDefinitions: aCollection [
   | classDirExtension extensionClasses extensionMethodDefinitions extensionMethodMap methodHolders |
   self writeBasicDefinitions: aCollection.
@@ -315,7 +315,7 @@ MCFileTreeStCypressWriter >> writeMethodDefinition: methodDefinition to: methodP
     visit: [ self writeMethodDefinition: methodDefinition ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
     "Issue 33: https://github.com/dalehenrich/filetree/issues/33"
 
@@ -331,7 +331,7 @@ MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
     STON put: properties asJsonOnStreamPretty: fileStream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCFileTreeStCypressWriter >> writePropertiesFile [
   | properties |
   properties := Dictionary new.

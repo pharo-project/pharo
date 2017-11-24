@@ -5,5 +5,5 @@ Tools that want persistant AST annotations can subscribe to this announcement to
 Class {
 	#name : #ASTCacheReset,
 	#superclass : #Announcement,
-	#category : #AST-Core-Parser
+	#category : #'AST-Core-Parser'
 }

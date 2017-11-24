@@ -7,7 +7,7 @@ Class {
 	#category : #Kernel
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 PackageManifest class >> description [
 	^ 'No description for this package manifest available. Please add a description for this package here.'
 ]
@@ -22,7 +22,7 @@ PackageManifest class >> isManifest [
 	^ (self = PackageManifest) not
 ]
 
-{ #category : #System-Support }
+{ #category : #'System-Support' }
 PackageManifest class >> isUsed [
 	^ true
 ]
@@ -46,12 +46,12 @@ PackageManifest class >> preUnload [
 	"override this method to specify clean-up actions that should be done before package unloading."
 ]
 
-{ #category : #code-critics }
+{ #category : #'code-critics' }
 PackageManifest class >> rejectClasses [
 	^ #()
 ]
 
-{ #category : #code-critics }
+{ #category : #'code-critics' }
 PackageManifest class >> rejectRules [
 	^ #()
 ]

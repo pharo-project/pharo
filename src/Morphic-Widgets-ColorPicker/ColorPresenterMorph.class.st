@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'HatchForm'
 	],
-	#category : #Morphic-Widgets-ColorPicker
+	#category : #'Morphic-Widgets-ColorPicker'
 }
 
 { #category : #example }

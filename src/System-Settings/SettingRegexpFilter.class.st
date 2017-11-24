@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'regexp'
 	],
-	#category : #System-Settings-Filter
+	#category : #'System-Settings-Filter'
 }
 
 { #category : #filtering }

@@ -6,7 +6,7 @@ Will be removed when the new Translor design is in place
 Class {
 	#name : #RFASTTranslatorForEffect,
 	#superclass : #RFASTTranslator,
-	#category : #Reflectivity-Compiler
+	#category : #'Reflectivity-Compiler'
 }
 
 { #category : #'inline messages' }

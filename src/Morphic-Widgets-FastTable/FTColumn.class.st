@@ -20,7 +20,7 @@ Class {
 		'id',
 		'width'
 	],
-	#category : #Morphic-Widgets-FastTable
+	#category : #'Morphic-Widgets-FastTable'
 }
 
 { #category : #'instance creation' }

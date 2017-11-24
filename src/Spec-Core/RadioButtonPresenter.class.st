@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'canDeselectByClick'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -116,7 +116,7 @@ RadioButtonPresenter >> stateHolder [
 	^ stateHolder
 ]
 
-{ #category : #protocol-events }
+{ #category : #'protocol-events' }
 RadioButtonPresenter >> whenCanDeselectByClickChanged: aBlock [
 	"This method is triggered when `canDeselectByClick` changes"
 	

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'scope'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #variables }

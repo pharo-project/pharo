@@ -1,7 +1,7 @@
 Class {
 	#name : #HistoryNodeTest,
 	#superclass : #TestCase,
-	#category : #System-History-Tests
+	#category : #'System-History-Tests'
 }
 
 { #category : #tests }

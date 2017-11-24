@@ -5,7 +5,7 @@ Class {
 		'playground',
 		'window'
 	],
-	#category : #GT-Tests-Playground
+	#category : #'GT-Tests-Playground'
 }
 
 { #category : #running }

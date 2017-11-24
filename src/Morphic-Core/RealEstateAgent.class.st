@@ -9,7 +9,7 @@ Class {
 		'StandardSize',
 		'UsedStrategy'
 	],
-	#category : #Morphic-Core-Worlds
+	#category : #'Morphic-Core-Worlds'
 }
 
 { #category : #utilities }

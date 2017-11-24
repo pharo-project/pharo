@@ -9,10 +9,10 @@ For mouseOver action, #taskbarCanShowThumbnail must be implemented to return tru
 "
 Trait {
 	#name : #TShowInTaskbar,
-	#category : #Morphic-Widgets-Taskbar
+	#category : #'Morphic-Widgets-Taskbar'
 }
 
-{ #category : #taskbar-private }
+{ #category : #'taskbar-private' }
 TShowInTaskbar >> customizeTaskbarButton: aButton [
 
 	self taskbarCanShowThumbnail ifFalse: [ ^ self ].
@@ -30,19 +30,19 @@ TShowInTaskbar >> customizeTaskbarButton: aButton [
 		withValue: aButton.
 ]
 
-{ #category : #taskbar-public }
+{ #category : #'taskbar-public' }
 TShowInTaskbar >> taskbarButtonClicked [
 
 	"Do something"
 ]
 
-{ #category : #taskbar-thumbnail }
+{ #category : #'taskbar-thumbnail' }
 TShowInTaskbar >> taskbarButtonEntered: aButton event: evt in: aMorph [
 	"The mouse has entered out taskbar button.
 	Show a thumbnail."
 ]
 
-{ #category : #taskbar-private }
+{ #category : #'taskbar-private' }
 TShowInTaskbar >> taskbarButtonFor: aTaskbar [
 	"Answer a new task bar button for the receiver.
 	Answer nil if not required."
@@ -58,7 +58,7 @@ TShowInTaskbar >> taskbarButtonFor: aTaskbar [
 	^ taskbarButton
 ]
 
-{ #category : #taskbar-required }
+{ #category : #'taskbar-required' }
 TShowInTaskbar >> taskbarButtonIsActive [
 
 	"true/false"
@@ -66,13 +66,13 @@ TShowInTaskbar >> taskbarButtonIsActive [
 	^self explicitRequirement
 ]
 
-{ #category : #taskbar-thumbnail }
+{ #category : #'taskbar-thumbnail' }
 TShowInTaskbar >> taskbarButtonLeft: aButton event: evt in: aMorph [
 	"The mouse has left our taskbar button.
 	Remove our thumbnail."
 ]
 
-{ #category : #taskbar-public }
+{ #category : #'taskbar-public' }
 TShowInTaskbar >> taskbarButtonMenu: aMenu [
 
 	"default is to show no menu"
@@ -80,27 +80,27 @@ TShowInTaskbar >> taskbarButtonMenu: aMenu [
 	^aMenu
 ]
 
-{ #category : #taskbar-thumbnail }
+{ #category : #'taskbar-thumbnail' }
 TShowInTaskbar >> taskbarCanShowThumbnail [
 
 	^ false
 ]
 
-{ #category : #taskbar-required }
+{ #category : #'taskbar-required' }
 TShowInTaskbar >> taskbarLabel [
 	"Answer the label to use for a taskbar button for the receiver."
 	
 	^self explicitRequirement
 ]
 
-{ #category : #taskbar-required }
+{ #category : #'taskbar-required' }
 TShowInTaskbar >> taskbarState [
 	"Answer one of #minimized, #restored, #maximized or #active."
 	
 	^self explicitRequirement
 ]
 
-{ #category : #taskbar-private }
+{ #category : #'taskbar-private' }
 TShowInTaskbar >> taskbarTask [
 
 	^ TaskbarTask

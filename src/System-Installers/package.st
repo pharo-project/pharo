@@ -1,1 +1,1 @@
-Package { #name : #System-Installers }
+Package { #name : #'System-Installers' }

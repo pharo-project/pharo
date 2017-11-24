@@ -5,7 +5,7 @@ Class {
 		'progressBarSize',
 		'progress'
 	],
-	#category : #Glamour-Tests-Core
+	#category : #'Glamour-Tests-Core'
 }
 
 { #category : #utilities }

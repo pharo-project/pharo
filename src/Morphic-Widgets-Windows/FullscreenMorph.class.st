@@ -4,7 +4,7 @@ Provides for another morph to occupy the full screen area (less docking bars).
 Class {
 	#name : #FullscreenMorph,
 	#superclass : #Morph,
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
 { #category : #accessing }
@@ -46,7 +46,7 @@ FullscreenMorph >> layoutChanged [
 	self layoutPolicy ifNotNil:[:l | l flushLayoutCache].
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 FullscreenMorph >> openAsIs [
 	"Open in the current world with the current position and extent."
 	
@@ -54,7 +54,7 @@ FullscreenMorph >> openAsIs [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 FullscreenMorph >> openAsIsIn: aWorld [
 	"Start stepping."
 	

@@ -1,1 +1,1 @@
-Package { #name : #Graphics-Canvas }
+Package { #name : #'Graphics-Canvas' }

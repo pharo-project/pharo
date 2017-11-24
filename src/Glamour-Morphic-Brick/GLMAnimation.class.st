@@ -24,7 +24,7 @@ Class {
 		'ensureLogic',
 		'stamp'
 	],
-	#category : #Glamour-Morphic-Brick-Async
+	#category : #'Glamour-Morphic-Brick-Async'
 }
 
 { #category : #'instance creation' }

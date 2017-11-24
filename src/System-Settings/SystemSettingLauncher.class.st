@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'script'
 	],
-	#category : #System-Settings-Core
+	#category : #'System-Settings-Core'
 }
 
 { #category : #accessing }

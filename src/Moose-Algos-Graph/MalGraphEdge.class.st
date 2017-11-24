@@ -6,7 +6,7 @@ Class {
 		'from',
 		'to'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #'as yet unclassified' }

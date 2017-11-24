@@ -10,7 +10,7 @@ Class {
 		'blockcounter',
 		'compilationContext'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #api }
@@ -92,7 +92,7 @@ OCASTSemanticAnalyzer >> lookupVariableForWrite: aVariableNode [
 	^var
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 OCASTSemanticAnalyzer >> scope: aSemScope [
 	scope := aSemScope
 ]

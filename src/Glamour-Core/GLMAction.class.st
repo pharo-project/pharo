@@ -20,7 +20,7 @@ Class {
 		'separatorBefore',
 		'shouldShowTitle'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #'public interface' }

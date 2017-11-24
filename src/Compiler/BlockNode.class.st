@@ -21,7 +21,7 @@ Class {
 		'closureCreationNode',
 		'startOfLastStatement'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #'instance creation' }
@@ -216,7 +216,7 @@ BlockNode >> arguments: argNodes [
 	arguments := argNodes
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BlockNode >> arguments: argNodes statements: statementsCollection returns: returnBool from: encoder [
 	"Compile."
 
@@ -469,7 +469,7 @@ BlockNode >> noteOptimizedIn: anOptimizedMessageNode [
 	optimizedMessageNode := anOptimizedMessageNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BlockNode >> noteSourceRangeStart: start end: end encoder: encoder [
 	"Note two source ranges for this node.  One is for the debugger
 	 and is of the last expression, the result of the block.  One is for
@@ -800,7 +800,7 @@ BlockNode >> statements: val [
 	statements := val
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 BlockNode >> statements: statementsCollection returns: returnBool [ 
 	"Decompile."
 

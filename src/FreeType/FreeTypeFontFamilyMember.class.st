@@ -14,7 +14,7 @@ Class {
 		'slantValue',
 		'simulated'
 	],
-	#category : #FreeType-FontManager
+	#category : #'FreeType-FontManager'
 }
 
 { #category : #'instance creation' }

@@ -12,7 +12,7 @@ Class {
 	#pools : [
 		'ZipConstants'
 	],
-	#category : #Compression-Streams
+	#category : #'Compression-Streams'
 }
 
 { #category : #positioning }
@@ -20,7 +20,7 @@ ZipEncoder >> bitPosition [
 	^encodedStream position + position * 8 + bitPosition.
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 ZipEncoder >> close [
 	self flush.
 	encodedStream close.

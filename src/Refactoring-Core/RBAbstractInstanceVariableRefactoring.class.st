@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'accessorsRefactoring'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #transforming }
@@ -33,7 +33,7 @@ RBAbstractInstanceVariableRefactoring >> abstractReferences [
 		using: replacer
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 	^accessorsRefactoring isNil 
 		ifTrue: 

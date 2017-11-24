@@ -4,7 +4,7 @@ I know how to talk with a debugger and extract the information needed for the su
 Class {
 	#name : #SugsDebuggerContext,
 	#superclass : #SugsAbstractContext,
-	#category : #SmartSuggestions-Menu
+	#category : #'SmartSuggestions-Menu'
 }
 
 { #category : #refactoring }

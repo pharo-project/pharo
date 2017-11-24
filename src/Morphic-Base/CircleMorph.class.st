@@ -10,7 +10,7 @@ Class {
 		'originalCenter',
 		'originalAngle'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #example }

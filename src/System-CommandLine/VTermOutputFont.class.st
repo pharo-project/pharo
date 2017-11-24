@@ -5,7 +5,7 @@ I'm characterized by the color of the font that will be printed.
 Class {
 	#name : #VTermOutputFont,
 	#superclass : #VTermOutputStyleElement,
-	#category : #System-CommandLine
+	#category : #'System-CommandLine'
 }
 
 { #category : #comparing }

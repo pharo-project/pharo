@@ -40,7 +40,7 @@ Class {
 		'Default',
 		'NullCategory'
 	],
-	#category : #Kernel-Classes
+	#category : #'Kernel-Classes'
 }
 
 { #category : #'class initialization' }

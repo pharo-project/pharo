@@ -8,7 +8,7 @@ Class {
 		'globalTransform',
 		'localTransform'
 	],
-	#category : #Graphics-Transformations
+	#category : #'Graphics-Transformations'
 }
 
 { #category : #'instance creation' }

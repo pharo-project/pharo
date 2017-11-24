@@ -1,1 +1,1 @@
-Package { #name : #System-Settings }
+Package { #name : #'System-Settings' }

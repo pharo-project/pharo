@@ -14,7 +14,7 @@ Class {
 		'superMessages',
 		'messages'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
 { #category : #'instance creation' }
@@ -182,7 +182,7 @@ RBSmalllintContext >> protocols [
 	^Array with: self protocol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSmalllintContext >> release [
 	literalProcess notNil ifTrue: [literalProcess terminate].
 	super release

@@ -1,7 +1,7 @@
 Class {
 	#name : #GTGenericStackDebuggerTest,
 	#superclass : #TestCase,
-	#category : #GT-Tests-Debugger
+	#category : #'GT-Tests-Debugger'
 }
 
 { #category : #'as yet unclassified' }

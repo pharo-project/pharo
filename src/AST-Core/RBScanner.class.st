@@ -42,7 +42,7 @@ Class {
 	#classInstVars : [
 		'classificationTable'
 	],
-	#category : #AST-Core-Parser
+	#category : #'AST-Core-Parser'
 }
 
 { #category : #accessing }
@@ -241,7 +241,7 @@ RBScanner >> nextPut: anObject [
 	self shouldNotImplement
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBScanner >> on: aStream [ 
 	buffer := (String new: 60) writeStream.
 	stream := aStream.
@@ -264,14 +264,14 @@ RBScanner >> previousStepPosition [
 		ifFalse: [stream position - 1]
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanAnySymbol [
 	characterType = #alphabetic ifTrue: [^self scanSymbol].
 	characterType = #binary ifTrue: [^self scanBinary: RBLiteralToken].
 	^RBToken new
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanBinary: aClass [ 
 	| val |
 	buffer nextPut: currentCharacter.
@@ -284,7 +284,7 @@ RBScanner >> scanBinary: aClass [
 	^aClass value: val start: tokenStart
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanError: theCause [
 	| location |
 	"error location is the next not parseable character. Or current stream position + 1 if 
@@ -300,7 +300,7 @@ RBScanner >> scanError: theCause [
 		location: location
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanIdentifierOrKeyword [
 	| name |
 	self scanName.
@@ -328,7 +328,7 @@ RBScanner >> scanIdentifierOrKeyword [
 	^RBIdentifierToken value: name start: tokenStart
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanKeyword [
 	| outputPosition inputPosition name |
 	[currentCharacter = $:] whileTrue: 
@@ -350,7 +350,7 @@ RBScanner >> scanKeyword [
 				stop: tokenStart + name size - 1]
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanLiteral [
 	"Do not allow whitespace between # and the literal."
 
@@ -373,7 +373,7 @@ RBScanner >> scanLiteral [
 	^ self scanError: 'Expecting a literal type'
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanLiteralArrayToken [
 	| token |
 	token := RBLiteralArrayToken 
@@ -383,7 +383,7 @@ RBScanner >> scanLiteralArrayToken [
 	^token
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanLiteralCharacter [
 	| token |
 	self step.	"$"
@@ -396,7 +396,7 @@ RBScanner >> scanLiteralCharacter [
 	^token
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanLiteralString [
 	self step.
 	
@@ -412,14 +412,14 @@ RBScanner >> scanLiteralString [
 		stop: self previousStepPosition
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanName [
 	[characterType = #alphabetic or: [characterType = #digit]] whileTrue: 
 			[buffer nextPut: currentCharacter.
 			self step]
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanNumber [
 	| start number stop string |
 	start := stream position.
@@ -437,7 +437,7 @@ RBScanner >> scanNumber [
 		source: string
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanPatternVariable [
 	buffer nextPut: currentCharacter.
 	self step.
@@ -453,7 +453,7 @@ RBScanner >> scanPatternVariable [
 	^self scanIdentifierOrKeyword
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanSpecialCharacter [
 	| character |
 	currentCharacter = $: 
@@ -474,7 +474,7 @@ RBScanner >> scanSpecialCharacter [
 	^ RBSpecialCharacterToken value: character start: tokenStart
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanStringSymbol [
 	| literalToken |
 	literalToken := self scanLiteralString.
@@ -482,7 +482,7 @@ RBScanner >> scanStringSymbol [
 	^literalToken
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanSymbol [
 	[ characterType = #alphabetic or: [ currentCharacter = $: ] ] whileTrue: [
 		self scanName.
@@ -512,7 +512,7 @@ RBScanner >> scanToken [
 	^self scanUnknownCharacter
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> scanUnknownCharacter [
 	| errorToken |
 	errorToken := self scanError: 'Unknown character'.
@@ -544,7 +544,7 @@ RBScanner >> step [
 	^currentCharacter
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> stripComment [
 	| start stop |
 	start := stream position.
@@ -561,7 +561,7 @@ RBScanner >> stripComment [
 	comments add: (start to: stop)
 ]
 
-{ #category : #private-scanning }
+{ #category : #'private-scanning' }
 RBScanner >> stripSeparators [
 	
 	[[characterType = #separator] whileTrue: [self step].

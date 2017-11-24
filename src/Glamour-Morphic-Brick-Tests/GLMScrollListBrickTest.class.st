@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #Glamour-Morphic-Brick-Tests
+	#category : #'Glamour-Morphic-Brick-Tests'
 }
 
 { #category : #running }

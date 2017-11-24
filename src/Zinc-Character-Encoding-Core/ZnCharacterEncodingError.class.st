@@ -9,5 +9,5 @@ Part of Zinc HTTP Components
 Class {
 	#name : #ZnCharacterEncodingError,
 	#superclass : #Error,
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }

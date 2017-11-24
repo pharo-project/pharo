@@ -24,7 +24,7 @@ Class {
 		'oldSelector',
 		'newSelector'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'intance creation' }

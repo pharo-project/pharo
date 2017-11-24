@@ -24,7 +24,7 @@ Class {
 		'smartCharactersWithDoubleSpace',
 		'overrideModel'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #private }

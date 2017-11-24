@@ -7,7 +7,7 @@ Class {
 		'focused',
 		'index'
 	],
-	#category : #Glamour-Morphic-Pager-Brick
+	#category : #'Glamour-Morphic-Pager-Brick'
 }
 
 { #category : #'as yet unclassified' }

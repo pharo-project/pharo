@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'attributes'
 	],
-	#category : #Zinc-HTTP-Support
+	#category : #'Zinc-HTTP-Support'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,7 @@ ZnCookie >> = aCookie [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnCookie >> defaultDomain: aDomain [
 	self domain ifNil: [ self domain: aDomain ]
 ]
@@ -80,7 +80,7 @@ ZnCookie >> extraAttributes [
 	^ attributes associationsSelect: [ :ea | (ea key = 'name' or: [ ea key = 'value' ]) not ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnCookie >> fromString: aString [
 	| tokens val data i |
 	tokens := aString substrings: ';'.
@@ -177,7 +177,7 @@ ZnCookie >> printOn: stream [
 	self writeOn: stream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnCookie >> readAttribute: aToken [
 	| i key data |
 	i := aToken indexOf: $=.

@@ -6,7 +6,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnUtils,
 	#superclass : #Object,
-	#category : #Zinc-HTTP-Support
+	#category : #'Zinc-HTTP-Support'
 }
 
 { #category : #streaming }

@@ -4,5 +4,5 @@ This is deprecated class because the original class ComposableModel was renamed 
 Class {
 	#name : #ComposableModel,
 	#superclass : #ComposablePresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

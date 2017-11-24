@@ -1,1 +1,1 @@
-Package { #name : #Glamour-FastTable }
+Package { #name : #'Glamour-FastTable' }

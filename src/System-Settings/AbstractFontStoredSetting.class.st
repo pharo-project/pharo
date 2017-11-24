@@ -10,7 +10,7 @@ Class {
 		'pointSize',
 		'emphasized'
 	],
-	#category : #System-Settings-Persistence-Ston-StoredSettings
+	#category : #'System-Settings-Persistence-Ston-StoredSettings'
 }
 
 { #category : #accessing }

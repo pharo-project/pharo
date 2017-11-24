@@ -9,7 +9,7 @@ Class {
 		'logBrowserModel',
 		'statusLabelModel'
 	],
-	#category : #EpiceaBrowsers-UI-Log
+	#category : #'EpiceaBrowsers-UI-Log'
 }
 
 { #category : #specs }

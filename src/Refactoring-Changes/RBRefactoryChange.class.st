@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ RBRefactoryChange >> displayString [
 	^name isNil ifTrue: [self changeString] ifFalse: [name]
 ]
 
-{ #category : #performing-changes }
+{ #category : #'performing-changes' }
 RBRefactoryChange >> execute [
 	^self executeNotifying: []
 ]
@@ -62,7 +62,7 @@ RBRefactoryChange >> name [
 	^name isNil ifTrue: [self changeString] ifFalse: [name]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRefactoryChange >> name: aString [
 	name := aString
 ]

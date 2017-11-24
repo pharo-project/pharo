@@ -4,7 +4,7 @@ I'm a generic model for package tree nodes.
 Class {
 	#name : #PackageTreeNodeModel,
 	#superclass : #MorphTreeNodeModel,
-	#category : #Nautilus-Tree
+	#category : #'Nautilus-Tree'
 }
 
 { #category : #comparing }

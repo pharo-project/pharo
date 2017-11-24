@@ -60,7 +60,7 @@ Class {
 		'Approved',
 		'Blocks'
 	],
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #'instance creation' }

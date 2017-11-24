@@ -15,17 +15,17 @@ Class {
 		'statementNodes',
 		'transformedNode'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 RBCreateCascadeRefactoring class >> combine: anInterval from: aSelector in: aClass [
 	^ self new 
 		combine: anInterval from: aSelector in: aClass;
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 RBCreateCascadeRefactoring class >> model: aNamespace combine: anInterval from: aSelector in: aClass [
 	^ self new 
 		model: aNamespace; 
