@@ -64,7 +64,7 @@ DatePrintFormatTester >> assert: aBooleanOrBlock description: aStringOrBlock res
 { #category : #asserting }
 DatePrintFormatTester >> assert: actual equals: expected [
 	^ self
-		assert: expected = actual
+		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
 ]
 

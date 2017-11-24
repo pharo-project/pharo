@@ -49,7 +49,7 @@ TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock resumable: re
 { #category : #asserting }
 TAssertable >> assert: actual equals: expected [
 	^ self
-		assert: expected = actual
+		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
 ]
 
