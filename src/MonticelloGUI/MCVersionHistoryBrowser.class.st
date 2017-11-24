@@ -30,11 +30,13 @@ MCVersionHistoryBrowser >> defaultLabel [
 
 { #category : #'morphic ui' }
 MCVersionHistoryBrowser >> getMenu: aMenu [
-	index < 2 ifTrue: [^ aMenu].
+	index < 1 ifTrue: [^ aMenu].
 	self fillMenu: aMenu fromSpecs: 
-		(Array
-			with: (Array with: 'view changes -> ', ancestry name with: #viewChanges)
-			with: #('spawn history' spawnHistory)).
+		(Array streamContents: [ :stream |
+			index > 1 ifTrue: [ stream nextPut: (Array with: 'view changes -> ', ancestry name with: #viewChanges) ].
+			self selectedInfo ancestors do: [:parent |
+				stream nextPut: {'view changes <- ', parent name . #viewChanges: . parent}].
+			stream nextPut: #('spawn history' spawnHistory)]).
 	^ aMenu
 ]
 

@@ -11,6 +11,16 @@ MCVersionHistoryBrowser >> viewChanges [
 ]
 
 { #category : #'*Tool-Diff' }
+MCVersionHistoryBrowser >> viewChanges: otherInfo [
+	"View the changes between a prior version and this version."
+	
+	self
+		viewChanges: (self selectedSnapshot patchRelativeToBase: (self snapshotForInfo: otherInfo))
+		from: otherInfo name
+		to: self selectedInfo name
+]
+
+{ #category : #'*Tool-Diff' }
 MCVersionHistoryBrowser >> viewChanges: patch from: fromDescription to: toDescription [
 	"Open a browser on the patch."
 	
