@@ -1,7 +1,7 @@
 Extension { #name : #ScaledDecimalTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
-ScaledDecimalTest >> testStoreOn [
+ScaledDecimalTest >> testStoreOnRoundTrip [
 	"this is http://bugs.squeak.org/view.php?id=4378"
 	
 	"Both results should be 1.
