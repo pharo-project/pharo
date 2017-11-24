@@ -480,7 +480,7 @@ BlockClosure >> numArgs [
 	^numArgs
 ]
 
-{ #category : #'error handing' }
+{ #category : #'error handling' }
 BlockClosure >> numArgsError: numArgsForInvocation [
 
 	| printNArgs |

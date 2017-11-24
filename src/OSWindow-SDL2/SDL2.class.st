@@ -16,7 +16,7 @@ Class {
 	#category : #'OSWindow-SDL2-Bindings'
 }
 
-{ #category : #'error handing' }
+{ #category : #'error handling' }
 SDL2 class >> checkForError [
 	| msg |
 	msg := self getErrorMessage.
@@ -122,7 +122,7 @@ SDL2 class >> gameControllerOpen: deviceIndex [
 	^ self nbCall: #( SDL_GameController SDL_GameControllerOpen ( int deviceIndex ) )
 ]
 
-{ #category : #'error handing' }
+{ #category : #'error handling' }
 SDL2 class >> getErrorMessage [
 	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
 	^ self nbCall: #( String SDL_GetError ( void ) )
