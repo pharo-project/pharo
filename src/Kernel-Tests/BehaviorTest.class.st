@@ -133,6 +133,20 @@ BehaviorTest >> testHasAbstractMethods [
 ]
 
 { #category : #tests }
+BehaviorTest >> testIsAbstract [
+
+	self assert: Behavior isAbstract.	
+	self deny: Behavior class isAbstract.
+	self assert: ClassDescription isAbstract.
+	self deny: ClassDescription class isAbstract.
+	
+	self deny: Class isAbstract.
+	self deny: Class class isAbstract.
+	self deny: Object isAbstract.
+	self deny: Object class isAbstract.
+]
+
+{ #category : #tests }
 BehaviorTest >> testIsRootInEnvironment [
 	self assert: ProtoObject isRootInEnvironment.
 	self deny: Object isRootInEnvironment

@@ -487,7 +487,13 @@ CompiledMethod >> hasSourcePointer [
 CompiledMethod >> isAbstract [
 	"Answer true if I am abstract"
 	
-	^ self markerOrNil == self class abstractMarker
+	| marker |
+	marker := self markerOrNil ifNil: [^false].
+	
+	^marker == self class subclassResponsibilityMarker 
+		or: [ marker == self class explicitRequirementMarker
+			or: [  marker == self class implicitRequirementMarker]]
+
 ]
 
 { #category : #testing }

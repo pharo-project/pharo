@@ -990,7 +990,8 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 Behavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	
-	^ (self methods anySatisfy: [:cm | cm sendsSelector: #subclassResponsibility ])
+	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
+	^false
 ]
 
 { #category : #'testing method dictionary' }
@@ -1160,6 +1161,17 @@ Behavior >> instancesSizeInMemory [
 	bytes := 0.
 	self allInstancesDo: [:each | bytes := bytes + each sizeInMemory  ].
 	^ bytes
+]
+
+{ #category : #testing }
+Behavior >> isAbstract [
+	
+	self withAllSuperclassesDo: [ :eachClass | 
+		eachClass methodsDo: [ :eachMethod |
+			(eachMethod isAbstract and: [ (self lookupSelector: eachMethod selector) isAbstract ])
+				ifTrue: [ ^true ]]].
+	
+	^false
 ]
 
 { #category : #'testing method dictionary' }
