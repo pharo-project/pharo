@@ -9,7 +9,7 @@ ByteArray >> asExternalPointer [
 { #category : #'*FFI-Kernel' }
 ByteArray >> booleanAt: byteOffset [
 	"Booleans are just integers in C word"
-	^(self integerAt: byteOffset size: 1 signed: false) == true
+	^(self integerAt: byteOffset size: 1 signed: false) ~= 0
 ]
 
 { #category : #'*FFI-Kernel' }
