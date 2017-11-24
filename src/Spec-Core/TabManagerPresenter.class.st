@@ -12,7 +12,7 @@ Class {
 		'tabSelectedAction',
 		'selectedTab'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -119,7 +119,7 @@ TabManagerPresenter >> tabs: aCollection [
 	tabs value: aCollection
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TabManagerPresenter >> whenTabSelected: aBlock [
 
 	tabSelectedAction value: aBlock

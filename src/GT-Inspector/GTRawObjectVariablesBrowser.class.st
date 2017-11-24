@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'cachedHashes'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'private building' }

@@ -48,7 +48,7 @@ Class {
 		'StateNewBlock',
 		'StateNoMoreData'
 	],
-	#category : #Compression-Streams
+	#category : #'Compression-Streams'
 }
 
 { #category : #initialization }
@@ -98,7 +98,7 @@ InflateStream >> bitPosition [
 		ifFalse:[^sourceStream position + sourcePos * 8 + bitPos]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 InflateStream >> close [
 	sourceStream ifNotNil:[sourceStream close].
 ]

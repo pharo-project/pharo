@@ -8,7 +8,7 @@ the scanner produces the tokens 'a' and '-1'. This will be converted to the toke
 Class {
 	#name : #RBNumberLiteralToken,
 	#superclass : #RBLiteralToken,
-	#category : #AST-Core-Tokens
+	#category : #'AST-Core-Tokens'
 }
 
 { #category : #testing }

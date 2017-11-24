@@ -1,1 +1,1 @@
-Package { #name : #RPackage-Core }
+Package { #name : #'RPackage-Core' }

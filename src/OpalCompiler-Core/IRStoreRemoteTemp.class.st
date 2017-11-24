@@ -4,7 +4,7 @@ store remote temp
 Class {
 	#name : #IRStoreRemoteTemp,
 	#superclass : #IRRemoteTempAccess,
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #visiting }

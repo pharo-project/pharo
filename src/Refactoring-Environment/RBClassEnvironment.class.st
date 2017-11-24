@@ -12,7 +12,7 @@ Class {
 		'classes',
 		'metaClasses'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -58,7 +58,7 @@ RBClassEnvironment >> asSelectorEnvironment [
 		yourself.
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBClassEnvironment >> classNames [
 	^ IdentitySet new
 		addAll: classes;
@@ -76,12 +76,12 @@ RBClassEnvironment >> classSelectorDictionary [
 				yourself ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBClassEnvironment >> classes: aCollection [ 
 	aCollection do: [ :each | self addClass: each ]
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBClassEnvironment >> classesDo: aBlock [ 
 	classes do: [ :each | 
 		| class |

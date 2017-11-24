@@ -28,7 +28,7 @@ Class {
 		'comment',
 		'commentStamp'
 	],
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #private }
@@ -108,7 +108,7 @@ SlotClassBuilder >> applySuperclassChange: classModification [
 		self applyAndUpdateSuperclass: propagation ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SlotClassBuilder >> build [
 	| oldClass metaChange classChange |
 	result := oldClass := installer classAt: name ifAbsent: [ ^ self buildNewClass ].
@@ -164,7 +164,7 @@ SlotClassBuilder >> build [
 	^ result instanceSide
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SlotClassBuilder >> buildNewClass [
 	| metaclass newClass |
 	metaclass := Metaclass new.

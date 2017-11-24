@@ -9,7 +9,7 @@ Class {
 		'testMethod',
 		'testClass2'
 	],
-	#category : #Renraku-Test
+	#category : #'Renraku-Test'
 }
 
 { #category : #running }

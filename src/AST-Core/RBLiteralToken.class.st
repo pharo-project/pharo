@@ -13,7 +13,7 @@ Class {
 		'stopPosition',
 		'source'
 	],
-	#category : #AST-Core-Tokens
+	#category : #'AST-Core-Tokens'
 }
 
 { #category : #'instance creation' }
@@ -68,7 +68,7 @@ RBLiteralToken >> source [
 	^source
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBLiteralToken >> source: aString [ 
 	source := aString
 ]
@@ -96,7 +96,7 @@ RBLiteralToken >> storeOn: aStream [
 	value storeOn: aStream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBLiteralToken >> value: aString start: anInteger stop: stopInteger [ 
 	value := aString.
 	sourcePointer := anInteger.

@@ -17,7 +17,7 @@ Class {
 	#classInstVars : [
 		'commentCache'
 	],
-	#category : #Versionner-Commit-UI
+	#category : #'Versionner-Commit-UI'
 }
 
 { #category : #cleanup }

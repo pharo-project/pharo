@@ -18,7 +18,7 @@ Class {
 		'ISO3Countries',
 		'ISO3Table'
 	],
-	#category : #System-Localization-Utilities
+	#category : #'System-Localization-Utilities'
 }
 
 { #category : #'private - ISO 3166' }

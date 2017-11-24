@@ -21,7 +21,7 @@ Class {
 		'Default',
 		'DefaultSocketStreamTimeout'
 	],
-	#category : #Zinc-HTTP-Support
+	#category : #'Zinc-HTTP-Support'
 }
 
 { #category : #accessing }
@@ -217,7 +217,7 @@ ZnNetworkingUtils >> secureSocketStreamClass [
 		secureSocketStreamClass := Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ] ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnNetworkingUtils >> secureSocketStreamClass: anObject [
 	secureSocketStreamClass := anObject
 ]
@@ -293,7 +293,7 @@ ZnNetworkingUtils >> socketStreamClass [
 	^ socketStreamClass ifNil: [ socketStreamClass := SocketStream ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnNetworkingUtils >> socketStreamClass: anObject [
 	socketStreamClass := anObject
 ]

@@ -5,7 +5,7 @@ Class {
 		'link',
 		'selector'
 	],
-	#category : #Reflectivity-Tests
+	#category : #'Reflectivity-Tests'
 }
 
 { #category : #running }

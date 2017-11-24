@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'isHorizontal'
 	],
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #scripting }

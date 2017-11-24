@@ -20,7 +20,7 @@ Class {
 		'chunkCount',
 		'extraHeaders'
 	],
-	#category : #Zinc-HTTP-Streaming
+	#category : #'Zinc-HTTP-Streaming'
 }
 
 { #category : #'instance creation' }
@@ -204,7 +204,7 @@ ZnChunkedReadStream >> next: requestedCount into: collection startingAt: offset 
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnChunkedReadStream >> on: readStream [
 	stream := readStream
 ]

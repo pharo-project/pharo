@@ -1,1 +1,1 @@
-Package { #name : #System-SessionManager-Tests }
+Package { #name : #'System-SessionManager-Tests' }

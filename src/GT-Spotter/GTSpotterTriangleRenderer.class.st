@@ -6,7 +6,7 @@ Class {
 		'border',
 		'borderColor'
 	],
-	#category : #GT-Spotter-Renderer
+	#category : #'GT-Spotter-Renderer'
 }
 
 { #category : #accessing }

@@ -13,7 +13,7 @@ Class {
 		'uri',
 		'version'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -99,7 +99,7 @@ ZnRequestLine >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnRequestLine >> readFrom: stream [
 	| line lineStream |
 	line := (ZnLineReader on: stream) nextLine.

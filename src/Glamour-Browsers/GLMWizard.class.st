@@ -84,7 +84,7 @@ Class {
 		'stepsDictionary',
 		'stepsAndPanes'
 	],
-	#category : #Glamour-Browsers-Wizards
+	#category : #'Glamour-Browsers-Wizards'
 }
 
 { #category : #examples }
@@ -366,7 +366,7 @@ GLMWizard >> hasUniquePane [
 	^ self steps size = 1 and: [self stepToUse size = 1]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMWizard >> initialize [
 
 	super initialize.

@@ -1,1 +1,1 @@
-Package { #name : #Polymorph-Widgets }
+Package { #name : #'Polymorph-Widgets' }

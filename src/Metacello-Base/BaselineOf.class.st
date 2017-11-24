@@ -68,7 +68,7 @@ reference](MetacelloScriptingAPI.md). There more information on [working with Gi
 Class {
 	#name : #BaselineOf,
 	#superclass : #ConfigurationOf,
-	#category : #Metacello-Base
+	#category : #'Metacello-Base'
 }
 
 { #category : #accessing }

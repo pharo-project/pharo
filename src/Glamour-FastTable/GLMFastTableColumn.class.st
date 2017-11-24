@@ -10,7 +10,7 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#category : #Glamour-FastTable-Model
+	#category : #'Glamour-FastTable-Model'
 }
 
 { #category : #execute }

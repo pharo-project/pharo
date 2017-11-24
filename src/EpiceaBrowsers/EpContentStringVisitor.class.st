@@ -4,7 +4,7 @@ I am an abstract superclass for some visitors that answer Strings describing EpE
 Class {
 	#name : #EpContentStringVisitor,
 	#superclass : #EpEntryContentVisitor,
-	#category : #EpiceaBrowsers-Visitors
+	#category : #'EpiceaBrowsers-Visitors'
 }
 
 { #category : #private }

@@ -1,7 +1,7 @@
 Class {
 	#name : #OCNewCompilerWithChangesFunctionalTests,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-Misc
+	#category : #'OpalCompiler-Tests-Misc'
 }
 
 { #category : #'test - block returning' }
@@ -85,7 +85,7 @@ self assert: (bytecode at: (index := index + 1)) = '52 <78> returnSelf'.
 
 ]
 
-{ #category : #other-tests }
+{ #category : #'other-tests' }
 OCNewCompilerWithChangesFunctionalTests >> testDifferentBlocksWithSameArgumentName [
 	
 	| aCompiledMethod bytecode index |
@@ -227,7 +227,7 @@ OCNewCompilerWithChangesFunctionalTests >> testMethodTemp [
 
 ]
 
-{ #category : #other-tests }
+{ #category : #'other-tests' }
 OCNewCompilerWithChangesFunctionalTests >> testModulePrimitive [
 	
 	| aCompiledMethod bytecode index |

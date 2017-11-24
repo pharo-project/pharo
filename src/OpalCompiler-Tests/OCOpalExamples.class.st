@@ -8,7 +8,7 @@ Class {
 		'iVar',
 		'collection'
 	],
-	#category : #OpalCompiler-Tests-AST
+	#category : #'OpalCompiler-Tests-AST'
 }
 
 { #category : #compiler }
@@ -33,7 +33,7 @@ OCOpalExamples >> doubleRemoteAnidatedBlocks [
 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr [
 	| t1 t2 |
 	t1 := true.
@@ -41,7 +41,7 @@ OCOpalExamples >> exampleAndOr [
 	t1 and: [ t2. '1' logCr ]. "effect"   
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr2 [
 	| t1 t2 |
 	t1 := true.
@@ -49,7 +49,7 @@ OCOpalExamples >> exampleAndOr2 [
 	t2 or: [ t1. '2' logCr ]. "effect" 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr3 [
 	| t1 t2 |
 	t1 := true.
@@ -57,7 +57,7 @@ OCOpalExamples >> exampleAndOr3 [
 	^ t1 and: [ t2 ] "value" 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr4 [
 	| t1 t2 |
 	t1 := true.
@@ -65,7 +65,7 @@ OCOpalExamples >> exampleAndOr4 [
 	^ t2 or: [ t1 ] "value"  
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr5 [
 	| t1 t2 |
 	t1 := true.
@@ -73,7 +73,7 @@ OCOpalExamples >> exampleAndOr5 [
 	^ t2 or: [ t1 and: [ t2 ] ]
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr6 [
 	| t1 t2 |
 	t1 := true.
@@ -81,7 +81,7 @@ OCOpalExamples >> exampleAndOr6 [
 	^ t1 and: [ t2 or: [ t1 ] ]
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockArgument [
 	| block block1 block2 |
 	block := [ :arg | | temp | temp := arg. [ temp ] ].
@@ -92,41 +92,41 @@ OCOpalExamples >> exampleBlockArgument [
 	^block1 value + block2 value.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockExternal [
 	| t |
 	t := 1.
 	^[t] value.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockExternal2 [
 	| t1 t2 |
 	t1 :=  t2 := 1.
 	^[t1 + t2] value.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockExternalArg [
 	| t  |
 	t := 1.
 	^[:a | t + a] value: 1.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockExternalNested [
 	| t s |
 	t := s := 1.
 	^[[s] value +   t   ] value.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockInternal [
 	
 	^[ | t | t := 1. t] value
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockMethodArgument: arg [
 	|  block |
 	block := [ :blockarg | blockarg + arg].
@@ -134,18 +134,18 @@ OCOpalExamples >> exampleBlockMethodArgument: arg [
 	^block value: 2
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleBlockNested [
 	
 	^[ [1] value] value
 ]
 
-{ #category : #examples-pragmas }
+{ #category : #'examples-pragmas' }
 OCOpalExamples >> exampleDoublePrimitive [
 	<primitive: 1>
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleEffectValues [
 	#getMe.
 	#( got that ? ).
@@ -153,64 +153,64 @@ OCOpalExamples >> exampleEffectValues [
 	
 ]
 
-{ #category : #examples-simple }
+{ #category : #'examples-simple' }
 OCOpalExamples >> exampleEmptyMethod [
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleForBlockArgument [
 	|b|
 	b:= [ :blockArg | 1 ].
 	^ b
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleForInlinedBlockArgument [
 	
 	1 ifNotNil:[ :value | ^ value ].
 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalse [
 	true ifFalse: [^1].
 	^2
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalseIfTrue [
 	true ifFalse: [^1] ifTrue: [^2].
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfNotNilArg [
 	^1 even ifNotNil: [ :arg | arg not ]
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfNotNilReturnNil [
 	^nil ifNotNil: [ :arg | arg not ]
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfTrue [
 	 1  < 2 ifTrue: [^'result']. 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfTrueAssign [
 	| a |
 	a := 1 <2 ifTrue: [1] ifFalse: [2].
 	^a 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfTrueIfFalse [
 	 1 <2 ifTrue: [^'result'] ifFalse: [2].
 	
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleInlineBlockCollectionLR3 [
 	| col |
 	col := OrderedCollection new.
@@ -219,7 +219,7 @@ OCOpalExamples >> exampleInlineBlockCollectionLR3 [
 
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleMethodTempInNestedBlock [
 	| temp block |
 	temp := 0.
@@ -231,7 +231,7 @@ OCOpalExamples >> exampleMethodTempInNestedBlock [
 	^block value.
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleMethodWithOptimizedBlocksA [
 	| s c |
 	s := self isNil
@@ -243,7 +243,7 @@ OCOpalExamples >> exampleMethodWithOptimizedBlocksA [
 	^c. "notNil"
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleNestedBlockScoping [
 
 	| b c z |
@@ -255,7 +255,7 @@ OCOpalExamples >> exampleNestedBlockScoping [
 	^ (b value: 2) + (c value: 1)
 ]
 
-{ #category : #examples-simple }
+{ #category : #'examples-simple' }
 OCOpalExamples >> exampleNewArray [
 
 	| temp |
@@ -264,7 +264,7 @@ OCOpalExamples >> exampleNewArray [
 	^temp
 ]
 
-{ #category : #examples-pragmas }
+{ #category : #'examples-pragmas' }
 OCOpalExamples >> examplePrimitiveErrorCode [
 	
 	<primitive: 60 error: code >
@@ -274,7 +274,7 @@ OCOpalExamples >> examplePrimitiveErrorCode [
 
 ]
 
-{ #category : #examples-pragmas }
+{ #category : #'examples-pragmas' }
 OCOpalExamples >> examplePrimitiveErrorCodeModule [
 	"Primitive. Attempt to load a module of the given name.
 	Fail if module cannot be found, or cannot be loaded,
@@ -284,21 +284,21 @@ OCOpalExamples >> examplePrimitiveErrorCodeModule [
 	^ self primitiveFailed
 ]
 
-{ #category : #examples-pragmas }
+{ #category : #'examples-pragmas' }
 OCOpalExamples >> examplePrimitiveErrorModule [
 	
 	<primitive: 'primFunction' error: errorCode module: 'primModule'>
 	^ errorCode
 ]
 
-{ #category : #examples-pragmas }
+{ #category : #'examples-pragmas' }
 OCOpalExamples >> examplePrimitiveModuleError [
 	
 	<primitive: 'primFunction'  module: 'primModule' error: errorCode >
 	^ errorCode
 ]
 
-{ #category : #examples-misc }
+{ #category : #'examples-misc' }
 OCOpalExamples >> examplePushArray [
 	| t |
 
@@ -306,14 +306,14 @@ OCOpalExamples >> examplePushArray [
 	^t
 ]
 
-{ #category : #examples-misc }
+{ #category : #'examples-misc' }
 OCOpalExamples >> examplePushBigArray [
 	"This array should have a size more than 127 elements"
 	{ 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 .  255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 . 255 }.
 	^ 1
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleRepeatEffect [
 	<compilerOptions: #(#+ #optionInlineRepeat)>
 	| i |
@@ -324,7 +324,7 @@ OCOpalExamples >> exampleRepeatEffect [
 		ifTrue: [ ^ true ] ] repeat
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleRepeatValue [
 	<compilerOptions: #(#+ #optionInlineRepeat)>
 	| i |
@@ -335,86 +335,86 @@ OCOpalExamples >> exampleRepeatValue [
 		ifTrue: [ ^ true ] ] repeat 
 ]
 
-{ #category : #examples-simple }
+{ #category : #'examples-simple' }
 OCOpalExamples >> exampleReturn1 [
 	^1
 ]
 
-{ #category : #examples-simple }
+{ #category : #'examples-simple' }
 OCOpalExamples >> exampleReturn1plus2 [
 	^1+2
 ]
 
-{ #category : #examples-simple }
+{ #category : #'examples-simple' }
 OCOpalExamples >> exampleReturn42 [
 	^42
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleSelf [
 	| t |
 	t := self.
 	^self.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlock [
 	^[1].
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockArgument1 [
 	^[:a | a ] value: 1.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockArgument2 [
 	^[:a :b | a + b ] value: 1 value: 1.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockArgument3 [
 	^[:a :b :c | a + b + c ] value: 1 value: 1 value: 1.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockArgument4 [
 	^[:a :b :c :d | a + b + c  + d] value: 1 value: 1 value: 1 value: 1. 
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockArgument5 [
 	^[:a :b :c :d :e| a + b + c  + d + e] valueWithArguments: #(1 1 1 1 1). 
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockEmpty [
 	^[] value.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockLocal [
 	^[ :each | | t |  t:= each. t   ] value: 5.
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleSimpleBlockLocalIf [
 	^true ifTrue: [ | hallo |  hallo := 1 . hallo].
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockLocalIfNested [
 	^true ifTrue: [| hallo |  [  hallo := 1 . hallo] value] .
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleSimpleBlockLocalWhile [
 	|a|
 	a := true.
 	^[: b | [a] whileTrue: [ | hallo |  a := false. hallo := 1 . hallo]]value: 1.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockNested [
 	| a match dict | 
 
@@ -429,31 +429,31 @@ OCOpalExamples >> exampleSimpleBlockNested [
 	^ dict.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockReturn [
 	[^1] value.
 ]
 
-{ #category : #examples-blocks }
+{ #category : #'examples-blocks' }
 OCOpalExamples >> exampleSimpleBlockiVar [
 	^[iVar] value.
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleSuper [
 	| t |
 	t := super.
 	^super.
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleThisContext [
 	| t |
 	t := thisContext.
 	^thisContext.
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleTimesRepeatEffect [
 	| foo |
 	foo := 1.
@@ -461,12 +461,12 @@ OCOpalExamples >> exampleTimesRepeatEffect [
 	^ foo
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleTimesRepeatValue [
 	^ 5 timesRepeat: [ 1 + 2 ]   
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoArgument [
 	collection := OrderedCollection new.
 	1 to: 5 do: [ :index |
@@ -475,7 +475,7 @@ OCOpalExamples >> exampleToDoArgument [
 	"#(1 2 3 4 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoArgumentLimitIsExpression [
 	| count sum |
 	count := 10.
@@ -484,7 +484,7 @@ OCOpalExamples >> exampleToDoArgumentLimitIsExpression [
 	^sum
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoArgumentNotInlined [
 	| block |
 	block := [ :index |
@@ -493,7 +493,7 @@ OCOpalExamples >> exampleToDoArgumentNotInlined [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoInsideTemp [
 	1 to: 5 do: [ :index | 
 		| temp | 
@@ -502,7 +502,7 @@ OCOpalExamples >> exampleToDoInsideTemp [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoInsideTempNotInlined [
 	| block |
 	block := [ :index | 
@@ -513,7 +513,7 @@ OCOpalExamples >> exampleToDoInsideTempNotInlined [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoOutsideTemp [
 	| temp |
 	1 to: 5 do: [ :index | 
@@ -522,7 +522,7 @@ OCOpalExamples >> exampleToDoOutsideTemp [
 	^collection "#(5 5 5 5 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleToDoOutsideTempNotInlined [
 	| block temp |
 	block := [ :index | 
@@ -532,7 +532,7 @@ OCOpalExamples >> exampleToDoOutsideTempNotInlined [
 	^collection "#(5 5 5 5 5)"
 ]
 
-{ #category : #examples-misc }
+{ #category : #'examples-misc' }
 OCOpalExamples >> exampleToDoValue [
 
 	^ 1 to: 2 do: [:each | each]
@@ -540,7 +540,7 @@ OCOpalExamples >> exampleToDoValue [
 
 ]
 
-{ #category : #examples-misc }
+{ #category : #'examples-misc' }
 OCOpalExamples >> exampleToDoValueLimitExpression [
 
 	^ 2 to: 3+4 do: [:each | each]
@@ -548,7 +548,7 @@ OCOpalExamples >> exampleToDoValueLimitExpression [
 
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileModificationAfterNotInlined [
 	| index block |
 	index := 0.
@@ -559,7 +559,7 @@ OCOpalExamples >> exampleWhileModificationAfterNotInlined [
 	^collection "#(5 5 5 5 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileModificationBefore [
 	| index |
 	collection := OrderedCollection new.
@@ -571,7 +571,7 @@ OCOpalExamples >> exampleWhileModificationBefore [
 	"#(5 5 5 5 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileModificationBeforeNotInlined [
 	| index block |
 	index := 0.
@@ -583,7 +583,7 @@ OCOpalExamples >> exampleWhileModificationBeforeNotInlined [
 	"#(5 5 5 5 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileNoModification [
 	"tempvars aren't modified in the loop, therefore they don't need to be in a indirection vector.
 	  number of temps = declared temps "
@@ -599,7 +599,7 @@ OCOpalExamples >> exampleWhileNoModification [
 			  c class ]	"<- block in optimized loop" ]
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileWithTemp [
 	| index |
 	index := 0.
@@ -610,7 +610,7 @@ OCOpalExamples >> exampleWhileWithTemp [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #examples-blocks-optimized }
+{ #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileWithTempNotInlined [
 	| index block |
 	index := 0.
@@ -622,12 +622,12 @@ OCOpalExamples >> exampleWhileWithTempNotInlined [
 	^collection "#(1 2 3 4 5)"
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleWithArgument: anArg [
 	^ anArg
 ]
 
-{ #category : #examples-variables }
+{ #category : #'examples-variables' }
 OCOpalExamples >> exampleiVar [
 	iVar := 1.
 	^iVar.

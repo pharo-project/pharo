@@ -6,10 +6,10 @@ By inheritance it knows how to treat classes and methods
 Class {
 	#name : #RGSlice,
 	#superclass : #RGContainer,
-	#category : #Ring-Core-Containers
+	#category : #'Ring-Core-Containers'
 }
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RGSlice >> addElement: aRGDefinition in: aCollection [
 
 	aRGDefinition environment: self.

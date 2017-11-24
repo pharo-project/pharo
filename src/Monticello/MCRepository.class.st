@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'Settings'
 	],
-	#category : #Monticello-Repositories
+	#category : #'Monticello-Repositories'
 }
 
 { #category : #accessing }

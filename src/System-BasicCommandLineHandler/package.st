@@ -1,1 +1,1 @@
-Package { #name : #System-BasicCommandLineHandler }
+Package { #name : #'System-BasicCommandLineHandler' }

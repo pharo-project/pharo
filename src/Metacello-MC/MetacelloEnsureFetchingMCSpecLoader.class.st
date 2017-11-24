@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloEnsureFetchingMCSpecLoader,
 	#superclass : #MetacelloFetchingMCSpecLoader,
-	#category : #Metacello-MC-Loaders
+	#category : #'Metacello-MC-Loaders'
 }
 
 { #category : #accessing }

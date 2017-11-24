@@ -4,7 +4,7 @@ ZdcSecureSocketStreamTests tests ZdcSecureSocketStream
 Class {
 	#name : #ZdcSecureSocketStreamTests,
 	#superclass : #TestCase,
-	#category : #Zodiac-Tests
+	#category : #'Zodiac-Tests'
 }
 
 { #category : #private }

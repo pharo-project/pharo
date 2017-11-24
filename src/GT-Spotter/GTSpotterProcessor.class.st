@@ -8,7 +8,7 @@ Class {
 		'allFilteredCandidates',
 		'order'
 	],
-	#category : #GT-Spotter-Processors
+	#category : #'GT-Spotter-Processors'
 }
 
 { #category : #public }
@@ -67,7 +67,7 @@ GTSpotterProcessor >> doFilterInContext: aSpotterContext [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTSpotterProcessor >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
 	^ GTCurrentSpotterExceptionHandler value ifNil: [ GTSpotterExceptionHandlerNotFound signal ]

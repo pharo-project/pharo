@@ -10,7 +10,7 @@ Class {
 		'editingModeMorph',
 		'lineNumbersDisplayMorph'
 	],
-	#category : #Tool-Workspace
+	#category : #'Tool-Workspace'
 }
 
 { #category : #querying }
@@ -74,7 +74,7 @@ RubWorkspaceBar >> fontToUse [
 	^ RubAbstractTextArea lineNumbersFont 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubWorkspaceBar >> initialize [
 	super initialize.
 	self side: #bottom.
@@ -119,7 +119,7 @@ RubWorkspaceBar >> modeListMenu [
 	^ menu
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubWorkspaceBar >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self color: self backgroundColor.

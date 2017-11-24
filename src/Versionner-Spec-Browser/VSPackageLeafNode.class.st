@@ -4,7 +4,7 @@ Abstract class used to display a package with its specific icons and no child in
 Class {
 	#name : #VSPackageLeafNode,
 	#superclass : #VSPackageNode,
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #accessing }

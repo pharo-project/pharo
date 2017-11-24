@@ -1,1 +1,1 @@
-Package { #name : #FFI-Kernel }
+Package { #name : #'FFI-Kernel' }

@@ -4,7 +4,7 @@ Checks code using the do: method instead of using the collect: or select: method
 Class {
 	#name : #RBCollectionProtocolRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

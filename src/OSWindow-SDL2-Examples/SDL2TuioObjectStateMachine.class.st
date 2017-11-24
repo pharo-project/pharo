@@ -8,7 +8,7 @@ Class {
 		'objectId',
 		'objectNumber'
 	],
-	#category : #OSWindow-SDL2-Examples-Touch
+	#category : #'OSWindow-SDL2-Examples-Touch'
 }
 
 { #category : #accessing }

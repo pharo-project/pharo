@@ -4,7 +4,7 @@ I am a specialized variable node for 'super'
 Class {
 	#name : #RBSuperNode,
 	#superclass : #RBVariableNode,
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #visiting }

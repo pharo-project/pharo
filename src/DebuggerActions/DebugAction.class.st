@@ -90,7 +90,7 @@ DebugAction >> category: anObject [
 	category := anObject
 ]
 
-{ #category : #accessing-context }
+{ #category : #'accessing-context' }
 DebugAction >> currentContext [
 
 	^ self debugger currentContext
@@ -217,7 +217,7 @@ DebugAction >> id [
 	^ nil
 ]
 
-{ #category : #accessing-context }
+{ #category : #'accessing-context' }
 DebugAction >> interruptedContext [
 	
 	^ self debugger interruptedContext
@@ -350,7 +350,7 @@ DebugAction >> precondition [
 	^ self needsValidation not or: [ self debugger okToChange ]
 ]
 
-{ #category : #accessing-context }
+{ #category : #'accessing-context' }
 DebugAction >> selectedContext [
 	
 	^ self debugger selectedContext

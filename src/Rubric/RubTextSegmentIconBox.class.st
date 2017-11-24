@@ -5,7 +5,7 @@ Class {
 		'icon',
 		'previouslyIn'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }

@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'ContextInstance'
 	],
-	#category : #WriteBarrier-Tests
+	#category : #'WriteBarrier-Tests'
 }
 
 { #category : #initialization }

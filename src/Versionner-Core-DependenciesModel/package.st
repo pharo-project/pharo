@@ -1,1 +1,1 @@
-Package { #name : #Versionner-Core-DependenciesModel }
+Package { #name : #'Versionner-Core-DependenciesModel' }

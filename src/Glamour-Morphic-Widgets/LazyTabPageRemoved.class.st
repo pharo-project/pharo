@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'newIndex'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #accessing }

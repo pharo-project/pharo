@@ -10,7 +10,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnUTF16Encoder,
 	#superclass : #ZnEndianSensitiveUTFEncoder,
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #accessing }

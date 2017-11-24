@@ -9,7 +9,7 @@ Class {
 		'selfVar',
 		'superVar'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #acessing }

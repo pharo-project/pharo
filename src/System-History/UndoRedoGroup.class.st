@@ -7,20 +7,20 @@ Instance Variables
 Class {
 	#name : #UndoRedoGroup,
 	#superclass : #HistoryNode,
-	#category : #System-History
+	#category : #'System-History'
 }
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 UndoRedoGroup >> do [
 	self redo
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 UndoRedoGroup >> redo [
 	self history do: [:i | i redo]
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 UndoRedoGroup >> undo [
 	self history reverseDo: [:i | i undo]
 ]

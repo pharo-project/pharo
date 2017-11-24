@@ -42,12 +42,12 @@ SortHierarchicallyIndentNode >> printOn: aStream [
 		print: indent
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SortHierarchicallyIndentNode >> setElement: anObject [
 	element := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SortHierarchicallyIndentNode >> setIndent: aNumber [
 
 	indent := aNumber

@@ -7,7 +7,7 @@ SpecInterpreter
 Class {
 	#name : #MorphicButtonAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'widget API' }

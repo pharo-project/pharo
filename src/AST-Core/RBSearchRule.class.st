@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'answerBlock'
 	],
-	#category : #AST-Core-Matching
+	#category : #'AST-Core-Matching'
 }
 
 { #category : #'instance creation' }
@@ -36,19 +36,19 @@ RBSearchRule >> canMatch: aProgramNode [
 	^true
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSearchRule >> searchFor: aString thenDo: aBlock [ 
 	self searchString: aString.
 	answerBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSearchRule >> searchForMethod: aString thenDo: aBlock [ 
 	self methodSearchString: aString.
 	answerBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSearchRule >> searchForTree: aBRProgramNode thenDo: aBlock [ 
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock

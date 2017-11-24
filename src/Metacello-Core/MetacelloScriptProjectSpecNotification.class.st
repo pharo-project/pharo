@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'projectSpec'
 	],
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #'exception description' }

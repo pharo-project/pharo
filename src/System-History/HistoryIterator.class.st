@@ -30,7 +30,7 @@ Class {
 		'recorder',
 		'maxSize'
 	],
-	#category : #System-History
+	#category : #'System-History'
 }
 
 { #category : #adding }
@@ -82,12 +82,12 @@ HistoryIterator >> defaultMaximumSize [
 	^ 999999999
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> do [
 	^ self redo
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> doAndAddRecord: anUndoRedoRecord [
 	| result |
 	result := anUndoRedoRecord do.
@@ -195,7 +195,7 @@ HistoryIterator >> recorder [
 	^ recorder ifNil: [recorder := UndoRedoGroup new]
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> redo [
 	self unplugWhile: [
 		self hasNext ifFalse: [^false].
@@ -203,12 +203,12 @@ HistoryIterator >> redo [
 	^ true
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> redo: doMessageSend undo: undoMessageSend [
 	self addItem: (UndoRedoRecord redo: doMessageSend undo: undoMessageSend)
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> redoArray: doArray undoArray: undoArray [
 	self addItem: (UndoRedoRecord redoArray: doArray undoArray: undoArray)
 ]
@@ -234,7 +234,7 @@ HistoryIterator >> size [
 	^ self recorder size
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> undo [
 	self unplugWhile: [
 		self current ifNotNil: [:curr | curr undo].
@@ -242,7 +242,7 @@ HistoryIterator >> undo [
 	^ true
 ]
 
-{ #category : #undo-undo }
+{ #category : #'undo-undo' }
 HistoryIterator >> unplugWhile: aBlock [
 	| wasPlugged |
 	wasPlugged := self isPlugged.

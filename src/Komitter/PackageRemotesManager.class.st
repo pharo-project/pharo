@@ -11,7 +11,7 @@ Class {
 		'remotes',
 		'silent'
 	],
-	#category : #Komitter-Support
+	#category : #'Komitter-Support'
 }
 
 { #category : #specs }

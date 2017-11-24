@@ -8,7 +8,7 @@ Class {
 		'loader',
 		'loaderPolicy'
 	],
-	#category : #Metacello-MC-Loaders
+	#category : #'Metacello-MC-Loaders'
 }
 
 { #category : #'instance creation' }

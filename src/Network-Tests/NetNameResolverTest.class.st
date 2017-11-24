@@ -4,7 +4,7 @@ SUnit tests for NetNameResolver
 Class {
 	#name : #NetNameResolverTest,
 	#superclass : #TestCase,
-	#category : #Network-Tests-Kernel
+	#category : #'Network-Tests-Kernel'
 }
 
 { #category : #accessing }

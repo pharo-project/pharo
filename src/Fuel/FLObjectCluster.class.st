@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'theClass'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -24,7 +24,7 @@ FLObjectCluster class >> newAnalyzing: aClass [
 		yourself.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLObjectCluster >> clusterMaterializeStepWith: aMaterialization [
 
 	super clusterMaterializeStepWith: aMaterialization.
@@ -38,14 +38,14 @@ FLObjectCluster >> clusterReferencesDo: aBlock [
 	aBlock value: theClass
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLObjectCluster >> clusterSerializeStepWith: aSerialization [
 
 	super clusterSerializeStepWith: aSerialization.
 	aSerialization encoder encodeReferenceToClusterObjectClass: theClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLObjectCluster >> initializeAnalyzing: aClass [
 
 	self initializeAnalyzing.

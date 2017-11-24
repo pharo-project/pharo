@@ -14,7 +14,7 @@ Class {
 		'packagesDiff',
 		'dependentPackagesDiff'
 	],
-	#category : #Tool-DependencyAnalyser-Diff
+	#category : #'Tool-DependencyAnalyser-Diff'
 }
 
 { #category : #private }

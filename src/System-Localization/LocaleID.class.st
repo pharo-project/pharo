@@ -8,7 +8,7 @@ Class {
 		'isoLanguage',
 		'isoCountry'
 	],
-	#category : #System-Localization-Locales
+	#category : #'System-Localization-Locales'
 }
 
 { #category : #accessing }
@@ -16,7 +16,7 @@ LocaleID class >> current [
 	^Locale current localeID
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 LocaleID class >> default [
 	^ self isoLanguage: 'en'
 ]

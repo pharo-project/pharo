@@ -14,7 +14,7 @@ Class {
 		'keyText',
 		'isValidBlock'
 	],
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #'instance creation' }

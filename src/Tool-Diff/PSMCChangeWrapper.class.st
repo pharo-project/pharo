@@ -1,7 +1,7 @@
 Class {
 	#name : #PSMCChangeWrapper,
 	#superclass : #ListItemWrapper,
-	#category : #Tool-Diff
+	#category : #'Tool-Diff'
 }
 
 { #category : #accessing }

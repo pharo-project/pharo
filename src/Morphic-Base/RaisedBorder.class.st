@@ -4,7 +4,7 @@ see BorderedMorph
 Class {
 	#name : #RaisedBorder,
 	#superclass : #SimpleBorder,
-	#category : #Morphic-Base-Borders
+	#category : #'Morphic-Base-Borders'
 }
 
 { #category : #accessing }

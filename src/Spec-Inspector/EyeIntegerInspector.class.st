@@ -6,7 +6,7 @@ If within Unicode range, show a Character having using the Integer value as code
 Class {
 	#name : #EyeIntegerInspector,
 	#superclass : #EyeInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #list }

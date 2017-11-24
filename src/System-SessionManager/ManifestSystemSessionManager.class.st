@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestSystemSessionManager,
 	#superclass : #PackageManifest,
-	#category : #System-SessionManager
+	#category : #'System-SessionManager'
 }
 
 { #category : #'meta-data - dependency analyser' }

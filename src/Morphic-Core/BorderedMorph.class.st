@@ -19,7 +19,7 @@ Class {
 		'borderWidth',
 		'borderColor'
 	],
-	#category : #Morphic-Core-Kernel
+	#category : #'Morphic-Core-Kernel'
 }
 
 { #category : #geometry }

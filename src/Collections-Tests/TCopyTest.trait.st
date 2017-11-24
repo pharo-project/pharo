@@ -6,7 +6,7 @@ Note that the order is not garanteed -- see TEqualityTest for that.
 "
 Trait {
 	#name : #TCopyTest,
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

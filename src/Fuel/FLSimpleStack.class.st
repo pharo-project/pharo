@@ -12,7 +12,7 @@ Class {
 		'array',
 		'slotIndex'
 	],
-	#category : #Fuel-Collections
+	#category : #'Fuel-Collections'
 }
 
 { #category : #'instance creation' }
@@ -48,7 +48,7 @@ FLSimpleStack >> grow [
 	array := newArray
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLSimpleStack >> initialize: hintSize [
 
 	array := Array new: hintSize.

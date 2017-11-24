@@ -32,5 +32,5 @@ row := builder newRow: {
 Class {
 	#name : #ExpanderMorphContracted,
 	#superclass : #ExpanderMorphAnnouncement,
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }

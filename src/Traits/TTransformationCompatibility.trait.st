@@ -5,7 +5,7 @@ When used in Trait and ClassTrait, this eliminates the need for TraitHolders.
 "
 Trait {
 	#name : #TTransformationCompatibility,
-	#category : #Traits-Kernel-Traits
+	#category : #'Traits-Kernel-Traits'
 }
 
 { #category : #enquiries }

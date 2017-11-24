@@ -10,7 +10,7 @@ Class {
 		'ownTempVectors',
 		'copiedValues'
 	],
-	#category : #OpalCompiler-Core-Bytecode
+	#category : #'OpalCompiler-Core-Bytecode'
 }
 
 { #category : #accessing }

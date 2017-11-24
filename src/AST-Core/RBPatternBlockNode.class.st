@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'valueBlock'
 	],
-	#category : #AST-Core-Pattern
+	#category : #'AST-Core-Pattern'
 }
 
 { #category : #visitor }
@@ -87,7 +87,7 @@ RBPatternBlockNode >> createReplacingBlock [
 	^self createBlockFor: newBlock
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternBlockNode >> isPatternNode [
 	^ true
 ]

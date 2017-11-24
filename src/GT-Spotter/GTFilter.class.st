@@ -12,7 +12,7 @@ Class {
 		'filteredItems',
 		'streamed'
 	],
-	#category : #GT-Spotter-Filters
+	#category : #'GT-Spotter-Filters'
 }
 
 { #category : #public }
@@ -25,19 +25,19 @@ GTFilter class >> gtListFilter [
 	^ self new
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> addItem: anItem [
 	self context streamed add: anItem.
 	self context addItem: anItem
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> addItems: aCollection [
 	self context streamed addAll: aCollection.
 	self context addItems: aCollection
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> allItems [
 	" WARNING: #allItems might be a list, block or iterator. we have to evaluate it in order to calculate the remaining/unstreamed items. #allItems are/were designed to be polymorphic to collections and streams. so this should be safe "
 	| allItems |
@@ -47,7 +47,7 @@ GTFilter >> allItems [
 		ifFalse: [ allItems ]
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> allItemsDo: aBlock [
 	self allItems do: aBlock
 ]
@@ -79,17 +79,17 @@ GTFilter >> context: anObject [
 	context := anObject
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTFilter >> defaultFilteredItems [
 	^ OrderedCollection new: 100 " not a limitation, just a reasonable start size "
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTFilter >> defaultStreamed [
 	^ true
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> exceptionHandler [
 	self flag: 'Bloc -> overrides doesNotUnderstand discarding the current exception context'.
 	^ GTCurrentSpotterExceptionHandler value ifNil: [ self context exceptionHandler ]
@@ -127,14 +127,14 @@ GTFilter >> initialize [
 	self filteredItems: self defaultFilteredItems
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> itemFilterNameFor: anItem [
 	"I return the string/text representation of an item used by the filter."
 	
 	^ self processor itemFilterNameFor: anItem
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> itemsLimit [
 	^ self context itemsLimit
 ]
@@ -146,12 +146,12 @@ GTFilter >> prepareFilterInContext: aSpotterContext [
 	self context: aSpotterContext.
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> processor [
 	^ self context processor
 ]
 
-{ #category : #private-model }
+{ #category : #'private-model' }
 GTFilter >> step [
 	^ self context step
 ]

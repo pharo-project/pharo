@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'issues'
 	],
-	#category : #Metacello-Core-Exceptions-Errors
+	#category : #'Metacello-Core-Exceptions-Errors'
 }
 
 { #category : #'instance creation' }

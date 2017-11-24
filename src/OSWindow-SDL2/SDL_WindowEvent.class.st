@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_WindowEvent,
+	#name : #'SDL_WindowEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_DATA1',
@@ -15,7 +15,7 @@ Class {
 		'OFFSET_TYPE',
 		'OFFSET_WINDOWID'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

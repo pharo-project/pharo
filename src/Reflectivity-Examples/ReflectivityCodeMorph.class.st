@@ -8,7 +8,7 @@ Class {
 		'textModel',
 		'compiledMethod'
 	],
-	#category : #Reflectivity-Examples
+	#category : #'Reflectivity-Examples'
 }
 
 { #category : #'instance creation' }

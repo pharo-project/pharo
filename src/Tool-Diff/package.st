@@ -1,1 +1,1 @@
-Package { #name : #Tool-Diff }
+Package { #name : #'Tool-Diff' }

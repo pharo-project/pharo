@@ -4,7 +4,7 @@ I answer a morph for each EpEvent.
 Class {
 	#name : #EpMorphVisitor,
 	#superclass : #EpEntryContentVisitor,
-	#category : #EpiceaBrowsers-Visitors
+	#category : #'EpiceaBrowsers-Visitors'
 }
 
 { #category : #private }

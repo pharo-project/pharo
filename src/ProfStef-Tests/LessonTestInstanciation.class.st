@@ -4,7 +4,7 @@ SUnit tests for lessons
 Class {
 	#name : #LessonTestInstanciation,
 	#superclass : #TestCase,
-	#category : #ProfStef-Tests-Tests
+	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #tests }

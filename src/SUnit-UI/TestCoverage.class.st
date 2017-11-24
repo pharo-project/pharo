@@ -9,7 +9,7 @@ Class {
 		'reference',
 		'method'
 	],
-	#category : #SUnit-UI
+	#category : #'SUnit-UI'
 }
 
 { #category : #'instance creation' }

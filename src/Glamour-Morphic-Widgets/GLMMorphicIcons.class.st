@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicIcons,
 	#superclass : #Object,
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #'accessing - icons' }

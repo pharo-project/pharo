@@ -65,7 +65,7 @@ Class {
 		'dialog',
 		'allowedInStyle'
 	],
-	#category : #System-Settings-Core
+	#category : #'System-Settings-Core'
 }
 
 { #category : #comparing }

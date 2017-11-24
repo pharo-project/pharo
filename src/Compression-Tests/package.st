@@ -1,1 +1,1 @@
-Package { #name : #Compression-Tests }
+Package { #name : #'Compression-Tests' }

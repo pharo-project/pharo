@@ -4,7 +4,7 @@ A FLAbstractCollectionCluster is the common behavior for all cluster collections
 Class {
 	#name : #FLAbstractCollectionCluster,
 	#superclass : #FLObjectCluster,
-	#category : #Fuel-Clusters-Optionals
+	#category : #'Fuel-Clusters-Optionals'
 }
 
 { #category : #analyzing }
@@ -14,42 +14,42 @@ FLAbstractCollectionCluster class >> clusterBucketIn: aClusterization [
 	^aClusterization postBaselevelBucket
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> afterMaterializationStepWith: aDecoder [  
 
 	objects do: [ :anObject | anObject fuelAfterMaterialization ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> materializeInstanceWith: aDecoder [
 
 	^theClass new: aDecoder nextEncodedPositiveInteger
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> materializeReferencesOf: anObject with: aDecoder [
 	"Hook method"
 
 	self subclassResponsibility
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> materializeReferencesStepWith: aDecoder [
 
 	objects do: [ :anObject | self materializeReferencesOf: anObject with: aDecoder ]
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> serializeInstance: anObject with: anEncoder [
 	anEncoder encodePositiveInteger: anObject size
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> serializeReferencesOf: anObject with: anEncoder [
 	^ self subclassResponsibility 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLAbstractCollectionCluster >> serializeReferencesStepWith: anEncoder [
 
 	objects do: [ :anObject | self serializeReferencesOf: anObject with: anEncoder ]

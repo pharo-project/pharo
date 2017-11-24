@@ -10,7 +10,7 @@ Class {
 		'shortcut',
 		'platform'
 	],
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #'instance creation' }

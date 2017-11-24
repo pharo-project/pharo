@@ -2,13 +2,13 @@
 I represent a handle of GL rendering context, coming from SDL2 library
 "
 Class {
-	#name : #SDL_GLContext,
+	#name : #'SDL_GLContext',
 	#superclass : #SDL2Handle,
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #deleting }

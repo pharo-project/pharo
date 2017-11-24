@@ -4,7 +4,7 @@ This rule should be updated to verify the inverse no translated messsages should
 Class {
 	#name : #RBMissingTranslationsInMenusRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

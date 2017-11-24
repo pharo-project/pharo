@@ -20,7 +20,7 @@ Class {
 		'FT2Constants',
 		'FreeTypeCacheConstants'
 	],
-	#category : #FreeType-Fonts
+	#category : #'FreeType-Fonts'
 }
 
 { #category : #'instance creation' }
@@ -476,7 +476,7 @@ FreeTypeFont >> hintedWidthOf: aCharacter [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FreeTypeFont >> initialize: aFont [
 
 	self face: aFont face.
@@ -691,7 +691,7 @@ FreeTypeFont >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FreeTypeFont >> releaseCachedState [
 	face releaseCachedState.
 	FreeTypeCache current removeAllForFont: self.

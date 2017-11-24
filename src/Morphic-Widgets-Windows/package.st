@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Widgets-Windows }
+Package { #name : #'Morphic-Widgets-Windows' }

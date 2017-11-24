@@ -14,7 +14,7 @@ Class {
 		'cache',
 		'continuing'
 	],
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #public }
@@ -89,7 +89,7 @@ GTSpotterContext >> continuing: anObject [
 	continuing := anObject
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterContext >> defaultCache [
 	^ IdentityDictionary new 
 		at: #processorsAndFilters put: (IdentityDictionary new: 100); " not a limitation, just a reasonable start size "
@@ -97,22 +97,22 @@ GTSpotterContext >> defaultCache [
 		yourself
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterContext >> defaultContinuing [
 	^ false
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterContext >> defaultText [
 	^ ''
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterContext >> defaultTextLowercase [
 	^ self textTrimmed asLowercase
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterContext >> defaultTextTrimmed [
 	^ self text trimBoth
 ]
@@ -222,7 +222,7 @@ GTSpotterContext >> search: anObject [
 	search := anObject
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTSpotterContext >> spotter [
 	^ self step spotter
 ]

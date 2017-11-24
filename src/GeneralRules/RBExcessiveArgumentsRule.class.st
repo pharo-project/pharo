@@ -8,7 +8,7 @@ The defined number of arguments can be edited in #argumentsCount.
 Class {
 	#name : #RBExcessiveArgumentsRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

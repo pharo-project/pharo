@@ -4,7 +4,7 @@ A FinderMethodNode is a node used by the FinderUI's tree representing a Method
 Class {
 	#name : #FinderMethodNode,
 	#superclass : #FinderNode,
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #'events handling' }

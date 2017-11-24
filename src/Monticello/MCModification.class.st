@@ -8,10 +8,10 @@ Class {
 		'obsoletion',
 		'modification'
 	],
-	#category : #Monticello-Patching
+	#category : #'Monticello-Patching'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCModification class >> of: base to: target [
 	^ self new initializeWithBase: base target: target
 ]

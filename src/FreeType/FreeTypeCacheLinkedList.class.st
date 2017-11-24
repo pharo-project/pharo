@@ -4,7 +4,7 @@ A linked list for the FreeTypeCache
 Class {
 	#name : #FreeTypeCacheLinkedList,
 	#superclass : #LinkedList,
-	#category : #FreeType-Cache
+	#category : #'FreeType-Cache'
 }
 
 { #category : #adding }

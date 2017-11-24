@@ -7,7 +7,7 @@ ACustomTheme>>spotterWidgetThemer
 Class {
 	#name : #GTSpotterWidgetThemer,
 	#superclass : #GLMBrickThemerModule,
-	#category : #GT-Spotter-Theme
+	#category : #'GT-Spotter-Theme'
 }
 
 { #category : #values }
@@ -45,7 +45,7 @@ GTSpotterWidgetThemer >> breadcrumbItemLabelStyleFor: aBrick [
 		hSpaceFill
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> breadcrumbItemLabelWidgetStyleFor: aBrick [
 
 	aBrick
@@ -73,7 +73,7 @@ GTSpotterWidgetThemer >> breadcrumbItemTriangleStyleFor: aBrick [
 		hSpaceFill
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> breadcrumbItemTriangleWidgetStyleFor: aBrick [
 
 	aBrick
@@ -105,7 +105,7 @@ GTSpotterWidgetThemer >> breadcrumbSeparatorStyleFor: aBrick [
 		height: self breadcrumbHeight + self outerBorderWidth.
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> breadcrumbSeparatorWidgetStyleFor: aBrick [
 
 	aBrick
@@ -159,7 +159,7 @@ GTSpotterWidgetThemer >> categoryAmountStyleFor: aBrick [
 		marginLeft: self categoryNameMarginRight.
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> categoryAmountWidgetStyleFor: aBrick [
 
 	aBrick
@@ -212,7 +212,7 @@ GTSpotterWidgetThemer >> categoryTitleNameStyleFor: aBrick [
 	
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> categoryTitleNameWidgetStyleFor: aBrick [
 
 	aBrick
@@ -253,7 +253,7 @@ GTSpotterWidgetThemer >> categoryTitleStyleFor: aBrick [
 			title amountBrick hMargin ]"
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> categoryTitleWidgetStyleFor: aBrick [
 
 	aBrick
@@ -270,7 +270,7 @@ GTSpotterWidgetThemer >> closeButtonStyleFor: aBrick [
 		marginLeft: 0
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> closeButtonWidgetStyleFor: aBrick [
 
 	aBrick
@@ -302,7 +302,7 @@ GTSpotterWidgetThemer >> headerStyleFor: aBrick [
 		height: self headerHeight
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> headerWidgetStyleFor: aBrick [
 
 	aBrick
@@ -319,7 +319,7 @@ GTSpotterWidgetThemer >> helpButtonStyleFor: aBrick [
 		marginLeft: 0
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> helpButtonWidgetStyleFor: aBrick [
 
 	aBrick
@@ -429,7 +429,7 @@ GTSpotterWidgetThemer >> itemActionButtonStyleFor: aBrick [
 		padding: { 0 . self outerBorderWidth }
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> itemActionButtonWidgetStyleFor: aBrick [
 
 	aBrick
@@ -518,7 +518,7 @@ GTSpotterWidgetThemer >> itemNormalStyleFor: aBrick [
 		hSpaceFill
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> itemNormalWidgetStyleFor: aBrick [
 
 	aBrick
@@ -671,7 +671,7 @@ GTSpotterWidgetThemer >> searchFieldTextColor [
 	^ Color black
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> searchFieldWidgetStyleFor: aBrick [
 	
 	aBrick morph
@@ -693,7 +693,7 @@ GTSpotterWidgetThemer >> settingsButtonStyleFor: aBrick [
 		marginRight: 2
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> settingsButtonWidgetStyleFor: aBrick [
 	aBrick
 		normalImage: (Smalltalk ui icons iconNamed: #glamorousPreferences);
@@ -733,7 +733,7 @@ GTSpotterWidgetThemer >> spotterContentsStyleFor: aBrick [
 	
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> spotterContentsWidgetStyleFor: aBrick [
 	
 	aBrick
@@ -783,7 +783,7 @@ GTSpotterWidgetThemer >> spotterPreviewArrowStyleFor: aBrick [
 		height: [ (self previewArrowWidth - self previewArrowGapHack ) * 2 ]
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> spotterPreviewArrowWidgetStyleFor: aBrick [
 
 	aBrick owner isTriangleVisible
@@ -827,7 +827,7 @@ GTSpotterWidgetThemer >> spotterPreviewStyleFor: aBrick [
 		zIndex: 1
 ]
 
-{ #category : #styles-widget }
+{ #category : #'styles-widget' }
 GTSpotterWidgetThemer >> spotterPreviewWidgetStyleFor: aBrick [
 	
 	aBrick

@@ -34,7 +34,7 @@ Class {
 		'timerEventLoop',
 		'timingSemaphore'
 	],
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #snapshotting }

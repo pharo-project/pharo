@@ -1,7 +1,7 @@
 Class {
 	#name : #MirrorPrimitivesTests,
 	#superclass : #TestCase,
-	#category : #ReflectionMirrors-Primitives-Tests
+	#category : #'ReflectionMirrors-Primitives-Tests'
 }
 
 { #category : #'tests-class relationship' }
@@ -315,7 +315,7 @@ MirrorPrimitivesTests >> testGettingGeneralFieldOfWeakMessageSend [
 	self should: [MirrorPrimitives fieldOf: arrayWithInstVars at: 5] raise: PrimitiveFailed
 ]
 
-{ #category : #tests-hashes }
+{ #category : #'tests-hashes' }
 MirrorPrimitivesTests >> testGettingIdentityHashOfObject [
 
 	| actual object |
@@ -425,7 +425,7 @@ MirrorPrimitivesTests >> testPerformingMessageInSuperclass [
 	self assert: actual equals: '(0@0)'
 ]
 
-{ #category : #tests-printing }
+{ #category : #'tests-printing' }
 MirrorPrimitivesTests >> testPrintingObject [
 
 	| actual |

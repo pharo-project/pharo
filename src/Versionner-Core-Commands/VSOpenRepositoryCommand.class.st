@@ -4,7 +4,7 @@ Open an inspector on the remote repository.
 Class {
 	#name : #VSOpenRepositoryCommand,
 	#superclass : #VSCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

@@ -19,10 +19,10 @@ Class {
 		'size',
 		'numberOfDisplayBlock'
 	],
-	#category : #Glamour-Browsers-Wizards
+	#category : #'Glamour-Browsers-Wizards'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMWizardGenericStep >> initialize [
 
 	super initialize.

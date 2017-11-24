@@ -4,7 +4,7 @@ The test framework distinguishes between failures and errors.  A failure is an e
 Class {
 	#name : #TestFailure,
 	#superclass : #Exception,
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #'camp smalltalk' }

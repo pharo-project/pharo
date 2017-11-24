@@ -129,7 +129,7 @@ Class {
 		'cairo_t',
 		'cairo_text_extents_t'
 	],
-	#category : #Athens-CairoPools
+	#category : #'Athens-CairoPools'
 }
 
 { #category : #'as yet unclassified' }

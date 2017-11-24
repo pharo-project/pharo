@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'loaderPolicy'
 	],
-	#category : #Metacello-MC-Model
+	#category : #'Metacello-MC-Model'
 }
 
 { #category : #querying }

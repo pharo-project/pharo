@@ -21,7 +21,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }
@@ -121,7 +121,7 @@ MBConfigurationRoot >> configurations [
 	^ configurations
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MBConfigurationRoot >> initialize [
 
 	super initialize .

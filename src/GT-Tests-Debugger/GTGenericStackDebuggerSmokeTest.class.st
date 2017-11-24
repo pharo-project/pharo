@@ -1,7 +1,7 @@
 Class {
 	#name : #GTGenericStackDebuggerSmokeTest,
 	#superclass : #GTDebuggerSmokeTest,
-	#category : #GT-Tests-Debugger
+	#category : #'GT-Tests-Debugger'
 }
 
 { #category : #accessing }

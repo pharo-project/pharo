@@ -4,7 +4,7 @@ A MCMerger is an abstract responsible for performing merge operations and detect
 Class {
 	#name : #MCMerger,
 	#superclass : #Object,
-	#category : #Monticello-Merging
+	#category : #'Monticello-Merging'
 }
 
 { #category : #operations }

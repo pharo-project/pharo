@@ -10,7 +10,7 @@ Class {
 		'matrix3',
 		'matrix23'
 	],
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #running }

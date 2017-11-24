@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'storeString'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #testing }
@@ -28,7 +28,7 @@ EpGenericRefactoring >> asRBRefactoring [
 	^ self class compiler evaluate: storeString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpGenericRefactoring >> initializeWith: aRBRefactoring [
 	self initialize.
 	storeString := aRBRefactoring storeString

@@ -239,7 +239,7 @@ Class {
 		'maxNodeWidth',
 		'enabled'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #'instance creation' }
@@ -248,7 +248,7 @@ MorphTreeMorph class >> on: anObject [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> acceptDroppingMorph: aMorph event: evt [
 	"This message is sent when a morph is dropped onto a morph that has agreed 
 	to accept the dropped morph by responding 'true' to the wantsDroppedMorph:Event: 
@@ -293,7 +293,7 @@ MorphTreeMorph >> addColumnResizers [
 	self columnResizersToFront
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 	"Sent when expanding a node in order to add chilldren nodes after the expanded node"
 	| priorMorph morphList  subs |
@@ -332,7 +332,7 @@ MorphTreeMorph >> addMorphsAfter: parentMorph fromCollection: aCollection [
 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: expandedItems atLevel: newIndent [ 
 	"Sent when building the list (by #buildContents), takes
 	into accound old expanded items: they remain 
@@ -364,13 +364,13 @@ MorphTreeMorph >> addMorphsTo: morphList from: aCollection withExpandedItems: ex
 	^ firstAddition
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList [
 	self addSubmorphsFromNodeList: self currentNodelist previouslyExpanded: #() 
 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 MorphTreeMorph >> addSubmorphsFromNodeList: aNodeList previouslyExpanded: expandedNodeList [
 	| morphList  |
 	morphList := OrderedCollection new.
@@ -428,7 +428,7 @@ MorphTreeMorph >> allNodeMorphs [
 		
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> allowColumnDrop [
 	"allowing column drop means that a column 
 	can be dropped into another one. The default behavior is to swap the
@@ -519,13 +519,13 @@ MorphTreeMorph >> childrenDo: aBlock [
 	self roots do: aBlock
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> collapseAll [
 	self updateContentsWithPreviouslyExpanded: Array new.
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> collapseNodePath: aPath [
 	self allNodeMorphs first collapseNodePath: aPath
 ]
@@ -644,7 +644,7 @@ MorphTreeMorph >> columnsChanged [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> commandOrCrontrolKeyPressed: anEvent [
 	^ (Smalltalk os isMacOS) 
 		ifTrue: [anEvent controlKeyPressed]
@@ -657,7 +657,7 @@ MorphTreeMorph >> currentNodelist [
 	^ self nodeList
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> currentlyExpanded [
 
 	^ self expandedNodesFrom: (self allNodeMorphs).
@@ -674,7 +674,7 @@ MorphTreeMorph >> disable [
 	self enabled: false
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> doubleClick: anEvent [ 
 	| targetMorph |
 	targetMorph := self scrollerSubMorphFromPoint: anEvent position.
@@ -760,7 +760,7 @@ MorphTreeMorph >> enabledFromModel [
 		ifTrue: [ self enabled: val ] 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expand: aMorph suchThat: aBlock [
 	(aBlock value: aMorph complexContents)
 		ifTrue: [
@@ -769,7 +769,7 @@ MorphTreeMorph >> expand: aMorph suchThat: aBlock [
 	self innerWidgetChanged.
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expand: aMorph to: level [
 	| allChildren |
 	aMorph toggleExpandedState.
@@ -782,7 +782,7 @@ MorphTreeMorph >> expand: aMorph to: level [
 			ifTrue: [self expand: each to: level-1]].
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAll [
 	"Expand all of the roots"
 	
@@ -790,7 +790,7 @@ MorphTreeMorph >> expandAll [
 	self innerWidgetChanged
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAll: aMorph [
 	|  subs |
 	self expandAllSilently: aMorph.
@@ -803,7 +803,7 @@ MorphTreeMorph >> expandAll: aMorph [
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAll: aMorph except: aBlock [
 	| allChildren |
 	(aBlock value: aMorph complexContents)
@@ -817,14 +817,14 @@ MorphTreeMorph >> expandAll: aMorph except: aBlock [
 			ifTrue: [self expandAll: each except: aBlock]].
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAllFromNode: aNode [
 		self expandAll: ((self nodeMorphOfNode: aNode) ifNil: [^self]).
 		self adjustSubmorphPositions
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAllSilently: aMorph [
 	aMorph isExpanded ifFalse: [aMorph expand].
 	aMorph childrenDo: [:ch | self expandAllSilently: ch].
@@ -833,31 +833,31 @@ MorphTreeMorph >> expandAllSilently: aMorph [
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAllSuchThat: aBlock [
 	self roots do: [:m | self expand: m suchThat: aBlock].
 	self innerWidgetChanged
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandAllTo: aLevel [
 	self roots do: [:m | self expand: m to: aLevel].
 	self innerWidgetChanged
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandItemPath: aNodePath [
 	(self allNodeMorphs at: 1 ifAbsent: [^self]) 
 		openItemPath: aNodePath
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandNodePath: aNodePath [
 	(self allNodeMorphs at: 1 ifAbsent: [^self]) 
 		openNodePath: aNodePath
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandRoots [
 	"Expand all the receiver's roots"
 	
@@ -868,7 +868,7 @@ MorphTreeMorph >> expandRoots [
 	self innerWidgetChanged
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandSilently: aMorph suchThat: aBlock [
 	(aBlock value: aMorph complexContents)
 		ifTrue: [
@@ -877,14 +877,14 @@ MorphTreeMorph >> expandSilently: aMorph suchThat: aBlock [
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandedForm [
 	"Answer the form to use for expanded items."
 	
 	^self theme treeExpandedForm
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandedFormForMorph: aMorph [
 	"Answer the form to use for expanded items."
 	
@@ -893,14 +893,14 @@ MorphTreeMorph >> expandedFormForMorph: aMorph [
 		ifFalse: [self theme treeExpandedForm]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandedNodesFrom: aMorpList [
 
 	^ (aMorpList select: [ :each | each isExpanded]) collect: [ :each | each complexContents].
 	
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> expandedToggleImage [
 	^ expandedToggleImage ifNil: [expandedToggleImage := ImageMorph new form: self expandedForm].
 
@@ -934,7 +934,7 @@ MorphTreeMorph >> firstNodeMorph [
 	^ self allNodeMorphs ifEmpty: [nil] ifNotEmpty: [scroller submorphs at: 1]
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> forbidColumnDrop [
 	"Do not allow column drag and drop"
 	columnDropUnabled := false
@@ -971,7 +971,7 @@ MorphTreeMorph >> hScrollBarValue: scrollValue [
 			self updateTopHeader]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> handleMouseMove: anEvent [
 	"Reimplemented because we really want #mouseMove when a morph is dragged around"
 	
@@ -1142,7 +1142,7 @@ MorphTreeMorph >> itemStringGetter: aValuable [
 	self columns first itemStringGetter: aValuable
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> keyStroke: event [ 
 	"Process potential command keys."
 	(self navigationKey: event) ifTrue: [^true].
@@ -1261,7 +1261,7 @@ MorphTreeMorph >> model: aTreeModel [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseDown: event [ 
 	"Changed to take keybaord focus."
 	| targetMorph selectors |
@@ -1315,7 +1315,7 @@ MorphTreeMorph >> mouseDownHighlightColor [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseEnter: event [
 	"Changed to take keyboardFocusOnMouseDown preference into account."
 	
@@ -1324,7 +1324,7 @@ MorphTreeMorph >> mouseEnter: event [
 	self keyboardFocusOnMouseDown ifFalse: [self takeKeyboardFocus]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseEnterDragging: evt [
 	| aMorph |
 	(evt hand hasSubmorphs and: [self dropEnabled]) 
@@ -1337,7 +1337,7 @@ MorphTreeMorph >> mouseEnterDragging: evt [
 			"above is ugly but necessary for now"].
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseLeaveDragging: anEvent [
 	(self dropEnabled and:[anEvent hand hasSubmorphs]) ifFalse: ["no d&d"
 		^ super mouseLeaveDragging: anEvent].
@@ -1347,7 +1347,7 @@ MorphTreeMorph >> mouseLeaveDragging: anEvent [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseMove: evt [
 
 	| targetMorph |
@@ -1376,7 +1376,7 @@ MorphTreeMorph >> mouseOverAllowed [
 	^ mouseOverAllowed ifNil: [mouseOverAllowed := false]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseStillDown: anEvent [
 	(anEvent hand position y > self innerBounds bottom)
 		ifTrue: [self listManager selectMoreAtBottom]
@@ -1386,13 +1386,13 @@ MorphTreeMorph >> mouseStillDown: anEvent [
 				ifFalse: [super mouseStillDown: anEvent]]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseStillDownStepRate [
 	"At what rate do I want to receive #mouseStillDown: notifications?"
 	^10
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> mouseUp: event [ 
 	"Fixed up highlight problems."
 	| nodeMorph wasHigh |
@@ -1477,14 +1477,14 @@ MorphTreeMorph >> nodeStringGetter: aValuable [
 	self columns first nodeStringGetter: aValuable
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> notExpandedForm [
 	"Answer the form to use for unexpanded items."
 	
 	^self theme treeUnexpandedForm
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> notExpandedFormForMorph: aMorph [
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
 		ifTrue: [self theme whiteTreeUnexpandedForm]
@@ -1492,7 +1492,7 @@ MorphTreeMorph >> notExpandedFormForMorph: aMorph [
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> notExpandedToggleImage [
 	^ notExpandedToggleImage ifNil: [notExpandedToggleImage := ImageMorph new form: self notExpandedForm].
 
@@ -1508,14 +1508,14 @@ MorphTreeMorph >> noteRemovalOfAll: aCollection [
 	self adjustSubmorphPositions
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> potentialDropMorph [
 	"return the morph (the MorphTreeNodeMorph) 
 	which is the current drop target candidate "
 	^potentialDropMorph
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> potentialDropMorph: aMorph [
 	"Set the morph (the MorphTreeNodeMorph) 
 	which is the current drop target candidate "
@@ -1606,7 +1606,7 @@ MorphTreeMorph >> removeTopHeader [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> resetPotentialDropMorph [
 	"release the current drop morph candidate"
 	potentialDropMorph ifNotNil: [
@@ -1719,7 +1719,7 @@ MorphTreeMorph >> scrollSelectionIntoView [
 		ifNotNil: [:morph | self scrollToShow: morph bounds ]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> scrollerSubMorphFromPoint: aPoint [
 	"Return the list element (morph) at the given point or nil if outside"
 
@@ -1845,7 +1845,7 @@ MorphTreeMorph >> setSelectedMorph: aNodeMorph [
 	self listManager setSelectedMorph: aNodeMorph
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> startDrag: anEvent [ 
 	| aTransferMorph itemMorph passenger |
 	self dragEnabled
@@ -1889,7 +1889,7 @@ MorphTreeMorph >> swapColumnAt: oneIndex withColumnAt: anotherIndex [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
@@ -1910,7 +1910,7 @@ MorphTreeMorph >> themeChanged [
 	super themeChanged.
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 	| oldState |
 	event yellowButtonPressed 
@@ -1924,12 +1924,12 @@ MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 	
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> toggleImageHeight [
 	^ self expandedToggleImage height max: self notExpandedToggleImage height.
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeMorph >> toggleImageWidth [
 	^ self expandedToggleImage width max: self notExpandedToggleImage width.
 ]
@@ -2074,7 +2074,7 @@ MorphTreeMorph >> vExtraScrollRange [
 
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 MorphTreeMorph >> wantsDroppedMorph: aMorph event: anEvent [
 	"Return true if the receiver wishes to accept the given morph, which is being dropped 
 	by a hand in response to the given event. Note that for a successful drop operation 
@@ -2104,7 +2104,7 @@ MorphTreeMorph >> withTreeLines: aBoolean [
 	self  treeLineWidth: 1
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 MorphTreeMorph >> yellowButtonEvent: anEvent [
 
 	(self scrollerSubMorphFromPoint: anEvent position) 

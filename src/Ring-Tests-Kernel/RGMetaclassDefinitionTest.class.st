@@ -4,7 +4,7 @@ SUnit tests for Ring metaclass definitions
 Class {
 	#name : #RGMetaclassDefinitionTest,
 	#superclass : #TestCase,
-	#category : #Ring-Tests-Kernel
+	#category : #'Ring-Tests-Kernel'
 }
 
 { #category : #testing }

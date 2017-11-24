@@ -34,7 +34,7 @@ Class {
 		'verticalScrollbar',
 		'velocity'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
+	#category : #'Glamour-Morphic-Brick-Widgets-Scrollpane'
 }
 
 { #category : #'as yet unclassified' }
@@ -106,37 +106,37 @@ GLMScrollPaneBrick class >> exampleLarge [
 	foundation openInWindow
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMScrollPaneBrick >> addAllBricks: aCollection [
 
 	self band addAllBricks: aCollection
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMScrollPaneBrick >> addBrick: aBrick before: anotherBrick [
 
 	self band addBrick: aBrick before: anotherBrick
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMScrollPaneBrick >> addBrickBack: aBrick [
 
 	self band addBrickBack: aBrick
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> allowedBounds [
 
 	^ self globalBounds
 ]
 
-{ #category : #scrollpane-brick-accessing }
+{ #category : #'scrollpane-brick-accessing' }
 GLMScrollPaneBrick >> band [
 
 	^ band
 ]
 
-{ #category : #scrollpane-brick-accessing }
+{ #category : #'scrollpane-brick-accessing' }
 GLMScrollPaneBrick >> band: aBrick [
 
 	band := aBrick.
@@ -145,19 +145,19 @@ GLMScrollPaneBrick >> band: aBrick [
 	super addBrickBack: self band.
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> bandTopOffset [
 
 	^ self band brickBounds top
 ]
 
-{ #category : #scrollpane-calculations }
+{ #category : #'scrollpane-calculations' }
 GLMScrollPaneBrick >> calculateMaxVelocity [
 	"max velocity must depend from the height of the band"
 	^ (self band height / 15) max: self class defaultMaxVelocity
 ]
 
-{ #category : #scrollpane-calculations }
+{ #category : #'scrollpane-calculations' }
 GLMScrollPaneBrick >> calculateVelocity: event [
 	|delta|
 	delta := event timeStamp - lastScrollTimeStamp.
@@ -171,7 +171,7 @@ GLMScrollPaneBrick >> calculateVelocity: event [
 	^ self velocity ceiling
 ]
 
-{ #category : #scrollpane-events-mouse }
+{ #category : #'scrollpane-events-mouse' }
 GLMScrollPaneBrick >> handleListenEvent: anEvent [
 	"checking if it's keyboard event (mouse wheel is keyboard event on windows o_O (wtf?)"
 	anEvent type = #keystroke ifTrue: [
@@ -181,7 +181,7 @@ GLMScrollPaneBrick >> handleListenEvent: anEvent [
 			self scrollByKeyboard: anEvent ] ]
 ]
 
-{ #category : #scrollpane-events-mouse }
+{ #category : #'scrollpane-events-mouse' }
 GLMScrollPaneBrick >> handlesMouseWheel: evt [
 	^ true
 ]
@@ -206,7 +206,7 @@ GLMScrollPaneBrick >> initializeListeners [
 	self activeHand addEventListener: self.
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isBottomOverscrolled [
 
 	self isLastVisible ifFalse: [ ^ false ].
@@ -214,20 +214,20 @@ GLMScrollPaneBrick >> isBottomOverscrolled [
 	^ ((self band lastSubbrick brickBounds bottom + self band brickBounds top) < self height)
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isFirstVisible [
 
 	self band hasSubbricks ifFalse: [ ^ true ].
 	^ self isVisible: self band firstSubbrick
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isFullyVisible [
 
 	^ self isFirstVisible & self isLastVisible
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isKeyboardScrollEvent: anEvent [
 
 	(anEvent controlKeyPressed | anEvent commandKeyPressed) ifFalse: [^ false ].
@@ -236,14 +236,14 @@ GLMScrollPaneBrick >> isKeyboardScrollEvent: anEvent [
 	^ false
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isLastVisible [
 
 	self band hasSubbricks ifFalse: [ ^ true ].
 	^ self isVisible: self band lastSubbrick
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isPartiallyVisible: aBrick [
 	|myBounds testingBounds|
 	"need to normalize bounds to take only y coordinate into account"
@@ -254,13 +254,13 @@ GLMScrollPaneBrick >> isPartiallyVisible: aBrick [
 	^ myBounds intersects: testingBounds
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isTopOverscrolled [
 
 	^ self bandTopOffset > 0
 ]
 
-{ #category : #scrollpane-testing }
+{ #category : #'scrollpane-testing' }
 GLMScrollPaneBrick >> isVisible: aBrick [
 	|myBounds testingBounds|
 	"need to normalize bounds to take only y coordinate into account"
@@ -271,13 +271,13 @@ GLMScrollPaneBrick >> isVisible: aBrick [
 	^ myBounds containsRect: testingBounds
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> layoutMorphs: aBoolean [
 
 	self band layoutMorphs: aBoolean
 ]
 
-{ #category : #scrollpane-events-mouse }
+{ #category : #'scrollpane-events-mouse' }
 GLMScrollPaneBrick >> mouseWheel: event [
 	
 	self
@@ -285,38 +285,38 @@ GLMScrollPaneBrick >> mouseWheel: event [
 		direction: (event isUp ifTrue: [ #up ] ifFalse: [ #down ])
 ]
 
-{ #category : #scrollpane-transformations }
+{ #category : #'scrollpane-transformations' }
 GLMScrollPaneBrick >> moveBandBottom [
 	
 	self band translateY: (self height - self band brickBounds bottom)
 ]
 
-{ #category : #scrollpane-transformations }
+{ #category : #'scrollpane-transformations' }
 GLMScrollPaneBrick >> moveBandTop [
 
 	self band translateY: self bandTopOffset negated
 ]
 
-{ #category : #scrollpane-brick-creation }
+{ #category : #'scrollpane-brick-creation' }
 GLMScrollPaneBrick >> newBand [
 
 	^ GLMScrollPaneBandBrick new
 ]
 
-{ #category : #scrollpane-brick-creation }
+{ #category : #'scrollpane-brick-creation' }
 GLMScrollPaneBrick >> newVerticalScrollbar [
 
 	^ GLMScrollbarBrick new
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GLMScrollPaneBrick >> onChildrenLayouted [
 	super onChildrenLayouted.
 	
 	self band translateY: self scrollPositionTop
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GLMScrollPaneBrick >> onThemerChanged [
 	super onThemerChanged.
 	
@@ -330,26 +330,26 @@ GLMScrollPaneBrick >> outOfWorld: aWorld [
 	self unsubscribeListeners
 ]
 
-{ #category : #private-scrolling }
+{ #category : #'private-scrolling' }
 GLMScrollPaneBrick >> privateScrollPosition: anInteger [
 
 	scrollPosition := anInteger.
 	self announcer announce: GLMBrickScrollPositionChanged new
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMScrollPaneBrick >> removeAllBricks [
 	
 	self band removeAllBricks.
 	self scrollToTop
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMScrollPaneBrick >> removeBrick: aBrick [
 	self band removeBrick: aBrick
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollBy: anInteger direction: aSymbol [
 
 	self isFullyVisible ifTrue: [ ^ self ].
@@ -361,7 +361,7 @@ GLMScrollPaneBrick >> scrollBy: anInteger direction: aSymbol [
 	self changed
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollByKeyboard: anEvent [
 	|direction|
 	
@@ -375,14 +375,14 @@ GLMScrollPaneBrick >> scrollByKeyboard: anEvent [
 	self scrollBy: velocity direction: direction
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollDown: anInteger [
 	
 	self band translateY: anInteger negated.
 	self isBottomOverscrolled ifTrue: [ self moveBandBottom ]
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollPageDown [
 
 	self
@@ -391,7 +391,7 @@ GLMScrollPaneBrick >> scrollPageDown [
 		changed
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollPageUp [
 
 	self
@@ -400,19 +400,19 @@ GLMScrollPaneBrick >> scrollPageUp [
 		changed
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> scrollPositionBottom [
 
 	^ self scrollPositionTop + self innerBounds height
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> scrollPositionTop [
 
 	^ scrollPosition ifNil: [ scrollPosition := 0 ]
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollTo: aBrick [
 	|delta|
 	"if already visible no need to scroll"
@@ -432,33 +432,33 @@ GLMScrollPaneBrick >> scrollTo: aBrick [
 	
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollToBottom [
 
 	self band hasSubbricks ifFalse: [ ^ self ].
 	self scrollTo: self band lastSubbrick
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollToTop [
 
 	self scrollBy: self scrollPositionTop negated direction: #up
 ]
 
-{ #category : #scrollpane-scrolling }
+{ #category : #'scrollpane-scrolling' }
 GLMScrollPaneBrick >> scrollUp: anInteger [
 
 	self band translateY: anInteger.
 	self isTopOverscrolled ifTrue: [ self moveBandTop ]
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMScrollPaneBrick >> scrollpaneBackgroundColor [
 
 	^ self valueOfProperty: #brickScrollpaneBackgroundColor ifAbsent: [ self themer scrollpaneBackgroundColor ]
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMScrollPaneBrick >> scrollpaneBackgroundColor: aColor [
 
 	self setProperty: #brickScrollpaneBackgroundColor toValue: aColor.
@@ -471,7 +471,7 @@ GLMScrollPaneBrick >> unsubscribeListeners [
 	self activeHand removeEventListener: self
 ]
 
-{ #category : #scrollpane-updating }
+{ #category : #'scrollpane-updating' }
 GLMScrollPaneBrick >> update [
 
 	self scrollDown: 0.
@@ -480,31 +480,31 @@ GLMScrollPaneBrick >> update [
 	self band onChildrenLayouted
 ]
 
-{ #category : #scrollpane-updating }
+{ #category : #'scrollpane-updating' }
 GLMScrollPaneBrick >> updateScrollbar [
 
 	self verticalScrollbar ifNotNil: [ :b | b updatePosition ]
 ]
 
-{ #category : #scrollpane-updating }
+{ #category : #'scrollpane-updating' }
 GLMScrollPaneBrick >> updateStyle [
 
 	self color: self scrollpaneBackgroundColor
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> velocity [
 
 	^ velocity ifNil: [ velocity := self class defaultScrollVelocity ]
 ]
 
-{ #category : #scrollpane-accessing }
+{ #category : #'scrollpane-accessing' }
 GLMScrollPaneBrick >> velocity: anInteger [
 
 	velocity := anInteger
 ]
 
-{ #category : #scrollpane-calculations }
+{ #category : #'scrollpane-calculations' }
 GLMScrollPaneBrick >> velocityValue: anInteger [
 	|time|
 	
@@ -514,13 +514,13 @@ GLMScrollPaneBrick >> velocityValue: anInteger [
 	^ (self velocity + (self class defaultScrollAcceleration * time)) min: self calculateMaxVelocity
 ]
 
-{ #category : #scrollpane-brick-accessing }
+{ #category : #'scrollpane-brick-accessing' }
 GLMScrollPaneBrick >> verticalScrollbar [
 
 	^ verticalScrollbar
 ]
 
-{ #category : #scrollpane-brick-accessing }
+{ #category : #'scrollpane-brick-accessing' }
 GLMScrollPaneBrick >> verticalScrollbar: aBrick [
 
 	verticalScrollbar := aBrick.

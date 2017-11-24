@@ -8,7 +8,7 @@ Class {
 		'full',
 		'empty'
 	],
-	#category : #SUnit-Tests-Core
+	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #running }

@@ -28,7 +28,7 @@ Class {
 		'TypeTable',
 		'UppercasingTable'
 	],
-	#category : #Collections-Strings
+	#category : #'Collections-Strings'
 }
 
 { #category : #primitives }

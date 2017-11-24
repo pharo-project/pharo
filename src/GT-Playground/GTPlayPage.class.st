@@ -14,7 +14,7 @@ Class {
 		'publishedUrl',
 		'persistenceStrategies'
 	],
-	#category : #GT-Playground
+	#category : #'GT-Playground'
 }
 
 { #category : #private }
@@ -56,7 +56,7 @@ GTPlayPage class >> creationTimeFromString: aString [
 						seconds: (subexpressions at: 12)) " 11 == full match "
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPage class >> fileExtension [
 	^ 'ph'
 ]
@@ -92,7 +92,7 @@ GTPlayPage class >> loadFromPublishUrl: aString thenDo: aBlock [
 	^ page
 ]
 
-{ #category : #compatibility-tools }
+{ #category : #'compatibility-tools' }
 GTPlayPage >> acceptContents: aStringOrtext [
 
 	self flag: #TODO. "Need support for what lies in the comment down here"
@@ -113,7 +113,7 @@ GTPlayPage >> content: aString [
 	content := aString asString
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPage >> contentString [
 	" strange, sometimes #content is aText not aString ! "
 	^ self content asString
@@ -129,12 +129,12 @@ GTPlayPage >> creationTime: anObject [
 	creationTime := anObject
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTPlayPage >> creationTimeForFileName [
 	^ (self creationTime asString copyReplaceAll: ':' with: '-') copyReplaceAll: '.' with: '-'
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPage >> ensureStashPersistency [
 	(self persistenceStrategies noneSatisfy: [ :each | each isStash ])
 		ifTrue: [ self persistenceStrategies add: (GTPlayPageStashPersistence new page: self) ]
@@ -200,19 +200,19 @@ GTPlayPage >> saveContent: aStringOrText [
 	self save.
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPage >> setTitleAndEnsureInStash: aString [
 	self title: aString.
 	self ensureStashPersistency.
 	self save
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPage >> title [
 	^ title ifNil: [ 'Page' ]
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayPage >> title: aString [
 	title := aString
 ]

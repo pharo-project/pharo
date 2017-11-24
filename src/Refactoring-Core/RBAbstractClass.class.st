@@ -34,7 +34,7 @@ Class {
 	#classVars : [
 		'LookupSuperclass'
 	],
-	#category : #Refactoring-Core-Model
+	#category : #'Refactoring-Core-Model'
 }
 
 { #category : #'class initialization' }
@@ -410,7 +410,7 @@ RBAbstractClass >> model [
 	^model
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAbstractClass >> model: aRBSmalltalk [
 	model := aRBSmalltalk
 ]

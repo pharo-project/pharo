@@ -8,7 +8,7 @@ Class {
 		'gofer',
 		'model'
 	],
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #'instance creation' }

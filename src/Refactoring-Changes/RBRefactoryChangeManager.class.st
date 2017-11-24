@@ -16,10 +16,10 @@ Class {
 		'Instance',
 		'UndoSize'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
-{ #category : #change-factory }
+{ #category : #'change-factory' }
 RBRefactoryChangeManager class >> changeFactory [
 	^self instance changeFactory
 ]
@@ -83,7 +83,7 @@ RBRefactoryChangeManager >> addUndo: aRefactoringChange [
 	redo := OrderedCollection new
 ]
 
-{ #category : #change-factory }
+{ #category : #'change-factory' }
 RBRefactoryChangeManager >> changeFactory [
 	^ RBRefactoryChangeFactory new
 ]
@@ -94,7 +94,7 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 	redo := OrderedCollection new
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRefactoryChangeManager >> connectToChanges [
 	SystemAnnouncer uniqueInstance weak
 		when: CategoryAdded,
@@ -114,7 +114,7 @@ RBRefactoryChangeManager >> connectToChanges [
 		to: self.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRefactoryChangeManager >> disconnectFromChanges [
 	SystemAnnouncer uniqueInstance unsubscribe: self
 ]
@@ -165,7 +165,7 @@ RBRefactoryChangeManager >> redoOperation [
 		undo add: change execute ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRefactoryChangeManager >> release [
 	self disconnectFromChanges.
 	super release.	

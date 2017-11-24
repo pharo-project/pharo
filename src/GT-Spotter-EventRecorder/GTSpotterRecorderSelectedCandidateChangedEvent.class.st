@@ -5,7 +5,7 @@ A GTSpotterRecorderSelectedCandidateChangedEvent models the action of  selecting
 Class {
 	#name : #GTSpotterRecorderSelectedCandidateChangedEvent,
 	#superclass : #GTSpotterRecorderEvent,
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }

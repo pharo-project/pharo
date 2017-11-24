@@ -12,10 +12,10 @@ Class {
 		'packageAnalyzerTreeModel',
 		'nautilus'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 DAPackageAnalyzerWindow class >> onPackagesNamed: aCollection [
 	^ self new 
 		initializeWithPackageNames: aCollection;
@@ -71,7 +71,7 @@ DAPackageAnalyzerWindow >> buildNautilusWindow [
 	^ nautilusWindow
 ]
 
-{ #category : #initialization-filter }
+{ #category : #'initialization-filter' }
 DAPackageAnalyzerWindow >> buildandAddAllMorph [
 	nautilus := packageAnalyzerTreeModel packageTreeNautilus.
 	self addAllMorph
@@ -82,7 +82,7 @@ DAPackageAnalyzerWindow >> defaultLabel [
 	^ 'Package Dependencies Analysis'
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 DAPackageAnalyzerWindow >> delete [
 	self packageAnalyzerTreeModel close.
 	^ super delete

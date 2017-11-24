@@ -9,7 +9,7 @@ Class {
 		'targetNode',
 		'requestor'
 	],
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #testing }
@@ -148,7 +148,7 @@ MBCommand >> compiledMethodForVersion: aMetacelloVersion [
 	^pragma method
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBCommand >> configurationClass [
 	^ target
 ]
@@ -226,7 +226,7 @@ MBCommand >> helpDocumentation [
 	^self documentation
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MBCommand >> initialize [
 	super initialize.
 
@@ -272,7 +272,7 @@ MBCommand >> pickRepositoryFrom: repositories title: title [
 		ifFalse: [ repositories at: index ] 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBCommand >> projectName [
 	^ self configurationClass name configurationBaseName
 ]

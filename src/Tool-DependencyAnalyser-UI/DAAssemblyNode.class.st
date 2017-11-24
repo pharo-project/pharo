@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'dependencies'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -18,7 +18,7 @@ DAAssemblyNode class >> newWith: aCollection [
 		yourself
 ]
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DAAssemblyNode >> browseInNautilus [
 	"nothing to browse"
 ]

@@ -4,7 +4,7 @@ I am an eye element for all inst vars, printing a description of all the instanc
 Class {
 	#name : #AllInstVarsEyeElement,
 	#superclass : #SelfEyeElement,
-	#category : #Spec-Inspector-Element
+	#category : #'Spec-Inspector-Element'
 }
 
 { #category : #accessing }

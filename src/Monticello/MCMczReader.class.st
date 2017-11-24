@@ -8,7 +8,7 @@ Class {
 		'zip',
 		'infoCache'
 	],
-	#category : #Monticello-Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #accessing }

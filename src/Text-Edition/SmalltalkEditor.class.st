@@ -4,7 +4,7 @@ The editor built specifically for Smalltalk code
 Class {
 	#name : #SmalltalkEditor,
 	#superclass : #TextEditor,
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #shortcuts }
@@ -346,7 +346,7 @@ SmalltalkEditor >> codeCompletionAround:  aBlock textMorph:  aTextMorph keyStrok
 	Smalltalk tools codeCompletionAround: aBlock textMorph: aTextMorph keyStroke: anEvent
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 	| methodNode  |
 
@@ -363,7 +363,7 @@ SmalltalkEditor >> compileSelectionFor: anObject in: evalContext [
 	
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext [
 	| guineaPig context debugSession |
 	guineaPig := [ aCompiledMethod
@@ -379,7 +379,7 @@ SmalltalkEditor >> debug: aCompiledMethod receiver: anObject in: evalContext [
 	Smalltalk tools debugger openOn: debugSession withFullView: true.
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> debugIt [
 
 	| method receiver context |
@@ -420,7 +420,7 @@ SmalltalkEditor >> displayIfTrue: aKeyboardEvent [
 	^false
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> doIt [
 	"Set the context to include pool vars of the model.  Then evaluate."
 	^ self evaluateSelection
@@ -439,14 +439,14 @@ SmalltalkEditor >> editingStateClass [
 	^ SmalltalkEditingState
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> evaluateSelection [
 	"Treat the current selection as an expression; evaluate it and return the result"
 	
 	^self evaluateSelectionAndDo: [:result | result]
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
@@ -467,7 +467,7 @@ SmalltalkEditor >> evaluateSelectionAndDo: aBlock [
 	^ aBlock value: result
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> exploreIt [
 	self evaluateSelectionAndDo: [:result | result basicInspect]
 ]
@@ -524,7 +524,7 @@ SmalltalkEditor >> implementorsOfIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> inspectIt [
 	self evaluateSelectionAndDo: [:result | result inspect]
 ]
@@ -710,7 +710,7 @@ SmalltalkEditor >> prettyPrint [
 		self selectAt: 1]
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> printIt [
 	"Treat the current text selection as an expression; evaluate it. Insert the 
 	description of the result of evaluation after the selection and then make 
@@ -845,7 +845,7 @@ SmalltalkEditor >> selectedSymbol [
 	^ nil
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> selectionForDoitAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently
 	selected. "
@@ -855,7 +855,7 @@ SmalltalkEditor >> selectionForDoitAsStream [
 		to: self stopIndex - 1
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> selectionString [
 	"remove the initial and final quote marks, if present"
 	"'''h''' withoutWrappingDoubleQuotes"
@@ -910,13 +910,13 @@ SmalltalkEditor >> spawnIt: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> tallyIt [
 
 	^ self tallySelection
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 SmalltalkEditor >> tallySelection [
 	"Treat the current selection as an expression; evaluate and tally it."
 	| receiver context v  compiledMethod profiler |

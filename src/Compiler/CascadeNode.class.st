@@ -8,7 +8,7 @@ Class {
 		'receiver',
 		'messages'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -63,7 +63,7 @@ CascadeNode >> receiver [
 	^receiver
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CascadeNode >> receiver: receivingObject messages: msgs [
 	" Transcript show: 'abc'; cr; show: 'def' "
 

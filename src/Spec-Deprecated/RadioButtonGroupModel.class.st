@@ -4,5 +4,5 @@ This is deprecated class because the original class RadioButtonGroupModel was re
 Class {
 	#name : #RadioButtonGroupModel,
 	#superclass : #RadioButtonGroupPresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

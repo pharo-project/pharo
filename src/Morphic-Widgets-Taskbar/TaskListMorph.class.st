@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'KeepOpen'
 	],
-	#category : #Morphic-Widgets-Taskbar
+	#category : #'Morphic-Widgets-Taskbar'
 }
 
 { #category : #'instance creation' }
@@ -193,14 +193,14 @@ TaskListMorph >> newTasksMorph [
 		yourself.
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 TaskListMorph >> openAsIs [
 	"Open in the world."
 	
 	self openAsIsIn: self currentWorld
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 TaskListMorph >> openAsIsIn: aWorld [
 	"Update the layout after opening."
 
@@ -272,7 +272,7 @@ TaskListMorph >> stepTime [
 	^100
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 TaskListMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 

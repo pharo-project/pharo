@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'wordSize'
 	],
-	#category : #FFI-Kernel
+	#category : #'FFI-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -111,7 +111,7 @@ ExternalAddress >> asInteger [
 	^ self asByteArrayPointer integerAt: 1 size: self class wordSize signed: false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ExternalAddress >> beNull [
 	"Make the receiver a NULL pointer"
 	self atAllPut: 0.
@@ -144,7 +144,7 @@ ExternalAddress >> finalize [
 	self free
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ExternalAddress >> free [
 	"Primitive. Free the object pointed to on the external heap.
 	Dangerous - may break your system if the receiver hasn't been

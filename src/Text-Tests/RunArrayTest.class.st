@@ -4,7 +4,7 @@ SUnit tests for class RunArray
 Class {
 	#name : #RunArrayTest,
 	#superclass : #TestCase,
-	#category : #Text-Tests
+	#category : #'Text-Tests'
 }
 
 { #category : #'tests - instance creation' }

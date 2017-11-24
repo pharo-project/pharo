@@ -4,7 +4,7 @@ SUnit tests for RBScanner
 Class {
 	#name : #RBScannerTest,
 	#superclass : #TestCase,
-	#category : #AST-Tests-Core
+	#category : #'AST-Tests-Core'
 }
 
 { #category : #initialize }

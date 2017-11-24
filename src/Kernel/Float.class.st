@@ -52,7 +52,7 @@ Class {
 		'ThreePi',
 		'Twopi'
 	],
-	#category : #Kernel-Numbers
+	#category : #'Kernel-Numbers'
 }
 
 { #category : #'as yet unclassified' }

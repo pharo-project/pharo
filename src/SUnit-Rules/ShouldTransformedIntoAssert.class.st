@@ -4,7 +4,7 @@ should: will be deprecated sooner or leater. Use assert: instead
 Class {
 	#name : #ShouldTransformedIntoAssert,
 	#superclass : #ReNodeRewriteRule,
-	#category : #SUnit-Rules
+	#category : #'SUnit-Rules'
 }
 
 { #category : #accessing }

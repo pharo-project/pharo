@@ -6,7 +6,7 @@ Class {
 		'window',
 		'debugger'
 	],
-	#category : #GT-Tests-Debugger
+	#category : #'GT-Tests-Debugger'
 }
 
 { #category : #testing }

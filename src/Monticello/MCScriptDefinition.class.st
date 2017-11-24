@@ -8,15 +8,15 @@ Class {
 		'script',
 		'packageName'
 	],
-	#category : #Monticello-Modeling
+	#category : #'Monticello-Modeling'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCScriptDefinition class >> from: aPackageInfo [
 	^ self script: (aPackageInfo perform: self scriptSelector) contents asString packageName: aPackageInfo name
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCScriptDefinition class >> script: aString packageName: packageString [
 	^ self instanceLike: (self new initializeWithScript: aString packageName: packageString)
 ]
@@ -26,7 +26,7 @@ MCScriptDefinition class >> scriptSelector [
 	self subclassResponsibility
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCScriptDefinition class >> scriptSelector: selectorString script: aString packageName: packageString [
 	^ (self subclassForScriptSelector: selectorString)
 		script: aString packageName: packageString

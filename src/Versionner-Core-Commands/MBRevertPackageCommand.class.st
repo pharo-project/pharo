@@ -4,7 +4,7 @@ Command to revert a package in versionner
 Class {
 	#name : #MBRevertPackageCommand,
 	#superclass : #MBAbstractPackageCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #documentation }

@@ -1,7 +1,7 @@
 Class {
 	#name : #RBFormatterTest,
 	#superclass : #TestCase,
-	#category : #AST-Tests-Core
+	#category : #'AST-Tests-Core'
 }
 
 { #category : #private }

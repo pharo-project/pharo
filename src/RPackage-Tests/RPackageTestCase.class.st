@@ -11,7 +11,7 @@ Class {
 		'createdPackages',
 		'createdCategories'
 	],
-	#category : #RPackage-Tests
+	#category : #'RPackage-Tests'
 }
 
 { #category : #utils }

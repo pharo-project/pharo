@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'TraitProperties'
 	],
-	#category : #Traits-Kernel
+	#category : #'Traits-Kernel'
 }
 
 { #category : #initialization }
@@ -689,7 +689,7 @@ TraitBehavior >> ensureLocalSelectors [
 	self basicLocalSelectors ifNil: [self basicLocalSelectors: self selectors asSet]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> ensureProperties [
 	^ TraitProperties at: self ifAbsentPut: WeakKeyDictionary new
 		
@@ -1341,7 +1341,7 @@ TraitBehavior >> nextQuotePosIn: sourceString startingFrom: commentStart [
 	^nextQuotePos
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TraitBehavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
@@ -1452,20 +1452,20 @@ TraitBehavior >> printOn: aStream [
 	self superclass printOn: aStream
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> properties [
 	^ TraitProperties at: self ifAbsent: nil
 		
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> propertyAt: propName ifAbsent: aBlock [
 	self properties ifNil: [^aBlock value].
 	^ self properties
@@ -1473,7 +1473,7 @@ TraitBehavior >> propertyAt: propName ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
@@ -1516,21 +1516,21 @@ TraitBehavior >> removeFromComposition: aTrait [
 		removeFromComposition: aTrait)
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> removePropertiesIfEmpty [
 	^ TraitProperties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ TraitProperties removeKey: self ] ]
 		
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> removeProperty: propName [
 	^ self
 		removeProperty: propName
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TraitBehavior >> removeProperty: propName ifAbsent: aBlock [
 	| property |
 	self properties ifNil: [^aBlock value].
@@ -1838,7 +1838,7 @@ TraitBehavior >> superclass: aClass [
 	"Compatibility purposes"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TraitBehavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver.
 	Must only be sent to a new instance; else we would need Object flushCache."

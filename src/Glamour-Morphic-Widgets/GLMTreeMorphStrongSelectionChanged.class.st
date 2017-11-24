@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'strongSelectionValue'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #accessing }

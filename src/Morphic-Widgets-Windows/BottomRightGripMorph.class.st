@@ -4,7 +4,7 @@ I am the handle in the right bottom of windows used for resizing them.
 Class {
 	#name : #BottomRightGripMorph,
 	#superclass : #CornerGripMorph,
-	#category : #Morphic-Widgets-Windows-Resizing
+	#category : #'Morphic-Widgets-Windows-Resizing'
 }
 
 { #category : #'target resize' }

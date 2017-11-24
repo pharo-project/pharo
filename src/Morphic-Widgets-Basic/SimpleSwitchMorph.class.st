@@ -10,7 +10,7 @@ Class {
 		'onColor',
 		'offColor'
 	],
-	#category : #Morphic-Widgets-Basic-Buttons
+	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
 { #category : #button }

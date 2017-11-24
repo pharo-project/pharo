@@ -1,1 +1,1 @@
-Package { #name : #Glamour-SpecIntegration }
+Package { #name : #'Glamour-SpecIntegration' }

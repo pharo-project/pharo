@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMRubricExample,
 	#superclass : #Model,
-	#category : #Glamour-Rubric-Presentations-Examples
+	#category : #'Glamour-Rubric-Presentations-Examples'
 }
 
 { #category : #accessing }

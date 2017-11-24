@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'initialAnswer'
 	],
-	#category : #System-Support
+	#category : #'System-Support'
 }
 
 { #category : #accessing }
@@ -39,7 +39,7 @@ AuthorNameRequest >> initialAnswer: anObject [
 	initialAnswer := anObject
 ]
 
-{ #category : #ui-requests }
+{ #category : #'ui-requests' }
 AuthorNameRequest >> messagePrompt [
 	^ self class messagePrompt
 ]

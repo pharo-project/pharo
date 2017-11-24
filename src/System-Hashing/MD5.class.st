@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'state'
 	],
-	#category : #System-Hashing-MD5
+	#category : #'System-Hashing-MD5'
 }
 
 { #category : #accessing }
@@ -35,7 +35,7 @@ MD5 class >> new [
 		ifFalse: [ ^MD5NonPrimitive basicNew ]
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5 >> finalValue [
 
 	^state
@@ -74,21 +74,21 @@ MD5 >> initialize [
 
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5 >> primProcessBuffer: aByteArray withState: s [
 
 	<primitive: 'primitiveProcessBufferWithState' module: 'MD5Plugin'>
 	self primitiveFailed
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5 >> processBuffer: aByteArray [
 
 	self primProcessBuffer: aByteArray withState: state.
 	
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5 >> processFinalBuffer: aByteArray bitLength: bitLength [ 
 	"Pad the buffer until we have an even 64 bytes, then transform"
 	| out |
@@ -127,7 +127,7 @@ MD5 >> processFinalBuffer: aByteArray bitLength: bitLength [
 	self processBuffer: out
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5 >> storeLength: bitLength in: aByteArray [ 
 	"Fill in the final 8 bytes of the given ByteArray with a 64-bit
 	little-endian representation of the original message length in bits."

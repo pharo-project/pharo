@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'scopes'
 	],
-	#category : #OpalCompiler-Tests-AST
+	#category : #'OpalCompiler-Tests-AST'
 }
 
 { #category : #initialization }

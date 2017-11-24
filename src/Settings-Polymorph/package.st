@@ -1,1 +1,1 @@
-Package { #name : #Settings-Polymorph }
+Package { #name : #'Settings-Polymorph' }

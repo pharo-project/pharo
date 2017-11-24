@@ -11,7 +11,7 @@ Class {
 		'nodeShape',
 		'nodeBuilder'
 	],
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #initialization }

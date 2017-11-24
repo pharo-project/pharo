@@ -4,7 +4,7 @@ AbstractKeyPressedPlugin is an abstraction of plugin which react when a package 
 Class {
 	#name : #AbstractPackageSelectedPlugin,
 	#superclass : #AbstractNautilusPlugin,
-	#category : #NautilusCommon-Plugin
+	#category : #'NautilusCommon-Plugin'
 }
 
 { #category : #announcement }

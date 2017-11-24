@@ -8,7 +8,7 @@ Class {
 		'action',
 		'isSyncronous'
 	],
-	#category : #Glamour-Presentations-Announcements
+	#category : #'Glamour-Presentations-Announcements'
 }
 
 { #category : #accessing }

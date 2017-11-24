@@ -4,7 +4,7 @@ I answer a String that represents the new state of an EpEvent.
 Class {
 	#name : #EpNewStateVisitor,
 	#superclass : #EpContentStringVisitor,
-	#category : #EpiceaBrowsers-Visitors
+	#category : #'EpiceaBrowsers-Visitors'
 }
 
 { #category : #visitor }

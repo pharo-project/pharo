@@ -4,7 +4,7 @@ STONJSONTests contains unit tests for the JSON functionality available in STON.
 Class {
 	#name : #STONJSONTests,
 	#superclass : #TestCase,
-	#category : #STON-Tests
+	#category : #'STON-Tests'
 }
 
 { #category : #tests }

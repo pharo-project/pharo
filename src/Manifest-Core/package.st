@@ -1,1 +1,1 @@
-Package { #name : #Manifest-Core }
+Package { #name : #'Manifest-Core' }

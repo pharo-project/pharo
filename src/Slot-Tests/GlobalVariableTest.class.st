@@ -1,7 +1,7 @@
 Class {
 	#name : #GlobalVariableTest,
 	#superclass : #TestCase,
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
 { #category : #'tests  - properties' }

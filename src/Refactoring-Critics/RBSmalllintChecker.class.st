@@ -14,7 +14,7 @@ Class {
 		'context',
 		'methodBlock'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
 { #category : #'instance creation' }
@@ -84,7 +84,7 @@ RBSmalllintChecker >> methodBlock: aBlock [
 	methodBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSmalllintChecker >> release [
 	context release.
 	super release

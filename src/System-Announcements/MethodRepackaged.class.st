@@ -8,7 +8,7 @@ Class {
 		'newPackage',
 		'oldPackage'
 	],
-	#category : #System-Announcements-System-Packages
+	#category : #'System-Announcements-System-Packages'
 }
 
 { #category : #'instance creation' }

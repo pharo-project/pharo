@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'paints'
 	],
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #drawing }
@@ -32,7 +32,7 @@ AthensCompositePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCompositePaint >> fromFillStyles: fillStyles on: aCanvas [
 
 	paints := fillStyles collect: [:each | each asAthensPaintOn: aCanvas ]

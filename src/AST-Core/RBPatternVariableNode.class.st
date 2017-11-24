@@ -26,7 +26,7 @@ Class {
 		'isStatement',
 		'isAnything'
 	],
-	#category : #AST-Core-Pattern
+	#category : #'AST-Core-Pattern'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,7 @@ RBPatternVariableNode >> copyInContext: aDictionary [
 		ifFalse: [ (aDictionary at: self) copy ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPatternVariableNode >> initializePatternVariables [
 	| myname |
 	myname := self name.
@@ -67,27 +67,27 @@ RBPatternVariableNode >> initializePatternVariables [
 										ifFalse: [^self]]]]]
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternVariableNode >> isAnything [
 	^isAnything
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternVariableNode >> isList [
 	^isList
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternVariableNode >> isLiteralNode [
 	^isLiteral
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternVariableNode >> isPatternNode [
 	^true
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternVariableNode >> isStatement [
 	^isStatement
 ]
@@ -120,7 +120,7 @@ RBPatternVariableNode >> matchingClass [
 	^RBVariableNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPatternVariableNode >> named: aName start: aPosition [
 
 	super named: aName start: aPosition.
@@ -141,7 +141,7 @@ RBPatternVariableNode >> parent: aBRProgramNode [
 				ifFalse: [isList := false]]
 ]
 
-{ #category : #testing-matching }
+{ #category : #'testing-matching' }
 RBPatternVariableNode >> recurseInto [
 	^recurseInto
 ]

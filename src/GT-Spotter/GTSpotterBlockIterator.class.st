@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'onDo'
 	],
-	#category : #GT-Spotter-Iterators
+	#category : #'GT-Spotter-Iterators'
 }
 
 { #category : #private }

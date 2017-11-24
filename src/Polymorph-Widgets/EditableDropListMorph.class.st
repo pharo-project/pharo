@@ -16,7 +16,7 @@ Class {
 		'addToListSel',
 		'content'
 	],
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }
 
 { #category : #'as yet unclassified' }

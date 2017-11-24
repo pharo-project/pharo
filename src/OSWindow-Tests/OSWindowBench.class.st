@@ -1,7 +1,7 @@
 Class {
 	#name : #OSWindowBench,
 	#superclass : #TestCase,
-	#category : #OSWindow-Tests
+	#category : #'OSWindow-Tests'
 }
 
 { #category : #benchmarking }

@@ -4,7 +4,7 @@ I'm a signed int type (32 bits)
 Class {
 	#name : #FFIInt32,
 	#superclass : #FFIUInt32,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

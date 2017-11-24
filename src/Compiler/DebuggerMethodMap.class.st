@@ -18,7 +18,7 @@ Class {
 		'blockExtentsToTempRefs',
 		'startpcsToTempRefs'
 	],
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #'instance creation' }
@@ -103,12 +103,12 @@ DebuggerMethodMap >> blockExtentsInto: aDictionary from: initialPC to: endPC sca
 	^aDictionary
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DebuggerMethodMap >> forMethod: aMethod [ 
 	^self forMethod: aMethod methodNode: aMethod methodNode.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DebuggerMethodMap >> forMethod: aMethod "<CompiledMethod>" methodNode: theMethodNode [ "<MethodNode>"
 	methodReference := WeakArray with: aMethod.
 	methodNode := theMethodNode.

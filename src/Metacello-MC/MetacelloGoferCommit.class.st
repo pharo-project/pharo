@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloGoferCommit,
 	#superclass : #GoferCommit,
-	#category : #Metacello-MC-Gofer
+	#category : #'Metacello-MC-Gofer'
 }
 
 { #category : #running }

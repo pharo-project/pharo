@@ -4,7 +4,7 @@ Checks for senders of comparator messages that do not use the result of the comp
 Class {
 	#name : #RBEqualNotUsedRule,
 	#superclass : #ReNodeBasedRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

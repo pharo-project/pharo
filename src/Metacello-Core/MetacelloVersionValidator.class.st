@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'reasonCodeDescriptions'
 	],
-	#category : #Metacello-Core-Validation
+	#category : #'Metacello-Core-Validation'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 		'currentClipRect',
 		'origin'
 	],
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #'instance creation' }

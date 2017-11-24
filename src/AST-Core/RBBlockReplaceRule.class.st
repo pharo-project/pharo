@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'replaceBlock'
 	],
-	#category : #AST-Core-Matching
+	#category : #'AST-Core-Matching'
 }
 
 { #category : #'instance creation' }
@@ -67,37 +67,37 @@ RBBlockReplaceRule >> initialize [
 	replaceBlock := [:aNode | aNode]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBlockReplaceRule >> searchFor: searchString replaceWith: aBlock [ 
 	self searchString: searchString.
 	replaceBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBlockReplaceRule >> searchFor: searchString replaceWith: replBlock when: verifyBlock [ 
 	self searchFor: searchString replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBlockReplaceRule >> searchForMethod: searchString replaceWith: aBlock [ 
 	self methodSearchString: searchString.
 	replaceBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBlockReplaceRule >> searchForMethod: searchString replaceWith: replBlock when: verifyBlock [ 
 	self searchForMethod: searchString replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: aBlock [ 
 	searchTree := aBRProgramNode.
 	replaceBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: replBlock when: verifyBlock [ 
 	self searchForTree: aBRProgramNode replaceWith: replBlock.
 	verificationBlock := verifyBlock

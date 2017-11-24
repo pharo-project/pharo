@@ -5,7 +5,7 @@ Update the current development version with infomation provided by the project.
 Class {
 	#name : #VSUpdateDevelopmentVersionCommand,
 	#superclass : #VSDevCycleCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

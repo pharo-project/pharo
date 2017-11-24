@@ -4,7 +4,7 @@ SUnit tests for class  DependentsArray
 Class {
 	#name : #DependentsArrayTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Objects
+	#category : #'Kernel-Tests-Objects'
 }
 
 { #category : #test }

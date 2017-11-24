@@ -7,10 +7,10 @@ Class {
 	#pools : [
 		'GZipConstants'
 	],
-	#category : #Compression-Streams
+	#category : #'Compression-Streams'
 }
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 GZipReadStream class >> fileIn: fullFileName [
 	"FileIn the contents of a gzipped file"
 	| zipped unzipped |
@@ -21,7 +21,7 @@ GZipReadStream class >> fileIn: fullFileName [
 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 GZipReadStream class >> fileIntoNewChangeSet: fullFileName [
 	"FileIn the contents of a gzipped file"
 
@@ -35,7 +35,7 @@ GZipReadStream class >> fileIntoNewChangeSet: fullFileName [
 		named: fullFileName asFileReference basename
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 GZipReadStream class >> saveContents: fullFileName [
 	"Save the contents of a gzipped file"
 	| zipped buffer unzipped newName |
@@ -58,7 +58,7 @@ GZipReadStream class >> saveContents: fullFileName [
 	^ newName
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 GZipReadStream class >> uncompressedFileName: fullName [
 	^((fullName endsWith: '.gz') and: [self confirm: ('{1}
 appears to be a compressed file.
@@ -101,7 +101,7 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	^ newName
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 GZipReadStream class >> viewContents: fullFileName [
 	"Open the decompressed contents of the .gz file with the given name.  This method is only required for the registering-file-list of Squeak 3.3a and beyond, but does no harm in an earlier system"
 

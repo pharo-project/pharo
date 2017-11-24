@@ -8,7 +8,7 @@ Class {
 		'origin',
 		'allCandidates'
 	],
-	#category : #GT-Spotter-Processors
+	#category : #'GT-Spotter-Processors'
 }
 
 { #category : #'instance creation' }

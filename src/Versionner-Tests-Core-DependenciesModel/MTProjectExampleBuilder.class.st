@@ -5,7 +5,7 @@ A MTProjectExampleBuilder is used to create some MTProjects with dummy data or t
 Class {
 	#name : #MTProjectExampleBuilder,
 	#superclass : #Object,
-	#category : #Versionner-Tests-Core-DependenciesModel
+	#category : #'Versionner-Tests-Core-DependenciesModel'
 }
 
 { #category : #'building projects' }

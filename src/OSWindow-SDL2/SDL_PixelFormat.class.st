@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_PixelFormat,
+	#name : #'SDL_PixelFormat',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_ALOSS',
@@ -26,7 +26,7 @@ Class {
 		'OFFSET_RMASK',
 		'OFFSET_RSHIFT'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

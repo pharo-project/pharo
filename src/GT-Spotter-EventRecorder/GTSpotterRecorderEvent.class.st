@@ -9,7 +9,7 @@ Class {
 		'timestamp',
 		'info'
 	],
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #'instance creation' }
@@ -85,13 +85,13 @@ GTSpotterRecorderEvent >> fromAnnouncement: anAnnouncement [
 	
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTSpotterRecorderEvent >> gtInspectorItems [
 	^ Array
 		 with: (#eventTimestamp -> self timestamp) withAll: self associations
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTSpotterRecorderEvent >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: -1>  
 	^ (composite table)

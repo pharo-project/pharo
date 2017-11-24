@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'environmentDictionaries'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
 { #category : #adding }

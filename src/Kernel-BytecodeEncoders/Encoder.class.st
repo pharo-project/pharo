@@ -4,7 +4,7 @@ I encode names and literals into tree nodes with byte codes for the compiler. By
 Class {
 	#name : #Encoder,
 	#superclass : #Object,
-	#category : #Kernel-BytecodeEncoders
+	#category : #'Kernel-BytecodeEncoders'
 }
 
 { #category : #'bytecode decoding' }

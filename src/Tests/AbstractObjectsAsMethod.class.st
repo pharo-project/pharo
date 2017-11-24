@@ -1,7 +1,7 @@
 Class {
 	#name : #AbstractObjectsAsMethod,
 	#superclass : #Object,
-	#category : #Tests-ObjectsAsMethods
+	#category : #'Tests-ObjectsAsMethods'
 }
 
 { #category : #compatibility }

@@ -25,7 +25,7 @@ Class {
 		'compilationContext',
 		'compilationContextClass'
 	],
-	#category : #OpalCompiler-Core-FrontEnd
+	#category : #'OpalCompiler-Core-FrontEnd'
 }
 
 { #category : #public }

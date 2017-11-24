@@ -8,7 +8,7 @@ Class {
 		'popup',
 		'predicates'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #'instance creation' }
@@ -25,7 +25,7 @@ GLMPopupBrickListener >> act [
 	self subclassResponsibility
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMPopupBrickListener >> handleListenEvent: anEvent [
 
 	self predicates

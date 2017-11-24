@@ -10,7 +10,7 @@ Class {
 		'active',
 		'transformation'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #accessing }
@@ -47,7 +47,7 @@ GLMOriginPortReference >> transformation: anObject [
 	transformation := anObject
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMOriginPortReference >> value [
 	^ self transformation isNil ifTrue: [self port value] ifFalse: [self transformation value: self port value]
 ]

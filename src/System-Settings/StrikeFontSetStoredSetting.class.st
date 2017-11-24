@@ -4,7 +4,7 @@ I am responsible for storing information about StrikeFontSet objects.
 Class {
 	#name : #StrikeFontSetStoredSetting,
 	#superclass : #AbstractFontStoredSetting,
-	#category : #System-Settings-Persistence-Ston-StoredSettings
+	#category : #'System-Settings-Persistence-Ston-StoredSettings'
 }
 
 { #category : #accessing }

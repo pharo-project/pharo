@@ -2,7 +2,7 @@
 I represent x86_64 architectures.
 "
 Class {
-	#name : #FFI_x86_64,
+	#name : #'FFI_x86_64',
 	#superclass : #FFIArchitecture,
 	#category : #UnifiedFFI
 }

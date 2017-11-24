@@ -10,7 +10,7 @@ Class {
 		'overMorphs',
 		'leftMorphs'
 	],
-	#category : #Morphic-Core-Events
+	#category : #'Morphic-Core-Events'
 }
 
 { #category : #'event handling - private' }

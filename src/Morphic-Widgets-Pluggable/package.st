@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Widgets-Pluggable }
+Package { #name : #'Morphic-Widgets-Pluggable' }

@@ -26,7 +26,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #Text-Scanning
+	#category : #'Text-Scanning'
 }
 
 { #category : #comparing }

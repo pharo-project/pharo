@@ -19,7 +19,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #Tool-Catalog-Base
+	#category : #'Tool-Catalog-Base'
 }
 
 { #category : #accessing }

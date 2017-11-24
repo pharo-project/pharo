@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'canvas'
 	],
-	#category : #Athens-Cairo-Transforms
+	#category : #'Athens-Cairo-Transforms'
 }
 
 { #category : #'instance creation' }
@@ -130,7 +130,7 @@ AthensCairoTransform >> scaleX: fx Y: fy [
 
 ]
 
-{ #category : #vector-transform }
+{ #category : #'vector-transform' }
 AthensCairoTransform >> transform: aPoint [
 	| x y |
 	x := ByteArray new: 8.

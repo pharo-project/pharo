@@ -5,7 +5,7 @@ Class {
 		'prefix',
 		'requestorPos'
 	],
-	#category : #Rubric-Editing-Core-Support
+	#category : #'Rubric-Editing-Core-Support'
 }
 
 { #category : #opening }
@@ -65,7 +65,7 @@ RubSelectorChooserMorph >> close [
 			self choose: 0]
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 RubSelectorChooserMorph >> comeToFront [
 	super comeToFront.
 	self setPosition 
@@ -105,7 +105,7 @@ RubSelectorChooserMorph >> fullDrawOn: aCanvas [
 	
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 RubSelectorChooserMorph >> newContentMorph [ 
 	| sp |
 	sp := super newContentMorph.
@@ -115,7 +115,7 @@ RubSelectorChooserMorph >> newContentMorph [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 RubSelectorChooserMorph >> nextPrefixWith: aPrefix [
 	| curr pref found lab |
 	curr := aPrefix size.
@@ -135,7 +135,7 @@ RubSelectorChooserMorph >> nextPrefixWith: aPrefix [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 RubSelectorChooserMorph >> open [
 	super open. 
 	self comeToFront.
@@ -143,7 +143,7 @@ RubSelectorChooserMorph >> open [
 	self setPosition
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 RubSelectorChooserMorph >> positionInRequestor [
 	|  caret  editor pos allowedArea |
 	requestor ifNil: [^self].
@@ -167,7 +167,7 @@ RubSelectorChooserMorph >> prefix: aPrefix [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 RubSelectorChooserMorph >> setPosition [
 	self position: self positionInRequestor.
 

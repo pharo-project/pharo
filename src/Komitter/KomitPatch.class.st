@@ -8,7 +8,7 @@ Class {
 		'base',
 		'patch'
 	],
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #'instance creation' }

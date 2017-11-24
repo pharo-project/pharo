@@ -4,7 +4,7 @@ Explains help topics
 Class {
 	#name : #HelpHowToHelpTopics,
 	#superclass : #HelpOnHelp,
-	#category : #HelpSystem-Core-Help
+	#category : #'HelpSystem-Core-Help'
 }
 
 { #category : #accessing }

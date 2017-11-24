@@ -8,7 +8,7 @@ Class {
 		'arguments',
 		'selector'
 	],
-	#category : #Spec-Layout
+	#category : #'Spec-Layout'
 }
 
 { #category : #accesing }

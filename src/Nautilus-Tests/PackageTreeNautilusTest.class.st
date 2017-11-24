@@ -8,7 +8,7 @@ Class {
 		'expectedMethodCategory',
 		'expectedCompiledMethod'
 	],
-	#category : #Nautilus-Tests
+	#category : #'Nautilus-Tests'
 }
 
 { #category : #asserting }

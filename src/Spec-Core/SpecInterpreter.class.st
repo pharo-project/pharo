@@ -13,7 +13,7 @@ Class {
 	#classInstVars : [
 		'bindings'
 	],
-	#category : #Spec-Core
+	#category : #'Spec-Core'
 }
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ SpecInterpreter class >> private_interpretASpec: aPresenter model: aModel select
 		selector: aSelector
 ]
 
-{ #category : #interpreting-private }
+{ #category : #'interpreting-private' }
 SpecInterpreter >> actionToPerformWithSelector: selector arguments: args [
 
 	^ spec instance perform: selector withArguments: args
@@ -88,7 +88,7 @@ SpecInterpreter >> bindings [
 	^ self class bindings
 ]
 
-{ #category : #interpreting-private }
+{ #category : #'interpreting-private' }
 SpecInterpreter >> computeSpecFrom: aSymbol selector: aSelector [
 	| instance |
 
@@ -118,7 +118,7 @@ SpecInterpreter >> convertSymbolOfClassToInstance: aSymbol [
 		ifAbsent: [ ^ translatedSymbol ]) new
 ]
 
-{ #category : #interpreting-private }
+{ #category : #'interpreting-private' }
 SpecInterpreter >> extractArrayToInterpretFrom: aFragment [
 
 	arrayToInterpret := aFragment.
@@ -183,7 +183,7 @@ SpecInterpreter >> model: anObject [
 	model := anObject
 ]
 
-{ #category : #interpreting-private }
+{ #category : #'interpreting-private' }
 SpecInterpreter >> performNextSelectorAndIncrementIndex [
 	| args numArgs selector |
 
@@ -207,7 +207,7 @@ SpecInterpreter >> performNextSelectorAndIncrementIndex [
 	^ self actionToPerformWithSelector: selector arguments: args
 ]
 
-{ #category : #interpreting-private }
+{ #category : #'interpreting-private' }
 SpecInterpreter >> retrieveSpecFrom: aPresenter selector: aSelector [
 
 	((self model respondsTo: #needRebuild) and: [ self model needRebuild not and: [ self model spec notNil ] ])
@@ -229,7 +229,7 @@ SpecInterpreter >> retrieveSpecFrom: aPresenter selector: aSelector [
 	^ nil
 ]
 
-{ #category : #interpreting-private }
+{ #category : #'interpreting-private' }
 SpecInterpreter >> returnInterpretationOf: newInstance [
 	| result |
 	(model respondsTo: #spec:)

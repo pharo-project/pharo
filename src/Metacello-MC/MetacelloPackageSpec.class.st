@@ -8,7 +8,7 @@ Class {
 		'preLoadDoIt',
 		'postLoadDoIt'
 	],
-	#category : #Metacello-MC-Specs
+	#category : #'Metacello-MC-Specs'
 }
 
 { #category : #gofer }

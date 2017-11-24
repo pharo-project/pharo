@@ -4,7 +4,7 @@ I am delivered when window loses the user input focus.
 Class {
 	#name : #OSWindowFocusOutEvent,
 	#superclass : #OSWindowEvent,
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #visitor }

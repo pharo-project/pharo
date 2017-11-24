@@ -17,7 +17,7 @@ Class {
 		'radius',
 		'focalPoint'
 	],
-	#category : #Athens-Core-Paints
+	#category : #'Athens-Core-Paints'
 }
 
 { #category : #converting }

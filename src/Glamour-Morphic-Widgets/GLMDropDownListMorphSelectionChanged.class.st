@@ -5,7 +5,7 @@ Class {
 		'selectionIndex',
 		'selectionValue'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 		'suiteLog',
 		'iterationsBeforeTimeout'
 	],
-	#category : #Kernel-Tests-Exception
+	#category : #'Kernel-Tests-Exception'
 }
 
 { #category : #accessing }

@@ -2,7 +2,7 @@
 SDL2 library structure representing a joystick button event data.
 "
 Class {
-	#name : #SDL_JoyButtonEvent,
+	#name : #'SDL_JoyButtonEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_BUTTON',
@@ -13,7 +13,7 @@ Class {
 		'OFFSET_TYPE',
 		'OFFSET_WHICH'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #QACritiqueTest,
 	#superclass : #TestCase,
-	#category : #QualityAssistant-Test
+	#category : #'QualityAssistant-Test'
 }
 
 { #category : #running }

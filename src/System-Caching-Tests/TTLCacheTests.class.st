@@ -1,7 +1,7 @@
 Class {
 	#name : #TTLCacheTests,
 	#superclass : #LRUCacheTests,
-	#category : #System-Caching-Tests
+	#category : #'System-Caching-Tests'
 }
 
 { #category : #testing }

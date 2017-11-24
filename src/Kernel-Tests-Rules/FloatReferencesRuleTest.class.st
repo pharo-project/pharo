@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'testClass'
 	],
-	#category : #Kernel-Tests-Rules
+	#category : #'Kernel-Tests-Rules'
 }
 
 { #category : #running }

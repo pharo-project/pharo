@@ -4,7 +4,7 @@ A shared pool represents a set of bindings which are accessible to all classes w
 Class {
 	#name : #SharedPool,
 	#superclass : #Object,
-	#category : #Kernel-Classes
+	#category : #'Kernel-Classes'
 }
 
 { #category : #'name lookup' }

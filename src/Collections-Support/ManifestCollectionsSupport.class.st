@@ -4,15 +4,15 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsSupport,
 	#superclass : #PackageManifest,
-	#category : #Collections-Support
+	#category : #'Collections-Support'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsSupport class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Native' #'Collections-Unordered' #Kernel #'Collections-Abstract')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsSupport class >> description [
 	^ 'Some basic classes used in collections: Link, Associtation, Weak*, CharacterSet, SetElement, etc.'
 ]
@@ -22,7 +22,7 @@ ManifestCollectionsSupport class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsSupport class >> packageName [
 	^ #'Collections-Support'
 ]

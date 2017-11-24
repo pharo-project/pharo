@@ -24,7 +24,7 @@ Class {
 		'labelHolder',
 		'actionWhenDeactivatedHolder'
 	],
-	#category : #Spec-Core-Widgets-Support
+	#category : #'Spec-Core-Widgets-Support'
 }
 
 { #category : #api }
@@ -102,7 +102,7 @@ AbstractFormButtonPresenter >> labelClickable: aBoolean [
 	labelClickableHolder value: aBoolean
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 AbstractFormButtonPresenter >> labelHolder [
 
 	^ labelHolder
@@ -132,20 +132,20 @@ AbstractFormButtonPresenter >> toggleState [
 	self state: self state not
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractFormButtonPresenter >> whenActivatedDo: aBlock [
 	"This method is used to propagate the event that I have been activated" 
 	
 	stateHolder whenChangedDo: [:bool | bool ifTrue: aBlock ]
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractFormButtonPresenter >> whenActivationActionChanged: aBlock [
 	"A block performed when the activation action changed"
 	actionWhenActivatedHolder whenChangedDo: aBlock 
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractFormButtonPresenter >> whenChangedDo: aBlock [
 	"This method is used to propagate the event that I have changed"
 	
@@ -165,7 +165,7 @@ AbstractFormButtonPresenter >> whenDeactivationActionChanged: aBlock [
 	actionWhenDeactivatedHolder whenChangedDo:  aBlock 
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractFormButtonPresenter >> whenLabelClickableChanged: aBlock [
 	"A block performed when the label click is activated or descativated"
 	

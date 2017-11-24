@@ -20,7 +20,7 @@ Class {
 		'arguments',
 		'keyword'
 	],
-	#category : #Kernel-Pragmas
+	#category : #'Kernel-Pragmas'
 }
 
 { #category : #finding }
@@ -116,14 +116,14 @@ Pragma >> analogousCodeTo: anObject [
 	  and: [arguments = anObject arguments]]
 ]
 
-{ #category : #accessing-pragma }
+{ #category : #'accessing-pragma' }
 Pragma >> argumentAt: anInteger [
 	"Answer one of the arguments of the pragma."
 	
 	^ self arguments at: anInteger.
 ]
 
-{ #category : #accessing-pragma }
+{ #category : #'accessing-pragma' }
 Pragma >> arguments [
 	"Answer the arguments of the receiving pragma. For a pragma defined as <key1: val1 key2: val2> this will answer #(val1 val2)."
 	
@@ -177,14 +177,14 @@ Pragma >> message [
 	^ Message selector: self keyword arguments: self arguments. 
 ]
 
-{ #category : #accessing-method }
+{ #category : #'accessing-method' }
 Pragma >> method [
 	"Answer the compiled-method containing the pragma."
 	
 	^ method
 ]
 
-{ #category : #accessing-method }
+{ #category : #'accessing-method' }
 Pragma >> methodClass [
 	"Answer the class of the method containing the pragma."
 	
@@ -199,7 +199,7 @@ Pragma >> methodSelector [
 	^method selector
 ]
 
-{ #category : #accessing-pragma }
+{ #category : #'accessing-pragma' }
 Pragma >> numArgs [
 	"Answer the number of arguments in the pragma."
 

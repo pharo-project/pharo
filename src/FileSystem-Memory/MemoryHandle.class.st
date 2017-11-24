@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'entry'
 	],
-	#category : #FileSystem-Memory
+	#category : #'FileSystem-Memory'
 }
 
 { #category : #public }
@@ -31,7 +31,7 @@ MemoryHandle >> at: first write: aCollection startingAt: start count: count [
 	entry at: first write: aCollection startingAt: start count: count.
 ]
 
-{ #category : #streams-compatibility }
+{ #category : #'streams-compatibility' }
 MemoryHandle >> binaryReadStream [
 	^ entry binaryReadStream
 ]
@@ -43,7 +43,7 @@ MemoryHandle >> close [
 	entry := nil.
 ]
 
-{ #category : #stream-protocol }
+{ #category : #'stream-protocol' }
 MemoryHandle >> copyFrom: from to: position [
 	^ entry copyFrom: from to: position
 ]
@@ -58,7 +58,7 @@ MemoryHandle >> grow [
 	entry grow
 ]
 
-{ #category : #stream-protocol }
+{ #category : #'stream-protocol' }
 MemoryHandle >> grownBy: length [
 	entry grownBy: length
 ]
@@ -73,7 +73,7 @@ MemoryHandle >> open [
 	entry := self basicOpen.
 ]
 
-{ #category : #stream-protocol }
+{ #category : #'stream-protocol' }
 MemoryHandle >> readStream [
 	"Return a readstream on my contents.
 	Using myself as target collection allows to share the internal bytearray between multiple streams."
@@ -101,7 +101,7 @@ MemoryHandle >> truncateTo: anInteger [
 	entry truncateTo: anInteger
 ]
 
-{ #category : #stream-protocol }
+{ #category : #'stream-protocol' }
 MemoryHandle >> writeStream [
 	"Return a writestream on my contents.
 	Using myself as target collection allows to share the internal bytearray between multiple streams."

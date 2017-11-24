@@ -4,7 +4,7 @@ SUnit tests for the size of objects in memory
 Class {
 	#name : #SizeInMemoryTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Objects
+	#category : #'Kernel-Tests-Objects'
 }
 
 { #category : #utils }

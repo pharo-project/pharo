@@ -17,7 +17,7 @@ Class {
 		'compilationContext',
 		'irPrimitive'
 	],
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #optimizing }

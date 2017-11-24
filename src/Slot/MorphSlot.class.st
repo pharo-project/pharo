@@ -11,10 +11,10 @@ setIvar: aMorph
 Class {
 	#name : #MorphSlot,
 	#superclass : #IndexedSlot,
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 MorphSlot >> write: aValue to: anObject [
 	
 	(self read: anObject) ifNotNil: [ :m | m delete ].

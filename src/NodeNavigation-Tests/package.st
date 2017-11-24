@@ -1,1 +1,1 @@
-Package { #name : #NodeNavigation-Tests }
+Package { #name : #'NodeNavigation-Tests' }

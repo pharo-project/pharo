@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'fontNumber'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #private }

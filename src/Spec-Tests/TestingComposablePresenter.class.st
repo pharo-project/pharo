@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'list'
 	],
-	#category : #Spec-Tests-Utils
+	#category : #'Spec-Tests-Utils'
 }
 
 { #category : #specs }

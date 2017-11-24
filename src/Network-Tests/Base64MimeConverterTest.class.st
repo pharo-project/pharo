@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'message'
 	],
-	#category : #Network-Tests-Kernel
+	#category : #'Network-Tests-Kernel'
 }
 
 { #category : #running }

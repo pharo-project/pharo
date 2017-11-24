@@ -7,7 +7,7 @@
 Class {
 	#name : #RubLipsumWithSegmentsExample,
 	#superclass : #RubLipsumBasicExample,
-	#category : #Rubric-Editing-Widgets-Examples
+	#category : #'Rubric-Editing-Widgets-Examples'
 }
 
 { #category : #accessing }

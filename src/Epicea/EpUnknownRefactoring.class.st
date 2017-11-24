@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'printString'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }
@@ -29,7 +29,7 @@ EpUnknownRefactoring >> canBuildRBRefactoring [
 	^ false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpUnknownRefactoring >> initializeWith: aRBRefactoring [
 	self initialize.
 	printString := aRBRefactoring printString

@@ -1,7 +1,7 @@
 Class {
 	#name : #BecomeTest,
 	#superclass : #TestCase,
-	#category : #Tests-VM
+	#category : #'Tests-VM'
 }
 
 { #category : #testing }

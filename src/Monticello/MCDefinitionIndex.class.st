@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'definitions'
 	],
-	#category : #Monticello-Patching
+	#category : #'Monticello-Patching'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCDefinitionIndex class >> definitions: aCollection [
 	^ self new addAll: aCollection
 ]

@@ -13,7 +13,7 @@ Class {
 		'definition',
 		'definedClass'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }

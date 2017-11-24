@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'candidateBrick'
 	],
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }
 
 { #category : #accessing }

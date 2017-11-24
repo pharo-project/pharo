@@ -8,7 +8,7 @@ Class {
 		'localName',
 		'globalName'
 	],
-	#category : #Ombu-Entries
+	#category : #'Ombu-Entries'
 }
 
 { #category : #'ston persistence' }
@@ -57,7 +57,7 @@ OmReference >> hash [
 	^ (self species hash bitXor: self localName hash) bitXor: self globalName hash
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 OmReference >> initializeWithLocalName: aLocalName globalName: aGlobalName [
 
 	self initialize.

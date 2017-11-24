@@ -4,7 +4,7 @@ Checks for use of to:do: when a do:, with:do: or timesRepeat: when should be use
 Class {
 	#name : #RBToDoRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

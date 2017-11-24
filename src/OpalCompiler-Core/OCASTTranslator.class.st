@@ -25,7 +25,7 @@ Class {
 	#classVars : [
 		'OptimizedMessages'
 	],
-	#category : #OpalCompiler-Core-Translator
+	#category : #'OpalCompiler-Core-Translator'
 }
 
 { #category : #initialize }

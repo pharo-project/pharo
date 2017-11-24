@@ -4,7 +4,7 @@ I represent a class Variable
 Class {
 	#name : #NECClassVarEntry,
 	#superclass : #NECEntry,
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #operations }

@@ -13,7 +13,7 @@ Class {
 		'browsedEnvironment',
 		'renameAccessors'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -78,7 +78,7 @@ RBRenameInstanceVariableRefactoring >> executeRefactoring: aRefactoring [
 	RBParser parseExpression: aRefactoring storeString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRenameInstanceVariableRefactoring >> initialize [
 	super initialize.
 	renameAccessors := false
@@ -111,13 +111,13 @@ RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	oldAccessors do: [ :each | class removeMethod: each selector ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self rename: aVarName to: aName in: aClass renameAccessors: false
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRenameInstanceVariableRefactoring >> rename: aVarName to: aName in: aClass renameAccessors: aBoolean [
 	self variable: aVarName class: aClass.
 	newName := aName.

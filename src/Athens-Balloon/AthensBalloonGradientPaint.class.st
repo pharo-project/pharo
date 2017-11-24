@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'colorRamp'
 	],
-	#category : #Athens-Balloon
+	#category : #'Athens-Balloon'
 }
 
 { #category : #accessing }

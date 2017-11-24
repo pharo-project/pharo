@@ -11,7 +11,7 @@ Class {
 		'customMenuActions',
 		'text'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #spec }
@@ -37,7 +37,7 @@ EyeAbstractInspector class >> taskbarIconName [
 	^#smallInspectItIcon
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeAbstractInspector >> close [
 	"Override in sublcasses for special actions"
 ]
@@ -52,7 +52,7 @@ EyeAbstractInspector >> customMenuActions: anObject [
 	customMenuActions := anObject
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeAbstractInspector >> diveInto: anObject [
 	self owner ifNotNil: [ :navigator | 
 		(navigator respondsTo: #diveInto:)
@@ -152,13 +152,13 @@ EyeAbstractInspector >> object: anObject [
 	object value: anObject
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeAbstractInspector >> objectChanged [
 	"triggered when the inspected object is changed"
 	self subclassResponsibility
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeAbstractInspector >> ownerChanged [
 	self
 		customMenuActions: self owner customMenuActions;

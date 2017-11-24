@@ -14,7 +14,7 @@ This slot inherits from IndexedSlot to guarantee that this slot has a real field
 Class {
 	#name : #WeakSlot,
 	#superclass : #IndexedSlot,
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #'code generation' }
@@ -45,19 +45,19 @@ WeakSlot >> initialize: anObject [
 	super write: (WeakArray new: 1) to: anObject
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 WeakSlot >> read: anObject [
 
 	^ (super read: anObject) at: 1.
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 WeakSlot >> wantsInitalization [
 
 	^ true
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 WeakSlot >> write: aValue to: anObject [
 
 	(super read: anObject) at: 1 put: aValue.

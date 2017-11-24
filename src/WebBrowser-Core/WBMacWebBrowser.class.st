@@ -4,7 +4,7 @@ Access to the web browser on Mac
 Class {
 	#name : #WBMacWebBrowser,
 	#superclass : #WebBrowser,
-	#category : #WebBrowser-Core-OS-Mac
+	#category : #'WebBrowser-Core-OS-Mac'
 }
 
 { #category : #examples }

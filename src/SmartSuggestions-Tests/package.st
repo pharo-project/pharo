@@ -1,1 +1,1 @@
-Package { #name : #SmartSuggestions-Tests }
+Package { #name : #'SmartSuggestions-Tests' }

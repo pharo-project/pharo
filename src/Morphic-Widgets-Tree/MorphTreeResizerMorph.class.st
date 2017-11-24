@@ -10,7 +10,7 @@ Class {
 		'index',
 		'container'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #'instance creation' }
@@ -23,7 +23,7 @@ MorphTreeResizerMorph class >> fastSplitterResize [
 	^ true
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 MorphTreeResizerMorph >> adoptPaneColor: paneColor [ 
 	"Change our color too."
 	super adoptPaneColor: paneColor.
@@ -103,7 +103,7 @@ MorphTreeResizerMorph >> mouseMove: anEvent [
 		ifFalse: [self updateFromEvent: anEvent]
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 MorphTreeResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
 	
@@ -140,7 +140,7 @@ MorphTreeResizerMorph >> pressedFillStyle [
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 MorphTreeResizerMorph >> release [
 	traceMorph := nil.
 	oldColor := nil.
@@ -162,7 +162,7 @@ MorphTreeResizerMorph >> setGrabbedColor [
 	self fillStyle: self pressedFillStyle
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 MorphTreeResizerMorph >> shouldDraw [
 	^ true
 ]
@@ -172,7 +172,7 @@ MorphTreeResizerMorph >> splitsTopAndBottom [
 	^ false
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 MorphTreeResizerMorph >> themeChanged [
 	"Update the fill style."
 	self fillStyle: self normalFillStyle.

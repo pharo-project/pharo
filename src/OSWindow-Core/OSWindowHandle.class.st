@@ -11,7 +11,7 @@ Class {
 		'osWindow',
 		'renderer'
 	],
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #accessing }

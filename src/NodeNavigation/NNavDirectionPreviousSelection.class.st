@@ -4,7 +4,7 @@ I know how to go to the previous selection in the text
 Class {
 	#name : #NNavDirectionPreviousSelection,
 	#superclass : #NNavDirection,
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #builder }

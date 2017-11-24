@@ -19,7 +19,7 @@ Class {
 	#classVars : [
 		'Properties'
 	],
-	#category : #Slot-Variables
+	#category : #'Slot-Variables'
 }
 
 { #category : #validating }
@@ -178,7 +178,7 @@ LiteralVariable >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 LiteralVariable >> read [
 	^self value
 ]
@@ -212,7 +212,7 @@ LiteralVariable >> usingMethods [
 	^SystemNavigation new allReferencesTo: self
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 LiteralVariable >> write: anObject [
 	^self value: anObject
 ]

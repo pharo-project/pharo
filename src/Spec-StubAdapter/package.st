@@ -1,1 +1,1 @@
-Package { #name : #Spec-StubAdapter }
+Package { #name : #'Spec-StubAdapter' }

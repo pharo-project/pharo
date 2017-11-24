@@ -9,7 +9,7 @@ Class {
 		'allFileNames',
 		'cacheFileNames'
 	],
-	#category : #Monticello-Repositories
+	#category : #'Monticello-Repositories'
 }
 
 { #category : #'instance creation' }

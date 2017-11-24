@@ -20,7 +20,7 @@ Class {
 		'ShiftTable',
 		'SinTable'
 	],
-	#category : #System-Hashing-MD5
+	#category : #'System-Hashing-MD5'
 }
 
 { #category : #'class initialization' }
@@ -127,7 +127,7 @@ MD5NonPrimitive class >> initialize [
 	 }
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> fX: x Y: y Z: z [
 	" compute 'xy or (not x)z'"
 	^ x copy bitAnd: y; bitOr: (x copy bitInvert; bitAnd: z)
@@ -135,20 +135,20 @@ MD5NonPrimitive >> fX: x Y: y Z: z [
 	
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> ffA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + f(b,c,d) + m + t) <<< s)"
 	^ a += (self fX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
 
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5NonPrimitive >> finalValue [
 	"Concatenate the state values to produce the 128-bite result"
 	^ (state at: 1) asByteArray, (state at: 2) asByteArray, (state at: 3) asByteArray, (state at: 4) asByteArray
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> gX: x Y: y Z: z [
 	" compute 'xz or y(not z)'"
 	^ x copy bitAnd: z; bitOr: (z copy bitInvert; bitAnd: y)
@@ -156,14 +156,14 @@ MD5NonPrimitive >> gX: x Y: y Z: z [
 	
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> ggA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + g(b,c,d) + m + t) <<< s)"
 	^ a += (self gX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
 
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> hX: x Y: y Z: z [
 	" compute 'x xor y xor z'"
 	^ x copy bitXor: y; bitXor: z
@@ -171,21 +171,21 @@ MD5NonPrimitive >> hX: x Y: y Z: z [
 	
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> hhA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + h(b,c,d) + m + t) <<< s)"
 	^ a += (self hX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
 
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> iX: x Y: y Z: z [
 	" compute 'y xor (x or (not z))'"
 	^ y copy bitXor: (z copy bitInvert; bitOr: x)
 
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> iiA: a B: b C: c D: d M: m S: s T: t [
 	"compute a = b + ((a + i(b,c,d) + m + t) <<< s)"
 	^ a += (self iX: b Y: c Z: d); += m; += t; leftRotateBy: s; += b.
@@ -203,7 +203,7 @@ MD5NonPrimitive >> initialize [
 		 }
 ]
 
-{ #category : #private-buffers }
+{ #category : #'private-buffers' }
 MD5NonPrimitive >> processBuffer: aByteArray [ 
 	"Process a 64-byte buffer"
 	| saveState data |
@@ -224,7 +224,7 @@ MD5NonPrimitive >> processBuffer: aByteArray [
 		do: [ :index | (state at: index) += (saveState at: index) ]
 ]
 
-{ #category : #private-rounds }
+{ #category : #'private-rounds' }
 MD5NonPrimitive >> round: data selector: selector round: round [ 
 	"Do one round with the given function"
 	| shiftIndex template abcd |
@@ -249,7 +249,7 @@ MD5NonPrimitive >> round: data selector: selector round: round [
 				selector: selector ]
 ]
 
-{ #category : #private-rounds }
+{ #category : #'private-rounds' }
 MD5NonPrimitive >> rounds: data [
 	"Perform the four rounds with different functions"
 	#(
@@ -262,7 +262,7 @@ MD5NonPrimitive >> rounds: data [
 
 ]
 
-{ #category : #private-functions }
+{ #category : #'private-functions' }
 MD5NonPrimitive >> step: data template: item selector: selector [ 
 	"Perform one step in the round"
 	| args |

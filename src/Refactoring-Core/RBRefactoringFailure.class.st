@@ -4,7 +4,7 @@ This error is signalled whenever there is a non recoverable error during refacto
 Class {
 	#name : #RBRefactoringFailure,
 	#superclass : #RBRefactoringError,
-	#category : #Refactoring-Core-Support
+	#category : #'Refactoring-Core-Support'
 }
 
 { #category : #testing }

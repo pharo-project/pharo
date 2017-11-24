@@ -10,7 +10,7 @@ Class {
 		'contentStream',
 		'uri'
 	],
-	#category : #Network-MIME
+	#category : #'Network-MIME'
 }
 
 { #category : #'instance creation' }
@@ -60,27 +60,27 @@ MIMEDocument class >> contentType: type content: content url: url [
 		uri: url
 ]
 
-{ #category : #content-types }
+{ #category : #'content-types' }
 MIMEDocument class >> contentTypeFormData [
 	^'application/x-www-form-urlencoded'
 ]
 
-{ #category : #content-types }
+{ #category : #'content-types' }
 MIMEDocument class >> contentTypeHtml [
 	^'text/html'
 ]
 
-{ #category : #content-types }
+{ #category : #'content-types' }
 MIMEDocument class >> contentTypeMultipart [
 	^'multipart/form-data'
 ]
 
-{ #category : #content-types }
+{ #category : #'content-types' }
 MIMEDocument class >> contentTypePlainText [
 	^'text/plain'
 ]
 
-{ #category : #content-types }
+{ #category : #'content-types' }
 MIMEDocument class >> contentTypeXml [
 	^'text/xml'
 ]

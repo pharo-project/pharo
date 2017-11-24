@@ -71,7 +71,7 @@ Class {
 	#classVars : [
 		'SearchStrategies'
 	],
-	#category : #Morphic-Widgets-FastTable-Tree
+	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
 { #category : #accessing }
@@ -168,7 +168,7 @@ FTTreeDataSource >> childrenBlock: aBlockClosure [
 	childrenBlock := aBlockClosure
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeDataSource >> collapseAll [
 	rootItem collapseAll.
 	self tableRefresh
@@ -179,18 +179,18 @@ FTTreeDataSource >> elementAt: index [
 	^ rootItem childAt: index
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeDataSource >> expandAll [
 	rootItem expandAll.
 	self tableRefresh
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeDataSource >> expandAllTo: aDepth [
 	self rootItem expandAllTo: aDepth
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeDataSource >> expandRoots [
 	self rootsItems do: #expand.
 	self tableRefresh

@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'FormatAsYouReadPolicy'
 	],
-	#category : #AST-Core-Formatter
+	#category : #'AST-Core-Formatter'
 }
 
 { #category : #public }
@@ -93,7 +93,7 @@ BISimpleFormatter >> format: aParseTree [
 	^ codeStream contents
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatArray: anArrayNode [
 	anArrayNode statements
 		do: [ :each | 
@@ -103,7 +103,7 @@ BISimpleFormatter >> formatArray: anArrayNode [
 				self newLine ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatBlock: aBlockNode [
 	self formatBlockArgumentsFor: aBlockNode.
 	self space.
@@ -113,7 +113,7 @@ BISimpleFormatter >> formatBlock: aBlockNode [
 
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 	aBlockNode arguments isEmpty
 		ifTrue: [ ^ self ].
@@ -127,7 +127,7 @@ BISimpleFormatter >> formatBlockArgumentsFor: aBlockNode [
 	codeStream nextPutAll: '| '
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatCommentsFor: aNode [
 	originalSource isNil
 		ifTrue: [ ^ self ].
@@ -138,7 +138,7 @@ BISimpleFormatter >> formatCommentsFor: aNode [
 			self newLine ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround:
@@ -149,7 +149,7 @@ BISimpleFormatter >> formatMethodBodyFor: aMethodNode [
 			self visitNode: aMethodNode body ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatMethodCommentFor: aNode [
 	originalSource isNil
 		ifTrue: [ ^ self ].
@@ -160,19 +160,19 @@ BISimpleFormatter >> formatMethodCommentFor: aNode [
 			self newLine ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatMethodPatternFor: aMethodNode [
 	aMethodNode arguments isEmpty
 		ifTrue: [ codeStream nextPutAll: aMethodNode selector ]
 		ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatPragmasFor: aMethodNode [
 	aMethodNode pragmas do: [ :each | self visitNode: each; newLine ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatSelectorAndArguments: aMessageNode [
 	
 	self
@@ -184,7 +184,7 @@ BISimpleFormatter >> formatSelectorAndArguments: aMessageNode [
 				restSeparator: [ self space ] ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: firstBlock restSeparator: restBlock [
 	aMessageNode isUnary
 		ifTrue: [ 
@@ -201,7 +201,7 @@ BISimpleFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: fi
 							self handleLineForArgument: argument ] ] ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	| statements |
 	statements := aSequenceNode statements.
@@ -218,7 +218,7 @@ BISimpleFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 			ifTrue: [  ] ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BISimpleFormatter >> formatStatementCommentsFor: aStatementNode [
 	originalSource isNil
 		ifTrue: [ ^ self ].

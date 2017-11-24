@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'trait'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #testing }

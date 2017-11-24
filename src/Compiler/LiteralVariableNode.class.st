@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'writeNode'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }

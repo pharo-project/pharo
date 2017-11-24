@@ -21,7 +21,7 @@ Class {
 		'BalloonColor',
 		'BalloonFont'
 	],
-	#category : #Morphic-Base-Widgets
+	#category : #'Morphic-Base-Widgets'
 }
 
 { #category : #utility }

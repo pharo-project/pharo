@@ -23,7 +23,7 @@ Class {
 		'textBlock',
 		'selectedTextBlock'
 	],
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #'accessing ports' }

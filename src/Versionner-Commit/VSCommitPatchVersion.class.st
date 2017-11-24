@@ -5,7 +5,7 @@ I'm a patch version.
 Class {
 	#name : #VSCommitPatchVersion,
 	#superclass : #VSCommitVersion,
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #accessing }

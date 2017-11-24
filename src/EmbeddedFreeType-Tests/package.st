@@ -1,1 +1,1 @@
-Package { #name : #EmbeddedFreeType-Tests }
+Package { #name : #'EmbeddedFreeType-Tests' }

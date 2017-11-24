@@ -53,7 +53,7 @@ Class {
 	#pools : [
 		'FFIConstants'
 	],
-	#category : #FFI-Kernel
+	#category : #'FFI-Kernel'
 }
 
 { #category : #private }

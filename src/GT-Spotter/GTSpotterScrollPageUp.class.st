@@ -1,5 +1,5 @@
 Class {
 	#name : #GTSpotterScrollPageUp,
 	#superclass : #Announcement,
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }

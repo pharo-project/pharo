@@ -25,10 +25,10 @@ Class {
 		'detailMorph',
 		'detailPosition'
 	],
-	#category : #NECompletion-View
+	#category : #'NECompletion-View'
 }
 
-{ #category : #preferences-colors }
+{ #category : #'preferences-colors' }
 NECMenuMorph class >> backgroundColor [
 	^NECPreferences backgroundColor
 ]
@@ -167,7 +167,7 @@ NECMenuMorph class >> maxLength [
 	^ 20
 ]
 
-{ #category : #preferences-fonts }
+{ #category : #'preferences-fonts' }
 NECMenuMorph class >> messageFont [
 	^ StandardFonts menuFont
 ]
@@ -177,7 +177,7 @@ NECMenuMorph class >> scrollArrowSize [
 	^ 8
 ]
 
-{ #category : #preferences-colors }
+{ #category : #'preferences-colors' }
 NECMenuMorph class >> scrollColor [
 	^ Smalltalk ui theme selectionColor
 ]
@@ -202,7 +202,7 @@ NECMenuMorph class >> selectColorFor: aSymbol [
 	^ (SHTextStylerST80 new attributesFor: attribute) first color
 ]
 
-{ #category : #preferences-fonts }
+{ #category : #'preferences-fonts' }
 NECMenuMorph class >> selectFontFor: aSymbol [ 
 	| emphasized attributes |
 	attributes := SHTextStylerST80 new 
@@ -232,7 +232,7 @@ NECMenuMorph class >> shortcutAttributes [
 	^ {TextIndent spaceUsed; tabs: 1. TextEmphasis italic }
 ]
 
-{ #category : #preferences-fonts }
+{ #category : #'preferences-fonts' }
 NECMenuMorph class >> titleFont [
 	^ StandardFonts windowTitleFont
 ]

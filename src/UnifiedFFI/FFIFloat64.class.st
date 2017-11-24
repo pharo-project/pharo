@@ -5,7 +5,7 @@ Represented as double in C side.
 Class {
 	#name : #FFIFloat64,
 	#superclass : #FFIFloatType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

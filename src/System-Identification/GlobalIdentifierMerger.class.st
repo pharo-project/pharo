@@ -32,7 +32,7 @@ Class {
 		'existing',
 		'stored'
 	],
-	#category : #System-Identification
+	#category : #'System-Identification'
 }
 
 { #category : #actions }

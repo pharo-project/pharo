@@ -10,7 +10,7 @@ Class {
 	#classVars : [
 		'SuperClassVar'
 	],
-	#category : #NECompletion-Tests
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #initialization }

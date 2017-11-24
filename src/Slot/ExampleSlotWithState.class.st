@@ -46,15 +46,15 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ExampleSlotWithState >> read: anObject [
 	^ value
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ExampleSlotWithState >> write: aValue to: anObject [
 	value := aValue
 ]

@@ -32,7 +32,7 @@ Class {
 		'unhoverAction',
 		'clickAction'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Basic
+	#category : #'Glamour-Morphic-Brick-Widgets-Basic'
 }
 
 { #category : #examples }
@@ -58,13 +58,13 @@ GLMActionButtonBrick class >> gtExample [
 			padding: 5
 ]
 
-{ #category : #action-button-actions }
+{ #category : #'action-button-actions' }
 GLMActionButtonBrick >> action: anObject [
 
 	clickAction := anObject
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMActionButtonBrick >> click: anEvent [
 	
 	clickAction ifNil: [ ^ false ].
@@ -73,14 +73,14 @@ GLMActionButtonBrick >> click: anEvent [
 	^ true
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMActionButtonBrick >> deselect: anEvent [
 	super deselect: anEvent.
 	
 	unhoverAction ifNotNil: [ :a | a brickValue: self withEnoughArguments: { anEvent } ]
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMActionButtonBrick >> hShrinkWrap [
 
 	self width: [
@@ -96,32 +96,32 @@ GLMActionButtonBrick >> hShrinkWrap [
 							ifNotNil: [ self icon width max: self hoverIcon width ] ] ]) ]
 ]
 
-{ #category : #action-button-actions }
+{ #category : #'action-button-actions' }
 GLMActionButtonBrick >> hoverAction: anObject [
 
 	hoverAction := anObject
 ]
 
-{ #category : #action-button-accessing }
+{ #category : #'action-button-accessing' }
 GLMActionButtonBrick >> hoverIcon [
 
 	^ self selectedImage
 ]
 
-{ #category : #action-button-accessing }
+{ #category : #'action-button-accessing' }
 GLMActionButtonBrick >> hoverIcon: anImage [
 
 	self selectedImage: anImage.
 	self doLayoutForce
 ]
 
-{ #category : #action-button-accessing }
+{ #category : #'action-button-accessing' }
 GLMActionButtonBrick >> icon [
 
 	^ self normalImage
 ]
 
-{ #category : #action-button-accessing }
+{ #category : #'action-button-accessing' }
 GLMActionButtonBrick >> icon: anImage [
 
 	self normalImage: anImage.
@@ -138,20 +138,20 @@ GLMActionButtonBrick >> initialize [
 		enable
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMActionButtonBrick >> select: anEvent [
 	super select: anEvent.
 	
 	hoverAction ifNotNil: [ :a | a brickValue: self withEnoughArguments: { anEvent } ]
 ]
 
-{ #category : #action-button-actions }
+{ #category : #'action-button-actions' }
 GLMActionButtonBrick >> unhoverAction: anObject [
 
 	unhoverAction := anObject
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMActionButtonBrick >> vShrinkWrap [
 
 	self height: [

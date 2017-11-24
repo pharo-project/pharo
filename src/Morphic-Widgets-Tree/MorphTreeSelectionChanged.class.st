@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selection'
 	],
-	#category : #Morphic-Widgets-Tree-Announcements
+	#category : #'Morphic-Widgets-Tree-Announcements'
 }
 
 { #category : #accessing }

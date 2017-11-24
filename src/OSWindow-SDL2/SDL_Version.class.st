@@ -2,14 +2,14 @@
 A structure that contains information about the version of SDL in use. 
 "
 Class {
-	#name : #SDL_Version,
+	#name : #'SDL_Version',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_MAJOR',
 		'OFFSET_MINOR',
 		'OFFSET_PATCH'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #accessing }

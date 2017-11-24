@@ -9,7 +9,7 @@ Class {
 		'type',
 		'description'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }

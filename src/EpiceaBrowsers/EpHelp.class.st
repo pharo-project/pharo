@@ -4,7 +4,7 @@ Help for Epicea project.
 Class {
 	#name : #EpHelp,
 	#superclass : #CustomHelp,
-	#category : #EpiceaBrowsers-Integration
+	#category : #'EpiceaBrowsers-Integration'
 }
 
 { #category : #accessing }

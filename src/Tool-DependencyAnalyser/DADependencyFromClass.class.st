@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'theClass'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #comparing }

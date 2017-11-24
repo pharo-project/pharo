@@ -4,7 +4,7 @@ Specific to BinaryFileStream
 Class {
 	#name : #FLBinaryFileStreamStrategy,
 	#superclass : #FLFileStreamStrategy,
-	#category : #FuelTests-StreamStrategies
+	#category : #'FuelTests-StreamStrategies'
 }
 
 { #category : #reading }

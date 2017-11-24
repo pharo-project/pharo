@@ -38,7 +38,7 @@ Class {
 		'referenceVariableName',
 		'newClass'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -62,7 +62,7 @@ RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariab
 		yourself
 ]
 
-{ #category : #private-transforming }
+{ #category : #'private-transforming' }
 RBSplitClassRefactoring >> abstractReferenceTo: each [ 
 	| setterMethod replacer accessorRef getterMethod |
 	accessorRef := RBCreateAccessorsForVariableRefactoring 
@@ -91,7 +91,7 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 	instanceVariables do: [:each | self abstractReferenceTo: each]
 ]
 
-{ #category : #private-transforming }
+{ #category : #'private-transforming' }
 RBSplitClassRefactoring >> addClass [
 	self performComponentRefactoring: (RBAddClassRefactoring 
 				model: self model
@@ -102,7 +102,7 @@ RBSplitClassRefactoring >> addClass [
 	newClass := self model classNamed: newClassName asSymbol
 ]
 
-{ #category : #private-transforming }
+{ #category : #'private-transforming' }
 RBSplitClassRefactoring >> addInstanceVariables [
 	instanceVariables do: 
 			[:each | 
@@ -112,7 +112,7 @@ RBSplitClassRefactoring >> addInstanceVariables [
 						class: newClass)]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSplitClassRefactoring >> class: aClass instanceVariables: instVars newClassName: className referenceVariableName: newVariable [ 
 	class := self model classFor: aClass.
 	instanceVariables := instVars.

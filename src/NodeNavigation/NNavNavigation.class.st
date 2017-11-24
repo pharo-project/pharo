@@ -13,7 +13,7 @@ Class {
 		'Instance',
 		'UseArrowsShortcuts'
 	],
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #'instance creation' }
@@ -36,7 +36,7 @@ NNavNavigation class >> useArrowsShortcuts: enable [
 
 ]
 
-{ #category : #current-context }
+{ #category : #'current-context' }
 NNavNavigation >> bestNodeForSelection [
 	| root |
 	
@@ -46,7 +46,7 @@ NNavNavigation >> bestNodeForSelection [
 	^ root bestNodeFor: self textSelection .	
 ]
 
-{ #category : #current-context }
+{ #category : #'current-context' }
 NNavNavigation >> currentText [
 	^ self textArea text
 ]
@@ -69,12 +69,12 @@ NNavNavigation >> navigate: editor direction: direction [
 
 ]
 
-{ #category : #current-context }
+{ #category : #'current-context' }
 NNavNavigation >> textArea [
 	^ currentEditor sourceTextArea 
 ]
 
-{ #category : #current-context }
+{ #category : #'current-context' }
 NNavNavigation >> textSelection [ 
 	^ self textArea selectionInterval
 ]

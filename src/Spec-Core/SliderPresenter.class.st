@@ -31,7 +31,7 @@ Class {
 		'absoluteValue',
 		'labelHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -205,42 +205,42 @@ SliderPresenter >> value: aNumber [
 	value value: aNumber.
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SliderPresenter >> whenAbsoluteValueChangedDo: aBlock [
 	"Block performed when the absolute value changed"
 
 	absoluteValue whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SliderPresenter >> whenLabelChangedDo: aBlock [
 	"Block performed when the label changed"
 
 	labelHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SliderPresenter >> whenMaxChangedDo: aBlock [ 
 	"Block performed when the maximum value changed"
 
 	max whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SliderPresenter >> whenMinChangedDo: aBlock [ 
 	"Block performed when the minimum value changed"
 
 	min whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SliderPresenter >> whenQuantumChangedDo: aBlock [ 
 	"Block performed when the quantum value changed"
 
 	quantum whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SliderPresenter >> whenValueChangedDo: aBlock [ 
 	"Block performed when the value changed"
 

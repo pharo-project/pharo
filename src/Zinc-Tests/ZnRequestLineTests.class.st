@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnRequestLineTests,
 	#superclass : #TestCase,
-	#category : #Zinc-Tests
+	#category : #'Zinc-Tests'
 }
 
 { #category : #testing }

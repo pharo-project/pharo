@@ -4,10 +4,10 @@ SUnit tests for MemoryFileSystem
 Class {
 	#name : #MemoryFileSystemTest,
 	#superclass : #FileSystemTest,
-	#category : #FileSystem-Tests-Memory
+	#category : #'FileSystem-Tests-Memory'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MemoryFileSystemTest >> createFileSystem [
 	^ FileSystem memory
 ]

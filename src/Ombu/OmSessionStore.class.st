@@ -19,7 +19,7 @@ Class {
 		'storeNameStrategy',
 		'defaultBaseLocator'
 	],
-	#category : #Ombu-Stores
+	#category : #'Ombu-Stores'
 }
 
 { #category : #accessing }

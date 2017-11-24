@@ -9,7 +9,7 @@ Class {
 		'sortedElements',
 		'verticesWithNoIncomingEdge'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #private }
@@ -22,7 +22,7 @@ MalTopologicalSorting >> graphHasEdges [
 	^ (nodes allSatisfy: [ :node | node nextNodes isEmpty ]) not
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MalTopologicalSorting >> initialize [
 	super initialize.
 	sortedElements := OrderedCollection new

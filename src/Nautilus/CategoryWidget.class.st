@@ -12,7 +12,7 @@ Class {
 		'categoriesList',
 		'categoriesSelection'
 	],
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #shortcuts }

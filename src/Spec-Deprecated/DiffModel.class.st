@@ -4,5 +4,5 @@ This is deprecated class because the original class DiffModel was renamed to Dif
 Class {
 	#name : #DiffModel,
 	#superclass : #DiffPresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

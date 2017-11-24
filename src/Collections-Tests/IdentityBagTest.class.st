@@ -11,7 +11,7 @@ Class {
 		'elementAlreadyIncluded',
 		'identityBagWithoutElement'
 	],
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #requirements }

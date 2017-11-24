@@ -3,7 +3,7 @@ Kernel trait for Behavior
 "
 Trait {
 	#name : #TBehavior,
-	#category : #Traits-Kernel-Traits
+	#category : #'Traits-Kernel-Traits'
 }
 
 { #category : #'accessing method dictionary' }
@@ -682,7 +682,7 @@ TBehavior >> ensureLocalSelectors [
 	self basicLocalSelectors ifNil: [self basicLocalSelectors: self selectors asSet]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> ensureProperties [
 	^ self explicitRequirement
 ]
@@ -1323,7 +1323,7 @@ TBehavior >> nextQuotePosIn: sourceString startingFrom: commentStart [
 	^nextQuotePos
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TBehavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
@@ -1434,20 +1434,20 @@ TBehavior >> printOn: aStream [
 	self superclass printOn: aStream
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> properties [
 	^ self explicitRequirement
 		
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> propertyAt: propName ifAbsent: aBlock [
 	self properties ifNil: [^aBlock value].
 	^ self properties
@@ -1455,7 +1455,7 @@ TBehavior >> propertyAt: propName ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
@@ -1498,19 +1498,19 @@ TBehavior >> removeFromComposition: aTrait [
 		removeFromComposition: aTrait)
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> removePropertiesIfEmpty [
 	^ self explicitRequirement
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> removeProperty: propName [
 	^ self
 		removeProperty: propName
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 TBehavior >> removeProperty: propName ifAbsent: aBlock [
 	| property |
 	self properties ifNil: [^aBlock value].
@@ -1816,7 +1816,7 @@ TBehavior >> superclass: aClass [
 	^self explicitRequirement.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TBehavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver.
 	Must only be sent to a new instance; else we would need Object flushCache."

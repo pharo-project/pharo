@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Tests-Rubric }
+Package { #name : #'Glamour-Tests-Rubric' }

@@ -4,7 +4,7 @@ Versionnner commands related to the development workflow.
 Class {
 	#name : #VSDevCycleCommand,
 	#superclass : #VSCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #private }

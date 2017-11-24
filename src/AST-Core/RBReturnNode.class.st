@@ -14,7 +14,7 @@ Class {
 		'return',
 		'value'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -108,17 +108,17 @@ RBReturnNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [self value: anotherNode]
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBReturnNode >> return [
 	^ return
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBReturnNode >> return: anInteger [
 	return := anInteger
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBReturnNode >> return: returnInteger value: aValueNode [ 
 	return := returnInteger.
 	self value: aValueNode

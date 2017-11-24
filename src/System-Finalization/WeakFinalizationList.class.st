@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'first'
 	],
-	#category : #System-Finalization
+	#category : #'System-Finalization'
 }
 
 { #category : #'vm capability test' }

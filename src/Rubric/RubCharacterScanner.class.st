@@ -35,7 +35,7 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #Rubric-TextScanning
+	#category : #'Rubric-TextScanning'
 }
 
 { #category : #'class initialization' }

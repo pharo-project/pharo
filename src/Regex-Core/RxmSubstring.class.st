@@ -13,22 +13,22 @@ Class {
 		'sample',
 		'compare'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSubstring >> beCaseInsensitive [
 
 	compare := [:char1 :char2 | char1 sameAs: char2]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSubstring >> beCaseSensitive [
 
 	compare := [:char1 :char2 | char1 = char2]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSubstring >> character: aCharacter ignoreCase: aBoolean [
 	"Match exactly this character."
 
@@ -67,7 +67,7 @@ RxmSubstring >> sampleStream [
 	^sample readStream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSubstring >> substring: aString ignoreCase: aBoolean [
 	"Match exactly this string."
 

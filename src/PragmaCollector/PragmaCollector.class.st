@@ -34,7 +34,7 @@ Class {
 		'filter',
 		'announcing'
 	],
-	#category : #PragmaCollector-Base
+	#category : #'PragmaCollector-Base'
 }
 
 { #category : #utilities }

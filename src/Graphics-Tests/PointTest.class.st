@@ -4,7 +4,7 @@ SUnit tests for class Point
 Class {
 	#name : #PointTest,
 	#superclass : #ClassTestCase,
-	#category : #Graphics-Tests-Primitives
+	#category : #'Graphics-Tests-Primitives'
 }
 
 { #category : #'tests - arithmetic' }

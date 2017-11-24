@@ -10,7 +10,7 @@ Class {
 		'menu',
 		'text'
 	],
-	#category : #Spec-Examples
+	#category : #'Spec-Examples'
 }
 
 { #category : #specs }

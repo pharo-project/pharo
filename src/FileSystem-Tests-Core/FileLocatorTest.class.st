@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'locator'
 	],
-	#category : #FileSystem-Tests-Core
+	#category : #'FileSystem-Tests-Core'
 }
 
 { #category : #'compatibility tests' }

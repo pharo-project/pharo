@@ -4,5 +4,5 @@ Class {
 	#instVars : [
 		'var1'
 	],
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }

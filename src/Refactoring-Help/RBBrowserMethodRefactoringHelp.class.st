@@ -4,7 +4,7 @@ This is the chapter of the refactoring help book about the method  refactoring a
 Class {
 	#name : #RBBrowserMethodRefactoringHelp,
 	#superclass : #RBBrowserSupportHelp,
-	#category : #Refactoring-Help
+	#category : #'Refactoring-Help'
 }
 
 { #category : #pages }

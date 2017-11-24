@@ -1,1 +1,1 @@
-Package { #name : #FileSystem-Path }
+Package { #name : #'FileSystem-Path' }

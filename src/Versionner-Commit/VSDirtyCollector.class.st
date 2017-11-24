@@ -9,7 +9,7 @@ Class {
 		'projects',
 		'commitStrategy'
 	],
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #'instance creation' }

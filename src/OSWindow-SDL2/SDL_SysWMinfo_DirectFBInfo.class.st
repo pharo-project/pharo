@@ -2,14 +2,14 @@
 A structure that contains DirectFB specific information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo_DirectFBInfo,
+	#name : #'SDL_SysWMinfo_DirectFBInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_DFB',
 		'OFFSET_SURFACE',
 		'OFFSET_WINDOW'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

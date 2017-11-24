@@ -4,7 +4,7 @@ Notify about an unknown selector
 Class {
 	#name : #UnknownSelectorDetected,
 	#superclass : #ParserNotification,
-	#category : #Compiler-Exceptions
+	#category : #'Compiler-Exceptions'
 }
 
 { #category : #correcting }

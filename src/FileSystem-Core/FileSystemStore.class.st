@@ -11,7 +11,7 @@ My associated filesystem can be accessed as follows:
 Class {
 	#name : #FileSystemStore,
 	#superclass : #Object,
-	#category : #FileSystem-Core-Kernel
+	#category : #'FileSystem-Core-Kernel'
 }
 
 { #category : #accessing }

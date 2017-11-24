@@ -18,7 +18,7 @@ Class {
 		'enabled',
 		'highlights'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #'instance creation' }
@@ -152,32 +152,32 @@ RubScrolledTextMorph >> beEditable [
 	self textArea beEditable 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> beForPlainText [
 	self textArea beForPlainText
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> beForSmalltalkCode [
 	self textArea beForSmalltalkCode.
 	self withTextSegmentIcons.
 	self textArea font: StandardFonts codeFont
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> beForSmalltalkCodeInClass: aClass [
 	self textArea beForSmalltalkCodeInClass: aClass.
 	self withTextSegmentIcons.
 	self textArea font: StandardFonts codeFont
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> beForSmalltalkCodeWithDefaultFont [
 	self textArea beForSmalltalkCodeWithDefaultFont.
 	self withTextSegmentIcons
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> beForSmalltalkComment [
 	self textArea beForSmalltalkComment
 ]
@@ -301,7 +301,7 @@ RubScrolledTextMorph >> defaultGhostTextMorph [
 	^ gt
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> defaultScrollTarget [
 	| textArea |
 	textArea := self textAreaClass new.
@@ -387,7 +387,7 @@ RubScrolledTextMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 		ifFalse: [ drawBlock value ]
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> editPrimarySelectionSeparately [
 	self textArea editPrimarySelectionSeparately
 ]
@@ -454,7 +454,7 @@ RubScrolledTextMorph >> getMenuPolicy: aGetMenuPolicy [
 	self textArea getMenuPolicy: aGetMenuPolicy
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> getSelectionFromModel [
 	"Answer the model's selection interval."
 
@@ -609,7 +609,7 @@ RubScrolledTextMorph >> horizontalRulers [
 	^self rulers select: [ :r | r isHorizontal ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> initialize [
 	super initialize.
 	self clipSubmorphs: true.
@@ -733,12 +733,12 @@ RubScrolledTextMorph >> mouseWheel: event [
 		ifTrue: [^self scrollTarget mouseWheel: event]. "pass on"
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> moveCursorToIndex: anIndex [ 
 	self selectFrom: anIndex to: anIndex - 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> newScrollPane [
 	| sp |
 	sp := RubTextScrollPane new.
@@ -746,7 +746,7 @@ RubScrolledTextMorph >> newScrollPane [
 	^ sp
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubScrolledTextMorph >> noteNewOwner: aMorph [ 
 	super noteNewOwner: aMorph.
 	self manageLayout 
@@ -881,42 +881,42 @@ RubScrolledTextMorph >> segmentsAtLine: aLineNumber [
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> selectAll [
 	self selectFrom: 1 to: self text size 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> selectFrom: firstIndex to: lastIndex [
 	self selectionInterval: (firstIndex to: lastIndex)
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> selectionChanged [
 	self rulers do: [ :r | r selectionChanged ].
 	self setModelSelection: self selectionInterval
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> selectionInterval [
 	^ self textArea selectionInterval
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> selectionInterval: anInterval [
 	self setSelection: anInterval
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> setModelSelection: aSelectionInterval [
 	"try to set the selection in the model"
 	setSelectionSelector
 		ifNotNil: [ self model perform: setSelectionSelector with: aSelectionInterval]
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> setSelection: aSelectionInterval [
 	aSelectionInterval ifNil: [ ^ self ].
 	self setTextAreaSelection: aSelectionInterval.
@@ -928,7 +928,7 @@ RubScrolledTextMorph >> setText: aText [
 	self updateTextWith: aText
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubScrolledTextMorph >> setTextAreaSelection: aSelectionInterval [
 	aSelectionInterval ifNil: [ ^ self ].
 	self textArea selectFrom: aSelectionInterval first to: aSelectionInterval last.
@@ -989,7 +989,7 @@ RubScrolledTextMorph >> textArea [
 	^ self scrollPane ifNotNil: [:sp | sp textArea]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubScrolledTextMorph >> textAreaClass [
 	^ RubEditingArea
 ]

@@ -4,7 +4,7 @@ reify args
 Class {
 	#name : #RFArgumentsReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

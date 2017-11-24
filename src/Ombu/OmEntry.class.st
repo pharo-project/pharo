@@ -8,7 +8,7 @@ Class {
 		'tags',
 		'content'
 	],
-	#category : #Ombu-Entries
+	#category : #'Ombu-Entries'
 }
 
 { #category : #'instance creation' }
@@ -39,7 +39,7 @@ OmEntry >> hash [
 	^ self species hash bitXor: self content hash
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 OmEntry >> initializeWithContent: anObject [
 	self initialize.
 	content := anObject.

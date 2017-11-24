@@ -16,7 +16,7 @@ Class {
 		'x4',
 		'y4'
 	],
-	#category : #Athens-Core-PathsGeometry
+	#category : #'Athens-Core-PathsGeometry'
 }
 
 { #category : #subdivision }

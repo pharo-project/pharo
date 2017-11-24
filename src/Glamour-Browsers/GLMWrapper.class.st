@@ -6,10 +6,10 @@ The pane takes only entity as input.
 Class {
 	#name : #GLMWrapper,
 	#superclass : #GLMImplicitBrowser,
-	#category : #Glamour-Browsers-Other
+	#category : #'Glamour-Browsers-Other'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMWrapper >> addDefaultPane [
 	self addPane: (GLMPane named: #default)
 ]
@@ -19,7 +19,7 @@ GLMWrapper >> defaultPane [
 	^ self panes anyOne 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMWrapper >> initialize [
 	super initialize.
 	self addDefaultPane.

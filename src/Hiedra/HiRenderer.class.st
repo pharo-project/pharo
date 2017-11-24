@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'athensCanvas'
 	],
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ An EmbeddedFreeTypeFontInstallerTest is a test class for testing the behavior of
 Class {
 	#name : #EmbeddedFreeTypeFontInstallerTest,
 	#superclass : #TestCase,
-	#category : #EmbeddedFreeType-Tests
+	#category : #'EmbeddedFreeType-Tests'
 }
 
 { #category : #accessing }

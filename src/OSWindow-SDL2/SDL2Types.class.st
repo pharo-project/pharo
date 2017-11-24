@@ -22,7 +22,7 @@ Class {
 		'Uint64',
 		'Uint8'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'class initialization' }

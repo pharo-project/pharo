@@ -9,10 +9,10 @@ Class {
 	#instVars : [
 		'uncollapsedMorph'
 	],
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
-{ #category : #collapse/expand }
+{ #category : #'collapse/expand' }
 CollapsedMorph >> beReplacementFor: aMorph [
 
 	| itsWorld priorPosition |
@@ -52,7 +52,7 @@ CollapsedMorph >> buildWindowMenu [
 	^aMenu
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 CollapsedMorph >> collapseOrExpand [
 	"Toggle the expand/collapsd state of the receiver.  If expanding, copy the window title back to the name of the expanded morph"
 
@@ -69,7 +69,7 @@ CollapsedMorph >> collapseOrExpand [
 			[super collapseOrExpand]
 ]
 
-{ #category : #collapse/expand }
+{ #category : #'collapse/expand' }
 CollapsedMorph >> uncollapseToHand [
 	"Hand the uncollapsedMorph to the user, placing it in her hand, after remembering appropriate state for possible future use"
 
@@ -82,7 +82,7 @@ CollapsedMorph >> uncollapseToHand [
 	ActiveHand attachMorph: nakedMorph
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 CollapsedMorph >> wantsExpandBox [
 	"Answer whether I'd like an expand box"
 

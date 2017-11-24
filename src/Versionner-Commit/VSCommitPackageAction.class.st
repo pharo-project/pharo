@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'package'
 	],
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #'instance creation' }

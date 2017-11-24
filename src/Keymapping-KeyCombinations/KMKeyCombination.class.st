@@ -16,7 +16,7 @@ For more information, look at my subclasses.
 Class {
 	#name : #KMKeyCombination,
 	#superclass : #Object,
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #'instance creation' }

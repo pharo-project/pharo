@@ -4,7 +4,7 @@ Action when the method contains a flag
 Class {
 	#name : #MethodContainsFlagsAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #order }

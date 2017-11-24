@@ -4,10 +4,10 @@ A canvas which ignores all drawing commands.
 Class {
 	#name : #NullCanvas,
 	#superclass : #PluggableCanvas,
-	#category : #Graphics-Canvas
+	#category : #'Graphics-Canvas'
 }
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 NullCanvas >> clipBy: region during: aBlock [
 	"do this in order that timing runs work better"
 	aBlock value: self
@@ -39,13 +39,13 @@ NullCanvas >> origin [
 	^0@0
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 NullCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock smoothing: cellSize [
 	"do this in order that timing runs work better"
 	aBlock value: self
 ]
 
-{ #category : #drawing-support }
+{ #category : #'drawing-support' }
 NullCanvas >> translateBy: delta during: aBlock [
 	"do this in order that timing runs work better"
 	aBlock value: self

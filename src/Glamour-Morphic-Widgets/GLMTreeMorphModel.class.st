@@ -19,7 +19,7 @@ Class {
 		'columnToSortBy',
 		'stopStepping'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #'drag and drop' }

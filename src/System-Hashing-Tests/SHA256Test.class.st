@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'hash'
 	],
-	#category : #System-Hashing-Tests-SHA256
+	#category : #'System-Hashing-Tests-SHA256'
 }
 
 { #category : #testing }

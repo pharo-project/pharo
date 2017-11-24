@@ -4,7 +4,7 @@ subclass of Opal that takes links into account
 Class {
 	#name : #RFASTTranslator,
 	#superclass : #OCASTTranslator,
-	#category : #Reflectivity-Compiler
+	#category : #'Reflectivity-Compiler'
 }
 
 { #category : #initialization }

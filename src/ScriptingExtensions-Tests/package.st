@@ -1,1 +1,1 @@
-Package { #name : #ScriptingExtensions-Tests }
+Package { #name : #'ScriptingExtensions-Tests' }

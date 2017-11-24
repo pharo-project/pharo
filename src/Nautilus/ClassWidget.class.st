@@ -14,7 +14,7 @@ Class {
 		'cachedHierarchy',
 		'showHierarchy'
 	],
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #private }

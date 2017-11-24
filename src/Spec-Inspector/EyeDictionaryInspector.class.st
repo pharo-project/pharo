@@ -4,7 +4,7 @@ Specialized version of inspector showing keys on left panel and values on descri
 Class {
 	#name : #EyeDictionaryInspector,
 	#superclass : #EyeCollectionInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #list }

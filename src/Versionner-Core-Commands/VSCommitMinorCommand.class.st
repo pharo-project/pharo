@@ -4,7 +4,7 @@ I open commit tool to create a MINOR version of target configuration.
 Class {
 	#name : #VSCommitMinorCommand,
 	#superclass : #VSCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

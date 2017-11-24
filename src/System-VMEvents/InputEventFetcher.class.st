@@ -82,7 +82,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #System-VMEvents
+	#category : #'System-VMEvents'
 }
 
 { #category : #accessing }
@@ -166,7 +166,7 @@ InputEventFetcher >> fetcherProcess [
 	^ fetcherProcess 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InputEventFetcher >> installEventLoop [
 	"Initialize the event loop process. Terminate the old process if any."
 	"InputEventFetcher default installEventLoop"
@@ -207,7 +207,7 @@ InputEventFetcher >> registerHandler: handler [
 	self eventHandlers add: handler
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InputEventFetcher >> shutDown [
 	self terminateEventLoop.
 	inputSemaphore ifNotNil: [Smalltalk unregisterExternalObject: inputSemaphore]
@@ -222,7 +222,7 @@ InputEventFetcher >> signalEvent: eventBuffer [
 		handler handleEvent: eventBuffer]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InputEventFetcher >> startUp [
 	inputSemaphore := Semaphore new.
 	self primSetInputSemaphore: (Smalltalk registerExternalObject: inputSemaphore).
@@ -230,7 +230,7 @@ InputEventFetcher >> startUp [
 	self installEventLoop
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InputEventFetcher >> terminateEventLoop [
 	"Terminate the event loop process. Terminate the old process if any."
 	"InputEventFetcher default terminateEventLoop"

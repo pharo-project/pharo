@@ -9,7 +9,7 @@ Class {
 		'removeTestCase',
 		'selectedRules'
 	],
-	#category : #Tool-CriticBrowser
+	#category : #'Tool-CriticBrowser'
 }
 
 { #category : #'instance creation' }

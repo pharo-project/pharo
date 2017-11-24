@@ -4,7 +4,7 @@ I am builder class used to generate the tree nodes for a package or for all the 
 Class {
 	#name : #KomitTreeBuilder,
 	#superclass : #Object,
-	#category : #Komitter-UI
+	#category : #'Komitter-UI'
 }
 
 { #category : #protocol }

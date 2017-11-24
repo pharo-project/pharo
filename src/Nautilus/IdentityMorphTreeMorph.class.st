@@ -5,10 +5,10 @@ An IdentityMorphTreeMorph is a MorphTreeMorph which always check for identity be
 Class {
 	#name : #IdentityMorphTreeMorph,
 	#superclass : #MorphTreeMorph,
-	#category : #Nautilus-MorphTreeWidget-Extension
+	#category : #'Nautilus-MorphTreeWidget-Extension'
 }
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 IdentityMorphTreeMorph >> expandedFormForMorph: aMorph [
 	"Answer the form to use for expanded items."
 	
@@ -23,7 +23,7 @@ IdentityMorphTreeMorph >> listManager: aManager [
 	listManager := aManager
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 IdentityMorphTreeMorph >> notExpandedFormForMorph: aMorph [
 
 	^ ((self selectedMorphList identityIncludes: aMorph) and: [self theme selectionColor luminance < 0.6])

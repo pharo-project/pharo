@@ -157,10 +157,10 @@ In particular, you may also be interested in:
 Class {
 	#name : #PharoEnvironmentHelp,
 	#superclass : #Object,
-	#category : #Pharo-Help
+	#category : #'Pharo-Help'
 }
 
-{ #category : #help-text }
+{ #category : #'help-text' }
 PharoEnvironmentHelp class >> wikiStyleHelp [
 	<wikiStyleHelp: #' Pharo Environment Help'>
 	

@@ -4,7 +4,7 @@ SearchFacade is a facade for creating searching dialog window
 Class {
 	#name : #SearchFacade,
 	#superclass : #Object,
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #'message search' }

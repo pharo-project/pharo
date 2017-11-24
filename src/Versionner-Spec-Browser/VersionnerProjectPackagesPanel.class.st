@@ -49,7 +49,7 @@ Class {
 		'editPackageButton',
 		'savePackageButton'
 	],
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #spec }

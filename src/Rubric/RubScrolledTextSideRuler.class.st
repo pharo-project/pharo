@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'side'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #testing }

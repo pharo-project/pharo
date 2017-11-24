@@ -45,7 +45,7 @@ Class {
 		'margins',
 		'defaultColor'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #shortcuts }
@@ -109,7 +109,7 @@ TextMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 	
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 TextMorph >> addMorphFront: aMorph fromWorldPosition: wp [ 
 	"Overridden for more specific re-layout and positioning"
 	aMorph textAnchorType == #document 
@@ -561,7 +561,7 @@ TextMorph >> defaultLineHeight [
 	^ textStyle lineGrid
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 TextMorph >> delete [
 	predecessor ifNotNil: [predecessor setSuccessor: successor].
 	successor ifNotNil: [successor setPredecessor: predecessor.
@@ -853,7 +853,7 @@ TextMorph >> getMenu: shiftKeyState [
 		ifFalse: [TextEditor shiftedYellowButtonMenu]
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 TextMorph >> goBehind [
 	"We need to save the container, as it knows about fill and run-around"
 	| cont |
@@ -918,7 +918,7 @@ TextMorph >> handleKeystroke: anEvent [
 	anEvent wasHandled: true.
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 TextMorph >> handleMouseMove: anEvent [
 	"Re-implemented to allow for mouse-up move events"
 	anEvent wasHandled ifTrue:[^self]. "not interested"
@@ -1259,7 +1259,7 @@ TextMorph >> onBlinkCursor [
 	para caretRect ifNotNil:[:r| self invalidRect: r].
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorph >> openFindDialog [
 	self flash
 ]
@@ -1615,7 +1615,7 @@ TextMorph >> setTextStyle: aTextStyle [
 	self releaseCachedState; changed
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorph >> sharesFindReplace [
 	^ false
 ]

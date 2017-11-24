@@ -16,7 +16,7 @@ My subclasses represent a concreate paint by implementing my protocol,  that act
 Class {
 	#name : #AthensPaint,
 	#superclass : #AthensAbstractPaint,
-	#category : #Athens-Core-Paints
+	#category : #'Athens-Core-Paints'
 }
 
 { #category : #converting }

@@ -34,7 +34,7 @@ self ffiCall: #(int sqlite3_open(String filename, sqlite3 **handle)).
 Class {
 	#name : #FFIOpaqueObject,
 	#superclass : #FFIExternalReference,
-	#category : #UnifiedFFI-Objects
+	#category : #'UnifiedFFI-Objects'
 }
 
 { #category : #converting }

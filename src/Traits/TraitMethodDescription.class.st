@@ -9,7 +9,7 @@ Class {
 		'selector',
 		'locatedMethods'
 	],
-	#category : #Traits-Composition
+	#category : #'Traits-Composition'
 }
 
 { #category : #private }

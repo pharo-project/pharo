@@ -3,7 +3,7 @@ I am a visitor for EpCodeChange subinstances.
 "
 Trait {
 	#name : #EpTCodeChangeVisitor,
-	#category : #Epicea-Visitors
+	#category : #'Epicea-Visitors'
 }
 
 { #category : #visitor }

@@ -4,7 +4,7 @@ SUnit test for TestCase class
 Class {
 	#name : #TestCaseTest,
 	#superclass : #TestCase,
-	#category : #SUnit-Tests-Core
+	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #events }

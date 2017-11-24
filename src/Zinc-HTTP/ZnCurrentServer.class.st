@@ -7,5 +7,5 @@ I hold a reference to the current ZnServer instance during HTTP processing, duri
 Class {
 	#name : #ZnCurrentServer,
 	#superclass : #DynamicVariable,
-	#category : #Zinc-HTTP-Variables
+	#category : #'Zinc-HTTP-Variables'
 }

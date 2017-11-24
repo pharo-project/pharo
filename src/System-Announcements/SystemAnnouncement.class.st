@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'timeStamp'
 	],
-	#category : #System-Announcements-System-Base
+	#category : #'System-Announcements-System-Base'
 }
 
 { #category : #initialization }

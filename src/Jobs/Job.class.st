@@ -26,7 +26,7 @@ Class {
 	#classInstVars : [
 		'jobAnnouncer'
 	],
-	#category : #Jobs-Base
+	#category : #'Jobs-Base'
 }
 
 { #category : #'instance creation' }

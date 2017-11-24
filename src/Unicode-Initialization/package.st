@@ -1,1 +1,1 @@
-Package { #name : #Unicode-Initialization }
+Package { #name : #'Unicode-Initialization' }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'patch'
 	],
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #running }

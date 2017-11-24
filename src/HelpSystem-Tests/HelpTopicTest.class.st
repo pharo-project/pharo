@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'topic'
 	],
-	#category : #HelpSystem-Tests-Core-Model
+	#category : #'HelpSystem-Tests-Core-Model'
 }
 
 { #category : #accessing }

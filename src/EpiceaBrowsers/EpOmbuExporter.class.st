@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'outputLog'
 	],
-	#category : #EpiceaBrowsers-Exporter
+	#category : #'EpiceaBrowsers-Exporter'
 }
 
 { #category : #convenience }

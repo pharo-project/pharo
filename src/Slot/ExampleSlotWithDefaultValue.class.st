@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #comparing }
@@ -50,7 +50,7 @@ ExampleSlotWithDefaultValue >> printOn: aStream [
 		store: default
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ExampleSlotWithDefaultValue >> wantsInitalization [
 	^ true
 ]

@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterWidgetDarkThemer,
 	#superclass : #GTSpotterWidgetThemer,
-	#category : #GT-Spotter-Theme
+	#category : #'GT-Spotter-Theme'
 }
 
 { #category : #values }

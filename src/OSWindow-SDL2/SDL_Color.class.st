@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_Color,
+	#name : #'SDL_Color',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_A',
@@ -10,7 +10,7 @@ Class {
 		'OFFSET_G',
 		'OFFSET_R'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields descriptions' }

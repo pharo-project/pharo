@@ -19,10 +19,10 @@ Class {
 		'afterNodes',
 		'ancestorNode'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 RBSplitCascadeRefactoring class >> model: aNamespace split: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aNamespace;
@@ -30,7 +30,7 @@ RBSplitCascadeRefactoring class >> model: aNamespace split: anInterval from: aSe
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 RBSplitCascadeRefactoring class >> split: anInterval from: aSelector in: aClass [
 	^ self new 
 		split: anInterval from: aSelector in: aClass;

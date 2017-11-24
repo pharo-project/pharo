@@ -4,7 +4,7 @@ I'm a unix platform (works in mac too) dynamic library loader.
 Class {
 	#name : #UnixDynamicLoader,
 	#superclass : #DynamicLoader,
-	#category : #UnifiedFFI-Libraries
+	#category : #'UnifiedFFI-Libraries'
 }
 
 { #category : #testing }

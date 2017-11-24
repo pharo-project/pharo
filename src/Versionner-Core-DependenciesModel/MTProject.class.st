@@ -23,7 +23,7 @@ Class {
 		'devWorkflow',
 		'announcer'
 	],
-	#category : #Versionner-Core-DependenciesModel
+	#category : #'Versionner-Core-DependenciesModel'
 }
 
 { #category : #'instance creation' }
@@ -139,7 +139,7 @@ MTProject >> groups [
 	^ self dependenciesFilteredBy: MTGroup .
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MTProject >> initialize [ 
 	dependencies  := OrderedCollection new.
 

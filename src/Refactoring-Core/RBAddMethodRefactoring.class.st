@@ -18,7 +18,7 @@ Class {
 		'protocols',
 		'source'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -38,7 +38,7 @@ RBAddMethodRefactoring class >> model: aRBSmalltalk addMethod: aString toClass: 
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAddMethodRefactoring >> addMethod: aString toClass: aClass inProtocols: protocolList [ 
 	class := self classObjectFor: aClass.
 	source := aString.

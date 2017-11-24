@@ -20,7 +20,7 @@ Class {
 		'pragma',
 		'contents'
 	],
-	#category : #System-Settings-Browser
+	#category : #'System-Settings-Browser'
 }
 
 { #category : #comparing }

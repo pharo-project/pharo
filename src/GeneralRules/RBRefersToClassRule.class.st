@@ -5,7 +5,7 @@ However we cannot systematically replace Class reference by self class or self b
 Class {
 	#name : #RBRefersToClassRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

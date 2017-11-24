@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Widgets-Scrolling }
+Package { #name : #'Morphic-Widgets-Scrolling' }

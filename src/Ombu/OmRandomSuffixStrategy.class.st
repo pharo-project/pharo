@@ -4,7 +4,7 @@ I attach random characters as a suffix to the name (after last _).
 Class {
 	#name : #OmRandomSuffixStrategy,
 	#superclass : #OmSuffixAfterDotStrategy,
-	#category : #Ombu-Strategies
+	#category : #'Ombu-Strategies'
 }
 
 { #category : #accessing }

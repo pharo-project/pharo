@@ -4,10 +4,10 @@ Simple glyph infos
 Class {
 	#name : #SimpleTextGlyphInfo,
 	#superclass : #FT2GlyphSlot,
-	#category : #Athens-Text
+	#category : #'Athens-Text'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 SimpleTextGlyphInfo class >> fromFace: anFT2Face [
 	^(self new)
 		loadFrom: anFT2Face;

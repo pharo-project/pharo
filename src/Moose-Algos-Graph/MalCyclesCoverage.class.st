@@ -7,7 +7,7 @@ Class {
 		'circuits',
 		'sccExtractorClass'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }

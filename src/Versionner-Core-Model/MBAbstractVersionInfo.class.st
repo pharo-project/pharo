@@ -8,7 +8,7 @@ Class {
 		'configurationInfo',
 		'version'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #'instance creation' }
@@ -184,7 +184,7 @@ MBAbstractVersionInfo >> version: aMetacelloVersion [
 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractVersionInfo >> versionForInfoList [
 
 	^self version 

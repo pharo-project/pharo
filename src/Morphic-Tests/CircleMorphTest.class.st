@@ -7,7 +7,7 @@ My fixtures are morph, a CircleMorph and world.
 Class {
 	#name : #CircleMorphTest,
 	#superclass : #MorphTest,
-	#category : #Morphic-Tests-Basic
+	#category : #'Morphic-Tests-Basic'
 }
 
 { #category : #running }

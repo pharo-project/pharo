@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'aClass'
 	],
-	#category : #EpiceaTests-Integration
+	#category : #'EpiceaTests-Integration'
 }
 
 { #category : #tests }

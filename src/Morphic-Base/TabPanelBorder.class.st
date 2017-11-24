@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tabSelector'
 	],
-	#category : #Morphic-Base-Borders
+	#category : #'Morphic-Base-Borders'
 }
 
 { #category : #drawing }

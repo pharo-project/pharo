@@ -1,7 +1,7 @@
 Class {
 	#name : #SimulateKeystrokesSpecification,
 	#superclass : #UITestCase,
-	#category : #SUnit-UITesting
+	#category : #'SUnit-UITesting'
 }
 
 { #category : #tests }

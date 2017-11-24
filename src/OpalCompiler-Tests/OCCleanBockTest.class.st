@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'instVar'
 	],
-	#category : #OpalCompiler-Tests-AST
+	#category : #'OpalCompiler-Tests-AST'
 }
 
 { #category : #tests }

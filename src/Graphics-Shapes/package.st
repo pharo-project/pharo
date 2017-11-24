@@ -1,1 +1,1 @@
-Package { #name : #Graphics-Shapes }
+Package { #name : #'Graphics-Shapes' }

@@ -8,7 +8,7 @@ Class {
 		'action',
 		'arguments'
 	],
-	#category : #Morphic-Widgets-Tree-Announcements
+	#category : #'Morphic-Widgets-Tree-Announcements'
 }
 
 { #category : #'instance creation' }

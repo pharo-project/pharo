@@ -4,7 +4,7 @@ Action when the method is a class initialize method
 Class {
 	#name : #MethodClassInitializeAction,
 	#superclass : #AbstractMethodIconAction,
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #order }

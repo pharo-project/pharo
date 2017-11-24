@@ -4,7 +4,7 @@ I am the adapter used to link a RadioButtonPresenter with a CheckboxMorph (which
 Class {
 	#name : #MorphicRadioButtonAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

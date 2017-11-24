@@ -12,7 +12,7 @@ Is adopted as the theme for Pharo3, but it was renamed to avoid collisions with 
 Class {
 	#name : #PharoLightTheme,
 	#superclass : #UITheme,
-	#category : #Polymorph-Widgets-Themes
+	#category : #'Polymorph-Widgets-Themes'
 }
 
 { #category : #accessing }
@@ -192,7 +192,7 @@ PharoLightTheme >> balloonBackgroundColor [
 	^ (Color r: 1.0 g: 1.0 b: 0.71 alpha: 1.0)
 ]
 
-{ #category : #border-styles-buttons }
+{ #category : #'border-styles-buttons' }
 PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 
@@ -205,7 +205,7 @@ PharoLightTheme >> buttonNormalBorderStyleFor: aButton [
 					baseColor: outerColor
 ]
 
-{ #category : #border-styles }
+{ #category : #'border-styles' }
 PharoLightTheme >> configureWindowBorderFor: aWindow [
 "	super configureWindowBorderFor: aWindow.
 	aWindow roundedCorners: #()"
@@ -300,7 +300,7 @@ PharoLightTheme >> glamorousVeyLightSelectionColorFor: aMorph [
 	^ self class veryLightSelectionColor
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 PharoLightTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 

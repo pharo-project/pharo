@@ -4,7 +4,7 @@ Writing MCD format
 Class {
 	#name : #MCMcdWriter,
 	#superclass : #MCMczWriter,
-	#category : #Monticello-Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #accessing }

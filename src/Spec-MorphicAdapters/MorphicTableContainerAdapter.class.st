@@ -5,7 +5,7 @@ I am the adapter providing container with table layout
 Class {
 	#name : #MorphicTableContainerAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

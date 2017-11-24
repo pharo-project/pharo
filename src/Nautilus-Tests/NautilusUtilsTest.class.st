@@ -1,7 +1,7 @@
 Class {
 	#name : #NautilusUtilsTest,
 	#superclass : #TestCase,
-	#category : #Nautilus-Tests
+	#category : #'Nautilus-Tests'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 		'contentMorph',
 		'pageMorphs'
 	],
-	#category : #Morphic-Widgets-PolyTabs
+	#category : #'Morphic-Widgets-PolyTabs'
 }
 
 { #category : #example }

@@ -4,7 +4,7 @@ A TimeProfilerNode represents a node in the tally tree
 Class {
 	#name : #TimeProfilerNode,
 	#superclass : #MorphTreeNodeModel,
-	#category : #Tool-Profilers
+	#category : #'Tool-Profilers'
 }
 
 { #category : #printing }
@@ -18,7 +18,7 @@ TimeProfilerNode >> browseItem [
 		openOnClass: self methodClass  selector: self selector
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfilerNode >> childrenItems [
 	^ (self item sonsOver: model threshold) asSortedCollection
 ]
@@ -64,19 +64,19 @@ TimeProfilerNode >> menu: menu shifted: b [
 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfilerNode >> methodClass [
 	^self item method methodClass 
 	
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfilerNode >> percentage [ 
 	^ self item tally asFloat / model time * 100.0 roundTo: 0.1.
 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 TimeProfilerNode >> selector [
 	^self item method selector 
 	

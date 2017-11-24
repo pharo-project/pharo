@@ -4,7 +4,7 @@ SUnit tests for the help browser
 Class {
 	#name : #HelpBrowserTest,
 	#superclass : #TestCase,
-	#category : #HelpSystem-Tests-Core-UI
+	#category : #'HelpSystem-Tests-Core-UI'
 }
 
 { #category : #accessing }

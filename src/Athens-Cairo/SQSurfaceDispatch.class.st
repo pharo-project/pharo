@@ -34,7 +34,7 @@ Class {
 		'OFFSET_SHOWSURFACEFN',
 		'OFFSET_UNLOCKSURFACEFN'
 	],
-	#category : #Athens-Cairo
+	#category : #'Athens-Cairo'
 }
 
 { #category : #'field definition' }
@@ -89,7 +89,7 @@ SQSurfaceDispatch >> getSurfaceFormatFn: aCallback [
 		put: (ExternalAddress fromAddress: aCallback thunk address)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SQSurfaceDispatch >> initialize [
 	super initialize.
 	self

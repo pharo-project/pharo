@@ -17,7 +17,7 @@ Class {
 		'groups',
 		'infoList'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #private }
@@ -32,7 +32,7 @@ MBAbstractInfoList >> fullRecalculate [
 	self recalculate
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractInfoList >> groups [
 	"Return the list of groups for the configuration"
 
@@ -53,13 +53,13 @@ MBAbstractInfoList >> groups [
 	^ groups
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractInfoList >> infoList [
 	infoList ~~ nil ifTrue: [ ^infoList ].
 	^ infoList := self calculateInfoList
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractInfoList >> infos [
 	"Return the list of info that are displayed"
 	^self infoList
@@ -87,7 +87,7 @@ MBAbstractInfoList >> isDirty [
 	^ self packages anySatisfy: [:each | each isDirty ]
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractInfoList >> packages [
 	"Return the list of dependent packages for the last baseline"
 
@@ -110,7 +110,7 @@ MBAbstractInfoList >> packages [
 	^ packages
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractInfoList >> projects [
 	"Return the list of dependent packages for the last baseline"
 
@@ -152,14 +152,14 @@ MBAbstractInfoList >> recalculateIfInterestedInPackageNamed: packageName for: op
 	^false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MBAbstractInfoList >> release [
 
 	packages := projects := groups := infoList := nil.
 	super release.	
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBAbstractInfoList >> versionForInfoList [
 
 	^self subclassResponsibility 

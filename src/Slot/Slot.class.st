@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'slotClassDefinition'
 	],
-	#category : #Slot-Variables
+	#category : #'Slot-Variables'
 }
 
 { #category : #'instance creation' }
@@ -291,7 +291,7 @@ Slot >> propertyAt: propName put: propValue [
 		put: propValue
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 Slot >> read: anObject [
 	^ self subclassResponsibility
 ]
@@ -350,13 +350,13 @@ Slot >> usingMethods [
 		ifNotNil: [:class | class allMethodsAccessingSlot: self].
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 Slot >> wantsInitalization [
 	"if a slot wants to hable initalization, return true here"
 	^false
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 Slot >> write: aValue to: anObject [
 	^self subclassResponsibility
 ]

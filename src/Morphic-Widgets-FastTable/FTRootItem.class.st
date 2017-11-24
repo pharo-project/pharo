@@ -16,7 +16,7 @@ FTRootItem data: Object allSubclasses from: aDataSource
 Class {
 	#name : #FTRootItem,
 	#superclass : #FTTreeItem,
-	#category : #Morphic-Widgets-FastTable-Tree
+	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ FTRootItem >> children: aCollectionOfItem [
 	children := aCollectionOfItem
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTRootItem >> collapseAll [
 	children do: #collapseAll
 ]
@@ -45,12 +45,12 @@ FTRootItem >> dataSource: anObject [
 	children ifNotNil: [ children do: [ :item | item dataSource: anObject ] ]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTRootItem >> expandAll [
 	children do: #expandAll
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTRootItem >> expandAllTo: aDepth [
 	children do: [ :each | each expandAllTo: aDepth ]
 ]

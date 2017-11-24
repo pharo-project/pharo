@@ -256,7 +256,7 @@ StandardFileStream >> binary [
 	collection ifNotNil: [ collection := collection asByteArray ]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> close [
 	"Close this file."
 
@@ -316,7 +316,7 @@ StandardFileStream >> enableReadBuffering [
 	readLimit := position := 0
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> ensureOpen [
 	"Make sure that this file really is open."
 
@@ -521,14 +521,14 @@ StandardFileStream >> nextPutAll: stringOrByteArray [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> open [
 	"For compatibility with a few existing things."
 
 	^ self reopen
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> open: fileName forWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	| f |
@@ -546,7 +546,7 @@ StandardFileStream >> open: fileName forWrite: writeMode [
 	
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> openOnHandle: aFileID name: streamName forWrite: writeMode [
 	"Initialize the file with the given handle. If writeMode is true then
 	 allow writing, otherwise put the file in read-only mode.
@@ -560,7 +560,7 @@ StandardFileStream >> openOnHandle: aFileID name: streamName forWrite: writeMode
 	self enableReadBuffering
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> openReadOnly [
 	"Open the receiver as a read-only file."
 
@@ -861,7 +861,7 @@ StandardFileStream >> register [
 	^self class register: self
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 StandardFileStream >> reopen [
 	"Close and reopen this file. The file position is reset to zero."
 	"Details: Files that were open when a snapshot occurs are no longer valid when the snapshot is resumed. This operation re-opens the file if that has happened."

@@ -4,7 +4,7 @@ I'm in charge to style  the editor for  a ""self halt"".
 Class {
 	#name : #HaltIconStyler,
 	#superclass : #IconStyler,
-	#category : #Reflectivity-Tools-Breakpoints
+	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
 { #category : #defaults }

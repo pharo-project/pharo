@@ -1,1 +1,1 @@
-Package { #name : #OSWindow-Core }
+Package { #name : #'OSWindow-Core' }

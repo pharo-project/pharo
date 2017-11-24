@@ -4,7 +4,7 @@ I'm used when completing a method override. I contain all selectors of the super
 Class {
 	#name : #NECOverrideModel,
 	#superclass : #NECTypedModel,
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #action }
@@ -23,7 +23,7 @@ NECOverrideModel >> completionAt: aNumber [
 	^ output contents
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECOverrideModel >> initializeSelectors [
 	clazz superclass ifNotNil: [ self initializeSelectorsFor: clazz superclass ].
 	clazz

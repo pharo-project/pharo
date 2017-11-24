@@ -11,7 +11,7 @@ Class {
 		'Finds',
 		'Replacements'
 	],
-	#category : #Rubric-Editing-FindReplaceService
+	#category : #'Rubric-Editing-FindReplaceService'
 }
 
 { #category : #accessing }
@@ -29,7 +29,7 @@ RubFindReplaceDialogWindow class >> replacements [
 	^ Replacements ifNil: [Replacements := OrderedCollection new]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> buildWindowMenu [
 	"Build and answer the window menu."
 
@@ -65,7 +65,7 @@ RubFindReplaceDialogWindow >> caseSensitive: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> defaultButton [
 	"Answer the default button."
 	^self
@@ -74,7 +74,7 @@ RubFindReplaceDialogWindow >> defaultButton [
 		ifAbsent: [] 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> defaultFocusMorph [
 	^ self findTextFieldMorph textMorph
 ]
@@ -100,7 +100,7 @@ RubFindReplaceDialogWindow >> entireWordsOnly: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> extent: anExtent [
 	^ super extent: anExtent x @ self initialExtent y
 ]
@@ -111,7 +111,7 @@ RubFindReplaceDialogWindow >> find [
 	^ self model find
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> findEnabled [
 	^ self findString isEmptyOrNil not 
 ]
@@ -147,12 +147,12 @@ RubFindReplaceDialogWindow >> findText: aStringOrText [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> findTextFieldMorph [
 	^ findTextField
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> initialExtent [ 
 	^ 400 @ super initialExtent y
 ]
@@ -168,7 +168,7 @@ RubFindReplaceDialogWindow >> isRegex: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> isResizeable [
 	"Answer whether we are not we can be resized."
 
@@ -180,14 +180,14 @@ RubFindReplaceDialogWindow >> maxPreviousListSize [
 	^ self class maxPreviousListSize
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
 	^{self newFindButton isDefault: true. self newReplaceButton. self newReplaceAllButton. self newCancelButton}
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newContentMorph [
 	^(self newColumn: {	
 			(self newGroupbox: nil for: 
@@ -212,7 +212,7 @@ RubFindReplaceDialogWindow >> newContentMorph [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newFindButton [
 	^(self theme
 			newButtonIn: self
@@ -227,7 +227,7 @@ RubFindReplaceDialogWindow >> newFindButton [
 		vResizing: #rigid
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newFindTextEntryMorph [
 	| entryCompletion pt |
 	entryCompletion := EntryCompletion new
@@ -265,7 +265,7 @@ RubFindReplaceDialogWindow >> newFinding [
 		ifTrue: [self prevFinds removeLast]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newReplaceAllButton [
 	^ (self theme
 		newButtonIn: self
@@ -279,7 +279,7 @@ RubFindReplaceDialogWindow >> newReplaceAllButton [
 		 vResizing: #rigid
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newReplaceButton [
 	^ (self theme
 		newButtonIn: self
@@ -293,7 +293,7 @@ RubFindReplaceDialogWindow >> newReplaceButton [
 		 vResizing: #rigid
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 	| entryCompletion pt |
 	entryCompletion := EntryCompletion new
@@ -366,13 +366,13 @@ RubFindReplaceDialogWindow >> replaceAll [
 	self model replaceAll
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> replaceAllEnabled [
 	^ self textView notNil
 		and: [self findText notEmpty]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> replaceEnabled [
 	^ self textView notNil
 		and: [self findText notEmpty]
@@ -404,7 +404,7 @@ RubFindReplaceDialogWindow >> searchBackwards: aBoolean [
 			self findPolicyChanged ]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> taskbarButtonFor: aTaskBar [
 	"No taskbar button because always on top"
 	^nil
@@ -415,7 +415,7 @@ RubFindReplaceDialogWindow >> textView [
 	^ self model ifNotNil: [ :m | m textArea ]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceDialogWindow >> title [
 	^ 'Find & Replace' translated.
 

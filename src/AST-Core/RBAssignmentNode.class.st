@@ -16,7 +16,7 @@ Class {
 		'assignment',
 		'value'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -48,12 +48,12 @@ RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitAssignmentNode: self
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBAssignmentNode >> assignment [
 	^ assignment
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBAssignmentNode >> assignment: anInteger [
 	assignment := anInteger
 ]
@@ -231,7 +231,7 @@ RBAssignmentNode >> variable: varNode [
 	variable parent: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [ 
 	self variable: aVariableNode.
 	self value: aValueNode.

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'currentIcon'
 	],
-	#category : #Spec-MorphicAdapters-Support
+	#category : #'Spec-MorphicAdapters-Support'
 }
 
 { #category : #protocol }

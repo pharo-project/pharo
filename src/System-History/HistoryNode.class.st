@@ -77,7 +77,7 @@ Class {
 		'history',
 		'opened'
 	],
-	#category : #System-History
+	#category : #'System-History'
 }
 
 { #category : #adding }
@@ -101,12 +101,12 @@ HistoryNode >> at: aPosition put: anItem [
 	self history at: aPosition put: anItem
 ]
 
-{ #category : #opening-closing }
+{ #category : #'opening-closing' }
 HistoryNode >> close [
 	opened := false
 ]
 
-{ #category : #opening-closing }
+{ #category : #'opening-closing' }
 HistoryNode >> closeGroup [
 	(self current notNil
 			and: [self current isComposite
@@ -161,12 +161,12 @@ HistoryNode >> last [
 	^ self history last
 ]
 
-{ #category : #opening-closing }
+{ #category : #'opening-closing' }
 HistoryNode >> open [
 	opened := true
 ]
 
-{ #category : #opening-closing }
+{ #category : #'opening-closing' }
 HistoryNode >> openGroup [
 	^ self addItem: self groupClass new
 ]
@@ -196,7 +196,7 @@ HistoryNode >> removeLast: count [
 	self history removeLast: count
 ]
 
-{ #category : #opening-closing }
+{ #category : #'opening-closing' }
 HistoryNode >> reset [
 	history := nil.
 	opened := true

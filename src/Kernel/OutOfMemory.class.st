@@ -5,7 +5,7 @@ Originally suggested by A. Raab.
 Class {
 	#name : #OutOfMemory,
 	#superclass : #Error,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #handling }

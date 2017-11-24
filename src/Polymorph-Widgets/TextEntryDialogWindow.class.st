@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'MinimumWidth'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #settings }

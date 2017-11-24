@@ -18,7 +18,7 @@ Class {
 		'selector',
 		'arguments'
 	],
-	#category : #Refactoring-Core-Support
+	#category : #'Refactoring-Core-Support'
 }
 
 { #category : #'instance creation' }

@@ -19,7 +19,7 @@ Class {
 		'pharoLogo',
 		'esugBallon'
 	],
-	#category : #Athens-Examples
+	#category : #'Athens-Examples'
 }
 
 { #category : #examples }
@@ -38,7 +38,7 @@ AthensDemoMorph class >> example [
 	window title: 'Athens demos'
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensDemoMorph >> backColor [
 	^ Color white.
 ]
@@ -353,7 +353,7 @@ AthensDemoMorph >> figure9: aCanvas [
 	aCanvas draw.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensDemoMorph >> figures [
 	^ #(
 	figure1:
@@ -371,7 +371,7 @@ AthensDemoMorph >> figures [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensDemoMorph >> initialize [ 
 	| ref loadFileFailBlock|
 	super initialize.

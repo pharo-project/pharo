@@ -10,7 +10,7 @@ Class {
 		'sharedPools',
 		'layoutClass'
 	],
-	#category : #Hermes-Model
+	#category : #'Hermes-Model'
 }
 
 { #category : #'instance creation' }

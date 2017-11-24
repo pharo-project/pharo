@@ -4,7 +4,7 @@ TickingSpecWindow new openInWorld
 Class {
 	#name : #TickingSpecWindow,
 	#superclass : #SpecWindow,
-	#category : #Spec-MorphicAdapters-Support
+	#category : #'Spec-MorphicAdapters-Support'
 }
 
 { #category : #'stepping and presenter' }

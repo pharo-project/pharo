@@ -14,7 +14,7 @@ Class {
 		'searchTree',
 		'owner'
 	],
-	#category : #AST-Core-Matching
+	#category : #'AST-Core-Matching'
 }
 
 { #category : #'instance creation' }
@@ -46,12 +46,12 @@ RBParseTreeRule >> foundMatchFor: aProgramNode [
 	^aProgramNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBParseTreeRule >> methodSearchString: aString [ 
 	searchTree := RBParser parseRewriteMethod: aString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBParseTreeRule >> owner: aParseTreeSearcher [
 	owner := aParseTreeSearcher
 ]
@@ -69,7 +69,7 @@ RBParseTreeRule >> performOn: aProgramNode [
 		
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBParseTreeRule >> searchString: aString [ 
 	searchTree := RBParser parseRewriteExpression: aString
 ]

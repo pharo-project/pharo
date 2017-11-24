@@ -1,10 +1,10 @@
 Class {
 	#name : #OCBytecodeDecompilerExamplesTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-Bytecode
+	#category : #'OpalCompiler-Tests-Bytecode'
 }
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 	| ir method newMethod instance |
 	
@@ -18,7 +18,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockArgument [
 
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 	| ir method newMethod instance |
 	
@@ -32,7 +32,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal [
 
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 	| ir method newMethod instance |
 	
@@ -46,7 +46,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternal2 [
 
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 	| ir method newMethod instance |
 	
@@ -60,7 +60,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalArg [
 
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 	| ir method newMethod instance |
 	
@@ -74,7 +74,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockExternalNested [
 
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 	| ir method newMethod instance |
 	
@@ -87,7 +87,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockInternal [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleBlockInternal.
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 	| ir method newMethod instance |
 	
@@ -100,7 +100,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleBlockNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleBlockNested.
 ]
 
-{ #category : #tests-simple }
+{ #category : #'tests-simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 	| ir method newMethod instance |
 	
@@ -113,7 +113,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleEmptyMethod [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleEmptyMethod.
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 	| ir method newMethod instance |
 	
@@ -126,7 +126,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalse [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleIfFalse.
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 	| ir method newMethod instance |
 	
@@ -139,7 +139,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfFalseIfTrue [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleIfFalseIfTrue.
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 	| ir method newMethod instance |
 	
@@ -152,7 +152,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfIfNotNilReturnNil [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleIfNotNilReturnNil
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 	| ir method newMethod instance |
 	
@@ -165,7 +165,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfNotNilArg [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleIfNotNilArg.
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 	| ir method newMethod instance |
 	
@@ -178,7 +178,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrue [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleIfTrue
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 	| ir method newMethod instance |
 	
@@ -191,7 +191,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleIfTrueIfFalse [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleIfTrueIfFalse
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 	| ir method newMethod instance |
 	
@@ -204,7 +204,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodTempInNestedBlock [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleMethodTempInNestedBlock
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 	| ir method newMethod instance |
 	
@@ -217,7 +217,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleMethodWithOptimizedBlocksA [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleMethodWithOptimizedBlocksA
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 	| ir method newMethod instance |
 	
@@ -230,7 +230,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNestedBlockScoping [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleNestedBlockScoping
 ]
 
-{ #category : #tests-simple }
+{ #category : #'tests-simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 	| ir method newMethod instance |
 	
@@ -243,7 +243,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleNewArray [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleNewArray
 ]
 
-{ #category : #tests-misc }
+{ #category : #'tests-misc' }
 OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 	| ir method newMethod instance |
 	
@@ -256,7 +256,7 @@ OCBytecodeDecompilerExamplesTest >> testExamplePushArray [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance examplePushArray
 ]
 
-{ #category : #tests-simple }
+{ #category : #'tests-simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 	| ir method newMethod instance |
 	
@@ -269,7 +269,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleReturn1
 ]
 
-{ #category : #tests-simple }
+{ #category : #'tests-simple' }
 OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 	| ir method newMethod instance |
 	
@@ -282,7 +282,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleReturn1plus2 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleReturn1plus2
 ]
 
-{ #category : #tests-variables }
+{ #category : #'tests-variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 	| ir method newMethod instance |
 	
@@ -295,7 +295,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSelf [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSelf
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 	| ir method newMethod instance |
 	
@@ -308,7 +308,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlock [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) value = instance exampleSimpleBlock value
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 	| ir method newMethod instance |
 	
@@ -321,7 +321,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument1 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockArgument1
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 	| ir method newMethod instance |
 	
@@ -334,7 +334,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument2 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockArgument2
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 	| ir method newMethod instance |
 	
@@ -347,7 +347,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument3 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockArgument3
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 	| ir method newMethod instance |
 	
@@ -360,7 +360,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument4 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockArgument4
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 	| ir method newMethod instance |
 	
@@ -373,7 +373,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockArgument5 [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockArgument5
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 	| ir method newMethod instance |
 	
@@ -386,7 +386,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockEmpty [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockEmpty
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 	| ir method newMethod instance |
 	
@@ -399,7 +399,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocal [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockLocal
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 	| ir method newMethod instance |
 	
@@ -412,7 +412,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalIf [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockLocalIf
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 	| ir method newMethod instance |
 	
@@ -425,7 +425,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockNested
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 	| ir method newMethod instance |
 	
@@ -438,7 +438,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockLocalWhile [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockLocalWhile
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 	| ir method newMethod instance |
 	
@@ -451,7 +451,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockNested [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockNested
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 	| ir method newMethod instance |
 	
@@ -464,7 +464,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockReturn [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockReturn
 ]
 
-{ #category : #tests-blocks }
+{ #category : #'tests-blocks' }
 OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 	| ir method newMethod instance |
 	
@@ -477,7 +477,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSimpleBlockiVar [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSimpleBlockiVar
 ]
 
-{ #category : #tests-variables }
+{ #category : #'tests-variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 	| ir method newMethod instance |
 	
@@ -490,7 +490,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleSuper [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleSuper
 ]
 
-{ #category : #tests-variables }
+{ #category : #'tests-variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	| ir method newMethod instance |
 	
@@ -502,7 +502,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleThisContext [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) isContext
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 	| ir method newMethod instance |
 	
@@ -515,7 +515,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgument [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoArgument
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 	| ir method newMethod instance |
 	
@@ -528,7 +528,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoArgumentNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoArgumentNotInlined
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 	| ir method newMethod instance |
 	
@@ -541,7 +541,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTemp [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoInsideTemp
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 	| ir method newMethod instance |
 	
@@ -554,7 +554,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoInsideTempNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoInsideTempNotInlined
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 	| ir method newMethod instance |
 	
@@ -567,7 +567,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTemp [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoOutsideTemp
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 	| ir method newMethod instance |
 	
@@ -580,7 +580,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoOutsideTempNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoOutsideTempNotInlined
 ]
 
-{ #category : #tests-misc }
+{ #category : #'tests-misc' }
 OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 	| ir method newMethod instance |
 	
@@ -593,7 +593,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleToDoValue [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleToDoValue
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined [
 	| ir method newMethod instance |
 	
@@ -606,7 +606,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationAfterNotInlined 
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleWhileModificationAfterNotInlined
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 	| ir method newMethod instance |
 	
@@ -619,7 +619,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBefore [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleWhileModificationBefore
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined [
 	| ir method newMethod instance |
 	
@@ -632,7 +632,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileModificationBeforeNotInlined
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleWhileModificationBeforeNotInlined
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 	| ir method newMethod instance |
 	
@@ -645,7 +645,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTemp [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleWhileWithTemp
 ]
 
-{ #category : #tests-blocks-optimized }
+{ #category : #'tests-blocks-optimized' }
 OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 	| ir method newMethod instance |
 	
@@ -658,7 +658,7 @@ OCBytecodeDecompilerExamplesTest >> testExampleWhileWithTempNotInlined [
 	self assert: (newMethod valueWithReceiver: instance arguments: #()) = instance exampleWhileWithTempNotInlined
 ]
 
-{ #category : #tests-variables }
+{ #category : #'tests-variables' }
 OCBytecodeDecompilerExamplesTest >> testExampleiVar [
 	| ir method newMethod instance |
 	

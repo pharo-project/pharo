@@ -4,7 +4,7 @@ I am a cluster for objects with weak indexable variables.
 Class {
 	#name : #FLWeakVariableObjectCluster,
 	#superclass : #FLVariableObjectCluster,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -15,7 +15,7 @@ FLWeakVariableObjectCluster >> clusterReferencesDo: aBlock [
 	aBlock value: nil
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLWeakVariableObjectCluster >> serializeReferencesVariablePartOf: anObject with: anEncoder [
 	
 	1 to: anObject basicSize do: [ :index |

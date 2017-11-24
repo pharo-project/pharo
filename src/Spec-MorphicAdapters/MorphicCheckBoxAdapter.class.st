@@ -4,7 +4,7 @@ I am an adapter to ease the bridge a CheckBoxPresenter and a CheckboxMorph
 Class {
 	#name : #MorphicCheckBoxAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

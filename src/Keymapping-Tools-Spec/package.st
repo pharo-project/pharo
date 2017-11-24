@@ -1,1 +1,1 @@
-Package { #name : #Keymapping-Tools-Spec }
+Package { #name : #'Keymapping-Tools-Spec' }

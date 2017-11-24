@@ -10,7 +10,7 @@ Class {
 		'changesTree',
 		'changes'
 	],
-	#category : #NautilusRefactoring-Utilities
+	#category : #'NautilusRefactoring-Utilities'
 }
 
 { #category : #shortcuts }

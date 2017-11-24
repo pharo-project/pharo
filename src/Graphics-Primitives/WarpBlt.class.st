@@ -24,7 +24,7 @@ Class {
 		'cellSize',
 		'sourceRGBmap'
 	],
-	#category : #Graphics-Primitives
+	#category : #'Graphics-Primitives'
 }
 
 { #category : #'form rotation' }

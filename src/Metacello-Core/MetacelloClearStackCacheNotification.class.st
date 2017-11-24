@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cacheNames'
 	],
-	#category : #Metacello-Core-Exceptions-Notifications
+	#category : #'Metacello-Core-Exceptions-Notifications'
 }
 
 { #category : #accessing }

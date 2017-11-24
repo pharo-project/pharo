@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'statusLine'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -285,13 +285,13 @@ ZnResponse >> printOn: stream [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnResponse >> readEntityFrom: stream [
 	(self isInformational or: [ self isNoContent or: [ self isNotModified ] ])
 		ifFalse: [ super readEntityFrom: stream ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnResponse >> readHeaderFrom: stream [
 	self statusLine: (ZnStatusLine readFrom: stream).
 	super readHeaderFrom: stream

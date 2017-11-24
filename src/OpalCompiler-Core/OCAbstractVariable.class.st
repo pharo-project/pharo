@@ -8,7 +8,7 @@ Class {
 		'scope',
 		'usage'
 	],
-	#category : #OpalCompiler-Core-Semantics
+	#category : #'OpalCompiler-Core-Semantics'
 }
 
 { #category : #accessing }

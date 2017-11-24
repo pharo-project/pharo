@@ -1,5 +1,5 @@
 Class {
 	#name : #GLMNumberOfVisiblePagesChanged,
 	#superclass : #Announcement,
-	#category : #Glamour-Morphic-Pager-Announcement
+	#category : #'Glamour-Morphic-Pager-Announcement'
 }

@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'block'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #comparing }
@@ -45,7 +45,7 @@ ComputedSlot >> printOn: aStream [
 		nextPutAll: block printString
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ComputedSlot >> read: anObject [
 	^block value: anObject
 	
@@ -56,7 +56,7 @@ ComputedSlot >> with: aBlock [
 	block := aBlock
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ComputedSlot >> write: aValue to: anObject [
 	"ignored"
 ]

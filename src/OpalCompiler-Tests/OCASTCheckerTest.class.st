@@ -1,7 +1,7 @@
 Class {
 	#name : #OCASTCheckerTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-AST
+	#category : #'OpalCompiler-Tests-AST'
 }
 
 { #category : #tools }

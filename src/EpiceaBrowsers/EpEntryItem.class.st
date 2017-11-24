@@ -9,7 +9,7 @@ Class {
 		'entry',
 		'triggerItems'
 	],
-	#category : #EpiceaBrowsers-UI-Log
+	#category : #'EpiceaBrowsers-UI-Log'
 }
 
 { #category : #comparing }

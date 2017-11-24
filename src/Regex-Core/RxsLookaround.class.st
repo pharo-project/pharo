@@ -10,7 +10,7 @@ Class {
 		'piece',
 		'positive'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #'instance creation' }
@@ -19,12 +19,12 @@ RxsLookaround class >> with: anRsxPiece [
 		initializePiece: anRsxPiece
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 RxsLookaround >> beNegative [
 	positive := false
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 RxsLookaround >> bePositive [
 	positive := true
 ]
@@ -36,7 +36,7 @@ RxsLookaround >> dispatchTo: aBuilder [
 	^aBuilder syntaxLookaround: self
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 RxsLookaround >> initializePiece: anRsxPiece [
 	super initialize.
 	piece := anRsxPiece.

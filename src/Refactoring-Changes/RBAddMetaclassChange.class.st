@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'classInstanceVariableNames'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #private }

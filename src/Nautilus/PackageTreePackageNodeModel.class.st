@@ -4,7 +4,7 @@ I'm a package node model.
 Class {
 	#name : #PackageTreePackageNodeModel,
 	#superclass : #PackageTreeNodeModel,
-	#category : #Nautilus-Tree
+	#category : #'Nautilus-Tree'
 }
 
 { #category : #converting }

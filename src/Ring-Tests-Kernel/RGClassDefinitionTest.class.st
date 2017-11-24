@@ -4,7 +4,7 @@ SUnit tests for class definitions
 Class {
 	#name : #RGClassDefinitionTest,
 	#superclass : #TestCase,
-	#category : #Ring-Tests-Kernel
+	#category : #'Ring-Tests-Kernel'
 }
 
 { #category : #testing }

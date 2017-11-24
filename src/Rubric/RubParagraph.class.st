@@ -11,7 +11,7 @@ Class {
 		'drawingEnabled',
 		'textArea'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #querying }
@@ -348,7 +348,7 @@ RubParagraph >> indentationOfLineIndex: lineIndex ifBlank: aBlock [
 	^ self composer indentationOfLineIndex: lineIndex ifBlank: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubParagraph >> initialize [ 
 	super initialize.
 	drawingEnabled := true.
@@ -663,7 +663,7 @@ RubParagraph >> totalTextHeight [
 	^self lines last bottom
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubParagraph >> unplug [
 	self releaseComposer.
 	textArea := nil.

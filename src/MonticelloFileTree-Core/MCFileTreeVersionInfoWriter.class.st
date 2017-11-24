@@ -4,7 +4,7 @@ Write for the version info
 Class {
 	#name : #MCFileTreeVersionInfoWriter,
 	#superclass : #MCVersionInfoWriter,
-	#category : #MonticelloFileTree-Core
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #serialization }

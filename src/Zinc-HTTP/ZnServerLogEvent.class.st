@@ -11,7 +11,7 @@ Class {
 		'serverId',
 		'processId'
 	],
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #initialize }

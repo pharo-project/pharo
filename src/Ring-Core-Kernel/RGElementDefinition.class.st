@@ -81,7 +81,7 @@ Class {
 	#instVars : [
 		'parent'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #'parsing stamp' }
@@ -130,13 +130,13 @@ RGElementDefinition class >> class: aRGBehaviorDefinition [
 		yourself
 ]
 
-{ #category : #elements-annotations }
+{ #category : #'elements-annotations' }
 RGElementDefinition class >> classNameKey [
 
 	^#className
 ]
 
-{ #category : #elements-annotations }
+{ #category : #'elements-annotations' }
 RGElementDefinition class >> isMetaSideKey [
 
 	^#isMetaSide
@@ -197,13 +197,13 @@ RGElementDefinition class >> realClass: aClass [
 		yourself
 ]
 
-{ #category : #elements-annotations }
+{ #category : #'elements-annotations' }
 RGElementDefinition class >> sourcePointerKey [ 
 
 	^#sourcePointer
 ]
 
-{ #category : #elements-annotations }
+{ #category : #'elements-annotations' }
 RGElementDefinition class >> statusKey [
 
 	^#statusKey

@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloDevelopmentProcess,
 	#superclass : #AbstractTutorial,
-	#category : #Metacello-ProfStef
+	#category : #'Metacello-ProfStef'
 }
 
 { #category : #'tutorial metainfo' }

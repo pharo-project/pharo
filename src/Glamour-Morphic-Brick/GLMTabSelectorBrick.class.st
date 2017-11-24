@@ -37,10 +37,10 @@ Class {
 		'font',
 		'tabs'
 	],
-	#category : #Glamour-Morphic-Brick-Morphic
+	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMTabSelectorBrick >> addTab: aStringOrMorph [
 	"Add a new tab with the given text."
 	
@@ -48,7 +48,7 @@ GLMTabSelectorBrick >> addTab: aStringOrMorph [
 	self updateTabs
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMTabSelectorBrick >> addTab: aStringOrMorph selected: selectedStringOrMorph [
 	"Add a new tab with the given text or morph and alternate for when selected."
 	
@@ -131,7 +131,7 @@ GLMTabSelectorBrick >> relabelTab: aTab with: aStringOrBrick [
 	self updateTabs
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 GLMTabSelectorBrick >> removeTabIndex: anInteger [
 	"Remove the tab at the given index and
 	adjust any selected (next or first if was last)."

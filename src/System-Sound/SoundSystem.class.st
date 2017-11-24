@@ -27,7 +27,7 @@ Class {
 		'SoundEnabled',
 		'SoundQuickStart'
 	],
-	#category : #System-Sound
+	#category : #'System-Sound'
 }
 
 { #category : #'current ' }

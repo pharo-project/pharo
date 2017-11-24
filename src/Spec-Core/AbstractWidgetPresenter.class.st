@@ -39,7 +39,7 @@ Class {
 		'transferBlock',
 		'color'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -187,14 +187,14 @@ AbstractWidgetPresenter >> enabledHolder [
 	^ enabledHolder
 ]
 
-{ #category : #api-focus }
+{ #category : #'api-focus' }
 AbstractWidgetPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	
 	^ { Character arrowRight asKeyCombination. Character tab asKeyCombination}
 ]
 
-{ #category : #api-focus }
+{ #category : #'api-focus' }
 AbstractWidgetPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 	
@@ -294,28 +294,28 @@ AbstractWidgetPresenter >> wantDropBlock: aBlock [
 	wantDropBlock value: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractWidgetPresenter >> whenBorderColorChanged: aBlock [
 	"Set a block to be performed when the brder width changed"
 	
 	borderColor whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractWidgetPresenter >> whenBorderWidthChanged: aBlock [
 	"Set a block to be performed when the brder width changed"
 	
 	borderWidth whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractWidgetPresenter >> whenEnabledChanged: aBlock [
 	"Set a block to performed when the widget is enabled or disabled"
 	
 	enabledHolder whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 AbstractWidgetPresenter >> whenHelpChanged: aBlock [
 	"Set a block to be performed when the help changed"
 	

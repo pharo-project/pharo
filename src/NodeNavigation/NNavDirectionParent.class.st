@@ -4,7 +4,7 @@ I'm the one who knows how to navigate going to the parent node.
 Class {
 	#name : #NNavDirectionParent,
 	#superclass : #NNavDirection,
-	#category : #NodeNavigation-Core
+	#category : #'NodeNavigation-Core'
 }
 
 { #category : #builder }

@@ -7,7 +7,7 @@ self openOn: (self>>#compose) ast ir
 Class {
 	#name : #GTIRBrowser,
 	#superclass : #GLMCompositePresentation,
-	#category : #OpalCompiler-Tools
+	#category : #'OpalCompiler-Tools'
 }
 
 { #category : #building }

@@ -18,7 +18,7 @@ Class {
 		'traitComposition',
 		'localSelectors'
 	],
-	#category : #Kernel-Classes
+	#category : #'Kernel-Classes'
 }
 
 { #category : #compiling }
@@ -60,7 +60,7 @@ Metaclass >> addSubclass: aClass [
 	"Do nothing."
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Metaclass >> adoptInstance: oldInstance from: oldMetaClass [ 
 	"Recreate any existing instances of the argument, oldClass, as instances of 
 	the receiver, which is a newly changed class. Permute variables as 
@@ -192,7 +192,7 @@ Metaclass >> classVarNames [
 	^self theNonMetaClass classVarNames
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 Metaclass >> definition [
 	"Refer to the comment in ClassDescription|definition."
 
@@ -242,7 +242,7 @@ Metaclass >> initializeFrom: anotherClassTrait [
 	self basicOrganization: self organization copy.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Metaclass >> instanceVariableNames: instVarString [ 
 	"Declare additional named variables for my instance."
 	| theClass |
@@ -416,7 +416,7 @@ Metaclass >> sharedPools [
 	^OrderedCollection new.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Metaclass >> slots: slotsDefinition [ 
 	"Declare additional named variables for my instance."
 	| theClass |
@@ -496,7 +496,7 @@ Metaclass >> uses: aTraitCompositionOrArray [
 		classModificationAppliedTo: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
 	| newComposition newMetaClass copyOfOldMetaClass |
 	
@@ -511,7 +511,7 @@ Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString
 		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [ 
 	| newComposition newMetaClass copyOfOldMetaClass |
 	

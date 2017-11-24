@@ -13,7 +13,7 @@ The event can be used by any Morph implementing:
 Class {
 	#name : #DropFilesEvent,
 	#superclass : #DropEvent,
-	#category : #Morphic-Base-Events
+	#category : #'Morphic-Base-Events'
 }
 
 { #category : #dispatching }

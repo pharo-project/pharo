@@ -6,7 +6,7 @@ I collaborate with GlobalIdentifierPersistence that uses me for checking before 
 Class {
 	#name : #GlobalIdentifierPersistenceChecker,
 	#superclass : #Object,
-	#category : #System-Identification
+	#category : #'System-Identification'
 }
 
 { #category : #testing }

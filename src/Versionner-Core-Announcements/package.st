@@ -1,1 +1,1 @@
-Package { #name : #Versionner-Core-Announcements }
+Package { #name : #'Versionner-Core-Announcements' }

@@ -8,7 +8,7 @@ Class {
 		'position',
 		'length'
 	],
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #initialization }

@@ -9,7 +9,7 @@ Class {
 		'restoredStartDay',
 		'restoredTimeZone'
 	],
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #running }

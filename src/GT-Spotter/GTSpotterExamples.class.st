@@ -6,7 +6,7 @@ I provide examples for the class GTSpotter as class side methods.
 Class {
 	#name : #GTSpotterExamples,
 	#superclass : #Object,
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #'examples - basic' }

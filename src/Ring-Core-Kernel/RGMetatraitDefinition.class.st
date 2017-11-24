@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'baseClass'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #'class initialization' }

@@ -9,7 +9,7 @@ Class {
 		'contents',
 		'stream'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,7 @@ ZipStringMember >> readRawChunk: n [
 	^stream next: n
 ]
 
-{ #category : #private-writing }
+{ #category : #'private-writing' }
 ZipStringMember >> rewindData [
 	super rewindData.
 	stream := contents readStream.

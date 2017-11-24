@@ -15,7 +15,7 @@ Class {
 		'selectedMethodName',
 		'enabled'
 	],
-	#category : #Rubric-Editing-Widgets-Examples
+	#category : #'Rubric-Editing-Widgets-Examples'
 }
 
 { #category : #example }

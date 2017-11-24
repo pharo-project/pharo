@@ -6,7 +6,7 @@ Class {
 	#name : #ByteArray,
 	#superclass : #ArrayedCollection,
 	#type : #bytes,
-	#category : #Collections-Native
+	#category : #'Collections-Native'
 }
 
 { #category : #'byte based hash' }
@@ -236,7 +236,7 @@ ByteArray >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ByteArray >> readHexFrom: aStream [
 	"Initialize the receiver from a hexadecimal string representation"
 	| map v ch value |

@@ -4,7 +4,7 @@ Window edge gripper allowing resizing of a window by a particular side.
 Class {
 	#name : #WindowEdgeGripMorph,
 	#superclass : #EdgeGripMorph,
-	#category : #Morphic-Widgets-Windows-Resizing
+	#category : #'Morphic-Widgets-Windows-Resizing'
 }
 
 { #category : #'event handling' }

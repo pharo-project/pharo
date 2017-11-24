@@ -31,7 +31,7 @@ Class {
 		'OFFSET_MAX_X_ADVANCE',
 		'OFFSET_MAX_Y_ADVANCE'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #'field definition' }

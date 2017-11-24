@@ -36,7 +36,7 @@ Class {
 		'eg',
 		'stringToSplit'
 	],
-	#category : #Collections-Tests-SplitJoin
+	#category : #'Collections-Tests-SplitJoin'
 }
 
 { #category : #documentation }

@@ -1,1 +1,1 @@
-Package { #name : #Text-Scanning }
+Package { #name : #'Text-Scanning' }

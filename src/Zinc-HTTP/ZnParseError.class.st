@@ -6,5 +6,5 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnParseError,
 	#superclass : #Error,
-	#category : #Zinc-HTTP-Exceptions
+	#category : #'Zinc-HTTP-Exceptions'
 }

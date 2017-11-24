@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnFileUrlTests,
 	#superclass : #TestCase,
-	#category : #Zinc-Resource-Meta-FileSystem
+	#category : #'Zinc-Resource-Meta-FileSystem'
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ Test originally from Andreas Raab
 Class {
 	#name : #AllocationTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Exception
+	#category : #'Kernel-Tests-Exception'
 }
 
 { #category : #testing }

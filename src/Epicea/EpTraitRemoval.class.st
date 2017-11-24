@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'trait'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }

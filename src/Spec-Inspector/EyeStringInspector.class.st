@@ -6,7 +6,7 @@ Right now, the only difference is that the list of elements for the tree is over
 Class {
 	#name : #EyeStringInspector,
 	#superclass : #EyeCollectionInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #accessing }

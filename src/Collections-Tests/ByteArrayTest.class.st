@@ -4,7 +4,7 @@ SUnit tests for ByteArray
 Class {
 	#name : #ByteArrayTest,
 	#superclass : #TestCase,
-	#category : #Collections-Tests-Arrayed
+	#category : #'Collections-Tests-Arrayed'
 }
 
 { #category : #tests }

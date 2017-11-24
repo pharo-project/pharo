@@ -8,7 +8,7 @@ Class {
 		'rules',
 		'name'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
 { #category : #accessing }
@@ -142,7 +142,7 @@ RBCompositeLintRule >> problemCount [
 	^ rules inject: 0 into: [ :count :each | count + each problemCount ]
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RBCompositeLintRule >> removeRule: aRule [
 
 	(rules anySatisfy: [ :rule | rule name = aRule name] )
@@ -167,7 +167,7 @@ RBCompositeLintRule >> rules: aCollection [
 	rules := aCollection
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 RBCompositeLintRule >> sort: aBlock [
 	
 	rules first isComposite

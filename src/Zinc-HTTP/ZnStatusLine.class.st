@@ -13,7 +13,7 @@ Class {
 		'code',
 		'reason'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #'instance creation' }
@@ -155,7 +155,7 @@ ZnStatusLine >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnStatusLine >> readFrom: stream [
 	| line lineStream httpCode |
 	line := (ZnLineReader on: stream) nextLine.

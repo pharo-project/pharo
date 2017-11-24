@@ -4,7 +4,7 @@ Using the ObjectRefification, one can pass a pointer to the object where the lin
 Class {
 	#name : #RFObjectReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

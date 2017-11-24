@@ -23,7 +23,7 @@ Class {
 		'isExpanded',
 		'hasChildren'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -334,7 +334,7 @@ TreeNodePresenter >> updateAccordingTo: aFilter [
 			self changed: #updateAccordingTo: with: { aFilter } ]
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TreeNodePresenter >> whenContentChanged: aBlock [
 
 	content whenChangedDo: aBlock
@@ -342,7 +342,7 @@ TreeNodePresenter >> whenContentChanged: aBlock [
 	
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TreeNodePresenter >> whenIsExpandedChanged: aBlock [
 
 	isExpanded whenChangedDo: aBlock
@@ -350,7 +350,7 @@ TreeNodePresenter >> whenIsExpandedChanged: aBlock [
 	
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TreeNodePresenter >> whenSelectedChanged: aBlock [
 
 	selected whenChangedDo: aBlock

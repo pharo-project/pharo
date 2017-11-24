@@ -4,7 +4,7 @@ Specialized version of inspector showing occurrences of items of the bag
 Class {
 	#name : #EyeBagInspector,
 	#superclass : #EyeCollectionInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #list }

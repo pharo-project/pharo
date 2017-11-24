@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #'instance creation' }
@@ -40,20 +40,20 @@ KomitStagingArea class >> resetCurrent [
 	current := nil
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 KomitStagingArea >> addPackage: aPackage [
 
 	(packages includes: aPackage)
 		ifFalse: [ packages add: aPackage ]
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 KomitStagingArea >> filterBlock [
 
 	^ filterBlock
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 KomitStagingArea >> filterBlock: aFilterBlock [
 
 	filterBlock := aFilterBlock
@@ -118,7 +118,7 @@ KomitStagingArea >> remotesFor: aCollection [
 	^ result collect: [ :each | each koRemote ]
 ]
 
-{ #category : #adding/removing }
+{ #category : #'adding/removing' }
 KomitStagingArea >> removePackage: aKomitPackage [
 
 	self packages 	

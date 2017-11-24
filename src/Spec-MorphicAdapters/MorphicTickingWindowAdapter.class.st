@@ -4,7 +4,7 @@ I am the adapter used to bridge a TickingWindowPresenter and a TickingSpecWindow
 Class {
 	#name : #MorphicTickingWindowAdapter,
 	#superclass : #MorphicWindowAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

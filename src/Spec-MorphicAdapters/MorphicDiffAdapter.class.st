@@ -4,7 +4,7 @@ I am an adpater to bridge a DiffPresenter and a DiffMorph
 Class {
 	#name : #MorphicDiffAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

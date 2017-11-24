@@ -4,7 +4,7 @@ A BeepingSoundSystem is a simple sound system just doing beep and niling everyth
 Class {
 	#name : #DummySoundSystem,
 	#superclass : #SoundSystem,
-	#category : #System-Sound
+	#category : #'System-Sound'
 }
 
 { #category : #beep }

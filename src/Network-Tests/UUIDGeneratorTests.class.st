@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'generator'
 	],
-	#category : #Network-Tests-UUID
+	#category : #'Network-Tests-UUID'
 }
 
 { #category : #running }

@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'packages'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #'instance creation' }

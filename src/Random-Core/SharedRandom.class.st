@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'global'
 	],
-	#category : #Random-Core
+	#category : #'Random-Core'
 }
 
 { #category : #accessing }

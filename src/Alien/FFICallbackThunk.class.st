@@ -17,7 +17,7 @@ Class {
 		'AllocatedThunks',
 		'ExecutablePages'
 	],
-	#category : #Alien-Core
+	#category : #'Alien-Core'
 }
 
 { #category : #'executable page management' }
@@ -292,7 +292,7 @@ FFICallbackThunk >> primFree [
 	self shouldNotImplement
 ]
 
-{ #category : #private-primitives }
+{ #category : #'private-primitives' }
 FFICallbackThunk >> primThunkEntryAddress [ "^<Integer>"
 	"Answer the address of the entry-point for thunk callbacks:
 		x86: long thunkEntry(void *thunkp, long *stackp);

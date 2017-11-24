@@ -11,7 +11,7 @@ Class {
 		'nodes',
 		'links'
 	],
-	#category : #Hiedra-Rendering
+	#category : #'Hiedra-Rendering'
 }
 
 { #category : #building }

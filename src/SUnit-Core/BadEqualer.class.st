@@ -4,7 +4,7 @@ I am an object that doesn't always report #= correctly.  Used for testing the Eq
 Class {
 	#name : #BadEqualer,
 	#superclass : #Object,
-	#category : #SUnit-Core-Utilities
+	#category : #'SUnit-Core-Utilities'
 }
 
 { #category : #comparing }

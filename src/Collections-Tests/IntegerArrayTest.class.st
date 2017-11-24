@@ -4,7 +4,7 @@ SUnit tests for integer arrays
 Class {
 	#name : #IntegerArrayTest,
 	#superclass : #TestCase,
-	#category : #Collections-Tests-Arrayed
+	#category : #'Collections-Tests-Arrayed'
 }
 
 { #category : #tests }

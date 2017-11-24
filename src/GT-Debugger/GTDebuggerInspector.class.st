@@ -12,7 +12,7 @@ Class {
 		'debugger',
 		'notifyPaneRemoved'
 	],
-	#category : #GT-Debugger-UI
+	#category : #'GT-Debugger-UI'
 }
 
 { #category : #callbacks }

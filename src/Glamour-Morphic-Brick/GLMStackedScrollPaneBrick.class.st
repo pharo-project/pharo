@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'allowedBounds'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Scrollpane
+	#category : #'Glamour-Morphic-Brick-Widgets-Scrollpane'
 }
 
 { #category : #examples }

@@ -22,7 +22,7 @@ Class {
 		'substitutions',
 		'substitutes'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -42,7 +42,7 @@ FLSubstitutionCluster >> add: anObject substitutedBy: anotherObject traceWith: a
 			aAnalysis trace: anotherObject ].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLSubstitutionCluster >> initializeAnalyzing [
 
 	super initializeAnalyzing.
@@ -71,7 +71,7 @@ FLSubstitutionCluster >> printOn: aStream [
 	substitutions printElementsOn: aStream
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLSubstitutionCluster >> registerIndexesOn: anEncoder [
 	substitutions keysAndValuesDo: [ :anObject :theSubstitution | 
 		| substitutionIndex |

@@ -16,7 +16,7 @@ Class {
 		'inset',
 		'spacing'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #examples }
@@ -79,7 +79,7 @@ GLMEmptyPopupBrick >> anchorBrick: aBrick [
 	self updateTriggerBrick
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMEmptyPopupBrick >> area [
 	| firstBounds secondBounds |
 
@@ -238,7 +238,7 @@ GLMEmptyPopupBrick >> inset: aMargin [
 	self updateInsetAndSpacing
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMEmptyPopupBrick >> isInsideOfContentBrick: anEvent [
 	self contentBrick 
 		ifNil: [^ false]
@@ -246,12 +246,12 @@ GLMEmptyPopupBrick >> isInsideOfContentBrick: anEvent [
 			anEvent withHandPositionDo: [ :position | ^ aBrick boundsInWorld containsPoint: position ]]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMEmptyPopupBrick >> isInsideOfPopupBrick: anEvent [
 	^ (self isInsideOfTriggerBrick: anEvent) | (self isInsideOfContentBrick: anEvent)
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMEmptyPopupBrick >> isInsideOfTriggerBrick: anEvent [
 	self triggerBrick 
 		ifNil: [^ false]

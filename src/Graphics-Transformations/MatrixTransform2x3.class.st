@@ -7,7 +7,7 @@ Class {
 	#name : #MatrixTransform2x3,
 	#superclass : #DisplayTransform,
 	#type : #words,
-	#category : #Graphics-Transformations
+	#category : #'Graphics-Transformations'
 }
 
 { #category : #'instance creation' }

@@ -24,7 +24,7 @@ Class {
 		'showClassSide',
 		'model'
 	],
-	#category : #Tool-ExternalBrowser
+	#category : #'Tool-ExternalBrowser'
 }
 
 { #category : #'public access' }
@@ -52,7 +52,7 @@ ExternalBrowser class >> defaultSpec [
 		yourself
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 ExternalBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
@@ -70,7 +70,7 @@ ExternalBrowser class >> openOn: model [
 		openWithSpec
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 ExternalBrowser class >> serviceBrowseCode [
 	"Answer the service of opening a file-contents browser"
 
@@ -83,7 +83,7 @@ ExternalBrowser class >> serviceBrowseCode [
 		argumentGetter: [ :file| file readOnlyStream ]
 ]
 
-{ #category : #System-FileRegistry }
+{ #category : #'System-FileRegistry' }
 ExternalBrowser class >> services [
 	"Answer potential file services associated with this class"
 

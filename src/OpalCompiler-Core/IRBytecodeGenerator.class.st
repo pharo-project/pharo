@@ -77,7 +77,7 @@ Class {
 		'encoderClass',
 		'inBlock'
 	],
-	#category : #OpalCompiler-Core-Bytecode
+	#category : #'OpalCompiler-Core-Bytecode'
 }
 
 { #category : #'instance creation' }

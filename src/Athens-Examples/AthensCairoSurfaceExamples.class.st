@@ -4,7 +4,7 @@ self example1
 Class {
 	#name : #AthensCairoSurfaceExamples,
 	#superclass : #AthensSurfaceExamples,
-	#category : #Athens-Examples
+	#category : #'Athens-Examples'
 }
 
 { #category : #'as yet unclassified' }

@@ -4,7 +4,7 @@ A LayoutPolicy defines how submorphs of some morph should be arranged. Subclasse
 Class {
 	#name : #LayoutPolicy,
 	#superclass : #Object,
-	#category : #Morphic-Base-Layouts
+	#category : #'Morphic-Base-Layouts'
 }
 
 { #category : #layout }

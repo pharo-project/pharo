@@ -8,15 +8,15 @@ Class {
 	#instVars : [
 		'state'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ExampleClassVariable >> read [
 	^state
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ExampleClassVariable >> write:	 anObject [
 	state := anObject
 	 

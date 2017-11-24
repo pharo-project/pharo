@@ -6,7 +6,7 @@ See the comment of IdentitySet for more information.
 Class {
 	#name : #IdentityDictionary,
 	#superclass : #Dictionary,
-	#category : #Collections-Unordered
+	#category : #'Collections-Unordered'
 }
 
 { #category : #private }

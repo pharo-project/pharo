@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'pager'
 	],
-	#category : #Morphic-Widgets-Tree-Pagination
+	#category : #'Morphic-Widgets-Tree-Pagination'
 }
 
 { #category : #'pager managing' }
@@ -51,7 +51,7 @@ PaginatedMorphTreeMorph >> currentNodelist [
 		ifNotNil: [self pager currentNodelist]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 PaginatedMorphTreeMorph >> expandItemPath: anItemPath [
 	| rest |
 	rest := anItemPath asOrderedCollection.

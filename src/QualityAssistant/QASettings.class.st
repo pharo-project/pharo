@@ -7,13 +7,13 @@ Class {
 	#category : #QualityAssistant
 }
 
-{ #category : #settings-accessing }
+{ #category : #'settings-accessing' }
 QASettings class >> nautilusPlugin [
 	
 	^ QANautilusPlugin isInstalled
 ]
 
-{ #category : #settings-accessing }
+{ #category : #'settings-accessing' }
 QASettings class >> nautilusPlugin: aBoolean [
 
 	aBoolean
@@ -21,7 +21,7 @@ QASettings class >> nautilusPlugin: aBoolean [
 		ifFalse: [ QANautilusPlugin uninstall ]
 ]
 
-{ #category : #settings-definition }
+{ #category : #'settings-definition' }
 QASettings class >> qaGroupSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #qualityAssistant)
@@ -29,7 +29,7 @@ QASettings class >> qaGroupSettingsOn: aBuilder [
 		parent: #codeBrowsing.
 ]
 
-{ #category : #settings-definition }
+{ #category : #'settings-definition' }
 QASettings class >> qaNautilusPlugginSettingOn: aBuilder [
 	<systemsettings>
 

@@ -5,7 +5,7 @@ Class {
 		'value',
 		'externalType'
 	],
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #'instance creation' }

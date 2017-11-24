@@ -24,7 +24,7 @@ Class {
 		'allowedToNotePresentationsChanged',
 		'cachedMatchingPresentations'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #'instance creation' }

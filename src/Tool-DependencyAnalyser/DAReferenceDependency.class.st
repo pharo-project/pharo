@@ -15,7 +15,7 @@ Class {
 		'reference',
 		'method'
 	],
-	#category : #Tool-DependencyAnalyser-Core
+	#category : #'Tool-DependencyAnalyser-Core'
 }
 
 { #category : #testing }

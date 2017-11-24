@@ -4,20 +4,20 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsStack,
 	#superclass : #PackageManifest,
-	#category : #Collections-Stack
+	#category : #'Collections-Stack'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsStack class >> dependencies [
 	^ #(#'Collections-Sequenceable')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsStack class >> description [
 	^ 'I only contain a Stack implementation.'
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsStack class >> packageName [
 	^ #'Collections-Stack'
 ]

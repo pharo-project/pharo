@@ -5,7 +5,7 @@ Specialized version of inspector showing the hex and string representation of th
 Class {
 	#name : #EyeByteArrayInspector,
 	#superclass : #EyeCollectionInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #list }

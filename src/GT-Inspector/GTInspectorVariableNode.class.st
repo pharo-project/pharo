@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'hostObject'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'instance creation' }

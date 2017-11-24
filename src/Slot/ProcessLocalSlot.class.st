@@ -26,7 +26,7 @@ obj local. “nil” <—— Now we don’t
 Class {
 	#name : #ProcessLocalSlot,
 	#superclass : #IndexedSlot,
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #'code generation' }
@@ -55,19 +55,19 @@ ProcessLocalSlot >> initialize: anObject [
 	super write: ProcessLocalVariable new to: anObject
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ProcessLocalSlot >> read: anObject [
 
 	^ (super read: anObject) value.
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ProcessLocalSlot >> wantsInitalization [
 
 	^ true
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ProcessLocalSlot >> write: aValue to: anObject [
 
 	(super read: anObject) value: aValue.

@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'RecursiveSelfRule'
 	],
-	#category : #Refactoring-Tests-Core-Data
+	#category : #'Refactoring-Tests-Core-Data'
 }
 
 { #category : #transformations }
@@ -300,7 +300,7 @@ RBTransformationRuleTest >> resetResult [
 	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChange
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBTransformationRuleTest >> rewriteUsing: searchReplacer [ 
 	rewriteRule := searchReplacer.
 	self resetResult

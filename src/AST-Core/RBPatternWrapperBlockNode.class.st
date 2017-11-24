@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'wrappedNode'
 	],
-	#category : #AST-Core-Pattern
+	#category : #'AST-Core-Pattern'
 }
 
 { #category : #visitor }

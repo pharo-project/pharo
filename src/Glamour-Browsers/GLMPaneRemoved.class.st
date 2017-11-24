@@ -4,7 +4,7 @@ A new pane was removed
 Class {
 	#name : #GLMPaneRemoved,
 	#superclass : #GLMPaneAnnouncement,
-	#category : #Glamour-Browsers-Announcements
+	#category : #'Glamour-Browsers-Announcements'
 }
 
 { #category : #'instance creation' }

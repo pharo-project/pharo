@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMPaginatedResizableMorphTreeMorph,
 	#superclass : #GLMPaginatedMorphTreeMorph,
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #'as yet unclassified' }
@@ -15,7 +15,7 @@ GLMPaginatedResizableMorphTreeMorph >> resizeColumns [
 	self hHideScrollBar.
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMPaginatedResizableMorphTreeMorph >> toggleExpandedState: aMorph event: event [
 	super toggleExpandedState: aMorph event: event.
 	self resizeColumns.

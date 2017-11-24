@@ -19,7 +19,7 @@ Class {
 		'redoMessage',
 		'undoMessage'
 	],
-	#category : #System-History
+	#category : #'System-History'
 }
 
 { #category : #compatibility }
@@ -77,7 +77,7 @@ UndoRedoRecord >> doMessage: aMessageSend [
 
 ]
 
-{ #category : #redo-undo }
+{ #category : #'redo-undo' }
 UndoRedoRecord >> redo [
 	^self redoMessage value.
 ]
@@ -94,7 +94,7 @@ UndoRedoRecord >> redoMessage: aMessageSend [
 	redoMessage := aMessageSend
 ]
 
-{ #category : #redo-undo }
+{ #category : #'redo-undo' }
 UndoRedoRecord >> undo [
 	^self undoMessage
 		ifNotNil: [self undoMessage value].

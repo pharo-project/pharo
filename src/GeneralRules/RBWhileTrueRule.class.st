@@ -14,7 +14,7 @@ statements2
 Class {
 	#name : #RBWhileTrueRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

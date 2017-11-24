@@ -76,7 +76,7 @@ Class {
 		'packageCacheRepository',
 		'resolvedReferencesCache'
 	],
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #private }
@@ -127,7 +127,7 @@ Gofer >> basicReferencesIn: aRepository [
 		do: errorBlock
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> blueplane: aString [
 	self url: 'http://squeaksource.blueplane.jp/' , aString
 ]
@@ -186,28 +186,28 @@ Gofer >> directory: aDirectoryOrString [
 	self repository: repository
 ]
 
-{ #category : #repositories-options }
+{ #category : #'repositories-options' }
 Gofer >> disablePackageCache [
 	"Disable the use of the package-cache repository."
 
 	packageCacheRepository := nil
 ]
 
-{ #category : #repositories-options }
+{ #category : #'repositories-options' }
 Gofer >> disableRepositoryErrors [
 	"Silently swallow all repository errors."
 
 	errorBlock := [ :error | error resume: #() ]
 ]
 
-{ #category : #repositories-options }
+{ #category : #'repositories-options' }
 Gofer >> enablePackageCache [
 	"Enable the use of the package-cache repository."
 
 	packageCacheRepository := MCCacheRepository uniqueInstance.
 ]
 
-{ #category : #repositories-options }
+{ #category : #'repositories-options' }
 Gofer >> enableRepositoryErrors [
 	"Throw an exception when repositories are not available."
 
@@ -234,12 +234,12 @@ Gofer >> fetch [
 	^ self execute: GoferFetch
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> gemsource: aString [
 	self url: 'http://seaside.gemstone.com/ss/' , aString
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> impara: aString [
 	self url: 'http://source.impara.de/' , aString
 ]
@@ -361,7 +361,7 @@ Gofer >> remoteChanges [
 	^ self execute: GoferRemoteChanges
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> renggli: aString [
 	self url: 'http://source.lukas-renggli.ch/' , aString
 ]
@@ -401,22 +401,22 @@ Gofer >> revert [
 	^ self execute: GoferRevert
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> smalltalkhubUser: aUserName project: aProjectName [
 	self repository: (MCSmalltalkhubRepository owner: aUserName project: aProjectName)
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> squeakfoundation: aString [
 	self url: 'http://source.squeakfoundation.org/' , aString
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> squeaksource3: aProjectName [
 	self repository: (MCGemstoneRepository location: 'http://ss3.gemtalksystems.com/ss/' , aProjectName)
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> squeaksource: aProjectName [
 	self repository: (MCSqueaksourceRepository location: 'http://www.squeaksource.com/' , aProjectName)
 ]
@@ -462,7 +462,7 @@ Gofer >> version: aString [
 	references addLast: (GoferVersionReference name: aString)
 ]
 
-{ #category : #repositories-places }
+{ #category : #'repositories-places' }
 Gofer >> wiresong: aString [
 	self url: 'http://source.wiresong.ca/' , aString
 ]

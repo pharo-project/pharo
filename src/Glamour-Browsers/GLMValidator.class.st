@@ -5,7 +5,7 @@ Class {
 		'buttonActions',
 		'specificAnnouncementActions'
 	],
-	#category : #Glamour-Browsers-Other
+	#category : #'Glamour-Browsers-Other'
 }
 
 { #category : #accessing }
@@ -65,7 +65,7 @@ GLMValidator >> explicitlyInnerPortNamed: aPortName [
 		self panes first ports do: [:each | (self pane port: each name) value: each value] ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMValidator >> initialize [
 
 	super initialize.

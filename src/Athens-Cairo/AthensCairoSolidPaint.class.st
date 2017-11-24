@@ -14,7 +14,7 @@ Class {
 		'origin',
 		'extent'
 	],
-	#category : #Athens-Cairo-Paints
+	#category : #'Athens-Cairo-Paints'
 }
 
 { #category : #drawing }

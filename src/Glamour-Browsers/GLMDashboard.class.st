@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'panesLayouts'
 	],
-	#category : #Glamour-Browsers-Dashboard
+	#category : #'Glamour-Browsers-Dashboard'
 }
 
 { #category : #adding }

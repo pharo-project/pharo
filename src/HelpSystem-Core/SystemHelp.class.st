@@ -10,7 +10,7 @@ So ""HelpBrowser open"" is the same as ""HelpBrowser openOn: SystemHelp"".
 Class {
 	#name : #SystemHelp,
 	#superclass : #Object,
-	#category : #HelpSystem-Core-Utilities
+	#category : #'HelpSystem-Core-Utilities'
 }
 
 { #category : #'private accessing' }

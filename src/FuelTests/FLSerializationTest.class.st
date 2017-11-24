@@ -50,7 +50,7 @@ FLSerializationTest >> classFactory [
 	^classFactory
 ]
 
-{ #category : #traits-factory }
+{ #category : #'traits-factory' }
 FLSerializationTest >> cleanUpTraits [
 	self traits do: [ :aTrait | self removeFromSystem: aTrait ]
 ]
@@ -91,7 +91,7 @@ FLSerializationTest >> materializer [
 	^materializer
 ]
 
-{ #category : #class-factory }
+{ #category : #'class-factory' }
 FLSerializationTest >> newClass [
 	^ self newSubclassOf: Object 
 		instanceVariableNames: '' 
@@ -99,12 +99,12 @@ FLSerializationTest >> newClass [
 
 ]
 
-{ #category : #class-factory }
+{ #category : #'class-factory' }
 FLSerializationTest >> newClassInCategory: aCategory [
 	^ self classFactory silentlyNewClassInCategory: aCategory
 ]
 
-{ #category : #class-factory }
+{ #category : #'class-factory' }
 FLSerializationTest >> newSubclassNamed: nameString of: aClass  instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 	| class |
 	SystemAnnouncer uniqueInstance suspendAllWhile: [
@@ -118,12 +118,12 @@ FLSerializationTest >> newSubclassNamed: nameString of: aClass  instanceVariable
 	^ class
 ]
 
-{ #category : #class-factory }
+{ #category : #'class-factory' }
 FLSerializationTest >> newSubclassOf: aClass  instanceVariableNames: ivNamesString classVariableNames: classVarsString [
 	^ self classFactory silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames:  classVarsString
 ]
 
-{ #category : #traits-factory }
+{ #category : #'traits-factory' }
 FLSerializationTest >> newTraitNamed: traitName inCategory: aCategory [
 
 	^ Trait 
@@ -132,7 +132,7 @@ FLSerializationTest >> newTraitNamed: traitName inCategory: aCategory [
 		category: aCategory asSymbol
 ]
 
-{ #category : #traits-factory }
+{ #category : #'traits-factory' }
 FLSerializationTest >> newTraitSuffixed: suffix [
 
 	| trait |
@@ -277,7 +277,7 @@ FLSerializationTest >> tearDownTraits [
 	self cleanUpTraits
 ]
 
-{ #category : #traits-factory }
+{ #category : #'traits-factory' }
 FLSerializationTest >> traitNamePrefix [
 	^'FLTraitForTesting'
 ]
@@ -287,42 +287,42 @@ FLSerializationTest >> traits [
 	^ traits ifNil: [ traits := OrderedCollection new ]
 ]
 
-{ #category : #stream-strategies }
+{ #category : #'stream-strategies' }
 FLSerializationTest >> useBinaryFileStream [
 
 	streamFactory := FLFileStreamStrategy newWithBinaryFileStream
 ]
 
-{ #category : #stream-strategies }
+{ #category : #'stream-strategies' }
 FLSerializationTest >> useGzipInMemoryStream [
 
 	streamFactory := FLGZipStrategy newWithTarget: FLByteArrayStreamStrategy new
 ]
 
-{ #category : #stream-strategies }
+{ #category : #'stream-strategies' }
 FLSerializationTest >> useInMemorySerializationStream [ 
 	"This is a special factory to test what we offer with FLSerializer class >> #serializeInMemory:  and  FLMaterializer class >> #materializeFromByteArray: "
 	streamFactory := FLByteArrayStreamStrategy new
 ]
 
-{ #category : #stream-strategies }
+{ #category : #'stream-strategies' }
 FLSerializationTest >> useMemoryStream [
 
 	streamFactory := FLMultiByteStreamStrategy new
 ]
 
-{ #category : #stream-strategies }
+{ #category : #'stream-strategies' }
 FLSerializationTest >> useStandardFileStream [
 
 	streamFactory := FLFileStreamStrategy newWithStandardFileStream
 ]
 
-{ #category : #class-factory }
+{ #category : #'class-factory' }
 FLSerializationTest >> withNotificationsNewClass [
 	^ self classFactory withNotificationsNewClass
 ]
 
-{ #category : #class-factory }
+{ #category : #'class-factory' }
 FLSerializationTest >> withNotificationsNewClassWithInstanceVariableNames: instanceVariableNames [
 	"Returns a class for testing, with the specified instance variables."
 

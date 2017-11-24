@@ -4,7 +4,7 @@ This class defines AST node menus for breakpoints
 Class {
 	#name : #SugsBreakAlwaysSuggestion,
 	#superclass : #SugsBreakpointSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

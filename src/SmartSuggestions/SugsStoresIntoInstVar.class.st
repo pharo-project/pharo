@@ -4,7 +4,7 @@ I know how to find stores into for an instance var
 Class {
 	#name : #SugsStoresIntoInstVar,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

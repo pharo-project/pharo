@@ -9,7 +9,7 @@ Example:
 Class {
 	#name : #OCLiteralSet,
 	#superclass : #Set,
-	#category : #OpalCompiler-Core-Extras
+	#category : #'OpalCompiler-Core-Extras'
 }
 
 { #category : #adding }

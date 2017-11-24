@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'gofer'
 	],
-	#category : #JenkinsTools-ExtraReports
+	#category : #'JenkinsTools-ExtraReports'
 }
 
 { #category : #running }

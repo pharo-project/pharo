@@ -22,7 +22,7 @@ Class {
 		'storedSetting',
 		'storedSettings'
 	],
-	#category : #System-Settings-Persistence-Ston-StoredSettings-Builder
+	#category : #'System-Settings-Persistence-Ston-StoredSettings-Builder'
 }
 
 { #category : #building }

@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'previousNodes'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #adding }

@@ -15,7 +15,7 @@ Class {
 		'password',
 		'enabled'
 	],
-	#category : #STON-Tests
+	#category : #'STON-Tests'
 }
 
 { #category : #'instance creation' }
@@ -33,7 +33,7 @@ STONTestUser class >> dummy [
 		yourself
 ]
 
-{ #category : #ston-core }
+{ #category : #'ston-core' }
 STONTestUser class >> stonName [
 	^ #TestUser
 ]
@@ -66,7 +66,7 @@ STONTestUser >> hash [
 	^ username hash bitXor: (password hash bitXor: enabled hash)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONTestUser >> initialize [ 
 	super initialize.
 	enabled := true

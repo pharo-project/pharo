@@ -4,7 +4,7 @@ I represent the Meta or Command key modifier. Look at my superclass for a more d
 Class {
 	#name : #KMMetaModifier,
 	#superclass : #KMModifier,
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #comparing }

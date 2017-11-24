@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'dict'
 	],
-	#category : #Monticello-Tests
+	#category : #'Monticello-Tests'
 }
 
 { #category : #actions }

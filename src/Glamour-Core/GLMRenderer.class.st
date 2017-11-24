@@ -4,7 +4,7 @@ A GLMRenderer is the abstract class for the renderer hierarchy. This should be s
 Class {
 	#name : #GLMRenderer,
 	#superclass : #Object,
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #rendering }

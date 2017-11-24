@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'backjump'
 	],
-	#category : #Flashback-Decompiler
+	#category : #'Flashback-Decompiler'
 }
 
 { #category : #accessing }

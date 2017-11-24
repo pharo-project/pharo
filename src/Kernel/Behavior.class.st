@@ -14,7 +14,7 @@ Class {
 		'ClassProperties',
 		'ObsoleteSubclasses'
 	],
-	#category : #Kernel-Classes
+	#category : #'Kernel-Classes'
 }
 
 { #category : #testing }
@@ -838,7 +838,7 @@ Behavior >> ensureLocalSelectors [
 	self basicLocalSelectors ifNil: [self basicLocalSelectors: self selectors asSet]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> ensureProperties [
 	^ ClassProperties at: self ifAbsentPut: WeakKeyDictionary new
 		
@@ -1586,7 +1586,7 @@ Behavior >> nextQuotePosIn: sourceString startingFrom: commentStart [
 	^nextQuotePos
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Behavior >> nonObsoleteClass [
 	"Attempt to find and return the current version of this obsolete class"
 
@@ -1697,20 +1697,20 @@ Behavior >> printOn: aStream [
 	self superclass printOn: aStream
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> properties [
 	^ ClassProperties at: self ifAbsent: nil
 		
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> propertyAt: propName [
 	^ self
 		propertyAt: propName
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> propertyAt: propName ifAbsent: aBlock [
 	self properties ifNil: [^aBlock value].
 	^ self properties
@@ -1718,7 +1718,7 @@ Behavior >> propertyAt: propName ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
@@ -1761,21 +1761,21 @@ Behavior >> removeFromComposition: aTrait [
 		removeFromComposition: aTrait)
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> removePropertiesIfEmpty [
 	^ ClassProperties at: self ifPresent: [ :dict |
 		dict ifEmpty: [ ClassProperties removeKey: self ] ]
 		
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> removeProperty: propName [
 	^ self
 		removeProperty: propName
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing-properties }
+{ #category : #'accessing-properties' }
 Behavior >> removeProperty: propName ifAbsent: aBlock [
 	| property |
 	self properties ifNil: [^aBlock value].
@@ -2095,7 +2095,7 @@ Behavior >> superclass: aClass [
 		ifFalse: [self error: 'superclass must be a class-describing object']
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Behavior >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver.
 	Must only be sent to a new instance; else we would need Object flushCache."

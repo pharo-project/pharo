@@ -1,1 +1,1 @@
-Package { #name : #FileSystem-Tests-Core }
+Package { #name : #'FileSystem-Tests-Core' }

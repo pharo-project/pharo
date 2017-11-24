@@ -9,7 +9,7 @@ Class {
 		'inStream',
 		'outStream'
 	],
-	#category : #Network-Tests-Kernel
+	#category : #'Network-Tests-Kernel'
 }
 
 { #category : #'instance creation' }

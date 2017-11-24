@@ -14,7 +14,7 @@ Class {
 		'writingScopes',
 		'remoteNode'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -226,7 +226,7 @@ TempVariableNode >> isUnusedTemp [
 	^ hasRefs not
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TempVariableNode >> name: varName index: i type: type scope: level [
 	"Only used for initting temporary variables"
 	hasDefs := hasRefs := false.
@@ -234,12 +234,12 @@ TempVariableNode >> name: varName index: i type: type scope: level [
 	^super name: varName key: varName index: i type: type
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TempVariableNode >> nowHasDef [
 	hasDefs := true
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TempVariableNode >> nowHasRef [
 	hasRefs := true
 ]
@@ -279,7 +279,7 @@ TempVariableNode >> scope [
 	^scope
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 TempVariableNode >> scope: level [
 	"Note scope of temporary variables.
 	Currently only the following distinctions are made:

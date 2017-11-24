@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'slotScope'
 	],
-	#category : #Slot-Layout
+	#category : #'Slot-Layout'
 }
 
 { #category : #comparing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'portName'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'transformations'
 	],
-	#category : #Traits-Composition
+	#category : #'Traits-Composition'
 }
 
 { #category : #'instance creation' }
@@ -84,7 +84,7 @@ TraitComposition >> asTraitComposition [
 	^self
 ]
 
-{ #category : #error-handling }
+{ #category : #'error-handling' }
 TraitComposition >> assertValidUser: aBehavior [
 	"Assert that this trait composition set for aBehavior
 	does not introduce a cycle."
@@ -148,7 +148,7 @@ TraitComposition >> copyWithoutAlias: aSymbol of: aTrait [
 		yourself
 ]
 
-{ #category : #error-handling }
+{ #category : #'error-handling' }
 TraitComposition >> errorIfNotAddable: aTraitTransformation [
 	(self includesTrait: aTraitTransformation trait) ifTrue: [
 		^TraitCompositionException

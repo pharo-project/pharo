@@ -1,1 +1,1 @@
-Package { #name : #Polymorph-Widgets-Rules }
+Package { #name : #'Polymorph-Widgets-Rules' }

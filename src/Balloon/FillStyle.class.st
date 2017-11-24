@@ -4,7 +4,7 @@ FillStyle is an abstract base class for fills in the BalloonEngine.
 Class {
 	#name : #FillStyle,
 	#superclass : #Object,
-	#category : #Balloon-Fills
+	#category : #'Balloon-Fills'
 }
 
 { #category : #converting }

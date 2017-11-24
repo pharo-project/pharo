@@ -6,7 +6,7 @@ Parsing a method or block code will just use RBVariableNodes for block/method ar
 Class {
 	#name : #RBTemporaryNode,
 	#superclass : #RBVariableNode,
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #visiting }

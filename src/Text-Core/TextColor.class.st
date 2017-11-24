@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'color'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #constants }

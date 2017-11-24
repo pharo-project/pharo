@@ -5,7 +5,7 @@ A ProcessSpecificTest is a test case for process local and dynamic variables.
 Class {
 	#name : #ProcessSpecificTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #testing }

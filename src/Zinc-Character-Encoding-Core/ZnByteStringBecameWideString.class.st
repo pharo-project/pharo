@@ -12,7 +12,7 @@ Class {
 		'byteString',
 		'wideString'
 	],
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #convenience }

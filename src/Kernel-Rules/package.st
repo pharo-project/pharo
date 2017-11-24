@@ -1,1 +1,1 @@
-Package { #name : #Kernel-Rules }
+Package { #name : #'Kernel-Rules' }

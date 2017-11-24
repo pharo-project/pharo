@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloVersionNumberTestCase,
 	#superclass : #MetacelloCommonVersionNumberTestCase,
-	#category : #Metacello-TestsCore
+	#category : #'Metacello-TestsCore'
 }
 
 { #category : #'test approximately greater than' }

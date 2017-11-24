@@ -4,7 +4,7 @@ SUnit tests for monitors
 Class {
 	#name : #MonitorTest,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #'tests - examples' }

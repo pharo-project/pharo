@@ -1,7 +1,7 @@
 Class {
 	#name : #MBCommandMetacelloTests,
 	#superclass : #MBCommandTests,
-	#category : #Versionner-Tests-Core-Commands
+	#category : #'Versionner-Tests-Core-Commands'
 }
 
 { #category : #tests }

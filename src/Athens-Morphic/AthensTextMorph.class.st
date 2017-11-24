@@ -4,7 +4,7 @@ this class is subject of changes/removal. do not use it.
 Class {
 	#name : #AthensTextMorph,
 	#superclass : #TextMorphForEditView,
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #'as yet unclassified' }

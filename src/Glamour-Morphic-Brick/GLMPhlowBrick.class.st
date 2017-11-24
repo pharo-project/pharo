@@ -5,7 +5,7 @@ Class {
 		'entity',
 		'titleBrick'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Phlow
+	#category : #'Glamour-Morphic-Brick-Widgets-Phlow'
 }
 
 { #category : #phlow }
@@ -45,7 +45,7 @@ GLMPhlowBrick >> newTitleBrick [
 	^ GLMLabelBrick new
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GLMPhlowBrick >> onThemerChanged [
 	super onThemerChanged.
 	

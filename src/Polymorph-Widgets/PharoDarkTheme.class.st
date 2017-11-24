@@ -11,7 +11,7 @@ self installFullTheme.
 Class {
 	#name : #PharoDarkTheme,
 	#superclass : #UITheme,
-	#category : #Polymorph-Widgets-Themes
+	#category : #'Polymorph-Widgets-Themes'
 }
 
 { #category : #accessing }
@@ -89,7 +89,7 @@ PharoDarkTheme >> buttonColor [
 	^ self backgroundColor lighter lighter
 ]
 
-{ #category : #border-styles-buttons }
+{ #category : #'border-styles-buttons' }
 PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 	"Return the normal button borderStyle for the given button."
 	
@@ -104,7 +104,7 @@ PharoDarkTheme >> buttonNormalBorderStyleFor: aButton [
 		baseColor: self buttonColor lighter
 ]
 
-{ #category : #fill-styles-buttons }
+{ #category : #'fill-styles-buttons' }
 PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
@@ -114,7 +114,7 @@ PharoDarkTheme >> buttonNormalFillStyleFor: aButton [
 	^ SolidFillStyle color: self buttonColor.
 ]
 
-{ #category : #fill-styles-buttons }
+{ #category : #'fill-styles-buttons' }
 PharoDarkTheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 	
@@ -175,7 +175,7 @@ PharoDarkTheme >> configureTextMorph: textMorph [
 		color: self textColor.
 ]
 
-{ #category : #border-styles }
+{ #category : #'border-styles' }
 PharoDarkTheme >> configureWindowBorderFor: aWindow [
 "	super configureWindowBorderFor: aWindow.
 	aWindow roundedCorners: #()"
@@ -189,7 +189,7 @@ PharoDarkTheme >> configureWindowBorderFor: aWindow [
 	aWindow borderStyle: aStyle.
 ]
 
-{ #category : #fill-styles-buttons }
+{ #category : #'fill-styles-buttons' }
 PharoDarkTheme >> controlButtonNormalFillStyleFor: aButton [
 	"Return the normal control button fillStyle for the given button.
 	Control buttons are generally used for drop-lists and expanders."
@@ -206,31 +206,31 @@ PharoDarkTheme >> dangerTextColor [
 		range: 255
 ]
 
-{ #category : #fill-styles }
+{ #category : #'fill-styles' }
 PharoDarkTheme >> desktopColor [
 
 	^Color darkGray darker
 ]
 
-{ #category : #basic-colors-diffs }
+{ #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffAdditionalLineBackgroundColor [
 	"Answer the color used to highlight additional text lines in a diff view."
 	^ Color r: 0.0 g: 0.76 b: 0.0 alpha: 0.2
 ]
 
-{ #category : #basic-colors-diffs }
+{ #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffEdgeColor [
 	"Answer the color used to show the border of the changes."
 	^ Color white alpha: 0.5
 ]
 
-{ #category : #basic-colors-diffs }
+{ #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffModificatedLineBackgroundColor [
 	"Answer the color used to highlight changed text lines in a diff view."
 	^ Color gray alpha: 0.2
 ]
 
-{ #category : #basic-colors-diffs }
+{ #category : #'basic-colors-diffs' }
 PharoDarkTheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to highlight removed text lines in a diff view."
 	^ Color r: 0.84 g: 0.0 b: 0.0 alpha: 0.2
@@ -241,14 +241,14 @@ PharoDarkTheme >> disabledColor [
 	^ Color gray lighter
 ]
 
-{ #category : #fill-styles }
+{ #category : #'fill-styles' }
 PharoDarkTheme >> dropListNormalFillStyleFor: aDropList [
 	"Return the normal fillStyle for the given drop list."
 	
 	^ self backgroundColor
 ]
 
-{ #category : #border-styles }
+{ #category : #'border-styles' }
 PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 	"Return the normal borderStyle for the list of the given given drop list"
 
@@ -257,7 +257,7 @@ PharoDarkTheme >> dropListNormalListBorderStyleFor: aDropList [
 		baseColor: self buttonColor lighter.
 ]
 
-{ #category : #fill-styles }
+{ #category : #'fill-styles' }
 PharoDarkTheme >> dropListNormalListFillStyleFor: aDropList [
 	"Return the normal fillStyle for the list of the given drop list."
 	
@@ -269,7 +269,7 @@ PharoDarkTheme >> enabledColor [
 	^ self textColor
 ]
 
-{ #category : #basic-colors }
+{ #category : #'basic-colors' }
 PharoDarkTheme >> errorPopperBackgroundColor [
 	^ Color red muchDarker 
 ]
@@ -331,7 +331,7 @@ PharoDarkTheme >> glamorousNormalFillStyleWithBaseColor: aColor for: aMorph heig
 		radial: false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 PharoDarkTheme >> initialize [
 	"self beCurrent"
 
@@ -356,7 +356,7 @@ PharoDarkTheme >> lineNumberColor [
 	^ Color gray lighter lighter
 ]
 
-{ #category : #fill-styles }
+{ #category : #'fill-styles' }
 PharoDarkTheme >> listNormalFillStyleFor: aList [
 	"Return the normal fillStyle for the given list."
 	
@@ -386,7 +386,7 @@ PharoDarkTheme >> menuItemDisabledTextColorFor: aMenuItem [
 	^ Color lightGray
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 PharoDarkTheme >> newRadioMarkerForm [
 	"Answer a new checkbox marker form."
 
@@ -398,14 +398,14 @@ PharoDarkTheme >> scrollbarColor [
 	^ self buttonColor
 ]
 
-{ #category : #border-styles-scrollbars }
+{ #category : #'border-styles-scrollbars' }
 PharoDarkTheme >> scrollbarNormalFillStyleFor: aScrollbar [
 	"Return the normal scrollbar fillStyle for the given scrollbar."
 	
 	^ SolidFillStyle color: self backgroundColor lighter.
 ]
 
-{ #category : #border-styles-scrollbars }
+{ #category : #'border-styles-scrollbars' }
 PharoDarkTheme >> scrollbarPressedThumbFillStyleFor: aScrollbar [
 	"Return the normal scrollbar button fillStyle for the given scrollbar."
 	
@@ -443,14 +443,14 @@ PharoDarkTheme >> successTextColor [
 	^ Color green darker darker darker
 ]
 
-{ #category : #basic-colors }
+{ #category : #'basic-colors' }
 PharoDarkTheme >> taskbarButtonLabelColorForCollapsed: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is collapsed."
 
 	^ self textColor
 ]
 
-{ #category : #basic-colors }
+{ #category : #'basic-colors' }
 PharoDarkTheme >> taskbarButtonLabelColorForExpanded: aButton [
 	"Answer the colour for the label of the given taskbar button, given that the corresponding window is expanded."
 
@@ -467,7 +467,7 @@ PharoDarkTheme >> textColorForNonStandardBackground [
 	^ Color black
 ]
 
-{ #category : #fill-styles }
+{ #category : #'fill-styles' }
 PharoDarkTheme >> textEditorNormalFillStyleFor: aTextEditor [
 	^ self backgroundColor
 ]
@@ -482,12 +482,12 @@ PharoDarkTheme >> warningTextColor [
 	^ Color yellow darker darker
 ]
 
-{ #category : #fill-styles }
+{ #category : #'fill-styles' }
 PharoDarkTheme >> windowActiveLabelFillStyleFor: aWindow [
 	^ self textColor
 ]
 
-{ #category : #label-styles }
+{ #category : #'label-styles' }
 PharoDarkTheme >> windowLabelForText: aTextOrString [
 	^ (super windowLabelForText: aTextOrString)
 		color: self textColor;

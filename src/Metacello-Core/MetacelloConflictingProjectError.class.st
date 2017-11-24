@@ -1,5 +1,5 @@
 Class {
 	#name : #MetacelloConflictingProjectError,
 	#superclass : #MetacelloScriptingError,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }

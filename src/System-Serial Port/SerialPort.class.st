@@ -34,7 +34,7 @@ SerialPort >> baudRate: anInteger [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SerialPort >> close [
 	"Close the serial port. Do nothing if the port is not open."
 	
@@ -94,7 +94,7 @@ SerialPort >> inputFlowControlType: anInteger [
 
 ]
 
-{ #category : #input/output }
+{ #category : #'input/output' }
 SerialPort >> nextPutAll: aStringOrByteArray [ 
 	"Send the given bytes out this serial port. The port must be
 	open. "
@@ -112,7 +112,7 @@ SerialPort >> nextPutAll: aStringOrByteArray [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SerialPort >> openPort: portId [ 
 	"Open the given serial port, using the settings specified by my
 	instance variables."
@@ -263,7 +263,7 @@ SerialPort >> printOn: aStream [
 
 ]
 
-{ #category : #input/output }
+{ #category : #'input/output' }
 SerialPort >> readByteArray [
 	"Answer a ByteArray read from this serial port. Answer an empty ByteArray if no data is available. The port must be open. "
 	
@@ -283,7 +283,7 @@ SerialPort >> readByteArray [
 	^ buf copyFrom: 1 to: count
 ]
 
-{ #category : #input/output }
+{ #category : #'input/output' }
 SerialPort >> readInto: aStringOrByteArray startingAt: index [ 
 	"Read data into the given String or ByteArray object starting at the given index, and answer the number of bytes read. Does not go past the end of the given String or ByteArray."
 	
@@ -299,7 +299,7 @@ SerialPort >> readInto: aStringOrByteArray startingAt: index [
 		
 ]
 
-{ #category : #input/output }
+{ #category : #'input/output' }
 SerialPort >> readString [
 	"Answer a String read from this serial port. Answer the empty
 	String if no data is available. The port must be open."

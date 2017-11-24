@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'messageSendAnalysis'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #browse-nautilus }
+{ #category : #'browse-nautilus' }
 DAPotentialDependenciesNode >> browseInNautilus [
 	self browseMethodInNautilus:
 		([ self packageUnderAnalysis packageManifest class methodNamed: #manuallyResolvedDependencies ]

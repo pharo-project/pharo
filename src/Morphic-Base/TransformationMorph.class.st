@@ -8,7 +8,7 @@ Class {
 	#superclass : #TransformMorph,
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #example }
@@ -107,7 +107,7 @@ TransformationMorph >> forwardDirection [
 		ifFalse: [^ rendee forwardDirection]
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransformationMorph >> grabTransform [
 	"Return the transform for the receiver which should be applied during grabbing"
 	self renderedMorph isWorldMorph 
@@ -217,7 +217,7 @@ TransformationMorph >> renderedMorph [
 	^self firstSubmorph renderedMorph
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 TransformationMorph >> replaceSubmorph: oldMorph by: newMorph [
 	| t b |
 	t := transform.

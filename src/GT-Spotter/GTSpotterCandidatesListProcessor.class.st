@@ -18,7 +18,7 @@ Class {
 		'keyBinding',
 		'sortBlock'
 	],
-	#category : #GT-Spotter-Processors
+	#category : #'GT-Spotter-Processors'
 }
 
 { #category : #accessing }
@@ -60,13 +60,13 @@ GTSpotterCandidatesListProcessor >> defaultCandidatesLimit [
 	^ self defaultItemsLimit
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterCandidatesListProcessor >> defaultContinueItemsLimit [
 	" Spotter becomes extraordenary slow when rendering too many results. So we set the maximum limit to 100. This is only a temporary solution until we have fixed the problem. Until then no spotter processor will ever generate more then 100 results. "
 	^ 100
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTSpotterCandidatesListProcessor >> defaultItemsLimit [
 	^ 5
 ]
@@ -179,34 +179,34 @@ GTSpotterCandidatesListProcessor >> keyBinding: anObject [
 	keyBinding := anObject
 ]
 
-{ #category : #scripting-convenience }
+{ #category : #'scripting-convenience' }
 GTSpotterCandidatesListProcessor >> match: aBlockWithTwoArguments [
 	self filter: (GTFilterBlock new 
 		matcher: aBlockWithTwoArguments;
 		yourself)
 ]
 
-{ #category : #scripting-convenience }
+{ #category : #'scripting-convenience' }
 GTSpotterCandidatesListProcessor >> matchAlike [
 	self filter: GTFilterAlike
 ]
 
-{ #category : #scripting-convenience }
+{ #category : #'scripting-convenience' }
 GTSpotterCandidatesListProcessor >> matchRegex [
 	self filter: GTFilterRegex
 ]
 
-{ #category : #scripting-convenience }
+{ #category : #'scripting-convenience' }
 GTSpotterCandidatesListProcessor >> matchString [
 	self filter: GTFilterStringMatch
 ]
 
-{ #category : #scripting-convenience }
+{ #category : #'scripting-convenience' }
 GTSpotterCandidatesListProcessor >> matchSubstring [
 	self filter: GTFilterSubstring
 ]
 
-{ #category : #scripting-convenience }
+{ #category : #'scripting-convenience' }
 GTSpotterCandidatesListProcessor >> matchSubstrings [
 	self filter: GTFilterSubstrings
 ]

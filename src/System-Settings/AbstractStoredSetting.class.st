@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'settingNodeIdentifier'
 	],
-	#category : #System-Settings-Persistence-Ston-StoredSettings
+	#category : #'System-Settings-Persistence-Ston-StoredSettings'
 }
 
 { #category : #comparing }

@@ -4,7 +4,7 @@ SUnit tests for MessageTally
 Class {
 	#name : #MessageTallyTest,
 	#superclass : #TestCase,
-	#category : #Tools-Test-Profilers
+	#category : #'Tools-Test-Profilers'
 }
 
 { #category : #tallying }

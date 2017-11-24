@@ -21,7 +21,7 @@ To compare the different delay schedulers...
 Class {
 	#name : #DelayExperimentalSpinScheduler,
 	#superclass : #DelayMicrosecondScheduler,
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #'low priority processes' }

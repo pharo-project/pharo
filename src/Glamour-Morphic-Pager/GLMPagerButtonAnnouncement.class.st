@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'buttonModel'
 	],
-	#category : #Glamour-Morphic-Pager-Announcement
+	#category : #'Glamour-Morphic-Pager-Announcement'
 }
 
 { #category : #accessing }

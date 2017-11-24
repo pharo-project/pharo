@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'factory'
 	],
-	#category : #SUnit-Tests-Core
+	#category : #'SUnit-Tests-Core'
 }
 
 { #category : #accessing }

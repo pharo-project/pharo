@@ -4,7 +4,7 @@ I am an acceptor in the context of code searching, using RBParseTreeSearcher
 Class {
 	#name : #CodeSearchingAcceptor,
 	#superclass : #AbstractAcceptor,
-	#category : #Nautilus-Acceptors
+	#category : #'Nautilus-Acceptors'
 }
 
 { #category : #protocol }

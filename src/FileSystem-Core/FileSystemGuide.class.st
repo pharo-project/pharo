@@ -15,7 +15,7 @@ Class {
 		'work',
 		'selectChildren'
 	],
-	#category : #FileSystem-Core-Implementation
+	#category : #'FileSystem-Core-Implementation'
 }
 
 { #category : #'instance creation' }
@@ -42,7 +42,7 @@ FileSystemGuide >> initialize [
 	work := OrderedCollection new
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileSystemGuide >> initializeWithVisitor: aVisitor [
 	self initialize.
 	visitor := aVisitor.

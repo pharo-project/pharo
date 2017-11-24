@@ -27,7 +27,7 @@ Class {
 		'handlerContext',
 		'outerContext'
 	],
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #exceptionselector }

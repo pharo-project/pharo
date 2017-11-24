@@ -610,7 +610,7 @@ LogicalFont >> height [
 	^self realFont height
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 LogicalFont >> initialize: aFont [
 
 	familyName := aFont familyName.

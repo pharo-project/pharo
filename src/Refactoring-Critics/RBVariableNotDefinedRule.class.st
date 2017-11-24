@@ -4,7 +4,7 @@ This check is similar to the ""References an undeclared variable"" check, but it
 Class {
 	#name : #RBVariableNotDefinedRule,
 	#superclass : #RBBlockLintRule,
-	#category : #Refactoring-Critics-BlockRules
+	#category : #'Refactoring-Critics-BlockRules'
 }
 
 { #category : #testing }

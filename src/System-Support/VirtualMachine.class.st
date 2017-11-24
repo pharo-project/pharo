@@ -21,7 +21,7 @@ Class {
 		'LastStats',
 		'WordSize'
 	],
-	#category : #System-Support
+	#category : #'System-Support'
 }
 
 { #category : #gc }

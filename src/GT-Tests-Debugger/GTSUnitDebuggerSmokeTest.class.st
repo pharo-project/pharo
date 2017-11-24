@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSUnitDebuggerSmokeTest,
 	#superclass : #GTDebuggerSmokeTest,
-	#category : #GT-Tests-Debugger
+	#category : #'GT-Tests-Debugger'
 }
 
 { #category : #accessing }

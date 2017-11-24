@@ -4,7 +4,7 @@ SUnit tests for MBSpecInfo in Versionner
 Class {
 	#name : #MBSpecInfoTest,
 	#superclass : #MBAbstractTest,
-	#category : #Versionner-Tests-Core-Model
+	#category : #'Versionner-Tests-Core-Model'
 }
 
 { #category : #testing }

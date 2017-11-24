@@ -14,7 +14,7 @@ Class {
 		'isPotentialDropTarget',
 		'resizable'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #accessing }
@@ -225,7 +225,7 @@ MorphTreeColumn >> nodeStringGetter: aSelectorOrAValuable [
 		ifFalse: [[:node | (aSelectorOrAValuable value: node complexContents ) asMorph]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MorphTreeColumn >> release [
 	container := nil.
 	header := nil.

@@ -20,7 +20,7 @@ Class {
 		'Stdin',
 		'Stdout'
 	],
-	#category : #Files-Core
+	#category : #'Files-Core'
 }
 
 { #category : #'system startup' }
@@ -29,7 +29,7 @@ Stdio class >> cleanStdioHandles [
 	Stderr := Stdin := Stdout := nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Stdio class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name

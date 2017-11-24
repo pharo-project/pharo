@@ -9,7 +9,7 @@ Class {
 		'specWidget',
 		'toolbar'
 	],
-	#category : #Spec-MorphicAdapters-Support
+	#category : #'Spec-MorphicAdapters-Support'
 }
 
 { #category : #protocol }
@@ -49,7 +49,7 @@ SpecDialogWindow >> giveFocusToPreviousFrom: aModel [
 	^ self model giveFocusToPreviousFrom: aModel
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SpecDialogWindow >> initialExtent [ 
 
 	^ self model

@@ -11,7 +11,7 @@ Class {
 		'condition',
 		'substitutionFactory'
 	],
-	#category : #Fuel-Mappers
+	#category : #'Fuel-Mappers'
 }
 
 { #category : #'instance creation' }
@@ -23,7 +23,7 @@ FLPluggableSubstitutionMapper class >> when: aCondition substituteBy: aFactory [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLPluggableSubstitutionMapper >> initializeWith: aCondition substitutionFactory: aBlock [
 
 	self initialize.

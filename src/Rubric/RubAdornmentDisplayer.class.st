@@ -4,7 +4,7 @@ RubAdornmentDisplayer adds a simple adornment for text area
 Class {
 	#name : #RubAdornmentDisplayer,
 	#superclass : #RubScrolledTextExtraSurface,
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }

@@ -1,1 +1,1 @@
-Package { #name : #SortFunctions-Tests }
+Package { #name : #'SortFunctions-Tests' }

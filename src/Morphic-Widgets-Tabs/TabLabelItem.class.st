@@ -10,7 +10,7 @@ Class {
 		'tab',
 		'storedIcon'
 	],
-	#category : #Morphic-Widgets-Tabs-Support
+	#category : #'Morphic-Widgets-Tabs-Support'
 }
 
 { #category : #'instance creation' }
@@ -33,7 +33,7 @@ TabLabelItem >> clippingBounds [
 	^ tab modifyClippingBounds: super clippingBounds
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 TabLabelItem >> computeSubmorphsToDraw [
 
 	owner width < tab showIconTreshold 

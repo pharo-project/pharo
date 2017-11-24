@@ -11,7 +11,7 @@ Class {
 	#classInstVars : [
 		'disabledExtensions'
 	],
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #settings }

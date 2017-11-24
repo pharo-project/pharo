@@ -5,7 +5,7 @@ I make sure that content is above the trigger brick
 Class {
 	#name : #GLMPopupBrickUpwardLayout,
 	#superclass : #GLMPopupBrickLayout,
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #building }

@@ -10,7 +10,7 @@ Class {
 	#classInstVars : [
 		'instance'
 	],
-	#category : #Komitter-Support
+	#category : #'Komitter-Support'
 }
 
 { #category : #accessing }

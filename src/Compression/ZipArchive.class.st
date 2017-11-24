@@ -16,7 +16,7 @@ Class {
 	#pools : [
 		'ZipFileConstants'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #constants }
@@ -39,7 +39,7 @@ ZipArchive class >> compressionStored [
 	^CompressionStored
 ]
 
-{ #category : #fileIn/Out }
+{ #category : #'fileIn/Out' }
 ZipArchive class >> extractAllIn: aFileName [
 	"Service method to extract all contents of a zip."
 	| directory |

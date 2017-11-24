@@ -7,7 +7,7 @@ In fact we should replace the SugsExtracMethod  with this one.
 Class {
 	#name : #SugsExtractStatements,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

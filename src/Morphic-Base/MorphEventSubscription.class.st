@@ -10,7 +10,7 @@ Class {
 		'recipient',
 		'valueParameter'
 	],
-	#category : #Morphic-Base-Events
+	#category : #'Morphic-Base-Events'
 }
 
 { #category : #'instance creation' }
@@ -32,17 +32,17 @@ MorphEventSubscription class >> on: anEvent send: aMessageSelector to: anObject 
 		yourself
 ]
 
-{ #category : #events-triggering }
+{ #category : #'events-triggering' }
 MorphEventSubscription >> click: anEvent fromMorph: aMorph [ 
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #events-triggering }
+{ #category : #'events-triggering' }
 MorphEventSubscription >> doubleClick: anEvent fromMorph: aMorph [ 
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #events-triggering }
+{ #category : #'events-triggering' }
 MorphEventSubscription >> doubleClickTimeout: anEvent fromMorph: aMorph [ 
 	^self notify: anEvent from: aMorph
 ]
@@ -59,17 +59,17 @@ MorphEventSubscription >> event: anEvent [
 	event := anEvent
 ]
 
-{ #category : #events-triggering }
+{ #category : #'events-triggering' }
 MorphEventSubscription >> mouseEnter: anEvent fromMorph: aMorph [ 
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #events-triggering }
+{ #category : #'events-triggering' }
 MorphEventSubscription >> mouseLeave: anEvent fromMorph: aMorph [ 
 	^self notify: anEvent from: aMorph
 ]
 
-{ #category : #events-triggering }
+{ #category : #'events-triggering' }
 MorphEventSubscription >> notify: anEvent from: sourceMorph [
 	| arity |
 	recipient ifNil: [^ self].

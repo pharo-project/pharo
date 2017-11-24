@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'morph'
 	],
-	#category : #Morphic-Tests-Event
+	#category : #'Morphic-Tests-Event'
 }
 
 { #category : #running }
@@ -62,7 +62,7 @@ MorphicEventHandlerTest >> testKeyStrokeFromMorph [
 	self assert: ((morph handleKeystroke: keyboardEvent) == true)
 ]
 
-{ #category : #tests-events }
+{ #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseEnterDraggingFromMorph [
 
 	| event | 
@@ -72,7 +72,7 @@ MorphicEventHandlerTest >> testMouseEnterDraggingFromMorph [
 	self assert: ((morph handleMouseEnter: event) == true)
 ]
 
-{ #category : #tests-events }
+{ #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseEnterFromMorph [
 
 	morph eventHandler on: #mouseEnter send: #value to: true.
@@ -80,7 +80,7 @@ MorphicEventHandlerTest >> testMouseEnterFromMorph [
 	self assert: ((morph mouseEnter: nil) == true)
 ]
 
-{ #category : #tests-events }
+{ #category : #'tests-events' }
 MorphicEventHandlerTest >> testMouseLeaveFromMorph [
 
 	morph eventHandler on: #mouseLeave send: #value to: true.

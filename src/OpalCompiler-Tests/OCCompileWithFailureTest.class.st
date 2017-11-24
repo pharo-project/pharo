@@ -8,7 +8,7 @@ Instead of raising syntax errors at runtime, they are raised at compile time.
 Class {
 	#name : #OCCompileWithFailureTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-Source
+	#category : #'OpalCompiler-Tests-Source'
 }
 
 { #category : #tests }

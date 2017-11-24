@@ -4,7 +4,7 @@ I reify the name of variables
 Class {
 	#name : #RFNameReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

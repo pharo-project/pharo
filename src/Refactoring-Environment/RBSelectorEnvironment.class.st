@@ -10,7 +10,7 @@ Class {
 		'classSelectors',
 		'metaClassSelectors'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -162,7 +162,7 @@ RBSelectorEnvironment >> asSelectorEnvironment [
 	^ self
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBSelectorEnvironment >> classNames [
 	^ IdentitySet new
 		addAll: classSelectors keys;
@@ -170,13 +170,13 @@ RBSelectorEnvironment >> classNames [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [ 
 	classSelectors := classSelectorDictionary.
 	metaClassSelectors := metaClassSelectorDictionary
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [ 
 	"Used to recreate an environment from its storeString"
 
@@ -188,7 +188,7 @@ RBSelectorEnvironment >> classes: classArray metaClasses: metaArray [
 		do: [ :each | metaClassSelectors at: each first put: each last asIdentitySet ]
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBSelectorEnvironment >> classesDo: aBlock [ 
 	classSelectors keysDo: [ :each | 
 		| class |
@@ -252,7 +252,7 @@ RBSelectorEnvironment >> isSelectorEnvironment [
 	^ true
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSelectorEnvironment >> on: aDictionary [ 
 	aDictionary keysAndValuesDo: [ :class :selectors | 
 		class isMeta 

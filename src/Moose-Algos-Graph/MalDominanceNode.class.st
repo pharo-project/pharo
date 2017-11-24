@@ -5,7 +5,7 @@ Class {
 		'previousNodes',
 		'uniqueSource'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }

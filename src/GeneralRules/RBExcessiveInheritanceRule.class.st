@@ -12,7 +12,7 @@ The defined inheritance depth can be edited in #inheritanceDepth.
 Class {
 	#name : #RBExcessiveInheritanceRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_Rect,
+	#name : #'SDL_Rect',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_H',
@@ -10,7 +10,7 @@ Class {
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

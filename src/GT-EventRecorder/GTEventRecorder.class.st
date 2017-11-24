@@ -35,7 +35,7 @@ Class {
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #GT-EventRecorder-Core
+	#category : #'GT-EventRecorder-Core'
 }
 
 { #category : #cleanup }
@@ -140,7 +140,7 @@ GTEventRecorder >> flush [
 	collectors do: #flush
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventRecorder >> gtInspectorActionHelp [
 	<gtInspectorAction>
 	^ GLMGenericAction new
@@ -153,7 +153,7 @@ GTEventRecorder >> gtInspectorActionHelp [
 		title: 'Help'
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventRecorder >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: 1>
 	^ collectors ifNotNil: [ 

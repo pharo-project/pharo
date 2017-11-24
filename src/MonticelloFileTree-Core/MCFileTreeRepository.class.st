@@ -12,7 +12,7 @@ Class {
 		'defaultPackageExtension',
 		'defaultPropertyFileExtension'
 	],
-	#category : #MonticelloFileTree-Core
+	#category : #'MonticelloFileTree-Core'
 }
 
 { #category : #'instance creation' }
@@ -294,7 +294,7 @@ MCFileTreeRepository >> propertyFileExtension: propertyFileExtension [
   self writeRepositoryProperties
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCFileTreeRepository >> readStreamForFileNamed: aString do: aBlock [
     ^ aBlock value: self directory
 ]
@@ -412,7 +412,7 @@ MCFileTreeRepository >> writeRepositoryProperties [
 
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCFileTreeRepository >> writeStreamForFileNamed: aString replace: aBoolean do: aBlock [
 	self error: 'we do not open a single stream, but write multiple files'
 ]

@@ -10,7 +10,7 @@ Class {
 		'category',
 		'package'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #accessing }

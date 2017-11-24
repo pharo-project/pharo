@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'arguments'
 	],
-	#category : #Morphic-Core-Announcements
+	#category : #'Morphic-Core-Announcements'
 }
 
 { #category : #accessing }

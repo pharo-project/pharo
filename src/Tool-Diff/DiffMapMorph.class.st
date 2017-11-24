@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'mappings'
 	],
-	#category : #Tool-Diff
+	#category : #'Tool-Diff'
 }
 
 { #category : #accessing }

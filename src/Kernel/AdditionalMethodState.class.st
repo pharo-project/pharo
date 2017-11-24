@@ -11,7 +11,7 @@ Class {
 		'method',
 		'selector'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #'instance creation' }
@@ -338,14 +338,14 @@ AdditionalMethodState >> propertyKeysAndValuesDo: aBlock [
 			[aBlock value: propertyOrPragma key value: propertyOrPragma value]]
 ]
 
-{ #category : #properties-compatibility }
+{ #category : #'properties-compatibility' }
 AdditionalMethodState >> propertyValueAt: aKey [
 	"use the version without ..Value, this methid is retained for compatibility"
 	
 	^ self propertyAt: aKey
 ]
 
-{ #category : #properties-compatibility }
+{ #category : #'properties-compatibility' }
 AdditionalMethodState >> propertyValueAt: aKey ifAbsent: aBlock [
 	"use the version without ..Value, this methid is retained for compatibility"
 	^self propertyAt: aKey ifAbsent: aBlock

@@ -27,7 +27,7 @@ Class {
 		'newLine',
 		'convertNewLines'
 	],
-	#category : #STON-Core
+	#category : #'STON-Core'
 }
 
 { #category : #'instance creation' }
@@ -37,12 +37,12 @@ STONReader class >> on: readStream [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> acceptUnknownClasses: boolean [
 	acceptUnknownClasses := boolean
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> allowComplexMapKeys: boolean [
 	"This is a no-op, this used to be an option, but it is now always enabled"
 ]
@@ -52,7 +52,7 @@ STONReader >> atEnd [
 	^ readStream atEnd
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> close [
 	readStream ifNotNil: [
 		readStream close.
@@ -67,7 +67,7 @@ STONReader >> consumeWhitespace [
 		whileTrue: [ readStream next ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> convertNewLines: boolean [
 	"When true, any newline CR, LF or CRLF read unescaped inside strings or symbols 
 	will be converted to the newline convention chosen, see #newLine:
@@ -94,7 +94,7 @@ STONReader >> expectChar: character [
 		ifFalse: [ self error: character asString, ' expected' ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> initialize [
 	super initialize.
 	objects := IdentityDictionary new.
@@ -156,7 +156,7 @@ STONReader >> matchChar: character [
 		ifFalse: [ false ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> newLine: string [
 	"Set the newline convention to be used when converting newlines, see #convertNewLines"
 	
@@ -184,19 +184,19 @@ STONReader >> next [
 	^ object
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> on: aReadStream [
 	readStream := aReadStream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> optimizeForLargeStructures [
 	self class environment
 		at: #FLLargeIdentityDictionary
 		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ]
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseCharacter [
 	| char |
 	^ (char := readStream next) = $\
@@ -204,7 +204,7 @@ STONReader >> parseCharacter [
 		ifFalse: [ char ]
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseCharacterConvertingNewLinesOn: writeStream [
 	| char |
 	(char := readStream next) = $\
@@ -245,7 +245,7 @@ STONReader >> parseCharacterHex4Value [
 	^ value
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseCharacterHexDigit [
 	| digit |
 	readStream atEnd ifFalse: [ 
@@ -259,7 +259,7 @@ STONReader >> parseCharacterHexDigit [
 	self error: 'hex-digit expected'
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseClass [
 	| className |
 	className := self stringStreamContents: [ :stream |
@@ -270,7 +270,7 @@ STONReader >> parseClass [
 	
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseConstantDo: block [
 	"Parse and consume either true|false|nil|null and execute block 
 	or else do nothing (but do not back up).
@@ -294,7 +294,7 @@ STONReader >> parseConstantDo: block [
 
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseEscapedCharacter [
 	| char |
 	char := readStream next.
@@ -380,7 +380,7 @@ STONReader >> parseNamedInstVarsFor: anObject [
 		anObject instVarNamed: instVarName put: value ]
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseNumber [
 	| negated number |
 	negated := readStream peekFor: $-.
@@ -395,7 +395,7 @@ STONReader >> parseNumber [
 	^ number
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseNumberExponent [
 	| number negated |
 	number := 0.
@@ -408,7 +408,7 @@ STONReader >> parseNumberExponent [
 	^ 10 raisedTo: number
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseNumberFraction [
 	| number power |
 	number := 0.
@@ -419,7 +419,7 @@ STONReader >> parseNumberFraction [
 	^ number / power
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseNumberInteger [
 	| number |
 	number := 0.
@@ -449,7 +449,7 @@ STONReader >> parseObject [
 	^ object
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseReference [
 	| index |
 	self expectChar: $@.
@@ -481,12 +481,12 @@ STONReader >> parseSimpleValue [
 	self error: 'invalid input'
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseString [
 	^ self parseStringInternal
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseStringInternal [
 	| result delimiter |
 	delimiter := readStream next.
@@ -505,7 +505,7 @@ STONReader >> parseStringInternal [
 	^ result
 ]
 
-{ #category : #parsing-internal }
+{ #category : #'parsing-internal' }
 STONReader >> parseSymbol [
 	| string |
 	self expectChar: $#.
@@ -553,7 +553,7 @@ STONReader >> processSubObjectsOf: object [
 	^ object
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONReader >> reset [
 	unresolvedReferences := 0.
 	objects removeAll

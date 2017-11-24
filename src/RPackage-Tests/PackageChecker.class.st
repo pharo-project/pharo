@@ -4,7 +4,7 @@ Utility class to check packages
 Class {
 	#name : #PackageChecker,
 	#superclass : #Object,
-	#category : #RPackage-Tests
+	#category : #'RPackage-Tests'
 }
 
 { #category : #check }

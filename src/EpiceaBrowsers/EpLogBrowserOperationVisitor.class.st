@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : #EpiceaBrowsers-Visitors
+	#category : #'EpiceaBrowsers-Visitors'
 }
 
 { #category : #'instance creation' }

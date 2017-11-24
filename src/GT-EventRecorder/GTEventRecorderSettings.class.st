@@ -9,7 +9,7 @@ Class {
 	#classInstVars : [
 		'url'
 	],
-	#category : #GT-EventRecorder-Settings
+	#category : #'GT-EventRecorder-Settings'
 }
 
 { #category : #cleanup }

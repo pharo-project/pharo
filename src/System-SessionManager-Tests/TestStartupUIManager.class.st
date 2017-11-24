@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'sessionManager'
 	],
-	#category : #System-SessionManager-Tests
+	#category : #'System-SessionManager-Tests'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Command to bset the user in Versionner
 Class {
 	#name : #MBSetUserCommand,
 	#superclass : #MBConfigurationInfoCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #'as yet unclassified' }

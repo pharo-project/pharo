@@ -22,7 +22,7 @@ Class {
 		'collectionWithoutNil',
 		'collectResult'
 	],
-	#category : #Collections-Tests-Sequenceable
+	#category : #'Collections-Tests-Sequenceable'
 }
 
 { #category : #requirements }

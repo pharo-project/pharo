@@ -20,7 +20,7 @@ Class {
 	#classVars : [
 		'Singleton'
 	],
-	#category : #Rubric-Editing-FindReplaceService
+	#category : #'Rubric-Editing-FindReplaceService'
 }
 
 { #category : #cleanup }
@@ -61,13 +61,13 @@ RubFindReplaceService >> convertedFindString [
 				s nextPut: c]]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceService >> dialog [
 	^ dialog ifNil: [ dialog := self newDialog ]
 	
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceService >> dialogIsActiveFor: aTextArea [
 	^ self dialog world notNil and: [ self textArea = aTextArea  ]
 ]
@@ -228,7 +228,7 @@ RubFindReplaceService >> isRegex: aBoolean [
 
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceService >> newDialog [
 	| d |
 	d := RubFindReplaceDialogWindow new model: self.
@@ -327,7 +327,7 @@ RubFindReplaceService >> updateFindStartIndex [
 			self findStartIndex: (self searchBackwards ifTrue: [si first - 1] ifFalse: [si last + 1]) ]
 ]
 
-{ #category : #user-interface }
+{ #category : #'user-interface' }
 RubFindReplaceService >> whenDialogDeleted [
 	dialog := nil.
 

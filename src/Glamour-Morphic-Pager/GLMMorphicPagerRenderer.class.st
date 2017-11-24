@@ -5,7 +5,7 @@ A GLMMorphicPagerRenderer is xxxxxxxxx.
 Class {
 	#name : #GLMMorphicPagerRenderer,
 	#superclass : #GLMMorphicFinderRenderer,
-	#category : #Glamour-Morphic-Pager-Glamour
+	#category : #'Glamour-Morphic-Pager-Glamour'
 }
 
 { #category : #callbacks }

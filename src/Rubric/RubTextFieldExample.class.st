@@ -19,7 +19,7 @@ Class {
 		'string',
 		'announcer'
 	],
-	#category : #Rubric-Editing-Widgets-Examples
+	#category : #'Rubric-Editing-Widgets-Examples'
 }
 
 { #category : #examples }

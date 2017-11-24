@@ -4,7 +4,7 @@ I am a parse tree leaf representing an instance variable.
 Class {
 	#name : #InstanceVariableNode,
 	#superclass : #VariableNode,
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -29,7 +29,7 @@ InstanceVariableNode >> emitCodeForValue: stack encoder: encoder [
 	^encoder genPushInstVar: index
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InstanceVariableNode >> name: varName index: varIndex [
 	^self name: varName index: varIndex-1 type: LdInstType
 ]

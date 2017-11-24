@@ -12,7 +12,7 @@ Class {
 		'classVars',
 		'listLimit'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
@@ -76,7 +76,7 @@ NECUntypedModel >> initialize [
 	listLimit := 100.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECUntypedModel >> initializeClassVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
 	classVars := clazz theNonMetaClass allClassVarNames asSortedCollection.
@@ -85,7 +85,7 @@ NECUntypedModel >> initializeClassVars [
 		NECClassVarEntry contents: each ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECUntypedModel >> initializeInstVars [
 	(clazz isNil or: [ includeVariables not ]) ifTrue: [ ^ self ].
 	instVars := clazz allInstVarNames asSortedCollection.
@@ -146,7 +146,7 @@ NECUntypedModel >> message [
 		ifFalse: [ super message ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECUntypedModel >> narrowString: aString [ 
 	(narrowString isEmpty
 			or: [aString isEmpty
@@ -163,7 +163,7 @@ NECUntypedModel >> narrowWith: aString [
 	self addSelectors
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECUntypedModel >> setClass: aClass temporaries: aCollection additionals: additionalCollection variables: variablesBoolean selectors: selectorsBoolean [ 
 	includeVariables := variablesBoolean.
 	includeSelectors := selectorsBoolean.

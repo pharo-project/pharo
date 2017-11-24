@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'token'
 	],
-	#category : #Monticello-Mocks
+	#category : #'Monticello-Mocks'
 }
 
 { #category : #accessing }

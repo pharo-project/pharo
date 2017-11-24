@@ -4,7 +4,7 @@ I am the state corresponding to a tab being disabled.
 Class {
 	#name : #TabDisabled,
 	#superclass : #TabState,
-	#category : #Morphic-Widgets-Tabs-States
+	#category : #'Morphic-Widgets-Tabs-States'
 }
 
 { #category : #protocol }

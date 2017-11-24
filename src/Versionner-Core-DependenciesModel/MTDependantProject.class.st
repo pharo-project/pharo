@@ -14,7 +14,7 @@ Class {
 		'repositories',
 		'symbolicVersionString'
 	],
-	#category : #Versionner-Core-DependenciesModel
+	#category : #'Versionner-Core-DependenciesModel'
 }
 
 { #category : #instantiation }
@@ -78,7 +78,7 @@ MTDependantProject >> displayString [
 					ifNotNil: [displayName, ' (', version name, ')' ] ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MTDependantProject >> initialize [ 
 	repositories  := OrderedCollection new.
 	dependencies := OrderedCollection new.

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'searcher'
 	],
-	#category : #AST-Tests-Core
+	#category : #'AST-Tests-Core'
 }
 
 { #category : #running }

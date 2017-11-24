@@ -11,7 +11,7 @@ I provide shortcuts for the most common methods to avoid the use of the DoesNotU
 Class {
 	#name : #LabelledSliderInput,
 	#superclass : #LabelledContainer,
-	#category : #Spec-PolyWidgets-Labelled
+	#category : #'Spec-PolyWidgets-Labelled'
 }
 
 { #category : #example }
@@ -28,22 +28,22 @@ LabelledSliderInput class >> example [
 	^ example
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledSliderInput >> absoluteValue [
 	^ self sliderInput absoluteValue
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledSliderInput >> absoluteValue: aBoolean [
 	^ self sliderInput absoluteValue: aBoolean
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledSliderInput >> autoAccept [
 	^ self sliderInput autoAccept
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledSliderInput >> autoAccept: aBoolean [
 	^ self sliderInput autoAccept: aBoolean
 ]
@@ -59,12 +59,12 @@ LabelledSliderInput >> input [
 	^ subwidget input
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledSliderInput >> max: aNumber [
 	^ self sliderInput max: aNumber
 ]
 
-{ #category : #api-shortcuts }
+{ #category : #'api-shortcuts' }
 LabelledSliderInput >> min: aNumber [
 	^ self sliderInput min: aNumber
 ]
@@ -89,7 +89,7 @@ LabelledSliderInput >> value: aNumber [
 	^ self sliderInput value: aNumber
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 LabelledSliderInput >> whenValueChangedDo: aBlock [
 	self sliderInput whenValueChangedDo: aBlock
 ]

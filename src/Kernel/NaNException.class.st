@@ -4,5 +4,5 @@ I am NaNException, an ArithmeticException signaled when Float nan was encountere
 Class {
 	#name : #NaNException,
 	#superclass : #ArithmeticError,
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }

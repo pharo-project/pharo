@@ -7,7 +7,7 @@ This is the unit test for the class ProtoObject. Unit tests are a good way to ex
 Class {
 	#name : #ProtoObjectTest,
 	#superclass : #ClassTestCase,
-	#category : #Kernel-Tests-Objects
+	#category : #'Kernel-Tests-Objects'
 }
 
 { #category : #'tests - testing' }

@@ -17,7 +17,7 @@ Class {
 		'parameters',
 		'needsReturn'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -134,7 +134,7 @@ RBExtractMethodRefactoring >> existingSelector [
 		ifNone: [nil]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.

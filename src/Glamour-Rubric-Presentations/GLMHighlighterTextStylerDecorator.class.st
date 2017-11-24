@@ -5,7 +5,7 @@ Class {
 		'text',
 		'styler'
 	],
-	#category : #Glamour-Rubric-Presentations
+	#category : #'Glamour-Rubric-Presentations'
 }
 
 { #category : #querying }

@@ -4,7 +4,7 @@ Merge work
 Class {
 	#name : #GoferMerge,
 	#superclass : #GoferUpdate,
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #private }

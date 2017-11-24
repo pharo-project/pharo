@@ -9,7 +9,7 @@ Class {
 		'done',
 		'extra'
 	],
-	#category : #UIManager-Support
+	#category : #'UIManager-Support'
 }
 
 { #category : #exceptioninstantiator }

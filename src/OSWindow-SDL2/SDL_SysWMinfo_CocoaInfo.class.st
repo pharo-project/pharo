@@ -2,12 +2,12 @@
 A structure that contains Cocoa specific information about a window. 
 "
 Class {
-	#name : #SDL_SysWMinfo_CocoaInfo,
+	#name : #'SDL_SysWMinfo_CocoaInfo',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_WINDOW'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'field definition' }

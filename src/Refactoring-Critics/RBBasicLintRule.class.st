@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'result'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
 { #category : #accessing }

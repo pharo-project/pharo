@@ -4,7 +4,7 @@ A GLMBrickAbstractAdaptor is an interface for all adaptors to be used with brick
 Class {
 	#name : #GLMBrickAbstractModel,
 	#superclass : #Object,
-	#category : #Glamour-Morphic-Brick-Model
+	#category : #'Glamour-Morphic-Brick-Model'
 }
 
 { #category : #'adaptor api' }

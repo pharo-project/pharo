@@ -4,7 +4,7 @@ reify newValue
 Class {
 	#name : #RFNewValueReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

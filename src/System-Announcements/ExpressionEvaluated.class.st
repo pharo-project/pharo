@@ -8,7 +8,7 @@ Class {
 		'context',
 		'expressionEvaluated'
 	],
-	#category : #System-Announcements-System-Base
+	#category : #'System-Announcements-System-Base'
 }
 
 { #category : #'instance creation' }

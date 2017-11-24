@@ -4,7 +4,7 @@ SUnit tests for WeakMessageSend
 Class {
 	#name : #WeakMessageSendTest,
 	#superclass : #ClassTestCase,
-	#category : #Kernel-Tests-Objects
+	#category : #'Kernel-Tests-Objects'
 }
 
 { #category : #tests }

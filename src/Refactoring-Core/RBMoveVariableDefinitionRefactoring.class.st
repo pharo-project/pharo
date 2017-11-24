@@ -14,7 +14,7 @@ Class {
 		'blockNodes',
 		'definingNode'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -71,7 +71,7 @@ RBMoveVariableDefinitionRefactoring >> checkParseTree [
 		ifFalse: [self refactoringError: 'Variable is possibly read before written']
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBMoveVariableDefinitionRefactoring >> class: aClass selector: aSelector interval: anInterval [ 
 	interval := anInterval.
 	class := self classObjectFor: aClass.

@@ -5,7 +5,7 @@ Class {
 		'gofer',
 		'initialWorkingCopyList'
 	],
-	#category : #Metacello-TestsMC
+	#category : #'Metacello-TestsMC'
 }
 
 { #category : #running }

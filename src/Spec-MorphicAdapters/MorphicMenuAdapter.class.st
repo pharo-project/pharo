@@ -4,7 +4,7 @@ I am the adapter used to build a MenuMorph from a MenuPresenter
 Class {
 	#name : #MorphicMenuAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'instance creation' }

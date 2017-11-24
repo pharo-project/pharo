@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'character'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ RxsCharacter >> enumerateTo: aSet ignoringCase: aBoolean [
 		ifFalse: [aSet add: character]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsCharacter >> initializeCharacter: aCharacter [
 	"See class comment for instance variable description."
 

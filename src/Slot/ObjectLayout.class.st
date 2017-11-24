@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'compactClassIndex'
 	],
-	#category : #Slot-Layout
+	#category : #'Slot-Layout'
 }
 
 { #category : #'instance creation' }
@@ -123,7 +123,7 @@ ObjectLayout >> initialize [
 	compactClassIndex := 0
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ObjectLayout >> initializeInstance: anInstance [
 	self subclassResponsibility
 ]

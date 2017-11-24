@@ -10,7 +10,7 @@ Class {
 		'label',
 		'changeable'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #'instance creation' }
@@ -160,7 +160,7 @@ RubTextSegmentMorph >> defaultColor [
 	^ Color red
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 RubTextSegmentMorph >> delete [
 	textArea ifNotNil: [ :ta | ta removeSegment: self ].
 	textArea := nil.
@@ -321,7 +321,7 @@ RubTextSegmentMorph >> mouseLeave: anEvent [
 	super mouseLeave: anEvent
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubTextSegmentMorph >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	self registerTextArea

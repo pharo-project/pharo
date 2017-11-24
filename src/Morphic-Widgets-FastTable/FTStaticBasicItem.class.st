@@ -24,7 +24,7 @@ FTStaticBasicItem new
 Class {
 	#name : #FTStaticBasicItem,
 	#superclass : #FTBasicItem,
-	#category : #Morphic-Widgets-FastTable-Tree
+	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
 { #category : #accessing }

@@ -12,10 +12,10 @@ Class {
 		'time',
 		'author'
 	],
-	#category : #Monticello-Versioning
+	#category : #'Monticello-Versioning'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors [
 	^ self 
 		name: vName
@@ -28,7 +28,7 @@ MCVersionInfo class >> name: vName id: id message: message date: date time: time
 		stepChildren: #()
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCVersionInfo class >> name: vName id: id message: message date: date time: time author: author ancestors: ancestors stepChildren: stepChildren [
 	^ self new
 		initializeWithName: vName

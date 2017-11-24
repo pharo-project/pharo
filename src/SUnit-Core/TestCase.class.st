@@ -20,7 +20,7 @@ Class {
 	#classInstVars : [
 		'history'
 	],
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #'building suites' }

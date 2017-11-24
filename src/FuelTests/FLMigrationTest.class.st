@@ -18,7 +18,7 @@ FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 	
 ]
 
-{ #category : #tests-manual }
+{ #category : #'tests-manual' }
 FLMigrationTest >> testBadDestinationVariableRename [
 	
 	| pointClass aPoint pointClassName |
@@ -36,7 +36,7 @@ FLMigrationTest >> testBadDestinationVariableRename [
 	self flag: #todo."Assert an specific materialization error"
 ]
 
-{ #category : #tests-automatic }
+{ #category : #'tests-automatic' }
 FLMigrationTest >> testChangeInSuperclass [
 	"Tests that serializer tolarates when there is a change in the superclass between serialization and materialization"
 	
@@ -71,7 +71,7 @@ FLMigrationTest >> testChangeInSuperclass [
 	
 ]
 
-{ #category : #tests-manual }
+{ #category : #'tests-manual' }
 FLMigrationTest >> testClassAndVariableRename [
 	
 	| pointClass aPoint resultPoint pointClassName |
@@ -96,7 +96,7 @@ FLMigrationTest >> testClassAndVariableRename [
 	self assert: (resultPoint instVarNamed: 'posY') = 11.
 ]
 
-{ #category : #tests-manual }
+{ #category : #'tests-manual' }
 FLMigrationTest >> testClassRename [
 	
 	| pointClass aPoint resultPoint pointClassName |
@@ -119,7 +119,7 @@ FLMigrationTest >> testClassRename [
 	self assert: (resultPoint instVarNamed: 'y') = 11.
 ]
 
-{ #category : #tests-automatic }
+{ #category : #'tests-automatic' }
 FLMigrationTest >> testFormatFixedToVariable [
 	"Tests that serializer can tolerate a format change from a *fixed* class to *weak/variable*.
 	Notice, however, that the other way around (variable to fixed) doesn't work so far"
@@ -130,7 +130,7 @@ FLMigrationTest >> testFormatFixedToVariable [
 	self assert: materialized size = 0
 ]
 
-{ #category : #tests-automatic }
+{ #category : #'tests-automatic' }
 FLMigrationTest >> testSuperclassChange [
 	"Tests that serializer tolarates when the superclass changed between serialization and materialization"
 	
@@ -162,7 +162,7 @@ FLMigrationTest >> testSuperclassChange [
 	
 ]
 
-{ #category : #tests-automatic }
+{ #category : #'tests-automatic' }
 FLMigrationTest >> testVariableInsertion [
 	"Tests that serializer tolarates when there is a new instance variable on materialization"
 	
@@ -181,7 +181,7 @@ FLMigrationTest >> testVariableInsertion [
 	self assert: $B = (resultPair instVarAt: 3).
 ]
 
-{ #category : #tests-automatic }
+{ #category : #'tests-automatic' }
 FLMigrationTest >> testVariableOrderChange [
 	"Tests that serializer tolarates when the order in the instance variables changed between serialization and materialization"
 	
@@ -199,7 +199,7 @@ FLMigrationTest >> testVariableOrderChange [
 	self assert: $A = (resultPair instVarAt: 2).	
 ]
 
-{ #category : #tests-automatic }
+{ #category : #'tests-automatic' }
 FLMigrationTest >> testVariableRemoved [
 	"Tests that serializer tolarates when an instance variable is missing on materialization"
 	
@@ -216,7 +216,7 @@ FLMigrationTest >> testVariableRemoved [
 	self assert: $B = (resultPair instVarAt: 1).	
 ]
 
-{ #category : #tests-manual }
+{ #category : #'tests-manual' }
 FLMigrationTest >> testVariableRename [
 	
 	| pointClass aPoint resultPoint pointClassName |

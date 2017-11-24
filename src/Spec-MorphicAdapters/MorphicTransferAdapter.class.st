@@ -4,7 +4,7 @@ I am a morphic specific adapter used to build a transfer object during a drang a
 Class {
 	#name : #MorphicTransferAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

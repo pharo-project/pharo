@@ -1,1 +1,1 @@
-Package { #name : #Random-Core }
+Package { #name : #'Random-Core' }

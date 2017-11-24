@@ -4,7 +4,7 @@ value of a variable read or assignment
 Class {
 	#name : #RFValueReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

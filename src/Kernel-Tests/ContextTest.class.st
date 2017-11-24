@@ -19,7 +19,7 @@ Class {
 		'aMethodContext',
 		'aSender'
 	],
-	#category : #Kernel-Tests-Methods
+	#category : #'Kernel-Tests-Methods'
 }
 
 { #category : #'closures for testing' }

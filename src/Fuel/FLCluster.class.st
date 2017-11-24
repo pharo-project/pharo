@@ -4,7 +4,7 @@ I represent a cluster of objects grouped by some specific similarity. I know how
 Class {
 	#name : #FLCluster,
 	#superclass : #Object,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #analyzing }
@@ -35,12 +35,12 @@ FLCluster class >> newMaterializing [
 		yourself.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> afterMaterializationStepWith: aDecoder [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> clusterMaterializeStepWith: aMaterialization [
 	"Materialize cluster stuff"
 
@@ -51,7 +51,7 @@ FLCluster >> clusterReferencesDo: aBlock [
 	"Evaluate a block with each object referenced by the cluster"
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> clusterSerializeStepWith: aSerialization [
 	"Serialize cluster stuff"
 ]
@@ -61,30 +61,30 @@ FLCluster >> fuelAccept: aGeneralMapper [
 	^ aGeneralMapper visitSubstitution: self by: nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLCluster >> initializeAnalyzing [
 
 	self initialize.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLCluster >> initializeMaterializing [
 
 	self initialize.
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> materializeInstancesStepWith: aDecoder [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> materializePostInstancesStepWith: aDecoder [
 
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> materializeReferencesStepWith: aDecoder [
 
 ]
@@ -96,22 +96,22 @@ FLCluster >> objects [
 	self subclassResponsibility
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> registerIndexesOn: anEncoder [
 	"Maps objects with indexes in the dictionary."
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> serializeInstancesStepWith: anEncoder [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> serializePostInstancesStepWith: anEncoder [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLCluster >> serializeReferencesStepWith: anEncoder [
 
 ]

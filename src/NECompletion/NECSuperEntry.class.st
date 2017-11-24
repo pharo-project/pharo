@@ -4,7 +4,7 @@ I represent super.
 Class {
 	#name : #NECSuperEntry,
 	#superclass : #NECEntry,
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #operations }

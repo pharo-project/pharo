@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Widgets-PolyTabs }
+Package { #name : #'Morphic-Widgets-PolyTabs' }

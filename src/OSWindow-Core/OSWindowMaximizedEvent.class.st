@@ -4,7 +4,7 @@ I am delivered when the window got maximized.
 Class {
 	#name : #OSWindowMaximizedEvent,
 	#superclass : #OSWindowEvent,
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #visitor }

@@ -8,7 +8,7 @@ Class {
 		'size',
 		'index'
 	],
-	#category : #OpalCompiler-Core-Bytecode
+	#category : #'OpalCompiler-Core-Bytecode'
 }
 
 { #category : #enumerating }

@@ -20,7 +20,7 @@ Class {
 	#instVars : [
 		'store'
 	],
-	#category : #FileSystem-Core-Public
+	#category : #'FileSystem-Core-Public'
 }
 
 { #category : #initializing }
@@ -71,14 +71,14 @@ FileSystem >> checkName: aString fixErrors: fixErrors [
 	^ store checkName: aString fixErrors: fixErrors
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> childNamesAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self childNamesAt: aResolvable do: [ :path|
 			out nextPut: path ]].
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> childNamesAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
@@ -89,14 +89,14 @@ FileSystem >> childNamesAt: aResolvable do: aBlock [
 			aBlock value: (store basenameFromEntry: entry) ]
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> childrenAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self childrenAt: aResolvable do: [ :path|
 			out nextPut: path ]].
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> childrenAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
@@ -213,14 +213,14 @@ FileSystem >> delimiter [
 	^ store delimiter
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> directoriesAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self directoriesAt: aResolvable do: [ :path|
 			out nextPut: path ]].
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> directoriesAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
@@ -231,14 +231,14 @@ FileSystem >> directoriesAt: aResolvable do: aBlock [
 			aBlock value: path / (store basenameFromEntry: entry) ]
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self directoryNamesAt: aResolvable do: [ :name|
 			out nextPut: name ]].
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
@@ -257,7 +257,7 @@ FileSystem >> ensureCreateDirectory: aResolvable [
 	store ensureCreateDirectory: (self resolve: aResolvable)
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable [
 	^ Array
 		streamContents: [ :out | 
@@ -265,7 +265,7 @@ FileSystem >> entriesAt: aResolvable [
 		]
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable do: aBlock [
 	^ self 
 		entriesAt: aResolvable 
@@ -273,7 +273,7 @@ FileSystem >> entriesAt: aResolvable do: aBlock [
 		do: aBlock 
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> entriesAt: aResolvable ifAbsent: absentBlock do: aBlock [
 	| path entry aFilesystem |
 	path := self resolve: aResolvable.
@@ -309,14 +309,14 @@ FileSystem >> extensionDelimiter [
 	^ $.
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> fileNamesAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self fileNamesAt: aResolvable do: [ :path|
 			out nextPut: path ]].
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> fileNamesAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
@@ -327,14 +327,14 @@ FileSystem >> fileNamesAt: aResolvable do: aBlock [
 			aBlock value: (store basenameFromEntry: entry) ]
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> filesAt: aResolvable [
 	^ Array streamContents: [ :out | 
 		self filesAt: aResolvable do: [ :path|
 			out nextPut: path ]].
 ]
 
-{ #category : #public-enumerating }
+{ #category : #'public-enumerating' }
 FileSystem >> filesAt: aResolvable do: aBlock [
 	| path |
 	path := self resolve: aResolvable.
@@ -350,7 +350,7 @@ FileSystem >> forReferencePrintOn: aStream [
 	store forReferencePrintOn: aStream
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> hasChildren: aResolvable [
 	"Returns whether aResolvable has children."
 	store directoryAt: (self resolve: aResolvable)
@@ -359,7 +359,7 @@ FileSystem >> hasChildren: aResolvable [
 	^false
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> hasDirectories: aResolvable [
 	self
 		entriesAt: aResolvable
@@ -369,7 +369,7 @@ FileSystem >> hasDirectories: aResolvable [
 	^false
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> hasFiles: aResolvable [
 	self
 		entriesAt: aResolvable
@@ -383,17 +383,17 @@ FileSystem >> hash [
 	^ store hash
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileSystem >> initializeWithStore: aStore [
 	store := aStore
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> isCaseSensitive [
 	^ self store isCaseSensitive
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> isDirectory: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a directory, false if it refers to a file or doesn't exist."
@@ -401,7 +401,7 @@ FileSystem >> isDirectory: aResolvable [
 	^ store isDirectory: (self resolve: aResolvable)
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> isFile: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a file, false if it refers to a directory or doesn't exist."
@@ -409,7 +409,7 @@ FileSystem >> isFile: aResolvable [
 	^ store isFile: (self resolve: aResolvable)
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> isReadable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file or directory that can be read from."
@@ -417,7 +417,7 @@ FileSystem >> isReadable: aResolvable [
 	^ (self permissions: aResolvable) isReadable
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> isSymlink: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a directory, false if it refers to a file or doesn't exist."
@@ -425,7 +425,7 @@ FileSystem >> isSymlink: aResolvable [
 	^ store isSymlink: (self resolve: aResolvable)
 ]
 
-{ #category : #public-testing }
+{ #category : #'public-testing' }
 FileSystem >> isWritable: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file that can be written to or directory that can be changed."

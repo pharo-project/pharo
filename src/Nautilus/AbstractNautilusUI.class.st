@@ -215,7 +215,7 @@ AbstractNautilusUI class >> buildButtonsShortcutsOn: aBuilder [
 
 ]
 
-{ #category : #shortcut-old }
+{ #category : #'shortcut-old' }
 AbstractNautilusUI class >> buildClassShortcutsOn: aBuilder [
 	<keymap>
 
@@ -409,7 +409,7 @@ AbstractNautilusUI class >> buildGotoNavigationShortcutsOn: aBuilder [
 		description: 'Jump to test class'.
 ]
 
-{ #category : #shortcut-old }
+{ #category : #'shortcut-old' }
 AbstractNautilusUI class >> buildGroupShortcutsOn: aBuilder [
 	<keymap>
 	(aBuilder shortcut: #fullBrowse)
@@ -446,7 +446,7 @@ AbstractNautilusUI class >> buildGroupShortcutsOn: aBuilder [
 		description: 'Remove the selected groups'
 ]
 
-{ #category : #shortcut-old }
+{ #category : #'shortcut-old' }
 AbstractNautilusUI class >> buildPackageShortcutsOn: aBuilder [
 	<keymap>
 
@@ -1463,7 +1463,7 @@ AbstractNautilusUI >> browseUnusedMethods [
 	self browseUnusedMethodsOf: self selectedClass
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> browseVariableReferences [
 
 	| mainMenu classVarSubMenu |
@@ -1515,25 +1515,25 @@ AbstractNautilusUI >> browseVariableReferences [
 
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> browseVariablesButtonAction [
 
 	self browseVariableReferences
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> browseVariablesButtonEnabled [
 
 	^ self selectedClass notNil
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> browseVariablesButtonLabel [
 
 	^ 'Variables'
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> browseVariablesButtonState [
 
 	^ false
@@ -2049,7 +2049,7 @@ AbstractNautilusUI >> buildTopPlugins [
 	^ container
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> buildVariableMenuFor: aMenu variablesFrom: aBlockOrSymbol menuItemBy: aMenuItemBlock [
 
 	self selectedClass withAllSuperclasses reverseDo: [ :class |
@@ -2483,7 +2483,7 @@ AbstractNautilusUI >> defaultClassDescriptor [
 		ifNotNil: [:package | string, package name, '''' ]
 ]
 
-{ #category : #menu-packages }
+{ #category : #'menu-packages' }
 AbstractNautilusUI >> demoteSelectedPackageAsPackageWithTag [
 	self subclassResponsibility
 ]
@@ -3470,7 +3470,7 @@ AbstractNautilusUI >> pendingText: aString [
 	self sourceTextModel hasUnacceptedEdits: true
 ]
 
-{ #category : #menu-packages }
+{ #category : #'menu-packages' }
 AbstractNautilusUI >> promoteSelectedPackageTagAsPackage [
 	self subclassResponsibility
 ]
@@ -4536,7 +4536,7 @@ AbstractNautilusUI >> updateSourceCodeAreaWith: aText [
 	
 ]
 
-{ #category : #button-variables }
+{ #category : #'button-variables' }
 AbstractNautilusUI >> variablesMenuEntry: aClass items: aCollection in: aMenu using: aBlock [
 	| menu |
 	aCollection ifEmpty: [ ^ self ].

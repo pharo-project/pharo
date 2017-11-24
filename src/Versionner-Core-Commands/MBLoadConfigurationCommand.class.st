@@ -4,7 +4,7 @@ Command to load a configuration in Versionner
 Class {
 	#name : #MBLoadConfigurationCommand,
 	#superclass : #MBDevCycleCommands,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #execute }

@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'searchList'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #'instance creation' }
@@ -194,13 +194,13 @@ ListDialogWindow >> giveFocusToSearch [
 	searchMorph takeKeyboardFocus.
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 ListDialogWindow >> initialAnswer: aString [
 
 	searchMorph content: aString.
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 ListDialogWindow >> initialExtent [
 	^ 300 @ 400
 ]

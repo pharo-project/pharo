@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'drawable'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #accessing }

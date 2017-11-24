@@ -8,7 +8,7 @@ Class {
 		'info',
 		'timestamp'
 	],
-	#category : #GT-EventRecorder-Core
+	#category : #'GT-EventRecorder-Core'
 }
 
 { #category : #comparing }

@@ -7,7 +7,7 @@ Class {
 		'password',
 		'type'
 	],
-	#category : #Metacello-MC-Specs
+	#category : #'Metacello-MC-Specs'
 }
 
 { #category : #adding }

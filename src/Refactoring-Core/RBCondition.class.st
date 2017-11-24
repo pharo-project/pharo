@@ -21,7 +21,7 @@ Class {
 		'type',
 		'errorBlock'
 	],
-	#category : #Refactoring-Core-Conditions
+	#category : #'Refactoring-Core-Conditions'
 }
 
 { #category : #'instance creation' }
@@ -390,7 +390,7 @@ RBCondition >> check [
 	^block value
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
 ]
@@ -405,14 +405,14 @@ RBCondition >> printOn: aStream [
 	aStream nextPutAll: type asString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCondition >> type: aSymbol block: aBlock errorString: aString [ 
  	type := aSymbol.
 	block := aBlock.
 	self errorMacro: aString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCondition >> withBlock: aBlock [ 
 	block := aBlock.
 	type := #(#generic)

@@ -25,7 +25,7 @@ Class {
 		'startGap',
 		'location'
 	],
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
 { #category : #'instance creation' }

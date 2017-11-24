@@ -5,10 +5,10 @@ Class used to abstract specific code for the Pharo platform.
 Class {
 	#name : #MetacelloPharoPlatform,
 	#superclass : #MetacelloPharoCommonPlatform,
-	#category : #Metacello-Platform
+	#category : #'Metacello-Platform'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloPharoPlatform class >> initialize [
   self select
 

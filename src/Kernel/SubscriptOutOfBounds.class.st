@@ -17,7 +17,7 @@ Class {
 		'lowerBound',
 		'upperBound'
 	],
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #signaling }

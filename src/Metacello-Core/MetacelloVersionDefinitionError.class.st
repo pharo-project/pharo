@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'exception'
 	],
-	#category : #Metacello-Core-Exceptions-Errors
+	#category : #'Metacello-Core-Exceptions-Errors'
 }
 
 { #category : #printing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #EpTriggeringIntegrationTest,
 	#superclass : #EpEnabledIntegrationTest,
-	#category : #EpiceaTests-Integration
+	#category : #'EpiceaTests-Integration'
 }
 
 { #category : #accessing }

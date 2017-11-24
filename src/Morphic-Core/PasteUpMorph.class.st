@@ -21,10 +21,10 @@ Class {
 		'WindowEventHandler',
 		'WorldAnnouncer'
 	],
-	#category : #Morphic-Core-Worlds
+	#category : #'Morphic-Core-Worlds'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 PasteUpMorph class >> initialize [
 	ShouldSwapMenuOpenerButtons := false
 ]
@@ -92,7 +92,7 @@ PasteUpMorph >> addMorph: aMorph centeredNear: aPoint [
 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 PasteUpMorph >> addMorphFront: aMorph [
 
 	^self addMorphInFrontOfLayer: aMorph
@@ -184,7 +184,7 @@ PasteUpMorph >> bringTopmostsToFront [
 		thenDo:[:m| self addMorphInLayer: m].
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> bringWindowsFullOnscreen [
 	"Make ever SystemWindow on the desktop be totally on-screen, whenever possible."
 
@@ -226,18 +226,18 @@ PasteUpMorph >> cleanseOtherworldlySteppers [
 		ifTrue: [ self crTrace: delta asString , ' morphs removed from steplist' ]
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllUnchangedWindows [
 	(self  windowsSatisfying: [:w | w model canDiscardEdits])
 		do: [:w | w delete]
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllWindowsDiscardingChanges [
 	World systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> closeUnchangedWindows [
 	"Present a menu of window titles for all windows with changes,
 	and activate the one that gets chosen."
@@ -249,7 +249,7 @@ except those with unaccepted edits?' translated)
 	self  closeAllUnchangedWindows.
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> collapseAll [
 	"Collapse all windows"
 	(self windowsSatisfying: [:w | w isCollapsed not])
@@ -426,7 +426,7 @@ PasteUpMorph >> drawSubmorphsOn: aCanvas [
 		ifFalse: [ drawBlock value: aCanvas ]
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 PasteUpMorph >> dropEnabled [
 	"Get this morph's ability to add and remove morphs via drag-n-drop."
 
@@ -449,14 +449,14 @@ PasteUpMorph >> dropFiles: anEvent [
 				ensure: [stream close]]].
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> expandAll [
 	"Expand all windows"
 	(self  windowsSatisfying: [:w | w isCollapsed])
 		reverseDo: [:w | w collapseOrExpand.  self displayWorld]
 ]
 
-{ #category : #Morphic-Base-Windows }
+{ #category : #'Morphic-Base-Windows' }
 PasteUpMorph >> findWindow: evt [
 	"Present a menu names of windows and naked morphs, and activate the one that gets chosen.  Collapsed windows appear below line, expand if chosen; naked morphs appear below second line; if any of them has been given an explicit name, that is what's shown, else the class-name of the morph shows; if a naked morph is chosen, bring it to front and have it don a halo."
 	| menu expanded collapsed nakedMorphs |
@@ -741,7 +741,7 @@ PasteUpMorph >> modalWindow: aMorph [
 	aMorph ifNotNil: [ self when: #aboutToLeaveWorld send: #removeModalWindow to: self ]
 ]
 
-{ #category : #Morphic-Base-Basic }
+{ #category : #'Morphic-Base-Basic' }
 PasteUpMorph >> morphToDropFrom: aMorph [ 
 	"Given a morph being carried by the hand, which the hand is about to drop, answer the actual morph to be deposited.  Normally this would be just the morph itself, but several unusual cases arise, which this method is designed to service."
 
@@ -757,7 +757,7 @@ PasteUpMorph >> morphToGrab: event [
 	^nil
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 PasteUpMorph >> morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock [
 	"Include hands if the receiver is the World"
 	self handsDo:[:m|
@@ -771,7 +771,7 @@ PasteUpMorph >> morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock [
 	^super morphsInFrontOf: someMorph overlapping: aRectangle do: aBlock
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 PasteUpMorph >> mouseDown: evt [
 	"Handle a mouse down event."
 
@@ -839,7 +839,7 @@ PasteUpMorph >> popUpContentsMenu: evt [
 	popUpEvent: evt in: (self world ifNil: [self]).
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 PasteUpMorph >> positionNear: aPoint forExtent: anExtent adjustmentSuggestion: adjustmentPoint [
 	"Compute a plausible positioning for adding a subpart of size anExtent, somewhere near aPoint, using adjustmentPoint as the unit of adjustment"
 
@@ -872,7 +872,7 @@ PasteUpMorph >> removeModalWindow [
 	self modalWindow: nil
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 PasteUpMorph >> repelsMorph: aMorph event: ev [
 	(aMorph wantsToBeDroppedInto: self) ifFalse: [^ false].
 	self dropEnabled ifFalse: [^ true].
@@ -1016,7 +1016,7 @@ PasteUpMorph >> viewBox: newViewBox [
 	
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 PasteUpMorph >> wantsDroppedMorph: aMorph event: evt [
 	
 	self visible ifFalse: [^ false].  "will be a call to #hidden again very soon"

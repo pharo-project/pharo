@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'contextClass'
 	],
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #accessing }

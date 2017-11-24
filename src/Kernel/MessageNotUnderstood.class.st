@@ -9,7 +9,7 @@ Class {
 		'receiver',
 		'reachedDefaultHandler'
 	],
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #handling }

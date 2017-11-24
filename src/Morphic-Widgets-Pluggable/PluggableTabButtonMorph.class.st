@@ -17,7 +17,7 @@ Class {
 		'arcLengths',
 		'subMorph'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #'instance creation' }

@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #accessing }

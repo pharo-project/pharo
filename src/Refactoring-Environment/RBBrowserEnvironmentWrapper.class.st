@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'environment'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -74,7 +74,7 @@ RBBrowserEnvironmentWrapper >> isSystem [
 	^false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBBrowserEnvironmentWrapper >> onEnvironment: anEnvironment [
 	environment := anEnvironment
 ]

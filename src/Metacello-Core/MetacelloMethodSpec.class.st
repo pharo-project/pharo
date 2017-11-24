@@ -8,7 +8,7 @@ Class {
 		'versionString',
 		'methodSections'
 	],
-	#category : #Metacello-Core-Constructors
+	#category : #'Metacello-Core-Constructors'
 }
 
 { #category : #accessing }

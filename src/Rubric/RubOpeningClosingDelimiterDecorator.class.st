@@ -4,7 +4,7 @@ I am the decorator for highliting opposite character in a text area (like parent
 Class {
 	#name : #RubOpeningClosingDelimiterDecorator,
 	#superclass : #RubParagraphDecorator,
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #querying }

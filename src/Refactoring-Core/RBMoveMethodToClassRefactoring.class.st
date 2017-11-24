@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'method'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -44,7 +44,7 @@ RBMoveMethodToClassRefactoring >> classModelOf: aClass [
 	^classModel
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBMoveMethodToClassRefactoring >> method: aMethod class: aClass [
 	method := aMethod.
 	class := self classObjectFor: aClass.

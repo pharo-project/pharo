@@ -37,7 +37,7 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #Kernel-Chronology
+	#category : #'Kernel-Chronology'
 }
 
 { #category : #'clock provider' }
@@ -187,7 +187,7 @@ DateAndTime class >> fuzzyReadFrom: aStream [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DateAndTime class >> initialize [
 	ClockProvider := Time
 ]

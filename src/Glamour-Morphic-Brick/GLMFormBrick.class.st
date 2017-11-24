@@ -5,7 +5,7 @@ A GLMFormBrick is scriptable html-like form with possibility to submit it.
 Class {
 	#name : #GLMFormBrick,
 	#superclass : #GLMBandBrick,
-	#category : #Glamour-Morphic-Brick-Widgets-Basic
+	#category : #'Glamour-Morphic-Brick-Widgets-Basic'
 }
 
 { #category : #examples }
@@ -49,7 +49,7 @@ GLMFormBrick class >> gtExample [
 		yourself
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMFormBrick >> asFormValue [
 	|result|
 	result := OrderedCollection new.
@@ -58,13 +58,13 @@ GLMFormBrick >> asFormValue [
 	^ result
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> checkbox [
 
 	^ self addBrickBack: self newCheckbox
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> checkbox: aBlock [
 
 	aBlock cull: self checkbox
@@ -83,38 +83,38 @@ GLMFormBrick >> initialize [
 		padding: #(4 7)
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> label [
 
 	^ self addBrickBack: self newLabel
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> label: aBlock [
 
 	aBlock cull: self label
 	
 ]
 
-{ #category : #form-brick-creation }
+{ #category : #'form-brick-creation' }
 GLMFormBrick >> newButton [
 
 	^ GLMButtonBrick new margin: #(3 0)
 ]
 
-{ #category : #form-brick-creation }
+{ #category : #'form-brick-creation' }
 GLMFormBrick >> newCheckbox [
 
 	^ GLMCheckboxBrick new margin: #(3 0)
 ]
 
-{ #category : #form-brick-creation }
+{ #category : #'form-brick-creation' }
 GLMFormBrick >> newLabel [
 
 	^ GLMLabelBrick new margin: #(3 0)
 ]
 
-{ #category : #form-brick-creation }
+{ #category : #'form-brick-creation' }
 GLMFormBrick >> newText [
 
 	^ GLMRubTextAreaBrick new
@@ -124,7 +124,7 @@ GLMFormBrick >> newText [
 		rubricTextFamilyName: StandardFonts defaultFont familyName
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> submit [
 
 	^ self addBrickBack: (
@@ -133,37 +133,37 @@ GLMFormBrick >> submit [
 			when: #onClicked do: [ self submitForm ])
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> submit: aBlock [
 
 	aBlock cull: self submit
 ]
 
-{ #category : #form-actions }
+{ #category : #'form-actions' }
 GLMFormBrick >> submitForm [
 
 	self announce: (GLMFormSubmitted new result: self asFormValue)
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> text [
 
 	^ self addBrickBack: self newText
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> text: aBlock [
 
 	aBlock cull: self text
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> title [
 
 	^ self addBrickBack: (self newLabel hAlign: #center)
 ]
 
-{ #category : #form-scripting }
+{ #category : #'form-scripting' }
 GLMFormBrick >> title: aBlock [
 
 	aBlock cull: self title

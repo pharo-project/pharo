@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #'instance creation' }

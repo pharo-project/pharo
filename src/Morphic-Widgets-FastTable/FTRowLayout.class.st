@@ -5,7 +5,7 @@ I simplify my parent (in an attept to achieve speed), but most important, Itake 
 Class {
 	#name : #FTRowLayout,
 	#superclass : #RowLayout,
-	#category : #Morphic-Widgets-FastTable
+	#category : #'Morphic-Widgets-FastTable'
 }
 
 { #category : #layouting }

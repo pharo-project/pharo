@@ -9,7 +9,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Text
+	#category : #'Athens-Cairo-Text'
 }
 
 { #category : #finalizing }
@@ -135,13 +135,13 @@ CairoFontOptions >> hintStyleSlight [
 	^ self setHintStyle: CAIRO_HINT_STYLE_SLIGHT
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CairoFontOptions >> initialize [ 
 	self autoRelease.
 	self setDefaults
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CairoFontOptions >> resourceData [
 
 	^ handle value

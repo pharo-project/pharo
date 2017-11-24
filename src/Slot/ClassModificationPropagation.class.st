@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'origin'
 	],
-	#category : #Slot-ClassBuilder
+	#category : #'Slot-ClassBuilder'
 }
 
 { #category : #'instance creation' }

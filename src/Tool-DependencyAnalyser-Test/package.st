@@ -1,1 +1,1 @@
-Package { #name : #Tool-DependencyAnalyser-Test }
+Package { #name : #'Tool-DependencyAnalyser-Test' }

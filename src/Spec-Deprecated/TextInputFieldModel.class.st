@@ -4,5 +4,5 @@ This is deprecated class because the original class TextInputFieldModel was rena
 Class {
 	#name : #TextInputFieldModel,
 	#superclass : #TextInputFieldPresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

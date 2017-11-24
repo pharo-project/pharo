@@ -44,7 +44,7 @@ It is safe to store transformation in temporary variable, as long as canvas is v
 Class {
 	#name : #AthensTransform,
 	#superclass : #Object,
-	#category : #Athens-Core
+	#category : #'Athens-Core'
 }
 
 { #category : #accessing }
@@ -105,12 +105,12 @@ AthensTransform >> scaleX: fx Y: fy [
 	self subclassResponsibility
 ]
 
-{ #category : #vector-transform }
+{ #category : #'vector-transform' }
 AthensTransform >> transform: aPoint [ 
 	self subclassResponsibility
 ]
 
-{ #category : #vector-transform }
+{ #category : #'vector-transform' }
 AthensTransform >> transformX: px Y: py [ 
 	self subclassResponsibility
 ]

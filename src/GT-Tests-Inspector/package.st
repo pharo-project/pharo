@@ -1,1 +1,1 @@
-Package { #name : #GT-Tests-Inspector }
+Package { #name : #'GT-Tests-Inspector' }

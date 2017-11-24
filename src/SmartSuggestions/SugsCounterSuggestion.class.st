@@ -4,7 +4,7 @@ I am creating Counters on AST nodes
 Class {
 	#name : #SugsCounterSuggestion,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

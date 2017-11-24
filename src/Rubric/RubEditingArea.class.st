@@ -8,7 +8,7 @@ Class {
 		'wrapped',
 		'editorClass'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #'event handling' }
@@ -18,31 +18,31 @@ RubEditingArea >> autoScroll: anEvent [
 	scrollPane scrollWhenMouseMove: anEvent pivotPoint: self scrollPivot
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubEditingArea >> beForPlainText [
 	self editingMode: RubPlainTextMode new
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubEditingArea >> beForSmalltalkCode [
 	self editingMode: RubSmalltalkCodeMode new
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubEditingArea >> beForSmalltalkCodeInClass: aClass [
 	self editingMode: (RubSmalltalkCodeMode new
 		classOrMetaClass: aClass;
 		yourself)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubEditingArea >> beForSmalltalkCodeWithDefaultFont [
 	self editingMode: RubSmalltalkCodeMode new.
 	self font: StandardFonts defaultFont
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubEditingArea >> beForSmalltalkComment [
 	self editingMode: RubSmalltalkCommentMode new
 ]

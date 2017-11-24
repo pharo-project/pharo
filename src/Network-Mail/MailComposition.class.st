@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'SmtpServer'
 	],
-	#category : #Network-Mail
+	#category : #'Network-Mail'
 }
 
 { #category : #'smtp server' }

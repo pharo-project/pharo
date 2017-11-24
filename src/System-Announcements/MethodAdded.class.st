@@ -5,7 +5,7 @@ This announcement is emited when we add a method to a class or a trait using:
 Class {
 	#name : #MethodAdded,
 	#superclass : #MethodAnnouncement,
-	#category : #System-Announcements-System-Methods
+	#category : #'System-Announcements-System-Methods'
 }
 
 { #category : #'instance creation' }

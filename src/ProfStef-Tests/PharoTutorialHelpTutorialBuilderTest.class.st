@@ -4,7 +4,7 @@ SUnit tests for PharoTutorialHelpTutorialBuilder
 Class {
 	#name : #PharoTutorialHelpTutorialBuilderTest,
 	#superclass : #TestCase,
-	#category : #ProfStef-Tests-Tests
+	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #tests }

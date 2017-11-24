@@ -9,10 +9,10 @@ Class {
 		'annotationRequests',
 		'method'
 	],
-	#category : #NautilusCommon-Plugin
+	#category : #'NautilusCommon-Plugin'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 AnnotationRequest class >> onClass: aClass selector: aSelector [
 	^ self new
 		onClass: aClass selector: aSelector;

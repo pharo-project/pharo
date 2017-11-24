@@ -1,7 +1,7 @@
 Class {
 	#name : #SortFunctionTest,
 	#superclass : #TestCase,
-	#category : #SortFunctions-Tests
+	#category : #'SortFunctions-Tests'
 }
 
 { #category : #tests }

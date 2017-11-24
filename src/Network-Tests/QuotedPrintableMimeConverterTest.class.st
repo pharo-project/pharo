@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'coder'
 	],
-	#category : #Network-Tests-MIME
+	#category : #'Network-Tests-MIME'
 }
 
 { #category : #accesing }

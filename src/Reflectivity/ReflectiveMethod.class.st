@@ -17,7 +17,7 @@ Class {
 		'compiledMethod',
 		'linkCount'
 	],
-	#category : #Reflectivity-Core
+	#category : #'Reflectivity-Core'
 }
 
 { #category : #'as yet unclassified' }

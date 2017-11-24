@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'changes'
 	],
-	#category : #Refactoring-Tests-Changes
+	#category : #'Refactoring-Tests-Changes'
 }
 
 { #category : #accessing }
@@ -131,7 +131,7 @@ RBRefactoringChangeTests >> testAddClassInteractively [
 	self universalTestFor: change
 ]
 
-{ #category : #tests-pattern }
+{ #category : #'tests-pattern' }
 RBRefactoringChangeTests >> testAddClassPattern [
 	"Make sure that all class definitions can be parsed."
 
@@ -151,7 +151,7 @@ RBRefactoringChangeTests >> testAddClassPattern [
 			self universalTestFor: change ] ]
 ]
 
-{ #category : #tests-pattern }
+{ #category : #'tests-pattern' }
 RBRefactoringChangeTests >> testAddClassTraitPattern [
 	"Make sure that all class trait definitions can be parsed."
 	
@@ -185,7 +185,7 @@ RBRefactoringChangeTests >> testAddInstanceVariable [
 	self universalTestFor: change
 ]
 
-{ #category : #tests-pattern }
+{ #category : #'tests-pattern' }
 RBRefactoringChangeTests >> testAddMetaclassPattern [
 	"Make sure that metaclass definitions can be parsed."
 	
@@ -210,7 +210,7 @@ RBRefactoringChangeTests >> testAddPool [
 	self universalTestFor: change
 ]
 
-{ #category : #tests-pattern }
+{ #category : #'tests-pattern' }
 RBRefactoringChangeTests >> testAddTraitPattern [
 	"Make sure that all trait definitions can be parsed."
 	
@@ -302,7 +302,7 @@ RBRefactoringChangeTests >> testComposite [
 	self universalTestFor: changes
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveClass [
 	| change |
 	change := changes defineClass: 'Object subclass: #' , self changeMock name , 'Temporary
@@ -318,7 +318,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveClass [
 	self assert: change definedClass isObsolete
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveClassInstanceVariable [
 	| change |
 	change := changes addInstanceVariable: 'foo' to: self changeMock class.
@@ -326,7 +326,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveClassInstanceVariable [
 	self deny: (change changeClass instVarNames includes: 'foo')
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveClassInteractively [
 	| change |
 	change := RBRefactoryChangeManager changeFactory addClassDefinition: 'Object subclass: #' , self changeMock name , 'Temporary
@@ -343,7 +343,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveClassInteractively [
 	
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveClassMethod [
 	| change |
 	change := changes compile: 'method ^ 1' in: self changeMock class classified: #utilities.
@@ -352,7 +352,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveClassMethod [
 	self assert: change definedSelector = #method
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveClassVariable [
 	| change |
 	change := changes addClassVariable: 'Foo' to: self changeMock.
@@ -360,7 +360,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveClassVariable [
 	self deny: (change changeClass classVarNames includes: 'Foo')
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveInstanceVariable [
 	| change |
 	change := changes addInstanceVariable: 'foo' to: self changeMock.
@@ -368,7 +368,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveInstanceVariable [
 	self deny: (change changeClass instVarNames includes: 'foo')
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveMethod [
 	| change |
 	change := changes compile: 'method ^ 1' in: self changeMock classified: #utilities.
@@ -377,7 +377,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveMethod [
 	self assert: change definedSelector = #method
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformAddRemoveMethodInteractively [
 	| change |
 	change := RBRefactoryChangeManager changeFactory addMethodSource: 'method ^ 1' in: self changeMock classified: #utilities for: self. 
@@ -386,7 +386,7 @@ RBRefactoringChangeTests >> testPerformAddRemoveMethodInteractively [
 	self assert: change definedSelector = #method
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformChangeClass [
 	| change |
 	change := changes defineClass: self class name , ' subclass: #' , self changeMock name , '
@@ -402,7 +402,7 @@ RBRefactoringChangeTests >> testPerformChangeClass [
 	self assert: change definedClass = self changeMock
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformChangeComment [
 	| change comment |
 	change := changes comment: 'Some Comment' in: self changeMock.
@@ -411,7 +411,7 @@ RBRefactoringChangeTests >> testPerformChangeComment [
 	self assert: change changeClass organization classComment = comment
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformChangeMetaclass [
 	| change |
 	change := changes defineClass: self changeMock name , ' class 
@@ -421,7 +421,7 @@ RBRefactoringChangeTests >> testPerformChangeMetaclass [
 	self assert: change definedClass = self changeMock class
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformChangeMethod [
 	| change source |
 	change := changes compile: 'one ^ 2' in: self changeMock.
@@ -430,7 +430,7 @@ RBRefactoringChangeTests >> testPerformChangeMethod [
 	self assert: (change changeClass sourceCodeAt: #one) = source
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformCompositeChange [
 	changes 
 		compile: 'method1 ^ 1' in: self changeMock;
@@ -442,7 +442,7 @@ RBRefactoringChangeTests >> testPerformCompositeChange [
 	self deny: (self changeMock canUnderstand: #method2) 
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformRenameClass [
 	| change |
 	change := changes renameClass: self changeMock to: self changeMock name , 'Plus'.
@@ -453,7 +453,7 @@ RBRefactoringChangeTests >> testPerformRenameClass [
 	self deny: (Smalltalk hasClassNamed: change newName)
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformRenameClassInstanceVariable [
 	| change |
 	change := changes renameInstanceVariable: 'classInstVar' to: 'classInstVarPlus' in: self changeMock class.
@@ -464,7 +464,7 @@ RBRefactoringChangeTests >> testPerformRenameClassInstanceVariable [
 	self deny: (change changeClass instVarNames includes: change newName)
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformRenameClassVariable [
 	| change |
 	change := changes renameClassVariable: 'ClassVar' to: 'ClassVarPlus' in: self changeMock.
@@ -475,7 +475,7 @@ RBRefactoringChangeTests >> testPerformRenameClassVariable [
 	self deny: (change changeClass classVarNames includes: change newName)
 ]
 
-{ #category : #tests-perform }
+{ #category : #'tests-perform' }
 RBRefactoringChangeTests >> testPerformRenameInstanceVariable [
 	| change |
 	change := changes renameInstanceVariable: 'instVar' to: 'instVarPlus' in: self changeMock.

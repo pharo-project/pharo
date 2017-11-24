@@ -1,7 +1,7 @@
 Class {
 	#name : #DelayTicklessSchedulerTest,
 	#superclass : #DelayMicrosecondSchedulerTest,
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #testing }

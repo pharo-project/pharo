@@ -32,7 +32,7 @@ Class {
 		'collectionNotIncluded',
 		'simpleCollection'
 	],
-	#category : #Collections-Tests-Sequenceable
+	#category : #'Collections-Tests-Sequenceable'
 }
 
 { #category : #helpers }

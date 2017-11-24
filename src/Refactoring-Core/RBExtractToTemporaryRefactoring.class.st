@@ -13,7 +13,7 @@ Class {
 		'newVariableName',
 		'parseTree'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -66,7 +66,7 @@ RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	^RBAssignmentNode variable: valueNode value: aNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
@@ -93,7 +93,7 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		addTemporaryNamed: newVariableName
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBExtractToTemporaryRefactoring >> parseTree [
 	parseTree isNil 
 		ifTrue: 
@@ -112,7 +112,7 @@ RBExtractToTemporaryRefactoring >> preconditions [
 						true])
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
 	| source |
 	source := class sourceCodeFor: selector.

@@ -5,7 +5,7 @@ Usually used within scroll panes
 Class {
 	#name : #GLMBandBrick,
 	#superclass : #GLMBrick,
-	#category : #Glamour-Morphic-Brick-Widgets-Core
+	#category : #'Glamour-Morphic-Brick-Widgets-Core'
 }
 
 { #category : #examples }

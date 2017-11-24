@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'maxLength'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #private }
@@ -196,7 +196,7 @@ self removeProperty: #CreatingParagraph.
 	^ paragraph
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 TextMorphForFieldView >> sharesFindReplace [
 	^ false
 ]

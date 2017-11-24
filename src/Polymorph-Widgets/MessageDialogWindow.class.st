@@ -9,7 +9,7 @@ Class {
 		'textFont',
 		'iconMorph'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #icons }
@@ -45,7 +45,7 @@ MessageDialogWindow >> iconMorph: anObject [
 	iconMorph := anObject
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 MessageDialogWindow >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/4 the display width."

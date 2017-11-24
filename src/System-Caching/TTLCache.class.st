@@ -26,7 +26,7 @@ Class {
 	#instVars : [
 		'timeToLive'
 	],
-	#category : #System-Caching
+	#category : #'System-Caching'
 }
 
 { #category : #accessing }

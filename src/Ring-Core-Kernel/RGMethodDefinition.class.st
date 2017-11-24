@@ -82,7 +82,7 @@ Class {
 		'stamp',
 		'package'
 	],
-	#category : #Ring-Core-Kernel
+	#category : #'Ring-Core-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -100,7 +100,7 @@ RGMethodDefinition class >> className: aString selector: aSelector isMetaSide: a
 	^ (self class: (RGClassDefinition named: aString) selector: aSelector) isMetaSide: aBoolean; yourself
 ]
 
-{ #category : #elements-annotations }
+{ #category : #'elements-annotations' }
 RGMethodDefinition class >> isExtensionKey [ 
 
 	^#isExtension
@@ -326,7 +326,7 @@ RGMethodDefinition >> isDefined [
 	^rClass notNil and: [ rClass includesSelector: self selector ]
 ]
 
-{ #category : #SUnit-support }
+{ #category : #'SUnit-support' }
 RGMethodDefinition >> isErrorTest [
 	"Is the receiver a test method that raised an error?"
 
@@ -357,7 +357,7 @@ RGMethodDefinition >> isExtension: aBoolean [
 	self annotationNamed: self class isExtensionKey put: aBoolean 
 ]
 
-{ #category : #SUnit-support }
+{ #category : #'SUnit-support' }
 RGMethodDefinition >> isFailedTest [
 	"Is the receiver a test method that failed?"
 
@@ -409,7 +409,7 @@ RGMethodDefinition >> isOverridden [
 	^ false
 ]
 
-{ #category : #SUnit-support }
+{ #category : #'SUnit-support' }
 RGMethodDefinition >> isPassedTest [
 	"Is the receiver a test method that passed?"
 
@@ -439,7 +439,7 @@ RGMethodDefinition >> isSameRevisionAs: aRGMethodDefinition [
 				and: [ self sourceCode = aRGMethodDefinition sourceCode ] ] ]
 ]
 
-{ #category : #SUnit-support }
+{ #category : #'SUnit-support' }
 RGMethodDefinition >> isTestMethod [
 	| selectorString |
 	self numArgs isZero

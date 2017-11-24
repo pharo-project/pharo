@@ -4,7 +4,7 @@ I am a parse tree leaf representing a selector.
 Class {
 	#name : #SelectorNode,
 	#superclass : #LeafNode,
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }
@@ -56,7 +56,7 @@ SelectorNode >> key: aSelector [
 	key := aSelector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SelectorNode >> name: literal key: object index: i type: type [
 	"For compatibility with Encoder>>name:key:class:type:set:"
 	^self key: object index: i type: type

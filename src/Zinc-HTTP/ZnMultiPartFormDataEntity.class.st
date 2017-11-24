@@ -14,7 +14,7 @@ Class {
 		'parts',
 		'representation'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #testing }
@@ -80,7 +80,7 @@ ZnMultiPartFormDataEntity >> getBoundary [
 	^ (self contentType parameterAt: 'boundary') withoutQuoting 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMultiPartFormDataEntity >> initialize [
 	super initialize.
 	self contentType: self mimeTypeWithBoundary  
@@ -160,7 +160,7 @@ ZnMultiPartFormDataEntity >> printContentsOn: stream [
 	self parts printElementsOn: stream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	"Switch to streaming implementation later on"
 	
@@ -176,7 +176,7 @@ ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	self parse: bytes boundary: self getBoundary asByteArray binary: true
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMultiPartFormDataEntity >> readFrom: stream [
 	"Switch to streaming implementation later on"
 	

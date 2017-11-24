@@ -9,7 +9,7 @@ stream upToEnd
 Class {
 	#name : #BinaryFileStream,
 	#superclass : #AbstractBinaryFileStream,
-	#category : #Files-Streams
+	#category : #'Files-Streams'
 }
 
 { #category : #testing }
@@ -18,7 +18,7 @@ BinaryFileStream >> atEnd [
 	^ self primAtEnd: handle
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 BinaryFileStream >> close [
 	self closed
 		ifTrue: [ ^ self ].

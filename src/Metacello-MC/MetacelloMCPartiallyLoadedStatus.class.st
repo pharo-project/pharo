@@ -17,7 +17,7 @@ Class {
 		'vrsnStatus',
 		'abort'
 	],
-	#category : #Metacello-MC-Specs
+	#category : #'Metacello-MC-Specs'
 }
 
 { #category : #'instance creation' }

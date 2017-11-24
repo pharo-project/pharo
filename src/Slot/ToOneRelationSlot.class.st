@@ -4,7 +4,7 @@ I'm an relation slot  that  describes the one or zero side of an association.
 Class {
 	#name : #ToOneRelationSlot,
 	#superclass : #RelationSlot,
-	#category : #Slot-Examples-Associations
+	#category : #'Slot-Examples-Associations'
 }
 
 { #category : #testing }
@@ -13,7 +13,7 @@ ToOneRelationSlot >> isToOneSlot [
 	^true
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 ToOneRelationSlot >> write: newValue to: anObject [
 
 	| oldValue |

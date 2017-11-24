@@ -4,7 +4,7 @@ SUnit tests for UTF8TextConverter
 Class {
 	#name : #UTF8TextConverterTest,
 	#superclass : #TestCase,
-	#category : #Multilingual-Tests-TextConversion
+	#category : #'Multilingual-Tests-TextConversion'
 }
 
 { #category : #testing }

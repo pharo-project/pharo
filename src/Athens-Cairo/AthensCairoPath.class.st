@@ -6,7 +6,7 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#category : #Athens-Cairo-Paths
+	#category : #'Athens-Cairo-Paths'
 }
 
 { #category : #'instance creation' }
@@ -30,7 +30,7 @@ AthensCairoPath >> asAthensShapeOn: anAthensCanvas [
 	^ self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoPath >> initialize [ 
 	handle value = 0 ifTrue: [ 
 		self error: 'Error creating new path' ].

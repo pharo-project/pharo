@@ -25,7 +25,7 @@ Class {
 		'workingCopy',
 		'trimVersionLists'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ MBConfigurationInfo class >> new [
 	self error: 'Please, use #configuration: to instantiate ', self name printString
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBConfigurationInfo >> baselines [ 
 	baselines ifNotNil: [ ^baselines ].
 	baselines := self baselinesFor: self project.
@@ -230,7 +230,7 @@ MBConfigurationInfo >> configurationRoot: anObject [
 	configurationRoot := anObject
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBConfigurationInfo >> currentVersion [
 	"Return the currentVersion of the configuration ... nil if not loaded."
 
@@ -249,7 +249,7 @@ MBConfigurationInfo >> currentVersion [
 	^ currentVersion
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBConfigurationInfo >> currentVersion: aVersion [
 
 	currentVersion  := aVersion.
@@ -367,7 +367,7 @@ MBConfigurationInfo >> recalculateSilently [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MBConfigurationInfo >> release [
 
 	baselines := versions := nil.
@@ -444,13 +444,13 @@ MBConfigurationInfo >> version [
 	^self currentVersion
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBConfigurationInfo >> versionForInfoList [
 
 	^self currentVersion 
 ]
 
-{ #category : #accessing-computed }
+{ #category : #'accessing-computed' }
 MBConfigurationInfo >> versions [
 	"Return the versions of the configuration"
 	| versionList devVersionString |

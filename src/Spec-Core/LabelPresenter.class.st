@@ -19,7 +19,7 @@ Class {
 		'labelHolder',
 		'emphasis'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -85,7 +85,7 @@ LabelPresenter >> label: aText [
 	labelHolder value: aText
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 LabelPresenter >> labelHolder [
 	"To register actions to be done when the label changes."
 	^ labelHolder

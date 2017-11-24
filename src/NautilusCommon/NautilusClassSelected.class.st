@@ -4,7 +4,7 @@ I announce when a class is selected, and also contain an information about selec
 Class {
 	#name : #NautilusClassSelected,
 	#superclass : #NautilusSelectionAnnouncement,
-	#category : #NautilusCommon-Announcements
+	#category : #'NautilusCommon-Announcements'
 }
 
 { #category : #'instance creation' }

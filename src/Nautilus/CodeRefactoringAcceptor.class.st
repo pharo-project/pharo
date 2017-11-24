@@ -4,7 +4,7 @@ I am an acceptor in the context of a RBRefactoring. I create a namespace of the 
 Class {
 	#name : #CodeRefactoringAcceptor,
 	#superclass : #AbstractAcceptor,
-	#category : #Nautilus-Acceptors
+	#category : #'Nautilus-Acceptors'
 }
 
 { #category : #protocol }

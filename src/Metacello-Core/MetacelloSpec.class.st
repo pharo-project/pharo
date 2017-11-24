@@ -6,7 +6,7 @@ Class {
 		'loader',
 		'mutable'
 	],
-	#category : #Metacello-Core-Specs
+	#category : #'Metacello-Core-Specs'
 }
 
 { #category : #'instance creation' }

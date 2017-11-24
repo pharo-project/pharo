@@ -1,7 +1,7 @@
 Class {
 	#name : #GTPlaygroundPlayPagesList,
 	#superclass : #GLMFallbackScrollListBrick,
-	#category : #GT-Playground
+	#category : #'GT-Playground'
 }
 
 { #category : #actions }
@@ -107,7 +107,7 @@ GTPlaygroundPlayPagesList >> on: aGTPlayBook [
 	self model: model
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTPlaygroundPlayPagesList >> onThemerChanged [
 	super onThemerChanged.
 	

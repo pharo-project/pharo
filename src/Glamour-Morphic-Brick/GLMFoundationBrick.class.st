@@ -18,7 +18,7 @@ Class {
 		'vResizing',
 		'hResizing'
 	],
-	#category : #Glamour-Morphic-Brick-Morphic
+	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
 { #category : #'instance creation' }
@@ -126,13 +126,13 @@ GLMFoundationBrick >> globalBoundsTranslateFactor [
 	^ self globalBounds origin
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMFoundationBrick >> hShrinkWrap [
 
 	hResizing:= #shrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMFoundationBrick >> hSpaceFill [
 
 	hResizing:= #spaceFill.
@@ -235,13 +235,13 @@ GLMFoundationBrick >> themer: aThemer [
 	self brickRoot themerChanged
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMFoundationBrick >> vShrinkWrap [
 
 	vResizing:= #shrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMFoundationBrick >> vSpaceFill [
 
 	vResizing:= #spaceFill

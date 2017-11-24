@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'attributes'
 	],
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #'as yet unclassified' }

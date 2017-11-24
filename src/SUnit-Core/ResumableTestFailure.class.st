@@ -13,7 +13,7 @@ for each element where #odd returns <false>, the element will be printed to the 
 Class {
 	#name : #ResumableTestFailure,
 	#superclass : #TestFailure,
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #'camp smalltalk' }

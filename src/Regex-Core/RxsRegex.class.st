@@ -14,7 +14,7 @@ Class {
 		'branch',
 		'regex'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #accessing }
@@ -31,7 +31,7 @@ RxsRegex >> dispatchTo: aMatcher [
 	^aMatcher syntaxRegex: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsRegex >> initializeBranch: aBranch regex: aRegex [
 	"See class comment for instance variable description."
 

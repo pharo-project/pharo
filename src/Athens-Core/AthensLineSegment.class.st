@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'point'
 	],
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #visitor }

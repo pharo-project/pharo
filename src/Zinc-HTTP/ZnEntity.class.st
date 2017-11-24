@@ -14,7 +14,7 @@ Class {
 		'contentType',
 		'contentLength'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #accessing }
@@ -171,7 +171,7 @@ ZnEntity >> asByteArray [
 	^ ByteArray streamContents: [ :stream | self writeOn: stream ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnEntity >> close [
 ]
 
@@ -251,12 +251,12 @@ ZnEntity >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnEntity >> readBinaryFrom: stream [
 	self readFrom: stream
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnEntity >> readFrom: stream [
 	self subclassResponsibility 
 ]

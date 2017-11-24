@@ -17,7 +17,7 @@ Class {
 		'string',
 		'encoder'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #testing }
@@ -163,7 +163,7 @@ ZnStringEntity >> printContentsOn: stream [
 		stream space; nextPutAll: self string ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnStringEntity >> readFrom: stream [
 	| buffer totalRead read readStream stringStream total |
 	total := self contentLength.

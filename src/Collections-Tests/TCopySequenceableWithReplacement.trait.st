@@ -3,7 +3,7 @@ A trait for test purposes
 "
 Trait {
 	#name : #TCopySequenceableWithReplacement,
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

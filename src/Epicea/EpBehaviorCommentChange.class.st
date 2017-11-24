@@ -11,7 +11,7 @@ Class {
 		'oldStamp',
 		'newStamp'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }

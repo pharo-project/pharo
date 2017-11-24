@@ -18,7 +18,7 @@ Class {
 		'context',
 		'messages'
 	],
-	#category : #AST-Core-Matching
+	#category : #'AST-Core-Matching'
 }
 
 { #category : #private }
@@ -140,7 +140,7 @@ RBParseTreeSearcher >> answer [
 	^answer
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBParseTreeSearcher >> answer: anObject [
 	answer := anObject
 ]

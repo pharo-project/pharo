@@ -23,7 +23,7 @@ Class {
 		'FilterCommonMessageSends',
 		'LogDebuggerStackToFile'
 	],
-	#category : #Spec-Debugger
+	#category : #'Spec-Debugger'
 }
 
 { #category : #settings }

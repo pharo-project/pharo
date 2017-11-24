@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'containerTree'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #'instance creation' }

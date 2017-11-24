@@ -13,7 +13,7 @@ Class {
 		'parameterIndex',
 		'argument'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -79,7 +79,7 @@ RBRemoveParameterRefactoring >> myConditions [
 						errorString: 'This argument is still referenced in at least one implementor!!')]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [ 
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.

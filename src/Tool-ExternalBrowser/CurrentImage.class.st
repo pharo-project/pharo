@@ -7,7 +7,7 @@ CurrentImage new packages
 Class {
 	#name : #CurrentImage,
 	#superclass : #Object,
-	#category : #Tool-ExternalBrowser
+	#category : #'Tool-ExternalBrowser'
 }
 
 { #category : #accessing }

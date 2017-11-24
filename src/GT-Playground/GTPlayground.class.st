@@ -24,7 +24,7 @@ Class {
 		'PreferredExtent',
 		'RememberPreferredExtent'
 	],
-	#category : #GT-Playground
+	#category : #'GT-Playground'
 }
 
 { #category : #menu }
@@ -34,7 +34,7 @@ GTPlayground class >> contextMenuBasicActionsFor: aPlayground [
 	^ aPlayground codePresentation defaultSelectionActions 
 ]
 
-{ #category : #compatibility-tools }
+{ #category : #'compatibility-tools' }
 GTPlayground class >> edit: aString label: aLabel [
 
 "Open a new playground with the given contents"
@@ -152,7 +152,7 @@ GTPlayground class >> openContents: aString label: aLabel [
 	^ self openOn: page
 ]
 
-{ #category : #compatibility-tools }
+{ #category : #'compatibility-tools' }
 GTPlayground class >> openLabel: aLabel [
 	| page |
 
@@ -350,7 +350,7 @@ GTPlayground >> codeIn: a [
 			text clearUserEdits ]
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayground >> codePresentation [
 
 	^ self inspectorPresentation firstPresentation
@@ -416,24 +416,24 @@ GTPlayground >> contextMenuPragma [
 	^ #playgroundContextMenu
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayground >> currentBindings [ 
 
 	^ self codePresentation currentBindings
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayground >> currentBindingsSorted [
 
 	^ self currentBindings associations asSortedCollection: [ :first :second | first key < second key ]
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTPlayground >> defaultPlaygroundTitle [
 	^ 'Playground'
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayground >> inspectorPresentation [
 
 	^ self presentations first 
@@ -459,7 +459,7 @@ GTPlayground >> openOn: aPage [
 	^ window
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTPlayground >> removeBinding: anAssociation [
 
 	|bindings|

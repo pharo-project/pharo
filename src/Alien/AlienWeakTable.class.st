@@ -20,7 +20,7 @@ Class {
 		'strongArray',
 		'owner'
 	],
-	#category : #Alien-Core
+	#category : #'Alien-Core'
 }
 
 { #category : #'instance creation' }
@@ -76,7 +76,7 @@ AlienWeakTable >> finalizeValues [
 		 lastUsedIndex := newLastUsedIndex]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AlienWeakTable >> initializeWithOwner: anObject [
 	accessProtect := Semaphore forMutualExclusion.
 	firstUnusedIndex := 1.

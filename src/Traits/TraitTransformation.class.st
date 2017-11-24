@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'subject'
 	],
-	#category : #Traits-Composition
+	#category : #'Traits-Composition'
 }
 
 { #category : #composition }

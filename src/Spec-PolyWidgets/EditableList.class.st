@@ -25,7 +25,7 @@ Class {
 		'addItemBlock',
 		'okBlock'
 	],
-	#category : #Spec-PolyWidgets-ListAndTree
+	#category : #'Spec-PolyWidgets-ListAndTree'
 }
 
 { #category : #example }

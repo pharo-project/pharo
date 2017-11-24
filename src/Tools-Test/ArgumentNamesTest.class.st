@@ -4,7 +4,7 @@ SUnit tests for generating argument names
 Class {
 	#name : #ArgumentNamesTest,
 	#superclass : #TestCase,
-	#category : #Tools-Test-Debugger
+	#category : #'Tools-Test-Debugger'
 }
 
 { #category : #asserting }

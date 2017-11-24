@@ -1,7 +1,7 @@
 Class {
 	#name : #FLPharoPlatform,
 	#superclass : #FLPlatform,
-	#category : #FuelPlatform-Pharo-Core
+	#category : #'FuelPlatform-Pharo-Core'
 }
 
 { #category : #testing }
@@ -29,7 +29,7 @@ FLPharoPlatform class >> addPackageManifest [
 		category: self hacksCategoryName
 ]
 
-{ #category : #private-hacks }
+{ #category : #'private-hacks' }
 FLPharoPlatform class >> basicAddHacks [
 	super basicAddHacks.
 	
@@ -43,12 +43,12 @@ FLPharoPlatform class >> isResponsibleForCurrentPlatform [
 	^ SystemVersion current version beginsWith: 'Pharo'
 ]
 
-{ #category : #accessing-system }
+{ #category : #'accessing-system' }
 FLPharoPlatform >> absolutePathOf: aString [
 	^ aString asFileReference fullName
 ]
 
-{ #category : #accessing-system }
+{ #category : #'accessing-system' }
 FLPharoPlatform >> imageName [
 	^ Smalltalk image shortImageName
 ]
@@ -63,7 +63,7 @@ FLPharoPlatform >> isSpur [
 	^ true
 ]
 
-{ #category : #accessing-compiler }
+{ #category : #'accessing-compiler' }
 FLPharoPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	| newMethod |
 	newMethod := aMethod ast
@@ -73,7 +73,7 @@ FLPharoPlatform >> renamedMethodCopyOf: aMethod selector: aSymbol [
 	^ newMethod compiledMethod
 ]
 
-{ #category : #accessing-system }
+{ #category : #'accessing-system' }
 FLPharoPlatform >> useAuthor: aString during: aBlock [
 	(Smalltalk at: #Author)
 		useAuthor: aString

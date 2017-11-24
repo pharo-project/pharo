@@ -9,7 +9,7 @@ Class {
 		'newSelector',
 		'affectedClassName'
 	],
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #'instance creation' }
@@ -30,7 +30,7 @@ EpRenameMethodRefactoring >> asRBRefactoring [
 		permutation: #()
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 EpRenameMethodRefactoring >> initializeFrom: anOldSelector to: aNewSelector in: aClassName [
 	self initialize.
 	

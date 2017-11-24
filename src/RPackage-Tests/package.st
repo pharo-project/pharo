@@ -1,1 +1,1 @@
-Package { #name : #RPackage-Tests }
+Package { #name : #'RPackage-Tests' }

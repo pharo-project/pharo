@@ -12,7 +12,7 @@ Class {
 		'leftColumn',
 		'rightColumn'
 	],
-	#category : #Morphic-Widgets-FastTable
+	#category : #'Morphic-Widgets-FastTable'
 }
 
 { #category : #'instance creation' }
@@ -40,7 +40,7 @@ FTColumnResizerMorph >> canResizeColumn [
 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 FTColumnResizerMorph >> delete [
 	super delete.
 	self release.
@@ -103,7 +103,7 @@ FTColumnResizerMorph >> mouseMove: anEvent [
 	traceMorph position: (anEvent cursorPoint x - lastMouse second x) @ traceMorph position y
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 FTColumnResizerMorph >> mouseUp: anEvent [
 	"Change the cursor back to normal if necessary and change the color back to normal."
 	
@@ -128,7 +128,7 @@ FTColumnResizerMorph >> pressedFillStyle [
 	^ self theme morphTreeSplitterPressedFillStyleFor: self
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 FTColumnResizerMorph >> release [
 	traceMorph := nil.
 	oldColor := nil.
@@ -149,7 +149,7 @@ FTColumnResizerMorph >> setGrabbedColor [
 	self fillStyle: Smalltalk ui theme fastTableColumnSplitterSelectedColor
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 FTColumnResizerMorph >> shouldDraw [
 	^ true
 ]
@@ -159,7 +159,7 @@ FTColumnResizerMorph >> splitsTopAndBottom [
 	^ false
 ]
 
-{ #category : #Polymorph-Widgets }
+{ #category : #'Polymorph-Widgets' }
 FTColumnResizerMorph >> themeChanged [
 	"Update the fill style."
 	self fillStyle: self normalFillStyle.

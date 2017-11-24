@@ -4,7 +4,7 @@ Use uncapitalized instead of withFirstCharacterDownshifted since withFirstCharac
 Class {
 	#name : #RBDeprecateWithFirstCharacterDownshifted,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

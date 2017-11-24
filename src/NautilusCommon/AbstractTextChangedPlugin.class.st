@@ -4,7 +4,7 @@ An AbstractTextChangedPlugin is a plugin which simply log each time the method d
 Class {
 	#name : #AbstractTextChangedPlugin,
 	#superclass : #AbstractNautilusPlugin,
-	#category : #NautilusCommon-Plugin
+	#category : #'NautilusCommon-Plugin'
 }
 
 { #category : #private }

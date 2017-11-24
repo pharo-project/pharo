@@ -4,7 +4,7 @@ Command to validate all configurations in versionner
 Class {
 	#name : #MBValidateAllConfigurationCommand,
 	#superclass : #MBConfigurationInfoCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #documentation }

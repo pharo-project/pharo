@@ -1,1 +1,1 @@
-Package { #name : #Tool-ProcessBrowser }
+Package { #name : #'Tool-ProcessBrowser' }

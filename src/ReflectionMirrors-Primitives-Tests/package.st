@@ -1,1 +1,1 @@
-Package { #name : #ReflectionMirrors-Primitives-Tests }
+Package { #name : #'ReflectionMirrors-Primitives-Tests' }

@@ -22,7 +22,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #System-Sound
+	#category : #'System-Sound'
 }
 
 { #category : #beeping }

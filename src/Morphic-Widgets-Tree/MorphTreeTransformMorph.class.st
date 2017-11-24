@@ -4,10 +4,10 @@ A custom transform morph for a morphic based tree
 Class {
 	#name : #MorphTreeTransformMorph,
 	#superclass : #TransformMorph,
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 MorphTreeTransformMorph >> addAllMorphs: aCollection after: anotherMorph [
 	^self privateAddAllMorphs: aCollection 
 			atIndex: (anotherMorph index ifNil: [submorphs size])

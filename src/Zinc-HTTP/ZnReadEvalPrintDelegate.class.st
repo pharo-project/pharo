@@ -60,7 +60,7 @@ Part of Zinc HTTP Components.
 Class {
 	#name : #ZnReadEvalPrintDelegate,
 	#superclass : #Object,
-	#category : #Zinc-HTTP-Client-Server
+	#category : #'Zinc-HTTP-Client-Server'
 }
 
 { #category : #public }

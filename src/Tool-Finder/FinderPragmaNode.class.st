@@ -4,7 +4,7 @@ A FinderPragmaNode is a Node used to render a pragma in the Finder Tree
 Class {
 	#name : #FinderPragmaNode,
 	#superclass : #FinderNode,
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #private }

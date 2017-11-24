@@ -10,7 +10,7 @@ Class {
 		'pageSizeEditor',
 		'nextPageAllowed'
 	],
-	#category : #Morphic-Widgets-Tree-Pagination
+	#category : #'Morphic-Widgets-Tree-Pagination'
 }
 
 { #category : #accessing }
@@ -25,7 +25,7 @@ MorphTreeChunkPager >> atBottom: aBoolean [
 
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 MorphTreeChunkPager >> buildPanel [
 	| widgets nextButton lastPageButton  searchEditor |
 	self removeAllMorphs.
@@ -179,7 +179,7 @@ MorphTreeChunkPager >> onLastPage [
 	^ self lastIndex = self nodeList size
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 MorphTreeChunkPager >> updateContents [
 	treeMorph vIsScrollable 
 		ifFalse: [self atBottom: true].

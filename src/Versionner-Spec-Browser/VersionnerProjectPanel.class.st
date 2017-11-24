@@ -23,7 +23,7 @@ Class {
 		'removeProjectButton',
 		'editProjectButton'
 	],
-	#category : #Versionner-Spec-Browser
+	#category : #'Versionner-Spec-Browser'
 }
 
 { #category : #spec }
@@ -87,12 +87,12 @@ VersionnerProjectPanel >> addGroup [
 			groupList roots: project groups ]
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> addGroupButton [
 	^ addGroupButton
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> addProjectButton [
 	^ addProjectButton
 ]
@@ -145,7 +145,7 @@ VersionnerProjectPanel >> config: anMBConfigurationInfo [
 	packagesPanel project: project.
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> editProjectButton [
 	^ editProjectButton
 ]
@@ -169,12 +169,12 @@ VersionnerProjectPanel >> editSelectedProjectLoads [
 	
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> groupList [
 	^ groupList
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> groupsLabel [
 	^ groupsLabel
 ]
@@ -297,7 +297,7 @@ VersionnerProjectPanel >> isProject: selection [
 	^ node parentNode isNil
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> packagesPanel [
 	^ packagesPanel
 ]
@@ -338,12 +338,12 @@ VersionnerProjectPanel >> projectBoundToSelection [
 		ifNotNil: [ selection parentNode content ]
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> projectList [
 	^ projectList
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> projectsLabel [
 	^ projectsLabel
 ]
@@ -376,17 +376,17 @@ VersionnerProjectPanel >> removeDependentProject: aMTDependantProject [
 	projectList roots: project requiredProjects.
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> removeGroupButton [
 	^ removeGroupButton
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> removeProjectButton [
 	^ removeProjectButton
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 VersionnerProjectPanel >> requiredProjectMenu: aMenu [
 	aMenu addMenuGroup: (MenuGroupPresenter new
 		addMenuItem: (MenuItemPresenter new

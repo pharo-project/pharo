@@ -4,7 +4,7 @@ I know how to rename an instance variable
 Class {
 	#name : #SugsRenameInstanceVar,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

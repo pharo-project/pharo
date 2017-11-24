@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'url'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #'instance creation' }

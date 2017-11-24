@@ -9,7 +9,7 @@ Class {
 		'oldSlot',
 		'host'
 	],
-	#category : #Slot-Exception
+	#category : #'Slot-Exception'
 }
 
 { #category : #accessing }

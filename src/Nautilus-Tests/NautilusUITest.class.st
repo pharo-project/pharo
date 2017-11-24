@@ -9,7 +9,7 @@ Class {
 		'nautilusUI2',
 		'nautilusUI3'
 	],
-	#category : #Nautilus-Tests
+	#category : #'Nautilus-Tests'
 }
 
 { #category : #running }

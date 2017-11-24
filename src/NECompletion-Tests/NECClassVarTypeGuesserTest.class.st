@@ -1,7 +1,7 @@
 Class {
 	#name : #NECClassVarTypeGuesserTest,
 	#superclass : #TestCase,
-	#category : #NECompletion-Tests
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #utils }

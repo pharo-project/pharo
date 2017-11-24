@@ -133,7 +133,7 @@ MCHttpRepository >> assertNonBinaryResponse: response [
 	response contentType isBinary ifTrue: [ MCRepositoryError signal: 'Did not expect a binary response but got ', response contentType printString ].
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCHttpRepository >> cacheRawVersionNamed: aString stream: contents [
 	"directly forward the contents to the cache repository. 
 	this avoids and unnecessary serialization step"
@@ -159,7 +159,7 @@ MCHttpRepository >> description [
 	^ self location
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCHttpRepository >> displayProgress: label during: workBlock [
 	| nextUpdateTime |
 	nextUpdateTime := 0.
@@ -199,7 +199,7 @@ MCHttpRepository >> flushCache [
 	readerCache := nil.
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCHttpRepository >> handleUnsuccessfulResponse: aZnResponse [
 	(#(403 401) includes: aZnResponse code)
 		ifTrue: [ MCPermissionDenied signalFor: self ].
@@ -220,7 +220,7 @@ MCHttpRepository >> httpClient [
 		yourself
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCHttpRepository >> loadAllFileNames [
 	| client |
 	self displayProgress: 'Loading all file names from ', self description during: [
@@ -302,7 +302,7 @@ MCHttpRepository >> project [
 	^ (self location splitOn: $/) last
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCHttpRepository >> readStreamForFileNamed: aString do: aBlock [
 	| client |
 	self displayProgress: 'Downloading ', aString during: [
@@ -400,7 +400,7 @@ MCHttpRepository >> versionReaderForFileNamed: aString do: aBlock [
 	^ (self versionReaderForFileNamed: aString) ifNotNil: aBlock
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCHttpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
 	| entity |
 	entity := self entityStreamContents: aBlock.

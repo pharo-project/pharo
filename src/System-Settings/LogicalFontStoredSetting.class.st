@@ -10,7 +10,7 @@ Class {
 		'weightValue',
 		'slantValue'
 	],
-	#category : #System-Settings-Persistence-Ston-StoredSettings
+	#category : #'System-Settings-Persistence-Ston-StoredSettings'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ A version info
 Class {
 	#name : #MBVersionInfo,
 	#superclass : #MBAbstractVersionInfo,
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }

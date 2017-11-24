@@ -9,7 +9,7 @@ HelpBrowser  openOn: AnnouncementsHelp
 Class {
 	#name : #Announcement,
 	#superclass : #Object,
-	#category : #Announcements-Core
+	#category : #'Announcements-Core'
 }
 
 { #category : #public }

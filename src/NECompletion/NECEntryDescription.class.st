@@ -9,7 +9,7 @@ Class {
 		'description',
 		'label'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
@@ -39,7 +39,7 @@ NECEntryDescription >> label [
 	^ label
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECEntryDescription >> setLabel: firstString title: secondString description: thirdString [ 
 	label := firstString.
 	title := secondString.

@@ -10,7 +10,7 @@ instead of
 Class {
 	#name : #IconShortcutRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #Polymorph-Widgets-Rules
+	#category : #'Polymorph-Widgets-Rules'
 }
 
 { #category : #accessing }

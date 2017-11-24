@@ -7,7 +7,7 @@ self openOn: World
 Class {
 	#name : #GTSimpleMethodsBrowser,
 	#superclass : #GLMCompositePresentation,
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #building }

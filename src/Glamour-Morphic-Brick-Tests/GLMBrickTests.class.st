@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'layouter'
 	],
-	#category : #Glamour-Morphic-Brick-Tests
+	#category : #'Glamour-Morphic-Brick-Tests'
 }
 
 { #category : #asserting }
@@ -65,14 +65,14 @@ GLMBrickTests >> assertWidthDirty: aBrick [
 	self assert: aBrick wrappedBounds isWidthClean not
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 GLMBrickTests >> markFullyClean: aBrick [ 
 
 	aBrick withAllSubbricks do: [ :each | each wrappedBounds markWidthClean; markHeightClean ].
 	^ aBrick
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 GLMBrickTests >> newBrickFullHeightAndWidthDependsOnParent: anInteger [
 
 	^ GLMBrick new
@@ -82,7 +82,7 @@ GLMBrickTests >> newBrickFullHeightAndWidthDependsOnParent: anInteger [
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 GLMBrickTests >> newBrickWithFullDependsOnChildren [
 
 	^ GLMBrick new 
@@ -92,7 +92,7 @@ GLMBrickTests >> newBrickWithFullDependsOnChildren [
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 GLMBrickTests >> newBrickWithFullFill [
 
 	^ GLMBrick new 
@@ -102,7 +102,7 @@ GLMBrickTests >> newBrickWithFullFill [
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 GLMBrickTests >> newBrickWithSmallStaticExtent [
 
 	^ GLMBrick new 
@@ -112,7 +112,7 @@ GLMBrickTests >> newBrickWithSmallStaticExtent [
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 GLMBrickTests >> newBrickWithStaticExtent [
 
 	^ GLMBrick new 
@@ -165,7 +165,7 @@ GLMBrickTests >> staticWidth [
 	^ 100
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> test100DependsOnChildrenBricksInsideOneStatic [
 	|root current|
 	
@@ -181,7 +181,7 @@ GLMBrickTests >> test100DependsOnChildrenBricksInsideOneStatic [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> test100FillBricksInsideEachOtherIndideStatic [
 	|root current|
 	
@@ -196,7 +196,7 @@ GLMBrickTests >> test100FillBricksInsideEachOtherIndideStatic [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> test100StaticBricksInsideEachOtherIndideStatic [
 	|root current|
 	
@@ -211,7 +211,7 @@ GLMBrickTests >> test100StaticBricksInsideEachOtherIndideStatic [
 	
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testBottomMarginMyselfDependency [
 	|root margin brick|
 	margin := 10.
@@ -227,7 +227,7 @@ GLMBrickTests >> testBottomMarginMyselfDependency [
 	self assert: brick brickBounds equals: (0@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testBottomMarginParentDependency [
 	|root margin brick|
 	margin := 10.
@@ -243,7 +243,7 @@ GLMBrickTests >> testBottomMarginParentDependency [
 	self assert: brick brickBounds equals: (0@0 corner: self staticExtent - (0@margin))
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testBrickDependsOnChildrenOneStatic [
 	|root brick|
 	
@@ -260,7 +260,7 @@ GLMBrickTests >> testBrickDependsOnChildrenOneStatic [
 	self assert: root extent equals: brick extent
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testChangeChildrenInParent [
 	|parent brick|
 	parent := self newBrickWithFullDependsOnChildren.
@@ -280,7 +280,7 @@ GLMBrickTests >> testChangeChildrenInParent [
 
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testChangeChildrenInParentAndSubchildren [
 	|parent brick child|
 	parent := self newBrickWithFullDependsOnChildren.
@@ -304,7 +304,7 @@ GLMBrickTests >> testChangeChildrenInParentAndSubchildren [
 
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testEmptyBrickDependsOnChildren [
 	|brick|
 	
@@ -320,7 +320,7 @@ GLMBrickTests >> testEmptyBrickDependsOnChildren [
 	self assert: brick extent equals: 0@0
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testFillBrickInsideStatic [
 	|root brick|
 	
@@ -335,13 +335,13 @@ GLMBrickTests >> testFillBrickInsideStatic [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testFreshBrickIsDirty [
 
 	self assertBrickDirty: GLMBrick new
 ]
 
-{ #category : #tests-align }
+{ #category : #'tests-align' }
 GLMBrickTests >> testFullAlignCenterShrinkWrapInSpaceFill [
 	|root brick1 brick2 brick3 increment|
 	
@@ -375,7 +375,7 @@ GLMBrickTests >> testFullAlignCenterShrinkWrapInSpaceFill [
 	
 ]
 
-{ #category : #tests-floating }
+{ #category : #'tests-floating' }
 GLMBrickTests >> testLeftFloatingMySelfDependency [
 	|root floating brick|
 	floating := #left.
@@ -391,7 +391,7 @@ GLMBrickTests >> testLeftFloatingMySelfDependency [
 	self assert: brick brickBounds equals: (0@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-floating }
+{ #category : #'tests-floating' }
 GLMBrickTests >> testLeftFloatingMySelfDependencyWithMargin [
 	|root floating margin brick|
 	margin := 10.
@@ -409,7 +409,7 @@ GLMBrickTests >> testLeftFloatingMySelfDependencyWithMargin [
 	self assert: brick brickBounds equals: (margin@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testLeftMarginChangeMyselfDependency [
 	|root margin newMargin brick|
 	margin := 10.
@@ -434,7 +434,7 @@ GLMBrickTests >> testLeftMarginChangeMyselfDependency [
 	self assert: brick brickBounds equals: (newMargin@0 extent: self staticSmallExtent).
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testLeftMarginMyselfDependency [
 	|root margin brick|
 	margin := 10.
@@ -450,7 +450,7 @@ GLMBrickTests >> testLeftMarginMyselfDependency [
 	self assert: brick brickBounds equals: (margin@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testLeftMarginParentDependency [
 	|root margin brick|
 	margin := 10.
@@ -466,7 +466,7 @@ GLMBrickTests >> testLeftMarginParentDependency [
 	self assert: brick brickBounds equals: (margin@0 corner: self staticExtent)
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenHeight [
 	|brick|
 	
@@ -480,7 +480,7 @@ GLMBrickTests >> testMarkerOneChildrenHeight [
 	self assert: brick wrappedBounds isHeightDirty.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenInChildrenHeight [
 	|root brick|
 	
@@ -499,7 +499,7 @@ GLMBrickTests >> testMarkerOneChildrenInChildrenHeight [
 	self assert: root wrappedBounds isHeightDirty.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenInChildrenWidth [
 	|root brick|
 	
@@ -518,7 +518,7 @@ GLMBrickTests >> testMarkerOneChildrenInChildrenWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenInParentHeight [
 	|root brick|
 	
@@ -537,7 +537,7 @@ GLMBrickTests >> testMarkerOneChildrenInParentHeight [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenInParentWidth [
 	|root brick|
 	
@@ -556,7 +556,7 @@ GLMBrickTests >> testMarkerOneChildrenInParentWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenInStaticHeight [
 	|root brick|
 	
@@ -575,7 +575,7 @@ GLMBrickTests >> testMarkerOneChildrenInStaticHeight [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenInStaticWidth [
 	|root brick|
 	
@@ -594,7 +594,7 @@ GLMBrickTests >> testMarkerOneChildrenInStaticWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneChildrenWidth [
 	|brick|
 	
@@ -608,7 +608,7 @@ GLMBrickTests >> testMarkerOneChildrenWidth [
 	self assert: brick wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneParentHeight [
 	|brick|
 	
@@ -622,7 +622,7 @@ GLMBrickTests >> testMarkerOneParentHeight [
 	self assert: brick wrappedBounds isHeightDirty.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneParentInParentHeight [
 	|root brick|
 	
@@ -641,7 +641,7 @@ GLMBrickTests >> testMarkerOneParentInParentHeight [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneParentInParentWidth [
 	|root brick|
 	
@@ -660,7 +660,7 @@ GLMBrickTests >> testMarkerOneParentInParentWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneParentInStaticHeight [
 	|root brick|
 	
@@ -679,7 +679,7 @@ GLMBrickTests >> testMarkerOneParentInStaticHeight [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneParentInStaticWidth [
 	|root brick|
 	
@@ -698,7 +698,7 @@ GLMBrickTests >> testMarkerOneParentInStaticWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneParentWidth [
 	|brick|
 	
@@ -712,7 +712,7 @@ GLMBrickTests >> testMarkerOneParentWidth [
 	self assert: brick wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticHeight [
 	|brick|
 	
@@ -726,7 +726,7 @@ GLMBrickTests >> testMarkerOneStaticHeight [
 	self assert: brick wrappedBounds isHeightDirty.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticInChildrenHeight [
 	|root brick|
 	
@@ -745,7 +745,7 @@ GLMBrickTests >> testMarkerOneStaticInChildrenHeight [
 	self assert: root wrappedBounds isHeightDirty.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticInChildrenWidth [
 	|root brick|
 	
@@ -764,7 +764,7 @@ GLMBrickTests >> testMarkerOneStaticInChildrenWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticInParentHeight [
 	|root brick|
 	
@@ -783,7 +783,7 @@ GLMBrickTests >> testMarkerOneStaticInParentHeight [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticInParentWidth [
 	|root brick|
 	
@@ -802,7 +802,7 @@ GLMBrickTests >> testMarkerOneStaticInParentWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticInStaticHeight [
 	|root brick|
 	
@@ -821,7 +821,7 @@ GLMBrickTests >> testMarkerOneStaticInStaticHeight [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticInStaticWidth [
 	|root brick|
 	
@@ -840,7 +840,7 @@ GLMBrickTests >> testMarkerOneStaticInStaticWidth [
 	self assert: root wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-marker }
+{ #category : #'tests-marker' }
 GLMBrickTests >> testMarkerOneStaticWidth [
 	|brick|
 	
@@ -854,7 +854,7 @@ GLMBrickTests >> testMarkerOneStaticWidth [
 	self assert: brick wrappedBounds isHeightClean.
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMaxHeightOneStatic [
 	|brick|
 	
@@ -866,7 +866,7 @@ GLMBrickTests >> testMaxHeightOneStatic [
 	self assert: brick brickBounds equals: (0@0 extent: self staticWidth @ self staticSmallHeight)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMaxHeightTwoParentDependencies [
 	|root brick1 brick2|
 	
@@ -884,7 +884,7 @@ GLMBrickTests >> testMaxHeightTwoParentDependencies [
 	self assert: brick2 extent equals: (self staticWidth @ (self staticHeight - self staticSmallHeight))
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMaxWidthOneStatic [
 	|brick|
 	
@@ -896,7 +896,7 @@ GLMBrickTests >> testMaxWidthOneStatic [
 	self assert: brick brickBounds equals: (0@0 extent: self staticSmallWidth @ self staticHeight)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMinAndMaxHeightTwoParentDependencies [
 	|root brick1 brick2 minHeight maxHeight|
 	minHeight := 60.
@@ -917,7 +917,7 @@ GLMBrickTests >> testMinAndMaxHeightTwoParentDependencies [
 	self assert: brick2 extent equals: (self staticWidth @ maxHeight)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMinAndMaxHeightTwoParentDependenciesReverse [
 	|root brick1 brick2 minHeight maxHeight|
 	minHeight := 20.
@@ -938,7 +938,7 @@ GLMBrickTests >> testMinAndMaxHeightTwoParentDependenciesReverse [
 	self assert: brick2 extent equals: (self staticWidth @ maxHeight)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMinHeightOneStatic [
 	|brick|
 	
@@ -950,7 +950,7 @@ GLMBrickTests >> testMinHeightOneStatic [
 	self assert: brick brickBounds equals: (0@0 extent: self staticSmallWidth @ self staticHeight)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMinHeightTwoParentDependencies [
 	|root brick1 brick2 height|
 	height := 80.
@@ -969,7 +969,7 @@ GLMBrickTests >> testMinHeightTwoParentDependencies [
 	self assert: brick2 extent equals: (self staticWidth @ (self staticHeight - height))
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testMinWidthOneStatic [
 	|brick|
 	
@@ -981,7 +981,7 @@ GLMBrickTests >> testMinWidthOneStatic [
 	self assert: brick brickBounds equals: (0@0 extent: self staticWidth @ self staticSmallHeight)
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testOneDependsOnParentOneDependsOnChildrenInsideStatic [
 	|root brick1 brick2 brick3 staticWidth staticHeight|
 	
@@ -1013,7 +1013,7 @@ GLMBrickTests >> testOneDependsOnParentOneDependsOnChildrenInsideStatic [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testOneDependsOnParentOneStaticInsideStatic [
 	|root brick1 brick2 staticWidth|
 	
@@ -1035,7 +1035,7 @@ GLMBrickTests >> testOneDependsOnParentOneStaticInsideStatic [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testOneStaticBrick [
 	|brick|
 	
@@ -1048,7 +1048,7 @@ GLMBrickTests >> testOneStaticBrick [
 	
 ]
 
-{ #category : #tests-floating }
+{ #category : #'tests-floating' }
 GLMBrickTests >> testRightFloatingMySelfDependency [
 	|root floating brick|
 	floating := #right.
@@ -1064,7 +1064,7 @@ GLMBrickTests >> testRightFloatingMySelfDependency [
 	self assert: brick brickBounds equals: ((self staticWidth - self staticSmallWidth)@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-floating }
+{ #category : #'tests-floating' }
 GLMBrickTests >> testRightFloatingMySelfDependencyWithMargin [
 	|root margin floating brick|
 	margin := 10.
@@ -1082,7 +1082,7 @@ GLMBrickTests >> testRightFloatingMySelfDependencyWithMargin [
 	self assert: brick brickBounds equals: ((self staticWidth - margin - self staticSmallWidth)@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testRightMarginMyselfDependency [
 	|root margin brick|
 	margin := 10.
@@ -1098,7 +1098,7 @@ GLMBrickTests >> testRightMarginMyselfDependency [
 	self assert: brick brickBounds equals: (0@0 extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testRightMarginParentDependency [
 	|root margin brick|
 	margin := 10.
@@ -1114,7 +1114,7 @@ GLMBrickTests >> testRightMarginParentDependency [
 	self assert: brick brickBounds equals: (0@0 corner: self staticExtent - (margin@0))
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testShrinkInShrinkChange [
 	|root brick1 brick2|
 	
@@ -1136,7 +1136,7 @@ GLMBrickTests >> testShrinkInShrinkChange [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testShrinkWrapInStaticWithNeighbours [
 	|root band child1 child2 neighbour childWidth width|
 	width := 20.
@@ -1160,7 +1160,7 @@ GLMBrickTests >> testShrinkWrapInStaticWithNeighbours [
 	self assert: band brickBounds equals: (0@0 extent: childWidth@(self staticHeight+self staticHeight)).
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testTopMarginMyselfDependency [
 	|root margin brick|
 	margin := 10.
@@ -1176,7 +1176,7 @@ GLMBrickTests >> testTopMarginMyselfDependency [
 	self assert: brick brickBounds equals: (0@margin extent: self staticSmallExtent)
 ]
 
-{ #category : #tests-geometry }
+{ #category : #'tests-geometry' }
 GLMBrickTests >> testTopMarginParentDependency [
 	|root margin brick|
 	margin := 10.
@@ -1192,7 +1192,7 @@ GLMBrickTests >> testTopMarginParentDependency [
 	self assert: brick brickBounds equals: (0@margin corner: self staticExtent)
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testTwoDependsOnParentInsideStatic [
 	|root brick1 brick2|
 	
@@ -1212,7 +1212,7 @@ GLMBrickTests >> testTwoDependsOnParentInsideStatic [
 	
 ]
 
-{ #category : #tests-layouter }
+{ #category : #'tests-layouter' }
 GLMBrickTests >> testTwoShrinkInShrinkChange [
 	|root brick1 brick2 brick3|
 	

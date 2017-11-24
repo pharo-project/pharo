@@ -8,7 +8,7 @@ I send these event back to my handler:
 Class {
 	#name : #OSTouchThreeFingersScrollDetector,
 	#superclass : #OSTouchScrollDetector,
-	#category : #OSWindow-Core-Gestures
+	#category : #'OSWindow-Core-Gestures'
 }
 
 { #category : #abstract }

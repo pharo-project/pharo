@@ -9,7 +9,7 @@ Class {
 		'#directedMovies => ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie',
 		'#actedInMovies => ToManyRelationSlot inverse: #actors inClass: #SlotExampleMovie'
 	],
-	#category : #Slot-Tests-Associations
+	#category : #'Slot-Tests-Associations'
 }
 
 { #category : #'instance creation' }

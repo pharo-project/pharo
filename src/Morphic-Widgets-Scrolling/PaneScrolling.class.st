@@ -12,7 +12,7 @@ Class {
 		'step',
 		'scrollPane'
 	],
-	#category : #Morphic-Widgets-Scrolling
+	#category : #'Morphic-Widgets-Scrolling'
 }
 
 { #category : #accessing }

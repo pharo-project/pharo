@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parent'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }
@@ -26,12 +26,12 @@ MalDisjointSetNode >> makeSet [
 	parent := self
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 MalDisjointSetNode >> parent [
 	^ parent
 ]
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 MalDisjointSetNode >> parent: anObject [
 	parent := anObject
 ]

@@ -11,7 +11,7 @@ Class {
 		'multiBundle',
 		'entity'
 	],
-	#category : #GT-EventRecorder-Tests-Support
+	#category : #'GT-EventRecorder-Tests-Support'
 }
 
 { #category : #running }

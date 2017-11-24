@@ -29,7 +29,7 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #FreeType-Settings
+	#category : #'FreeType-Settings'
 }
 
 { #category : #'instance creation' }

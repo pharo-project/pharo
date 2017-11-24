@@ -11,7 +11,7 @@ Class {
 		'filterField',
 		'kmTable'
 	],
-	#category : #Spec-Tools-Keymapping
+	#category : #'Spec-Tools-Keymapping'
 }
 
 { #category : #specs }

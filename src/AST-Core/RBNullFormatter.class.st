@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'FormatAsYouReadPolicy'
 	],
-	#category : #AST-Core-Formatter
+	#category : #'AST-Core-Formatter'
 }
 
 { #category : #initialize }

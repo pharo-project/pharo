@@ -8,7 +8,7 @@ Class {
 		'okButton',
 		'okAction'
 	],
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #specs }

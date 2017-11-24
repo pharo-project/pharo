@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'newSourceCode'
 	],
-	#category : #OpalCompiler-Core-Exception
+	#category : #'OpalCompiler-Core-Exception'
 }
 
 { #category : #accessing }

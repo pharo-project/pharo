@@ -5,7 +5,7 @@ Class {
 		'scrollButtonIconRenderBlock',
 		'minimumPageNumberForScrollbar'
 	],
-	#category : #Glamour-Morphic-Pager-Glamour
+	#category : #'Glamour-Morphic-Pager-Glamour'
 }
 
 { #category : #accessing }

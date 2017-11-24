@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'previouslyIn'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
 { #category : #querying }
@@ -150,7 +150,7 @@ RubTextSegmentIconDisplayer >> iconPositionOfSegment: aSegment [
 		translateBy: 0 negated @ (self offset y negated + self bounds top)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubTextSegmentIconDisplayer >> initialize [
 	super initialize.
 	self clipSubmorphs: false

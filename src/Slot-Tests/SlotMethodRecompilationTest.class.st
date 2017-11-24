@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'class'
 	],
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
 { #category : #accessing }

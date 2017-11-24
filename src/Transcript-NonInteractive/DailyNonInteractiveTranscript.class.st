@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'date'
 	],
-	#category : #Transcript-NonInteractive
+	#category : #'Transcript-NonInteractive'
 }
 
 { #category : #constants }
@@ -31,7 +31,7 @@ DailyNonInteractiveTranscript >> fileNameWithDate [
 	^ newName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 DailyNonInteractiveTranscript >> initialize [
 	super initialize.
 	date := Date today

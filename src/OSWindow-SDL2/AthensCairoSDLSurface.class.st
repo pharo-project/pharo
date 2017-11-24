@@ -4,7 +4,7 @@ I'm a cairo surface who renders directly to a SDL2 surface.
 Class {
 	#name : #AthensCairoSDLSurface,
 	#superclass : #AthensCairoSurface,
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'instance creation' }

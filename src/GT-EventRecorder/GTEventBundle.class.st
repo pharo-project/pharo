@@ -13,7 +13,7 @@ Class {
 		'category',
 		'data'
 	],
-	#category : #GT-EventRecorder-Support
+	#category : #'GT-EventRecorder-Support'
 }
 
 { #category : #visitor }

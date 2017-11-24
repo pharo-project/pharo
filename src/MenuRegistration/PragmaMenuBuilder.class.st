@@ -56,7 +56,7 @@ Class {
 		'pragmaCollector',
 		'currentRoot'
 	],
-	#category : #MenuRegistration-Core
+	#category : #'MenuRegistration-Core'
 }
 
 { #category : #private }
@@ -295,7 +295,7 @@ PragmaMenuBuilder >> pragmaKeywords: aCollection [
 	pragmaKeywords addAll: (aCollection collect: [:k | k asSymbol])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 PragmaMenuBuilder >> release [
 	self pragmaCollector unsubscribe: self.
 	pragmaCollector := nil.

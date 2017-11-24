@@ -17,7 +17,7 @@ Class {
 		'lineColor',
 		'selected'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #'drag and drop' }
@@ -182,7 +182,7 @@ MorphTreeNodeMorph >> closeItemPath: anArray [
 	^container setSelectedMorph: nil
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeNodeMorph >> collapseNodePath: anArray [
 	"Close a path based on node."
 	
@@ -413,7 +413,7 @@ MorphTreeNodeMorph >> expand [
 
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeNodeMorph >> expandItemPath: anArray [
 	"Open a path."
 	
@@ -746,7 +746,7 @@ MorphTreeNodeMorph >> openItemPath: anArray [
 	^self
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 MorphTreeNodeMorph >> openNodePath: anArray [ 
 	| found |
 	anArray isEmpty

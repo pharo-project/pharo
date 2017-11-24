@@ -4,7 +4,7 @@ AbstractKeyPressedPlugin is an abstract plugin which reacts to key strokes by se
 Class {
 	#name : #AbstractKeyPressedPlugin,
 	#superclass : #AbstractNautilusPlugin,
-	#category : #NautilusCommon-Plugin
+	#category : #'NautilusCommon-Plugin'
 }
 
 { #category : #announcement }

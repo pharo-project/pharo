@@ -11,7 +11,7 @@ Class {
 		'oldComment',
 		'oldStamp'
 	],
-	#category : #System-Announcements-System-Classes
+	#category : #'System-Announcements-System-Classes'
 }
 
 { #category : #'instance creation' }

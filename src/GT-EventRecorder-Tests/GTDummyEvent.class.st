@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'data'
 	],
-	#category : #GT-EventRecorder-Tests-Support
+	#category : #'GT-EventRecorder-Tests-Support'
 }
 
 { #category : #comparing }

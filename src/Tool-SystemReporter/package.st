@@ -1,1 +1,1 @@
-Package { #name : #Tool-SystemReporter }
+Package { #name : #'Tool-SystemReporter' }

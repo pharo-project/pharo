@@ -2,13 +2,13 @@
 I represent a handle of SDL rendering context, coming from SDL2 library
 "
 Class {
-	#name : #SDL_Renderer,
+	#name : #'SDL_Renderer',
 	#superclass : #SDL2Handle,
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #finalization }

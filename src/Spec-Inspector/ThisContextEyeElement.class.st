@@ -4,7 +4,7 @@ This eye element is used in the right panel of the debugger to show thiscontext 
 Class {
 	#name : #ThisContextEyeElement,
 	#superclass : #SelfEyeElement,
-	#category : #Spec-Inspector-Element
+	#category : #'Spec-Inspector-Element'
 }
 
 { #category : #accessing }

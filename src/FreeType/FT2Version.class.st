@@ -11,7 +11,7 @@ Class {
 		'minor',
 		'patch'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }
 
 { #category : #'instance creation' }

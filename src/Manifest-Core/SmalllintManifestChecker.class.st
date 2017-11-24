@@ -16,7 +16,7 @@ Class {
 	#instVars : [
 		'manifestClassCache'
 	],
-	#category : #Manifest-Core
+	#category : #'Manifest-Core'
 }
 
 { #category : #accessing }

@@ -8,7 +8,7 @@ Class {
 		'repository',
 		'workingCopy'
 	],
-	#category : #Spec-Tools-Monticello
+	#category : #'Spec-Tools-Monticello'
 }
 
 { #category : #metacello }

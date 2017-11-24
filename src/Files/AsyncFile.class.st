@@ -17,7 +17,7 @@ Class {
 		'Busy',
 		'ErrorCode'
 	],
-	#category : #Files-Core
+	#category : #'Files-Core'
 }
 
 { #category : #initialization }
@@ -30,7 +30,7 @@ AsyncFile class >> initialize [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 AsyncFile >> close [
 
 	fileHandle ifNil: [^ self].  "already closed"
@@ -46,7 +46,7 @@ AsyncFile >> fileHandle [
 	^ fileHandle
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 AsyncFile >> open: fullFileName forWrite: aBoolean [
 	"Open a file of the given name, and return a handle for that file. Answer the receiver if the primitive succeeds, nil otherwise.
 	If openForWrite is true, then:

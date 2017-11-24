@@ -14,7 +14,7 @@ Class {
 		'piece',
 		'branch'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #accessing }
@@ -31,7 +31,7 @@ RxsBranch >> dispatchTo: aMatcher [
 	^aMatcher syntaxBranch: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsBranch >> initializePiece: aPiece branch: aBranch [
 	"See class comment for instance variables description."
 

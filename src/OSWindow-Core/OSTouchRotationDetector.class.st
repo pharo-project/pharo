@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'MinAngleBeforeDetection'
 	],
-	#category : #OSWindow-Core-Gestures
+	#category : #'OSWindow-Core-Gestures'
 }
 
 { #category : #accessing }

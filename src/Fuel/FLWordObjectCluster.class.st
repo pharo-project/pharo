@@ -18,10 +18,10 @@ Future work: maybe we can modify and use the Bitmap hackBits:   not only for mat
 Class {
 	#name : #FLWordObjectCluster,
 	#superclass : #FLBitsObjectCluster,
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 
 	| inst wideSize |
@@ -37,7 +37,7 @@ FLWordObjectCluster >> materializeInstanceWith: aDecoder [
 	
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLWordObjectCluster >> serializeInstance: aWordObject with: anEncoder [
 
 	anEncoder encodePositiveInteger: aWordObject basicSize.

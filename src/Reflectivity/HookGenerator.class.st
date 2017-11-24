@@ -13,7 +13,7 @@ Class {
 		'links',
 		'plugins'
 	],
-	#category : #Reflectivity-Core
+	#category : #'Reflectivity-Core'
 }
 
 { #category : #'instance creation' }

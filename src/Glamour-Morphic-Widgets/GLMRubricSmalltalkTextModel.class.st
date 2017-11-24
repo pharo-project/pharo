@@ -7,7 +7,7 @@ Class {
 		'bindingsStrategy',
 		'variableBindings'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #bindings }

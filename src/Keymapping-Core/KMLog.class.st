@@ -7,7 +7,7 @@ Class {
 	#classInstVars : [
 		'debug'
 	],
-	#category : #Keymapping-Core
+	#category : #'Keymapping-Core'
 }
 
 { #category : #logging }

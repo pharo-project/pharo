@@ -25,7 +25,7 @@ Class {
 	#name : #FFICallbackReturnValue,
 	#superclass : #Alien,
 	#type : #bytes,
-	#category : #Alien-Core
+	#category : #'Alien-Core'
 }
 
 { #category : #'instance creation' }
@@ -34,7 +34,7 @@ FFICallbackReturnValue class >> dataSize [
 	^16
 ]
 
-{ #category : #primitives-callbacks }
+{ #category : #'primitives-callbacks' }
 FFICallbackReturnValue >> primReturnFromContext: callbackContext "<ContextPart>" through: jmpbuf [ "<Integer>" "^not reached"
 	"Return a value, as described by the receiver, to some C callee that has made a
 	callback.   Reestablish the interpreter's state prior to the callback so that either

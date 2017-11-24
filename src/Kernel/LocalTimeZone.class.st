@@ -9,7 +9,7 @@ Class {
 	#pools : [
 		'ChronologyConstants'
 	],
-	#category : #Kernel-Chronology
+	#category : #'Kernel-Chronology'
 }
 
 { #category : #accessing }

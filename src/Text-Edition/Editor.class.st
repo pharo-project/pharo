@@ -18,7 +18,7 @@ Class {
 		'DumbbellCursor',
 		'SkipOverMultipleSpaces'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #settings }
@@ -379,7 +379,7 @@ Editor >> hasError [
 	^ false 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 Editor >> hasSelection [
 	^self hasCaret not
 ]
@@ -710,7 +710,7 @@ Editor >> selectWord: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 Editor >> selectionInterval [
 	"Answer the interval that is currently selected."
 
@@ -745,7 +745,7 @@ Editor >> theme [
 	^ Smalltalk ui theme 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 Editor >> unselect [
 	self markIndex: self pointIndex
 ]

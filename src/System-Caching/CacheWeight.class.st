@@ -16,7 +16,7 @@ Class {
 		'maximum',
 		'compute'
 	],
-	#category : #System-Caching
+	#category : #'System-Caching'
 }
 
 { #category : #accessing }

@@ -34,10 +34,10 @@ Class {
 		'dataSource',
 		'children'
 	],
-	#category : #Morphic-Widgets-FastTable-Tree
+	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 FTTreeItem class >> data: aData from: aDataSource [
 	^ self new
 		dataSource: aDataSource;
@@ -65,7 +65,7 @@ FTTreeItem >> children [
 	self subclassResponsibility
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeItem >> collapseAll [
 	self subclassResponsibility
 ]
@@ -86,12 +86,12 @@ FTTreeItem >> dataSource: anObject [
 	dataSource := anObject
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeItem >> expandAll [
 	self subclassResponsibility
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTTreeItem >> expandAllTo: aDepth [
 	self subclassResponsibility
 ]

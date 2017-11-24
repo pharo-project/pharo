@@ -10,7 +10,7 @@ Class {
 		'shortcutBrick',
 		'category'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }
@@ -167,7 +167,7 @@ GTSpotterCategoryTitleBrick >> on: aStepModel category: aProcessor [
 	^ self
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GTSpotterCategoryTitleBrick >> onCandidateSelected [
 	
 	(self stepModel isCategorySelected: self category)
@@ -181,14 +181,14 @@ GTSpotterCategoryTitleBrick >> onCandidateSelected [
 			ifTrue: [ self hideActionbar ] ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GTSpotterCategoryTitleBrick >> onHideHints [
 
 	(self hasSubbrick: self actionbarBrick) ifFalse: [ ^ self ].
 	self themer spotterThemer hintHideStyleFor: self diveInButton
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GTSpotterCategoryTitleBrick >> onHovered [
 	self showActionbar
 ]
@@ -200,14 +200,14 @@ GTSpotterCategoryTitleBrick >> onLayoutEvent: aLayoutEvent [
 	(aLayoutEvent isKindOf: GLMBrickLayoutStacked) ifTrue: [ "self enable" ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GTSpotterCategoryTitleBrick >> onRevealHints [
 
 	(self hasSubbrick: self actionbarBrick) ifFalse: [ ^ self ].
 	self themer spotterThemer hintRevealStyleFor: self diveInButton
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterCategoryTitleBrick >> onThemerChanged [
 	super onThemerChanged.
 	
@@ -216,7 +216,7 @@ GTSpotterCategoryTitleBrick >> onThemerChanged [
 	self themer spotterThemer categoryTitleNameWidgetStyleFor: self nameBrick.
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 GTSpotterCategoryTitleBrick >> onUnhovered [
 	(self stepModel isCategorySelected: self category)
 		ifFalse: [ self hideActionbar ]

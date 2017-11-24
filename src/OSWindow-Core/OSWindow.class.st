@@ -37,7 +37,7 @@ Class {
 		'TraceEvents',
 		'VMWindow'
 	],
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #'clipboard handling' }

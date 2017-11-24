@@ -4,7 +4,7 @@ SimplestClassListWithPagerExample new openOn: Object
 Class {
 	#name : #SimplestClassListWithPagerExample,
 	#superclass : #SimplestPaginatedClassListExample,
-	#category : #Morphic-Examples-MorphTreeWidget
+	#category : #'Morphic-Examples-MorphTreeWidget'
 }
 
 { #category : #examples }

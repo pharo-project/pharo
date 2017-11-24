@@ -6,7 +6,7 @@ This class changes the default compiler used to compile itself to include the AS
 Class {
 	#name : #ASTTransformExamplePluginActive,
 	#superclass : #Object,
-	#category : #OpalCompiler-Tests-Plugins
+	#category : #'OpalCompiler-Tests-Plugins'
 }
 
 { #category : #compiler }

@@ -16,7 +16,7 @@ Class {
 		'checkNewTemps',
 		'scopeStack'
 	],
-	#category : #AST-Core-Visitors
+	#category : #'AST-Core-Visitors'
 }
 
 { #category : #accessing }
@@ -46,7 +46,7 @@ RBReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [
 		read
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBReadBeforeWrittenTester >> checkNewTemps: aBoolean [ 
 	checkNewTemps := aBoolean
 ]
@@ -84,7 +84,7 @@ RBReadBeforeWrittenTester >> initialize [
 	checkNewTemps := true
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBReadBeforeWrittenTester >> initializeVars: varNames [ 
 	varNames do: [:each | self currentScope at: each put: nil]
 ]

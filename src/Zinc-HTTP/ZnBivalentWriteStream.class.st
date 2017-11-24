@@ -14,7 +14,7 @@ Class {
 		'stream',
 		'binary'
 	],
-	#category : #Zinc-HTTP-Streaming
+	#category : #'Zinc-HTTP-Streaming'
 }
 
 { #category : #'instance creation' }
@@ -28,7 +28,7 @@ ZnBivalentWriteStream class >> on: writeStream [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBivalentWriteStream >> close [
 	stream close
 ]
@@ -79,7 +79,7 @@ ZnBivalentWriteStream >> nextPutAll: collection [
 		ifFalse: [ stream nextPutAll: collection asString ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBivalentWriteStream >> on: writeStream [
 	stream := writeStream
 ]

@@ -23,7 +23,7 @@ Class {
 		'closeableHolder',
 		'selectedHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -52,7 +52,7 @@ TabPresenter >> actions: aCollection [
 	actionsHolder value: aCollection
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> actionsHolder [
 
 	^ actionsHolder
@@ -70,7 +70,7 @@ TabPresenter >> closeable: aBoolean [
 	closeableHolder value: aBoolean
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> closeableHolder [
 
 	^ closeableHolder
@@ -106,7 +106,7 @@ TabPresenter >> icon: aForm [
 	iconHolder value: aForm
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> iconHolder [
 
 	^ iconHolder
@@ -153,7 +153,7 @@ TabPresenter >> label: aString [
 	labelHolder value: aString
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> labelHolder [
 
 	^ labelHolder
@@ -171,7 +171,7 @@ TabPresenter >> menu: aBlock [
 	menuHolder value: aBlock
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> menuHolder [
 
 	^ menuHolder
@@ -183,7 +183,7 @@ TabPresenter >> model: aComposablePresenter [
 	self retrievingBlock: [ aComposablePresenter buildWithSpec asWidget ]
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> morphHolder [
 
 	^ morphHolder
@@ -201,7 +201,7 @@ TabPresenter >> retrievingBlock: aBlock [
 	retrievingBlockHolder value: aBlock
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> retrievingBlockHolder [
 
 	^ retrievingBlockHolder
@@ -213,7 +213,7 @@ TabPresenter >> selected: aBoolean [
 	selectedHolder value: aBoolean
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> selectedHolder [
 
 	^ selectedHolder
@@ -231,13 +231,13 @@ TabPresenter >> tabSelectedAction [
 	^ tabSelectedActionHolder value
 ]
 
-{ #category : #api-valueHolder }
+{ #category : #'api-valueHolder' }
 TabPresenter >> tabSelectedActionHolder [
 
 	^ tabSelectedActionHolder
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TabPresenter >> whenTabSelected: aBlock [
 
 	tabSelectedActionHolder value: aBlock

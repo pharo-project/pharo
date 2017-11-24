@@ -8,7 +8,7 @@ Class {
 		'scrollHorizontal',
 		'scrollVertical'
 	],
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #visitor }

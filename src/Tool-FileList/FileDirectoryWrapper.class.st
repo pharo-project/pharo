@@ -6,7 +6,7 @@ Class {
 		'balloonText',
 		'hasContents'
 	],
-	#category : #Tool-FileList
+	#category : #'Tool-FileList'
 }
 
 { #category : #'as yet unclassified' }

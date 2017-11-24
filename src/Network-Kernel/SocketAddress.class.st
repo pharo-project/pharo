@@ -22,7 +22,7 @@ Class {
 	#name : #SocketAddress,
 	#superclass : #ByteArray,
 	#type : #bytes,
-	#category : #Network-Kernel
+	#category : #'Network-Kernel'
 }
 
 { #category : #'instance creation' }

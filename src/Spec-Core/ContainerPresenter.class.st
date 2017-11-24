@@ -7,7 +7,7 @@ I should not be used directly
 Class {
 	#name : #ContainerPresenter,
 	#superclass : #AbstractWidgetPresenter,
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #specs }
@@ -38,14 +38,14 @@ ContainerPresenter >> buildAdapterWithSpec [
 	^ adapter
 ]
 
-{ #category : #api-focus }
+{ #category : #'api-focus' }
 ContainerPresenter >> eventKeyStrokesForNextFocus [
 	"String describing the keystroke to perform to jump to the next widget"
 
 	^ keyStrokesForNextFocusHolder value
 ]
 
-{ #category : #api-focus }
+{ #category : #'api-focus' }
 ContainerPresenter >> eventKeyStrokesForPreviousFocus [
 	"String describing the keystroke to perform to jump to the previous widget"
 

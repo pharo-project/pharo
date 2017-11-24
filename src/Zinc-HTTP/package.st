@@ -1,1 +1,1 @@
-Package { #name : #Zinc-HTTP }
+Package { #name : #'Zinc-HTTP' }

@@ -8,7 +8,7 @@ Class {
 	#pools : [
 		'PoolDefiner'
 	],
-	#category : #Kernel-Tests-Classes
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #accessing }

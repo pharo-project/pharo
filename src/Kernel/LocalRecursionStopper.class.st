@@ -10,7 +10,7 @@ A LocalRecursionStopper value is a collection of active methods which are curren
 Class {
 	#name : #LocalRecursionStopper,
 	#superclass : #ProcessLocalVariable,
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #private }

@@ -10,7 +10,7 @@ Class {
 		'tag',
 		'vertices'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #'instance creation' }
@@ -91,7 +91,7 @@ RubSurfaceSelectionShape >> vertices [
 	^ vertices
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubSurfaceSelectionShape >> vertices: aCollectionOfPoints firstIndex: firstCharIndex lastIndex: lastCharIndex color: aColor borderWidth: aBorderWidth borderColor: aBorderColor [
 	firstIndex := firstCharIndex.
 	lastIndex := lastCharIndex.

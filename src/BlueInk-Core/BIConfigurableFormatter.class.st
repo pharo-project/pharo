@@ -26,7 +26,7 @@ Class {
 		'DefaultPrettyPrintContext',
 		'FormatAsYouReadPolicy'
 	],
-	#category : #BlueInk-Core
+	#category : #'BlueInk-Core'
 }
 
 { #category : #private }
@@ -508,7 +508,7 @@ BIConfigurableFormatter >> format: aParseTree [
 	^ codeStream contents
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatArray: anArrayNode [
 	| current | 
 	(anArrayNode statements reject: [ :each | each className = 'RBLiteralValueNode' ])
@@ -526,7 +526,7 @@ BIConfigurableFormatter >> formatArray: anArrayNode [
 		ifNotEmpty: [ self formatSequenceNodeStatementsFor: anArrayNode ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatBlock: aBlockNode [
 	codeStream nextPutAll: self stringInsideBlocks.
 	self formatBlockArgumentsFor: aBlockNode.
@@ -537,7 +537,7 @@ BIConfigurableFormatter >> formatBlock: aBlockNode [
 		ifFalse: [ codeStream nextPutAll: self stringInsideBlocks ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatBlockArgumentsFor: aBlockNode [
 	aBlockNode arguments isEmpty
 		ifTrue: [ ^ self ].
@@ -553,7 +553,7 @@ BIConfigurableFormatter >> formatBlockArgumentsFor: aBlockNode [
 		ifTrue: [ self newLine ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatBlockCommentFor: aBlockNode [
 	originalSource isNil
 		ifTrue: [  ^ self ].
@@ -577,7 +577,7 @@ BIConfigurableFormatter >> formatCommentWithStatements: aBoolean [
 	context formatCommentWithStatements: aBoolean
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatCommentsFor: aNode [
 	originalSource isNil
 		ifTrue: [ ^ self ].
@@ -604,7 +604,7 @@ BIConfigurableFormatter >> formatMessageNodeInAMessageStreamFor: aMessageNode [
 		^ messageStream 
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatMethodBodyFor: aMethodNode [
 	self
 		indentAround:
@@ -615,7 +615,7 @@ BIConfigurableFormatter >> formatMethodBodyFor: aMethodNode [
 			self visitNode: aMethodNode body ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatMethodCommentFor: aMethodNode [
 	originalSource isNil
 		ifTrue: [ ^ self ].
@@ -630,7 +630,7 @@ BIConfigurableFormatter >> formatMethodCommentFor: aMethodNode [
 			self newLines: self newLinesAfterMethodComment ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatMethodPatternFor: aMethodNode [
 	aMethodNode arguments isEmpty
 		ifTrue: [ codeStream nextPutAll: aMethodNode selector ]
@@ -640,12 +640,12 @@ BIConfigurableFormatter >> formatMethodPatternFor: aMethodNode [
 				ifFalse: [ self privateFormatMethodPatternMonoLineFor: aMethodNode ] ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatPragmasFor: aMethodNode [
 	aMethodNode pragmas do: [ :each | self visitNode: each; newLine ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatSelectorAndArguments: aMessageNode [
 	| newLineBetweenArguments |
 	newLineBetweenArguments := self isMultiLineMessage: aMessageNode.
@@ -667,7 +667,7 @@ BIConfigurableFormatter >> formatSelectorAndArguments: aMessageNode [
 						ifFalse: [ [ self space ] ]) ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatSelectorAndArguments: aMessageNode firstSeparator: firstBlock restSeparator: restBlock [
 	| separatorBlock |
 	separatorBlock := firstBlock.
@@ -688,7 +688,7 @@ BIConfigurableFormatter >> formatSelectorAndArguments: aMessageNode firstSeparat
 							self handleLineForArgument: argument ] ] ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 	| statements |
 	statements := aSequenceNode statements.
@@ -711,7 +711,7 @@ BIConfigurableFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 					addNewLinesBeforeStatementStartingAt: (statements at: i + 1) start ] ]
 ]
 
-{ #category : #private-formatting }
+{ #category : #'private-formatting' }
 BIConfigurableFormatter >> formatStatementCommentsFor: aStatementNode [
 	originalSource isNil
 		ifTrue: [ ^ self ].

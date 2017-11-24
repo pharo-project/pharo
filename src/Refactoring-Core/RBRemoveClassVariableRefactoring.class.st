@@ -6,7 +6,7 @@ My precondition verifies that there is no reference to this class variable.
 Class {
 	#name : #RBRemoveClassVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #preconditions }

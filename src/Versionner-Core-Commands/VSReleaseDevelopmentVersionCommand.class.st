@@ -5,7 +5,7 @@ Turn the version into a release. It therefore appears as #stable afterward"".
 Class {
 	#name : #VSReleaseDevelopmentVersionCommand,
 	#superclass : #VSDevCycleCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #actions }

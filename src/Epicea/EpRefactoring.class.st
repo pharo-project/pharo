@@ -4,7 +4,7 @@ I represent a refactoring performed in the system.
 Class {
 	#name : #EpRefactoring,
 	#superclass : #EpEvent,
-	#category : #Epicea-Model
+	#category : #'Epicea-Model'
 }
 
 { #category : #visitor }

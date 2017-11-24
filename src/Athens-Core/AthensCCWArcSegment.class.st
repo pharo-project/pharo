@@ -6,7 +6,7 @@ of given angle, passing in counter-clockwise direction.
 Class {
 	#name : #AthensCCWArcSegment,
 	#superclass : #AthensArcSegment,
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #visitor }

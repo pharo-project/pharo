@@ -76,7 +76,7 @@ Class {
 		'continue',
 		'home'
 	],
-	#category : #Collections-Streams
+	#category : #'Collections-Streams'
 }
 
 { #category : #examples }
@@ -87,7 +87,7 @@ Generator class >> examplePrimes [
 	[generator atEnd] whileFalse:[Transcript show: generator next; cr].
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 Generator class >> on: aBlock [
 	^ self basicNew initializeOn: aBlock
 ]
@@ -99,7 +99,7 @@ Generator >> atEnd [
 	^ continue isNil
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 Generator >> close [
 	"Close the receiving generator and unwind its ensure-blocks."
 

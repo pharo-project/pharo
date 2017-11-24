@@ -8,7 +8,7 @@ Class {
 		'toolbarBox',
 		'hasInitialStep'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #callbacks }
@@ -26,7 +26,7 @@ GLMSystemWindow >> allKeystrokeActions [
 		ifFalse: [#()]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 GLMSystemWindow >> delete [
 	self model notNil ifTrue: [self model unregisterFromAllAnnouncements].
 	super delete

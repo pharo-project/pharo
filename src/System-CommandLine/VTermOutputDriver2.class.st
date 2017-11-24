@@ -39,22 +39,22 @@ Class {
 	#pools : [
 		'VTermOutputStyles'
 	],
-	#category : #System-CommandLine
+	#category : #'System-CommandLine'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 VTermOutputDriver2 class >> on: anOutputStream [
 	^ self new
 		outStream: anOutputStream;
 		yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 VTermOutputDriver2 class >> stderr [
 	^ self on: FileStream stderr
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 VTermOutputDriver2 class >> stdout [
 	^ self on: FileStream stdout
 ]
@@ -203,7 +203,7 @@ VTermOutputDriver2 >> clearToEnd [
 	^self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VTermOutputDriver2 >> close [
 	"Stdout shouldn't be closed"
 

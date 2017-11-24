@@ -22,7 +22,7 @@ Class {
 		'cancelOnEscape',
 		'cancelOnFocusLost'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI
+	#category : #'Glamour-Morphic-Brick-Widgets-UI'
 }
 
 { #category : #examples }
@@ -41,7 +41,7 @@ GLMEditableLabelBrick class >> gtExample [
 		yourself
 ]
 
-{ #category : #label-brick-actions }
+{ #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> accept [
 
 	self text: self editBrick text.
@@ -49,7 +49,7 @@ GLMEditableLabelBrick >> accept [
 	self beNormal
 ]
 
-{ #category : #label-animation }
+{ #category : #'label-animation' }
 GLMEditableLabelBrick >> animateToEditFocused [
 
 	self borderAnimation
@@ -58,7 +58,7 @@ GLMEditableLabelBrick >> animateToEditFocused [
 		animate: self
 ]
 
-{ #category : #label-animation }
+{ #category : #'label-animation' }
 GLMEditableLabelBrick >> animateToEditNotFocused [
 
 	self borderAnimation
@@ -67,7 +67,7 @@ GLMEditableLabelBrick >> animateToEditNotFocused [
 		animate: self
 ]
 
-{ #category : #label-animation }
+{ #category : #'label-animation' }
 GLMEditableLabelBrick >> animateToNormal [
 
 	self borderAnimation
@@ -90,7 +90,7 @@ GLMEditableLabelBrick >> approximateWidth [
 		ifFalse: [ self editBrick width + self editBrick hPadding + self editBrick hMargin])
 ]
 
-{ #category : #label-brick-actions }
+{ #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> beEdit [
 
 	self isEditMode ifTrue: [ ^ self ].
@@ -104,7 +104,7 @@ GLMEditableLabelBrick >> beEdit [
 	self announce: #onEditMode
 ]
 
-{ #category : #label-brick-actions }
+{ #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> beNormal [
 	
 	self isReadMode ifTrue: [ ^ self ].
@@ -115,26 +115,26 @@ GLMEditableLabelBrick >> beNormal [
 	self announce: #onReadMode
 ]
 
-{ #category : #label-brick-accessing }
+{ #category : #'label-brick-accessing' }
 GLMEditableLabelBrick >> borderAnimation [
 
 	^ borderAnimation ifNil: [ borderAnimation := GLMAnimation borderColor duration: 200 ]
 ]
 
-{ #category : #label-brick-actions }
+{ #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> cancel [
 
 	self borderColor: self themer color alizarin.
 	self beNormal
 ]
 
-{ #category : #label-brick-actions }
+{ #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> cancelOnEscape [
 
 	cancelOnEscape := true
 ]
 
-{ #category : #label-brick-actions }
+{ #category : #'label-brick-actions' }
 GLMEditableLabelBrick >> cancelOnFocusLost [
 
 	cancelOnFocusLost := true
@@ -147,13 +147,13 @@ GLMEditableLabelBrick >> doesNotUnderstand: aMessage [
 		withArguments: aMessage arguments
 ]
 
-{ #category : #label-brick-accessing }
+{ #category : #'label-brick-accessing' }
 GLMEditableLabelBrick >> editBrick [
 
 	^ editBrick
 ]
 
-{ #category : #label-brick-accessing }
+{ #category : #'label-brick-accessing' }
 GLMEditableLabelBrick >> editBrick: aBrick [
 
 	editBrick := aBrick.
@@ -177,7 +177,7 @@ GLMEditableLabelBrick >> editBrick: aBrick [
 	self editBrick rubric announcer when: RubTextAcceptRequest send: #onTextChanged: to: self
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMEditableLabelBrick >> hShrinkWrap [
 	super hShrinkWrap.
 	
@@ -185,7 +185,7 @@ GLMEditableLabelBrick >> hShrinkWrap [
 	self editBrick hShrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMEditableLabelBrick >> hSpaceFill: anInteger [
 	super hSpaceFill: anInteger.
 	
@@ -211,37 +211,37 @@ GLMEditableLabelBrick >> initialize [
 		bindKeyCombination: Character escape toAction: [ self onEscapePressed ]
 ]
 
-{ #category : #label-brick-testing }
+{ #category : #'label-brick-testing' }
 GLMEditableLabelBrick >> isCancelOnEscape [
 
 	^ cancelOnEscape ifNil: [ cancelOnEscape := false ]
 ]
 
-{ #category : #label-brick-testing }
+{ #category : #'label-brick-testing' }
 GLMEditableLabelBrick >> isCancelOnFocusLost [
 
 	^ cancelOnFocusLost ifNil: [ cancelOnFocusLost := false ]
 ]
 
-{ #category : #label-brick-testing }
+{ #category : #'label-brick-testing' }
 GLMEditableLabelBrick >> isEditMode [
 
 	^ self hasSubbrick: self editBrick
 ]
 
-{ #category : #label-brick-testing }
+{ #category : #'label-brick-testing' }
 GLMEditableLabelBrick >> isReadMode [
 
 	^ self isEditMode not
 ]
 
-{ #category : #label-brick-accessing }
+{ #category : #'label-brick-accessing' }
 GLMEditableLabelBrick >> labelBrick [
 
 	^ labelBrick
 ]
 
-{ #category : #label-brick-accessing }
+{ #category : #'label-brick-accessing' }
 GLMEditableLabelBrick >> labelBrick: aBrick [
 
 	labelBrick := aBrick.
@@ -253,31 +253,31 @@ GLMEditableLabelBrick >> labelBrick: aBrick [
 	
 ]
 
-{ #category : #label-brick-creation }
+{ #category : #'label-brick-creation' }
 GLMEditableLabelBrick >> newEditBrick [
 
 	^ GLMRubTextFieldBrick new
 ]
 
-{ #category : #label-brick-creation }
+{ #category : #'label-brick-creation' }
 GLMEditableLabelBrick >> newLabelBrick [
 
 	^ GLMLabelBrick new
 ]
 
-{ #category : #label-events }
+{ #category : #'label-events' }
 GLMEditableLabelBrick >> onEscapePressed [
 
 	self isCancelOnEscape ifTrue: [ self cancel ]
 ]
 
-{ #category : #label-events }
+{ #category : #'label-events' }
 GLMEditableLabelBrick >> onGotFocus: ann [
 
 	self animateToEditFocused
 ]
 
-{ #category : #label-events }
+{ #category : #'label-events' }
 GLMEditableLabelBrick >> onLostFocus [
 	
 	self isCancelOnFocusLost & self isEditMode
@@ -288,7 +288,7 @@ GLMEditableLabelBrick >> onLostFocus [
 		ifFalse: [ self animateToNormal ]
 ]
 
-{ #category : #label-events }
+{ #category : #'label-events' }
 GLMEditableLabelBrick >> onTextAccepted: ann [
 	|isChanged|
 	
@@ -299,13 +299,13 @@ GLMEditableLabelBrick >> onTextAccepted: ann [
 	isChanged ifTrue: [ self announce: #onAccepted ]
 ]
 
-{ #category : #label-events }
+{ #category : #'label-events' }
 GLMEditableLabelBrick >> onTextChanged: ann [
 
 	self onTextAccepted: ann
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMEditableLabelBrick >> vShrinkWrap [
 	super vShrinkWrap.
 	
@@ -313,7 +313,7 @@ GLMEditableLabelBrick >> vShrinkWrap [
 	self editBrick vShrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMEditableLabelBrick >> vSpaceFill: anInteger [
 	super vSpaceFill: anInteger.
 	

@@ -22,7 +22,7 @@ Class {
 		'readPointer',
 		'writePointer'
 	],
-	#category : #Zodiac-Core
+	#category : #'Zodiac-Core'
 }
 
 { #category : #'instance creation' }
@@ -107,7 +107,7 @@ ZdcIOBuffer >> capacity [
 	^ self gapAtFront + self availableForWriting 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcIOBuffer >> close [
 	buffer ifNotNil: [  
 		ZdcByteArrayManager current recycle: buffer.
@@ -231,7 +231,7 @@ ZdcIOBuffer >> nextPut: anObject [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcIOBuffer >> on: sequenceableCollection [
 	buffer := sequenceableCollection.
 	self reset

@@ -9,7 +9,7 @@ Class {
 		'enablementSelector',
 		'keyText'
 	],
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #selecting }
@@ -39,7 +39,7 @@ ToggleMenuItemMorph >> balloonText: aText [
 	self assureExtension balloonText: aText
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> basicDrawOn: aCanvas [ 
 	"Draw on the canvas. Taken from MenuItemMorph for minor refactoring."
 	
@@ -65,7 +65,7 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 		self drawSubMenuMarker: subMenuMarker on: aCanvas in: stringBounds]
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
 	"Draw the icon on the canvas within the given bounds."
 	
@@ -82,7 +82,7 @@ ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
 		at: aRectangle topLeft + (0@(aRectangle height - iconForm height // 2))
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> drawKeyTextOn: aCanvas [ 
 	"Draw the key text on the canvas."
 	
@@ -100,7 +100,7 @@ ToggleMenuItemMorph >> drawOn: aCanvas [
 		drawKeyTextOn: aCanvas
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 	
@@ -109,7 +109,7 @@ ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
 	self drawIcon: aForm on: aCanvas in: markerRect
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle [
 	^ self 
 		drawText: aStringOrText 
@@ -118,7 +118,7 @@ ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle [
 		color: self stringColorToUse.
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> drawText: aStringOrText on: aCanvas in: aRectangle color: stringColor [ 
 	"Draw the text on the canvas within the given bounds."
 	
@@ -209,7 +209,7 @@ ToggleMenuItemMorph >> isEnabled: aBoolean [
 	self changed
 ]
 
-{ #category : #drawing-private }
+{ #category : #'drawing-private' }
 ToggleMenuItemMorph >> itemShortcut [
 
 	^ ToggleMenuItemShortcut 

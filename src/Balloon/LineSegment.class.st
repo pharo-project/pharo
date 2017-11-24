@@ -13,7 +13,7 @@ Class {
 		'start',
 		'end'
 	],
-	#category : #Balloon-Geometry
+	#category : #'Balloon-Geometry'
 }
 
 { #category : #'instance creation' }

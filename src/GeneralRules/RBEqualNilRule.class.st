@@ -4,7 +4,7 @@ Replaces = nil and == nil by isNil, ~= nil and ~~ nil by notNil to make the code
 Class {
 	#name : #RBEqualNilRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

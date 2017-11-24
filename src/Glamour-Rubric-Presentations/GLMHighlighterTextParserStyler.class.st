@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'parser'
 	],
-	#category : #Glamour-Rubric-Presentations
+	#category : #'Glamour-Rubric-Presentations'
 }
 
 { #category : #accessing }

@@ -9,7 +9,7 @@ Class {
 		'oldName',
 		'newName'
 	],
-	#category : #Refactoring-Changes
+	#category : #'Refactoring-Changes'
 }
 
 { #category : #'instance creation' }
@@ -69,7 +69,7 @@ RBRenameClassChange >> printOn: aStream [
 		nextPut: $!
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBRenameClassChange >> rename: oldString to: newString [ 
 	oldName := oldString.
 	newName := newString

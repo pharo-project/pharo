@@ -18,7 +18,7 @@ Class {
 		'classesListPresenter',
 		'textPresenter'
 	],
-	#category : #Spec-Tools-ChangeSorter
+	#category : #'Spec-Tools-ChangeSorter'
 }
 
 { #category : #menu }
@@ -846,7 +846,7 @@ ChangeSorterApplication >> updateTextContents [
 	textPresenter text: text.
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 ChangeSorterApplication >> whenChangesListChanges: aBlock [
 
 	changesListPresenter whenListChanged: aBlock

@@ -17,7 +17,7 @@ Class {
 	#name : #CompiledMethod,
 	#superclass : #CompiledCode,
 	#type : #compiledMethod,
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #constants }
@@ -358,7 +358,7 @@ CompiledMethod >> copyWithSource: aString [
 	^self copyWithTrailerBytes: (CompiledMethodTrailer new sourceCode: aString) 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CompiledMethod >> copyWithTrailerBytes: trailer [
 "Testing:
 	(CompiledMethod compiledMethodAt: #copyWithTrailerBytes:)
@@ -934,7 +934,7 @@ CompiledMethod >> readsField: varIndex [
 	^ super readsField: varIndex 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CompiledMethod >> removeFromSystem [
 	^ self methodClass removeSelector: self selector
 ]
@@ -1065,7 +1065,7 @@ CompiledMethod >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing-tags }
+{ #category : #'accessing-tags' }
 CompiledMethod >> tagWith: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	This method should apply new tag. All existing tags should not be changed. 
@@ -1076,7 +1076,7 @@ CompiledMethod >> tagWith: aSymbol [
 	self protocol: aSymbol
 ]
 
-{ #category : #accessing-tags }
+{ #category : #'accessing-tags' }
 CompiledMethod >> tags [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	For now we only define API to manage them implemented on top of method protocols.
@@ -1093,7 +1093,7 @@ CompiledMethod >> tempNames [
 	^self methodNode tempNames.
 ]
 
-{ #category : #accessing-tags }
+{ #category : #'accessing-tags' }
 CompiledMethod >> untagFrom: aSymbol [
 	"Any method could be tagged with multiple symbols for user purpose. 
 	This method should remove given tag from it. All other tags should not be changed. 

@@ -6,7 +6,7 @@ The method #methodWithCascades is not called, it is just a ""test data"" method 
 Class {
 	#name : #RBSplitCascadeRefactoringTest,
 	#superclass : #RBRefactoringTest,
-	#category : #Refactoring-Tests-Core
+	#category : #'Refactoring-Tests-Core'
 }
 
 { #category : #data }

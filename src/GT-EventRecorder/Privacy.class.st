@@ -22,7 +22,7 @@ Class {
 		'sendEntityNames',
 		'sendSourceCode'
 	],
-	#category : #GT-EventRecorder-Privacy
+	#category : #'GT-EventRecorder-Privacy'
 }
 
 { #category : #cleanup }

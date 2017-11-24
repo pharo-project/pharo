@@ -21,7 +21,7 @@ Class {
 		'sourceTextModel',
 		'spaceAnalysisResult'
 	],
-	#category : #Tool-SystemReporter
+	#category : #'Tool-SystemReporter'
 }
 
 { #category : #'instance creation' }
@@ -94,12 +94,12 @@ SystemReporter >> categoriesFrame [
 		
 ]
 
-{ #category : #accessing-categories }
+{ #category : #'accessing-categories' }
 SystemReporter >> categoryAt: anIndex [
 	^ categoriesSelected includes: (self categoryList at: anIndex ifAbsent: [ ^ false ]).
 ]
 
-{ #category : #accessing-categories }
+{ #category : #'accessing-categories' }
 SystemReporter >> categoryAt: anInteger put: aBoolean [
 	categoriesSelected := categoriesSelected
 		perform: (aBoolean ifTrue: [ #copyWith: ] ifFalse: [ #copyWithout: ])
@@ -112,7 +112,7 @@ SystemReporter >> categoryList [
 	^ categoryList ifNil: [categoryList := OrderedCollection new]
 ]
 
-{ #category : #accessing-categories }
+{ #category : #'accessing-categories' }
 SystemReporter >> categoryMenu: aMenu [
 	^ aMenu
 		addTitle: 'Categories';
@@ -123,18 +123,18 @@ SystemReporter >> categoryMenu: aMenu [
 		yourself
 ]
 
-{ #category : #accessing-categories }
+{ #category : #'accessing-categories' }
 SystemReporter >> categorySelected [
 	^ 0
 ]
 
-{ #category : #accessing-categories }
+{ #category : #'accessing-categories' }
 SystemReporter >> categorySelected: anInteger [
 
 	self changed: #categorySelected.
 ]
 
-{ #category : #accessing-report }
+{ #category : #'accessing-report' }
 SystemReporter >> copyReportToClipboard [
 	Clipboard clipboardText: self reportText.
 	UIManager default inform: 'Copied Report to Clipboard'
@@ -169,12 +169,12 @@ SystemReporter >> enumerate: aBlock startAt: first on: aStream [
 				cr ]
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 SystemReporter >> extent [
 	^ 640 @ 480
 ]
 
-{ #category : #printing-report }
+{ #category : #'printing-report' }
 SystemReporter >> header: aString on: aStream [
 	aStream withAttribute: TextEmphasis bold do: [	
 		aStream nextPutAll: aString; cr.
@@ -182,7 +182,7 @@ SystemReporter >> header: aString on: aStream [
 		aStream cr]
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 SystemReporter >> initialExtent [
 	^ 640 @ 480
 ]
@@ -218,7 +218,7 @@ SystemReporter >> initialize [
 	self updateReport
 ]
 
-{ #category : #accessing-ui }
+{ #category : #'accessing-ui' }
 SystemReporter >> label [
 	^ 'System Reporter' 
 ]
@@ -275,7 +275,7 @@ SystemReporter >> reportLinuxOSDetails: aStream [
 		self writeContentsSafelyFromFile: path on: aStream]
 ]
 
-{ #category : #accessing-report }
+{ #category : #'accessing-report' }
 SystemReporter >> reportMenu: aMenu [
 	^ aMenu
 		addTitle: 'Report' ;
@@ -344,7 +344,7 @@ SystemReporter >> reportSpaceAnalysis: aStream [
 	aStream nextPutAll: spaceAnalysisResult; cr
 ]
 
-{ #category : #accessing-report }
+{ #category : #'accessing-report' }
 SystemReporter >> reportText [
 
 	^ (report isNil or: [categoriesSelected isEmpty])

@@ -13,7 +13,7 @@ Class {
 		'packageName',
 		'workingCopy'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #'instance creation' }

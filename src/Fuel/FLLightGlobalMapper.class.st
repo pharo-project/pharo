@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'globals'
 	],
-	#category : #Fuel-Mappers
+	#category : #'Fuel-Mappers'
 }
 
 { #category : #'instance creation' }
@@ -35,7 +35,7 @@ FLLightGlobalMapper class >> valuesFor: globalSymbols in: globalEnvironment [
 	^ values
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLLightGlobalMapper >> initializeWith: someObjects [
 
 	self initialize.

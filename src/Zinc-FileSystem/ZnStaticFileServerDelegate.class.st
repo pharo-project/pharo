@@ -22,7 +22,7 @@ Class {
 		'directory',
 		'mimeTypeExpirations'
 	],
-	#category : #Zinc-FileSystem
+	#category : #'Zinc-FileSystem'
 }
 
 { #category : #accessing }

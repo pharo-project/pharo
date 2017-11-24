@@ -1,1 +1,1 @@
-Package { #name : #Morphic-Core }
+Package { #name : #'Morphic-Core' }

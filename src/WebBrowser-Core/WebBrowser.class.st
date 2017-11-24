@@ -4,7 +4,7 @@ General access to a webbrowser
 Class {
 	#name : #WebBrowser,
 	#superclass : #Object,
-	#category : #WebBrowser-Core-Base
+	#category : #'WebBrowser-Core-Base'
 }
 
 { #category : #example }
@@ -19,7 +19,7 @@ WebBrowser class >> isForCurrentSystem [
 	^self subclassResponsibility 
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 WebBrowser class >> openOn: aURLString [
 	"Open the webbrowser on the given URL"
 	

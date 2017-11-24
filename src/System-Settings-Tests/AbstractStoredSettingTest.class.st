@@ -4,7 +4,7 @@ An AbstractStoredSettingTest is a test class for testing the behavior of Abstrac
 Class {
 	#name : #AbstractStoredSettingTest,
 	#superclass : #TestCase,
-	#category : #System-Settings-Tests
+	#category : #'System-Settings-Tests'
 }
 
 { #category : #tests }

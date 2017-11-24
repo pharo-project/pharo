@@ -35,7 +35,7 @@ Class {
 		'canDeselectByClick',
 		'currentActivated'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -168,14 +168,14 @@ RadioButtonGroupPresenter >> rebuildWidget [
 	self buildWithSpecLayout: self dynamicLayout
 ]
 
-{ #category : #protocol-events }
+{ #category : #'protocol-events' }
 RadioButtonGroupPresenter >> whenCanDeselectByClickChanged: aBlock [
 	"This method is triggered when `canDeselectByClick` changes"
 	
 	canDeselectByClick whenChangedDo: aBlock
 ]
 
-{ #category : #protocol-events }
+{ #category : #'protocol-events' }
 RadioButtonGroupPresenter >> whenCurrentActivatedChanged: aBlock [
 
 	currentActivated whenChangedDo: aBlock

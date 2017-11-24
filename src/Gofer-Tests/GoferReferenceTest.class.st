@@ -4,7 +4,7 @@ SUnit tests for GoferReference and subclasses
 Class {
 	#name : #GoferReferenceTest,
 	#superclass : #GoferTest,
-	#category : #Gofer-Tests-Tests
+	#category : #'Gofer-Tests-Tests'
 }
 
 { #category : #running }

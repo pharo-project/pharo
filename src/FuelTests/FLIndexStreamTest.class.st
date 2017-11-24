@@ -4,7 +4,7 @@ SUnit tests for index streams
 Class {
 	#name : #FLIndexStreamTest,
 	#superclass : #TestCase,
-	#category : #FuelTests-Streams
+	#category : #'FuelTests-Streams'
 }
 
 { #category : #running }

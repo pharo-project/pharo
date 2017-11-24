@@ -9,7 +9,7 @@ Class {
 		'slot',
 		'set'
 	],
-	#category : #Slot-Examples-Associations
+	#category : #'Slot-Examples-Associations'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,7 @@ RelationSet >> do: aBlock [
 	set do: aBlock
 ]
 
-{ #category : #initailize-release }
+{ #category : #'initailize-release' }
 RelationSet >> initializeOwner: anObject slot: aToManyAssociation [
 
 	owner := anObject.

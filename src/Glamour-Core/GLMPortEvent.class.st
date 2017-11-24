@@ -15,7 +15,7 @@ Class {
 		'oldValue',
 		'transmissionContext'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #'instance creation' }
@@ -37,12 +37,12 @@ GLMPortEvent >> hasChanged [
 	^ self value ~~ self oldValue
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMPortEvent >> initializeOn: aPort previouslyValued: anObject [ 
 	self initializeOn: aPort previouslyValued: anObject in: OrderedCollection new
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMPortEvent >> initializeOn: aPort previouslyValued: anObject in: aTransmissionContext [ 
 	port := aPort.
 	oldValue := anObject.
@@ -65,7 +65,7 @@ GLMPortEvent >> oldValue [
 	^oldValue
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMPortEvent >> pane [ 
 	 
 	^self port pane
@@ -77,7 +77,7 @@ GLMPortEvent >> port [
 	^port
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMPortEvent >> portName [ 
 	 
 	^self port name
@@ -98,7 +98,7 @@ GLMPortEvent >> transmissionContext [
 	^ transmissionContext
 ]
 
-{ #category : #accessing-convenience }
+{ #category : #'accessing-convenience' }
 GLMPortEvent >> value [ 
 	 
 	^self port value

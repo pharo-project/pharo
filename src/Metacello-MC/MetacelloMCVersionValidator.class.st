@@ -46,7 +46,7 @@ Error reason codes:
 Class {
 	#name : #MetacelloMCVersionValidator,
 	#superclass : #MetacelloVersionValidator,
-	#category : #Metacello-MC-Validation
+	#category : #'Metacello-MC-Validation'
 }
 
 { #category : #private }

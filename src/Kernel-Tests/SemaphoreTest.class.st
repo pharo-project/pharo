@@ -7,7 +7,7 @@ Instance Variables none; does not have common test fixture accross all tests (be
 Class {
 	#name : #SemaphoreTest,
 	#superclass : #ClassTestCase,
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #private }

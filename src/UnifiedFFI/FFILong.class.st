@@ -5,7 +5,7 @@ Longs are special, see FFIULong comment for details.
 Class {
 	#name : #FFILong,
 	#superclass : #FFIULong,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

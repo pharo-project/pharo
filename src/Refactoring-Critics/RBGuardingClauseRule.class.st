@@ -4,7 +4,7 @@ Checks for ifTrue: or ifFalse: conditions at end of methods that have two or mor
 Class {
 	#name : #RBGuardingClauseRule,
 	#superclass : #RBParseTreeLintRule,
-	#category : #Refactoring-Critics-ParseTreeRules
+	#category : #'Refactoring-Critics-ParseTreeRules'
 }
 
 { #category : #accessing }

@@ -15,7 +15,7 @@ Class {
 		'originY',
 		'color'
 	],
-	#category : #Athens-Examples
+	#category : #'Athens-Examples'
 }
 
 { #category : #accessing }

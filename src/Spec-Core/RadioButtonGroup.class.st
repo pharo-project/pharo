@@ -21,7 +21,7 @@ Class {
 		'currentlyActivated',
 		'canDeselectByClick'
 	],
-	#category : #Spec-Core-Widgets-Support
+	#category : #'Spec-Core-Widgets-Support'
 }
 
 { #category : #api }
@@ -88,14 +88,14 @@ RadioButtonGroup >> initialize [
 		buttons do: [ :each | each canDeselectByClick: aBoolean ]].
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 RadioButtonGroup >> whenCanDeselectByClickChanged: aBlock [
 	"This method is triggered when `canDeselectByClick` changes"
 	
 	canDeselectByClick whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 RadioButtonGroup >> whenCurrentlyActivatedChanged: aBlock [
 	"This method is triggered when `canDeselectByClick` changes"
 	

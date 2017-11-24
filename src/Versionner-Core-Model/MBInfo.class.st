@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'ValidateAll'
 	],
-	#category : #Versionner-Core-Model
+	#category : #'Versionner-Core-Model'
 }
 
 { #category : #accessing }

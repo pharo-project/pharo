@@ -8,10 +8,10 @@ Class {
 	#classVars : [
 		'LastSaveOrder'
 	],
-	#category : #Balloon-Collections
+	#category : #'Balloon-Collections'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ShortIntegerArray class >> initialize [
 	LastSaveOrder := self new: 2.
 	LastSaveOrder at: 1 put: 42.
@@ -36,7 +36,7 @@ ShortIntegerArray class >> startUp [
 	^self error:'This must never happen'
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ShortIntegerArray class >> swapShortObjects [
 	self allSubInstancesDo:[:inst| inst swapShortObjects]
 ]

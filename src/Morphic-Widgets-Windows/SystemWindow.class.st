@@ -32,7 +32,7 @@ Class {
 		'FullscreenMargin',
 		'TopWindow'
 	],
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
 { #category : #initializing }
@@ -476,7 +476,7 @@ SystemWindow >> changeColor [
 	self setWindowColor 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> close [
 	^ self delete
 ]
@@ -488,13 +488,13 @@ SystemWindow >> closeWindowAction [
 	self close
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> collapse [
 	self isCollapsed ifFalse:[self collapseOrExpand].
 
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> collapseOrExpand [
 	"Collapse or expand the window, depending on existing state.
 	Use the taskbar if present, otherwise do as normal."
@@ -537,7 +537,7 @@ SystemWindow >> collapseOrExpand [
 			yourself).
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> collapsedFrame [
 	^ collapsedFrame
 ]
@@ -595,7 +595,7 @@ SystemWindow >> defaultIsResizeable [
 	^ true
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> delete [
 	"Should activate window before asking model if okToChange
 	since likely that a confirmation dialog will be requested.
@@ -651,7 +651,7 @@ SystemWindow >> doFastFrameDrag: grabPoint [
 
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> doFastWindowReframe: aSideOrCornerName [
 	"Do fast frame resizing  from the given corner or side"
 
@@ -686,13 +686,13 @@ SystemWindow >> existingPaneColor [
 	^aColor.
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> expand [
 	self isCollapsed ifTrue:[self collapseOrExpand].
 
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> extent: aPoint [ 
 	"Set the receiver's extent to value provided. Respect my minimumExtent."
 
@@ -754,13 +754,13 @@ SystemWindow >> fallbackMenuOn: menu [
 	menu lastItem icon: self theme windowCloseForm.
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> fastFramingOn [
 
 	^self theme settings fastDragging and: [self isFlexed not]
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> fullFrame [
 	^ fullFrame
 ]
@@ -778,7 +778,7 @@ SystemWindow >> fullscreenMargin [
 	^ self class fullscreenMargin
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> getBoundsWithFlex [
 	"Return the lastest bounds rectangle with origin forced to global coordinates"
 
@@ -789,7 +789,7 @@ SystemWindow >> getBoundsWithFlex [
 
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> getCollapsedFrame [
 
 	^RealEstateAgent assignCollapseFrameFor: self.
@@ -857,7 +857,7 @@ SystemWindow >> icon [
 	^ self iconNamed: #windowIcon
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> initialExtent [
 	^ (self model respondsTo: #initialExtent)
 		ifTrue: [self model initialExtent]
@@ -895,7 +895,7 @@ SystemWindow >> initializeShortcuts: aKMDispatcher [
 	aKMDispatcher attachCategory: #WindowShortcuts	
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> isCollapsed [
 	^ isCollapsed
 ]
@@ -1015,7 +1015,7 @@ SystemWindow >> menuBuilder [
 	^ menuBuilder ifNil: [ menuBuilder := PragmaMenuBuilder pragmaKeyword: self discoveredMenuPragmaKeyword model: self ].
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> minimizeOrRestore [
 	"Collapse or expand the window, depending on existing state"
 	
@@ -1119,7 +1119,7 @@ SystemWindow >> mouseUp: evt [
 	submorphs do: [:m | (m containsPoint: cp) ifTrue: [m mouseUp: evt]]
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> mustNotClose [
 	^ mustNotClose == true
 ]
@@ -1149,13 +1149,13 @@ SystemWindow >> offerWindowMenu [
 	aMenu popUpEvent: self currentEvent in: self world
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> openAsIs [
 	^self openAsIsIn: self currentWorld
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> openAsIsIn: aWorld [
 	"This msg and its callees result in the window being activeOnlyOnTop.
 	Play the open sound if the preference is enabled."
@@ -1174,7 +1174,7 @@ SystemWindow >> openAsIsIn: aWorld [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> openInWorld: aWorld [
 	"This msg and its callees result in the window being activeOnlyOnTop"
 	self bounds: (RealEstateAgent initialFrameFor: self world: aWorld).
@@ -1182,21 +1182,21 @@ SystemWindow >> openInWorld: aWorld [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> openInWorld: aWorld extent: extent [
 	"This msg and its callees result in the window being activeOnlyOnTop"
 	self position: (RealEstateAgent initialFrameFor: self initialExtent: extent world: aWorld) topLeft; extent: extent.
 	^self openAsIsIn: aWorld
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> openInWorldExtent: extent [
 	"This msg and its callees result in the window being activeOnlyOnTop"
 
 	self openInWorld: self currentWorld extent: extent
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> openModal [
 
 	self openInWorld.
@@ -1231,7 +1231,7 @@ SystemWindow >> paneMorphs [
 	^ paneMorphs
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> paneWithLongestSide: sideBlock near: aPoint [ 
 	| thePane theSide theLen |
 	theLen := 0.
@@ -1286,7 +1286,7 @@ SystemWindow >> positionModalOwner [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> positionSubmorphs [
 	"Feels like overkill, but effect needed"
 	super positionSubmorphs.
@@ -1328,7 +1328,7 @@ SystemWindow >> raisedColor [
 	^self paneColor raisedColor
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [ 
 	| delta newRect minDim theMin horiz |
 	growingPane ifNil: [^ self].  "As from click outside"
@@ -1425,7 +1425,7 @@ SystemWindow >> sendToBack [
 	].
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> setBoundsWithFlex: newFrame [
 	"Set bounds from newFrame with origin preserved from global coordinates"
 
@@ -1554,7 +1554,7 @@ SystemWindow >> taskbarIcon [
 	^super taskbarIcon
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 SystemWindow >> toggleClosable [
 	"Reinstate the close box. Go via theme to maintain box order."
 	
@@ -1568,14 +1568,14 @@ SystemWindow >> topWindow [
 	^ self class topWindow
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> unexpandedFrame [
 	"Return the frame size of an unexpanded window"
 
 	^ self valueOfProperty: #unexpandedFrame
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> unexpandedFrame: aRectangle [
 	"Set the frame size of an unexpanded window"
 
@@ -1609,7 +1609,7 @@ SystemWindow >> updatePanesFromSubmorphs [
 	paneMorphs := paneMorphs select: [ :pane | submorphs includes: pane ].
 ]
 
-{ #category : #resize/collapse }
+{ #category : #'resize/collapse' }
 SystemWindow >> wantsExpandBox [
 	"Answer whether I'd like an expand box"
 

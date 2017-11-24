@@ -4,7 +4,7 @@ Mocking a tutorial for test purposes
 Class {
 	#name : #MockTutorial,
 	#superclass : #AbstractTutorial,
-	#category : #ProfStef-Tests-Mocks
+	#category : #'ProfStef-Tests-Mocks'
 }
 
 { #category : #lesson }

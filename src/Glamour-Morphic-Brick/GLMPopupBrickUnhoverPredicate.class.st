@@ -4,7 +4,7 @@ I am activated as soon as mouse is moved outside of a popup
 Class {
 	#name : #GLMPopupBrickUnhoverPredicate,
 	#superclass : #GLMPopupBrickPredicate,
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #predicate }

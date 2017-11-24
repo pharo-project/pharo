@@ -4,7 +4,7 @@ SDL2 library structure
 Class {
 	#name : #SDL2MappedEvent,
 	#superclass : #SDL2Structure,
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #visitor }

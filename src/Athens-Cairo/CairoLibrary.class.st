@@ -5,7 +5,7 @@ Since paths and names can be tricky in different versions, I have methods to sol
 Class {
 	#name : #CairoLibrary,
 	#superclass : #FFILibrary,
-	#category : #Athens-Cairo
+	#category : #'Athens-Cairo'
 }
 
 { #category : #'accessing platform' }

@@ -6,7 +6,7 @@ I am the start of a literal array, normal literal arrays
 Class {
 	#name : #RBLiteralArrayToken,
 	#superclass : #RBValueToken,
-	#category : #AST-Core-Tokens
+	#category : #'AST-Core-Tokens'
 }
 
 { #category : #testing }

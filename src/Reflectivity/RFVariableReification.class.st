@@ -7,7 +7,7 @@ I reify #variable
 Class {
 	#name : #RFVariableReification,
 	#superclass : #RFReification,
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

@@ -6,7 +6,7 @@ Athens example using Ballon as surface
 Class {
 	#name : #AthensBalloonSurfaceExamples,
 	#superclass : #AthensSurfaceExamples,
-	#category : #Athens-Examples
+	#category : #'Athens-Examples'
 }
 
 { #category : #'instance creation' }

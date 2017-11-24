@@ -16,7 +16,7 @@ They should also implement to confirm that all methods have been tested.
 Class {
 	#name : #ClassTestCase,
 	#superclass : #TestCase,
-	#category : #SUnit-Core-Utilities
+	#category : #'SUnit-Core-Utilities'
 }
 
 { #category : #testing }

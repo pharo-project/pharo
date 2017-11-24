@@ -4,7 +4,7 @@ KMRepository reset
 Class {
 	#name : #GTSpotterGlobalShortcut,
 	#superclass : #KMCategory,
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #testing }

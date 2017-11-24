@@ -4,7 +4,7 @@ A helper class containing the help for GT Spotter.
 Class {
 	#name : #GTSpotterHelp,
 	#superclass : #CustomHelp,
-	#category : #GT-Spotter-Help
+	#category : #'GT-Spotter-Help'
 }
 
 { #category : #documentation }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'lazyIncrement'
 	],
-	#category : #Morphic-Widgets-Tree
+	#category : #'Morphic-Widgets-Tree'
 }
 
 { #category : #'initialize - release' }

@@ -4,7 +4,7 @@ SUnit tests for EUC-JP encoding
 Class {
 	#name : #EUCTextConverterTest,
 	#superclass : #TestCase,
-	#category : #Multilingual-Tests-OtherLanguages
+	#category : #'Multilingual-Tests-OtherLanguages'
 }
 
 { #category : #testing }

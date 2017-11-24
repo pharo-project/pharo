@@ -4,7 +4,7 @@ The NullSound means silence
 Class {
 	#name : #NullSound,
 	#superclass : #Object,
-	#category : #Polymorph-Widgets-Themes
+	#category : #'Polymorph-Widgets-Themes'
 }
 
 { #category : #playing }

@@ -11,7 +11,7 @@ The use of bit 25 of the source pointer for file references permits backward com
 Class {
 	#name : #SourceFileArrayTest,
 	#superclass : #TestCase,
-	#category : #Tests-Files
+	#category : #'Tests-Files'
 }
 
 { #category : #running }

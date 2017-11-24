@@ -34,7 +34,7 @@ Class {
 		'chooser',
 		'previousToken'
 	],
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }
 
 { #category : #examples }
@@ -109,7 +109,7 @@ EntryCompletion >> closeChooser [
 
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EntryCompletion >> closeIfNotNeeded: aMorph [
 
 	(chooser isNotNil and:[ chooser hasKeyboardFocus or: [ aMorph hasKeyboardFocus ] ]) ifFalse: [ self closeChooser ]
@@ -143,13 +143,13 @@ EntryCompletion >> filteredValuesWith: aToken [
 		select: [:v | aToken isNil or: [v isNil or: [self filterBlock value: v value: aToken]]]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EntryCompletion >> handlesKeyboard: anEvent [
 	^ anEvent keyCharacter = Character arrowDown
 		or: [chooser notNil and: [ anEvent keyCharacter = Character escape]]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EntryCompletion >> keystroke: anEvent from: aMorph [
 	(self handlesKeyboard: anEvent) 
 		ifFalse: [^ false].
@@ -167,7 +167,7 @@ EntryCompletion >> keystroke: anEvent from: aMorph [
 	
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EntryCompletion >> mouseDownFromTextMorph: anEvent [
 	self closeChooser
 ]

@@ -169,7 +169,7 @@ Class {
 		'ordering',
 		'precondition'
 	],
-	#category : #MenuRegistration-Core
+	#category : #'MenuRegistration-Core'
 }
 
 { #category : #'instance creation' }
@@ -443,7 +443,7 @@ MenuRegistration >> printOn: aStream [
 	aStream << ' ( ' << self name asString << ' ) '
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MenuRegistration >> release [
 	itemList := nil.
 	self releaseActionMap.
@@ -456,7 +456,7 @@ MenuRegistration >> removeItem: anItem [
 	self itemList remove: anItem 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MenuRegistration >> reset [
 	itemList 
 		ifNotNil: [

@@ -10,7 +10,7 @@ Class {
 		'link',
 		'entity'
 	],
-	#category : #Reflectivity-Links
+	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }

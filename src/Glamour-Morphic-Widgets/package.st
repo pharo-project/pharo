@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Morphic-Widgets }
+Package { #name : #'Glamour-Morphic-Widgets' }

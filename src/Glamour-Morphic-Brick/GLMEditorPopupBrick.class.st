@@ -10,7 +10,7 @@ Class {
 		'textModel',
 		'textEditBrick'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #examples }
@@ -87,13 +87,13 @@ GLMEditorPopupBrick >> newTextEditField [
 		yourself
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMEditorPopupBrick >> onCreated [
 
 	self textEditBrick: self newTextEditField
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GLMEditorPopupBrick >> onOpened [
 	super onOpened.
 

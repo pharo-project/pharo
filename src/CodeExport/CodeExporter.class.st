@@ -4,7 +4,7 @@ Class {
 	#category : #CodeExport
 }
 
-{ #category : #file-out }
+{ #category : #'file-out' }
 CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOrCsFlag [
 
 	| extension fileName  outputStream |

@@ -5,7 +5,7 @@ A GTSpotterRecorderDiveInElementEvent models the action of diving in a selected 
 Class {
 	#name : #GTSpotterRecorderDiveInElementEvent,
 	#superclass : #GTSpotterRecorderEvent,
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }

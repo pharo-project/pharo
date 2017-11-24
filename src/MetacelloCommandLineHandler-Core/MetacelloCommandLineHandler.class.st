@@ -28,7 +28,7 @@ Examples:
 Class {
 	#name : #MetacelloCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : #MetacelloCommandLineHandler-Core
+	#category : #'MetacelloCommandLineHandler-Core'
 }
 
 { #category : #accessing }

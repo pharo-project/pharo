@@ -4,7 +4,7 @@ This class defines AST node menus for watchpoints
 Class {
 	#name : #SugsWatchpointSuggestion,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

@@ -33,7 +33,7 @@ Class {
 		'children',
 		'dataSource'
 	],
-	#category : #Morphic-Widgets-FastTable-Tree-Basic
+	#category : #'Morphic-Widgets-FastTable-Tree-Basic'
 }
 
 { #category : #querying }
@@ -70,7 +70,7 @@ FTBasicTreeListItem >> children [
 	^children
 ]
 
-{ #category : #button-interaction }
+{ #category : #'button-interaction' }
 FTBasicTreeListItem >> collapseItem [
 
 	dataSource updateAvailableRows: 1 - self availableRows.
@@ -112,7 +112,7 @@ FTBasicTreeListItem >> depth: aNumber [
 	depth := aNumber 
 ]
 
-{ #category : #button-interaction }
+{ #category : #'button-interaction' }
 FTBasicTreeListItem >> expandItem [
 
 	expanded := true.
@@ -175,7 +175,7 @@ FTBasicTreeListItem >> item: anItem [
 	item := anItem
 ]
 
-{ #category : #button-interaction }
+{ #category : #'button-interaction' }
 FTBasicTreeListItem >> treeItemFor: anItem [
 
 	^FTBasicTreeListItem new 

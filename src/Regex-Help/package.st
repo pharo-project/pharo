@@ -1,1 +1,1 @@
-Package { #name : #Regex-Help }
+Package { #name : #'Regex-Help' }

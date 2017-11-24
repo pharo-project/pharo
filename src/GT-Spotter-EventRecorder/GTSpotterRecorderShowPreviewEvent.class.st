@@ -5,7 +5,7 @@ A GTSpotterRecorderShowPreviewEvent models the action of explicitly closing the 
 Class {
 	#name : #GTSpotterRecorderShowPreviewEvent,
 	#superclass : #GTSpotterRecorderEvent,
-	#category : #GT-Spotter-EventRecorder-Events
+	#category : #'GT-Spotter-EventRecorder-Events'
 }
 
 { #category : #visitor }

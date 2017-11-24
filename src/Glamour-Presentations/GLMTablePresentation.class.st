@@ -29,7 +29,7 @@ Class {
 		'rootsExpanded',
 		'shouldShowHeader'
 	],
-	#category : #Glamour-Presentations
+	#category : #'Glamour-Presentations'
 }
 
 { #category : #validation }

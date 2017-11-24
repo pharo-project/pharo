@@ -4,7 +4,7 @@ A DiffChangeRecordConverter is a converter used to show the diff between two met
 Class {
 	#name : #DiffChangeRecordConverter,
 	#superclass : #AbstractMethodReferenceConverter,
-	#category : #Spec-Tools-VersionBrowser
+	#category : #'Spec-Tools-VersionBrowser'
 }
 
 { #category : #private }

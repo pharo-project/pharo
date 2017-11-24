@@ -4,7 +4,7 @@ I know how to delegate the selected method in an instance variable and move the 
 Class {
 	#name : #SugsDelegateMethod,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

@@ -4,7 +4,7 @@ A chapter with a more in-depth description of the core components of the refacto
 Class {
 	#name : #RBRefactoringCoreHelp,
 	#superclass : #RefactoringHelp,
-	#category : #Refactoring-Help
+	#category : #'Refactoring-Help'
 }
 
 { #category : #pages }

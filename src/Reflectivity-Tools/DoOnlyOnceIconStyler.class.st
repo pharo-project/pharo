@@ -4,7 +4,7 @@ I render an icon to control the state of #doOnlyOnce:
 Class {
 	#name : #DoOnlyOnceIconStyler,
 	#superclass : #IconStyler,
-	#category : #Reflectivity-Tools-Watchpoints
+	#category : #'Reflectivity-Tools-Watchpoints'
 }
 
 { #category : #defaults }

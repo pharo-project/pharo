@@ -8,7 +8,7 @@ Class {
 		'index',
 		'slotName'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'instance creation' }

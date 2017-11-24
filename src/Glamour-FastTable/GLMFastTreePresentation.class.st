@@ -51,7 +51,7 @@ Class {
 	#instVars : [
 		'parameters'
 	],
-	#category : #Glamour-FastTable-Presentations
+	#category : #'Glamour-FastTable-Presentations'
 }
 
 { #category : #'public api' }
@@ -69,7 +69,7 @@ GLMFastTreePresentation >> hasChildrenBlock [
 	^ self parameters at: 'hasChildrenBlock' ifAbsent: [ nil ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMFastTreePresentation >> initialize [
 	super initialize.
 	parameters := Dictionary new

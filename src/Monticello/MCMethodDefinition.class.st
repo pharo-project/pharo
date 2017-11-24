@@ -27,7 +27,7 @@ Class {
 		'Definitions',
 		'InitializersEnabled'
 	],
-	#category : #Monticello-Modeling
+	#category : #'Monticello-Modeling'
 }
 
 { #category : #initialization }
@@ -153,7 +153,7 @@ MCMethodDefinition >> addMethodAdditionTo: aCollection [
 
 ]
 
-{ #category : #accessing-backward }
+{ #category : #'accessing-backward' }
 MCMethodDefinition >> category [
 	"Please favor protocol instead of category. We want to have method protocol and class package and tag = a category"
 	^ category

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'numElements'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #visiting }

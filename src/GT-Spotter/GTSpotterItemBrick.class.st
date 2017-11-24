@@ -30,7 +30,7 @@ Class {
 		'stepModel',
 		'candidateLink'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }
@@ -215,14 +215,14 @@ GTSpotterItemBrick >> notifySelected [
 	self stepModel announcer announce: (GTSpotterCandidateSelected new itemBrick: self)
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GTSpotterItemBrick >> onLayouted [
 	super onLayouted.
 	
 	self isChecked ifTrue: [ self stepModel spotter announce: GTSpotterCandidateSelectedMoved new ]
 ]
 
-{ #category : #brick-structure-events }
+{ #category : #'brick-structure-events' }
 GTSpotterItemBrick >> onRemovedFrom: aBrick [
 	super onRemovedFrom: aBrick.
 	
@@ -246,7 +246,7 @@ GTSpotterItemBrick >> onStepPopped [
 		self notifySelected ]
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterItemBrick >> onThemerChanged [
 	super onThemerChanged.
 	

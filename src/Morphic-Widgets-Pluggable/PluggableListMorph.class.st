@@ -46,7 +46,7 @@ Class {
 		'enabled',
 		'getEnabledSelector'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #'instance creation' }
@@ -164,7 +164,7 @@ PluggableListMorph >> adoptPaneColor: paneColor [
 		self borderStyle: self borderStyleToUse]
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 PluggableListMorph >> allSubmorphNamesDo: nameBlock [
 	"Assume list morphs do not have named parts -- saves MUCH time"
 
@@ -262,13 +262,13 @@ PluggableListMorph >> basicWrapSelector: aSymbol [
 	wrapSelector := aSymbol.
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> beMultipleSelection [
 
 	multipleSelection := true
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> beSingleSelection [
 
 	multipleSelection := false
@@ -319,7 +319,7 @@ PluggableListMorph >> copySelectionToClipboard [
 	self selection ifNotNil: [ Clipboard clipboardText: self selection asString ] ifNil: [ self flash ]
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> defaultMultipleSelectionValue [
 
 	^ false
@@ -661,13 +661,13 @@ PluggableListMorph >> initializeShortcuts: aKMDispatcher [
 	aKMDispatcher attachCategory: #MorphFocusNavigation
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> isMultipleSelection [
 
 	^ self multipleSelection
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> isSingleSelection [
 
 	^ self multipleSelection not
@@ -784,7 +784,7 @@ PluggableListMorph >> listMorphClass [
 	^LazyListMorph
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> listSelectionAt: index [
 
 	index isZero ifFalse:[ lastNonZeroIndex := index ].
@@ -792,7 +792,7 @@ PluggableListMorph >> listSelectionAt: index [
 	^model perform: getSelectionListSelector with: index
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> listSelectionAt: index put: value [
 
 	self searchedElement: nil.
@@ -875,7 +875,7 @@ PluggableListMorph >> mouseDown: event onItem: aMorph [
 	self removeObsoleteEventHandlers.
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> mouseDownOnMultiple: event forRow: row [
 
 	| anInteger oldIndex oldVal valueKeeper |
@@ -996,7 +996,7 @@ PluggableListMorph >> mouseMove: evt [
 		ifFalse: [ self mouseMoveOnSingle:evt ]
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> mouseMoveOnMultiple: event [
 
 	"The mouse has moved, as characterized by the event provided.  Adjust the scrollbar, and alter the selection as appropriate"
@@ -1032,7 +1032,7 @@ PluggableListMorph >> mouseMoveOnMultiple: event [
 	row changed
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> mouseMoveOnSingle: evt [
 	"The mouse has moved with a button down.
 	Do nothing if disabled."
@@ -1065,7 +1065,7 @@ PluggableListMorph >> mouseUp: event onItem: aMorph [
 	self removeObsoleteEventHandlers.
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> mouseUpOnMultiple: event [
 	"Reset the mouseDownRow."
 	
@@ -1074,7 +1074,7 @@ PluggableListMorph >> mouseUpOnMultiple: event [
 		self mouseDownRow: nil]
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> mouseUpOnSingle: event [
 	"The mouse came up within the list; take appropriate action"
 	
@@ -1098,7 +1098,7 @@ PluggableListMorph >> mouseUpOnSingle: event [
 	Cursor normal show
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> multipleSelection [
 
 	^ multipleSelection ifNil: [ multipleSelection := self defaultMultipleSelectionValue ]
@@ -1134,7 +1134,7 @@ PluggableListMorph >> numSelectionsInView [
 	^scroller numberOfItemsPotentiallyInViewWith: scroller submorphs last getListSize.
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> on: anObject list: listSel primarySelection: getSelectionSel changePrimarySelection: setSelectionSel listSelection: getListSel changeListSelection: setListSel menu: getMenuSel keystroke: keyActionSel [
 	"setup a whole load of pluggability options"
 	getSelectionListSelector := getListSel.
@@ -1227,13 +1227,13 @@ PluggableListMorph >> resetListSelectionSilently [
 	self resetListSelector ifNotNil: [:sel | self model perform: sel ]
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> resetListSelector [
 
 	^ resetListSelector
 ]
 
-{ #category : #multi-selection }
+{ #category : #'multi-selection' }
 PluggableListMorph >> resetListSelector: aSelector [
 
 	resetListSelector := aSelector

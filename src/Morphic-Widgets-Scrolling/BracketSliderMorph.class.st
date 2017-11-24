@@ -4,7 +4,7 @@ Abstract superclass for morphs that are used to select a component (R, G, B or A
 Class {
 	#name : #BracketSliderMorph,
 	#superclass : #PluggableSliderMorph,
-	#category : #Morphic-Widgets-Scrolling
+	#category : #'Morphic-Widgets-Scrolling'
 }
 
 { #category : #protocol }

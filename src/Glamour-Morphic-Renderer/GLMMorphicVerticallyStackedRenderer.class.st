@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMMorphicVerticallyStackedRenderer,
 	#superclass : #GLMMorphicCompositeRenderer,
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #rendering }

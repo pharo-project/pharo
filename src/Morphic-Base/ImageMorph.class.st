@@ -26,7 +26,7 @@ Class {
 	#classVars : [
 		'DefaultForm'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #accessing }

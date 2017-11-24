@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'inspectButton'
 	],
-	#category : #Glamour-Morphic-Widgets-Popper
+	#category : #'Glamour-Morphic-Widgets-Popper'
 }
 
 { #category : #examples }

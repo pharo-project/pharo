@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'sessions'
 	],
-	#category : #Zinc-HTTP-Support
+	#category : #'Zinc-HTTP-Support'
 }
 
 { #category : #accessing }

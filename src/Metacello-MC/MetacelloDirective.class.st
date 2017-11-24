@@ -5,7 +5,7 @@ Class {
 		'spec',
 		'loader'
 	],
-	#category : #Metacello-MC-Directives
+	#category : #'Metacello-MC-Directives'
 }
 
 { #category : #'instance creation' }
@@ -125,7 +125,7 @@ MetacelloDirective >> spec [
 	^spec
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloDirective >> spec: packageOrVersionSpec loader: aLoader [
 
 	spec := packageOrVersionSpec.

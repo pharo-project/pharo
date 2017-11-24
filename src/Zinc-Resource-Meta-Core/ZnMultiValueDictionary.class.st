@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'limit'
 	],
-	#category : #Zinc-Resource-Meta-Core
+	#category : #'Zinc-Resource-Meta-Core'
 }
 
 { #category : #accessing }
@@ -76,7 +76,7 @@ ZnMultiValueDictionary >> checkLimitForKey: aKey [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMultiValueDictionary >> initialize: n [
 	super initialize: n.
 	limit := self class defaultLimit
@@ -101,12 +101,12 @@ ZnMultiValueDictionary >> limit [
 	^ limit
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMultiValueDictionary >> limit: numberOfEntries [
 	limit := numberOfEntries 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnMultiValueDictionary >> unlimited [
 	self limit: nil
 ]

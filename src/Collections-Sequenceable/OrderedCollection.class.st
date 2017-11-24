@@ -79,7 +79,7 @@ Class {
 		'firstIndex',
 		'lastIndex'
 	],
-	#category : #Collections-Sequenceable
+	#category : #'Collections-Sequenceable'
 }
 
 { #category : #private }

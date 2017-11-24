@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #OSWindow-SDL2
+	#category : #'OSWindow-SDL2'
 }
 
 { #category : #testing }
@@ -54,7 +54,7 @@ OSSDL2Driver >> closeRemovedJoystick: index [
 	Transcript show: 'Joystick '; show: index; show: 'removed'; cr.
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> convertEvent: sdlEvent [
 	| mappedEvent window |
 	
@@ -113,7 +113,7 @@ OSSDL2Driver >> createWindowWithAttributes: attributes osWindow: osWindow [
 	^ window
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> eventLoopProcessWithPlugin [
 	| event session semaIndex |
 	event := SDL_Event new.
@@ -130,7 +130,7 @@ OSSDL2Driver >> eventLoopProcessWithPlugin [
 	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> eventLoopProcessWithVMWindow [
 	| event session semaIndex eventBuffer |
 	event := SDL_Event new.
@@ -148,7 +148,7 @@ OSSDL2Driver >> eventLoopProcessWithVMWindow [
 	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> eventLoopProcessWithoutPlugin [
 	| event session |
 	event := SDL_Event new.
@@ -214,25 +214,25 @@ OSSDL2Driver >> openAddedJoystick: index [
 
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> primSetupInputSemaphore: semaIndex [
 	<primitive: #primitiveSetSDL2Input module: #SDL2DisplayPlugin>
 	^ nil
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> primitivePollVMSDL2Event: eventBuffer size: size [
 	<primitive: #primitivePollVMSDL2Event>
 	^ false
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> primitiveSetVMSDL2Input: semaIndex [
 	<primitive: #primitiveSetVMSDL2Input>
 	^ nil
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> processEvent: sdlEvent [
 	| event |
 	[  
@@ -288,7 +288,7 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 	
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> setupEventLoop [
 	EventLoopProcess ifNotNil: [ EventLoopProcess terminate ].
 	EventLoopProcess := self class isVMDisplayUsingSDL2 ifTrue: [ 
@@ -397,7 +397,7 @@ OSSDL2Driver >> visitDropEvent: dropEvent [
 		filePath: dropEvent file readString
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> visitFingerDownEvent: event [
 	^OSTouchActionPointerDownEvent new
 			timestamp: event timestamp;
@@ -410,7 +410,7 @@ OSSDL2Driver >> visitFingerDownEvent: event [
 	
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> visitFingerMotionEvent: event [
 	^OSTouchActionPointerMoveEvent new
 			timestamp: event timestamp;
@@ -423,7 +423,7 @@ OSSDL2Driver >> visitFingerMotionEvent: event [
 	
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 OSSDL2Driver >> visitFingerUpEvent: event [
 	^OSTouchActionPointerUpEvent new
 			timestamp: event timestamp;

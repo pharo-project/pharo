@@ -19,7 +19,7 @@ Class {
 		'showOnlyDestination',
 		'showOnlySource'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -64,7 +64,7 @@ DiffPresenter class >> exampleWithoutOptions [
 
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 DiffPresenter >> clearUndoManager [
 	"The diff presenter does not allow edition, it does not have undo history. But this message is added to have polimorphism in the Message Browser"
 ]

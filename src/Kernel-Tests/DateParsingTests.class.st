@@ -4,7 +4,7 @@ SUnit tests for date parsing
 Class {
 	#name : #DateParsingTests,
 	#superclass : #TestCase,
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #asserting }

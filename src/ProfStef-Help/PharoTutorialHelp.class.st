@@ -4,7 +4,7 @@ HelpSystem book documenting PharoTutorial
 Class {
 	#name : #PharoTutorialHelp,
 	#superclass : #CustomHelp,
-	#category : #ProfStef-Help
+	#category : #'ProfStef-Help'
 }
 
 { #category : #accessing }

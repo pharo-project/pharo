@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'selector'
 	],
-	#category : #Morphic-Core-Announcements
+	#category : #'Morphic-Core-Announcements'
 }
 
 { #category : #delivering }

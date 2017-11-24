@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterExceptionMock5Filter,
 	#superclass : #GTFilter,
-	#category : #GT-Tests-Spotter-Exceptions-Mocks
+	#category : #'GT-Tests-Spotter-Exceptions-Mocks'
 }
 
 { #category : #public }

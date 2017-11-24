@@ -4,7 +4,7 @@ I know how to use a Glamour  code model to  and extract the information needed f
 Class {
 	#name : #SugsGlamourCodeContext,
 	#superclass : #SugsAbstractContext,
-	#category : #SmartSuggestions-Menu
+	#category : #'SmartSuggestions-Menu'
 }
 
 { #category : #selection }

@@ -13,7 +13,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #System-Clipboard
+	#category : #'System-Clipboard'
 }
 
 { #category : #accessing }

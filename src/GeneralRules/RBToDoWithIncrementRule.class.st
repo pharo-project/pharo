@@ -7,7 +7,7 @@ In Pharo you do not increment or decrement counter but should use the message to
 Class {
 	#name : #RBToDoWithIncrementRule,
 	#superclass : #ReNodeMatchRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

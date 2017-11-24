@@ -10,7 +10,7 @@ Class {
 		'projectName',
 		'issues'
 	],
-	#category : #Versionner-Commit
+	#category : #'Versionner-Commit'
 }
 
 { #category : #accessing }

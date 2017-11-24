@@ -82,7 +82,7 @@ Class {
 		'PackageGlobalOrganizer',
 		'Properties'
 	],
-	#category : #RPackage-Core
+	#category : #'RPackage-Core'
 }
 
 { #category : #constants }
@@ -1234,7 +1234,7 @@ RPackage >> register [
 	self organizer registerPackage: self
 ]
 
-{ #category : #private-register }
+{ #category : #'private-register' }
 RPackage >> registerClass: aClass [
 	"Private method that declares the mapping between a class and its package."
 	self organizer
@@ -1242,7 +1242,7 @@ RPackage >> registerClass: aClass [
 	
 ]
 
-{ #category : #private-register }
+{ #category : #'private-register' }
 RPackage >> registerClassName: aClassNameSymbol [
 	"Private method that declares the mapping between a class and its package."
 	self organizer
@@ -1250,7 +1250,7 @@ RPackage >> registerClassName: aClassNameSymbol [
 	
 ]
 
-{ #category : #private-register }
+{ #category : #'private-register' }
 RPackage >> removeAllMethodsFromClassNamed: aClassNameSymbol [
 	"Remove all the methods (defined and extensions) that are related to class aClassNameSymbol. aClassNameSymbol is the name of a class and not a metaclass - see class comment."
 
@@ -1320,7 +1320,7 @@ RPackage >> removeClassDefinitionName: aClassName fromClassTag: aSymbol [
 
 ]
 
-{ #category : #private-register }
+{ #category : #'private-register' }
 RPackage >> removeClassDefinitionNamed: aClassNameSymbol [
 	"aClassNameSymbol should be the name of a class and not a metaclass to be coherent with the class invariant that classes are only class names and not metaclass ones. 
 	
@@ -1610,14 +1610,14 @@ RPackage >> unregister [
 	self organizer unregisterPackage: self
 ]
 
-{ #category : #private-register }
+{ #category : #'private-register' }
 RPackage >> unregisterClass: aClass [
 	"Private method that declares the mapping between a class and its package."
 	self organizer
 		unregisterPackage: self forClass: aClass.
 ]
 
-{ #category : #private-register }
+{ #category : #'private-register' }
 RPackage >> unregisterClassName: aClassNameSymbol [
 	"Private method that declares the mapping between a class and its package."
 	self organizer unregisterPackage: self forClassName: aClassNameSymbol

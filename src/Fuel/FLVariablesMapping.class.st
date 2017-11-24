@@ -16,7 +16,7 @@ Class {
 		'notIgnoredVariables',
 		'references'
 	],
-	#category : #Fuel-Clusters
+	#category : #'Fuel-Clusters'
 }
 
 { #category : #'instance creation' }
@@ -37,7 +37,7 @@ FLVariablesMapping class >> newAnalyzing: anAnalysis references: aCollection [
 		yourself
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariablesMapping >> initializeAnalyzing [
 
 	notIgnoredVariables := self instanceVariableNamesToSerialize.
@@ -46,7 +46,7 @@ FLVariablesMapping >> initializeAnalyzing [
 		collect: [ :name | theClass instVarIndexFor: name ].
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 
 	notIgnoredVariables := (1 to: aDecoder nextEncodedByte) collect: [ :index | aDecoder nextEncodedString ].
@@ -57,13 +57,13 @@ FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLVariablesMapping >> initializeWithClass: aClass [
 	self initialize.
 	theClass := aClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLVariablesMapping >> initializeWithClass: aClass references: aCollection [
 	self initialize.
 	theClass := aClass.
@@ -98,7 +98,7 @@ FLVariablesMapping >> map: sourceName to: destinationName [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariablesMapping >> materializeReferencesOf: anObject with: aDecoder [ 
 
 	mapping do: [ :index | 
@@ -121,14 +121,14 @@ FLVariablesMapping >> referencesOf: anObject do: aBlock [
 	mapping do: [ :index | aBlock value: (anObject instVarAt: index) ].
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariablesMapping >> serializeOn: anEncoder [
 
 	anEncoder encodeByte: notIgnoredVariables size.	
 	notIgnoredVariables do: [ :name | anEncoder encodeString: name ].
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLVariablesMapping >> serializeReferencesOf: anObject with: anEncoder [ 
 
 	(self references at: anObject ifAbsent: [ ^ self ]) do: [ :value |

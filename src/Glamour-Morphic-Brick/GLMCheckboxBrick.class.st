@@ -20,7 +20,7 @@ Class {
 		'checkBrick',
 		'id'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Basic
+	#category : #'Glamour-Morphic-Brick-Widgets-Basic'
 }
 
 { #category : #examples }
@@ -54,7 +54,7 @@ GLMCheckboxBrick class >> gtExampleWithLabel [
 		yourself
 ]
 
-{ #category : #checkbox-accessing }
+{ #category : #'checkbox-accessing' }
 GLMCheckboxBrick >> action: aBlockClosure [ 
 	"aBlockClosure can receive as the first argument aBoolean, as the second argument this object."
 	self 
@@ -66,26 +66,26 @@ GLMCheckboxBrick >> action: aBlockClosure [
 					aBlockClosure cull: false cull: self cull: anAnnouncement cull: anAnnouncer ]
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMCheckboxBrick >> asFormValue [
 
 	^ self id -> self isChecked
 ]
 
-{ #category : #checkbox-brick-accessing }
+{ #category : #'checkbox-brick-accessing' }
 GLMCheckboxBrick >> box [
 
 	^ checkBrick
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMCheckboxBrick >> check [
 	self box check.
 	self label check.
 	super check
 ]
 
-{ #category : #checkbox-brick-accessing }
+{ #category : #'checkbox-brick-accessing' }
 GLMCheckboxBrick >> checkBrick: anObject [
 	checkBrick := anObject.
 	self box
@@ -99,41 +99,41 @@ GLMCheckboxBrick >> checkBrick: anObject [
 	self addBrickFirst: self box
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMCheckboxBrick >> click: evt [
 
 	self toggle.
 	^ true
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMCheckboxBrick >> deselect: anEvent [
 	super deselect: anEvent.
 	self box deselect: anEvent.
 	self label deselect: anEvent
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMCheckboxBrick >> hShrinkWrap [
 	super hShrinkWrap.
 	
 	self label hShrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMCheckboxBrick >> hSpaceFill: anInteger [
 	super hSpaceFill: anInteger.
 	
 	self label hSpaceFill
 ]
 
-{ #category : #checkbox-accessing }
+{ #category : #'checkbox-accessing' }
 GLMCheckboxBrick >> id [
 
 	^ id ifNil: [ self ]
 ]
 
-{ #category : #checkbox-scripting }
+{ #category : #'checkbox-scripting' }
 GLMCheckboxBrick >> id: anObejct [
 
 	id := anObejct
@@ -152,13 +152,13 @@ GLMCheckboxBrick >> initialize [
 		enable
 ]
 
-{ #category : #checkbox-brick-accessing }
+{ #category : #'checkbox-brick-accessing' }
 GLMCheckboxBrick >> label [
 
 	^ labelBrick
 ]
 
-{ #category : #checkbox-brick-accessing }
+{ #category : #'checkbox-brick-accessing' }
 GLMCheckboxBrick >> labelBrick: anObject [
 	labelBrick := anObject.
 	
@@ -168,26 +168,26 @@ GLMCheckboxBrick >> labelBrick: anObject [
 		textPosition: #leftCenter.
 ]
 
-{ #category : #checkbox-brick-creation }
+{ #category : #'checkbox-brick-creation' }
 GLMCheckboxBrick >> newCheckboxBrick [
 
 	^ GLMInteractableBrick new
 ]
 
-{ #category : #checkbox-brick-creation }
+{ #category : #'checkbox-brick-creation' }
 GLMCheckboxBrick >> newLabelBrick [
 
 	^ GLMLabelBrick new
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMCheckboxBrick >> select: anEvent [
 	super select: anEvent.
 	self box select: anEvent.
 	self label select: anEvent
 ]
 
-{ #category : #checkbox-scripting }
+{ #category : #'checkbox-scripting' }
 GLMCheckboxBrick >> text: aString [
 
 	self label text: aString.
@@ -198,7 +198,7 @@ GLMCheckboxBrick >> text: aString [
 	self doLayoutForce
 ]
 
-{ #category : #checkbox-actions }
+{ #category : #'checkbox-actions' }
 GLMCheckboxBrick >> toggle [
 
 	self isChecked
@@ -206,21 +206,21 @@ GLMCheckboxBrick >> toggle [
 		ifFalse: [ self check ]
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMCheckboxBrick >> uncheck [
 	self box uncheck.
 	self label uncheck.
 	super uncheck
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMCheckboxBrick >> vShrinkWrap [
 	super vShrinkWrap.
 	
 	self label vShrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMCheckboxBrick >> vSpaceFill: anInteger [
 	super vSpaceFill: anInteger.
 	

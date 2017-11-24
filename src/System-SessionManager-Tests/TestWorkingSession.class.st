@@ -9,7 +9,7 @@ Class {
 		'errors',
 		'errorHandler'
 	],
-	#category : #System-SessionManager-Tests
+	#category : #'System-SessionManager-Tests'
 }
 
 { #category : #accessing }

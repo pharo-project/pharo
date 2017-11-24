@@ -13,7 +13,7 @@ Class {
 		'ExitCount',
 		'Running'
 	],
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #action }

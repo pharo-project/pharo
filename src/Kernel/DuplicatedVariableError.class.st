@@ -8,7 +8,7 @@ Class {
 		'superclass',
 		'variable'
 	],
-	#category : #Kernel-Exceptions
+	#category : #'Kernel-Exceptions'
 }
 
 { #category : #testing }

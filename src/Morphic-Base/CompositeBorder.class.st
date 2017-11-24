@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'borders'
 	],
-	#category : #Morphic-Base-Borders
+	#category : #'Morphic-Base-Borders'
 }
 
 { #category : #comparing }

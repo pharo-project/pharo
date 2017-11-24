@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'id'
 	],
-	#category : #FuelTests-Mocks
+	#category : #'FuelTests-Mocks'
 }
 
 { #category : #comparing }

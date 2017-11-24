@@ -19,7 +19,7 @@ Class {
 		'iconBrick',
 		'labelBrick'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Basic
+	#category : #'Glamour-Morphic-Brick-Widgets-Basic'
 }
 
 { #category : #examples }
@@ -36,34 +36,34 @@ GLMButtonBrick class >> gtExample [
 	^ self new
 ]
 
-{ #category : #brick-interactable-actions }
+{ #category : #'brick-interactable-actions' }
 GLMButtonBrick >> click: evt [
 
 	super click: evt.
 	^ true
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMButtonBrick >> hShrinkWrap [
 	super hShrinkWrap.
 	
 	self label hShrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMButtonBrick >> hSpaceFill: anInteger [
 	super hSpaceFill: anInteger.
 	
 	self label hSpaceFill.
 ]
 
-{ #category : #button-brick-accessing }
+{ #category : #'button-brick-accessing' }
 GLMButtonBrick >> iconBrick [
 
 	^ iconBrick
 ]
 
-{ #category : #button-brick-accessing }
+{ #category : #'button-brick-accessing' }
 GLMButtonBrick >> iconBrick: anObject [
 
 	iconBrick := anObject
@@ -80,13 +80,13 @@ GLMButtonBrick >> initialize [
 		vShrinkWrap
 ]
 
-{ #category : #button-brick-accessing }
+{ #category : #'button-brick-accessing' }
 GLMButtonBrick >> label [
 
 	^ labelBrick
 ]
 
-{ #category : #button-brick-accessing }
+{ #category : #'button-brick-accessing' }
 GLMButtonBrick >> labelBrick: anObject [
 	labelBrick := anObject.
 	
@@ -101,32 +101,32 @@ GLMButtonBrick >> labelBrick: anObject [
 	self addBrickBack: self label
 ]
 
-{ #category : #button-brick-creation }
+{ #category : #'button-brick-creation' }
 GLMButtonBrick >> newLabelBrick [
 
 	^ GLMLabelBrick new
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GLMButtonBrick >> onThemerChanged [
 	super onThemerChanged.
 
 	self updateStyle
 ]
 
-{ #category : #button-properties }
+{ #category : #'button-properties' }
 GLMButtonBrick >> text [
 
 	^ self label text
 ]
 
-{ #category : #button-properties }
+{ #category : #'button-properties' }
 GLMButtonBrick >> text: aString [
 	"changes button text, redraws and updates button bounds"
 	self label text: aString
 ]
 
-{ #category : #button-updating }
+{ #category : #'button-updating' }
 GLMButtonBrick >> updateStyle [
 
 	self borderWidth: self themer buttonBorderWidth.
@@ -141,14 +141,14 @@ GLMButtonBrick >> updateStyle [
 	
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMButtonBrick >> vShrinkWrap [
 	super vShrinkWrap.
 	
 	self label vShrinkWrap
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMButtonBrick >> vSpaceFill: anInteger [
 	super vSpaceFill: anInteger.
 	

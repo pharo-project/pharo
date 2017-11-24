@@ -32,7 +32,7 @@ Class {
 		'icon',
 		'autoRefresh'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -57,7 +57,7 @@ MenuPresenter class >> popup [
 		adaptAsPopup: #(model))
 ]
 
-{ #category : #api-building }
+{ #category : #'api-building' }
 MenuPresenter >> addAllFromPragma: pragma target: target [
 
 	self fromSpec: (PragmaMenuBuilder 
@@ -111,7 +111,7 @@ MenuPresenter >> buildWithSpecAsPopup [
 	^ self buildWithSpec: #popup
 ]
 
-{ #category : #api-building }
+{ #category : #'api-building' }
 MenuPresenter >> fromSpec: aSpec [
 
 	aSpec addToMenuModel: self

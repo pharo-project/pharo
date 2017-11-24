@@ -4,7 +4,7 @@ ToolShortcuts defines some global keyboard shortcuts to open tools for workspace
 Class {
 	#name : #ToolShortcutsCategory,
 	#superclass : #KMCategory,
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #testing }

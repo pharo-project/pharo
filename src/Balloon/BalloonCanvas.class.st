@@ -11,7 +11,7 @@ Class {
 		'aaLevel',
 		'deferred'
 	],
-	#category : #Balloon-Canvas
+	#category : #'Balloon-Canvas'
 }
 
 { #category : #accessing }
@@ -131,13 +131,13 @@ BalloonCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: bord
 		transform: transform.
 ]
 
-{ #category : #drawing-polygons }
+{ #category : #'drawing-polygons' }
 BalloonCanvas >> drawPolygon: vertices fillStyle: aFillStyle [
 	"Fill the given polygon."
 	self drawPolygon: vertices fillStyle: aFillStyle borderWidth: 0 borderColor: nil
 ]
 
-{ #category : #drawing-polygons }
+{ #category : #'drawing-polygons' }
 BalloonCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWidth borderColor: borderColor [
 	"Draw a simple polygon defined by the list of vertices."
 
@@ -215,7 +215,7 @@ BalloonCanvas >> fillOval: r color: c borderWidth: borderWidth borderColor: bord
 			borderColor: borderColor
 ]
 
-{ #category : #drawing-ovals }
+{ #category : #'drawing-ovals' }
 BalloonCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given rectangle."
 	^self drawOval: (aRectangle insetBy: bw // 2)

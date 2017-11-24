@@ -5,7 +5,7 @@ A MenuLineMorph is a item separator in menu.
 Class {
 	#name : #MenuLineMorph,
 	#superclass : #Morph,
-	#category : #Morphic-Base-Menus
+	#category : #'Morphic-Base-Menus'
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ I represent the Shift key modifier. Look at my superclass for a more detailed ex
 Class {
 	#name : #KMShiftModifier,
 	#superclass : #KMModifier,
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #accessing }

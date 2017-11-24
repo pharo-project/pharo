@@ -12,10 +12,10 @@ Class {
 		'imagePatch',
 		'mergePatch'
 	],
-	#category : #Monticello-Versioning
+	#category : #'Monticello-Versioning'
 }
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCMergeRecord class >> version: aVersion [
 	^ self basicNew initializeWithVersion: aVersion
 ]
@@ -44,7 +44,7 @@ MCMergeRecord >> imagePatch [
 	^ imagePatch ifNil: [imagePatch := self packageSnapshot patchRelativeToBase: self ancestorSnapshot]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCMergeRecord >> initializeWithVersion: aVersion [
 	version := aVersion
 ]

@@ -1,1 +1,1 @@
-Package { #name : #Multilingual-Languages }
+Package { #name : #'Multilingual-Languages' }

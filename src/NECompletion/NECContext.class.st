@@ -20,7 +20,7 @@ Class {
 		'variables',
 		'selectors'
 	],
-	#category : #NECompletion-Model
+	#category : #'NECompletion-Model'
 }
 
 { #category : #'instance creation' }
@@ -32,7 +32,7 @@ NECContext class >> controller: aECController class: aClass source: aString posi
 		position: anInteger
 ]
 
-{ #category : #private-temporaries }
+{ #category : #'private-temporaries' }
 NECContext >> blockTemporaries [
 	| blocks range vars |
 	blocks := OrderedCollection new.
@@ -50,7 +50,7 @@ NECContext >> blockTemporaries [
 	^ self convertBlocksToVariables: blocks
 ]
 
-{ #category : #private-compute-index }
+{ #category : #'private-compute-index' }
 NECContext >> checkForZeroPosition [
 	^ (position = 0
 			or: [ranges isEmpty])
@@ -58,7 +58,7 @@ NECContext >> checkForZeroPosition [
 			true]
 ]
 
-{ #category : #private-receiver-guessing }
+{ #category : #'private-receiver-guessing' }
 NECContext >> checkImpossibleReceiver [
 	^ self isSelectorsAndVariables
 		ifTrue: [self configureSelectorsAndVariables]
@@ -78,21 +78,21 @@ NECContext >> completionToken [
 	^ completionToken
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> completionTokenIsComment [
 	| currentRange |
 	currentRange := (ranges at: completionIndex).
 	^  currentRange isComment
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> completionTokenIsLiteral [
 	| currentRange |
 	currentRange := (ranges at: completionIndex).
 	^  currentRange isConstant or:[ currentRange isUnfinished ]
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> completionTokenIsLiteralOrComment [
 	^ self completionTokenIsLiteral or:[ self completionTokenIsComment]
 ]
@@ -103,7 +103,7 @@ NECContext >> compute [
 	receiverClass := self computeReceiverClass
 ]
 
-{ #category : #private-compute-index }
+{ #category : #'private-compute-index' }
 NECContext >> computeIndexOfPosition [
 	| current |
 	self checkForZeroPosition ifTrue: [ ^ 1 ].
@@ -141,28 +141,28 @@ NECContext >> computeReceiverClass [
 	^self guessTypeOf: completionIndex - 1
 ]
 
-{ #category : #private-configure }
+{ #category : #'private-configure' }
 NECContext >> configureSelectorsAndVariables [
 	variables := true.
 	selectors := true.
 	^true
 ]
 
-{ #category : #private-configure }
+{ #category : #'private-configure' }
 NECContext >> configureSelectorsOnly [
 	variables := false.
 	selectors := true.
 	^true
 ]
 
-{ #category : #private-configure }
+{ #category : #'private-configure' }
 NECContext >> configureVariablesOnly [
 	variables := true.
 	selectors := false.
 	^true
 ]
 
-{ #category : #private-temporaries }
+{ #category : #'private-temporaries' }
 NECContext >> convertBlocksToVariables: anOrderedCollection [ 
 	| result blockStack |
 	blockStack := anOrderedCollection.
@@ -171,7 +171,7 @@ NECContext >> convertBlocksToVariables: anOrderedCollection [
 	^ result
 ]
 
-{ #category : #private-compute-index }
+{ #category : #'private-compute-index' }
 NECContext >> createEmptyRangeAtTail [
 	| previous |
 	previous := ranges last.
@@ -182,7 +182,7 @@ NECContext >> createEmptyRangeAtTail [
 	^ ranges size
 ]
 
-{ #category : #private-compute-index }
+{ #category : #'private-compute-index' }
 NECContext >> createEmptyRangeForGapAt: index [ 
 	| current previous |
 	current := ranges at: index.
@@ -258,7 +258,7 @@ NECContext >> findSourceRangeFor: aNumber [
 										ifFalse: [^ nil]]]]]
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> guessArgument: aSHRange [ 
 	| name |
 	name := self sourceOf: aSHRange.
@@ -293,7 +293,7 @@ NECContext >> guessClassVarClass: aSHRange [
 		class: theClass theMetaClass) perform
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> guessGlobal: aNumber [ 
 	| aClass |
 	aClass := Smalltalk 
@@ -346,7 +346,7 @@ NECContext >> guessTempVarClass: aString type: aSymbol [
 	^ nil
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> guessTypeOf: aNumber [ 
 	| range |
 	self configureSelectorsOnly.
@@ -366,7 +366,7 @@ NECContext >> guessTypeOf: aNumber [
 	^nil
 ]
 
-{ #category : #private-temporaries }
+{ #category : #'private-temporaries' }
 NECContext >> handleBlockStack: aCollection with: aSHRange [ 
 	| range blockStack |
 	range := aSHRange.
@@ -389,7 +389,7 @@ NECContext >> initialize [
 	completionToken := nil
 ]
 
-{ #category : #private-compute-index }
+{ #category : #'private-compute-index' }
 NECContext >> insertEmptyRangeAt: index start: start end: end [ 
 	ranges
 		add: (SHRange
@@ -406,14 +406,14 @@ NECContext >> isPositionAtPatternArg [
 	^ currentRange notNil and: [ currentRange type = #patternArg ]
 ]
 
-{ #category : #private-receiver-guessing }
+{ #category : #'private-receiver-guessing' }
 NECContext >> isSelectorsAndVariables [
 	| current |
 	current := ranges at: completionIndex.
 	^current isUnfinished
 ]
 
-{ #category : #private-receiver-guessing }
+{ #category : #'private-receiver-guessing' }
 NECContext >> isSelectorsOnly [
 	| previous |
 	previous := ranges at: completionIndex - 1.
@@ -425,7 +425,7 @@ NECContext >> isStartOfMethodDefinition [
 	^ completionIndex = 1 or: [ self isPositionAtPatternArg ]
 ]
 
-{ #category : #private-receiver-guessing }
+{ #category : #'private-receiver-guessing' }
 NECContext >> isVariablesOnly [
 	| current previous |
 	current := ranges at: completionIndex.
@@ -449,7 +449,7 @@ NECContext >> narrowWith: aString [
 	model ifNotNil: [ model narrowWith: aString ]
 ]
 
-{ #category : #private-type-guessing }
+{ #category : #'private-type-guessing' }
 NECContext >> nonAbstractTypeOf: aRange [
 	| cls |
 	cls := aRange asType.
@@ -463,7 +463,7 @@ NECContext >> receiverClass [
 	^ receiverClass
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NECContext >> setController: aECController class: aClass source: aString position: anInteger [ 
 	controller := aECController.
 	theClass := aClass.

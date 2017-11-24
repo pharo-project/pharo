@@ -8,7 +8,7 @@ Class {
 		'Author',
 		'Gloups'
 	],
-	#category : #Kernel-Tests-Classes
+	#category : #'Kernel-Tests-Classes'
 }
 
 { #category : #initialization }

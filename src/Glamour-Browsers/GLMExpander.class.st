@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'rootPane'
 	],
-	#category : #Glamour-Browsers-Other
+	#category : #'Glamour-Browsers-Other'
 }
 
 { #category : #events }

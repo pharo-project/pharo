@@ -4,7 +4,7 @@ I am a regex refactoring renaming protocol names.
 Class {
 	#name : #RBProtocolRegexRefactoring,
 	#superclass : #RBRegexRefactoring,
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #transforming }

@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'index'
 	],
-	#category : #Slot-Variables
+	#category : #'Slot-Variables'
 }
 
 { #category : #comparing }
@@ -42,12 +42,12 @@ IndexedSlot >> isVirtual [
 	^false
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 IndexedSlot >> read: anObject [
 	^ thisContext object: anObject instVarAt: index
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 IndexedSlot >> write: aValue to: anObject [
 	^ thisContext object: anObject instVarAt: index put: aValue.
 ]

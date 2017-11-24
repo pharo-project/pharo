@@ -12,7 +12,7 @@ Class {
 		'RBmethod',
 		'RBnamespace'
 	],
-	#category : #Refactoring-Core-Model
+	#category : #'Refactoring-Core-Model'
 }
 
 { #category : #'factory access' }

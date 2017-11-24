@@ -21,7 +21,7 @@ Class {
 		'smoothing',
 		'localBounds'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #menu }
@@ -107,7 +107,7 @@ TransformMorph >> fullBounds [
 	^ fullBounds
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 TransformMorph >> grabTransform [
 	"Return the transform for the receiver which should be applied during grabbing"
 	^owner ifNil:[self transform] ifNotNil:[owner grabTransform composedWithLocal: self transform]

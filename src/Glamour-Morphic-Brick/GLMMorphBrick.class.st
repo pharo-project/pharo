@@ -18,7 +18,7 @@ Class {
 		'vResizing',
 		'hResizing'
 	],
-	#category : #Glamour-Morphic-Brick-Morphic
+	#category : #'Glamour-Morphic-Brick-Morphic'
 }
 
 { #category : #'instance creation' }
@@ -27,7 +27,7 @@ GLMMorphBrick class >> on: aMorph [
 	^ self new on: aMorph
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMMorphBrick >> addBrickBack: aBrick [
 	|link|
 	link := aBrick asDoubleLink.
@@ -42,21 +42,21 @@ GLMMorphBrick >> addBrickBack: aBrick [
 	aBrick privateOwner: self.
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMMorphBrick >> brickBounds: aRectangle [
 	super brickBounds: aRectangle.
 	
 	self invalidateMorphBounds
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMMorphBrick >> drawSubmorphsOn: aCanvas [
 	aCanvas
 		translateBy: self bounds origin - self morph bounds origin + (self paddingLeft @ self paddingTop)
 		during: [ :canvas | self morph fullDrawOn: canvas ]
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMMorphBrick >> hShrinkWrap [
 	
 	hResizing := #shrinkWrap.
@@ -65,7 +65,7 @@ GLMMorphBrick >> hShrinkWrap [
 	
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMMorphBrick >> hSpaceFill: anInteger [
 	super hSpaceFill: anInteger.
 	
@@ -79,19 +79,19 @@ GLMMorphBrick >> initialize [
 	isLayouting := false
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMMorphBrick >> invalidateLayout [
 
 	
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMMorphBrick >> invalidateMorphBounds [
 
 	self invalidateMorphBounds: false
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMMorphBrick >> invalidateMorphBounds: isForce [
 	| origin corner newBounds |
 	isLayouting & (isForce not) ifTrue: [ ^ self ].
@@ -115,7 +115,7 @@ GLMMorphBrick >> isHShrinking [
 	^ hResizing = #shrinkWrap
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMMorphBrick >> isMorphBrick [
 
 	^ true
@@ -180,14 +180,14 @@ GLMMorphBrick >> on: aMorph [
 	super brickBounds: (0@0 extent: (morph width@morph height)).
 ]
 
-{ #category : #brick-layout-events }
+{ #category : #'brick-layout-events' }
 GLMMorphBrick >> onLayouted [
 	super onLayouted.
 	
 	self invalidateMorphBounds
 ]
 
-{ #category : #brick-structure-events }
+{ #category : #'brick-structure-events' }
 GLMMorphBrick >> onRemovedFrom: aBrick [
 	
 	"we should just override it and left empty,
@@ -195,31 +195,31 @@ GLMMorphBrick >> onRemovedFrom: aBrick [
 	to be propagated to morph"
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GLMMorphBrick >> onThemerChanged [
 	
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMMorphBrick >> shrinkingHeight [
 
 	^ self morph height
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMMorphBrick >> shrinkingWidth [
 
 	^ self morph width
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMMorphBrick >> themerChanged [
 
 	self onThemerChanged.
 	self morph brickThemerChanged
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMMorphBrick >> vShrinkWrap [
 
 	vResizing := #shrinkWrap.
@@ -228,7 +228,7 @@ GLMMorphBrick >> vShrinkWrap [
 	
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMMorphBrick >> vSpaceFill: anInteger [
 	super vSpaceFill: anInteger.
 	

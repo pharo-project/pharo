@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'pointer'
 	],
-	#category : #OSWindow-SDL2
+	#category : #'OSWindow-SDL2'
 }
 
 { #category : #initialize }

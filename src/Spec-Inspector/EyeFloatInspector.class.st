@@ -12,7 +12,7 @@ sign * significand * (2 raisedToInteger: exponent)
 Class {
 	#name : #EyeFloatInspector,
 	#superclass : #EyeInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #list }

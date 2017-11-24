@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'logBrowserModel'
 	],
-	#category : #EpiceaBrowsers-Filters
+	#category : #'EpiceaBrowsers-Filters'
 }
 
 { #category : #accessing }

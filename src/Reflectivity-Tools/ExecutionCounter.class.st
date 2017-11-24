@@ -17,7 +17,7 @@ Class {
 	#classVars : [
 		'Counters'
 	],
-	#category : #Reflectivity-Tools-Watchpoints
+	#category : #'Reflectivity-Tools-Watchpoints'
 }
 
 { #category : #accessing }
@@ -66,7 +66,7 @@ ExecutionCounter >> initialize [
 	count := 0.
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 ExecutionCounter >> install [
 
 	link := MetaLink new 
@@ -91,7 +91,7 @@ ExecutionCounter >> reset [
 	count := 0
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 ExecutionCounter >> uninstall [
 	node hasExecutionCounter ifFalse: [ ^self ].
 	link uninstall.

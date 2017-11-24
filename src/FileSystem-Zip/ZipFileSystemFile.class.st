@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'member'
 	],
-	#category : #FileSystem-Zip
+	#category : #'FileSystem-Zip'
 }
 
 { #category : #accessing }

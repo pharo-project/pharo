@@ -6,7 +6,7 @@ KeyPrinterMorph new openInWorld
 Class {
 	#name : #KeyPrinterMorph,
 	#superclass : #Morph,
-	#category : #Tools-Debugger
+	#category : #'Tools-Debugger'
 }
 
 { #category : #'event handling' }

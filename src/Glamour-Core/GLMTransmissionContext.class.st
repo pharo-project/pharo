@@ -13,7 +13,7 @@ Class {
 		'ports',
 		'forbiddenAnnouncements'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #accessing }

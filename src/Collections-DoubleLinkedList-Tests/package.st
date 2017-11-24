@@ -1,1 +1,1 @@
-Package { #name : #Collections-DoubleLinkedList-Tests }
+Package { #name : #'Collections-DoubleLinkedList-Tests' }

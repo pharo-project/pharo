@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloScriptImageExecutor,
 	#superclass : #MetacelloScriptExecutor,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #'execution callback' }

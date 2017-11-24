@@ -5,7 +5,7 @@ Class {
 		'versionString',
 		'exception'
 	],
-	#category : #Metacello-Core-Exceptions-Notifications
+	#category : #'Metacello-Core-Exceptions-Notifications'
 }
 
 { #category : #'instance creation' }

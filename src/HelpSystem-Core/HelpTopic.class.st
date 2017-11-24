@@ -43,7 +43,7 @@ Class {
 		'subtopics',
 		'owner'
 	],
-	#category : #HelpSystem-Core-Model
+	#category : #'HelpSystem-Core-Model'
 }
 
 { #category : #'instance creation' }

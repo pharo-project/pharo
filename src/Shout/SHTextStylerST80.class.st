@@ -33,7 +33,7 @@ Class {
 		'styleTable',
 		'textAttributesByPixelHeight'
 	],
-	#category : #Shout-Styling
+	#category : #'Shout-Styling'
 }
 
 { #category : #attributes }

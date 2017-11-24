@@ -7,7 +7,7 @@ Instance Variables
 Class {
 	#name : #SettingFilter,
 	#superclass : #Object,
-	#category : #System-Settings-Filter
+	#category : #'System-Settings-Filter'
 }
 
 { #category : #filtering }

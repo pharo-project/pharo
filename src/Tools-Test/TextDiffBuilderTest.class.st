@@ -5,7 +5,7 @@ Tests from L. Uzonyi (from squeak trunk System.ul207and 208)
 Class {
 	#name : #TextDiffBuilderTest,
 	#superclass : #TestCase,
-	#category : #Tools-Test-DiffBuilder
+	#category : #'Tools-Test-DiffBuilder'
 }
 
 { #category : #private }

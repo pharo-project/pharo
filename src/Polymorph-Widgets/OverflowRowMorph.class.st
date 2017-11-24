@@ -28,7 +28,7 @@ Class {
 		'moreButton',
 		'moreMorph'
 	],
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }
 
 { #category : #accessing }

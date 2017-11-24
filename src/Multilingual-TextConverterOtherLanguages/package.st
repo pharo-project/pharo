@@ -1,1 +1,1 @@
-Package { #name : #Multilingual-TextConverterOtherLanguages }
+Package { #name : #'Multilingual-TextConverterOtherLanguages' }

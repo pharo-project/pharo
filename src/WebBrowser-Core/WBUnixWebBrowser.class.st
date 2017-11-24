@@ -4,7 +4,7 @@ Access to the web browser on Unix
 Class {
 	#name : #WBUnixWebBrowser,
 	#superclass : #WebBrowser,
-	#category : #WebBrowser-Core-OS-Unix
+	#category : #'WebBrowser-Core-OS-Unix'
 }
 
 { #category : #examples }

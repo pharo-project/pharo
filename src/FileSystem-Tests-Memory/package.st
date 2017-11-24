@@ -1,1 +1,1 @@
-Package { #name : #FileSystem-Tests-Memory }
+Package { #name : #'FileSystem-Tests-Memory' }

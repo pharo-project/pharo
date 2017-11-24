@@ -25,10 +25,10 @@ Class {
 		'otherSelection',
 		'undoProperties'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SelectionMorph >> aboutToBeGrabbedBy: aHand [
 	slippage := 0@0.
 	^ super aboutToBeGrabbedBy: aHand
@@ -244,14 +244,14 @@ SelectionMorph >> defaultColor [
 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SelectionMorph >> delete [
 	self setProperty: #deleting toValue: true.
 	super delete.
 	
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SelectionMorph >> dismissViaHalo [
 
 	super dismissViaHalo.
@@ -430,7 +430,7 @@ SelectionMorph >> fillStyleForItems: fillStyleCollection [
 	selectedItems with: fillStyleCollection do: [:m :c | m fillStyle: c]
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SelectionMorph >> goBehind [
 	"selection morph stays on top"
 
@@ -455,7 +455,7 @@ SelectionMorph >> initialize [
 	slippage := 0@0
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 SelectionMorph >> justDroppedInto: newOwner event: evt [
 
 	selectedItems isEmpty ifTrue:

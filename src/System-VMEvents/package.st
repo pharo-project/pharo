@@ -1,1 +1,1 @@
-Package { #name : #System-VMEvents }
+Package { #name : #'System-VMEvents' }

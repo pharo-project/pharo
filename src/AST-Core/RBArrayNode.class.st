@@ -16,7 +16,7 @@ Class {
 		'statements',
 		'periods'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -155,12 +155,12 @@ RBArrayNode >> lastIsReturn [
 	^statements last lastIsReturn
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBArrayNode >> left [
 	^ left
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBArrayNode >> left: anInteger [
 	left := anInteger
 ]
@@ -176,12 +176,12 @@ RBArrayNode >> needsParenthesis [
 	^ false
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBArrayNode >> periods [
 	^ periods
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBArrayNode >> periods: anArray [
 	periods := anArray
 ]
@@ -210,12 +210,12 @@ RBArrayNode >> replaceNode: oldNode  withNode: newNode [
 			ifFalse: [ statement ] ])
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBArrayNode >> right [
 	^ right
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBArrayNode >> right: anInteger [
 	right := anInteger
 ]

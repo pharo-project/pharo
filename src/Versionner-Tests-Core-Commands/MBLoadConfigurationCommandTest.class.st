@@ -1,7 +1,7 @@
 Class {
 	#name : #MBLoadConfigurationCommandTest,
 	#superclass : #TestCase,
-	#category : #Versionner-Tests-Core-Commands
+	#category : #'Versionner-Tests-Core-Commands'
 }
 
 { #category : #tests }

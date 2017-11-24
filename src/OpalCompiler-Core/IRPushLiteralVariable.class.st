@@ -4,7 +4,7 @@ push literal variable
 Class {
 	#name : #IRPushLiteralVariable,
 	#superclass : #IRLiteralVariableAccess,
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #visiting }

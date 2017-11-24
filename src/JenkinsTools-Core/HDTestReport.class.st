@@ -14,7 +14,7 @@ Class {
 		'progressFile',
 		'nodeName'
 	],
-	#category : #JenkinsTools-Core
+	#category : #'JenkinsTools-Core'
 }
 
 { #category : #running }

@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'tabGroup'
 	],
-	#category : #Morphic-Widgets-Windows-Widgets
+	#category : #'Morphic-Widgets-Windows-Widgets'
 }
 
 { #category : #layout }
@@ -63,7 +63,7 @@ GroupWindowMorph >> defaultColor [
 	^ self theme windowColor lighter
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 GroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	"Drag a tab. Remove the window from the organiser and place in hand."
 	
@@ -87,7 +87,7 @@ GroupWindowMorph >> grabWindow [
 	choice ifNotNil: [self addWindow: choice]
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GroupWindowMorph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
 	
@@ -220,7 +220,7 @@ GroupWindowMorph >> update: aSymbol with: anObject [
 				]
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 GroupWindowMorph >> wantsDroppedMorph: aMorph event: evt [
   "Accept if a SystemWindow."
   

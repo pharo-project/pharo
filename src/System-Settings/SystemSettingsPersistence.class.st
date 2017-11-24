@@ -29,7 +29,7 @@ Class {
 	#classInstVars : [
 		'lastSettingsComputerID'
 	],
-	#category : #System-Settings-Persistence-Ston-Core
+	#category : #'System-Settings-Persistence-Ston-Core'
 }
 
 { #category : #cleanup }

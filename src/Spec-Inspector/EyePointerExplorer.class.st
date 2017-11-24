@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'onlyStrong'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #accessing }
@@ -72,7 +72,7 @@ EyePointerExplorer >> object: anObject [
 	super object: (EyePointerWrapper wrap: anObject)
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyePointerExplorer >> objectChanged [
 	self text doItReceiver: self object.
 	self text widget

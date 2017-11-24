@@ -157,7 +157,7 @@ The following instructions can have the ExtB check flag (See (3)).
 Class {
 	#name : #EncoderForSistaV1,
 	#superclass : #BytecodeEncoder,
-	#category : #Kernel-BytecodeEncoders
+	#category : #'Kernel-BytecodeEncoders'
 }
 
 { #category : #'bytecode decoding' }

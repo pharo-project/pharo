@@ -4,7 +4,7 @@ MetacelloValidationError indicates that errors are to be expected if an attempt 
 Class {
 	#name : #MetacelloValidationError,
 	#superclass : #MetacelloValidationIssue,
-	#category : #Metacello-Core-Validation
+	#category : #'Metacello-Core-Validation'
 }
 
 { #category : #testing }

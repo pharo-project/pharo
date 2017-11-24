@@ -9,7 +9,7 @@ Class {
 	#classVars : [
 		'RetryPackageResolution'
 	],
-	#category : #Metacello-MC-Loaders
+	#category : #'Metacello-MC-Loaders'
 }
 
 { #category : #utilities }
@@ -116,7 +116,7 @@ MetacelloCommonMCSpecLoader >> ignoreImage [
 	^self loaderPolicy ignoreImage
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MetacelloCommonMCSpecLoader >> initialize [
 
 	self loaderPolicy

@@ -52,7 +52,7 @@ QANautilusPlugin class >> uninstall [
 			each first = self ])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 QANautilusPlugin class >> unload [
 
 	self uninstall 

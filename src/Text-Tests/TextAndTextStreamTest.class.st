@@ -4,7 +4,7 @@ At May 09, 2003 Tim Olson sent a bug report to the Squeak developers list that i
 Class {
 	#name : #TextAndTextStreamTest,
 	#superclass : #TestCase,
-	#category : #Text-Tests
+	#category : #'Text-Tests'
 }
 
 { #category : #examples }
@@ -93,14 +93,14 @@ TextAndTextStreamTest >> testAddStringToTextStream [
 
 ]
 
-{ #category : #test-errors }
+{ #category : #'test-errors' }
 TextAndTextStreamTest >> testAddingAttributesBeforeBeg [
 	| aText |
 	aText := 'foo' asText.
 	self should: [aText addAttribute: TextColor red from: 0 to: aText size] raise: Error.
 ]
 
-{ #category : #test-errors }
+{ #category : #'test-errors' }
 TextAndTextStreamTest >> testAddingAttributesPastTheEnd [
 	| aText |
 	aText := 'foo' asText.
@@ -157,14 +157,14 @@ TextAndTextStreamTest >> testIncludesSubstringCaseSensitive [
 	self assert: ('123éàôüöß' asText includesSubstring: 'ÀÔ' caseSensitive: false)
 ]
 
-{ #category : #test-errors }
+{ #category : #'test-errors' }
 TextAndTextStreamTest >> testRemovingAttributesBeforeBeg [
 	| aText |
 	aText := Text string: 'foo' attribute: TextColor red .
 	self should: [aText removeAttribute: TextColor red from: 0 to: aText size] raise: Error.
 ]
 
-{ #category : #test-errors }
+{ #category : #'test-errors' }
 TextAndTextStreamTest >> testRemovingAttributesPastTheEnd [
 	| aText |
 	aText := Text string: 'foo' attribute: TextColor red .
@@ -253,7 +253,7 @@ TextAndTextStreamTest >> testRunArrayRunsSize [
 	self assert: (runArray size = 15). 
 ]
 
-{ #category : #test-errors }
+{ #category : #'test-errors' }
 TextAndTextStreamTest >> testSettingRunsOfWrongSize [
 	| aText newRuns |
 	aText := 'foo' asText.

@@ -4,7 +4,7 @@ A DiffMorphChangeRecordConverter is a converter used to show the diff between tw
 Class {
 	#name : #DiffMorphChangeRecordConverter,
 	#superclass : #AbstractMethodReferenceConverter,
-	#category : #Spec-Tools-VersionBrowser
+	#category : #'Spec-Tools-VersionBrowser'
 }
 
 { #category : #private }

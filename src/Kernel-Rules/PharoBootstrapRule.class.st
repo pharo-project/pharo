@@ -7,7 +7,7 @@ Class {
 	#classVars : [
 		'DependencyChecker'
 	],
-	#category : #Kernel-Rules
+	#category : #'Kernel-Rules'
 }
 
 { #category : #testing }

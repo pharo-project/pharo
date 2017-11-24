@@ -14,7 +14,7 @@ Class {
 		'negated',
 		'elements'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #accessing }
@@ -55,7 +55,7 @@ RxsCharSet >> hasPredicates [
 	^elements contains: [:some | some isEnumerable not]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsCharSet >> initializeElements: aCollection negated: aBoolean [
 	"See class comment for instance variables description."
 

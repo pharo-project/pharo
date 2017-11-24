@@ -21,7 +21,7 @@ Class {
 	#name : #LOGFONTA,
 	#superclass : #Alien,
 	#type : #bytes,
-	#category : #Alien-Win32
+	#category : #'Alien-Win32'
 }
 
 { #category : #constants }

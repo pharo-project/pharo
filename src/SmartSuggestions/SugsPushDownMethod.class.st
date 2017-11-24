@@ -4,7 +4,7 @@ I know how to push down the method to my subclass
 Class {
 	#name : #SugsPushDownMethod,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

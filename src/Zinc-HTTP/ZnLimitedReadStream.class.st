@@ -21,7 +21,7 @@ Class {
 		'limit',
 		'binary'
 	],
-	#category : #Zinc-HTTP-Streaming
+	#category : #'Zinc-HTTP-Streaming'
 }
 
 { #category : #'instance creation' }
@@ -46,7 +46,7 @@ ZnLimitedReadStream >> binary [
 	binary := true
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnLimitedReadStream >> close [
 	stream ifNotNil: [ stream close. stream := nil ]
 ]
@@ -178,7 +178,7 @@ ZnLimitedReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnLimitedReadStream >> on: readStream limit: integer [
 	stream := readStream.
 	limit := integer.

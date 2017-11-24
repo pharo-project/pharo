@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'receiver'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
 { #category : #scanning }

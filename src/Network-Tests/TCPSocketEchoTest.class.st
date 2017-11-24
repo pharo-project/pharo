@@ -19,7 +19,7 @@ Note: this example deliberately does not use SocketStream to show how to use Soc
 Class {
 	#name : #TCPSocketEchoTest,
 	#superclass : #TestCase,
-	#category : #Network-Tests-Kernel
+	#category : #'Network-Tests-Kernel'
 }
 
 { #category : #testing }

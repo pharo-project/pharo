@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #testing }

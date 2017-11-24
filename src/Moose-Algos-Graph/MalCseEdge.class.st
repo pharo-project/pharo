@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'cseVisited'
 	],
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #accessing }

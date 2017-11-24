@@ -4,7 +4,7 @@ A unit test to verify that the classes are properly implemented
 Class {
 	#name : #ProperlyImplementedClassesTest,
 	#superclass : #TestCase,
-	#category : #ReleaseTests-Environment
+	#category : #'ReleaseTests-Environment'
 }
 
 { #category : #tests }

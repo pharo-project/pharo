@@ -32,7 +32,7 @@ Class {
 		'c11',
 		't12'
 	],
-	#category : #Tests-Traits
+	#category : #'Tests-Traits'
 }
 
 { #category : #accessing }

@@ -1,1 +1,1 @@
-Package { #name : #Zinc-Resource-Meta-Tests }
+Package { #name : #'Zinc-Resource-Meta-Tests' }

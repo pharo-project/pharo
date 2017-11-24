@@ -12,7 +12,7 @@ Class {
 	#classInstVars : [
 		'urlProvider'
 	],
-	#category : #GT-Playground
+	#category : #'GT-Playground'
 }
 
 { #category : #settings }
@@ -81,7 +81,7 @@ GTUrlProvider >> urlProvider [
 	^ urlProvider ifNil: [ urlProvider := self class urlProvider ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GTUrlProvider >> urlProvider: anUrlObject [
 	urlProvider := anUrlObject asZnUrl 
 ]

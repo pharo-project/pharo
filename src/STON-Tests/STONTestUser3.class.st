@@ -4,20 +4,20 @@ STONTestUser3 extends STONTestUser but wants nil instance variables to be writte
 Class {
 	#name : #STONTestUser3,
 	#superclass : #STONTestUser,
-	#category : #STON-Tests
+	#category : #'STON-Tests'
 }
 
-{ #category : #ston-core }
+{ #category : #'ston-core' }
 STONTestUser3 class >> stonAllInstVarNames [
 	^ #(username password enabled)
 ]
 
-{ #category : #ston-core }
+{ #category : #'ston-core' }
 STONTestUser3 class >> stonName [
 	^ 'TestUser3'
 ]
 
-{ #category : #ston-core }
+{ #category : #'ston-core' }
 STONTestUser3 >> stonShouldWriteNilInstVars [
 	^ true
 ]

@@ -7,7 +7,7 @@ Class {
 	#category : #PharoDocComment
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestPharoDocComment class >> description [ ^ 'This package supports the handling (synatx highlighting and first class manipulation of small executable examples inline in method comment. 
 
 Assuming the following method is defined

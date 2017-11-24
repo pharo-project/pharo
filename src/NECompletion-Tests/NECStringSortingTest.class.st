@@ -1,7 +1,7 @@
 Class {
 	#name : #NECStringSortingTest,
 	#superclass : #TestCase,
-	#category : #NECompletion-Tests
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #tests }

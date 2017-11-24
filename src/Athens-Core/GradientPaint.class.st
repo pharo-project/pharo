@@ -32,7 +32,7 @@ Class {
 		'stops',
 		'colorRamp'
 	],
-	#category : #Athens-Core-Paints
+	#category : #'Athens-Core-Paints'
 }
 
 { #category : #accessing }
@@ -57,7 +57,7 @@ and values with Colors, for example:
 	colorRamp := aRamp copy.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GradientPaint >> initialize [
 	super initialize.
 	colorRamp := OrderedCollection new.

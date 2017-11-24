@@ -8,7 +8,7 @@ I show  all individual elements by name, as well as a UTC representation.
 Class {
 	#name : #EyeDateAndTimeInspector,
 	#superclass : #EyeInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #list }

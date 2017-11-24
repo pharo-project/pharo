@@ -8,7 +8,7 @@ Class {
 		'fileName',
 		'isCorrupt'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #'as yet unclassified' }

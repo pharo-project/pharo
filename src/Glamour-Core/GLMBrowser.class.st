@@ -16,7 +16,7 @@ Class {
 		'initialExtent',
 		'watcherPane'
 	],
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #constants }
@@ -79,7 +79,7 @@ GLMBrowser >> initialExtent: aPoint [
 	initialExtent := aPoint
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 GLMBrowser >> initialize [
 	super initialize.
 	panes := OrderedCollection new.
@@ -200,20 +200,20 @@ GLMBrowser >> resetAnnouncer [
 	self panes do: [:each | each resetAnnouncer ]
 ]
 
-{ #category : #scripting-private }
+{ #category : #'scripting-private' }
 GLMBrowser >> resolveDestinationPort: aPortReference [ 
 	self flag: 'this is a temporary hack due to initializeScripting transmitting directly a port'.
 	(aPortReference isKindOf: GLMPort) ifTrue: [ ^ aPortReference ].
 	^self resolvePort: aPortReference asGlamourTargetIdentifier defaultPortName: #entity
 ]
 
-{ #category : #scripting-private }
+{ #category : #'scripting-private' }
 GLMBrowser >> resolveOriginPort: aPortReference [ 
 	 
 	^self resolvePort: aPortReference asGlamourOriginIdentifier defaultPortName: #selection
 ]
 
-{ #category : #scripting-private }
+{ #category : #'scripting-private' }
 GLMBrowser >> resolvePort: aPortReference defaultPortName: aSymbol [ 
 	^ aPortReference paneName = #outer 
 		ifTrue: [

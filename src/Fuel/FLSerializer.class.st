@@ -41,7 +41,7 @@ Class {
 		'stream',
 		'header'
 	],
-	#category : #Fuel-Core
+	#category : #'Fuel-Core'
 }
 
 { #category : #protected }
@@ -74,19 +74,19 @@ FLSerializer class >> on: aStream [
 		yourself
 ]
 
-{ #category : #serializing-shortcuts }
+{ #category : #'serializing-shortcuts' }
 FLSerializer class >> serialize: anObject on: aStream [
 
 	self newDefault serialize: anObject on: aStream
 ]
 
-{ #category : #serializing-shortcuts }
+{ #category : #'serializing-shortcuts' }
 FLSerializer class >> serialize: anObject toFileNamed: aFilename [
 
 	self newDefault serialize: anObject toFileNamed: aFilename
 ]
 
-{ #category : #serializing-shortcuts }
+{ #category : #'serializing-shortcuts' }
 FLSerializer class >> serializeToByteArray: anObject [
 	"No stream is needed by the user. An internal in-memory stream will be used. This method returns a ByteArray representing the serialization"
 

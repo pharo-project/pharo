@@ -14,7 +14,7 @@ todo
 Class {
 	#name : #CheckBoxPresenter,
 	#superclass : #AbstractFormButtonPresenter,
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }

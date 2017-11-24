@@ -8,7 +8,7 @@ sign...
 Class {
 	#name : #FlagIconStyler,
 	#superclass : #IconStyler,
-	#category : #Reflectivity-Tools-Breakpoints
+	#category : #'Reflectivity-Tools-Breakpoints'
 }
 
 { #category : #defaults }

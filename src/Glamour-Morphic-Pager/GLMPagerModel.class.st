@@ -19,7 +19,7 @@ Class {
 		'scrollingDelay',
 		'minimumPageNumberForScrollbar'
 	],
-	#category : #Glamour-Morphic-Pager-Model
+	#category : #'Glamour-Morphic-Pager-Model'
 }
 
 { #category : #accessing }

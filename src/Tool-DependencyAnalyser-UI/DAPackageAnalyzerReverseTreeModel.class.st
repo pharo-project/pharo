@@ -10,7 +10,7 @@ Class {
 		'relationGraph',
 		'packageLabel'
 	],
-	#category : #Tool-DependencyAnalyser-UI-Core
+	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
 
 { #category : #specs }
@@ -28,7 +28,7 @@ DAPackageAnalyzerReverseTreeModel class >> defaultSpec [
 				add: #tree ] yourself
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 DAPackageAnalyzerReverseTreeModel class >> onRelationGraph: aRelationGraph [
 	^ self new
 		initializeWithRelationGraph: aRelationGraph;

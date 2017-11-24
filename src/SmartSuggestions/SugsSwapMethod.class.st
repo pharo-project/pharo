@@ -4,7 +4,7 @@ I know how to move a method from instance side to class side and the oposit, dep
 Class {
 	#name : #SugsSwapMethod,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

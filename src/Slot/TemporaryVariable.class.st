@@ -18,7 +18,7 @@ Class {
 		'PersistentTemps',
 		'Properties'
 	],
-	#category : #Slot-Variables
+	#category : #'Slot-Variables'
 }
 
 { #category : #'class initialization' }

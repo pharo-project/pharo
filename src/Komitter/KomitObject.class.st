@@ -17,7 +17,7 @@ Class {
 		'selected',
 		'expanded'
 	],
-	#category : #Komitter-Models
+	#category : #'Komitter-Models'
 }
 
 { #category : #comparing }

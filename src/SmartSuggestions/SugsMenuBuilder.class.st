@@ -5,7 +5,7 @@ I also add the options to the displayed menus.
 Class {
 	#name : #SugsMenuBuilder,
 	#superclass : #Object,
-	#category : #SmartSuggestions-Menu
+	#category : #'SmartSuggestions-Menu'
 }
 
 { #category : #builder }

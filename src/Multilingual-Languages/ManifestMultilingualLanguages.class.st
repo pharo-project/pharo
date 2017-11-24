@@ -4,7 +4,7 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestMultilingualLanguages,
 	#superclass : #PackageManifest,
-	#category : #Multilingual-Languages
+	#category : #'Multilingual-Languages'
 }
 
 { #category : #'meta-data - dependency analyser' }

@@ -3,7 +3,7 @@ Trait for testing tutorials
 "
 Trait {
 	#name : #TTutorialTest,
-	#category : #ProfStef-Tests-Traits
+	#category : #'ProfStef-Tests-Traits'
 }
 
 { #category : #tests }

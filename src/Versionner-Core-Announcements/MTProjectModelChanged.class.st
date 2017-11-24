@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'project'
 	],
-	#category : #Versionner-Core-Announcements
+	#category : #'Versionner-Core-Announcements'
 }
 
 { #category : #creation }

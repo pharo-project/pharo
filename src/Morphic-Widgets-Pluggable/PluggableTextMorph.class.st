@@ -29,7 +29,7 @@ Class {
 		'ShowTextEditingState',
 		'StylingClass'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #'instance creation' }
@@ -1387,7 +1387,7 @@ PluggableTextMorph >> vScrollBarValue: scrollValue [
 	self triggerEvent: #vScroll with: scrollValue
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 PluggableTextMorph >> wantsDroppedMorph: aMorph event: anEvent [ 
 	^ self model wantsDroppedMorph: aMorph event: anEvent inMorph: self
 ]

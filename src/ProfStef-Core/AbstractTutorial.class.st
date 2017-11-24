@@ -13,7 +13,7 @@ See the PharoTutorial class comment to execute your own tutorial.
 Class {
 	#name : #AbstractTutorial,
 	#superclass : #Object,
-	#category : #ProfStef-Core
+	#category : #'ProfStef-Core'
 }
 
 { #category : #'tutorial metainfo' }

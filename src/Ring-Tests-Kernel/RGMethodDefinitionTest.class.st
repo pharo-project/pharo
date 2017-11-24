@@ -4,7 +4,7 @@ SUnit tests for method definitions
 Class {
 	#name : #RGMethodDefinitionTest,
 	#superclass : #TestCase,
-	#category : #Ring-Tests-Kernel
+	#category : #'Ring-Tests-Kernel'
 }
 
 { #category : #running }

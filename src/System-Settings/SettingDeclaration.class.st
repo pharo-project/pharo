@@ -48,7 +48,7 @@ Class {
 		'UniqueObject',
 		'ValueListCache'
 	],
-	#category : #System-Settings-Core
+	#category : #'System-Settings-Core'
 }
 
 { #category : #initialization }

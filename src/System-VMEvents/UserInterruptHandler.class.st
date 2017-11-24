@@ -21,7 +21,7 @@ Class {
 	#pools : [
 		'EventSensorConstants'
 	],
-	#category : #System-VMEvents
+	#category : #'System-VMEvents'
 }
 
 { #category : #setting }
@@ -96,7 +96,7 @@ UserInterruptHandler >> processToInterrupt [
 	^fallback
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 UserInterruptHandler >> setInterruptKeyValue: anInt [
 	interruptKey := anInt
 

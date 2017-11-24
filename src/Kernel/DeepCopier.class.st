@@ -34,7 +34,7 @@ Class {
 	#instVars : [
 		'references'
 	],
-	#category : #Kernel-Copying
+	#category : #'Kernel-Copying'
 }
 
 { #category : #checking }

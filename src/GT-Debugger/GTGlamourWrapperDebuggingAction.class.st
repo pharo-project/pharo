@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'glamourAction'
 	],
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #registration }

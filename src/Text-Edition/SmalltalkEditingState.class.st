@@ -15,10 +15,10 @@ Class {
 	#instVars : [
 		'selectorChooser'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
-{ #category : #selector-chooser }
+{ #category : #'selector-chooser' }
 SmalltalkEditingState >> chosenSelector: aSelector for: aTextMorph [
 	| newStart replacement  caret prevSelection |
 	self closeSelectorChooser.
@@ -40,7 +40,7 @@ SmalltalkEditingState >> chosenSelector: aSelector for: aTextMorph [
 
 ]
 
-{ #category : #selector-chooser }
+{ #category : #'selector-chooser' }
 SmalltalkEditingState >> closeSelectorChooser [
 	selectorChooser 
 		ifNotNil: [ [selectorChooser delete] ensure: [selectorChooser := nil] ]
@@ -85,7 +85,7 @@ SmalltalkEditingState >> mouseDown: anEvent from: aTextMorph [
 	self closeSelectorChooser
 ]
 
-{ #category : #selector-chooser }
+{ #category : #'selector-chooser' }
 SmalltalkEditingState >> querySymbolFrom: aTextMorph [
 	| pref |
 
@@ -97,12 +97,12 @@ SmalltalkEditingState >> querySymbolFrom: aTextMorph [
 
 ]
 
-{ #category : #selector-chooser }
+{ #category : #'selector-chooser' }
 SmalltalkEditingState >> selectorChooser [
 	^ selectorChooser
 ]
 
-{ #category : #selector-chooser }
+{ #category : #'selector-chooser' }
 SmalltalkEditingState >> smartQuerySymbolFrom: aTextMorph [
 	| sel pref caret nextPref |
 	sel := aTextMorph editor selectionInterval.
@@ -120,7 +120,7 @@ SmalltalkEditingState >> smartQuerySymbolFrom: aTextMorph [
 			aTextMorph editor selectInterval: (caret to: caret - 1)]
 ]
 
-{ #category : #selector-chooser }
+{ #category : #'selector-chooser' }
 SmalltalkEditingState >> updateSelectorChooserFrom: aTextMorph [
 	selectorChooser ifNil: [^ self].
 	self closeSelectorChooser.

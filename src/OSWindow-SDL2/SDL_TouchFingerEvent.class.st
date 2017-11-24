@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_TouchFingerEvent,
+	#name : #'SDL_TouchFingerEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_DX',
@@ -15,7 +15,7 @@ Class {
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

@@ -4,7 +4,7 @@ This is a custom help book for the refactoring framework.
 Class {
 	#name : #RefactoringHelp,
 	#superclass : #CustomHelp,
-	#category : #Refactoring-Help
+	#category : #'Refactoring-Help'
 }
 
 { #category : #pages }

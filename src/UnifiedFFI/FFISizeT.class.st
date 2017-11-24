@@ -7,7 +7,7 @@ WARNING: I'm just implemented 32bits!
 Class {
 	#name : #FFISizeT,
 	#superclass : #FFIIntegerType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #converting }

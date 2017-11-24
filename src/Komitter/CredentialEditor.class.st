@@ -11,7 +11,7 @@ Class {
 		'passwordLabel',
 		'showPassword'
 	],
-	#category : #Komitter-Support
+	#category : #'Komitter-Support'
 }
 
 { #category : #specs }
@@ -47,7 +47,7 @@ CredentialEditor >> initialExtent [
 	^ 400@180
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CredentialEditor >> initializeDialogWindow: aWindow [
 
 	self 
@@ -55,7 +55,7 @@ CredentialEditor >> initializeDialogWindow: aWindow [
 		toAction: [ aWindow triggerOkAction ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CredentialEditor >> initializePresenter [
 
 	showPassword 
@@ -63,7 +63,7 @@ CredentialEditor >> initializePresenter [
 		whenDeactivatedDo: [ password beEncrypted ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CredentialEditor >> initializeWidgets [
 
 	username := self newTextInput.

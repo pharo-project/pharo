@@ -8,7 +8,7 @@ Class {
 		'rgMethod',
 		'browser'
 	],
-	#category : #Spec-Tools-VersionBrowser
+	#category : #'Spec-Tools-VersionBrowser'
 }
 
 { #category : #api }

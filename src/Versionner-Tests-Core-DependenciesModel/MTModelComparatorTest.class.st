@@ -1,7 +1,7 @@
 Class {
 	#name : #MTModelComparatorTest,
 	#superclass : #TestCase,
-	#category : #Versionner-Tests-Core-DependenciesModel
+	#category : #'Versionner-Tests-Core-DependenciesModel'
 }
 
 { #category : #private }

@@ -23,7 +23,7 @@ Class {
 		'brickBounds',
 		'brickApi'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Core
+	#category : #'Glamour-Morphic-Brick-Widgets-Core'
 }
 
 { #category : #examples }
@@ -234,25 +234,25 @@ form := PatchForm scaleForm: form by: (800/(form extent x))@(800/(form extent y)
 
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMBrick >> announcer [
 
 	^ super announcer
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMBrick >> asMorph [
 
 	^ self asBrickedMorph
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMBrick >> bounds [
 
 	^ self globalBounds
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> boundsInWorld [
 
 	^ self globalBounds
@@ -264,7 +264,7 @@ GLMBrick >> brickApi [
 	^ brickApi ifNil: [ brickApi := GLMBrickWrapper on: self ]
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> changed [
 	"Report that the area occupied by this morph should be redrawn.
 	Fixed to include submorphs outside the outerBounds."
@@ -276,7 +276,7 @@ GLMBrick >> changed [
 	self invalidRect: self globalClippingBounds
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> changedWith: aBlock [
 
 	self changed.
@@ -284,7 +284,7 @@ GLMBrick >> changedWith: aBlock [
 	self changed.
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMBrick >> currentColor [
 	^ self color
 ]
@@ -294,7 +294,7 @@ GLMBrick >> defaultRenderer [
 	^ GLMBrickRenderer new
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> drawOn: aCanvas [
 	"super drawOn: aCanvas."
 	aCanvas
@@ -302,7 +302,7 @@ GLMBrick >> drawOn: aCanvas [
 		during: [ :canvas | self onDraw: canvas ]
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> drawOnAthensCanvas: anAthensCanvas [
 
 	anAthensCanvas pathTransform restoreAfter: [
@@ -310,7 +310,7 @@ GLMBrick >> drawOnAthensCanvas: anAthensCanvas [
 					self onDrawAthensCanvas: anAthensCanvas ]
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> drawSubmorphsOn: aCanvas [
 	| area zIndexedBricks |
 	
@@ -356,7 +356,7 @@ GLMBrick >> drawSubmorphsOn: aCanvas [
 		
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	| area zIndexedBricks |
 	
@@ -405,18 +405,18 @@ GLMBrick >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 		
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMBrick >> drawingBounds [
 	^ self renderer drawingBounds: self
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> fullBounds [
 
 	^ self globalBounds
 ]
 
-{ #category : #morph-drawing }
+{ #category : #'morph-drawing' }
 GLMBrick >> fullDrawOn: aCanvas [
 	"fixes bug in canvas, when it tries to draw a morph even if clip rect has size 0"
 	
@@ -426,21 +426,21 @@ GLMBrick >> fullDrawOn: aCanvas [
 	super fullDrawOn: aCanvas
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMBrick >> globalClippingBounds [
 	^ self owner
 		ifNotNil: [ self drawingBounds translateBy: self owner globalBoundsTranslateFactor ]
 		ifNil: [ self drawingBounds ]
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> haloClass [
 	"Answer the name of the desired kind of HaloMorph to launch on behalf of the receiver"
 
 	^ #GLMHaloBrick
 ]
 
-{ #category : #private-extension }
+{ #category : #'private-extension' }
 GLMBrick >> hasProperty: aSymbol [ 
 	
 	^ super hasProperty: aSymbol
@@ -459,7 +459,7 @@ GLMBrick >> initialize [
 		renderer: self defaultRenderer
 ]
 
-{ #category : #brick-testing }
+{ #category : #'brick-testing' }
 GLMBrick >> isFitsInParent [
 
 	^ self owner
@@ -469,87 +469,87 @@ GLMBrick >> isFitsInParent [
 		ifNil: [ self owner ifNotNil: [ self owner bounds containsRect: self globalBounds ] ifNil: [ ^ true ] ]
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> isMorphBrick [
 
 	^ false
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMBrick >> layoutPolicy [
 
 	^ super layoutPolicy
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMBrick >> layoutPolicy: aLayout [
 	
 	super layoutPolicy: aLayout
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMBrick >> layoutProperties [
 	
 	^ super layoutProperties
 ]
 
-{ #category : #brick-layout }
+{ #category : #'brick-layout' }
 GLMBrick >> layoutProperties: aLayoutProperties [ 
 
 	super layoutProperties: aLayoutProperties
 ]
 
-{ #category : #brick-drawing }
+{ #category : #'brick-drawing' }
 GLMBrick >> onDraw: aCanvas [
 
 	self renderer render: self on: aCanvas. 
 ]
 
-{ #category : #brick-drawing }
+{ #category : #'brick-drawing' }
 GLMBrick >> onDrawAthensCanvas: aCanvas [
 
 	self renderer render: self onAthensCanvas: aCanvas. 
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GLMBrick >> onThemerChanged [
 
 	self changed
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMBrick >> outerBoundsInParent [
 	^ self owner
 		ifNotNil: [ self wrappedBounds outerBounds translateBy: self owner brickBounds origin ]
 		ifNil: [ self wrappedBounds outerBounds ]
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrick >> owner [
 
 	^ owner
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> privateMoveBy: delta [ 
 	"Private! Use 'position:' instead."
 	bounds := bounds translateBy: delta.
 	fullBounds ifNotNil: [fullBounds := fullBounds translateBy: delta].
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrick >> privateOwner: aBrick [
 
 	owner := aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrick >> privateSubbricks: aCollection [
 
 	submorphs := aCollection
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> removeAllMorphs [
 	| oldMorphs myWorld |
 	"we don't invalidate world"
@@ -561,13 +561,13 @@ GLMBrick >> removeAllMorphs [
 
 ]
 
-{ #category : #private-extension }
+{ #category : #'private-extension' }
 GLMBrick >> removeProperty: aSymbol [
 	
 	super removeProperty: aSymbol
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> setConstrainedPosition: aPoint hangOut: partiallyOutside [
 	"Change the position of this morph and and all of its submorphs to aPoint, but don't let me go outside my owner's bounds."
 
@@ -582,31 +582,31 @@ GLMBrick >> setConstrainedPosition: aPoint hangOut: partiallyOutside [
 
 ]
 
-{ #category : #private-extension }
+{ #category : #'private-extension' }
 GLMBrick >> setProperty: aSymbol toValue: anObject [
 	
 	super setProperty: aSymbol toValue: anObject
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrick >> subbricks [
 
 	^ self submorphs
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> submorphAfter [
 
 	^ self subbrickAfter
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> submorphBefore [
 
 	^ self subbrickBefore
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> taskThumbnailOfSize: thumbExtent [
 	"Answer a new task thumbnail for the receiver."
 
@@ -623,37 +623,37 @@ GLMBrick >> taskThumbnailOfSize: thumbExtent [
 		form: f
 ]
 
-{ #category : #morph-common }
+{ #category : #'morph-common' }
 GLMBrick >> updateMorphBounds [
 
 	self withAllSubbricks select: #isMorphBrick thenDo: #onLayouted
 ]
 
-{ #category : #private-extension }
+{ #category : #'private-extension' }
 GLMBrick >> valueOfProperty: aSymbol [
 	
 	^ super valueOfProperty: aSymbol
 ]
 
-{ #category : #private-extension }
+{ #category : #'private-extension' }
 GLMBrick >> valueOfProperty: aSymbol ifAbsent: aBlock [
 	
 	^ super valueOfProperty: aSymbol ifAbsent: aBlock
 ]
 
-{ #category : #private-extension }
+{ #category : #'private-extension' }
 GLMBrick >> valueOfProperty: aSymbol ifAbsentPut: aBlock [ 
 	
 	^ super valueOfProperty: aSymbol ifAbsentPut: aBlock
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMBrick >> wrappedBounds [
 
 	^ brickBounds ifNil: [ brickBounds := GLMBrickBounds new ]
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMBrick >> wrappedBounds: aBounds [
 
 	brickBounds := aBounds

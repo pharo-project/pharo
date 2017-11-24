@@ -4,7 +4,7 @@ I implement a filtering strategy for processors that takes into account the GTSp
 Class {
 	#name : #GTSpotterSettingsProcessorFilter,
 	#superclass : #GTSpotterProcessorFilter,
-	#category : #GT-Spotter-Model
+	#category : #'GT-Spotter-Model'
 }
 
 { #category : #testing }

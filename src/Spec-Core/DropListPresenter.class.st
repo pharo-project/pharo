@@ -14,7 +14,7 @@ Class {
 		'displayBlock',
 		'iconHolder'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -246,7 +246,7 @@ DropListPresenter >> silentlySetSelectedIndex: anIndex [
 	selectionHolder selection value: selection.
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 DropListPresenter >> whenSelectedItemChanged: aBlock [
 	"Set a block to perform when the selected item is changed"
 
@@ -254,7 +254,7 @@ DropListPresenter >> whenSelectedItemChanged: aBlock [
 		aBlock cull: (new ifNotNil: [ :item | item model ]) cull: old cull: announcement cull: ann ]
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 DropListPresenter >> whenSelectionChanged: aBlock [
 	"Set a block to perform when the selection is changed"
 	
@@ -265,7 +265,7 @@ DropListPresenter >> whenSelectionChanged: aBlock [
 	selectionHolder whenChangedDo: aBlock.
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 DropListPresenter >> whenSelectionIndexChanged: aBlock [
 	"Set a block to perform when the selected index is changed"
 

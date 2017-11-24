@@ -4,7 +4,7 @@ I model the  `self` variable. This the value of this variable is always the host
 Class {
 	#name : #GTInspectorSelfNode,
 	#superclass : #GTInspectorVariableNode,
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #composition }

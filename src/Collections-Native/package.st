@@ -1,1 +1,1 @@
-Package { #name : #Collections-Native }
+Package { #name : #'Collections-Native' }

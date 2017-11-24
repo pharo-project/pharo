@@ -8,7 +8,7 @@ Note that Adler32 is not a CRC, strictly speaking.
 Class {
 	#name : #Adler32,
 	#superclass : #Checksum,
-	#category : #System-Hashing-Checksums
+	#category : #'System-Hashing-Checksums'
 }
 
 { #category : #primitives }

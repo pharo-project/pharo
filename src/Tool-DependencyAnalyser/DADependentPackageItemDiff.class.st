@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'parent'
 	],
-	#category : #Tool-DependencyAnalyser-Diff
+	#category : #'Tool-DependencyAnalyser-Diff'
 }
 
 { #category : #testing }

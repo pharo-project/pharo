@@ -4,7 +4,7 @@ I am a notification raised when a OmFileStore has a problem reading an entry fro
 Class {
 	#name : #OmFileStoreReadingError,
 	#superclass : #Error,
-	#category : #Ombu-Errors
+	#category : #'Ombu-Errors'
 }
 
 { #category : #'instance creation' }

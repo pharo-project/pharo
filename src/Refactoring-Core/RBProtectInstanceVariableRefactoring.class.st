@@ -7,10 +7,10 @@ Omit method that are redefined in subclasses.
 Class {
 	#name : #RBProtectInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
-{ #category : #private-accessing }
+{ #category : #'private-accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	| matcher |
 	matcher := RBParseTreeSearcher new.

@@ -1,1 +1,1 @@
-Package { #name : #Metacello-ProfStef }
+Package { #name : #'Metacello-ProfStef' }

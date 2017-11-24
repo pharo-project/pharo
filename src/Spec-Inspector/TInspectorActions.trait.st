@@ -3,7 +3,7 @@ I contain common actions for inspectors and inspector elements/wrappers
 "
 Trait {
 	#name : #TInspectorActions,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #actions }

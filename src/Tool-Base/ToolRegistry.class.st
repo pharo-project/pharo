@@ -43,7 +43,7 @@ Class {
 	#instVars : [
 		'tools'
 	],
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #misc }
@@ -113,7 +113,7 @@ ToolRegistry >> informNoDebugger [
 			Processor activeProcess terminate ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ToolRegistry >> initDefaultToolSet [
 	
 	"Query the system for registering tools"

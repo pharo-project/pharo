@@ -21,7 +21,7 @@ Class {
 		'left',
 		'right'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -169,12 +169,12 @@ RBPragmaNode >> keywordsPositions: aPositionsList [
 	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ].
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBPragmaNode >> left [
 	^ left
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBPragmaNode >> left: anInteger [
 	left := anInteger
 ]
@@ -210,12 +210,12 @@ RBPragmaNode >> replaceNode: aNode withNode: anotherNode [
 			ifFalse: [ each ] ])
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBPragmaNode >> right [
 	^ right
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBPragmaNode >> right: anInteger [
 	right := anInteger
 ]

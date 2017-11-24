@@ -12,7 +12,7 @@ Class {
 		'nextModel',
 		'classTable'
 	],
-	#category : #NECompletion-OCompletion
+	#category : #'NECompletion-OCompletion'
 }
 
 { #category : #accessing }
@@ -79,7 +79,7 @@ NOCModel >> initialize [
 	classTable := NOCCompletionTable classes.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 NOCModel >> initializeSelectors [
 ]
 

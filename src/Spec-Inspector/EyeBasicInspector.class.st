@@ -4,7 +4,7 @@ I am a special inspector that only lists the real fields of an object. I have ex
 Class {
 	#name : #EyeBasicInspector,
 	#superclass : #EyeInspector,
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #accessing }

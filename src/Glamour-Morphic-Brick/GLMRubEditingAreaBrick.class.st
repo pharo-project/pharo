@@ -9,28 +9,28 @@ hSpaceFill - doesn't really makes sense, since text area still shrinks to fit te
 Class {
 	#name : #GLMRubEditingAreaBrick,
 	#superclass : #GLMRubScrolledTextBrick,
-	#category : #Glamour-Morphic-Brick-Widgets-Basic
+	#category : #'Glamour-Morphic-Brick-Widgets-Basic'
 }
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleBandOpen [
 
 	self gtExampleBand openInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleFillOpen [
 
 	self gtExampleFill openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleOpen [
 
 	self gtExample openCenteredInBrickWindow
 ]
 
-{ #category : #examples-open }
+{ #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleScrollPaneOpen [
 	
 	self gtExampleScrollPane openInBrickWindowLabeled: 'Rubric in ScrollPane'
@@ -112,13 +112,13 @@ GLMRubEditingAreaBrick >> initialize [
 		vShrinkWrap
 ]
 
-{ #category : #rubric-brick-creation }
+{ #category : #'rubric-brick-creation' }
 GLMRubEditingAreaBrick >> newRubricMorph [
 
 	^ GLMRubEditingArea new beWrapped
 ]
 
-{ #category : #brick-geometry }
+{ #category : #'brick-geometry' }
 GLMRubEditingAreaBrick >> shrinkingWidth [
 
 	self rubric width: self rubric textArea width.
@@ -126,7 +126,7 @@ GLMRubEditingAreaBrick >> shrinkingWidth [
 	^ self rubric textArea width
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMRubEditingAreaBrick >> withoutBackground [
 
 	self rubric color: Color transparent

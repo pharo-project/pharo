@@ -4,10 +4,10 @@ I'm a tree node representing a method implementation
 Class {
 	#name : #DAMethodImplementationNode,
 	#superclass : #DAMethodDependencyNode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #building-menu }
+{ #category : #'building-menu' }
 DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
 	| method |
 	method := self content.

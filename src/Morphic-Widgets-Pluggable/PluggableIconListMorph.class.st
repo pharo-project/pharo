@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'getIconSelector'
 	],
-	#category : #Morphic-Widgets-Pluggable
+	#category : #'Morphic-Widgets-Pluggable'
 }
 
 { #category : #event }

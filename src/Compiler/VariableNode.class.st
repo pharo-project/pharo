@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #initialization }
@@ -49,7 +49,7 @@ VariableNode >> accept: aVisitor [
 	^aVisitor visitVariableNode: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VariableNode >> asStorableNode: encoder [
 	^ self
 ]
@@ -156,20 +156,20 @@ VariableNode >> name [
 	^ name
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VariableNode >> name: string [
 	"Change name"
 
 	name := string
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VariableNode >> name: varName index: i type: type [
 	"Only used for initting instVar refs"
 	^self name: varName key: varName index: i type: type
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VariableNode >> name: string key: object code: byte [
 	"Only used for initting std variables, nil, true, false, self, etc."
 	name := string.
@@ -177,7 +177,7 @@ VariableNode >> name: string key: object code: byte [
 	code := byte
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 VariableNode >> name: varName key: objRef index: i type: type [
 	"Only used for initting global (litInd) variables"
 	^self name: varName key: objRef code: (self code: (index := i) type: type)

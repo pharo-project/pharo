@@ -4,7 +4,7 @@ I know how to rename a local variable.
 Class {
 	#name : #SugsRenameTemporaryVar,
 	#superclass : #SugsSuggestion,
-	#category : #SmartSuggestions-Suggestion
+	#category : #'SmartSuggestions-Suggestion'
 }
 
 { #category : #execution }

@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'errorMacro'
 	],
-	#category : #Refactoring-Core-Conditions
+	#category : #'Refactoring-Core-Conditions'
 }
 
 { #category : #'logical operations' }

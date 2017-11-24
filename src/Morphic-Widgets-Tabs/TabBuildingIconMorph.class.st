@@ -20,7 +20,7 @@ Class {
 		'progressIconMorph',
 		'progress'
 	],
-	#category : #Morphic-Widgets-Tabs
+	#category : #'Morphic-Widgets-Tabs'
 }
 
 { #category : #'stepping and presenter' }

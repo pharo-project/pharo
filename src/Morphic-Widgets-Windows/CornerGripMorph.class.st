@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'target'
 	],
-	#category : #Morphic-Widgets-Windows-Resizing
+	#category : #'Morphic-Widgets-Windows-Resizing'
 }
 
 { #category : #accessing }

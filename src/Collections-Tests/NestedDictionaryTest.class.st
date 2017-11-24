@@ -4,7 +4,7 @@ SUnit test class for nested dictionaries
 Class {
 	#name : #NestedDictionaryTest,
 	#superclass : #TestCase,
-	#category : #Collections-Tests-Unordered
+	#category : #'Collections-Tests-Unordered'
 }
 
 { #category : #tests }

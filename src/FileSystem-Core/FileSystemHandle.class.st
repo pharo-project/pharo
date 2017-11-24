@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'Primitives'
 	],
-	#category : #FileSystem-Core-Kernel
+	#category : #'FileSystem-Core-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -116,7 +116,7 @@ FileSystemHandle >> reopen [
 	self open
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileSystemHandle >> setReference: aReference writable: aBoolean [
 	reference := aReference resolve.
 	writable := aBoolean

@@ -75,7 +75,7 @@ Class {
 		'IfaTextFile',
 		'LocalFileHeaderSignature'
 	],
-	#category : #Compression-Archives
+	#category : #'Compression-Archives'
 }
 
 { #category : #'pool initialization' }

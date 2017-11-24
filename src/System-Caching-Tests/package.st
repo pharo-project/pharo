@@ -1,1 +1,1 @@
-Package { #name : #System-Caching-Tests }
+Package { #name : #'System-Caching-Tests' }

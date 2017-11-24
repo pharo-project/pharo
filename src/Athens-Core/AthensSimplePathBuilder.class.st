@@ -16,7 +16,7 @@ Class {
 		'pathStart',
 		'lastSegment'
 	],
-	#category : #Athens-Core-Paths
+	#category : #'Athens-Core-Paths'
 }
 
 { #category : #'path commands' }
@@ -102,7 +102,7 @@ AthensSimplePathBuilder >> cwArcTo: endPt angle: rot [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensSimplePathBuilder >> initialize [
 	"A new path always starts from implicit (moveTo:0@0) segment.
 	If next segment is moveTo: , the point of already existing move segment will be changed,

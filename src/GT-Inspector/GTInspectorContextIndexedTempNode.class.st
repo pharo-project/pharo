@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tempIndex'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #'as yet unclassified' }

@@ -29,7 +29,7 @@ Class {
 		'delimiter',
 		'escape'
 	],
-	#category : #STON-Core
+	#category : #'STON-Core'
 }
 
 { #category : #'instance creation' }
@@ -44,7 +44,7 @@ STONCStyleCommentsSkipStream >> atEnd [
 	^ self peek isNil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONCStyleCommentsSkipStream >> close [
 	stream close
 ]
@@ -198,7 +198,7 @@ STONCStyleCommentsSkipStream >> nextNonCommentChar [
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 STONCStyleCommentsSkipStream >> on: readStream [
 	stream := readStream
 ]

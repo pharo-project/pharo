@@ -5,7 +5,7 @@ Class {
 	#name : #IntegerFlagAlien,
 	#superclass : #Alien,
 	#type : #bytes,
-	#category : #Alien-Win32
+	#category : #'Alien-Win32'
 }
 
 { #category : #'instance creation' }
@@ -15,7 +15,7 @@ IntegerFlagAlien class >> forInIoProcessEventsFlag [
 		dataSize: 4
 ]
 
-{ #category : #primitives-Windows-VM-specific }
+{ #category : #'primitives-Windows-VM-specific' }
 IntegerFlagAlien class >> primInIOProcessEventsFlagAddress [ "^<Integer>"
 	"Answer the address of the Windows-VM-specific int inIoProcessEvents flag.
 	 See platforms/win32/vm/sqWin32Window.c

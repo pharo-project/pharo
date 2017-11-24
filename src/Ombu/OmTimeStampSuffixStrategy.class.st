@@ -4,7 +4,7 @@ I attach a timestamp as a suffix to the name (after last _).
 Class {
 	#name : #OmTimeStampSuffixStrategy,
 	#superclass : #OmSuffixAfterDotStrategy,
-	#category : #Ombu-Strategies
+	#category : #'Ombu-Strategies'
 }
 
 { #category : #accessing }

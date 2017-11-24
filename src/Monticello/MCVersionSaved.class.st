@@ -8,7 +8,7 @@ Class {
 		'version',
 		'repository'
 	],
-	#category : #Monticello-Announcements
+	#category : #'Monticello-Announcements'
 }
 
 { #category : #'instance creation' }
@@ -36,7 +36,7 @@ MCVersionSaved >> hash [
 		bitXor: self repository hash
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCVersionSaved >> initializeWithVersion: aMCVersion repository: aMCRepository [
 
 	self initialize.

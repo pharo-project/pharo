@@ -4,10 +4,10 @@ A FLDictionaryCollectionCluster is a special optional cluster that rather than u
 Class {
 	#name : #FLDictionaryCollectionCluster,
 	#superclass : #FLAbstractCollectionCluster,
-	#category : #Fuel-Clusters-Optionals
+	#category : #'Fuel-Clusters-Optionals'
 }
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLDictionaryCollectionCluster >> materializeReferencesOf: anObject with: aDecoder [
 	aDecoder nextEncodedPositiveInteger "anObject size"
 		 timesRepeat: 
@@ -24,7 +24,7 @@ FLDictionaryCollectionCluster >> referencesOf: anObject do: aBlock [
 
 ]
 
-{ #category : #serialize/materialize }
+{ #category : #'serialize/materialize' }
 FLDictionaryCollectionCluster >> serializeReferencesOf: anObject with: anEncoder [
 	| refs |
 	refs := self references at: anObject ifAbsent: [ ^ self ].

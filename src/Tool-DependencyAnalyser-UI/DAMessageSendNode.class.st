@@ -4,7 +4,7 @@ I'm a tree node representing a specific message send in the package under analys
 Class {
 	#name : #DAMessageSendNode,
 	#superclass : #DAMethodDependencyNode,
-	#category : #Tool-DependencyAnalyser-UI-Nodes
+	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
 { #category : #accessing }

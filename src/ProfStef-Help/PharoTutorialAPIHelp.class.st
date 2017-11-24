@@ -4,7 +4,7 @@ I'm a PharoTutorial which builds a HelpSystem book by collecting comment from cl
 Class {
 	#name : #PharoTutorialAPIHelp,
 	#superclass : #PharoTutorialHelp,
-	#category : #ProfStef-Help
+	#category : #'ProfStef-Help'
 }
 
 { #category : #accessing }

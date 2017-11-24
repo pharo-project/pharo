@@ -1,7 +1,7 @@
 Class {
 	#name : #SlotMigrationTest,
 	#superclass : #SlotSilentTest,
-	#category : #Slot-Tests
+	#category : #'Slot-Tests'
 }
 
 { #category : #tests }

@@ -12,7 +12,7 @@ Class {
 		'keywordSuffixMapping',
 		'pragmaMapping'
 	],
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #private }
@@ -159,7 +159,7 @@ MethodClassifier >> classify: aMethod [
 
 ]
 
-{ #category : #classification-rules }
+{ #category : #'classification-rules' }
 MethodClassifier >> classifyAccessor: aMethod [
 	" If the method is a setter or getter for a  "
 	| names selector |
@@ -185,7 +185,7 @@ MethodClassifier >> classifyAll: aCollectionOfMethods [
 		self classify: method ]
 ]
 
-{ #category : #classification-rules }
+{ #category : #'classification-rules' }
 MethodClassifier >> classifyByKnownKeywordSuffix: aMethod [
 	(self protocolForKnownKeywordSuffixOfSelector: aMethod selector)
 		ifNil: [ ^ false ]
@@ -194,7 +194,7 @@ MethodClassifier >> classifyByKnownKeywordSuffix: aMethod [
 			^ true ]
 ]
 
-{ #category : #classification-rules }
+{ #category : #'classification-rules' }
 MethodClassifier >> classifyByKnownPragma: aMethod [
 	self class pragmaMapping
 		keysAndValuesDo: [ :pragma :protocol | 
@@ -204,7 +204,7 @@ MethodClassifier >> classifyByKnownPragma: aMethod [
 	^ false
 ]
 
-{ #category : #classification-rules }
+{ #category : #'classification-rules' }
 MethodClassifier >> classifyByKnownPrefix: aMethod [
 	(self protocolForKnownPrefixOfSelector: aMethod selector)
 		ifNil: [ ^ false ]
@@ -213,7 +213,7 @@ MethodClassifier >> classifyByKnownPrefix: aMethod [
 			^ true ]
 ]
 
-{ #category : #classification-rules }
+{ #category : #'classification-rules' }
 MethodClassifier >> classifyByOtherImplementors: aMethod [
 	| protocolBag |
 	
@@ -233,7 +233,7 @@ MethodClassifier >> classifyByOtherImplementors: aMethod [
 	^ true
 ]
 
-{ #category : #classification-rules }
+{ #category : #'classification-rules' }
 MethodClassifier >> classifyInSuperclassProtocol: aMethod [
 	| currentClass |
 	currentClass := aMethod methodClass.

@@ -13,7 +13,7 @@ Class {
 		'selector',
 		'negated'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
 { #category : #accessing }
@@ -24,14 +24,14 @@ RxsMessagePredicate >> dispatchTo: aBuilder [
 	^aBuilder syntaxMessagePredicate: self
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsMessagePredicate >> initializeSelector: aSelector [
 	"The selector must be a one-argument message understood by Character."
 
 	selector := aSelector
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxsMessagePredicate >> initializeSelector: aSelector negated: aBoolean [
 	"The selector must be a one-argument message understood by Character."
 

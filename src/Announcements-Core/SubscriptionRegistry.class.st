@@ -12,10 +12,10 @@ Class {
 		'subscriptions',
 		'monitor'
 	],
-	#category : #Announcements-Core
+	#category : #'Announcements-Core'
 }
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 SubscriptionRegistry >> add: subscription [
 	^ self protected: [
 		subscriptions add: subscription  ]
@@ -69,7 +69,7 @@ SubscriptionRegistry >> protected: aBlock [
 	^ monitor critical: [ aBlock value ]
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 SubscriptionRegistry >> remove: subscription [
 	^ self protected: [
 		subscriptions remove: subscription ifAbsent: nil ]
@@ -77,7 +77,7 @@ SubscriptionRegistry >> remove: subscription [
 
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 SubscriptionRegistry >> removeSubscriber: subscriber [
 	
 	^ self protected: [
@@ -86,7 +86,7 @@ SubscriptionRegistry >> removeSubscriber: subscriber [
 
 ]
 
-{ #category : #add/remove }
+{ #category : #'add/remove' }
 SubscriptionRegistry >> replace: subscription with: newOne [
 
 	" Note that it will signal an error if subscription is not there "
@@ -97,7 +97,7 @@ SubscriptionRegistry >> replace: subscription with: newOne [
 	^ newOne
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 SubscriptionRegistry >> reset [
 	"subscriber -> subscriptions"
 	

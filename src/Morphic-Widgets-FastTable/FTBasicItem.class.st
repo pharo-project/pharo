@@ -46,15 +46,15 @@ Class {
 		'depth',
 		'recentlyChanged'
 	],
-	#category : #Morphic-Widgets-FastTable-Tree
+	#category : #'Morphic-Widgets-FastTable-Tree'
 }
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem class >> expandedForm [
 	^ Smalltalk ui theme treeExpandedForm
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem class >> unexpandedForm [
 	^ Smalltalk ui theme treeUnexpandedForm
 ]
@@ -75,7 +75,7 @@ FTBasicItem >> children [
 	^ children ifNil: [ children := self calculateChildren ]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> collapse [
 	"I do not refresh the table. Use collapseAndRefresh for that. I also do not 
 	ensure that any selected element is visible after collapsing the element.
@@ -96,13 +96,13 @@ FTBasicItem >> collapse [
 	isExpanded := false
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> collapseAll [
 	self children do: #collapseAll.
 	self collapse
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> collapseAndRefresh [
 	self collapse.
 	self refreshTable
@@ -140,7 +140,7 @@ FTBasicItem >> depth: anObject [
 	depth := anObject
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> expand [
 	"I do not refresh the table. Use expandAndRefresh for that. I also do not 
 	ensure that any selected element is visible after expanding the element."
@@ -154,20 +154,20 @@ FTBasicItem >> expand [
 				ifFalse: [ indexOfCurrentSelection + self numberOfVisibleChildren ] ]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> expandAll [
 	self expand.
 	self children do: #expandAll
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> expandAllTo: aDepth [
 	self expand.
 	aDepth > self depth
 		ifTrue: [ self children do: [ :each | each expandAllTo: aDepth ] ]
 ]
 
-{ #category : #expanding-collapsing }
+{ #category : #'expanding-collapsing' }
 FTBasicItem >> expandAndRefresh [
 	self expand.
 	self refreshTable

@@ -4,15 +4,15 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsSequenceable,
 	#superclass : #PackageManifest,
-	#category : #Collections-Sequenceable
+	#category : #'Collections-Sequenceable'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsSequenceable class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Streams' #'Collections-Unordered' #Kernel #'Collections-Abstract')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsSequenceable class >> description [
 	^ 'Sequenceable collections: arrays, intervals, ordered collections and dictionaries, etc.'
 ]
@@ -22,7 +22,7 @@ ManifestCollectionsSequenceable class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Support' #'System-Support')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsSequenceable class >> packageName [
 	^ #'Collections-Sequenceable'
 ]

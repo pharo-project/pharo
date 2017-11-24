@@ -4,7 +4,7 @@ i just a stub for rendering nothing , so that all update requests (like from Mor
 Class {
 	#name : #OSNullFormRenderer,
 	#superclass : #OSWindowFormRenderer,
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #size }

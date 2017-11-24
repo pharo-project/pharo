@@ -4,7 +4,7 @@ Cleanup working copies
 Class {
 	#name : #GoferCleanup,
 	#superclass : #GoferWorking,
-	#category : #Gofer-Core
+	#category : #'Gofer-Core'
 }
 
 { #category : #cleaning }

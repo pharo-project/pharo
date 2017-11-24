@@ -10,7 +10,7 @@ Class {
 		'preLoadDoIt',
 		'postLoadDoIt'
 	],
-	#category : #Metacello-Core-Specs
+	#category : #'Metacello-Core-Specs'
 }
 
 { #category : #adding }

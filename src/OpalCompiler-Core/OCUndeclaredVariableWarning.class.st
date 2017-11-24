@@ -4,7 +4,7 @@ I get signalled when a temporary variable is used that is not defined.  My defau
 Class {
 	#name : #OCUndeclaredVariableWarning,
 	#superclass : #OCSemanticWarning,
-	#category : #OpalCompiler-Core-Exception
+	#category : #'OpalCompiler-Core-Exception'
 }
 
 { #category : #correcting }

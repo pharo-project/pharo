@@ -17,7 +17,7 @@ Class {
 		'autoFractionComputation',
 		'size'
 	],
-	#category : #Spec-Layout
+	#category : #'Spec-Layout'
 }
 
 { #category : #'instance creation' }
@@ -40,19 +40,19 @@ SpecLayout >> add: aSpec [
 	self add: aSpec origin: 0@0 corner: 1@1
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock bottom: aNumber [
 	
 	self add: aBlock top: nil bottom: aNumber left: nil right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock left: aNumber [
 	
 	self add: aBlock top: nil bottom: nil left: aNumber right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock left: left right: right [
 	
 	self add: aBlock top: nil bottom: nil left: left right: right
@@ -75,25 +75,25 @@ SpecLayout >> add: aSpec origin: originPoint corner: cornerPoint offsetOrigin: o
 									bottomRightOffset: ocPoint ))
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock right: aNumber [
 	
 	self add: aBlock top: nil bottom: nil left: nil right: aNumber
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock top: aNumber [
 
 	self add: aBlock top: aNumber bottom: nil left: nil right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock top: top bottom: bottom [
 	
 	self add: aBlock top: top bottom: bottom left: nil right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock top: top bottom: bottom left: left right: right [
 	| layout |
 	
@@ -113,19 +113,19 @@ SpecLayout >> add: modelGetter withSpec: aSymbol [
 	self add: modelGetter withSpec: aSymbol origin: 0@0 corner: 1@1
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec bottom: aNumber [
 	
 	self add: aBlock withSpec: aSpec top: nil bottom: aNumber left: nil right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec left: aNumber [
 	
 	self add: aBlock withSpec: aSpec top: nil bottom: nil left: aNumber right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec left: left right: right [
 	
 	self add: aBlock withSpec: aSpec top: nil bottom: nil left: left right: right
@@ -148,25 +148,25 @@ SpecLayout >> add: modelGetter withSpec: aSymbol origin: originPoint corner: cor
 												bottomRightOffset: ocPoint))
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec right: aNumber [
 	
 	self add: aBlock withSpec: aSpec top: nil bottom: nil left: nil right: aNumber
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec top: aNumber [
 	
 	self add: aBlock withSpec: aSpec top: aNumber bottom: nil left: nil right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec top: top bottom: bottom [
 	
 	self add: aBlock withSpec: aSpec top: top bottom: bottom left: nil right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> add: aBlock withSpec: aSpec top: top bottom: bottom left: left right: right [
 	| layout |
 	
@@ -297,13 +297,13 @@ SpecLayout >> newColumn: aBlock [
 	self newColumn: aBlock origin: 0@0 corner: 1@1
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> newColumn: aBlock left: aNumber [
 	
 	self newColumn: aBlock left: aNumber right: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> newColumn: aBlock left: left right: right [
 	| layout |
 	
@@ -337,7 +337,7 @@ SpecLayout >> newColumn: aBlock origin: originPoint corner: cornerPoint offsetOr
 										bottomRightOffset: ocPoint)).
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> newColumn: aBlock right: aNumber [
 	
 	self newColumn: aBlock left: nil right: aNumber
@@ -355,7 +355,7 @@ SpecLayout >> newRow: aBlock [
 	self newRow: aBlock origin: 0@0 corner: 1@1
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> newRow: aBlock bottom: aNumber [
 	
 	self newRow: aBlock top: nil bottom: aNumber
@@ -387,13 +387,13 @@ SpecLayout >> newRow: aBlock origin: originPoint corner: cornerPoint offsetOrigi
 										bottomRightOffset: ocPoint)).
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> newRow: aBlock top: aNumber [
 	
 	self newRow: aBlock top: aNumber bottom: nil
 ]
 
-{ #category : #commands-advanced }
+{ #category : #'commands-advanced' }
 SpecLayout >> newRow: aBlock top: top bottom: bottom [
 	| layout |
 	

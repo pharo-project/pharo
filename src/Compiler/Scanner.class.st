@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'DoItCharacter'
 	],
-	#category : #Compiler-Kernel
+	#category : #'Compiler-Kernel'
 }
 
 { #category : #'class initialization' }
@@ -58,7 +58,7 @@ Scanner >> initScanner [
 	typeTable := String typeTable
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Scanner >> initScannerForTokenization [
 	"Use a version of typeTable that doesn't raise xIllegal when enocuntering an :="
 	| underscoreIndex |

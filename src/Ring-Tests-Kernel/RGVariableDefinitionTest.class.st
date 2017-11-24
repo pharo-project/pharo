@@ -4,7 +4,7 @@ SUnit tests for variable definitions
 Class {
 	#name : #RGVariableDefinitionTest,
 	#superclass : #TestCase,
-	#category : #Ring-Tests-Kernel
+	#category : #'Ring-Tests-Kernel'
 }
 
 { #category : #testing }

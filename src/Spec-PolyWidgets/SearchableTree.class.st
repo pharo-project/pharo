@@ -11,7 +11,7 @@ Class {
 		'label',
 		'button'
 	],
-	#category : #Spec-PolyWidgets-ListAndTree
+	#category : #'Spec-PolyWidgets-ListAndTree'
 }
 
 { #category : #specs }
@@ -68,13 +68,13 @@ SearchableTree >> button [
 	^ button
 ]
 
-{ #category : #api-compatibility }
+{ #category : #'api-compatibility' }
 SearchableTree >> childrenBlock [
 	
 	^ tree childrenBlock
 ]
 
-{ #category : #api-compatibility }
+{ #category : #'api-compatibility' }
 SearchableTree >> childrenBlock: aBlock [
 	
 	tree childrenBlock: aBlock
@@ -98,13 +98,13 @@ SearchableTree >> columns: aCollection [
 	tree columns: aCollection
 ]
 
-{ #category : #api-compatibility }
+{ #category : #'api-compatibility' }
 SearchableTree >> displayBlock [
 
 	^ tree displayBlock
 ]
 
-{ #category : #api-compatibility }
+{ #category : #'api-compatibility' }
 SearchableTree >> displayBlock: aBlock [
 	
 	tree displayBlock: aBlock
@@ -324,25 +324,25 @@ SearchableTree >> updateTree [
 	tree updateTree
 ]
 
-{ #category : #api-events-compatibility }
+{ #category : #'api-events-compatibility' }
 SearchableTree >> whenChildrenBlockChanged: aBlock [
 	
 	tree whenChildrenBlockChanged: aBlock
 ]
 
-{ #category : #api-events-compatibility }
+{ #category : #'api-events-compatibility' }
 SearchableTree >> whenDisplayBlockChanged: aBlock [
 	
 	tree whenDisplayBlockChanged: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SearchableTree >> whenMenuChanged: aBlock [
 	
 	tree whenMenuChanged: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SearchableTree >> whenRootsChanged: aBlock [
 
 	roots whenChangedDo: aBlock
@@ -354,7 +354,7 @@ SearchableTree >> whenSelectedItemChanged: aBlock [
 	tree whenSelectedItemChanged: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 SearchableTree >> whenSelectedItemsChanged: aBlock [
 	
 	tree whenSelectedItemsChanged: aBlock

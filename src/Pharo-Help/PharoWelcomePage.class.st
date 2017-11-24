@@ -51,7 +51,7 @@ https://github.com/pharo-project/pharo-changelogs/blob/master/Pharo40ChangeLogs.
 Class {
 	#name : #PharoWelcomePage,
 	#superclass : #Object,
-	#category : #Pharo-Help
+	#category : #'Pharo-Help'
 }
 
 { #category : #opening }

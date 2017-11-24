@@ -4,5 +4,5 @@ This is deprecated class because the original class TreeColumnModel was renamed 
 Class {
 	#name : #TreeColumnModel,
 	#superclass : #TreeColumnPresenter,
-	#category : #Spec-Deprecated
+	#category : #'Spec-Deprecated'
 }

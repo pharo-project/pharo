@@ -4,7 +4,7 @@ I'm a constant handle type (see ==FFIConstantHandle==  comment).
 Class {
 	#name : #FFIConstantHandleType,
 	#superclass : #FFIExternalReferenceType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #private }

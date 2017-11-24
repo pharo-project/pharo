@@ -5,7 +5,7 @@ RootEyeElement is used in the tree/explorer view for the initial, top root eleme
 Class {
 	#name : #RootEyeElement,
 	#superclass : #SelfEyeElement,
-	#category : #Spec-Inspector-Element
+	#category : #'Spec-Inspector-Element'
 }
 
 { #category : #accessing }

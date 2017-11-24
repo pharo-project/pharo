@@ -23,7 +23,7 @@ Class {
 	#pools : [
 		'FFIConstants'
 	],
-	#category : #FFI-Kernel
+	#category : #'FFI-Kernel'
 }
 
 { #category : #'compiler support' }
@@ -176,7 +176,7 @@ ExternalFunction >> flags [
 	^flags
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ExternalFunction >> initialize [
 	"Initialize the receiver"
 	handle := ExternalAddress new.

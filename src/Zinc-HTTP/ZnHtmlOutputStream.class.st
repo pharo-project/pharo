@@ -33,7 +33,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #Zinc-HTTP-Streaming
+	#category : #'Zinc-HTTP-Streaming'
 }
 
 { #category : #'instance creation' }
@@ -60,7 +60,7 @@ ZnHtmlOutputStream >> << collection [
 	^ self nextPutAll: collection asString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnHtmlOutputStream >> close [
 	stream close
 ]
@@ -174,7 +174,7 @@ ZnHtmlOutputStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnHtmlOutputStream >> on: writeStream [
 	stream := writeStream
 ]

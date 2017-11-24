@@ -6,7 +6,7 @@ Class {
 		'authorName',
 		'tearDownPackages'
 	],
-	#category : #Versionner-Tests-Core-Commands
+	#category : #'Versionner-Tests-Core-Commands'
 }
 
 { #category : #private }

@@ -4,7 +4,7 @@ A test for supplying answer
 Class {
 	#name : #SupplyAnswerTests,
 	#superclass : #TestCase,
-	#category : #Morphic-Tests-Widgets
+	#category : #'Morphic-Tests-Widgets'
 }
 
 { #category : #tests }

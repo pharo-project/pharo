@@ -1,1 +1,1 @@
-Package { #name : #Metacello-TestsCommonMC }
+Package { #name : #'Metacello-TestsCommonMC' }

@@ -8,7 +8,7 @@ Class {
 		'defaultKeymappingIndex',
 		'textArea'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #keymapping }
@@ -286,12 +286,12 @@ RubTextEditor >> backspace: aKeyboardEvent [
 	^ result
 ]
 
-{ #category : #obsolete-parenblinking }
+{ #category : #'obsolete-parenblinking' }
 RubTextEditor >> blinkParenAt: parenLocation [ 
 	"kept because NECController is sending it to me"
 ]
 
-{ #category : #obsolete-parenblinking }
+{ #category : #'obsolete-parenblinking' }
 RubTextEditor >> blinkPrevParen: aCharacter [
 	"kept because NECController is sending it to me"
 ]
@@ -878,7 +878,7 @@ RubTextEditor >> defaultShiftCommandKeymapping [
 	^ cmdMap
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> deselect [
 	"If the text selection is visible on the screen, reverse its highlight."
 	" ***** screw this logic ***** selectionShowing ifTrue: [self reverseSelection] "
@@ -970,7 +970,7 @@ RubTextEditor >> duplicate: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> editPrimarySelectionSeparately [
 	textArea editPrimarySelectionSeparately
 ]
@@ -1143,7 +1143,7 @@ RubTextEditor >> findAgainAndReplace [
 
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findAll: aRegex endingAt: searchIdx [ 
 	| ranges |
 	ranges := aRegex matchingRangesIn: (self string copyFrom: 1 to: searchIdx).
@@ -1151,7 +1151,7 @@ RubTextEditor >> findAll: aRegex endingAt: searchIdx [
 			
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findAll: aRegex startingAt: searchIdx [ 
 	| ranges |
 	ranges := aRegex matchingRangesIn: (self string copyFrom: searchIdx to: self string size).
@@ -1159,7 +1159,7 @@ RubTextEditor >> findAll: aRegex startingAt: searchIdx [
 			
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchBackwards [
 	| oldSelectionInterval where |
 	self closeTypeIn.
@@ -1172,7 +1172,7 @@ RubTextEditor >> findAndSelect: aRegex startingAt: anIndex searchBackwards: sear
 	^ where
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
 	| where |
 	where := self findNext: aRegex startingAt: self stopIndex.
@@ -1180,7 +1180,7 @@ RubTextEditor >> findAndSelectNextOccurenceOf: aRegex [
 	^ where
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
 	| where |
 	where := self findPrevious: aRegex startingAt: self startIndex.
@@ -1188,7 +1188,7 @@ RubTextEditor >> findAndSelectPreviousOccurenceOf: aRegex [
 	^ where
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findNext: aRegex startingAt: searchIdx [ 
 	| strm match range |
 	strm := (self string copyFrom: searchIdx to: self string size) readStream.
@@ -1198,7 +1198,7 @@ RubTextEditor >> findNext: aRegex startingAt: searchIdx [
 	^ range
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findNextString: aSubstring startingAt: searchIdx [ 
 	| idx |
 	idx := self string findString: aSubstring startingAt: searchIdx.
@@ -1206,7 +1206,7 @@ RubTextEditor >> findNextString: aSubstring startingAt: searchIdx [
 			
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findPrevious: aRegex startingAt: searchIdx [ 
 	| allRanges |
 	allRanges := self findAll: aRegex endingAt: searchIdx.
@@ -1220,17 +1220,17 @@ RubTextEditor >> findRegex [
 	^ self findReplaceService findRegex
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findReplaceService [
 	^ RubFindReplaceService default
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findText [
 	^ self findReplaceService findText
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> findText: aStringOrText [
 	self findReplaceService findText: aStringOrText 
 ]
@@ -1286,7 +1286,7 @@ RubTextEditor >> forwardDelete: aKeyboardEvent [
 	^ false
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> getHighlightInterval [
 	"Answer the interval that is or should be highligted."
 
@@ -1295,7 +1295,7 @@ RubTextEditor >> getHighlightInterval [
 		ifFalse: [ self computeSelectionIntervalForCurrentLine ]
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> hasCursor [
 	^self markBlock = self pointBlock
 ]
@@ -1305,7 +1305,7 @@ RubTextEditor >> hasError [
 	^ false 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> hasSelection [
 	^ self pointIndex ~= self markIndex
 ]
@@ -1343,7 +1343,7 @@ RubTextEditor >> highlightInterval: anInterval [
 		to: anInterval last + 1.
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> highlightedTextAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently highlighted."
 
@@ -1622,17 +1622,17 @@ RubTextEditor >> makeUppercase: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> markBlock [
 	^ textArea markBlock
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> markIndex [
 	^ textArea markIndex
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> markIndex: markIndex pointIndex: pointIndex [
 	textArea markIndex: markIndex pointIndex: pointIndex
 
@@ -1758,7 +1758,7 @@ RubTextEditor >> openingDelimiters [
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> oppositeDelimiterSelection [
 	^ RubTextSelectionColor oppositeDelimiterSelection
 ]
@@ -1825,12 +1825,12 @@ RubTextEditor >> performCmdActionsWith: aKeyboardEvent shifted: aBoolean return:
 	return value: ( self perform: action with: aKeyboardEvent).
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> pointBlock [
 	^ textArea pointBlock
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> pointIndex [
 	^ textArea pointIndex
 ]
@@ -1859,7 +1859,7 @@ RubTextEditor >> raiseContextMenu: aKeyboardEvent [
 	^ textArea yellowButtonActivity: ActiveEvent shiftPressed
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.
 	Redetermine the selection according to the start and stop block indices; 
@@ -1889,7 +1889,7 @@ RubTextEditor >> redoArray: doArray undoArray: undoArray [
 	self editingState redoArray: doArray undoArray: undoArray
 ]
 
-{ #category : #undoers-redoers }
+{ #category : #'undoers-redoers' }
 RubTextEditor >> redoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: self selectionInterval with: aText and:
@@ -1915,7 +1915,7 @@ RubTextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 			undoArray: {textArea. #undoTypeIn:interval:. {prevSel. currInterval first to: currInterval first + newText size - 1}}]
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> replaceAll: aRegex with: aText [
 	self
 		undoRedoTransaction: [ 
@@ -1929,7 +1929,7 @@ RubTextEditor >> replaceAll: aRegex with: aText [
 			self selectInterval: selec ]
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> replaceAll: aRegex with: aText startingAt: startIdx [
 	self
 		undoRedoTransaction: [ 
@@ -2057,7 +2057,7 @@ RubTextEditor >> search: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> select [
 	"select what and how ?"
 ]
@@ -2228,13 +2228,13 @@ RubTextEditor >> selectWord: aKeyboardEvent [
 	^ true
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> selection [
 	"Answer the text in the paragraph that is currently selected."
 	^self text copyFrom: self startIndex to: self stopIndex - 1 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> selectionAsStream [
 	"Answer a ReadStream on the text in the paragraph that is currently 
 	selected."
@@ -2243,19 +2243,19 @@ RubTextEditor >> selectionAsStream [
 		on: (self string copyFrom: self startIndex to: self stopIndex - 1)
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> selectionInterval [
 	"Answer the interval that is currently selected."
 
 	^self startIndex to: self stopIndex - 1 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> selectionStart [
 	^ textArea selectionStart
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> selectionStop [
 	^ textArea selectionStop
 ]
@@ -2405,7 +2405,7 @@ as if shift-command were also being pressed"
 	)
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> startIndex [
 	^ textArea startIndex
 ]
@@ -2420,12 +2420,12 @@ RubTextEditor >> startOfTyping: anIntegerIndex [
 	self editingState startOfTyping:  anIntegerIndex
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> stopIndex [
 	^ textArea stopIndex
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> storeSelectionInText [
 	self theme currentSettings haveSelectionTextColor 
 		ifTrue: [
@@ -2541,19 +2541,19 @@ RubTextEditor >> undo: aKeyboardEvent [
 	^true
 ]
 
-{ #category : #undoers-redoers }
+{ #category : #'undoers-redoers' }
 RubTextEditor >> undoRedoExchange: aninterval with: anotherInterval [
 	self selectInvisiblyFrom: aninterval first to: aninterval last.
 	self exchangeWith: anotherInterval
 
 ]
 
-{ #category : #find-select }
+{ #category : #'find-select' }
 RubTextEditor >> undoRedoTransaction: aBlock [
 	self editingState undoRedoTransaction: aBlock
 ]
 
-{ #category : #undoers-redoers }
+{ #category : #'undoers-redoers' }
 RubTextEditor >> undoTypeIn: aText interval: anInterval [
 	self selectInterval: anInterval.
 	self replace: anInterval with: aText and:
@@ -2567,7 +2567,7 @@ RubTextEditor >> unplug [
 	super unplug
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> unselect [
 	textArea unselect
 ]
@@ -2591,7 +2591,7 @@ RubTextEditor >> wordAtCaret [
 
 ]
 
-{ #category : #accessing-selection }
+{ #category : #'accessing-selection' }
 RubTextEditor >> zapSelectionWith: aText [
 	| start stop |
 	self canChangeText

@@ -5,7 +5,7 @@ Represented as single byte on C side.
 Class {
 	#name : #FFICharacterType,
 	#superclass : #FFIExternalType,
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #accessing }

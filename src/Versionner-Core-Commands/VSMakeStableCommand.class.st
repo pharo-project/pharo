@@ -4,7 +4,7 @@ I'm a command to declare versions as stable.
 Class {
 	#name : #VSMakeStableCommand,
 	#superclass : #VSMakeVersionCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #testing }

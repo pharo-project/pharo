@@ -1,7 +1,7 @@
 Class {
 	#name : #MethodMapExamples,
 	#superclass : #Object,
-	#category : #OpalCompiler-Tests-Misc
+	#category : #'OpalCompiler-Tests-Misc'
 }
 
 { #category : #examples }

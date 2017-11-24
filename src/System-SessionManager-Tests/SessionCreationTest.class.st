@@ -1,7 +1,7 @@
 Class {
 	#name : #SessionCreationTest,
 	#superclass : #TestCase,
-	#category : #System-SessionManager-Tests
+	#category : #'System-SessionManager-Tests'
 }
 
 { #category : #tests }

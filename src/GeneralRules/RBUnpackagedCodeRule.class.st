@@ -4,7 +4,7 @@ Code that is not contained in a Monticello package is not versioned and cannot b
 Class {
 	#name : #RBUnpackagedCodeRule,
 	#superclass : #ReAbstractRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #testing }

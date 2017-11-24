@@ -88,7 +88,7 @@ EventManagerTest >> testBlockReceiverTwoArgs [
 	self should: [(eventListener includes: 9) and: [eventListener includes: 42]]
 ]
 
-{ #category : #running-copying }
+{ #category : #'running-copying' }
 EventManagerTest >> testCopy [
 	"Ensure that the actionMap is zapped when
 	you make a copy of anEventManager"

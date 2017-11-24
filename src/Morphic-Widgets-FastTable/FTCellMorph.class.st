@@ -34,7 +34,7 @@ Class {
 	#instVars : [
 		'topSeparator'
 	],
-	#category : #Morphic-Widgets-FastTable
+	#category : #'Morphic-Widgets-FastTable'
 }
 
 { #category : #initialize }

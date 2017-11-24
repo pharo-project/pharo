@@ -8,7 +8,7 @@ Class {
 		'objectClass',
 		'structureSize'
 	],
-	#category : #UnifiedFFI-Types
+	#category : #'UnifiedFFI-Types'
 }
 
 { #category : #private }

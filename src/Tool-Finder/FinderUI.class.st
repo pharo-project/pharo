@@ -18,7 +18,7 @@ Class {
 	#classInstVars : [
 		'searchedTextListMaxSize'
 	],
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #'event subscriptions' }
@@ -37,7 +37,7 @@ FinderUI class >> icon [
 	^ self iconNamed: #smallFindIcon
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FinderUI class >> initialize [
 	searchedTextListMaxSize := 15
 ]

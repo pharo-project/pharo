@@ -4,7 +4,7 @@
 Class {
 	#name : #MetacelloLookupProjectSpec,
 	#superclass : #MetacelloScriptProjectSpecNotification,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #handlers }

@@ -31,7 +31,7 @@ Class {
 		'b2',
 		'p4'
 	],
-	#category : #RPackage-Tests
+	#category : #'RPackage-Tests'
 }
 
 { #category : #expectedfailures }

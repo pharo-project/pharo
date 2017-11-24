@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMLabelPresentation,
 	#superclass : #GLMFormatedPresentation,
-	#category : #Glamour-Core
+	#category : #'Glamour-Core'
 }
 
 { #category : #rendering }

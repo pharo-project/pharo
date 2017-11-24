@@ -1,7 +1,7 @@
 Class {
 	#name : #GLMCustomRow,
 	#superclass : #GLMCustomCell,
-	#category : #Glamour-Browsers-Tabulator
+	#category : #'Glamour-Browsers-Tabulator'
 }
 
 { #category : #accessing }

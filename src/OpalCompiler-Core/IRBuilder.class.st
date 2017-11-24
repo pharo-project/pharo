@@ -31,7 +31,7 @@ Class {
 		'sourceMapNodes',
 		'sourceMapByteIndex'
 	],
-	#category : #OpalCompiler-Core-IR-Manipulation
+	#category : #'OpalCompiler-Core-IR-Manipulation'
 }
 
 { #category : #'builder api' }

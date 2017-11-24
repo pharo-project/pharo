@@ -44,7 +44,7 @@ Class {
 		'textPosition',
 		'highlightedString'
 	],
-	#category : #Glamour-Morphic-Brick-Widgets-Core
+	#category : #'Glamour-Morphic-Brick-Widgets-Core'
 }
 
 { #category : #'as yet unclassified' }
@@ -207,7 +207,7 @@ GLMStringBrick >> fontSize: aNumber [
 	self updateFont.
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMStringBrick >> hShrinkWrap [
 	
 	self hResizing: #rigid.
@@ -343,13 +343,13 @@ GLMStringBrick >> text: aString [
 	self wrappedBounds markWidthDirty.
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMStringBrick >> textColor [
 
 	^ self valueOfProperty: #brickTextColor ifAbsent: [ self themer textColor ]
 ]
 
-{ #category : #brick-properties }
+{ #category : #'brick-properties' }
 GLMStringBrick >> textColor: aColor [
 
 	self setProperty: #brickTextColor toValue: aColor.
@@ -396,7 +396,7 @@ GLMStringBrick >> updateFont [
 	font := LogicalFont familyName: self familyName pointSize: self fontSize
 ]
 
-{ #category : #brick-layout-properties }
+{ #category : #'brick-layout-properties' }
 GLMStringBrick >> vShrinkWrap [
 	
 	self vResizing: #rigid.

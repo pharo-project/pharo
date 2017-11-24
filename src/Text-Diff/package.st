@@ -1,1 +1,1 @@
-Package { #name : #Text-Diff }
+Package { #name : #'Text-Diff' }

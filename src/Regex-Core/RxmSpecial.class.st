@@ -10,40 +10,40 @@ Class {
 	#instVars : [
 		'matchSelector'
 	],
-	#category : #Regex-Core
+	#category : #'Regex-Core'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSpecial >> beBeginningOfLine [
 
 	matchSelector := #atBeginningOfLine
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSpecial >> beBeginningOfWord [
 
 	matchSelector := #atBeginningOfWord
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSpecial >> beEndOfLine [
 
 	matchSelector := #atEndOfLine
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSpecial >> beEndOfWord [
 
 	matchSelector := #atEndOfWord
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSpecial >> beNotWordBoundary [
 
 	matchSelector := #notAtWordBoundary
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RxmSpecial >> beWordBoundary [
 
 	matchSelector := #atWordBoundary

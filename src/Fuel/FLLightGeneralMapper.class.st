@@ -4,10 +4,10 @@ I know how to map an object to its default cluster. I can map every object.
 Class {
 	#name : #FLLightGeneralMapper,
 	#superclass : #FLMapper,
-	#category : #Fuel-Mappers
+	#category : #'Fuel-Mappers'
 }
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLLightGeneralMapper >> clusterClassForSmallInteger: aSmallInteger [
 
 	aSmallInteger >= 0 ifTrue: [
@@ -31,7 +31,7 @@ FLLightGeneralMapper >> mapAndTrace: anObject [
 
 ]
 
-{ #category : #protected-mapping }
+{ #category : #'protected-mapping' }
 FLLightGeneralMapper >> mapAndTraceInstanceSideGlobal: aClassOrTrait [
 
 	(self clusterKeyedByClusterName: FLGlobalClassCluster)

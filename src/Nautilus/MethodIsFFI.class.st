@@ -4,7 +4,7 @@ Custom icon for methods which uses FFI
 Class {
 	#name : #MethodIsFFI,
 	#superclass : #AbstractMethodIconAction,
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #order }

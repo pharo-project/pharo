@@ -4,10 +4,10 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsAbstract,
 	#superclass : #PackageManifest,
-	#category : #Collections-Abstract
+	#category : #'Collections-Abstract'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsAbstract class >> dependencies [
 	^ #(#'Regex-Core' #'Collections-Strings' #'Collections-Streams' #'Collections-Support' #'Collections-Unordered' #Kernel #'Collections-Sequenceable' #'Collections-Native')
 ]
@@ -17,7 +17,7 @@ ManifestCollectionsAbstract class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Arithmetic')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsAbstract class >> packageName [
 	^ #'Collections-Abstract'
 ]

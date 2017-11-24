@@ -4,7 +4,7 @@ A FinderClassNode is a node used by the FinderUI's tree representing a Class
 Class {
 	#name : #FinderClassNode,
 	#superclass : #FinderNode,
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #private }

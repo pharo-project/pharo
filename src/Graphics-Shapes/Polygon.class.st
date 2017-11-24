@@ -4,7 +4,7 @@ I'm a Polygon PathShape (see PathShape).
 Class {
 	#name : #Polygon,
 	#superclass : #PathShape,
-	#category : #Graphics-Shapes
+	#category : #'Graphics-Shapes'
 }
 
 { #category : #testing }

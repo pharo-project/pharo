@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'tree'
 	],
-	#category : #Spec-Inspector
+	#category : #'Spec-Inspector'
 }
 
 { #category : #spec }
@@ -37,7 +37,7 @@ EyeTreeInspector >> childrenForObject: anObject [
 			select: [ :element | element shouldShowInTree ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeTreeInspector >> elementChanged [
 	self text doItReceiver: self selectedElement value.
 	self text widget
@@ -90,7 +90,7 @@ EyeTreeInspector >> labelFor: anEyeElement [
 			anEyeElement label, ': ', (self labelFor: anEyeElement error: error) ]
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeTreeInspector >> objectChanged [
 	self text doItReceiver: self object.
 	self text widget
@@ -100,7 +100,7 @@ EyeTreeInspector >> objectChanged [
 		expandRoots
 ]
 
-{ #category : #event-handling }
+{ #category : #'event-handling' }
 EyeTreeInspector >> ownerChanged [
 	super ownerChanged.
 	self expandRoots.
@@ -129,7 +129,7 @@ EyeTreeInspector >> selectedObject [
 	^self selectedElement value
 ]
 
-{ #category : #private-focus }
+{ #category : #'private-focus' }
 EyeTreeInspector >> takeKeyboardFocus [
 	^ self tree takeKeyboardFocus
 ]

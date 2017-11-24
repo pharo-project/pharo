@@ -16,7 +16,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #System-Localization-Translations
+	#category : #'System-Localization-Translations'
 }
 
 { #category : #cleanup }

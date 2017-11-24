@@ -1,7 +1,7 @@
 Class {
 	#name : #NECEntryTest,
 	#superclass : #TestCase,
-	#category : #NECompletion-Tests
+	#category : #'NECompletion-Tests'
 }
 
 { #category : #tests }

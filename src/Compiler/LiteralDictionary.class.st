@@ -4,7 +4,7 @@ A LiteralDictionary, like an IdentityDictionary, has a special test for equality
 Class {
 	#name : #LiteralDictionary,
 	#superclass : #Dictionary,
-	#category : #Compiler-Support
+	#category : #'Compiler-Support'
 }
 
 { #category : #testing }

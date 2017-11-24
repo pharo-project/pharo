@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #Monticello-Repositories
+	#category : #'Monticello-Repositories'
 }
 
 { #category : #'accessing settings' }
@@ -61,7 +61,7 @@ MCCacheRepository class >> disableCacheDuring: aBlock [
 	self uniqueInstance disableCacheDuring: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCCacheRepository class >> initialize [
 	self resetIfInvalid
 ]
@@ -127,7 +127,7 @@ MCCacheRepository >> loadVersionFromFileNamed: aString [
 	^ self versionReaderForFileNamed: aString do: [:r | r version]
 ]
 
-{ #category : #instance-creation }
+{ #category : #'instance-creation' }
 MCCacheRepository >> newFileNames [ 
 	^ self allFileNames difference: self seenFileNames
 ]

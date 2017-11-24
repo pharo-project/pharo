@@ -8,7 +8,7 @@ Class {
 		'package',
 		'browser'
 	],
-	#category : #Versionner-Tests-Core-Model
+	#category : #'Versionner-Tests-Core-Model'
 }
 
 { #category : #running }

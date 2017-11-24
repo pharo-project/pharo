@@ -4,7 +4,7 @@ I tests the navigations directions
 Class {
 	#name : #NNavNavigateTest,
 	#superclass : #TestCase,
-	#category : #NodeNavigation-Tests
+	#category : #'NodeNavigation-Tests'
 }
 
 { #category : #sibling }
@@ -24,7 +24,7 @@ NNavNavigateTest >> testNextBrotherItsTheNextOfTheChilds [
 
 ]
 
-{ #category : #sibling-prev }
+{ #category : #'sibling-prev' }
 NNavNavigateTest >> testNextBrotherItsThePreviousOfTheChilds [
 	| bigBrother middleBrother littleBrother brother parent |
 	
@@ -44,7 +44,7 @@ NNavNavigateTest >> testNextBrotherItsThePreviousOfTheChilds [
 
 ]
 
-{ #category : #sibling-prev }
+{ #category : #'sibling-prev' }
 NNavNavigateTest >> testNextBrotherWhenItsTheFirstItsTheLast [
 	| bigBrother middleBrother littleBrother brother parent |
 	
@@ -111,7 +111,7 @@ NNavNavigateTest >> testNotBrotherWhenOrphan [
 	self assert: brother isNil.
 ]
 
-{ #category : #sibling-prev }
+{ #category : #'sibling-prev' }
 NNavNavigateTest >> testNotPreviousBrotherWhenOrphan [
 	| orphanNode brother |
 	

@@ -11,7 +11,7 @@ Class {
 		'caseSensitive',
 		'query'
 	],
-	#category : #GT-Spotter-Filters
+	#category : #'GT-Spotter-Filters'
 }
 
 { #category : #private }
@@ -56,7 +56,7 @@ GTStringFilter >> caseSensitive: anObject [
 	caseSensitive := anObject
 ]
 
-{ #category : #accessing-defaults }
+{ #category : #'accessing-defaults' }
 GTStringFilter >> defaultCaseSensitive [
 	^ false
 ]

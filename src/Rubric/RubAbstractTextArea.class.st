@@ -104,7 +104,7 @@ Class {
 		'LineNumbersTextColor',
 		'WalkAlongDisplayedLine'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #settings }
@@ -379,7 +379,7 @@ RubAbstractTextArea class >> walkAlongDisplayedLine: aBoolean [
 	WalkAlongDisplayedLine := aBoolean
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 RubAbstractTextArea >> aboutToBeGrabbedBy: aHand [
 	self grabbedAllowed
 		ifTrue: [ ^ super aboutToBeGrabbedBy: aHand ].
@@ -634,7 +634,7 @@ RubAbstractTextArea >> defaultYellowButtonMenuEnabled [
 	^ self defaultMenuAllowed 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 RubAbstractTextArea >> delete [
 	self hasFocus
 		ifTrue: [ self currentHand newKeyboardFocus: nil ].
@@ -763,7 +763,7 @@ RubAbstractTextArea >> extent: aPoint [
 					self recomputeSelection ] ]
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> findAndSelect: aRegex startingAt: anIndex searchBackwards: searchBackwards [
 	| where |
 	self
@@ -776,7 +776,7 @@ RubAbstractTextArea >> findAndSelect: aRegex startingAt: anIndex searchBackwards
 	^ where
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> findNextString: aSubstring startingAt: searchIdx [
 	| where |
 	self
@@ -785,12 +785,12 @@ RubAbstractTextArea >> findNextString: aSubstring startingAt: searchIdx [
 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> findRegex [
 	^ self editor findRegex
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> findText [
 	^ self editor findText
 ]
@@ -868,7 +868,7 @@ RubAbstractTextArea >> getMenuPolicy: aGetMenuPolicy [
 	getMenuPolicy := aGetMenuPolicy
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 RubAbstractTextArea >> grabbedAllowed [
 	^ scrollPane isNil
 ]
@@ -993,7 +993,7 @@ RubAbstractTextArea >> hasDecoratorNamed: aKey [
 	
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> hasFindReplaceFocus [
 	^ RubFindReplaceService default dialogIsActiveFor: self
 ]
@@ -1323,7 +1323,7 @@ RubAbstractTextArea >> offset [
 		ifNotNil: [ :h | scrollPane offset ]
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> openFindDialog [
 	self sharesFindReplace 
 		ifTrue: [ self announce: RubFindReplaceWindowRequired ]
@@ -1528,14 +1528,14 @@ RubAbstractTextArea >> removeSegment: aRubTextSegmentMorph [
 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> replaceAll: aRegex with: aText [
 	self
 		handleEdit: [self editor replaceAll: aRegex with: aText].
 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> replaceAll: aRegex with: aText startingAt: startIdx [
 	self
 		handleEdit: [self editor replaceAll: aRegex with: aText startingAt: startIdx].
@@ -1549,13 +1549,13 @@ RubAbstractTextArea >> replaceFrom: start to: stop with: aText [
 
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> replaceSelectionWith: aText [
 	self
 		handleEdit: [self editor replaceSelectionWith: aText]
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 RubAbstractTextArea >> resistsRemoval [
 	^ self grabbedAllowed not
 ]
@@ -1683,7 +1683,7 @@ RubAbstractTextArea >> setTextWith: stringOrText [
 	self handleParagraphChange: [self privateText: stringOrText]
 ]
 
-{ #category : #find-replace }
+{ #category : #'find-replace' }
 RubAbstractTextArea >> sharesFindReplace [
 	^ true
 ]

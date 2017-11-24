@@ -1,5 +1,5 @@
 Class {
 	#name : #GTSpotterRevealHints,
 	#superclass : #Announcement,
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }

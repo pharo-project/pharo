@@ -4,7 +4,7 @@ SUnit tests for Gofer operations
 Class {
 	#name : #GoferOperationTest,
 	#superclass : #GoferTest,
-	#category : #Gofer-Tests-Tests
+	#category : #'Gofer-Tests-Tests'
 }
 
 { #category : #utilities }

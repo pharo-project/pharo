@@ -1,7 +1,7 @@
 Class {
 	#name : #GTFilterSubstring,
 	#superclass : #GTOrderedFilter,
-	#category : #GT-Spotter-Filters
+	#category : #'GT-Spotter-Filters'
 }
 
 { #category : #private }

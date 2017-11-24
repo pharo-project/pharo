@@ -17,7 +17,7 @@ Note that if scene view enters zooming or panning state, no events will be passe
 Class {
 	#name : #AthensInteractiveScene,
 	#superclass : #AthensSceneView,
-	#category : #Athens-Morphic
+	#category : #'Athens-Morphic'
 }
 
 { #category : #'event handling' }

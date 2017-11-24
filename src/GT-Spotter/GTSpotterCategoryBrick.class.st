@@ -7,7 +7,7 @@ Class {
 		'stepModel',
 		'category'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #adding }

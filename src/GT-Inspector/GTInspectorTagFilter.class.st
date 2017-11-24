@@ -14,7 +14,7 @@ Class {
 		'selectedTags',
 		'defaultTag'
 	],
-	#category : #GT-Inspector
+	#category : #'GT-Inspector'
 }
 
 { #category : #examples }

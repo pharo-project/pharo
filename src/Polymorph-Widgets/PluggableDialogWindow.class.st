@@ -11,7 +11,7 @@ Class {
 		'applyChangesSelector',
 		'defaultFocusMorph'
 	],
-	#category : #Polymorph-Widgets-Windows
+	#category : #'Polymorph-Widgets-Windows'
 }
 
 { #category : #actions }

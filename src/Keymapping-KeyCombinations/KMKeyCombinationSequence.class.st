@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'shortcuts'
 	],
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #'instance creation' }

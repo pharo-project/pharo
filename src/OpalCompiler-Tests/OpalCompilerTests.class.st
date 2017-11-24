@@ -1,7 +1,7 @@
 Class {
 	#name : #OpalCompilerTests,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-Misc
+	#category : #'OpalCompiler-Tests-Misc'
 }
 
 { #category : #tests }

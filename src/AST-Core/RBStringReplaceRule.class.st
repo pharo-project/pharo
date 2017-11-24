@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'replaceTree'
 	],
-	#category : #AST-Core-Matching
+	#category : #'AST-Core-Matching'
 }
 
 { #category : #'instance creation' }
@@ -65,12 +65,12 @@ RBStringReplaceRule >> foundMatchFor: aProgramNode [
 	^newNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> methodReplaceString: replaceString [ 
 	replaceTree := RBParser parseRewriteMethod: replaceString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> replaceString: replaceString [ 
 	replaceTree := RBParser parseRewriteExpression: replaceString.
 	searchTree isSequence = replaceTree isSequence 
@@ -80,37 +80,37 @@ RBStringReplaceRule >> replaceString: replaceString [
 				ifFalse: [searchTree := RBSequenceNode statements: (Array with: searchTree)]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> searchFor: searchString replaceWith: replaceString [ 
 	self searchString: searchString.
 	self replaceString: replaceString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> searchFor: searchString replaceWith: replaceString when: aBlock [ 
 	self searchFor: searchString replaceWith: replaceString.
 	verificationBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> searchForMethod: searchString replaceWith: replaceString [ 
 	self methodSearchString: searchString.
 	self methodReplaceString: replaceString
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> searchForMethod: searchString replaceWith: replaceString when: aBlock [ 
 	self searchForMethod: searchString replaceWith: replaceString.
 	verificationBlock := aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceNode [ 
 	searchTree := aBRProgramNode.
 	replaceTree := replaceNode
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBStringReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock [ 
 	self searchForTree: aBRProgramNode replaceWith: replaceString.
 	verificationBlock := aBlock

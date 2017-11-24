@@ -1,1 +1,1 @@
-Package { #name : #Versionner-Commit }
+Package { #name : #'Versionner-Commit' }

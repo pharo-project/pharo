@@ -23,7 +23,7 @@ Class {
 		'styleNameExtracted',
 		'upright'
 	],
-	#category : #FreeType-FontManager
+	#category : #'FreeType-FontManager'
 }
 
 { #category : #accessing }

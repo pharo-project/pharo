@@ -18,7 +18,7 @@ Class {
 		'position',
 		'limit'
 	],
-	#category : #Zinc-Character-Encoding-Core
+	#category : #'Zinc-Character-Encoding-Core'
 }
 
 { #category : #'instance creation' }
@@ -42,7 +42,7 @@ ZnBufferedReadStream >> atEnd [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBufferedReadStream >> close [
 	stream close
 ]
@@ -138,7 +138,7 @@ ZnBufferedReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBufferedReadStream >> on: readStream [
 	stream := readStream.
 	self sizeBuffer: self defaultBufferSize
@@ -193,7 +193,7 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 				ifFalse: [ stream readInto: collection startingAt: offset + read count: requestedCount - read ])
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnBufferedReadStream >> sizeBuffer: size [
 	buffer := self collectionSpecies new: size
 ]

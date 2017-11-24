@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloRepositorySqueakCommonTestCase,
 	#superclass : #TestCase,
-	#category : #Metacello-TestsPlatform
+	#category : #'Metacello-TestsPlatform'
 }
 
 { #category : #baselines }

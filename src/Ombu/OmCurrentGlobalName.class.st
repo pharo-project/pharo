@@ -4,5 +4,5 @@ I am a DynamicVariable that holds the globalName of a OmFileStore. I'm used duri
 Class {
 	#name : #OmCurrentGlobalName,
 	#superclass : #DynamicVariable,
-	#category : #Ombu-Persistence
+	#category : #'Ombu-Persistence'
 }

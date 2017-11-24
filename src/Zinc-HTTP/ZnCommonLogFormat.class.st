@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'combined'
 	],
-	#category : #Zinc-HTTP-Logging
+	#category : #'Zinc-HTTP-Logging'
 }
 
 { #category : #private }

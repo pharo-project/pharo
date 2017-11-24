@@ -18,7 +18,7 @@ Class {
 	#classVars : [
 		'LookupComment'
 	],
-	#category : #Refactoring-Core-Model
+	#category : #'Refactoring-Core-Model'
 }
 
 { #category : #'instance creation' }
@@ -198,7 +198,7 @@ RBClass >> privatePoolDictionaryNames [
 	^poolDictionaryNames
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBClass >> realName: aSymbol [ 
 	self realClass: (self class environment at: aSymbol)
 ]

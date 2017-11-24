@@ -1,1 +1,1 @@
-Package { #name : #Zinc-Character-Encoding-Core }
+Package { #name : #'Zinc-Character-Encoding-Core' }

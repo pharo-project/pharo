@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'targetStrategy'
 	],
-	#category : #FuelTests-StreamStrategies
+	#category : #'FuelTests-StreamStrategies'
 }
 
 { #category : #'instance creation' }
@@ -19,7 +19,7 @@ FLGZipStrategy class >> newWithTarget: aStreamStrategy [
 		
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FLGZipStrategy >> initializeWith: aStreamStrategy [
 
 	self initialize.

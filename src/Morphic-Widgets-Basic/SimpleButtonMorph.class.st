@@ -42,7 +42,7 @@ Class {
 		'oldColor',
 		'label'
 	],
-	#category : #Morphic-Widgets-Basic-Buttons
+	#category : #'Morphic-Widgets-Basic-Buttons'
 }
 
 { #category : #'instance creation' }
@@ -52,14 +52,14 @@ SimpleButtonMorph class >> newWithLabel: labelString [
 
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SimpleButtonMorph >> actWhen [
 	"acceptable symbols:  #buttonDown, #buttonUp, and #whilePressed"
 
 	^ actWhen
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SimpleButtonMorph >> actWhen: condition [
 	"Accepts symbols:  #buttonDown, #buttonUp, and #whilePressed, #startDrag"
 	actWhen := condition.
@@ -268,7 +268,7 @@ SimpleButtonMorph >> mouseStillDown: evt [
 	(self containsPoint: evt cursorPoint) ifTrue:[self doButtonAction].
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 SimpleButtonMorph >> mouseStillDownStepRate [
 	"Answer how often I want the #handleMouseStillDown: stepped"
 	^200

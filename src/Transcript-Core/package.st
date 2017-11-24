@@ -1,1 +1,1 @@
-Package { #name : #Transcript-Core }
+Package { #name : #'Transcript-Core' }

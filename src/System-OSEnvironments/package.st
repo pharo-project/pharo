@@ -1,1 +1,1 @@
-Package { #name : #System-OSEnvironments }
+Package { #name : #'System-OSEnvironments' }

@@ -21,7 +21,7 @@ Class {
 		'actionMap',
 		'clipSubmorphs'
 	],
-	#category : #Morphic-Core-Kernel
+	#category : #'Morphic-Core-Kernel'
 }
 
 { #category : #accessing }
@@ -83,7 +83,7 @@ MorphExtension >> clipSubmorphs: anObject [
 	clipSubmorphs := anObject
 ]
 
-{ #category : #connectors-copying }
+{ #category : #'connectors-copying' }
 MorphExtension >> copyWeakly [
 	"list of names of properties whose values should be weak-copied when veryDeepCopying a morph.  See DeepCopier."
 
@@ -300,7 +300,7 @@ MorphExtension >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #connectors-copying }
+{ #category : #'connectors-copying' }
 MorphExtension >> propertyNamesNotCopied [
 	"list of names of properties whose values should be deleted when veryDeepCopying a morph.
 	See DeepCopier."
@@ -383,7 +383,7 @@ MorphExtension >> valueOfProperty: aSymbol ifAbsentPut: aBlock [
 	^self assureOtherProperties at: aSymbol ifAbsentPut: aBlock
 ]
 
-{ #category : #connectors-copying }
+{ #category : #'connectors-copying' }
 MorphExtension >> veryDeepFixupWith: deepCopier [ 
 	"If target and arguments fields were weakly copied, fix them here.
 	If they were in the tree being copied, fix them up, otherwise point to the originals!!"
@@ -399,7 +399,7 @@ MorphExtension >> veryDeepFixupWith: deepCopier [
 
 ]
 
-{ #category : #connectors-copying }
+{ #category : #'connectors-copying' }
 MorphExtension >> veryDeepInner: deepCopier [ 
 	"Copy all of my instance variables.
 	Some otherProperties need to be not copied at all, but shared. Their names are given by copyWeakly.

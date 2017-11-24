@@ -8,7 +8,7 @@ Without help from the image such a virtual machine based on an interpreter would
 Class {
 	#name : #MaybeContextInstanceVariableNode,
 	#superclass : #InstanceVariableNode,
-	#category : #Compiler-ParseNodes
+	#category : #'Compiler-ParseNodes'
 }
 
 { #category : #accessing }

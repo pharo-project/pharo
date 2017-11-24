@@ -2,14 +2,14 @@
 SDL2 library structure representing a dropped file into the window.
 "
 Class {
-	#name : #SDL_DropEvent,
+	#name : #'SDL_DropEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_FILE',
 		'OFFSET_TIMESTAMP',
 		'OFFSET_TYPE'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

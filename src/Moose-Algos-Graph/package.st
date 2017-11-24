@@ -1,1 +1,1 @@
-Package { #name : #Moose-Algos-Graph }
+Package { #name : #'Moose-Algos-Graph' }

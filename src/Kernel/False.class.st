@@ -6,7 +6,7 @@ Be aware however that most of these methods are not sent as real messages in nor
 Class {
 	#name : #False,
 	#superclass : #Boolean,
-	#category : #Kernel-Objects
+	#category : #'Kernel-Objects'
 }
 
 { #category : #'logical operations' }

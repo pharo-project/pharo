@@ -4,7 +4,7 @@ SUnit tests for SystemVersion
 Class {
 	#name : #SystemVersionTest,
 	#superclass : #TestCase,
-	#category : #System-Support-Tests
+	#category : #'System-Support-Tests'
 }
 
 { #category : #utilities }

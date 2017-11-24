@@ -14,7 +14,7 @@ Class {
 		'passed',
 		'skipped'
 	],
-	#category : #SUnit-Core-Kernel
+	#category : #'SUnit-Core-Kernel'
 }
 
 { #category : #exceptions }
@@ -228,7 +228,7 @@ TestResult >> failures [
 	^ self unexpectedFailures, self unexpectedPasses 
 ]
 
-{ #category : #filein/out }
+{ #category : #'filein/out' }
 TestResult >> fileOutOn: aFileStream [
 	"Write in aFileStream like:
 	3 run, 2 passes, 0 expected failures, 1 failures, 0 errors, 0 unexpected passes

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'rules'
 	],
-	#category : #Refactoring-Tests-Core-Data
+	#category : #'Refactoring-Tests-Core-Data'
 }
 
 { #category : #'instance creation' }
@@ -93,7 +93,7 @@ RBCompositeLintRuleTest >> problemCount [
 	^rules inject: 0 into: [:count :each | count + each problemCount]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCompositeLintRuleTest >> resetResult [
 	rules do: [:each | each resetResult]
 ]
@@ -103,7 +103,7 @@ RBCompositeLintRuleTest >> rules [
 	^rules
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCompositeLintRuleTest >> rules: aCollection [
 	rules := aCollection
 ]

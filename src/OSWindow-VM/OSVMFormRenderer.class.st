@@ -4,7 +4,7 @@ My instances implement OSWindowFormRenderer interface for OSVMWindowHandle.
 Class {
 	#name : #OSVMFormRenderer,
 	#superclass : #OSWindowFormRenderer,
-	#category : #OSWindow-VM
+	#category : #'OSWindow-VM'
 }
 
 { #category : #private }

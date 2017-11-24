@@ -1,1 +1,1 @@
-Package { #name : #Flashback-Decompiler-Tests }
+Package { #name : #'Flashback-Decompiler-Tests' }

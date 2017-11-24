@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'renderer'
 	],
-	#category : #Glamour-Morphic-Renderer
+	#category : #'Glamour-Morphic-Renderer'
 }
 
 { #category : #'instance creation' }

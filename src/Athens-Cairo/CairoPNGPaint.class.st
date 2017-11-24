@@ -13,7 +13,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Paints
+	#category : #'Athens-Cairo-Paints'
 }
 
 { #category : #'instance creation' }
@@ -43,7 +43,7 @@ CairoPNGPaint >> asAthensPaintOn: anAthensCanvas [
  
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 CairoPNGPaint >> initializeOnFileNamed: aFileName [
 	fileName := aFileName.
 ]

@@ -4,7 +4,7 @@ A ""Print It"" action on a text. When the text is clicked the text is seen as so
 Class {
 	#name : #TextPrintIt,
 	#superclass : #TextDoIt,
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #styling }

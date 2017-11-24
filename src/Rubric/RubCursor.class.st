@@ -16,7 +16,7 @@ Class {
 		'FixedColor',
 		'Period'
 	],
-	#category : #Rubric-Editing-Core
+	#category : #'Rubric-Editing-Core'
 }
 
 { #category : #accessing }
@@ -180,7 +180,7 @@ RubCursor >> isBlinkingCursor [
 	^ self period > 0
 ]
 
-{ #category : #submorphs-accessing }
+{ #category : #'submorphs-accessing' }
 RubCursor >> noteNewOwner: aMorph [ 
 	super noteNewOwner: aMorph.
 	self textArea announcer when: MorphGotFocus send: #whenGotFocus: to: self.

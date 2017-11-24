@@ -1,1 +1,1 @@
-Package { #name : #Athens-Text }
+Package { #name : #'Athens-Text' }

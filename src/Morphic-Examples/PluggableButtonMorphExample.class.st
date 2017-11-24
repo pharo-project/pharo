@@ -9,7 +9,7 @@ Class {
 		'state',
 		'icon'
 	],
-	#category : #Morphic-Examples-Widgets
+	#category : #'Morphic-Examples-Widgets'
 }
 
 { #category : #examples }

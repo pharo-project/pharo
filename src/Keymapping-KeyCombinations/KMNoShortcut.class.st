@@ -6,7 +6,7 @@ I respond to the Null object pattern, since I represent the inexistance of a key
 Class {
 	#name : #KMNoShortcut,
 	#superclass : #KMKeyCombination,
-	#category : #Keymapping-KeyCombinations
+	#category : #'Keymapping-KeyCombinations'
 }
 
 { #category : #combining }

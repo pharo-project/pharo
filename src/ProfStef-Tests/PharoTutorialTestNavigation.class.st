@@ -8,7 +8,7 @@ Class {
 		'prof',
 		'mockView'
 	],
-	#category : #ProfStef-Tests-Tests
+	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #running }

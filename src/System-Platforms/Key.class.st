@@ -14,7 +14,7 @@ Class {
 		'UnixVirtualKeyTable',
 		'WindowsVirtualKeyTable'
 	],
-	#category : #System-Platforms
+	#category : #'System-Platforms'
 }
 
 { #category : #'class initialization' }
@@ -664,12 +664,12 @@ Key >> printOn: aStream [
 		nextPutAll: ')'.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Key >> withValue: aValue [
 	self withValue: aValue andName: self class unknownKeyName
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Key >> withValue: aValue andName: aName [
 	value := aValue.
 	name := aName

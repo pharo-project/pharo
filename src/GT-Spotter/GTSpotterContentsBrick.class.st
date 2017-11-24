@@ -6,7 +6,7 @@ Class {
 		'dropDownBrick',
 		'spotterModel'
 	],
-	#category : #GT-Spotter-UI
+	#category : #'GT-Spotter-UI'
 }
 
 { #category : #accessing }
@@ -68,7 +68,7 @@ GTSpotterContentsBrick >> newHeaderBrick [
 	^ GTSpotterHeaderBrick new
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GTSpotterContentsBrick >> onStepAdded [
 	"as soon as step added I need to show drop down pane"
 	self isDropDownPaneVisible ifTrue: [ ^ self ].
@@ -76,7 +76,7 @@ GTSpotterContentsBrick >> onStepAdded [
 	self showDropDownPane
 ]
 
-{ #category : #brick-properties-events }
+{ #category : #'brick-properties-events' }
 GTSpotterContentsBrick >> onThemerChanged [
 	super onThemerChanged.
 	

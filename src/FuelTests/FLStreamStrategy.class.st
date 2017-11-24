@@ -4,7 +4,7 @@ I am a strategy that help tests for writing (and then reading) on streams.
 Class {
 	#name : #FLStreamStrategy,
 	#superclass : #Object,
-	#category : #FuelTests-StreamStrategies
+	#category : #'FuelTests-StreamStrategies'
 }
 
 { #category : #serializing }

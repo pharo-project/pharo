@@ -7,10 +7,10 @@ Class {
 	#instVars : [
 		'drawFocusBorder'
 	],
-	#category : #Rubric-Editing-Widgets
+	#category : #'Rubric-Editing-Widgets'
 }
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 RubTextScrollPane >> aboutToBeGrabbedBy: aHand [
 	^ nil
 ]

@@ -4,7 +4,7 @@ I am the adapter used to bridge a MultiColumnListPresenter and a PluggableMultiC
 Class {
 	#name : #MorphicMultiColumnListAdapter,
 	#superclass : #MorphicListAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #factory }

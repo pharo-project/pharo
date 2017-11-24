@@ -4,10 +4,10 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsAtomic,
 	#superclass : #PackageManifest,
-	#category : #Collections-Atomic
+	#category : #'Collections-Atomic'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsAtomic class >> dependencies [
 	^ #(#Kernel)
 ]
@@ -17,7 +17,7 @@ ManifestCollectionsAtomic class >> manuallyResolvedDependencies [
 	^ #(#'Collections-Streams')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsAtomic class >> packageName [
 	^ #'Collections-Atomic'
 ]

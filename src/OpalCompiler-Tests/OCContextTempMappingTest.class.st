@@ -17,7 +17,7 @@ However this class is a starting point for this.
 Class {
 	#name : #OCContextTempMappingTest,
 	#superclass : #TestCase,
-	#category : #OpalCompiler-Tests-FromOld
+	#category : #'OpalCompiler-Tests-FromOld'
 }
 
 { #category : #tests }

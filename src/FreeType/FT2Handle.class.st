@@ -15,7 +15,7 @@ Class {
 	#pools : [
 		'FT2Constants'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }
 
 { #category : #'system startup' }
@@ -52,7 +52,7 @@ FT2Handle class >> errorString [
 	^self primitiveFailed
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FT2Handle class >> initialize [
 	SessionManager default 
 		registerGuiClassNamed: self name

@@ -6,7 +6,7 @@ This event is generated when a joystick is disconnected from the computer.
 Class {
 	#name : #OSJoyDeviceRemovedEvent,
 	#superclass : #OSJoyDeviceEvent,
-	#category : #OSWindow-Core-Events
+	#category : #'OSWindow-Core-Events'
 }
 
 { #category : #visitor }

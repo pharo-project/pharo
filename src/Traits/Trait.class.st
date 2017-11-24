@@ -10,7 +10,7 @@ Class {
 		'classTrait',
 		'category'
 	],
-	#category : #Traits-Kernel
+	#category : #'Traits-Kernel'
 }
 
 { #category : #'instance creation' }
@@ -415,7 +415,7 @@ Trait >> copy [
 	^newTrait
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> declareClassVariables: newVars [ 
 	"Declare class variables common to all instances. Answer whether 
 	recompilation is advisable."
@@ -733,7 +733,7 @@ Trait >> name: aSymbol [
 	name := aSymbol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> name: aString traitComposition: aComposition methodDict: aMethodDict localSelectors: aSet organization: aClassOrganization [
 
 	"Used by copy"
@@ -762,7 +762,7 @@ Trait >> newSubclass [
 "Point newSubclass new"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> obsolete [
 	"Change the receiver and all of its subclasses to an obsolete class."
 	self == Object 
@@ -858,14 +858,14 @@ Trait >> removeClassVariable: aGlobal [
 	
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> removeFromSystem [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
 	self removeFromSystem: true.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> removeFromSystem: logged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing 
 	instances will refer to an obsolete version of the receiver."
@@ -886,7 +886,7 @@ Trait >> removeFromSystem: logged [
 	logged ifTrue: [SystemAnnouncer uniqueInstance classRemoved: self fromCategory: myCategory].
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> removeFromSystemUnlogged [
 	"Forget the receiver from the Smalltalk global dictionary. Any existing instances will refer to an obsolete version of the receiver.  Do not log the removal either to the current change set nor to the system changes log"
 	^self removeFromSystem: false
@@ -1019,7 +1019,7 @@ Trait >> sharedPools: aCollection [
 	"Compatibilty purposes"
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> sharing: poolString [ 
 	"Set up sharedPools. Answer whether recompilation is advisable."
 	| oldPools |
@@ -1338,14 +1338,14 @@ Trait >> subclassesDo: aBlock [
 	self subclasses do: aBlock
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self subclasses: nil. 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 Trait >> unload [
 	"Sent when a the class is removed.  Does nothing, but may be overridden by (class-side) subclasses."
 ]

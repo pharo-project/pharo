@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'spotter'
 	],
-	#category : #GT-Tests-Spotter-Scripting
+	#category : #'GT-Tests-Spotter-Scripting'
 }
 
 { #category : #assertions }

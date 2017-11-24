@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'announcer'
 	],
-	#category : #System-Announcements-Core
+	#category : #'System-Announcements-Core'
 }
 
 { #category : #accessing }

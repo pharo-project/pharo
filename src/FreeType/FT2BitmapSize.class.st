@@ -59,5 +59,5 @@ Class {
 		'xPpEm',
 		'yPpEm'
 	],
-	#category : #FreeType-Base
+	#category : #'FreeType-Base'
 }

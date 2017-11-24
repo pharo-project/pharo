@@ -31,7 +31,7 @@ Class {
 	#classInstVars : [
 		'lifoCallbackSemaphore'
 	],
-	#category : #Alien-Core
+	#category : #'Alien-Core'
 }
 
 { #category : #'primitives-memory management' }
@@ -528,13 +528,13 @@ Alien >> address [
 		ifFalse: [self error: 'One cannot take the address of direct Alien instances; they may move']
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> addressField [ "^<Integer>"
 	<primitive: 'primAddressField' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> addressFieldPut: value [ "<Integer> ^<Integer>"
 	<primitive: 'primAddressFieldPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
@@ -587,7 +587,7 @@ Alien >> asUnsignedShort [ "^<Integer>"
 	^self unsignedShortAt: 1
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> copyInto: aByteObject "<Alien | indexableByteSubclass>" from: start "<Integer>" to: stop "<Integer>" in: replacement "<Alien | indexableByteSubclass>" startingAt: repStart [ "<Integer>" "^<self>"
 	<primitive: 'primAlienReplace' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
@@ -598,25 +598,25 @@ Alien >> dataSize [
 	^self sizeField abs
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> doubleAt: index [ "<Integer> ^<Float>"
 	<primitive: 'primDoubleAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> doubleAt: index "<Integer>" put: value [ "<Float | Integer> ^<Float | Integer>"
 	<primitive: 'primDoubleAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> floatAt: index [ "<Integer> ^<Float>"
 	<primitive: 'primFloatAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> floatAt: index "<Integer>" put: value [ "<Float | Integer> ^<Float | Integer>"
 	<primitive: 'primFloatAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
@@ -655,85 +655,85 @@ Alien >> pointer [
 	^self class forPointer: self address
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result [ "<Alien> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg [ "<Alien | Integer> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg [ "<Alien | Integer> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg [ "<Alien | SmallInteger> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg [ "<Alien | Integer> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg [ "<Alien | Integer> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg [ "<Alien | Integer> ^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 "<Alien | Integer>" with: arg8 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 "<Alien | Integer>" with: arg8 "<Alien | Integer>" with: arg9 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 "<Alien | Integer>" with: arg8 "<Alien | Integer>" with: arg9 "<Alien | Integer>" with: arg10 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 "<Alien | Integer>" with: arg8 "<Alien | Integer>" with: arg9 "<Alien | Integer>" with: arg10 "<Alien | Integer>" with: arg11 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" with: firstArg "<Alien | Integer>" with: secondArg "<Alien | Integer>" with: thirdArg "<Alien | Integer>" with: fourthArg "<Alien | Integer>" with: fifthArg "<Alien | Integer>" with: sixthArg "<Alien | Integer>" with: arg7 "<Alien | Integer>" with: arg8 "<Alien | Integer>" with: arg9 "<Alien | Integer>" with: arg10 "<Alien | Integer>" with: arg11 "<Alien | Integer>" with: arg12 [ "<Alien | Integer>" "^<Alien>"
 	<primitive: 'primCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-callouts }
+{ #category : #'primitives-callouts' }
 Alien >> primFFICallResult: result "<Alien>" withArguments: args [ "<Array of: Alien | Integer> ^<Alien>"
 	<primitive: 'primVarArgsCallOutIntegralReturn' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
@@ -760,67 +760,67 @@ Alien >> primFree [
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> replaceFrom: start "<Integer>" to: stop "<Integer>" with: replacement "<Alien | indexableByteSubclass>" startingAt: repStart [ "<Integer>" "^<self>"
 	<primitive: 'primAlienReplace' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedByteAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedByteAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedByteAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedByteAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedLongAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedLongAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedLongAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedLongAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedLongLongAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedLongLongAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedLongLongAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedLongLongAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedShortAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedShortAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> signedShortAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primSignedShortAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> sizeField [ "^<Integer>"
 	<primitive: 'primSizeField' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> sizeFieldPut: size [ "<Integer> ^<Integer>"
 	<primitive: 'primSizeFieldPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
@@ -889,61 +889,61 @@ Alien >> strlen [
 	^self strlenStartingAt: 1
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> strlenStartingAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primStrlenFromStartIndex' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> strlenThroughPointerAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primStrlenThroughPointerAtIndex' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedByteAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedByteAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedByteAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedByteAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedLongAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedLongAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedLongAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedLongAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedLongLongAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedLongLongAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedLongLongAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedLongLongAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedShortAt: index [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedShortAt' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed
 ]
 
-{ #category : #primitives-accessing }
+{ #category : #'primitives-accessing' }
 Alien >> unsignedShortAt: index "<Integer>" put: value [ "<Integer> ^<Integer>"
 	<primitive: 'primUnsignedShortAtPut' module: 'IA32ABI' error: errorCode>
 	^self primitiveFailed

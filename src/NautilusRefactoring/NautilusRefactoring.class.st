@@ -292,7 +292,7 @@ NautilusRefactoring >> categoryRegexText [
 	yourself'
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> changeManager [
 	^ RBRefactoryChangeManager instance
 ]
@@ -365,7 +365,7 @@ NautilusRefactoring >> class: aClass andInstVariable: aBlock [
 	^ aBlock value: class value: variable
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> classObjectFor: anObject [ 
 	(anObject isBehavior or: [anObject isTrait]) ifTrue: [ ^ environment classFor: anObject ].
 	anObject isSymbol ifTrue: [ ^ environment classNamed: anObject ].
@@ -397,7 +397,7 @@ NautilusRefactoring >> classRegexText [
 	yourself'
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> classRemovalRefactoringObjectFor: aCollection [
 	^ RBRemoveClassRefactoring 
 		model: environment 
@@ -704,7 +704,7 @@ NautilusRefactoring >> privateAccessorsInstVarFrom: aClass [
 			classVariable: false ]
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateAddAParameterFor: aMethod [
 	| initialAnswer oldSelector |
 	oldSelector := aMethod selector.
@@ -735,7 +735,7 @@ NautilusRefactoring >> privateAddInstVarFrom: aClass [
 		class: aClass theNonMetaClass
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateCreateCascadeBetween: aSelection from: aMethod [
 	^ RBCreateCascadeRefactoring 
 		model: environment
@@ -744,7 +744,7 @@ NautilusRefactoring >> privateCreateCascadeBetween: aSelection from: aMethod [
 		in: aMethod methodClass
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateDeprecateMethodFor: aMethod [
 	| class selector newMethod |
 	class := aMethod methodClass.
@@ -757,7 +757,7 @@ NautilusRefactoring >> privateDeprecateMethodFor: aMethod [
 		using: newMethod selector
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateExtractBetween: anInterval from: aMethod [
 	^ RBExtractMethodRefactoring
 		model: environment
@@ -766,7 +766,7 @@ NautilusRefactoring >> privateExtractBetween: anInterval from: aMethod [
 		in: aMethod methodClass
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateExtractToComponentBetween: anInterval from: aMethod [
 	^ RBExtractMethodToComponentRefactoring
 		model: environment
@@ -775,7 +775,7 @@ NautilusRefactoring >> privateExtractToComponentBetween: anInterval from: aMetho
 		in: aMethod methodClass
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateExtractToTemporaryBetween: anInterval from: aMethod [
 
 	^ RBExtractToTemporaryRefactoring
@@ -786,7 +786,7 @@ NautilusRefactoring >> privateExtractToTemporaryBetween: anInterval from: aMetho
 		in: aMethod methodClass
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateGenerateAccessorsFor: class [
 	^ class instVarNames
 		collect: [ :aVarName | 
@@ -797,7 +797,7 @@ NautilusRefactoring >> privateGenerateAccessorsFor: class [
 				classVariable: false ]
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateGenerateSubclassFor: class [
 	| subclassName |
 	subclassName := self request: 'Enter new subclass name:'.
@@ -809,7 +809,7 @@ NautilusRefactoring >> privateGenerateSubclassFor: class [
 		category: class category
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateGenerateSuperClassFor: class [
 	| superclassName subclasses |
 	superclassName := self request: 'Enter new superclass name:'.
@@ -822,7 +822,7 @@ NautilusRefactoring >> privateGenerateSuperClassFor: class [
 		subclasses: subclasses
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateInlineAllSendersFor: aMethod [
 	^ RBInlineAllSendersRefactoring
 		model: environment
@@ -830,7 +830,7 @@ NautilusRefactoring >> privateInlineAllSendersFor: aMethod [
 		in: aMethod methodClass
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateInlineMethodBetween: anInterval from: aMethod [
 	^ RBInlineMethodRefactoring
 		model: environment
@@ -839,7 +839,7 @@ NautilusRefactoring >> privateInlineMethodBetween: anInterval from: aMethod [
 		forClass: aMethod methodClass
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateInlineMethodFromComponentBetween: anInterval from: aMethod [
 	^ RBInlineMethodFromComponentRefactoring
 		model: environment
@@ -848,7 +848,7 @@ NautilusRefactoring >> privateInlineMethodFromComponentBetween: anInterval from:
 		forClass: aMethod methodClass
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateInlineParameterFor: aMethod [
 	^ RBInlineParameterRefactoring
 		model: environment
@@ -861,7 +861,7 @@ NautilusRefactoring >> privateInlineParameterFor: aMethod [
 		selector: aMethod selector
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateInlineTemporaryBetween: anInterval from: aMethod [
 	^ RBInlineTemporaryRefactoring
 		model: environment
@@ -870,7 +870,7 @@ NautilusRefactoring >> privateInlineTemporaryBetween: anInterval from: aMethod [
 		in: aMethod methodClass
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateInsertSubclassFor: class [
 	^ RBAddClassRefactoring
 		model: environment
@@ -880,7 +880,7 @@ NautilusRefactoring >> privateInsertSubclassFor: class [
 		category: class category
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateInsertSuperclassFor: class [
 	^ RBAddClassRefactoring
 		model: environment
@@ -902,7 +902,7 @@ NautilusRefactoring >> privateMoveInstVarToClass: aClass [
 			oldClass: aClass ]
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateMoveMethodFor: aMethod [
 	^ RBMoveMethodRefactoring
 		model: environment
@@ -911,7 +911,7 @@ NautilusRefactoring >> privateMoveMethodFor: aMethod [
 		variable: (self chooseFrom: aMethod methodClass instVarNames title: 'Choose:' lines:  aMethod methodClass instVarNames)
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateMoveMethodToClassFor: aMethod [
 	| class |
 	class := (SearchFacade classSearchInEnvironment: Smalltalk) chooseFromOwner: World.
@@ -922,7 +922,7 @@ NautilusRefactoring >> privateMoveMethodToClassFor: aMethod [
 		class: class
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateMoveVariableDefinitionBetween: anInterval from: aMethod [
 	^ RBMoveVariableDefinitionRefactoring
 		model: environment
@@ -949,7 +949,7 @@ NautilusRefactoring >> privatePullUpInstVarFrom: aClass [
 			class: class superclass ]
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privatePullUpMethodsFor: aCollection [
 	| selectors class |
 	selectors := aCollection collect: #selector.
@@ -975,7 +975,7 @@ NautilusRefactoring >> privatePushDownInstVarFrom: aClass [
 			class: class ]
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privatePushDownMethodsFor: aCollection [
 	| selectors class |
 	selectors := aCollection collect: #selector.
@@ -986,7 +986,7 @@ NautilusRefactoring >> privatePushDownMethodsFor: aCollection [
 		from: class
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateRealizeClassFor: aClass [
 	^ RBRealizeClassRefactoring model: environment className: aClass theNonMetaClass name
 ]
@@ -1009,7 +1009,7 @@ NautilusRefactoring >> privateRemoveInstVarFrom: aClass [
 			class: class ]
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateRemoveMethodsFor: aCollection [
 	| selectors class |
 	selectors := aCollection collect: #selector.
@@ -1020,7 +1020,7 @@ NautilusRefactoring >> privateRemoveMethodsFor: aCollection [
 		from: class
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateRemoveParameterMethodFor: aMethod [
 	^ RBRemoveParameterRefactoring
 		model: environment
@@ -1073,7 +1073,7 @@ NautilusRefactoring >> privateRenameInstVarNamed: variable from: aClass [
 		in: aClass
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateRenameMessageFor: aMethodOrMessageNode [
 	|  newMethodName oldMethodName selector oldArguments argumentPermutation |
 	selector := aMethodOrMessageNode selector.
@@ -1089,7 +1089,7 @@ NautilusRefactoring >> privateRenameMessageFor: aMethodOrMessageNode [
 		permutation: argumentPermutation
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateRenameMethodFor: aMethod [
 	|  newMethodName oldMethodName selector oldArguments |
 	selector := aMethod selector.
@@ -1100,7 +1100,7 @@ NautilusRefactoring >> privateRenameMethodFor: aMethod [
 
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateRenameMethodFor: aMethod withNewName: newMethodName [
 	| class selector  tempOldArguments argumentPermutation |
 	class := aMethod methodClass.
@@ -1115,7 +1115,7 @@ NautilusRefactoring >> privateRenameMethodFor: aMethod withNewName: newMethodNam
 		permutation: argumentPermutation
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateRenameTemporaryNamed: oldname Between: anInterval from: aMethod [
 
 	^ RBRenameTemporaryRefactoring
@@ -1126,7 +1126,7 @@ NautilusRefactoring >> privateRenameTemporaryNamed: oldname Between: anInterval 
 		selector: aMethod selector
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateSplitCascadeBetween: anInterval from: aMethod [
 	^ RBSplitCascadeRefactoring
 		model: environment
@@ -1135,7 +1135,7 @@ NautilusRefactoring >> privateSplitCascadeBetween: anInterval from: aMethod [
 		in: aMethod methodClass
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 NautilusRefactoring >> privateSplitClassFor: aClass [
 	| class |
 	class := aClass theNonMetaClass.
@@ -1147,13 +1147,13 @@ NautilusRefactoring >> privateSplitClassFor: aClass [
 		referenceVariableName: (self request: 'Enter new variable name where requests will be forwarded:')
 ]
 
-{ #category : #private-method }
+{ #category : #'private-method' }
 NautilusRefactoring >> privateSwapMethodFor: aCollection [
 	^ aCollection
 		collect: [ :aMethod | RBSwapMethodRefactoring model: environment swapMethod: aMethod selector in: aMethod methodClass ]
 ]
 
-{ #category : #private-source }
+{ #category : #'private-source' }
 NautilusRefactoring >> privateTemporaryToInstanceVariableNamed: name Between: anInterval from: aMethod [
 	^ RBTemporaryToInstanceVariableRefactoring
 		model: environment
@@ -1225,12 +1225,12 @@ NautilusRefactoring >> realizeClass [
 
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> redoEnabled [
 	^ self changeManager hasRedoableOperations
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> redoLabel [
 	| stream |
 	stream := WriteStream with: 'Redo'.
@@ -1247,7 +1247,7 @@ NautilusRefactoring >> redoLabel [
 	^ stream contents
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> redoOperation [ 
 	self changeManager redoOperation
 ]
@@ -1573,12 +1573,12 @@ NautilusRefactoring >> typeClassTextFor: aCollectionOfClass [
 			s cr; cr ]]
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> undoEnabled [
 	^ self changeManager hasUndoableOperations
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> undoLabel [
 	| stream |
 	stream := WriteStream with: 'Undo'.
@@ -1595,7 +1595,7 @@ NautilusRefactoring >> undoLabel [
 	^ stream contents
 ]
 
-{ #category : #undo-redo }
+{ #category : #'undo-redo' }
 NautilusRefactoring >> undoOperation [
 	self changeManager undoOperation
 ]

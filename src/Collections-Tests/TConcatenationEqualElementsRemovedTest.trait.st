@@ -5,7 +5,7 @@ Trait {
 	#name : #TConcatenationEqualElementsRemovedTest,
 	#traits : 'TConcatenationTest',
 	#classTraits : 'TConcatenationTest classTrait',
-	#category : #Collections-Tests-Abstract
+	#category : #'Collections-Tests-Abstract'
 }
 
 { #category : #requirements }

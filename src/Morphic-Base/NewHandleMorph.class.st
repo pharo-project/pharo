@@ -5,10 +5,10 @@ Class {
 		'hand',
 		'waitingForClickInside'
 	],
-	#category : #Morphic-Base-Widgets
+	#category : #'Morphic-Base-Widgets'
 }
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 NewHandleMorph >> delete [
 	hand ifNotNil:[
 		hand showTemporaryCursor: nil.
@@ -44,7 +44,7 @@ NewHandleMorph >> initialize [
 	
 ]
 
-{ #category : #dropping/grabbing }
+{ #category : #'dropping/grabbing' }
 NewHandleMorph >> justDroppedInto: aMorph event: anEvent [
 	"No dropping behavior because stepping will delete me.
 	Moreover it needs to be done that way to evaluate lastPointBlock"

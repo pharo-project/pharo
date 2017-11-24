@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'codePresentationSelector'
 	],
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #accessing }

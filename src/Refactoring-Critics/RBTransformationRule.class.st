@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'RecursiveSelfRule'
 	],
-	#category : #Refactoring-Critics
+	#category : #'Refactoring-Critics'
 }
 
 { #category : #testing }

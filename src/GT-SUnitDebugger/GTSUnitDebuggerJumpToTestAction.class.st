@@ -6,7 +6,7 @@ I am only valid if the context that triggered the failed assertion is diffferent
 Class {
 	#name : #GTSUnitDebuggerJumpToTestAction,
 	#superclass : #DebugAction,
-	#category : #GT-SUnitDebugger
+	#category : #'GT-SUnitDebugger'
 }
 
 { #category : #'as yet unclassified' }

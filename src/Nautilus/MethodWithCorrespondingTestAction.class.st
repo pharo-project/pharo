@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'testMethod'
 	],
-	#category : #Nautilus-Widgets
+	#category : #'Nautilus-Widgets'
 }
 
 { #category : #order }

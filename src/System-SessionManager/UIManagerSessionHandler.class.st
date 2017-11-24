@@ -11,10 +11,10 @@ Class {
 	#classVars : [
 		'UniqueInstance'
 	],
-	#category : #System-SessionManager
+	#category : #'System-SessionManager'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 UIManagerSessionHandler class >> initialize [
 	"has to be executed at the end of the GUI category"
 	SessionManager default 

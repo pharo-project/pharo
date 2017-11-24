@@ -1,7 +1,7 @@
 Class {
 	#name : #DelaySpinScheduler,
 	#superclass : #DelayMicrosecondScheduler,
-	#category : #Kernel-Processes
+	#category : #'Kernel-Processes'
 }
 
 { #category : #'low priority processes' }

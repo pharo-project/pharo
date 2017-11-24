@@ -17,7 +17,7 @@ Class {
 		'totalSize',
 		'chunkCount'
 	],
-	#category : #Zinc-HTTP-Streaming
+	#category : #'Zinc-HTTP-Streaming'
 }
 
 { #category : #'instance creation' }
@@ -27,7 +27,7 @@ ZnChunkedWriteStream class >> on: writeStream [
 		yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnChunkedWriteStream >> binary [
 	stream binary
 ]
@@ -37,7 +37,7 @@ ZnChunkedWriteStream >> chunkCount [
 	^ chunkCount
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnChunkedWriteStream >> close [
 	self finish.
 	stream close
@@ -53,14 +53,14 @@ ZnChunkedWriteStream >> extraHeaders [
 	^ extraHeaders ifNil: [ extraHeaders := ZnHeaders new ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnChunkedWriteStream >> finish [
 	self writeChunkSize: 0.
 	self crlf.
 	extraHeaders ifNotNil: [ extraHeaders writeOn: stream ]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnChunkedWriteStream >> flush [
 	stream flush
 ]
@@ -114,7 +114,7 @@ ZnChunkedWriteStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnChunkedWriteStream >> on: writeStream [
 	stream := writeStream
 ]

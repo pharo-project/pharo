@@ -1,1 +1,1 @@
-Package { #name : #Metacello-Bitbucket }
+Package { #name : #'Metacello-Bitbucket' }

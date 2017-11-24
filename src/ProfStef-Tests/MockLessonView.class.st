@@ -8,7 +8,7 @@ Class {
 		'lesson',
 		'title'
 	],
-	#category : #ProfStef-Tests-Mocks
+	#category : #'ProfStef-Tests-Mocks'
 }
 
 { #category : #testing }

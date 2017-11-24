@@ -5,7 +5,7 @@ Class {
 		'renderer',
 		'presentation'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #accessing }

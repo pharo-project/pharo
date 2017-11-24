@@ -4,7 +4,7 @@ I am the adapter used to bridget a SliderPresenter and a PluggableSliderMorph
 Class {
 	#name : #MorphicSliderAdapter,
 	#superclass : #AbstractMorphicAdapter,
-	#category : #Spec-MorphicAdapters
+	#category : #'Spec-MorphicAdapters'
 }
 
 { #category : #'widget API' }

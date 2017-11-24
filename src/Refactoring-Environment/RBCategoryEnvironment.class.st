@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'categories'
 	],
-	#category : #Refactoring-Environment
+	#category : #'Refactoring-Environment'
 }
 
 { #category : #'instance creation' }
@@ -41,12 +41,12 @@ RBCategoryEnvironment >> addCategory: aSymbol [
 	categories add: aSymbol
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCategoryEnvironment >> categories: aCollection [
 	categories addAll: aCollection
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBCategoryEnvironment >> classNames [
 	^ self categories 
 		inject: IdentitySet new

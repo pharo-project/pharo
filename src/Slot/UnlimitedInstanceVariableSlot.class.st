@@ -9,7 +9,7 @@ Class {
 		'offset',
 		'baseSlotSize'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #'class building' }
@@ -86,7 +86,7 @@ UnlimitedInstanceVariableSlot >> offset [
 	^offset
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> read: anObject [
 	^(baseSlot read: anObject) at: offset
 		
@@ -102,7 +102,7 @@ UnlimitedInstanceVariableSlot >> todo [
 	'
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 UnlimitedInstanceVariableSlot >> write: aValue to: anObject [
 	^(baseSlot read: anObject) at: offset put: aValue.
 	

@@ -47,7 +47,7 @@ Class {
 		'implementorsCache',
 		'sendersCache'
 	],
-	#category : #Refactoring-Core-Model
+	#category : #'Refactoring-Core-Model'
 }
 
 { #category : #'instance creation' }
@@ -57,7 +57,7 @@ RBNamespace class >> onEnvironment: aBrowserEnvironment [
 		yourself
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> addChangeToClass: aRBClass [ 
 	^ changedClasses 
 		at: aRBClass name
@@ -66,17 +66,17 @@ RBNamespace >> addChangeToClass: aRBClass [
 				with: aRBClass theMetaClass)
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> addClassVariable: aString to: aRBClass [ 
 	^changes addClassVariable: aString to: aRBClass
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> addInstanceVariable: aString to: aRBClass [ 
 	^changes addInstanceVariable: aString to: aRBClass
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> addPool: aString to: aRBClass [ 
 	^changes addPool: aString to: aRBClass
 ]
@@ -156,7 +156,7 @@ RBNamespace >> allReferencesToClass: aRBClass do: aBlock [
 				do: [:sel | aBlock value: (each theMetaClass methodFor: sel)]]
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> changeClass: aRBClass [ 
 	changedClasses 
 		at: aRBClass name
@@ -171,7 +171,7 @@ RBNamespace >> changes [
 	^changes
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBNamespace >> classFor: aBehavior [ 
 	aBehavior isNil 
 		ifTrue: [ ^ nil ].
@@ -185,7 +185,7 @@ RBNamespace >> classNameFor: aBehavior [
 	^ aBehavior theNonMetaClass name
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBNamespace >> classNamed: aSymbol [ 
 	| class classes index |
 	aSymbol isNil ifTrue: [ ^ nil ].
@@ -217,7 +217,7 @@ RBNamespace >> comment: aString in: aClass [
 	^ changes comment: aString in: aClass
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> compile: aString in: aRBClass classified: aSymbol [ 
 	| change |
 	change := changes 
@@ -228,7 +228,7 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 	^change
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className |
 	className := aBehavior theNonMetaClass name.
@@ -290,7 +290,7 @@ RBNamespace >> environment: aBrowserEnvironment [
 	environment := aBrowserEnvironment
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> flushCaches [
 	implementorsCache := IdentityDictionary new.
 	sendersCache := IdentityDictionary new
@@ -341,7 +341,7 @@ RBNamespace >> markAsRemoved: aClassName [
 		add: aClassName, ' class'
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBNamespace >> metaclassNamed: aSymbol [ 
 	| class |
 	aSymbol isNil ifTrue: [^nil].
@@ -367,7 +367,7 @@ RBNamespace >> name: aString [
 	^changes name: aString
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> performChange: aCompositeRefactoryChange around: aBlock [ 
 	| oldChanges |
 	changes addChange: aCompositeRefactoryChange.
@@ -430,17 +430,17 @@ RBNamespace >> removeClassNamed: aSymbol [
 	^changes removeClassNamed: aSymbol
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> removeClassVariable: aString from: aRBClass [ 
 	^changes removeClassVariable: aString from: aRBClass
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> removeInstanceVariable: aString from: aRBClass [ 
 	^changes removeInstanceVariable: aString from: aRBClass
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> removeMethod: aSelector from: aRBClass [ 
 	self flushCaches.
 	^changes removeMethod: aSelector from: aRBClass
@@ -467,7 +467,7 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 	^ change
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (RBRefactoryChangeManager changeFactory  
 				renameClassVariable: oldName
@@ -476,7 +476,7 @@ RBNamespace >> renameClassVariable: oldName to: newName in: aRBClass around: aBl
 		around: aBlock
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [ 
 	^self performChange: (RBRefactoryChangeManager changeFactory 
 				renameInstanceVariable: oldName
@@ -493,7 +493,7 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 						to: newClass name)]
 ]
 
-{ #category : #private-changes }
+{ #category : #'private-changes' }
 RBNamespace >> replaceClassNameIn: definitionString to: aSymbol [ 
 	| parseTree |
 	parseTree := RBParser parseExpression: definitionString.
@@ -513,7 +513,7 @@ RBNamespace >> unmarkAsRemoved: newClassName [
 		remove: newClassName , ' class' ifAbsent: [  ]
 ]
 
-{ #category : #accessing-classes }
+{ #category : #'accessing-classes' }
 RBNamespace >> whichCategoryIncludes: aSymbol [
 	^self environment whichCategoryIncludes: aSymbol
 ]

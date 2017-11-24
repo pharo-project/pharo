@@ -9,7 +9,7 @@ Class {
 		'debuggerClass',
 		'newDebugger'
 	],
-	#category : #GT-Debugger-Actions
+	#category : #'GT-Debugger-Actions'
 }
 
 { #category : #accessing }

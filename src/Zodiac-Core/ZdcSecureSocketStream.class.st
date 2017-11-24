@@ -19,7 +19,7 @@ Class {
 		'out',
 		'connecting'
 	],
-	#category : #Zodiac-Core
+	#category : #'Zodiac-Core'
 }
 
 { #category : #ssl }
@@ -57,7 +57,7 @@ ZdcSecureSocketStream >> atEnd [
 	^ self isConnected not
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcSecureSocketStream >> close [
 	"Close the stream, flush if necessary. 
 	Destory the SSLSession object."
@@ -148,13 +148,13 @@ ZdcSecureSocketStream >> flushEncryptedBytes: bytes startingAt: offset count: co
 	^ super flushBytes: bytes startingAt: offset count: count
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcSecureSocketStream >> initialize [ 
 	super initialize.
 	connecting := false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZdcSecureSocketStream >> initializeBuffers [
 	"The maximum payload message length of a TLS record is 16Kb,
 	add a margin for the header and trailer."

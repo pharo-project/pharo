@@ -17,7 +17,7 @@ Class {
 	#pools : [
 		'AthensCairoDefs'
 	],
-	#category : #Athens-Cairo-Transforms
+	#category : #'Athens-Cairo-Transforms'
 }
 
 { #category : #'field definition' }
@@ -61,7 +61,7 @@ AthensCairoMatrix >> getMatrix [
 	^ self copy
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 AthensCairoMatrix >> initialize [
 	super initialize.
 	self loadIdentity

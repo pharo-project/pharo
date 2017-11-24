@@ -1,7 +1,7 @@
 Class {
 	#name : #ZipCrcTests,
 	#superclass : #TestCase,
-	#category : #Compression-Tests-Streams
+	#category : #'Compression-Tests-Streams'
 }
 
 { #category : #tests }

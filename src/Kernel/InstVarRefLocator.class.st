@@ -11,10 +11,10 @@ Class {
 	#instVars : [
 		'bingo'
 	],
-	#category : #Kernel-Methods
+	#category : #'Kernel-Methods'
 }
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 InstVarRefLocator >> interpretNextInstructionUsing: aScanner [ 
 	
 	bingo := false.

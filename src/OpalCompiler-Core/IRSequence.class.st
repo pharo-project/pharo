@@ -9,7 +9,7 @@ Class {
 		'orderNumber',
 		'method'
 	],
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #'instance creation' }

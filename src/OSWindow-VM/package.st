@@ -1,1 +1,1 @@
-Package { #name : #OSWindow-VM }
+Package { #name : #'OSWindow-VM' }

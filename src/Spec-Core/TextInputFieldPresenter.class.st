@@ -33,7 +33,7 @@ Class {
 		'entryCompletion',
 		'isEncrypted'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -201,21 +201,21 @@ TextInputFieldPresenter >> textHolder [
 	^ textHolder
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextInputFieldPresenter >> whenAcceptOnCRChanged: aBlock [
 	"aBlock will be performed when acceptOnCR changed"
 	
 	acceptOnCR whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextInputFieldPresenter >> whenEntryCompletionChanged: aBlock [
 	"aBlock will be performed when entryCompletion changed"
 	
 	entryCompletion whenChangedDo: aBlock
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 TextInputFieldPresenter >> whenGhostTextChanged: aBlock [
 	"aBlock will be performed when ghostText changed"
 	

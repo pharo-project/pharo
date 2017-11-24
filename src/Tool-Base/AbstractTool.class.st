@@ -4,7 +4,7 @@ I'm an abstract class grouping generic methods for managing packages/classes/gro
 Class {
 	#name : #AbstractTool,
 	#superclass : #Model,
-	#category : #Tool-Base
+	#category : #'Tool-Base'
 }
 
 { #category : #private }

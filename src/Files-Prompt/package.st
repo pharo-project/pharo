@@ -1,1 +1,1 @@
-Package { #name : #Files-Prompt }
+Package { #name : #'Files-Prompt' }

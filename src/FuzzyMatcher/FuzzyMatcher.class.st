@@ -76,31 +76,31 @@ FuzzyMatcher class >> pattern: aString [
 	^self new pattern: aString
 ]
 
-{ #category : #scoring-bonus }
+{ #category : #'scoring-bonus' }
 FuzzyMatcher >> adjacencyBonus [
 
 	^ 5
 ]
 
-{ #category : #scoring-bonus }
+{ #category : #'scoring-bonus' }
 FuzzyMatcher >> adjacencyIncrease [
 
 	^ 1.2
 ]
 
-{ #category : #scoring-bonus }
+{ #category : #'scoring-bonus' }
 FuzzyMatcher >> adjacentCaseEqualBonus [
 
 	^ 3
 ]
 
-{ #category : #scoring-bonus }
+{ #category : #'scoring-bonus' }
 FuzzyMatcher >> caseEqualBonus [
 
 	^ 7
 ]
 
-{ #category : #scoring-bonus }
+{ #category : #'scoring-bonus' }
 FuzzyMatcher >> firstLetterBonus [
 
 	^ 12
@@ -157,7 +157,7 @@ FuzzyMatcher >> isSeperator: aCharacter [
 	^  aCharacter = $_ or: [ aCharacter = $: ] 
 ]
 
-{ #category : #scoring-penalty }
+{ #category : #'scoring-penalty' }
 FuzzyMatcher >> leadingLetterPenalty [
 
 	^ -3
@@ -206,7 +206,7 @@ FuzzyMatcher >> matches: aString [
 	^ true
 ]
 
-{ #category : #scoring-penalty }
+{ #category : #'scoring-penalty' }
 FuzzyMatcher >> maxLeadingLetterPenalty [
 
 	^ -9
@@ -252,13 +252,13 @@ FuzzyMatcher >> score: aString at: stringIndex patternAt: patternIndex [
 	^ score 
 ]
 
-{ #category : #scoring-bonus }
+{ #category : #'scoring-bonus' }
 FuzzyMatcher >> separatorBonus [
 
 	^ 5
 ]
 
-{ #category : #scoring-penalty }
+{ #category : #'scoring-penalty' }
 FuzzyMatcher >> unmatchedLetterPenalty [
 
 	^ -1

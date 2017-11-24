@@ -3,10 +3,10 @@ I declare api and logic to work with structure of a Brick as adding, removing, t
 "
 Trait {
 	#name : #GLMBrickStructureTrait,
-	#category : #Glamour-Morphic-Brick-Traits
+	#category : #'Glamour-Morphic-Brick-Traits'
 }
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> addAllBricks: aCollection [
 	|bricks|
 	bricks := self privateAddAllBricks: aCollection.
@@ -15,7 +15,7 @@ GLMBrickStructureTrait >> addAllBricks: aCollection [
 	^ aCollection
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> addBrick: aBrick after: otherBrick [
 	|result|
 	result := self privateAddBrick: aBrick asBrick after: otherBrick.
@@ -24,7 +24,7 @@ GLMBrickStructureTrait >> addBrick: aBrick after: otherBrick [
 	^ aBrick
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> addBrick: aBrick before: otherBrick [
 	|result|
 	result := self privateAddBrick: aBrick asBrick before: otherBrick.
@@ -33,7 +33,7 @@ GLMBrickStructureTrait >> addBrick: aBrick before: otherBrick [
 	^ aBrick
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> addBrickBack: aBrick [
 	|result|
 	result := self privateAddBrickBack: aBrick asBrick.
@@ -42,7 +42,7 @@ GLMBrickStructureTrait >> addBrickBack: aBrick [
 	^ aBrick
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> addBrickFirst: aBrick [
 	|result|
 	result := self privateAddBrickFirst: aBrick asBrick.
@@ -51,13 +51,13 @@ GLMBrickStructureTrait >> addBrickFirst: aBrick [
 	^ aBrick
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> allOwnersDo: aBlock [
 	"Evaluate aBlock with all owners of the receiver"
 	self owner ifNotNil:[ ^ self owner withAllOwnersDo: aBlock ].
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> allSubbricks [
 	| all |
 	all := OrderedCollection new.
@@ -65,55 +65,55 @@ GLMBrickStructureTrait >> allSubbricks [
 	^ all
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> allSubbricksDo: aBlock [
 
 	self subbricks do: [:each | 
 		each isBrick ifTrue: [ aBlock value: each. each allSubbricksDo: aBlock ] ]
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMBrickStructureTrait >> asBrick [
 	^ self
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMBrickStructureTrait >> asBrickedMorph [
 
 	^ GLMFoundationBrick new brickRoot: self
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMBrickStructureTrait >> asFormValue [
 
 	^ nil
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMBrickStructureTrait >> brick [
 
 	^ self
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> brickDoubleLink [
 
 	^ self valueOfProperty: #brickDoubleLink ifAbsentPut: [ nil ]
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> brickDoubleLink: aDoubleLink [
 
 	self setProperty: #brickDoubleLink toValue: aDoubleLink
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> brickRoot [
 
 	^ self owner ifNotNil: [ self owner brickRoot ] ifNil: [ ^ self ]
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> firstOwnerSuchThat: conditionBlock [
 
 	self allOwnersDo: [:m | (conditionBlock cull: m) ifTrue: [^ m]].
@@ -121,37 +121,37 @@ GLMBrickStructureTrait >> firstOwnerSuchThat: conditionBlock [
 
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> firstSubbrick [
 
 	^ self subbricks first
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> hasOwner [
 
 	^ self owner isNotNil
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> hasSubbrick: aBrick [
 
 	^ aBrick owner = self
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> hasSubbricks [
 
 	^ self subbricks isEmpty not
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> isBrick [
 
 	^ true
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> isFirstInOwner [
 
 	^ self brickDoubleLink 
@@ -159,13 +159,13 @@ GLMBrickStructureTrait >> isFirstInOwner [
 		ifNil: [ false ]
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> isFoundationBrick [
 
 	^ false
 ]
 
-{ #category : #brick-structure-testing }
+{ #category : #'brick-structure-testing' }
 GLMBrickStructureTrait >> isLastInOwner [
 
 	^ self brickDoubleLink
@@ -173,30 +173,30 @@ GLMBrickStructureTrait >> isLastInOwner [
 		ifNil: [ false ]
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> lastSubbrick [
 
 	^ self subbricks last
 ]
 
-{ #category : #brick-structure-converting }
+{ #category : #'brick-structure-converting' }
 GLMBrickStructureTrait >> morph [
 	^ self
 ]
 
-{ #category : #brick-structure-events }
+{ #category : #'brick-structure-events' }
 GLMBrickStructureTrait >> onRemovedFrom: aBrick [
 	"is called when brick is removed from aBrick"
 	self subbricks do: [ :each | each onRemovedFrom: aBrick ]
 ]
 
-{ #category : #brick-structure-opening }
+{ #category : #'brick-structure-opening' }
 GLMBrickStructureTrait >> openCenteredInBrickWindow [
 
 	self openCenteredInBrickWindowLabeled: self
 ]
 
-{ #category : #brick-structure-opening }
+{ #category : #'brick-structure-opening' }
 GLMBrickStructureTrait >> openCenteredInBrickWindowLabeled: aLabel [
 
 	self
@@ -205,13 +205,13 @@ GLMBrickStructureTrait >> openCenteredInBrickWindowLabeled: aLabel [
 		openInBrickWindowLabeled: aLabel
 ]
 
-{ #category : #brick-structure-opening }
+{ #category : #'brick-structure-opening' }
 GLMBrickStructureTrait >> openInBrickWindow [
 
 	^ self openInBrickWindowLabeled: self
 ]
 
-{ #category : #brick-structure-opening }
+{ #category : #'brick-structure-opening' }
 GLMBrickStructureTrait >> openInBrickWindowLabeled: aLabel [
 	
 	^ self class environment at: #GLMSystemWindowBrick 
@@ -231,13 +231,13 @@ GLMBrickStructureTrait >> openInBrickWindowLabeled: aLabel [
 	
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> owner [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> owner: aBrick [
 	|oldOwner|
 	oldOwner := self owner.
@@ -247,14 +247,14 @@ GLMBrickStructureTrait >> owner: aBrick [
 		ifNil: [ self onRemovedFrom: oldOwner ]
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> ownerThatIsA: aClass [
 	"Return the first enclosing morph that is a kind of aClass, or nil if none"
 
 	^ self firstOwnerSuchThat: [:m | m isKindOf: aClass]
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddAllBricks: aCollection [
 	|bricks|
 	bricks := aCollection collect: #asBrick.
@@ -263,7 +263,7 @@ GLMBrickStructureTrait >> privateAddAllBricks: aCollection [
 	^ bricks
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddBrick: aBrick after: otherBrick [
 	| brick link otherLink otherLinkSuccessor index|
 	brick := aBrick asBrick.
@@ -288,7 +288,7 @@ GLMBrickStructureTrait >> privateAddBrick: aBrick after: otherBrick [
 	^ aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddBrick: aBrick before: otherBrick [
 	| brick link otherLink otherLinkPredeccessor index|
 	brick := aBrick asBrick.
@@ -313,7 +313,7 @@ GLMBrickStructureTrait >> privateAddBrick: aBrick before: otherBrick [
 	^ aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddBrickBack: aBrick [
 	|brick|
 	
@@ -324,7 +324,7 @@ GLMBrickStructureTrait >> privateAddBrickBack: aBrick [
 	^ aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddBrickFirst: aBrick [
 	| link head tail brick|
 	
@@ -346,7 +346,7 @@ GLMBrickStructureTrait >> privateAddBrickFirst: aBrick [
 	^ aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddBrickLinkBack: aBrick [
 	|link brick|
 	
@@ -363,7 +363,7 @@ GLMBrickStructureTrait >> privateAddBrickLinkBack: aBrick [
 	^ aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateAddIntoWorld: aBrick [
 
 	self world == aBrick world
@@ -372,26 +372,26 @@ GLMBrickStructureTrait >> privateAddIntoWorld: aBrick [
 	
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateOwner: aBrick [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privatePrepareBrickAfterAdding: aBrick [
 
 	aBrick wrappedBounds markWidthDirty; markHeightDirty.
 	self privateAddIntoWorld: aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privatePrepareBrickAfterRemoving: aBrick [
 
 	self privateRemoveOutWorld: aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateRemoveAllBricks [
 	
 	self hasSubbricks ifFalse: [ ^ self ].
@@ -401,7 +401,7 @@ GLMBrickStructureTrait >> privateRemoveAllBricks [
 	self subbricks removeAll
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateRemoveBrick: aBrick [
 	| predecessor successor link head tail index|
 	aBrick ifNil: [ ^ aBrick ].
@@ -429,20 +429,20 @@ GLMBrickStructureTrait >> privateRemoveBrick: aBrick [
 	^ aBrick
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateRemoveOutWorld: aBrick [
 
 	aBrick outOfWorld: aBrick world
 	
 ]
 
-{ #category : #private-structure }
+{ #category : #'private-structure' }
 GLMBrickStructureTrait >> privateSubbricks: aCollection [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> removeAllBricks [
 	|copy|
 	copy := self subbricks copy.
@@ -451,7 +451,7 @@ GLMBrickStructureTrait >> removeAllBricks [
 	self doLayoutForce
 ]
 
-{ #category : #brick-structure-adding/removing }
+{ #category : #'brick-structure-adding/removing' }
 GLMBrickStructureTrait >> removeBrick: aBrick [
 	|result|
 	aBrick ifNil: [ ^ aBrick ].
@@ -461,7 +461,7 @@ GLMBrickStructureTrait >> removeBrick: aBrick [
 	^ result
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> subbrickAfter [
 
 	"Return the subbbrick after (behind) me, or nil"
@@ -472,7 +472,7 @@ GLMBrickStructureTrait >> subbrickAfter [
 	^ link nextLink value
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> subbrickBefore [
 
 	"Return the subbrick before me, or nil"
@@ -483,25 +483,25 @@ GLMBrickStructureTrait >> subbrickBefore [
 	^ link previousLink value
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> subbricks [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> subbricksCount [
 
 	^ self subbricks size
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> subbricksReverseDo: aBlock [
 
 	self subbricks reverseDo: aBlock
 ]
 
-{ #category : #brick-structure-opening }
+{ #category : #'brick-structure-opening' }
 GLMBrickStructureTrait >> window [
 	"Answer the receiver's window."
 	
@@ -512,14 +512,14 @@ GLMBrickStructureTrait >> window [
 		ifAbsent: [ self ownerThatIsA: SystemWindow ].
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> withAllOwnersDo: aBlock [
 	"Evaluate aBlock with the receiver and all of its owners"
 	aBlock cull: self.
 	self owner ifNotNil:[ ^ self owner withAllOwnersDo: aBlock ]
 ]
 
-{ #category : #brick-structure }
+{ #category : #'brick-structure' }
 GLMBrickStructureTrait >> withAllSubbricks [
 
 	^ self allSubbricks add: self;

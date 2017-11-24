@@ -17,7 +17,7 @@ Class {
 		'resultDictionary',
 		'useRegEx'
 	],
-	#category : #Tool-Finder
+	#category : #'Tool-Finder'
 }
 
 { #category : #menu }
@@ -63,7 +63,7 @@ Finder >> classSearch: aSelectBlock [
 	^ result
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 Finder >> computeListOfClasses: aString [
 	"Compute in the case I'm searching class names"
 		
@@ -76,7 +76,7 @@ Finder >> computeListOfClasses: aString [
 				class name includesSubstring: aString caseSensitive: false ]].
 ]
 
-{ #category : #private-example }
+{ #category : #'private-example' }
 Finder >> computeWithMethodFinder: aString [
 	"Compute the selectors for the single example of receiver and args, in the very top pane"
 
@@ -132,7 +132,7 @@ Finder >> computeWithMethodFinder: aString [
 	^ resultArray
 ]
 
-{ #category : #private-class }
+{ #category : #'private-class' }
 Finder >> constructClassNamesDictionary [
 	"Construct the dictionary in the case I'm searching in class names"
 	
@@ -164,7 +164,7 @@ Finder >> constructDictionary [
 	] asJob run
 ]
 
-{ #category : #private-selector }
+{ #category : #'private-selector' }
 Finder >> constructDictionaryWithMessagesNameSearch: aString [
 	"Construct dictionary when searching for selector"
 	
@@ -180,7 +180,7 @@ Finder >> constructDictionaryWithMessagesNameSearch: aString [
 	self resultDictionary: result.
 ]
 
-{ #category : #private-example }
+{ #category : #'private-example' }
 Finder >> constructDictionaryWithMethodFinder: aString [
 	"construct dictionary when searching patterns"
 
@@ -208,7 +208,7 @@ Finder >> constructDictionaryWithMethodFinder: aString [
 	self resultDictionary: result
 ]
 
-{ #category : #private-pragma }
+{ #category : #'private-pragma' }
 Finder >> constructDictionaryWithPragmaSearch: aString [ 
 	"construct dictionary when searching for pragmas"
 	
@@ -371,7 +371,7 @@ Finder >> listFromResult: resultOC [
 
 ]
 
-{ #category : #private-selector }
+{ #category : #'private-selector' }
 Finder >> messageSearchBlockFrom: aString [
 	| exactMatch |
 	
@@ -387,7 +387,7 @@ Finder >> messageSearchBlockFrom: aString [
 			[ :method | method selector = aSymbol ]].
 ]
 
-{ #category : #private-selector }
+{ #category : #'private-selector' }
 Finder >> messagesNameSearch: aString [
 	"I'm searching for selectors"
 	^ self useRegEx
@@ -431,7 +431,7 @@ Finder >> packagesSelection: aCollection [
 	self constructDictionary.
 ]
 
-{ #category : #private-pragma }
+{ #category : #'private-pragma' }
 Finder >> pragmaSearch: aString [ 
 	| result byCondition |
 	" I choose a dictionary here because the next step is to group result by pragmas "

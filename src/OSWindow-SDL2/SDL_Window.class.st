@@ -2,13 +2,13 @@
 I represent a handle of SDL2 window, coming from SDL2 library
 "
 Class {
-	#name : #SDL_Window,
+	#name : #'SDL_Window',
 	#superclass : #SDL2Handle,
 	#pools : [
 		'SDL2Constants',
 		'SDL2Types'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #rendering }

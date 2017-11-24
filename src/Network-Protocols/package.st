@@ -1,1 +1,1 @@
-Package { #name : #Network-Protocols }
+Package { #name : #'Network-Protocols' }

@@ -12,7 +12,7 @@ Class {
 		'RenderThreadProcess',
 		'RenderThreadQueue'
 	],
-	#category : #OSWindow-Core-Extras
+	#category : #'OSWindow-Core-Extras'
 }
 
 { #category : #'window animation' }

@@ -11,7 +11,7 @@ self example5.
 Class {
 	#name : #FTExampleMethodListDataSource,
 	#superclass : #FTSimpleDataSource,
-	#category : #Morphic-Widgets-FastTable-Examples
+	#category : #'Morphic-Widgets-FastTable-Examples'
 }
 
 { #category : #'instance creation' }

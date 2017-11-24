@@ -25,7 +25,7 @@ Class {
 	#instVars : [
 		'dictionary'
 	],
-	#category : #GT-EventRecorder-Announcements
+	#category : #'GT-EventRecorder-Announcements'
 }
 
 { #category : #examples }
@@ -125,7 +125,7 @@ GTEventAnnouncement >> events [
 	^ events
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventAnnouncement >> gtInspectorActionUnpackData [
 	<gtInspectorAction>
 	^ GLMGenericAction new
@@ -136,12 +136,12 @@ GTEventAnnouncement >> gtInspectorActionUnpackData [
 		title: 'Unpack data'
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventAnnouncement >> gtInspectorItems [
 	^ OrderedCollection withAll: self associations
 ]
 
-{ #category : #gt-inspector-extension }
+{ #category : #'gt-inspector-extension' }
 GTEventAnnouncement >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: -1>  
 	^ (composite table)

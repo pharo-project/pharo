@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'handle'
 	],
-	#category : #FFI-Kernel
+	#category : #'FFI-Kernel'
 }
 
 { #category : #'class initialization' }

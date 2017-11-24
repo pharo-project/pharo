@@ -1,1 +1,1 @@
-Package { #name : #Settings-Graphics }
+Package { #name : #'Settings-Graphics' }

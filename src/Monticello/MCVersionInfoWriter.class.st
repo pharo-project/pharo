@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'written'
 	],
-	#category : #Monticello-Storing
+	#category : #'Monticello-Storing'
 }
 
 { #category : #testing }

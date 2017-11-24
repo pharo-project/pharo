@@ -4,7 +4,7 @@ A MCDirectoryRepository that looks in subdirectories too.
 Class {
 	#name : #MCSubDirectoryRepository,
 	#superclass : #MCDirectoryRepository,
-	#category : #Monticello-Repositories
+	#category : #'Monticello-Repositories'
 }
 
 { #category : #'user interface' }
@@ -23,7 +23,7 @@ MCSubDirectoryRepository >> description [
 
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCSubDirectoryRepository >> findFullNameForReading: aBaseName [
 	"Answer the latest version of aBaseName"
 	^((directory glob: [ :each | each basename = aBaseName])
@@ -31,7 +31,7 @@ MCSubDirectoryRepository >> findFullNameForReading: aBaseName [
 		first.
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCSubDirectoryRepository >> findFullNameForWriting: aBaseName [
 	| possible split prefix fpattern now |
 	split := self splitNameVersionExtensionFor: aBaseName.
@@ -73,7 +73,7 @@ MCSubDirectoryRepository >> loadAllFileNames [
 		collect: [:ea | ea third ]
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCSubDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	| file val |
 	file := FileStream readOnlyFileNamed: (self findFullNameForReading: aString).
@@ -82,7 +82,7 @@ MCSubDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 	^ val
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCSubDirectoryRepository >> splitNameVersionExtensionFor: aBaseName [
 
 	| file version |
@@ -95,7 +95,7 @@ MCSubDirectoryRepository >> splitNameVersionExtensionFor: aBaseName [
 
 ]
 
-{ #category : #i/o }
+{ #category : #'i/o' }
 MCSubDirectoryRepository >> writeStreamForFileNamed: aString replace: aBoolean do: aBlock [ 
 	| file |
 	file := aBoolean

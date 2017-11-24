@@ -22,7 +22,7 @@ Class {
 		'textConverterHolder',
 		'browsedEnvironment'
 	],
-	#category : #Spec-Tools-Senders
+	#category : #'Spec-Tools-Senders'
 }
 
 { #category : #'instance creation' }
@@ -319,7 +319,7 @@ MessageBrowser >> displayBlock: aBlock [
 	^ listModel displayBlock: aBlock
 ]
 
-{ #category : #private-focus }
+{ #category : #'private-focus' }
 MessageBrowser >> ensureKeyBindingsFor: aWidget [
 	
 	self registerListShortcutsFor: listModel
@@ -630,7 +630,7 @@ MessageBrowser >> registerListShortcutsFor: aWidget [
 	aWidget bindKeyCombination: PharoShortcuts current removeShortcut toAction: [ self removeMethods ].
 ]
 
-{ #category : #announcements-registration }
+{ #category : #'announcements-registration' }
 MessageBrowser >> registerToAnnouncements [
 
 	SystemAnnouncer uniqueInstance weak		
@@ -851,7 +851,7 @@ MessageBrowser >> topologicSort: aBoolean [
 	^ topologicSortHolder value: aBoolean
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 MessageBrowser >> whenSelectedItemChanged: aBlock [ 
 
 	listModel whenSelectedItemChanged: aBlock 

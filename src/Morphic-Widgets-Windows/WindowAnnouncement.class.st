@@ -12,7 +12,7 @@ Class {
 	#instVars : [
 		'window'
 	],
-	#category : #Morphic-Widgets-Windows-Announcements
+	#category : #'Morphic-Widgets-Windows-Announcements'
 }
 
 { #category : #testing }

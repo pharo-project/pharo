@@ -13,7 +13,7 @@ Class {
 		'siteUsername',
 		'sitePassword'
 	],
-	#category : #Metacello-GitBasedRepository
+	#category : #'Metacello-GitBasedRepository'
 }
 
 { #category : #accessing }
@@ -336,7 +336,7 @@ MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
     yourself
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].
@@ -390,7 +390,7 @@ MCGitBasedNetworkRepository >> downloadJSONTags [
   ^ self normalizeTagsData: jsonObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCGitBasedNetworkRepository >> flushCache [
   "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
 
@@ -406,13 +406,13 @@ MCGitBasedNetworkRepository >> flushCache [
   directory := nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCGitBasedNetworkRepository >> flushForScriptGet [
     self class flushProjectEntry: self projectPath version: self projectVersion.
     directory := nil
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].
@@ -427,7 +427,7 @@ MCGitBasedNetworkRepository >> hash [
     ^ self description hash
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCGitBasedNetworkRepository >> initialize [
     super initialize.
     directory := nil.	"we'll lazily create the directory instance"
@@ -459,7 +459,7 @@ MCGitBasedNetworkRepository >> projectPath: anObject [
     projectPath := anObject
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 MCGitBasedNetworkRepository >> projectPath: aProjectPath projectVersion: aProjectVersion repoPath: aRepoPath [
   self projectPath: aProjectPath.
   self projectVersion: aProjectVersion.	"Important that projectVersion be set AFTER projectPath"

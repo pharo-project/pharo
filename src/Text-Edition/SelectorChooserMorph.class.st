@@ -21,7 +21,7 @@ Class {
 		'prefix',
 		'requestorPos'
 	],
-	#category : #Text-Edition
+	#category : #'Text-Edition'
 }
 
 { #category : #opening }
@@ -80,7 +80,7 @@ SelectorChooserMorph >> close [
 			self choose: 0]
 ]
 
-{ #category : #submorphs-add/remove }
+{ #category : #'submorphs-add/remove' }
 SelectorChooserMorph >> comeToFront [
 	super comeToFront.
 	self setPosition 
@@ -120,7 +120,7 @@ SelectorChooserMorph >> fullDrawOn: aCanvas [
 	
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 SelectorChooserMorph >> newContentMorph [ 
 	| sp |
 	sp := super newContentMorph.
@@ -130,7 +130,7 @@ SelectorChooserMorph >> newContentMorph [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 SelectorChooserMorph >> nextPrefixWith: aPrefix [
 	| curr pref found lab |
 	curr := aPrefix size.
@@ -150,14 +150,14 @@ SelectorChooserMorph >> nextPrefixWith: aPrefix [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 SelectorChooserMorph >> open [
 	super open. 
 	self borderStyle: ( self theme progressBarBorderStyleFor: self).
 	self setPosition
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 SelectorChooserMorph >> positionInRequestor [
 	| caret bottomLeft topLeft editor pos allowedArea |
 	requestor ifNil: [^self].
@@ -185,7 +185,7 @@ SelectorChooserMorph >> prefix: aPrefix [
 
 ]
 
-{ #category : #ui-building }
+{ #category : #'ui-building' }
 SelectorChooserMorph >> setPosition [
 	self position: self positionInRequestor.
 

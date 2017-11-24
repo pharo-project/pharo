@@ -16,7 +16,7 @@ Class {
 		'model',
 		'usersModel'
 	],
-	#category : #Spec-PolyWidgets-Widgets
+	#category : #'Spec-PolyWidgets-Widgets'
 }
 
 { #category : #specs }

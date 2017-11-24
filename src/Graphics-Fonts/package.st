@@ -1,1 +1,1 @@
-Package { #name : #Graphics-Fonts }
+Package { #name : #'Graphics-Fonts' }

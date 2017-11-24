@@ -18,7 +18,7 @@ Class {
 		'Current',
 		'Session'
 	],
-	#category : #OSWindow-Core
+	#category : #'OSWindow-Core'
 }
 
 { #category : #accessing }

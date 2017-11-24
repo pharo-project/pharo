@@ -1,7 +1,7 @@
 Class {
 	#name : #ZnEasyTests,
 	#superclass : #TestCase,
-	#category : #Zinc-Tests
+	#category : #'Zinc-Tests'
 }
 
 { #category : #accessing }

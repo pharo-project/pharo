@@ -4,7 +4,7 @@ SUnit tests for year handling
 Class {
 	#name : #YearTest,
 	#superclass : #ClassTestCase,
-	#category : #Kernel-Tests-Chronology
+	#category : #'Kernel-Tests-Chronology'
 }
 
 { #category : #coverage }

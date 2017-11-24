@@ -19,7 +19,7 @@ Class {
 		'removeRemoteIcon',
 		'editRemoteIcon'
 	],
-	#category : #Komitter-Support
+	#category : #'Komitter-Support'
 }
 
 { #category : #specs }

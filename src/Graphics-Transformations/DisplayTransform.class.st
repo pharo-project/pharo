@@ -20,7 +20,7 @@ Compositions of transformations MUST work in the following order. A 'global' tra
 Class {
 	#name : #DisplayTransform,
 	#superclass : #Object,
-	#category : #Graphics-Transformations
+	#category : #'Graphics-Transformations'
 }
 
 { #category : #'instance creation' }

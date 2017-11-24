@@ -9,7 +9,7 @@ Class {
 		'browseSenders',
 		'sourceNode'
 	],
-	#category : #Text-Core
+	#category : #'Text-Core'
 }
 
 { #category : #'instance creation' }

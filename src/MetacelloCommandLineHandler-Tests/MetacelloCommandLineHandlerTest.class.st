@@ -4,7 +4,7 @@ A MetacelloCommandLineHandlerTest is a test class for testing the behavior of Me
 Class {
 	#name : #MetacelloCommandLineHandlerTest,
 	#superclass : #TestCase,
-	#category : #MetacelloCommandLineHandler-Tests
+	#category : #'MetacelloCommandLineHandler-Tests'
 }
 
 { #category : #convenience }
@@ -17,7 +17,7 @@ MetacelloCommandLineHandlerTest >> command: arguments [
 	^ MetacelloCommandLineHandler commandLine: (self argumentsWith: arguments)
 ]
 
-{ #category : #tests-accessing }
+{ #category : #'tests-accessing' }
 MetacelloCommandLineHandlerTest >> testBaselineOrConfigurationName [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -27,7 +27,7 @@ MetacelloCommandLineHandlerTest >> testBaselineOrConfigurationName [
 	self assert: cli baselineOrConfigurationName equals: 'ConfigurationOfFoo'.
 ]
 
-{ #category : #tests-accessing }
+{ #category : #'tests-accessing' }
 MetacelloCommandLineHandlerTest >> testBaselineOrConfigurationNameSuffix [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -37,7 +37,7 @@ MetacelloCommandLineHandlerTest >> testBaselineOrConfigurationNameSuffix [
 	self assert: cli baselineOrConfigurationNameSuffix equals: 'Foo'.
 ]
 
-{ #category : #tests-activation }
+{ #category : #'tests-activation' }
 MetacelloCommandLineHandlerTest >> testCheckInputForInstallSubcommand [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper' '--version=master').
@@ -47,14 +47,14 @@ MetacelloCommandLineHandlerTest >> testCheckInputForInstallSubcommand [
 	self should: [ cli checkInputForInstallSubcommand ] raise: Exit.
 ]
 
-{ #category : #tests-accessing }
+{ #category : #'tests-accessing' }
 MetacelloCommandLineHandlerTest >> testGroups [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper' '--groups=core,tests').
 	self assertCollection: cli groups hasSameElements: #('core' 'tests')
 ]
 
-{ #category : #tests-testing }
+{ #category : #'tests-testing' }
 MetacelloCommandLineHandlerTest >> testHasGroups [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper' '--groups=core,tests').
@@ -64,7 +64,7 @@ MetacelloCommandLineHandlerTest >> testHasGroups [
 	self deny: cli hasGroups.
 ]
 
-{ #category : #tests-testing }
+{ #category : #'tests-testing' }
 MetacelloCommandLineHandlerTest >> testHasVersion [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper' '--version=stable').
@@ -74,7 +74,7 @@ MetacelloCommandLineHandlerTest >> testHasVersion [
 	self deny: cli hasVersion.
 ]
 
-{ #category : #tests-testing }
+{ #category : #'tests-testing' }
 MetacelloCommandLineHandlerTest >> testIsBaselineName [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -84,7 +84,7 @@ MetacelloCommandLineHandlerTest >> testIsBaselineName [
 	self deny: cli isBaselineName.
 ]
 
-{ #category : #tests-testing }
+{ #category : #'tests-testing' }
 MetacelloCommandLineHandlerTest >> testIsConfigurationName [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -94,14 +94,14 @@ MetacelloCommandLineHandlerTest >> testIsConfigurationName [
 	self assert: cli isConfigurationName.
 ]
 
-{ #category : #tests-accessing }
+{ #category : #'tests-accessing' }
 MetacelloCommandLineHandlerTest >> testRepositoryUrl [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
 	self assert: cli repositoryUrl equals: 'github://juliendelplanque/MineSweeper/repository'.
 ]
 
-{ #category : #tests-testing }
+{ #category : #'tests-testing' }
 MetacelloCommandLineHandlerTest >> testShouldQuit [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -115,7 +115,7 @@ MetacelloCommandLineHandlerTest >> testShouldQuit [
 		deny: cli shouldQuit
 ]
 
-{ #category : #tests-testing }
+{ #category : #'tests-testing' }
 MetacelloCommandLineHandlerTest >> testShouldSave [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -129,7 +129,7 @@ MetacelloCommandLineHandlerTest >> testShouldSave [
 		deny: cli shouldSave
 ]
 
-{ #category : #tests-accessing }
+{ #category : #'tests-accessing' }
 MetacelloCommandLineHandlerTest >> testSubCommand [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper').
@@ -139,7 +139,7 @@ MetacelloCommandLineHandlerTest >> testSubCommand [
 	self should: [ cli subCommand ] raise: Exit
 ]
 
-{ #category : #tests-accessing }
+{ #category : #'tests-accessing' }
 MetacelloCommandLineHandlerTest >> testVersion [
 	| cli |
 	cli := self command: #('install' 'github://juliendelplanque/MineSweeper/repository' 'BaselineOfMineSweeper' '--version=stable').

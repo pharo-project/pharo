@@ -2,12 +2,12 @@
 This is a raw SDL2 event
 "
 Class {
-	#name : #SDL_Event,
+	#name : #'SDL_Event',
 	#superclass : #FFIExternalObject,
 	#classVars : [
 		'EventTypeMap'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'class initialization' }

@@ -4,7 +4,7 @@ specific node when returning self
 Class {
 	#name : #IRReturnReceiver,
 	#superclass : #IRReturn,
-	#category : #OpalCompiler-Core-IR-Nodes
+	#category : #'OpalCompiler-Core-IR-Nodes'
 }
 
 { #category : #visiting }

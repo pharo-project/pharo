@@ -23,7 +23,7 @@ Class {
 	#instVars : [
 		'nextFunction'
 	],
-	#category : #SortFunctions-Core
+	#category : #'SortFunctions-Core'
 }
 
 { #category : #'instance creation' }

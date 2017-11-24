@@ -6,7 +6,7 @@ Class {
 		'containerTree',
 		'onSelection'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #comparing }

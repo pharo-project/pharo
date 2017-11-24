@@ -21,7 +21,7 @@ Class {
 		'fadingFactor',
 		'resetable'
 	],
-	#category : #Morphic-Base-Basic
+	#category : #'Morphic-Base-Basic'
 }
 
 { #category : #drawing }
@@ -32,13 +32,13 @@ FadingMorph >> areasRemainingToFill: aRectangle [
 	^Array with: aRectangle
 ]
 
-{ #category : #properties-setting }
+{ #category : #'properties-setting' }
 FadingMorph >> beResetable [
 
 	resetable := true
 ]
 
-{ #category : #properties-setting }
+{ #category : #'properties-setting' }
 FadingMorph >> beUnResetable [
 
 	resetable := false
@@ -57,7 +57,7 @@ FadingMorph >> fullDrawOn: aCanvas [
 	super fullDrawOn: (aCanvas asAlphaBlendingCanvas: alpha)
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 FadingMorph >> handleMouseMove: anEvent [
 
 	(anEvent wasHandled or: [ resetable not ]) ifTrue:[ ^self ]. 
@@ -103,7 +103,7 @@ FadingMorph >> initializeLayout [
 	cellInset: 0.
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 FadingMorph >> rejectsEvent: anEvent [
 
 	^(anEvent isMouse and: [ anEvent isMouseDown ]) or: [ super rejectsEvent: anEvent ]

@@ -4,15 +4,15 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestCollectionsWeak,
 	#superclass : #PackageManifest,
-	#category : #Collections-Weak
+	#category : #'Collections-Weak'
 }
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsWeak class >> dependencies [
 	^ #(#'System-Finalization' #'Collections-Support' #'Collections-Sequenceable' #'Collections-Unordered' #'Collections-Abstract' #Kernel)
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsWeak class >> description [
 	^ 'All weak collections'
 ]
@@ -22,7 +22,7 @@ ManifestCollectionsWeak class >> manuallyResolvedDependencies [
 	^ #(#'System-Support' #'Collections-Streams')
 ]
 
-{ #category : #meta-data }
+{ #category : #'meta-data' }
 ManifestCollectionsWeak class >> packageName [
 	^ #'Collections-Weak'
 ]

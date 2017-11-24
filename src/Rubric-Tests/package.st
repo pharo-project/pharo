@@ -1,1 +1,1 @@
-Package { #name : #Rubric-Tests }
+Package { #name : #'Rubric-Tests' }

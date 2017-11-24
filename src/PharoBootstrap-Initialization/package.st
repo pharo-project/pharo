@@ -1,1 +1,1 @@
-Package { #name : #PharoBootstrap-Initialization }
+Package { #name : #'PharoBootstrap-Initialization' }

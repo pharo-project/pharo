@@ -14,7 +14,7 @@ Class {
 		'messages',
 		'semicolons'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -116,7 +116,7 @@ RBCascadeNode >> messages: messageNodeCollection [
 	messages do: [:each | each parent: self]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBCascadeNode >> messages: messageNodes semicolons: integerCollection [ 
 	self messages: messageNodes.
 	semicolons := integerCollection
@@ -151,12 +151,12 @@ RBCascadeNode >> replaceNode: aNode withNode: anotherNode [
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBCascadeNode >> semicolons [
 	^ semicolons
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBCascadeNode >> semicolons: anArray [
 	semicolons := anArray
 ]

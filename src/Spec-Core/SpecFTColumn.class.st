@@ -5,7 +5,7 @@ Class {
 		'id',
 		'width'
 	],
-	#category : #Spec-Core-Support
+	#category : #'Spec-Core-Support'
 }
 
 { #category : #'instance creation' }

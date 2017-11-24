@@ -57,7 +57,7 @@ Class {
 		'methodName',
 		'selectorLookup'
 	],
-	#category : #Refactoring-Core-Support
+	#category : #'Refactoring-Core-Support'
 }
 
 { #category : #'instance creation' }
@@ -326,7 +326,7 @@ RBRefactoryTyper >> printTypeFor: aString on: aStream [
 				on: aStream]
 ]
 
-{ #category : #selectors-collections }
+{ #category : #'selectors-collections' }
 RBRefactoryTyper >> processCollectionFor: key messagesTo: aName in: aBlock [ 
 	| searcher |
 	searcher := RBParseTreeSearcher new.
@@ -340,7 +340,7 @@ RBRefactoryTyper >> processCollectionFor: key messagesTo: aName in: aBlock [
 		initialAnswer: (variableMessages at: (self collectionNameFor: key) ifAbsentPut: [ Set new ])
 ]
 
-{ #category : #selectors-collections }
+{ #category : #'selectors-collections' }
 RBRefactoryTyper >> processCollectionMessagesFor: variableName in: aParseTree [ 
 	| parent block |
 	aParseTree isMessage

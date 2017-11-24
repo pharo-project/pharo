@@ -4,7 +4,7 @@ Command to save a package in versionner
 Class {
 	#name : #MBSavePackageCommand,
 	#superclass : #MBAbstractPackageCommand,
-	#category : #Versionner-Core-Commands
+	#category : #'Versionner-Core-Commands'
 }
 
 { #category : #documentation }

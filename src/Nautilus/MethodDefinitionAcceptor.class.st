@@ -4,7 +4,7 @@ I am an acceptor in the context of method definition
 Class {
 	#name : #MethodDefinitionAcceptor,
 	#superclass : #AbstractAcceptor,
-	#category : #Nautilus-Acceptors
+	#category : #'Nautilus-Acceptors'
 }
 
 { #category : #protocol }

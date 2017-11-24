@@ -14,7 +14,7 @@ Class {
 		'removeDuplicates',
 		'selectors'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -228,7 +228,7 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 		classified: (class protocolsFor: aSelector)
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [ 
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection.

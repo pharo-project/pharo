@@ -1,7 +1,7 @@
 Class {
 	#name : #BinaryFileStreamTest,
 	#superclass : #TestCase,
-	#category : #Files-Tests
+	#category : #'Files-Tests'
 }
 
 { #category : #running }

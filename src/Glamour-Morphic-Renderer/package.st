@@ -1,1 +1,1 @@
-Package { #name : #Glamour-Morphic-Renderer }
+Package { #name : #'Glamour-Morphic-Renderer' }

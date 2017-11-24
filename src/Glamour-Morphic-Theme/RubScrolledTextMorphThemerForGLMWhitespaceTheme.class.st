@@ -1,10 +1,10 @@
 Class {
 	#name : #RubScrolledTextMorphThemerForGLMWhitespaceTheme,
 	#superclass : #RubScrolledTextMorphThemer,
-	#category : #Glamour-Morphic-Theme
+	#category : #'Glamour-Morphic-Theme'
 }
 
-{ #category : #border-styles }
+{ #category : #'border-styles' }
 RubScrolledTextMorphThemerForGLMWhitespaceTheme >> normalBorderStyleFor: aTextArea [
 	^ BorderStyle 
 		width: 1

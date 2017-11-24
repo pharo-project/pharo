@@ -10,7 +10,7 @@ Class {
 	#instVars : [
 		'hash'
 	],
-	#category : #System-Hashing-Tests-SHA1
+	#category : #'System-Hashing-Tests-SHA1'
 }
 
 { #category : #'testing - examples' }

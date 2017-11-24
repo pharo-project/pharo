@@ -21,7 +21,7 @@ Class {
 	#instVars : [
 		'stream'
 	],
-	#category : #Zinc-HTTP-Core
+	#category : #'Zinc-HTTP-Core'
 }
 
 { #category : #testing }
@@ -52,7 +52,7 @@ ZnStreamingEntity class >> readFrom: stream usingType: mimeType andLength: lengt
 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnStreamingEntity >> close [
 	stream ifNotNil: [ 
 		stream close. 
@@ -84,7 +84,7 @@ ZnStreamingEntity >> isEmpty [
 	^ false
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 ZnStreamingEntity >> readFrom: readStream [
 	self contentLength isNil
 		ifTrue: [ 

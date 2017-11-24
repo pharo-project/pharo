@@ -4,7 +4,7 @@ The Unix vm does not do line-ending conversion, thus this subclass which specifi
 Class {
 	#name : #UnixClipboard,
 	#superclass : #Clipboard,
-	#category : #System-Clipboard
+	#category : #'System-Clipboard'
 }
 
 { #category : #accessing }

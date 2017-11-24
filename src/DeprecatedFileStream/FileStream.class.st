@@ -127,7 +127,7 @@ FileStream class >> fullName: fileName [
 	^ fileName asFileReference fullName 
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 FileStream class >> initialize [
 	TheStdioHandles := Array new: 3.
 	SessionManager default registerSystemClassNamed: self name
@@ -389,7 +389,7 @@ FileStream >> binary [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 FileStream >> close [
 	"Close this file."
 
@@ -585,7 +585,7 @@ FileStream >> readWrite [
 
 ]
 
-{ #category : #open/close }
+{ #category : #'open/close' }
 FileStream >> reopen [
 	"Ensure that the receiver is open, re-open it if necessary."
 	"Details: Files that were open when a snapshot occurs are no longer valid when the snapshot is resumed. This operation re-opens the file if that has happened."

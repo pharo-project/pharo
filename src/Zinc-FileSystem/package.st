@@ -1,1 +1,1 @@
-Package { #name : #Zinc-FileSystem }
+Package { #name : #'Zinc-FileSystem' }

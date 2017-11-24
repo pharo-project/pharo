@@ -4,7 +4,7 @@ I am activated when user clicks outside of a popup
 Class {
 	#name : #GLMPopupBrickOutisideClickPredicate,
 	#superclass : #GLMPopupBrickPredicate,
-	#category : #Glamour-Morphic-Brick-Widgets-UI-Popup
+	#category : #'Glamour-Morphic-Brick-Widgets-UI-Popup'
 }
 
 { #category : #predicate }

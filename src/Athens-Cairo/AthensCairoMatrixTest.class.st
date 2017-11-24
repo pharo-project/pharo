@@ -1,7 +1,7 @@
 Class {
 	#name : #AthensCairoMatrixTest,
 	#superclass : #TestCase,
-	#category : #Athens-Cairo-Tests
+	#category : #'Athens-Cairo-Tests'
 }
 
 { #category : #tests }

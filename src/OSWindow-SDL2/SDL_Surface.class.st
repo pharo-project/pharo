@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_Surface,
+	#name : #'SDL_Surface',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_CLIP_RECT',
@@ -18,7 +18,7 @@ Class {
 		'OFFSET_USERDATA',
 		'OFFSET_W'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

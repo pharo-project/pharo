@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'decoratedStream'
 	],
-	#category : #Collections-Streams
+	#category : #'Collections-Streams'
 }
 
 { #category : #'instance creation' }

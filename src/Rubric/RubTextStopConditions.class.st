@@ -9,7 +9,7 @@ Class {
 		'crossedX',
 		'endOfRun'
 	],
-	#category : #Rubric-TextScanning
+	#category : #'Rubric-TextScanning'
 }
 
 { #category : #accessing }
@@ -68,7 +68,7 @@ RubTextStopConditions >> endOfRun: aSymbolOrNil [
 	stops size >= 257 ifTrue: [stops at: 257 put: endOfRun]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubTextStopConditions >> initialize [
 	"Initialize the default stop conditions."
 	stops := Array new: 258.
@@ -81,7 +81,7 @@ RubTextStopConditions >> postCopy [
 	stops := stops copy
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RubTextStopConditions >> setStops: stopArray [
 	stops := stopArray
 ]

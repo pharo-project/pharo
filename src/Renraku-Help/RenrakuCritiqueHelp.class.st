@@ -4,7 +4,7 @@ Critique is an object that binds an entity with a rule that is violated by that 
 Class {
 	#name : #RenrakuCritiqueHelp,
 	#superclass : #RenrakuHelp,
-	#category : #Renraku-Help
+	#category : #'Renraku-Help'
 }
 
 { #category : #accessing }

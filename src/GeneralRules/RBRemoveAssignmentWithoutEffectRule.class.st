@@ -4,7 +4,7 @@ See my #longDescription .
 Class {
 	#name : #RBRemoveAssignmentWithoutEffectRule,
 	#superclass : #ReNodeRewriteRule,
-	#category : #GeneralRules-Migrated
+	#category : #'GeneralRules-Migrated'
 }
 
 { #category : #accessing }

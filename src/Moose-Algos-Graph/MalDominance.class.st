@@ -1,7 +1,7 @@
 Class {
 	#name : #MalDominance,
 	#superclass : #MalGraphAlgorithm,
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #configuration }

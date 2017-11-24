@@ -1,7 +1,7 @@
 Class {
 	#name : #MalWeightedHits,
 	#superclass : #MalHits,
-	#category : #Moose-Algos-Graph
+	#category : #'Moose-Algos-Graph'
 }
 
 { #category : #running }

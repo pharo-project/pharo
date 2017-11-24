@@ -11,7 +11,7 @@ Class {
 		'doubleClick',
 		'columns'
 	],
-	#category : #Spec-Core-Widgets
+	#category : #'Spec-Core-Widgets'
 }
 
 { #category : #specs }
@@ -156,7 +156,7 @@ FastTablePresenter >> registerEvents [
 
 ]
 
-{ #category : #api-events }
+{ #category : #'api-events' }
 FastTablePresenter >> whenIconsChanged: aBlock [ 
 	
 	iconHolder whenChangedDo: aBlock 

@@ -3,7 +3,7 @@ Trait providing useful theme-related methods.
 "
 Trait {
 	#name : #TEasilyThemed,
-	#category : #Polymorph-Widgets
+	#category : #'Polymorph-Widgets'
 }
 
 { #category : #services }

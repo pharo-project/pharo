@@ -11,7 +11,7 @@ Class {
 		'selector',
 		'object'
 	],
-	#category : #Ombu-Common
+	#category : #'Ombu-Common'
 }
 
 { #category : #initialization }

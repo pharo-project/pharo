@@ -9,7 +9,7 @@ Class {
 		'hScrollbar',
 		'vScrollbar'
 	],
-	#category : #Morphic-Widgets-Scrolling
+	#category : #'Morphic-Widgets-Scrolling'
 }
 
 { #category : #accessing }
@@ -248,7 +248,7 @@ GeneralScrollPane >> handlesKeyboard: evt [
 	^true
 ]
 
-{ #category : #events-processing }
+{ #category : #'events-processing' }
 GeneralScrollPane >> handlesMouseWheel: evt [
 	"Do I want to receive mouseWheel events?." 
 

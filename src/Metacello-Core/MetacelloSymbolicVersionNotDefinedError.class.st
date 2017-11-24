@@ -1,7 +1,7 @@
 Class {
 	#name : #MetacelloSymbolicVersionNotDefinedError,
 	#superclass : #MetacelloSymbolicVersionDoesNotExistError,
-	#category : #Metacello-Core-Exceptions-Errors
+	#category : #'Metacello-Core-Exceptions-Errors'
 }
 
 { #category : #printing }

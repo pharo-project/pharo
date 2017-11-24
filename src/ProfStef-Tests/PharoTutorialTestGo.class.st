@@ -4,7 +4,7 @@ SUnit tests for tutorial navigation
 Class {
 	#name : #PharoTutorialTestGo,
 	#superclass : #TestCase,
-	#category : #ProfStef-Tests-Tests
+	#category : #'ProfStef-Tests-Tests'
 }
 
 { #category : #running }

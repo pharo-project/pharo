@@ -48,7 +48,7 @@ Class {
 		'GZipNameFlag',
 		'GZipReservedFlags'
 	],
-	#category : #Compression-Streams
+	#category : #'Compression-Streams'
 }
 
 { #category : #'pool initialization' }

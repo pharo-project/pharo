@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'selectors'
 	],
-	#category : #Refactoring-Core-Refactorings
+	#category : #'Refactoring-Core-Refactorings'
 }
 
 { #category : #'instance creation' }
@@ -55,7 +55,7 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 				ifFalse: [each compile: code classified: protocols]]
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [ 
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection

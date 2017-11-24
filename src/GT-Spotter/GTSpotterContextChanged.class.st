@@ -5,7 +5,7 @@ Class {
 		'previous',
 		'current'
 	],
-	#category : #GT-Spotter-Announcements
+	#category : #'GT-Spotter-Announcements'
 }
 
 { #category : #compatibility }
@@ -28,7 +28,7 @@ GTSpotterContextChanged >> current: anObject [
 	current := anObject
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTSpotterContextChanged >> currentText [
 	^ self current ifNil: [''] ifNotNil: [ self current text ]
 ]
@@ -43,7 +43,7 @@ GTSpotterContextChanged >> previous: anObject [
 	previous := anObject
 ]
 
-{ #category : #accessing-dynamic }
+{ #category : #'accessing-dynamic' }
 GTSpotterContextChanged >> previousText [
 	^ self previous ifNil: ['']  ifNotNil: [ self previous text ]
 ]

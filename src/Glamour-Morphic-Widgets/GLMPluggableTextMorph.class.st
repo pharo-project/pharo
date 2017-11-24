@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'announcer'
 	],
-	#category : #Glamour-Morphic-Widgets
+	#category : #'Glamour-Morphic-Widgets'
 }
 
 { #category : #'interactive error protocol' }
@@ -24,7 +24,7 @@ GLMPluggableTextMorph >> announcer [
 	^ announcer ifNil: [announcer := GLMAnnouncer new]
 ]
 
-{ #category : #do-its }
+{ #category : #'do-its' }
 GLMPluggableTextMorph >> evaluateSelectionAndDo: aBlock [
 
 	^ self handleEdit: [textMorph editor evaluateSelectionAndDo: aBlock]

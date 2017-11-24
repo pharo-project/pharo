@@ -1,7 +1,7 @@
 Class {
 	#name : #GTSpotterExceptionMock5,
 	#superclass : #Object,
-	#category : #GT-Tests-Spotter-Exceptions-Mocks
+	#category : #'GT-Tests-Spotter-Exceptions-Mocks'
 }
 
 { #category : #mocks }

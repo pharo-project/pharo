@@ -9,7 +9,7 @@ For other objects  that don't understand threeWayCompareTo: it is necessary to u
 Class {
 	#name : #DefaultSortFunction,
 	#superclass : #SortFunction,
-	#category : #SortFunctions-Core
+	#category : #'SortFunctions-Core'
 }
 
 { #category : #'class initialization' }

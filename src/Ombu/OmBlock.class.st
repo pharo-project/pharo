@@ -11,7 +11,7 @@ Class {
 		'startPosition',
 		'endPosition'
 	],
-	#category : #Ombu-Stores
+	#category : #'Ombu-Stores'
 }
 
 { #category : #'instance creation' }

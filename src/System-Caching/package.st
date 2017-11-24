@@ -1,1 +1,1 @@
-Package { #name : #System-Caching }
+Package { #name : #'System-Caching' }

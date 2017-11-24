@@ -15,7 +15,7 @@ Class {
 	#instVars : [
 		'handle'
 	],
-	#category : #Zodiac-Core
+	#category : #'Zodiac-Core'
 }
 
 { #category : #operations }

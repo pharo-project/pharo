@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'pageSize'
 	],
-	#category : #Morphic-Widgets-Tree-Pagination
+	#category : #'Morphic-Widgets-Tree-Pagination'
 }
 
 { #category : #examples }

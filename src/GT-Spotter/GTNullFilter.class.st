@@ -1,7 +1,7 @@
 Class {
 	#name : #GTNullFilter,
 	#superclass : #GTStringFilter,
-	#category : #GT-Spotter-Filters
+	#category : #'GT-Spotter-Filters'
 }
 
 { #category : #public }

@@ -5,7 +5,7 @@ This is a custom help book providing a tutorial for the SUnit framework.
 Class {
 	#name : #SUnitTutorial,
 	#superclass : #SUnitHelp,
-	#category : #SUnit-Help
+	#category : #'SUnit-Help'
 }
 
 { #category : #accessing }

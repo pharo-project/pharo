@@ -8,7 +8,7 @@ Class {
 		'source',
 		'stateChanged'
 	],
-	#category : #Morphic-Widgets-Basic
+	#category : #'Morphic-Widgets-Basic'
 }
 
 { #category : #'instance creation' }

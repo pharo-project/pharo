@@ -4,7 +4,7 @@ MetacelloScriptExecutor decodes script args and launches MetacelloScriptEngine t
 Class {
 	#name : #MetacelloScriptApiExecutor,
 	#superclass : #MetacelloScriptExecutor,
-	#category : #Metacello-Core-Scripts
+	#category : #'Metacello-Core-Scripts'
 }
 
 { #category : #'execution callback' }

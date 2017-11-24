@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : #Keymapping-Tests
+	#category : #'Keymapping-Tests'
 }
 
 { #category : #utilities }

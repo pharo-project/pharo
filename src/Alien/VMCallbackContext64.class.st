@@ -25,7 +25,7 @@ Class {
 	#name : #VMCallbackContext64,
 	#superclass : #Alien,
 	#type : #bytes,
-	#category : #Alien-Core
+	#category : #'Alien-Core'
 }
 
 { #category : #'instance creation' }
@@ -62,17 +62,17 @@ VMCallbackContext64 >> primSignal: aSemaphore "<Semaphore>" andReturnAs: typeCod
 	^ self primitiveFailed
 ]
 
-{ #category : #accessing-legacy }
+{ #category : #'accessing-legacy' }
 VMCallbackContext64 >> rawStackp [
 	^self unsignedLongAt: 9
 ]
 
-{ #category : #accessing-legacy }
+{ #category : #'accessing-legacy' }
 VMCallbackContext64 >> returnDouble: f [
 	^self floatResult: f
 ]
 
-{ #category : #accessing-legacy }
+{ #category : #'accessing-legacy' }
 VMCallbackContext64 >> returnInteger: n [
 	^self wordResult: n
 ]

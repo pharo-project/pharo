@@ -2,7 +2,7 @@
 SDL2 library structure
 "
 Class {
-	#name : #SDL_Keysym,
+	#name : #'SDL_Keysym',
 	#superclass : #SDL2Structure,
 	#classVars : [
 		'OFFSET_MOD',
@@ -10,7 +10,7 @@ Class {
 		'OFFSET_SYM',
 		'OFFSET_UNUSED'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'fields description' }

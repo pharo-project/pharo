@@ -15,7 +15,7 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #Collections-Weak
+	#category : #'Collections-Weak'
 }
 
 { #category : #accessing }
@@ -108,7 +108,7 @@ WeakRegistry >> initialize [
 	self installFinalizer.
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 WeakRegistry >> installFinalizer [
 	" do nothing, pharo does not supports it right now
 	valueDictionary finalizer: #finalizeValues

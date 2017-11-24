@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'default'
 	],
-	#category : #Slot-Examples
+	#category : #'Slot-Examples'
 }
 
 { #category : #comparing }
@@ -42,7 +42,7 @@ BaseSlot >> isVisible [
 	^ false
 ]
 
-{ #category : #meta-object-protocol }
+{ #category : #'meta-object-protocol' }
 BaseSlot >> wantsInitalization [
 	"if a slot wants to hable initalization, return true here"
 	^true

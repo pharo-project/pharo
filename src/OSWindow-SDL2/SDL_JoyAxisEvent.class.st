@@ -2,7 +2,7 @@
 SDL2 library structure representing a joystick axis event data.
 "
 Class {
-	#name : #SDL_JoyAxisEvent,
+	#name : #'SDL_JoyAxisEvent',
 	#superclass : #SDL2MappedEvent,
 	#classVars : [
 		'OFFSET_AXIS',
@@ -15,7 +15,7 @@ Class {
 		'OFFSET_VALUE',
 		'OFFSET_WHICH'
 	],
-	#category : #OSWindow-SDL2-Bindings
+	#category : #'OSWindow-SDL2-Bindings'
 }
 
 { #category : #'event type' }

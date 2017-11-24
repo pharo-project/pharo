@@ -4,7 +4,7 @@ SUnit tests for announcement sets
 Class {
 	#name : #AnnouncementSetTest,
 	#superclass : #TestCase,
-	#category : #Announcements-Tests-Core-Tests
+	#category : #'Announcements-Tests-Core-Tests'
 }
 
 { #category : #tests }

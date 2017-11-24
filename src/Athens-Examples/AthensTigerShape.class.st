@@ -17,7 +17,7 @@ Class {
 		'fillPaint',
 		'stroke'
 	],
-	#category : #Athens-Examples
+	#category : #'Athens-Examples'
 }
 
 { #category : #'as yet unclassified' }

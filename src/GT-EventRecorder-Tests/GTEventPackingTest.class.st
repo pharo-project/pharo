@@ -15,7 +15,7 @@ Class {
 		'storage',
 		'file'
 	],
-	#category : #GT-EventRecorder-Tests-Support
+	#category : #'GT-EventRecorder-Tests-Support'
 }
 
 { #category : #testing }
@@ -58,7 +58,7 @@ GTEventPackingTest >> setUp [
 
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testNewAnnouncementFor [
 	announcement := packing newAnnouncementFor: collector.
 	self assert: announcement serializedBy equals: packing class name.
@@ -66,7 +66,7 @@ GTEventPackingTest >> testNewAnnouncementFor [
 	self assert: announcement category equals: collector category.
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testNewAnnouncementFor2 [
 	collector updateAnnouncementBlock: [ :anAnnouncement | 
 		anAnnouncement at: #testNewAnnouncementFor2 put: 42 ].
@@ -76,14 +76,14 @@ GTEventPackingTest >> testNewAnnouncementFor2 [
 	self assert: (announcement at: #testNewAnnouncementFor2) equals: 42.
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testPack [
 	self assertBundle.
 	announcement := packing unpack: bundle data.
 	self assertUnpackedData
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testUnpackBinaryBinaryStream [
 	self assertBundle.
 	file writeStreamDo: [ :aStream | 
@@ -95,7 +95,7 @@ GTEventPackingTest >> testUnpackBinaryBinaryStream [
 
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testUnpackBinaryUnspecifiedStream [
 	self assertBundle.
 	file writeStreamDo: [ :aStream | 
@@ -105,7 +105,7 @@ GTEventPackingTest >> testUnpackBinaryUnspecifiedStream [
 	self assertUnpackedData.
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testUnpackUnspecifiedBinaryStream [
 	self assertBundle.
 	file writeStreamDo: [ :aStream | 
@@ -116,7 +116,7 @@ GTEventPackingTest >> testUnpackUnspecifiedBinaryStream [
 
 ]
 
-{ #category : #tests-packing }
+{ #category : #'tests-packing' }
 GTEventPackingTest >> testUnpackUnspecifiedUnspecifiedStream [
 	self assertBundle.
 	file writeStreamDo: [ :aStream | 

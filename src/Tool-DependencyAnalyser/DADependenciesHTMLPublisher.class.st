@@ -15,7 +15,7 @@ Class {
 		'stream',
 		'report'
 	],
-	#category : #Tool-DependencyAnalyser-HTMLReport
+	#category : #'Tool-DependencyAnalyser-HTMLReport'
 }
 
 { #category : #publishing }

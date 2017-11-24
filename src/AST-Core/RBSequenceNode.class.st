@@ -20,7 +20,7 @@ Class {
 		'periods',
 		'temporaries'
 	],
-	#category : #AST-Core-Nodes
+	#category : #'AST-Core-Nodes'
 }
 
 { #category : #'instance creation' }
@@ -286,17 +286,17 @@ RBSequenceNode >> lastIsReturn [
 	^statements notEmpty and: [statements last lastIsReturn]
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBSequenceNode >> leftBar [
 	^ leftBar
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBSequenceNode >> leftBar: anInteger [
 	leftBar := anInteger
 ]
 
-{ #category : #initialize-release }
+{ #category : #'initialize-release' }
 RBSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [ 
 	leftBar := leftInteger.
 	self temporaries: variableNodes.
@@ -326,12 +326,12 @@ RBSequenceNode >> methodComments [
 	^methodComments asSortedCollection: [:a :b | a start < b start]
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBSequenceNode >> periods [
 	^ periods
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBSequenceNode >> periods: anArray [
 	periods := anArray
 ]
@@ -394,12 +394,12 @@ RBSequenceNode >> replaceNode: aNode withNodes: aCollection [
 	statements := newStatements
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBSequenceNode >> rightBar [
 	^ rightBar
 ]
 
-{ #category : #accessing-token }
+{ #category : #'accessing-token' }
 RBSequenceNode >> rightBar: anInteger [
 	rightBar := anInteger
 ]

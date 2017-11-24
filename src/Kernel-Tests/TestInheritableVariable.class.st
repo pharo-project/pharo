@@ -8,7 +8,7 @@ Class {
 	#classInstVars : [
 		'enabled'
 	],
-	#category : #Kernel-Tests-Processes
+	#category : #'Kernel-Tests-Processes'
 }
 
 { #category : #controlling }

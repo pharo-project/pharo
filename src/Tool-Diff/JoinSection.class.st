@@ -12,7 +12,7 @@ Class {
 		'additionHighlightColor',
 		'removalHighlightColor'
 	],
-	#category : #Tool-Diff
+	#category : #'Tool-Diff'
 }
 
 { #category : #adding }
