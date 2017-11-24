@@ -8,16 +8,32 @@ Class {
 }
 
 { #category : #utilities }
-ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: category whenSubclassOf: aClass [
+ProperMethodCategorizationTest >> assureAll: selector areCategorizedIn: protocol whenSubclassOf: aClass [
 	| violating |
 	violating := OrderedCollection new.
 	aClass allSubclassesDo: [:cls | cls methods do: [:m |
-			(m selector = selector and: [ m category ~= category ])
+			(m selector = selector and: [ m category ~= protocol ])
 				ifTrue: [ violating add: m -> m category ]
 			]
 		 ].
-	self assert: violating isEmpty description: ('Subclasses of {1} should have #{2} methods in category {3}' format: { aClass asString. selector. category })
+	self assert: violating isEmpty description: [self describeViolations: violating forSubclassOf: aClass protocol: protocol]
 
+]
+
+{ #category : #utilities }
+ProperMethodCategorizationTest >> describeViolations: violations forSubclassOf: aClass protocol: aProtocolString [
+	| offendingClasses selector classList word |
+	offendingClasses := violations collect: [ :assoc | assoc key classBinding key ].
+	selector := violations first key selector.
+	(violations size = 1) ifTrue: [ 
+		^ '{1}, a subclass of {2}, should have its #{3} method in protocol ''{4}'''
+		    format: {offendingClasses first. aClass asString. selector. aProtocolString} ].
+	word := (violations size = 2) ifTrue: [ 'both' ] ifFalse: [ 'all' ].
+	classList := 'and ', offendingClasses last.
+	1 to: (offendingClasses size - 1) do: [ :i | 
+		classList := (offendingClasses at: i) , ', ' , classList  ].
+	^ '{1}, {2} subclasses of {3}, should have their #{4} methods in protocol ''{5}'''
+		    format: {classList. word. aClass asString. selector. aProtocolString}
 ]
 
 { #category : #'tests - object' }
@@ -86,7 +102,7 @@ ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 
 { #category : #'tests - sunit' }
 ProperMethodCategorizationTest >> testRunCaseMethodInSUnitTestsNeedsToBeInRunningProtocol [
-	"The #tearDown method in SUnit test classes should be in method protocol 'running'"
+	"The #runCase method in SUnit test classes should be in method protocol 'running'"
 	
 	self assureAll: #runCase areCategorizedIn: #running  whenSubclassOf: TestCase
 

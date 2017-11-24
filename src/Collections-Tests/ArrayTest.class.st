@@ -604,6 +604,23 @@ ArrayTest >> testAsArrayKeepsIdentity [
 	self assert: y identityHash = x identityHash
 ]
 
+{ #category : #'some tests' }
+ArrayTest >> testAsSet [
+
+	| newFull |
+	newFull := #(1 2 3) asSet.
+	newFull add: 4.
+	self assert: newFull equals: (Set with: 1 with: 2 with: 3 with: 4)
+]
+
+{ #category : #'some tests' }
+ArrayTest >> testAsSetClass [
+	| |
+	"test with a collection without equal elements :"
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set.
+	
+]
+
 { #category : #'tests - accessing' }
 ArrayTest >> testAtWrap2 [
 	| tabTest |

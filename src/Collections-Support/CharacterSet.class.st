@@ -1,5 +1,11 @@
 "
 A set of characters.  Lookups for inclusion are very fast.
+
+map is a ByteArray of size 256, initially all zeros.  
+map at: n+1 is set to 1 when a Character with a codePoint of n is added to the set.
+
+If a ""wide"" character (codePoint > 255) is added, the ChacracterSet becomes a WideCharacterSet.
+ 
 "
 Class {
 	#name : #CharacterSet,
@@ -40,7 +46,7 @@ CharacterSet class >> newFrom: aCollection [
 	| newCollection |
 	newCollection := self new.
 	newCollection addAll: aCollection.
-	^newCollection
+	^ newCollection
 ]
 
 { #category : #'instance creation' }
@@ -60,13 +66,39 @@ CharacterSet class >> separators [
 	^set
 ]
 
+{ #category : #'instance creation' }
+CharacterSet class >> withAll: aCollection [
+	^ self newFrom: aCollection
+]
+
+{ #category : #'instance creation' }
+CharacterSet class >> without: aSetOfCharacters [
+	"return a set containing the inverse of aSetOfCharacters"
+
+	^ CharacterSetComplement of: aSetOfCharacters
+]
+
 { #category : #comparing }
 CharacterSet >> = anObject [
-	^self species == anObject species and: [
-		self byteArrayMap = anObject byteArrayMap ]
+	self class == anObject class
+		ifTrue: [ ^ self byteArrayMap = anObject byteArrayMap ].
+	((anObject respondsTo: #size) and: [ anObject respondsTo: #includes: ])
+		ifFalse: [ ^ false ].
+	self size = anObject size
+		ifFalse: [ ^ false ].
+	self do: [ :each | 
+			(anObject includes: each) ifFalse: [ ^ false ] ].
+	^ true
 ]
 
 { #category : #'collection ops' }
+CharacterSet >> abstractSize [
+	"an abstraction of my size, to be used in implementing union & intersection"
+		
+	^ Size small
+]
+
+{ #category : #adding }
 CharacterSet >> add: aCharacter [
 	"I automatically become a WideCharacterSet if you add a wide character to myself"
 	
@@ -81,7 +113,7 @@ CharacterSet >> add: aCharacter [
 	^aCharacter
 ]
 
-{ #category : #conversion }
+{ #category : #converting }
 CharacterSet >> asString [
 	"Convert the receiver into a String"
 
@@ -114,7 +146,7 @@ CharacterSet >> complement [
 	^CharacterSetComplement of: self copy
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSet >> do: aBlock [
 	"evaluate aBlock with each character in the set"
 
@@ -123,7 +155,7 @@ CharacterSet >> do: aBlock [
 
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 CharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
 	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
 	^ByteString
@@ -142,6 +174,12 @@ CharacterSet >> hash [
 	^self byteArrayMap hash
 ]
 
+{ #category : #testing }
+CharacterSet >> identityIncludes: aCharacter [
+	"On Characters, = and == are the same"
+	^ self includes: aCharacter
+]
+
 { #category : #'collection ops' }
 CharacterSet >> includes: aCharacter [
 	aCharacter asciiValue >= 256
@@ -156,24 +194,47 @@ CharacterSet >> initialize [
 	map := ByteArray new: 256 withAll: 0.
 ]
 
+{ #category : #private }
+CharacterSet >> intersectSmallWithLarge: aLargerSet [
+	^ self select: [ :each | (aLargerSet includes: each) ]
+]
+
+{ #category : #enumerating }
+CharacterSet >> intersection: anotherSet [
+	| smaller larger |
+	(anotherSet abstractSize = Size small and: [ self size < anotherSet size ])
+		ifTrue: [ smaller := self.
+			larger := anotherSet ]
+		ifFalse: [ smaller := anotherSet.
+			larger := self ].
+	^ smaller intersectSmallWithLarge: larger
+]
+
+{ #category : #accessing }
+CharacterSet >> like: aCharacter [
+	"Answer aCharacter if aCharacter is in the receiver, or nil if it is absent."
+
+	^ (self includes: aCharacter) ifTrue: [ aCharacter ] ifFalse: [ nil ]
+]
+
 { #category : #copying }
 CharacterSet >> postCopy [
 	super postCopy.
 	map := map copy
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSet >> remove: aCharacter [
-	aCharacter asciiValue >= 256
-		ifFalse: ["Guard against wide characters"
-			map at: aCharacter asciiValue + 1 put: 0].
-	^aCharacter
+	^ self remove: aCharacter ifAbsent: [ self errorNotFound: aCharacter ]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #removing }
 CharacterSet >> remove: aCharacter ifAbsent: aBlock [
-	(self includes: aCharacter) ifFalse: [^aBlock value].
-	^self remove: aCharacter
+	| code |
+	code := aCharacter asciiValue.
+	(code >= 256 or: [ (map at: code + 1) == 0 ]) ifTrue: [ ^ aBlock value ].
+	map at: code + 1 put: 0.
+	^ aCharacter
 ]
 
 { #category : #removing }
@@ -185,6 +246,22 @@ CharacterSet >> removeAll [
 { #category : #'collection ops' }
 CharacterSet >> size [
 	^map sum
+]
+
+{ #category : #enumerating }
+CharacterSet >> union: anotherSet [
+	| smaller larger |
+	(anotherSet abstractSize = Size small and: [ self size < anotherSet size ])
+		ifTrue: [ smaller := self.
+			larger := anotherSet ]
+		ifFalse: [ smaller := anotherSet.
+			larger := self ].
+	^ larger unionLargeWithSmall: smaller
+]
+
+{ #category : #enumerating }
+CharacterSet >> unionLargeWithSmall: aSmallerSet [
+	^ self copy addAll: aSmallerSet; yourself
 ]
 
 { #category : #private }

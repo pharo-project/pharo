@@ -235,7 +235,7 @@ SetTest >> sizeCollection [
 	^ full
 ]
 
-{ #category : #'tests - iterate' }
+{ #category : #requirements }
 SetTest >> speciesClass [
 	
 	^ Set
@@ -252,8 +252,11 @@ SetTest >> test0FixtureAddForUniquenessTest [
 
 { #category : #'tests - sunit original tests' }
 SetTest >> testAdd [ 
-	empty add: 5.
-	self assert: (empty includes: 5).
+	| e |
+	e := self element.
+	empty add: e.
+	self assert: (empty includes: e) 
+			description: ['after adding ' , e printString , ', it wasn''t included']
 ]
 
 { #category : #'tests - growable' }
@@ -268,10 +271,11 @@ SetTest >> testAddNonEmptyGrowsWhenNewElement [
 
 { #category : #'tests - some' }
 SetTest >> testAddWithOccurences [
- 
-	empty add: 2 withOccurrences: 3.
-	self assert: (empty includes: 2).
-	self assert: ((empty occurrencesOf: 2) = 1).
+ 	| e |
+	e := self element.
+	empty add: e withOccurrences: 3.
+	self assert: (empty includes: e).
+	self assert: (empty occurrencesOf: e) equals: 1
 ]
 
 { #category : #'tests - with nil' }
@@ -282,16 +286,6 @@ SetTest >> testAllowInclusionOfNils [
 	self assert: (set includes: nil).
 	set remove: nil.
 	self deny: (set includes: nil)
-]
-
-{ #category : #'tests - some' }
-SetTest >> testAsSet [
-	"could be moved in Array or Collection"
-
-	| newFull |
-	newFull := #(1 2 3 ) asSet.
-	newFull add: 4.
-	self assert: (newFull = full).
 ]
 
 { #category : #'tests - iterating' }
@@ -312,11 +306,19 @@ SetTest >> testCollect [
 { #category : #'tests - some' }
 SetTest >> testCollect2 [
 	| newFull result |
-	newFull := Set withAll: (1 to: 10).
-	result := newFull collect: [:each | each >= 1 ifTrue: [each] ifFalse: ['no']].
-	self assert: (result = newFull).
-	result := newFull collect: [:each | each >= 5 ifTrue: [each] ifFalse: ['no']].
-	self assert: (result = ((Set withAll: (5 to: 10)) add: 'no'; yourself)).
+	newFull := self classToBeTested withAll: (1 to: 10).
+	result := newFull
+		collect: [ :each | 
+			each >= 1
+				ifTrue: [ each ]
+				ifFalse: [ 'no' ] ].
+	self assert: result equals: newFull.
+	result := newFull
+		collect: [ :each | 
+			each >= 5
+				ifTrue: [ each ]
+				ifFalse: [ 'no' ] ].
+	self assert: result equals: ((Set withAll: (5 to: 10)) add: 'no'; yourself)
 ]
 
 { #category : #'tests - some' }
@@ -331,39 +333,53 @@ SetTest >> testCopy [
 ]
 
 { #category : #'tests - copy' }
+SetTest >> testCopyEmptyWith [
+	"self debug: #testCopyEmptyWith"
+
+	| res anElement |
+	anElement := self elementToAdd.
+	res := self empty copyWith: anElement.
+	self assert: res size equals: self empty size + 1.
+	self assert: (res includes: anElement).
+	self deny: (empty includes: anElement)
+]
+
+{ #category : #'tests - copy' }
 SetTest >> testCopyNonEmptyWithoutAllNotIncluded [
 	
 ]
 
 { #category : #'tests - some' }
 SetTest >> testCopyWithout [
-	| newFull | 
-	full add: 3.
-	full add: 2.
-	newFull := full copyWithout: 3.
-	self assert: (newFull size = (full size - 1)).
-	self deny: (newFull includes: 3).
-	self assert: ((newFull select: [:each | (full includes: each) not]) isEmpty).
-	self assert: ((full select: [:each | (newFull includes: each) not]) = (Set with: 3)).
-	
+	| newFull e |
+	e := self elementNotIn.
+	full add: e.
+	newFull := full copyWithout: e.
+	self assert: newFull size equals: full size - 1.
+	self deny: (newFull includes: e).
+	self assert: (newFull reject: [ :each | full includes: each ]) isEmpty.
+	self
+		assert: (full reject: [ :each | newFull includes: each ])
+		equals: (self classToBeTested with: e)
 ]
 
-{ #category : #'tests - some' }
+{ #category : #'tests - iterating' }
 SetTest >> testDo2 [
 	| newFull result |
-	newFull := Set withAll: (1 to: 5).
+	newFull := self classToBeTested withAll: (1 to: 5).
 	result := 0.
-	newFull do: [:each | result := (result + each)].
-	self assert: (result = 15).
+	newFull do: [ :each | result := result + each ].
+	self assert: result equals: 15
 ]
 
 { #category : #'tests - iterate' }
 SetTest >> testDoWithoutNoDuplicates [
 	"self debug: #testDoWithoutNoDuplicates"
+
 	| res |
-	res := self speciesClass new.  
-	self collection do: [:each | res add: each] without: -2.
-	self assert: res size = self doWithoutNumber.
+	res := self speciesClass new.
+	self collection do: [ :each | res add: each ] without: -2.
+	self assert: res size equals: self doWithoutNumber
 ]
 
 { #category : #'tests - enumerating' }
@@ -386,9 +402,10 @@ SetTest >> testGrow [
 
 { #category : #'tests - includes' }
 SetTest >> testIdentityIncludes [
-	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
+	"test containment in presence of elements that are 'included' but not 'identityIncludeded'"
 
-	" can not be used by collections that can't include elements for wich copy doesn't return another instance "
+	"Can _not_ be used by collections that can't include elements for which copy doesn't return 
+	 a distinct object"
 
 	| collection element |
 	self collectionWithCopyNonIdentical.
@@ -406,9 +423,8 @@ SetTest >> testIllegal [
 
 { #category : #'tests - sunit original tests' }
 SetTest >> testIncludes [
-	self assert: (full includes: 4).
-	self assert: (full includes: 3).
-	self deny: (full includes: 6).
+	self assert: (full includes: self elementInForIncludesTest).
+	self deny: (full includes: self elementNotIn).
 			
 ]
 
@@ -420,20 +436,20 @@ SetTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
-{ #category : #'tests - some' }
+{ #category : #tests }
 SetTest >> testIntersection [ 
 	| newFull col |
 	full add: 3; add: 2.
 	col := full intersection: full.
-	self assert: (full = col).
+	self assert: full equals: col.
 
-	newFull := Set with: 8 with: 9 with: #z.
+	newFull := self classToBeTested with: 8 with: 9 with: #z.
 	col := newFull intersection: full.
 	self assert: (col isEmpty).
 	
 	newFull add: 5; add: #abc; add: 7.
 	col := newFull intersection: full.
-	self assert: ((full select: [:each | (newFull includes: each)]) = col).
+	self assert: (full select: [:each | (newFull includes: each)]) equals: col.
 	
 	
 	
@@ -441,27 +457,28 @@ SetTest >> testIntersection [
 
 { #category : #'tests - integrity' }
 SetTest >> testIsHealthy [
-	"we use associations as keys on purpose, because they changing
-	hash depending on the key"
-	| a1 a2 set |
+	"we use associations as elements on purpose, because they change their
+	hash when we change their keys"
 
-	set := Set new.
-	[
-		a1 := 3 -> nil.
-		a2 := nil -> 3.
-		set add: a1; add: a2.
-		self assert: set isHealthy.
-		a1 key: 0.
-		a2 key: 0.
-		self assert: set isHealthy not
-	
-	] ensure: [set removeAll]
+	| a1 a2 set |
+	set := self classToBeTested new.
+	a1 := 3 -> nil.
+	a2 := nil -> 3.
+	set
+		add: a1;
+		add: a2.
+	self assert: set isHealthy.
+	a1 key: 0.
+	a2 key: 0.
+	self assert: set isHealthy not
 ]
 
 { #category : #'tests - some' }
 SetTest >> testLike [
-	self assert: ((full like: 3) = 3).
-	self assert: ((full like: 8) isNil).
+	| e |
+	e := self element.
+	self assert: (full like: e) equals: e.
+	self assert: ((full like: elementNotIn) isNil)
 ]
 
 { #category : #'tests - sunit original tests' }
@@ -497,9 +514,10 @@ SetTest >> testRemoveAll [
 { #category : #'tests - some' }
 SetTest >> testRemoveIfAbsent [
 	"self debug: #testRemoveIfAbsent"
-	
-	self assert: (full remove: 8 ifAbsent: [true]).
-	self assert: (full remove: 4 ifAbsent: [false]) isNumber.
+	| e |
+	e := self element.	
+	self assert: (full remove: elementNotIn ifAbsent: [true]).
+	self assert: (full remove: e ifAbsent: [false]) equals: e
 	
 	
 	
@@ -507,22 +525,21 @@ SetTest >> testRemoveIfAbsent [
 
 { #category : #'tests - integrity' }
 SetTest >> testSetWithNilItemsIsHealthy [
-	self classToBeTested = Set
-		ifFalse: [ ^ self	"only works on Dictionary" ].
+
 	self assert: {nil} asSet isHealthy
 ]
 
 { #category : #'tests - some' }
 SetTest >> testSize2 [
-	self assert: (empty size = 0).
-	self assert: (full size = 4).
-	empty add: 2.
-	empty add: 1.
-	full add: 2.
-	self assert: (empty size = 2).
-	self assert: (full size = 4).
-	empty remove: 2.
-	self assert: (empty size = 1).
+	self assert: empty size equals: 0.
+	self assert: full size equals: 4.
+	empty add: elementNotIn.
+	empty add: $X.
+	full add: self elementInForIncludesTest.
+	self assert: empty size equals: 2.
+	self assert: full size equals: 4.
+	empty remove: $X.
+	self assert: empty size equals: 1
 ]
 
 { #category : #'tests - some' }
@@ -531,24 +548,27 @@ SetTest >> testUnion [
 	full add: 3.
 	full add: 2.
 	col := full union: full.
-	self assert: (full = col).
-
-	newFull := Set with: 8 with: 9 with: #z.
+	self assert: full equals: col.
+	newFull := self classToBeTested with: 8 with: 9 with: #z.
 	col := newFull union: full.
-	self assert: (col size = (full size + newFull size)).
-	self assert: ((col select: [:each | (full includes: each) not]) = newFull).
-	self assert: ((col select: [:each | (newFull includes: each) not]) = full).
-
+	self assert: col size equals: full size + newFull size.
+	self
+		assert: (col reject: [ :each | full includes: each ])
+		equals: newFull.
+	self
+		assert: (col reject: [ :each | newFull includes: each ])
+		equals: full.
 	full add: 9.
 	col := newFull union: full.
 	newCol := newFull copy.
 	newCol remove: 9.
-	self assert: (col size = (full size + newFull size - 1)).
-	self assert: ((col select: [:each | (full includes: each) not]) = newCol).
+	self assert: col size equals: full size + newFull size - 1.
+	self
+		assert: (col reject: [ :each | full includes: each ])
+		equals: newCol.
 	newCol := full copy.
 	newCol remove: 9.
-	self assert: ((col select: [:each | (newFull includes: each) not]) = newCol).
-	
-	
-	
+	self
+		assert: (col reject: [ :each | newFull includes: each ])
+		equals: newCol
 ]
