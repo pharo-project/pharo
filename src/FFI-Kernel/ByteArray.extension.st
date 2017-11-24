@@ -8,7 +8,10 @@ ByteArray >> asExternalPointer [
 
 { #category : #'*FFI-Kernel' }
 ByteArray >> booleanAt: byteOffset [
-	"Booleans are just integers in C word"
+	"Returns the boolean the byte at index byteOffset of this ByteArray represents in the C convention ( A byte representing the 0 integer corresponds to false, while all other integers corresponds to true).
+	Examples:
+	`(ByteArray readHexFrom: '00') booleanAt: 1` returns false
+	`(ByteArray readHexFrom: '01') booleanAt: 1` returns true"
 	^(self integerAt: byteOffset size: 1 signed: false) ~= 0
 ]
 

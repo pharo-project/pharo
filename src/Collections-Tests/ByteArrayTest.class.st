@@ -8,6 +8,20 @@ Class {
 }
 
 { #category : #tests }
+ByteArrayTest >> testBooleanAt [
+	"self run: #testBooleanAt"
+
+	| results |
+	results := Array new: 16.
+	1 to: 16 do: [ :inx | results at: inx put: (ByteArray readHexFrom: (inx - 1 printPaddedWith: $0 to: 2 base: 16)) ].
+	self deny: ((results at: 1) booleanAt: 1) description: 'booleanAt: 0 expected true'.
+	2 to: 16 do: [ :inx | 
+		self
+			assert: ((results at: inx) booleanAt: 1)
+			description: 'booleanAt: ' , (inx - 1) printString , ' expected false']
+]
+
+{ #category : #tests }
 ByteArrayTest >> testFallbackReplaceFromToWithForString [
 	| testString byteArray stringByteSize |
 	testString := 'Test string'.
