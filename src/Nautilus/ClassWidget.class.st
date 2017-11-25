@@ -77,7 +77,7 @@ ClassWidget >> buildTabbedNameOf: anElement [
 			stringMorph color: self model extensionColor ] 
 	].
 	
-	anElement hasAbstractMethods ifTrue: [ 	
+	anElement isAbstract ifTrue: [ 	
 		stringMorph 
 		emphasis: 2; 
 		color: (self abstractColorAdjust: stringMorph color)

@@ -667,6 +667,13 @@ Trait >> innerBindingOf: aSymbol [
 ]
 
 { #category : #testing }
+Trait >> isAbstract [
+	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
+
+	^ super isAbstract or: [ self theMetaClass isAbstract ]
+]
+
+{ #category : #testing }
 Trait >> isAnonymous [
 	^self getName isNil
 ]

@@ -748,7 +748,8 @@ TBehavior >> flushCache [
 TBehavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 	
-	^ (self methods anySatisfy: [:cm | cm sendsSelector: #subclassResponsibility ])
+	self methodsDo: [:each | each isAbstract ifTrue: [ ^true ]].
+	^false
 ]
 
 { #category : #'testing method dictionary' }
