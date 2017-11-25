@@ -495,7 +495,7 @@ MetacelloProject >> valueHolderSpecClass [
 
 { #category : #versions }
 MetacelloProject >> version: aVersionString [
-    | vrsn |
+    
     aVersionString isSymbol
         ifTrue: [ 
             | symbolicVersionString |

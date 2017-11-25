@@ -147,7 +147,7 @@ MetacelloVersionSpec >> configMethodOn: aStream indent: indent [
 
 { #category : #printing }
 MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
-    | spec hasPackageSpecs |
+    | hasPackageSpecs |
     hasPackageSpecs := false.
     self packagesSpec list
         do: [ :member | 

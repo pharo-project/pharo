@@ -194,7 +194,7 @@ MetacelloPackageSpec >> currentPackageLoaded: loadedBlock notLoaded: notLoadedBl
 	"Use currentVersionInfoFor: because it involves the loader and returns versionInfo for a planned load 
 	 (atomic loaders) or currently loaded package"
 
-	| wcName vis |
+	| vis |
 	vis := anMCLoader ancestorsFor: self.
 	vis notNil
 		ifTrue: [ 
@@ -445,7 +445,7 @@ MetacelloPackageSpec >> mergeMap [
 { #category : #merging }
 MetacelloPackageSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherPackages anotherRepositories |
+	| newSpec map anotherRepositories |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
 	(anotherRepositories := map at: #repositories) notEmpty
