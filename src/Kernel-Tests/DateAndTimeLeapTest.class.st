@@ -54,7 +54,7 @@ DateAndTimeLeapTest >> testAsLocal [
 DateAndTimeLeapTest >> testAsMonth [
 	self
 		assert: aDateAndTime asMonth
-		equals: (Month year: 2004 month: 'February').
+		equals: ((Month year: 2004 month: 'February') translateTo: 2 hours).
 
 ]
 
