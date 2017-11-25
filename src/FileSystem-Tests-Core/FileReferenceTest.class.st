@@ -199,7 +199,6 @@ FileReferenceTest >> testCanonicalization [
 
 	ref := '/a/b/../c' asFileReference canonicalize.
 	self assert: ref path segments equals: #('a' 'c').
-
 ]
 
 { #category : #tests }
@@ -497,7 +496,7 @@ FileReferenceTest >> testExists [
 	self assert: reference exists.
 
 	reference delete.
-	self deny: reference exists. 
+	self deny: reference exists.
 ]
 
 { #category : #tests }
@@ -666,7 +665,6 @@ FileReferenceTest >> testParentResolutionWithAbsoluteReference [
 	self assert: (absolute path at: 1) = 'griffle'.
 	self assert: (absolute path at: 2) = 'zonk'.
 	
-	
 ]
 
 { #category : #tests }
@@ -677,7 +675,6 @@ FileReferenceTest >> testParentResolutionWithPath [
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
 ]
 
 { #category : #tests }
@@ -689,7 +686,6 @@ FileReferenceTest >> testParentResolutionWithReference [
 	self assert: absolute isAbsolute.
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
 	
-	
 ]
 
 { #category : #tests }
@@ -700,7 +696,6 @@ FileReferenceTest >> testParentResolutionWithRemoteReference [
 	absolute := base resolve: relative.
 	self assert: absolute isAbsolute.
 	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
 	
 ]
 
@@ -759,7 +754,7 @@ FileReferenceTest >> testReadStreamDoNotFound [
 	ref := filesystem / 'plonk'.
 	self
 		should: [ref readStreamDo: [:s]]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExist
 ]
 
 { #category : #tests }
@@ -804,7 +799,7 @@ FileReferenceTest >> testReadStreamNotFound [
 	ref := filesystem * 'plonk'.
 	self
 		should: [ref readStream]
-		raise: FileDoesNotExist 
+		raise: FileDoesNotExist
 ]
 
 { #category : #tests }
@@ -893,7 +888,6 @@ FileReferenceTest >> testSimpleResolution [
 	self assert: (absolute path at: 2) = 'griffle'.
 	self assert: (absolute path at: 3) = 'zonk'.
 	
-	
 ]
 
 { #category : #tests }
@@ -905,7 +899,6 @@ FileReferenceTest >> testSlash [
 	self assert: result  isRelative.
 	self assert: (result path at: 1) = 'plonk'.
 	self assert: (result path at: 2) = 'griffle'.
-
 ]
 
 { #category : #tests }
@@ -983,7 +976,6 @@ FileReferenceTest >> testWriteStreamDo [
 		[:stream |
 		s := stream.
 		self deny: stream isNil ].
-		
 ]
 
 { #category : #tests }
@@ -1008,7 +1000,6 @@ FileReferenceTest >> testWriteStreamDoifPresent [
 			s := stream.
 			self deny: stream isNil ]
 		ifPresent: [self signalFailure: 'The file does not exist!'].
-		
 ]
 
 { #category : #tests }

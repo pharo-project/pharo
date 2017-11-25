@@ -24,7 +24,6 @@ InteractiveResolver >> initialize [
 InteractiveResolver >> resolve: origin [
 	^ cache at: origin ifAbsent: [self unknownOrigin: origin]
 	
-
 ]
 
 { #category : #resolving }

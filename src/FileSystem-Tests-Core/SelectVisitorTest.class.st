@@ -1,6 +1,5 @@
 "
 SUnit tests for class SelectVistor
-
 "
 Class {
 	#name : #SelectVisitorTest,

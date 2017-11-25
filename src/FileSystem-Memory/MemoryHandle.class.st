@@ -22,7 +22,7 @@ MemoryHandle >> at: index put: anObject [
 
 { #category : #public }
 MemoryHandle >> at: index read: aCollection startingAt: start count: count [ 
-	^ entry at: index read: aCollection startingAt: start count: count 
+	^ entry at: index read: aCollection startingAt: start count: count
 ]
 
 { #category : #public }

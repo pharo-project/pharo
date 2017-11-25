@@ -14,5 +14,4 @@ DeleteVisitorTest >> testBeta [
 	self assert: (filesystem isDirectory: '/alpha').
 	self assert: (filesystem isDirectory: '/alpha/epsilon').
 	self deny: (filesystem exists: '/alpha/beta').
-	
 ]

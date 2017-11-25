@@ -20,7 +20,6 @@ WindowsStoreTest >> testAbsoluteFullName [
 		do: [ :pathString | self assert: (filesystem referenceTo: pathString) fullName equals: pathString ].
 	
 	
-
 ]
 
 { #category : #testing }
@@ -28,7 +27,6 @@ WindowsStoreTest >> testAbsolutePath [
 
 	#('c:\' 'C:\temp' 'A:\temp\test' '\test\bar' '\') do: [:each |
 		self assert: (WindowsStore current pathFromString: each) isAbsolute ] 
-	
 ]
 
 { #category : #testing }
@@ -70,5 +68,4 @@ WindowsStoreTest >> testRelativePath [
 
 	#('a' 'bin\foo' 'temp\test' 'C:temp\test') do: [:each |
 		self assert: (WindowsStore current pathFromString: each) isRelative ] 
-	
 ]

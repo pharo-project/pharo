@@ -32,12 +32,11 @@ FileSystemTest class >> packageNamesUnderTest [
 { #category : #testing }
 FileSystemTest class >> shouldInheritSelectors [
 	^ true
-	
 ]
 
 { #category : #'initialize-release' }
 FileSystemTest >> createFileSystem [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #'initialize-release' }
@@ -269,7 +268,6 @@ FileSystemTest >> testCreateDirectoryExists [
 
 	
 	
-
 ]
 
 { #category : #tests }
@@ -281,7 +279,6 @@ FileSystemTest >> testCreateDirectoryNoParent [
 		raise: DirectoryDoesNotExist.
 	
 	
-
 ]
 
 { #category : #tests }
@@ -333,7 +330,6 @@ FileSystemTest >> testDelete [
 	
 	self deny: reference exists. 
 		
-
 ]
 
 { #category : #tests }
@@ -435,7 +431,6 @@ FileSystemTest >> testEntryAt [
 
 	self assert: entry1 creationTime < entry2 creationTime.
 	self assert: entry1 modificationTime < entry2 modificationTime.
-
 ]
 
 { #category : #tests }

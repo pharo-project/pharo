@@ -39,7 +39,6 @@ FileSystemHandle >> at: index put: anObject [
 		ifTrue: [ anObject codePoint ]
 		ifFalse: [ anObject ]).
 	self at: index write: buffer startingAt: 1 count: 1.
-	
 ]
 
 { #category : #public }
@@ -72,7 +71,7 @@ FileSystemHandle >> ensureClosed [
 
 { #category : #accessing }
 FileSystemHandle >> fileSystem [
-	^ reference fileSystem 
+	^ reference fileSystem
 ]
 
 { #category : #public }

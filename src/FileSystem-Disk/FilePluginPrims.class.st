@@ -1,6 +1,5 @@
 "
 I provide an interface to the primitives in the FilePlugin.
-
 "
 Class {
 	#name : #FilePluginPrims,
@@ -14,7 +13,6 @@ FilePluginPrims >> atEnd: id [
 
 	<primitive: 'primitiveFileAtEnd' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'file primitives' }
@@ -22,7 +20,6 @@ FilePluginPrims >> close: id [
 	"Close this file."
 
 	<primitive: 'primitiveFileClose' module: 'FilePlugin'>
-	
 ]
 
 { #category : #'path primitives' }
@@ -32,7 +29,6 @@ FilePluginPrims >> createDirectory: fullPath [
 
  	<primitive: 'primitiveDirectoryCreate' module: 'FilePlugin'>
 	^ nil
-
 ]
 
 { #category : #'encoding primitives' }
@@ -48,7 +44,6 @@ FilePluginPrims >> deleteDirectory: fullPath [
 
  	<primitive: 'primitiveDirectoryDelete' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'path primitives' }
@@ -58,7 +53,6 @@ FilePluginPrims >> deleteFile: aFileName [
 
 	<primitive: 'primitiveFileDelete' module: 'FilePlugin'>
 	^ nil
-
 ]
 
 { #category : #'path primitives' }
@@ -67,7 +61,6 @@ FilePluginPrims >> delimiter [
 
  	<primitive: 'primitiveDirectoryDelimitor' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'encoding primitives' }
@@ -96,7 +89,6 @@ FilePluginPrims >> getMacFile: fileName type: typeString creator: creatorString 
 
  	<primitive: 'primitiveDirectoryGetMacTypeAndCreator' module: 'FilePlugin'>
 
-
 ]
 
 { #category : #'file primitives' }
@@ -105,7 +97,6 @@ FilePluginPrims >> getPosition: id [
 
 	<primitive: 'primitiveFileGetPosition' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'path primitives' }
@@ -136,7 +127,6 @@ FilePluginPrims >> lookupDirectory: fullPath filename: fileName [
 	
 	^ #badDirectoryPath
 
-
 ]
 
 { #category : #'path primitives' }
@@ -158,7 +148,6 @@ FilePluginPrims >> lookupEntryIn: fullPath index: index [
 	
 	^ #badDirectoryPath
 
-
 ]
 
 { #category : #'file primitives' }
@@ -173,7 +162,6 @@ FilePluginPrims >> open: fileName writable: writableFlag [
 
 	<primitive: 'primitiveFileOpen' module: 'FilePlugin'>
 	^ nil
-
 ]
 
 { #category : #'file primitives' }
@@ -201,7 +189,6 @@ FilePluginPrims >> setMacFileNamed: fileName type: typeString creator: creatorSt
 
  	<primitive: 'primitiveDirectorySetMacTypeAndCreator' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'file primitives' }
@@ -210,7 +197,6 @@ FilePluginPrims >> setPosition: id to: anInteger [
 
 	<primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'file primitives' }
@@ -219,7 +205,6 @@ FilePluginPrims >> sizeOf: id [
 
 	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'file primitives' }
@@ -247,7 +232,6 @@ FilePluginPrims >> truncate: id to: anInteger [
 
 	<primitive: 'primitiveFileTruncate' module: 'FilePlugin'>
 	self primitiveFailed
-
 ]
 
 { #category : #'file primitives' }

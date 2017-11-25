@@ -1,5 +1,5 @@
 "
-I resolve origins that are related to the currently running Smalltalk system, using primitives provided by the VM. 
+I resolve origins that are related to the currently running Smalltalk system, using primitives provided by the VM.
 "
 Class {
 	#name : #SystemResolver,
@@ -31,7 +31,6 @@ SystemResolver class >> settingsOn: aBuilder [
 SystemResolver class >> userLocalDirectory [
 	^ UserLocalDirectory ifNil: [ 
 		(FileLocator imageDirectory / self defaultLocalDirectoryName) resolve  ]
-
 ]
 
 { #category : #accessing }

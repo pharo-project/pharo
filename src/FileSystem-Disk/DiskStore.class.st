@@ -1,6 +1,5 @@
 "
 I am an abstract superclass for disk store implementations. My subclasses provide access to the actual data storage of a particular kind of filesystem. 
-
 "
 Class {
 	#name : #DiskStore,
@@ -78,7 +77,7 @@ DiskStore class >> isActiveClass [
 
 { #category : #public }
 DiskStore class >> maxFileNameLength [
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : #current }
@@ -149,7 +148,6 @@ DiskStore >> basicEntryAt: aPath [
 	
 	^ (Primitives lookupDirectory: encodedPath filename: encodedBasename)
 		ifNil: [ #badDirectoryPath ].
-	
 ]
 
 { #category : #private }
@@ -293,7 +291,6 @@ DiskStore >> isDirectory: aPath [
 	^ entry == #badDirectoryPath 
 		ifTrue: [  false ]
 		ifFalse: [ self basicIsDirectory: entry ].
-	
 ]
 
 { #category : #testing }
@@ -312,7 +309,6 @@ DiskStore >> isFile: aPath [
 	^ entry == #badDirectoryPath 
 		ifTrue: [  false ]
 		ifFalse: [ self basicIsFile: entry ].
-	
 ]
 
 { #category : #public }
@@ -337,7 +333,6 @@ DiskStore >> isSymlink: aPath [
 	^ entry == #badDirectoryPath 
 		ifTrue: [  false ]
 		ifFalse: [ self basicIsSymlink: entry ].
-	
 ]
 
 { #category : #public }

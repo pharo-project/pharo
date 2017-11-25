@@ -16,7 +16,6 @@ isDirectory
 	
 size
 	Size in bytes for a file, 0 for a directory.
-
 "
 Class {
 	#name : #FileSystemDirectoryEntry,
@@ -79,7 +78,7 @@ FileSystemDirectoryEntry >> basename [
 
 { #category : #accessing }
 FileSystemDirectoryEntry >> creation [
-	^ self creationTime 
+	^ self creationTime
 ]
 
 { #category : #accessing }
@@ -145,7 +144,7 @@ FileSystemDirectoryEntry >> isSymlink [
 
 { #category : #accessing }
 FileSystemDirectoryEntry >> modification [
-	^ self modificationTime 
+	^ self modificationTime
 ]
 
 { #category : #accessing }
