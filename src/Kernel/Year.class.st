@@ -34,7 +34,7 @@ Year class >> starting: aDateAndTime duration: aDuration [
 	aYear := aDateAndTime asDateAndTime year.
 
 	^ super
-		starting: (DateAndTime year: aYear month: 1 day: 1)
+		starting: (DateAndTime year: aYear month: 1 day: 1 offset: aDateAndTime offset)
 		duration: (Duration days: (self daysInYear: aYear)).
 ]
 
