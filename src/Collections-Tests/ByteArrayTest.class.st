@@ -8,6 +8,19 @@ Class {
 }
 
 { #category : #tests }
+ByteArrayTest >> testBooleanAt [
+	"self run: #testBooleanAt"
+	
+	"Checking the result of ByteArray>>#booleanAt on a few instances of ByteArray. It should return false on 0-valued bytes and true on all other bytes (according to the integer to boolean C convention)."
+
+	self deny: (#[0] booleanAt: 1).
+	self assert: (#[1] booleanAt: 1).
+	self assert: (#[255 2 3] booleanAt: 1).
+	self deny: (#[0 25] booleanAt: 1).
+	self assert: (#[255] booleanAt: 1).
+]
+
+{ #category : #tests }
 ByteArrayTest >> testFallbackReplaceFromToWithForString [
 	| testString byteArray stringByteSize |
 	testString := 'Test string'.
