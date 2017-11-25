@@ -531,7 +531,7 @@ EncoderForSistaV1 class >> literalIndexOfBytecodeAt: pc in: aCompiledMethod [
 ]
 
 { #category : #'compiled method support' }
-EncoderForSistaV1 class >> markerOrNilFor: compiledMethod [
+EncoderForSistaV1 class >> markerOrNilFor: aMethod [
 	"What is a marker method?  It is method with body like 
 		'self subclassResponsibility' or '^ self subclassResponsibility' 
 	used to indicate ('mark') a special property.
@@ -550,14 +550,13 @@ EncoderForSistaV1 class >> markerOrNilFor: compiledMethod [
 		11 <7C> returnTop
 
 	for the second form."
-
-	| e |
-	((e := compiledMethod endPC) = 19 or: [e = 20]) ifFalse: [^ nil].
-	(compiledMethod numLiterals = 3) ifFalse:[^ nil].
-	(compiledMethod at: 17) = 76 ifFalse:[^ nil].		"push self"
-	(compiledMethod at: 18) = 128 ifFalse:[^ nil].		"send <literal 1>"
-	"If we reach this point, we have a marker method that sends self <literal 1>"
-	^ compiledMethod literalAt: 1
+	| expectedHeaderPlusLliteralSize e |
+  	expectedHeaderPlusLliteralSize := Smalltalk wordSize * 4.
+  	^(((e := aMethod endPC - expectedHeaderPlusLliteralSize) = 3 or: [e = 4]) 
+    	and: [aMethod numLiterals = 3
+    	and: [(aMethod at:  expectedHeaderPlusLliteralSize + 1) = 76 "push self"
+    	and: [(aMethod at: expectedHeaderPlusLliteralSize + 2) = 128]]])  "send <literal 1>"
+    	ifTrue: [aMethod literalAt: 1]
 ]
 
 { #category : #scanning }
