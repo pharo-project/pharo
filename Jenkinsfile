@@ -14,7 +14,7 @@ def shell(params){
 }
 
 def runTests(architecture, prefix=''){
-	def retryTimes = 3
+	def retryTimes = 1
 	def tries = 0
 	def success = false
 	waitUntil {
