@@ -79,6 +79,7 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	Smalltalk tools register: Workspace as: #changeList.	
 	
 	Smalltalk ui theme settings preferGradientFill: true.
+	PharoCommonTools initialize.
 
 ]
 
