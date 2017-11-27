@@ -291,7 +291,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	FreeTypeSubPixelAntiAliasedGlyphRenderer FT2Constants FT2Handle 
 	GIFReadWriter GlobalIdentifier
 	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
-	JPEGReadStream JPEGReadWriter 
+	JPEGReadStream JPEGReadWriter Locale
 	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
 	RxMatcher RxParser RxsPredicate
 	SHA1 ShortIntegerArray SimpleEditor
