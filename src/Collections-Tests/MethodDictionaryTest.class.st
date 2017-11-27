@@ -190,7 +190,7 @@ MethodDictionaryTest >> testGrowDoublesCapacity [
 
 { #category : #'tests - others' }
 MethodDictionaryTest >> testGrowPreservesElements [
-	| methodDictionary oldCapacity growedMethodDictionary |
+	| methodDictionary growedMethodDictionary |
 	methodDictionary := self class methodDict copy.
 	growedMethodDictionary := methodDictionary copy; grow; yourself.
 
@@ -223,7 +223,7 @@ MethodDictionaryTest >> testIdentityKeyAtExistantValueReturnsOkKey [
 
 { #category : #'tests - others' }
 MethodDictionaryTest >> testIdentityKeyAtNonExistantValueReturnsFailBlock [
-	| methodSelector result aMethod error |
+	| methodSelector result error |
 	methodSelector := #testAssociationAtExistantKeyReturnsOkAssociation.
 	error := #error.
 	

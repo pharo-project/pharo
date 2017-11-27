@@ -161,11 +161,10 @@ MBPackageInfo >> typeLabel [
 	^'package'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 MBPackageInfo >> versions [
-	""
-	|wc v|
+	| wc |
 	(wc := self workingCopy) isNil
-                   ifTrue: [ ^ #() ].
-      ^ (wc ancestry breadthFirstAncestors) collect: [ : vi| vi].
+		ifTrue: [ ^#() ].
+	^ wc ancestry breadthFirstAncestors collect: [ :vi | vi ]
 ]
