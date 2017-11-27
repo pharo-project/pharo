@@ -879,6 +879,12 @@ TestRunner >> runTestSuites: testSuites [
 	]
 ]
 
+{ #category : #utilities }
+TestRunner >> safePrintStringFor: anObject [
+	"In case the printString method fails, we should still be able to list the method" 
+		^ [ anObject printString ] ifCurtailed: [ self halt. 'ZZZZZZZZZZZZZZ' ]
+]
+
 { #category : #'history saving' }
 TestRunner >> saveResultInHistory [
 	result dispatchResultsIntoHistory
@@ -1069,6 +1075,13 @@ TestRunner >> sortClass: aFirstClass before: aSecondClass [
 	^ second includes: aFirstClass.
 ]
 
+{ #category : #utilities }
+TestRunner >> sorted: aCollectionOfIssues [
+	"sort alphabetically by their printStrings"
+	^ aCollectionOfIssues asArray sort: [ :a :b | 
+		(self safePrintStringFor: a) <= (self safePrintStringFor: b) ]
+]
+
 { #category : #'accessing-testing' }
 TestRunner >> statusColor [
 	result hasErrors 
@@ -1169,8 +1182,7 @@ TestRunner >> updateResults [
 
 	self updateStatus: false.
 	failedList size = result failures size ifFalse: [
-		failedList := result failures asArray
-			sort: [ :a :b | a printString <= b printString ].
+		failedList := self sorted: result failures.
 		failedSelected := nil.
 		self 
 			changed: #failedList; 
@@ -1179,8 +1191,7 @@ TestRunner >> updateResults [
 			changed: #hasProgress;
 			changed: #hasFailuresOrErrors  ].
 	errorList size = result errors size ifFalse: [
-		errorList := result errors asArray
-			sort: [ :a :b | a printString <= b printString ].
+		errorList := self sorted: result errors.
 		errorSelected := nil.
 		self 
 			changed: #errorList; 
