@@ -203,6 +203,6 @@ For more information, please visit here:
 
 ', (self url: 'http://pharo.org'),
 (self subheading: 'Color themes'),
-'White theme: ', (self doItFrom: 'PharoTheme beCurrent. '), ' 
+'White theme: ', (self doItFrom: 'PharoLightTheme beCurrent. '), ' 
 Dark theme: ', (self doItFrom: 'PharoDarkTheme beCurrent. ').
 ]
