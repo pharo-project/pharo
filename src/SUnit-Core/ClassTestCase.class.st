@@ -127,12 +127,16 @@ ClassTestCase >> testCoverage [
 	self class mustTestCoverage ifTrue:
 		[ untested := self selectorsNotTested.
 		self assert: untested isEmpty 
-		description: untested size asString, ' selectors are not covered' ]
+		description: untested size asString, ' selectors are not covered' ].
+	
+	self deliberatelyDidNotAssert
 ]
 
 { #category : #tests }
 ClassTestCase >> testNew [
-	self targetClass new
+	self smokeTest.
+	
+	self targetClass new.
 ]
 
 { #category : #tests }
