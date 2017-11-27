@@ -42,6 +42,8 @@ FreeTypeSettings class >> current [
 FreeTypeSettings class >> initialize [
 	SessionManager default 
 		registerGuiClassNamed: self name 
+		atPriority: 10.
+
 ]
 
 { #category : #'system startup' }

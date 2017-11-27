@@ -54,6 +54,7 @@ FreeTypeCache class >> defaultMaximumSize [
 FreeTypeCache class >> initialize [
 	SessionManager default 
 		registerGuiClassNamed: self name
+		atPriority: 10.
 ]
 
 { #category : #'system startup' }

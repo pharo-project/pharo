@@ -56,6 +56,7 @@ FT2Handle class >> errorString [
 FT2Handle class >> initialize [
 	SessionManager default 
 		registerGuiClassNamed: self name
+		atPriority: 10.
 	
 ]
 
