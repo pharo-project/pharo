@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GLMWatcherMorphicTest >> expectedFailures [ 
-	^ #(testSimple testWithDynamicPresentation)
-
-]
-
-{ #category : #tests }
 GLMWatcherMorphicTest >> testSimple [
 	| browser |
 	browser := GLMTabulator new.

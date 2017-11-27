@@ -34,6 +34,13 @@ CharacterSetComplement >> = anObject [
 ]
 
 { #category : #'collection ops' }
+CharacterSetComplement >> abstractSize [
+	"an abstraction of my size, to be used in implementing union & intersection"
+		
+	^self large
+]
+
+{ #category : #'collection ops' }
 CharacterSetComplement >> add: aCharacter [ 
 	"a character is present if not absent, so adding a character is removing it from the absent"
 	
@@ -99,6 +106,15 @@ CharacterSetComplement >> hash [
 { #category : #'collection ops' }
 CharacterSetComplement >> includes: aCharacter [
 	^(absent includes: aCharacter) not
+]
+
+{ #category : #enumerating }
+CharacterSetComplement >> intersection: anotherSet [
+	"if anotherSet is small, let it take care of the operation. 
+	Otherwise, invoke de Morgan's law."
+	anotherSet abstractSize < self abstractSize
+		ifTrue: [ ^ anotherSet intersectSmallWithLarge: self ].
+	^ self class of: (self complement union: anotherSet complement)
 ]
 
 { #category : #copying }

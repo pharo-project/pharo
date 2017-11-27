@@ -18,13 +18,18 @@ A byteArrayMap is maintained in parallel with map for fast handling of ByteStrin
 "
 Class {
 	#name : #WideCharacterSet,
-	#superclass : #Collection,
+	#superclass : #CharacterSet,
 	#instVars : [
-		'map',
 		'byteArrayMap'
 	],
 	#category : #'Collections-Support'
 }
+
+{ #category : #'instance creation' }
+WideCharacterSet class >> new: initialSize [
+	"ignore the initial size"
+	^ self new
+]
 
 { #category : #'instance creation' }
 WideCharacterSet class >> newFrom: aCollection [
@@ -36,15 +41,24 @@ WideCharacterSet class >> newFrom: aCollection [
 
 { #category : #comparing }
 WideCharacterSet >> = anObject [
-	^self species == anObject species and: [
-		self wideCharacterMap = anObject wideCharacterMap ]
+	self class == anObject class
+		ifTrue: [
+			^ (self byteArrayMap = anObject byteArrayMap) and: [ 
+				self wideCharacterMap = anObject wideCharacterMap ] ].
+	((anObject respondsTo: #size) and: [ anObject respondsTo: #includes: ])
+		ifFalse: [ ^ false ].
+	self size = anObject size
+		ifFalse: [ ^ false ].
+	^ self allSatisfy: [ :each | (anObject includes: each)].
 ]
 
 { #category : #'collection ops' }
 WideCharacterSet >> add: aCharacter [ 
 	| val high low lowmap |
 	val := aCharacter asciiValue.
-	val < 256 ifTrue: [self byteArrayMap at: val + 1 put: 1].
+	val < 256 ifTrue: [
+		byteArrayMap at: val + 1 put: 1.
+		^ aCharacter ].
 	high := val bitShift: -16.
 	low := val bitAnd: 16rFFFF.
 	lowmap := map at: high ifAbsentPut: ["create a chunk of 65536=8192*8 bits"
@@ -83,39 +97,31 @@ WideCharacterSet >> bitmap: aMap do: aBlock [
 
 { #category : #comparing }
 WideCharacterSet >> byteArrayMap [
-	"return a ByteArray mapping each ascii value to a 1 if that ascii value is in the set, and a 0 if it isn't.
-	Intended for use by primitives only. (and comparison)
-	This version will answer a subset with only byte characters"
+	"returns a ByteArray mapping n < 256 to 1 if (Character asciValue: (n-1)) is in the set, 
+	and  0 if it isn't.
+	Intended for internal use, and for comparison."
 	
-	| lowmap |
-	byteArrayMap ifNil: [
-		byteArrayMap := ByteArray new: 256.
-		lowmap := map at: 0 ifAbsent: [^byteArrayMap].
-		lowmap := lowmap copyFrom: 1 to: 32. "Keep first 8*32=256 bits..."
-		self bitmap: lowmap do: [:code | byteArrayMap at: code + 1 put: 1]].
-	^byteArrayMap
+	^ byteArrayMap
 ]
 
 { #category : #private }
-WideCharacterSet >> clearBitmap: aMap at: shortInteger [
+WideCharacterSet >> clearBitmap: aMap at: shortInteger ifNotSet: anAction [
 	"clear a single bit in aMap.
 	shortInteger should be between: 0 and: 16rFFFF"
-	
-	| collecIndex bitIndex |
-	collecIndex := shortInteger bitShift: -3.
-	bitIndex := shortInteger bitAnd: 7.
-	^aMap at: collecIndex + 1 put: ((aMap at: collecIndex + 1) bitClear: (1 bitShift: bitIndex))
+
+	| collecIndex oldMapEntry bitMask |
+	collecIndex := (shortInteger bitShift: -3) + 1.
+	oldMapEntry := aMap at: collecIndex.
+	bitMask := 1 bitShift: (shortInteger bitAnd: 7).
+	(oldMapEntry bitAnd: bitMask) = 0
+		ifTrue: [ ^ anAction value ].
+	^ aMap at: collecIndex put: (oldMapEntry bitClear: bitMask)
 ]
 
-{ #category : #converting }
-WideCharacterSet >> complement [
-	"return a character set containing precisely the characters the receiver does not"
-	
-	^CharacterSetComplement of: self copy
-]
-
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 WideCharacterSet >> do: aBlock [ 
+	byteArrayMap withIndexDo: [ :each :index | (each = 1) 
+			ifTrue: [ aBlock value: (Character value: index - 1) ]].
 	map
 		keysAndValuesDo: [:index :lowmap |
 			| high16Bits |
@@ -125,12 +131,14 @@ WideCharacterSet >> do: aBlock [
 				do: [:low16Bits | aBlock value: (Character value: high16Bits + low16Bits)]]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #enumerating }
 WideCharacterSet >> findFirstInByteString: aByteString startingAt: startIndex [
-	"Double dispatching: since we know this is a ByteString, we can use a superfast primitive using a ByteArray map with 0 slots for byte characters not included and 1 for byte characters included in the receiver."
-	^ByteString
+	"Double dispatching: since we know first argument is a ByteString, 
+	we can use a ByteString primitive."
+	
+	^ ByteString
 		findFirstInString: aByteString
-		inSet: self byteArrayMap
+		inSet: byteArrayMap
 		startingAt: startIndex
 ]
 
@@ -154,10 +162,13 @@ WideCharacterSet >> hash [
 		ifFalse: [self asCharacterSet hash]
 ]
 
-{ #category : #'collection ops' }
+{ #category : #private }
 WideCharacterSet >> includes: aCharacter [ 
 	| val high low |
 	val := aCharacter asciiValue.
+	val < 256 ifTrue: [
+		^ (self byteArrayMap at: val + 1) = 1
+	].
 	high := val bitShift: -16.
 	low := val bitAnd: 16rFFFF.
 	^(self
@@ -174,32 +185,52 @@ WideCharacterSet >> initialize [
 	byteArrayMap := ByteArray new: 256
 ]
 
+{ #category : #accessing }
+WideCharacterSet >> like: anObject [
+	"Answer an object in the receiver that is equal to anObject,
+	nil if no such object is found. Relies heavily on hash properties.
+	Note, use #like:ifAbsent: if you need to match against nil as element"
+
+	^ self like: anObject ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+WideCharacterSet >> like: aCharacter ifAbsent: aBlock [
+	"Answer an object in the receiver that is equal to anObject,
+	or evaluate the block if not found. Relies heavily on hash properties"
+
+	^ (self includes: aCharacter)
+		ifTrue: [ aCharacter ]
+		ifFalse: [ aBlock value ]
+]
+
 { #category : #copying }
 WideCharacterSet >> postCopy [
 	super postCopy.
+	byteArrayMap := byteArrayMap copy.
 	map := map collect: [:each | each copy]
 ]
 
-{ #category : #'collection ops' }
-WideCharacterSet >> remove: aCharacter [ 
+{ #category : #removing }
+WideCharacterSet >> remove: aCharacter ifAbsent: aBlock [
 	| val high low lowmap |
 	val := aCharacter asciiValue.
-	val < 256 ifTrue: [self byteArrayMap at: val + 1 put: 0].
+	val < 256 ifTrue: [
+		| index |
+		index := val + 1.
+		((byteArrayMap at: index) = 0) ifTrue: [ ^ aBlock value ].
+		byteArrayMap at: index put: 0.
+		^ aCharacter
+	].
 	high := val bitShift: -16.
 	low := val bitAnd: 16rFFFF.
 	lowmap := map
 				at: high
-				ifAbsent: [^ aCharacter].
-	self clearBitmap: lowmap at: low.
+				ifAbsent: [^ aBlock value].
+	self clearBitmap: lowmap at: low ifNotSet: [^ aBlock value].
 	(lowmap allSatisfy: [:e | e = 0])
 		ifTrue: [map removeKey: high].
 	^ aCharacter
-]
-
-{ #category : #'collection ops' }
-WideCharacterSet >> remove: aCharacter ifAbsent: aBlock [
-	(self includes: aCharacter) ifFalse: [^aBlock value].
-	^self remove: aCharacter
 ]
 
 { #category : #'collection ops' }
@@ -219,25 +250,22 @@ WideCharacterSet >> setBitmap: aMap at: shortInteger [
 	^aMap at: collecIndex + 1 put: ((aMap at: collecIndex + 1) bitOr: (1 bitShift: bitIndex))
 ]
 
-{ #category : #'collection ops' }
+{ #category : #accessing }
 WideCharacterSet >> size [
 	| size |
 	size := 0.
-	map
-		keysAndValuesDo: [:high :lowmap | self
-				bitmap: lowmap
-				do: [:low | size := size + 1]].
+	self do: [ :_ | size := size + 1].
 	^ size
 ]
 
-{ #category : #comparing }
+{ #category : #private }
 WideCharacterSet >> species [
 	^self hasWideCharacters
 		ifTrue: [WideCharacterSet]
 		ifFalse: [CharacterSet]
 ]
 
-{ #category : #comparing }
+{ #category : #private }
 WideCharacterSet >> wideCharacterMap [
 	^map
 ]
