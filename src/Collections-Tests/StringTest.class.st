@@ -338,7 +338,7 @@ StringTest >> setUp [
 	unsortedCollection := 'azsbe'.
 	indexInNonEmptyArray := #(1 3 2 ).
 	arrayWithCharacters := #($a $b $c ).
-	nonEmpty1element := 'a'.
+	nonEmpty1element := '3'.
 	withoutEqualElements := 'abcde'.
 	
 	sameAtEndAndBegining := 'abca'.

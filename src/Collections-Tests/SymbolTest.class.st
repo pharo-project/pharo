@@ -250,7 +250,7 @@ SymbolTest >> secondCollection [
 SymbolTest >> setUp [
 	emptySymbol := #''.
 	collectionSize4 := #abcd.
-	collection1Element := #a.
+	collection1Element := #'23'.
 	subcollection3ElementsSorted := #bcd.
 	with2timeSubcollection := #abcdebcda.
 	nonEmptySymbol5ElementsNoDuplicates := #abcde.
