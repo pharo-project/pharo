@@ -548,7 +548,7 @@ MetacelloToolBox class >> createVersion: targetVersionString for: configurationB
 
 { #category : #help }
 MetacelloToolBox class >> defaultTopic: pageSelector for: aConfigurationClass [
-	| topic stream helpTopicClass |
+	| stream helpTopicClass |
 	(helpTopicClass := self helpTopicClass) ifNil: [^self error: 'Help system not installed'].
 	stream := WriteStream on: String new.
 	pageSelector == #helpInstallation
@@ -1606,7 +1606,7 @@ MetacelloToolBox >> clearVersionSpec: versionSpec fullVersionSpec: fullVersionSp
 
 { #category : #'api-configuration' }
 MetacelloToolBox >> commitBaselineOfMethod [
-  | skipValidation isues |
+  | skipValidation |
   skipValidation := false.
   self methodSpec ifNil: [ ^ self ].
   self methodSpec compileMethod.
@@ -1627,7 +1627,7 @@ MetacelloToolBox >> commitConfiguration: commitComment [
 
 { #category : #'api-configuration' }
 MetacelloToolBox >> commitMethod [
-	| skipValidation isues |
+	| skipValidation |
 	skipValidation := false.
 	self methodSpec ifNil: [ ^self ].
 	self methodSpec compileMethod.
@@ -2161,7 +2161,7 @@ MetacelloToolBox >> symbolicVersionMethod: versionSymbol [
 
 { #category : #'api-configuration' }
 MetacelloToolBox >> updateVersionMethodForVersion: inputVersionStringOrSymbol projectAttributes: projectAttributes updateProjects: updateProjects updatePackages: updatePackages versionSpecsDo: aBlock [
-    | constructor updatedSpecs fullVersionSpec version coll pragma imports blessing reversed addedSections visitedSpecs sourceVersionString keptSections |
+    | constructor updatedSpecs fullVersionSpec version coll pragma imports blessing addedSections visitedSpecs sourceVersionString keptSections |
     updatedSpecs := Set new.
     version := project version: inputVersionStringOrSymbol.
     sourceVersionString := version versionString.	"resolve symbolic version"
