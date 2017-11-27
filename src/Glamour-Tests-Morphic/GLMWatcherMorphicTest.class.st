@@ -5,12 +5,6 @@ Class {
 }
 
 { #category : #tests }
-GLMWatcherMorphicTest >> expectedFailures [ 
-	^ #(testSimple testWithDynamicPresentation)
-
-]
-
-{ #category : #tests }
 GLMWatcherMorphicTest >> testSimple [
 	| browser |
 	browser := GLMTabulator new.
@@ -24,7 +18,6 @@ GLMWatcherMorphicTest >> testSimple [
 		andShow: [ :a | a text ].
 	window := browser openOn: (1 to: 42).
 	((browser paneNamed: #one) port: #selection) value: 42.
-	(Delay forMilliseconds: 1000) wait.
 	self assert: (self find: RubScrolledTextMorph in: GLMWatcherWindow uniqueInstance) text equals: '42'
 ]
 
@@ -42,6 +35,5 @@ GLMWatcherMorphicTest >> testWithDynamicPresentation [
 		andShow: [ :a | a dynamic display: [ :x | GLMRubricTextPresentation new ] ].
 	window := browser openOn: (1 to: 42).
 	((browser paneNamed: #one) port: #selection) value: 42.
-	(Delay forMilliseconds: 1000) wait.
 	self assert: (self find: RubScrolledTextMorph in: GLMWatcherWindow uniqueInstance) text equals: '42'
 ]
