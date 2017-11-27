@@ -50,4 +50,7 @@ MetacelloPharo30Platform initialize.
 
 STONWriter initialize.
 
+MCGitHubRepository initialize.
+MCGitBasedNetworkRepository initialize.
+
 SystemAnnouncer restoreAllNotifications.

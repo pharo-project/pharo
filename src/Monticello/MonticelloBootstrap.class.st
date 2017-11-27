@@ -43,7 +43,10 @@ MonticelloBootstrap class >> inDirectory: aDirectory [
 MonticelloBootstrap >> bootstrap [
 
 	self createWorkingCopies.
-	self loadBootstrapPackages
+	self loadBootstrapPackages.
+	
+	SessionManager default registerSystemClassNamed: #SmalltalkImage.
+
 ]
 
 { #category : #versions }

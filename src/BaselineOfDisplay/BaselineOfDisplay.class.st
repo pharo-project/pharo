@@ -66,6 +66,7 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	Cursor initialize.
 	DisplayScreen initialize.
 	BitBlt initialize.
+	Form initialize.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 	
