@@ -2038,6 +2038,14 @@ Integer >> sqrtFloor [
 	^guess
 ]
 
+{ #category : #printing }
+Integer >> storeOn: aStream [
+	self < 0
+		ifTrue: [ aStream space ].
+		
+	super storeOn: aStream.
+]
+
 { #category : #'printing-numerative' }
 Integer >> storeOn: aStream base: base [
 	"Print a representation of the receiver on the stream

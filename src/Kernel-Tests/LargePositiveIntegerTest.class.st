@@ -65,3 +65,12 @@ LargePositiveIntegerTest >> testNormalize [
 	self should: ((SmallInteger minVal - 1 + 1) == SmallInteger minVal).
 	self assert: (SmallInteger minVal - 3 + 6) == (SmallInteger minVal+3).
 ]
+
+{ #category : #'tests-printing' }
+LargePositiveIntegerTest >> testStoreOn [
+	| integer |
+	integer := 1073741824.
+	self
+		assert: integer class equals: LargePositiveInteger;
+		assert: (String streamContents: [ :s | integer storeOn: s ]) equals: '1073741824'.
+]

@@ -1535,6 +1535,18 @@ IntegerTest >> testSqrtFloor [
 		
 ]
 
+{ #category : #'tests - printing' }
+IntegerTest >> testStoreOn [
+	| integer |
+	integer := 42.
+	
+	self assert: (String streamContents: [ :s | integer storeOn: s ]) equals: '42'.
+	
+	integer := -42.
+	
+	self assert: (String streamContents: [ :s | integer storeOn: s ]) equals: ' -42'.
+]
+
 { #category : #'tests - instance creation' }
 IntegerTest >> testStringAsNumber [
 	"This covers parsing in Number>>readFrom:

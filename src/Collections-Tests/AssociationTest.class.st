@@ -55,3 +55,22 @@ AssociationTest >> testIsSelfEvaluating [
 		description: 'a self evaluating should evaluate as self'].
 
 ]
+
+{ #category : #tests }
+AssociationTest >> testStoreOnNegativeInteger [
+	| association storeString |
+	association := 'a'-> -1.
+	
+	storeString := String streamContents: [ :s | association storeOn: s ].
+	
+	self assert: storeString equals: '(''a''-> -1)'
+]
+
+{ #category : #tests }
+AssociationTest >> testStoreOnPositiveInteger [
+	| association storeString |
+	association := 'a'-> 1.
+	storeString := String streamContents: [ :s | association storeOn: s ].
+	
+	self assert: storeString equals: '(''a''->1)'
+]

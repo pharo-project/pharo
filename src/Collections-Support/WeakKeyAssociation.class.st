@@ -113,7 +113,7 @@ WeakKeyAssociation >> printOn: aStream [
 
 { #category : #printing }
 WeakKeyAssociation >> storeOn: aStream [
-	"Store in the format (key->value)"
+	"Store in the format (WeakKeyAssociation key: theKey value: theValue)"
 	aStream 
 		nextPut: $(;
 		nextPutAll: self class name.

@@ -960,6 +960,18 @@ FloatTest >> testStoreBase16 [
 		description: 'the radix prefix should not be omitted, except in base 10'
 ]
 
+{ #category : #'tests - printing' }
+FloatTest >> testStoreOn [
+	| float |
+	float := -1.2.
+	
+	self assert: (String streamContents: [ :s | float storeOn: s ]) equals: ' -1.2'.
+	
+	float := 1.2.
+	
+	self assert: (String streamContents: [ :s | float storeOn: s ]) equals: '1.2'
+]
+
 { #category : #'tests - conversion' }
 FloatTest >> testStringAsNumber [
 	"This covers parsing in Number>>readFrom:"
