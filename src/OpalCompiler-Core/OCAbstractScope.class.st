@@ -55,11 +55,6 @@ OCAbstractScope >> isMethodScope [
 	^false
 ]
 
-{ #category : #testing }
-OCAbstractScope >> isOptimizedBlockScope [
-	^false
-]
-
 { #category : #lookup }
 OCAbstractScope >> lookupSelector: name [
 
