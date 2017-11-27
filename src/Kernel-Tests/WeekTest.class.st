@@ -128,6 +128,17 @@ WeekTest >> testNameOfDay [
 ]
 
 { #category : #tests }
+WeekTest >> testOffset [
+	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
+
+	| dt newWeek |
+
+	dt := DateAndTime fromString: '2018/01/01T00:00:00+10'.
+	newWeek := Week starting: dt duration: 0. "duration is ignored"
+	self assert: newWeek asDateAndTime offset equals: dt offset
+]
+
+{ #category : #tests }
 WeekTest >> testPreviousNext [
 	self
 		assert: week next = (Week starting: '6 July 1998' asDate);

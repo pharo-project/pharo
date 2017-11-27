@@ -110,6 +110,17 @@ index) = item].
 ]
 
 { #category : #tests }
+MonthTest >> testOffset [
+	"Check that the offset is maintained when creating a new instance of Month from a DateAndTime"
+
+	| dt newMonth |
+
+	dt := DateAndTime fromString: '2018/01/01T00:00:00+10'.
+	newMonth := Month starting: dt duration: 0. "duration is ignored"
+	self assert: newMonth asDateAndTime offset equals: dt offset
+]
+
+{ #category : #tests }
 MonthTest >> testPreviousNext [
 	| n p |
 	n := month next.

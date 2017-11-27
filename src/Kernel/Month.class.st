@@ -84,7 +84,8 @@ Month class >> starting: aDateAndTime duration: aDuration [
 	adjusted := DateAndTime
 				year: start year
 				month: start month
-				day: 1.
+				day: 1
+				offset: aDateAndTime offset.
 	days := self 
 		daysInMonth: adjusted month 
 		forYear: adjusted year.
