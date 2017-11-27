@@ -14,3 +14,17 @@ Behavior >> classLayout [
 Behavior >> classLayout: aClassLayout [
 	layout := aClassLayout
 ]
+
+{ #category : #'*Slot' }
+Behavior >> definesSlot: aSlot [
+	"Return true whether the receiver defines an instance variable named aString"
+	
+	^ self slots identityIncludes: aSlot
+]
+
+{ #category : #'*Slot' }
+Behavior >> definesSlotNamed: aString [
+	"Return true whether the receiver defines an instance variable named aString."
+	
+	^ self slotNames includes: aString
+]

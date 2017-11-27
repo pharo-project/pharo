@@ -416,6 +416,21 @@ SlotIntegrationTest >> testSlotScopeParallelism [
 ]
 
 { #category : #tests }
+SlotIntegrationTest >> testSlotsAreInitializedWithDefiningAnonimousClass [
+	"All slots should include reference to defining class"
+	aClass := self make: [ :builder |
+		builder 
+			name: self aClassName;
+			slots: #(x)
+		].
+	self assert: aClass slots first definingClass equals: aClass.
+	
+	aClass addInstVarNamed: 'y'.
+	self assert: aClass slots size equals: 2.
+	self assert: (aClass slots collect: #definingClass as: Set) equals: {aClass} asSet
+]
+
+{ #category : #tests }
 SlotIntegrationTest >> testSmallIntegerLayout [
 	self assert: (SmallInteger classLayout isKindOf: ImmediateLayout).
 ]
