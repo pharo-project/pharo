@@ -98,6 +98,8 @@ BaselineOfIDE >> additionalInitialization [
 		Undeclared removeUnreferencedKeys.].
 	
 	self loadIceberg.
+	
+	WelcomeHelp openForRelease.
 ]
 
 { #category : #baseline }
