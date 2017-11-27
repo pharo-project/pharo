@@ -152,7 +152,7 @@ MCWorkingCopyBrowser >> addRepository: aRepository [
 
 { #category : #actions }
 MCWorkingCopyBrowser >> addRepositoryToPackage [
-	| selectedPackages |
+
 	self repository
 		ifNotNil: [ :repos | 
 			((SearchFacade mcPackageSearchRejectAll: [ :aPackage | aPackage repositoryGroup includes: repos ] withInitialFilter: nil)

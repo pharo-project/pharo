@@ -75,7 +75,7 @@ MCFileTreeRepository class >> parseName: aString [
 MCFileTreeRepository class >> parseName: aString extension: extension [
     "picked up from GoferVersionReference>>parseName:"
 
-    | info basicName package branch author versionNumber packageName |
+    | basicName package branch author versionNumber packageName |
     basicName := aString last isDigit
         ifTrue: [ aString ]
         ifFalse: [ (aString copyUpToLast: $.) copyUpTo: $( ].

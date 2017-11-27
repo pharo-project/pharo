@@ -80,7 +80,7 @@ MBConfigurationInfo >> branch [
 
 { #category : #converting }
 MBConfigurationInfo >> buildStringOrText [
-	| string cv specVersion attributes wc |
+	| string attributes wc |
 	attributes := OrderedCollection new.
 	[ string := super buildStringOrText ]
 		on: Error
