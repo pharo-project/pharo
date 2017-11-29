@@ -817,6 +817,11 @@ CompiledCode >> signFlag [
 ]
 
 { #category : #'source code management' }
+CompiledCode >> sourcePointer [
+	^ self subclassResponsibility 
+]
+
+{ #category : #'source code management' }
 CompiledCode >> stamp [
 
 	^ self timeStamp
