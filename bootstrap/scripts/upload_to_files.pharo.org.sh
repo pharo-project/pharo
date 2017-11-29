@@ -7,14 +7,14 @@ echo "Uploading Images to pharo.files.org/$destDir"
 scp -o StrictHostKeyChecking=no -v \
   latest*.zip \
   Pharo-7.*.zip \
+  Pharo-metacello*.zip \
     filepharosync@file-pharo.inria.fr:/appli/files.pharo.org/image/70/
 
 scp -o StrictHostKeyChecking=no -v \
-  Pharobootstrap*.zip \
-  Pharocore*.zip \
-  Pharocompiler*.zip \
-  Pharomonticello_bootstrap*.zip \
-  Pharomonticello*.zip \
-  Pharorpackage*.zip \
-  PharohermesPackages*.zip \
+  Pharo-bootstrap*.zip \
+  Pharo-core*.zip \
+  Pharo-compiler*.zip \
+  Pharo-monticello*.zip \
+  Pharo-rpackage*.zip \
+  Pharo-hermesPackages*.zip \
     filepharosync@file-pharo.inria.fr:/appli/files.pharo.org/image/70/bootstrap/

@@ -24,7 +24,7 @@ for f in Pharo7.0*-32bit-*.zip; do
 	BITNESS=32bit
 	if [[ "$f" != "${FULL_IMAGE_NAME32}" ]]; then
 		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
-		mv "$f" Pharo${IMAGE_KIND}-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
+		mv "$f" Pharo-${IMAGE_KIND}-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	else
 		mv "$f" Pharo-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	fi
@@ -37,7 +37,7 @@ for f in Pharo7.0*-64bit-*.zip; do
 	echo ${FULL_IMAGE_NAME64}
 	if [[ "$f" != "${FULL_IMAGE_NAME64}" ]]; then
 		IMAGE_KIND=$(echo "$f" | cut -d '-' -f 2)
-		mv "$f" Pharo${IMAGE_KIND}-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
+		mv "$f" Pharo-${IMAGE_KIND}-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	else
 		mv "$f" Pharo-7.0.0-alpha.build.${BUILD_NUMBER}.sha.${HASH}.arch.${BITNESS}.zip;
 	fi
