@@ -8,7 +8,7 @@ scp -o StrictHostKeyChecking=no -v \
   latest*.zip \
   Pharo-7.*.zip \
   Pharo-metacello*.zip \
-    filepharosync@file-pharo.inria.fr:/appli/files.pharo.org/image/70/
+    pharoorgde@ssh.cluster023.hosting.ovh.net:files/image/70/
 
 scp -o StrictHostKeyChecking=no -v \
   Pharo-bootstrap*.zip \
@@ -17,4 +17,4 @@ scp -o StrictHostKeyChecking=no -v \
   Pharo-monticello*.zip \
   Pharo-rpackage*.zip \
   Pharo-hermesPackages*.zip \
-    filepharosync@file-pharo.inria.fr:/appli/files.pharo.org/image/70/bootstrap/
+    pharoorgde@ssh.cluster023.hosting.ovh.net:files/image/70/bootstrap/
