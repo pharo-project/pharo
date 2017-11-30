@@ -1,5 +1,5 @@
 "
-I'm in charge to style  the editor for  a ""self halt"".
+I'm in charge to style  the editor for  message sends with the ""halt"", ""halt:"" or ""haltIf:"" selectors, like ""self halt"".
 "
 Class {
 	#name : #HaltIconStyler,
@@ -19,10 +19,10 @@ HaltIconStyler >> iconFor: aNode [
 
 { #category : #defaults }
 HaltIconStyler >> iconLabelBlock: aNode [
-	^ ['halt']
+	^ [aNode selector]
 ]
 
 { #category : #testing }
 HaltIconStyler >> shouldStyleNode: aNode [
-	^aNode isMessage and: [ aNode selector = 'halt']
+	^aNode isMessage and: [ aNode selector = 'halt' or: [aNode selector = 'halt:' or: [aNode selector = 'haltIf:']]]
 ]
