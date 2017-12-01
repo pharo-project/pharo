@@ -309,6 +309,8 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	UIManager default: MorphicUIManager new.
 
 	World displayWorldSafely.
+	World assuredCanvas.
+
 	UIManager default uiProcess resume.
 	PharoLightTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
@@ -318,7 +320,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	"Install the right UIManager"
 	UIManager default: UIManager forCurrentSystemConfiguration.
-	Stdio stdout nextPutAll: 'UIManager changed:' , UIManager default class name ; lf.
+	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
 
 	TextEditor initialize.
 	SmalltalkEditor initialize.
