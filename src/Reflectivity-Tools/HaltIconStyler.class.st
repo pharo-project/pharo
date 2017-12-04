@@ -24,5 +24,7 @@ HaltIconStyler >> iconLabelBlock: aNode [
 
 { #category : #testing }
 HaltIconStyler >> shouldStyleNode: aNode [
-	^aNode isMessage and: [ aNode selector = 'halt' or: [aNode selector = 'halt:' or: [aNode selector = 'haltIf:']]]
+	| selectorsToBeHighlighted |
+	selectorsToBeHighlighted := { 'halt'. 'halt:'. 'haltIf:'. 'haltIfNil' }.
+	^aNode isMessage and: [ selectorsToBeHighlighted anySatisfy: [ :sel| sel = aNode selector ]].
 ]
