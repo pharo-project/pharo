@@ -307,7 +307,10 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	Display newDepth: 32.
 	World displayWorldSafely.
 	UIManager default: MorphicUIManager new.
+
 	World displayWorldSafely.
+	World assuredCanvas.
+
 	UIManager default uiProcess resume.
 	PharoLightTheme beCurrent.
 	(World windowsSatisfying: [:w | w model canDiscardEdits]) do: [:w | w delete].
@@ -315,8 +318,14 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	GraphicFontSettings setFontsToStyleNamed: #small.
 
+	"Install the right UIManager"
+	UIManager default: UIManager forCurrentSystemConfiguration.
+	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
+
 	TextEditor initialize.
 	SmalltalkEditor initialize.
+
+	Stdio stdout nextPutAll: 'SmalltalkEditor initialized.'; lf.
 
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
