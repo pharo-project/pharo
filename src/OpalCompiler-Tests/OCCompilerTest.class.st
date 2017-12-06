@@ -58,6 +58,7 @@ OCCompilerTest >> runCase [
 
 { #category : #running }
 OCCompilerTest >> setUp [
+	super setUp.
 	Smalltalk globals at: #OCCompilerTestTestVar put: MockForCompilation.
 	
 	

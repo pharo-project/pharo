@@ -152,6 +152,7 @@ OCBytecodeDecompilerTest >> remoteTempNested [
 
 { #category : #running }
 OCBytecodeDecompilerTest >> setUp [
+	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler.
 ]
