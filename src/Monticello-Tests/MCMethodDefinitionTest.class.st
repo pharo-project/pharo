@@ -3,7 +3,8 @@ Class {
 	#superclass : #MCTestCase,
 	#instVars : [
 		'navigation',
-		'isModified'
+		'isModified',
+		'extensionPackage'
 	],
 	#category : #'Monticello-Tests-Base'
 }
@@ -20,6 +21,7 @@ MCMethodDefinitionTest >> ownPackage [
 { #category : #running }
 MCMethodDefinitionTest >> setUp [
 	super setUp.
+	extensionPackage := (MCWorkingCopy forPackage: (MCPackage named: 'FooBarBaz')).
 	navigation := (Smalltalk hasClassNamed: #SystemNavigation)
 		ifTrue: [ (Smalltalk globals at: #SystemNavigation) new ]
 		ifFalse: [ Smalltalk ].
@@ -29,7 +31,8 @@ MCMethodDefinitionTest >> setUp [
 { #category : #running }
 MCMethodDefinitionTest >> tearDown [
        self restoreMocks.
-       (MCWorkingCopy forPackage: (MCPackage named: 'FooBarBaz')) unregister.
+       extensionPackage unregister.
+		extensionPackage := nil.
        self class compile: 'override ^ 1' classified: 'mocks'.
        self ownPackage modified: isModified.
 
