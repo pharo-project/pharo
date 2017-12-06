@@ -31,7 +31,7 @@ MBAbstractTest >> removeClassIfExist: aSymbol [
 
 { #category : #running }
 MBAbstractTest >> setUp [
-
+	super setUp.
 	(Smalltalk globals includesKey: self configurationName asSymbol) 
 		ifFalse: [ 
 			MetacelloToolBox configurationNamed: self configurationName.
