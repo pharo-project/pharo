@@ -76,6 +76,20 @@ ProperMethodCategorizationTest >> testHashMethodNeedsToBeInComparingProtocol [
 
 ]
 
+{ #category : #tests }
+ProperMethodCategorizationTest >> testNoEmptyProtocols [
+	"Check that we have no protocols left without methods"
+	
+	| violating protocolsWithoutMethods |
+	violating := Dictionary new.
+	ProtoObject withAllSubclasses
+		do: [ :cls | 
+			protocolsWithoutMethods := cls organization protocolOrganizer protocols select: [ :e | e isEmpty and: [ e canBeRemoved ] ].
+			protocolsWithoutMethods notEmpty
+				ifTrue: [ violating at: cls put: protocolsWithoutMethods ] ].
+	self assert: violating isEmpty
+]
+
 { #category : #'tests - object' }
 ProperMethodCategorizationTest >> testPostCopyMethodNeedsToBeInCopyingProtocol [
 	"The #postCopy methods should be in method protocol 'copying'"
