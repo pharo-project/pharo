@@ -138,6 +138,15 @@ ReleaseTest >> testMethodsWithUnboundGlobals [
 ]
 
 { #category : #testing }
+ReleaseTest >> testNoEmptyPackages [
+	"Test that we have no empty packages left"
+
+	| violating |
+	violating := RPackageOrganizer default packages select: #isEmpty.
+	self assert: violating isEmpty	
+]
+
+{ #category : #testing }
 ReleaseTest >> testObsoleteClasses [
 	| obsoleteClasses |
 	
