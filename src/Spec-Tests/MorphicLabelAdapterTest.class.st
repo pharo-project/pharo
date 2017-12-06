@@ -14,6 +14,7 @@ MorphicLabelAdapterTest >> modelClass [
 
 { #category : #running }
 MorphicLabelAdapterTest >> setUp [
+	super setUp.
 	label := self modelClass new
 ]
 
