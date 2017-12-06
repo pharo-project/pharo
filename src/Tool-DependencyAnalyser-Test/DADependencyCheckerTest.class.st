@@ -5,7 +5,7 @@ Class {
 		'checker'
 	],
 	#category : #'Tool-DependencyAnalyser-Test-Core'
-}
+} 
 
 { #category : #running }
 DADependencyCheckerTest >> setUp [
