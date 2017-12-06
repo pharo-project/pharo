@@ -5,9 +5,6 @@ RBIdentifierToken is the first class representation of an identifier token (e.g.
 Class {
 	#name : #RBIdentifierToken,
 	#superclass : #RBValueToken,
-	#instVars : [
-		'stopPosition'
-	],
 	#category : #'AST-Core-Tokens'
 }
 
