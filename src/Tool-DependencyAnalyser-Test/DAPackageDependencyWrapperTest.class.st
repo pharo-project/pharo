@@ -5,11 +5,12 @@ Class {
 		'packageA',
 		'aPDPackageDependencyWrapper'
 	],
-	#category : #'Tool-DependencyAnalyser-Test'
+	#category : #'Tool-DependencyAnalyser-Test-Packages'
 }
 
 { #category : #running }
 DAPackageDependencyWrapperTest >> setUp [
+	super setUp.
 	packageA := DAPackage on: (RPackageSet named:'A').
 ]
 
