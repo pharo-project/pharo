@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 RBParseTreeSearcherTest >> setUp [
+	super setUp.
 	searcher := RBParseTreeSearcher new.
 	
 ]

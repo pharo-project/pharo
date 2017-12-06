@@ -15,7 +15,7 @@ RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
 
 { #category : #running }
 RBParseTreeRewriterTest >> setUp [
-
+	super setUp.
 	rewriter := RBParseTreeRewriter new.
 ]
 
