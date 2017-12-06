@@ -555,9 +555,9 @@ RBScanner >> stripComment [
 		whileFalse: [ characterType = #eof
 				ifTrue: [ ^ self scannerError: 'Unmatched " in comment.' ].
 			self step ].
-	characterType = #eof
-		ifTrue: [ stop := stream position ]
-		ifFalse: [ stop := stream position - 1 ].
+	stop := characterType = #eof
+		ifTrue: [ stream position ]
+		ifFalse: [ stream position - 1 ].
 	comments add: (start to: stop)
 ]
 
