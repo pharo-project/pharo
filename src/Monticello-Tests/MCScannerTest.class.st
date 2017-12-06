@@ -1,7 +1,7 @@
 Class {
 	#name : #MCScannerTest,
 	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #asserting }

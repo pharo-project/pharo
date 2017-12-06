@@ -5,7 +5,7 @@ Class {
 		'expected',
 		'diff'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-IO'
 }
 
 { #category : #'as yet unclassified' }
@@ -63,6 +63,7 @@ MCMczInstallerTest >> fileStream [
 
 { #category : #running }
 MCMczInstallerTest >> setUp [
+	super setUp.
 	expected := self mockVersion.
 	self change: #one toReturn: 2.
 ]

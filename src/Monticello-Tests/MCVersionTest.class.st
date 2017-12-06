@@ -5,7 +5,7 @@ Class {
 		'version',
 		'visited'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #asserting }
@@ -37,6 +37,7 @@ MCVersionTest >> dependencyFromTree: sexpr [
 
 { #category : #running }
 MCVersionTest >> setUp [
+	super setUp.
 	visited := OrderedCollection new.
 ]
 

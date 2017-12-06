@@ -5,7 +5,7 @@ Class {
 		'navigation',
 		'isModified'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #mocks }
@@ -19,6 +19,7 @@ MCMethodDefinitionTest >> ownPackage [
 
 { #category : #running }
 MCMethodDefinitionTest >> setUp [
+	super setUp.
 	navigation := (Smalltalk hasClassNamed: #SystemNavigation)
 		ifTrue: [ (Smalltalk globals at: #SystemNavigation) new ]
 		ifFalse: [ Smalltalk ].

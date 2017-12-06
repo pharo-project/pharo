@@ -1,3 +1,6 @@
+"
+Abstract superclass for Repository tests
+"
 Class {
 	#name : #MCRepositoryTest,
 	#superclass : #MCTestCase,
@@ -5,7 +8,7 @@ Class {
 		'repository',
 		'ancestors'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Repository'
 }
 
 { #category : #testing }

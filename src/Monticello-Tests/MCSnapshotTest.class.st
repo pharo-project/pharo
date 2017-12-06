@@ -4,11 +4,12 @@ Class {
 	#instVars : [
 		'snapshot'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Snapshots'
 }
 
 { #category : #running }
 MCSnapshotTest >> setUp [
+	super setUp.
 	snapshot :=  self mockSnapshot.
 ]
 
