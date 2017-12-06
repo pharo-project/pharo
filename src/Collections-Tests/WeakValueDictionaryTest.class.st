@@ -118,8 +118,9 @@ WeakValueDictionaryTest >> testDoesNotIncludeNilAfterGarbageCollection [
 { #category : #tests }
 WeakValueDictionaryTest >> testKeysAndValuesDoWithGarbageCollectedValue [
 
-	self dictionaryWithGarbageCollectedValue keysAndValuesDo: [:key :value | self fail ]
-
+	self dictionaryWithGarbageCollectedValue keysAndValuesDo: [:key :value | self fail ].
+	
+	self deliberatelyDidNotAssert
 ]
 
 { #category : #tests }

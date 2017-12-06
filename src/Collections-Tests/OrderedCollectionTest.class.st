@@ -373,7 +373,7 @@ OrderedCollectionTest >> nonEmpty [
 { #category : #requirements }
 OrderedCollectionTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
-	^ OrderedCollection new add:( self nonEmpty anyOne); yourself.
+	^ OrderedCollection new add: 257 ; yourself.
 ]
 
 { #category : #requirements }

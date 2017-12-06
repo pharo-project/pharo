@@ -11,6 +11,9 @@ Override my class-side #isLogging in subclasses to have failed assertion descrip
 Class {
 	#name : #TestAsserter,
 	#superclass : #Object,
+	#instVars : [
+		'assertionMade'
+	],
 	#category : #'SUnit-Core-Kernel'
 }
 
@@ -65,6 +68,7 @@ TestAsserter class >> suiteClass [
 
 { #category : #asserting }
 TestAsserter >> assert: aBoolean [
+	assertionMade := true.
 	aBoolean ifFalse:
 		[self logFailure: 'Assertion failed'.
 		self defaultTestFailure signal: 'Assertion failed'].
@@ -79,6 +83,7 @@ TestAsserter >> assert: actualNumber closeTo: expectedNumber [
 
 { #category : #asserting }
 TestAsserter >> assert: aBooleanOrBlock description: aStringOrBlock [
+	assertionMade := true.
 	aBooleanOrBlock value ifFalse: [
 		| aString |
 		aString := aStringOrBlock value.
@@ -244,6 +249,11 @@ TestAsserter >> defaultTestFailure [
 ]
 
 { #category : #asserting }
+TestAsserter >> deliberatelyDidNotAssert [
+	self assert: true
+]
+
+{ #category : #asserting }
 TestAsserter >> deny: aBooleanOrBlock [
 
 	self assert: aBooleanOrBlock value not
@@ -287,7 +297,7 @@ TestAsserter >> denyCollection: actual equals: expected [
 		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
 ]
 
-{ #category : #asserting }
+{ #category : #private }
 TestAsserter >> executeShould: aBlock inScopeOf: anExceptionalEvent [ 
 	^[aBlock value.
  	false] on: anExceptionalEvent
@@ -464,6 +474,17 @@ TestAsserter >> skip [
 TestAsserter >> skip: aComment [
 	"Don't run this test, and don't mark it as failure"
 	TestSkip signal: aComment
+]
+
+{ #category : #asserting }
+TestAsserter >> smokeTest [
+	"A smoke test is a test that make sure that the basic functions complete without error but does not make any assertion.
+	
+	This message should be sent at the beginning of smoke test cases.
+	Example: 
+		(ClassTestCase>>#testNew) browse
+	"
+	self deliberatelyDidNotAssert
 ]
 
 { #category : #private }

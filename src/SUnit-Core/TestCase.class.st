@@ -76,6 +76,18 @@ TestCase class >> announcers [
 	^ Announcers ifNil: [ Announcers := Dictionary new ] 
 ]
 
+{ #category : #testing }
+TestCase class >> assertionlessTestsShouldFail [
+	"By default, a test that makes no assertion is regarded as failing.  This bahaveiour can be changed
+	by overriding this method in a subclass.  If a single method makes no assertions deliberatley, then
+	rather than overriding this method, it should send the message
+	
+		self  deliberatelyDidNotAssert
+		
+	"
+	^ true
+]
+
 { #category : #'building suites' }
 TestCase class >> buildSuite [
 	| suite |
@@ -642,7 +654,10 @@ TestCase >> openDebuggerOnFailingTestMethod [
 
 { #category : #private }
 TestCase >> performTest [
-	self perform: testSelector asSymbol
+	assertionMade := false.
+	self perform: testSelector asSymbol.
+	assertionMade
+		ifFalse: [ TestResult makesNoAssertion signal: 'This test method made no assertion.' ]
 ]
 
 { #category : #running }

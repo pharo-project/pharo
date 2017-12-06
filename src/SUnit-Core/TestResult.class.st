@@ -12,7 +12,8 @@ Class {
 		'failures',
 		'errors',
 		'passed',
-		'skipped'
+		'skipped',
+		'assertionless'
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -57,6 +58,11 @@ TestResult class >> historyFor: aTestCaseClass [
 	^ history
 	
 "	^ self history at: aTestCaseClass ifAbsent: [ self newTestDictionary ]"
+]
+
+{ #category : #exceptions }
+TestResult class >> makesNoAssertion [
+	^ TestMakesNoAssertion
 ]
 
 { #category : #history }
@@ -134,6 +140,12 @@ TestResult >> addFailure: aTestCase [
 ]
 
 { #category : #adding }
+TestResult >> addMakesNoAssertion: aTestCase [
+	
+	^assertionless add: aTestCase
+]
+
+{ #category : #adding }
 TestResult >> addPass: aTestCase [
 	"We cannot use self passed as that incorporates test expectations and so does not return the stored collection."
 
@@ -144,6 +156,16 @@ TestResult >> addPass: aTestCase [
 TestResult >> addSkip: aTestCase [
 
 	^skipped add: aTestCase
+]
+
+{ #category : #accessing }
+TestResult >> assertionless [
+	^ assertionless
+]
+
+{ #category : #accessing }
+TestResult >> assertionlessCount [
+	^ self assertionless size
 ]
 
 { #category : #accessing }
@@ -273,7 +295,8 @@ TestResult >> initialize [
 	failures := Set new.
 	errors := OrderedCollection new.
 	skipped := OrderedCollection new.
-	timeStamp := DateAndTime now
+	assertionless := OrderedCollection new.
+	timeStamp := DateAndTime now.
 ]
 
 { #category : #testing }
@@ -321,21 +344,21 @@ TestResult >> passedCount [
 
 { #category : #printing }
 TestResult >> printOn: aStream [
-	aStream
-		nextPutAll: self runCount printString;
-		nextPutAll: ' run, ';
-		nextPutAll: self expectedPassCount printString;
-		nextPutAll: ' passes, ';
-		nextPutAll: self skippedCount printString;
-		nextPutAll: ' skipped, ';
-		nextPutAll: self expectedDefectCount printString;
-		nextPutAll:' expected failures, ';
-		nextPutAll: self unexpectedFailureCount printString;
-		nextPutAll: ' failures, ';
-		nextPutAll: self unexpectedErrorCount printString;
-		nextPutAll:' errors, ';
-		nextPutAll: self unexpectedPassCount printString;
-		nextPutAll:' unexpected passes'.
+		aStream << self runCount printString << ' run'.
+		self reportCount: self expectedPassCount as: 'passes' on: aStream.
+		self reportCount: self skippedCount as: 'skipped' on: aStream.
+		self reportCount: self expectedDefectCount as: 'expected failures' on: aStream.
+		self reportCount: self unexpectedFailureCount as: 'failures' on: aStream.
+		self reportCount: self unexpectedErrorCount as: 'errors' on: aStream.
+		self reportCount: self unexpectedPassCount as: 'unexpected passes' on: aStream.
+		self reportCount: self assertionlessCount as: 'tests made no assertion' on: aStream.
+		aStream << '.'
+]
+
+{ #category : #printing }
+TestResult >> reportCount: aCount as: aDescription on: aStream [
+	(aCount = 0) ifFalse: [ 
+		aStream << ', ' << aCount printString << ' ' << aDescription ]
 ]
 
 { #category : #running }
@@ -345,7 +368,7 @@ TestResult >> runCase: aTestCase [
 	aTestCase runCaseManaged.
 	aTestCase announce: TestCaseEnded  withResult: self.
 	self addPass: aTestCase]
-		on: self class failure , self class skip, self class warning, self class error
+		on: self class failure , self class skip, self class warning, self class error , self class makesNoAssertion
 		do: [:ex | ex sunitAnnounce: aTestCase toResult: self]
 ]
 
