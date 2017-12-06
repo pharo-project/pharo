@@ -15,7 +15,7 @@ Class {
 		'default'
 	],
 	#category : #'Keymapping-Tests'
-}
+} 
 
 { #category : #testing }
 AbstractKeymappingTest class >> isAbstract [
