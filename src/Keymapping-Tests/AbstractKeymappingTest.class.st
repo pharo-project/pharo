@@ -17,6 +17,12 @@ Class {
 	#category : #'Keymapping-Tests'
 }
 
+{ #category : #testing }
+AbstractKeymappingTest class >> isAbstract [
+
+	^self name = #AbstractKeymappingTest
+]
+
 { #category : #utilities }
 AbstractKeymappingTest >> eventKey: character [ 
 	^ self eventKey: character
@@ -91,11 +97,14 @@ AbstractKeymappingTest >> eventKey: character shift: aBoolean [
 
 { #category : #running }
 AbstractKeymappingTest >> setUp [
+	super setUp.
 	default := KMRepository default.
 	KMRepository default: KMRepository new
 ]
 
 { #category : #running }
 AbstractKeymappingTest >> tearDown [
-	KMRepository default: default
+	KMRepository default: default.
+	default := nil.
+	super tearDown 
 ]
