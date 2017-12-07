@@ -14,7 +14,7 @@ My fixtures are:
 aDateAndTime = January 01, 1901 midnight (the start of the Squeak epoch) with localTimeZone = Grenwhich Meridian (local offset = 0 hours)
 aDuration = 1 day, 2 hours, 3, minutes, 4 seconds and 5 nano seconds.
 aTimeZone =  'Epoch Test Time Zone', 'ETZ' , offset: 12 hours, 15 minutes. 
-"
+" 
 Class {
 	#name : #DateAndTimeEpochTest,
 	#superclass : #TestCase,
@@ -39,7 +39,7 @@ DateAndTimeEpochTest >> setUp [
 { #category : #running }
 DateAndTimeEpochTest >> tearDown [
      DateAndTime localTimeZone: localTimeZoneToRestore.
-     "wish I could remove the time zones I added earlier, tut there is no method for that"
+     "wish I could remove the time zones I added earlier, but there is no method for that"
 
 ]
 
