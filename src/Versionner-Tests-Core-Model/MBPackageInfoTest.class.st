@@ -13,6 +13,7 @@ Class {
 
 { #category : #running }
 MBPackageInfoTest >> setUp [
+	super setUp.
 "	(Smalltalk includesKey: #TMPClass)
 		ifTrue: [ (Smalltalk at: #TMPClass) removeFromSystem ].
 "		
