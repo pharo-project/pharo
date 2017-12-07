@@ -47,3 +47,36 @@ asRing2EnvironmentWith: packageNames
 	aRG2Environment behaviorsDo: [ :beh |
 		beh superclass == beh ifTrue: [ beh superclass: nil. ] ].			
 	^ aRG2Environment! 
+	
+'From Pharo6.0 of 13 May 2016 [Latest update: #60508] on 7 December 2017 at 1:00:41.915623 pm'!
+
+!RG2WeakLayoutDefinition methodsFor: '*Ring2-Hermes' stamp: 'PavelKrivanek 12/7/2017 13:00'!
+layoutName
+
+	^ #WeakLayout! !
+
+'From Pharo6.0 of 13 May 2016 [Latest update: #60508] on 6 December 2017 at 10:35:49.58245 pm'!
+
+!HERing2ToHermesBuilder methodsFor: 'visiting' stamp: 'PavelKrivanek 12/6/2017 22:34'!
+visitClass: aClass
+	| aHEClass |
+	
+	aHEClass := HEClass new.
+	self visitMethodContainer: aClass using: aHEClass.
+
+	aHEClass className: aClass name.
+	aHEClass superclass: ((aClass superclass)
+		ifNil: [ 'nil' ]
+		ifNotNil: [ aClass superclass name ]).
+	aHEClass instanceVariables: ((aClass slots collect: #name) joinUsing: ' ').
+	aHEClass classInstancevariables: ((aClass metaclass slots collect: #name) joinUsing: ' ').
+	aHEClass classVariables: (aClass classPool keys joinUsing: ' ').
+	aHEClass sharedPools: ((aClass sharedPools collect: #name) joinUsing: ' ').
+	aHEClass layoutClass: aClass layout layoutName.
+
+	aHEClass category: aClass category.
+	aHEClass traitComposition: aClass traitComposition asExportedLiteral.
+	aHEClass classTraitComposition: aClass theMetaClass traitComposition asExportedLiteral.
+
+
+	^ aHEClass.! !
