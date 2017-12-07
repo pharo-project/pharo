@@ -12,24 +12,18 @@ repo := IceRepositoryCreator new
 	createRepository.
 
 repo name: 'pharo'.
-repo beSystemRepository.
-repo register.
-
 "get loaded commit"
 commit := repo branch lastCommit.
-"set loaded commit as reference"
-repo loadedCode 
-	instVarNamed: #referenceCommit 
-	put: commit.
 "using commit as versionInfo for all loaded packages"
-repo savedPackages 
-	collect: [ :eachPackage | 
-		IceMCVersionInfo new 
-			fromCommit: commit package: eachPackage;
-			yourself ]
-	thenDo: [ :eachInfo |  
-			MCWorkingCopy allManagers
-				detect: [ :each | each packageName = eachInfo package name ]
-				ifFound: [ :each | each ancestry ancestors: { eachInfo } ] ].
-"clean location (because this repo is my local repo, user will need to set their own)"
-repo location: nil. 
+repo savedPackages do: [ :eachPackage | 
+	MCWorkingCopy allManagers
+		detect: [ :each | each packageName = eachPackage packageName ]
+		ifFound: [ :each |
+			each ancestry ancestors: { 
+				IceProxyMCVersionInfo
+					remoteUrl: 'git@github.com:pharo-project/pharo.git'
+					packageName: each packageName
+					commit: commit 
+					message: ('Stub pointing to remote repository git@github.com:pharo-project/pharo.git. 
+Add iceberg repository to have the real version here.')
+					author: 'TheBootstrap' } ] ]
