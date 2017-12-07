@@ -2,6 +2,6 @@ class-loading
 isClassDefinition: aString
 
 	^ aString beginsWith: '| newClass |
-	newClass := PharoClassInstaller make: [ :builder |
+	newClass := ShiftClassInstaller make: [ :builder |
 		builder
 			superclass: '.

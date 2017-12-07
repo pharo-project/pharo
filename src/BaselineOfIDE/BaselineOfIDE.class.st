@@ -339,6 +339,9 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'ScriptingExtensions-Tests'.
 		spec package: 'STON-Tests'.
 		spec package: 'SUnit-Tests'.
+		spec package: 'Shift-Changes-Tests'.
+		spec package: 'Shift-ClassBuilder-Tests'.
+		spec package: 'Shift-ClassInstaller-Tests'.
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
@@ -623,7 +626,11 @@ spec group: 'Refactoring-Group' with: #(
 	'Refactoring-Tests-Group'
 	'Refactoring-Help-Group' 
 ).
-
+spec group: 'Shift-Group' with: #(
+	'Shift-Changes-Tests'
+	'Shift-ClassBuilder-Tests'
+	'Shift-ClassInstaller-Tests'
+).
 spec group: 'Catalog-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency"
 	'GT-Core-Group'	"dependency"
@@ -861,6 +868,7 @@ spec group: #default with: #(
 	'Zodiac-Group'
 	'FuzzyMatcher-Group'
 	'Flashback-Group'
+	'Shift-Group'
 
 	'GT&QA-Group'
 

@@ -107,7 +107,7 @@ MonticelloBootstrap >> loadBootstrapPackages [
 	MCCacheRepository cacheDirectory: directory.
 
 	(self bootstrapVersionsExcept: [ :package | 
-		#('Collections-Sequenceable' 'Slot' 'Kernel' 'Monticello')
+		#('Shift-ClassBuilder' 'Monticello')
 			includes: package name])
 		do: [ :version | self loadPackageVersion: version ].
 
