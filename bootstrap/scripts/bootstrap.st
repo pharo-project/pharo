@@ -35,7 +35,11 @@ environment := repository asRing2EnvironmentWith: packageNames.
 	^(self substrings: '' '') collect: [ :substring | substring asSlot ]'.
 
 ((environment ask behaviorNamed: #SlotClassBuilder) methodNamed: #validateClassName) sourceCode: 
-'validateClassName'.	
+'validateClassName'.
+
+((environment ask behaviorNamed: #SystemVersion) methodNamed: #initialize) sourceCode: 
+'initialize
+	super initialize'.		
 	
 ((environment ask behaviorNamed: #HEInstaller) methodNamed: #installPackage:) sourceCode: 
 'installPackage: aHEPackage

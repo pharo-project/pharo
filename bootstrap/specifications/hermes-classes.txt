@@ -64,6 +64,7 @@ Context
 CurrentExecutionEnvironment
 CurrentJob
 DangerousClassNotifier
+Date
 DateAndTime
 DefaultExecutionEnvironment
 Delay
@@ -74,6 +75,7 @@ Dictionary
 Duration
 DynamicVariable
 EmptyLayout
+EncodedCharSet
 Encoder
 EncoderForSistaV1
 EncoderForV3
