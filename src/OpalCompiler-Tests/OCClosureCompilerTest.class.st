@@ -333,6 +333,7 @@ OCClosureCompilerTest >> evaluate: aString in: aContext to: anObject [
 
 { #category : #running }
 OCClosureCompilerTest >> setUp [
+	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler.
 ]
