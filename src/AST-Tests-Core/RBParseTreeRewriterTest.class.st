@@ -5,7 +5,7 @@ Class {
 		'rewriter'
 	],
 	#category : #'AST-Tests-Core'
-}
+} 
 
 { #category : #utils }
 RBParseTreeRewriterTest >> compare: anObject to: anotherObject [ 
@@ -15,7 +15,7 @@ RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
 
 { #category : #running }
 RBParseTreeRewriterTest >> setUp [
-
+	super setUp.
 	rewriter := RBParseTreeRewriter new.
 ]
 
