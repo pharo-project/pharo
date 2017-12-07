@@ -7,11 +7,12 @@ Class {
 		'packageB',
 		'packageC'
 	],
-	#category : #'Tool-DependencyAnalyser-Test'
+	#category : #'Tool-DependencyAnalyser-Test-Packages'
 }
 
 { #category : #running }
 DAPackageCycleTest >> setUp [
+	super setUp.
 	aPDPackageCycle := DAPackageCycle new.
 	packageA := DAPackage on: (RPackageSet named:'A').
 	packageB := DAPackage on: (RPackageSet named:'B').

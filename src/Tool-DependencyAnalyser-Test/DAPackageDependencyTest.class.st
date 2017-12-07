@@ -7,7 +7,7 @@ Class {
 		'packageA',
 		'packageB'
 	],
-	#category : #'Tool-DependencyAnalyser-Test'
+	#category : #'Tool-DependencyAnalyser-Test-Packages'
 }
 
 { #category : #running }
@@ -31,6 +31,7 @@ DAPackageDependencyTest >> referenceDependency: aClass [
 { #category : #running }
 DAPackageDependencyTest >> setUp [
 	| source target |
+	super setUp.
 	source := DAPackage on: (RPackageSet named:'Kernel').
 	target := DAPackage on: (RPackageSet named:'Collections-Abstract').
 	aPackageDependency := DAPackageDependency from:source to:target.
