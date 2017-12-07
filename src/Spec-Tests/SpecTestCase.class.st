@@ -49,6 +49,7 @@ SpecTestCase >> openInstance: aLayoutSelector [
 
 { #category : #running }
 SpecTestCase >> setUp [
+	super setUp.
 	testedInstance := self classToTest new.
 	self initializeTestedInstance
 ]
