@@ -7,20 +7,14 @@ AbstractMethodUpdateStrategy
 AbstractSessionHandler
 AbstractTimeZone
 AdditionalMethodState
-AdditionalMethodState class
 AllProtocol
-AllProtocol class
 Announcement
-Announcement class
 AnnouncementSet
 Announcer
 Array
-Array class
 ArrayedCollection
-ArrayedCollection class
 AsciiCharset
 Association
-Association class
 BasicCommandLineHandler
 Behavior
 BinaryFileStream
@@ -31,9 +25,7 @@ BoxedFloat64
 ByteArray
 ByteLayout
 ByteString
-ByteString class
 ByteSymbol
-ByteSymbol class
 BytecodeEncoder
 Categorizer
 CategoryAdded
@@ -42,18 +34,15 @@ CategoryRenamed
 ChangeSet
 ChangesLog
 Character
-Character class
 CharacterSet
 CharacterSetComplement
 ChronologyConstants
 Class
 ClassAdded
-ClassAdded class
 ClassAnnouncement
 ClassChangeRecord
 ClassDescription
 ClassOrganization
-ClassOrganization class
 ClassRecategorized
 ClassRemoved
 ClassRenamed
@@ -62,25 +51,20 @@ ClassSessionHandler
 ClassTagAdded
 ClassTagAnnouncement
 ClassTrait
-ClassTrait class
 ClassVariable
 Collection
-Collection class
 Color
 CommandLineArguments
 CommandLineHandler
 CommandLineUIManager
 CompiledCode
-CompiledCode class
 CompiledMethod
-CompiledMethod class
 CompiledMethodLayout
 Context
 CurrentExecutionEnvironment
 CurrentJob
 DangerousClassNotifier
 DateAndTime
-DateAndTime class
 DefaultExecutionEnvironment
 Delay
 DelayMicrosecondScheduler
@@ -110,10 +94,8 @@ FFIConstants
 False
 File
 FixedLayout
-FixedLayout class
 Float
 Fraction
-Fraction class
 FullBlockClosure
 GlobalVariable
 HEAbstractExported
@@ -153,9 +135,7 @@ HEWideString
 Halt
 HashFunction
 HashTableSizes
-HashTableSizes class
 HashedCollection
-HashedCollection class
 Heap
 HermesCommandLineHandler
 IdentityDictionary
@@ -180,30 +160,24 @@ LayoutClassScope
 LayoutEmptyScope
 LegacyWeakSubscription
 LimitedWriteStream
-LimitedWriteStream class
 Link
 LinkedList
 LiteralVariable
 LocalTimeZone
 LookupKey
-LookupKey class
 MCPackage
 MCPackageManager
-MCPackageManager class
 MacOSPlatform
 MacOSXPlatform
 Magnitude
 Message
 Metaclass
 MethodAdded
-MethodAdded class
 MethodAnnouncement
 MethodChangeRecord
 MethodDictionary
-MethodDictionary class
 MethodModified
 MethodRecategorized
-MethodRecategorized class
 MethodRecompileStrategy
 MethodRemoved
 Monitor
@@ -213,19 +187,16 @@ NonInteractiveUIManager
 Notification
 Number
 OSPlatform
-OSPlatform class
 Object
 ObjectFinalizerCollection
 ObjectLayout
 OrderedCollection
-OrderedCollection class
 PharoBootstrapInitialization
 PharoClassInstaller
 PharoCommandLineHandler
 Point
 PointerLayout
 PositionableStream
-PositionableStream class
 Pragma
 PrintVersionCommandLineHandler
 Process
@@ -236,7 +207,6 @@ ProcessSpecificVariable
 ProcessorScheduler
 ProtoObject
 Protocol
-Protocol class
 ProtocolAdded
 ProtocolAnnouncement
 ProtocolOrganizer
@@ -245,28 +215,22 @@ RBBlockNode
 RBProgramNode
 RBValueNode
 RPackage
-RPackage class
 RPackageAnnouncement
 RPackageOrganizer
-RPackageOrganizer class
 RPackageRegistered
 RPackageSet
-RPackageSet class
 RPackageTag
 SHA1
 SaveCommandLineHandler
 Semaphore
 SequenceableCollection
-SequenceableCollection class
 SessionCategory
 SessionManager
 Set
-Set class
 SetElement
 SharedPool
 SharedQueue
 Slot
-Slot class
 SlotClassBuilder
 SmallInteger
 SmalltalkImage
@@ -277,22 +241,19 @@ Stdio
 StdioStream
 Stream
 String
-String class
 SubscriptionRegistry
 Symbol
-Symbol class
 SystemAnnouncement
 SystemAnnouncer
-SystemAnnouncer class
 SystemDictionary
 SystemOrganizer
+SystemVersion
 TClass
 Termcap
 Time
-Time class
 TimeZone
+Timespan
 Trait
-Trait class
 TraitBehavior
 TraitComposition
 TraitDescription
@@ -300,7 +261,7 @@ True
 UIManager
 UndefinedObject
 UnhandledError
-Unicode class
+Unicode
 Unix32Platform
 UnixPlatform
 VTermOutputDriver

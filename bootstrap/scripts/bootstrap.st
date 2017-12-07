@@ -1,5 +1,5 @@
 [
-| options architecture repository packageNames environment fetcher buildNumber bootstrap repositoryReference specificationsPath |
+| options architecture repository packageNames environment fetcher buildNumber bootstrap repositoryReference specificationsPath usedClasses calledMethods |
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].

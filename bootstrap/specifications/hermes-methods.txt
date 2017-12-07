@@ -767,13 +767,25 @@ CurrentExecutionEnvironment>>#default
 DangerousClassNotifier class>>#check:
 DangerousClassNotifier class>>#disable
 DangerousClassNotifier class>>#enabled
+Date class>>#starting:
+Date class>>#today
 DateAndTime class>>#clock
 DateAndTime class>>#current
 DateAndTime class>>#initialize
 DateAndTime class>>#localOffset
 DateAndTime class>>#localTimeZone
 DateAndTime class>>#now
+DateAndTime class>>#year:month:day:hour:minute:offset:
+DateAndTime class>>#year:month:day:hour:minute:second:nanoSecond:offset:
+DateAndTime class>>#year:month:day:hour:minute:second:offset:
+DateAndTime class>>#year:month:day:offset:
+DateAndTime>>#asDateAndTime
+DateAndTime>>#dayMonthYearDo:
+DateAndTime>>#julianDayNumber
+DateAndTime>>#julianDayOffset
+DateAndTime>>#midnight
 DateAndTime>>#normalizeSecondsAndNanos
+DateAndTime>>#offset
 DateAndTime>>#setJdn:seconds:nano:offset:
 DefaultExecutionEnvironment class>>#beActiveDuring:
 DefaultExecutionEnvironment class>>#instance
@@ -819,11 +831,13 @@ Dictionary>>#removeKey:ifAbsent:
 Dictionary>>#scanFor:
 Dictionary>>#values
 Dictionary>>#valuesDo:
+Duration class>>#days:
 Duration class>>#hours:
 Duration class>>#seconds:nanoSeconds:
 Duration class>>#zero
 Duration>>#=
 Duration>>#asNanoSeconds
+Duration>>#asSeconds
 Duration>>#seconds:nanoSeconds:
 DynamicVariable class>>#value:during:
 DynamicVariable>>#value:during:
@@ -919,6 +933,7 @@ Float>>#negated
 Float>>#rounded
 Float>>#signBit
 Fraction class>>#numerator:denominator:
+Fraction>>#''>=''
 Fraction>>#reduced
 Fraction>>#setNumerator:denominator:
 Fraction>>#truncated
@@ -1096,12 +1111,15 @@ Integer>>#asLargerPowerOfTwo
 Integer>>#bitShift:
 Integer>>#bitShiftMagnitude:
 Integer>>#ceiling
+Integer>>#denominator
 Integer>>#digitAdd:
 Integer>>#digitCompare:
 Integer>>#digitMultiply:neg:
+Integer>>#isFraction
 Integer>>#isInteger
 Integer>>#isPowerOfTwo
 Integer>>#noMask:
+Integer>>#numerator
 Integer>>#rounded
 Integer>>#truncated
 Interval class>>#from:to:by:
@@ -1231,6 +1249,7 @@ MethodDictionary>>#valuesDo:
 MethodRecategorized class>>#method:oldProtocol:
 MethodRecategorized>>#oldProtocol:
 Monitor>>#initialize
+Month class>>#daysInMonth:forYear:
 Mutex>>#critical:
 Mutex>>#initialize
 NonInteractiveTranscript class>>#initialize
@@ -1257,6 +1276,7 @@ NonInteractiveTranscript>>#stream
 Number class>>#one
 Number>>#abs
 Number>>#asInteger
+Number>>#floor
 Number>>#fractionPart
 Number>>#hours
 Number>>#integerPart
@@ -1941,6 +1961,14 @@ SystemOrganizer>>#environment:
 SystemOrganizer>>#includesCategory:
 SystemOrganizer>>#initialize
 SystemOrganizer>>#removeCategory:
+SystemVersion class>>#invalidBuildNumber
+SystemVersion>>#build:
+SystemVersion>>#commitHash:
+SystemVersion>>#initialize
+SystemVersion>>#major:
+SystemVersion>>#minor:
+SystemVersion>>#suffix:
+SystemVersion>>#type:
 Termcap>>#initialize
 Termcap>>#initializeDefaultSequences
 Time class>>#microsecondClockValue
@@ -1955,6 +1983,10 @@ TimeZone>>#abbreviation:
 TimeZone>>#name:
 TimeZone>>#offset
 TimeZone>>#offset:
+Timespan class>>#current
+Timespan class>>#starting:duration:
+Timespan>>#duration:
+Timespan>>#start:
 Trait class>>#named:uses:category:
 Trait class>>#named:uses:category:env:
 Trait>>#baseTrait
