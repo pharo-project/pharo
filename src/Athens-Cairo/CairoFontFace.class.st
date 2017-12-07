@@ -12,15 +12,21 @@ Class {
 	#superclass : #FFIExternalObject,
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
-	#instVars : [
-		'ftFace'
-	],
 	#pools : [
 		'AthensCairoDefs',
 		'FT2Constants'
 	],
 	#category : #'Athens-Cairo-Text'
 }
+
+{ #category : #finalizing }
+CairoFontFace class >> countReferences: handle [
+"
+unsigned int  cairo_font_face_get_reference_count             (cairo_font_face_t *font_face);
+"
+	<primitive: #primitiveNativeCall module: #NativeBoostPlugin error: errorCode>
+	^ self nbCall: #( unsigned int cairo_font_face_get_reference_count (size_t handle)) 
+]
 
 { #category : #finalizing }
 CairoFontFace class >> finalizeResourceData: handle [
@@ -43,6 +49,12 @@ CairoFontFace class >> fromFreetypeFace: aFace [
 	^ cairoFace initializeWithFreetypeFace: aFace
 ]
 
+{ #category : #finalizing }
+CairoFontFace class >> hasSharedResourceData: handle [
+	"Answer wether the external cairo_font_face resource is shared (referenced) by other external objects."
+	^(self countReferences: handle) > 1
+]
+
 { #category : #'instance creation' }
 CairoFontFace class >> primFtFace: aFace loadFlags: flags [
 
@@ -63,9 +75,12 @@ CairoFontFace >> initialize [
 
 { #category : #'initialize-release' }
 CairoFontFace >> initializeWithFreetypeFace: aFace [
-	ftFace := aFace.
-	
-	self autoRelease.
+	FFIExternalResourceManager
+		addResource: self
+		executor:
+			(CairoFontFaceExecutor new
+				resourceClass: self class data: self resourceData;
+				ftFace: aFace)
 ]
 
 { #category : #private }
