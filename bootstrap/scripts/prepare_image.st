@@ -46,7 +46,7 @@ asRing2EnvironmentWith: packageNames
 	aRG2Environment clean.
 	aRG2Environment behaviorsDo: [ :beh |
 		beh superclass == beh ifTrue: [ beh superclass: nil. ] ].			
-	^ aRG2Environment! 
+	^ aRG2Environment! !
 	
 'From Pharo6.0 of 13 May 2016 [Latest update: #60508] on 7 December 2017 at 1:00:41.915623 pm'!
 
