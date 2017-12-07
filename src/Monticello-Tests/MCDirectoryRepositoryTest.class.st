@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'directory'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Repository'
 }
 
 { #category : #actions }
@@ -25,6 +25,7 @@ MCDirectoryRepositoryTest >> directory [
 
 { #category : #running }
 MCDirectoryRepositoryTest >> setUp [
+	super setUp.
 	repository := MCDirectoryRepository new directory: self directory
 ]
 

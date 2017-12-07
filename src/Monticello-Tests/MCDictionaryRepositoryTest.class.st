@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'dict'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Repository'
 }
 
 { #category : #actions }
@@ -24,5 +24,6 @@ MCDictionaryRepositoryTest >> dictionary [
 
 { #category : #running }
 MCDictionaryRepositoryTest >> setUp [
+	super setUp.
 	repository :=  MCDictionaryRepository new dictionary: self dictionary
 ]

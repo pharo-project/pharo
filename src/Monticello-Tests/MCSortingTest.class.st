@@ -1,7 +1,7 @@
 Class {
 	#name : #MCSortingTest,
 	#superclass : #TestCase,
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Sorting'
 }
 
 { #category : #testing }

@@ -1,7 +1,7 @@
 Class {
 	#name : #MCDataStreamTest,
 	#superclass : #BaseStreamTest,
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-IO'
 }
 
 { #category : #testing }

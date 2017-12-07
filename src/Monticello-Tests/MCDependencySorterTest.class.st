@@ -1,7 +1,7 @@
 Class {
 	#name : #MCDependencySorterTest,
 	#superclass : #TestCase,
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Dependencies'
 }
 
 { #category : #testing }

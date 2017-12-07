@@ -8,7 +8,7 @@ Class {
 		'versions2',
 		'savedName'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #asserting }
@@ -72,6 +72,7 @@ MCWorkingCopyTest >> packageName [
 { #category : #running }
 MCWorkingCopyTest >> setUp [
 	| repos1 repos2 |
+	super setUp.
 	self clearPackageCache.
 	repositoryGroup := MCRepositoryGroup new.
 	repositoryGroup disableCache.

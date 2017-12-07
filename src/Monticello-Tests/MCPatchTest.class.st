@@ -4,12 +4,13 @@ Class {
 	#instVars : [
 		'patch'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #running }
 MCPatchTest >> setUp [
 	|rev1 rev2|
+	super setUp.
 	rev1 :=  MCSnapshotResource takeSnapshot.
 	self change: #one toReturn: 2.
 	rev2 :=  MCSnapshotResource takeSnapshot.
