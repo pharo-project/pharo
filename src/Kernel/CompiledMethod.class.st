@@ -514,18 +514,24 @@ CompiledMethod >> isConflict [
 ]
 
 { #category : #testing }
-CompiledMethod >> isDeprecated [
+CompiledMethod >> isDeprecated [	
+	"Answer a boolean indicating whether the receiver is deprecated.
+	Methods that send one of the deprecation protocol messages, or has 'deprecated' in the protocol or package name are considered deprecated"
+
+	| deprecated package |
 	"Object selectorsInProtocol: #deprecation"
-	(self
-		sendsAnySelectorOf:
-			#(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
-		ifTrue: [ ^ true ].
-	$-
-		split: self protocol asString
-		do: [ :each | 
-			each withBlanksCondensed = 'deprecated'
-				ifTrue: [ ^ true ] ].
-	^ false
+	(self sendsAnySelectorOf: #(#deprecated: #deprecated:on:in: #deprecated:on:in:transformWith: #deprecated:transformWith:))
+		ifTrue: [ ^true ].
+
+	deprecated := 'deprecated'.
+	(self protocol asString asLowercase includesSubstring: deprecated)
+		ifTrue: [ ^true ].
+
+	package := self package.
+	(package notNil and: [ package name asLowercase includesSubstring: deprecated ])
+		ifTrue: [ ^true ].
+
+	^false
 ]
 
 { #category : #testing }
