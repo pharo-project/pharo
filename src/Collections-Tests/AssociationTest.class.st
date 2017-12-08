@@ -13,7 +13,7 @@ Class {
 
 { #category : #running }
 AssociationTest >> setUp [
-
+	super setUp.
 	a := 1 -> 'one'.
 	b := 1 -> 'een'.
 ]

@@ -23,6 +23,7 @@ CopyVisitorTest >> createFile: aString [
 
 { #category : #running }
 CopyVisitorTest >> setUp [
+	super setUp.
 	source := FileSystem memory.
 	dest := FileSystem memory.
 	

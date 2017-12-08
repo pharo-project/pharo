@@ -23,7 +23,7 @@ Class {
 
 { #category : #running }
 FreeTypeCacheTest >> setUp [
-
+	super setUp.
 	cache := FreeTypeCache new.
 	font1 := FreeTypeFont basicNew.
 	font2 := FreeTypeFont basicNew.

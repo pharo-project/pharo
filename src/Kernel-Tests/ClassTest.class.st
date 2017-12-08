@@ -49,6 +49,7 @@ ClassTest >> referencingMethod3 [
 
 { #category : #running }
 ClassTest >> setUp [
+	super setUp.
 	className := #TUTU.
 	self deleteClass.
 	Object subclass: className

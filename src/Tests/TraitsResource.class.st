@@ -188,6 +188,7 @@ TraitsResource >> setUp [
 	classes - and that especially the order of the definitions matters."
 	"SetUpCount := SetUpCount + 1."
 
+	super setUp.
 	dirty := false.
 	SystemAnnouncer uniqueInstance suspendAllWhile: 
 			[self t1: (self createTraitNamed: #T1

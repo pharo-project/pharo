@@ -253,6 +253,7 @@ BagTest >> selectedNumber [
 
 { #category : #running }
 BagTest >> setUp [
+	super setUp.
 	empty := self speciesClass new.
 	nonEmpty := self speciesClass new
 		add: 13;

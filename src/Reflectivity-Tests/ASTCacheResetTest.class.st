@@ -22,6 +22,7 @@ ASTCacheResetTest >> increment [
 
 { #category : #running }
 ASTCacheResetTest >> setUp [
+	super setUp.
 	cache := ASTCache default copy.
 	counter := 0.
 	link := MetaLink new

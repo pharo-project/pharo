@@ -22,7 +22,7 @@ SortHierarchicallyTests >> nodes: nodes shouldBe: correctNodes [
 
 { #category : #running }
 SortHierarchicallyTests >> setUp [
-
+	super setUp.
 	completeTree := {String . ByteString . Symbol . ByteSymbol . WideSymbol . WideString} .
 	partialTree := {String . ByteString . ByteSymbol . WideString}.
 	unrelatedClasses :=  {ArrayedCollection . BlockClosure . Class  . Morph . Point}.
