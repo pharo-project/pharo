@@ -13,8 +13,8 @@ ShMetaclassChanged >> announceChanges [
 	SystemAnnouncer uniqueInstance classDefinitionChangedFrom: oldClass class to: builder newMetaclass.
 ]
 
-{ #category : #announcing }
+{ #category : #accessing }
 ShMetaclassChanged >> builder: anObject [
-	builder := anObject.
+	super builder: anObject.
 	oldClass := builder oldClass copy.
 ]

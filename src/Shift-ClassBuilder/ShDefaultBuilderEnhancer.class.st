@@ -15,12 +15,12 @@ ShDefaultBuilderEnhancer >> afterMethodsCompiled: builder [
 ]
 
 { #category : #migrating }
-ShDefaultBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller. [
+ShDefaultBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 
 ]
 
 { #category : #migrating }
-ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller. [
+ShDefaultBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 
 ]
 

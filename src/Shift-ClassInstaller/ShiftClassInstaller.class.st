@@ -28,7 +28,7 @@ Class {
 	#category : 'Shift-ClassInstaller'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #example }
 ShiftClassInstaller class >> example [
 	^ Smalltalk classInstaller make: [ :aSlotClassBuilder |
 		aSlotClassBuilder
@@ -38,19 +38,19 @@ ShiftClassInstaller class >> example [
 			category: 'My-Category' ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 ShiftClassInstaller class >> make: aBlock [
 	^ self new make:aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 ShiftClassInstaller class >> update: oldClass to: aBlock [
 	^ self new 
 		oldClass: oldClass;
 		make:aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 ShiftClassInstaller class >> validateClassName: aString [ 
 	ShiftClassBuilder new name: aString.
 ]

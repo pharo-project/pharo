@@ -10,14 +10,14 @@ Class {
 	#category : 'Shift-ClassInstaller'
 }
 
-{ #category : #building }
+{ #category : #accessing }
 ShiftAnonymousClassInstaller >> comment: newClass [
 
 ]
 
 { #category : #building }
 ShiftAnonymousClassInstaller >> installInEnvironment: newClass. [
-	^ self.
+	^ self
 ]
 
 { #category : #building }
@@ -25,12 +25,12 @@ ShiftAnonymousClassInstaller >> lookupOldClass [
 	^ self.
 ]
 
-{ #category : #building }
+{ #category : #notifications }
 ShiftAnonymousClassInstaller >> notifyChanges [
 	
 ]
 
-{ #category : #building }
+{ #category : #notifications }
 ShiftAnonymousClassInstaller >> recategorize: newClass to: category [
 
 ]

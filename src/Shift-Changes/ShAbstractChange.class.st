@@ -22,9 +22,7 @@ Class {
 
 { #category : #comparing }
 ShAbstractChange >> = another [
-	self species = another species
-		ifFalse: [ ^ false ].
-	^ builder = another builder
+	^ self species = another species and: [ builder = another builder ]
 ]
 
 { #category : #announcing }
