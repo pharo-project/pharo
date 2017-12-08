@@ -13,6 +13,7 @@ Class {
 
 { #category : #running }
 SMTPClientTest >> setUp [
+	super setUp.
 	socket := MockSocketStream on: ''.
 	smtp := SMTPClient new.
 	smtp stream: socket.

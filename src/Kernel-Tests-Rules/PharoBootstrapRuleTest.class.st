@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 PharoBootstrapRuleTest >> setUp [
+	super setUp.
 	checkerBackup := PharoBootstrapRule
 		classVarNamed: 'DependencyChecker'.
 ]

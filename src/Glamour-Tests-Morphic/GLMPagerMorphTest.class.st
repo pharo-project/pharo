@@ -35,7 +35,7 @@ GLMPagerMorphTest >> panesMorphs [
 
 { #category : #running }
 GLMPagerMorphTest >> setUp [
-
+	super setUp.
 	pagerModel := GLMPagerModel new.
 	pagerMorph := GLMPagerBrick new
 		pagerModel: pagerModel

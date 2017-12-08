@@ -11,6 +11,7 @@ Class {
 
 { #category : #running }
 PharoIssueTest >> setUp [
+	super setUp.
 	issueNumber := 6489.
 	issue := PharoIssue number: issueNumber.
 	madeUpTitleString := 'A title'.

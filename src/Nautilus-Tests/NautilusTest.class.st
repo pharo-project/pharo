@@ -12,7 +12,7 @@ Class {
 
 { #category : #running }
 NautilusTest >> setUp [
-
+	super setUp.
 	nautilus := Nautilus new.
 ]
 

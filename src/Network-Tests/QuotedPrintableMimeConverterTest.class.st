@@ -22,6 +22,7 @@ QuotedPrintableMimeConverterTest >> encode: string [
 
 { #category : #running }
 QuotedPrintableMimeConverterTest >> setUp [
+	super setUp.
 	coder := QuotedPrintableMimeConverter
 ]
 
