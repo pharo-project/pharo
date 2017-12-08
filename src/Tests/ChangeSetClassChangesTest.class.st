@@ -52,6 +52,7 @@ ChangeSetClassChangesTest >> isDefinition: firstString equivalentTo: secondStrin
 
 { #category : #running }
 ChangeSetClassChangesTest >> setUp [
+	super setUp.
 	className := #TUTU.
 	renamedName := #RenamedTUTU.
 	self deleteClass.

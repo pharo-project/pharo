@@ -16,6 +16,7 @@ Class {
 
 { #category : #running }
 MorphTest >> setUp [
+	super setUp.
 	morph := Morph new
 ]
 

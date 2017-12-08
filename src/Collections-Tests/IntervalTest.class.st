@@ -264,7 +264,7 @@ IntervalTest >> secondCollection [
 
 { #category : #running }
 IntervalTest >> setUp [
-
+	super setUp.
 	empty := (1 to: 0).
 	one := (1 to:1).
 	nonEmpty := -5 to: 10 by: 3.

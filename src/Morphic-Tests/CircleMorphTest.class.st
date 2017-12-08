@@ -12,5 +12,6 @@ Class {
 
 { #category : #running }
 CircleMorphTest >> setUp [
+	super setUp.
 	morph := CircleMorph new
 ]

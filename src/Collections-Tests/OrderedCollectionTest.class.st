@@ -448,7 +448,7 @@ OrderedCollectionTest >> selectorToAccessValuePutIn [
 { #category : #running }
 OrderedCollectionTest >> setUp [
 
-	
+	super setUp.
 	nonEmpty := OrderedCollection new  add: self valuePutIn; add: self elementTwiceIn; add: self elementTwiceIn; yourself.
 	empty := OrderedCollection new. 
 	elementNotIn := 99.

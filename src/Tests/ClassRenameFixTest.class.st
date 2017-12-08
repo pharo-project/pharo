@@ -59,7 +59,7 @@ ClassRenameFixTest >> renameClassUsing: aBlock [
 
 { #category : #running }
 ClassRenameFixTest >> setUp [
-
+	super setUp.
 	previousChangeSet := ChangeSet current.
 	testsChangeSet := ChangeSet new.
 	ChangeSet newChanges: testsChangeSet.
