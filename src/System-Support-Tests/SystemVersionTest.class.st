@@ -53,7 +53,7 @@ SystemVersionTest >> testDottedMajorMinor [
 	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinor = '1.1'.
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #tests }
 SystemVersionTest >> testInstanceCreation [
 
 	| version |
@@ -67,11 +67,10 @@ SystemVersionTest >> testInstanceCreation [
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-0.0')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #tests }
 SystemVersionTest >> testInstanceCreationMajorMinor [
 
 	| version |
@@ -84,11 +83,10 @@ SystemVersionTest >> testInstanceCreationMajorMinor [
 		assert: version build equals: SystemVersion invalidBuildNumber;
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-6.1')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #tests }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 
 	| version |
@@ -101,11 +99,10 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 		assert: version build equals: SystemVersion invalidBuildNumber;
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0+alpha')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #tests }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
 
 	| version |
@@ -118,11 +115,10 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
 		assert: version build equals: 142;
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0+alpha.build.142')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #tests }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 
 	| version |
@@ -135,11 +131,10 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 		assert: version build equals: 148;
 		assert: version commitHash equals: '368dcda1b1ba81215fb7355cfc1e901d45395bd8';
 		assert: version commitHashShort equals: '368dcda';
-		assert: version date notNil; 	
 		assert: (version printString beginsWith: 'Pharo-7.0+alpha.build.148.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8')
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : #tests }
 SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 
 	| version |
@@ -151,8 +146,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 		assert: version suffix isEmpty;
 		assert: version build equals: 142;
 		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;
-		assert: version date notNil;		
+		assert: version commitHashShort isEmpty;	
 		assert: (version printString beginsWith: 'Pharo-7.0+build.142')
 ]
 
