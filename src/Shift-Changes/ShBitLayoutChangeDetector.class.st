@@ -25,7 +25,7 @@ ShBitLayoutChangeDetector >> compareClass [
 	(builder layoutDefinition slots size ~= builder oldClass slots size)	
 		ifTrue:[ ^ { ShBitLayoutChanged new builder: builder; yourself. } ].
 
-	(builder oldClass superclass allSlots isEmpty not)	
+	(builder oldClass superclass allSlots isNotEmpty)	
 		ifTrue:[ ^ { ShBitLayoutChanged new builder: builder; yourself. } ]
 		ifFalse:[ ^ #() ].
 

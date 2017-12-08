@@ -23,15 +23,15 @@ ShOldTraitsBuilderEnhancer >> afterMethodsCompiled: aBuilder [
 ]
 
 { #category : #migrating }
-ShOldTraitsBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller. [	
+ShOldTraitsBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 	aBuilder newClass traitComposition traits do: [:each | each addUser: aBuilder newClass].
 	aBuilder newMetaclass traitComposition traits do: [:each | each addUser: aBuilder newMetaclass]
 ]
 
 { #category : #migrating }
-ShOldTraitsBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller. [	
+ShOldTraitsBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 	aBuilder oldClass ifNotNil:[ :x | x traitComposition traits do: [:each | each removeUser: x]].	
-	aBuilder oldMetaclass ifNotNil:[ :x | x traitComposition traits do: [:each | each removeUser: x]].
+	aBuilder oldMetaclass ifNotNil:[ :x | x traitComposition traits do: [:each | each removeUser: x]]
 
 ]
 
