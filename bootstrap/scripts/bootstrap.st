@@ -3,7 +3,7 @@
 
 options := CommandLineArguments default.
 architecture := options optionAt: 'ARCH' ifAbsent: [ '32' ].
-buildNumber := options optionAt: 'BUILD_NUMBER' ifAbsent: [ 'NO_CI' ].
+buildNumber := options optionAt: 'BUILD_NUMBER' ifAbsent: [ '1' ].
 
 "Configure logging"
 (CustomStringStreamBeacon with: FileStream stdout)

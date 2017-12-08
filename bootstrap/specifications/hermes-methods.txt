@@ -1393,6 +1393,7 @@ OrderedCollection>>#setContents:
 OrderedCollection>>#size
 OrderedCollection>>#sort:
 PharoBootstrapInitialization class>>#initializeCommandLineHandlerAndErrorHandling
+PharoBootstrapInitialization class>>#initializeImageOfType:majorVersion:minor:suffix:buid:commitHash:
 PharoClassInstaller>>#classAdded:inCategory:
 PharoClassInstaller>>#classAt:ifAbsent:
 PharoClassInstaller>>#environment:
