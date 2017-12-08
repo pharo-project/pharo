@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 GLMAnnouncerTest >> setUp [
+	super setUp.
 	announcer := GLMAnnouncer new
 ]
 

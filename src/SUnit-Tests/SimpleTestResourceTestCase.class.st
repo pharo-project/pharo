@@ -64,7 +64,7 @@ SimpleTestResourceTestCase >> setRun [
 { #category : #running }
 SimpleTestResourceTestCase >> setUp [
 	"Ensure that we error, not just fail, if resource is nil so that #should:raise: checks cannot mistake such an error for what they are trapping."
-	
+	super setUp.
 	resource := SimpleTestResource rawCurrentForTest.
 	self
 		deny: resource isNil

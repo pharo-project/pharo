@@ -25,6 +25,7 @@ GuideTest >> assertVisitedIs: anArray [
 
 { #category : #running }
 GuideTest >> setUp [
+	super setUp.
 	visited := OrderedCollection new.
 	filesystem := FileSystem memory.
 	self setUpGreek

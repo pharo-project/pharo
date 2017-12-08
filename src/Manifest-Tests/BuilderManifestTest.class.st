@@ -11,6 +11,7 @@ Class {
 BuilderManifestTest >> setUp [
 	
 	| cl |
+	super setUp.
 	cl := Smalltalk globals at: #ManifestManifestResourcesTests ifAbsent: [ nil ].
 	cl
 		ifNotNil: [ 

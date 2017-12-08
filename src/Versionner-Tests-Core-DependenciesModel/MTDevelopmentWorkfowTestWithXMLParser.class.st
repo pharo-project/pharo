@@ -16,7 +16,7 @@ MTDevelopmentWorkfowTestWithXMLParser >> setDevelopment: aVersionString [
 MTDevelopmentWorkfowTestWithXMLParser >> setUp [
 	"Create a model of the project version we want to work on."
 	| version |
-	
+	super setUp.
 	"create a copy of the class to don't pollute the configuration with code generated for tests purposes"
 	classFactory := ClassFactoryForTestCase new.
 	class := classFactory duplicateClass: ConfigurationOfVersionnerTestXMLParserTemplate withNewName: #ConfigurationOfVersionnerTestXMLParser.

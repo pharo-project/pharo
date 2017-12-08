@@ -399,6 +399,7 @@ PNGReadWriterTest >> readEncoded: bytes [
 
 { #category : #running }
 PNGReadWriterTest >> setUp [
+	super setUp.
 	fileName := nil.
 ]
 

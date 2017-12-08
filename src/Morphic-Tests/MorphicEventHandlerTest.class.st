@@ -9,7 +9,7 @@ Class {
 
 { #category : #running }
 MorphicEventHandlerTest >> setUp [
-
+	super setUp.
 	morph := Morph new.
 	morph eventHandler: MorphicEventHandler new
 ]

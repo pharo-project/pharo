@@ -420,6 +420,7 @@ HeapTest >> secondIndex [
 
 { #category : #running }
 HeapTest >> setUp [
+	super setUp.
 	element := 33.
 	elementNotIn := 666.
 	elementTwiceIn := 3.

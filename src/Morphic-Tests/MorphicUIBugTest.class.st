@@ -24,7 +24,7 @@ Class {
 { #category : #running }
 MorphicUIBugTest >> setUp [
 	"default. tests will add morphs to list. Teardown will delete."
-
+	super setUp.
 	cases := #()
 ]
 

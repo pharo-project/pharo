@@ -25,7 +25,7 @@ GTSpotterCandidatesListTest >> hasCategories: aCollection [
 
 { #category : #running }
 GTSpotterCandidatesListTest >> setUp [
-
+	super setUp.
 	candidates := GTSpotterCandidatesList new.
 ]
 

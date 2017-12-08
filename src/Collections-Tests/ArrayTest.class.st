@@ -447,7 +447,7 @@ ArrayTest >> selectorToAccessValuePutIn [
 { #category : #running }
 ArrayTest >> setUp [
 
-	
+	super setUp.
 	literalArray := #(1 true 3 #four).
 	selfEvaluatingArray := { 1. true. (3/4). String loremIpsum. (2 to: 4) . 5 }.
 	nonSEArray1 := { 1 . Set with: 1 }.

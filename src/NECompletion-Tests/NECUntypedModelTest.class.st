@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 NECUntypedModelTest >> setUp [
+	super setUp.
 	prefValueCase := NECPreferences caseSensitive.
 	NECPreferences caseSensitive: true
 ]

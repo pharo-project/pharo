@@ -15,6 +15,7 @@ Class {
 
 { #category : #running }
 Base64MimeConverterTest >> setUp [
+	super setUp.
 	message := 'Hi There!' readStream.
 ]
 

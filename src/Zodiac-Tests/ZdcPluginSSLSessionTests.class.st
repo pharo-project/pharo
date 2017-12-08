@@ -13,7 +13,7 @@ Class {
 
 { #category : #running }
 ZdcPluginSSLSessionTests >> setUp [
-
+	super setUp.
 	session := ZdcPluginSSLSession new
 ]
 

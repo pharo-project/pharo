@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 CairoUTF8ConverterTest >> setUp [
+	super setUp.
 	encoder := CairoUTF8Converter new.
 ]
 

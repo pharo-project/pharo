@@ -331,6 +331,7 @@ StringTest >> secondIndex [
 
 { #category : #running }
 StringTest >> setUp [
+	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
 	subcollection3ElementsSorted := 'bcd'.

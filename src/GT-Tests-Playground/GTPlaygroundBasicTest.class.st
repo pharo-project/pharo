@@ -10,7 +10,7 @@ Class {
 
 { #category : #running }
 GTPlaygroundBasicTest >> setUp [
-
+	super setUp.
 	playground := GTPlayground new.
 ]
 
