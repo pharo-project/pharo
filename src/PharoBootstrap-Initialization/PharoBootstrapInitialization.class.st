@@ -292,7 +292,7 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersi
 					minor: minor;
 					suffix: suffix;
 					build: build;
-					commitHash: {hash};
+					commitHash: hash;
 					yourself).
 	
 	self initializeCommandLineHandlerAndErrorHandling.
