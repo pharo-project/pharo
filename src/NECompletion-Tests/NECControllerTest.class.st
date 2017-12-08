@@ -14,7 +14,7 @@ Class {
 NECControllerTest >> setUp [
 	"Setting up code for NECControllerTest"
 
-
+	super setUp.
 	controller := NECController new.
 ]
 
