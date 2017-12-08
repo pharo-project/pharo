@@ -18,22 +18,18 @@ initializeImage
 	process := objectSpace
 		createProcessWithPriority: 40 
 		"doing: self bootstrapInitialProcessCode."
-		doing: ('
-	SystemVersion 
-		writeClassVariableNamed: #Current
-		value: (SystemVersion new
-					type: ''Pharo'';
-					major: {major};
-					minor: {minor};
-					suffix: ''alpha'';
-					build: {build};
-					commitHash: ''{hash}'';
-					yourself).
-	PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling' format: {
-		'major' -> definitionFetcher majorVersion asNumber.
-		'minor' -> definitionFetcher minorVersion asNumber.
-		'build' -> self buildNumber asNumber.
-		'hash' -> definitionFetcher commitHash asString.
+		doing: ('PharoBootstrapInitialization 
+			initializeImageOfType: ''Pharo'' 
+			majorVersion: {major} 
+			minor: {minor} 
+			suffix: ''alpha'' 
+			buid: {build} 
+			commitHash: ''{hash}''.' 
+		format: {
+			'major' -> definitionFetcher majorVersion asNumber.
+			'minor' -> definitionFetcher minorVersion asNumber.
+			'build' -> self buildNumber asNumber.
+			'hash' -> definitionFetcher commitHash asString.
 	} asDictionary).
  	objectSpace installAsActiveProcess: process.
 	
