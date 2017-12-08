@@ -14,6 +14,7 @@ Class {
 { #category : #running }
 SocketStreamTest >> setUp [
 	| listener clientSocket serverSocket |
+	super setUp.
 	listener := Socket newTCP.
 	[listener listenOn: 0 backlogSize: 4.
 

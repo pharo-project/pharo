@@ -56,6 +56,7 @@ ResumableTestFailureTestCase >> resumableTestFailureTest [
 
 { #category : #running }
 ResumableTestFailureTestCase >> setUp [
+	super setUp.
 	duplicateFailureLog := OrderedCollection with: 'In set up'.
 ]
 

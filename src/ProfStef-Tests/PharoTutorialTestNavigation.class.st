@@ -13,6 +13,7 @@ Class {
 
 { #category : #running }
 PharoTutorialTestNavigation >> setUp [
+	super setUp.
 	prof := ProfStef new.
 	prof player: (
 		TutorialPlayer new 

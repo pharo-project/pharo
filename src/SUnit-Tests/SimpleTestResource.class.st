@@ -68,7 +68,7 @@ SimpleTestResource >> setRun [
 
 { #category : #running }
 SimpleTestResource >> setUp [
-	
+	super setUp.
 	self runningState: self startedStateSymbol.
 	hasSetup := true
 ]

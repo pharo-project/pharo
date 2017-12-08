@@ -29,6 +29,7 @@ SmalllintManifestCheckerTest >> package [
 { #category : #running }
 SmalllintManifestCheckerTest >> setUp [
 	| bm |
+	super setUp.
 	self cleaningResources.
 	bm := TheManifestBuilder of: MFClassA.
 	bm installFalsePositiveOf: RBCodeCruftLeftInMethodsRule uniqueIdentifierName version: 1.

@@ -24,6 +24,7 @@ SlotMethodRecompilationTest >> reshapeClass [
 
 { #category : #running }
 SlotMethodRecompilationTest >> setUp [
+	super setUp.
 	class := self make: [ :builder |
 		builder traitComposition: TOne ].
 	class compile: 'm1'.

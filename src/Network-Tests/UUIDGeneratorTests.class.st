@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 UUIDGeneratorTests >> setUp [
+	super setUp.
 	generator := UUIDGenerator new
 ]
 

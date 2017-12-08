@@ -66,6 +66,7 @@ GTDebuggerSmokeTest >> initializeSessionForContext: aContext withStepBlock: aBlo
 
 { #category : #running }
 GTDebuggerSmokeTest >> setUp [
+	super setUp.
 	debugger := self debuggerToTest new.
 ]
 
