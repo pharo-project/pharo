@@ -13,7 +13,6 @@ Class {
 	#name : #SystemVersion,
 	#superclass : #Object,
 	#instVars : [
-		'date',
 		'highestUpdate',
 		'type',
 		'major',
@@ -222,16 +221,6 @@ SystemVersion >> commitHashShort [
 	^ commitHash ifNotNil: [ commitHash first: (7 min: commitHash size) ]
 ]
 
-{ #category : #'accessing - properties' }
-SystemVersion >> date [
-	^date
-]
-
-{ #category : #'accessing - properties' }
-SystemVersion >> date: newDate [
-	date := newDate
-]
-
 { #category : #'accessing - version strings' }
 SystemVersion >> datedVersion [
 	" E.g. 'Pharo2.0a of ''18 April 2012''' "
@@ -302,7 +291,6 @@ SystemVersion >> initialize [
 	suffix := ''.
 	build := self class invalidBuildNumber.
 	commitHash := ''.
-	date := Date today.
 ]
 
 { #category : #'accessing - properties' }

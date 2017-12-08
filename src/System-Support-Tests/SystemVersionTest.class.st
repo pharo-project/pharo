@@ -67,7 +67,6 @@ SystemVersionTest >> testInstanceCreation [
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-0.0')
 ]
 
@@ -84,7 +83,6 @@ SystemVersionTest >> testInstanceCreationMajorMinor [
 		assert: version build equals: SystemVersion invalidBuildNumber;
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-6.1')
 ]
 
@@ -101,7 +99,6 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 		assert: version build equals: SystemVersion invalidBuildNumber;
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0+alpha')
 ]
 
@@ -118,7 +115,6 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
 		assert: version build equals: 142;
 		assert: version commitHash isEmpty;
 		assert: version commitHashShort isEmpty;		
-		assert: version date notNil;
 		assert: (version printString beginsWith: 'Pharo-7.0+alpha.build.142')
 ]
 
@@ -135,7 +131,6 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 		assert: version build equals: 148;
 		assert: version commitHash equals: '368dcda1b1ba81215fb7355cfc1e901d45395bd8';
 		assert: version commitHashShort equals: '368dcda';
-		assert: version date notNil; 	
 		assert: (version printString beginsWith: 'Pharo-7.0+alpha.build.148.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8')
 ]
 
@@ -151,8 +146,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 		assert: version suffix isEmpty;
 		assert: version build equals: 142;
 		assert: version commitHash isEmpty;
-		assert: version commitHashShort isEmpty;
-		assert: version date notNil;		
+		assert: version commitHashShort isEmpty;	
 		assert: (version printString beginsWith: 'Pharo-7.0+build.142')
 ]
 
