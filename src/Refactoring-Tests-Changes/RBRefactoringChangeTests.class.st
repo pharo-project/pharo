@@ -408,7 +408,7 @@ RBRefactoringChangeTests >> testPerformChangeComment [
 	| change comment |
 	change := changes comment: 'Some Comment' in: self changeMock.
 	comment := change changeClass organization classComment.
-	self perform: change do: [ self assert: (change changeClass comment equals: 'Some Comment') ].
+	self perform: change do: [ self assert: change changeClass comment equals: 'Some Comment' ].
 	self assert: change changeClass organization classComment equals: comment
 ]
 
