@@ -184,7 +184,6 @@ Collection >> anyOne [
 	([#() anyOne] on: SubscriptOutOfBounds do: [ :ex | 'whatever' ]) >>> 'whatever'
 	"
 	
-	
 	self emptyCheck.
 	self do: [:each | ^ each]
 ]
@@ -573,14 +572,9 @@ Collection >> detectSum: aBlock [
 
 { #category : #enumerating }
 Collection >> difference: aCollection [
-	"Answer the set theoretic difference of two collections."
-
-	"#(a b c d e f) difference:  #(a b z k)
-	=> #(#f #d #e #c)
-	
-	#(a b z k) difference: #(a b c d e f) 
-	=> #(#k #z) 
-	"
+	"Answer the set theoretic difference of two collections. Pay attention that the difference is not commutative, hence the order is important."
+	"(#(a b c d e f) difference:  #(a b z k))>>> #(#f #d #e #c)"
+	"(#(a b z k) difference: #(a b c d e f)) >>> #(#k #z)"
 
 	| set |
 	set := self asSet.
@@ -599,6 +593,7 @@ Collection >> do: aBlock [
 Collection >> do: elementBlock separatedBy: separatorBlock [
 	"Evaluate the elementBlock for all elements in the receiver,
 	and evaluate the separatorBlock between."
+	"(String streamContents: [:s | #(1 2 3) do: [:each | s << each asString] separatedBy: [s << ', ']]) >>> '1, 2, 3'"
 
 	| beforeFirst | 
 	beforeFirst := true.
@@ -679,6 +674,9 @@ Collection >> flatCollect: aBlock [
 	list of all resulting values flatten one level. Assumes that aBlock returns some kind
 	of collection for each element. Equivalent to the lisp's mapcan"
 	
+	"( #((3 4) (1 2)) flatCollect: [:each | each ] )>>> #(3 4 1 2)"
+	"( #(3 4 1 2) flatCollect: [:each | { each } ] ) >>> #(3 4 1 2)"
+	
 	^ self flatCollect: aBlock as: self species
 ]
 
@@ -713,40 +711,32 @@ Collection >> flattenOn: aStream [
 
 { #category : #enumerating }
 Collection >> flattened [
-	
-	"Flattens a collection of collections (no matter how many levels of collections exist).
-	Strings are considered atoms and, as such, won't be flattened
-	
-	Examples:
-	#(1 #(2 3) #(4 (#5))) flattened returns #(1 2 3 4 5) 
-	#('string1' #('string2' 'string3')) flattened returns #('string1' 'string2' 'string3')"
+	"Flattens a collection of collections (no matter how many levels of collections exist). Strings are considered atoms and, as such, won't be flattened"
+	"( #(1 #(2 3) #(4 #(5))) flattened ) >>> #(1 2 3 4 5)" 
+	"( #('string1' #('string2' 'string3')) flattened ) >>> #('string1' 'string2' 'string3')"
 	
 	^ Array streamContents: [ :stream | self flattenOn: stream].
 ]
 
 { #category : #enumerating }
 Collection >> fold: binaryBlock [
-	"Evaluate the block with the first two elements of the receiver,
-	then with the result of the first evaluation and the next element,
-	and so on.  Answer the result of the final evaluation. If the receiver
-	is empty, raise an error. If the receiver has a single element, answer
-	that element."
-	"#('if' 'it' 'is' 'to' 'be' 'it' 'is' 'up' 'to' 'me') fold: [:a :b | a, ' ', b]"
+	"Evaluate the block with the first two elements of the receiver, then with the result of the first evaluation and the next element, and so on.  Answer the result of the final evaluation. If the receiver is empty, raise an error. If the receiver has a single element, answer that element."
+	"( #('if' 'it' 'is' 'to' 'be' 'it' 'is' 'up' 'to' 'me') fold: [:a :b | a, ' ', b] ) >>> 'if it is to be it is up to me'"
 
 	^self reduce: binaryBlock
 ]
 
 { #category : #enumerating }
 Collection >> gather: aBlock [
-	"This method is kept for compatibility reasons, use flatCollect instead."
+	"This method is kept for compatibility reasons, use flatCollect: instead."
+	
 	^ self flatCollect: aBlock.
 ]
 
 { #category : #enumerating }
 Collection >> groupedBy: aBlock [
-	"Answer a dictionary whose keys are the result of evaluating aBlock
-	for all my elements, and the value for each key is the selection of 
-	my elements that evaluated to that key. Uses species."
+	"Answer a dictionary whose keys are the result of evaluating aBlock for all my elements, and the value for each key is the selection of my elements that evaluated to that key. Uses species."
+	
 	| groups |
 	groups := PluggableDictionary integerDictionary.
 	self do: [ :each |
@@ -887,11 +877,9 @@ Collection >> includesSubstringAnywhere: testString [
 
 { #category : #enumerating }
 Collection >> inject: thisValue into: binaryBlock [ 
-	"Accumulate a running value associated with evaluating the argument, 
-	binaryBlock, with the current value of the argument, thisValue, and the 
-	receiver as block arguments. For instance, to sum the numeric elements 
-	of a collection, aCollection inject: 0 into: [:subTotal :next | subTotal + 
-	next]."
+	"Accumulate a running value associated with evaluating the argument, binaryBlock, with the current value of the argument, thisValue, and the receiver as block arguments."
+	
+	"( #(1 2 3) inject: 0 into: [ :sum :each | sum + each ] ) >>> 6"
 
 	| nextValue |
 	nextValue := thisValue.
@@ -903,16 +891,17 @@ Collection >> inject: thisValue into: binaryBlock [
 Collection >> intersection: aCollection [
 	"Answer the set theoretic intersection of two collections."
 
+	"(#(1 2 3 4) intersection: #(3 4 5)) >>> #(3 4)"
+	"(#(1 2 3 4) intersection: #()) >>> #()"
+	"(#() intersection: #(1 2 3 4)) >>> #()"
+
 	| set outputSet |
-	
 	set := self asSet.
 	outputSet := Set new.
-	
-	aCollection do: [ :each|
-		((set includes: each) and: [(outputSet includes: each) not])
-			ifTrue: [ 
-				outputSet add: each]].
-		
+	aCollection 
+		do: [ :each | 
+			((set includes: each) and: [ (outputSet includes: each) not ])
+				ifTrue: [ outputSet add: each ] ].
 	^ self species withAll: outputSet asArray
 ]
 
@@ -955,9 +944,7 @@ Collection >> median [
 
 { #category : #enumerating }
 Collection >> noneSatisfy: aBlock [
-	"Evaluate aBlock with the elements of the receiver.
-	If aBlock returns false for all elements return true.
-	Otherwise return false"
+	"Evaluate aBlock with the elements of the receiver. If aBlock returns false for all elements return true. Otherwise return false"
 
 	self do: [:item | (aBlock value: item) ifTrue: [^ false]].
 	^ true
@@ -984,7 +971,7 @@ Collection >> occurrencesOf: anObject [
 { #category : #enumerating }
 Collection >> piecesCutWhere: binaryBlock [
 	"Answer substrings of the receiver derived from cutting the receiver at points where binaryBlock answers true for adjacent elements."
-
+	"( #(1 2 3 1 6 1 2 3 4) piecesCutWhere: [ :a :b | a = 1 and: [ b = 2]]) asArray >>> #(#(1) #(2 3 1 6 1) #(2 3 4))"
 	| pieces |
 	pieces := OrderedCollection new.
 	self 
@@ -992,7 +979,7 @@ Collection >> piecesCutWhere: binaryBlock [
 		do: [ :piece | pieces add: piece ].
 	^pieces
 
-       "'Now is the time for all good people to come to the aid of the cause of world peace.  It is just fine, even desirable, to love your country, if that means wanting it to play a beneficial role in the course of world events and be the best possible example of a good society.  But if it means wanting dominion over the rest of the world, it is not love but defensiveness or self-glorification, and will lead only to oblivion.'  piecesCutWhere: [:a :b| a = $. and: [b isSeparator]]"
+   "'Now is the time for all good people to come to the aid of the cause of world peace.  It is just fine, even desirable, to love your country, if that means wanting it to play a beneficial role in the course of world events and be the best possible example of a good society.  But if it means wanting dominion over the rest of the world, it is not love but defensiveness or self-glorification, and will lead only to oblivion.'  piecesCutWhere: [:a :b| a = $. and: [b isSeparator]]"
 ]
 
 { #category : #enumerating }
@@ -1070,21 +1057,18 @@ Collection >> printOn: aStream delimiter: delimString last: lastDelimString [
 { #category : #enumerating }
 Collection >> reduce: aBlock [
 	"Fold the result of the receiver into aBlock. The argument aBlock must take two or more arguments. It applies the argument, binaryBlock cumulatively to the elements of the receiver. For sequenceable collections the elements will be used in order, for unordered collections the order is unspecified."
-	"#(1 2 3) asSet reduce: [ :a :b | a + b ]
-		--> 1 + 2 + 3 = 6
-	#(1 2 3 4 5) asSet reduce: [ :a :b :c | a + b + c ]
-		--> 1 + 2 + 3 + 4 + 5 = 15"
+	"( #(1 2 3) asSet reduce: [ :a :b | a + b ] ) >>> 1 + 2 + 3"
+	"( #(1 2 3 4 5) asSet reduce: [ :a :b :c | a + b + c ] ) >>> 1 + 2 + 3 + 4 + 5"
 		
 	^self asOrderedCollection reduce: aBlock
 ]
 
 { #category : #enumerating }
 Collection >> reject: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
-	Collect into a new collection like the receiver only those elements for 
-	which aBlock evaluates to false. Answer the new collection."
+	"Evaluate aBlock with each of the receiver's elements as the argument. Collect into a new collection like the receiver only those elements for which aBlock evaluates to false. Answer the new collection."
+	"#(1 2 3 4 5) reject: #even >>>  #(1 3 5)"
 
-	^self select: [ :element | (aBlock value: element) == false ]
+	^ self select: [ :element | (aBlock value: element) == false ]
 ]
 
 { #category : #enumerating }
@@ -1163,10 +1147,9 @@ Collection >> removeAllSuchThat: aBlock [
 
 { #category : #enumerating }
 Collection >> select: aBlock [ 
-	"Evaluate aBlock with each of the receiver's elements as the argument. 
-	Collect into a new collection like the receiver, only those elements for 
-	which aBlock evaluates to true. Answer the new collection."
-
+	"Evaluate aBlock with each of the receiver's elements as the argument. Collect into a new collection like the receiver, only those elements for which aBlock evaluates to true. Answer the new collection."
+	"(#(1 2 3 4 5) select: #even) >>> #(2 4)"
+	
 	| newCollection |
 	newCollection := self copyEmpty.
 	self do: [ :each | 
@@ -1284,11 +1267,10 @@ Collection >> sumNumbers: aBlock [
 { #category : #enumerating }
 Collection >> union: aCollection [
 	"Answer the set theoretic union of two collections."
+	"(#(1 2 3) union: #(4 5 6 2)) >>> #(1 2 3 4 5 6)"
 	
 	| set |
-	
 	set := self asSet addAll: aCollection; yourself.
-	
 	^ self species withAll: set asArray
 ]
 
