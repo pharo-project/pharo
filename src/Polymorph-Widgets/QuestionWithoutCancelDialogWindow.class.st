@@ -7,6 +7,12 @@ Class {
 	#category : #'Polymorph-Widgets-Windows'
 }
 
+{ #category : #keymapping }
+QuestionWithoutCancelDialogWindow >> closeWindowAction [
+	
+	self escapePressed 
+]
+
 { #category : #actions }
 QuestionWithoutCancelDialogWindow >> escapePressed [
 	"Default is to cancel."
