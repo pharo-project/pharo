@@ -4,10 +4,10 @@ I store metadata for this package. These meta data are used by other tools such 
 Class {
 	#name : #ManifestHermes,
 	#superclass : #PackageManifest,
-	#category : #Hermes
+	#category : 'Hermes'
 }
 
 { #category : #'meta-data - dependency analyser' }
 ManifestHermes class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract' #'Zinc-Character-Encoding-Core' #'System-Support')
+	^ #(#'RPackage-Core' #Files #'Collections-Abstract')
 ]

@@ -2,9 +2,10 @@ Class {
 	#name : #HEInstaller,
 	#superclass : #Object,
 	#instVars : [
-		'environment'
+		'environment',
+		'originalUndeclareds'
 	],
-	#category : #'Hermes-ClassInstaller'
+	#category : 'Hermes-ClassInstaller'
 }
 
 { #category : #converting }
@@ -32,12 +33,18 @@ HEInstaller >> asSlots: aString [
 { #category : #'creating classes' }
 HEInstaller >> build: aHEClass [
 	| newMetaclass newClass superclass layoutType |
+
+	self validateExistanceOfClass: aHEClass.
+
 	newMetaclass := Metaclass new.
 	
 	superclass := self classNamed: aHEClass superclass.
 	layoutType := self classNamed: aHEClass layoutClass.
 
-	newMetaclass superclass: superclass class withLayoutType: FixedLayout slots: (self asSlots: aHEClass classInstancevariables).
+	newMetaclass 
+		superclass: (superclass ifNil: [Class] ifNotNil: [superclass class]) 
+		withLayoutType: FixedLayout 
+		slots: (self asSlots: aHEClass classInstancevariables).
 	
 	newClass := newMetaclass new.
 	newClass setName: aHEClass className.
@@ -66,6 +73,9 @@ HEInstaller >> build: aHEClass [
 { #category : #'creating traits' }
 HEInstaller >> buildTrait: aTraitDefinition [
 	| newTrait traitComposition |
+	
+	self validateExistanceOfTrait: aTraitDefinition.
+	
 	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
 	
 	newTrait := Trait
@@ -81,7 +91,13 @@ HEInstaller >> buildTrait: aTraitDefinition [
 
 { #category : #accessing }
 HEInstaller >> classNamed: aSymbol [
+	aSymbol ifNil: [ ^ nil ].
 	^ self environment at: aSymbol
+]
+
+{ #category : #'reporting undeclared' }
+HEInstaller >> createdUndeclared [
+	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
 ]
 
 { #category : #accessing }
@@ -97,6 +113,7 @@ HEInstaller >> environment: anObject [
 { #category : #initialization }
 HEInstaller >> initialize [
 	environment := self class environment.
+	originalUndeclareds := Undeclared copy.
 ]
 
 { #category : #'creating classes' }
@@ -143,12 +160,16 @@ HEInstaller >> installPackage: aHEPackage [
 
 	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
 
-	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ]
+	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	
+	self validateNoNewUndeclared
 ]
 
 { #category : #'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 	| newMethod literalSpace extendedEnvironment |
+	
+	self validateExistanceOfMethod: aMethod in: aClass.	
 
 	extendedEnvironment := HEExtendedEnvironment new.
 	extendedEnvironment inner: environment.
@@ -173,4 +194,40 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 		withMethod: newMethod
 		inProtocol: aMethod protocol
 		notifying: nil
+]
+
+{ #category : #'validating existance' }
+HEInstaller >> validateExistanceOfClass: aHEClass. [
+	(environment hasClassNamed: aHEClass className) ifTrue:[
+		self error: 'The class ' , aHEClass className asString, ' already exists. Should not be overwritten'.	
+	].
+]
+
+{ #category : #'validating existance' }
+HEInstaller >> validateExistanceOfMethod: aHEMethod in: aClass [
+	aClass
+		compiledMethodAt: aHEMethod name
+		ifPresent: [ :m | 
+			(m isFromTrait and:[aClass isTrait not]) ifTrue:[ ^self ].  	
+			self error: 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString ]
+		ifAbsent: [  ]
+]
+
+{ #category : #'validating existance' }
+HEInstaller >> validateExistanceOfTrait: aHETrait. [
+	(environment includesKey: aHETrait traitName) ifTrue:[ 
+		self error: 'The trait ' , aHETrait traitName asString, ' already exists. Should not be overwritten'.	
+	].
+]
+
+{ #category : #'reporting undeclared' }
+HEInstaller >> validateNoNewUndeclared [
+	| newUndeclareds|
+	
+	newUndeclareds := self createdUndeclared.
+	newUndeclareds ifNotEmpty: [ 
+		self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString.
+	].
+
+	('[Hermes] Remaining Undeclared variables in the system: ' , Undeclared keys printString) logCr.
 ]

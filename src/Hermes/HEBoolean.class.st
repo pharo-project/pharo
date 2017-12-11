@@ -1,7 +1,7 @@
 Class {
 	#name : #HEBoolean,
 	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #accessing }

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'traitName'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #'instance creation' }
@@ -29,6 +29,11 @@ HETrait >> fromTrait: aTrait [
 	traitName := aTrait name.
 
 	self doFromMethodContainer: aTrait
+]
+
+{ #category : #accessing }
+HETrait >> isTrait [
+	^ true
 ]
 
 { #category : #accessing }

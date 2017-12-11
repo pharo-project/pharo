@@ -1,10 +1,10 @@
 Class {
 	#name : #HEScaledDecimal,
 	#superclass : #HEFraction,
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 HEScaledDecimal class >> tag [ 
 	^ 25
 ]

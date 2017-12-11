@@ -1,10 +1,10 @@
 Class {
 	#name : #HEFraction,
 	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 HEFraction class >> tag [ 
 	^ 24
 ]

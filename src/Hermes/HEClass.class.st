@@ -10,7 +10,7 @@ Class {
 		'sharedPools',
 		'layoutClass'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #'instance creation' }
@@ -103,6 +103,11 @@ HEClass >> instanceVariables: anObject [
 ]
 
 { #category : #accessing }
+HEClass >> isTrait [
+	^ false
+]
+
+{ #category : #accessing }
 HEClass >> layoutClass [
 	^ layoutClass
 ]
@@ -137,7 +142,7 @@ HEClass >> sharedPoolsIn: aCollection [
 
 { #category : #accessing }
 HEClass >> superclass [
-	^ superclass
+	^ superclass ifEmpty: [nil]
 ]
 
 { #category : #accessing }

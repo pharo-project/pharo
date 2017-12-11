@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'key'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #accessing }

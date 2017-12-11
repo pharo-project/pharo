@@ -1,7 +1,7 @@
 Class {
 	#name : #HEFloat,
 	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -22,9 +22,7 @@ HEFloat >> doReadFrom: aReader [
 	originalValue at:2 put: (aReader readUInt32).
 	
 	"Force the conversion to SmallFloat64 or BoxedFloat64"
-	value := originalValue + 0.
-	
-	(value literalEqual: originalValue) ifFalse:[ value := value negated]
+	value := originalValue - 0.0.
 ]
 
 { #category : #writing }

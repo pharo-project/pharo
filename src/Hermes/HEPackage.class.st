@@ -8,7 +8,7 @@ Class {
 		'extensionMethods',
 		'traits'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #formatting }

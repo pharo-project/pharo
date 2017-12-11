@@ -8,7 +8,7 @@ Class {
 		'classTraitComposition',
 		'category'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #accessing }

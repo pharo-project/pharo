@@ -1,7 +1,7 @@
 Class {
 	#name : #HETraitComposition,
 	#superclass : #HEArray,
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model'
 }
 
 { #category : #accessing }
