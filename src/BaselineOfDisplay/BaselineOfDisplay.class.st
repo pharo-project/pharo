@@ -61,7 +61,7 @@ BaselineOfDisplay >> postload: loader package: packageSpec [
 	display beDisplay.
 
 	Cursor classPool at: #CurrentCursor put: Cursor new.
-	Cursor classPool at: #WebLinkCursor put: Cursor new.
+	Cursor webLink. "set the webLink cursor shape"
 					
 	Cursor initialize.
 	DisplayScreen initialize.
