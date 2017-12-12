@@ -17,6 +17,8 @@ addMethod: method
 
 [ | repositoryPathString |
 
+  Iceberg enableMetacelloIntegration: true.
+
   repositoryPathString := ((Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['.']) asFileReference / 'bootstrap' / 'src') fullName.
   Metacello new
 	baseline: 'PharoBootstrapProcess';
