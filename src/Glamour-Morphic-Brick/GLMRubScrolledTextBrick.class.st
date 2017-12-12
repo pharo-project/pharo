@@ -233,5 +233,5 @@ GLMRubScrolledTextBrick >> withoutBorder [
 { #category : #'brick-properties' }
 GLMRubScrolledTextBrick >> withoutMargins [
 
-	self margins: (0@0 corner: 0@0)
+	self margins: 0 asMargin
 ]

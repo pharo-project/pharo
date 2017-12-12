@@ -674,9 +674,9 @@ RubScrolledTextMorph >> manageLayoutInBounds: aRectangle [
 ]
 
 { #category : #'accessing text area' }
-RubScrolledTextMorph >> margins: aRectangle [
+RubScrolledTextMorph >> margins: aMargin [
 	"polymorphism with text area"
-	self textArea margins: aRectangle
+	self textArea margins: aMargin
 ]
 
 { #category : #'accessing menu' }
