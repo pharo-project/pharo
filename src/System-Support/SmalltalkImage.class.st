@@ -453,7 +453,7 @@ SmalltalkImage >> compiler [
 
 { #category : #compiler }
 SmalltalkImage >> compilerClass [
-	^CompilerClass ifNil: [CompilerClass := OpalCompiler].
+	^CompilerClass ifNil: [CompilerClass := (self class environment at: #OpalCompiler)].
 ]
 
 { #category : #'memory space' }

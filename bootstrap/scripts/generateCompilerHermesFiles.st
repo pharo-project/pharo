@@ -12,9 +12,9 @@ repository := TonelRepository new
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.
 
-toExport := #BaselineOfPharoBootstrap asClass kernelPackageNames.
+toExport := #BaselineOfPharoBootstrap asClass compilerPackageNames.
 	
-packageNames := toExport.
+packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, toExport.
 environment := repository asRing2EnvironmentWith: packageNames.		
 
 environment fixProtoObjectClassSuperclass.

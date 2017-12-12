@@ -155,6 +155,7 @@ try{
     		stage ("Bootstrap-${architecture}") {
     			shell "mkdir -p bootstrap-cache #required to generate hermes files"
     			shell "./pharo Pharo.image ./bootstrap/scripts/generateKernelHermesFiles.st --quit"
+    			shell "./pharo Pharo.image ./bootstrap/scripts/generateCompilerHermesFiles.st --quit"
     			shell "./pharo Pharo.image ./bootstrap/scripts/generateSUnitHermesFiles.st --quit"
     			shell "./pharo ./Pharo.image bootstrap/scripts/bootstrap.st --ARCH=${architecture} --BUILD_NUMBER=${env.BUILD_ID} --quit"
     	    }
