@@ -328,11 +328,12 @@ SlotAnnouncementsTest >> testFixedClassWithTraitCreatedShouldntAnnounceClassModi
 { #category : #tests }
 SlotAnnouncementsTest >> testLayoutChangeShouldAnnounceClassModified [
 
-	| classAdded classModified |
+	| classAdded classModified addedFormat |
 	self subscribeOn: ClassModifiedClassDefinition.
 	
 	"Create a class"
 	classAdded := self makeWithLayout: FixedLayout.
+	addedFormat := classAdded format.
 	
 	"Modify its format"
 	classModified := self makeWithLayout: WeakLayout.
@@ -340,7 +341,7 @@ SlotAnnouncementsTest >> testLayoutChangeShouldAnnounceClassModified [
 	self assert: self collectedAnnouncements size equals: 1.
 	announcement := self collectedAnnouncements first.
 	self assert: announcement newClassDefinition equals: classModified.
-	self assert: announcement oldClassDefinition format equals: classAdded format.
+	self assert: announcement oldClassDefinition format equals: addedFormat.
 	self assert: announcement newClassDefinition format equals: classModified format.
 ]
 
@@ -365,11 +366,12 @@ SlotAnnouncementsTest >> testSameCommentDoesNotAnnounce [
 { #category : #tests }
 SlotAnnouncementsTest >> testSlotAdditionShouldAnnounceClassModified [
 
-	| classAdded classModified |
+	| classAdded classModified addedInstanceNames |
 	self subscribeOn: ClassModifiedClassDefinition.
 	
 	"Create a class"
 	classAdded := self makeWithLayout: FixedLayout.
+	addedInstanceNames := classAdded allInstVarNames.
 	
 	"now we extend it with slots.  The class definition should've changed"
 	classModified := self makeWithLayout: FixedLayout andSlots: { #aSlot }.
@@ -377,7 +379,7 @@ SlotAnnouncementsTest >> testSlotAdditionShouldAnnounceClassModified [
 	self assert: self collectedAnnouncements size equals: 1.
 	announcement := self collectedAnnouncements first.	
 	self assert: announcement newClassDefinition equals: classModified.
-	self assert: announcement oldClassDefinition allInstVarNames equals: classAdded allInstVarNames.
+	self assert: announcement oldClassDefinition allInstVarNames equals: addedInstanceNames.
 ]
 
 { #category : #'tests-integration' }

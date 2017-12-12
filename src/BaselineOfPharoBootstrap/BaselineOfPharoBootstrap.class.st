@@ -71,6 +71,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'RPackage-Core'.
 		spec package: 'Random-Core'.
+		spec package: 'Shift-Changes'.
+		spec package: 'Shift-ClassBuilder'.
+		spec package: 'Shift-ClassInstaller'.
 		spec package: 'Slot'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
@@ -87,6 +90,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Transcript-Core'.
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
+		spec package: 'MethodTracer'.
 		
 		spec package: 'FFI-Kernel'.
 		spec package: 'FFI-Pools'.
@@ -135,6 +139,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'PharoBootstrap-Initialization'.
 			'RPackage-Core'.
 			'Random-Core'.
+			'Shift-Changes'.
+			'Shift-ClassBuilder'.
+			'Shift-ClassInstaller'.
 			'Slot'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
@@ -155,7 +162,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			
 			'Multilingual-Languages'.
 			'Multilingual-Encodings'.
-			'Multilingual-TextConversion' }.
+			'Multilingual-TextConversion'.
+			'MethodTracer' }.
 
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
