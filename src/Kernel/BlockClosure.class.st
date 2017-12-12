@@ -688,7 +688,6 @@ BlockClosure >> value [
 	 whose closure is the receiver and whose caller is the sender of this message.
 	 Supply the copied values to the activation as its arguments and copied temps.
 	 Primitive. Optional (but you're going to want this for performance)."
-	| newContext ncv |
 	<primitive: 201>
 	numArgs ~= 0 ifTrue:
 		[self numArgsError: 0].
@@ -700,8 +699,7 @@ BlockClosure >> value: anArg [
 	"Activate the receiver, creating a closure activation (MethodContext)
 	 whose closure is the receiver and whose caller is the sender of this message.
 	 Supply the argument and copied values to the activation as its arguments and copied temps.
-	 Primitive. Optional (but you're going to want this for performance)."
-	| newContext ncv |
+	 Primitive. Optional (but you're going to want this for performance)."	 
 	<primitive: 202>
 	numArgs ~= 1 ifTrue:
 		[self numArgsError: 1].
@@ -714,7 +712,6 @@ BlockClosure >> value: firstArg value: secondArg [
 	 whose closure is the receiver and whose caller is the sender of this message.
 	 Supply the arguments and copied values to the activation as its arguments and copied temps.
 	 Primitive. Optional (but you're going to want this for performance)."
-	| newContext ncv |
 	<primitive: 203>
 	numArgs ~= 2 ifTrue:
 		[self numArgsError: 2].
@@ -727,7 +724,6 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg [
 	 whose closure is the receiver and whose caller is the sender of this message.
 	 Supply the arguments and copied values to the activation as its arguments and copied temps.
 	 Primitive. Optional (but you're going to want this for performance)."
-	| newContext ncv |
 	<primitive: 204>
 	numArgs ~= 3 ifTrue:
 		[self numArgsError: 3].
@@ -740,7 +736,6 @@ BlockClosure >> value: firstArg value: secondArg value: thirdArg value: fourthAr
 	 whose closure is the receiver and whose caller is the sender of this message.
 	 Supply the arguments and copied values to the activation as its arguments and copied temps.
 	 Primitive. Optional (but you're going to want this for performance)."
-	| newContext ncv |
 	<primitive: 205>
 	numArgs ~= 4 ifTrue:
 		[self numArgsError: 4].

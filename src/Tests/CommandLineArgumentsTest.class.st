@@ -22,6 +22,7 @@ CommandLineArgumentsTest >> parameters [
 
 { #category : #running }
 CommandLineArgumentsTest >> setUp [
+	super setUp.
 	commandLine := CommandLineArguments withArguments: self parameters.
 ]
 

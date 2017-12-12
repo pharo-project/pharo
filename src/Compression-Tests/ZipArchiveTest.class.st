@@ -18,6 +18,7 @@ Class {
 ZipArchiveTest >> setUp [
 
 	| now |
+	super setUp.
 	now := DateAndTime now asString replaceAll: $: with: $_.
 	fileToZip := ('_test-zip-file', now) asFileReference.
 	fileToZip writeStreamDo: [ :stream | stream nextPutAll: 'file contents' ].

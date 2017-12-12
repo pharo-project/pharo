@@ -277,6 +277,27 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 
 ]
 
+{ #category : #'public api' }
+PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersion: major minor: minor suffix: suffix buid: build commitHash: hash [
+
+	"The image main entry point called by an image builder. The arguments specify the image
+	version description.
+	This method is run before the new bootstrapped image is saved!"
+
+	SystemVersion 
+		writeClassVariableNamed: #Current
+		value: (SystemVersion new
+					type: typeName;
+					major: major;
+					minor: minor;
+					suffix: suffix;
+					build: build;
+					commitHash: hash;
+					yourself).
+	
+	self initializeCommandLineHandlerAndErrorHandling.
+]
+
 { #category : #loading }
 PharoBootstrapInitialization class >> loadPackage: mcVersion from: aRepository [
 	mcVersion ifNotEmpty: [

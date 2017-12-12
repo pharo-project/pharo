@@ -4,7 +4,7 @@ I am not a subclass of MCRepositoryTest because my purpose was to show that a bu
 Class {
 	#name : #MCSubDirectoryRepositoryTest,
 	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #tests }

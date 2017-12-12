@@ -33,7 +33,7 @@ SendsDeprecatedMethodToGlobalRuleTest >> nonDeprecatedMethodName [
 { #category : #running }
 SendsDeprecatedMethodToGlobalRuleTest >> setUp [
 	| deprClass |
-	
+	super setUp.
 	deprClass := Object newAnonymousSubclass. 
 	Smalltalk globals at: self globalName put: deprClass new.
 	

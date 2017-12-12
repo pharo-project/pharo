@@ -15,6 +15,7 @@ Class {
 
 { #category : #running }
 MatrixTest >> setUp [
+	super setUp.
 	matrix1 := Matrix new: 2.
 	matrix1 at:1 at:1 put: 1.
 	matrix1 at:1 at:2 put: 3.

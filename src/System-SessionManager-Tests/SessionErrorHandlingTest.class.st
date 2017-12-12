@@ -17,6 +17,7 @@ SessionErrorHandlingTest >> newTestSessionfor: aManager [
 
 { #category : #running }
 SessionErrorHandlingTest >> setUp [
+	super setUp.
 	manager := SessionManager new.
 	session := self newTestSessionfor: manager.
 	manager installSession: session.

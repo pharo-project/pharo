@@ -143,9 +143,8 @@ TestSuite >> runUnmanaged: aResult [
 
 { #category : #running }
 TestSuite >> setUp [
-	self resources  do: [ :each |
-			each isAvailable ifFalse: [ each signalInitializationError ]
-		].
+	self resources do: [:each |
+			each isAvailable ifFalse: [ each signalInitializationError ]].
 ]
 
 { #category : #announcements }

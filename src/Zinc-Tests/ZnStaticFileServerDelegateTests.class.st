@@ -15,7 +15,7 @@ ZnStaticFileServerDelegateTests >> largeHtml [
 
 { #category : #running }
 ZnStaticFileServerDelegateTests >> setUp [
-	self tearDown.
+	super setUp.
 	ZnFileSystemUtils
 		newFileNamed: 'small.html' 
 		do: [ :stream |

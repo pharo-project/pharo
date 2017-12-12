@@ -1,10 +1,13 @@
+"
+A test resource mocking a snapshot
+"
 Class {
 	#name : #MCSnapshotResource,
 	#superclass : #TestResource,
 	#instVars : [
 		'snapshot'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Resources'
 }
 
 { #category : #accessing }
@@ -29,6 +32,7 @@ MCSnapshotResource >> definitions [
 
 { #category : #running }
 MCSnapshotResource >> setUp [
+	super setUp.
 	snapshot := self class takeSnapshot.
 ]
 

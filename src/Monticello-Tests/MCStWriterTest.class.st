@@ -5,7 +5,7 @@ Class {
 		'stream',
 		'writer'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-IO'
 }
 
 { #category : #asserting }
@@ -154,6 +154,7 @@ MCMethodDeclaration className: #MCMockClassD selector: #one category: #''as yet 
 
 { #category : #running }
 MCStWriterTest >> setUp [
+	super setUp.
 	stream := String new writeStream.
 	writer := MCStWriter on: stream.
 

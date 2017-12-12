@@ -8,12 +8,13 @@ Class {
 		'packageA',
 		'packageB'
 	],
-	#category : #'Tool-DependencyAnalyser-Test'
+	#category : #'Tool-DependencyAnalyser-Test-Packages'
 }
 
 { #category : #running }
 DAPackageRelationGraphDiffTest >> setUp [
 	| packageCollectionsAbstract packageCollectionsString |
+	super setUp.
 	packageA := DAPackage on: (RPackageSet named: 'A').
 	packageB := DAPackage on: (RPackageSet named: 'B').
 	packageCollectionsAbstract := DAPackage on: (RPackageSet named: 'Collections-Abstract').
@@ -24,7 +25,6 @@ DAPackageRelationGraphDiffTest >> setUp [
 	oldRelationGraph build.
 	newRelationGraph build.
 	
-
 	packageRelationGraphDiff := DAPackageRelationGraphDiff new
 		oldRelationGraph: oldRelationGraph;
 		newRelationGraph: newRelationGraph

@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 RandomTest >> setUp [
+	super setUp.
 	gen := Random seed: 112629.
 ]
 

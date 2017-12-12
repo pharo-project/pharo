@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 PharoTutorialTestGoOnMockTutorial >> setUp [
+	super setUp.
 	ProfStef tutorial: MockTutorial lesson: #firstLesson 
 ]
 

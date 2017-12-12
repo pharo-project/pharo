@@ -1,3 +1,6 @@
+"
+A test object mocking a dependency
+"
 Class {
 	#name : #MCMockDependency,
 	#superclass : #Object,
@@ -6,7 +9,7 @@ Class {
 		'children',
 		'hasResolution'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Dependencies'
 }
 
 { #category : #'instance creation' }

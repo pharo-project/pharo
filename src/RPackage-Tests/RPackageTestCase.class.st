@@ -142,7 +142,7 @@ RPackageTestCase >> runCase [
 
 { #category : #running }
 RPackageTestCase >> setUp [
-	
+	super setUp.
 	createdClasses := OrderedCollection new.
 	createdPackages := OrderedCollection new.
 	createdCategories := Set new.

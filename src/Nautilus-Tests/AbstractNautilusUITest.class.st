@@ -13,7 +13,7 @@ Class {
 { #category : #running }
 AbstractNautilusUITest >> setUp [
 	"Setting up code for AbstractNautilusUITest"
-
+	super setUp.
 	model := AbstractNautilusUI new.
 ]
 

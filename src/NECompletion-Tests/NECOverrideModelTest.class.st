@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 NECOverrideModelTest >> setUp [
+	super setUp.
 	model := NECOverrideModel class: NECTestClass.
 	model toggleExpand
 ]

@@ -248,6 +248,7 @@ SymbolTest >> secondCollection [
 
 { #category : #running }
 SymbolTest >> setUp [
+	super setUp.
 	emptySymbol := #''.
 	collectionSize4 := #abcd.
 	collection1Element := #a.

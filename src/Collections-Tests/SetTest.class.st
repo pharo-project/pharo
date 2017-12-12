@@ -215,6 +215,7 @@ SetTest >> selectedNumber [
 
 { #category : #running }
 SetTest >> setUp [
+	super setUp.
 	empty := self classToBeTested  new.
 	full := self classToBeTested  with: 1 with: 2 with: 3 with: 4.
 	collectionIncluded := self classToBeTested  with: 2 with: 3 .

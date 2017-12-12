@@ -12,6 +12,7 @@ Class {
 
 { #category : #running }
 SHStyleElementTest >> setUp [
+	super setUp.
 	element := SHStyleElement withTokens: #(#self #super #true #false).
 ]
 

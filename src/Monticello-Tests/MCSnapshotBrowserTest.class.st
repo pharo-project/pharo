@@ -5,7 +5,7 @@ Class {
 		'model',
 		'morph'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Snapshots'
 }
 
 { #category : #private }
@@ -192,6 +192,7 @@ MCSnapshotBrowserTest >> selectMockClassA [
 
 { #category : #running }
 MCSnapshotBrowserTest >> setUp [
+	super setUp.
 	model := MCSnapshotBrowser forSnapshot: MCSnapshotResource current snapshot.
 	morph := model buildWindow.
 ]

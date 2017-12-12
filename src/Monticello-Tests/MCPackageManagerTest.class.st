@@ -7,7 +7,7 @@ Class {
 		'mcPackage1',
 		'mcPackage2'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #running }
@@ -34,7 +34,7 @@ MCPackageManagerTest >> tearDown [
 		removeKey: mcPackage2 ifAbsent: [ ] 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MCPackageManagerTest >> testClassAdded [
 
 	self assert: package1 mcWorkingCopy modified not.
@@ -46,7 +46,7 @@ MCPackageManagerTest >> testClassAdded [
 	self assert: package2 mcWorkingCopy modified
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 MCPackageManagerTest >> testClassRemoved [
 	
 	| class |
@@ -65,7 +65,7 @@ MCPackageManagerTest >> testClassRemoved [
 	
 ]
 
-{ #category : #running }
+{ #category : #tests }
 MCPackageManagerTest >> testManagersForCategoryDo [
 	"Consider the following package structure:
 		Renraku

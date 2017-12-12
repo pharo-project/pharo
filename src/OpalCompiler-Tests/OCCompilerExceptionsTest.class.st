@@ -52,7 +52,7 @@ OCCompilerExceptionsTest >> selectionInterval [
 
 { #category : #running }
 OCCompilerExceptionsTest >> setUp [
-
+	super setUp.
 	currentCompiler := SmalltalkImage compilerClass.
 	SmalltalkImage compilerClass: OpalCompiler.
 

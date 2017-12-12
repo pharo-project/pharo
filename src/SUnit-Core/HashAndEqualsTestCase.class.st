@@ -15,6 +15,7 @@ Class {
 { #category : #running }
 HashAndEqualsTestCase >> setUp [
 	"subclasses will add their prototypes into this collection"
+	super setUp.
 	prototypes := OrderedCollection new 
 ]
 
