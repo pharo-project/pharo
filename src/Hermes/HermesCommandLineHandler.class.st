@@ -33,6 +33,7 @@ HermesCommandLineHandler >> activate [
 			installer installPackage: readPackage
 			].
 	(self hasOption: 'save')
-		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
+		ifTrue: [ MethodTracer uninstall.
+			Smalltalk snapshot: true andQuit: false ].
 	self exitSuccess
 ]

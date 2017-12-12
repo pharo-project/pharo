@@ -90,6 +90,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Transcript-Core'.
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
+		spec package: 'MethodTracer'.
 		
 		spec package: 'FFI-Kernel'.
 		spec package: 'FFI-Pools'.
@@ -161,7 +162,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			
 			'Multilingual-Languages'.
 			'Multilingual-Encodings'.
-			'Multilingual-TextConversion' }.
+			'Multilingual-TextConversion'.
+			'MethodTracer' }.
 
 		"These packages are added using hermes after bootstrap"
 		spec group: 'CompilerGroup' with: {
