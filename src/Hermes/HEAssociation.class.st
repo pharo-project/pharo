@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'key'
 	],
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -21,13 +21,6 @@ HEAssociation >> asLiteralIn: env [
 HEAssociation >> doReadFrom: aReader [
 	key := HEExportedLiteral readFrom: aReader.
 	value := HEExportedLiteral readFrom: aReader.
-
-]
-
-{ #category : #writing }
-HEAssociation >> doWriteInto: aWriter [
-	key writeInto: aWriter.
-	value writeInto: aWriter.
 
 ]
 

@@ -1,7 +1,7 @@
 Class {
 	#name : #HEScaledDecimal,
 	#superclass : #HEFraction,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #'as yet unclassified' }
@@ -18,10 +18,4 @@ HEScaledDecimal >> doReadFrom: aReader [
 	value := ScaledDecimal newFromNumber: value scale: scale value.
 	
 	
-]
-
-{ #category : #writing }
-HEScaledDecimal >> doWriteInto: aWriter [
-	super doWriteInto: aWriter.
-	value scale asExportedLiteral writeInto: aWriter.	
 ]

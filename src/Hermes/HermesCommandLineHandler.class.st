@@ -1,7 +1,7 @@
 Class {
 	#name : #HermesCommandLineHandler,
 	#superclass : #CommandLineHandler,
-	#category : 'Hermes-CommandLineHandler'
+	#category : #'Hermes-CommandLineHandler'
 }
 
 { #category : #accessing }
@@ -34,7 +34,7 @@ HermesCommandLineHandler >> processFile: file [
 	
 	('[Hermes] Reading ' , file) logCr.
 	
-	reader := HEBinaryReaderWriter new
+	reader := HEBinaryReader new
 		stream: (File named: file) readStream;
 		yourself.
 	

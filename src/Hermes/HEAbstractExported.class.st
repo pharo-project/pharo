@@ -1,7 +1,7 @@
 Class {
 	#name : #HEAbstractExported,
 	#superclass : #Object,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #formatting }

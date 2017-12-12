@@ -5,7 +5,7 @@ Class {
 		'method',
 		'selector'
 	],
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -30,13 +30,6 @@ HEAdditionalMethodState >> doReadFrom: aReader [
 	selector := HEExportedLiteral readFrom: aReader.
 	value := HEExportedLiteral readFrom: aReader.
 
-]
-
-{ #category : #writing }
-HEAdditionalMethodState >> doWriteInto: aWriter [
-	method writeInto: aWriter.
-	selector writeInto: aWriter.
-	value writeInto: aWriter.		
 ]
 
 { #category : #accessing }

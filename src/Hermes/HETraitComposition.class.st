@@ -1,17 +1,12 @@
 Class {
 	#name : #HETraitComposition,
 	#superclass : #HEArray,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
 HETraitComposition class >> tag [
 	^18
-]
-
-{ #category : #querying }
-HETraitComposition >> allDependenciesIn: aCollection [
-	^ self value flatCollect: [ :aTrait | aTrait allDependenciesIn: aCollection ]
 ]
 
 { #category : #converting }

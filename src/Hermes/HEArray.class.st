@@ -1,7 +1,7 @@
 Class {
 	#name : #HEArray,
 	#superclass : #HEExportedLiteral,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -21,12 +21,6 @@ HEArray >> doReadFrom: aReader [
 	value := Array new:size.
 	
 	1 to:size do:[:idx | value at:idx put: (HEExportedLiteral readFrom: aReader)].
-]
-
-{ #category : #writing }
-HEArray >> doWriteInto: aWriter [
-	aWriter writeInt32: value size.
-	value do:[:e | e writeInto: aWriter].
 ]
 
 { #category : #accessing }

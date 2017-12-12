@@ -1,7 +1,7 @@
 Class {
 	#name : #HEByteString,
 	#superclass : #HEExportedLiteral,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -22,9 +22,4 @@ HEByteString >> doConvertValue: aValue [
 { #category : #reading }
 HEByteString >> doReadFrom: aReader [
 	value := self doConvertValue:(aReader readByteString).
-]
-
-{ #category : #writing }
-HEByteString >> doWriteInto: aWriter [
-	aWriter writeByteString: value.
 ]

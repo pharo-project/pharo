@@ -5,7 +5,7 @@ Class {
 		'className',
 		'selector'
 	],
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -34,14 +34,6 @@ HEMethodLiteral >> className: anObject [
 HEMethodLiteral >> doReadFrom: aReader [
 	className := aReader readByteSymbol.
 	selector := aReader readByteSymbol.
-
-
-]
-
-{ #category : #writing }
-HEMethodLiteral >> doWriteInto: aWriter [
-	aWriter writeByteString: className.
-	aWriter writeByteString: selector.
 
 
 ]

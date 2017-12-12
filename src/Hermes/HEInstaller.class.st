@@ -5,7 +5,7 @@ Class {
 		'environment',
 		'originalUndeclareds'
 	],
-	#category : 'Hermes-ClassInstaller'
+	#category : #'Hermes-ClassInstaller'
 }
 
 { #category : #converting }

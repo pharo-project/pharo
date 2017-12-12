@@ -1,7 +1,7 @@
 Class {
 	#name : #HEByteArray,
 	#superclass : #HEExportedLiteral,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -17,9 +17,4 @@ HEByteArray >> asLiteralIn: env [
 { #category : #reading }
 HEByteArray >> doReadFrom: aReader [
 	value := aReader readByteArray.
-]
-
-{ #category : #writing }
-HEByteArray >> doWriteInto: aWriter [
-	aWriter writeByteArray: value.
 ]

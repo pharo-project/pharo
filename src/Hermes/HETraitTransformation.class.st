@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'subject'
 	],
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -16,12 +16,6 @@ HETraitTransformation class >> tag [
 HETraitTransformation >> doReadFrom: aReader [
 	super doReadFrom: aReader.
 	subject := HEExportedLiteral readFrom: aReader.
-]
-
-{ #category : #writing }
-HETraitTransformation >> doWriteInto: aWriter [
-	super doWriteInto: aWriter.
-	subject writeInto: aWriter.
 ]
 
 { #category : #accessing }

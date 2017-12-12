@@ -1,7 +1,7 @@
 Class {
 	#name : #HEUndefinedObject,
 	#superclass : #HEExportedLiteral,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -16,9 +16,4 @@ HEUndefinedObject >> asLiteralIn: env [
 
 { #category : #reading }
 HEUndefinedObject >> doReadFrom: aReader [
-]
-
-{ #category : #writing }
-HEUndefinedObject >> doWriteInto: aWriter [
-
 ]

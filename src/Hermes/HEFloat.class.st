@@ -1,7 +1,7 @@
 Class {
 	#name : #HEFloat,
 	#superclass : #HEExportedLiteral,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -23,10 +23,4 @@ HEFloat >> doReadFrom: aReader [
 	
 	"Force the conversion to SmallFloat64 or BoxedFloat64"
 	value := originalValue - 0.0.
-]
-
-{ #category : #writing }
-HEFloat >> doWriteInto: aWriter [
-	aWriter writeUInt32: (value at:1).
-	aWriter writeUInt32: (value at:2).	
 ]

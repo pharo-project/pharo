@@ -1,17 +1,12 @@
 Class {
 	#name : #HETraitLiteral,
 	#superclass : #HESymbol,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
 HETraitLiteral class >> tag [
 	^ 19
-]
-
-{ #category : #querying }
-HETraitLiteral >> allDependenciesIn: aCollection [
-	^ aCollection detect: [ :aTrait | aTrait traitName = self value ] ifFound: [ :x | {x} ] ifNone: [ #() ]
 ]
 
 { #category : #converting }

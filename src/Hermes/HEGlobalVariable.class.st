@@ -1,7 +1,7 @@
 Class {
 	#name : #HEGlobalVariable,
 	#superclass : #HESymbol,
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }

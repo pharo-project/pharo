@@ -6,7 +6,7 @@ Class {
 		'arguments',
 		'keyword'
 	],
-	#category : 'Hermes-Model'
+	#category : #'Hermes-Model'
 }
 
 { #category : #accessing }
@@ -29,13 +29,6 @@ HEPragma >> doReadFrom: aReader [
 	method := HEExportedLiteral readFrom: aReader.
 	keyword := HEExportedLiteral readFrom: aReader.
 	arguments := HEExportedLiteral readFrom: aReader.
-]
-
-{ #category : #writing }
-HEPragma >> doWriteInto: aWriter [
-	method writeInto: aWriter.
-	keyword writeInto: aWriter.
-	arguments writeInto: aWriter
 ]
 
 { #category : #accessing }
