@@ -245,7 +245,7 @@ SettingBrowser class >> menuCommandOn: aBuilder [
 		action: [ SettingBrowser open ];
 		keyText: 'o, s';
 		help:
-			'Opens a SystemSettingBrowser which allows you to alter many system settings'
+			'Opens a SystemSettingBrowser which allows you to alter many system settings.'
 ]
 
 { #category : #opening }

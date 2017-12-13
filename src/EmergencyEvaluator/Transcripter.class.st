@@ -69,7 +69,7 @@ Transcripter class >> emergencyEvaluatorMenuOn: aBuilder [
 		action: [self emergencyEvaluator. World restoreMorphicDisplay];
 		parent: #Tools;
 		order: 0.57;	
-		help: 'Invoke the emergency evaluator';
+		help: 'Invoke the emergency evaluator.';
 		icon: self icon
 	
 ]

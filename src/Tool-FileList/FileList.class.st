@@ -131,14 +131,15 @@ FileList class >> itemsForFile: file [
 ]
 
 { #category : #'world menu' }
-FileList class >> menuCommandOn: aBuilder [ 
-	<worldMenu> 
+FileList class >> menuCommandOn: aBuilder [
+	<worldMenu>
 	(aBuilder item: #'File Browser')
 		parent: #Tools;
 		order: 0.43;
-		action:[self open]; 
+		action: [ self open ];
+		help: 'Browse the files present on your system.';
 		icon: self taskbarIcon.
-	aBuilder withSeparatorAfter.		
+	aBuilder withSeparatorAfter
 ]
 
 { #category : #'morphic ui' }

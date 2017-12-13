@@ -37,7 +37,7 @@ SystemReporter class >> systemReporterMenuOn: aBuilder [
 	(aBuilder item: #'System Reporter')
 		parent: #System;
 		action: [ self open ];
-		help: 'If you have a bug, use this tool to provide information about your system'.
+		help: 'If you have a bug, use this tool to provide information about your system.'.
 ]
 
 { #category : #operations }

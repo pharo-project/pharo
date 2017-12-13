@@ -8,7 +8,7 @@ StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuil
 		label: 'General Preferences folder';
 		parent: #SystemStartup;
 		order: 3;
-		help: 'Open the folder with general preferences';
+		help: 'Open the folder with general preferences.';
 		iconName: #smallOpenIcon
 ]
 
@@ -20,7 +20,7 @@ StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 		label: 'Run startup scripts';
 		parent: #SystemStartup;
 		order: 1;
-		help: 'Run startup "scripts';
+		help: 'Run startup scripts.';
 		iconName: #scriptManagerIcon.
 	aBuilder withSeparatorAfter
 ]
@@ -35,7 +35,7 @@ StartupPreferencesLoader class >> startupPreferencesVersionFolderMenuOn: aBuilde
 		label: 'Version Preferences folder';
 		parent: #SystemStartup;
 		order: 2;
-		help: 'Open the preferences per version folder';
+		help: 'Open the preferences per version folder.';
 		iconName: #smallOpenIcon
 ]
 
@@ -46,6 +46,6 @@ StartupPreferencesLoader class >> systemStartupMenuOn: aBuilder [
 		label: 'Startup';
 		parent: #System;
 		order: 2;
-		help: 'System startup related';
+		help: 'System startup related.';
 		iconName: #scriptManagerIcon
 ]

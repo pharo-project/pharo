@@ -35,6 +35,7 @@ CatalogBrowser class >> menuCommandOn: aBuilder [
 		order: 0.19;
 		iconName: #catalogIcon;
 		parent: #Tools;
+		help: 'Project catalog from pharo official repositories.';
 		action: [ self open ]
 ]
 

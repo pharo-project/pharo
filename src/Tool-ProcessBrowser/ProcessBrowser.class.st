@@ -157,7 +157,8 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 	(aBuilder item: #'Process Browser')
 		parent: #Tools;
 		order: 0.42;
-		action:[self open]; 
+		action:[ self open ];
+		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
 		icon: self taskbarIcon.
 ]
 

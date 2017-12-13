@@ -46,6 +46,7 @@ TestRunner class >> menuCommandOn: aBuilder [
 		action: [ Smalltalk tools openTestRunner ];
 		order: 0.5;
 		keyText: 'o, u';
+		help: 'Let you run and debug SUnit tests.';
 		icon: self taskbarIcon
 ]
 

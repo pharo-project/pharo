@@ -36,6 +36,7 @@ MCWorkingCopyBrowser class >> menuCommandOn: aBuilder [
 		action: [ Smalltalk tools openMonticelloBrowser ];
 		order: 0.9;
 		keyText: 'o, p';
+		help: 'Source code versionning system to manage Smalltalk code.';
 		icon: Smalltalk tools monticelloBrowser taskbarIcon
 ]
 

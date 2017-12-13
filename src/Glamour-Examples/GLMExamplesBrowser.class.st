@@ -16,7 +16,7 @@ GLMExamplesBrowser class >> menuExamplesOn: aBuilder [
 		iconName: #glamorousHelp;
 		parent: #Help;
 		order: 4.0;
-		help: 'Open Glamour Example Browser';
+		help: 'Open Glamour Example Browser.';
 		action: [ self open ]
 ]
 
