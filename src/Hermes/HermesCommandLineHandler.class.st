@@ -28,20 +28,33 @@ HermesCommandLineHandler >> activate [
 ]
 
 { #category : #'processing files' }
+HermesCommandLineHandler >> createInstaller [
+	"In the basic installation, the bootstraped version of Hermes, 
+	there is only one Installer, the HEInstaller. 
+	When the extensions are installed the new installer to use is the HEExtendedInstaller."
+
+	^ Smalltalk globals
+		at: #HEExtendedInstaller
+		ifPresent: [ :instClass | 
+			instClass new
+				forOptions: self commandLine;
+				yourself ]
+		ifAbsent: [ HEInstaller new ]
+]
+
+{ #category : #'processing files' }
 HermesCommandLineHandler >> processFile: file [
 	| installer reader readPackage |
-	installer := HEInstaller new.
-	
+	installer := self createInstaller.
 	('[Hermes] Reading ' , file) logCr.
-	
+
 	reader := HEBinaryReader new
 		stream: (File named: file) readStream;
 		yourself.
-	
+
 	readPackage := HEPackage readFrom: reader.
-	
+
 	('[Hermes] Installing ' , file) logCr.
-	
 	installer installPackage: readPackage
 ]
 
