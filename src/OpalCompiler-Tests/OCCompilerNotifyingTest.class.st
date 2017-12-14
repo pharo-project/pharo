@@ -102,6 +102,7 @@ OCCompilerNotifyingTest >> numberOfSelections [
 
 { #category : #running }
 OCCompilerNotifyingTest >> setUp [
+	super setUp.
 	failure := Object new.
 ]
 

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'workingCopy'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #private }
@@ -25,7 +25,6 @@ MCChangeNotificationTest >> modifiedEventFor: aSelector ofClass: aClass [
 
 { #category : #running }
 MCChangeNotificationTest >> setUp [
-
        "FIXME: Unregister Monticellomocks if it got created in another test
        (for example MCMethodDefinitionTest may create it implicitly).
        This avoids a nasty failure of MCChangeNotificationTest due to
@@ -36,8 +35,8 @@ MCChangeNotificationTest >> setUp [
                removeKey: (MCPackage new name: 'MonticelloMocks')
                ifAbsent:[].
        PackageOrganizer default unregisterPackageNamed: 'MonticelloMocks'."
-
-       workingCopy := MCWorkingCopy forPackage: self mockPackage.
+		super setUp.	
+      workingCopy := MCWorkingCopy forPackage: self mockPackage.
 ]
 
 { #category : #tests }

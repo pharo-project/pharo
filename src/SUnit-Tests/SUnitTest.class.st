@@ -160,6 +160,7 @@ SUnitTest >> setRun [
 
 { #category : #running }
 SUnitTest >> setUp [
+	super setUp.
 	hasSetup := true
 ]
 

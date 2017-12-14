@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 SessionManagerUnregistrationTest >> setUp [
+	super setUp.
 	sessionManager := SessionManager new
 ]
 

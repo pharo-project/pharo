@@ -331,6 +331,7 @@ StringTest >> secondIndex [
 
 { #category : #running }
 StringTest >> setUp [
+	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
 	subcollection3ElementsSorted := 'bcd'.
@@ -1672,6 +1673,11 @@ StringTest >> testReadFrom [
 		equals: 'this '' is embedded'
 ]
 
+{ #category : #'tests - streaming' }
+StringTest >> testReadStreamDo [
+	string readStreamDo: [ :stream | self assert: stream contents equals: string ]
+]
+
 { #category : #'tests - converting' }
 StringTest >> testRepeat [
 
@@ -2037,6 +2043,15 @@ StringTest >> testWriteStreamConvertsToWideString [
 	ws := newString writeStream.
 	oldWideString do: [:each | ws nextPut: each].
 	self assert: (newString = oldWideString).
+]
+
+{ #category : #'tests - streaming' }
+StringTest >> testWriteStreamDo [
+	emptyString
+		writeStreamDo: [ :stream | 
+			stream nextPutAll: string.
+			self assert: stream contents equals: string ].
+	self assert: (emptyString writeStreamDo: [ :stream | true ])
 ]
 
 { #category : #'tests - lines' }

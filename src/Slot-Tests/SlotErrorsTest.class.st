@@ -14,7 +14,7 @@ SlotErrorsTest >> assertInvalidClassName: aName [
 	self flag: 'should remove class if not raised'.
 		
 	self should: [
-		PharoClassInstaller 
+		Smalltalk classInstaller 
 			validateClassName: aName ]
 		raise: InvalidGlobalName
 ]
@@ -206,6 +206,6 @@ SlotErrorsTest >> testSlotWithReservedName [
 { #category : #tests }
 SlotErrorsTest >> testValidateClassName [		
 		
-	PharoClassInstaller 
+	Smalltalk classInstaller 
 		validateClassName: #GoodClassNameThatShouldNotExist
 ]

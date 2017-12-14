@@ -30,7 +30,7 @@ StackTest >> nonEmpty [
 
 { #category : #running }
 StackTest >> setUp [
-
+	super setUp.
 	empty := Stack new.
 	nonEmpty := Stack new.
 	nonEmpty push: 1.

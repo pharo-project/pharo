@@ -107,27 +107,6 @@ Class class >> templateForSubclassOf: priorClassName category: systemCategoryNam
 	package: ''' , systemCategoryName asString , ''''
 ]
 
-{ #category : #private }
-Class >> addClassSlot: aSlot [
-
- 	<localClassMethod> 
-   "This method is supposed to be local in Class because of a good reason.
-   We use this pragma to test if Class does not contain some accidental 
-   local selectors."
-
-	^self classInstaller make: [ :builder |
-		builder
-			superclass: self superclass;
-			name: self name;
-			layoutClass: self classLayout class;
-			slots: self slots;
-			classSlots: (self class classLayout slots copyWith: aSlot);
-			sharedVariablesFromString: self classVariablesString;
-			sharedPools: self sharedPoolsString;
-			category: self category;
-			environment: self environment].
-]
-
 { #category : #'class variables' }
 Class >> addClassVarNamed: aString [ 
 	"Add the argument, aString, as a class variable of the receiver.
@@ -184,27 +163,6 @@ Class >> addSharedPool: aSharedPool [
 	self sharedPools == nil
 		ifTrue: [self sharedPools: (OrderedCollection with: aSharedPool)]
 		ifFalse: [self sharedPools add: aSharedPool]
-]
-
-{ #category : #'instance variables' }
-Class >> addSlot: aSlot [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
-	^self classInstaller make: [ :builder |
-		builder
-			superclass: self superclass;
-			name: self getName;
-			layoutClass: self classLayout class;
-			slots: (self slots copyWith: aSlot);
-			classSlots: self class classLayout slots;
-			sharedVariablesFromString: self classVariablesString;
-			sharedPools: self sharedPoolsString;
-			category: self category;
-			environment: self environment].
 ]
 
 { #category : #'accessing class hierarchy' }
@@ -930,7 +888,7 @@ Class >> newAnonymousSubclass [
     We use this pragma to test if Class does not contain some accidental 
     local selectors."
 
-	^ AnonymousClassInstaller make: [ :builder |
+	^ Smalltalk anonymousClassInstaller make: [ :builder |
 		builder
 			superclass: self ;
 			layoutClass: self classLayout class ].

@@ -22,6 +22,7 @@ GLMUpdateMorphicTest >> expectedFailures [
 
 { #category : #running }
 GLMUpdateMorphicTest >> setUp [
+	super setUp.
 	announcer := Announcer new.
 	entity := OrderedCollection with: 1 with: 2 with: 3.
 	browser := GLMTabulator new.

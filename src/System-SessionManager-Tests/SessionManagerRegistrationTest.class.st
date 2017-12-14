@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 SessionManagerRegistrationTest >> setUp [
+	super setUp.
 	manager := SessionManager new
 ]
 

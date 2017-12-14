@@ -9,6 +9,7 @@ Class {
 
 { #category : #running }
 HistoryIteratorTest >> setUp [
+	super setUp.
 	historyList := HistoryIterator new.
 ]
 

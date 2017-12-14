@@ -13,6 +13,7 @@ Class {
 { #category : #running }
 TutorialPlayerTestWithMockTutorial >> setUp [
 	| tutorial |
+	super setUp.
 	tutorial := MockTutorial new.
 	player := TutorialPlayer new tutorial: (MockTutorial new)
 ]

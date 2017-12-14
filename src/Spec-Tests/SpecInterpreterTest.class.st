@@ -15,6 +15,7 @@ Class {
 SpecInterpreterTest >> setUp [
 	"Setting up code for SpecInterpreterTest"
 
+	super setUp.
 	specInterpreterClass := SpecInterpreter.
 	specInterpreter := specInterpreterClass new.
 	specInterpreter model: TestingComposablePresenter new

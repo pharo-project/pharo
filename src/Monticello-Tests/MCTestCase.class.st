@@ -1,7 +1,10 @@
+"
+Abstract superclass for monticello tests
+"
 Class {
 	#name : #MCTestCase,
 	#superclass : #TestCase,
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #'as yet unclassified' }

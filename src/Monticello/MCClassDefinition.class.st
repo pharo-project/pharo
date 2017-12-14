@@ -251,7 +251,7 @@ MCClassDefinition >> createClass [
 					^ self ].
 	superClass := superclassName == #nil
 		ifFalse: [ Smalltalk globals at: superclassName ].
-	^ [ PharoClassInstaller
+	^ [ Smalltalk classInstaller
 		make: [ :builder | 
 			builder
 				superclass: superClass;

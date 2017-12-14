@@ -42,7 +42,7 @@ RecursionStopperTest >> recursion [
 
 { #category : #running }
 RecursionStopperTest >> setUp [
-
+	super setUp.
 	value := 0
 ]
 

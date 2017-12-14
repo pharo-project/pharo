@@ -122,7 +122,18 @@ FFIExternalStructureTests >> testNestedStructure [
 
 	s1 := FFITestNestingStructure new.
 	s1 nested byte: 42.
-	self assert: s1 nested byte = 42
+	s1 nested float: 4.0.
+	s1 nested double: 42.0.
+
+	s1 nested long: -123456.
+	s1 nested ulong: 123456.
+
+	self assert: s1 nested byte equals: 42.	
+	self assert: s1 nested float equals: 4.0.	
+	self assert: s1 nested double equals: 42.0.	
+	self assert: s1 nested long equals: -123456.
+	self assert: s1 nested ulong equals: 123456.
+
 ]
 
 { #category : #tests }

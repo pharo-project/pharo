@@ -144,7 +144,7 @@ PharoBootstrapInitialization class >> fixPharoClassInstallerMethodCopying [
 	"By default the class installer tries to recompile existing code when loading a new version of a class.
 	Since the initial bootstrap has no sources, this will fail.
 	This patch creates new methods by copying them and fixing the corresponding literals"
-	PharoClassInstaller compile: 'copyMethodsFrom: oldClass to: newClass using: classModification
+	ShiftClassBuilder compile: 'compileMethods
 	|newClassVariables|
 	newClassVariables := classModification classVariables asDictionary.
 	oldClass localMethods do: [ :m | | copy |
@@ -153,7 +153,7 @@ PharoBootstrapInitialization class >> fixPharoClassInstallerMethodCopying [
 		copy literals withIndexDo: [:l :i |
 			(l isKindOf: ClassVariable)
 				ifTrue: [ | newLiteral |
-					newLiteral := classModification newClass innerBindingOf: l key.
+					newLiteral := newClass innerBindingOf: l key.
 					m literalAt: i put: newLiteral ].
 		].
 		newClass addSelectorSilently: copy selector withMethod: copy.
@@ -164,7 +164,7 @@ PharoBootstrapInitialization class >> fixPharoClassInstallerMethodCopying [
 		copy literals withIndexDo: [:l :i |
 			(l isKindOf: ClassVariable)
 				ifTrue: [ | newLiteral |
-					newLiteral := classModification newClass innerBindingOf: l key.
+					newLiteral := newClass innerBindingOf: l key.
 					m literalAt: i put: newLiteral ].
 		].
 		newClass classSide addSelectorSilently: copy selector withMethod: copy.
@@ -275,6 +275,27 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive.
 
+]
+
+{ #category : #'public api' }
+PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersion: major minor: minor suffix: suffix buid: build commitHash: hash [
+
+	"The image main entry point called by an image builder. The arguments specify the image
+	version description.
+	This method is run before the new bootstrapped image is saved!"
+
+	SystemVersion 
+		writeClassVariableNamed: #Current
+		value: (SystemVersion new
+					type: typeName;
+					major: major;
+					minor: minor;
+					suffix: suffix;
+					build: build;
+					commitHash: hash;
+					yourself).
+	
+	self initializeCommandLineHandlerAndErrorHandling.
 ]
 
 { #category : #loading }

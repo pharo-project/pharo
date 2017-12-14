@@ -39,6 +39,7 @@ ScheduleTest >> setUp [
 	The duration of each occurence of the event is not specified. 
 	Nor are any other attributes such as name"
 
+	super setUp.
 	restoredTimeZone := DateAndTime localTimeZone.
 	DateAndTime localTimeZone: (TimeZone timeZones detect: [:tz | tz abbreviation = 'GMT']).
 

@@ -6,7 +6,7 @@ Class {
 		'expected',
 		'diff'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-IO'
 }
 
 { #category : #testing }
@@ -59,6 +59,7 @@ MCFileInTest >> assertSuccessfulLoadWith: aBlock [
 
 { #category : #running }
 MCFileInTest >> setUp [
+	super setUp.
 	expected := self mockSnapshot.
 	stream := RWBinaryOrTextStream on: String new.
 ]

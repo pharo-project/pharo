@@ -16,7 +16,7 @@ Class {
 NautilusUITest >> setUp [
 	"Setting up code for NautilusUITest"
 
-
+	super setUp.
 	nautilusUI := NautilusUI on: Nautilus new.
 ]
 

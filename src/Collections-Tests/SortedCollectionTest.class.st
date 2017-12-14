@@ -352,7 +352,7 @@ SortedCollectionTest >> result [
 
 { #category : #running }
 SortedCollectionTest >> setUp [
-
+	super setUp.
 	nonEmpty := SortedCollection new.
 	elementExistsTwice := 12332312321.
 	nonEmpty add: 2.

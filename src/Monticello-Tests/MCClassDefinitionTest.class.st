@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'previousChangeSet'
 	],
-	#category : #'Monticello-Tests'
+	#category : #'Monticello-Tests-Base'
 }
 
 { #category : #'as yet unclassified' }
@@ -38,6 +38,7 @@ MCClassDefinitionTest >> creationMessage [
 
 { #category : #running }
 MCClassDefinitionTest >> setUp [
+	super setUp.
 	Smalltalk globals at: #MCMockClassC ifPresent: [ :c | c removeFromSystem ]
 ]
 

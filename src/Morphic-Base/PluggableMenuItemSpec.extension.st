@@ -13,6 +13,7 @@ PluggableMenuItemSpec >> asMenuItemMorphFrom: parentMenu isLast: aBoolean [
 	it icon: self icon.
 	it keyText: self keyText.
 	it isEnabled: self enabled.
+	it balloonText: self help.
 	(act := self action) ifNotNil: [
 				it 
 					target: act receiver;

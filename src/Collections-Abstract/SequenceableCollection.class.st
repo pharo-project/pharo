@@ -1607,6 +1607,15 @@ SequenceableCollection >> readStream [
 	^ ReadStream on: self
 ]
 
+{ #category : #streaming }
+SequenceableCollection >> readStreamDo: aBlock [
+	"Evaluates the argument with the read stream of the collection. Answers the result."
+	
+	"#(3 4 5) readStreamDo: [ :stream | stream contents ] >>> #(3 4 5)"
+
+	^ aBlock value: self readStream
+]
+
 { #category : #enumerating }
 SequenceableCollection >> reduce: aBlock [
 	"Fold the result of the receiver into aBlock. The argument aBlock must take two or more arguments. It applies the argument, binaryBlock cumulatively to the elements of the receiver. For sequenceable collections the elements will be used in order, for unordered collections the order is unspecified."
@@ -2044,4 +2053,13 @@ SequenceableCollection >> withIndexDo: elementAndIndexBlock [
 { #category : #converting }
 SequenceableCollection >> writeStream [
 	^ WriteStream on: self
+]
+
+{ #category : #streaming }
+SequenceableCollection >> writeStreamDo: aBlock [
+	"Evaluates the argument with the write stream of the collection. Answers the result."
+	
+	"#() writeStreamDo: [ :stream | stream nextPut: '4'; space; nextPutAll: '34'. stream contents ] >>> {'4'. Character space. $3. $4}"
+
+	^ aBlock value: self writeStream
 ]
