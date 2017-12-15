@@ -41,7 +41,7 @@ WidgetExamples class >> colorControls [
 	"self exampleColorControls"
 	<script>
 	|dialog builder|
-	builder := self exampleBuilder.
+	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example color controls') useDefaultOKButton.
 	dialog contentMorph: (dialog newRow: {
 		dialog newLabelGroup: {
@@ -68,7 +68,7 @@ WidgetExamples class >> exampleBasicControls [
 	"self exampleBasicControls"
 	<script>
 	|dialog builder radioModel treeModel|
-	builder := self exampleBuilder.
+	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
 	radioModel := ExampleRadioButtonModel new.
 	treeModel := Array with:(MorphWithSubmorphsWrapper with: World).
@@ -153,7 +153,7 @@ WidgetExamples class >> exampleColorControls [
 	"self exampleColorControls"
 	<script>
 	| dialog builder|
-	builder := self exampleBuilder.
+	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example color controls') useDefaultOKButton.
 	dialog contentMorph: (dialog newRow: {
 		dialog newLabelGroup: {
@@ -180,7 +180,7 @@ WidgetExamples class >> exampleDialogs [
 	"self exampleDialogs"
 	<script>
 	
-	self exampleBuilder
+	self builder
 		chooseFont: TextStyle default defaultFont;
 		chooseColor: (Color r: 0.529 g: 0.611 b: 0.004);
 		chooseDirectory: 'Choose folder';
@@ -202,7 +202,7 @@ WidgetExamples class >> exampleGroups [
 	"self exampleGroups"
 	<script>
 	| dialog builder |
-	builder := self exampleBuilder.
+	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example groups')
 		useDefaultOKButton.
 	dialog
@@ -283,7 +283,7 @@ WidgetExamples class >> exampleOtherControls [
 	"self exampleOtherControls"
 	<script>
 	| dialog builder image emboss fuzzy |
-	builder := self exampleBuilder.
+	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example other controls') useDefaultOKButton.
 	emboss := (dialog newString: 'Hello there') trackPaneColor: false.
 	fuzzy := (dialog newFuzzyLabel: 'A Fuzzy Label') minHeight: 40; minWidth: 160.
