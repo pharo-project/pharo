@@ -211,6 +211,7 @@ PharoBootstrapInitialization class >> initializeClasses [
 { #category : #'public api' }
 PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandling [
 	"This method is run before the new bootstrapped image is saved!"
+
 	ProcessorScheduler initialize.
 	
 	Object initialize.
@@ -284,6 +285,8 @@ PharoBootstrapInitialization class >> initializeImageOfType: typeName majorVersi
 	version description.
 	This method is run before the new bootstrapped image is saved!"
 
+	MethodTracer installOn: ((Smalltalk globals values select: [ :each | each isClassOrTrait ] ) flatCollect: [ :each | each localMethods, each classSide localMethods ]).
+	
 	SystemVersion 
 		writeClassVariableNamed: #Current
 		value: (SystemVersion new

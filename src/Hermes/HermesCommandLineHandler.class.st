@@ -22,7 +22,8 @@ HermesCommandLineHandler >> activate [
 	self processFiles.
 		
 	(self hasOption: 'save')
-		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
+		ifTrue: [ MethodTracer uninstall.
+		Smalltalk snapshot: true andQuit: false ].
 
 	self exitSuccess
 ]
