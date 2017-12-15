@@ -18,12 +18,6 @@ HETraitTransformation >> doReadFrom: aReader [
 	subject := HEExportedLiteral readFrom: aReader.
 ]
 
-{ #category : #writing }
-HETraitTransformation >> doWriteInto: aWriter [
-	super doWriteInto: aWriter.
-	subject writeInto: aWriter.
-]
-
 { #category : #accessing }
 HETraitTransformation >> value: aTraitTransformation [
 	subject := aTraitTransformation subject asExportedLiteral.

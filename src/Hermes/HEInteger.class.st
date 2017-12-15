@@ -22,9 +22,3 @@ HEInteger >> doReadFrom: aReader [
 
 	value := anArray asInteger *(isNegative ifTrue: -1 ifFalse: 1)
 ]
-
-{ #category : #writing }
-HEInteger >> doWriteInto: aWriter [
-	aWriter writeByte: (value sign < 0 ifTrue: [ 1 ]	ifFalse: [ 0 ]).
-	aWriter writeByteArray: value asByteArray.
-]

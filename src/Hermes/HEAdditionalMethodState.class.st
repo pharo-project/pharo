@@ -32,13 +32,6 @@ HEAdditionalMethodState >> doReadFrom: aReader [
 
 ]
 
-{ #category : #writing }
-HEAdditionalMethodState >> doWriteInto: aWriter [
-	method writeInto: aWriter.
-	selector writeInto: aWriter.
-	value writeInto: aWriter.		
-]
-
 { #category : #accessing }
 HEAdditionalMethodState >> value: anAdditionalMethodState [
 	method := anAdditionalMethodState method asExportedLiteral.

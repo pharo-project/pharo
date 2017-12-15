@@ -24,13 +24,6 @@ HEAssociation >> doReadFrom: aReader [
 
 ]
 
-{ #category : #writing }
-HEAssociation >> doWriteInto: aWriter [
-	key writeInto: aWriter.
-	value writeInto: aWriter.
-
-]
-
 { #category : #accessing }
 HEAssociation >> value: anAssociation [
 	value := anAssociation value asExportedLiteral.

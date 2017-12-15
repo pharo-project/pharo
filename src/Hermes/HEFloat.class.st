@@ -22,13 +22,5 @@ HEFloat >> doReadFrom: aReader [
 	originalValue at:2 put: (aReader readUInt32).
 	
 	"Force the conversion to SmallFloat64 or BoxedFloat64"
-	value := originalValue + 0.
-	
-	(value literalEqual: originalValue) ifFalse:[ value := value negated]
-]
-
-{ #category : #writing }
-HEFloat >> doWriteInto: aWriter [
-	aWriter writeUInt32: (value at:1).
-	aWriter writeUInt32: (value at:2).	
+	value := originalValue - 0.0.
 ]

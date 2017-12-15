@@ -12,13 +12,6 @@ Class {
 }
 
 { #category : #formatting }
-HEPackage class >> for: aPackage [
-	^ self new
-		fromPackage: aPackage;
-		yourself
-]
-
-{ #category : #formatting }
 HEPackage class >> formatVersion [
 	^ 1
 ]
@@ -26,11 +19,6 @@ HEPackage class >> formatVersion [
 { #category : #adding }
 HEPackage >> addClass: anExportedClass [
 	classes add: anExportedClass.
-]
-
-{ #category : #testing }
-HEPackage >> allSharedPoolsOf: aClass in: aCollection [
-	^ ({aClass} , (aClass allSuperclassesIn: aCollection)) flatCollect: [:e | e sharedPoolsIn: aCollection].
 ]
 
 { #category : #accessing }
@@ -54,29 +42,12 @@ HEPackage >> extensionMethods: anObject [
 ]
 
 { #category : #initialization }
-HEPackage >> fromPackage: aPackage [
-	| allClasses|
-	packageName := aPackage name.
-
-	traits := (aPackage definedClasses select: #isTrait) collect: [ :e | HETrait for: e ] as: OrderedCollection.	
-	allClasses := (aPackage definedClasses reject: #isTrait).
-	(aPackage definedClasses reject: #isTrait) do: [ :e | self addClass: (HEClass for: e) ].
-
-	aPackage extensionMethods do: [ :e | extensionMethods add: (HEMethod for: e) ]
-]
-
-{ #category : #initialization }
 HEPackage >> initialize [
 	version := self class formatVersion.
 	classes := OrderedCollection new.
 	traits := OrderedCollection new.
 
 	extensionMethods := OrderedCollection new.
-]
-
-{ #category : #testing }
-HEPackage >> numberOfRequiredClassesOf: aClass in: aCollection [
-	^ ((aClass allSuperclassesIn: aCollection) , ((self allSharedPoolsOf: aClass in: aCollection) flatCollect: [:e | {e} , (e allSuperclassesIn: aCollection)])) size
 ]
 
 { #category : #accessing }
@@ -122,16 +93,6 @@ HEPackage >> readFrom: aReader [
 	1 to: numberOfExtensionMethods do: [ :idx | extensionMethods add: (HEMethod readFrom: aReader) ]  
 ]
 
-{ #category : #adding }
-HEPackage >> sortContent [
-	| allClasses|
-	traits := traits sorted: [ :a :b | (a traitComposition allDependenciesIn: traits) size < (b traitComposition allDependenciesIn: traits) size ].
-	
-	allClasses := classes.
-	classes := classes sorted: [ :a :b | (self numberOfRequiredClassesOf: a in: allClasses) < (self numberOfRequiredClassesOf: b in: allClasses) ].
-
-]
-
 { #category : #accessing }
 HEPackage >> traits [
 	^ traits
@@ -145,23 +106,4 @@ HEPackage >> traits: anObject [
 { #category : #accessing }
 HEPackage >> version [
 	^ version
-]
-
-{ #category : #writing }
-HEPackage >> writeInto: aWriter [
-	self sortContent.
-
-	aWriter writeInt32: version.
-	aWriter writeByteString: packageName.
-
-	aWriter writeInt32: traits size.
-	traits do: [ :each | each writeInto: aWriter ].
-
-	aWriter writeInt32: classes size.
-	classes do: [ :each | each writeInto: aWriter ].
-
-	aWriter writeInt32: extensionMethods size.
-	extensionMethods do: [ :e | e writeInto: aWriter ].
-
-	aWriter flush.
 ]

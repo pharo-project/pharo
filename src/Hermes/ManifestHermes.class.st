@@ -9,5 +9,5 @@ Class {
 
 { #category : #'meta-data - dependency analyser' }
 ManifestHermes class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract' #'Zinc-Character-Encoding-Core' #'System-Support')
+	^ #(#'RPackage-Core' #Files #'Collections-Abstract')
 ]

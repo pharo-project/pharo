@@ -9,11 +9,6 @@ HETraitComposition class >> tag [
 	^18
 ]
 
-{ #category : #querying }
-HETraitComposition >> allDependenciesIn: aCollection [
-	^ self value flatCollect: [ :aTrait | aTrait allDependenciesIn: aCollection ]
-]
-
 { #category : #converting }
 HETraitComposition >> asLiteralIn: env [
 	^ TraitComposition new

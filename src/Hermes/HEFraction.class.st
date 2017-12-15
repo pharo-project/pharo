@@ -4,7 +4,7 @@ Class {
 	#category : #'Hermes-Model'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 HEFraction class >> tag [ 
 	^ 24
 ]
@@ -21,10 +21,4 @@ HEFraction >> doReadFrom: aReader [
 	denominator := HEExportedLiteral readFrom: aReader.
 	
 	value := Fraction numerator: numerator value denominator: denominator value.
-]
-
-{ #category : #writing }
-HEFraction >> doWriteInto: aWriter [
-	value numerator asExportedLiteral writeInto: aWriter.
-	value denominator asExportedLiteral writeInto: aWriter.	
 ]

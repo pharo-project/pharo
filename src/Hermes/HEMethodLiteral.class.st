@@ -38,14 +38,6 @@ HEMethodLiteral >> doReadFrom: aReader [
 
 ]
 
-{ #category : #writing }
-HEMethodLiteral >> doWriteInto: aWriter [
-	aWriter writeByteString: className.
-	aWriter writeByteString: selector.
-
-
-]
-
 { #category : #accessing }
 HEMethodLiteral >> value: aMethod [
 	className := aMethod methodClass name.
