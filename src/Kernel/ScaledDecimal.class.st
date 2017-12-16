@@ -205,6 +205,16 @@ ScaledDecimal >> reciprocal [
 	^self class newFromNumber: super reciprocal scale: scale
 ]
 
+{ #category : #'truncation and round off' }
+ScaledDecimal >> round: numberOfWishedDecimal [
+	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal."
+	
+   "10.156s round: 2 >>> 10.160s3 "
+   "1/3.0s round: 4 >>> 0.3333s4 "
+
+	^(super round: numberOfWishedDecimal) asScaledDecimal: (scale max: numberOfWishedDecimal)
+]
+
 { #category : #accessing }
 ScaledDecimal >> scale [
 	^scale
