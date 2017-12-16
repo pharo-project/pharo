@@ -33,7 +33,7 @@ Komitter class >> komitterMenuOn: aBuilder [
 		action: [ self openAndCommitToMonticello ];
 		order: 0.29;
 		parent: #Tools;
-		help: 'Cherry pick what you commit';
+		help: 'Cherry pick what you commit.';
 		keyText: 'o, k';
 		icon: self taskbarIcon.
 	aBuilder withSeparatorAfter

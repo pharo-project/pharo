@@ -19,12 +19,15 @@ WorldState class >> debugOn: aBuilder [
 		iconName: #smallDebug;
 		with: [ (aBuilder item: #'Remove all Breakpoints')
 				order: 0;
+				help: 'Remove all the breakpoints of the image.';
 				action: [ Breakpoint removeAll ].
 			(aBuilder item: #'Enable all break/inspect once')
 				order: 0;
+				help: 'Reset the break/inspect once. Once restarted, the first break once encountered will stop the execution.';
 				action: [ Halt resetOnce ].
 			(aBuilder item: #'Reset Counters')
 				order: 0;
+				help: 'Reset the counters on the executions counters.';
 				action: [ ExecutionCounter resetAll ] ]
 ]
 
@@ -81,22 +84,30 @@ WorldState class >> systemOn: aBuilder [
 		with: [ (aBuilder item: #'About...')
 				order: 0;
 				iconName: #smallLanguageIcon;
+				help: 'Informations about this version of Pharo.';
 				action: [ Smalltalk aboutThisSystem ].
 			(aBuilder item: #'Start profiling all Processes')
+				help: 'Profile all Pharo processes.';
 				action: [ self startMessageTally ].
 			(aBuilder item: #'Start profiling UI ')
+				help: 'Profile the UI process of Pharo.';
 				action: [ self startThenBrowseMessageTally ].
 			(aBuilder item: #'Space left')
+				help: 'Do a garbage collection, and report results about the to the user.';
 				action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
 			(aBuilder item: #'Do Image Cleanup')
+				help: 'Clean out any caches and other state that should be flushed when trying to get an image into a pristine state.';
 				action: [ Smalltalk cleanUp: true ];
 				withSeparatorAfter.
 			(aBuilder item: #'Start drawing again')
+				help: 'Resume the drawing after a draw error of the world.';
 				action: [ World resumeAfterDrawError ].
 			(aBuilder item: #'Start stepping again')
+				help: 'Resume stepping of Morph after an error has occured.';
 				action: [ World resumeAfterStepError ];
 				withSeparatorAfter.
-			(aBuilder item: #'Restore display (r)')
+			(aBuilder item: #'Restore display')
+				help: 'Restore Morphic display.';
 				action: [ World restoreMorphicDisplay ] ]
 ]
 
@@ -109,9 +120,7 @@ WorldState class >> windowsOn: aBuilder [
 		iconName: #smallWindowIcon;
 		with: [ (aBuilder item: #'Collapse all windows')
 				action: [ World collapseAll ];
-				help:
-					'Reduce all open windows to collapsed forms that only show titles'
-						translated.
+				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
 			(aBuilder item: #'Expand all windows')
 				iconName: #expandBoxIcon;
 				action: [ World expandAll ];
@@ -120,12 +129,11 @@ WorldState class >> windowsOn: aBuilder [
 				action: [ World fitAllVisibleWindows ];
 				help: 'Fit all open windows as visible in World' translated.
 			(aBuilder item: #'Close all debuggers')
+				help: 'Close all opened debugger in the image.';
 				action: [ Smalltalk tools debugger closeAllDebuggers ].
 			(aBuilder item: #'Send top window to back (\)')
 				action: [ SystemWindow sendTopWindowToBack ];
-				help:
-					'Make the topmost window become the backmost one, and activate the window just beneath it.'
-						translated.
+				help: 'Make the topmost window become the backmost one, and activate the window just beneath it.' translated.
 			(aBuilder item: #'Move windows onscreen')
 				action: [ World bringWindowsFullOnscreen ];
 				help: 'Make all windows fully visible on the screen' translated.
@@ -137,7 +145,5 @@ WorldState class >> windowsOn: aBuilder [
 				help: 'Deletes all windows even if they have unsaved text edits.' translated.
 			(aBuilder item: #'Toggle full screen mode')
 				action: [ Display toggleFullscreen ];
-				help:
-					'Turn full screen mode on when it is off, off when it is on.'
-						translated ]
+				help: 'Turn full screen mode on when it is off, off when it is on.' translated ]
 ]

@@ -28,6 +28,7 @@ AbstractTool class >> menuCommandOn: aBuilder [
 	(aBuilder item: #Tools)
 		order: 1.0;
 		target: self;
+		help: 'Set of tools to get a better Pharo experience.';
 		iconName: #toolsIcon
 ]
 

@@ -126,6 +126,7 @@ WorldState class >> helpOn: aBuilder [
 	(aBuilder item: #Help)
 		order: 4.0;
 		iconName: #smallHelpIcon;
+		help: 'Some help tools on Pharo.';
 		withSeparatorAfter
 ]
 
@@ -159,23 +160,23 @@ WorldState class >> quitItemsOn: aBuilder [
 		with: [ (aBuilder item: #Save)
 				target: self;
 				selector: #saveSession;
-				help: 'save the current version of the image on disk';
+				help: 'Save the current version of the image on disk.';
 				keyText: 'S';
 				iconName: #smallSaveIcon.
 			(aBuilder item: #'Save as...')
 				target: self;
 				selector: #saveAs;
-				help: 'save the current version of the image on disk under a new name.';
+				help: 'Save the current version of the image on disk under a new name.';
 				iconName: #smallSaveAsIcon.
 			(aBuilder item: #'Save and quit')
 				target: self;
 				selector: #saveAndQuit;
-				help: 'save the current image on disk, and quit Pharo.';
+				help: 'Save the current image on disk, and quit Pharo.';
 				iconName: #smallQuitIcon.
 			(aBuilder item: #Quit)
 				target: self;
 				selector: #quitSession;
-				help: 'quit Pharo.';
+				help: 'Quit Pharo without saving the image on disk.';
 				iconName: #smallQuitIcon ]
 ]
 
@@ -226,6 +227,7 @@ WorldState class >> screenShotCommandOn: aBuilder [
 		order: 0.59;
 		selector: #makeAScreenshot;
 		label: 'Screenshot';
+		help: 'Take a screenshot of your Pharo image.';
 		iconName: #smallScreenshotIcon
 ]
 

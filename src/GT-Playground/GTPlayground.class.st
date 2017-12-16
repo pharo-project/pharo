@@ -113,6 +113,7 @@ GTPlayground class >> menuCommandOn: aBuilder [
 		action: [ Smalltalk tools openWorkspace ];
 		order: 0.3;
 		keyText: 'o, w';
+		help: 'A window used as a scratchpad area where fragments of Pharo code can be entered, stored, edited, and evaluated.';
 		icon: Smalltalk tools workspace taskbarIcon
 ]
 

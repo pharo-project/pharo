@@ -59,6 +59,7 @@ HelpBrowser class >> menuCommandOn: aBuilder [
 		order: 1.0;
 		action: [ self open ];
 		iconName: #smallHelpIcon;
+		help: 'Explore a list of help topics to learn to use Pharo tools.';
 		withSeparatorAfter 
 ]
 
