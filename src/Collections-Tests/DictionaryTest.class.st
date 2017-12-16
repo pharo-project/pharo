@@ -618,6 +618,17 @@ DictionaryTest >> testNewFrom [
 ]
 
 { #category : #'tests - new' }
+DictionaryTest >> testNewFromKeysAndValues [
+ 
+	| keys values newDict |
+	keys := self nonEmptyDict keys.
+	values := self nonEmptyDict values.
+	newDict := Dictionary newFromKeys: keys andValues: values.
+	self nonEmptyDict keysAndValuesDo: [:k :v|
+		self assert: (newDict at: k) equals: v ]. 
+]
+
+{ #category : #'tests - new' }
 DictionaryTest >> testNewFromPairs [
 	| assocs pairs |
 
