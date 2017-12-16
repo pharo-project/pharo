@@ -41,13 +41,16 @@ CatalogProject class >> availableRepositoryURLStrings [
 CatalogProject class >> createRepositoryURLtoNameMappings [
 	"Return a mapping between repositories URLs and their user names"
 
-	^ Dictionary new
-		at: self pharoDistributionRepository put: self pharoCurrentDottedName;
-		at: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo50/main' put: 'Pharo5.0';
-		at: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo40/main' put: 'Pharo4.0';
-		at: 'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo30/main' put: 'Pharo3.0';
-		at: 'http://www.squeaksource.com/MetacelloRepository' put: 'Unsorted';
-		yourself
+	<script: 'self createRepositoryURLtoNameMappings inspect'>
+	|repos|
+	repos := Dictionary new.	
+	3 to: SystemVersion current major do: [:v | 
+		repos 	
+			at: ('http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo{1}0/main' format: v asArray)
+			put: ('Pharo{1}.0' format: v asArray)].
+	repos at: 'http://www.squeaksource.com/MetacelloRepository' put: 'Unsorted'.		
+	^repos
+ 
 ]
 
 { #category : #'instance creation' }
@@ -66,11 +69,6 @@ CatalogProject class >> gtBasicExample [
 			add: ('name'->'GTInspector'); 
 			add: ('repositoryUrl'->'http://smalltalkhub.com/mc/Pharo/MetaRepoForPharo50/main'); 
 			yourself)
-]
-
-{ #category : #private }
-CatalogProject class >> pharoCurrentDottedName [
-	^ 'Pharo' , SystemVersion current major asString , '.', SystemVersion current minor asString
 ]
 
 { #category : #private }
