@@ -32,16 +32,16 @@ ZnCrPortableWriteStream >> newLine [
 
 { #category : #accessing }
 ZnCrPortableWriteStream >> nextPut: aCharacter [
+	"Write aCharacter to the receivers stream.
+	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
 
-	(String crlf includes: aCharacter )
-		ifFalse: [ 
-			previous ifNotNil: [ self newLine ].
-			^ stream nextPut: aCharacter ].
+	(aCharacter = Character lf and: [ previous = Character cr ]) ifFalse: [
+		(String crlf includes: aCharacter) ifTrue: 
+			[ self newLine ]
+		ifFalse:
+			[ stream nextPut: aCharacter ] ].
+	previous := aCharacter.
 
-	previous = Character cr
-		ifTrue: [ self newLine ].
-	aCharacter ~= Character lf
-		ifTrue: [ previous := aCharacter ].
 ]
 
 { #category : #accessing }
