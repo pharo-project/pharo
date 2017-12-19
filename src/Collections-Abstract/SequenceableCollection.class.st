@@ -1324,8 +1324,12 @@ SequenceableCollection >> isSortedBy: aBlock [
 
 { #category : #splitjoin }
 SequenceableCollection >> join: aCollection [
-	"NB: this implementation only works for Array, since WriteStreams only work for Arrays and Strings. (!)
-	Overridden in OrderedCollection and SortedCollection."
+	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
+	
+	"({Character space. Character space} join: #('Pharo' 'is' 'cool')) >>>  {$P. $h. $a. $r. $o. Character space. Character space. $i. $s. Character space. Character space. $c. $o. $o. $l}"
+
+	"NB: this implementation only works for Array, since WriteStreams only work for Arrays and Strings. (!) Overridden in OrderedCollection and SortedCollection."
+	
 	^ self class
 		streamContents: [:stream | aCollection
 				do: [:each | each joinTo: stream]
@@ -1340,14 +1344,16 @@ SequenceableCollection >> joinTo: stream [
 
 { #category : #splitjoin }
 SequenceableCollection >> joinUsing: joiner [
-	"joiner - character, string or sequenceable collection
-	returns collection of the same collection class as 'joiner', or a String"
+	"Append the elements of the receiver separating them with the joiner - character, string or sequenceable collection. Return collection of the same collection class as 'joiner', or a String"
 	^ joiner join: self
 ]
 
 { #category : #splitjoin }
 SequenceableCollection >> joinUsing: joiner last: last [ 
-	"#(1 2 3 4) joinUsing: ', ' last: 'and'. => '1, 2, 3 and 4"
+	"Append the elements of the receiver separating them with the joiner argument and handle the last elment separation using the last argument."
+	
+	"(#(1 2 3 4) joinUsing: ', ' last: ' and ') >>> '1, 2, 3 and 4'"
+	
 	(self size = 0) ifTrue: [  ^ '' ].
 	(self size = 1) ifTrue: [  ^ self first asString ].
 	^ last join: (Array
@@ -1935,14 +1941,11 @@ comparison."
 
 { #category : #splitjoin }
 SequenceableCollection >> split: aSequenceableCollection indicesDo: aBlock [
-	
-	"Split a collection by myself as a delimitier.
-	see Object >> split: for optimized version for single delimiters.
-	Example:
-		'||' split: 'foo||bar||2'"
+	"Perform an action specified as aBlock (with a start and end argument) to each of the indices of aSequenceableCollection that have been identified by taking the receiver as a splitter."
+	"('||' split: 'foo||bar||2')>>>#('foo' 'bar' '2') asOrderedCollection"
+	"(String streamContents: [:s | '||' split: 'foo||bar||2' indicesDo: [ :start :end | s << 's:' << start asString << ' ' << 'e:' << end asString << ' ' ]]) >>> 's:1 e:3 s:6 e:8 s:11 e:11 '"
 	
 	| position oldPosition |
-	
 	position := 1.
 	oldPosition := position.
 	position := aSequenceableCollection indexOfSubCollection: self startingAt: position.
@@ -1961,22 +1964,28 @@ SequenceableCollection >> split: aSequenceableCollection indicesDo: aBlock [
 
 { #category : #splitjoin }
 SequenceableCollection >> splitOn: splitter [ 
-	"splitter - can be a subsequence, a Block or a Regex (String receiver only).
-	Any other object used as a splitter is treated as an Array containing that object."
+	"Split a collection of objects based on a splitter. splitter - can be a subsequence, a Block or a Regex (String receiver only). Any other object used as a splitter is treated as an Array containing that object."
+	"(#(1 2 3 3 4 1 2 3 5 4 6) splitOn: 4 >>> #(#(1 2 3 3) #(1 2 3 5) #(6))asOrderedCollection"
+	"(#(1 2 3 3 4 1 2 3 3 5 6) splitOn: #(3 3)) >>> #(#(1 2) #(4 1 2) #(5 6)) asOrderedCollection"
+	"(#(2 2 3 3 4 1 2 3 3 5) splitOn: [:each | each > 3])>>> #(#(2 2 3 3) #(1 2 3 3) #()) asOrderedCollection"
+	
 	^ splitter split: self
 ]
 
 { #category : #splitjoin }
 SequenceableCollection >> splitOn: splitter do: aBlock [
-	"splitter - can be a subsequence, a Block or a Regex (String receiver only).
-	Any other object used as a splitter is treated as an Array containing that object."
+	"Perform an action specified as aBlock to each of the elements of the receiver that have been split using the splitter argument. splitter - can be a subsequence, a Block or a Regex (String receiver only). Any other object used as a splitter is treated as an Array containing that object."
+	"(String streamContents: [:s | 'Pharo is cool' splitOn: Character space do: [:each | s << each ]])>>>'Pharoiscool'"
+	
 	^ splitter split: self do: aBlock
 ]
 
 { #category : #splitjoin }
 SequenceableCollection >> splitOn: splitter indicesDo: aBlock [
-	"splitter - can be a subsequence, a Block or a Regex (String receiver only).
-	Any other object used as a splitter is treated as an Array containing that object."
+	"Perform an action specified as aBlock (with a start and end argument) to each of the indices of the receiver element that have been identified by splitting the receiver using the splitter argument. splitter - can be a subsequence, a Block or a Regex (String receiver only). Any other object used as a splitter is treated as an Array containing that object."
+	"(String streamContents: [:s | 'Pharo is cool' splitOn: Character space indicesDo: [ :start :end | s << 's:' << start asString << ' ' << 'e:' << end asString << ' ' ]]) >>> 's:1 e:5 s:7 e:8 s:10 e:13 '"
+	
+	
 	^ splitter split: self indicesDo: aBlock
 ]
 
