@@ -11,6 +11,8 @@ Class {
 	#superclass : #WriteStream,
 	#instVars : [
 		'stream',
+		'cr',
+		'lf',
 		'previous'
 	],
 	#category : #'Zinc-Character-Encoding-Core'
@@ -20,8 +22,17 @@ Class {
 ZnCrPortableWriteStream class >> on: aStream [
 
 	^ self basicNew
+		initialize;
 		stream: aStream;
 		yourself
+]
+
+{ #category : #initialize }
+ZnCrPortableWriteStream >> initialize [
+
+	super initialize.
+	cr := Character cr.
+	lf := Character lf.
 ]
 
 { #category : #accessing }
@@ -35,8 +46,8 @@ ZnCrPortableWriteStream >> nextPut: aCharacter [
 	"Write aCharacter to the receivers stream.
 	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
 
-	(aCharacter = Character lf and: [ previous = Character cr ]) ifFalse: [
-		(String crlf includes: aCharacter) ifTrue: 
+	(previous == cr and: [ aCharacter == lf ]) ifFalse: [
+		(aCharacter == cr or: [ aCharacter == lf ]) ifTrue: 
 			[ self newLine ]
 		ifFalse:
 			[ stream nextPut: aCharacter ] ].
