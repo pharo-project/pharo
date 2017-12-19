@@ -58,6 +58,15 @@ AbstractWidget >> takeKeyboardFocus [
 	^ self subclassResponsibility
 ]
 
+{ #category : #'drag and drop' }
+AbstractWidget >> transferFor: passenger from: aMorph [
+
+	^ TransferPresenter new
+		transfer: passenger;
+		from: aMorph;
+		yourself
+]
+
 { #category : #updating }
 AbstractWidget >> update: aSymbol [
 
