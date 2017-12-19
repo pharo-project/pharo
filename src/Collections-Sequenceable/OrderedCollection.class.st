@@ -505,6 +505,8 @@ OrderedCollection >> insert: anObject before: spot [
 
 { #category : #splitjoin }
 OrderedCollection >> join: aCollection [ 
+	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
+	
 	| result |
 	result := self class new.
 	aCollection

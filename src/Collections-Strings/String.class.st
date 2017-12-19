@@ -1768,9 +1768,10 @@ String >> isWideString [
 ]
 
 { #category : #splitjoin }
-String >> join: aCollection [ 
-	"'*' join: #('WWWWW' 'W  EW' 'zzzz')
-		->  'WWWWW*W  EW*zzzz' "
+String >> join: aCollection [
+	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
+	"('*' join: #('WWWWW' 'W  EW' 'zzzz')) >>> 'WWWWW*W  EW*zzzz'"
+	
 	^ self class new: (aCollection size * self size) streamContents: [:stream | 
 			aCollection
 				do: [:each | stream nextPutAll: each asString] 
