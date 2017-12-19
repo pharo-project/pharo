@@ -309,7 +309,8 @@ AbstractWidgetPresenter >> wantDropBlock: aBlock [
 
 { #category : #'drag and drop' }
 AbstractWidgetPresenter >> wantsDroppedMorph: draggedMorph event: anEvent inMorph: source [
-
+	draggedMorph isTransferable ifFalse: [ ^false ].
+	
 	^wantDropBlock value cull: draggedMorph passenger cull: anEvent cull:source
 ]
 
