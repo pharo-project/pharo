@@ -80,10 +80,20 @@ SmallDictionary class >> newFrom: aDict [
 ]
 
 { #category : #'instance creation' }
-SmallDictionary class >> newFromPairs: anArray [ 
+SmallDictionary class >> newFromKeys: keys andValues: values [
+	"Create a dictionary from the keys and values arguments which should have the same length."
+	
+	"(SmallDictionary newFromKeys: #(#x #y) andValues: #(3 6)) >>> (SmallDictionary new at: #x put: 3; at: #y put: 6 ;yourself)"
+	
+	| dict |
+	dict := self new.
+	keys with: values do: [ :k :v | dict at: k put: v ].
+	^ dict
+]
 
-	"Answer an instance of me associating (anArray at:i) to (anArray at: i+i)
-	 for each odd i.  anArray must have an even number of entries."
+{ #category : #'instance creation' }
+SmallDictionary class >> newFromPairs: anArray [ 
+	"Answer an instance of me associating (anArray at:i) to (anArray at: i+i) for each odd i.  anArray must have an even number of entries."
 
 	| newDictionary |
 
