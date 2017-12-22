@@ -104,6 +104,11 @@ ShiftClassInstaller >> installInEnvironment: newClass [
 ]
 
 { #category : #building }
+ShiftClassInstaller >> installSubclassInSuperclass: newClass [
+	newClass superclass addSubclass: newClass
+]
+
+{ #category : #building }
 ShiftClassInstaller >> lookupOldClass [
 	oldClass
 		ifNil: [ oldClass := builder environment at: builder name ifAbsent: [ nil ] ]
@@ -123,7 +128,8 @@ ShiftClassInstaller >> make: aBlock [
 
 		self installInEnvironment: newClass.
 
-		newClass superclass addSubclass: newClass.
+		self installSubclassInSuperclass: newClass.
+		
 		builder builderEnhancer beforeMigratingClass: builder installer: self.
 
 		self migrateClassTo: newClass.
