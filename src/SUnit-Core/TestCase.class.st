@@ -24,7 +24,7 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #adding }
+{ #category : #'building suites' }
 TestCase class >> addTestsFor: classNameString toSuite: suite [
 	| cls |
 	cls := Smalltalk globals at: classNameString ifAbsent: [ ^ suite ].
@@ -38,21 +38,21 @@ TestCase class >> addTestsFor: classNameString toSuite: suite [
 		ifFalse: [ cls addToSuiteFromSelectors: suite ]
 ]
 
-{ #category : #adding }
+{ #category : #'building suites' }
 TestCase class >> addToSuite: suite fromMethods: testMethods [ 
 	testMethods do:  [ :selector | 
 			suite addTest: (self selector: selector) ].
 	^suite
 ]
 
-{ #category : #adding }
+{ #category : #'building suites' }
 TestCase class >> addToSuiteFromSelectors: suite [
 	^self addToSuite: suite fromMethods: (self shouldInheritSelectors
 		ifTrue: [ self allTestSelectors ]
 		ifFalse: [self testSelectors ])
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> allTestSelectors [
 	| answer pivotClass lookupRoot |
 	answer := Set withAll: self testSelectors.
@@ -67,17 +67,17 @@ TestCase class >> allTestSelectors [
 	^answer asSortedCollection asOrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : #events }
 TestCase class >> announcer [ 
 	^ self announcers at: self ifAbsentPut: [ Announcer new ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 TestCase class >> announcers [
 	^ Announcers ifNil: [ Announcers := Dictionary new ] 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> assertionlessTestsShouldFail [
 	"By default, a test that makes no assertion is regarded as not failing.  This behaviour can be changed
 	setting the value of the class inst. var.  If a single method makes no assertions deliberatley, then
@@ -89,12 +89,12 @@ TestCase class >> assertionlessTestsShouldFail [
 	^ AssertionlessTestsShouldFail ifNil: [ AssertionlessTestsShouldFail := false ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> assertionlessTestsShouldFail: aBoolean [
 	AssertionlessTestsShouldFail := aBoolean
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 TestCase class >> assertionlessTestsShouldFailSettingOn: aBuilder [
 	<systemsettings>
 	
@@ -105,7 +105,7 @@ TestCase class >> assertionlessTestsShouldFailSettingOn: aBuilder [
 		description: 'Whether tests without assertion should fail or not.'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'building suites' }
 TestCase class >> buildSuite [
 	| suite |
 	^self isAbstract
@@ -117,21 +117,21 @@ TestCase class >> buildSuite [
 		ifFalse: [self buildSuiteFromSelectors]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'building suites' }
 TestCase class >> buildSuiteFromAllSelectors [
 
 	^self buildSuiteFromMethods: self allTestSelectors
 			
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'building suites' }
 TestCase class >> buildSuiteFromLocalSelectors [
 
 	^self buildSuiteFromMethods: self testSelectors
 			
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'building suites' }
 TestCase class >> buildSuiteFromMethods: testMethods [
 
 	^testMethods
@@ -142,12 +142,12 @@ TestCase class >> buildSuiteFromMethods: testMethods [
 				yourself]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'building suites' }
 TestCase class >> buildSuiteFromSelectors [
 	^self buildSuiteFromMethods: self allTestSelectors
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> coverage [
 	"returns the coverage determined by a simple static analysis of test coverage 
 	made by the receiver on a class that is identified by the name of the receiver.
@@ -163,7 +163,7 @@ TestCase class >> coverage [
 	^ self coverageForClass: cls
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> coverageAsString [
 	| cov className |
 	cov := self coverage first asInteger. 
@@ -173,13 +173,13 @@ TestCase class >> coverageAsString [
 	^ self name asString, ' covers ', cov asString, '% of ', className.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> coverageForClass: cls [
 	"returns the test coverage of all the methods included inherited ones"
 	^ self coverageForClass: cls until: ProtoObject
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> coverageForClass: cls until: aRootClass [
 	"returns the test coverage of all the methods included inherited ones but stopping at aRootClass included"
 	
@@ -196,12 +196,12 @@ TestCase class >> coverageForClass: cls until: aRootClass [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> coveragePercentage [
 	^ self coverage first
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 TestCase class >> debug: aSymbol [
 
 	^(self selector: aSymbol) debug
@@ -213,22 +213,22 @@ TestCase class >> defaultTimeLimit [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> defaultTimeLimit: aDuration [
 	DefaultTimeLimit := aDuration
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 TestCase class >> defaultTimeLimitSecs [
 	^self defaultTimeLimit asMilliSeconds / 1000.0
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 TestCase class >> defaultTimeLimitSecs: aNumber [
 	self defaultTimeLimit: aNumber seconds
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 TestCase class >> defaultTimeLimitSettingOn: aBuilder [
 	<systemsettings>
 	
@@ -239,7 +239,7 @@ TestCase class >> defaultTimeLimitSettingOn: aBuilder [
 		description: 'Detault time limit in seconds for test execution'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #history }
 TestCase class >> generateLastStoredRunMethod [
 
 	self shouldGenerateLastStoredRunMethod ifTrue: [
@@ -273,24 +273,24 @@ TestCase class >> hasTestSelectors [
 	
 ]
 
-{ #category : #accessing }
+{ #category : #history }
 TestCase class >> history [
 	^ history ifNil: [ history := self newTestDictionary ]
 ]
 
-{ #category : #accessing }
+{ #category : #history }
 TestCase class >> history: aDictionary [
 
 	history := aDictionary.
 	self historyAnnouncer announce: (TestSuiteEnded result: self)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> historyAnnouncer [
 	^ HistoryAnnouncer ifNil: [  HistoryAnnouncer := Announcer new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : #'initialize - event' }
 TestCase class >> initialize [
 	super initialize.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
@@ -327,12 +327,12 @@ TestCase class >> isUsed [
 		ifFalse: [ true ]
 ]
 
-{ #category : #accessing }
+{ #category : #history }
 TestCase class >> lastRun [
 	^ self classForTestResult historyFor: self
 ]
 
-{ #category : #accessing }
+{ #category : #history }
 TestCase class >> lastRunMethodNamed: aSelector [
 	
 	^ String streamContents: [:str |
@@ -341,12 +341,12 @@ TestCase class >> lastRunMethodNamed: aSelector [
 
 ]
 
-{ #category : #accessing }
+{ #category : #history }
 TestCase class >> lastStoredRun [
 	^ ((Dictionary new) add: (#failures->#()); add: (#passed->#()); add: (#errors->#()); yourself)
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> localCoverage [
 	"returns the coverage determined by a simple static analysis of test coverage 
 	made by the receiver on a class that is identified by the name of the receiver.
@@ -364,7 +364,7 @@ TestCase class >> localCoverage [
 	^ self localCoverageForClass: cls
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> localCoverageAsString [
 	| cov className |
 	cov := self localCoverage first asInteger. 
@@ -374,7 +374,7 @@ TestCase class >> localCoverageAsString [
 	^ self name asString, ' covers ', cov asString, '% of ', className.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> localCoverageForClass: cls [
 	
 	| definedMethods testedMethods untestedMethods |
@@ -396,17 +396,17 @@ TestCase class >> localCoverageForClass: cls [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #coverage }
 TestCase class >> localCoveragePercentage [
 	^ self localCoverage first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> lookupHierarchyRoot [
 	^TestCase
 ]
 
-{ #category : #events }
+{ #category : #'initialize - event' }
 TestCase class >> methodChanged: anEvent [
 	"Remove the changed method from the known test results."
 	
@@ -421,34 +421,34 @@ TestCase class >> methodChanged: anEvent [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> methodFailed: aSelector [
 	^ (self lastRun at: #failures) includes: aSelector
 ]
 
-{ #category : #factory }
+{ #category : #testing }
 TestCase class >> methodPassed: aSelector [
 	^ (self lastRun at: #passed) includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> methodProgressed: aSelector [
 	^ ((self storedMethodRaisedError: aSelector) or: [self storedMethodFailed: aSelector])
 		and: [self methodPassed: aSelector]
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> methodRaisedError: aSelector [
 	^ (self lastRun at: #errors) includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> methodRegressed: aSelector [
 	^ (self storedMethodPassed: aSelector) and: [(self methodFailed: aSelector) or: [self methodRaisedError: aSelector]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : #history }
 TestCase class >> newTestDictionary [
 
 	^ Dictionary new at: #timeStamp put: DateAndTime now;
@@ -459,12 +459,12 @@ TestCase class >> newTestDictionary [
 		
 ]
 
-{ #category : #initialization }
+{ #category : #events }
 TestCase class >> resetAnnouncer [
 	self announcers removeKey: self ifAbsent: []
 ]
 
-{ #category : #initialization }
+{ #category : #history }
 TestCase class >> resetHistory [
 	history := nil
 ]
@@ -475,13 +475,13 @@ TestCase class >> resources [
 	^#()
 ]
 
-{ #category : #running }
+{ #category : #'instance creation' }
 TestCase class >> run: aSymbol [
 
 	^(self selector: aSymbol) run
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #utility }
 TestCase class >> runAllAndLogResult [
 
 	"runs all tests in the image"
@@ -489,18 +489,18 @@ TestCase class >> runAllAndLogResult [
 	TestCase suite run logCr
 ]
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 TestCase class >> selector: aSymbol [
 
 	^self new setTestSelector: aSymbol
 ]
 
-{ #category : #asserting }
+{ #category : #events }
 TestCase class >> shouldAnnounce [
 	^ self announcers includesKey: self
 ]
 
-{ #category : #asserting }
+{ #category : #history }
 TestCase class >> shouldGenerateLastStoredRunMethod [
 	| sameRun |
 	
@@ -512,7 +512,7 @@ TestCase class >> shouldGenerateLastStoredRunMethod [
 
 ]
 
-{ #category : #asserting }
+{ #category : #testing }
 TestCase class >> shouldInheritSelectors [
 	"I should inherit from an Abstract superclass but not from a concrete one by default, unless I have no testSelectors in which case I must be expecting to inherit them from my superclass.  If a test case with selectors wants to inherit selectors from a concrete superclass, override this to true in that subclass."
 	
@@ -520,33 +520,33 @@ TestCase class >> shouldInheritSelectors [
 		and: [self superclass isAbstract or: [self testSelectors isEmpty]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> storedMethodFailed: aSelector [
 	^ (self lastStoredRun at: #failures) includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> storedMethodPassed: aSelector [
 	^ (self lastStoredRun at: #passed) includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> storedMethodRaisedError: aSelector [
 	^ (self lastStoredRun at: #errors) includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 TestCase class >> suite [
 
 	^self buildSuite
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> sunitVersion [
 	^'4.0'
 ]
 
-{ #category : #tests }
+{ #category : #accessing }
 TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
