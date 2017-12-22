@@ -59,6 +59,11 @@ TestResult class >> historyFor: aTestCaseClass [
 "	^ self history at: aTestCaseClass ifAbsent: [ self newTestDictionary ]"
 ]
 
+{ #category : #exceptions }
+TestResult class >> makesNoAssertion [
+	^ TestMakesNoAssertion
+]
+
 { #category : #history }
 TestResult class >> newTestDictionary [
 
@@ -134,6 +139,12 @@ TestResult >> addFailure: aTestCase [
 ]
 
 { #category : #adding }
+TestResult >> addMakesNoAssertion: aTestCase [
+	
+	^assertionless add: aTestCase
+]
+
+{ #category : #adding }
 TestResult >> addPass: aTestCase [
 	"We cannot use self passed as that incorporates test expectations and so does not return the stored collection."
 
@@ -144,6 +155,16 @@ TestResult >> addPass: aTestCase [
 TestResult >> addSkip: aTestCase [
 
 	^skipped add: aTestCase
+]
+
+{ #category : #accessing }
+TestResult >> assertionless [
+	^ assertionless
+]
+
+{ #category : #accessing }
+TestResult >> assertionlessCount [
+	^ self assertionless size
 ]
 
 { #category : #accessing }
@@ -273,7 +294,8 @@ TestResult >> initialize [
 	failures := Set new.
 	errors := OrderedCollection new.
 	skipped := OrderedCollection new.
-	timeStamp := DateAndTime now
+	assertionless := OrderedCollection new.
+	timeStamp := DateAndTime now.
 ]
 
 { #category : #testing }
@@ -331,11 +353,19 @@ TestResult >> printOn: aStream [
 		nextPutAll: self expectedDefectCount printString;
 		nextPutAll:' expected failures, ';
 		nextPutAll: self unexpectedFailureCount printString;
-		nextPutAll: ' failures, ';
+		nextPutAll: ' failures'.
+	
+	TestCase assertionlessTestsShouldFail
+		ifTrue: [ aStream nextPutAll: ' including ' ]
+		ifFalse: [ aStream nextPutAll: ', ' ].
+
+	aStream
+		nextPutAll: self assertionlessCount printString;
+		nextPutAll: ' tests making no assertion, ';
 		nextPutAll: self unexpectedErrorCount printString;
 		nextPutAll:' errors, ';
 		nextPutAll: self unexpectedPassCount printString;
-		nextPutAll:' unexpected passes'.
+		nextPutAll:' unexpected passes.'
 ]
 
 { #category : #running }
@@ -345,7 +375,7 @@ TestResult >> runCase: aTestCase [
 	aTestCase runCaseManaged.
 	aTestCase announce: TestCaseEnded  withResult: self.
 	self addPass: aTestCase]
-		on: self class failure , self class skip, self class warning, self class error
+		on: self class failure , self class skip, self class warning, self class error , self class makesNoAssertion
 		do: [:ex | ex sunitAnnounce: aTestCase toResult: self]
 ]
 
