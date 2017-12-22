@@ -106,22 +106,31 @@ UndefinedObject >> ifNil: aBlock [
 
 { #category : #testing }
 UndefinedObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock [
-	"Evaluate the block for nil because I'm == nil"
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+
+	"(nil ifNil: [42] ifNotNil: [:o | o +3 ] ) >>> 42"
+	"(3  ifNil: [42] ifNotNil: [:o | o +3 ]) >>> 6"
 
 	^ nilBlock value
 ]
 
 { #category : #testing }
 UndefinedObject >> ifNotNil: aBlock [
-	"A convenient test, in conjunction with Object ifNotNil:"
+	"If the receiver is not nil, pass it as argument to the block."
+
+	"(2 ifNotNil: [ :o | o + 3]) >>> 5"
+	"(nil ifNotNil: [:o | o +3 ]) >>> nil"
 
 	^ self
 ]
 
 { #category : #testing }
 UndefinedObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [ 
-	"If I got here, I am nil, so evaluate the block nilBlock"
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
 
+	"(nil ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 42"
+	"(3 ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 6"
+	
 	^ nilBlock value
 ]
 
