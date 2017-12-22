@@ -82,6 +82,16 @@ Exception class >> signal: message in: context [
 ]
 
 { #category : #exceptioninstantiator }
+Exception class >> signal: message withTag: aTag [
+	"Signal the occurrence of an exceptional condition with a specified textual description including a tag for the exception."
+
+	^ self new 
+		messageText: message;
+		tag: aTag; 
+		signal
+]
+
+{ #category : #exceptioninstantiator }
 Exception class >> signalIn: context [
 	"Signal the occurrence of an exceptional condition in the given context."
 
