@@ -126,21 +126,30 @@ ProtoObject >> ifNil: nilBlock [
 
 { #category : #testing }
 ProtoObject >> ifNil: nilBlock ifNotNil: ifNotNilBlock [
-	"Evaluate the block, unless I'm == nil (q.v.)"
-
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+	
+	"(nil ifNil: [42] ifNotNil: [:o | o +3 ] ) >>> 42"
+	"(3  ifNil: [42] ifNotNil: [:o | o +3 ]) >>> 6"
+	
 	^ ifNotNilBlock cull: self
 ]
 
 { #category : #testing }
 ProtoObject >> ifNotNil: ifNotNilBlock [
-	"Evaluate the block, unless I'm == nil (q.v.)"
+	"Evaluate the block, unless I'm == nil (q.v.). If the receiver is not nil, pass it as argument to the block."
+
+	"(2 ifNotNil: [ :o | o + 3]) >>> 5"
+	"(nil ifNotNil: [:o | o +3 ]) >>> nil"
 
 	^ ifNotNilBlock cull: self
 ]
 
 { #category : #testing }
 ProtoObject >> ifNotNil: ifNotNilBlock ifNil: nilBlock [ 
-	"If I got here, I am not nil, so evaluate the block ifNotNilBlock"
+	"If the receiver is not nil, pass it as argument to the ifNotNilBlock block. else execute the nilBlock block "
+
+	"(nil ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 42"
+	"(3 ifNotNil: [:o | o +3 ] ifNil: [42]) >>> 6"
 
 	^ ifNotNilBlock cull: self
 ]
