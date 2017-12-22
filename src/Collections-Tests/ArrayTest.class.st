@@ -792,7 +792,7 @@ ArrayTest >> testPrinting [
 ]
 
 { #category : #'tests - arithmetic' }
-ArrayTest >> testSumNumbersWithoutArgument [
+ArrayTest >> testSumNumberItemsWithoutBlock [
 	
 	self assert: #() sumNumbers equals: 0.
 	
