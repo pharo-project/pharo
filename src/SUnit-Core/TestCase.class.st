@@ -24,7 +24,7 @@ Class {
 	#category : #'SUnit-Core-Kernel'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 TestCase class >> addTestsFor: classNameString toSuite: suite [
 	| cls |
 	cls := Smalltalk globals at: classNameString ifAbsent: [ ^ suite ].
@@ -38,14 +38,14 @@ TestCase class >> addTestsFor: classNameString toSuite: suite [
 		ifFalse: [ cls addToSuiteFromSelectors: suite ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 TestCase class >> addToSuite: suite fromMethods: testMethods [ 
 	testMethods do:  [ :selector | 
 			suite addTest: (self selector: selector) ].
 	^suite
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 TestCase class >> addToSuiteFromSelectors: suite [
 	^self addToSuite: suite fromMethods: (self shouldInheritSelectors
 		ifTrue: [ self allTestSelectors ]
@@ -67,7 +67,7 @@ TestCase class >> allTestSelectors [
 	^answer asSortedCollection asOrderedCollection
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> announcer [ 
 	^ self announcers at: self ifAbsentPut: [ Announcer new ]
 ]
@@ -201,13 +201,13 @@ TestCase class >> coveragePercentage [
 	^ self coverage first
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> debug: aSymbol [
 
 	^(self selector: aSymbol) debug
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> defaultTimeLimit [
 	^DefaultTimeLimit ifNil: [DefaultTimeLimit := 10 seconds]
 
@@ -248,7 +248,7 @@ TestCase class >> generateLastStoredRunMethod [
 			classified: 'history' ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> hasMethodBeenRun: aSelector [
 	^ ((self lastRun at: #errors),
 		(self lastRun at: #failures),
@@ -256,7 +256,7 @@ TestCase class >> hasMethodBeenRun: aSelector [
 			includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> hasTestSelectors [
 
 	^(self selectors anySatisfy: [ :each | 
@@ -273,12 +273,12 @@ TestCase class >> hasTestSelectors [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> history [
 	^ history ifNil: [ history := self newTestDictionary ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> history: aDictionary [
 
 	history := aDictionary.
@@ -290,7 +290,7 @@ TestCase class >> historyAnnouncer [
 	^ HistoryAnnouncer ifNil: [  HistoryAnnouncer := Announcer new ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 TestCase class >> initialize [
 	super initialize.
 	SystemAnnouncer uniqueInstance unsubscribe: self.
@@ -300,7 +300,7 @@ TestCase class >> initialize [
 		to: self.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> isAbstract [
 	"Override to true if a TestCase subclass is Abstract and should not have
 	TestCase instances built from it"
@@ -309,17 +309,17 @@ TestCase class >> isAbstract [
 			
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> isTestCase [
 	^ true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> isUnitTest [
 	^true
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #testing }
 TestCase class >> isUsed [
 	"all my subclasses are used by me"
 	^self name = 'TestCase'
@@ -327,12 +327,12 @@ TestCase class >> isUsed [
 		ifFalse: [ true ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> lastRun [
 	^ self classForTestResult historyFor: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> lastRunMethodNamed: aSelector [
 	
 	^ String streamContents: [:str |
@@ -341,7 +341,7 @@ TestCase class >> lastRunMethodNamed: aSelector [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> lastStoredRun [
 	^ ((Dictionary new) add: (#failures->#()); add: (#passed->#()); add: (#errors->#()); yourself)
 ]
@@ -406,7 +406,7 @@ TestCase class >> lookupHierarchyRoot [
 	^TestCase
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #events }
 TestCase class >> methodChanged: anEvent [
 	"Remove the changed method from the known test results."
 	
@@ -426,7 +426,7 @@ TestCase class >> methodFailed: aSelector [
 	^ (self lastRun at: #failures) includes: aSelector
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #factory }
 TestCase class >> methodPassed: aSelector [
 	^ (self lastRun at: #passed) includes: aSelector
 ]
@@ -448,7 +448,7 @@ TestCase class >> methodRegressed: aSelector [
 	^ (self storedMethodPassed: aSelector) and: [(self methodFailed: aSelector) or: [self methodRaisedError: aSelector]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 TestCase class >> newTestDictionary [
 
 	^ Dictionary new at: #timeStamp put: DateAndTime now;
@@ -459,23 +459,23 @@ TestCase class >> newTestDictionary [
 		
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TestCase class >> resetAnnouncer [
 	self announcers removeKey: self ifAbsent: []
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 TestCase class >> resetHistory [
 	history := nil
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> resources [
 
 	^#()
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #running }
 TestCase class >> run: aSymbol [
 
 	^(self selector: aSymbol) run
@@ -489,18 +489,18 @@ TestCase class >> runAllAndLogResult [
 	TestCase suite run logCr
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TestCase class >> selector: aSymbol [
 
 	^self new setTestSelector: aSymbol
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #asserting }
 TestCase class >> shouldAnnounce [
 	^ self announcers includesKey: self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #asserting }
 TestCase class >> shouldGenerateLastStoredRunMethod [
 	| sameRun |
 	
@@ -512,7 +512,7 @@ TestCase class >> shouldGenerateLastStoredRunMethod [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #asserting }
 TestCase class >> shouldInheritSelectors [
 	"I should inherit from an Abstract superclass but not from a concrete one by default, unless I have no testSelectors in which case I must be expecting to inherit them from my superclass.  If a test case with selectors wants to inherit selectors from a concrete superclass, override this to true in that subclass."
 	
@@ -546,7 +546,7 @@ TestCase class >> sunitVersion [
 	^'4.0'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TestCase class >> testSelectors [
 	^(self selectors select: [ :each | (each beginsWith: 'test') and: [each numArgs isZero]])
 ]
