@@ -243,6 +243,20 @@ ExceptionTests >> testSignalFromHandlerActionTest [
 ]
 
 { #category : #'tests - exceptiontester' }
+ExceptionTests >> testSignalWithTag [
+	| aTag |
+	aTag := Object new.
+	
+	[ 
+		DomainError signal: 'aMessage' withTag: aTag.
+		self fail: 'The exception was not signaled'. 
+	] on: DomainError do: [ :e | 
+		self assert: e messageText equals: 'aMessage'.
+		self assert: e tag equals: aTag.
+	]
+]
+
+{ #category : #'tests - exceptiontester' }
 ExceptionTests >> testSimpleEnsure [
 	self assertSuccess: (ExceptionTester new runTest: #simpleEnsureTest ) 
 ]
