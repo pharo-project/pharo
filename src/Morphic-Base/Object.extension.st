@@ -93,12 +93,6 @@ Object >> hasModelYellowButtonMenuItems [
 ]
 
 { #category : #'*Morphic-Base' }
-Object >> head [
-
-	^ self
-]
-
-{ #category : #'*Morphic-Base' }
 Object >> iconOrThumbnailOfSize: aNumberOrPoint [ 
 	"Answer an appropiate form to represent the receiver"
 	^ nil
@@ -108,12 +102,6 @@ Object >> iconOrThumbnailOfSize: aNumberOrPoint [
 Object >> isTransferable [
 
 	^ false
-]
-
-{ #category : #'*Morphic-Base' }
-Object >> tail [
-
-	^ nil
 ]
 
 { #category : #'*Morphic-Base' }
@@ -142,6 +130,18 @@ Object class >> taskbarIconName [
 Object >> transferFor: passenger from: aMorph [
 
 	^ TransferMorph withPassenger: passenger from: aMorph
+]
+
+{ #category : #'*Morphic-Base' }
+Object >> treeNodeHead [
+
+	^ self
+]
+
+{ #category : #'*Morphic-Base' }
+Object >> treeNodeTail [
+
+	^ nil
 ]
 
 { #category : #'*Morphic-Base' }
