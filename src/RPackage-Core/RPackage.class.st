@@ -252,40 +252,57 @@ RPackage >> addClassTag: aSymbol [
 ]
 
 { #category : #'compiled method handling' }
+RPackage >> addExtensionMethod: aCompiledMethod [ 
+	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
+	| methodClass |
+	
+	methodClass := aCompiledMethod methodClass. 
+	methodClass isMeta
+		ifTrue: [
+			(metaclassExtensionSelectors 
+				at: methodClass theNonMetaClass name  
+				ifAbsentPut: [ Set new ]) 
+					add: aCompiledMethod selector.]
+		ifFalse: [
+			(classExtensionSelectors 
+				at: methodClass name 
+				ifAbsentPut: [ Set new ]) 
+					add: aCompiledMethod selector].
+	"we added a method extension so the receiver is an extending package of the class"
+	self organizer registerExtendingPackage: self forClass: methodClass.
+	aCompiledMethod adoptToBeExtensionIn: self
+]
+
+{ #category : #'compiled method handling' }
 RPackage >> addMethod: aCompiledMethod [ 
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
 	| methodClass |
 	
 	methodClass := aCompiledMethod methodClass. 
-	(self includesClass: methodClass )
+	(self includesClass: methodClass ) 
+		ifTrue: [ self addNonExtensionMethod: aCompiledMethod ]
+		ifFalse: [self addExtensionMethod: aCompiledMethod].
+]
+
+{ #category : #'compiled method handling' }
+RPackage >> addNonExtensionMethod: aCompiledMethod [ 
+	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
+	| methodClass |
+	
+	methodClass := aCompiledMethod methodClass. 
+	methodClass isMeta
 		ifTrue: [
-			methodClass isMeta
-				ifTrue: [
-					(metaclassDefinedSelectors 
-						at: methodClass theNonMetaClass name  
-						ifAbsentPut: [ Set new ]) 
-						add: aCompiledMethod selector]
-				ifFalse: [
-					(classDefinedSelectors 
-						at: methodClass name 
-						ifAbsentPut: [ Set new ]) 
-						add: aCompiledMethod selector ] ]
-		ifFalse:  [
-			methodClass isMeta
-				ifTrue: [
-					(metaclassExtensionSelectors 
-						at: methodClass theNonMetaClass name  
-						ifAbsentPut: [ Set new ]) 
-						add: aCompiledMethod selector.]
-				ifFalse: [
-					(classExtensionSelectors 
-						at: methodClass name 
-						ifAbsentPut: [ Set new ]) 
-						add: aCompiledMethod selector].
-				"we added a method extension so the receiver is an extending package of the class"
-				self organizer registerExtendingPackage: self forClass: methodClass ].
-					
-	^ aCompiledMethod.
+			(metaclassDefinedSelectors 
+				at: methodClass theNonMetaClass name  
+				ifAbsentPut: [ Set new ]) 
+					add: aCompiledMethod selector]
+		ifFalse: [
+			(classDefinedSelectors 
+				at: methodClass name 
+				ifAbsentPut: [ Set new ]) 
+					add: aCompiledMethod selector ].
+				
+	aCompiledMethod adoptToNotBeExtension
 ]
 
 { #category : #'selector handling' }

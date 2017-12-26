@@ -1,8 +1,32 @@
 Extension { #name : #CompiledMethod }
 
 { #category : #'*rpackage-core' }
-CompiledMethod >> isDefinedInPackage: anRPackage [
-	^ anRPackage includesDefinedSelector: self selector ofClass: self methodClass
+CompiledMethod >> adoptToBeExtensionIn: aPackage [
+
+	| tagName |
+	self properties at: #package ifPresent: [ :existingPackage |
+		existingPackage = aPackage ifTrue: [ ^self ]].
+	
+	self properties at: #package put: aPackage.
+	self tags ifNotEmpty: [ :tags | 
+		tagName := tags anyOne asLowercase allButFirst.
+		(tagName includesSubstring: aPackage name caseSensitive: false) ifFalse: [ 
+			self tagWith: ('*', aPackage name) asSymbol]]
+]
+
+{ #category : #'*rpackage-core' }
+CompiledMethod >> adoptToNotBeExtension [
+
+	| previousPackage |
+	previousPackage := self properties removeKey: #package ifAbsent: [^self].
+	
+	self tags do: [ :each | 
+		(each beginsWith: '*') ifTrue: [ self untagFrom: each] ]
+]
+
+{ #category : #'*rpackage-core' }
+CompiledMethod >> isDefinedInPackage: aPackage [
+	^ aPackage includesDefinedSelector: self selector ofClass: self methodClass
 ]
 
 { #category : #'*rpackage-core' }
@@ -17,7 +41,19 @@ CompiledMethod >> isExtensionInPackage: anRPackage [
 
 { #category : #'*rpackage-core' }
 CompiledMethod >> package [
-	^ self packageFromOrganizer: RPackage organizer
+
+	^self properties 
+		at: #package 
+		ifAbsent: [ self origin package]
+]
+
+{ #category : #'*rpackage-core' }
+CompiledMethod >> package: aPackage [
+	self isInstalled ifFalse: [
+		self properties at: #package put: aPackage.
+		^self].
+	
+	aPackage addMethod: self
 ]
 
 { #category : #'*rpackage-core' }
