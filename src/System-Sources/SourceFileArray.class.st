@@ -36,8 +36,9 @@ SourceFileArray class >> initialize [
 SourceFileArray class >> sourcesFS [
 
 	^ sourcesFS ifNil: [ 
-		sourcesFS := FileSystem memory ] 
-
+		self class environment at: #MemoryStore
+			ifPresent: [ FileSystem memory ]
+			ifAbsent: [ nil ] ].
 ]
 
 { #category : #'as yet unclassified' }
