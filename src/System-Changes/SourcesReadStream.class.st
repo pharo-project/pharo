@@ -7,6 +7,11 @@ Class {
 	#category : #'System-Changes'
 }
 
+{ #category : #'as yet unclassified' }
+SourcesReadStream >> basicNext [
+	^ self next
+]
+
 { #category : #decorated }
 SourcesReadStream >> basicNextChunk [
 	"Answer the contents of the receiver, up to the next terminator character. Doubled terminators indicate an embedded terminator character."
@@ -107,6 +112,11 @@ SourcesReadStream >> parseLangTagFor: aString [
 
 ]
 
+{ #category : #'as yet unclassified' }
+SourcesReadStream >> position [
+	^ self wrappedStream position
+]
+
 { #category : #accessing }
 SourcesReadStream >> position: anInteger [
 
@@ -130,6 +140,16 @@ SourcesReadStream >> skipSeparators [
 	[self atEnd]
 		whileFalse:
 		[self next isSeparator ifFalse: [^ self position: self position-1]]
+]
+
+{ #category : #'as yet unclassified' }
+SourcesReadStream >> skipSeparatorsAndPeekNext [
+	"A special function to make nextChunk fast"
+	| peek |
+	[self atEnd]
+		whileFalse:
+		[(peek := self next) isSeparator
+			ifFalse: [self position: self position-1. ^ peek]]
 ]
 
 { #category : #'as yet unclassified' }
