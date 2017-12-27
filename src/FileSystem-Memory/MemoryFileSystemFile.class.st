@@ -106,7 +106,7 @@ MemoryFileSystemFile >> isDirectory [
 
 { #category : #'stream-protocol' }
 MemoryFileSystemFile >> readStream [
-	^ ReadStream on: self bytes asString from: 1 to: size
+	^ ReadStream on: self bytes from: 1 to: size
 ]
 
 { #category : #accessing }
