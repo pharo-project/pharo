@@ -37,7 +37,7 @@ SourceFileArray class >> sourcesFS [
 
 	^ sourcesFS ifNil: [ 
 		self class environment at: #MemoryStore
-			ifPresent: [ FileSystem memory ]
+			ifPresent: [ sourcesFS := FileSystem memory ]
 			ifAbsent: [ nil ] ].
 ]
 
