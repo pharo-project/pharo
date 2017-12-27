@@ -93,6 +93,11 @@ SourcesReadStream >> nextPreamble [
 	^ out contents
 ]
 
+{ #category : #'as yet unclassified' }
+SourcesReadStream >> openReadOnly [
+	^ self 
+]
+
 { #category : #parsing }
 SourcesReadStream >> parseLangTagFor: aString [
 

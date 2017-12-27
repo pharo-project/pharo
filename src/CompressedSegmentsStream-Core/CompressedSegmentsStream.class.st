@@ -219,7 +219,7 @@ CompressedSegmentsStream >> position: newPosition [
 			"just leave garbage beyond end of file"]
 			ifFalse:
 			[compressedBuffer := segmentFile next: ((segmentTable at: segmentIndex+1) - (segmentTable at: segmentIndex)). 
-			collection := (GZipReadStream on: compressedBuffer) contents].
+			collection := (GZipReadStream on: compressedBuffer) contents asByteArray].
 		readLimit := collection size min: endOfFile - self segmentOffset].
 	position := newPosition \\ segmentSize.
 	
