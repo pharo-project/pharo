@@ -32,6 +32,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'System-Changes';
 			package: 'RingChunkImporter';
 			package: 'Compression';
+			package: 'CompressedSegmentsStream-Core';
 			package: 'Monticello';
 			package: 'Ring-Monticello';
 			
