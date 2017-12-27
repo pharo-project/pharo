@@ -224,7 +224,8 @@
 	UIManager default progressBarEnabled: true.
 	MCPackageManager allSubInstancesDo: [ :p | p unregister ].
 	SystemAnnouncer uniqueInstance unsubscribe: MCWorkingCopy.
-	delete := #('RingChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Core-Kernel' 'Ring-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Ring-Monticello').
+	delete := #('RingChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Core-Kernel' 'Ring-Core-Containers' 'RingChunkImporter' 'Compression' 'Monticello' 'Ring-Monticello' 'CompressedSegmentsStream-Core';
+).
 	delete
 		do: [ :packageName | 
 			| mcPackage classes |
