@@ -48,7 +48,32 @@ Class {
 	#category : #'CompressedSegmentsStream-Core'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'compressed sources' }
+CompressedSegmentsStream class >> compressSourcesInMemory [
+
+	| originalSources originalSourcesReference compressedSources compressedSourcesReference segmentSize |
+	
+	segmentSize := 20000.
+	originalSourcesReference := Smalltalk sourcesName asFileReference.
+	originalSources := originalSourcesReference readStream reset binary.
+	
+	compressedSourcesReference := SourceFileArray sourcesFS root / originalSourcesReference base, 'stc'.
+	compressedSourcesReference ensureDelete.
+
+	compressedSources := (CompressedSegmentsStream 
+		on: (compressedSourcesReference writeStream binary)) 
+		segmentSize: segmentSize 
+		maxSize: originalSources size.
+
+	originalSources position: 0.
+	[originalSources atEnd] whileFalse:
+			[compressedSources nextPutAll: (originalSources next: segmentSize)].
+
+	originalSources close.
+	compressedSources close.
+]
+
+{ #category : #'instance creation' }
 CompressedSegmentsStream class >> on: aFile [
 	^ self basicNew openOn: aFile
 ]
