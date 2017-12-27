@@ -1,7 +1,14 @@
-Extension { #name : #ZnCharacterReadStream }
+"
+I am a ZnCharacterReadStream that implements API required by the sources file accesses.
+"
+Class {
+	#name : #SourcesReadStream,
+	#superclass : #ZnCharacterReadStream,
+	#category : #'System-Changes'
+}
 
-{ #category : #'*System-Changes' }
-ZnCharacterReadStream >> basicNextChunk [
+{ #category : #decorated }
+SourcesReadStream >> basicNextChunk [
 	"Answer the contents of the receiver, up to the next terminator character. Doubled terminators indicate an embedded terminator character."
 
 	| terminator out ch |
@@ -19,8 +26,8 @@ ZnCharacterReadStream >> basicNextChunk [
 	^ out contents
 ]
 
-{ #category : #'*System-Changes' }
-ZnCharacterReadStream >> decodeString: string andRuns: runsRaw [
+{ #category : #decorated }
+SourcesReadStream >> decodeString: string andRuns: runsRaw [
 	| strm runLength runValues newString index |
 	strm := ReadStream on: runsRaw from: 1 to: runsRaw size.
 	(strm peekFor: $()
@@ -44,8 +51,8 @@ ZnCharacterReadStream >> decodeString: string andRuns: runsRaw [
 	^ newString
 ]
 
-{ #category : #'*System-Changes' }
-ZnCharacterReadStream >> nextChunk [
+{ #category : #'fileIn/Out' }
+SourcesReadStream >> nextChunk [
 	"Answer the contents of the receiver, up to the next terminator character. Doubled terminators indicate an embedded terminator character."
 
 	| terminator out ch |
@@ -63,8 +70,8 @@ ZnCharacterReadStream >> nextChunk [
 	^ self parseLangTagFor: out contents
 ]
 
-{ #category : #'*System-Changes' }
-ZnCharacterReadStream >> nextPreamble [
+{ #category : #'fileIn/Out' }
+SourcesReadStream >> nextPreamble [
 	"Assuming that preamble part does not contain ]lang[ tag"
 	| terminator out ch |
 	terminator := $!.
@@ -81,8 +88,8 @@ ZnCharacterReadStream >> nextPreamble [
 	^ out contents
 ]
 
-{ #category : #'*System-Changes' }
-ZnCharacterReadStream >> parseLangTagFor: aString [
+{ #category : #parsing }
+SourcesReadStream >> parseLangTagFor: aString [
 
 	| string peek runsRaw pos |
 	string := aString.
@@ -100,8 +107,33 @@ ZnCharacterReadStream >> parseLangTagFor: aString [
 
 ]
 
-{ #category : #'*System-Changes' }
-ZnCharacterReadStream >> skipStyleChunk [
+{ #category : #accessing }
+SourcesReadStream >> position: anInteger [
+
+	^ self wrappedStream position: anInteger
+]
+
+{ #category : #'private - copying' }
+SourcesReadStream >> readOnlyCopy [
+
+	^ self 
+]
+
+{ #category : #accessing }
+SourcesReadStream >> size [
+
+	^ self wrappedStream size
+]
+
+{ #category : #positioning }
+SourcesReadStream >> skipSeparators [
+	[self atEnd]
+		whileFalse:
+		[self next isSeparator ifFalse: [^ self position: self position-1]]
+]
+
+{ #category : #'as yet unclassified' }
+SourcesReadStream >> skipStyleChunk [
 	"Get to the start of the next chunk that is not a style for the previous chunk"
 
 	| pos |
