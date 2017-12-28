@@ -199,6 +199,7 @@ dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 c
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5'; load: 'core'"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://${REPOSITORY}/src'; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "CompressedSegmentsStream compressSourcesInMemory"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release
 
 echo "[Pharo] Configure resulting image"
@@ -209,4 +210,4 @@ ${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
 # clean bak sources files
 rm -f *.bak
 
-zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*
+zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.image  ${PHARO_IMAGE_NAME}.changes
