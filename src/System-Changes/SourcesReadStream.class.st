@@ -7,7 +7,7 @@ Class {
 	#category : #'System-Changes'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
 SourcesReadStream >> basicNext [
 	^ self next
 ]
@@ -75,6 +75,28 @@ SourcesReadStream >> nextChunk [
 	^ self parseLangTagFor: out contents
 ]
 
+{ #category : #accessing }
+SourcesReadStream >> nextChunkText [
+	"Deliver the next chunk as a Text.  Decode the following ]style[ chunk if present.  Position at start of next real chunk."
+	| string runsRaw strm runs peek pos |
+	"Read the plain text"
+	string := self nextChunk.
+	
+	"Test for ]style[ tag"
+	pos := self position.
+	peek := self skipSeparatorsAndPeekNext.
+	peek = $] ifFalse: [self position: pos. ^ string asText].  "no tag"
+	(self upTo: $[) = ']style' ifFalse: [self position: pos. ^ string asText].  "different tag"
+
+	"Read and decode the style chunk"
+	runsRaw := self basicNextChunk.	"style encoding"
+	strm := ReadStream on: runsRaw from: 1 to: runsRaw size.
+	runs := RunArray scanFrom: strm.
+
+	^ Text basicNew setString: string setRunsChecking: runs.
+
+]
+
 { #category : #'fileIn/Out' }
 SourcesReadStream >> nextPreamble [
 	"Assuming that preamble part does not contain ]lang[ tag"
@@ -93,7 +115,7 @@ SourcesReadStream >> nextPreamble [
 	^ out contents
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'open/close' }
 SourcesReadStream >> openReadOnly [
 	^ self 
 ]
@@ -117,7 +139,7 @@ SourcesReadStream >> parseLangTagFor: aString [
 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SourcesReadStream >> position [
 	^ self wrappedStream position
 ]
@@ -147,7 +169,7 @@ SourcesReadStream >> skipSeparators [
 		[self next isSeparator ifFalse: [^ self position: self position-1]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 SourcesReadStream >> skipSeparatorsAndPeekNext [
 	"A special function to make nextChunk fast"
 	| peek |
@@ -157,7 +179,7 @@ SourcesReadStream >> skipSeparatorsAndPeekNext [
 			ifFalse: [self position: self position-1. ^ peek]]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #parsing }
 SourcesReadStream >> skipStyleChunk [
 	"Get to the start of the next chunk that is not a style for the previous chunk"
 
