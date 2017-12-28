@@ -26,7 +26,7 @@ Class {
 	#category : #'System-Sources'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 SourceFileArray class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name.
@@ -41,7 +41,7 @@ SourceFileArray class >> sourcesFS [
 			ifAbsent: [ nil ] ].
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #'class initialization' }
 SourceFileArray class >> startUp: resuming [
 
 	resuming ifTrue: [ Smalltalk openSourceFiles ]
