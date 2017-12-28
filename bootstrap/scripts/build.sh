@@ -210,4 +210,4 @@ ${VM} "${PHARO_IMAGE_NAME}.image" save "Pharo"
 # clean bak sources files
 rm -f *.bak
 
-zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.*
+zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.image  ${PHARO_IMAGE_NAME}.changes
