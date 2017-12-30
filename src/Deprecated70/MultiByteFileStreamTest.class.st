@@ -297,6 +297,25 @@ MultiByteFileStreamTest >> testReset [
 ]
 
 { #category : #testing }
+MultiByteFileStreamTest >> testUpToAll [
+	| testString filename  |
+	testString := 'ße'.
+	filename := 'test-file-' , 99 atRandom printString , '.txt'.
+	MultiByteFileStream 
+		forceNewFileNamed: filename
+		do: [ :stream | 
+			stream
+				nextPutAll: testString;
+				crlf ].
+	[  
+	filename asFileReference
+		readStreamDo: [ :stream |
+			self assert: (stream upToAll: 'e') = $ß.
+		] ]
+	ensure: [ filename asFileReference ensureDelete ] 
+]
+
+{ #category : #testing }
 MultiByteFileStreamTest >> testUpToAnyOfDo [
 	| testString filename  str1 ch1 ch2|
 	testString := 'élève en Français'.
