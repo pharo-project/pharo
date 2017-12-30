@@ -310,7 +310,7 @@ MultiByteFileStreamTest >> testUpToAll [
 	[  
 	filename asFileReference
 		readStreamDo: [ :stream |
-			self assert: (stream upToAll: 'e') = $ß.
+			self assert: (stream upToAll: 'e') = 'ß'.
 		] ]
 	ensure: [ filename asFileReference ensureDelete ] 
 ]
