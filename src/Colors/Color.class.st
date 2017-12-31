@@ -1,22 +1,17 @@
 "
 This class represents abstract color, regardless of the depth of bitmap it will be shown in.  At the very last moment a Color is converted to a pixelValue that depends on the depth of the actual Bitmap inside the Form it will be used with.  The supported depths (in bits) are 1, 2, 4, 8, 16, and 32.  The number of actual colors at these depths are: 2, 4, 16, 256, 32768, and 16 million.  (See comment in BitBlt.)  To change the depth of the Display and set how many colors you can see, execute: (Display newDepth: 8).  (See comment in DisplayMedium)
+
 	Color is represented as the amount of light in red, green, and blue.  White is (1.0, 1.0, 1.0) and black is (0, 0, 0).  Pure red is (1.0, 0, 0).  These colors are ""additive"".  Think of Color's instance variables as:
 	r	amount of red, a Float between 0.0 and 1.0.
 	g	amount of green, a Float between 0.0 and 1.0.
 	b	amount of blue, a Float between 0.0 and 1.0.
 (But, in fact, the three are encoded as values from 0 to 1023 and combined in a single integer, rgb.  The user does not need to know this.)
+
 	Many colors are named.  You find a color by name by sending a message to class Color, for example (Color lightBlue).  Also, (Color red: 0.2 green: 0.6 blue: 1.0) or (Color r: 0.2 g: 0.6 b: 1.0) creates a color. (see below)
 	A color is essentially immutable.  Once you set red, green, and blue, you cannot change them.  Instead, create a new Color and use it.
+	
 	Applications such as contour maps and bar graphs will want to display one of a set of shades based on a number.  Convert the range of this number to an integer from 1 to N.  Then call (Color green lightShades: N) to get an Array of colors from white to green.  Use the Array messages at:, atPin:, or atWrap: to pull out the correct color from the array.  atPin: gives the first (or last) color if the index is out of range.  atWrap: wraps around to the other end if the index is out of range.
-	Here are some fun things to run in when your screen has color:
-		Pen new mandala: 30 diameter: Display height-100.
-		Pen new web  ""Draw with the mouse, opt-click to end""
-		Display fillWhite.  Pen new hilberts: 5.
-		Form toothpaste: 30  ""Draw with mouse, opt-click to end""
-You might also want to try the comment in
-	Form>class>examples>tinyText...
-
-
+		
 Messages:
 	mixed: proportion with: aColor	Answer this color mixed with the given color additively. The proportion, a number between 0.0 and 1.0, determines what what fraction of the receiver to use in the mix.
 
@@ -32,7 +27,6 @@ Messages:
 	brightness	Returns the brightness of the color.  0.0 to 1.0
 
 	name    Look to see if this Color has a name.
-	display	Show a swatch of this color tracking the cursor.
 
 	lightShades: thisMany		An array of thisMany colors from white to the receiver. 
 	darkShades: thisMany		An array of thisMany colors from black to the receiver.  Array is of length num.
@@ -53,15 +47,10 @@ Messages to Class Color.
 	canUnderstand: #brown	  Returns true if #brown is a defined color.
 	names		An OrderedCollection of the names of the colors.
 	named: #notAllThatGray put: aColor    Add a new color to the list and create an access message and a class variable for it.
-	fromUser	Shows the palette of colors available at this display depth.  Click anywhere to return the color you clicked on.
-
-	hotColdShades: thisMany	An array of thisMany colors showing temperature from blue to red to white hot.
-
-    stdColorsForDepth: d        An Array of colors available at this depth.  For 16 bit and 32 bits, returns a ColorGenerator.  It responds to at: with a Color for that index, simulating a very big Array. 
 
    colorFromPixelValue: value depth: d    Returns a Color whose bit pattern (inside a Bitmap) at this depth is the number specified.  Normal users do not need to use this.
 
-(See also comments in these classes: Form, Bitmap, BitBlt, Pattern, MaskedForm.)
+(See also comments in these classes: Form, Bitmap, BitBlt,.)
 "
 Class {
 	#name : #Color,
@@ -1047,12 +1036,16 @@ Color >> asColor [
 
 { #category : #conversions }
 Color >> asColorref [
-	"Convert the receiver into a colorref"
+	"Convert the receiver into a colorref, i.e, a number embedding r,g,b on 24 bits"
+	"(Color red asColorref) >>> 229"
+	"(Color white asColorref) >>>  16777215"
 	^(self red * 255) asInteger + ((self green * 255) asInteger << 8) + ((self blue * 255) asInteger << 16)
 ]
 
 { #category : #conversions }
 Color >> asHexString [
+	"Return a string representing the receiver in HEX (i.e., 6 elements in 16 basis)"
+	"(Color red asHexString) >>> 'E50000'"
 	| s |
 	s := '000000' copy.
 	s at: 1 put: (Character digitValue: ((rgb bitShift: -6 - RedShift) bitAnd: 15)).
@@ -1066,6 +1059,8 @@ Color >> asHexString [
 
 { #category : #conversions }
 Color >> asNontranslucentColor [
+	"Set the transparency of the receiver to opaque."
+	
 	^ self alpha: 1.0.
 ]
 
@@ -1277,9 +1272,9 @@ Color >> dansDarker [
 		h: self hue s: self saturation v: (self brightness - 0.16 max: 0.0)
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> darkShades: thisMany [
-	"An array of thisMany colors from black to the receiver.  Array is of length num. Very useful for displaying color based on a variable in your program.  "
+	"Return an array of thisMany colors from black to the receiver.  Array is of length num. Very useful for displaying color based on a variable in your program.  "
 	"(Color red darkShades: 12) inspect"
 
 	^ self class black mix: self shades: thisMany
@@ -1296,7 +1291,9 @@ Color >> darker [
 { #category : #equality }
 Color >> diff: theOther [
 	"Returns a number between 0.0 and 1.0"
-
+	"(Color red diff: Color red) >>> 0.0"
+	"(Color white diff: Color black ) >>> 1.0"
+	
 	^ ((self privateRed - theOther privateRed) abs
 		+ (self privateGreen - theOther privateGreen) abs
 		+ (self privateBlue - theOther privateBlue) abs)
@@ -1400,7 +1397,7 @@ Color >> indexInMap: aColorMap [
 
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeHue: hue saturation: saturation brightness: brightness alpha: anAlpha [
 	"Initialize this color to the given hue, saturation, and brightness. See the comment in the instance creation method for details."
 
@@ -1471,7 +1468,7 @@ Color >> initializeHue: hue saturation: saturation brightness: brightness alpha:
 	self error: 'implementation error'
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeHue: hue saturation: saturation lightness: lightness alpha: anAlpha [
 	"Initialize this color to the given hue, saturation, and lightness. See the comment in the instance creation method for details."
 
@@ -1504,7 +1501,7 @@ Color >> initializeHue: hue saturation: saturation lightness: lightness alpha: a
 	self error: 'implementation error'
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializePrivateRed: r green: g blue: b [ 
 	"Initialize this color's r, g, and b components to the given values in the range [0..ComponentMax].  Encoded in a single variable as 3 integers in [0..1023]."
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -1519,7 +1516,7 @@ Color >> initializePrivateRed: r green: g blue: b [
 	cachedBitPattern := nil
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeRed: r green: g blue: b alpha: anAlpha [ 
 	"Initialize this color's r, g, and b components to the given values in the range [0.0..1.0].  Encoded in a single variable as 3 integers in [0..1023]."
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -1529,7 +1526,7 @@ Color >> initializeRed: r green: g blue: b alpha: anAlpha [
 	self setAlpha: anAlpha.
 ]
 
-{ #category : #conversions }
+{ #category : #initialization }
 Color >> initializeRed: r green: g blue: b range: range [ 
 	"Initialize this color's r, g, and b components to the given values in the range [0..r]."
 	rgb == nil ifFalse: [ self attemptToMutateError ].
@@ -1615,9 +1612,9 @@ Color >> isTransparent [
 	^ alpha = 0
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> lightShades: thisMany [
-	"An array of thisMany colors from white to self. Very useful for displaying color based on a variable in your program.  "
+	"Return an array of thisMany colors from white to self. Very useful for displaying color based on a variable in your program.  "
 	"(Color red lightShades: 12) inspect"
 
 	^ self class white mix: self shades: thisMany
@@ -1649,7 +1646,7 @@ Color >> luminance [
 
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> mix: color2 shades: thisMany [ 
 	"Return an array of thisMany colors from self to color2. Very useful for displaying color based on a variable in your program.  "
 	"(Color red mix: Color green shades: 12) inspect"
@@ -1738,7 +1735,7 @@ Color >> paler [
 
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> pixelValueForDepth: d [ 
 		 
 		"Return the pixel value for this color at the given depth. Translucency only works in RGB; this color will appear either opaque or transparent at all other depths."
@@ -1750,7 +1747,7 @@ Color >> pixelValueForDepth: d [
 		ifFalse: [ (basicPixelWord bitAnd: 16777215) bitOr: (alpha bitShift: 24) ]
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> pixelWordFor: depth filledWith: pixelValue [ 
 	"Return to a 32-bit word that concatenates enough copies of the given pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
 	| halfword |
@@ -1771,7 +1768,7 @@ Color >> pixelWordFor: depth filledWith: pixelValue [
 	^ halfword bitOr: (halfword bitShift: 16)
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> pixelWordForDepth: depth [ 
 	"Return to a 32-bit word that concatenates enough copies of the receiver's pixel value to fill the word (i.e., 32/depth copies). Depth should be one of 1, 2, 4, 8, 16, or 32. The pixel value should be an integer in 0..2^depth-1."
 	| pixelValue basicPixelWord |
@@ -1886,7 +1883,7 @@ Color >> saturation [
 	^ self hsvSaturation
 ]
 
-{ #category : #conversions }
+{ #category : #'pixels handling' }
 Color >> scaledPixelValue32 [
 	"Return the alpha scaled pixel value for depth 32"
 	| pv32 a b g r |
@@ -1899,7 +1896,7 @@ Color >> scaledPixelValue32 [
 	^ b + (g bitShift: 8) + (r bitShift: 16) + (a bitShift: 24)
 ]
 
-{ #category : #conversions }
+{ #category : #accessing }
 Color >> setAlpha: aFloat [
 	alpha := ((255.0 * aFloat) asInteger  min: 255) max: 0.
 
@@ -2101,9 +2098,12 @@ Color >> veryMuchLighter [
 
 ]
 
-{ #category : #'groups of shades' }
+{ #category : #wheels }
 Color >> wheel: thisMany [ 
 	"An array of thisMany colors around the color wheel starting at self and ending all the way around the hue space just before self.  Array is of length thisMany.  Very useful for displaying color based on a variable in your program.  "
+	"(Color wheel: 8) inspect"
+	"(Color wheel: 8) withIndexDo: [:c :i | Display fill: (i*10@20 extent: 10@20) fillColor: c]"
+	
 	| sat bri step hue |
 	sat := self saturation.
 	bri := self brightness.
@@ -2117,9 +2117,7 @@ Color >> wheel: thisMany [
 			v: bri.	"hue is taken mod 360"
 		hue := hue + step.
 		c ]
-	"
-(Color wheel: 8) withIndexDo: [:c :i | Display fill: (i*10@20 extent: 10@20) fillColor: c]
-"
+
 ]
 
 { #category : #transformations }

@@ -1,18 +1,6 @@
 Extension { #name : #Color }
 
-{ #category : #'*System-CommandLine' }
-Color >> asTerminfoCharacterBackground [
-
-	^ '48;5;', self closestXTermPixelValue asString
-]
-
-{ #category : #'*System-CommandLine' }
-Color >> asTerminfoCharacterFont [
-
-	^ '38;5;', self closestXTermPixelValue asString
-]
-
-{ #category : #'*System-CommandLine' }
+{ #category : #'*System-CommandLine-TextSupport' }
 Color >> closestXTermPixelValue [
 	| index |
 	"Return the nearest approximation to this color for 256 xterm color."
@@ -26,10 +14,4 @@ Color >> closestXTermPixelValue [
 	
 	"compute nearest entry in the 6*6*6 color cube"
 	^ 16 + (self red * 6*6*5) asInteger + (self green * 6*5) asInteger + (self blue * 5) asInteger
-]
-
-{ #category : #'*System-CommandLine' }
-Color >> isVTermDefaultColor [
-
-	^ false
 ]
