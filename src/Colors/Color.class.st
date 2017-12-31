@@ -115,29 +115,31 @@ Color class >> brown [
 { #category : #'instance creation' }
 Color class >> colorFrom: parm [
 	"Return an instantiated color from parm.  If parm is already a color, return it, else return the result of my performing it if it's a symbol or, if it is a list, it can either be an array of three numbers, which will be interpreted as RGB values, or a list of symbols, the first of which is sent to me and then the others of which are in turn sent to the prior result, thus allowing entries of the form #(blue darker).  Else just return the thing"
+	"Color colorFrom: #(blue darker) >>> (Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0) "
+	"(Color colorFrom: Color blue darker)>>>(Color r: 0.011 g: 0.23900000000000002 b: 0.795 alpha: 1.0)"
+	"(Color colorFrom: #blue)>>> (Color blue)"
+	"(Color colorFrom: #(0.0 0.0 1.0) >>> (Color blue)"
 
 	| aColor firstParm |
-	(parm isKindOf: Color) ifTrue: [^ parm].
-	(parm isSymbol) ifTrue: [^ self perform: parm].
-	(parm isString) ifTrue: [^ self fromString: parm].
-	((parm isKindOf: SequenceableCollection) and: [parm size > 0])
-		ifTrue:
-			[firstParm := parm first.
-			(firstParm isKindOf: Number) ifTrue:
-				[^ self fromRgbTriplet: parm].
+	(parm isKindOf: Color)
+		ifTrue: [ ^ parm ].
+	parm isSymbol
+		ifTrue: [ ^ self perform: parm ].
+	parm isString
+		ifTrue: [ ^ self fromString: parm ].
+	((parm isKindOf: SequenceableCollection) and: [ parm size > 0 ])
+		ifTrue: [ firstParm := parm first.
+			(firstParm isKindOf: Number)
+				ifTrue: [ ^ self fromRgbTriplet: parm ].
 			aColor := self colorFrom: firstParm.
-			parm doWithIndex:
-				[:sym :ind | ind > 1 ifTrue:
-					[aColor := aColor perform: sym]].
-			^ aColor].
+			parm
+				doWithIndex: [ :sym :ind | 
+					ind > 1
+						ifTrue: [ aColor := aColor perform: sym ] ].
+			^ aColor ].
 	^ parm
 
-"
-Color colorFrom: #(blue darker)
-Color colorFrom: Color blue darker
-Color colorFrom: #blue
-Color colorFrom: #(0.0 0.0 1.0)
-"
+
 ]
 
 { #category : #'instance creation' }
@@ -291,24 +293,31 @@ Color class >> fromArray: colorDef [
 
 { #category : #'instance creation' }
 Color class >> fromHexString: aColorHex [
+	"Returns a color instance from HEX (6 element elements)."
+
+	"(Color fromHexString: 'FFFFFF')>>> (Color white) "
+
 	| green red blue |
 	red := (Integer readFrom: (aColorHex first: 2) base: 16) / 255.
 	green := (Integer readFrom: (aColorHex copyFrom: 3 to: 4) base: 16) / 255.
 	blue := (Integer readFrom: (aColorHex last: 2) base: 16) / 255.
-	^self r: red g: green b: blue
+	^ self r: red g: green b: blue
 ]
 
 { #category : #'instance creation' }
 Color class >> fromRgbTriplet: list [
+	"Return a color from its RGB components (0 - 1.0 floats)"
+	"(Color colorFrom: #(1.0 1.0 1.0)) >>> (Color white)"
+
 	^ self r: list first g: list second b: list last
 ]
 
 { #category : #'instance creation' }
 Color class >> fromString: aString [
-	"for HTML color spec: #FFCCAA or white/black"
+	"Return a color for HTML color spec: #FFCCAA or white/black passed as string."
 
-	"Color fromString: '#FFCCAA'.
-	 Color fromString: 'orange'"
+	"(Color fromString: '#FFCCAA')>>> (Color r: 1.0 g: 0.8 b: 0.667 alpha: 1.0) "
+	"(Color fromString: 'orange') >>> Color orange"
 
 	| aColorHex |
 	aString isEmptyOrNil
@@ -319,8 +328,7 @@ Color class >> fromString: aString [
 	^ self registeredColorNames
 		detect: [ :each | each sameAs: aColorHex ]
 		ifFound: [ :namedColor | self named: namedColor ]
-		ifNone: [ 
-			(aColorHex size = 6 and: [ aColorHex allSatisfy: [ :character | '0123456789ABCDEFabcdef' includes: character ] ])
+		ifNone: [ (aColorHex size = 6 and: [ aColorHex allSatisfy: [ :character | '0123456789ABCDEFabcdef' includes: character ] ])
 				ifTrue: [ self fromHexString: aColorHex ]
 				ifFalse: [ self white ] ]
 ]
@@ -346,6 +354,7 @@ Color class >> green [
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation l: lightness [
 	"Create a color with the given hue, saturation, and lightness. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and lightness are numbers in [0.0..1.0] where larger values are more saturated or lighter colors. The difference with brightness in the HSV coordinates is that colors go from black at lightness 0, through vivid hues at lightness 0.5, to white at lightness 1. For example, (Color h: 0 s: 1 l: 0.5) is pure red."
+	" (Color h: 0 s: 1 l: 0.5) >>> (Color r: 1 g: 0 b:0)"
 
 	^ self
 		h: hue
@@ -356,6 +365,7 @@ Color class >> h: hue s: saturation l: lightness [
 
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation l: lightness alpha: alpha [
+	"Create a color with the given hue, saturation, lightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and lightness are numbers in [0.0..1.0] where larger values are more saturated or lighter colors. The difference with brightness in the HSV coordinates is that colors go from black at lightness 0, through vivid hues at lightness 0.5, to white at lightness 1. For example, (Color h: 0 s: 1 l: 0.5) is pure red."
 	^ self basicNew
 		initializeHue: hue
 			saturation: saturation
@@ -368,12 +378,15 @@ Color class >> h: hue s: saturation l: lightness alpha: alpha [
 Color class >> h: hue s: saturation v: brightness [
 	"Create a color with the given hue, saturation, and brightness. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1) is pure red."
 	"Note: By convention, brightness is abbreviated 'v' to to avoid confusion with blue."
-
+	"(Color h: 0 s: 1 v: 1) >>> (Color r: 1 g: 0 b:0)"
 	^ self h: hue s: saturation v: brightness alpha: 1.0
 ]
 
 { #category : #'instance creation' }
 Color class >> h: hue s: saturation v: brightness alpha: alpha [
+	"Create a color with the given hue, saturation, brightness, and alpha. Hue is given as the angle in degrees of the color on the color circle where red is zero degrees. Saturation and brightness are numbers in [0.0..1.0] where larger values are more saturated or brighter colors. For example, (Color h: 0 s: 1 v: 1 alpha: 1) is pure red."
+	"(Color h: 0 s: 1 v: 1 alpha: 1) >>> Color red "
+	"(Color h: 0 s: 1 v: 1 alpha: 0.5) >>> (Color r: 1.0 g: 0.0 b: 0.0 alpha: 0.498) "
 	^ self basicNew
 		initializeHue: hue saturation: saturation brightness: brightness alpha: alpha ;
 		yourself 
@@ -384,9 +397,12 @@ Color class >> h: hue s: saturation v: brightness alpha: alpha [
 Color class >> hex: aFloat [
 	"Return an hexadecimal two-digits string between 00 and FF
 	for a float between 0.0 and 1.0"
+	" Color hex: 0.2>> '33' "
 	| str |
-	str := ((aFloat * 255) asInteger printStringHex) asLowercase.
-	str size = 1 ifTrue: [^'0',str] ifFalse: [^str]
+	str := (aFloat * 255) asInteger printStringHex asLowercase.
+	str size = 1
+		ifTrue: [ ^ '0' , str ]
+		ifFalse: [ ^ str ]
 ]
 
 { #category : #other }
@@ -687,10 +703,11 @@ Color class >> magenta [
 	^ ColorRegistry at: #magenta
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 Color class >> named: aColorName [
-	
-	^ ColorRegistry  at: aColorName asSymbol ifAbsent: nil 
+	"Return the color associated with the name aColorName and nil otherwise. Note that only a subsets of colors have a name."
+
+	^ ColorRegistry at: aColorName asSymbol ifAbsent: nil
 ]
 
 { #category : #'instance creation' }
@@ -762,13 +779,14 @@ Color class >> purple [
 { #category : #'instance creation' }
 Color class >> r: r g: g b: b [
 	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
-
+	"(Color r: 1 g: 1 b: 1) >>> Color white"
+	
 	^ self r: r g: g b: b alpha: 1.0
 ]
 
 { #category : #'instance creation' }
 Color class >> r: r g: g b: b alpha: alpha [
-"Return a color with the given r, g, and b components in the range [0.0..1.0]."
+	"Return a color with the given r, g, and b components in the range [0.0..1.0]."
 	^ self basicNew
 		initializeRed: r green: g blue: b alpha: alpha ;
 		yourself.
@@ -778,9 +796,14 @@ Color class >> r: r g: g b: b alpha: alpha [
 Color class >> r: r g: g b: b range: range [
 	"Return a color with the given r, g, and b components specified as integers in the range [0..r]. This avoids the floating point arithmetic in the red:green:blue: message and is thus a bit faster for certain applications (such as computing a sequence of colors for a palette)."
 
+	"(Color r: 31 g: 0 b: 0 range: 31) >>> (Color r: 1.0 g: 0 b: 0)"
+
 	^ self basicNew
-		initializeRed: r green: g blue: b range: range;
-		yourself 
+		initializeRed: r
+			green: g
+			blue: b
+			range: range;
+		yourself
 ]
 
 { #category : #defaults }
@@ -796,15 +819,21 @@ Color class >> registerColor: aColor named: aName [
 
 { #category : #accessing }
 Color class >> registeredColorNames [
-	^ ColorRegistry keys collect: #asString 
+	"Returns all the available names of named colors."
+	
+	^ ColorRegistry keys collect: #asString
 ]
 
 { #category : #accessing }
-Color class >> registeredNameOf: aColor [ 
+Color class >> registeredNameOf: aColor [
+	"Return the name of a color if it has a name, else #unnamed"
 	| colorName |
 	colorName := #unnamed.
-	ColorRegistry keysAndValuesDo: [:key :value|  value = aColor ifTrue: [ colorName := key ] ].
-	^ colorName 
+	ColorRegistry
+		keysAndValuesDo: [ :key :value | 
+			value = aColor
+				ifTrue: [ colorName := key ] ].
+	^ colorName
 ]
 
 { #category : #'system startup' }
@@ -824,8 +853,9 @@ Color class >> transparent [
   ^   ColorRegistry at: #transparent 
 ]
 
-{ #category : #accesing }
+{ #category : #accessing }
 Color class >> unregisterColorNamed: aName [
+	"Remove the color named aName from the list of named colors."
 	ColorRegistry removeKey: aName ifAbsent: nil
 ]
 
