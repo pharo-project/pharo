@@ -151,18 +151,22 @@ GoferApiTest >> testPackageCache [
 
 { #category : #'tests - references' }
 GoferApiTest >> testPackageReference [
+	|reference|
 	gofer 
 		repository: self monticelloRepository;
 		package: 'GoferFoo'.
 
-	self 
-		assert: gofer resolved size equals: 1;
-		assert: (gofer resolved first isKindOf: GoferResolvedReference);
-		assert: gofer resolved first packageName equals: 'GoferFoo';
-		assert: gofer resolved first author equals: 'lr';
-		assert: gofer resolved first branch isEmpty;
-		assert: gofer resolved first versionNumber equals: 4;
-		assert: gofer resolved first repository equals: self monticelloRepository
+	self assert: gofer resolved size equals: 1.
+
+	reference := gofer resolved first.
+	
+	self
+		assert: (reference isKindOf: GoferResolvedReference);
+		assert: reference packageName equals: 'GoferFoo';
+		assert: reference author equals: 'lr';
+		assert: reference branch isEmpty;
+		assert: reference versionNumber equals: 4;
+		assert: reference repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories - places' }
