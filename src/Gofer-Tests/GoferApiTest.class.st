@@ -17,7 +17,7 @@ GoferApiTest >> assert: registry on: serverUrlString hasUser: nameString withPas
 
 { #category : #utilities }
 GoferApiTest >> assert: aGofer repositories: anArray [
-	self assert: aGofer repositories size = anArray size.
+	self assert: aGofer repositories size equals: anArray size.
 	aGofer repositories with: anArray
 		do: [ :first :second | 
 			self assert: first description equals: second ]
@@ -31,30 +31,40 @@ GoferApiTest >> testBlueplane [
 
 { #category : #'tests - references' }
 GoferApiTest >> testConstraintReference [
+	|reference|
 	gofer 
 		repository: self monticelloRepository; 
 		package: 'GoferBar' constraint: [ :ref | ref branch = 'branch' ].
-	self assert: (gofer resolved size = 1).
-	self assert: (gofer resolved first isKindOf: GoferResolvedReference).
-	self assert: (gofer resolved first packageName = 'GoferBar').
-	self assert: (gofer resolved first author = 'lr').
-	self assert: (gofer resolved first branch = 'branch').
-	self assert: (gofer resolved first versionNumber = 2).
-	self assert: (gofer resolved first repository = self monticelloRepository)
+	
+	self assert: gofer resolved size equals: 1.
+	
+	reference := gofer resolved first.
+	
+	self 
+		assert: (reference isKindOf: GoferResolvedReference);
+		assert: reference packageName equals: 'GoferBar';
+		assert: reference author equals: 'lr';
+		assert: reference branch equals: 'branch';
+		assert: reference versionNumber equals: 2;
+		assert: reference repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testCustomRepository [
+
 	gofer repository: self monticelloRepository.
-	self assert: gofer repositories: (Array with: self monticelloRepository description).
-	self assert: (gofer repositories first = self monticelloRepository)
+	
+	self 
+		assert: gofer repositories: (Array with: self monticelloRepository description);
+		assert: gofer repositories first equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testDirectoryRepository [
 	gofer directory: FileSystem disk workingDirectory fullName.
-	self assert: gofer repositories: (Array with: FileSystem disk workingDirectory fullName).
-	self assert: (gofer repositories first isKindOf: MCDirectoryRepository)
+	self 
+		assert: gofer repositories: (Array with: FileSystem disk workingDirectory fullName);
+		assert: (gofer repositories first isKindOf: MCDirectoryRepository)
 ]
 
 { #category : #'tests - repositories - places' }
@@ -79,7 +89,7 @@ GoferApiTest >> testHttpRepositoryOverrideStoredCredentials [
 		registry := MCServerRegistry uniqueInstance.
 		registry on: exampleServer beUser: 'myusername' withPassword: 'mypassword'.
 		
-		gofer url: exampleServer username: 'foo' password: 'bar'..
+		gofer url: exampleServer username: 'foo' password: 'bar'.
 		
 		self assert: gofer repositories: { exampleServer }.
 		self assert: gofer repositories first user equals: 'foo'.
@@ -120,9 +130,12 @@ GoferApiTest >> testInitialReferences [
 
 { #category : #tests }
 GoferApiTest >> testInitialRepositories [
+
 	gofer := Gofer new.
-	self assert: (gofer repositories size = 1).
-	self assert: (gofer repositories first isKindOf: MCCacheRepository uniqueInstance class)
+
+	self 
+		assert: gofer repositories size equals: 1;
+		assert: (gofer repositories first isKindOf: MCCacheRepository uniqueInstance class)
 ]
 
 { #category : #'tests - repositories - options' }
@@ -141,13 +154,15 @@ GoferApiTest >> testPackageReference [
 	gofer 
 		repository: self monticelloRepository;
 		package: 'GoferFoo'.
-	self assert: (gofer resolved size = 1).
-	self assert: (gofer resolved first isKindOf: GoferResolvedReference).
-	self assert: (gofer resolved first packageName = 'GoferFoo').
-	self assert: (gofer resolved first author = 'lr').
-	self assert: (gofer resolved first branch isEmpty).
-	self assert: (gofer resolved first versionNumber = 4).
-	self assert: (gofer resolved first repository = self monticelloRepository)
+
+	self 
+		assert: gofer resolved size equals: 1;
+		assert: (gofer resolved first isKindOf: GoferResolvedReference);
+		assert: gofer resolved first packageName equals: 'GoferFoo';
+		assert: gofer resolved first author equals: 'lr';
+		assert: gofer resolved first branch isEmpty;
+		assert: gofer resolved first versionNumber equals: 4;
+		assert: gofer resolved first repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories - places' }
@@ -199,16 +214,21 @@ GoferApiTest >> testSubDirectoryRepository [
 
 { #category : #'tests - references' }
 GoferApiTest >> testVersionReference [
+	|reference|
 	gofer 
 		repository: self monticelloRepository; 
 		version: 'GoferFoo-lr.2'.
-	self assert: (gofer resolved size = 1).
-	self assert: (gofer resolved first isKindOf: GoferResolvedReference).
-	self assert: (gofer resolved first packageName = 'GoferFoo').
-	self assert: (gofer resolved first author = 'lr').
-	self assert: (gofer resolved first branch isEmpty).
-	self assert: (gofer resolved first versionNumber = 2).
-	self assert: (gofer resolved first repository = self monticelloRepository)
+	self assert: gofer resolved size equals: 1.
+	
+	reference := gofer resolved first.
+	
+	self
+		assert: (reference isKindOf: GoferResolvedReference);
+		assert: reference packageName equals: 'GoferFoo';
+		assert: reference author equals: 'lr';
+		assert: reference branch isEmpty;
+		assert: reference versionNumber equals: 2;
+		assert: reference repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories - places' }

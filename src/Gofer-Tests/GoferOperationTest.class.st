@@ -7,7 +7,7 @@ Class {
 	#category : #'Gofer-Tests-Tests'
 }
 
-{ #category : #utilities }
+{ #category : #utils }
 GoferOperationTest >> allManagers [
 
 	^ MCWorkingCopy allManagers 
@@ -52,7 +52,8 @@ GoferOperationTest >> tearDown [
 	(self hasPackage: 'GoferBar')
 		ifTrue: [ Gofer new package: 'GoferBar'; unload ].
 	(self hasPackage: 'ConfigurationOfGoferFoo')
-		ifTrue: [ Gofer new package: 'ConfigurationOfGoferFoo'; unload ]
+		ifTrue: [ Gofer new package: 'ConfigurationOfGoferFoo'; unload ].
+	super tearDown.
 ]
 
 { #category : #tests }
@@ -79,11 +80,12 @@ GoferOperationTest >> testCommit [
 		package: 'GoferFoo';
 		load.
 	gofer := Gofer new.
-	gofer disablePackageCache.
-	gofer repository: repository.
-	gofer package: 'GoferFoo'.
-	gofer commit: 'A test commit'.
-	self assert: repository allVersionInfos size = 1
+	gofer 
+		disablePackageCache;
+		repository: repository;
+		package: 'GoferFoo';
+		commit: 'A test commit'.
+	self assert: repository allVersionInfos size equals: 1
 ]
 
 { #category : #tests }
@@ -96,8 +98,9 @@ GoferOperationTest >> testFetch [
 GoferOperationTest >> testLoad [
 	gofer version: 'GoferFoo-lr.1'.
 	gofer load.
-	self assert: (self hasVersion: 'GoferFoo-lr.1').
-	self assert: (self hasClass: #GoferFoo)
+	self 
+		assert: (self hasVersion: 'GoferFoo-lr.1');
+		assert: (self hasClass: #GoferFoo)
 ]
 
 { #category : #tests }
@@ -171,7 +174,7 @@ GoferOperationTest >> testRemoteChanges [
 		load.
 	(Smalltalk globals classNamed: #GoferBar) compile: 'foo'.
 	changes := gofer remoteChanges.
-	self assert: changes operations size = 1
+	self assert: changes operations size equals: 1
 ]
 
 { #category : #tests }
@@ -182,8 +185,8 @@ GoferOperationTest >> testRevert [
 		load.
 	(Smalltalk globals classNamed: #GoferBar) category: 'GoferFoo'.
 	gofer revert.
-	self assert: (Smalltalk globals classNamed: #GoferFoo) category asSymbol = #GoferFoo.
-	self assert: (Smalltalk globals classNamed: #GoferBar) category asSymbol = #GoferBar
+	self assert: (Smalltalk globals classNamed: #GoferFoo) category asSymbol equals: #GoferFoo.
+	self assert: (Smalltalk globals classNamed: #GoferBar) category asSymbol equals: #GoferBar
 ]
 
 { #category : #tests }
@@ -192,8 +195,9 @@ GoferOperationTest >> testUnload [
 		package: 'GoferFoo';
 		load.
 	gofer unload.
-	self deny: (self hasPackage: 'GoferFoo').
-	self deny: (self hasClass: #GoferFoo)
+	self 
+		deny: (self hasPackage: 'GoferFoo');
+		deny: (self hasClass: #GoferFoo)
 ]
 
 { #category : #tests }
