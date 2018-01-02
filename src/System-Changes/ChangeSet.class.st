@@ -882,7 +882,7 @@ ChangeSet >> fileOutBody: fileReference [
 			self fileOutPreambleOn: internalStream.
 			self fileOutOn: internalStream.
 			self fileOutPostscriptOn: internalStream.
-			self halt.
+
 			CodeExporter 
 				writeSourceCodeFrom: internalStream
 				toFileReference: fileReference ]
