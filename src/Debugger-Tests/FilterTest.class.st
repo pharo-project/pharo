@@ -17,7 +17,7 @@ Class {
 
 { #category : #running }
 FilterTest >> setUp [
-
+	super setUp.
 	context := [ (Set with: 1 with: 2) collect: [ :e | e * 2 ]. self halt ] asContext.
 	process := Process 
 		forContext: context 
