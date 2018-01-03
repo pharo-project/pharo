@@ -221,7 +221,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	aPackagesList
 		do: [ :packageName | 
 		  | package |
-		  package := (RPackage named: packageName).
+		  package := (self packageClass named: packageName).
 		  packages at: packageName asSymbol put: package. ]
 		displayingProgress: 'Importing monticello packages'.
 		
@@ -306,7 +306,7 @@ RPackageOrganizer >> category: categoryName matches: prefix [
 RPackageOrganizer >> checkPackageExistsOrRegister: packageName [
 	(self packages 
 		anySatisfy: [ :each | self category: packageName matches: each packageName ])
-		ifFalse: [ (RPackage named: packageName capitalized) register ] 
+		ifFalse: [ (self packageClass named: packageName capitalized) register ] 
 ]
 
 { #category : #'private testing' }
@@ -474,7 +474,7 @@ RPackageOrganizer >> initializeExtensionsFor: aBehavior protocol: aProtocol [
 	protocolName := (aProtocol name allButFirst) trimBoth.
 	package := self packageMatchingExtensionName: protocolName.
 	package ifNil: [
-		package := self basicRegisterPackage: (RPackage named: protocolName) ].
+		package := self basicRegisterPackage: (self packageClass named: protocolName) ].
 	nonTraitMethods := aProtocol methods 
 		select: [ :eachSelector | (aBehavior >> eachSelector) origin = aBehavior ].
 	nonTraitMethods ifEmpty:[^ self].
@@ -491,7 +491,7 @@ RPackageOrganizer >> initializeFor: aBehavior [
 	package ifNil: [ 
 		"It should not happen. 
 		 But actually could happen that one class is in a SystemCategory and not in a MC"
-		package := self basicRegisterPackage: (RPackage named: aBehavior category) ]. 
+		package := self basicRegisterPackage: (self packageClass named: aBehavior category) ]. 
 	package addClassDefinition: aBehavior.
 	package 
 		addClassDefinition: aBehavior 
@@ -501,7 +501,7 @@ RPackageOrganizer >> initializeFor: aBehavior [
 
 { #category : #'initialization-data' }
 RPackageOrganizer >> initializeFromPackagesList: aPackagesList [
- 	RPackage 
+ 	self packageClass 
 		withOrganizer: self  
 		do:  [  self basicInitializeFromPackagesList: aPackagesList ].
 ]
@@ -828,7 +828,7 @@ RPackageOrganizer >> registerPackage: aPackage forClassName: aClassNameSymbol [
 RPackageOrganizer >> registerPackageNamed: aString [ 
 	^ self 
 		packageNamed: aString asSymbol
-		ifAbsent: [ (RPackage named: aString asSymbol) register ]
+		ifAbsent: [ (self packageClass named: aString asSymbol) register ]
 ]
 
 { #category : #'system integration' }
@@ -917,7 +917,7 @@ RPackageOrganizer >> systemCategoryRenamedActionFrom: ann [
 	oldName := ann oldCategoryName asSymbol.
 	newName := ann newCategoryName asSymbol.
 	rPackage := self packageMatchingExtensionName: ann oldCategoryName.
-	rPackage ifNil: [  rPackage := (RPackage named: newName) register ].
+	rPackage ifNil: [ rPackage := (self packageClass named: newName) register ].
 	rPackage name = ann oldCategoryName ifTrue: [ 
 		self 
 			renamePackage: rPackage 
