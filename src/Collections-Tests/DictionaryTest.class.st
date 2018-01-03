@@ -286,6 +286,7 @@ DictionaryTest >> result [
 
 { #category : #running }
 DictionaryTest >> setUp [
+	super setUp.
 	emptyDict := self classToBeTested new.
 	nonEmptyDict := self classToBeTested new.
 	nonEmptyDict
