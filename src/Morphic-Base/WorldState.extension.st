@@ -95,6 +95,12 @@ WorldState class >> systemOn: aBuilder [
 			(aBuilder item: #'Space left')
 				help: 'Do a garbage collection, and report results about the to the user.';
 				action: [ Smalltalk informSpaceLeftAfterGarbageCollection ].
+			(aBuilder item: #'Decompress sources to disk')
+				enabledBlock: [ self class environment at: #CompressedSegmentsStream 
+					ifPresent: [ :copressetSegmentsStream | copressetSegmentsStream canDecompressSourcesToDisk ]
+					ifAbsent: [ false ]];
+				help: 'Decompress the sources file (*.sources) to disk. Then delete it from the object memory.';
+				action: [ (self class environment at: #CompressedSegmentsStream) decompressSourcesToDisk ].
 			(aBuilder item: #'Do Image Cleanup')
 				help: 'Clean out any caches and other state that should be flushed when trying to get an image into a pristine state.';
 				action: [ Smalltalk cleanUp: true ];

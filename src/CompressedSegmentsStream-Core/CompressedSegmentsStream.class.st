@@ -49,6 +49,12 @@ Class {
 }
 
 { #category : #'compressed sources' }
+CompressedSegmentsStream class >> canDecompressSourcesToDisk [
+
+	^ (SourceFileArray sourcesFS root / (Smalltalk sourcesName asFileReference) base, 'stc') exists.
+]
+
+{ #category : #'compressed sources' }
 CompressedSegmentsStream class >> compressSourcesInMemory [
 
 	| originalSources originalSourcesReference compressedSources compressedSourcesReference segmentSize |
@@ -71,6 +77,22 @@ CompressedSegmentsStream class >> compressSourcesInMemory [
 
 	originalSources close.
 	compressedSources close.
+]
+
+{ #category : #'compressed sources' }
+CompressedSegmentsStream class >> decompressSourcesToDisk [
+
+	| compressed ref exported |
+
+	compressed := SourceFiles sourcesFileStream wrappedStream.
+	compressed position: 0.
+	ref := Smalltalk sourcesName asFileReference.
+	ref ensureDelete.
+	exported := (File openForWriteFileNamed: ref fullName).
+	[compressed atEnd] whileFalse:
+		[exported nextPutAll: (compressed next: 20000)].
+	exported close.
+	(SourceFileArray sourcesFS root / (Smalltalk sourcesName asFileReference) base, 'stc') ensureDelete.
 ]
 
 { #category : #'instance creation' }
