@@ -540,7 +540,7 @@ HeapTest >> testAdd [
 
 { #category : #'tests - growable' }
 HeapTest >> testAddNonEmptyGrowsWhenNewElement [
-	"self debug: #testAddNonEmptyGrowsWhenNewElement"
+	
 	| oldSize |
 	oldSize := self nonEmpty size.
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).

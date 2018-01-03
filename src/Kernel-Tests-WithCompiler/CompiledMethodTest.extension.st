@@ -2,7 +2,6 @@ Extension { #name : #CompiledMethodTest }
 
 { #category : #'*Kernel-Tests-WithCompiler' }
 CompiledMethodTest >> testCompiledMethodAsString [
-	"self debug: #testCompiledMethodAsString"
 
 	thisContext method asString
 ]

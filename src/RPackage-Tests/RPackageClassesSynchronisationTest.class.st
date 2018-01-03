@@ -184,8 +184,7 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassFro
 
 { #category : #'tests - recategorizing class' }
 RPackageClassesSynchronisationTest >> testRecategorizeClassUnregisterTheClassMethodsFromTheOldPackage [
-	"test that when we recategorize a class, the old package in which it was defined don't include its defined methods (not extensions) anymore"
-	"self debug: #testRecategorizeClassUnregisterTheClassMethodsFromTheOldPackage"
+	"test that when we recategorize a class, the old package in which it was defined don't include its defined methods (not extensions) anymore"	
 		
 	|XPackage YPackage ZPackage class|
 	self addXCategory.
@@ -325,8 +324,7 @@ RPackageClassesSynchronisationTest >> testRemoveClassUpdateTheOrganizerMappings 
 { #category : #'tests - operations on classes' }
 RPackageClassesSynchronisationTest >> testRenameClassUpdateClassDefinedInTheParentPackage [
 	"test that when we rename a class, the classes Defined in the parent package includes the new name"
-	"self debug: #testRenameClassUpdateClassDefinedInTheParentPackage"
-	
+		
 	| XPackage class |
 	self addXCategory.
 	XPackage := self organizer packageNamed: #XXXXX.

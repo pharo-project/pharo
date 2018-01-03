@@ -157,7 +157,6 @@ RGMethodDefinitionTest >> testAsMethodDefinition [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testAsMethodDefinition2 [
-	"self debug: #testAsMethodDefinition2"
 	
 	| newMethod |
 	newMethod := (Object >> #printOn:) asRingDefinition.
@@ -188,8 +187,7 @@ RGMethodDefinitionTest >> testAsPassive [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testClassNameSelectorIsMetaSide [
-	"self debug: #testClassNameSelectorIsMetaSide"
-	
+		
 	| rg |
 	rg := RGMethodDefinition className: 'Point' selector: #x  isMetaSide: false. 	
 	self assert: (rg parentName = 'Point').
@@ -227,8 +225,7 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testDifferentObjectButSameMethodInSet [
-	"self debug: #testDifferentObjectButSameMethodInSet"
-
+	
 	| s rgmethod rgmethod2 |
 	s := Set new.
 	rgmethod := (OrderedCollection>>#size) asRingDefinition.
@@ -438,8 +435,7 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 
 { #category : #testing }
 RGMethodDefinitionTest >> testSameMethodInSet [
-	"self debug: #testSameMethodInSet"
-
+	
 	| s rgmethod |
 	s := Set new.
 	rgmethod := (OrderedCollection>>#size) asRingDefinition.

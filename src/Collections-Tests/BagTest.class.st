@@ -337,8 +337,7 @@ BagTest >> test0CopyTest [
 { #category : #'basic tests' }
 BagTest >> testAdd [
 	"self run: #testAdd"
-	"self debug: #testAdd"
-
+	
 	| aBag |
 	aBag := Bag new.
 	aBag add: 'a'.
@@ -419,7 +418,6 @@ BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
 { #category : #tests }
 BagTest >> testCreation [
 	"self run: #testCreation" 
-	"self debug: #testCreation"
 		
 	| bag |
 	bag := Bag new.
@@ -431,8 +429,7 @@ BagTest >> testCreation [
 
 { #category : #tests }
 BagTest >> testCumulativeCounts [
-	"self run: #testCumulativeCounts" 
-	"self debug: #testCumulativeCounts"
+	"self run: #testCumulativeCounts" 	
 		
 	| bag cumulativeCounts |
 	bag := Bag new.
@@ -499,15 +496,14 @@ BagTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 BagTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
 { #category : #'basic tests' }
-BagTest >> testOccurrencesOf [
-	"self debug: #testOccurrencesOf"
+BagTest >> testOccurrencesOf [	
 
 	| aBag |
  	aBag := Bag new.	
@@ -527,8 +523,7 @@ BagTest >> testOccurrencesOf [
 
 { #category : #tests }
 BagTest >> testRemove [
-	"self run: #testRemove"
-	"self debug: #testRemove" 
+	"self run: #testRemove"	 
 	
 	| bag item |
 	item := 'test item'.
@@ -574,8 +569,7 @@ BagTest >> testRemoveElementThatExistsTwice [
 
 { #category : #tests }
 BagTest >> testSortedCounts [
-	"self run: #testSortedCounts"
-	"self debug: #testSortedCounts" 
+	"self run: #testSortedCounts"	 
 	
 	| bag sortedCounts|
 	bag := Bag new.
@@ -593,8 +587,7 @@ BagTest >> testSortedCounts [
 
 { #category : #tests }
 BagTest >> testSortedElements [
-	"self run: #testSortedElements" 
-	"self debug: #testSortedElements"
+	"self run: #testSortedElements" 	
 	
 	| bag sortedElements|
 	bag := Bag new.

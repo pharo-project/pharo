@@ -230,8 +230,7 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 
 { #category : #'tests - instance variable' }
 CompiledMethodTest >> testHasInstVarRef [
-	"self debug: #testHasInstVarRef"
-	
+		
 	| method  |
 	method := self class compiledMethodAt: #readX.
 	self assert: (method hasInstVarRef).
@@ -296,8 +295,7 @@ CompiledMethodTest >> testOrigin [
 ]
 
 { #category : #'tests - performing' }
-CompiledMethodTest >> testPerformCanExecutelongMethodWithTemps [
-	"self debug: #testPerformCanExecutelongMethodWithTemps"
+CompiledMethodTest >> testPerformCanExecutelongMethodWithTemps [	
 	"the perform: primitive reuses the context of the method calling it. The primitive adds performed selector arguments to the context variables list. So this means that you can execute some methods but not performed them if the calling methods defined too many temps "
 	
 	| temp1 temp2 temp3 |
@@ -310,8 +308,7 @@ CompiledMethodTest >> testPerformCanExecutelongMethodWithTemps [
 ]
 
 { #category : #'tests - performing' }
-CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
-	"self debug: #testPerformInSuperclassCanExecutelongMethodWithTemps"
+CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [	
 	"the perform: primitive reuses the context of the method calling it. The primitive adds performed selector arguments to the context variables list. So this means that you can execute some methods but not performed them if the calling methods defined too many temps "
 	
 	| temp1 temp2 temp3 |
@@ -322,9 +319,7 @@ CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 ]
 
 { #category : #'tests - instance variable' }
-CompiledMethodTest >> testReadsField [
-	"self debug: #testReadsField"
-	
+CompiledMethodTest >> testReadsField [		
 	| method |
 	method := self class compiledMethodAt: #readX.
 	self assert: (method readsField: 3).
@@ -380,9 +375,7 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 ]
 
 { #category : #'tests - instance variable' }
-CompiledMethodTest >> testWritesField [
-	"self debug: #testWritesField"
-
+CompiledMethodTest >> testWritesField [	
 	| method |
 	method := self class compiledMethodAt: #writeX.
 	self assert: (method writesField: 3).

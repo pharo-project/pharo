@@ -72,8 +72,7 @@ OCPragmaTest >> methodSinglePragma [
 
 { #category : #testing }
 OCPragmaTest >> testDoublePragma [
-	| aRBMethode |
-	"self debug: #testDoublePragma"
+	| aRBMethode |	
 	aRBMethode := OpalCompiler new parse: self methodDoublePragma.
 	
 	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:).
@@ -97,10 +96,9 @@ OCPragmaTest >> testNoPragma [
 
 { #category : #testing }
 OCPragmaTest >> testPragmaAfterBeforTemp [
-	"self debug: #testPragmaAfterBeforTemp"
+	
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodPragmaAfterBeforTemps.
-
 
 	self assert: (aRBMethode compiledMethod pragmas first keyword = #hello:).
 	self assert: (aRBMethode compiledMethod pragmas second keyword = #world:)

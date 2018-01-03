@@ -153,8 +153,7 @@ NumberParserTest >> testFloatMaxAndMin [
 
 { #category : #'tests - Float' }
 NumberParserTest >> testFloatPrintString [
-	"self debug: #testFloatPrintString"
-	
+		
 	| f r bases |
 	f := Float basicNew: 2.
 	r := Random new seed: 1234567.
@@ -357,8 +356,7 @@ NumberParserTest >> testSqueezingOutNumbers [
 ]
 
 { #category : #'tests - Integer' }
-NumberParserTest >> testcheckForCoverage [
-	"self debug: #testcheckForCoverage"
+NumberParserTest >> testcheckForCoverage [	
 	"Tests for old semantics of Number>>readFrom:"
 	
 	self should: [(NumberParser parse: '.') = 0 ] raise: Error.

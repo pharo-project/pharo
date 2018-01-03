@@ -803,7 +803,6 @@ OrderedCollectionTest >> testAtPut [
 { #category : #'tests - begin' }
 OrderedCollectionTest >> testBeginsWithAnyOf [
 	"We can't test SequenceableCollection directly. However, we can test a sampling of its descendants."
-	"self debug: #testBeginsWithAnyOf"
 	
 	| la oc |
 	la := #(1 2 3 4 5 6).
@@ -935,7 +934,7 @@ OrderedCollectionTest >> testCopyWith [
 { #category : #'tests - begin' }
 OrderedCollectionTest >> testEndsWithAnyOf [
 	"We can't test SequenceableCollection directly. However, we can test a sampling of its descendants."
-	"self debug: #testEndsWithAnyOf"
+	
 	| la oc |
 	la := #(6 5 4 3 2 1).
 	oc := OrderedCollection new.
@@ -964,7 +963,7 @@ OrderedCollectionTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 OrderedCollectionTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)

@@ -242,8 +242,7 @@ IntegerTest >> testBitShift [
 
 { #category : #'tests - bitLogic' }
 IntegerTest >> testBitString [
-	"self debug: #testBitString"
-	
+		
 	Smalltalk vm wordSize = 4
 		ifTrue: [
 			self assert: 2 bitString equals: '0000000000000000000000000000010'.

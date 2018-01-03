@@ -519,8 +519,7 @@ DurationTest >> testReadFromMillisecond [
 ]
 
 { #category : #tests }
-DurationTest >> testReadFromNoException [
-	"self debug: #testReadFromNoException"
+DurationTest >> testReadFromNoException [	
 
 	#(	'0:00:00:00' 
 		'0:00:00:00.000000001' 

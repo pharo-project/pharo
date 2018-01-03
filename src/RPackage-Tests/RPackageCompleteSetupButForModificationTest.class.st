@@ -52,8 +52,7 @@ RPackageCompleteSetupButForModificationTest >> setUp [
 
 { #category : #'test addition' }
 RPackageCompleteSetupButForModificationTest >> testAddMethod [
-	"self debug: #testAddMethod"
-	
+		
 	self assert: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
 	
 	a1 compileSilently: 'zork ^ #methodDefinedInP1'.
@@ -67,7 +66,6 @@ RPackageCompleteSetupButForModificationTest >> testAddMethod [
 { #category : #'test addition' }
 RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 	"we remove a class we check that it is not in the package anymore"
-	"self debug: #testBasicRemoveClass"	
 
 	|  size |
 	size := p1 definedClasses size. 
@@ -90,8 +88,6 @@ RPackageCompleteSetupButForModificationTest >> testBasicRemoveClass [
 
 { #category : #'test starting situation' }
 RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
-	"self debug: #testExtensionMethodOfClass"
-	
 	"P1 
 		A1DefinedInP1>>methodDefinedInP1
 		B1DefinedInP1	
@@ -121,8 +117,7 @@ RPackageCompleteSetupButForModificationTest >> testExtensionMethodOfClass [
 
 { #category : #'test addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveMethod [
-	"self debug: #testRemoveMethod"
-	
+
 	p1 removeMethod: a1 >> #methodDefinedInP1.
 	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
 	
@@ -131,8 +126,7 @@ RPackageCompleteSetupButForModificationTest >> testRemoveMethod [
 { #category : #'test addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveMethodDoesNotRemoveFromClass [
 	"we remove a method so it is not in the package but also not from the class anymore"
-	"self debug: #testRemoveMethodDoesNotRemoveFromClass"
-	
+
 	p1 removeMethod:  a1 >> #methodDefinedInP1.
 	self deny: (p1 includesSelector: #methodDefinedInP1 ofClass: a1).
 	self assert: (a1 selectors includes: #methodDefinedInP1)
@@ -140,15 +134,13 @@ RPackageCompleteSetupButForModificationTest >> testRemoveMethodDoesNotRemoveFrom
 
 { #category : #'test addition' }
 RPackageCompleteSetupButForModificationTest >> testRemoveShouldRaiseErrorWhenMethodIsNotInPackage [
-	"self debug: #testRemoveShouldRaiseErrorWhenMethodIsNotInPackage"
 	
 	self should: [p2 removeMethod: a2>>#methodDefinedZork] raise: Error
 ]
 
 { #category : #'test starting situation' }
 RPackageCompleteSetupButForModificationTest >> testStartingSituation [
-	"self debug: #testStartingSituation"
-	
+
 	self deny: (p2 includesClass: b1).
 	self assert: (p2 includesClass: b2).
 	"a locally defined class not extended by other packages"

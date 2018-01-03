@@ -123,10 +123,8 @@ RPackageWithDoTest >> testOnDo [
 
 { #category : #tests }
 RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
-	"self debug: #testWithDoIsCorrectlyReinstallingDefault"
 	
 	| current empty |
-
 	current := self packageOrganizerClass default.  
 	empty := self packageOrganizerClass basicNew initialize.
 	empty debuggingName: 'empty from PackageWithDoTest'.
@@ -141,8 +139,7 @@ RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefault [
 
 { #category : #tests }
 RPackageWithDoTest >> testWithDoIsCorrectlyReinstallingDefaultEvenIfHalt [
-	"self debug: #testWithDoIsCorrectlyReinstallingDefaultEvenIfHalt"
-	
+
 	| current empty |
 	current := self packageOrganizerClass default.  
 	empty := self packageOrganizerClass basicNew initialize.

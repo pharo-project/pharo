@@ -88,7 +88,7 @@ PathTest >> testBasenameNoParent [
 
 { #category : #tests }
 PathTest >> testBasenameWithoutExtension [
-	"self debug: #testBasenameWithoutExtension"
+	
 	| path |
 	path := Path * 'plonk' / 'griffle'.
 	self assert: path basenameWithoutExtension equals: 'griffle'.
@@ -627,8 +627,7 @@ PathTest >> testResolveAbsolute [
 
 { #category : #tests }
 PathTest >> testResolvePath [
-	"self debug: #testResolvePath"
-	
+		
 	| path |
 	path := Path / 'grandfather' / 'father' / 'child'.
 	self 
@@ -663,8 +662,7 @@ PathTest >> testResolveRelative [
 ]
 
 { #category : #tests }
-PathTest >> testResolveString [
-	"self debug: #testResolveString"
+PathTest >> testResolveString [	
 
 	| path result |
 	path := Path * 'plonk'.

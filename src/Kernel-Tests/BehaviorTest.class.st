@@ -71,8 +71,7 @@ BehaviorTest >> testAllSelectors [
 
 { #category : #tests }
 BehaviorTest >> testAllSelectorsAbove [
-	"self debug: #testAllSelectorsAbove"
-	
+		
 	|sels |
 	sels := Date allSelectorsAbove.
 	self deny: (sels includes: #mmddyyyy). 
@@ -84,8 +83,7 @@ BehaviorTest >> testAllSelectorsAbove [
 
 { #category : #tests }
 BehaviorTest >> testAllSelectorsAboveUntil [
-	"self debug: #testAllSelectorsAboveUntil"
-	
+		
 	|sels |
 	sels := Date allSelectorsAboveUntil: Object..
 	self deny: (sels includes: #mmddyyyy). 
@@ -228,8 +226,7 @@ BehaviorTest >> testWhichSelectorsAccess [
 
 { #category : #tests }
 BehaviorTest >> testallSuperclassesIncluding [
-	"self debug: #testallSuperclassesIncluding"
-	
+		
 	|cls |
 	cls := ArrayedCollection allSuperclassesIncluding: Collection.
 	self deny: (cls includes: ArrayedCollection).

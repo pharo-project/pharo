@@ -11,8 +11,7 @@ Class {
 { #category : #'tests - operations on methods' }
 RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMethodToThePackage [
 	"test that when a method is added to a class bu using a trait, this method is not imported in the parent package of the class"
-	"self debug: #testAddMethodByUsingATraitDoesNotAddTheMethodToThePackage"
-	
+		
 	|XPackage YPackage class trait|
 	self addXCategory.
 	self addYCategory.
@@ -32,8 +31,7 @@ RPackageTraitSynchronisationTest >> testAddMethodByUsingATraitDoesNotAddTheMetho
 
 { #category : #'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
-	"self debug: #testAddTraitAddItIntoPackageBestMatchName"
-
+	
 	|tmpPackage class|
 	self addXCategory.
 	self addXMatchCategory.
@@ -47,8 +45,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageBestMatchName [
 
 { #category : #'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
-	"self debug: #testAddTraitAddItIntoPackageExactName"
-
+	
 	|tmpPackage class|
 	self addXCategory.
 	self addXMatchCategory.
