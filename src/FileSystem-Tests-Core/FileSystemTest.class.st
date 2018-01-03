@@ -47,6 +47,7 @@ FileSystemTest >> markForCleanup: anObject [
 
 { #category : #running }
 FileSystemTest >> setUp [
+	super setUp.
 	filesystem := self createFileSystem.
 	toDelete := OrderedCollection new.
 ]
