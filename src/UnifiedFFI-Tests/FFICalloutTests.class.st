@@ -41,6 +41,7 @@ FFICalloutTests >> ffiBindingOf: aName [
 
 { #category : #running }
 FFICalloutTests >> setUp [
+	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 

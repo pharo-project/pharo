@@ -14,6 +14,7 @@ FFIExternalStructureFieldParserTests >> newParser [
 
 { #category : #running }
 FFIExternalStructureFieldParserTests >> setUp [
+	super setUp.
 	architecture := FFIArchitecture forCurrentArchitecture
 ]
 

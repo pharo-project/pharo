@@ -1,3 +1,6 @@
+"
+A callout object for testing purposes
+"
 Class {
 	#name : #FFICalloutObjectForTest,
 	#superclass : #Object,
