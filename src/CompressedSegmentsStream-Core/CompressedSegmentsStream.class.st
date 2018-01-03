@@ -93,6 +93,8 @@ CompressedSegmentsStream class >> decompressSourcesToDisk [
 		[exported nextPutAll: (compressed next: 20000)].
 	exported close.
 	(SourceFileArray sourcesFS root / (Smalltalk sourcesName asFileReference) base, 'stc') ensureDelete.
+	PharoFilesOpener default sourcesFileOrNil.
+	
 ]
 
 { #category : #'instance creation' }
