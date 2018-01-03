@@ -28,14 +28,12 @@ TStructuralEqualityTest >> test0TStructuralEqualityTest [
 
 { #category : #'test - equality' }
 TStructuralEqualityTest >> testEqualSign [
-	"self debug: #testEqualSign"
-
+ 
 	self deny: (self empty = self nonEmpty).
 ]
 
 { #category : #'test - equality' }
 TStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections [
-	"self debug: #testEqualSignIsTrueForNonIdenticalButEqualCollections"
 		
 	self assert: (self empty = self empty copy). 
 	self assert: (self empty copy = self empty).
@@ -48,7 +46,6 @@ TStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections
 
 { #category : #'test - equality' }
 TStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
-	"self debug: #testEqualSignOfIdenticalCollectionObjects"
 	
 	self assert: (self empty = self empty). 
 	self assert: (self nonEmpty = self nonEmpty). 

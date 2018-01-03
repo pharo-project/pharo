@@ -60,7 +60,7 @@ RPackageTraitSynchronisationTest >> testAddTraitAddItIntoPackageExactName [
 { #category : #'tests - operations on traits' }
 RPackageTraitSynchronisationTest >> testAddTraitUpdateTheOrganizerMappings [
 	"test that when we add a Trait, the organizer 'classPackageMapping' dictionary is updated, so that the trait is linked to its package and so that we can access its owning package"
-	"self debug: #testAddClassUpdateTheOrganizer"
+
 	|tmpPackage class|
 	self addXCategory.
 	

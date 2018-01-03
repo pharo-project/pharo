@@ -24,7 +24,6 @@ MOPTraitTest >> testClass [
 
 { #category : #tests }
 MOPTraitTest >> testOrigin [
-	"self debug: #testClass"
 	"The origin of a compiledMethod is its defining class or trait."
 
 	| aliasedMethod |

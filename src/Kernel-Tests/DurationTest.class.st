@@ -111,7 +111,6 @@ DurationTest >> testAsMilliSecond [
 
 { #category : #tests }
 DurationTest >> testAsMilliSeconds [
-	"self debug:#testAsMilliSeconds"
 	
 	self assert: (Duration nanoSeconds: 1000000)  asMilliSeconds = 1.
 	self assert: (Duration seconds: 1)  asMilliSeconds = 1000.	

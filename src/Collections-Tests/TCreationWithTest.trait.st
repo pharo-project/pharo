@@ -27,7 +27,6 @@ TCreationWithTest >> test0FixtureCreationWithTest [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testOfSize [
-	"self debug: #testOfSize"
 	
 	| aCol |
 	aCol := self collectionClass ofSize: 3.
@@ -37,7 +36,6 @@ TCreationWithTest >> testOfSize [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWith [
-	"self debug: #testWith"
 	
 	| aCol anElement |
 	anElement := self collectionMoreThan5Elements anyOne.
@@ -47,8 +45,7 @@ TCreationWithTest >> testWith [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithAll [
-	"self debug: #testWithAll"
-	
+
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection .
 	aCol := self collectionClass withAll: collection  .
@@ -60,7 +57,6 @@ TCreationWithTest >> testWithAll [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWith [
-	"self debug: #testWithWith"
 	
 	| aCol collection element1 element2 |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 2  .
@@ -76,7 +72,6 @@ TCreationWithTest >> testWithWith [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWith [
-	"self debug: #testWithWithWith"
 	
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom:1 to: 3 .
@@ -87,7 +82,6 @@ TCreationWithTest >> testWithWithWith [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWithWith [
-	"self debug: #testWithWithWithWith"
 	
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 4.
@@ -98,7 +92,6 @@ TCreationWithTest >> testWithWithWithWith [
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWithWithWith [
-	"self debug: #testWithWithWithWithWith"
 	
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 5 .

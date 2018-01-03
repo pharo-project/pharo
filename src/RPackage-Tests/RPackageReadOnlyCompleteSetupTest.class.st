@@ -99,7 +99,6 @@ RPackageReadOnlyCompleteSetupTest >> testAddTag [
 
 { #category : #'test tag class' }
 RPackageReadOnlyCompleteSetupTest >> testAddTagNames [
-	"self debug: #testAddTag"
 	
 	self assert: p1 classTags isEmpty.
 	p1 addClassTag: #baz. 
@@ -257,8 +256,6 @@ RPackageReadOnlyCompleteSetupTest >> testExtendingPackagesOfClass [
 RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 	"a package can extend several classes, either the class or  the meta-class side. 'extensionMethods' should list all the methods involved in shuch extensions. P3 extend a2 and a2 class"
 
-	"self debug: #testExtendingPackagesOfClass"
-
 	| package extensionMethods cpt |
 	package := p3.
 	extensionMethods := package extensionMethods.	"self assert: (extensionMethods size = 2)."
@@ -280,7 +277,6 @@ RPackageReadOnlyCompleteSetupTest >> testExtensionMethods [
 
 { #category : #'test situation' }
 RPackageReadOnlyCompleteSetupTest >> testExtensionSelectors [
-	"self debug: #testDefinedSelectors"
 	
 	self assert: a1 extensionSelectors isEmpty.
 

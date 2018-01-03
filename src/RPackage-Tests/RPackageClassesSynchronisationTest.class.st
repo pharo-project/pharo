@@ -9,7 +9,6 @@ Class {
 
 { #category : #'tests - adding classes' }
 RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageBestMatchName [
-	"self debug: #testAddCategoryCreatesPackage"
 
 	|tmpPackage class|
 	self addXCategory.
@@ -24,7 +23,6 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageBestMatchName 
 
 { #category : #'tests - adding classes' }
 RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageExactName [
-	"self debug: #testAddCategoryCreatesPackage"
 
 	|tmpPackage class|
 	self addXCategory.
@@ -40,7 +38,7 @@ RPackageClassesSynchronisationTest >> testAddClassAddItIntoPackageExactName [
 { #category : #'tests - adding classes' }
 RPackageClassesSynchronisationTest >> testAddClassUpdateTheOrganizerMappings [
 	"test that when we add a class, the organizer 'classPackageMapping' dictionary is updated, so that the class is linked to its package and so that we can access its owning package"
-	"self debug: #testAddClassUpdateTheOrganizer"
+
 	|tmpPackage class|
 	self addXCategory.
 	
@@ -497,8 +495,7 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRemovingExtensionCate
 ]
 
 { #category : #'tests - operations on protocols' }
-RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveAllMethodsFromParentPackageToExtendingPackage [
-	"self debug:#testReoganizeClassByRenamingClassicCategoryToExtensionCategoryMoveAllMethodsFromParentPackageToExtendingPackage"
+RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingClassicCategoryToExtensionCategoryMoveAllMethodsFromParentPackageToExtendingPackage [	 
 	"test that when we reoganized a class by renaming a  classic category (a category not beginning with '*') to an extension category, all the methods are moved from the  parent package of the class to the extending package"
 	|XPackage YPackage class| 
 	self addXYCategory.
@@ -552,7 +549,6 @@ RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCate
 { #category : #'tests - operations on protocols' }
 RPackageClassesSynchronisationTest >> testReorganizeClassByRenamingExtensionCategoryToClassicCategoryMoveAllMethodsFromExtendingPackageToParentPackage [
 	"test that when we reoganized a class by renaming an extension category (a category beginning with '*') to a classic category, all the methods are moved from the  extendingPackage to the parent package of the class"
-	"self debug: #testReoganizeClassByRenamingExtensionCategoryToClassicCategoryMoveAllMethodsFromExtendingPackageToParentPackage"
 	
 	|XPackage YPackage class| 
 	self addXYCategory.

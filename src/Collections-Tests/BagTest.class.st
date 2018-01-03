@@ -353,7 +353,6 @@ BagTest >> testAdd [
 
 { #category : #'basic tests' }
 BagTest >> testAddWithOccurrences [
-	"self debug:#testAddWithOccurrences"
 	
 	| aBag |
  	aBag := Bag new.	
@@ -448,8 +447,7 @@ BagTest >> testCumulativeCounts [
 
 { #category : #tests }
 BagTest >> testEqual [
-	"(self run: #testEqual)"
-	"(self debug: #testEqual)"
+	"(self run: #testEqual)"	 
 	| bag1 bag2 |
 	bag1 := Bag new.
 	bag2 := Bag new.
@@ -559,7 +557,7 @@ BagTest >> testRemoveAll [
 
 { #category : #'tests - remove' }
 BagTest >> testRemoveElementThatExistsTwice [
-	"self debug: #testRemoveElementThatDoesExistsTwice"
+	 
 	| size |
 	size := self nonEmpty size.
 	self assert: (self nonEmpty includes: self elementTwiceIn).

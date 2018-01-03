@@ -95,7 +95,7 @@ WriteStreamTest >> testEnsureEndsWith [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureNoSpace [
-	"self debug: #testEnsureASpace2"
+	 
 	| stream |
 	stream := self newStream.
 	stream ensureNoSpace.

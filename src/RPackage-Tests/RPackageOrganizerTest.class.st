@@ -198,7 +198,6 @@ RPackageOrganizerTest >> testFullRegistration [
 
 { #category : #tests }
 RPackageOrganizerTest >> testFullUnregistration [
-	"self debug: #testFullRegistration"
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
@@ -250,10 +249,8 @@ RPackageOrganizerTest >> testFullUnregistration [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
-	"self debug: #testRegisteredIsThere"
 
 	| package1 package2 |
-
 	package1 := self createNewPackageNamed: 'P1'.
 	package1 register.
 	
@@ -265,7 +262,6 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
-	"self debug: #testRegisteredIsThere"
 
 	| package1 package2 |
 

@@ -20,12 +20,6 @@ TDictionaryIncludesWithIdentityCheckTest >> nonEmpty [
 ^self explicitRequirement
 ]
 
-{ #category : #requirements }
-TDictionaryIncludesWithIdentityCheckTest >> nonEmptyWithCopyNonIdentical. [
-" return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
-^self explicitRequirement
-]
-
 { #category : #'tests - fixture' }
 TDictionaryIncludesWithIdentityCheckTest >> test0FixtureDictionaryIncludes [
 	| in |

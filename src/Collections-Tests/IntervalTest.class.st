@@ -341,7 +341,7 @@ IntervalTest >> testAdd [
 
 { #category : #'tests - indexable access' }
 IntervalTest >> testAllButFirstElements [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self accessCollection.
 	abf := col allButFirst: 2.
@@ -353,7 +353,7 @@ IntervalTest >> testAllButFirstElements [
 
 { #category : #'tests - indexable access' }
 IntervalTest >> testAllButLastElements [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self accessCollection.
 	abf := col allButLast: 2.
@@ -395,7 +395,7 @@ IntervalTest >> testAt [
 
 { #category : #'tests - indexable access' }
 IntervalTest >> testAtWrap [
-	"self debug: #testAt"
+ 
 	"
 	self assert: (self accessCollection at: 1) = 1.
 	self assert: (self accessCollection at: 2) = 2.

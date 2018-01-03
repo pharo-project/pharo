@@ -59,7 +59,6 @@ ProcessTerminateBug >> testUnwindFromActiveProcess [
 
 { #category : #tests }
 ProcessTerminateBug >> testUnwindFromForeignProcess [
-	"self debug:#testUnwindFromForeignProcess"
 
 	| sema process |
 	sema := Semaphore forMutualExclusion.

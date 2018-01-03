@@ -89,7 +89,6 @@ OCPragmaTest >> testIsPrimitve [
 
 { #category : #testing }
 OCPragmaTest >> testNoPragma [
-	"self debug: #testDoublePrimitive"
 
 	OpalCompiler new parse: self methodNoPragma
 ]
@@ -107,7 +106,7 @@ OCPragmaTest >> testPragmaAfterBeforTemp [
 
 { #category : #testing }
 OCPragmaTest >> testPragmaTwoParam [
-	"self debug: #testPragmaAfterBeforTemp"
+ 
 	| aRBMethode |
 	aRBMethode := OpalCompiler new parse: self methodPragmaTwoParam.
 

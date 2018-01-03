@@ -1506,11 +1506,8 @@ IntegerTest >> testRomanPrinting [
 
 { #category : #'tests - rounding' }
 IntegerTest >> testRounding [
-        "
-        self debug: #testRounding
-        "
-
-        self assert: (5 round: 2) equals: 5
+ 
+	self assert: (5 round: 2) equals: 5
 ]
 
 { #category : #'tests - mathematical functions' }

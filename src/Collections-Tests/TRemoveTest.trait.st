@@ -42,7 +42,7 @@ TRemoveTest >> test0FixtureTRemoveTest [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAll [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection collection res |
 	collection := self nonEmptyWithoutEqualElements.
 	el := collection anyOne.
@@ -54,7 +54,7 @@ TRemoveTest >> testRemoveAll [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllError [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection |
 	el := self elementNotIn.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWith: el.
@@ -65,7 +65,7 @@ TRemoveTest >> testRemoveAllError [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllFoundIn [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection res |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	aSubCollection := (self nonEmptyWithoutEqualElements copyWithout: el) copyWith: self elementNotIn.
@@ -76,7 +76,7 @@ TRemoveTest >> testRemoveAllFoundIn [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveAllSuchThat [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWithout: el.
@@ -87,7 +87,7 @@ TRemoveTest >> testRemoveAllSuchThat [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveElementFromEmpty [
-	"self debug: #testRemoveElementFromEmpty"
+
 	self 
 		should: [ self empty remove: self nonEmptyWithoutEqualElements anyOne ]
 		raise: Error
@@ -95,7 +95,7 @@ TRemoveTest >> testRemoveElementFromEmpty [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveElementReallyRemovesElement [
-	"self debug: #testRemoveElementReallyRemovesElement"
+
 	| size |
 	size := self nonEmptyWithoutEqualElements size.
 	self nonEmptyWithoutEqualElements remove: self nonEmptyWithoutEqualElements anyOne.
@@ -104,7 +104,6 @@ TRemoveTest >> testRemoveElementReallyRemovesElement [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveElementThatExists [
-	"self debug: #testRemoveElementThatExists"
 
 	| el res |
 	el := self nonEmptyWithoutEqualElements anyOne.
@@ -114,8 +113,7 @@ TRemoveTest >> testRemoveElementThatExists [
 
 { #category : #'tests - remove' }
 TRemoveTest >> testRemoveIfAbsent [
-	"self debug: #testRemoveElementThatExists"
-
+ 
 	| el res |
 	el := self elementNotIn.
 	res := self nonEmptyWithoutEqualElements remove: el ifAbsent: [ 33 ].

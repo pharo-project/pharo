@@ -9,7 +9,6 @@ Class {
 
 { #category : #tests }
 RxParserTest >> DoesNotWorktestBackQuotesEscape [
-	"self debug: #testBackQuotesEscape"
 	
 	"Regular expressions can also include the following backquote escapes
 to refer to popular classes of characters:
@@ -297,7 +296,6 @@ RxParserTest >> testTranslatingMatchesUsing [
 
 { #category : #tests }
 RxParserTest >> toDotestSpecialCharacterInSetRange [
-	"self debug: #testSpecialCharacterInSetRange"
 	
 	"Special characters within a set are `^', `-', and `]' that closes the
 set. Below are the examples of how to literally use them in a set:

@@ -662,7 +662,7 @@ SortedCollectionTest >> testLastIndexOf [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testLastIndexOfStartingAt [
-	"self debug: #testLastIndexOf"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection last.

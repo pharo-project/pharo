@@ -20,7 +20,6 @@ BehaviorTest >> sampleMessageWithFirstArgument: firstArgument "This is a comment
 
 { #category : #tests }
 BehaviorTest >> testAllLocalCallsOn [
-	" self debug: #testAllLocalCallsOn"
 	
 	self assert: (( Point allLocalCallsOn: #asPoint )  notEmpty).
 	self assert: (( Point allLocalCallsOn: #asPoint )  size = 4).
