@@ -23,12 +23,6 @@ HEArray >> doReadFrom: aReader [
 	1 to:size do:[:idx | value at:idx put: (HEExportedLiteral readFrom: aReader)].
 ]
 
-{ #category : #writing }
-HEArray >> doWriteInto: aWriter [
-	aWriter writeInt32: value size.
-	value do:[:e | e writeInto: aWriter].
-]
-
 { #category : #accessing }
 HEArray >> value: anArray [
 	value := anArray collect:#asExportedLiteral

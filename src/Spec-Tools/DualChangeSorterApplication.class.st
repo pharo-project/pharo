@@ -77,16 +77,16 @@ DualChangeSorterApplication class >> defaultSpec [
 ]
 
 { #category : #menu }
-DualChangeSorterApplication class >> menuCommandOn: aBuilder [ 
-	<worldMenu> 
+DualChangeSorterApplication class >> menuCommandOn: aBuilder [
+	<worldMenu>
 	(aBuilder group: #SystemChanges)
-		parent: #Tools;  
+		parent: #Tools;
 		order: 0.51;
-		with: [
-			(aBuilder item: #'Change Sorter')
-				action:[self open]; 
-				icon: self taskbarIcon].			
-	aBuilder withSeparatorAfter.		
+		with: [ (aBuilder item: #'Change Sorter')
+				action: [ self open ];
+				help: 'Examine the different change set of the image.';
+				icon: self taskbarIcon ].
+	aBuilder withSeparatorAfter
 ]
 
 { #category : #menu }

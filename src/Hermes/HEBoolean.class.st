@@ -18,8 +18,3 @@ HEBoolean >> asLiteralIn: env [
 HEBoolean >> doReadFrom: aReader [
 	value := aReader readByte = 1
 ]
-
-{ #category : #writing }
-HEBoolean >> doWriteInto: aWriter [
-	aWriter writeByte:(value ifTrue:1 ifFalse:0).
-]

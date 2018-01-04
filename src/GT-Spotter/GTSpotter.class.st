@@ -133,6 +133,7 @@ GTSpotter class >> menuCommandOn: aBuilder [
 		keyText: 'Shift + Enter';
 		order: 0.7;
 		parent: #MostUsedTools;
+		help: 'Search tool to explore Pharo system effectively.';
 		iconName: #smallFindIcon
 ]
 

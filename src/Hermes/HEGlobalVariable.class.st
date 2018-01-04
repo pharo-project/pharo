@@ -11,7 +11,15 @@ HEGlobalVariable class >> tag [
 
 { #category : #converting }
 HEGlobalVariable >> asLiteralIn: env [
-	^ env newClass bindingOf: value
+	| bind undec |
+	bind := env newClass bindingOf: value.
+	
+	bind ifNotNil: [ ^ bind ].
+	
+	undec := UndeclaredVariable key: value value: nil.
+	Undeclared add: undec.
+	
+	^ undec.
 ]
 
 { #category : #accessing }

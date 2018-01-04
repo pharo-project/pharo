@@ -17,8 +17,3 @@ HEUndefinedObject >> asLiteralIn: env [
 { #category : #reading }
 HEUndefinedObject >> doReadFrom: aReader [
 ]
-
-{ #category : #writing }
-HEUndefinedObject >> doWriteInto: aWriter [
-
-]

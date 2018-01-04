@@ -154,7 +154,7 @@ JoinSection >> createHighlightsFrom: srcPara to: dstPara [
 		ifFalse: [ ^ self ].
 	s := self src highlights.
 	d := self dst highlights.
-	diffs := (InlineTextDiffBuilder from: srcText to: dstText) buildPatchSequence aggregateRuns: [ :e | e key ].
+	diffs := (InlineTextDiffBuilder from: srcText to: dstText) buildPatchSequence groupByRuns: [ :e | e key ].
 	diffs
 		do: [ :c | 
 			c first key = #match

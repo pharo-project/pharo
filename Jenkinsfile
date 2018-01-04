@@ -14,7 +14,7 @@ def shell(params){
 }
 
 def runTests(architecture, prefix=''){
-	def retryTimes = 1
+	def retryTimes = 3
 	def tries = 0
 	def success = false
 	waitUntil {
@@ -146,8 +146,8 @@ try{
     		try{
     		stage ("Fetch Requirements-${architecture}") {	
     			checkout scm
-    			shell 'wget -O - get.pharo.org/vm60 | bash	'
-    			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2/bootstrapImage.zip'
+    			shell 'wget -O - get.pharo.org/vm61 | bash	'
+    			shell 'wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2.1/bootstrapImage.zip'
     			shell 'unzip bootstrapImage.zip'
     			shell './pharo Pharo.image bootstrap/scripts/prepare_image.st --save --quit'
     	    }

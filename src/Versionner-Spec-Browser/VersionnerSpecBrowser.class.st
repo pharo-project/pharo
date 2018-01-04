@@ -63,6 +63,7 @@ VersionnerSpecBrowser class >> menuCommandOn: aBuilder [
 		parent: #Tools;
 		label: 'Versionner';
 		iconName: #databaseIcon;
+		help: 'Create and edit project configurations for code versionned via Monticello.';
 		action: [ VersionnerSpecBrowser open ]
 ]
 

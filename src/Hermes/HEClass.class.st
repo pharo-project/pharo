@@ -13,20 +13,6 @@ Class {
 	#category : #'Hermes-Model'
 }
 
-{ #category : #'instance creation' }
-HEClass class >> for: aClass [
-	^ self new
-		fromClass: aClass;
-		yourself
-]
-
-{ #category : #querying }
-HEClass >> allSuperclassesIn: aCollection [
-	^ aCollection detect:[:aSuper | aSuper className = self superclass]
-		ifFound:[ :miSuper | { miSuper } , (miSuper allSuperclassesIn: aCollection) ]
-		ifNone:[ #() ]
-]
-
 { #category : #accessing }
 HEClass >> classInstancevariables [
 	^ classInstancevariables
@@ -68,30 +54,6 @@ HEClass >> doReadHeaderFrom: aReader [
 	layoutClass := aReader readByteSymbol
 ]
 
-{ #category : #writing }
-HEClass >> doWriteHeaderInto: aWriter [
-	aWriter writeByteString: className.
-	aWriter writeByteString: superclass.
-	aWriter writeByteString: instanceVariables.
-	aWriter writeByteString: classInstancevariables.
-	aWriter writeByteString: classVariables.
-	aWriter writeByteString: sharedPools.
-	aWriter writeByteString: layoutClass
-]
-
-{ #category : #initialization }
-HEClass >> fromClass: aClass [
-	className := aClass name.
-	superclass := aClass superclass ifNil: '' ifNotNil:#name.
-	instanceVariables := (aClass slots collect: #name) joinUsing: ' '.
-	classInstancevariables := (aClass class slots collect: #name) joinUsing: ' '.
-	classVariables := aClass classPool keys joinUsing: ' '.
-	sharedPools := (aClass sharedPools collect: #name) joinUsing: ' '.
-	layoutClass := aClass classLayout class name.
-
-	self doFromMethodContainer: aClass
-]
-
 { #category : #accessing }
 HEClass >> instanceVariables [
 	^ instanceVariables
@@ -100,6 +62,11 @@ HEClass >> instanceVariables [
 { #category : #accessing }
 HEClass >> instanceVariables: anObject [
 	instanceVariables := anObject
+]
+
+{ #category : #accessing }
+HEClass >> isTrait [
+	^ false
 ]
 
 { #category : #accessing }
@@ -130,14 +97,9 @@ HEClass >> sharedPools: anObject [
 	sharedPools := anObject
 ]
 
-{ #category : #querying }
-HEClass >> sharedPoolsIn: aCollection [
-	^ ((sharedPools substrings collect: #asSymbol) collect: [ :aName | aCollection detect: [ :aClass | aClass className = aName ] ifNone: nil ]) reject: #isNil
-]
-
 { #category : #accessing }
 HEClass >> superclass [
-	^ superclass
+	^ superclass ifEmpty: [nil]
 ]
 
 { #category : #accessing }

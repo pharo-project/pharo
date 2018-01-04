@@ -4,7 +4,7 @@ Class {
 	#category : #'Hermes-Model'
 }
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 HEScaledDecimal class >> tag [ 
 	^ 25
 ]
@@ -18,10 +18,4 @@ HEScaledDecimal >> doReadFrom: aReader [
 	value := ScaledDecimal newFromNumber: value scale: scale value.
 	
 	
-]
-
-{ #category : #writing }
-HEScaledDecimal >> doWriteInto: aWriter [
-	super doWriteInto: aWriter.
-	value scale asExportedLiteral writeInto: aWriter.	
 ]

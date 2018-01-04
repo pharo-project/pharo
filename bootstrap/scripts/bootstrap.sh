@@ -2,7 +2,7 @@ set -x
 set -e
 
 wget -O - get.pharo.org/vm60 | bash
-wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2/bootstrapImage.zip
+wget https://github.com/guillep/PharoBootstrap/releases/download/v1.2.1/bootstrapImage.zip
 unzip bootstrapImage.zip
 
 CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"

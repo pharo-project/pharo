@@ -66,6 +66,13 @@ AbstractWidgetPresenter >> acceptDropBlock: aBlock [
 	acceptDropBlock value: aBlock
 ]
 
+{ #category : #'drag and drop' }
+AbstractWidgetPresenter >> acceptDroppingMorph: draggedMorph event: event inMorph: source [
+
+	^ self acceptDropBlock cull: draggedMorph model model cull: event cull: source cull: source model 
+
+]
+
 { #category : #api }
 AbstractWidgetPresenter >> borderColor [
 	"<api: #inspect>"
@@ -113,6 +120,15 @@ AbstractWidgetPresenter >> color: aColor [
 { #category : #initialization }
 AbstractWidgetPresenter >> defaultColor [
 	^ Smalltalk ui theme backgroundColor
+]
+
+{ #category : #'drag and drop' }
+AbstractWidgetPresenter >> defaultTransferFor: passenger from: source [
+
+	^ TransferPresenter new
+		transfer: passenger;
+		from: source;
+		yourself
 ]
 
 { #category : #api }
@@ -231,7 +247,7 @@ AbstractWidgetPresenter >> initialize [
 	dragTransformationBlock := [ :item :source | item ] asValueHolder.
 	wantDropBlock := [ :draggedItem :event :source | self dropEnabled ] asValueHolder.
 	acceptDropBlock := [ :draggedItem :event :source | ] asValueHolder.
-	transferBlock := [:passenger :source | self transferFor: passenger from: source ] asValueHolder.
+	transferBlock := [:passenger :source | self defaultTransferFor: passenger from: source ] asValueHolder.
 	color := self defaultColor asValueHolder.
 	
 	helpHolder whenChangedDo: [:string | 
@@ -276,10 +292,7 @@ AbstractWidgetPresenter >> transferBlock: aBlock [
 { #category : #'drag and drop' }
 AbstractWidgetPresenter >> transferFor: passenger from: source [
 
-	^ TransferPresenter new
-		transfer: passenger;
-		from: source;
-		yourself
+	^ transferBlock value value: passenger value: source
 ]
 
 { #category : #'drag and drop' }
@@ -292,6 +305,13 @@ AbstractWidgetPresenter >> wantDropBlock [
 AbstractWidgetPresenter >> wantDropBlock: aBlock [
 
 	wantDropBlock value: aBlock
+]
+
+{ #category : #'drag and drop' }
+AbstractWidgetPresenter >> wantsDroppedMorph: draggedMorph event: anEvent inMorph: source [
+	draggedMorph isTransferable ifFalse: [ ^false ].
+	
+	^wantDropBlock value cull: draggedMorph passenger cull: anEvent cull:source
 ]
 
 { #category : #'api-events' }

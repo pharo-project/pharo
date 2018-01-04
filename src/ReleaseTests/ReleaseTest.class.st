@@ -259,3 +259,17 @@ ReleaseTest >> testUnpackagedClasses [
 				separatedBy: [ s cr ]])
 
 ]
+
+{ #category : #testing }
+ReleaseTest >> testWorldMenuHasHelpForAllEntries [
+	"In this test we check that at least every terminal menu entry of the world menu has an help."
+
+	| menuElements |
+	menuElements := WorldState new menuBuilder itemList.
+
+	"Here we have the roots of the menu. We want the terminal menu entries."
+	[ menuElements allSatisfy: [ :each | each itemList isNil ] ]
+		whileFalse: [ menuElements := menuElements inject: OrderedCollection new into: [ :coll :each | each itemList ifNil: [ coll add: each ] ifNotNil: [ :items | coll addAll: items ]. coll ] ].
+			
+	menuElements collect: #spec thenDo: [ :item | self assert: item help isNotNil description: item label , ' menu entry in world menu should have an help.' ]
+]

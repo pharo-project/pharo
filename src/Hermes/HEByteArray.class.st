@@ -18,8 +18,3 @@ HEByteArray >> asLiteralIn: env [
 HEByteArray >> doReadFrom: aReader [
 	value := aReader readByteArray.
 ]
-
-{ #category : #writing }
-HEByteArray >> doWriteInto: aWriter [
-	aWriter writeByteArray: value.
-]

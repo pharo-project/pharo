@@ -23,8 +23,3 @@ HEByteString >> doConvertValue: aValue [
 HEByteString >> doReadFrom: aReader [
 	value := self doConvertValue:(aReader readByteString).
 ]
-
-{ #category : #writing }
-HEByteString >> doWriteInto: aWriter [
-	aWriter writeByteString: value.
-]

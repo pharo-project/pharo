@@ -25,5 +25,5 @@ PharoTutorialsHelp class >> menuCommandOn: aBuilder [
 			order: 2.0;
 			action:[ HelpBrowser openOn: self ]; 
 			icon: ((self iconNamed: #pharoIcon) scaledToSize: 16@16);
-			help: 'Browse and create Pharo tutorials'.
+			help: 'Browse and create Pharo tutorials.'.
 ]

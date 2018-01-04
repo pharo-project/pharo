@@ -791,6 +791,14 @@ ArrayTest >> testPrinting [
 
 ]
 
+{ #category : #'tests - arithmetic' }
+ArrayTest >> testSumNumberItemsWithoutBlock [
+	
+	self assert: #() sumNumbers equals: 0.
+	
+	self assert: #(1 2 3) sumNumbers equals: 6
+]
+
 { #category : #requirements }
 ArrayTest >> unsortedCollection [
 	^unsortedCollection .

@@ -135,7 +135,7 @@ SlotExampleTest >> testExampleTwoSlotWithState [
 SlotExampleTest >> testPharoClassInstallerExample [
 	| newClass |
 	[ 
-		newClass := PharoClassInstaller example.
+		newClass := Smalltalk classInstaller example.
 		self assert: newClass isBehavior.
 	] ensure: [ 
 		newClass removeFromSystem ].

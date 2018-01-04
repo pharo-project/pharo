@@ -83,6 +83,7 @@ MethodClassifier class >> buildPrefixMapping [
 		at: 'remove' put: 'removing';
 		at: 'render' put: 'rendering';
 		at: 'requires' put: 'testing';
+		at: 'reset' put: 'initialization';
 		at: 'set' put: 'initialization';
 		at: 'should' put: 'asserting';
 		at: 'shouldnt' put: 'asserting';

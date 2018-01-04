@@ -213,7 +213,7 @@ FTPluggableIconListMorphAdaptorDataSource >> searchText: aString [
 
 { #category : #'drag and drop' }
 FTPluggableIconListMorphAdaptorDataSource >> transferFor: passenger from: aMorph [
-    ^self model transferFor: passenger from: self table
+    ^(self model transferFor: passenger from: self table) buildWithSpec
 ]
 
 { #category : #'drag and drop' }

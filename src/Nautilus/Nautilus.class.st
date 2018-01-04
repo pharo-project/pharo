@@ -164,6 +164,7 @@ Nautilus class >> menuCommandOn: aBuilder [
 		action: [ Smalltalk tools openClassBrowser ];
 		order: 0.1;
 		keyText: 'o, b';
+		help: 'System browser to browse and edit code.';
 		icon: Smalltalk tools browser taskbarIcon
 ]
 

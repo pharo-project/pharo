@@ -58,6 +58,7 @@ DAPackageDependenciesWelcome class >> menuCommandOn: aBuilder [
 		parent: #Tools;
 		label: 'Dependency Analyser';
 		icon: (self iconNamed: #packageIcon);
+		help: 'Analyze dependencies between different packages in the image.';
 		action: [ self new open ]
 ]
 

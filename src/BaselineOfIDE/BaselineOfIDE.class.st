@@ -114,6 +114,11 @@ BaselineOfIDE >> baseline: spec [
 		
 		spec baseline: 'BasicTools' with: [spec repository: repository].
 
+		spec baseline: 'Shift' with: [
+			spec loads: 'shift-tests'. 
+			spec repository: repository
+		].
+
 		spec package: 'ReleaseTests'. 
 		spec package: 'Refactoring-Critics'.
 		spec package: 'NautilusRefactoring'.
@@ -623,7 +628,6 @@ spec group: 'Refactoring-Group' with: #(
 	'Refactoring-Tests-Group'
 	'Refactoring-Help-Group' 
 ).
-
 spec group: 'Catalog-Core-Group' with: #(
 	'Glamour-Core-Group'	"dependency"
 	'GT-Core-Group'	"dependency"
@@ -879,6 +883,9 @@ spec group: #default with: #(
 	'BaselineOfPharoBootstrap'
 	'BaselineOfMonticello'
 	'BaselineOfMetacello'
+	
+	"Importing tests of Shift"
+	'Shift'
 ).
 
 ]
@@ -887,7 +894,7 @@ spec group: #default with: #(
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.6.4';
+		repository: 'github://pharo-vcs/iceberg:v0.6.5';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

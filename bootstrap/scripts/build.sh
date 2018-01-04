@@ -125,7 +125,7 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes SUnit-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes 
+zip "${HERMES_ARCHIVE_NAME}.zip" OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes SUnit-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes Hermes-Extensions.hermes
 # Archive RPackage definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
@@ -147,7 +147,8 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKer
 
 # Installing compiler through Hermes 
 echo "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/Multilingual.st ${ST_CACHE}/DeprecatedFileStream.st ${ST_CACHE}/FileSystem.st --no-source --quit --save
@@ -195,7 +196,7 @@ else
 fi
 dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 conv=notrunc
 
-${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.4'; load: 'core'"
+${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5'; load: 'core'"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'IDE';repository: 'tonel://${REPOSITORY}/src'; load"
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources"
 ${VM} "${PHARO_IMAGE_NAME}.image" clean --release

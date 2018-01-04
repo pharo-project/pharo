@@ -31,13 +31,6 @@ HEPragma >> doReadFrom: aReader [
 	arguments := HEExportedLiteral readFrom: aReader.
 ]
 
-{ #category : #writing }
-HEPragma >> doWriteInto: aWriter [
-	method writeInto: aWriter.
-	keyword writeInto: aWriter.
-	arguments writeInto: aWriter
-]
-
 { #category : #accessing }
 HEPragma >> keyword [
 	^ keyword

@@ -36,7 +36,7 @@ KeymapBrowser class >> keymapBrowserMenuOn: aBuilder [
 		order: 4;
 		icon: self taskbarIcon;
 		action: [ self new openWithSpec ];
-		help: 'List all know shortcuts and Keymapping categories'.
+		help: 'List all know shortcuts and Keymapping categories.'.
 ]
 
 { #category : #accessing }
