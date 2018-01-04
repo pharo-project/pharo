@@ -117,11 +117,6 @@ StringMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 
 ]
 
-{ #category : #accessing }
-StringMorph >> addEmphasis: aCodeOrTextEmphasis [
-	self emphasis: (emphasis bitOr: aCodeOrTextEmphasis value)
-]
-
 { #category : #'halos and balloon help' }
 StringMorph >> addOptionalHandlesTo: aHalo box: box [
 	self flag: #deferred.

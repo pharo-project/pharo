@@ -12,10 +12,3 @@ RGMetaclassDefinition >> arrayStringForManifest [
 			(self theNonMetaClass asString asSymbol)}.
 	^ array
 ]
-
-{ #category : #'*Manifest-Core' }
-RGMetaclassDefinition class >> manifestReadOn: aArray [
-
-	^ (self named:( aArray at:1))
-		baseClass: (RGClassDefinition named: (aArray at:2))
-]

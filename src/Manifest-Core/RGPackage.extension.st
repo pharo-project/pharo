@@ -8,9 +8,3 @@ RGPackage >> arrayStringForManifest [
 	array at: 2 put: {(name asSymbol)}.
 	^ array
 ]
-
-{ #category : #'*Manifest-Core' }
-RGPackage class >> manifestReadOn: aArray [
-
-	^ self named:( aArray first)
-]
