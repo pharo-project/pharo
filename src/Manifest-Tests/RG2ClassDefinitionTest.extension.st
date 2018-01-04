@@ -28,8 +28,7 @@ RG2ClassDefinitionTest >> testAsMetaclassDefinition [
 	
 	self assert: (rgClass isRing2Object).
 	self assert: (rgClass isMeta).  
-	self assert: (rgClass name == #'Class class').  
-	self assert: (rgClass category == class category).
+	self assert: (rgClass name = 'Class class').  
 	self assert: (rgClass theMetaClass == rgClass).
 
 ]
@@ -40,7 +39,6 @@ RG2ClassDefinitionTest >> testManifestReadOn [
 	class := self class.
 
  	self
-		assert: (RG2MetaclassDefinition manifestReadOn: { class class name asSymbol . class name asSymbol })
-		equals: class class asRing2Definition 
-
+		assert: (RG2ClassDefinition manifestReadOn: { class name asSymbol }) name
+		equals: class asRingDefinition name
 ]
