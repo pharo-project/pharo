@@ -96,7 +96,7 @@ MCStReader >> commentStampFor: aRingClass [
 { #category : #evaluating }
 MCStReader >> loadDefinitions [
 	| filePackage |
-	filePackage := RingChunkImporter fromStream: self readStream.
+	filePackage := Ring2ChunkImporter fromStream: self readStream.
 	definitions := OrderedCollection new.
 	filePackage classes
 		do: [ :ringClass |
