@@ -17,7 +17,7 @@ NECInstVarTypeGuesser >> methodRefs [
 	theClass ifNil: [ ^ nil ].
 	selectors := theClass whichSelectorsStoreInto: variableName.
 	^ selectors collect: [ :each | 
-		RGMethodDefinition realClass: theClass selector: each]
+		RG2MethodDefinition realClass: theClass selector: each]
 ]
 
 { #category : #'bytecode decoding' }

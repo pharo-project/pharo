@@ -30,7 +30,7 @@ Class {
 { #category : #'public access' }
 ExternalBrowser class >> browseStream: aStream [
 
-	self openOn: (RingChunkImporter fromStream: aStream)
+	self openOn: (Ring2ChunkImporter fromStream: aStream)
 ]
 
 { #category : #specs }

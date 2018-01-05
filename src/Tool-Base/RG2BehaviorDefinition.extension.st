@@ -1,7 +1,7 @@
-Extension { #name : #RGBehaviorDefinition }
+Extension { #name : #RG2BehaviorDefinition }
 
 { #category : #'*Tool-Base' }
-RGBehaviorDefinition >> browse [
+RG2BehaviorDefinition >> browse [
 
 	^ Smalltalk tools browser openOnClass: self realClass
 ]

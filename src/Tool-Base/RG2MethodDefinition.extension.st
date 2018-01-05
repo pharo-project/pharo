@@ -1,7 +1,7 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : #RG2MethodDefinition }
 
 { #category : #'*Tool-Base' }
-RGMethodDefinition >> browse [
+RG2MethodDefinition >> browse [
 
 	^ Smalltalk tools browser
 		openOnClass: self realClass 

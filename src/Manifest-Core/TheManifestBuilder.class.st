@@ -654,6 +654,8 @@ TheManifestBuilder >> unwrap: aCollection [
 			| definitionClassName |
 			definitionClassName := each first first.
 			(definitionClassName = #RGMethodDefinition) ifTrue: [ definitionClassName := #RG2MethodDefinition ].
+			(definitionClassName = #RGClassDefinition) ifTrue: [ definitionClassName := #RG2ClassDefinition ].
+			(definitionClassName = #RGMetaclassClassDefinition) ifTrue: [ definitionClassName := #RG2MetaclassDefinition ].
 	
 			rgobject := (self browsedEnvironment at: definitionClassName) manifestReadOn:  (each first at: 2).
 			(rgobject isClass and: [ rgobject  realClass notNil ])
