@@ -1,3 +1,6 @@
+"
+An array  structure for test purposes
+"
 Class {
 	#name : #FFITestArrayStructure,
 	#superclass : #FFIExternalStructure,

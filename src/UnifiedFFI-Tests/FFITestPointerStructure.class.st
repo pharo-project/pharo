@@ -1,3 +1,6 @@
+"
+A pointer structure for test purposes
+"
 Class {
 	#name : #FFITestPointerStructure,
 	#superclass : #FFIExternalStructure,
