@@ -403,7 +403,7 @@ RPackage >> changeRecordForOverriddenMethod: aMethodDefinition [
 		detect: [ :protocol | 
 			self 
 				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
+				ofClass: aMethodDefinition realClass ]
 ]
 
 { #category : #slices }
@@ -1226,7 +1226,7 @@ RPackage >> propertyAt: propName put: propValue [
 
 { #category : #'system compatibility' }
 RPackage >> referenceForMethod: aSymbol ofClass: aClass [
-	^ (aClass >> aSymbol) asRingDefinition
+	^ (aClass >> aSymbol) asRing2Definition
 ]
 
 { #category : #accessing }

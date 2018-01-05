@@ -107,7 +107,7 @@ RPackageSet >> changeRecordForOverriddenMethod: aMethodDefinition [
 		detect: [ :protocol | 
 			self 
 				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
+				ofClass: aMethodDefinition realClass ]
 ]
 
 { #category : #accessing }
