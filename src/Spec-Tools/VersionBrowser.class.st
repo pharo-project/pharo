@@ -156,7 +156,7 @@ VersionBrowser >> buildChangeList [
 		isMeta: rgMethod isMetaSide)
 		collectWithIndex: [ :c :i | | rg |
 			rg := c asRing2Definition.
-			rg annotationNamed: #versionIndex put: i ]
+			rg propertyNamed: #versionIndex put: i ]
 ]
 
 { #category : #menu }
