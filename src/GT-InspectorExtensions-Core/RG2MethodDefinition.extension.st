@@ -1,7 +1,7 @@
-Extension { #name : #RGMethodDefinition }
+Extension { #name : #RG2MethodDefinition }
 
 { #category : #'*GT-InspectorExtensions-Core' }
-RGMethodDefinition >> gtInspectorImplementorsIn: composite [
+RG2MethodDefinition >> gtInspectorImplementorsIn: composite [
 	<gtInspectorPresentationOrder: 4>
 	composite list 
 		title: 'Implementors';
@@ -9,7 +9,7 @@ RGMethodDefinition >> gtInspectorImplementorsIn: composite [
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }
-RGMethodDefinition >> gtInspectorSendersIn: composite [
+RG2MethodDefinition >> gtInspectorSendersIn: composite [
 	<gtInspectorPresentationOrder: 2>
 	composite list 
 		title: 'Senders';
@@ -17,7 +17,7 @@ RGMethodDefinition >> gtInspectorSendersIn: composite [
 ]
 
 { #category : #'*GT-InspectorExtensions-Core' }
-RGMethodDefinition >> gtInspectorSourceIn: composite [
+RG2MethodDefinition >> gtInspectorSourceIn: composite [
 	<gtInspectorPresentationOrder: 00>
 	^ composite pharoMethod 
 		title: 'Source';
