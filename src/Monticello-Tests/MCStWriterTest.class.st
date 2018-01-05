@@ -175,9 +175,9 @@ MCStWriterTest >> testClassDefinitionB [
 	
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 MCStWriterTest >> testClassMethodDefinition [
-	writer visitMethodDefinition: (RGMethodDefinition realClass: self mockClassA class selector: #one) asMCMethodDefinition.
+	writer visitMethodDefinition: (RG2MethodDefinition realClass: self mockClassA class selector: #one) asMCMethodDefinition.
 	self assert: (stream contents matchesRegex: self expectedClassMethodDefinition).
 	
 	stream := ChunkReadStream on: stream contents readStream.
@@ -203,9 +203,9 @@ MCStWriterTest >> testInitializerDefinition [
 	self assertContentsOf: lastChunk readStream match: self expectedInitializerASubclass
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 MCStWriterTest >> testMethodDefinition [
-	writer visitMethodDefinition: (RGMethodDefinition realClass: self mockClassA selector: #one) asMCMethodDefinition.
+	writer visitMethodDefinition: (RG2MethodDefinition realClass: self mockClassA selector: #one) asMCMethodDefinition.
 	self assert: (stream contents matchesRegex: self expectedMethodDefinition).
 	
 	stream := ChunkReadStream on: stream contents readStream.
@@ -216,12 +216,12 @@ MCStWriterTest >> testMethodDefinition [
 	self assert: stream next isAllSeparators 
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 MCStWriterTest >> testMethodDefinitionWithBangs [
 
 	| methodDefinition |
 	
-	methodDefinition := (RGMethodDefinition 
+	methodDefinition := (RG2MethodDefinition 
 		realClass: self class
 		selector: #methodWithBangs) asMCMethodDefinition.	
 	methodDefinition setTimeStamp: ''.

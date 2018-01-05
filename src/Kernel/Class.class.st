@@ -223,6 +223,12 @@ Class >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
 	^ changedSelectors
 ]
 
+{ #category : #converting }
+Class >> asEpiceaRingDefinition [
+	
+	^ self asRing2Definition asEpiceaRingDefinition 
+]
+
 { #category : #'accessing parallel hierarchy' }
 Class >> baseClass [
 
