@@ -7,7 +7,7 @@ Slot >> gtInspectorUsersIn: composite [
 	users := self usingMethods.
 	composite list 
 		title: 'Users';
-		display: [ users collect: #asRingDefinition];
+		display: [ users collect: #asRing2Definition];
 		when: [ users notEmpty ];
 		showOnly: 30
 ]

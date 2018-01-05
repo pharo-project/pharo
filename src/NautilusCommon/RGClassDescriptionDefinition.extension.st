@@ -5,7 +5,7 @@ RGClassDescriptionDefinition >> correspondingTestCase [
 	"Return the TestCase that corresponds to me.
 	If it does not exist, return nil."
 
-	^ (NautilusUtils correspondingTestCaseOf: self) asRingDefinition
+	^ (NautilusUtils correspondingTestCaseOf: self) asRing2Definition
 ]
 
 { #category : #'*NautilusCommon' }

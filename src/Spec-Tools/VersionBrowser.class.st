@@ -155,7 +155,7 @@ VersionBrowser >> buildChangeList [
 		className: rgMethod theNonMetaClassName
 		isMeta: rgMethod isMetaSide)
 		collectWithIndex: [ :c :i | | rg |
-			rg := c asRingDefinition.
+			rg := c asRing2Definition.
 			rg annotationNamed: #versionIndex put: i ]
 ]
 
@@ -225,7 +225,7 @@ VersionBrowser >> revert: aChangeRecord [
 { #category : #private }
 VersionBrowser >> setRGMethodFrom: aMethod [
 "asHistorical, because active RGMethods don't always have the source pointer attached"
-	rgMethod := aMethod asRingDefinition asHistorical.
+	rgMethod := aMethod asRing2Definition asHistorical.
 ]
 
 { #category : #'instance creation' }

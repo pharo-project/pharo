@@ -348,7 +348,7 @@ MessageBrowser >> handleClassRenamed: anAnnouncement [
 			interestedClassName := interestedClassName, ' class'.
 			interestedClass := interestedClass theMetaClass ].
 		rgMethod parentName = interestedClassName ifTrue: [ 
-			(interestedClass >> rgMethod selector) asFullRingDefinition.
+			(interestedClass >> rgMethod selector) asRing2Definition.
 		 	] ifFalse: [ rgMethod ] ].
 	
 	selectedIndex := listModel selectedIndex.
@@ -372,7 +372,7 @@ MessageBrowser >> handleMethodAdded: anAnnouncement [
 	boolean ifTrue: [ text := textModel pendingText ].
 	
 	sel := listModel selectedItem.
-	self messages: (listModel listItems add: item asFullRingDefinition; yourself).
+	self messages: (listModel listItems add: item asRing2Definition; yourself).
 	listModel setSelectedItem: sel.
 	
 	boolean ifTrue: [ textModel pendingText: text ]
@@ -399,7 +399,7 @@ MessageBrowser >> handleMethodModified: anAnnouncement [
 	index := listModel selectedIndex.
 	list := listModel listItems
 		remove: sel ifAbsent: [  ];
-		add: item asFullRingDefinition;
+		add: item asRing2Definition;
 		"to ensure it's still a RGMethod"
 			yourself.
 	self messages: list.
@@ -431,7 +431,7 @@ MessageBrowser >> handleMethodRemoved: anAnnouncement [
 	self
 		messages:
 			(listModel listItems
-				remove: item asFullRingDefinition ifAbsent: [ nil ];
+				remove: item asRing2Definition ifAbsent: [ nil ];
 				yourself).
 	
 	listModel setSelectedIndex: sel

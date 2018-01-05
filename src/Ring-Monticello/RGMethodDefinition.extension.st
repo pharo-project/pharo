@@ -1,6 +1,6 @@
 Extension { #name : #RGMethodDefinition }
 
-{ #category : #'*ring-monticello' }
+{ #category : #'*Ring-Monticello' }
 RGMethodDefinition >> asMCMethodDefinition [
    "Creates a MCMethodDefinition from the receiver"
 	| cached |
@@ -19,7 +19,7 @@ RGMethodDefinition >> asMCMethodDefinition [
 	^ cached
 ]
 
-{ #category : #'*ring-monticello' }
+{ #category : #'*Ring-Monticello' }
 RGMethodDefinition >> asMCMethodDefinitionFromActiveDefinition [
 	"Creates a MCMethodDefinition from a source file assuming the current method isActive."
 
@@ -36,7 +36,7 @@ RGMethodDefinition >> asMCMethodDefinitionFromActiveDefinition [
 		source: compiledMethod sourceCode
 ]
 
-{ #category : #'*ring-monticello' }
+{ #category : #'*Ring-Monticello' }
 RGMethodDefinition >> basicAsMCMethodDefinition [
    "Creates a MCMethodDefinition from the receiver"
    
@@ -52,7 +52,7 @@ RGMethodDefinition >> basicAsMCMethodDefinition [
 				source: self sourceCode ]
 ]
 
-{ #category : #'*ring-monticello' }
+{ #category : #'*Ring-Monticello' }
 RGMethodDefinition >> sameAsMCDefinition: anMCMethodDefinition [
 	^ anMCMethodDefinition selector = self selector
 		and:

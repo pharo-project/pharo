@@ -193,7 +193,7 @@ RGElementDefinition class >> realClass: aClass [
 	However it is not set as parent but only its name and scope (instance/class)"
 
 	^self new
-		parent: aClass asRingDefinition;
+		parent: aClass asRing2Definition;
 		yourself
 ]
 

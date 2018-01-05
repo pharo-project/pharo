@@ -1,9 +1,9 @@
 Extension { #name : #Trait }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : #'*Epicea' }
 Trait >> asEpiceaRingDefinition [
 
-	^ self asRingDefinition
+	^ self asRing2Definition
 		package: (EpPlatform current packageNameFor: self);
 		yourself.
 ]

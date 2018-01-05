@@ -158,7 +158,7 @@ RPackageSet >> extensionClasses [
 { #category : #accessing }
 RPackageSet >> extensionMethods [
 	^extensionMethods ifNil: [
-		extensionMethods := ((self collectFromAllPackages: #extensionMethods) collect: #asRingDefinition) asSet asArray ]
+		extensionMethods := ((self collectFromAllPackages: #extensionMethods) collect: #asRing2Definition) asSet asArray ]
 ]
 
 { #category : #testing }
@@ -206,7 +206,7 @@ RPackageSet >> methodCategoryPrefix [
 
 { #category : #accessing }
 RPackageSet >> methods [
-	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: #asRingDefinition ]
+	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: [:each | each asRingDefinition  ]]
 ]
 
 { #category : #'system compatibility' }
