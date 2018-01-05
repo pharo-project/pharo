@@ -249,6 +249,12 @@ DictionaryTest >> nonEmptyDifferentFromNonEmptyDict [
 ]
 
 { #category : #requirements }
+DictionaryTest >> nonEmptyWithCopyNonIdentical. [
+" return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
+^nonEmptyWithFloat 
+]
+
+{ #category : #requirements }
 DictionaryTest >> nonEmptyWithoutEqualsValues [
 " return a dictionary that doesn't include equal values'"
 ^nonEmpty5ElementsNoDuplicates 
