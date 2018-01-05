@@ -155,7 +155,7 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 	| method |
 	method := aModifiedMethodEvent method.
 
-	^ (RGMethodDefinition
+	^ (RG2MethodDefinition
 		realClass: method methodClass
 		selector: method selector) asHistorical
 ]
