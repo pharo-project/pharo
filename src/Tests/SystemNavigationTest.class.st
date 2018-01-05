@@ -32,7 +32,7 @@ SystemNavigationTest >> createClassFactory [
 { #category : #utils }
 SystemNavigationTest >> createMethodNamed: selector realParent: class [
 
-	^ RGMethodDefinition realClass: class selector: selector
+	^ RG2MethodDefinition realClass: class selector: selector
 ]
 
 { #category : #'setUp-tearDown' }
@@ -144,7 +144,7 @@ SystemNavigationTest >> testAllSendersOfReturnsExistingMethods [
 				assert: (aReference actualClass canUnderstand: aReference selector)]
 ]
 
-{ #category : #testing }
+{ #category : #tests }
 SystemNavigationTest >> testIsMessageSentInSystemAnswersMethodReference [
 	| classesSendingMessage sentMessageSelector anyOne |
 	sentMessageSelector := 'MessageSentOnlyByTestClassesXXXShouldNotBeRealyDefined' asSymbol.
@@ -155,7 +155,7 @@ SystemNavigationTest >> testIsMessageSentInSystemAnswersMethodReference [
 		class compileSilently: 'meth self ', sentMessageSelector].
 	anyOne :=(self systemNavigationToTest allSendersOf: sentMessageSelector) anyOne.
 
-	self assert: (anyOne isKindOf: RGMethodDefinition) 
+	self assert: (anyOne isKindOf: RG2MethodDefinition) 
 ]
 
 { #category : #testing }

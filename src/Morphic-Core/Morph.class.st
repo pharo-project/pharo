@@ -5675,7 +5675,7 @@ Morph >> showActions [
 	| list cls selector adder |
 	list := SortedCollection new.
 	adder := [:mrClass :mrSel | list
-				add: (RGMethodDefinition realClass: mrClass selector: mrSel)].
+				add: (RG2MethodDefinition realClass: mrClass selector: mrSel)].
 	"the eventHandler"
 	self eventHandler
 		ifNotNil: [list := self eventHandler methodRefList.
