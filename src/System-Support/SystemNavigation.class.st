@@ -222,7 +222,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 	list := Set new.
 	
 	addMethod := [ :mrClass :mrSel | list add: (self createMethodNamed: mrSel realParent:  mrClass)].									
-	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].
+	addComment := [ :mrClass | list add: (RG2CommentDefinition realClass: mrClass)].
 										
 	'Searching all source code...'
 		displayProgressFrom: 0 to: (2*self environment classAndTraitNames size)
