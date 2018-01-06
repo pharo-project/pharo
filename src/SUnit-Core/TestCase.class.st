@@ -14,6 +14,7 @@ Class {
 	],
 	#classVars : [
 		'Announcers',
+		'AssertionlessTestsShouldFail',
 		'DefaultTimeLimit',
 		'HistoryAnnouncer'
 	],
@@ -74,6 +75,34 @@ TestCase class >> announcer [
 { #category : #events }
 TestCase class >> announcers [
 	^ Announcers ifNil: [ Announcers := Dictionary new ] 
+]
+
+{ #category : #accessing }
+TestCase class >> assertionlessTestsShouldFail [
+	"By default, a test that makes no assertion is regarded as not failing.  This behaviour can be changed
+	setting the value of the class inst. var.  If a single method makes no assertions deliberatley, then
+	rather than overriding this method, it should send the message
+	
+		self  deliberatelyDidNotAssert
+		
+	"
+	^ AssertionlessTestsShouldFail ifNil: [ AssertionlessTestsShouldFail := false ]
+]
+
+{ #category : #accessing }
+TestCase class >> assertionlessTestsShouldFail: aBoolean [
+	AssertionlessTestsShouldFail := aBoolean
+]
+
+{ #category : #settings }
+TestCase class >> assertionlessTestsShouldFailSettingOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #assertionlessTestsShouldFail)
+		target: self;
+		parent: #pharoSystem ;
+		label: 'Should assertionless tests fail?' ;
+		description: 'Whether tests without assertion should fail or not.'
 ]
 
 { #category : #'building suites' }
@@ -642,7 +671,10 @@ TestCase >> openDebuggerOnFailingTestMethod [
 
 { #category : #private }
 TestCase >> performTest [
-	self perform: testSelector asSymbol
+	assertionMade := false.
+	self perform: testSelector asSymbol.
+	assertionMade
+		ifFalse: [ TestResult makesNoAssertion signal: 'This test method made no assertion.' ]
 ]
 
 { #category : #running }
