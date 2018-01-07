@@ -148,7 +148,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring2-Tests-Core'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'FuelTests'.
@@ -162,8 +162,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Tests-Containers'.
-		spec package: 'Ring-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -338,7 +336,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Tests-Core'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Tests-Monticello'.
+		spec package: 'Ring2-Tests-Monticello'.
+		spec package: 'Ring2-Tests-ChunkImporter'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
@@ -465,7 +464,7 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
-	'Ring-Tests-Monticello'
+	'Ring2-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
@@ -817,8 +816,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Tests-Kernel'
-	'Ring-Tests-Containers' 
+	'Ring2-Tests-Kernel'
+	'Ring2-Tests-ChunkImporter' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
 	'FileSystem-Tests-Memory'
