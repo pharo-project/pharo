@@ -34,16 +34,6 @@ RG2MethodDefinition >> asHistorical [
 ]
 
 { #category : #'*Ring2-Compatibility' }
-RG2MethodDefinition >> asStandalone [
-
-	| aMethod |
-	
-	aMethod := self copy makeResolved.
-	aMethod environment backend: RG2EnvironmentBackend new. 
-	^ aMethod. 
-]
-
-{ #category : #'*Ring2-Compatibility' }
 RG2MethodDefinition class >> className: aString selector: aString2 isMetaSide: isMeta [
 
 	| aClass env |
