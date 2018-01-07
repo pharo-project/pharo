@@ -1,11 +1,11 @@
 Extension { #name : #MCFileTreeRepository }
 
-{ #category : #'*Ring2-Monticello' }
+{ #category : #'*Ring2-MCFileTree' }
 MCFileTreeRepository >> asRing2Environment [
 
 	| aRG2Environment |
 	aRG2Environment := RG2Environment new.
-	aRG2Environment announcer suspendAllWhile: [ 
+	aRG2Environment announcer suspendAllWhile: [
 		self allFileNames do: [ :pn | 
 			| snap defs package version |
 			package := aRG2Environment ensurePackageNamed: (pn withoutSuffix: '.package') asSymbol.
@@ -25,7 +25,7 @@ MCFileTreeRepository >> asRing2Environment [
 	^ aRG2Environment 
 ]
 
-{ #category : #'*Ring2-Monticello' }
+{ #category : #'*Ring2-MCFileTree' }
 MCFileTreeRepository >> asRing2EnvironmentWith: packageNames [
 
 	| aRG2Environment |
