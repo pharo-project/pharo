@@ -2,7 +2,7 @@ preparation
 exportMonticelloInStFile
 
 	self
-		exportPackages: #( 'Ring2-Core' 'Ring2-Compatibility' 'Ring2-ChunkImporter' 'Ring2-Monticello' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Compression' 'Monticello' )
+		exportPackages: #( 'Ring2-Core' 'Ring2-ChunkImporter'  'Zinc-Resource-Meta-Core' 'System-Changes' 'Compression' 'Ring2-Compatibility' 'Monticello' 'Ring2-Monticello' )
 		usingInitializeScript: '
 		ChangeSet initialize.
 		
