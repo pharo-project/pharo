@@ -42,7 +42,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Zinc-FileSystem';
 			package: 'Zodiac-Core'.
 		spec 
-			group: 'Core' with: #('Ring2-Core' 'Ring2-Compatibility' 'Ring2-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Compression' 'Monticello' 'Ring-Monticello');
+			group: 'Core' with: #('Ring2-Core' 'Ring2-ChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Compression' 'Monticello' 'Ring2-Compatibility' 'Ring-Monticello');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zinc-FileSystem' 'Zodiac-Core' );
 
 			group: 'default' with: #('Core' 'RemoteRepositories' ). ].		
