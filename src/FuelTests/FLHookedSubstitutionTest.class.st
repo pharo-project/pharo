@@ -10,7 +10,7 @@ Class {
 { #category : #tests }
 FLHookedSubstitutionTest >> testAvoidRecursion [
 
-	| result original | 
+	| aClass result original | 
 	original := FLClassWithRecursiveSubstitution new index: 1.
 	
 	result := self resultOfSerializeAndMaterialize: original.

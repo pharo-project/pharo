@@ -10,6 +10,7 @@ Class {
 { #category : #tests }
 FLHeaderSerializationTest >> testAdditionalObjects [
 
+	| materialization |
 	self serializer at: #test putAdditionalObject: 'test'.
 	self serializer at: 42 putAdditionalObject: 68.
 	
