@@ -1241,11 +1241,17 @@ Context >> object: anObject basicAt: index put: value [
 	<primitive: 61>
 	index isInteger
 		ifTrue: [(index >= 1 and: [index <= (self objectSize: anObject)])
-					ifTrue: [self errorImproperStore]
 					ifFalse: [self errorSubscriptBounds: index]].
 	index isNumber
 		ifTrue: [^self object: anObject basicAt: index asInteger put: value]
-		ifFalse: [self errorNonIntegerIndex]
+		ifFalse: [self errorNonIntegerIndex].
+	anObject isReadOnlyObject 
+		ifTrue: [ ^ (ModificationForbidden new
+				object: anObject;
+				fieldIndex: index;
+				newValue: value;
+				retrySelector: #basicAt:put:) signal ].
+	self errorImproperStore
 ]
 
 { #category : #'mirror primitives' }
