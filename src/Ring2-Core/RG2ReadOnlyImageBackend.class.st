@@ -257,11 +257,11 @@ RG2ReadOnlyImageBackend >> metaclassTraitBaseTraitFor: aRG2MetaclassTraitDefinit
 { #category : #method }
 RG2ReadOnlyImageBackend >> methodPackageFor: aRG2MethodDefinition [
 	
-	| realPackage |
+	| realMethod |
 	
-	realPackage := self realMethodFor: aRG2MethodDefinition.
-	^ realPackage 
-		ifNotNil: [ realPackage asRing2MinimalDefinitionIn: aRG2MethodDefinition environment ]
+	realMethod := self realMethodFor: aRG2MethodDefinition.
+	^ realMethod 
+		ifNotNil: [ realMethod package asRing2MinimalDefinitionIn: aRG2MethodDefinition environment ]
 ]
 
 { #category : #general }

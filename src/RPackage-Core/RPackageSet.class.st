@@ -206,7 +206,7 @@ RPackageSet >> methodCategoryPrefix [
 
 { #category : #accessing }
 RPackageSet >> methods [
-	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: [:each | each asActiveRing2Definition  ]]
+	^methods ifNil: [ methods := (self collectFromAllPackages: #methods) collect: [:each | each asRing2Definition asStandaloneWithPackage  ]]
 ]
 
 { #category : #'system compatibility' }
