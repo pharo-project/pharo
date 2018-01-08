@@ -188,6 +188,7 @@ ShiftClassBuilder >> copyClassSlotsFromExistingClass [
 { #category : #building }
 ShiftClassBuilder >> copyOrganization [
 	newClass organization copyFrom: oldClass organization.
+	newClass class organization copyFrom: oldClass class organization.
 ]
 
 { #category : #installing }
