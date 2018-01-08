@@ -34,6 +34,11 @@ WriteBarrierTest >> alwaysWritableObjects [
 		Processor activeProcess }
 ]
 
+{ #category : #'expected failures' }
+WriteBarrierTest >> expectedFailures [
+	^ #( testMutateByteArrayUsingDoubleAtPut testMutateByteArrayUsingFloatAtPut )
+]
+
 { #category : #'guinea pigs' }
 WriteBarrierTest >> maybeReadOnlyObjects [
 	"ByteObject, Variable object, fixed sized object"
@@ -383,17 +388,17 @@ WriteBarrierTest >> testMutateWideSymbolUsingPrivateAtPut [
 	guineaPig beReadOnlyObject.
 	
 	self 
-		should: [ guineaPig privateAt: 1 put: $q  ]
+		should: [ guineaPig privateAt: 1 put: 65  ]
 		raise: ModificationForbidden.
 		
-	[ guineaPig privateAt: 1 put: $q ] 
+	[ guineaPig privateAt: 1 put: 65 ] 
 		on: ModificationForbidden 
 		do: [:modification | 
 			self assert: modification fieldIndex equals: 1.
 			modification object beWritableObject.
 			modification retryModification ].
 
-	self assert: guineaPig first equals: $q
+	self assert: guineaPig first asciiValue equals: 65
 ]
 
 { #category : #'tests - helper' }
