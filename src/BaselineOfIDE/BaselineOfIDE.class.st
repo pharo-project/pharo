@@ -816,7 +816,7 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring2-Tests-Kernel'
+	'Ring2-Tests-Core'
 	'Ring2-Tests-ChunkImporter' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
