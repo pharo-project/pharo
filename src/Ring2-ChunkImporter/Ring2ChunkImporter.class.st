@@ -220,6 +220,8 @@ Ring2ChunkImporter >> createBehavior: subclassName superclassName: superclassNam
 			composition addTransformation: each ].
 		].
 	
+	package addDefinedBehavior: behavior instanceSide.
+	
 ]
 
 { #category : #accessing }
@@ -302,6 +304,11 @@ Ring2ChunkImporter >> metaTraitDefinition: string with: chgRec [
 	trait := environment ensureTraitNamed: tokens first.
 	
 "	trait theMetaClass definitionSource: string"
+]
+
+{ #category : #accessing }
+Ring2ChunkImporter >> methods [
+	^ self environment ask behaviors flatCollect: [ :each | each localMethods ]
 ]
 
 { #category : #private }
