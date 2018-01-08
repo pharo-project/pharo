@@ -398,12 +398,12 @@ Object >> at: index put: value [
 	index isInteger 
 		ifTrue: [self class isVariable
 			ifTrue: [(index between: 1 and: self size)
-				ifFalse: [self errorSubscriptBounds: index]]
-			ifFalse: [self errorNotIndexable]]
+				ifFalse: [ ^ self errorSubscriptBounds: index]]
+			ifFalse: [ ^ self errorNotIndexable ]]
 		ifFalse: [  
-			index isNumber
-				ifTrue: [^self at: index asInteger put: value]
-				ifFalse: [self errorNonIntegerIndex] ].
+			^ index isNumber
+				ifTrue: [ self at: index asInteger put: value]
+				ifFalse: [ self errorNonIntegerIndex] ].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: value ].
 	self errorImproperStore 
@@ -449,15 +449,15 @@ Object >> basicAt: index put: value [
 	index isInteger 
 		ifTrue: [self class isVariable
 			ifTrue: [(index between: 1 and: self size)
-				ifFalse: [self errorSubscriptBounds: index]]
-			ifFalse: [self errorNotIndexable]]
+				ifFalse: [ ^ self errorSubscriptBounds: index ]]
+			ifFalse: [ ^ self errorNotIndexable ]]
 		ifFalse: [  
-			index isNumber
-				ifTrue: [^self basicAt: index asInteger put: value]
-				ifFalse: [self errorNonIntegerIndex] ].
+			^ index isNumber
+				ifTrue: [ self basicAt: index asInteger put: value ]
+				ifFalse: [ self errorNonIntegerIndex ] ].
 	self isReadOnlyObject 
 		ifTrue: [ ^ self modificationForbiddenFor: #basicAt:put: index: index value: value ].
-	self primitiveFailed
+	self errorImproperStore 
 ]
 
 { #category : #accessing }
@@ -1017,11 +1017,10 @@ Object >> instVarAt: index put: anObject [
 
 	<primitive: 174 error: ec>
 	 (index isInteger 
-		and: [index between: 1 and: self class instSize + self basicSize]) 
-			ifFalse: [ self errorSubscriptBounds: index ].
+		and: [ index between: 1 and: self class instSize + self basicSize]) 
+			ifFalse: [ ^ self errorSubscriptBounds: index ].
 	self isReadOnlyObject 
-		ifTrue: [ ^ self modificationForbiddenFor: #instVarAt:put: index: index value: anObject ].
-	self primitiveFailed
+		ifTrue: [ ^ self modificationForbiddenFor: #instVarAt:put: index: index value: anObject ]
 ]
 
 { #category : #introspection }
