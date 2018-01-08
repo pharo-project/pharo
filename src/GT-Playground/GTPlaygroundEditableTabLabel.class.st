@@ -23,7 +23,7 @@ GTPlaygroundEditableTabLabel >> initialize [
 		with: [ :b | b editBrick
 			hShrinkWrap;
 			rubricBackgroundColor: b themer rubricBackgroundColor;
-			margins: (self defaultPadding@0 corner: self defaultPadding@0) ];
+			margins: (self defaultPadding@0) asMargin ];
 		with: [ :b | b maxWidth: [ b approximateWidth + b owner hPadding] ];
 		with: [ :b | b labelBrick margin: { 0 . self defaultPadding + 2. 0 . self defaultPadding } ];
 		with: [ :b | b layout widthDependency: [ b owner ] ];
