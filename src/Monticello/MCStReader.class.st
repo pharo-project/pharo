@@ -98,10 +98,7 @@ MCStReader >> loadDefinitions [
 	| filePackage |
 	filePackage := Ring2ChunkImporter fromStream: self readStream.
 	definitions := OrderedCollection new.
-	filePackage classes
-		do: [ :ringClass |
-			definitions addAll: (self methodDefinitionsFor: ringClass).
-			definitions addAll: (self methodDefinitionsFor: ringClass theMetaClass) ].
+	filePackage classes do: [ :each | definitions add: each asMCDefinition ].
 	filePackage methods do: [ :each | definitions add: each asMCDefinition ].
 	filePackage doIts 
 		do: [ :ea | self addDefinitionsFromDoit: ea contents ].
