@@ -98,11 +98,11 @@ VersionBrowser >> browser [
 { #category : #'instance creation' }
 VersionBrowser >> browserForList: aList [
 
-	browser :=  MessageBrowser new.
+	browser := MessageBrowser new.
 	browser
 		topologicSort: false;
 		refreshingBlock: [:m | false];
-		sortingBlock: [:a :b | (a annotationNamed:#versionIndex ifAbsent:[0]) < (b annotationNamed:#versionIndex ifAbsent:[0]) ];
+		sortingBlock: [:a :b | (a propertyNamed:#versionIndex ifAbsent:[0]) < (b propertyNamed:#versionIndex ifAbsent:[0]) ];
 		displayBlock: [:changeRecord | self displayStringsFor: changeRecord].
 										
 	browser toolbarModel

@@ -264,7 +264,7 @@ MessageBrowser >> buildHierarchyForMessages: messages [
 	result := Dictionary new.	
 	classes := (messages collect: #methodClass) asSet.
 	messages do: [:message || level class |
-		class := message methodClass.
+		class := message method methodClass.
 		level := OrderedCollection new.
 		class allSuperclassesDo: [:superClass |
 			(classes includes: superClass)
@@ -535,7 +535,7 @@ MessageBrowser >> isMethodDefinition: anItem [
 	anItem ifNil: [ ^ false ].
 	
 	"assume it is a compiled method or ring method definition"
-	^ (anItem isRingObject and: [ anItem isMethod and: [ anItem compiledMethod isNotNil ] ])
+	^ (anItem isRing2Object and: [ anItem isMethod and: [ anItem compiledMethod isNotNil ] ])
 		or: [  anItem isCompiledMethod ]
 ]
 

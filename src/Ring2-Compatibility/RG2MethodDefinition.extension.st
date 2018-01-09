@@ -57,6 +57,18 @@ RG2MethodDefinition class >> className: aString selector: aString2 isMetaSide: i
 ]
 
 { #category : #'*Ring2-Compatibility' }
+RG2MethodDefinition >> imageCompiledMethod [
+
+	| aSelector aClass |
+	aClass := (self class environment classNamed: self parent name).
+	aClass ifNil: [ ^ nil ].
+	aSelector := self name asSymbol.
+	^ (aClass includesSelector: aSelector)
+		ifTrue: [ aClass>>aSelector ]
+		ifFalse: [ nil ]
+]
+
+{ #category : #'*Ring2-Compatibility' }
 RG2MethodDefinition >> isDefined [
 	"Answer whether the receiver exists in the environment"
 	
@@ -83,13 +95,7 @@ RG2MethodDefinition >> literals [
 { #category : #'*Ring2-Compatibility' }
 RG2MethodDefinition >> method [
 
-	| aSelector aClass |
-	aClass := (self class environment classNamed: self parent name).
-	aClass ifNil: [ ^ nil ].
-	aSelector := self name asSymbol.
-	^ (aClass includesSelector: aSelector)
-		ifTrue: [ aClass>>aSelector ]
-		ifFalse: [ nil ]
+	^ self imageCompiledMethod 
 ]
 
 { #category : #'*Ring2-Compatibility' }
