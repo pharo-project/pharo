@@ -114,13 +114,16 @@ WideString >> at: index put: aCharacter [
 	 argument is not a Character.  Essential.  See Object documentation whatIsAPrimitive."
 
 	<primitive: 64>
-	^aCharacter isCharacter
+	aCharacter isCharacter
 		ifTrue:
 			[index isInteger
-				ifTrue: [self errorSubscriptBounds: index]
-				ifFalse: [self errorNonIntegerIndex]]
+				ifTrue: [ ( index between: 1 and: self size )
+					ifFalse: [ ^ self errorSubscriptBounds: index ] ]
+				ifFalse: [ ^ self errorNonIntegerIndex ]]
 		ifFalse:
-			[self errorImproperStore]
+			[ ^ self errorImproperStore ].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #at:put: index: index value: aCharacter ].
 ]
 
 { #category : #accessing }

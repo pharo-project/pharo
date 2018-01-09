@@ -178,6 +178,22 @@ ProtoObject >> isNil [
 	^false
 ]
 
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector index: index value: value [
+	^ (ModificationForbidden 
+		for: self
+		atInstVar: index
+		with: value
+		retrySelector: selector) signal
+]
+
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector value: value [
+	^ self modificationForbiddenFor: selector index: nil value: value 
+	
+
+]
+
 { #category : #'memory scanning' }
 ProtoObject >> nextInstance [
 	"Primitive. Answer the next instance after the receiver in the 
