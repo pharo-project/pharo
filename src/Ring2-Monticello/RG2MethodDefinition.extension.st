@@ -3,6 +3,8 @@ Extension { #name : #RG2MethodDefinition }
 { #category : #'*Ring2-Monticello' }
 RG2MethodDefinition >> asMCDefinition [
 
+	self parent theNonMetaClass setNameFromSiblingIfNeeded.
+
 	^ MCMethodDefinition 
 		className: self parent theNonMetaClass name
 		classIsMeta: self parent isMeta
