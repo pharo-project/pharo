@@ -32,8 +32,6 @@ ModificationForbidden class >> for: anObject atInstVar: fieldIndex with: newValu
 
 { #category : #accessing }
 ModificationForbidden >> defaultAction [
-	self flag: #todo.
-	"^ nil"
 	UnhandledError signalForException: self
 ]
 
