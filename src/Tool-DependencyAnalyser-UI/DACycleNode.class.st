@@ -44,6 +44,6 @@ DACycleNode >> isCycleNode [
 
 { #category : #'browse-nautilus' }
 DACycleNode >> selectInBrowser [
-	"we cannot browse a cycle in Nautilus"
+	"we cannot browse a cycle in browser"
 	^ self
 ]

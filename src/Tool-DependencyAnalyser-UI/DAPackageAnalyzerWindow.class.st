@@ -1,8 +1,8 @@
 "
 A PDPackageAnalyzerWindow class is an abstract class.
-It represents the UI merging the SpecTreeModel (package dependencies or cycles) and Nautilus UI.
+It represents the UI merging the SpecTreeModel (package dependencies or cycles) and browser.
 
-The main feature is to browse automatically in the Nautilus when you click on a node (package or dependency).
+The main feature is to browse automatically in the browser when you click on a node (package or dependency).
 
 "
 Class {
@@ -10,7 +10,7 @@ Class {
 	#superclass : #StandardWindow,
 	#instVars : [
 		'packageAnalyzerTreeModel',
-		'nautilus'
+		'browser'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
@@ -37,12 +37,18 @@ DAPackageAnalyzerWindow class >> systemPackages [
 
 { #category : #adding }
 DAPackageAnalyzerWindow >> addAllMorph [
-	| windowNautilus  windowTreeModel |
-	windowNautilus := self buildNautilusWindow.	
+	| browserWindow  windowTreeModel |
+	browserWindow := self buildBrowserWindow.	
 	windowTreeModel := self buildMorphWindowForTreeModel.
 	self
-		addMorph: windowNautilus frame: (0.4 @ 0 corner: 1 @ 1);
+		addMorph: browserWindow frame: (0.4 @ 0 corner: 1 @ 1);
 		addMorph:  (self panelMorphFrom: windowTreeModel) frame: (0 @ 0 corner: 0.4 @ 1).
+]
+
+{ #category : #building }
+DAPackageAnalyzerWindow >> buildBrowserWindow [
+
+	^browser buildWindow
 ]
 
 { #category : #building }
@@ -56,15 +62,9 @@ DAPackageAnalyzerWindow >> buildMorphWindowForTreeModel [
 	^ specWindow
 ]
 
-{ #category : #building }
-DAPackageAnalyzerWindow >> buildNautilusWindow [
-
-	^nautilus buildWindow
-]
-
 { #category : #'initialization-filter' }
 DAPackageAnalyzerWindow >> buildandAddAllMorph [
-	nautilus := packageAnalyzerTreeModel browser.
+	browser := packageAnalyzerTreeModel browser.
 	self addAllMorph
 ]
 
@@ -82,16 +82,6 @@ DAPackageAnalyzerWindow >> delete [
 { #category : #'morphic ui' }
 DAPackageAnalyzerWindow >> initialExtent [
 	^ (1500@800)
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerWindow >> nautilus [
-	^ nautilus
-]
-
-{ #category : #accessing }
-DAPackageAnalyzerWindow >> nautilusUI [
-	^ nautilus ui
 ]
 
 { #category : #accessing }

@@ -66,7 +66,7 @@ DAPackageCycleDetectionTreeModel >> analysis: anObject [
 
 { #category : #accessing }
 DAPackageCycleDetectionTreeModel >> browser: anObject [
-	packageTreeNautilus := anObject
+	browser := anObject
 ]
 
 { #category : #accessing }

@@ -86,10 +86,10 @@ DANode >> rootNode [
 
 { #category : #'browse-nautilus' }
 DANode >> selectClass: aClass [
-	| nautilus |
+	| aBrowser |
 	
-	nautilus := self rootNode browser.
-	nautilus selectClass: aClass
+	aBrowser := self rootNode browser.
+	aBrowser selectClass: aClass
 ]
 
 { #category : #'browse-nautilus' }
@@ -99,18 +99,18 @@ DANode >> selectInBrowser [
 
 { #category : #'browse-nautilus' }
 DANode >> selectMethod: aMethod [
-	| classToBrowse nautilus compiledMethod |
-	nautilus := self rootNode browser.
+	| classToBrowse aBrowser compiledMethod |
+	aBrowser := self rootNode browser.
 	classToBrowse := aMethod methodClass.
 	compiledMethod := classToBrowse>>aMethod selector.
-	nautilus selectMethod: compiledMethod
+	aBrowser selectMethod: compiledMethod
 ]
 
 { #category : #'browse-nautilus' }
 DANode >> selectPackage: aPackage [
-	| nautilus |
-	nautilus := self rootNode browser.
-	nautilus selectPackage: aPackage
+	| aBrowser |
+	aBrowser := self rootNode browser.
+	aBrowser selectPackage: aPackage
 ]
 
 { #category : #'browse-nautilus' }
