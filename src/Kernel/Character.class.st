@@ -379,6 +379,16 @@ Character >> asciiValue [
 	^self primitiveFailed
 ]
 
+{ #category : #comparing }
+Character >> basicIdentityHash [
+	"Answer the receiver's character code.
+	 The value answered is unsigned. It can in theory be in the full
+	 poisitive SmallInteger range, but based on Unicode, it is fair
+	 to assume that the value is in the range [ 0 ; 16r3FFFFF ]"
+	<primitive: 171>
+	^self primitiveFailed
+]
+
 { #category : #converting }
 Character >> basicSqueakToIso [
 	| tmp1 |
@@ -451,13 +461,6 @@ Character >> hash [
 { #category : #printing }
 Character >> hex [
 	^ self asInteger hex
-]
-
-{ #category : #comparing }
-Character >> identityHash [
-	"Answer the receiver's character code."
-	<primitive: 171>
-	^self primitiveFailed
 ]
 
 { #category : #testing }
