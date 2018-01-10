@@ -23,11 +23,11 @@ ProtoObject >> gtInspectorActions [
 		from: self class
 		to: ProtoObject)
 		collect: [ :eachPragma | 
-			thisContext
-				object: self
+			MirrorPrimitives
+				withReceiver: self
 				perform: eachPragma methodSelector
 				withArguments: #()
-				inClass: self class ].
+				inSuperclass: self class ].
 	^ all
 		asSortedCollection: [ :a :b | 
 			| first second |
@@ -65,19 +65,19 @@ ProtoObject >> gtInspectorPresentationsFromPragmas: aCollection In: composite in
 						cull: aGTInspector
 						cull: self ].
 			eachPragma methodSelector numArgs = 1
-				ifTrue: [ thisContext
-						object: self
+				ifTrue: [ MirrorPrimitives
+						withReceiver: self
 						perform: eachPragma methodSelector
 						withArguments: {composite}
-						inClass: self class ].
+						inSuperclass: self class ].
 			eachPragma methodSelector numArgs = 2
-				ifTrue: [ thisContext
-						object: self
+				ifTrue: [ MirrorPrimitives
+						withReceiver: self
 						perform: eachPragma methodSelector
 						withArguments:
 							{composite.
 							aGTInspector}
-						inClass: self class ] ]
+						inSuperclass: self class ] ]
 ]
 
 { #category : #'*GT-Inspector' }

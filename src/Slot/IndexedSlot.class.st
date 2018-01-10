@@ -44,10 +44,10 @@ IndexedSlot >> isVirtual [
 
 { #category : #'meta-object-protocol' }
 IndexedSlot >> read: anObject [
-	^ thisContext object: anObject instVarAt: index
+	^ MirrorPrimitives fixedFieldOf: anObject at: index
 ]
 
 { #category : #'meta-object-protocol' }
 IndexedSlot >> write: aValue to: anObject [
-	^ thisContext object: anObject instVarAt: index put: aValue.
+	^ MirrorPrimitives fixedFieldOf: anObject at: index put: aValue
 ]
