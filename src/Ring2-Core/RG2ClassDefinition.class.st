@@ -417,6 +417,21 @@ RG2ClassDefinition >> isTaggedWith: aSymbol [
 ]
 
 { #category : #resolving }
+RG2ClassDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	self resolveName.
+	
+	super makeMinimallyResolved.
+	
+	comment := self comment.
+	classVariables := self classVariables collect: #makeMinimallyResolved.
+	package := self package makeMinimallyResolved.
+	sharedPools := self sharedPools collect: #makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2ClassDefinition >> makeResolved [
 
 	self resolveName.

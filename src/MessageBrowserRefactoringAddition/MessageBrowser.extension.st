@@ -25,5 +25,5 @@ MessageBrowser class >> refactoringMethodMenu: aBuilder [
 	| target |
 	target := aBuilder model.
 	target selectedMethod ifNil: [ ^ target ].
-	aBuilder model selectedClass refactoringMethod: aBuilder
+	aBuilder model selectedClass realClass refactoringMethod: aBuilder
 ]

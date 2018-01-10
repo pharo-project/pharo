@@ -113,6 +113,17 @@ RG2CommentDefinition >> isEmptyOrNil [
 ]
 
 { #category : #resolving }
+RG2CommentDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	content := self content.
+	author := self author.
+	time := self time.
+]
+
+{ #category : #resolving }
 RG2CommentDefinition >> makeResolved [
 
 	super makeResolved.

@@ -64,6 +64,16 @@ RG2TraitCompositionDefinition >> isTraitComposition [
 ]
 
 { #category : #resolving }
+RG2TraitCompositionDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	transformations := self transformations collect: #makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2TraitCompositionDefinition >> makeResolved [
 
 	super makeResolved.

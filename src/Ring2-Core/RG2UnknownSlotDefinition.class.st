@@ -38,6 +38,16 @@ RG2UnknownSlotDefinition >> initialize [
 ]
 
 { #category : #resolving }
+RG2UnknownSlotDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	expression := self expression.
+
+]
+
+{ #category : #resolving }
 RG2UnknownSlotDefinition >> makeResolved [
 
 	super makeResolved.

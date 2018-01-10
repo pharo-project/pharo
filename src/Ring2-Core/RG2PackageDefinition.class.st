@@ -256,6 +256,15 @@ RG2PackageDefinition >> isPackage [
 ]
 
 { #category : #resolving }
+RG2PackageDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+
+]
+
+{ #category : #resolving }
 RG2PackageDefinition >> makeResolved [
 
 	super makeResolved.

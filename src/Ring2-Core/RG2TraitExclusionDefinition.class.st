@@ -67,6 +67,16 @@ RG2TraitExclusionDefinition >> isTraitExclusion [
 ]
 
 { #category : #resolving }
+RG2TraitExclusionDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	exclusions := self exclusions collect: #makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2TraitExclusionDefinition >> makeResolved [
 
 	super makeResolved.

@@ -345,7 +345,7 @@ GTSpotterStepTest >> testProcessorForImplementors [
 	self assertProcessorByTitle: 'Implementors'.
 	self assertProcessorNotEmpty.
 	
-	partialImplementors := (SystemNavigation default allImplementorsOf: #do:) collect: [ :rm | rm compiledMethod ].
+	partialImplementors := (SystemNavigation default allImplementorsOf: #do:) collect: [ :rm | rm imageCompiledMethod ].
 	self assertProcessorIncludesAll: partialImplementors.
 	self assert: currentProcessor allFilteredCandidates size > partialImplementors size.
 	
@@ -353,7 +353,7 @@ GTSpotterStepTest >> testProcessorForImplementors [
 	self assertProcessorByTitle: 'Implementors'.
 	self assertProcessorNotEmpty.
 	
-	partialImplementors := (SystemNavigation default allImplementorsOf: #size) collect: [ :rm | rm compiledMethod ].
+	partialImplementors := (SystemNavigation default allImplementorsOf: #size) collect: [ :rm | rm imageCompiledMethod ].
 	self assertProcessorIncludesAll: partialImplementors.
 	self assert: currentProcessor allFilteredCandidates size > partialImplementors size.
 ]

@@ -226,6 +226,16 @@ RG2ClassDescriptionDefinition >> layout: aRG2LayoutDefinition [
 ]
 
 { #category : #resolving }
+RG2ClassDescriptionDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	layout := self layout makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2ClassDescriptionDefinition >> makeResolved [
 
 	super makeResolved.

@@ -65,6 +65,16 @@ RG2PointerLayoutDefinition >> isPointerLayout [
 ]
 
 { #category : #resolving }
+RG2PointerLayoutDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	slots := self slots asOrderedCollection collect: #makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2PointerLayoutDefinition >> makeResolved [
 
 	super makeResolved.

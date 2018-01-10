@@ -540,6 +540,16 @@ RG2Definition >> isVariableDefinition [
 ]
 
 { #category : #resolving }
+RG2Definition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	self propertyNamed: #resolved put: true.
+	
+	name := self name.
+	parent := self parent makeMinimallyResolved.
+]
+
+{ #category : #resolving }
 RG2Definition >> makeResolved [
 
 	self propertyNamed: #resolved put: true.

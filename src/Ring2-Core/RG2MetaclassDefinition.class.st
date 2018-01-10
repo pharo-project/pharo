@@ -119,6 +119,18 @@ RG2MetaclassDefinition >> isMetaclass [
 ]
 
 { #category : #resolving }
+RG2MetaclassDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	"try to set the correct name before resolving of it"
+	self resolveName.
+	
+	super makeMinimallyResolved.
+	
+	baseClass := self baseClass makeMinimallyResolved.
+]
+
+{ #category : #resolving }
 RG2MetaclassDefinition >> makeResolved [
 
 	"try to set the correct name before resolving of it"

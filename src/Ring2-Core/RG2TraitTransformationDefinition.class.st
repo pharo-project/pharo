@@ -49,6 +49,16 @@ RG2TraitTransformationDefinition >> isTraitTransformation [
 ]
 
 { #category : #resolving }
+RG2TraitTransformationDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	subject := self subject makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2TraitTransformationDefinition >> makeResolved [
 
 	super makeResolved.

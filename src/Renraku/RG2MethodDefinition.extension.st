@@ -5,5 +5,5 @@ RG2MethodDefinition >> critiques [
 
 	<eProperty>
 	
-	^ self compiledMethod critiques
+	^ self imageCompiledMethod critiques
 ]

@@ -373,6 +373,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfMetacello'.
 		
 		spec package: 'ReferenceFinder-Core'.
+		spec package: 'Ring2-MCFileTree'.
 
       self groups: spec.
 	].
@@ -883,6 +884,8 @@ spec group: #default with: #(
 	'BaselineOfMonticello'
 	'BaselineOfMetacello'
 	
+	'Ring2-MCFileTree'
+	
 	"Importing tests of Shift"
 	'Shift'
 ).
@@ -893,7 +896,7 @@ spec group: #default with: #(
 BaselineOfIDE >> loadIceberg [
 	Metacello new
 		baseline: 'Iceberg';
-		repository: 'github://pharo-vcs/iceberg:v0.6.5';
+		repository: 'github://pharo-vcs/iceberg:v0.6.6';
 		load.
 	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
 

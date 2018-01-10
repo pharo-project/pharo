@@ -250,6 +250,19 @@ RG2MethodDefinition >> isTaggedWith: aSymbol [
 ]
 
 { #category : #resolving }
+RG2MethodDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	sourceCode := self sourceCode.
+	package := self package makeMinimallyResolved.	
+	author := self author.	
+	time := self time.	
+	tags := self tags.
+]
+
+{ #category : #resolving }
 RG2MethodDefinition >> makeResolved [
 
 	super makeResolved.
@@ -271,6 +284,12 @@ RG2MethodDefinition >> methodClass [
 { #category : #accessing }
 RG2MethodDefinition >> numArgs [
 	^ self selector asString numArgs
+]
+
+{ #category : #accessing }
+RG2MethodDefinition >> origin [
+
+	^ self parent
 ]
 
 { #category : #'accessing - backend' }

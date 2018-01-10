@@ -16,6 +16,6 @@ GoferReinitialize >> execute [
 { #category : #running }
 GoferReinitialize >> execute: aWorkingCopy [
 	aWorkingCopy packageSet methods do: [ :each |
-		(each classIsMeta and: [ each selector = #initialize ])
+		(each parent isMeta and: [ each selector = #initialize ])
 			ifTrue: [ each actualClass theNonMetaClass initialize ] ]
 ]

@@ -66,6 +66,16 @@ RG2TraitAliasDefinition >> isTraitAlias [
 ]
 
 { #category : #resolving }
+RG2TraitAliasDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	aliases := self aliases collect: #makeMinimallyResolved.
+
+]
+
+{ #category : #resolving }
 RG2TraitAliasDefinition >> makeResolved [
 
 	super makeResolved.

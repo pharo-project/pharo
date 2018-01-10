@@ -515,6 +515,19 @@ RG2BehaviorDefinition >> localSelectors [
 ]
 
 { #category : #resolving }
+RG2BehaviorDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	super makeMinimallyResolved.
+	
+	superclass := self superclass makeMinimallyResolved.
+	traitComposition := self traitComposition makeMinimallyResolved.
+	metaclass := self metaclass makeMinimallyResolved.
+	tags := self tags asSet.	
+
+]
+
+{ #category : #resolving }
 RG2BehaviorDefinition >> makeResolved [
 
 	super makeResolved.

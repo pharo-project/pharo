@@ -76,6 +76,17 @@ RG2MetaclassTraitDefinition >> isMetaclassTrait [
 ]
 
 { #category : #resolving }
+RG2MetaclassTraitDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	self resolveName.
+
+	super makeMinimallyResolved.
+	
+	baseTrait := self baseTrait makeMinimallyResolved.
+]
+
+{ #category : #resolving }
 RG2MetaclassTraitDefinition >> makeResolved [
 
 	self resolveName.

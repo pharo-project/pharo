@@ -151,6 +151,19 @@ RG2TraitDefinition >> instanceSide [
 ]
 
 { #category : #resolving }
+RG2TraitDefinition >> makeMinimallyResolved [
+
+	self isRing2Resolved ifTrue: [ ^ self ].
+	self resolveName.
+	
+	super makeMinimallyResolved.
+	classTrait := self classTrait makeMinimallyResolved.
+	comment := self comment.
+	package := self package makeMinimallyResolved.
+	
+]
+
+{ #category : #resolving }
 RG2TraitDefinition >> makeResolved [
 
 	self resolveName.
