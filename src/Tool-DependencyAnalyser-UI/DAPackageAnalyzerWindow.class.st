@@ -64,7 +64,7 @@ DAPackageAnalyzerWindow >> buildNautilusWindow [
 
 { #category : #'initialization-filter' }
 DAPackageAnalyzerWindow >> buildandAddAllMorph [
-	nautilus := packageAnalyzerTreeModel packageTreeNautilus.
+	nautilus := packageAnalyzerTreeModel browser.
 	self addAllMorph
 ]
 

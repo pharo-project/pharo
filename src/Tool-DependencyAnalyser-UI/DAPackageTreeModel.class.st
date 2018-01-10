@@ -69,6 +69,11 @@ DAPackageTreeModel >> browseReference [
 		 ]
 ]
 
+{ #category : #accessing }
+DAPackageTreeModel >> browser [
+	^ packageTreeNautilus
+]
+
 { #category : #private }
 DAPackageTreeModel >> buildRoots [
 	self subclassResponsibility.
@@ -104,7 +109,7 @@ DAPackageTreeModel >> initializeWidgets [
 	tree := self newTree
 		multiSelection: true;
 		on: $b meta
-			do: [ self selectedItemFromTree browseInOtherNautilus ];
+			do: [ self selectedItemFromTree spawnNewBrowser ];
 		columns: {(TreeColumnPresenter new displayBlock: [ :node | node label ])};
 		yourself.
 	buttonRefresh := self newButton
@@ -156,11 +161,6 @@ DAPackageTreeModel >> openTreeFor: namesOfSelected [
 		title: 'Class dependencies';
 		extent: 700 @ 500;
 		openWithSpec
-]
-
-{ #category : #accessing }
-DAPackageTreeModel >> packageTreeNautilus [
-	^ packageTreeNautilus
 ]
 
 { #category : #accessing }

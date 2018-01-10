@@ -7,11 +7,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAManuallyAddedDependentPackageNode >> browseInNautilus [
-	"Nothing to do"
-]
-
 { #category : #accessing }
 DAManuallyAddedDependentPackageNode >> children [
 	^ self content dependencies flatCollect: 
@@ -35,4 +30,9 @@ DAManuallyAddedDependentPackageNode >> hasChildren [
 { #category : #accessing }
 DAManuallyAddedDependentPackageNode >> icon [
 	^ self iconNamed: #smallRedoIcon
+]
+
+{ #category : #'browse-nautilus' }
+DAManuallyAddedDependentPackageNode >> selectInBrowser [
+	"Nothing to do"
 ]

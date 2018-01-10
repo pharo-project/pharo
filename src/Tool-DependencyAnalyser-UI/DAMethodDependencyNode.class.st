@@ -10,6 +10,6 @@ Class {
 }
 
 { #category : #'browse-nautilus' }
-DAMethodDependencyNode >> browseInNautilus [
-	self browseMethodInNautilus: self content method
+DAMethodDependencyNode >> selectInBrowser [
+	self selectMethod: self content method
 ]

@@ -10,11 +10,11 @@ Class {
 }
 
 { #category : #'browse-nautilus' }
-DAClassNode >> browseInNautilus [
-	self browseClassInNautilus: self classFromContent
+DAClassNode >> classFromContent [
+	^ self content theClass
 ]
 
 { #category : #'browse-nautilus' }
-DAClassNode >> classFromContent [
-	^ self content theClass
+DAClassNode >> selectInBrowser [
+	self selectClass: self classFromContent
 ]

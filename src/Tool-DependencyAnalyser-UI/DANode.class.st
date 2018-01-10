@@ -6,9 +6,8 @@ Class {
 	#superclass : #TreeNodePresenter,
 	#instVars : [
 		'treeModelParent',
-		'packageTreeNautilus',
-		'packageTreeNautilusUI',
-		'cycle'
+		'cycle',
+		'browser'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
@@ -23,41 +22,14 @@ DANode >> browseClass: classToBrowse [
 	Smalltalk tools browser openOnClass: classToBrowse
 ]
 
-{ #category : #'browse-nautilus' }
-DANode >> browseClassInNautilus: aClass [
-	| nautilus |
-	
-	nautilus := self rootNode packageTreeNautilus.
-	nautilus selectClass: aClass
+{ #category : #accessing }
+DANode >> browser [
+	^ browser
 ]
 
-{ #category : #'browse-nautilus' }
-DANode >> browseInNautilus [
-	^ self subclassResponsibility
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> browseInOtherNautilus [
-	"do nothing by default"
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> browseMethodInNautilus: aMethod [
-	| classToBrowse nautilus compiledMethod |
-	nautilus := self rootNode packageTreeNautilus.
-	classToBrowse := aMethod methodClass.
-	compiledMethod := classToBrowse>>aMethod selector.
-	nautilus selectMethod: compiledMethod
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> browsePackageInNautilus: aPackage [
-	| classToBrowse classFromPackage classesToBrowse |
-	classFromPackage := aPackage classes.
-	classesToBrowse := classFromPackage reject: [ :class | classFromPackage includes: class superclass ].
-	classToBrowse := classesToBrowse isEmpty
-		ifFalse: [ (classesToBrowse sorted: [ :a :b | a asString < b asString ]) first ].
-	classToBrowse ifNotNil: [ self browseClassInNautilus: classToBrowse ]
+{ #category : #accessing }
+DANode >> browser: anObject [
+	browser := anObject
 ]
 
 { #category : #accessing }
@@ -96,16 +68,6 @@ DANode >> label [
 ]
 
 { #category : #accessing }
-DANode >> packageTreeNautilus [
-	^ packageTreeNautilus
-]
-
-{ #category : #accessing }
-DANode >> packageTreeNautilus: anObject [
-	packageTreeNautilus := anObject
-]
-
-{ #category : #accessing }
 DANode >> packageUnderAnalysis [
 	^ self rootNode daPackage rPackageSet packages first
 ]
@@ -120,6 +82,40 @@ DANode >> rootNode [
 			currentNode := rootNode.
 			rootNode := currentNode parentNode ].
 	^ currentNode.
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectClass: aClass [
+	| nautilus |
+	
+	nautilus := self rootNode browser.
+	nautilus selectClass: aClass
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectInBrowser [
+	^ self subclassResponsibility
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectMethod: aMethod [
+	| classToBrowse nautilus compiledMethod |
+	nautilus := self rootNode browser.
+	classToBrowse := aMethod methodClass.
+	compiledMethod := classToBrowse>>aMethod selector.
+	nautilus selectMethod: compiledMethod
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> selectPackage: aPackage [
+	| nautilus |
+	nautilus := self rootNode browser.
+	nautilus selectPackage: aPackage
+]
+
+{ #category : #'browse-nautilus' }
+DANode >> spawnNewBrowser [
+	"do nothing by default"
 ]
 
 { #category : #accessing }
