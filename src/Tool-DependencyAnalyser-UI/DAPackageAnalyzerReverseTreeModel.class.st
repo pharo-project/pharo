@@ -78,7 +78,6 @@ DAPackageAnalyzerReverseTreeModel >> nodesFor: anItemList [
 						content: each;
 						treeModelParent: self;
 						packageTreeNautilus: self packageTreeNautilus;
-						packageTreeNautilusUI: self packageTreeNautilusUI;
 						cycle: false;
 						yourself ]
 ]

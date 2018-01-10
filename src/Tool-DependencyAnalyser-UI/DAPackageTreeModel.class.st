@@ -112,7 +112,7 @@ DAPackageTreeModel >> initializeWidgets [
 		help: 'Refresh the TreePresenter';
 		label: 'Refresh';
 		yourself.
-	packageTreeNautilus := Nautilus new
+	packageTreeNautilus := Smalltalk tools browser onDefaultEnvironment
 ]
 
 { #category : #testing }

@@ -28,9 +28,7 @@ DANode >> browseClassInNautilus: aClass [
 	| nautilus |
 	
 	nautilus := self rootNode packageTreeNautilus.
-	self setSelectionOnMethod: nil class: aClass with: nautilus.
-	self refreshNautilus: nautilus.
-	self rootNode packageTreeNautilusUI sourceTextModel announce: NautilusClassSelected.
+	nautilus selectClass: aClass
 ]
 
 { #category : #'browse-nautilus' }
@@ -45,16 +43,11 @@ DANode >> browseInOtherNautilus [
 
 { #category : #'browse-nautilus' }
 DANode >> browseMethodInNautilus: aMethod [
-	| classToBrowse nautilus compiledMethod nautilusUI |
+	| classToBrowse nautilus compiledMethod |
 	nautilus := self rootNode packageTreeNautilus.
-	nautilusUI := self rootNode packageTreeNautilusUI.
 	classToBrowse := aMethod methodClass.
 	compiledMethod := classToBrowse>>aMethod selector.
-	self setSelectionOnMethod: compiledMethod class: classToBrowse with: nautilus.
-	nautilusUI updateCategoryAndMethodList.
-	nautilusUI sourceTextModel announce: NautilusMethodSelected.	
-	
-	
+	nautilus selectMethod: compiledMethod
 ]
 
 { #category : #'browse-nautilus' }
@@ -113,26 +106,8 @@ DANode >> packageTreeNautilus: anObject [
 ]
 
 { #category : #accessing }
-DANode >> packageTreeNautilusUI [
-	^ packageTreeNautilusUI
-]
-
-{ #category : #accessing }
-DANode >> packageTreeNautilusUI: anObject [
-	packageTreeNautilusUI := anObject
-]
-
-{ #category : #accessing }
 DANode >> packageUnderAnalysis [
 	^ self rootNode daPackage rPackageSet packages first
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> refreshNautilus: nautilus [
-
-	| nautilusUI |
-	nautilusUI := self rootNode packageTreeNautilusUI.
-	nautilusUI updatePackageGroupAndClassList.
 ]
 
 { #category : #private }
@@ -145,25 +120,6 @@ DANode >> rootNode [
 			currentNode := rootNode.
 			rootNode := currentNode parentNode ].
 	^ currentNode.
-]
-
-{ #category : #'browse-nautilus' }
-DANode >> setSelectionOnMethod: aMethod class: aClass with: nautilus [
-	| protocol nautilusUI |
-	aMethod ifNotNil: [ protocol := aMethod protocol ].
-	nautilusUI := self rootNode packageTreeNautilusUI.
-	self refreshNautilus: nautilus.
-	nautilus
-		browsedEnvironment: Nautilus defaultBrowsedEnvironment;
-		showInstance: aClass isMeta not.
-	nautilus
-		package: aClass package
-		class: aClass
-		protocol: protocol
-		method: aMethod.
-	nautilusUI
-		showHierarchy: false;
-		giveFocusToMethod
 ]
 
 { #category : #accessing }

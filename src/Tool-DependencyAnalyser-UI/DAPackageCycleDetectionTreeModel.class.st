@@ -75,7 +75,6 @@ DAPackageCycleDetectionTreeModel >> buildRoots [
 								content: item;
 								treeModelParent: self;
 								packageTreeNautilus: self packageTreeNautilus;
-								packageTreeNautilusUI: self packageTreeNautilusUI;
 								cycle: true ] ].
 	self cyclesLabel
 		label:

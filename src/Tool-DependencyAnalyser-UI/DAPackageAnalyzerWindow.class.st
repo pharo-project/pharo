@@ -40,7 +40,6 @@ DAPackageAnalyzerWindow >> addAllMorph [
 	| windowNautilus  windowTreeModel |
 	windowNautilus := self buildNautilusWindow.	
 	windowTreeModel := self buildMorphWindowForTreeModel.
-	packageAnalyzerTreeModel packageTreeNautilusUI: self nautilusUI.
 	self
 		addMorph: windowNautilus frame: (0.4 @ 0 corner: 1 @ 1);
 		addMorph:  (self panelMorphFrom: windowTreeModel) frame: (0 @ 0 corner: 0.4 @ 1).
@@ -59,16 +58,8 @@ DAPackageAnalyzerWindow >> buildMorphWindowForTreeModel [
 
 { #category : #building }
 DAPackageAnalyzerWindow >> buildNautilusWindow [
-	| nautilusUI nautilusWindow |
 
-	nautilusUI := NautilusUI on: nautilus.
-	nautilus instVarNamed: 'ui' put: nautilusUI.
-	nautilusWindow := NautilusWindow new model: nautilusUI.
-	nautilusUI 
-		addAll: nautilusWindow;
-		window: nautilusWindow;
-		setWindowTitle.
-	^ nautilusWindow
+	^nautilus buildWindow
 ]
 
 { #category : #'initialization-filter' }
