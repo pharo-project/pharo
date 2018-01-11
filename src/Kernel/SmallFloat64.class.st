@@ -140,6 +140,15 @@ SmallFloat64 >> arcTan [
 	^ theta
 ]
 
+{ #category : #comparing }
+SmallFloat64 >> basicIdentityHash [
+	"Answer an integer unique to the receiver. 
+	 The value answered is signed, within the full 
+	 SmallInteger range, on the contrary to normal objects."
+	<primitive: 171>
+	^self primitiveFailed
+]
+
 { #category : #copying }
 SmallFloat64 >> clone [
 	"Answer the receiver, because SmallFloat64s are unique."
@@ -224,9 +233,9 @@ SmallFloat64 >> fractionPart [
 
 { #category : #comparing }
 SmallFloat64 >> identityHash [
-	"Answer an integer unique to the receiver."
-	<primitive: 171>
-	^self primitiveFailed
+	"We need the override since basicIdentityHash is already in SmallInteger range,
+	 the bitShift: 8 of the super implementation would lead to a LargeInteger"
+	^ self basicIdentityHash
 ]
 
 { #category : #'mathematical functions' }

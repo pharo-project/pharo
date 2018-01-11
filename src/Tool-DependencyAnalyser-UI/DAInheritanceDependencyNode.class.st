@@ -7,11 +7,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAInheritanceDependencyNode >> browseInOtherNautilus [
-	self browseClass: self content superclass
-]
-
 { #category : #accessing }
 DAInheritanceDependencyNode >> icon [
 	^ self iconNamed: #arrowUpIcon
@@ -20,4 +15,9 @@ DAInheritanceDependencyNode >> icon [
 { #category : #accessing }
 DAInheritanceDependencyNode >> isClassToDependencyNode [
 	^ true
+]
+
+{ #category : #'browse-nautilus' }
+DAInheritanceDependencyNode >> spawnNewBrowser [
+	self browseClass: self content superclass
 ]

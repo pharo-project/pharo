@@ -1,3 +1,6 @@
+"
+An enumeration for test purposes
+"
 Class {
 	#name : #FFITestEnumeration,
 	#superclass : #FFIExternalEnumeration,

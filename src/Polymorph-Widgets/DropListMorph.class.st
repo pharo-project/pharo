@@ -574,7 +574,7 @@ DropListMorph >> newContentMorph [
 
 	^TextMorphForFieldView new
 		contents: self defaultContents;
-		margins: (2@0 corner: 2@1);
+		margins: (Margin left: 2 right: 2 top: 0 bottom: 1);
 		borderStyle: (BorderStyle simple width: 0);
 		vResizing: #shrinkWrap;
 		hResizing: #spaceFill;

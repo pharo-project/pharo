@@ -343,7 +343,7 @@ MorphTreeNavigationBar >> textEntryLabel: aLabel get: getSel set: setSel help: h
 	pt textMorph
 		autoFit: true;
 		wrapFlag: false;
-		margins: (1@0 corner: 1@0).
+		margins: (1@0) asMargin.
 	^pt
 ]
 

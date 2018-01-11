@@ -1,5 +1,5 @@
 "
-UI merging SpecTreeModel package dependencies and Nautilus UI.
+UI merging SpecTreeModel package dependencies and browser
 "
 Class {
 	#name : #DAPackageAnalyzerCycleDetectionWindow,

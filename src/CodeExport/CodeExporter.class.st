@@ -21,3 +21,15 @@ CodeExporter class >> writeSourceCodeFrom: aStream baseName: baseName isSt: stOr
 
 	self inform: 'Filed out to: ', String cr, fileName.
 ]
+
+{ #category : #'file-out' }
+CodeExporter class >> writeSourceCodeFrom: aStream toFileReference: aFileReference [
+
+	aFileReference writeStreamDo: [ :outputStream |
+		(ZnCrPortableWriteStream on: (ZnCharacterWriteStream
+			on: outputStream
+			encoding: 'utf8')) nextPutAll: aStream contents.
+	].
+
+	self inform: 'Filed out to: ', String cr, aFileReference basename
+]

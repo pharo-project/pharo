@@ -1,3 +1,6 @@
+"
+A nesting structure for test purposes
+"
 Class {
 	#name : #FFITestNestingStructure,
 	#superclass : #FFIExternalStructure,

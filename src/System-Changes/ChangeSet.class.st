@@ -166,7 +166,7 @@ ChangeSet class >> defaultChangeSetDirectory: dirOrName [
 
 { #category : #settings }
 ChangeSet class >> defaultChangeSetDirectoryName [
-	^ DefaultChangeSetDirectoryName ifNil: [DefaultChangeSetDirectoryName := '.']
+	^ DefaultChangeSetDirectoryName ifNil: [DefaultChangeSetDirectoryName := FileSystem workingDirectory ]
 ]
 
 { #category : #settings }
@@ -250,6 +250,7 @@ ChangeSet class >> initialize [
 	"ChangeSet initialize"
 
 	AllChangeSets ifNil: [ AllChangeSets := OrderedCollection new ].
+	self defaultChangeSetDirectoryName: nil.
 	self gatherChangeSets
 ]
 
@@ -387,31 +388,14 @@ ChangeSet class >> promoteToTop: aChangeSet [
 
 { #category : #defaults }
 ChangeSet class >> promptForDefaultChangeSetDirectoryIfNecessary [
-	"Check the Preference (if any), and prompt the
-	user to change it if necessary.
-	The default if the Preference is unset is the current
-	directory. Answer the directory."
-	"ChangeSet
-	promptForDefaultChangeSetDirectoryIfNecessary"
-	| choice directoryPath dir message |
-	directoryPath := self defaultChangeSetDirectoryName.
-	[dir := directoryPath asFileReference.
-	dir exists] 
-		whileFalse: [message := 'The preferred change set directory' , ' (''{1}'') ' , 'does not exist.' , '
-' , 'Create it or use the default directory' , ' ({2})?' format: {directoryPath. FileSystem workingDirectory fullName}.
-			choice := UIManager default
-						chooseFrom: (#('Create directory' 'Use default directory and forget preference' 'Choose another directory' )
-								collect: [:ea | ea ])
-						message: message.
-			choice = 1
-				ifTrue: [dir ensureCreateDirectory ].
-			choice = 3
-				ifTrue: [dir := UIManager default chooseDirectory.
-					directoryPath := dir
-								ifNil: ['']
-								ifNotNil: [dir fullName]]].
-	self defaultChangeSetDirectory: directoryPath.
-	^ dir
+	"ChangeSet promptForDefaultChangeSetDirectoryIfNecessary"
+	
+	| path |
+	path := UIManager default 
+		chooseDirectory: 'Please select where you want to save your cs' 
+		from: FileSystem workingDirectory.
+	self defaultChangeSetDirectoryName: path asFileReference.
+	^ path asFileReference
 ]
 
 { #category : #'system-events' }
@@ -878,9 +862,15 @@ ChangeSet >> fileOut [
 	"File out the receiver, to a file whose name is a function of the  
 	change-set name and a unique numeric tag."
 
-	| nameToUse |
-	self class promptForDefaultChangeSetDirectoryIfNecessary.
-	nameToUse := (self defaultChangeSetDirectory / self name , 'cs') nextVersion basename.
+	| fileReference dir |
+	dir := self class promptForDefaultChangeSetDirectoryIfNecessary.
+	fileReference := ( dir / self name , 'cs') nextVersion.
+	self fileOutBody: fileReference.
+]
+
+{ #category : #'filein/out' }
+ChangeSet >> fileOutBody: fileReference [
+
 	UIManager default
 		showWaitCursorWhile:			
 			[ 
@@ -892,10 +882,10 @@ ChangeSet >> fileOut [
 			self fileOutPreambleOn: internalStream.
 			self fileOutOn: internalStream.
 			self fileOutPostscriptOn: internalStream.
+
 			CodeExporter 
 				writeSourceCodeFrom: internalStream
-				baseName: (nameToUse copyFrom: 1 to: nameToUse size - 3)
-				isSt: false ]
+				toFileReference: fileReference ]
 ]
 
 { #category : #'filein/out' }

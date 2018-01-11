@@ -53,7 +53,7 @@ DAPackageAnalyzerReverseTreeModel >> initializePresenter [
 		whenSelectedItemChanged: [ :item | 
 			item
 				ifNotNil: [ 
-					self tree selectedItem browseInNautilus.
+					self tree selectedItem selectInBrowser.
 					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ] ] ].
 ]
 
@@ -77,8 +77,7 @@ DAPackageAnalyzerReverseTreeModel >> nodesFor: anItemList [
 		DAReversePackageNode new
 						content: each;
 						treeModelParent: self;
-						packageTreeNautilus: self packageTreeNautilus;
-						packageTreeNautilusUI: self packageTreeNautilusUI;
+						browser: self browser;
 						cycle: false;
 						yourself ]
 ]

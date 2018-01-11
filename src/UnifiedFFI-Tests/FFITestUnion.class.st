@@ -1,3 +1,6 @@
+"
+A union for test purposes
+"
 Class {
 	#name : #FFITestUnion,
 	#superclass : #FFIExternalUnion,

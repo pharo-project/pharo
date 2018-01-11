@@ -468,7 +468,7 @@ UITheme >> buttonLabelForText: aTextOrString [
 				t := TextMorph new newContents: aTextOrString.
 				t
 					extent: t optimalExtent;
-					margins: (0@0 corner: 0@1);
+					margins: (Margin left: 0 right: 0 top: 0 bottom: 1);
 					lock]
 ]
 
@@ -2881,7 +2881,7 @@ UITheme >> newAutoAcceptTextEntryIn: aThemedMorph for: aModel  get: getSel set: 
 	pt textMorph
 		autoFit: true;
 		wrapFlag: false;
-		margins: (2@1 corner: 2@1).
+		margins: (2@1) asMargin.
 	^pt
 
 ]
@@ -4324,7 +4324,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 	pt textMorph
 		autoFit: true;
 		wrapFlag: false;
-		margins: (2@1 corner: 2@1).
+		margins: (2@1) asMargin.
 	^pt
 ]
 
@@ -4358,7 +4358,7 @@ UITheme >> newTextEntryIn: aThemedMorph for: aModel get: getSel set: setSel clas
 	pt textMorph
 		autoFit: true;
 		wrapFlag: false;
-		margins: (2@1 corner: 2@1).
+		margins: (2@1) asMargin.
 	^pt
 ]
 

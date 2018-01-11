@@ -9,7 +9,8 @@ Class {
 
 { #category : #defaults }
 RubTextFieldArea >> defaultMargins [
-	^ 2 @ 0 corner: 2 @ 1
+
+	^ Margin left: 2 right: 2 top: 0 bottom: 1
 ]
 
 { #category : #private }

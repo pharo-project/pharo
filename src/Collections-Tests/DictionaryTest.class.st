@@ -249,7 +249,7 @@ DictionaryTest >> nonEmptyDifferentFromNonEmptyDict [
 ]
 
 { #category : #requirements }
-DictionaryTest >> nonEmptyWithCopyNonIdentical. [
+DictionaryTest >> nonEmptyWithCopyNonIdentical [
 " return a collection including elements for wich copy is not identical to the initial element ( this is not the cas of Integer )"
 ^nonEmptyWithFloat 
 ]
@@ -286,6 +286,7 @@ DictionaryTest >> result [
 
 { #category : #running }
 DictionaryTest >> setUp [
+	super setUp.
 	emptyDict := self classToBeTested new.
 	nonEmptyDict := self classToBeTested new.
 	nonEmptyDict
@@ -615,6 +616,30 @@ DictionaryTest >> testNewFrom [
 	assocs := self nonEmptyDict associations collect: [:each | each copy].
 	self assert: (self classToBeTested newFrom: assocs) = self nonEmptyDict.
 
+]
+
+{ #category : #'tests - new' }
+DictionaryTest >> testNewFromKeysAndValues [
+ 
+	| keys values newDict |
+	keys := self nonEmptyDict keys.
+	values := self nonEmptyDict values.
+	newDict := self classToBeTested newFromKeys: keys andValues: values.
+	self nonEmptyDict keysAndValuesDo: [:k :v|
+		self assert: (newDict at: k) equals: v ]. 
+]
+
+{ #category : #'tests - new' }
+DictionaryTest >> testNewFromKeysAndValues2 [
+ 
+	| dict newDict |
+	dict := self classToBeTested new
+		at: #a put: 1;
+		at: #b put: 2;
+		at: #c put: 3; yourself.
+	newDict := self classToBeTested newFromKeys: dict keys andValues: dict values.
+	dict keysAndValuesDo: [:k :v|
+		self assert: (newDict at: k) equals: v ]. 
 ]
 
 { #category : #'tests - new' }
