@@ -40,13 +40,12 @@ GoferApiTest >> testConstraintReference [
 	
 	reference := gofer resolved first.
 	
-	self 
-		assert: (reference isKindOf: GoferResolvedReference);
-		assert: reference packageName equals: 'GoferBar';
-		assert: reference author equals: 'lr';
-		assert: reference branch equals: 'branch';
-		assert: reference versionNumber equals: 2;
-		assert: reference repository equals: self monticelloRepository
+	self assert: (reference isKindOf: GoferResolvedReference).
+	self assert: reference packageName equals: 'GoferBar'.
+	self assert: reference author equals: 'lr'.
+	self assert: reference branch equals: 'branch'.
+	self assert: reference versionNumber equals: 2.
+	self assert: reference repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories' }
@@ -54,17 +53,16 @@ GoferApiTest >> testCustomRepository [
 
 	gofer repository: self monticelloRepository.
 	
-	self 
-		assert: gofer repositories: (Array with: self monticelloRepository description);
-		assert: gofer repositories first equals: self monticelloRepository
+	self assert: gofer repositories: (Array with: self monticelloRepository description).
+	self assert: gofer repositories first equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testDirectoryRepository [
 	gofer directory: FileSystem disk workingDirectory fullName.
-	self 
-		assert: gofer repositories: (Array with: FileSystem disk workingDirectory fullName);
-		assert: (gofer repositories first isKindOf: MCDirectoryRepository)
+
+	self assert: gofer repositories: (Array with: FileSystem disk workingDirectory fullName).
+	self assert: (gofer repositories first isKindOf: MCDirectoryRepository)
 ]
 
 { #category : #'tests - repositories - places' }
@@ -75,7 +73,9 @@ GoferApiTest >> testGemsource [
 
 { #category : #'tests - repositories' }
 GoferApiTest >> testHttpRepository [
+
 	gofer url: 'http://source.lukas-renggli.ch/pier' username: 'foo' password: 'bar'.
+
 	self assert: gofer repositories: #('http://source.lukas-renggli.ch/pier').
 	self assert: (gofer repositories first isKindOf: MCHttpRepository)
 ]
@@ -133,9 +133,8 @@ GoferApiTest >> testInitialRepositories [
 
 	gofer := Gofer new.
 
-	self 
-		assert: gofer repositories size equals: 1;
-		assert: (gofer repositories first isKindOf: MCCacheRepository uniqueInstance class)
+	self assert: gofer repositories size equals: 1.
+	self assert: (gofer repositories first isKindOf: MCCacheRepository uniqueInstance class)
 ]
 
 { #category : #'tests - repositories - options' }
@@ -160,13 +159,12 @@ GoferApiTest >> testPackageReference [
 
 	reference := gofer resolved first.
 	
-	self
-		assert: (reference isKindOf: GoferResolvedReference);
-		assert: reference packageName equals: 'GoferFoo';
-		assert: reference author equals: 'lr';
-		assert: reference branch isEmpty;
-		assert: reference versionNumber equals: 4;
-		assert: reference repository equals: self monticelloRepository
+	self assert: (reference isKindOf: GoferResolvedReference).
+	self assert: reference packageName equals: 'GoferFoo'.
+	self assert: reference author equals: 'lr'.
+	self assert: reference branch isEmpty.
+	self assert: reference versionNumber equals: 4.
+	self assert: reference repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories - places' }
@@ -226,13 +224,12 @@ GoferApiTest >> testVersionReference [
 	
 	reference := gofer resolved first.
 	
-	self
-		assert: (reference isKindOf: GoferResolvedReference);
-		assert: reference packageName equals: 'GoferFoo';
-		assert: reference author equals: 'lr';
-		assert: reference branch isEmpty;
-		assert: reference versionNumber equals: 2;
-		assert: reference repository equals: self monticelloRepository
+	self assert: (reference isKindOf: GoferResolvedReference).
+	self assert: reference packageName equals: 'GoferFoo'.
+	self assert: reference author equals: 'lr'.
+	self assert: reference branch isEmpty.
+	self assert: reference versionNumber equals: 2.
+	self assert: reference repository equals: self monticelloRepository
 ]
 
 { #category : #'tests - repositories - places' }

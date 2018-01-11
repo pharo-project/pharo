@@ -98,9 +98,8 @@ GoferOperationTest >> testFetch [
 GoferOperationTest >> testLoad [
 	gofer version: 'GoferFoo-lr.1'.
 	gofer load.
-	self 
-		assert: (self hasVersion: 'GoferFoo-lr.1');
-		assert: (self hasClass: #GoferFoo)
+	self assert: (self hasVersion: 'GoferFoo-lr.1').
+	self assert: (self hasClass: #GoferFoo)
 ]
 
 { #category : #tests }
@@ -195,9 +194,8 @@ GoferOperationTest >> testUnload [
 		package: 'GoferFoo';
 		load.
 	gofer unload.
-	self 
-		deny: (self hasPackage: 'GoferFoo');
-		deny: (self hasClass: #GoferFoo)
+	self deny: (self hasPackage: 'GoferFoo').
+	self deny: (self hasClass: #GoferFoo)
 ]
 
 { #category : #tests }
