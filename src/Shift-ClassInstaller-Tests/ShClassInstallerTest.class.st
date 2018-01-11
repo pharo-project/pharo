@@ -113,3 +113,38 @@ ShClassInstallerTest >> testModifyingSuperclassInOtherOrder [
 	self assert: (obj instVarNamed: #anSubInstanceVariable) equals: 17
 
 ]
+
+{ #category : #tests }
+ShClassInstallerTest >> testTryingToModifyReadOnlyInstances [
+	| obj obj2 |
+	newClass := self newClass: #ShCITestClass slots: #(anInstanceVariable).
+	
+	obj := newClass new.	
+	obj instVarNamed: #anInstanceVariable put: 7.
+	obj beReadOnlyObject.
+			
+	obj2 := newClass new.	
+	obj2 instVarNamed: #anInstanceVariable put: 17.
+
+	self should: [self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable)] raise: Error.
+
+]
+
+{ #category : #tests }
+ShClassInstallerTest >> testTryingToModifyReadOnlySubInstances [
+	| obj obj2 |
+	superClass := self newClass: #ShCITestSuperClass slots: #(aSuperVariable).
+	newClass := self newClass: #ShCITestClass superclass: superClass slots: #(anInstanceVariable).
+	
+	obj := newClass new.	
+	obj instVarNamed: #aSuperVariable put: 1.
+	obj instVarNamed: #anInstanceVariable put: 7.
+	obj beReadOnlyObject.
+			
+	obj2 := newClass new.	
+	obj2 instVarNamed: #aSuperVariable put: 11.
+	obj2 instVarNamed: #anInstanceVariable put: 17.
+
+	self should: [self newClass:#ShCITestClass slots:#(otherVariable anInstanceVariable)] raise: Error.
+
+]

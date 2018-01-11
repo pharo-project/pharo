@@ -274,6 +274,11 @@ ShiftClassBuilder >> fillFor: aClass [
 		copyClassSlotsFromExistingClass
 ]
 
+{ #category : #testing }
+ShiftClassBuilder >> hasToMigrateInstances [
+	^ self changes anySatisfy: [ :e | e hasToMigrateInstances ]
+]
+
 { #category : #initialization }
 ShiftClassBuilder >> initialize [
 	super initialize.
