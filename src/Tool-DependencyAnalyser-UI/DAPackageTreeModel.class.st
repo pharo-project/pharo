@@ -85,7 +85,8 @@ DAPackageTreeModel >> buttonRefresh [
 
 { #category : #actions }
 DAPackageTreeModel >> close [
-	open := false
+	open := false.
+	browser windowIsClosing
 ]
 
 { #category : #protocol }
