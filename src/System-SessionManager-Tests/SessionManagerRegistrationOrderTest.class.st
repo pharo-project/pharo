@@ -24,6 +24,7 @@ SessionManagerRegistrationOrderTest >> register: aString atSystemPriority: anInt
 
 { #category : #running }
 SessionManagerRegistrationOrderTest >> setUp [
+	super setUp.
 	manager := SessionManager new
 ]
 
