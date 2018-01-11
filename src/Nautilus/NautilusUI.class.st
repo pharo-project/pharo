@@ -224,6 +224,13 @@ NautilusUI >> basicRemoveClasses: aCollection [
 		aCollection do: #removeFromSystem.
 ]
 
+{ #category : #refactorings }
+NautilusUI >> basicRenameClass: aClass [
+	" Override to set the class rename with RB by default "
+
+	self renameClassWithRefactoringEngine: aClass
+]
+
 { #category : #private }
 NautilusUI >> basicRenamePackage: aPackage [ 
 
@@ -1232,6 +1239,18 @@ NautilusUI >> promoteSelectedPackageTagAsPackage [
 	self selectedPackage item promoteAsRPackage
 ]
 
+{ #category : #refactorings }
+NautilusUI >> refactor [
+
+	^ NautilusRefactoring model: self
+]
+
+{ #category : #refactorings }
+NautilusUI >> refactorCode: aText [
+	acceptor := CodeRefactoringAcceptor model: self.
+	self sourceCode: aText
+]
+
 { #category : #'private dispatch' }
 NautilusUI >> registerSelectionGroup: aSelection [
 	self model selectedGroup: aSelection item.
@@ -1290,6 +1309,12 @@ NautilusUI >> removeCategories [
 NautilusUI >> removeClassCategory: packageTag [ 
 	self basicRemoveClasses: packageTag classes.
 	packageTag asNautilusSelection item removeFromPackage.
+]
+
+{ #category : #refactorings }
+NautilusUI >> removeClassWithRefactoringEngine: aCollection [
+
+	^ self refactor removeClasses: aCollection 
 ]
 
 { #category : #'menus behavior' }
@@ -1419,6 +1444,12 @@ NautilusUI >> renameClassCategory: packageTag [
 
 ]
 
+{ #category : #refactorings }
+NautilusUI >> renameClassWithRefactoringEngine: aClass [
+
+	self refactor renameClass: aClass 
+]
+
 { #category : #private }
 NautilusUI >> renamePackage: aSelection [
 	aSelection asNautilusSelection renameTarget: self. 
@@ -1483,6 +1514,13 @@ NautilusUI >> restrictedBrowsePackages: selections [
 	^ super restrictedBrowsePackages: (selections collect: [ :each | each asNautilusSelection item ])
 ]
 
+{ #category : #refactorings }
+NautilusUI >> rewriteCode: aText [
+
+	acceptor := CodeRewritingAcceptor model: self.
+	self sourceCode: aText
+]
+
 { #category : #private }
 NautilusUI >> runPackagesTestsNotifying: aBoolean [
 	| packages classes label |
@@ -1504,6 +1542,13 @@ NautilusUI >> runPackagesTestsNotifying: aBoolean [
 { #category : #'menus behavior' }
 NautilusUI >> runTestForAMethod: aMethod notifying: aBoolean [
 	^self class runTestForAMethod: aMethod notifying: aBoolean
+]
+
+{ #category : #refactorings }
+NautilusUI >> searchCode: aText [
+	acceptor := CodeSearchingAcceptor model: self.
+	self setStylerClass: nil.
+	self pendingText: aText
 ]
 
 { #category : #selection }
