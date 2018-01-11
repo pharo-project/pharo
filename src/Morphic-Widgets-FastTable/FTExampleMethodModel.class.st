@@ -31,13 +31,7 @@ FTExampleMethodModel >> actionOn: aBrowser [
 
 { #category : #factory }
 FTExampleMethodModel >> createActionIconOn: aBrowser [
-	| actions action |
-	actions := AbstractMethodIconAction allSubclasses 
-		collect: [ :class | class for: self method in: self ].
-	actions sort: [ :a :b | a actionOrder < b actionOrder ].
-	action := actions detect: [ :each | each isActionHandled ].
-	^ action actionIcon
-
+	^Smalltalk ui icons iconNamed: #scriptManagerIcon
 ]
 
 { #category : #initialization }
