@@ -2066,6 +2066,16 @@ AbstractNautilusUI >> buildVariableMenuFor: aMenu variablesFrom: aBlockOrSymbol 
 	
 ]
 
+{ #category : #displaying }
+AbstractNautilusUI >> buildWindow [
+	window := NautilusWindow new model: self.
+	self addAll: window.
+	self setWindowTitle.
+	self registerToAnnouncements.
+	self selectedMethod ifNotNil: [ self resetIconStyle  ].
+	window announcer when: WindowClosed send: #unregisterToAnnouncements to: self
+]
+
 { #category : #'build ui' }
 AbstractNautilusUI >> buttonsBarHeight [
 	^ StandardFonts defaultFont pixelSize + 14
@@ -3252,12 +3262,7 @@ AbstractNautilusUI >> okToChangeSourceAndComment [
 
 { #category : #displaying }
 AbstractNautilusUI >> open [
-	window := NautilusWindow new model: self.
-	self addAll: window.
-	self setWindowTitle.
-	self registerToAnnouncements.
-	self selectedMethod ifNotNil: [ self resetIconStyle  ].
-	window announcer when: WindowClosed send: #unregisterToAnnouncements to: self.
+	self buildWindow.
 	window openInWorld
 	
 ]

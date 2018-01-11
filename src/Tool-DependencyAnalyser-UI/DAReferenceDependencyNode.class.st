@@ -7,13 +7,6 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DAReferenceDependencyNode >> browseInOtherNautilus [
-	| classToBrowse |
-	classToBrowse := self content reference.
-	self browseClass: classToBrowse
-]
-
 { #category : #testing }
 DAReferenceDependencyNode >> browseSendersOrUsers [
 	
@@ -32,4 +25,11 @@ DAReferenceDependencyNode >> isClassToDependencyNode [
 { #category : #testing }
 DAReferenceDependencyNode >> isReferenceNode [
 	  ^ true
+]
+
+{ #category : #'browse-nautilus' }
+DAReferenceDependencyNode >> spawnNewBrowser [
+	| classToBrowse |
+	classToBrowse := self content reference.
+	self browseClass: classToBrowse
 ]

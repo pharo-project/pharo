@@ -65,6 +65,11 @@ DAPackageCycleDetectionTreeModel >> analysis: anObject [
 ]
 
 { #category : #accessing }
+DAPackageCycleDetectionTreeModel >> browser: anObject [
+	browser := anObject
+]
+
+{ #category : #accessing }
 DAPackageCycleDetectionTreeModel >> buildRoots [
 	self tree
 		roots: cycles;
@@ -74,8 +79,7 @@ DAPackageCycleDetectionTreeModel >> buildRoots [
 							DACycleNode new
 								content: item;
 								treeModelParent: self;
-								packageTreeNautilus: self packageTreeNautilus;
-								packageTreeNautilusUI: self packageTreeNautilusUI;
+								browser: self browser;
 								cycle: true ] ].
 	self cyclesLabel
 		label:
@@ -137,7 +141,7 @@ DAPackageCycleDetectionTreeModel >> initializePresenter [
 		whenSelectedItemChanged: [ :item | 
 			item
 				ifNotNil: [ 
-					self tree selectedItem browseInNautilus.
+					self tree selectedItem selectInBrowser.
 					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ] ] ]
 ]
 
@@ -164,11 +168,6 @@ DAPackageCycleDetectionTreeModel >> initializeWithPackageName: aCollection [
 	self analysis:  (DAPackageCycleDetector onPackagesNamed: aCollection) runAlgorithm.
 	
 	self cycles: self analysis cycles.
-]
-
-{ #category : #accessing }
-DAPackageCycleDetectionTreeModel >> packageTreeNautilus: anObject [
-	packageTreeNautilus := anObject
 ]
 
 { #category : #actions }
