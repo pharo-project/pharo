@@ -1,5 +1,5 @@
 "
-A supporting behavior for Ring tests.
+This supporting class is not part of the Support package becuase it requires full slot class to be loaded firsty.
 "
 Class {
 	#name : #RG2TestSlotUser,
@@ -7,5 +7,5 @@ Class {
 	#instVars : [
 		'#unknown => RG2TestSlot forTesting'
 	],
-	#category : #'Ring2-Tests-Core-Support'
+	#category : #'Ring2-Tests-Core'
 }

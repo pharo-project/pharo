@@ -7,5 +7,5 @@ Class {
 	#pools : [
 		'RG2TestPool'
 	],
-	#category : #'Ring2-Tests-Core-Support'
+	#category : #'Ring2-Tests-Support'
 }

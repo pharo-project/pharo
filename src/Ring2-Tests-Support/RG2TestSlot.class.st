@@ -4,7 +4,7 @@ a testing slot for testing of unknown slots
 Class {
 	#name : #RG2TestSlot,
 	#superclass : #InstanceVariableSlot,
-	#category : #'Ring2-Tests-Core-Support'
+	#category : #'Ring2-Tests-Support'
 }
 
 { #category : #'as yet unclassified' }

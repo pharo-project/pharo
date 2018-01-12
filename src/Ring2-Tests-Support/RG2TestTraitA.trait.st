@@ -3,7 +3,7 @@ A supporting behavior for Ring tests.
 "
 Trait {
 	#name : #RG2TestTraitA,
-	#category : #'Ring2-Tests-Core-Support'
+	#category : #'Ring2-Tests-Support'
 }
 
 { #category : #'traitA - c' }

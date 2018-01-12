@@ -14,5 +14,5 @@ Class {
 	#classInstVars : [
 		'classInstVar1'
 	],
-	#category : #'Ring2-Tests-Core-Support'
+	#category : #'Ring2-Tests-Support'
 }

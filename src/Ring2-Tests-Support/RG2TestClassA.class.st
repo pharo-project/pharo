@@ -6,5 +6,5 @@ Class {
 	#superclass : #Object,
 	#traits : 'RG2TestTraitC',
 	#classTraits : 'RG2TestTraitC classTrait',
-	#category : #'Ring2-Tests-Core-Support'
+	#category : #'Ring2-Tests-Support'
 }
