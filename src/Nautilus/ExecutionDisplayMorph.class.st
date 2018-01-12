@@ -7,7 +7,7 @@ My color (the execution indicator) fades away over time.
 Class {
 	#name : #ExecutionDisplayMorph,
 	#superclass : #BorderedMorph,
-	#category : #'Reflectivity-Examples'
+	#category : #'Nautilus-Plugins-Examples'
 }
 
 { #category : #private }

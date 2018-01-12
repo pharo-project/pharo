@@ -8,7 +8,7 @@ Class {
 		'morph',
 		'link'
 	],
-	#category : #'Reflectivity-Examples'
+	#category : #'Nautilus-Plugins-Examples'
 }
 
 { #category : #position }
