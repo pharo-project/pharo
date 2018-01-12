@@ -35,9 +35,15 @@ FLFileStreamStrategy class >> newWithBinaryFileStream [
 ]
 
 { #category : #'instance creation' }
+FLFileStreamStrategy class >> newWithMultiByteFileStream [
+
+	^self newWith: MultiByteFileStream
+]
+
+{ #category : #'instance creation' }
 FLFileStreamStrategy class >> newWithStandardFileStream [
 
-	^self newWith: (Smalltalk globals at: #StandardFileStream)
+	^self newWith: StandardFileStream
 ]
 
 { #category : #writing }

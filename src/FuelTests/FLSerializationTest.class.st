@@ -35,6 +35,15 @@ FLSerializationTest >> assertSerializationEqualityOf: anObject [
 ]
 
 { #category : #running }
+FLSerializationTest >> assertSerializationEqualityOrIdentityOf: anObject [
+	"Asserts that the original object and the materialized one are equal (may be the same)"
+
+	| materialized |
+	materialized := self resultOfSerializeAndMaterialize: anObject.
+	self assert: anObject = materialized description: 'The materialized object should be equal to serialized one'.
+]
+
+{ #category : #running }
 FLSerializationTest >> assertSerializationIdentityOf: anObject [
 	"Asserts that the original object and the materialized one are the same"
 
@@ -309,6 +318,12 @@ FLSerializationTest >> useInMemorySerializationStream [
 FLSerializationTest >> useMemoryStream [
 
 	streamFactory := FLMultiByteStreamStrategy new
+]
+
+{ #category : #'stream-strategies' }
+FLSerializationTest >> useMultiByteFileStream [
+
+	streamFactory := FLFileStreamStrategy newWithMultiByteFileStream
 ]
 
 { #category : #'stream-strategies' }
