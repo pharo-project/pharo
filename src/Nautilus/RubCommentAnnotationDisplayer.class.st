@@ -11,7 +11,7 @@ Class {
 		'lineNumbersDisplayMorph',
 		'extendCommentPolicyMorph'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : #'Nautilus-Rubric'
 }
 
 { #category : #querying }
@@ -33,6 +33,7 @@ RubCommentAnnotationDisplayer >> backgroundColor [
 
 { #category : #'submorphs-accessing' }
 RubCommentAnnotationDisplayer >> changeExtendCommentPolicy [
+
 	self paragraphProvider model announcer announce: NautilusExtendCommentSwitch
 ]
 
