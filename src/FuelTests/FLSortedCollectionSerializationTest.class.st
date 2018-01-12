@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : #'sorted collections for testing' }
-FLSortedCollectionSerializationTest class >> sortedCollectionForTestingWithClassVariable. [
+FLSortedCollectionSerializationTest class >> sortedCollectionForTestingWithClassVariable [
 	^  SortedCollection sortBlock: [:a :b | 
 		ClassVariableForTesting 
 			ifTrue: [ a <= b ] 
