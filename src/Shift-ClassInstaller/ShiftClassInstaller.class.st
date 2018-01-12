@@ -139,6 +139,8 @@ ShiftClassInstaller >> make: aBlock [
 		builder oldClass: oldClass.
 		newClass := builder build.
 
+		self validateReadOnlyInstancesOf: oldClass.
+
 		self installInEnvironment: newClass.
 
 		self installSubclassInSuperclass: newClass.
@@ -168,7 +170,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate |
 	oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
-	
+		
 	oldClass 	superclass removeSubclass: oldClass.
 
 	newClass subclasses: oldClass subclasses.
@@ -181,7 +183,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	].
 	
 	[ 	
-		(self builder changes anySatisfy: [ :e | e hasToMigrateInstances ]) 
+		(self builder hasToMigrateInstances) 
 			ifTrue: [self migrateInstancesTo: newClass].
 
 		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
@@ -243,4 +245,14 @@ ShiftClassInstaller >> remake: aClass [
 { #category : #building }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
+]
+
+{ #category : #validating }
+ShiftClassInstaller >> validateReadOnlyInstancesOf: aClass [
+	
+	builder hasToMigrateInstances ifFalse: [ ^ self ].
+	
+	(aClass allSubInstances anySatisfy: [ :anInstance | anInstance isReadOnlyObject ]) ifTrue:[
+		self error: 'There are read only instances of the class to modify. Aborting the creation of classes'
+	]
 ]
