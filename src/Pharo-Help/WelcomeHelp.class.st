@@ -24,6 +24,9 @@ WelcomeHelp class >> changeLog [
 - integration of Renraku quality framework
 - integration of WebBrowser
 - integration of ReferenceFinder
+- using Tonel format for Iceberg (a single file per class instead of a file per method)
+- including the Shift Class Builder
+- release checks for proper categorization (no protocols left	without methods, categorization 
 
 ', (self heading: 'All Issues'), 
 'Over ... fixes and enhancements were integrated in this release.
@@ -39,9 +42,14 @@ As the complete list of fixed issues is too large to be placed here, you can rev
 - ...
 ', 
 (self subheading: 'Other'), 
-'- ...', 
+'- create clear image entry point (PharoBootstrapInitialization>>#initializeImageOfType:majorVersion:minor:suffix:buid:commitHash:)', 
 (self subheading: 'Cleanups'), 
 '- Object>>#setPinned: is now private
+- unnecessary "self debug:" comment removed 
+- super setUp now called in various test classes 
+- better zeroconf reporting of missing i386 libraries for command line
+- halt: and haltIf: are also highlighted in red as the other flavours of halt messages   
+- 
 ', 
 (self subheading: 'Unit testing/Documentation'), 
 '- More class comments and documentation', 
