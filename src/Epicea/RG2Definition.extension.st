@@ -3,5 +3,11 @@ Extension { #name : #RG2Definition }
 { #category : #'*Epicea' }
 RG2Definition >> asEpiceaRingDefinition [
 
-	^ self asStandalone
+	| aDefinition |
+	
+	aDefinition := self copy.
+	aDefinition environment backend: (RG2ReadOnlyImageBackend for: aDefinition environment).
+	aDefinition resolveBehaviorInformation.
+	aDefinition environment backend: RG2EnvironmentBackend new. 
+	^ aDefinition. 
 ]

@@ -443,7 +443,9 @@ Behavior >> basicAddSelector: selector withMethod: compiledMethod [
 
 { #category : #'reflective operations' }
 Behavior >> basicIdentityHash [
-	"Answer a SmallInteger whose value is related to the receiver's identity.
+	"Answer a 22 bits unsigned SmallInteger, whose value is related to the receiver's identity
+	 and unique among the behaviors (i.e. 2 different Behaviors cannot have the same identityHash).
+	
 	 Behavior implements identityHash to allow the VM to use an object representation which
 	 does not include a direct reference to an object's class in an object.  If the VM is using
 	 this implementation then classes are held in a class table and instances contain the index

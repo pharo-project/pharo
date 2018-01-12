@@ -4,7 +4,6 @@ I am a visitor for EpEvent subinstances.
 Trait {
 	#name : #EpTEventVisitor,
 	#traits : 'EpTCodeChangeVisitor',
-	#classTraits : 'EpTCodeChangeVisitor classTrait',
 	#category : #'Epicea-Visitors'
 }
 

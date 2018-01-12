@@ -226,7 +226,7 @@ Class >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
 { #category : #converting }
 Class >> asEpiceaRingDefinition [
 	
-	^ self asRing2Definition asEpiceaRingDefinition 
+	^ (self ensureRing2DefinitionIn: RG2Environment new) asEpiceaRingDefinition
 ]
 
 { #category : #'accessing parallel hierarchy' }

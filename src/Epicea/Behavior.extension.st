@@ -1,7 +1,7 @@
-Extension { #name : #Trait }
+Extension { #name : #Behavior }
 
 { #category : #'*Epicea' }
-Trait >> asEpiceaRingDefinition [
+Behavior >> asEpiceaRingDefinition [
 	
 	^ (self ensureRing2DefinitionIn: RG2Environment new) asEpiceaRingDefinition
 ]

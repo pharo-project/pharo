@@ -24,12 +24,12 @@ ProtoObject >> == anObject [
 
 { #category : #'reflective operations' }
 ProtoObject >> basicIdentityHash [
-	"Answer a SmallInteger whose value is related to the receiver's identity.
-	This method must not be overridden, except by SmallInteger.
-	Primitive. Fails if the receiver is a SmallInteger. Essential.
+	"Answer a 22 bits unsigned SmallInteger whose value is related to the receiver's identity.
+	
+	Primitive. Fails if the receiver is an immediate. Essential.
 	See Object documentation whatIsAPrimitive.
-
-	Do not override. Use #identityHash unless you really know what you're doing.'"
+	
+	Do not override, use #identityHash instead"
 
 	<primitive: 75>
 	self primitiveFailed
@@ -176,6 +176,22 @@ ProtoObject >> isNil [
 	"Coerces nil to true and everything else to false."
 
 	^false
+]
+
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector index: index value: value [
+	^ (ModificationForbidden 
+		for: self
+		atInstVar: index
+		with: value
+		retrySelector: selector) signal
+]
+
+{ #category : #'write barrier' }
+ProtoObject >> modificationForbiddenFor: selector value: value [
+	^ self modificationForbiddenFor: selector index: nil value: value 
+	
+
 ]
 
 { #category : #'memory scanning' }

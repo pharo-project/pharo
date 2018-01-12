@@ -3,5 +3,5 @@ Extension { #name : #ClassTrait }
 { #category : #'*Epicea-Ring' }
 ClassTrait >> asEpiceaRingDefinition [
 
-	^ self theNonMetaClass asEpiceaRingDefinition theMetaClass
+	^ (self ensureRing2DefinitionIn: RG2Environment new) asEpiceaRingDefinition
 ]

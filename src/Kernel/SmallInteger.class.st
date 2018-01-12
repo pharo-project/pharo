@@ -214,7 +214,8 @@ SmallInteger >> asFloat [
 
 { #category : #'system primitives' }
 SmallInteger >> basicIdentityHash [
-
+	"The value answered is signed, within the full 
+	 SmallInteger range, on the contrary to normal objects."
 	^self
 ]
 
@@ -455,8 +456,9 @@ SmallInteger >> highBitOfPositiveReceiver [
 
 { #category : #comparing }
 SmallInteger >> identityHash [
-
-	^self hashMultiply
+	"Answer a SmallInteger whose value is related to the receiver's identity.
+	 Specific override here to decrease the number of conflicts"
+	^ self hashMultiply
 ]
 
 { #category : #testing }
