@@ -86,7 +86,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
-		spec package: 'Traits'.
+
 		spec package: 'Transcript-Core'.
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
@@ -153,7 +153,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-SessionManager'.
 			'System-Sources'.
 			'System-Support'.
-			'Traits'.
 			'Transcript-Core'.
 			'UIManager'.
 			'Zinc-Character-Encoding-Core'.

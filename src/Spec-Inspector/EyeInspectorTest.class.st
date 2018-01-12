@@ -19,7 +19,7 @@ EyeInspectorTest >> instancesToTry [
 	12 . 
 	#symbol . 
 	(12.32) . 
-	TBehavior . 
+	TSortable . 
 	(SmallInteger>>#+) . 
 	#(1 2 3) . 
 	#[1 2 3] .

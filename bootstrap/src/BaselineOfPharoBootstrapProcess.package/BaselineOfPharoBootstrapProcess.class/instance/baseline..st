@@ -7,11 +7,11 @@ baseline: spec
 		spec baseline: 'Tonel' with: [ spec
 			repository: 'github://pharo-vcs/tonel:v1.0.3' ].
 		spec baseline: 'Hermes' with: [ spec
-			repository: 'github://tesonep/hermes:v2.3.0';
+			repository: 'github://tesonep/hermes:v2.4.0';
   			loads: 'ring' ].
 		spec
 			 package: 'Pharo30Bootstrap'.
 		spec baseline: 'Ring2' with: [ spec
-			repository: 'github://pavel-krivanek/Ring2:v1.0.1/src';
+			repository: 'github://tesonep/Ring2:production-dev/src';
   			loads: 'bootstrap' ].  			
 ]

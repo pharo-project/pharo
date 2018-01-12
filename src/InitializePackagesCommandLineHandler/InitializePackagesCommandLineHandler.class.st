@@ -84,6 +84,6 @@ InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 				ifTrue: [(Smalltalk classOrTraitNamed: items first) theMetaClass]
 				ifFalse: [Smalltalk classOrTraitNamed: items first].
 			selector := items third asSymbol.
-			(class localSelectors includes: selector)
+			(class selectors includes: selector)
 				ifTrue: [class organization classify: selector under: items fourth]]].
 ]

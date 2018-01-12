@@ -245,7 +245,6 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	CompiledMethod initialize.
 	Categorizer initialize.
 	Slot initialize.
-	TraitBehavior initialize.
 	RPackage initialize.
 	Behavior initialize.
 

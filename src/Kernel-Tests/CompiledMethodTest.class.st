@@ -288,7 +288,7 @@ CompiledMethodTest >> testOrigin [
 	regularMethod := Behavior>>#name.
 	
 	"Method from a trait without alias "
-	methodFromTrait := Behavior>>#addToComposition:.
+	methodFromTrait := Behavior>>#adoptInstance:.
 
 	self assert: regularMethod origin == regularMethod originMethod methodClass.
 	self assert: methodFromTrait origin == methodFromTrait originMethod methodClass.

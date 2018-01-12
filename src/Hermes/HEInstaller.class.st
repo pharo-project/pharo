@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'environment',
-		'originalUndeclareds'
+		'originalUndeclareds',
+		'hasTraits'
 	],
 	#category : #'Hermes-ClassInstaller'
 }
@@ -32,39 +33,24 @@ HEInstaller >> asSlots: aString [
 
 { #category : #'creating classes' }
 HEInstaller >> build: aHEClass [
-	| newMetaclass newClass superclass layoutType |
+	| newMetaclass newClass superclass layoutType  |
 
 	(self existingClass: aHEClass) ifNotNil: [ :x | ^ x ].
 
-	newMetaclass := Metaclass new.
-	
 	superclass := self classNamed: aHEClass superclass.
 	layoutType := self classNamed: aHEClass layoutClass.
 
-	newMetaclass 
-		superclass: (superclass ifNil: [Class] ifNotNil: [superclass class]) 
-		withLayoutType: FixedLayout 
-		slots: (self asSlots: aHEClass classInstancevariables).
+	newClass := self class classInstaller make: [ :builder |
+		builder name: aHEClass className;
+		superclass: superclass;
+		layoutClass: layoutType;
+		slots: (self asSlots: aHEClass instanceVariables);
+		sharedVariables:  (self asClassVariables:aHEClass classVariables);
+		sharedPools: aHEClass sharedPools;
+		category: aHEClass category;
+		classSlots: (self asSlots: aHEClass classInstancevariables) ].
 	
-	newClass := newMetaclass new.
-	newClass setName: aHEClass className.
-	
-	newClass superclass: superclass withLayoutType: layoutType slots: (self asSlots: aHEClass instanceVariables).
-	newClass environment: environment.	
-	newClass basicCategory: aHEClass category.
-	
-	newClass
-		declareClassVariables: (self asClassVariables:aHEClass classVariables);
-		sharing: aHEClass sharedPools.	
-
-	newClass classLayout slots do: [ :each | each installingIn: newClass ].
-	newClass classLayout slots do: [ :each | each layoutChanged: newClass ].
-
-	newClass traitComposition: (aHEClass traitComposition asLiteralIn: environment).
-	newClass class traitComposition: (aHEClass classTraitComposition asLiteralIn: environment).
-	
-	newClass applyChangesOfNewTraitCompositionReplacing:#() asTraitComposition.
-	newClass class applyChangesOfNewTraitCompositionReplacing:#() asTraitComposition.
+	self processTraitsFrom: aHEClass in: newClass.
 	
 	^newClass.
 
@@ -72,19 +58,21 @@ HEInstaller >> build: aHEClass [
 
 { #category : #'creating traits' }
 HEInstaller >> buildTrait: aTraitDefinition [
-	| newTrait traitComposition |
+	| newTrait traitComposition traitClass|
 	
 	(self existingTrait: aTraitDefinition) ifNotNil: [:x | ^ x ].
 	
-	traitComposition := aTraitDefinition traitComposition asLiteralIn: environment.
+	traitComposition := (aTraitDefinition traitComposition asLiteralIn: environment) asTraitComposition.
 	
-	newTrait := Trait
+	traitClass := Smalltalk globals at: #Trait ifAbsent: [ self error: 'Trait support is not installed' ].
+	
+	newTrait := traitClass
 		named: aTraitDefinition traitName
 		uses: traitComposition
 		category: aTraitDefinition category
 		env: environment.
 
-	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment).
+	newTrait classTrait traitComposition: (aTraitDefinition classTraitComposition asLiteralIn: environment) asTraitComposition.
 
 	^ newTrait
 ]
@@ -98,6 +86,25 @@ HEInstaller >> classNamed: aSymbol [
 { #category : #'reporting undeclared' }
 HEInstaller >> createdUndeclared [
 	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
+]
+
+{ #category : #'installing package' }
+HEInstaller >> doInstallPackage: aHEPackage [
+	| newTraits newClasses |
+	RPackageOrganizer default registerPackageNamed: aHEPackage packageName.
+
+	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
+
+	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
+
+	newClasses := aHEPackage classes
+		collect: [ :exportedClass | self build: exportedClass ].
+
+	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
+
+	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	
+	self validateNoNewUndeclared
 ]
 
 { #category : #accessing }
@@ -131,18 +138,7 @@ HEInstaller >> existingTrait: aHETrait. [
 HEInstaller >> initialize [
 	environment := self class environment.
 	originalUndeclareds := Undeclared copy.
-
-]
-
-{ #category : #'creating classes' }
-HEInstaller >> installClass: aClass in: category [
-	environment at: aClass name put: aClass.
-	aClass superclass addSubclass: aClass.
-
-	aClass basicCategory: category.
-   environment organization ifNotNil: [ :e | e classify: aClass name under: category ].
-	SystemAnnouncer uniqueInstance classAdded: aClass inCategory: category.
-
+	hasTraits := Smalltalk globals hasClassNamed: #Trait.
 ]
 
 { #category : #'installing methods' }
@@ -162,25 +158,10 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 
 { #category : #'installing package' }
 HEInstaller >> installPackage: aHEPackage [
-	| newTraits newClasses |
-	RPackageOrganizer default registerPackageNamed: aHEPackage packageName.
-
-	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
-
-	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
-
-	newClasses := aHEPackage classes
-		collect: [ :exportedClass | 
-			| aClass |
-			aClass := self build: exportedClass.
-			self installClass: aClass in: exportedClass category.
-			aClass ].
-
-	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
-
-	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	| storedAnnouncements |
 	
-	self validateNoNewUndeclared
+	storedAnnouncements := SystemAnnouncer uniqueInstance suspendAllWhileStoring: [ self doInstallPackage: aHEPackage ].	
+	storedAnnouncements do: [ :e | SystemAnnouncer uniqueInstance announce: e ].
 ]
 
 { #category : #messages }
@@ -198,6 +179,16 @@ HEInstaller >> messageExistingTrait: aHETrait [
 { #category : #messages }
 HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
+]
+
+{ #category : #'creating classes' }
+HEInstaller >> processTraitsFrom: aHEClass in: newClass [
+
+	hasTraits ifFalse: [ ^ self ].
+
+	newClass setTraitComposition: (aHEClass traitComposition asLiteralIn: environment) asTraitComposition.
+	newClass class setTraitComposition: (aHEClass classTraitComposition asLiteralIn: environment) asTraitComposition.
+
 ]
 
 { #category : #'installing methods' }

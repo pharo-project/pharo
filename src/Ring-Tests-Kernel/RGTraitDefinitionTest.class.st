@@ -45,10 +45,10 @@ RGTraitDefinitionTest >> testAddingMethods [
 RGTraitDefinitionTest >> testAsTraitDefinition [
 
 	| newTrait |
-	newTrait:= TBehavior asRingDefinition.
+	newTrait:= TSortable asRingDefinition.
 	self assert: (newTrait isRingObject).
 	self assert: (newTrait isTrait).  
-	self assert: (newTrait name == #TBehavior).  
+	self assert: (newTrait name == #TSortable).  
 	self assert: (newTrait category notNil).
 	self assert: (newTrait superclassName notNil).
 	

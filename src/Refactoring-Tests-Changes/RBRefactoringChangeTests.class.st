@@ -52,7 +52,7 @@ RBRefactoringChangeTests >> exampleClasses [
 
 { #category : #accessing }
 RBRefactoringChangeTests >> exampleTraits [
-	^ { TBehavior. TClass. TAssertable }
+	^ { TSortable. TAssertable }
 ]
 
 { #category : #utilities }

@@ -17,6 +17,12 @@ HEExportedLiteral class >> readFrom: aReader [
 		yourself
 ]
 
+{ #category : #converting }
+HEExportedLiteral >> asExportedLiteral [
+	
+	^ self
+]
+
 { #category : #reading }
 HEExportedLiteral >> doReadFrom: aReader [
 	self subclassResponsibility.

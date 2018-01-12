@@ -214,15 +214,6 @@ Class >> anyUserOfClassVarNamed: aSymbol [
 	^nil
 ]
 
-{ #category : #traits }
-Class >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
-
-	| changedSelectors |
-	changedSelectors := super applyChangesOfNewTraitCompositionReplacing: oldComposition.
-	self classSide noteNewBaseTraitCompositionApplied: self traitComposition.
-	^ changedSelectors
-]
-
 { #category : #'accessing parallel hierarchy' }
 Class >> baseClass [
 
@@ -758,36 +749,6 @@ Class >> immediateSubclass: t instanceVariableNames: f classVariableNames: d poo
 			copyClassSlotsFromExistingClass ].
 ]
 
-{ #category : #'subclass creation - immediate' }
-Class >> immediateSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames 
-	classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-	
-	^ self immediateSubclass: aClassName 
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames  
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - immediate' }
-Class >> immediateSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have indexable byte-sized nonpointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				immediateSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				package: aCategory ]
-]
-
 { #category : #compiling }
 Class >> innerBindingOf: aSymbol [
 	"Answer the binding of some variable resolved in the scope of the receiver, or one of its superclass
@@ -862,18 +823,6 @@ Class >> name: aSymbol [
 	self setName: aSymbol
 ]
 
-{ #category : #'initialize-release' }
-Class >> name: aString traitComposition: aComposition methodDict: aMethodDict localSelectors: aSet organization: aClassOrganization [
-
-	"Used by copy"
-	
-	self name: aString.
-	self localSelectors: aSet.
-	self methodDict: aMethodDict.
-	self traitComposition: aComposition.
-	self organization: aClassOrganization
-]
-
 { #category : #'subclass creation' }
 Class >> newAnonymousSubclass [
 
@@ -933,24 +882,6 @@ Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 			[ ^ misspelled correctAgainstDictionary: self environment continuedFrom: results ]
 		ifFalse:
 			[ ^ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
-]
-
-{ #category : #'subclass creation' }
-Class >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [ 
-	"This is the standard initialization message for creating a new class as a 
-	subclass of an existing class (the receiver)."
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: self classLayout class;
-			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
-
 ]
 
 { #category : #'class variables' }
@@ -1032,10 +963,11 @@ Class >> removeFromSystem: logged [
 	| myCategory |
 	self release.
 	self unload.
-	self traitUsers do: [ :user | user removeFromComposition: self ].
+
 	self superclass ifNotNil:
 		["If we have no superclass there's nothing to be remembered"
 		self superclass addObsoleteSubclass: self].
+
 	myCategory := self category.
 	self environment forgetClass: self logged: logged.
 	self obsolete.
@@ -1135,27 +1067,6 @@ Class >> setName: aSymbol [
 	name := aSymbol.
 ]
 
-{ #category : #private }
-Class >> setName: aSymbol andRegisterInCategory: categorySymbol environment: aSystemDictionary [
-	(self isValidTraitName: aSymbol) ifFalse: [TraitException signal: 'Invalid trait name'].
-	
-	(self environment == aSystemDictionary
-		and: [self name = aSymbol
-			and: [self category = categorySymbol]]) ifTrue: [^self].
-		
-	((aSystemDictionary includes: aSymbol) and: [(aSystemDictionary at: aSymbol) ~~ self])
-		ifTrue: [TraitException signal: 'The name ''' , aSymbol , ''' is already used'].
-
-	(self environment notNil and: [self name notNil and: [self name ~= aSymbol]]) ifTrue: [
-		self environment renameClass: self as: aSymbol].
-	
-	self name: aSymbol.
-	self environment: aSystemDictionary.	
-	self environment at: self name put: self.
-	self environment organization classify: self name under: categorySymbol.
-	^ true
-]
-
 { #category : #'pool variables' }
 Class >> sharedPoolOfVarNamed: aString [
 	"Returns the SharedPool or nil from which the pool variable named aString is coming from."
@@ -1242,22 +1153,27 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVari
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
 	^ self
 		subclass: t
-		uses: {}
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		category: cat
-]
-
-{ #category : #'subclass creation' }
-Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
-	^ self
-		subclass: t
-		uses: {}
 		instanceVariableNames: f
 		classVariableNames: d
 		poolDictionaries: s
 		package: cat
+]
+
+{ #category : #'subclass creation' }
+Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
+
+	^ self classInstaller
+		make: [ :builder | 
+			builder
+				superclass: self;
+				name: t;
+				layoutClass: self classLayout class;
+				slots: f asSlotCollection;
+				sharedVariablesFromString: d;
+				sharedPools: s;
+				category: cat;
+				environment: self environment;
+				copyClassSlotsFromExistingClass ]
 ]
 
 { #category : #'subclass creation - slots' }
@@ -1312,175 +1228,6 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 
 ]
 
-{ #category : #'subclass creation' }
-Class >> subclass: t uses: aTraitComposition [ 
-	| cls |
-	cls := self
-				subclass: t
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				category: 'Unclassified'.
-	cls setTraitComposition: aTraitComposition asTraitComposition.
-	^ cls
-]
-
-{ #category : #'subclass creation' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [ 
-
-	^ self
-		subclass: aTraitName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		category: cat 
-]
-
-{ #category : #'subclass creation' }
-Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
-	^ self
-		subclass: aTraitName
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		category: cat
-]
-
-{ #category : #'subclass creation' }
-Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-
-	^ self
-		subclass: aName
-		uses: aTraitCompositionOrArray
-		with: [ 
-			self
-				private_subclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
-]
-
-{ #category : #'subclass creation' }
-Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-
-	^ self
-		subclass: aName
-		uses: aTraitCompositionOrArray
-		with: [ 
-			self
-				private_subclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
-]
-
-{ #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		with: [ 
-			self classInstaller
-				make: [ :builder | 
-					builder
-						name: aSubclassSymbol;
-						superclass: self;
-						layoutClass: layoutClass;
-						slots: slotDefinition;
-						sharedVariables: classVarDefinition;
-						category: aCategorySymbol ] ]
-]
-
-{ #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		with: [ 
-			self classInstaller
-				make: [ :builder | 
-					builder
-						name: aSubclassSymbol;
-						superclass: self;
-						layoutClass: layoutClass;
-						slots: slotDefinition;
-						sharedVariables: classVarDefinition;
-						sharedPools: someSharedPoolNames;
-						category: aCategorySymbol ] ]
-]
-
-{ #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		with: [ 
-			self classInstaller
-				make: [ :builder | 
-					builder
-						name: aSubclassSymbol;
-						superclass: self;
-						slots: slotDefinition;
-						sharedVariables: classVarDefinition;
-						category: aCategorySymbol ] ]
-]
-
-{ #category : #'subclass creation - slots' }
-Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
-	^ self
-		subclass: aSubclassSymbol
-		uses: aTraitCompositionOrArray
-		with: [ 
-			self classInstaller
-				make: [ :builder | 
-					builder
-						name: aSubclassSymbol;
-						superclass: self;
-						slots: slotDefinition;
-						sharedVariables: classVarDefinition;
-						sharedPools: someSharedPoolNames;
-						category: aCategorySymbol ] ]
-]
-
-{ #category : #'subclass creation - private' }
-Class >> subclass: aName uses: aTraitComposition with: aBlock [ 
-	"Define (or redefine) a subclass by evaluating a block closure. 
-
-	Note (MartinDias): 
-		This is a workaround for the subclass creation API when a trait is specified. 
-		To fix it well, in Pharo 4, a bit deeper refactoring is required, delegating this responsibility
-		to SlotClassBuilder."
-
-	^ self environment 
-		at: aName
-		ifPresent: [ :old | 
-			| copyOfOld newClass |
-			copyOfOld := old copy.
-
-			"Modify the class and set the new trait composition"
-			newClass := aBlock value. 
-			newClass setTraitComposition: aTraitComposition asTraitComposition.
-
-			"Announce that the definition changed when there is a new trait composution. 
-			Note: It may be a re-announce if there was other change in the class definition, 
-			e.g. an instace variable added."
-			(newClass traitComposition syntacticallyEquals: copyOfOld traitComposition) ifFalse: [ 
-				SystemAnnouncer uniqueInstance 
-					classDefinitionChangedFrom: copyOfOld to: newClass;
-					classModificationAppliedTo: newClass ].
-
-			newClass ]
-		ifAbsent: [ | newClass |
-			"Create the class and set the trait composition"
-			newClass := aBlock value.
-			newClass setTraitComposition: aTraitComposition asTraitComposition.
-			SystemAnnouncer uniqueInstance classModificationAppliedTo: newClass.
-			newClass].
-]
-
 { #category : #'accessing class hierarchy' }
 Class >> subclasses [
 	"Answer a Set containing the receiver's subclasses."
@@ -1507,29 +1254,6 @@ Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self subclasses: nil. 
-]
-
-{ #category : #accessing }
-Class >> traitComposition [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
-	traitComposition ifNil: [traitComposition := TraitComposition new].
-	^traitComposition
-]
-
-{ #category : #accessing }
-Class >> traitComposition: aTraitComposition [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-	
-	traitComposition := aTraitComposition
 ]
 
 { #category : #'initialize-release' }
@@ -1612,256 +1336,6 @@ Class >> variableByteSubclass: t instanceVariableNames: f
 			copyClassSlotsFromExistingClass ].
 ]
 
-{ #category : #'subclass creation - variableByte' }
-Class >> variableByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames 
-	classVariableNames: classVarNames category: cat [
-		"Added to allow for a simplified subclass creation experience. "
-	
-	^ self variableByteSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		category: cat
-]
-
-{ #category : #'subclass creation - variableByte' }
-Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have indexable byte-sized nonpointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				variableByteSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNames
-	classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-	 
-	^ self variableDoubleByteSubclass: className
-		instanceVariableNames: instVarNames  
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNames
-	classVariableNames: classVarNames package: cat [
-	"
-	Variable double byte is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a double byte (16bit).
-	
-	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example.
-	"
-	 
-	^ self variableDoubleByteSubclass: className
-		instanceVariableNames: instVarNames  
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		variableDoubleByteSubclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: t instanceVariableNames: f 
-	classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a 
-	subclass of an existing class (the receiver) in which the subclass is to 
-	have indexable word-sized nonpointer variables."
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: DoubleByteLayout;
-			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		variableDoubleByteSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames
-	classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self variableDoubleByteSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	^ self
-		variableDoubleByteSubclass: aName
-		uses: aTraitComposition
-		instanceVariableNames: someInstanceVariableNames
-		classVariableNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		package: aCategory
-]
-
-{ #category : #'subclass creation - variableDoubleByte' }
-Class >> variableDoubleByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have indexable word-sized nonpointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				variableDoubleByteSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				package: aCategory ]
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNames
-	classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-	 
-	^ self variableDoubleWordSubclass: className
-		instanceVariableNames: instVarNames  
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNames
-	classVariableNames: classVarNames package: cat [
-	"
-	Variable double word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a double word (64bit).
-	
-	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example.
-	"
-	 
-	^ self variableDoubleWordSubclass: className
-		instanceVariableNames: instVarNames  
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
-	^ self
-		variableDoubleWordSubclass: t
-		instanceVariableNames: f
-		classVariableNames: d
-		poolDictionaries: s
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: t instanceVariableNames: f 
-	classVariableNames: d poolDictionaries: s package: cat [
-	"This is the standard initialization message for creating a new class as a 
-	subclass of an existing class (the receiver) in which the subclass is to 
-	have indexable word-sized nonpointer variables."
-	^ self classInstaller make: [ :builder |
-		builder
-			superclass: self;
-			name: t;
-			layoutClass: DoubleWordLayout;
-			slots: f asSlotCollection;
-			sharedVariablesFromString: d;
-			sharedPools: s;
-			category: cat;
-			environment: self environment;
-			copyClassSlotsFromExistingClass ].
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		variableDoubleWordSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames
-	classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self variableDoubleWordSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	^ self
-		variableDoubleWordSubclass: aName
-		uses: aTraitComposition
-		instanceVariableNames: someInstanceVariableNames
-		classVariableNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		package: aCategory
-]
-
-{ #category : #'subclass creation - variableDoubleWord' }
-Class >> variableDoubleWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have indexable word-sized nonpointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				variableDoubleWordSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				package: aCategory ]
-]
-
 { #category : #'subclass creation - variable' }
 Class >> variableSubclass: className instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "
@@ -1901,48 +1375,6 @@ Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d pool
 { #category : #'subclass creation - variable' }
 Class >> variableSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [
 	^ self variableSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat
-]
-
-{ #category : #'subclass creation - variable' }
-Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames 
-	classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-	
-	^ self variableSubclass: aClassName 
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames  
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		category: cat
-]
-
-{ #category : #'subclass creation - variable' }
-Class >> variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: cat [
-
-	^ self variableSubclass: aClassName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat
-
-]
-
-{ #category : #'subclass creation - variable' }
-Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have indexable pointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				variableSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
-]
-
-{ #category : #'subclass creation - variable' }
-Class >> variableSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-	^ self variableSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory
 ]
 
 { #category : #'subclass creation - variableWord' }
@@ -2002,59 +1434,6 @@ Class >> variableWordSubclass: t instanceVariableNames: f
 			copyClassSlotsFromExistingClass ].
 ]
 
-{ #category : #'subclass creation - variableWord' }
-Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self
-		variableWordSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		package: cat
-]
-
-{ #category : #'subclass creation - variableWord' }
-Class >> variableWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames
-	classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-
-	^ self variableWordSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames
-		classVariableNames: classVarNames
-		poolDictionaries: ''
-		package: cat
-]
-
-{ #category : #'subclass creation - variableWord' }
-Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	^ self
-		variableWordSubclass: aName
-		uses: aTraitComposition
-		instanceVariableNames: someInstanceVariableNames
-		classVariableNames: someClassVariableNames
-		poolDictionaries: someSharedPoolNames
-		package: aCategory
-]
-
-{ #category : #'subclass creation - variableWord' }
-Class >> variableWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have indexable word-sized nonpointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				variableWordSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				package: aCategory ]
-]
-
 { #category : #'subclass creation - weak' }
 Class >> weakSubclass: className instanceVariableNames: instVarNames 
 	classVariableNames: classVarNames category: cat [
@@ -2103,53 +1482,6 @@ Class >> weakSubclass: t instanceVariableNames: f
 	"This is the standard initialization message for creating a new class as a subclass of an existing class (the receiver) in which the subclass is to have weak indexable pointer variables."
 
 	^self weakSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat
-]
-
-{ #category : #'subclass creation - weak' }
-Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames 
-	classVariableNames: classVarNames category: cat [
-	"Added to allow for a simplified subclass creation experience. "
-	
-	^ self weakSubclass: className
-		uses: aTraitCompositionOrArray
-		instanceVariableNames: instVarNames 
-		classVariableNames: classVarNames 
-		poolDictionaries: ''
-		category: cat
-
-]
-
-{ #category : #'subclass creation - weak' }
-Class >> weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames 
-	classVariableNames: classVarNames package: cat [
-	"Added to allow for a simplified subclass creation experience. "
-	
-	^self weakSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat
-]
-
-{ #category : #'subclass creation - weak' }
-Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have weak indexable pointer variables."
-	
-	^ self
-		subclass: aName
-		uses: aTraitComposition
-		with: [ 
-			self
-				weakSubclass: aName
-				instanceVariableNames: someInstanceVariableNames
-				classVariableNames: someClassVariableNames
-				poolDictionaries: someSharedPoolNames
-				category: aCategory ]
-]
-
-{ #category : #'subclass creation - weak' }
-Class >> weakSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
-	"Creates a new class as a subclass of an existing class (the receiver) 
-	in which the subclass is to have weak indexable pointer variables."
-	
-	^self weakSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory
 ]
 
 { #category : #'class variables' }

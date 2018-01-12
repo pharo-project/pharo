@@ -101,6 +101,7 @@ RPACKAGE_ARCHIVE_NAME=${PREFIX}-rpackage-${SUFFIX}
 
 CORE_IMAGE_NAME=${PREFIX}-core-${SUFFIX}
 COMPILER_IMAGE_NAME=${PREFIX}-compiler-${SUFFIX}
+TRAITS_IMAGE_NAME=${PREFIX}-traits-${SUFFIX}
 MC_BOOTSTRAP_IMAGE_NAME=${PREFIX}-monticello_bootstrap-${SUFFIX}
 MC_IMAGE_NAME=${PREFIX}-monticello-${SUFFIX}
 METACELLO_IMAGE_NAME=${PREFIX}-metacello-${SUFFIX}
@@ -125,7 +126,8 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes SUnit-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes Hermes-Extensions.hermes
+zip "${HERMES_ARCHIVE_NAME}.zip" AST-Core-Traits.hermes CodeImport-Traits.hermes Collections-Abstract-Traits.hermes Kernel-Traits.hermes RPackage-Traits.hermes SUnit-Tests.hermes System-Sources-Traits.hermes CodeExport-Traits.hermes CodeImport.hermes Hermes-Extensions.hermes OpalCompiler-Core.hermes SUnit-Core-Traits.hermes System-Support-Traits.hermes Transcript-Core-Traits.hermes CodeExport.hermes CodeImportCommandLineHandlers.hermes JenkinsTools-Core.hermes OpalCompiler-Traits.hermes SUnit-Core.hermes Slot-Traits.hermes
+
 # Archive RPackage definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
 
@@ -143,6 +145,8 @@ cd ..
 # Installing RPackage
 echo "[Compiler] Installing RPackage"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
+
+echo "[Compiler] Initializing the packages in the Kernel"
 ${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKernel.txt --packages=packagesKernel.txt --save
 
 # Installing compiler through Hermes 
@@ -155,20 +159,29 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" st ${ST_CACHE}/Multilingual.st ${ST_CACHE}/
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SourceFileArray initialize"
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
+# Installing Traits through Hermes 
+echo "[Compiler] Installing Traits through Hermes"
+
+${VM} "${COMPILER_IMAGE_NAME}.image" save ${TRAITS_IMAGE_NAME}
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes TraitsV2.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes Kernel-Traits.hermes AST-Core-Traits.hermes Collections-Abstract-Traits.hermes Transcript-Core-Traits.hermes SUnit-Core-Traits.hermes CodeImport-Traits.hermes RPackage-Traits.hermes OpalCompiler-Traits.hermes Slot-Traits.hermes CodeExport-Traits.hermes System-Sources-Traits.hermes System-Support-Traits.hermes --save
+zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
+
 #Bootstrap Initialization: Class and RPackage initialization
 echo "[Core] Class and RPackage initialization"
-${VM} "${COMPILER_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
+${VM} "${TRAITS_IMAGE_NAME}.image" save ${CORE_IMAGE_NAME}
 ${VM} "${CORE_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/03-initUnicode.st --no-source --save --quit "${REPOSITORY}/resources/unicode/UnicodeData.txt"
 zip "${CORE_IMAGE_NAME}.zip" "${CORE_IMAGE_NAME}.image"
 
 #Bootstrap Monticello Part 1: Core and Local repositories
 echo "[Monticello] Bootstrap Monticello Core and Local repositories"
 
-#${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
-cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
+${VM} "${CORE_IMAGE_NAME}.image" save ${MC_BOOTSTRAP_IMAGE_NAME}
+#cp "${CORE_IMAGE_NAME}.image" "${MC_BOOTSTRAP_IMAGE_NAME}.image"
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${ST_CACHE}/Monticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/01-fixLocalMonticello.st --save --quit
 ${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/02-monticello-bootstrap/02-bootstrapMonticello.st --save --quit
+${VM} "${MC_BOOTSTRAP_IMAGE_NAME}.image" eval --save "TraitsBootstrap fixSourceCodeOfTraits "
 zip "${MC_BOOTSTRAP_IMAGE_NAME}.zip" ${MC_BOOTSTRAP_IMAGE_NAME}.*
 
 #Bootstrap Monticello Part 2: Networking Packages and Remote Repositories

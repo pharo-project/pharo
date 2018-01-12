@@ -97,10 +97,6 @@ EpCodeChangeIntegrationTest >> testClassInstanceVariableRemoval [
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testClassModificationOfTraitComposition [
-	<expectedFailure>
-	"Failure: Currently, there is no system announcement when the trait composition is changed. 
-	Epicea, confussingly, only registers method addition and modification events 
-	when the trait is installed."
 	
 	| aTrait |
 	aClass := classFactory newClass.
@@ -335,10 +331,6 @@ EpCodeChangeIntegrationTest >> testTraitAddition [
 
 { #category : #tests }
 EpCodeChangeIntegrationTest >> testTraitModificationOfTraitComposition [
-	<expectedFailure>
-	"Failure: Currently, there is no system announcement when the trait composition is changed. 
-	Epicea, confussingly, only registers method addition and modification events 
-	when the trait is installed."
 	
 	| aTrait |
 	aClass := classFactory newTrait.

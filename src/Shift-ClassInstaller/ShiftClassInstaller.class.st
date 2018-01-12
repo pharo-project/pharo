@@ -83,6 +83,20 @@ ShiftClassInstaller >> copyObject: oldObject to: newClass [
 	^ newObject
 ]
 
+{ #category : #building }
+ShiftClassInstaller >> fixSlotScope: newClass [
+	newClass superclass ifNil: [ ^ self ].
+	(newClass classLayout slotScope isKindOf: LayoutEmptyScope) ifTrue: [ ^ self ].
+
+	self assert: newClass superclass classLayout slotScope = newClass classLayout slotScope parentScope.
+
+	newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope
+		ifFalse: [ newClass classLayout slotScope parentScope: newClass superclass classLayout slotScope ].
+		
+	self assert: newClass superclass classLayout slotScope == newClass classLayout slotScope parentScope.
+
+]
+
 { #category : #initialization }
 ShiftClassInstaller >> initialize [
 	super initialize.
@@ -106,7 +120,7 @@ ShiftClassInstaller >> installInEnvironment: newClass [
 
 { #category : #building }
 ShiftClassInstaller >> installSubclassInSuperclass: newClass [
-       newClass superclass addSubclass: newClass
+	newClass superclass addSubclass: newClass
 ]
 
 { #category : #building }
@@ -144,7 +158,7 @@ ShiftClassInstaller >> make: aBlock [
 		self installInEnvironment: newClass.
 
 		self installSubclassInSuperclass: newClass.
-		
+	
 		builder builderEnhancer beforeMigratingClass: builder installer: self.
 
 		self migrateClassTo: newClass.
@@ -156,6 +170,9 @@ ShiftClassInstaller >> make: aBlock [
 		"If there are no changes in the building, I am not building or replacing nothing"
 		newClass := oldClass.
 	].
+
+	self fixSlotScope: newClass.
+	self fixSlotScope: newClass class.
 
 	self recategorize: newClass to: builder category.
 	self comment: newClass.
@@ -175,7 +192,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 
 	newClass subclasses: oldClass subclasses.
 
-	slotsToMigrate := newClass class allSlots reject:[:e | Class hasSlotNamed: e name].
+	slotsToMigrate := newClass class allSlots reject:[:e | builder builderEnhancer hasToSkipSlot: e ].
 	slotsToMigrate do: [ :newSlot | oldClass class slotNamed: newSlot name ifFound: [ :oldSlot | newSlot write: (oldSlot read: oldClass) to: newClass ] ].
 	
 	oldClass classVarNames do: [ :aClassVar |

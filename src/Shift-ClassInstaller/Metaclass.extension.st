@@ -14,7 +14,6 @@ Metaclass >> instanceVariableNames: instVarString [
 			slots: theClass slots;
 			sharedVariablesFromString: theClass classVariablesString;
 			sharedPools: theClass sharedPoolsString;
-			traitComposition: theClass traitComposition;
 			category: theClass category asString;
 			classSlots: instVarString asSlotCollection ].
 	^ theClass theMetaClass

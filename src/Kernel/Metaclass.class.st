@@ -75,33 +75,6 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
-{ #category : #composition }
-Metaclass >> assertConsistantCompositionsForNew: aTraitComposition [
-	"Applying or modifying a trait composition on the class side
-	of a behavior has some restrictions."
-
-	| baseTraits notAddable message |
-	baseTraits := aTraitComposition traits select: [:each | each isBaseTrait].
-	baseTraits isEmpty ifFalse: [
-		notAddable := (baseTraits reject: [:each | each classSide methodDict isEmpty]).
-		notAddable isEmpty ifFalse: [
-			message := String streamContents: [:stream |
-				stream nextPutAll: 'You can not add the base trait(s)'; cr.
-				notAddable
-					do: [:each | stream nextPutAll: each name]
-					separatedBy: [ stream nextPutAll: ', '].
-				stream cr; nextPutAll: 'to this composition because it/they define(s) methods on the class side.'].
-		^TraitCompositionException signal: message]].
-		
-	(self instanceSide traitComposition traits asSet =
-			(aTraitComposition traits
-				select: [:each | each isClassTrait]
-				thenCollect: [:each | each baseTrait]) asSet) ifFalse: [
-				^TraitCompositionException signal: 'You can not add or remove class side traits on
-				the class side of a composition. (But you can specify aliases or exclusions
-				for existing traits or add a trait which does not have any methods on the class side.)']
-]
-
 { #category : #'accessing parallel hierarchy' }
 Metaclass >> baseClass [
 
@@ -199,11 +172,6 @@ Metaclass >> definition [
 	^ String streamContents: 
 		[:strm |
 		strm print: self.
-		self hasTraitComposition ifTrue: [
-			strm
-				crtab;
-				nextPutAll: 'uses: ';
-				print: self traitComposition ].
 		
 		(self usesSpecialSlot or: [ Slot showSlotClassDefinition ])
 			ifFalse: [  
@@ -439,71 +407,6 @@ Metaclass >> subclassesDo: aBlock [
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	
 	self theNonMetaClass subclasses do: [ :each | aBlock value: each theMetaClass ]
-]
-
-{ #category : #accessing }
-Metaclass >> traitComposition [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	traitComposition ifNil: [traitComposition := TraitComposition new].
-	^traitComposition
-]
-
-{ #category : #accessing }
-Metaclass >> traitComposition: aTraitComposition [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
-	traitComposition := aTraitComposition
-]
-
-{ #category : #composition }
-Metaclass >> uses: aTraitCompositionOrArray [
-	| copyOfOldTrait newComposition |
-	copyOfOldTrait := self copy.
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	self assertConsistantCompositionsForNew: newComposition.
-	self setTraitComposition: newComposition.
-	SystemAnnouncer uniqueInstance
-		traitDefinitionChangedFrom: copyOfOldTrait to: self;
-		classModificationAppliedTo: self
-]
-
-{ #category : #'initialize-release' }
-Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString [ 
-	| newComposition newMetaClass copyOfOldMetaClass |
-	
-	copyOfOldMetaClass := self copy.
-	newMetaClass := self instanceVariableNames: instVarString.
-	
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	newMetaClass assertConsistantCompositionsForNew: newComposition.
-	newMetaClass setTraitComposition: newComposition.
-	
-	SystemAnnouncer uniqueInstance
-		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
-]
-
-{ #category : #'initialize-release' }
-Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [ 
-	| newComposition newMetaClass copyOfOldMetaClass |
-	
-	copyOfOldMetaClass := self copy.
-	newMetaClass := self slots: slotArray.
-	
-	newComposition := aTraitCompositionOrArray asTraitComposition.
-	newMetaClass assertConsistantCompositionsForNew: newComposition.
-	newMetaClass setTraitComposition: newComposition.
-	
-	SystemAnnouncer uniqueInstance
-		classDefinitionChangedFrom: copyOfOldMetaClass to: newMetaClass
 ]
 
 { #category : #copying }

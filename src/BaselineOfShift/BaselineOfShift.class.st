@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfShift,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfShift'
+	#category : #BaselineOfShift
 }
 
 { #category : #baseline }
@@ -20,6 +20,7 @@ BaselineOfShift >> baseline: spec [
 			
 			spec package: 'Shift-Changes'.
 			spec package: 'Shift-ClassBuilder' with:[spec requires: #('Shift-Changes')].
+
 			spec package: 'Shift-ClassInstaller' with:[spec requires: #('Shift-ClassBuilder')].
 
 			spec package: 'Shift-Changes-Ficus' with:[spec requires: #'Ficus'].

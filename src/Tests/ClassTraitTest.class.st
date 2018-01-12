@@ -40,7 +40,7 @@ ClassTraitTest >> testConflictsAliasesAndExclusions [
 	self assert: self t5 classSide traitComposition asString 
 				= 'T1 classTrait + T2 classTrait'.
 	self t5 classSide 
-		setTraitCompositionFrom: (self t1 classTrait @ { (#m2ClassSideAlias1: -> #m2ClassSide:) } 
+		setTraitComposition: (self t1 classTrait @ { (#m2ClassSideAlias1: -> #m2ClassSide:) } 
 				+ ((self t2 classTrait) @ { (#m2ClassSideAlias2: -> #m2ClassSide:) } 
 				- { #m2ClassSide: })).
 	self deny: (self t5 classTrait >> #m2ClassSide:) isConflict.
@@ -55,11 +55,11 @@ ClassTraitTest >> testInitialization [
 	| classTrait |
 	classTrait := self t1 classTrait.
 	self assert: self t1 hasClassSide.
-	self assert: self t1 classTrait == classTrait.
+	self assert: self t1 classTrait = classTrait.
 	self assert: classTrait isClassTrait.
-	self assert: classTrait classSide == classTrait.
+	self assert: classTrait classSide = classTrait.
 	self deny: classTrait isBaseTrait.
-	self assert: classTrait baseTrait == self t1.
+	self assert: classTrait baseTrait = self t1.
 
 	"assert classtrait methods are propagated to users when setting traitComposition"
 	self assert: self t4 hasClassSide.
@@ -74,11 +74,11 @@ ClassTraitTest >> testInitialization [
 ClassTraitTest >> testIsClassOrTrait [
 
 	self 
-		assert: TBehavior isClassOrTrait;
+		assert: TSortable isClassOrTrait;
 		assert: Class isClassOrTrait;
 		assert: Class class isClassOrTrait;
 		deny: Object new isClassOrTrait;
-		assert: TBehavior classTrait isClassOrTrait.
+		assert: TSortable classTrait isClassOrTrait.
 ]
 
 { #category : #testing }
@@ -90,7 +90,7 @@ ClassTraitTest >> testUsers [
 		(self t6 classTrait) }).
 	self assert: self t5 classSide traitUsers size = 1.
 	self assert: self t5 classSide traitUsers anyOne = self c2 class.
-	self c2 setTraitCompositionFrom: self t1 + self t5.
+	self c2 setTraitComposition: self t1 + self t5.
 	self assert: self t5 classSide traitUsers size = 1.
 	self assert: self t5 classSide traitUsers anyOne = self c2 class.
 	self c2 setTraitComposition: self t2 asTraitComposition.

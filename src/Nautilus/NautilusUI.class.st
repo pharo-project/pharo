@@ -1364,7 +1364,7 @@ NautilusUI >> removeMethods [
 { #category : #'menus behavior' }
 NautilusUI >> removeNonLocalSelector: aSymbol [
 	| traits isAlias |
-	traits := self selectedClassOrMetaClass traitsProvidingSelector: aSymbol.
+	traits := self selectedClassOrMetaClass traitComposition traitDefining: aSymbol.
 	isAlias := self selectedClassOrMetaClass isLocalAliasSelector: aSymbol.
 	isAlias
 		ifTrue: [

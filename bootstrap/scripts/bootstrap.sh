@@ -12,6 +12,7 @@ REPOSITORY="${BOOTSTRAP_REPOSITORY:-.}"
 mkdir -p "${CACHE}" #required to generate hermes files
 ./pharo Pharo.image ${REPOSITORY}/bootstrap/scripts/generateKernelHermesFiles.st --quit
 ./pharo Pharo.image ${REPOSITORY}/bootstrap/scripts/generateSUnitHermesFiles.st --quit
+./pharo Pharo.image ${REPOSITORY}/bootstrap/scripts/generateTraitsHermesFiles.st --quit
 ./pharo Pharo.image ${REPOSITORY}/bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --BUILD_NUMBER=${BUILD_NUMBER} --quit
 
 bash ${REPOSITORY}/bootstrap/scripts/build.sh
