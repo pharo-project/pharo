@@ -93,7 +93,7 @@ RG2MetaclassTraitDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	baseTrait := self baseTrait.
+	self resolveBaseTrait.
 ]
 
 { #category : #'as yet unclassified' }
@@ -130,6 +130,19 @@ RG2MetaclassTraitDefinition >> pvtResolvableProperties [
 RG2MetaclassTraitDefinition >> referencedBehaviors [
 
 	^ super referencedBehaviors, {self baseTrait}
+]
+
+{ #category : #resolving }
+RG2MetaclassTraitDefinition >> resolveBaseTrait [
+
+	baseTrait := self baseTrait.
+]
+
+{ #category : #resolving }
+RG2MetaclassTraitDefinition >> resolveSibling [
+
+	self resolveBaseTrait.
+	self baseTrait resolveBehaviorInformation.
 ]
 
 { #category : #resolving }

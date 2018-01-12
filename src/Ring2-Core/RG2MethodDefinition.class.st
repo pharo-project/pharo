@@ -267,12 +267,12 @@ RG2MethodDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	protocol := self protocol.
-	sourceCode := self sourceCode.
-	package := self package.	
-	author := self author.	
-	time := self time.	
-	tags := self tags.
+	self resolveProtocol.
+	self resolveSourceCode.
+	self resolvePackage.
+	self resolveAuthor.
+	self resolveTime.
+	self resolveTags.
 ]
 
 { #category : #'queries - class' }
@@ -474,6 +474,45 @@ RG2MethodDefinition >> pvtUntagFrom: aSymbol [
 RG2MethodDefinition >> removeFromSystem [
 
 	^ self parent removeLocalMethod: self
+]
+
+{ #category : #resolving }
+RG2MethodDefinition >> resolveAuthor [
+
+	author := self author.	
+]
+
+{ #category : #resolving }
+RG2MethodDefinition >> resolvePackage [
+
+	package := self package.	
+
+]
+
+{ #category : #resolving }
+RG2MethodDefinition >> resolveProtocol [
+
+	protocol := self protocol.
+
+]
+
+{ #category : #resolving }
+RG2MethodDefinition >> resolveSourceCode [
+
+	sourceCode := self sourceCode.
+
+]
+
+{ #category : #resolving }
+RG2MethodDefinition >> resolveTags [
+
+	tags := self tags.
+]
+
+{ #category : #resolving }
+RG2MethodDefinition >> resolveTime [
+
+	time := self time.	
 ]
 
 { #category : #accessing }

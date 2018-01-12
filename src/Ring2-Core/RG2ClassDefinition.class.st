@@ -438,10 +438,10 @@ RG2ClassDefinition >> makeResolved [
 	
 	super makeResolved.
 	
-	comment := self comment.
-	classVariables := self classVariables.
-	package := self package.
-	sharedPools := self sharedPools.
+	self resolveComment.
+	self resolveClassVariables.
+	self resolvePackage.
+	self resolveSharedPools.
 
 ]
 
@@ -615,6 +615,62 @@ RG2ClassDefinition >> removeSharedPool: aRG2PoolVariableDefinition [
 
 	self announceDefinitionChangeDuring: [ 
 		self backend forBehavior removeSharedPool: aRG2PoolVariableDefinition from: self ].
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+
+	self resolveComment. 
+	self comment resolveBehaviorInformation.
+
+	self resolveClassVariables.
+	self classVariablesDo: #resolveBehaviorInformation.
+
+	self resolvePackage.
+	self package resolveBehaviorInformation.
+	
+	self resolveSharedPoolNames.
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolveClassVariables [
+
+	classVariables := self classVariables.
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolveComment [
+
+	comment := self comment.
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolvePackage [
+
+	package := self package.
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolveSharedPoolNames [
+
+	self resolveSharedPools.
+	self sharedPools do: [:each | each resolveName ].
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolveSharedPools [
+
+	sharedPools := self sharedPools.
+]
+
+{ #category : #resolving }
+RG2ClassDefinition >> resolveSibling [
+
+	self resolveMetaclass.
+	self metaclass resolveBehaviorInformation.
 ]
 
 { #category : #resolving }

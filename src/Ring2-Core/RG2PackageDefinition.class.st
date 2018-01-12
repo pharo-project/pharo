@@ -269,9 +269,9 @@ RG2PackageDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	definedBehaviors := self definedBehaviors.
-	extensionMethods := self extensionMethods.
-	tagsForClasses := self tagsForClasses.
+	self resolveDefinedBehaviors.
+	self resolveExtensionMethods.
+	self resolveTagsForClasses.
 
 ]
 
@@ -478,6 +478,33 @@ RG2PackageDefinition >> removeDefinedBehavior: aRG2BehaviorDefinition [
 RG2PackageDefinition >> removeExtensionMethod: aRG2MethodDefinition [ 
 
 	self backend forPackage removeExtensionMethod: aRG2MethodDefinition from: self
+]
+
+{ #category : #resolving }
+RG2PackageDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveName.
+]
+
+{ #category : #resolving }
+RG2PackageDefinition >> resolveDefinedBehaviors [
+
+	definedBehaviors := self definedBehaviors.
+]
+
+{ #category : #resolving }
+RG2PackageDefinition >> resolveExtensionMethods [
+
+	extensionMethods := self extensionMethods.
+]
+
+{ #category : #resolving }
+RG2PackageDefinition >> resolveTagsForClasses [
+
+	tagsForClasses := self tagsForClasses.
 ]
 
 { #category : #'accessing - model' }

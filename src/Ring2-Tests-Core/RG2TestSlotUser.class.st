@@ -2,9 +2,10 @@
 A supporting behavior for Ring tests.
 "
 Class {
-	#name : #RG2TestClass,
+	#name : #RG2TestSlotUser,
 	#superclass : #Object,
-	#traits : 'RG2TestTrait',
-	#classTraits : 'RG2TestTrait classTrait',
+	#instVars : [
+		'#unknown => RG2TestSlot forTesting'
+	],
 	#category : #'Ring2-Tests-Core-Support'
 }

@@ -80,7 +80,7 @@ RG2TraitAliasDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	aliases := self aliases.
+	self resolveAliases.
 
 ]
 
@@ -133,6 +133,21 @@ RG2TraitAliasDefinition >> removeAlias: aSymbol [
 
 	self parent parent announceDefinitionChangeDuring: [ 
 		self backend forBehavior removeAlias: aSymbol from: self ].
+]
+
+{ #category : #resolving }
+RG2TraitAliasDefinition >> resolveAliases [
+
+	aliases := self aliases.
+]
+
+{ #category : #resolving }
+RG2TraitAliasDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveAliases.
 ]
 
 { #category : #'as yet unclassified' }

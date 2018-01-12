@@ -81,7 +81,7 @@ RG2TraitExclusionDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	exclusions := self exclusions.
+	self resolveExclusions.
 
 ]
 
@@ -134,6 +134,22 @@ RG2TraitExclusionDefinition >> removeExclusion: aSymbol [
 
 	self parent parent announceDefinitionChangeDuring: [ 
 		self backend forBehavior removeExclusion: aSymbol from: self. ].
+]
+
+{ #category : #resolving }
+RG2TraitExclusionDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveExclusions.
+]
+
+{ #category : #resolving }
+RG2TraitExclusionDefinition >> resolveExclusions [
+	
+	exclusions := self exclusions.
+
 ]
 
 { #category : #traits }

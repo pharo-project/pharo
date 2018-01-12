@@ -2,9 +2,9 @@
 A supporting behavior for Ring tests.
 "
 Class {
-	#name : #RG2TestClass,
+	#name : #RG2TestClassC,
 	#superclass : #Object,
-	#traits : 'RG2TestTrait',
-	#classTraits : 'RG2TestTrait classTrait',
+	#traits : 'RG2TestTraitB',
+	#classTraits : 'RG2TestTraitB classTrait',
 	#category : #'Ring2-Tests-Core-Support'
 }

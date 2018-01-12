@@ -44,3 +44,12 @@ RG2VariableDefinition >> name: aString [
 		super name: aString ].
 
 ]
+
+{ #category : #resolving }
+RG2VariableDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveName.
+]

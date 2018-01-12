@@ -78,7 +78,7 @@ RG2TraitCompositionDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	transformations := self transformations.
+	self resolveTransformations.
 
 ]
 
@@ -144,6 +144,22 @@ RG2TraitCompositionDefinition >> removeTransformation: aRG2TraitTransformationDe
 
 	self parent announceDefinitionChangeDuring: [ 
 		self backend forBehavior removeTransformation: aRG2TraitTransformationDefinition from: self ].
+]
+
+{ #category : #resolving }
+RG2TraitCompositionDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveTransformations.
+	self transformationsDo: [ :each | each resolveBehaviorInformation ].
+]
+
+{ #category : #resolving }
+RG2TraitCompositionDefinition >> resolveTransformations [
+
+	transformations := self transformations.
 ]
 
 { #category : #'as yet unclassified' }

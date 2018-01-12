@@ -138,7 +138,7 @@ RG2MetaclassDefinition >> makeResolved [
 	
 	super makeResolved.
 	
-	baseClass := self baseClass.
+	self resolveBaseClass.
 ]
 
 { #category : #accessing }
@@ -196,6 +196,19 @@ RG2MetaclassDefinition >> pvtResolvableProperties [
 RG2MetaclassDefinition >> referencedBehaviors [
 
 	^ super referencedBehaviors, {self baseClass}
+]
+
+{ #category : #resolving }
+RG2MetaclassDefinition >> resolveBaseClass [
+
+	baseClass := self baseClass.
+]
+
+{ #category : #resolving }
+RG2MetaclassDefinition >> resolveSibling [
+
+	self resolveMetaclass.
+	self baseClass resolveBehaviorInformation.
 ]
 
 { #category : #resolving }

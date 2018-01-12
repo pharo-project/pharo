@@ -532,13 +532,13 @@ RG2BehaviorDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	superclass := self superclass.
-	localMethods := self localMethods asSet.
-	protocols := self protocols.
-	traitComposition := self traitComposition.
-	metaclass := self metaclass.
-	tagsForMethods := self tagsForMethods asSet.
-	tags := self tags asSet.	
+	self resolveSuperclass.
+	self resolveLocalMethods.
+	self resolveProtocols.
+	self resolveTraitComposition.
+	self resolveMetaclass.
+	self resolveTagsForMethods.
+	self resolveTags.
 
 ]
 
@@ -857,6 +857,35 @@ RG2BehaviorDefinition >> removeProtocol: aSymbol [
 ]
 
 { #category : #resolving }
+RG2BehaviorDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveSuperclassName.
+	
+	self resolveTraitComposition.
+	self traitComposition resolveBehaviorInformation.
+	
+	self resolveSibling.
+	self resolveTags.
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveLocalMethods [
+
+	localMethods := self localMethods asSet.
+	
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveMetaclass [
+
+	metaclass := self metaclass.
+	
+]
+
+{ #category : #resolving }
 RG2BehaviorDefinition >> resolveName [
 
 	"try to set the correct name if sibling has already a name"
@@ -864,6 +893,53 @@ RG2BehaviorDefinition >> resolveName [
 	( self sibling isRing2Resolved and: [ self sibling hasResolved: #name ] ) ifTrue: [ 
 		self setNameFromSiblingIfNeeded ].
 
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveProtocols [
+
+	protocols := self protocols.
+
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveSibling [
+
+	self subclassResponsibility.
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveSuperclass [
+
+	superclass := self superclass.
+	
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveSuperclassName [
+
+	self resolveSuperclass.
+	self superclass resolveName.	
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveTags [
+
+	tags := self tags asSet.	
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveTagsForMethods [
+
+	tagsForMethods := self tagsForMethods asSet.
+	
+]
+
+{ #category : #resolving }
+RG2BehaviorDefinition >> resolveTraitComposition [
+
+	traitComposition := self traitComposition.
+	
 ]
 
 { #category : #'queries - methods' }

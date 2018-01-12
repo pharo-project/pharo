@@ -128,9 +128,9 @@ RG2CommentDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	content := self content.
-	author := self author.
-	time := self time.
+	self resolveContent.
+	self resolveAuthor.
+	self resolveTime.
 ]
 
 { #category : #printing }
@@ -190,10 +190,50 @@ RG2CommentDefinition >> pvtTime: aDateAndTime [
 	^ time := aDateAndTime
 ]
 
+{ #category : #resolving }
+RG2CommentDefinition >> resolveAuthor [
+
+	author := self author.
+]
+
+{ #category : #resolving }
+RG2CommentDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveContent.
+	self resolveAuthor.
+	self resolveTime.
+]
+
+{ #category : #resolving }
+RG2CommentDefinition >> resolveContent [
+
+	content := self content.
+]
+
+{ #category : #resolving }
+RG2CommentDefinition >> resolveTime [
+
+	time := self time.
+]
+
 { #category : #'backward compatibility' }
 RG2CommentDefinition >> sourceCode [
 
 	^ self content   
+]
+
+{ #category : #accessing }
+RG2CommentDefinition >> stamp [
+
+	| timeString |
+	
+	timeString := String new: 8 streamContents: [ :aStream | 
+		self time asTime print24: true showSeconds: false on: aStream ].
+
+	^ self author asString, ' ', self time asDate mmddyyyy, ' ', timeString
 ]
 
 { #category : #'accessing - backend' }

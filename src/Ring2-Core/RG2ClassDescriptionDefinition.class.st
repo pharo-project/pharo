@@ -240,7 +240,7 @@ RG2ClassDescriptionDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	layout := self layout.
+	self resolveLayout.
 
 ]
 
@@ -264,6 +264,23 @@ RG2ClassDescriptionDefinition >> pvtResolvableProperties [
 	^ super pvtResolvableProperties, { 
 		#layout -> layout. 
      	}
+]
+
+{ #category : #resolving }
+RG2ClassDescriptionDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveLayout.
+	self layout resolveBehaviorInformation.
+	
+]
+
+{ #category : #resolving }
+RG2ClassDescriptionDefinition >> resolveLayout [
+
+	layout := self layout.
 ]
 
 { #category : #resolving }

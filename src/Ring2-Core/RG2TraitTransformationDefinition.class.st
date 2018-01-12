@@ -63,7 +63,7 @@ RG2TraitTransformationDefinition >> makeResolved [
 
 	super makeResolved.
 	
-	subject := self subject.
+	self resolveSubject.
 
 ]
 
@@ -102,6 +102,23 @@ RG2TraitTransformationDefinition >> pvtSubject: aRG2TraitDefinition [
 	self environment verifyOwnership: aRG2TraitDefinition.
 
 	^ subject := aRG2TraitDefinition
+]
+
+{ #category : #resolving }
+RG2TraitTransformationDefinition >> resolveBehaviorInformation [
+
+	self isBehaviorInformationResolved ifTrue: [ ^ self ].
+	super resolveBehaviorInformation.
+	
+	self resolveSubject.
+	self subject resolveName.
+
+]
+
+{ #category : #resolving }
+RG2TraitTransformationDefinition >> resolveSubject [
+
+	subject := self subject.
 ]
 
 { #category : #'accessing - backend' }

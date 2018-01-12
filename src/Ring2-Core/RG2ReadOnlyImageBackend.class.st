@@ -316,7 +316,14 @@ RG2ReadOnlyImageBackend >> resolvedPropertiesFor: aRG2Definition [
 { #category : #class }
 RG2ReadOnlyImageBackend >> sharedPoolsFor: aRG2Behavior do: aBlock [
 
-	^ aRG2Behavior pvtSharedPoolsDo: aBlock
+	| realClass |
+	realClass := self realBehaviorFor: aRG2Behavior.
+	realClass sharedPools do: [ :each | 
+			| def | 
+			def := self 
+				definitionFor: each
+				ifAbsentRegister: [ each asRing2MinimalDefinitionIn: aRG2Behavior environment ].
+			aBlock value: def ]
 ]
 
 { #category : #'pointer layout' }
