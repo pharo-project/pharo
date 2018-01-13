@@ -20,6 +20,13 @@ RG2PointerLayoutDefinition >> allSlots [
 	^ self slots
 ]
 
+{ #category : #children }
+RG2PointerLayoutDefinition >> childDefinitionsDo: aBlock traversed: aSet [
+
+	self pvtSlotsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
+
+]
+
 { #category : #'accessing - backend' }
 RG2PointerLayoutDefinition >> cleanSlots [
 

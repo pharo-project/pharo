@@ -51,6 +51,15 @@ RG2TraitDefinition >> category: aString [
 	self announcer behaviorRecategorized: self."
 ]
 
+{ #category : #'accessing - backend' }
+RG2TraitDefinition >> childDefinitionsDo: aBlock traversed: aSet [
+
+	self pvtClassTrait withChildrenDo: aBlock traversed: aSet.
+	self pvtComment withChildrenDo: aBlock traversed: aSet.
+	self pvtPackage withChildrenDo: aBlock traversed: aSet.
+	
+]
+
 { #category : #accessing }
 RG2TraitDefinition >> classSide [
 

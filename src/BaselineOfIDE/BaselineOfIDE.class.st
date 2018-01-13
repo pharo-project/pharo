@@ -422,7 +422,7 @@ spec group: 'Epicea-Tests-Group' with: #(
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
-	'Epicea-Tests-Group'
+	"'Epicea-Tests-Group'"
 ).	
 
 spec group: 'General-Help-Group' with: #(
@@ -942,7 +942,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	Smalltalk fixObsoleteReferences.
 	
-	EpMonitor current enable.
+	"EpMonitor current enable."
 		
 	Author reset.
 

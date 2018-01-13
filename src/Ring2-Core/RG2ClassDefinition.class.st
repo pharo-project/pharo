@@ -115,6 +115,16 @@ RG2ClassDefinition >> category: aString [
 	self announcer behaviorRecategorized: self."
 ]
 
+{ #category : #children }
+RG2ClassDefinition >> childDefinitionsDo: aBlock traversed: aSet [
+
+	self pvtComment withChildrenDo: aBlock traversed: aSet.
+	self pvtClassVariablesDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
+	self pvtPackage withChildrenDo: aBlock traversed: aSet.
+	self pvtSharedPoolsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
+	
+]
+
 { #category : #'as yet unclassified' }
 RG2ClassDefinition >> classSide [
 
