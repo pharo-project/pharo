@@ -282,7 +282,7 @@ CompiledMethodTest >> testIsQuick [
 
 { #category : #'tests - accessing' }
 CompiledMethodTest >> testOrigin [
-	| regularMethod methodFromTrait aliasedMethod |
+	| regularMethod methodFromTrait |
 
 	"Regular method"
 	regularMethod := Behavior>>#name.
