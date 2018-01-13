@@ -257,7 +257,7 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 { #category : #actions }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
-	| dejavu array |
+	| array |
 
 	'Starting postload action' logCr.
 
