@@ -638,7 +638,7 @@ RG2Definition >> parent: aRG2BehaviorDefinition [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #copying }
 RG2Definition >> postCopy [
 
 	super postCopy.
