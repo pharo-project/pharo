@@ -113,7 +113,7 @@ GLMPresentationTest >> testCopyRootPrototype [
 
 { #category : #tests }
 GLMPresentationTest >> testCopyTheTransformation [
-	| presentation newPresentation transformation |
+	| presentation newPresentation |
 	presentation := GLMPresentation new.
 	presentation selectionTransformation: [:each | each + 1].
 	newPresentation := presentation copy.
