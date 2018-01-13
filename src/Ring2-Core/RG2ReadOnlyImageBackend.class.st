@@ -261,7 +261,8 @@ RG2ReadOnlyImageBackend >> methodPackageFor: aRG2MethodDefinition [
 	
 	realMethod := self realMethodFor: aRG2MethodDefinition.
 	^ realMethod 
-		ifNotNil: [ realMethod package asRing2MinimalDefinitionIn: aRG2MethodDefinition environment ]
+		ifNotNil: [ realMethod package ifNotNil: [ :aPackage | 
+				aPackage asRing2MinimalDefinitionIn: aRG2MethodDefinition environment ] ]
 ]
 
 { #category : #general }
