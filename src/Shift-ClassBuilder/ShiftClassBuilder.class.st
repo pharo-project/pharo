@@ -188,6 +188,7 @@ ShiftClassBuilder >> copyClassSlotsFromExistingClass [
 { #category : #building }
 ShiftClassBuilder >> copyOrganization [
 	newClass organization copyFrom: oldClass organization.
+	newClass class organization copyFrom: oldClass class organization.
 ]
 
 { #category : #installing }
@@ -271,6 +272,11 @@ ShiftClassBuilder >> fillFor: aClass [
 		category: aClass category;
 		environment: aClass environment;
 		copyClassSlotsFromExistingClass
+]
+
+{ #category : #testing }
+ShiftClassBuilder >> hasToMigrateInstances [
+	^ self changes anySatisfy: [ :e | e hasToMigrateInstances ]
 ]
 
 { #category : #initialization }

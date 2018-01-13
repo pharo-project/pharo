@@ -46,6 +46,13 @@ Margin class >> fromRectangle: aRectangle [
 ]
 
 { #category : #'instance creation' }
+Margin class >> left: leftNumber right: rightNumber top: topNumber  bottom: bottomNumber [ 
+
+	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
+
+]
+
+{ #category : #'instance creation' }
 Margin class >> left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber [ 
 
 	^ self new setTop: topNumber left: leftNumber bottom: bottomNumber right: rightNumber 
@@ -121,7 +128,7 @@ Margin >> fromRectangle: aRectangle [
 
 { #category : #accessing }
 Margin >> height [
-
+	"Height represents the height of the rubber of the margin this is why we add bottom and top margins."
 	^ self bottom + self top
 ]
 
@@ -129,8 +136,7 @@ Margin >> height [
 Margin >> initialize [
 
 	super initialize.
-	
-	self fromNumber: 0
+	self setTop: 0 left: 0 bottom: 0 right: 0 
 ]
 
 { #category : #operations }
@@ -138,7 +144,6 @@ Margin >> insetRectangle: aRectangle [
 	"Answer a rectangle whose size has been reduced by the receiver. The limitation is that since a rectangle topleft is always less than its bottomright you may have a some cases that are not possible to express. For that you should use a margin object instead of a rectangle."
 	
 	| l r t b |
-	
 	l := aRectangle left 	+ self left.
 	r := left max: aRectangle right - self right.
 	t := aRectangle top + self top.
@@ -200,6 +205,6 @@ Margin >> top [
 
 { #category : #accessing }
 Margin >> width [ 
-
+	"Width represents the size (width) of the rubber of the margin, this is why we add right and left margins."
 	^ self right + self left
 ]

@@ -6,10 +6,9 @@ Class {
 	#superclass : #ComposablePresenter,
 	#instVars : [
 		'tree',
-		'packageTreeNautilus',
 		'buttonRefresh',
-		'packageTreeNautilusUI',
-		'open'
+		'open',
+		'browser'
 	],
 	#category : #'Tool-DependencyAnalyser-UI-Core'
 }
@@ -69,6 +68,11 @@ DAPackageTreeModel >> browseReference [
 		 ]
 ]
 
+{ #category : #accessing }
+DAPackageTreeModel >> browser [
+	^ browser
+]
+
 { #category : #private }
 DAPackageTreeModel >> buildRoots [
 	self subclassResponsibility.
@@ -81,7 +85,8 @@ DAPackageTreeModel >> buttonRefresh [
 
 { #category : #actions }
 DAPackageTreeModel >> close [
-	open := false
+	open := false.
+	browser windowIsClosing
 ]
 
 { #category : #protocol }
@@ -104,7 +109,7 @@ DAPackageTreeModel >> initializeWidgets [
 	tree := self newTree
 		multiSelection: true;
 		on: $b meta
-			do: [ self selectedItemFromTree browseInOtherNautilus ];
+			do: [ self selectedItemFromTree spawnNewBrowser ];
 		columns: {(TreeColumnPresenter new displayBlock: [ :node | node label ])};
 		yourself.
 	buttonRefresh := self newButton
@@ -112,7 +117,7 @@ DAPackageTreeModel >> initializeWidgets [
 		help: 'Refresh the TreePresenter';
 		label: 'Refresh';
 		yourself.
-	packageTreeNautilus := Nautilus new
+	browser := Smalltalk tools browser onDefaultEnvironment
 ]
 
 { #category : #testing }
@@ -156,23 +161,6 @@ DAPackageTreeModel >> openTreeFor: namesOfSelected [
 		title: 'Class dependencies';
 		extent: 700 @ 500;
 		openWithSpec
-]
-
-{ #category : #accessing }
-DAPackageTreeModel >> packageTreeNautilus [
-	^ packageTreeNautilus
-]
-
-{ #category : #accessing }
-DAPackageTreeModel >> packageTreeNautilusUI [
-	^ packageTreeNautilusUI
-]
-
-{ #category : #accessing }
-DAPackageTreeModel >> packageTreeNautilusUI: anObject [
-	packageTreeNautilusUI := anObject.
-	"have to rebuild the roots, because the Nautilus UI just changed"
-	self buildRoots
 ]
 
 { #category : #actions }

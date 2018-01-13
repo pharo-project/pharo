@@ -7,12 +7,12 @@ Class {
 	#category : #'Tool-DependencyAnalyser-UI-Nodes'
 }
 
-{ #category : #'browse-nautilus' }
-DATraitDependencyNode >> browseInOtherNautilus [
-	self browseClass: self content trait
-]
-
 { #category : #accessing }
 DATraitDependencyNode >> icon [
 	^  Smalltalk ui icons iconNamed: #traitIcon
+]
+
+{ #category : #'browse-nautilus' }
+DATraitDependencyNode >> spawnNewBrowser [
+	self browseClass: self content trait
 ]

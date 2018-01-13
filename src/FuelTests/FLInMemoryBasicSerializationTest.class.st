@@ -41,6 +41,12 @@ FLInMemoryBasicSerializationTest >> testConsiderCustomGlobal [
 ]
 
 { #category : #tests }
+FLInMemoryBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
+	"Since FLSerializer class >> serializeToByteArray: does not allow customizing serialization, this test is disabled."
+	self error "Since it's an expectedFailure"
+]
+
+{ #category : #tests }
 FLInMemoryBasicSerializationTest >> testStringGlobalsAndClosure [
 
 	| materialized |

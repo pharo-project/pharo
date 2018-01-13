@@ -8,14 +8,6 @@ Class {
 }
 
 { #category : #'tests - valid context' }
-SugsContextTest >> testContextForNautilusItsANautilusContext [
-	| nautilus |
-	
-	nautilus := NautilusUI new.
-	self assert: (SugsAbstractContext contextFor: nautilus) class equals: SugsNautilusContext.
-]
-
-{ #category : #'tests - valid context' }
 SugsContextTest >> testDebuggerIsAValidContext [
 	| debugger |
 	

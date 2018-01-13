@@ -8,11 +8,12 @@ Float >> fuelAccept: aGeneralMapper [
 
 { #category : #'*Fuel' }
 Float class >> materializeFrom: aDecoder [
-
-	^ (self new: 2)
+	"The * 1 is here to give a chance to the VM to create a SmallFloat64 if it can (thanks Nicolas Cellier)."
+	
+	^ (BoxedFloat64 new: 2)
 		at: 1 put: aDecoder nextEncodedUint32;
 		at: 2 put: aDecoder nextEncodedUint32;
-		yourself.
+		* 1.
 
 ]
 

@@ -215,6 +215,11 @@ Nautilus class >> nautilusSettingsOn: aBuilder [
 ]
 
 { #category : #opening }
+Nautilus class >> onDefaultEnvironment [
+	^self new
+]
+
+{ #category : #opening }
 Nautilus class >> open [
 	^ self openInEnvironment: self defaultBrowsedEnvironment
 ]
@@ -582,6 +587,18 @@ Nautilus >> browsingHistory [
 	^ browsingHistory ifNil: [ browsingHistory := NavigationHistory new ]
 ]
 
+{ #category : #displaying }
+Nautilus >> buildUI [
+	ui := NautilusUI on: self
+]
+
+{ #category : #displaying }
+Nautilus >> buildWindow [
+	ui ifNil: [ self buildUI ].
+	ui buildWindow.
+	^ui window
+]
+
 { #category : #accessing }
 Nautilus >> classes [
 	
@@ -677,7 +694,8 @@ Nautilus >> next [
 
 { #category : #displaying }
 Nautilus >> open [
-	ui := (NautilusUI on: self) open.
+	self buildUI.
+	ui open.
 	self announce: (WindowOpened new window: ui window)
 ]
 
@@ -798,6 +816,43 @@ Nautilus >> removeFromHistory: aNautilusHistoryEntry [
 
 	self browsingHistory removeEntry: aNautilusHistoryEntry.
 	self historyChanged
+]
+
+{ #category : #controlling }
+Nautilus >> selectClass: aClass [
+
+	self package: aClass package class: aClass.
+	self showInstance: aClass isInstanceSide.
+	ui updatePackageGroupAndClassList.
+	ui updatePackageGroupAndClassList
+]
+
+{ #category : #controlling }
+Nautilus >> selectMethod: aMethod [
+
+	| methodClass |
+	methodClass := aMethod methodClass.	
+	self selectClass: methodClass.
+	self 
+		browsedEnvironment: Nautilus defaultBrowsedEnvironment;
+		showInstance: methodClass isInstanceSide.
+	self 
+		package: methodClass package
+		class: methodClass
+		protocol: aMethod protocol
+		method: aMethod.
+	ui
+		showHierarchy: false;
+		giveFocusToMethod.
+	ui updateCategoryAndMethodList.
+	ui sourceTextModel announce: NautilusMethodSelected
+]
+
+{ #category : #controlling }
+Nautilus >> selectPackage: aPackage [
+
+	self package: aPackage.
+	ui updatePackageGroupAndClassList.
 ]
 
 { #category : #accessing }

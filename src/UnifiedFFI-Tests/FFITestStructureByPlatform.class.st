@@ -1,3 +1,6 @@
+"
+A structure for test purposes
+"
 Class {
 	#name : #FFITestStructureByPlatform,
 	#superclass : #FFIExternalStructure,

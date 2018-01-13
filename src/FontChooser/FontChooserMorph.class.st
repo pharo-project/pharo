@@ -255,7 +255,7 @@ FontChooserMorph >> newFontPreviewInnerPanel [
 	
 	| textMorph |
 	textMorph := self newText: self previewText.
-	textMorph margins: 4.
+	textMorph margins: 4 asMargin.
 	^ self model selectedFont
 		ifNil: [ textMorph ]
 		ifNotNil: [ :f | textMorph beAllFont: f ]

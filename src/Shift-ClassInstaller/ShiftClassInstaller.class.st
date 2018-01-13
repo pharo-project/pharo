@@ -23,12 +23,13 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'oldClass',
-		'builder'
+		'builder',
+		'installingEnvironment'
 	],
-	#category : 'Shift-ClassInstaller'
+	#category : #'Shift-ClassInstaller'
 }
 
-{ #category : #example }
+{ #category : #examples }
 ShiftClassInstaller class >> example [
 	^ Smalltalk classInstaller make: [ :aSlotClassBuilder |
 		aSlotClassBuilder
@@ -50,7 +51,7 @@ ShiftClassInstaller class >> update: oldClass to: aBlock [
 		make:aBlock
 ]
 
-{ #category : #testing }
+{ #category : #validating }
 ShiftClassInstaller class >> validateClassName: aString [ 
 	ShiftClassBuilder new name: aString.
 ]
@@ -94,19 +95,36 @@ ShiftClassInstaller >> initialize [
 { #category : #building }
 ShiftClassInstaller >> installInEnvironment: newClass [
 	"I only install in the environment if there is not oldClass installed."
-	(builder environment includesKey: builder name) ifFalse:[
-		builder environment at: builder name put: newClass
+	(self installingEnvironment hasClassNamed: builder name) ifFalse:[
+		self installingEnvironment installClass: newClass withName: builder name.
 	].
 
 	self
-		updateBindings: (builder environment associationAt: builder name)
+		updateBindings: (self installingEnvironment bindingAt: builder name)
 		of: newClass
+]
+
+{ #category : #building }
+ShiftClassInstaller >> installSubclassInSuperclass: newClass [
+       newClass superclass addSubclass: newClass
+]
+
+{ #category : #building }
+ShiftClassInstaller >> installingEnvironment [
+
+	^ installingEnvironment ifNil: [ builder buildEnvironment ]
+]
+
+{ #category : #building }
+ShiftClassInstaller >> installingEnvironment: anEnvironment [
+
+	installingEnvironment := anEnvironment
 ]
 
 { #category : #building }
 ShiftClassInstaller >> lookupOldClass [
 	oldClass
-		ifNil: [ oldClass := builder environment at: builder name ifAbsent: [ nil ] ]
+		ifNil: [ oldClass := self installingEnvironment classNamed: builder name ifAbsent: [ nil ] ]
 ]
 
 { #category : #building }
@@ -121,9 +139,12 @@ ShiftClassInstaller >> make: aBlock [
 		builder oldClass: oldClass.
 		newClass := builder build.
 
+		self validateReadOnlyInstancesOf: oldClass.
+
 		self installInEnvironment: newClass.
 
-		newClass superclass addSubclass: newClass.
+		self installSubclassInSuperclass: newClass.
+		
 		builder builderEnhancer beforeMigratingClass: builder installer: self.
 
 		self migrateClassTo: newClass.
@@ -149,7 +170,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	| slotsToMigrate |
 	oldClass ifNil:[^ self].
 	self assert: newClass isNotNil.
-	
+		
 	oldClass 	superclass removeSubclass: oldClass.
 
 	newClass subclasses: oldClass subclasses.
@@ -162,7 +183,7 @@ ShiftClassInstaller >> migrateClassTo: newClass [
 	].
 	
 	[ 	
-		(self builder changes anySatisfy: [ :e | e hasToMigrateInstances ]) 
+		(self builder hasToMigrateInstances) 
 			ifTrue: [self migrateInstancesTo: newClass].
 
 		{ oldClass. builder oldMetaclass } elementsForwardIdentityTo: { newClass. builder newMetaclass }.	
@@ -201,7 +222,8 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 	oldCategory == newCategory asSymbol
 		ifTrue: [ ^ self ].
 
-	builder environment organization ifNotNil: [ :e | e classify: aClass name under: newCategory ].
+	self installingEnvironment organization
+		ifNotNil: [ :e | e classify: aClass name under: newCategory ].
 
 	(oldCategory isNil or:[ oldCategory = #Unclassified])
 		ifTrue: [ SystemAnnouncer uniqueInstance classAdded: aClass inCategory: newCategory ]
@@ -210,13 +232,27 @@ ShiftClassInstaller >> recategorize: aClass to: newCategory [
 
 { #category : #building }
 ShiftClassInstaller >> remake: aClass [
-	self class update: aClass to: [ :anotherBuilder | 
-		anotherBuilder fillFor: aClass.
-		builder propagateChangesTo: anotherBuilder.
-	]
+
+	self class new
+		oldClass: aClass;
+		installingEnvironment: self installingEnvironment;
+		make: [ :anotherBuilder | 
+			anotherBuilder fillFor: aClass.
+			anotherBuilder buildEnvironment: builder buildEnvironment.
+			builder propagateChangesTo: anotherBuilder ]
 ]
 
 { #category : #building }
 ShiftClassInstaller >> updateBindings: aBinding of: newClass [
 	newClass methods do: [ :e | e classBinding: aBinding ]
+]
+
+{ #category : #validating }
+ShiftClassInstaller >> validateReadOnlyInstancesOf: aClass [
+	
+	builder hasToMigrateInstances ifFalse: [ ^ self ].
+	
+	(aClass allSubInstances anySatisfy: [ :anInstance | anInstance isReadOnlyObject ]) ifTrue:[
+		self error: 'There are read only instances of the class to modify. Aborting the creation of classes'
+	]
 ]
