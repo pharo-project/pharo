@@ -20,13 +20,6 @@ RG2ClassDescriptionDefinition >> allSlots [
 	^ (superclassSlots, self layout allSlots) asArray.
 ]
 
-{ #category : #children }
-RG2ClassDescriptionDefinition >> childDefinitionsDo: aBlock traversed: aSet [
-
-	self pvtLayout withChildrenDo: aBlock traversed: aSet.
-	
-]
-
 { #category : #'as yet unclassified' }
 RG2ClassDescriptionDefinition >> classVariablesString [
 	"Answer a string of my class variable names separated by spaces."

@@ -98,13 +98,13 @@ RG2ReadOnlyImageBackendTest >> testClassTrait [
 	self assert: classTrait isMeta.
 	self assert: classTrait name equals: 'RG2TestTrait classTrait'.
 	self assert: classTrait baseTrait name equals: 'RG2TestTrait'.
-	self assert: classTrait category equals: 'Ring2-Tests-Core'.
+	self assert: classTrait category equals: 'Ring2-Tests-Support'.
 	self assert: (classTrait superclass == classTrait). "cycle, nil in reality"
 	self assert: classTrait comment content equals: RG2TestTrait organization comment.
 	self assert: classTrait localMethods size equals: RG2TestTrait classTrait localMethods size.
 	self assert: classTrait protocols asSortedCollection equals: RG2TestTrait classTrait protocols asSortedCollection.
 	self assert: classTrait metaclass name equals: #ClassTrait.
-	self assert: classTrait package name equals: 'Ring2-Tests-Core'.
+	self assert: classTrait package name equals: 'Ring2-Tests-Support'.
 	
 
 ]
@@ -307,13 +307,13 @@ RG2ReadOnlyImageBackendTest >> testTrait [
 	self assert: trait isMeta not.
 	self assert: trait name equals: #RG2TestTrait.
 	self assert: trait classTrait name equals: 'RG2TestTrait classTrait'.
-	self assert: trait category equals: 'Ring2-Tests-Core'.
+	self assert: trait category equals: 'Ring2-Tests-Support'.
 	self assert: (trait superclass == trait). "cycle, nil in reality"
 	self assert: trait comment content equals: RG2TestTrait organization comment.
 	self assert: trait localMethods size equals: RG2TestTrait localMethods size.
 	self assert: trait protocols asSortedCollection equals: RG2TestTrait protocols asSortedCollection.
 	self assert: trait metaclass name equals: #Trait.
-	self assert: trait package name equals: 'Ring2-Tests-Core'.
+	self assert: trait package name equals: 'Ring2-Tests-Support'.
 	
 
 ]

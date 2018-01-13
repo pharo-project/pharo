@@ -160,16 +160,6 @@ RG2Definition >> canMergeWith: aRG2Definition visited: visitedDefinitions [
 RG2Definition >> child: aChildDefinition renamedFrom: oldName to: newName [
 ]
 
-{ #category : #children }
-RG2Definition >> childDefinitionsDo: aBlock traversed: aSet [
-]
-
-{ #category : #properties }
-RG2Definition >> cleanedProperties [
-
-	^ properties := IdentityDictionary new
-]
-
 { #category : #'as yet unclassified' }
 RG2Definition >> compatibleWith: aRG2Definition [
 
@@ -659,7 +649,7 @@ RG2Definition >> postCopy [
 { #category : #properties }
 RG2Definition >> properties [
 
-	^ properties ifNil: [ self cleanedProperties ]
+	^ properties ifNil:[ properties := IdentityDictionary new ]
 ]
 
 { #category : #properties }
@@ -826,20 +816,4 @@ RG2Definition >> unresolvedValue: aDefaultValue [
 	^ RG2UnresolvedValue new
 		default: aDefaultValue;
 		yourself
-]
-
-{ #category : #children }
-RG2Definition >> withChildrenDo: aBlock [
-
-	self withChildrenDo: aBlock traversed: IdentitySet new.
-]
-
-{ #category : #children }
-RG2Definition >> withChildrenDo: aBlock traversed: aSet [
-
-	(aSet includes: self) ifTrue: [ ^ self ].
-
-	aBlock value: self.
-	aSet add: self.
-	self childDefinitionsDo: aBlock traversed: aSet.
 ]

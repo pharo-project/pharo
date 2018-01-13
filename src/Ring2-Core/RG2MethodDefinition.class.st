@@ -137,13 +137,6 @@ RG2MethodDefinition >> category [
 	^ self protocol
 ]
 
-{ #category : #children }
-RG2MethodDefinition >> childDefinitionsDo: aBlock traversed: aSet [
-
-	self pvtPackage withChildrenDo: aBlock traversed: aSet.
-	
-]
-
 { #category : #'accessing - backend' }
 RG2MethodDefinition >> cleanTags [
 

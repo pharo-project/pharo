@@ -62,14 +62,6 @@ RG2PackageDefinition >> categoryName [
 	^ self name 
 ]
 
-{ #category : #children }
-RG2PackageDefinition >> childDefinitionsDo: aBlock traversed: aSet [
-
-	self pvtDefinedBehaviorsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
-	self pvtExtensionMethodsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
-
-]
-
 { #category : #accessing }
 RG2PackageDefinition >> classNames [
 

@@ -17,12 +17,6 @@ RG2UnresolvedValue class >> recursive [
 	^ unresolvedValue.
 ]
 
-{ #category : #enumerating }
-RG2UnresolvedValue >> childDefinitionsDo: aBlock [
-
-		
-]
-
 { #category : #accessing }
 RG2UnresolvedValue >> default [
 	^ default

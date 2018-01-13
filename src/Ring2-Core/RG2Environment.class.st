@@ -124,27 +124,10 @@ RG2Environment >> child: aChildDefinition renamedFrom: oldName to: newName [
 
 ]
 
-{ #category : #children }
-RG2Environment >> childDefinitionsDo: aBlock traversed: aSet [
-
-	self pvtBehaviorsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
-	self pvtPackagesDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
-	self pvtGlobalVariablesDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
-	
-]
-
 { #category : #cleaning }
 RG2Environment >> clean [
 
 	self cleanWithMetaclassNamed: #Metaclass
-
-]
-
-{ #category : #'as yet unclassified' }
-RG2Environment >> cleanAllProperties [
-
-	self withChildrenDo: [ :each | 
-		each cleanedProperties ]
 
 ]
 

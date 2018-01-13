@@ -14,13 +14,6 @@ RG2TraitTransformationDefinition >> addoptToParentStub [
 	self parent addTransformation: self.
 ]
 
-{ #category : #children }
-RG2TraitTransformationDefinition >> childDefinitionsDo: aBlock traversed: aSet [
-
-	self pvtSubject withChildrenDo: aBlock traversed: aSet.
-	
-]
-
 { #category : #'managing container' }
 RG2TraitTransformationDefinition >> defaultParentStub [
 

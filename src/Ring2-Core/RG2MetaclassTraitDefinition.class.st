@@ -40,13 +40,6 @@ RG2MetaclassTraitDefinition >> category [
 	^ self baseTrait category
 ]
 
-{ #category : #children }
-RG2MetaclassTraitDefinition >> childDefinitionsDo: aBlock traversed: aSet [
-
-	self pvtBaseTrait withChildrenDo: aBlock traversed: aSet.
-
-]
-
 { #category : #accessing }
 RG2MetaclassTraitDefinition >> comment [
 
