@@ -12,8 +12,20 @@ Class {
 }
 
 { #category : #accessing }
+ShGlobalsEnvironment >> bindingAt: aString [ 
+	
+	^ environment bindingOf: aString
+]
+
+{ #category : #accessing }
 ShGlobalsEnvironment >> classNamed: aName [
 	^ environment classNamed:aName.
+]
+
+{ #category : #'as yet unclassified' }
+ShGlobalsEnvironment >> classNamed: aString ifAbsent: aBlockClosure [ 
+	
+	^ environment at: aString ifAbsent: aBlockClosure
 ]
 
 { #category : #accessing }
@@ -29,4 +41,16 @@ ShGlobalsEnvironment >> environment: anObject [
 { #category : #testing }
 ShGlobalsEnvironment >> hasClassNamed: aName [
 	^ environment hasClassNamed: aName
+]
+
+{ #category : #installation }
+ShGlobalsEnvironment >> installClass: aClass withName: aString [ 
+	
+	environment at: aString put: aClass
+]
+
+{ #category : #accessing }
+ShGlobalsEnvironment >> organization [
+	
+	^ environment organization
 ]

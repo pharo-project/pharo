@@ -21,6 +21,10 @@ ShiftAnonymousClassInstaller >> installInEnvironment: newClass. [
 ]
 
 { #category : #building }
+ShiftAnonymousClassInstaller >> installSubclassInSuperclass: newClass [
+]
+
+{ #category : #building }
 ShiftAnonymousClassInstaller >> lookupOldClass [
 	^ self.
 ]

@@ -31,14 +31,31 @@ ShLayoutDefinition >> classSlots: anObject [
 ]
 
 { #category : #accessing }
-ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
-	oldClass ifNil:[^self].
+ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
+	"I only copy the slot if it is not virtual and it is the same in the oldClass. 
+	 They are copied as they have the index as instance variable, the index can change in the new class."
 	
-	oldClass slots isEmpty ifTrue: [ ^self ].
-	oldClass classLayout postCopy.		
+	aClass slots isEmpty ifTrue: [ ^ slotCollection ].
+	
+	^ slotCollection
+		collect: [ :aSlot | 
+			aClass
+				slotNamed: aSlot name
+				ifFound: [ :oldSlot | 
+					(oldSlot == aSlot and: [ aSlot isVirtual not ])
+						ifTrue: [ aSlot copy ]
+						ifFalse: [ aSlot ] ]
+				ifNone: [ aSlot ] ]
+]
 
-	oldClass class slots isEmpty ifTrue: [ ^self ].
-	oldClass class classLayout postCopy.		
+{ #category : #accessing }
+ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
+	"I copy the slots if they are used in oldClass. As the slots has state (usually the index) they cannot be shared between the old and the new class."
+
+	oldClass ifNil: [ ^ self ].
+	
+	slots := self copy: slots ifUsedIn: oldClass.
+	classSlots := self copy: classSlots ifUsedIn: oldClass class.
 
 ]
 

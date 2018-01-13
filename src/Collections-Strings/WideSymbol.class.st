@@ -33,7 +33,7 @@ WideSymbol >> byteAt: index [
 
 { #category : #accessing }
 WideSymbol >> byteAt: index put: aByte [
-	self errorNoModification.
+	^ self modificationForbiddenFor: #byteAt:put: index: index value: aByte
 ]
 
 { #category : #accessing }
@@ -64,8 +64,12 @@ WideSymbol >> privateAt: index put: aCharacter [
 
 	<primitive: 61>
 	index isInteger
-		ifTrue: [self errorSubscriptBounds: index]
-		ifFalse: [self errorNonIntegerIndex]
+		ifTrue: [ (index between: 1 and: self size)
+			ifFalse: [ ^ self errorSubscriptBounds: index] ]
+		ifFalse: [^ self errorNonIntegerIndex].
+	self isReadOnlyObject 
+		ifTrue: [ ^ self modificationForbiddenFor: #privateAt:put: index: index value: aCharacter ].
+
 ]
 
 { #category : #accessing }
@@ -91,5 +95,5 @@ WideSymbol >> wordAt: index [
 
 { #category : #accessing }
 WideSymbol >> wordAt: index put: anInteger [
-	self errorNoModification.
+	^ self modificationForbiddenFor: #wordAt:put: index: index value: anInteger 
 ]

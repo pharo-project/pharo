@@ -1,6 +1,6 @@
 "
 A PDClassDependencyNode is the superclass node for PDInheritanceNode and PDTraitDependencyNode. 
-Indeed these two nodes have the same behavior to browse the dependency in the Nautilus UI.
+Indeed these two nodes have the same behavior to browse the dependency in the browser
 
 "
 Class {
@@ -10,11 +10,11 @@ Class {
 }
 
 { #category : #'browse-nautilus' }
-DAClassNode >> browseInNautilus [
-	self browseClassInNautilus: self classFromContent
+DAClassNode >> classFromContent [
+	^ self content theClass
 ]
 
 { #category : #'browse-nautilus' }
-DAClassNode >> classFromContent [
-	^ self content theClass
+DAClassNode >> selectInBrowser [
+	self selectClass: self classFromContent
 ]

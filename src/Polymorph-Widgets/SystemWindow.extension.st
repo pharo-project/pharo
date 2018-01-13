@@ -553,7 +553,7 @@ SystemWindow >> drawDropShadowOn: aCanvas [
 	"Get the theme to draw the drop shawdow for the receiver."
 	
 	|dropAreas|
-	dropAreas := self areasRemainingToFill: (self bounds expandBy: self shadowOffsetRectangle).
+	dropAreas := self areasRemainingToFill: (self bounds expandBy: self shadowMargins).
 	(dropAreas anySatisfy: [:rect | aCanvas isVisible: rect])
 		ifFalse: [^self]. "no need to draw since no intersection"
 	self isActive
@@ -1356,16 +1356,6 @@ SystemWindow >> setWindowColor: incomingColor [
 	self theme settings fadedBackgroundWindows 
 		ifFalse: [self adoptPaneColor: aColor]. "reverse optimisation"
 	self changed.
-]
-
-{ #category : #'*Polymorph-Widgets' }
-SystemWindow >> shadowOffsetRectangle [
-	"Answer a rectangle describing the offsets to the
-	receiver's bounds for a drop shadow."
-
-	^self isActive
-		ifTrue: [self theme windowActiveDropShadowOffsetRectangleFor: self]
-		ifFalse: [self theme windowInactiveDropShadowOffsetRectangleFor: self]
 ]
 
 { #category : #'*Polymorph-Widgets' }

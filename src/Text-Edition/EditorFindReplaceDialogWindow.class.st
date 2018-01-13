@@ -266,7 +266,7 @@ EditorFindReplaceDialogWindow >> newFindTextEntryMorph [
 	pt textMorph
 		autoFit: true;
 		wrapFlag: false;
-		margins: (2@1 corner: 2@1).
+		margins: (2@1) asMargin.
 	textFieldMorph := pt. 
 	^ pt
 
@@ -333,7 +333,7 @@ EditorFindReplaceDialogWindow >> newReplaceTextEntryMorph [
 	pt textMorph
 		autoFit: true;
 		wrapFlag: false;
-		margins: (2@1 corner: 2@1).
+		margins: (2@1) asMargin.
 	^ pt
 
 ]

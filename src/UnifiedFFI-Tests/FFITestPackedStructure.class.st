@@ -1,3 +1,6 @@
+"
+A packaged structure for test purposes
+"
 Class {
 	#name : #FFITestPackedStructure,
 	#superclass : #FFIExternalPackedStructure,

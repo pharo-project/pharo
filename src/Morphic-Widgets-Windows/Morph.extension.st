@@ -216,11 +216,13 @@ Morph >> previousMorphWantingFocus [
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }
-Morph >> shadowOffsetRectangle [
-	"Answer a rectangle describing the offsets to the
-	receiver's bounds for a drop shadow."
-
-	^self shadowOffset negated corner: self shadowOffset
+Morph >> shadowMargins [
+	"Answer the margins of my shadow"
+	|left right top bottom deltaX deltaY|
+	left := right := top := bottom := 0.
+	(deltaX := self shadowOffset x) < 0 ifTrue: [ left := deltaX] ifFalse: [right := deltaX ].
+	(deltaY := self shadowOffset x) < 0 ifTrue: [ top := deltaY] ifFalse: [bottom := deltaY ].
+	^Margin left: left right: right top: top bottom: bottom
 ]
 
 { #category : #'*Morphic-Widgets-Windows' }

@@ -201,7 +201,7 @@ PackageAndClassChooser >> tree [
 			
 			whenSelectedItemChanged: [ :selection | self selectionChanged ];
 			doubleClick: [
-				 Nautilus openOnPackage: tree selectedItem ]]
+				 Smalltalk tools browser openOnPackage: tree selectedItem ]]
 ]
 
 { #category : #updating }

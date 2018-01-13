@@ -293,7 +293,7 @@ DAPackageAnalyzerTreeModel >> initializePresenter [
 				ifNotNil: [ 
 					buttonBrowseCycles enabled: true.
 					tree menu: [ :aMenu | self loadMenuFor: item in: aMenu ].
-					self tree selectedItem browseInNautilus ] ]
+					self tree selectedItem selectInBrowser ] ]
 ]
 
 { #category : #initialization }
@@ -322,8 +322,7 @@ DAPackageAnalyzerTreeModel >> nodesFor: anItemList [
 			content: each;
 			cycle: false;
 			treeModelParent: self;
-			packageTreeNautilus: self packageTreeNautilus;
-			packageTreeNautilusUI: self packageTreeNautilusUI;
+			browser: self browser;
 			yourself ]
 ]
 

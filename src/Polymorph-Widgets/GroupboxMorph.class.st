@@ -189,7 +189,7 @@ GroupboxMorph >> newLabelMorph [
 
 	^TextMorph new
 		roundedCorners: #(1 4);
-		margins: (2@1 corner: 2 @ -1);
+		margins: (Margin left: 2 right: 2 top: 1 bottom: -1);
 		contents: 'groupbox';
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap;
