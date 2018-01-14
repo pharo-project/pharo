@@ -25,11 +25,9 @@ MethodReference >> compiledMethod [
 
 	| realInstanceSideClass |
 	
-	realInstanceSideClass := self class environment at: instanceSideClassName ifAbsent: [ ^ nil ].
-	^ self onClassSide
-		ifFalse: [ realInstanceSideClass methodDict at: selector ifAbsent: nil ] 
-		ifTrue: [ realInstanceSideClass classSide methodDict at: selector ifAbsent: nil ]
-		
+	^ (self realClassOrNil ifNil: [ ^ nil ])
+		 methodDict at: selector ifAbsent: nil
+	
 ]
 
 { #category : #accessing }
@@ -40,6 +38,25 @@ MethodReference >> instanceSideClassName [
 { #category : #accessing }
 MethodReference >> instanceSideClassName: anObject [
 	instanceSideClassName := anObject
+]
+
+{ #category : #testing }
+MethodReference >> isLocalSelector [
+
+	| realInstanceSideClass |
+	
+	realInstanceSideClass := self realInstanceSideClassOrNil.
+	realInstanceSideClass ifNil: [ ^ false ].
+
+	^ realInstanceSideClass includesLocalSelector: self selector
+]
+
+{ #category : #testing }
+MethodReference >> isValid [
+	"Answer whether the receiver represents a current selector or Comment"
+
+	selector isDoIt ifTrue: [^ false].
+	^ self compiledMethod notNil.
 ]
 
 { #category : #accessing }
@@ -53,6 +70,12 @@ MethodReference >> onClassSide: anObject [
 ]
 
 { #category : #accessing }
+MethodReference >> realClass [
+
+	^ self realClassOrNil 
+]
+
+{ #category : #accessing }
 MethodReference >> realClass: aClass selector: aString [
 
 	self instanceSideClassName: (aClass isClassSide
@@ -62,6 +85,27 @@ MethodReference >> realClass: aClass selector: aString [
 	self onClassSide: aClass isClassSide.
 	
 	self selector: aString asSymbol
+]
+
+{ #category : #accessing }
+MethodReference >> realClassOrNil [
+
+	| realInstanceSideClass |
+	
+	realInstanceSideClass := self realInstanceSideClassOrNil.
+	realInstanceSideClass ifNil: [ ^ nil ].
+	
+	^ self onClassSide
+		ifFalse: [ realInstanceSideClass ] 
+		ifTrue: [ realInstanceSideClass classSide ]
+		
+]
+
+{ #category : #accessing }
+MethodReference >> realInstanceSideClassOrNil [
+
+	^ self class environment at: instanceSideClassName ifAbsent: [ nil ].
+
 ]
 
 { #category : #accessing }

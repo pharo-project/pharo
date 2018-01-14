@@ -86,10 +86,10 @@ TestRunner >> addDeclaredPackagesUnderTestTo: listOfPackages [
 TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [ 
 	listOfPackages
 		do: [:package | package isNil
-				ifFalse: [package methodReferences
+				ifFalse: [package simpleMethodReferences
 						do: [:method | ((#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
-									or: [method imageCompiledMethod isAbstract
-											or: [method imageCompiledMethod refersToLiteral: #ignoreForCoverage]])
+									or: [method compiledMethod isAbstract
+											or: [method compiledMethod refersToLiteral: #ignoreForCoverage]])
 								ifFalse: [methods add: method]]]]
 ]
 
@@ -396,7 +396,7 @@ TestRunner >> collectCoverageFor: methods [
 	[ self runSuite: suite ] ensure: [ wrappers do: [ :each | each uninstall ] ] ] valueUnpreemptively.
 
 	wrappers := wrappers reject: [:each | each hasRun].
-	wrappers := wrappers collect: [:each | each reference].
+	wrappers := wrappers collect: [:each | each reference compiledMethod asRing2Definition].
 	wrappers isEmpty 
 		ifTrue:  [ UIManager default inform: 'Congratulations. Your tests cover all code under analysis.' ]
 		ifFalse: [ 

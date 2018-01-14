@@ -1572,6 +1572,12 @@ RPackage >> selectorsForClass: aClass [
 ]
 
 { #category : #'system compatibility' }
+RPackage >> simpleMethodReferences [
+	
+	^ self methods collect: [:each | each simpleMethodReference] thenSelect: [:each| each isValid and: [each isLocalSelector]].
+]
+
+{ #category : #'system compatibility' }
 RPackage >> systemCategories [
 
 	"(RPackageOrganizer default packageNamed: 'HelpSystem-Core' asSymbol) systemCategories"

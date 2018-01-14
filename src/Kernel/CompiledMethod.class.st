@@ -1032,6 +1032,16 @@ CompiledMethod >> setSourcePointer: srcPointer [
 
 ]
 
+{ #category : #converting }
+CompiledMethod >> simpleMethodReference [
+
+	| class selector |
+	class := self methodClass ifNil: [^nil].
+	selector := self selector ifNil: [^nil].
+	^ MethodReference realClass: class selector: selector.
+	
+]
+
 { #category : #accessing }
 CompiledMethod >> sourceCode [
 	"Retrieve or reconstruct the source code for this method."
