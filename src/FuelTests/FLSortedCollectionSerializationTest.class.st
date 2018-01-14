@@ -15,11 +15,10 @@ Class {
 
 { #category : #'sorted collections for testing' }
 FLSortedCollectionSerializationTest class >> sortedCollectionForTestingWithClassVariable [
-	^  SortedCollection sortBlock: [:a :b | 
+	^ SortedCollection sortBlock: [ :a :b | 
 		ClassVariableForTesting 
 			ifTrue: [ a <= b ] 
-			ifFalse: [ a >= b ] ]. 
-
+			ifFalse: [ a >= b ] ]
 ]
 
 { #category : #accessing }
