@@ -375,7 +375,7 @@ RubTextAreaExamples class >> smalltalkCodeWrappedWithSegments [
 ]
 
 { #category : #examples }
-RubTextAreaExamples class >> someSmallSmalltalkCode. [
+RubTextAreaExamples class >> someSmallSmalltalkCode [
 	^ '
 WorldState
 	addDeferredUIMessage: [ 

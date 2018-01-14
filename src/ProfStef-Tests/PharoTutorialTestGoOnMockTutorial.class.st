@@ -19,7 +19,7 @@ PharoTutorialTestGoOnMockTutorial >> tearDown [
 ]
 
 { #category : #tests }
-PharoTutorialTestGoOnMockTutorial >> testFirstLessonShouldBeDisplayed. [
+PharoTutorialTestGoOnMockTutorial >> testFirstLessonShouldBeDisplayed [
  	self assert:  'First lesson' equals: ProfStef default lessonView text
 ]
 

@@ -119,7 +119,7 @@ PragmaMenuBuilder >> allMisplacedItems [
 ]
 
 { #category : #'registrations handling' }
-PragmaMenuBuilder >> arrangeRegistrations. [
+PragmaMenuBuilder >> arrangeRegistrations [
 	self allMisplacedItems do: [:item |
 		(self itemNamed: item parentName)
 			ifNotNil: [:newOwner | item owner removeItem: item.
