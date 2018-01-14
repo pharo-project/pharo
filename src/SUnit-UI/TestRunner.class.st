@@ -88,8 +88,8 @@ TestRunner >> addMethodsUnderTestIn: listOfPackages to: methods [
 		do: [:package | package isNil
 				ifFalse: [package methodReferences
 						do: [:method | ((#(#packageNamesUnderTest #classNamesNotUnderTest ) includes: method selector)
-									or: [method compiledMethod isAbstract
-											or: [method compiledMethod refersToLiteral: #ignoreForCoverage]])
+									or: [method imageCompiledMethod isAbstract
+											or: [method imageCompiledMethod refersToLiteral: #ignoreForCoverage]])
 								ifFalse: [methods add: method]]]]
 ]
 

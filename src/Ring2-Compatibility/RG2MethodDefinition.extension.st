@@ -88,6 +88,13 @@ RG2MethodDefinition >> isLocalSelector [
 ]
 
 { #category : #'*Ring2-Compatibility' }
+RG2MethodDefinition >> isValid [
+	"verifies that the receiver is locally defined in the class and that is not a DoIt"
+
+	^self isDefined
+]
+
+{ #category : #'*Ring2-Compatibility' }
 RG2MethodDefinition >> literals [
 	^ self method literals
 ]

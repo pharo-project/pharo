@@ -713,7 +713,7 @@ MessageBrowser >> selectedMessage: aMessage [
 { #category : #accessing }
 MessageBrowser >> selectedMethod [
 	self selectedMessage ifNil: [ ^nil ].
-	^ self selectedMessage compiledMethod
+	^ self selectedMessage imageCompiledMethod
 ]
 
 { #category : #accessing }
