@@ -46,6 +46,12 @@ RG2MetaclassDefinition >> category [
 	^ self baseClass category
 ]
 
+{ #category : #children }
+RG2MetaclassDefinition >> childDefinitionsDo: aBlock traversed: aSet [
+
+	self pvtBaseClass withChildrenDo: aBlock traversed: aSet.
+]
+
 { #category : #'as yet unclassified' }
 RG2MetaclassDefinition >> classVarNames [
 

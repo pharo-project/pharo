@@ -22,6 +22,13 @@ RG2TraitCompositionDefinition >> addoptToParentStub [
 	self environment backend createUnresolvedClassGroupFor: self parent
 ]
 
+{ #category : #children }
+RG2TraitCompositionDefinition >> childDefinitionsDo: aBlock traversed: aSet [
+
+	self pvtTransformationsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
+	
+]
+
 { #category : #'accessing - backend' }
 RG2TraitCompositionDefinition >> cleanTransformations [
 

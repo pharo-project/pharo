@@ -166,6 +166,16 @@ RG2BehaviorDefinition >> category [
 	^ String new
 ]
 
+{ #category : #children }
+RG2BehaviorDefinition >> childDefinitionsDo: aBlock traversed: aSet [
+
+	self pvtSuperclass withChildrenDo: aBlock traversed: aSet.
+	self pvtLocalMethodsDo: [ :each | each withChildrenDo: aBlock traversed: aSet ].
+	self pvtTraitComposition withChildrenDo: aBlock traversed: aSet.
+	self pvtMetaclass withChildrenDo: aBlock traversed: aSet.
+	
+]
+
 { #category : #'as yet unclassified' }
 RG2BehaviorDefinition >> classSide [
 
