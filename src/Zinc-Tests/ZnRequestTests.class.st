@@ -44,7 +44,7 @@ ZnRequestTests >> testCookiesParsing [
 
 { #category : #testing }
 ZnRequestTests >> testCookiesWriting [
-	|  client testCookie1 testCookie2 cookieString cookies|
+	|  client testCookie1 testCookie2 cookies|
 	client := ZnClient new.
 	client url: 'http://www.example.com'.
 	(testCookie1 := ZnCookie name: 'testCookie1' value: '123')
