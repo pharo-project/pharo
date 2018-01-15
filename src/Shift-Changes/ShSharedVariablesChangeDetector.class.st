@@ -4,7 +4,7 @@ I know how to detect a change in the collection of the shared variables (class v
 Class {
 	#name : #ShSharedVariablesChangeDetector,
 	#superclass : #ShAbstractClassChangeDetector,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #initialization }

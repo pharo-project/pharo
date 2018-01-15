@@ -4,7 +4,7 @@ I can compare an old class and a builder to detect if the layout kind changed an
 Class {
 	#name : #ShBitLayoutChangeDetector,
 	#superclass : #ShAbstractChangeDetector,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #comparing }
