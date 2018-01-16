@@ -76,7 +76,7 @@ Class >> gtInspectorMethodsIn: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite list 
 		title: 'Methods';
-		display: [ (self methods collect: #asRingDefinition) 
+		display: [ (self methods collect: #asRing2Definition) 
 						sorted: [ :x :y | x selector < y selector ] ];
 		format: #selector;
 		tags: [ :each | {each methodClass name} ]

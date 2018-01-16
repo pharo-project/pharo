@@ -222,7 +222,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 	list := Set new.
 	
 	addMethod := [ :mrClass :mrSel | list add: (self createMethodNamed: mrSel realParent:  mrClass)].									
-	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].
+	addComment := [ :mrClass | list add: (RG2CommentDefinition realClass: mrClass)].
 										
 	'Searching all source code...'
 		displayProgressFrom: 0 to: (2*self environment classAndTraitNames size)
@@ -415,13 +415,10 @@ SystemNavigation >> categoriesInPackageNamed: packageName [
 	^(self environment organization categoriesMatching: packageName), (self environment organization categoriesMatching: (packageName, '-*'))
 ]
 
-{ #category : #query }
+{ #category : #utils }
 SystemNavigation >> createMethodNamed: aSelector realParent: class [
 
-	"This method has some problems."
-	"1 - It should use the object that comes from the browsed environment"
-	"2 - It does not create a method but a representation of it so be careful"
-	^ (RGMethodDefinition realClass: class selector: aSelector) package:  (class>>aSelector) package asRingDefinition; yourself .
+	^ (RG2MethodDefinition realClass: class selector: aSelector) asStandalone
 ]
 
 { #category : #accessing }

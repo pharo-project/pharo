@@ -142,7 +142,7 @@ MorphicEventHandler >> methodRefList [
 		
 		subscriptionSet do: [ 	 :s | 
 			s  ifNotNil: [list
-						add: (RGMethodDefinition
+						add: (RG2MethodDefinition
 								realClass: (s recipient class whichClassIncludesSelector: s selector)
 								selector: s selector)]
 							]

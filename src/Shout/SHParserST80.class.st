@@ -971,7 +971,7 @@ SHParserST80 >> resolvePartial: aString [
 		ifNotNil: [(workspace hasBindingThatBeginsWith: aString)
 				ifTrue: [^ #incompleteIdentifier]].
 	classOrMetaClass isBehavior
-		ifTrue: [classOrMetaClass theNonMetaClass withAllSuperclasses
+		ifTrue: [classOrMetaClass realClass theNonMetaClass withAllSuperclasses
 				do: [:c | 
 					(c classPool hasBindingThatBeginsWith: aString)
 						ifTrue: [^ #incompleteIdentifier].

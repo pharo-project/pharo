@@ -148,7 +148,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Text-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Tests'.
-		spec package: 'Ring-Tests-Kernel'.
+		spec package: 'Ring2-Tests-Support'.
+		spec package: 'Ring2-Tests-Core'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'FuelTests'.
@@ -162,8 +163,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
 		spec package: 'ReleaseTests'.
-		spec package: 'Ring-Tests-Containers'.
-		spec package: 'Ring-Tests-Kernel'.
 		spec package: 'System-DependenciesTests'.
 		
 		spec package: 'System-Serial Port'.
@@ -339,7 +338,8 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Regex-Tests-Core'.
 		spec package: 'Renraku-Help'.
 		spec package: 'Renraku-Test'.
-		spec package: 'Ring-Tests-Monticello'.
+		spec package: 'Ring2-Tests-Monticello'.
+		spec package: 'Ring2-Tests-ChunkImporter'.
 		spec package: 'Rubric-Rules'.
 		spec package: 'Rubric-Tests'.
 		spec package: 'ScriptingExtensions-Tests'.
@@ -376,6 +376,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfMetacello'.
 		
 		spec package: 'ReferenceFinder-Core'.
+		spec package: 'Ring2-MCFileTree'.
 
       self groups: spec.
 	].
@@ -423,7 +424,7 @@ spec group: 'Epicea-Tests-Group' with: #(
 ).	
 spec group: 'Epicea-Group' with: #(
 	'Epicea-Core-Group' 
-	'Epicea-Tests-Group'
+	"'Epicea-Tests-Group'"
 ).	
 
 spec group: 'General-Help-Group' with: #(
@@ -467,7 +468,7 @@ spec group: 'General-Tests-Group' with: #(
 
 	'Reflectivity-Tools-Tests'
 	'Regex-Tests-Core'
-	'Ring-Tests-Monticello'
+	'Ring2-Tests-Monticello'
 	'Rubric-Tests'
 	'ScriptingExtensions-Tests'
 	'STON-Tests'
@@ -821,8 +822,9 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'OpalCompiler-Tests' 
 	'Random-Tests'
 	"'ReleaseTests'"
-	'Ring-Tests-Kernel'
-	'Ring-Tests-Containers' 
+	'Ring2-Tests-Support'
+	'Ring2-Tests-Core'
+	'Ring2-Tests-ChunkImporter' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
 	'FileSystem-Tests-Memory'
@@ -888,6 +890,8 @@ spec group: #default with: #(
 	'BaselineOfMonticello'
 	'BaselineOfMetacello'
 	
+	'Ring2-MCFileTree'
+	
 	"Importing tests of Shift"
 	'Shift'
 ).
@@ -942,7 +946,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	Smalltalk fixObsoleteReferences.
 	
-	EpMonitor current enable.
+	"EpMonitor current enable."
 		
 	Author reset.
 

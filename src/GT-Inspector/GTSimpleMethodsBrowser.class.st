@@ -89,7 +89,7 @@ GTSimpleMethodsBrowser >> methodActionsFor: aMethod [
 { #category : #building }
 GTSimpleMethodsBrowser >> methodsIn: a [
 	^ a list
-		display: [ :object :class | class methods collect: #asRingDefinition];
+		display: [ :object :class | class methods collect: #asRing2Definition];
 		filterOn: [ :text :each | (text , '*') match: each selector ];
 		helpMessage:  'Wildcard filtering (e.g., "*pattern*")';
 		tags: [ :method | method category ];

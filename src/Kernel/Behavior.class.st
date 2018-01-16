@@ -1529,6 +1529,12 @@ Behavior >> methodDictionary: aDictionary [
 	self methodDict: aDictionary
 ]
 
+{ #category : #accessing }
+Behavior >> methodNamed: aSelector [
+
+	^ self methodDict at: aSelector
+]
+
 { #category : #'accessing method dictionary' }
 Behavior >> methods [
 	
@@ -1545,6 +1551,13 @@ Behavior >> methodsDo: aBlock [
 	"Evaluate aBlock for all the compiled methods in my method dictionary."
 
 	^ self methodDict valuesDo: aBlock
+]
+
+{ #category : #accessing }
+Behavior >> methodsInProtocol: aString [
+
+	^ (self organization listAtCategoryNamed: aString) 
+			collect: [ :each | (self compiledMethodAt: each) ]
 ]
 
 { #category : #queries }
@@ -1737,6 +1750,12 @@ Behavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
 		ifAbsentPut: propValue
+]
+
+{ #category : #accessing }
+Behavior >> protocols [
+	
+	^ self organization categories copy
 ]
 
 { #category : #traits }

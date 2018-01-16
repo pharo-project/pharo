@@ -72,16 +72,6 @@ CompiledMethod >> asRingDefinition [
 ]
 
 { #category : #'*Ring-Core-Kernel' }
-CompiledMethod >> methodReference [
-
-	| class selector |
-	class := self methodClass ifNil: [^nil].
-	selector := self selector ifNil: [^nil].
-	^RGMethodDefinition realClass: class selector: selector.
-	
-]
-
-{ #category : #'*Ring-Core-Kernel' }
 CompiledMethod >> realClass [
 	"answer the class that I am installed in"
 	

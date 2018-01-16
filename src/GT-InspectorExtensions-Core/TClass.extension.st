@@ -53,7 +53,7 @@ TClass >> gtInspectorMethodsIn: composite [
 	<gtInspectorPresentationOrder: 20>
 	composite list 
 		title: 'Methods';
-		display: [ (self allMethods collect: #asRingDefinition) 
+		display: [ (self allMethods collect: #asRing2Definition) 
 						sorted: [ :x :y | x selector < y selector ] ];
 		format: #selector;
 		tags: [ :each | {each methodClass name} ]

@@ -403,7 +403,7 @@ RPackage >> changeRecordForOverriddenMethod: aMethodDefinition [
 		detect: [ :protocol | 
 			self 
 				includesMethodCategory: protocol 
-				ofClass: aMethodDefinition actualClass ]
+				ofClass: aMethodDefinition realClass ]
 ]
 
 { #category : #slices }
@@ -1226,7 +1226,7 @@ RPackage >> propertyAt: propName put: propValue [
 
 { #category : #'system compatibility' }
 RPackage >> referenceForMethod: aSymbol ofClass: aClass [
-	^ (aClass >> aSymbol) asRingDefinition
+	^ (aClass >> aSymbol) asRing2Definition
 ]
 
 { #category : #accessing }
@@ -1569,6 +1569,12 @@ RPackage >> selectorsForClass: aClass [
 		ifFalse: [self extensionSelectorsForClass: aClass]
 		ifTrue: [self definedSelectorsForClass: aClass]
 	
+]
+
+{ #category : #'system compatibility' }
+RPackage >> simpleMethodReferences [
+	
+	^ self methods collect: [:each | each simpleMethodReference] thenSelect: [:each| each isValid and: [each isLocalSelector]].
 ]
 
 { #category : #'system compatibility' }

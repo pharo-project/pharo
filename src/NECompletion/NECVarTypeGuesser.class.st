@@ -116,7 +116,7 @@ NECVarTypeGuesser >> perform [
 	methodRefs
 		do: [:each | 
 			self prepare: each.
-			infosOfMethod := self typeOfVarIn: each compiledMethod.
+			infosOfMethod := self typeOfVarIn: each imageCompiledMethod.
 			infos addAll: infosOfMethod].
 	infos notEmpty
 		ifTrue: [^ infos first type].

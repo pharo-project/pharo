@@ -162,7 +162,7 @@ GTSpotter class >> spotterExtendingMethods [
 	^(SystemNavigation default allBehaviors
 		flatCollect: [ :each | 
 			(Pragma allNamed: self extensionsPragma in: each) 
-				collect: [ :p | p method asRingDefinition ] ])
+				collect: [ :p | p method asRing2Definition ] ])
 		sorted
 ]
 

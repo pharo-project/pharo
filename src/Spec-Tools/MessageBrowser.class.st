@@ -113,7 +113,7 @@ MessageBrowser class >> messageBrowserListMenu: aBuilder [
 		keyText: 'b';
 		action: [ 
 			Smalltalk tools browser 
-				openOnClass: message methodClass
+				openOnClass: message methodClass realClass
 				selector: message selector ].
 
 	(aBuilder item: #'Inspect method...')
@@ -264,7 +264,7 @@ MessageBrowser >> buildHierarchyForMessages: messages [
 	result := Dictionary new.	
 	classes := (messages collect: #methodClass) asSet.
 	messages do: [:message || level class |
-		class := message methodClass.
+		class := message method methodClass.
 		level := OrderedCollection new.
 		class allSuperclassesDo: [:superClass |
 			(classes includes: superClass)
@@ -348,7 +348,7 @@ MessageBrowser >> handleClassRenamed: anAnnouncement [
 			interestedClassName := interestedClassName, ' class'.
 			interestedClass := interestedClass theMetaClass ].
 		rgMethod parentName = interestedClassName ifTrue: [ 
-			(interestedClass >> rgMethod selector) asFullRingDefinition.
+			(interestedClass >> rgMethod selector) asRing2Definition.
 		 	] ifFalse: [ rgMethod ] ].
 	
 	selectedIndex := listModel selectedIndex.
@@ -372,7 +372,7 @@ MessageBrowser >> handleMethodAdded: anAnnouncement [
 	boolean ifTrue: [ text := textModel pendingText ].
 	
 	sel := listModel selectedItem.
-	self messages: (listModel listItems add: item asFullRingDefinition; yourself).
+	self messages: (listModel listItems add: item asRing2Definition; yourself).
 	listModel setSelectedItem: sel.
 	
 	boolean ifTrue: [ textModel pendingText: text ]
@@ -399,7 +399,7 @@ MessageBrowser >> handleMethodModified: anAnnouncement [
 	index := listModel selectedIndex.
 	list := listModel listItems
 		remove: sel ifAbsent: [  ];
-		add: item asFullRingDefinition;
+		add: item asRing2Definition;
 		"to ensure it's still a RGMethod"
 			yourself.
 	self messages: list.
@@ -431,7 +431,7 @@ MessageBrowser >> handleMethodRemoved: anAnnouncement [
 	self
 		messages:
 			(listModel listItems
-				remove: item asFullRingDefinition ifAbsent: [ nil ];
+				remove: item asRing2Definition ifAbsent: [ nil ];
 				yourself).
 	
 	listModel setSelectedIndex: sel
@@ -535,7 +535,7 @@ MessageBrowser >> isMethodDefinition: anItem [
 	anItem ifNil: [ ^ false ].
 	
 	"assume it is a compiled method or ring method definition"
-	^ (anItem isRingObject and: [ anItem isMethod and: [ anItem compiledMethod isNotNil ] ])
+	^ (anItem isRing2Object and: [ anItem isMethod and: [ anItem compiledMethod isNotNil ] ])
 		or: [  anItem isCompiledMethod ]
 ]
 
@@ -713,7 +713,7 @@ MessageBrowser >> selectedMessage: aMessage [
 { #category : #accessing }
 MessageBrowser >> selectedMethod [
 	self selectedMessage ifNil: [ ^nil ].
-	^ self selectedMessage compiledMethod
+	^ self selectedMessage imageCompiledMethod
 ]
 
 { #category : #accessing }

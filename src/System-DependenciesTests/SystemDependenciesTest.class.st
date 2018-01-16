@@ -67,7 +67,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring2-Core' #'System-Changes' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }
@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler).
+	^ #(#Compiler #'Iceberg-Libgit-Filetree').
 ]
 
 { #category : #'known dependencies' }
@@ -155,7 +155,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring2-Core' #'System-Changes' #'System-Localization')
 ]
 
 { #category : #'known dependencies' }

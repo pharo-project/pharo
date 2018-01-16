@@ -98,11 +98,11 @@ VersionBrowser >> browser [
 { #category : #'instance creation' }
 VersionBrowser >> browserForList: aList [
 
-	browser :=  MessageBrowser new.
+	browser := MessageBrowser new.
 	browser
 		topologicSort: false;
 		refreshingBlock: [:m | false];
-		sortingBlock: [:a :b | (a annotationNamed:#versionIndex ifAbsent:[0]) < (b annotationNamed:#versionIndex ifAbsent:[0]) ];
+		sortingBlock: [:a :b | (a propertyNamed:#versionIndex ifAbsent:[0]) < (b propertyNamed:#versionIndex ifAbsent:[0]) ];
 		displayBlock: [:changeRecord | self displayStringsFor: changeRecord].
 										
 	browser toolbarModel
@@ -155,8 +155,8 @@ VersionBrowser >> buildChangeList [
 		className: rgMethod theNonMetaClassName
 		isMeta: rgMethod isMetaSide)
 		collectWithIndex: [ :c :i | | rg |
-			rg := c asRingDefinition.
-			rg annotationNamed: #versionIndex put: i ]
+			rg := c asRing2Definition.
+			rg propertyNamed: #versionIndex put: i ]
 ]
 
 { #category : #menu }
@@ -225,7 +225,7 @@ VersionBrowser >> revert: aChangeRecord [
 { #category : #private }
 VersionBrowser >> setRGMethodFrom: aMethod [
 "asHistorical, because active RGMethods don't always have the source pointer attached"
-	rgMethod := aMethod asRingDefinition asHistorical.
+	rgMethod := aMethod asRing2Definition asHistorical.
 ]
 
 { #category : #'instance creation' }

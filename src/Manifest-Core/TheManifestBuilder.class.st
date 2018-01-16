@@ -160,7 +160,7 @@ TheManifestBuilder >> addAllItem: aSet selector: selector [
 	set addAll:
 			(newSet
 				collect: [ :fp | 
-					{(fp asRingDefinition arrayStringForManifest).
+					{(fp asRing2Definition arrayStringForManifest).
 					(DateAndTime current asString)} ]).
 	arrayString := self buildArrayString: set.
 	self compileSelector: selector returnValue: arrayString
@@ -196,7 +196,7 @@ TheManifestBuilder >> addRejectClass: aClass [
 	falsePositives := self manifest rejectClasses asOrderedCollection .
 	((self unwrap: falsePositives) anySatisfy: [:each | each = aClass])
 		ifTrue: [ ^ self ].
-	falsePositives add: {aClass asRingDefinition arrayStringForManifest. DateAndTime current asString}.
+	falsePositives add: {aClass asRing2Definition arrayStringForManifest. DateAndTime current asString}.
 	self compileSelector:  (self class rejectClassesTag) returnValue: (self buildArrayString: falsePositives)
 	
 	
@@ -364,7 +364,7 @@ TheManifestBuilder >> dateOfFalsePositive: aItem onRule: ruleId version: version
 	(self hasFalsePositiveOf: ruleId version: versionId)
 		ifFalse: [^ self].
 		
-	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorFalsePositiveOf: ruleId version: versionId)
+	^ self dateOf: ( aItem asRing2Definition) forSelector:  (self selectorFalsePositiveOf: ruleId version: versionId)
 		
 		
 ]
@@ -374,7 +374,7 @@ TheManifestBuilder >> dateOfToDo: aItem onRule: ruleId version: versionId [
 	
 	 (self hasToDoOf: ruleId version: versionId)
 		ifFalse: [^ self].
-	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorToDoOf: ruleId version: versionId)
+	^ self dateOf: ( aItem asRing2Definition) forSelector:  (self selectorToDoOf: ruleId version: versionId)
 		
 		
 ]
@@ -384,7 +384,7 @@ TheManifestBuilder >> dateOfTruePositive: aItem onRule: ruleId version: versionI
 
 	(self hasTruePositiveOf: ruleId version: versionId)
 		ifFalse: [^ self].
-	^ self dateOf: ( aItem asRingDefinition) forSelector:  (self selectorTruePositiveOf: ruleId version: versionId)
+	^ self dateOf: ( aItem asRing2Definition) forSelector:  (self selectorTruePositiveOf: ruleId version: versionId)
 		
 		
 ]
@@ -508,7 +508,7 @@ TheManifestBuilder >> removeAllItem: aSet selector: selector [
 		reject: [ :each | 
 			| tmp |
 			tmp := (self browsedEnvironment at: each first first) manifestReadOn: (each first at: 2).
-			aSet anySatisfy: [ :fp | tmp = fp asRingDefinition ] ].
+			aSet anySatisfy: [ :fp | tmp = fp asRing2Definition ] ].
 	arrayString := self buildArrayString: set.
 	self compileSelector: selector returnValue: arrayString
 ]
@@ -567,7 +567,7 @@ TheManifestBuilder >> removeRejectClass: aClass [
 	|  classes |
 	classes :=  self manifest rejectClasses asOrderedCollection.
 	classes := classes reject: [ :each | 
-			((self browsedEnvironment at: each first first) manifestReadOn:  (each first at: 2)) =  aClass asRingDefinition ].	
+			((self browsedEnvironment at: each first first) manifestReadOn:  (each first at: 2)) =  aClass asRing2Definition ].	
 	self compileSelector: (self class rejectClassesTag) returnValue:  (self buildArrayString: classes)
 	
 ]
@@ -651,7 +651,13 @@ TheManifestBuilder >> unwrap: aCollection [
 	unwrapCollection := OrderedCollection new.
 	aCollection
 		do: [ :each | 
-			rgobject := (self browsedEnvironment at: each first first) manifestReadOn:  (each first at: 2).
+			| definitionClassName |
+			definitionClassName := each first first.
+			(definitionClassName = #RGMethodDefinition) ifTrue: [ definitionClassName := #RG2MethodDefinition ].
+			(definitionClassName = #RGClassDefinition) ifTrue: [ definitionClassName := #RG2ClassDefinition ].
+			(definitionClassName = #RGMetaclassClassDefinition) ifTrue: [ definitionClassName := #RG2MetaclassDefinition ].
+	
+			rgobject := (self browsedEnvironment at: definitionClassName) manifestReadOn:  (each first at: 2).
 			(rgobject isClass and: [ rgobject  realClass notNil ])
 				ifTrue: [ unwrapCollection add: rgobject realClass ].
 			(rgobject isMethod and: [ rgobject method notNil ])

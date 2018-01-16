@@ -146,7 +146,7 @@ RecentMessageList >> clearAll [
 { #category : #private }
 RecentMessageList >> createAClassReference: aCommentedEvent [
 
-	^RGCommentDefinition realClass: aCommentedEvent classCommented
+	^RG2CommentDefinition realClass: aCommentedEvent classCommented
 ]
 
 { #category : #private }
@@ -155,7 +155,7 @@ RecentMessageList >> createTheMethodReference: aModifiedMethodEvent [
 	| method |
 	method := aModifiedMethodEvent method.
 
-	^ (RGMethodDefinition
+	^ (RG2MethodDefinition
 		realClass: method methodClass
 		selector: method selector) asHistorical
 ]

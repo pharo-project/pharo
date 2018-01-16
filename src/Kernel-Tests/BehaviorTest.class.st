@@ -24,10 +24,10 @@ BehaviorTest >> testAllLocalCallsOn [
 	
 	self assert: (( Point allLocalCallsOn: #asPoint )  notEmpty).
 	self assert: (( Point allLocalCallsOn: #asPoint )  size = 4).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point>> #roundDownTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #roundUpTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #roundTo:) asRingDefinition).
-	self assert: (( Point allLocalCallsOn: #asPoint )  includes: (Point >> #truncateTo: ) asRingDefinition).
+	self assert: ((( Point allLocalCallsOn: #asPoint ) collect: #fullName)  includes: (Point>> #roundDownTo:) asRing2Definition fullName).
+	self assert: ((( Point allLocalCallsOn: #asPoint ) collect: #fullName) includes: (Point >> #roundUpTo:) asRing2Definition fullName).
+	self assert: ((( Point allLocalCallsOn: #asPoint ) collect: #fullName) includes: (Point >> #roundTo:) asRing2Definition fullName).
+	self assert: ((( Point allLocalCallsOn: #asPoint ) collect: #fullName) includes: (Point >> #truncateTo: ) asRing2Definition fullName).
 	
 ]
 
@@ -50,15 +50,15 @@ BehaviorTest >> testAllMethods [
 BehaviorTest >> testAllReferencesTo [
 	| result |
 	result := SystemNavigation new allReferencesTo: Point binding.
-	result do: [ :each | self assert: (each compiledMethod hasLiteral: Point binding) ].
+	result do: [ :each | self assert: (each imageCompiledMethod hasLiteral: Point binding) ].
 	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
 		
 	result := SystemNavigation new allReferencesTo: #printOn:.
-	result do: [ :each | self assert: (each compiledMethod hasLiteralThorough: #printOn:) ].
+	result do: [ :each | self assert: (each imageCompiledMethod hasLiteralThorough: #printOn:) ].
 	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ]).
 	
 	result := SystemNavigation new allReferencesTo: #+.
-	result do: [ :each | self assert: ((each compiledMethod sendsSelector: #+) or: [ each compiledMethod hasLiteralThorough: #+ ]) ].
+	result do: [ :each | self assert: ((each imageCompiledMethod sendsSelector: #+) or: [ each imageCompiledMethod hasLiteralThorough: #+ ]) ].
 	self assert: (result anySatisfy: [ :each | each actualClass = self class and: [ each selector = #testAllReferencesTo ] ])
 ]
 

@@ -36,7 +36,7 @@ TestCoverage >> initializeOn: aMethodReference [
 
 { #category : #actions }
 TestCoverage >> install [
-	reference actualClass methodDict
+	reference realClass methodDict
 		at: reference selector
 		put: self
 ]
@@ -59,7 +59,7 @@ TestCoverage >> run: aSelector with: anArray in: aReceiver [
 
 { #category : #actions }
 TestCoverage >> uninstall [
-	reference actualClass methodDict
+	reference realClass methodDict
 		at: reference selector
 		put: method
 ]

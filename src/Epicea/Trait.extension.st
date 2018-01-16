@@ -1,9 +1,7 @@
 Extension { #name : #Trait }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : #'*Epicea' }
 Trait >> asEpiceaRingDefinition [
-
-	^ self asRingDefinition
-		package: (EpPlatform current packageNameFor: self);
-		yourself.
+	
+	^ (self ensureRing2DefinitionIn: RG2Environment new) asEpiceaRingDefinition
 ]

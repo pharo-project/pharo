@@ -151,7 +151,7 @@ SystemNavigation >> browseClassCommentsWithString: aString matchCase: caseSensit
 		self environment allClassesDo: [:class | 
 			(class organization classComment asString 
 							includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [
-								list add: (RGCommentDefinition realClass: class)
+								list add: (RG2CommentDefinition realClass: class)
 							]
 		]
 	].

@@ -664,13 +664,13 @@ ChangeSet >> changedMessageList [
 
 		(clAssoc value allChangeTypes includes: #comment) ifTrue:
 			[messageList add:
-				(RGCommentDefinition new
+				(RG2CommentDefinition new
 					parentName: className) asActive ].
 
 		clAssoc value methodChangeTypes associationsDo: [:mAssoc |
 			(#(remove addedThenRemoved) includes: mAssoc value) ifFalse:
 				[messageList add:
-					((RGMethodDefinition named: mAssoc key)
+					((RG2MethodDefinition named: mAssoc key)
 						parentName: className;
 						isMetaSide: classIsMeta) asActive ]]].
 	^ messageList asArray sort
