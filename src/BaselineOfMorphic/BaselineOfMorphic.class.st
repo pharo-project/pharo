@@ -53,7 +53,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Fuel'.
 		spec package: 'FuelPlatform-Core'.
 		spec package: 'FuelPlatform-Pharo-Core'.
-		spec package: 'FuelPlatform-Pharo-06'.
+		spec package: 'FuelPlatform-Pharo-07'.
 	
 		spec package: 'FuelCommandLineHandler'.
 		spec package: 'FuelSystem-FileRegistry'.
