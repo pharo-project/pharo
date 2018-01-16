@@ -269,7 +269,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	"Initialize Fuel"
 
 	FLLargeIdentityHashedCollection initialize.
-	FLPlatform classPool at: #Current put: FLPharo6Platform new.
+	FLPlatform classPool at: #Current put: FLPharo7Platform new.
 
 	Stdio stdout nextPutAll: 'starting...'; lf.
 
