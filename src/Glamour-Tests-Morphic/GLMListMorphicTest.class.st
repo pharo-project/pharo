@@ -106,7 +106,7 @@ GLMListMorphicTest >> testOnlyOneMorphPerRowInList [
 
 { #category : #tests }
 GLMListMorphicTest >> testTextBackgroundColor [
-	| browser firstTreeMorph secondTreeMorph treeNodeMorph txtMorph |
+	| browser firstTreeMorph treeNodeMorph txtMorph |
 	browser := GLMTabulator new.
 	browser column: #one.
 	browser transmit

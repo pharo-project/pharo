@@ -61,7 +61,7 @@ GLMTextMorphicTest >> testPastingUpdatesTextPort [
 
 { #category : #tests }
 GLMTextMorphicTest >> testResettingTheSelection [
-	| composite textMorph textPresentation |
+	| composite textPresentation |
 	composite := GLMCompositePresentation new with: [ :a | a text display: '123456789' ].
 	window := composite openOn: 4.
 	textPresentation := composite presentations first.
