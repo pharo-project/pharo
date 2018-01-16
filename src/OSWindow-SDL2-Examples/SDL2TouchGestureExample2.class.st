@@ -149,7 +149,7 @@ SDL2TouchGestureExample2 >> initialize [
 ]
 
 { #category : #initialization }
-SDL2TouchGestureExample2 >> initializeFromSurface. [
+SDL2TouchGestureExample2 >> initializeFromSurface [
 	super initializeFromSurface.
 	blackBackground := renderer athensSurface createSolidColorPaint: Color black
 ]

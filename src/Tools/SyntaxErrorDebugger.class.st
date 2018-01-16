@@ -197,7 +197,7 @@ SyntaxErrorDebugger >> handleWindowClosed [
 ]
 
 { #category : #initialization }
-SyntaxErrorDebugger >> highlightError. [
+SyntaxErrorDebugger >> highlightError [
 	"copy in the error message"
 	contents := contents
 					copyReplaceFrom: location
