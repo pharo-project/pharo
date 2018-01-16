@@ -1,41 +1,41 @@
 Class {
-	#name : #FLPharo6Platform,
+	#name : #FLPharo7Platform,
 	#superclass : #FLPharoPlatform,
-	#category : #'FuelPlatform-Pharo-06'
+	#category : #'FuelPlatform-Pharo-07'
 }
 
 { #category : #'private-hacks' }
-FLPharo6Platform class >> addHacks [
+FLPharo7Platform class >> addHacks [
 	"no hacks for development platform"
 ]
 
 { #category : #testing }
-FLPharo6Platform class >> isResponsibleForCurrentPlatform [
+FLPharo7Platform class >> isResponsibleForCurrentPlatform [
 	^ super isResponsibleForCurrentPlatform and: [
 		(SystemVersion current type = 'Pharo')
-			and: [ SystemVersion current major = 6 ] ]
+			and: [ SystemVersion current major = 7 ] ]
 ]
 
 { #category : #'accessing-files' }
-FLPharo6Platform >> deleteFileNamed: aFilename [
+FLPharo7Platform >> deleteFileNamed: aFilename [
 	((Smalltalk at: #File) named: aFilename) delete
 ]
 
 { #category : #'accessing-files' }
-FLPharo6Platform >> fileNamed: aFilename readStreamDo: aBlock [
+FLPharo7Platform >> fileNamed: aFilename readStreamDo: aBlock [
 	^ ((Smalltalk at: #File) named: aFilename) readStreamDo: [ :stream |
 		stream binary.
 		aBlock value: stream ]
 ]
 
 { #category : #'accessing-files' }
-FLPharo6Platform >> fileNamed: aFilename writeStreamDo: aBlock [
+FLPharo7Platform >> fileNamed: aFilename writeStreamDo: aBlock [
 	^ ((Smalltalk at: #File) named: aFilename) writeStreamDo: [ :stream |
 		stream binary.
 		aBlock value: stream ]
 ]
 
 { #category : #testing }
-FLPharo6Platform >> isBigEndian [
+FLPharo7Platform >> isBigEndian [
 	^ (Smalltalk at: #EndianDetector) isBigEndian
 ]
