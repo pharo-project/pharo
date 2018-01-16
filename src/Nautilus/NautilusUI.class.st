@@ -1843,11 +1843,6 @@ NautilusUI >> signatureFor: aSelector [
 		ifFalse: [ aSelector ]
 ]
 
-{ #category : #'smart suggestions support' }
-NautilusUI >> sugsContext [
-	^ SugsNautilusContext model: self.
-]
-
 { #category : #'menus behavior' }
 NautilusUI >> toggleBreakConditionOnEntryIn: aMethod [
 	"Install or uninstall a halt-on-entry breakpoint"

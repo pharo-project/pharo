@@ -1,7 +1,7 @@
 Class {
 	#name : #SugsNautilusContextTests,
 	#superclass : #TestCase,
-	#category : #'Nautilus-Tests'
+	#category : #'SmartSuggestions-Nautilus-Tests'
 }
 
 { #category : #tests }

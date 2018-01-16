@@ -4,7 +4,7 @@ The implementation who asumes that my model it's a nautilus object.
 Class {
 	#name : #SugsNautilusContext,
 	#superclass : #SugsAbstractContext,
-	#category : #Nautilus
+	#category : #'SmartSuggestions-Nautilus'
 }
 
 { #category : #refactoring }

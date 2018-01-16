@@ -253,6 +253,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'NautilusGroupAutoBuilder'.
 		spec package: 'Kernel-Rules'.
 		spec package: 'SmartSuggestions'.
+		spec package: 'SmartSuggestions-Nautilus'.
 		
 		spec package: 'MonticelloMocks'.
 		spec package: 'NodeNavigation'.
@@ -347,6 +348,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Shout-Tests'.
 		spec package: 'Slot-Tests'.
 		spec package: 'SmartSuggestions-Tests'.
+		spec package: 'SmartSuggestions-Nautilus-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
 		spec package: 'System-Caching-Tests'.
@@ -532,9 +534,11 @@ spec group: 'Reflectivity-Group' with: #(
 spec group: 'SmartSuggestions-Core-Group' with: #(
 	"depends on 'Glamour-Core-Group', circular dependency, needs fix"
 	'SmartSuggestions'
+	'SmartSuggestions-Nautilus'
 ).
 spec group: 'SmartSuggestions-Tests-Group' with: #(
 	'SmartSuggestions-Tests'
+	'SmartSuggestions-Nautilus-Tests'
 ).
 spec group: 'SmartSuggestions-Group' with: #(
 	'SmartSuggestions-Core-Group'
