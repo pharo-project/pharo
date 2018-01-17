@@ -80,6 +80,26 @@ ObjectLayout >> extendCompiledMethod [
 ]
 
 { #category : #extending }
+ObjectLayout >> extendDoubleByte [
+	self hasFields ifTrue: [
+		IncompatibleLayoutConflict new
+			layout: self;
+			subType: #doubleByte;
+			signal ].
+	^ DoubleByteLayout new
+]
+
+{ #category : #extending }
+ObjectLayout >> extendDoubleWord [
+	self hasFields ifTrue: [
+		IncompatibleLayoutConflict new
+			layout: self;
+			subType: #doubleWord;
+			signal ].
+	^ DoubleWordLayout new
+]
+
+{ #category : #extending }
 ObjectLayout >> extendSmallInteger [
 	self hasFields ifTrue: [
 		IncompatibleLayoutConflict new
