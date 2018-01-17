@@ -4,7 +4,7 @@ I know how to detect a change in the collection of slots of the metaclass.
 Class {
 	#name : #ShClassSlotChangeDetector,
 	#superclass : #ShAbstractClassChangeDetector,
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #initialization }

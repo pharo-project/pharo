@@ -17,7 +17,7 @@ Class {
 		'builder',
 		'oldClass'
 	],
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #comparing }
