@@ -1648,6 +1648,226 @@ Class >> variableByteSubclass: aName uses: aTraitComposition instanceVariableNam
 				category: aCategory ]
 ]
 
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNames
+	classVariableNames: classVarNames category: cat [
+	"Added to allow for a simplified subclass creation experience. "
+	 
+	^ self variableDoubleByteSubclass: className
+		instanceVariableNames: instVarNames  
+		classVariableNames: classVarNames 
+		poolDictionaries: ''
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: className instanceVariableNames: instVarNames
+	classVariableNames: classVarNames package: cat [
+	"
+	Variable double byte is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a double byte (16bit).
+	
+	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example.
+	"
+	 
+	^ self variableDoubleByteSubclass: className
+		instanceVariableNames: instVarNames  
+		classVariableNames: classVarNames 
+		poolDictionaries: ''
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+	^ self
+		variableDoubleByteSubclass: t
+		instanceVariableNames: f
+		classVariableNames: d
+		poolDictionaries: s
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: t instanceVariableNames: f 
+	classVariableNames: d poolDictionaries: s package: cat [
+	"This is the standard initialization message for creating a new class as a 
+	subclass of an existing class (the receiver) in which the subclass is to 
+	have indexable word-sized nonpointer variables."
+	^ self classInstaller make: [ :builder |
+		builder
+			superclass: self;
+			name: t;
+			layoutClass: DoubleByteLayout;
+			slots: f asSlotCollection;
+			sharedVariablesFromString: d;
+			sharedPools: s;
+			category: cat;
+			environment: self environment;
+			copyClassSlotsFromExistingClass ].
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+	"Added to allow for a simplified subclass creation experience. "
+
+	^ self
+		variableDoubleByteSubclass: className
+		uses: aTraitCompositionOrArray
+		instanceVariableNames: instVarNames
+		classVariableNames: classVarNames
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames
+	classVariableNames: classVarNames package: cat [
+	"Added to allow for a simplified subclass creation experience. "
+
+	^ self variableDoubleByteSubclass: className
+		uses: aTraitCompositionOrArray
+		instanceVariableNames: instVarNames
+		classVariableNames: classVarNames
+		poolDictionaries: ''
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
+	^ self
+		variableDoubleByteSubclass: aName
+		uses: aTraitComposition
+		instanceVariableNames: someInstanceVariableNames
+		classVariableNames: someClassVariableNames
+		poolDictionaries: someSharedPoolNames
+		package: aCategory
+]
+
+{ #category : #'subclass creation - variableDoubleByte' }
+Class >> variableDoubleByteSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
+	"Creates a new class as a subclass of an existing class (the receiver) 
+	in which the subclass is to have indexable word-sized nonpointer variables."
+	
+	^ self
+		subclass: aName
+		uses: aTraitComposition
+		with: [ 
+			self
+				variableDoubleByteSubclass: aName
+				instanceVariableNames: someInstanceVariableNames
+				classVariableNames: someClassVariableNames
+				poolDictionaries: someSharedPoolNames
+				package: aCategory ]
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNames
+	classVariableNames: classVarNames category: cat [
+	"Added to allow for a simplified subclass creation experience. "
+	 
+	^ self variableDoubleWordSubclass: className
+		instanceVariableNames: instVarNames  
+		classVariableNames: classVarNames 
+		poolDictionaries: ''
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: className instanceVariableNames: instVarNames
+	classVariableNames: classVarNames package: cat [
+	"
+	Variable double word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a double word (64bit).
+	
+	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example.
+	"
+	 
+	^ self variableDoubleWordSubclass: className
+		instanceVariableNames: instVarNames  
+		classVariableNames: classVarNames 
+		poolDictionaries: ''
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+	^ self
+		variableDoubleWordSubclass: t
+		instanceVariableNames: f
+		classVariableNames: d
+		poolDictionaries: s
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: t instanceVariableNames: f 
+	classVariableNames: d poolDictionaries: s package: cat [
+	"This is the standard initialization message for creating a new class as a 
+	subclass of an existing class (the receiver) in which the subclass is to 
+	have indexable word-sized nonpointer variables."
+	^ self classInstaller make: [ :builder |
+		builder
+			superclass: self;
+			name: t;
+			layoutClass: DoubleWordLayout;
+			slots: f asSlotCollection;
+			sharedVariablesFromString: d;
+			sharedPools: s;
+			category: cat;
+			environment: self environment;
+			copyClassSlotsFromExistingClass ].
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+	"Added to allow for a simplified subclass creation experience. "
+
+	^ self
+		variableDoubleWordSubclass: className
+		uses: aTraitCompositionOrArray
+		instanceVariableNames: instVarNames
+		classVariableNames: classVarNames
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: className uses: aTraitCompositionOrArray instanceVariableNames: instVarNames
+	classVariableNames: classVarNames package: cat [
+	"Added to allow for a simplified subclass creation experience. "
+
+	^ self variableDoubleWordSubclass: className
+		uses: aTraitCompositionOrArray
+		instanceVariableNames: instVarNames
+		classVariableNames: classVarNames
+		poolDictionaries: ''
+		package: cat
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
+	^ self
+		variableDoubleWordSubclass: aName
+		uses: aTraitComposition
+		instanceVariableNames: someInstanceVariableNames
+		classVariableNames: someClassVariableNames
+		poolDictionaries: someSharedPoolNames
+		package: aCategory
+]
+
+{ #category : #'subclass creation - variableDoubleWord' }
+Class >> variableDoubleWordSubclass: aName uses: aTraitComposition instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aCategory [
+	"Creates a new class as a subclass of an existing class (the receiver) 
+	in which the subclass is to have indexable word-sized nonpointer variables."
+	
+	^ self
+		subclass: aName
+		uses: aTraitComposition
+		with: [ 
+			self
+				variableDoubleWordSubclass: aName
+				instanceVariableNames: someInstanceVariableNames
+				classVariableNames: someClassVariableNames
+				poolDictionaries: someSharedPoolNames
+				package: aCategory ]
+]
+
 { #category : #'subclass creation - variable' }
 Class >> variableSubclass: className instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
 	"Added to allow for a simplified subclass creation experience. "
@@ -1747,7 +1967,7 @@ Class >> variableWordSubclass: className instanceVariableNames: instVarNames
 Class >> variableWordSubclass: className instanceVariableNames: instVarNames
 	classVariableNames: classVarNames package: cat [
 	"
-	Variable word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a full word (either 32 or 64bit depending on the VM).
+	Variable word is like variable byte (ByteArray), variable size, with indices instead of named instance variables, but each index points to a full word (32 bits).
 	
 	Objects on the heap are either pointers or bits.  For example instances of Point, Array, BlockClosure etc are pointer objects.  But Bitmap, ByteString, WideString etc are bits objects.  In v3 bits objects are either a sequence of bytes (ByteArray, ByteString, ByteSymbol etc) or 32-bit words (WideString, Float, Bitmap etc).  Spur supports byte, short, word and double-word bits objects even though currently only byte and word classes exist.  16-bit strings will be useful on Windows, for example.
 	"

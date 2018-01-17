@@ -1,5 +1,5 @@
 "
-I am a raw data layout that holds bytes (8 bit).
+I am a raw data layout that holds bytes (8 bits).
 "
 Class {
 	#name : #ByteLayout,
@@ -15,11 +15,8 @@ ByteLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #extending }
-ByteLayout >> extendWord [
-	IncompatibleLayoutConflict new
-		layout: self;
-		subType: #word;
-		signal
+ByteLayout >> extendByte [
+	^ ByteLayout new
 ]
 
 { #category : #format }

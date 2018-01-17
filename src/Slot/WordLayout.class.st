@@ -1,5 +1,5 @@
 "
-I am a raw data layout that holds words (32 / 64 bit depending on the platform).
+I am a raw data layout that holds words (32 bits ).
 "
 Class {
 	#name : #WordLayout,
@@ -15,11 +15,8 @@ WordLayout class >> extending: superLayout scope: aScope host: aClass [
 ]
 
 { #category : #extending }
-WordLayout >> extendByte [
-	IncompatibleLayoutConflict new
-		layout: self;
-		subType: #byte;
-		signal
+WordLayout >> extendWord [
+	^ WordLayout new
 ]
 
 { #category : #format }
@@ -28,6 +25,6 @@ WordLayout >> instanceSpecification [
 ]
 
 { #category : #testing }
-WordLayout >> isBytes [
-	^ false
+WordLayout >> isWords [
+	^ true
 ]
