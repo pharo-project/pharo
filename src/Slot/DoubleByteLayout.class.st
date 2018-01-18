@@ -7,16 +7,16 @@ Class {
 	#category : #'Slot-Layout'
 }
 
-{ #category : #'instance creation' }
-DoubleByteLayout class >> extending: superLayout scope: aScope host: aClass [
-	^ superLayout extendDoubleByte
-		host: aClass;
-		yourself
-]
-
 { #category : #extending }
 DoubleByteLayout >> extendDoubleByte [
 	^ DoubleByteLayout new
+]
+
+{ #category : #'methodsFor:' }
+DoubleByteLayout >> extending: superLayout scope: aScope host: aClass [
+	^ superLayout extendDoubleByte
+		host: aClass;
+		yourself
 ]
 
 { #category : #format }
