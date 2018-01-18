@@ -36,13 +36,14 @@ EpLogTest >> testEntriesCount [
 { #category : #tests }
 EpLogTest >> testEntryReferences [
 
-	| entryReferences |
+	| entryReferences entries |
 	entryReferences := log entryReferences.
+	entries := log entries.
 	
-	entryReferences do: [:each |
+	entryReferences withIndexDo: [:each :index |
 		log
 			entryFor: each
-			ifPresent: [:entry | "ok" ]
+			ifPresent: [:entry | self assert: entry equals: (entries at: index) ]
 			ifAbsent: [ self fail ] ].
 
 	self assert: entryReferences size equals: 5.

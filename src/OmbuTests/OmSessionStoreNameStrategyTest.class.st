@@ -41,7 +41,7 @@ OmSessionStoreNameStrategyTest >> fileReferenceWith: aName [
 
 { #category : #running }
 OmSessionStoreNameStrategyTest >> setUp [
-	super setUp.
+
 	strategy := self strategyClass new
 ]
 

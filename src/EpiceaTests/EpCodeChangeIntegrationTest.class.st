@@ -249,11 +249,11 @@ EpCodeChangeIntegrationTest >> testMethodRecompilationShouldNotLog [
 	aClass := classFactory newClass.
 	aClass compile: 'fortyTwo ^42'.
 
-	headBeforeRecompiling := monitor log head.
+	headBeforeRecompiling := monitor head.
 
 	aClass compile: 'fortyTwo ^42'.
 	
-	self assert: monitor log head == headBeforeRecompiling
+	self assert: monitor head == headBeforeRecompiling
 ]
 
 { #category : #tests }
