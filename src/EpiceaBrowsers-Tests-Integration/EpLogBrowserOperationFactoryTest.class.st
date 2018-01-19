@@ -8,7 +8,7 @@ Class {
 		'inputEntry',
 		'inputEntries'
 	],
-	#category : #'EpiceaBrowsersTests-Integration'
+	#category : #'EpiceaBrowsers-Tests-Integration'
 }
 
 { #category : #tests }

@@ -8,7 +8,7 @@ Class {
 		'log',
 		'directory'
 	],
-	#category : #'EpiceaTests-Resources'
+	#category : #'Epicea-Tests-Resources'
 }
 
 { #category : #releasing }

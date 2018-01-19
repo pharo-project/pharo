@@ -8,7 +8,7 @@ Class {
 		'logBuilder1',
 		'logBuilder2'
 	],
-	#category : #'EpiceaBrowsersTests-Exporter'
+	#category : #'EpiceaBrowsers-Tests-Exporter'
 }
 
 { #category : #accessing }

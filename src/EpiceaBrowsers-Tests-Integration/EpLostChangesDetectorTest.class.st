@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'detector'
 	],
-	#category : #'EpiceaBrowsersTests-Integration'
+	#category : #'EpiceaBrowsers-Tests-Integration'
 }
 
 { #category : #tests }

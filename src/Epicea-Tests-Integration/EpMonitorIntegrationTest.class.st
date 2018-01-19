@@ -9,7 +9,7 @@ Class {
 		'classFactory',
 		'logBuilder'
 	],
-	#category : #'EpiceaTests-Integration'
+	#category : #'Epicea-Tests-Integration'
 }
 
 { #category : #running }

@@ -1,7 +1,7 @@
 Class {
 	#name : #EpRevertTest,
 	#superclass : #EpLogBrowserOperationFactoryTest,
-	#category : #'EpiceaBrowsersTests-Integration'
+	#category : #'EpiceaBrowsers-Tests-Integration'
 }
 
 { #category : #private }
