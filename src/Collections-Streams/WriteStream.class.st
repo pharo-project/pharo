@@ -319,6 +319,18 @@ WriteStream >> tab: anInteger [
 	self next: anInteger put: Character tab
 ]
 
+{ #category : #positioning }
+WriteStream >> truncate [
+	^ self truncate: 0
+]
+
+{ #category : #positioning }
+WriteStream >> truncate: anInteger [ 
+	self position: anInteger.
+	readLimit := anInteger
+	
+]
+
 { #category : #initialization }
 WriteStream >> with: aCollection [
 
