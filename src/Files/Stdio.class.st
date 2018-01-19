@@ -49,7 +49,6 @@ Stdio class >> reset [
 
 { #category : #'system startup' }
 Stdio class >> startUp: resuming [
-
 	resuming ifTrue: [ self cleanStdioHandles ].
 ]
 
