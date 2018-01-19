@@ -1121,6 +1121,29 @@ Context >> longStack [
 ]
 
 { #category : #accessing }
+Context >> lookupSymbol: aSymbol [
+	"Pool variables not supported yet.
+	In order, looks up among:
+		1) Local variables and arguments
+		2) Instance variables of the receiver
+		3) Class variables of the class of the receiver
+		4) Pool variables (NOT IMPLEMENTED)
+		5) Global variables
+	If nothing is found, returns nil.
+	"
+	| classVariablesHolder |
+	(self tempNames includes: aSymbol) ifTrue: [^ self tempNamed: aSymbol].
+	(self receiver class allInstVarNames includes: aSymbol) ifTrue: [ ^ self receiver instVarNamed: aSymbol ].
+	classVariablesHolder := self receiver.
+	(self receiver isClass) ifFalse: [
+		"If the receiver is not a class, its class hold its class variables" classVariablesHolder := 		classVariablesHolder class].
+	(classVariablesHolder allClassVarNames includes: aSymbol) ifTrue: [ ^ classVariablesHolder classVarNamed: aSymbol].
+	"(self receiver instanceSide allClassVarNames includes: aSymbol) ifTrue: [ ^ self receiver instanceSide classVarNamed: aSymbol]."
+	Smalltalk globals at: aSymbol ifPresent: [ :value | ^ value ].
+	^ nil.
+]
+
+{ #category : #accessing }
 Context >> method [
 
 	^method

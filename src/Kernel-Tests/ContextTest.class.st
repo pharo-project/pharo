@@ -17,7 +17,11 @@ Class {
 		'aCompiledMethod',
 		'aReceiver',
 		'aMethodContext',
-		'aSender'
+		'aSender',
+		'instVarForTestLookupSymbol'
+	],
+	#classVars : [
+		'classVarForTestLookupSymbol'
 	],
 	#category : #'Kernel-Tests-Methods'
 }
@@ -128,6 +132,18 @@ ContextTest >> testFindContextSuchThat [
 ContextTest >> testJump [
 	#(exampleClosure exampleSend exampleStore) do: [ :selector |
 		self verifyJumpWithSelector: selector ]
+]
+
+{ #category : #tests }
+ContextTest >> testLookupSymbol [
+	|localVar|
+	localVar := 2.
+	instVarForTestLookupSymbol := 3.
+	classVarForTestLookupSymbol := 4.
+	self assert: (thisContext lookupSymbol: #localVar) equals: 2.
+	self assert: (thisContext lookupSymbol: #instVarForTestLookupSymbol) equals: 3.
+	self assert: (thisContext lookupSymbol: #classVarForTestLookupSymbol) equals: 4.
+	self assert: (thisContext lookupSymbol: #Smalltalk) equals: Smalltalk.
 ]
 
 { #category : #tests }
