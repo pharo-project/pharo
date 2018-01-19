@@ -99,8 +99,8 @@ ConfigurationOf class >> bootstrapMetacelloFrom: repositoryUrl [
 { #category : #private }
 ConfigurationOf class >> bootstrapPackage: aString from: aPath [
     | repository version |
-    repository := (MCCacheRepository default includesVersionNamed: aString)
-        ifTrue: [ MCCacheRepository default ]
+    repository := (MCCacheRepository uniqueInstance includesVersionNamed: aString)
+        ifTrue: [ MCCacheRepository uniqueInstance ]
         ifFalse: [ MCHttpRepository location: aPath user: '' password: '' ].
     self
         retry: [ 

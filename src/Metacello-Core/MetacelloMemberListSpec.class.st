@@ -3,7 +3,7 @@ Class {
 	#superclass : #MetacelloSpec,
 	#instVars : [
 		'list',
-		'memberMap' 
+		'memberMap'
 	],
 	#category : #'Metacello-Core-Members'
 }
