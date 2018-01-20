@@ -1,7 +1,5 @@
 "
-I am NoStdio.
-
-I am a Stdio that does not create files for windows but just streams stored in memory. 
+I am NoStdio. I am a Stdio that does not create files for windows but just streams stored in memory. 
 This is an hack due to the missing handles in the VM for Windows.
 
 I am used to set up an image to run an image without writing files on disk.
