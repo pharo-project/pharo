@@ -1,6 +1,5 @@
 "
-You must use a *configuration* when your project is stored in a
-repository using `.mcz` files.
+You must use a *configuration* when your project is stored in a repository using `.mcz` files.
 
 If you are using a source code manager (SCM) like [git][1] and have
 created a *baseline* (see the [**BaselineOf** class comment][3] for more info)
