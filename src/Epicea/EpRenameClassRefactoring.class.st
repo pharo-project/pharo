@@ -21,10 +21,9 @@ EpRenameClassRefactoring class >> rename: oldName to: newName [
 
 { #category : #converting }
 EpRenameClassRefactoring >> asRBRefactoring [
-
-	^ RBRenameClassRefactoring new 
-		className: oldName 
-		newName: newName
+	^ RBRenameClassRefactoring
+		rename: oldName
+		to: newName
 ]
 
 { #category : #'initialize-release' }
