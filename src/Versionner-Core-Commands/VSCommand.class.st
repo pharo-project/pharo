@@ -59,7 +59,7 @@ VSCommand >> repositoryOfPackageNamed: packageName [
 	| mcPackage workingCopy repositories repository repositoryIndex |
 	mcPackage := MCPackage named: packageName.
 	workingCopy := mcPackage workingCopy.
-	repositories := workingCopy repositoryGroup repositories reject: [ :rep | rep == MCCacheRepository default ].
+	repositories := workingCopy repositoryGroup repositories reject: [ :rep | rep == MCCacheRepository uniqueInstance ].
 	repositories
 		ifEmpty: [ repository := MCTool newRepository.
 				   workingCopy repositoryGroup addRepository: repository. ].
