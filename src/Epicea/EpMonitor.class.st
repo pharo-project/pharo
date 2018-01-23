@@ -58,17 +58,18 @@ EpMonitor class >> newWithLog: aLog [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 EpMonitor class >> reset [
 	"
 	self reset
 	"
 
-	self current disable.
-	self current: nil
+	self current
+		ifNotNil: [ self current disable.
+			self current: nil ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 EpMonitor class >> restart [
 	"
 	self restart
