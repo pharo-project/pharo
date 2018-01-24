@@ -107,6 +107,7 @@ RPackageOrganizerTest >> tearDown [
 				cls removeFromSystem ].
 	"createdPackages do:
 		[:each | self packageOrganizer unregisterPackage: each]"
+	super tearDown 
 	
 
 ]
