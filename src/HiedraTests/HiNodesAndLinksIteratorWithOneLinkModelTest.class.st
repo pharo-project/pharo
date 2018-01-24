@@ -37,6 +37,7 @@ HiNodesAndLinksIteratorWithOneLinkModelTest >> iteratedAsArray [
 
 { #category : #running }
 HiNodesAndLinksIteratorWithOneLinkModelTest >> setUp [
+	super setUp.
 	linkBuilder := HiLinkBuilder new
 		targetsBlock: [ :node | node parents ];
 		yourself.
