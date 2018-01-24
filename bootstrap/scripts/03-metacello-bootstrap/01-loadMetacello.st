@@ -20,6 +20,7 @@ mcPackages := #(
  'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
  'Metacello-GitBasedRepository'
+ 'Metacello-Gitlab'
  'Metacello-GitHub'
  'Metacello-Bitbucket'
  'Metacello-Platform'
