@@ -18,8 +18,10 @@ RGMethodDefinitionTest >> runCase [
 
 { #category : #running }
 RGMethodDefinitionTest >> tearDown [
+
 	self class removeSelectorSilently: #foo.
 	self class removeProtocol: 'test'.
+	super tearDown 
 ]
 
 { #category : #'test - accessing source' }
