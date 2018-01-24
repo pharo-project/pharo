@@ -64,7 +64,7 @@ EpMonitor class >> reset [
 	self reset
 	"
 
-	self current
+	current
 		ifNotNil: [ self current disable.
 			self current: nil ]
 ]
