@@ -63,6 +63,29 @@ ReadWriteStream >> next: anInteger [
 
 ]
 
+{ #category : #initialization }
+ReadWriteStream >> on: aCollection [
+
+	super on: aCollection.
+	readLimit := aCollection size
+]
+
+{ #category : #accessing }
+ReadWriteStream >> readInto: aCollection startingAt: startIndex count: n [
+	"Read n objects into the given collection. 
+	Return number of elements that have been read."
+	
+	| max |
+	max := (readLimit - position) min: n.
+	aCollection 
+		replaceFrom: startIndex 
+		to: startIndex + max - 1
+		with: collection
+		startingAt: position + 1.
+	position := position + max.
+	^ max
+]
+
 { #category : #converting }
 ReadWriteStream >> readStream [
 	"polymorphic with SequenceableCollection.  Return self"

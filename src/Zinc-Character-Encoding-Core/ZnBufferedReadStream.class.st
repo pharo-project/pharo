@@ -59,6 +59,12 @@ ZnBufferedReadStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
 
+{ #category : #private }
+ZnBufferedReadStream >> discardBuffer [
+
+	limit := 0
+]
+
 { #category : #initialization }
 ZnBufferedReadStream >> initialize [
 	super initialize.

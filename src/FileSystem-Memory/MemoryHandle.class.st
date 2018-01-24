@@ -73,14 +73,14 @@ MemoryHandle >> open [
 	entry := self basicOpen.
 ]
 
-{ #category : #public }
+{ #category : #'stream-protocol' }
 MemoryHandle >> readStream [
 	"Return a readstream on my contents.
 	Using myself as target collection allows to share the internal bytearray between multiple streams."
 	^ entry readStream
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 MemoryHandle >> size [
 	"return the size for the interna"
 	^ entry internalSize
@@ -101,9 +101,9 @@ MemoryHandle >> truncateTo: anInteger [
 	entry truncateTo: anInteger
 ]
 
-{ #category : #public }
+{ #category : #'stream-protocol' }
 MemoryHandle >> writeStream [
 	"Return a writestream on my contents.
 	Using myself as target collection allows to share the internal bytearray between multiple streams."
-	^ MemoryWriteStream on: self from: 1 to: entry fileSize
+	^ WriteStream on: self from: 1 to: entry fileSize
 ]

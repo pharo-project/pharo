@@ -35,6 +35,11 @@ GoferOperationTest >> hasVersion: aString [
 ]
 
 { #category : #running }
+GoferOperationTest >> runCase [
+	^ "SystemAnnouncer uniqueInstance suspendAllWhile: [ "super runCase "]"
+]
+
+{ #category : #running }
 GoferOperationTest >> setUp [
 	super setUp.
 	gofer repository: self monticelloRepository
