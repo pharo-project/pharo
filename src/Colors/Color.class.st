@@ -1600,13 +1600,6 @@ Color >> isTranslucentButNotTransparent [
 ]
 
 { #category : #queries }
-Color >> isTranslucentColor [
-	"This means: self isTranslucent, but isTransparent not"
-	self flag: #toremove.
-	^ false
-]
-
-{ #category : #queries }
 Color >> isTransparent [
 
 	^ alpha = 0
