@@ -234,6 +234,46 @@ SourceFileArrayTest >> testProtocol [
 ]
 
 { #category : #testing }
+SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
+
+	| fs array remoteString readStream |
+	fs := FileSystem memory.
+
+	array := SourceFileArray new.
+	array changesFileStream: (fs / 'changes.chunk') writeStream.
+	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	
+	remoteString := array remoteStringForNewString: 'test'.
+	
+	self
+		assert: remoteString string
+		equals: 'test'.
+		
+	self assert: (array fileAt: remoteString sourceFileNumber) equals: array changesFileStream.
+	
+	readStream := (fs / 'changes.chunk') readStream.
+	readStream position: remoteString position.
+	self assert: (ChunkReadStream on: readStream) next
+		equals: 'test'
+]
+
+{ #category : #testing }
+SourceFileArrayTest >> testRemoteStringWritesInGivenSourceFileArray [
+
+	| fs array |
+	fs := FileSystem memory.
+
+	array := SourceFileArray new.
+	array changesFileStream: (fs / 'changes.chunk') writeStream.
+	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	
+	array remoteStringForNewString: 'test'.
+	
+	self assert: (fs / 'changes.chunk') contents equals: '
+test!'
+]
+
+{ #category : #testing }
 SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
 	"Test valid input ranges"
 
@@ -319,4 +359,71 @@ SourceFileArrayTest >> testTimeStamp [
 	self assert: (((SourceFiles sourcedDataAt: okCm sourcePointer)) beginsWith:   
  'Point methodsFor: ''point functions'' stamp: ''''').
 	
+]
+
+{ #category : #testing }
+SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
+
+	| fs array |
+	fs := FileSystem memory.
+
+	array := SourceFileArray new.
+	array changesFileStream: (fs / 'changes.chunk') writeStream.
+	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	
+	array
+		writeSource: 'some source'
+		preamble: 'some preamble'
+		onSuccess: [ :sourcePointer | "continue with assertions" ]
+		onFail: [ "fail the test"
+			self fail ].
+	
+	self
+		assert: (fs / 'changes.chunk') contents
+		equals: 'some preamblesome source!'
+]
+
+{ #category : #testing }
+SourceFileArrayTest >> testWriteToBufferedStream [
+
+	| fs array |
+	fs := FileSystem memory.
+
+	array := SourceFileArray new.
+	array changesFileStream: (ZnBufferedReadWriteStream on: (fs / 'changes.chunk') writeStream).
+	array sourcesFileStream: (ZnBufferedReadWriteStream on: (fs / 'sources.chunk') writeStream).
+	
+	array
+		writeSource: 'some source'
+		preamble: 'some preamble'
+		onSuccess: [ :sourcePointer | "continue with assertions" ]
+		onFail: [ "fail the test"
+			self fail ].
+	
+	self
+		assert: (fs / 'changes.chunk') contents
+		equals: 'some preamblesome source!'
+]
+
+{ #category : #testing }
+SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
+
+	| fs array |
+	fs := FileSystem memory.
+
+	array := SourceFileArray new.
+	array changesFileStream: (fs / 'changes.chunk') writeStream.
+	array sourcesFileStream: (fs / 'sources.chunk') writeStream.
+	
+	array changesWriteStreamDo: [ :changesFile |
+		changesFile cr; cr;
+			nextChunkPut: 'test';
+			cr ].
+	
+	self
+		assert: (fs / 'changes.chunk') contents
+		equals: '
+
+test!
+'
 ]

@@ -460,7 +460,10 @@ SourceFileArray >> remoteStringAt: sourcePointer [
 { #category : #'public - string writing' }
 SourceFileArray >> remoteStringForNewString: aString [
 
-	^ RemoteString newString: aString
+	^ RemoteString new
+		sourceFileArray: self;
+		string: aString;
+		yourself
 ]
 
 { #category : #printing }
@@ -567,7 +570,7 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	file setToEnd.
 	file nextPutAll: preamble.
 	position := file position.
-	file nextChunkPut: aString.
+	(ChunkWriteStream on: file) nextChunkPut: aString.
 
 	self flushChangesFile.
 

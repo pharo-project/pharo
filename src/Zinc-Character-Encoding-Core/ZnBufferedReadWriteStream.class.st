@@ -49,6 +49,12 @@ ZnBufferedReadWriteStream >> flush [
 	self writingActionDo: [ writeStream flush ]
 ]
 
+{ #category : #testing }
+ZnBufferedReadWriteStream >> isReadOnly [
+	
+	^ false
+]
+
 { #category : #accessing }
 ZnBufferedReadWriteStream >> next [
 	
@@ -98,6 +104,12 @@ ZnBufferedReadWriteStream >> peek [
 ]
 
 { #category : #accessing }
+ZnBufferedReadWriteStream >> position [
+	
+	^ readStream position
+]
+
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> readInto: collection startingAt: offset count: requestedCount [
 	
 	^ self readingActionDo: [ 
@@ -117,6 +129,12 @@ ZnBufferedReadWriteStream >> readingActionDo: aBlock [
 		writeStream flush.
 		readStream discardBuffer ].
 	^ aBlock ensure: [ lastRead := true ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> setToEnd [
+	
+	readStream setToEnd
 ]
 
 { #category : #'initialize-release' }

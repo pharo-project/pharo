@@ -174,6 +174,12 @@ ZnBufferedReadStream >> peekFor: object [
 ]
 
 { #category : #accessing }
+ZnBufferedReadStream >> position [
+
+	^ stream position
+]
+
+{ #category : #accessing }
 ZnBufferedReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available."
@@ -197,6 +203,12 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 								nextBuffer;
 								readInto: collection startingAt: offset + read count: requestedCount - read ] ]
 				ifFalse: [ stream readInto: collection startingAt: offset + read count: requestedCount - read ])
+]
+
+{ #category : #accessing }
+ZnBufferedReadStream >> setToEnd [
+	
+	stream setToEnd
 ]
 
 { #category : #'initialize-release' }

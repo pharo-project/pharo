@@ -110,7 +110,6 @@ EpLogBrowserOperationFactory >> latestEventsFrom: previewEventsTheOldestFirst [
 	filter := EpLatestCodeChangeFilter new
 		logBrowserModel: logBrowserModel;
 		yourself.
-
 	^ aLog entries 
 		select: [ :each | filter accepts: each ] 
 		thenCollect: [ :each | each content ]
