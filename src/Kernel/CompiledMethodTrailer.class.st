@@ -240,14 +240,19 @@ CompiledMethodTrailer >> decodeClearedTrailer [
 
 { #category : #decoding }
 CompiledMethodTrailer >> decodeEmbeddedSource [
-
 	"data is string with method's source code"
-	| len input dataStr |
+
+	| len start end newSize byteArray |
 	len := self decodeLengthField.
- 	input := (ReadStream on: method asByteArray from: method size - size+1 to: method size - size + len).
-	dataStr := WriteStream on: (ByteArray new: len).
-	[ input atEnd ] whileFalse: [ dataStr nextPut: input next ].
-	data := dataStr contents utf8Decoded
+	start := method size - self size + 1.
+	end := method size - self size + len.
+	newSize := end - start + 1. 
+	byteArray := (ByteArray new: newSize)
+		replaceFrom: 1
+		to: newSize
+		with: method
+		startingAt: start.
+	data := byteArray utf8Decoded
 ]
 
 { #category : #decoding }
@@ -505,28 +510,30 @@ CompiledMethodTrailer >> kindAsByte [
 	^ (index - 1) << 2
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 CompiledMethodTrailer >> method: aMethod [
 
 	| flagByte |
 
 	data := size := nil.
 	method := aMethod.
-	flagByte := method at: (method size).
+	flagByte := method at: method size.
 
 	"trailer kind encoded in 6 high bits of last byte"
 	kind := self class trailerKinds at: 1+(flagByte>>2).
 
 	"decode the trailer bytes, inline some common types to speed up decoding"
 	kind == #SourcePointer
-		ifTrue: [ self decodeSourcePointer ]
-	ifFalse: [ kind == #VarLengthSourcePointer
-		ifTrue: [ self decodeVarLengthSourcePointer ]
-	ifFalse: [ kind == #NoTrailer
-			ifTrue: [ self decodeNoTrailer ]
-	ifFalse: [ 
-		"slow but general decoding using perform"
-		self perform: ('decode' , kind) asSymbol ]]].
+		ifTrue: [ ^self decodeSourcePointer ].
+   kind == #VarLengthSourcePointer
+		ifTrue: [ ^self decodeVarLengthSourcePointer ].
+	kind == #EmbeddedSource
+		ifTrue: [ ^self decodeEmbeddedSource ].
+	kind == #NoTrailer
+		ifTrue: [ ^self decodeNoTrailer ].
+
+	"slow but general decoding using perform"
+	self perform: ('decode' , kind) asSymbol.
 
 ]
 
