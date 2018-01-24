@@ -56,7 +56,8 @@ TimespanTest >> setUp [
 { #category : #running }
 TimespanTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
-	timespan := nil
+	timespan := nil.
+	super tearDown 
 
 ]
 
