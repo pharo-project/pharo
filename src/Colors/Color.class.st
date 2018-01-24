@@ -1600,6 +1600,15 @@ Color >> isTranslucentButNotTransparent [
 ]
 
 { #category : #queries }
+Color >> isTranslucentColor [
+	self
+		deprecated: 'Please use #isTranslucent instead'
+		transformWith: '`@receiver isTranslucentColor' -> '`@receiver isTranslucent'.
+
+	^ self isTranslucent
+]
+
+{ #category : #queries }
 Color >> isTransparent [
 
 	^ alpha = 0
