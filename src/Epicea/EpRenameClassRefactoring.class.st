@@ -20,7 +20,7 @@ EpRenameClassRefactoring class >> rename: oldName to: newName [
 ]
 
 { #category : #converting }
- EpRenameClassRefactoring >> asRBRefactoring [
+EpRenameClassRefactoring >> asRBRefactoring [
 	^ RBRenameClassRefactoring new 
 		className: oldName 
 		newName: newName
