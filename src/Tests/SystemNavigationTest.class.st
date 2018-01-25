@@ -79,7 +79,6 @@ SystemNavigationTest >> tearDown [
 
 { #category : #testing }
 SystemNavigationTest >> testAllClassesUsingSharedPool [
-	"self debug: #testAllClassesUsingSharedPool"
 
 	| res |
 	res := SystemNavigation new allClassesUsingSharedPool: 'ChronologyConstants'.

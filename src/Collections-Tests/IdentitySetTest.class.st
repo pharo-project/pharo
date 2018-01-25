@@ -42,7 +42,7 @@ IdentitySetTest >> testGrowWithNil [
 { #category : #'tests - identity' }
 IdentitySetTest >> testIdentity [
 	"self run:#testIdentity" 
-	"self debug:#testIdentity"
+
 	| identitySet aString anOtherString |
 	
 	aString := 'hello'.

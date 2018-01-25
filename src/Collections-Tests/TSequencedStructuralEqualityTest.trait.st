@@ -35,14 +35,12 @@ TSequencedStructuralEqualityTest >> test0TStructuralEqualityTest [
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testEqualSign [
-	"self debug: #testEqualSign"
-
+ 
 	self deny: (self empty = self nonEmpty).
 ]
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testEqualSignForSequenceableCollections [
-	"self debug: #testEqualSign"
 
 	self deny: (self nonEmpty = self nonEmpty asSet). 
 	self deny: (self nonEmpty reversed = self nonEmpty).
@@ -51,8 +49,7 @@ TSequencedStructuralEqualityTest >> testEqualSignForSequenceableCollections [
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testEqualSignIsTrueForEmptyButNonIdenticalCollections [
-	"self debug: #testEqualSignIsTrueForNonIdenticalButEqualCollections"
-		
+	
 	self assert: (self empty = self empty copy). 
 	self assert: (self empty copy = self empty).
 	self assert: (self empty copy = self empty copy).
@@ -62,7 +59,6 @@ TSequencedStructuralEqualityTest >> testEqualSignIsTrueForEmptyButNonIdenticalCo
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCollections [
-	"self debug: #testEqualSignIsTrueForNonIdenticalButEqualCollections"
 		
 	self assert: (self empty = self empty copy). 
 	self assert: (self empty copy = self empty).
@@ -75,7 +71,6 @@ TSequencedStructuralEqualityTest >> testEqualSignIsTrueForNonIdenticalButEqualCo
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
-	"self debug: #testEqualSignOfIdenticalCollectionObjects"
 	
 	self assert: (self empty = self empty). 
 	self assert: (self nonEmpty = self nonEmpty). 
@@ -84,7 +79,6 @@ TSequencedStructuralEqualityTest >> testEqualSignOfIdenticalCollectionObjects [
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testHasEqualElements [
-	"self debug: #testHasEqualElements"
 
 	self deny: (self empty hasEqualElements: self nonEmpty).
 	self deny: (self nonEmpty hasEqualElements: self nonEmpty asSet). 
@@ -94,7 +88,6 @@ TSequencedStructuralEqualityTest >> testHasEqualElements [
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testHasEqualElementsIsTrueForNonIdenticalButEqualCollections [
-	"self debug: #testHasEqualElementsIsTrueForNonIdenticalButEqualCollections"
 		
 	self assert: (self empty hasEqualElements: self empty copy). 
 	self assert: (self empty copy hasEqualElements: self empty).
@@ -107,7 +100,6 @@ TSequencedStructuralEqualityTest >> testHasEqualElementsIsTrueForNonIdenticalBut
 
 { #category : #'tests - equality' }
 TSequencedStructuralEqualityTest >> testHasEqualElementsOfIdenticalCollectionObjects [
-	"self debug: #testHasEqualElementsOfIdenticalCollectionObjects"
 	
 	self assert: (self empty hasEqualElements: self empty). 
 	self assert: (self nonEmpty hasEqualElements: self nonEmpty). 

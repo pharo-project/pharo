@@ -54,7 +54,6 @@ TCopyTest >> test0CopyTest [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyEmptyWith [
-	"self debug: #testCopyWith"
 	| res anElement |
 	anElement := self elementToAdd.
 	res := self empty copyWith: anElement.
@@ -64,7 +63,6 @@ TCopyTest >> testCopyEmptyWith [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyEmptyWithout [
-	"self debug: #testCopyEmptyWithout"
 	| res |
 	res := self empty copyWithout: self elementToAdd.
 	self assert: res size = self empty size.
@@ -73,7 +71,6 @@ TCopyTest >> testCopyEmptyWithout [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyEmptyWithoutAll [
-	"self debug: #testCopyEmptyWithoutAll"
 	| res |
 	res := self empty copyWithoutAll: self collectionWithElementsToRemove.
 	self assert: res size = self empty size.
@@ -82,7 +79,6 @@ TCopyTest >> testCopyEmptyWithoutAll [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyEquals [
-	"self debug: #testCopySameClass"
 	"A copy should be equivalent to the things it's a copy of"
 	
 	| copy | 
@@ -92,7 +88,7 @@ TCopyTest >> testCopyEquals [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyNonEmptyWith [
-	"self debug: #testCopyNonEmptyWith"
+
 	| res anElement |
 	anElement := self elementToAdd .
 	res := self nonEmpty copyWith: anElement.
@@ -105,7 +101,6 @@ TCopyTest >> testCopyNonEmptyWith [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithout [
-	"self debug: #testCopyNonEmptyWithout"
 	
 	| res anElementOfTheCollection |
 	anElementOfTheCollection :=  self nonEmpty anyOne.
@@ -123,7 +118,6 @@ TCopyTest >> testCopyNonEmptyWithout [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithoutAll [
-	"self debug: #testCopyNonEmptyWithoutAll"
 	| res |
 	res := self nonEmpty copyWithoutAll: self collectionWithElementsToRemove.
 	"here we do not test the size since for a non empty set we would get a problem.
@@ -137,7 +131,7 @@ TCopyTest >> testCopyNonEmptyWithoutAll [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithoutAllNotIncluded [
-	"self debug: #testCopyNonEmptyWithoutAllNotIncluded"
+
 	| res |
 	res := self nonEmpty copyWithoutAll: self collectionNotIncluded.
 	"here we do not test the size since for a non empty set we would get a problem.
@@ -148,7 +142,7 @@ TCopyTest >> testCopyNonEmptyWithoutAllNotIncluded [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyNonEmptyWithoutNotIncluded [
-	"self debug: #testCopyNonEmptyWithoutNotIncluded"
+
 	| res |
 	res := self nonEmpty copyWithout: self elementToAdd.
 	"here we do not test the size since for a non empty set we would get a problem.
@@ -159,7 +153,6 @@ TCopyTest >> testCopyNonEmptyWithoutNotIncluded [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopyNotSame [
-	"self debug: #testCopySameClass"
 	"A copy of a collection should always be of the same class as the instance it copies"
 	
 	| copy | 
@@ -169,7 +162,6 @@ TCopyTest >> testCopyNotSame [
 
 { #category : #'tests - copy' }
 TCopyTest >> testCopySameClass [
-	"self debug: #testCopySameClass"
 	"A copy of a collection should always be of the same class as the instance it copies"
 	
 	| copy | 

@@ -1203,7 +1203,7 @@ self assert: ('test this string €₤' hasWideCharacterFrom: 18 to: 19).
 
 { #category : #'tests - includes' }
 StringTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -1690,8 +1690,7 @@ StringTest >> testRepeat [
 
 { #category : #'tests - instance creation' }
 StringTest >> testSpace [
-	"self debug: #testSpace"
-	
+		
 	string := String new.
 	self assert: string size = 0. "instead of #isEmpty to be consistent with the following test"
 	
@@ -1824,7 +1823,7 @@ StringTest >> testUncapitalized [
 
 { #category : #'tests - converting' }
 StringTest >> testUpTo [
-	"self debug: #testUpTo"
+	
 	self assert: #up:to: keywords = #(up: to:).
 	self assert: #copy:from:to: keywords = #(copy: from: to:).
 	self assert: #up keywords = #(up).

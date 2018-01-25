@@ -44,7 +44,6 @@ TGrowableTest >> test0FixtureRequirementsOfTGrowableTest [
 
 { #category : #'tests - growable' }
 TGrowableTest >> testAddEmptyGrows [
-	"self debug: #testAddEmptyGrows"
 	
 	| oldSize |
 	oldSize := self empty size.
@@ -54,7 +53,6 @@ TGrowableTest >> testAddEmptyGrows [
 
 { #category : #'tests - growable' }
 TGrowableTest >> testAddNonEmptyGrowsWhenNewElement [
-	"self debug: #testAddNonEmptyGrowsWhenNewElement"
 	
 	| oldSize |
 	oldSize := self nonEmpty size.

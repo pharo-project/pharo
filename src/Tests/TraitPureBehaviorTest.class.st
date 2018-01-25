@@ -70,8 +70,7 @@ TraitPureBehaviorTest >> testChangeSuperclass [
 ]
 
 { #category : #'testing-applying trait composition' }
-TraitPureBehaviorTest >> testClassesWithTraits [
-	"self debug: #testClassesWithTraits"
+TraitPureBehaviorTest >> testClassesWithTraits [	
 
 	self assert: (self c1 methodDict includesKey: #foo).
 	self assert: (self c2 methodDict includesKey: #bar).
@@ -165,9 +164,6 @@ TraitPureBehaviorTest >> testMethodCategoryReorganization [
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testMethodClass [
 	"Test sharing of compiled methods between traits and their users. Methods are installed in exactly one behavior, however, the source pointers of methods are shared (unless sources or changes have been condensed). Verify	that methodClass properties are set correctly."
-	
-	"self debug: #testMethodClass"
-
 	| m1 m2 |
 	m1 := self t5 >> #m51.
 	m2 := self c2 >> #m51.
@@ -324,8 +320,7 @@ TraitPureBehaviorTest >> testReshapeClass [
 
 { #category : #'testing-applying trait composition' }
 TraitPureBehaviorTest >> testSuperSends [
-	"self debug: #testSuperSends"
-	
+
 	| aC2 |
 	aC2 := self c2 new.
 	self assert: aC2 m51.
@@ -361,7 +356,7 @@ TraitPureBehaviorTest >> testTraitCompositionWithCycles [
 
 { #category : #testing }
 TraitPureBehaviorTest >> testTraitsAccessor [
-	"self debug: #testTraitsAccessor"
+	
 	self assert: self c1 traits isEmpty.
 	self assert: (self c2 traits hasEqualElements: (Array with: self t5))
 ]

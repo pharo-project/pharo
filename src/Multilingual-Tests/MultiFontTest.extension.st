@@ -2,7 +2,7 @@ Extension { #name : #MultiFontTest }
 
 { #category : #'*Multilingual-Tests-OtherLanguages' }
 MultiFontTest >> testMultistringFont [
-	"self debug: #testMultistringFont"
+	
 	| text p style height width |
 	[(TextStyle default fontArray at: JapaneseEnvironment leadingChar)
 		ifNil: [^ self]]

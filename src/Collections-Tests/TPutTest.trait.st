@@ -87,7 +87,7 @@ TPutTest >> testAtLastPut [
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testAtWrapPut [
-	"self debug: #testAtWrapPut"
+	 
 	| index |
 	index := self indexArray anyOne.
 	
@@ -119,7 +119,7 @@ TPutTest >> testFromToPut [
 
 { #category : #'tests - puting with indexes' }
 TPutTest >> testSwapWith [
-	"self debug: #testSwapWith"
+ 
 	| result index |
 	index := self indexArray anyOne.
 	result:= self nonEmpty copy .

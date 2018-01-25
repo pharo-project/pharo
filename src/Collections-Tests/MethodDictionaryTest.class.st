@@ -174,7 +174,7 @@ MethodDictionaryTest >> testAtNonexistantKeyExecutesFailBlock [
 { #category : #tests }
 MethodDictionaryTest >> testBehaviorLocalyDefined [
 	"method not acquired from a trait or from its superclass"
-	" self debug: #testBehavior "
+	 
 	self assert: (Object methodDict isKindOf: MethodDictionary).
 	self assert: (Object selectors asSortedCollection = Object selectors asSortedCollection).
 ]
@@ -234,7 +234,7 @@ MethodDictionaryTest >> testIdentityKeyAtNonExistantValueReturnsFailBlock [
 
 { #category : #tests }
 MethodDictionaryTest >> testIncludesKeyLocalyDefined [
-	" self debug: #testIncludesKeyLocalyDefined "
+
 	self assert: (self class includesSelector: #testIncludesKeyLocalyDefined).
 ]
 
@@ -270,7 +270,7 @@ MethodDictionaryTest >> testKeyAtNonexistantValueExecutesFailBlock [
 
 { #category : #tests }
 MethodDictionaryTest >> testKeyAtValueIfAbsentLocalyDefined [
-	" self debug: #testKeyAtValueIfAbsentLocalyDefined "
+
 	self assert: (self class methodDict keyAtValue: (self class >> #testKeyAtValueIfAbsentLocalyDefined) ifAbsent: []) == #testKeyAtValueIfAbsentLocalyDefined.
 	
 	self assert: (self class methodDict keyAtValue: (Object >> #printOn:) ifAbsent: [#notFound]) == #notFound

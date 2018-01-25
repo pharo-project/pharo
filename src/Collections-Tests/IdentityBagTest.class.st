@@ -49,7 +49,7 @@ IdentityBagTest >> testAsSetWithEqualsElements [
 { #category : #tests }
 IdentityBagTest >> testIdentity [
 	"self run:#testIdentity" 
-	"self debug:#testIdentity"
+ 
 	| bag identityBag aString anOtherString |
 	
 	aString := 'hello'.
