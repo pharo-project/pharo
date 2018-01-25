@@ -18,6 +18,18 @@ FFICompilerPluginTests >> ffiCopyString: aString to: dest [
 ]
 
 { #category : #tests }
+FFICompilerPluginTests >> ffiLibraryName [
+	^ LibC
+]
+
+{ #category : #tests }
+FFICompilerPluginTests >> testMethodCall [
+	| buffer result |
+	buffer := ByteArray new: 12.
+	result := self ffiCopyString: 'Hello World!' to: buffer.
+]
+
+{ #category : #tests }
 FFICompilerPluginTests >> testThatFFIAdditionalStateIsFilledCorrectlyWith2Parameters [
 	| ffiCallMethod |
 	ffiCallMethod := self class >> #ffiCopyString:to:.
