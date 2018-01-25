@@ -137,6 +137,7 @@ CompiledMethodTest >> shouldNotImplementMethod [
 { #category : #running }
 CompiledMethodTest >> tearDown [
 	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
+	super tearDown
 ]
 
 { #category : #'tests - slots' }

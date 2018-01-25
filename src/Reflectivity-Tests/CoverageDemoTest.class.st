@@ -12,6 +12,7 @@ Class {
 CoverageDemoTest >> tearDown [
 	link ifNotNil: [link uninstall].
 	ReflectivityExamples recompile: selector.
+	super tearDown
 ]
 
 { #category : #tests }
