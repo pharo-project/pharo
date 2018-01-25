@@ -32,7 +32,7 @@ FFICompilerPluginTests >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
 		should: [ 	| buffer result |
 	buffer := ByteArray new: 12.
 	result := self ffiCopyStringWithError: 'Hello World!' to: buffer. ]
-		raise: Error
+		raise: FFIVariableNameNotFound
 ]
 
 { #category : #tests }
