@@ -18,10 +18,9 @@ FFICompilerPluginTests >> ffiCopyString: aString to: dest [
 ]
 
 { #category : #tests }
-FFICompilerPluginTests >> test [
+FFICompilerPluginTests >> testThatFFIAdditionalStateIsFilledCorrectlyWith2Parameters [
 	| ffiCallMethod |
 	ffiCallMethod := self class >> #ffiCopyString:to:.
 	self assert: ffiCallMethod properties class equals: FFIAdditionalFFIMethodState.
-	self assert: ffiCallMethod properties argsNames equals: #(#aString #dest).
-	self halt
+	self assert: ffiCallMethod properties argsNames equals: #(#aString #dest)
 ]
