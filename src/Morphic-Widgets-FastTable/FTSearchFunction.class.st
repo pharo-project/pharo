@@ -65,7 +65,7 @@ FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 		withEditedContentsDo:
 				[ :contents :editor | 
 			contents
-				ifEmpty: [ self table selectRowIndex: currentSelIndex. 
+				ifEmpty: [ founds ifTrue: [self table selectRowIndex: currentSelIndex]. 
 					self table highlightRowIndexes: currentHighlightedIndexes ]
 				ifNotEmpty:
 					[ founds := self searchFor: contents.
