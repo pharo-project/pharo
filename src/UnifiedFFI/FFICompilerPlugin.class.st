@@ -6,12 +6,12 @@ Class {
 
 { #category : #api }
 FFICompilerPlugin >> transform [
-	| temp rule pattern selfMessages |
-	self halt.
+	| rule pattern |
 	pattern := '`@message ffiCall: ``@args'.
 	rule := RBParseTreeSearcher new
 		matchesAnyOf: {pattern}
 		do: [ :node :answer | ast propertyAt: #methodProperties ifAbsentPut: [ FFIAdditionalFFIMethodState new: 0 ] ].
 	rule executeTree: ast.
+	ast propertyAt: #methodProperties ifPresent: [ :methodState | methodState argsNames: ast argumentNames ] ifAbsent: [  ].
 	^ ast
 ]

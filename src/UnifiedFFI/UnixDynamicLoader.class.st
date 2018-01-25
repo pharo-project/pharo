@@ -25,7 +25,7 @@ UnixDynamicLoader >> loadLibrary: path [
 
 { #category : #misc }
 UnixDynamicLoader >> loadLibrary: filename flag: flag [
-	^ self ffiCall: #(void *dlopen(const char *filename, int flag))
+	^ self ffiCall: #(void *dlopen(const char *filename, int flag))   
 ]
 
 { #category : #misc }
