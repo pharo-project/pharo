@@ -13,14 +13,12 @@ FFICompilerPluginTests class >> compiler [
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiCopyString2: aString to: dest [
-<toto>
-	^ self ffiCall: #( String strcpy ( String dest, String aString  ) )      
+	^ self ffiCall: #( String strcpy ( String dest, String aString  ) )       
 ]
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiCopyString: aString to: dest [
-<toto>
-	^ self ffiCall: #( String strcpy ( String dest, String aString  ) )     
+	^ self ffiCall: #(String strcpy ( String dest, String aString  ) )
 ]
 
 { #category : #tests }
@@ -33,6 +31,16 @@ FFICompilerPluginTests >> testMethodCall [
 	| buffer result |
 	buffer := ByteArray new: 12.
 	result := self ffiCopyString2: 'Hello World!' to: buffer.
+]
+
+{ #category : #tests }
+FFICompilerPluginTests >> testRecompilationOfWrongFFIMethodShouldRaiseAnError [
+	self
+		should: [ self
+				class compile:
+					'ffiCopyString: aString to: dest2
+	^ self ffiCall: #(String strcpy ( String dest, String aString  ) )' ]
+		raise: NotFound
 ]
 
 { #category : #tests }

@@ -6,5 +6,7 @@ CompiledMethod >> ffiArgumentNames [
 	to get arg names not from source code directly, but from method properties, collected at
 	compile time. Useful, when there is no source code available (for some reason)"
 
-	^ self properties argsNames
+	^ self properties isFFIMethodState
+		ifTrue: [ self properties argsNames ]
+		ifFalse: [ self halt. self argumentNames ]
 ]

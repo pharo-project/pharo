@@ -95,7 +95,6 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 	functionSpec arguments
 		do: [ :each | each emitArgument: builder context: sender ].
 	"create the array"
-	self halt.
 	builder pushConsArray: functionSpec arguments size.
 	"send call and store into result"
 	builder send: #invokeWithArguments:.

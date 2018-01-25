@@ -17,3 +17,8 @@ FFIAdditionalFFIMethodState >> argsNames [
 FFIAdditionalFFIMethodState >> argsNames: anObject [
 	argsNames := anObject
 ]
+
+{ #category : #testing }
+FFIAdditionalFFIMethodState >> isFFIMethodState [
+	^ true
+]

@@ -9,6 +9,11 @@ Class {
 	#category : #'OpalCompiler-Tests-Plugins'
 }
 
+{ #category : #'as yet unclassified' }
+ASTPluginMeaningOfLife class >> priority [
+	^ 0
+]
+
 { #category : #transformation }
 ASTPluginMeaningOfLife >> transform [
 	| rule |
