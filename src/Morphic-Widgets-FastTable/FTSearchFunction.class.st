@@ -80,7 +80,7 @@ FTSearchFunction >> showSearchFieldFromKeystrokeEvent: anEvent [
 									(contents
 										addAttribute: (TextColor new color: Color red);
 										yourself) ] ] ];
-		whenEditorEscapedDo: [ self table selectRowIndex: currentSelIndex.
+		whenEditorEscapedDo: [ founds ifTrue: [self table selectRowIndex: currentSelIndex].
 			self table highlightRowIndexes: currentHighlightedIndexes ].
 	ed autoAccept: true.
 	founds
