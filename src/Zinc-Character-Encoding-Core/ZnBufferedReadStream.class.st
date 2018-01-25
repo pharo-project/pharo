@@ -74,7 +74,13 @@ ZnBufferedReadStream >> initialize [
 
 { #category : #accessing }
 ZnBufferedReadStream >> isBinary [
+
 	^ stream isBinary
+]
+
+{ #category : #'as yet unclassified' }
+ZnBufferedReadStream >> isStream [
+	^ true
 ]
 
 { #category : #accessing }
@@ -175,8 +181,24 @@ ZnBufferedReadStream >> peekFor: object [
 
 { #category : #accessing }
 ZnBufferedReadStream >> position [
+	
+	"If the buffer advanced, we need to check the original stream position, minus what we have read.
+	The -1 is because the buffer is base 1"
+	^ stream position - limit + position - 1
+]
 
-	^ stream position
+{ #category : #accessing }
+ZnBufferedReadStream >> position: anInteger [ 
+	
+	| bufferEnd bufferStart |
+	bufferEnd := stream position.
+	bufferStart := bufferEnd - limit.
+	(anInteger between: bufferStart and: bufferEnd)
+		ifTrue: [ position := bufferEnd - anInteger + 1 ]
+		ifFalse: [ 
+			"We reset the buffer and update the position in the underlying stream"
+			limit := 0.
+			stream position: anInteger ]
 ]
 
 { #category : #accessing }
@@ -209,6 +231,12 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 ZnBufferedReadStream >> setToEnd [
 	
 	stream setToEnd
+]
+
+{ #category : #accessing }
+ZnBufferedReadStream >> size [
+
+	^ stream size
 ]
 
 { #category : #'initialize-release' }

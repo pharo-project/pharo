@@ -553,23 +553,25 @@ ZipArchiveMember >> refreshLocalFileHeaderTo: aStream [
 	To be called after writing the data stream.
 	Assumes that fileName and localExtraField sizes didn't change since last written."
 
-	| here systemFileName |
+	| here systemFileName endianStream |
 	self flag: 'WTF! What is the purpose of this method?! We just wrote the headers. Why write them again?'.
 	here := aStream position.
 	systemFileName := fileName asVmPathName.
 	aStream position: writeLocalHeaderRelativeOffset.
 
 	aStream nextPutAll: LocalFileHeaderSignature.
-	aStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
-	aStream nextLittleEndianNumber: 2 put: self bitFlag.
-	aStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
-	aStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
-	aStream nextLittleEndianNumber: 4 put: crc32.
-	aStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
+	
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
+	endianStream nextLittleEndianNumber: 2 put: self bitFlag.
+	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
+	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
+	endianStream nextLittleEndianNumber: 4 put: crc32.
+	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
 												ifTrue: [ uncompressedSize ] ifFalse: [ compressedSize ]).
-	aStream nextLittleEndianNumber: 4 put: uncompressedSize.
-	aStream nextLittleEndianNumber: 2 put: systemFileName size.
-	aStream nextLittleEndianNumber: 2 put: localExtraField size.
+	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
+	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
 
 	aStream position: here.
 
@@ -683,34 +685,37 @@ ZipArchiveMember >> versionNeededToExtract: anInteger [
 ZipArchiveMember >> writeCentralDirectoryFileHeaderTo: aStream [
 	"C2 v3 V4 v5 V2"
 
-	| systemFileName systemFileComment systemCdExtraField |
+	| systemFileName systemFileComment systemCdExtraField endianStream |
 	systemFileName := fileName asVmPathName.
 	systemFileComment := fileComment convertToSystemString.
 	systemCdExtraField := cdExtraField.
 	aStream nextPutAll: CentralDirectoryFileHeaderSignature.
-	aStream nextLittleEndianNumber: 1 put: self versionMadeBy.
-	aStream nextLittleEndianNumber: 1 put: fileAttributeFormat.
+	
 
-	aStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
-	aStream nextLittleEndianNumber: 2 put: self bitFlag.
-	aStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	endianStream nextLittleEndianNumber: 1 put: self versionMadeBy.
+	endianStream nextLittleEndianNumber: 1 put: fileAttributeFormat.
 
-	aStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
+	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
+	endianStream nextLittleEndianNumber: 2 put: self bitFlag.
+	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
+
+	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
 
 	"These next 3 should have been updated during the write of the data"
-	aStream nextLittleEndianNumber: 4 put: crc32.
-	aStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
+	endianStream nextLittleEndianNumber: 4 put: crc32.
+	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
 												ifTrue: [ uncompressedSize ] ifFalse: [ compressedSize ]).
-	aStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
 
-	aStream nextLittleEndianNumber: 2 put: systemFileName size.
-	aStream nextLittleEndianNumber: 2 put: systemCdExtraField size.
-	aStream nextLittleEndianNumber: 2 put: systemFileComment size.
-	aStream nextLittleEndianNumber: 2 put: 0.		"diskNumberStart"
-	aStream nextLittleEndianNumber: 2 put: internalFileAttributes.
+	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
+	endianStream nextLittleEndianNumber: 2 put: systemCdExtraField size.
+	endianStream nextLittleEndianNumber: 2 put: systemFileComment size.
+	endianStream nextLittleEndianNumber: 2 put: 0.		"diskNumberStart"
+	endianStream nextLittleEndianNumber: 2 put: internalFileAttributes.
 
-	aStream nextLittleEndianNumber: 4 put: externalFileAttributes.
-	aStream nextLittleEndianNumber: 4 put: writeLocalHeaderRelativeOffset.
+	endianStream nextLittleEndianNumber: 4 put: externalFileAttributes.
+	endianStream nextLittleEndianNumber: 4 put: writeLocalHeaderRelativeOffset.
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: systemCdExtraField asByteArray.
@@ -775,21 +780,23 @@ ZipArchiveMember >> writeLocalFileHeaderTo: aStream [
 	Stores the offset to the start of the header in my
 	writeLocalHeaderRelativeOffset member."
 
-	| systemFileName |
+	| systemFileName endianStream |
 	systemFileName := fileName asVmPathName.
 	aStream nextPutAll: LocalFileHeaderSignature.
-	aStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
-	aStream nextLittleEndianNumber: 2 put: self bitFlag.
-	aStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
 
-	aStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
-	aStream nextLittleEndianNumber: 4 put: crc32.
-	aStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	endianStream nextLittleEndianNumber: 2 put: versionNeededToExtract.
+	endianStream nextLittleEndianNumber: 2 put: self bitFlag.
+	endianStream nextLittleEndianNumber: 2 put: desiredCompressionMethod.
+
+	endianStream nextLittleEndianNumber: 4 put: lastModFileDateTime asDosTimestamp.
+	endianStream nextLittleEndianNumber: 4 put: crc32.
+	endianStream nextLittleEndianNumber: 4 put: (desiredCompressionMethod = CompressionStored
 												ifTrue: [ uncompressedSize ] ifFalse: [ compressedSize ]).
-	aStream nextLittleEndianNumber: 4 put: uncompressedSize.
+	endianStream nextLittleEndianNumber: 4 put: uncompressedSize.
 
-	aStream nextLittleEndianNumber: 2 put: systemFileName size.
-	aStream nextLittleEndianNumber: 2 put: localExtraField size.
+	endianStream nextLittleEndianNumber: 2 put: systemFileName size.
+	endianStream nextLittleEndianNumber: 2 put: localExtraField size.
 
 	aStream nextPutAll: systemFileName asByteArray.
 	aStream nextPutAll: localExtraField asByteArray.

@@ -47,15 +47,6 @@ BinaryFileStream >> flush [
 	self primFlush: handle
 ]
 
-{ #category : #endianess }
-BinaryFileStream >> nextLittleEndianNumber: n put: value [
-	"Answer the next n bytes as a positive Integer or LargePositiveInteger, where the bytes are ordered from least significant to most significant."
-	| bytes |
-	bytes := ByteArray new: n.
-	1 to: n do: [:i | bytes at: i put: (value digitAt: i)].
-	self nextPutAll: bytes
-]
-
 { #category : #accessing }
 BinaryFileStream >> peek [
 	"Answer what would be returned if the message next were sent to the receiver. If the receiver is at the end, answer nil.  "
@@ -66,7 +57,7 @@ BinaryFileStream >> peek [
 	^ next
 ]
 
-{ #category : #position }
+{ #category : #positioning }
 BinaryFileStream >> position [
 
 	^ self primGetPosition: handle
@@ -137,12 +128,12 @@ BinaryFileStream >> register [
 	File register: self
 ]
 
-{ #category : #position }
+{ #category : #positioning }
 BinaryFileStream >> reset [
 	self position: 0
 ]
 
-{ #category : #position }
+{ #category : #positioning }
 BinaryFileStream >> setToEnd [
 	
 	self position: self size
@@ -154,7 +145,7 @@ BinaryFileStream >> size [
 	^ self primSize: handle
 ]
 
-{ #category : #position }
+{ #category : #positioning }
 BinaryFileStream >> skip: n [
 	"Set the character position to n characters from the current position."
 	self position: self position + n
@@ -169,13 +160,13 @@ BinaryFileStream >> sync [
 	self primSync: handle
 ]
 
-{ #category : #position }
+{ #category : #positioning }
 BinaryFileStream >> truncate [
 
 	self truncate: 0
 ]
 
-{ #category : #position }
+{ #category : #positioning }
 BinaryFileStream >> truncate: pos [
 	"Truncate to this position"
 

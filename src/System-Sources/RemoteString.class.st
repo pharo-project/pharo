@@ -110,7 +110,7 @@ RemoteString >> string [
 		readStreamAtFileIndex: sourceFileNumber 
 		atPosition: filePositionHi 
 		ifPresent: [ :readStream | readStream nextChunk ]
-		ifAbsent: [ nil ]	
+		ifAbsent: [ nil ]
 ]
 
 { #category : #private }

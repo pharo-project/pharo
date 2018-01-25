@@ -110,6 +110,7 @@ MCDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace
 
 	shouldReplace ifTrue: [ file ensureDelete ].
 
-	file writeStreamDo:  [ :stream | 
+	file writeStreamDo:  [ :stream |
+		stream binary.
 		aBlock value: stream ].
 ]

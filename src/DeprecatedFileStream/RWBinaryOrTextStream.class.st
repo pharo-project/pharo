@@ -106,6 +106,13 @@ RWBinaryOrTextStream >> nextPutAll: aCollection [
 		ifFalse: [ super nextPutAll: aCollection ]
 ]
 
+{ #category : #converting }
+RWBinaryOrTextStream >> on: aCollection [
+
+	super on: aCollection.
+	readLimit := 0
+]
+
 { #category : #accessing }
 RWBinaryOrTextStream >> padToEndWith: aChar [
 	"We don't have pages, so we are at the end, and don't need to pad."

@@ -53,7 +53,7 @@ FileTest >> testFilesAreRegisteredInWeakRegistry [
 
 	|  f |
 	f := (File named: 'asd.txt') writeStream.
-	self assert: (File registry keys includes: f)
+	self assert: (File registry keys includes: f wrappedStream)
 ]
 
 { #category : #tests }

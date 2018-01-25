@@ -40,7 +40,14 @@ ZnBufferedReadWriteStream class >> on: readStream do: block [
 { #category : #testing }
 ZnBufferedReadWriteStream >> atEnd [
 	
-	^ readStream atEnd
+	^ self readingActionDo: [ readStream atEnd ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> close [
+	
+	writeStream flush.
+	writeStream close.
 ]
 
 { #category : #accessing }
@@ -50,9 +57,21 @@ ZnBufferedReadWriteStream >> flush [
 ]
 
 { #category : #testing }
+ZnBufferedReadWriteStream >> isBinary [
+	
+	^ readStream isBinary
+]
+
+{ #category : #testing }
 ZnBufferedReadWriteStream >> isReadOnly [
 	
 	^ false
+]
+
+{ #category : #testing }
+ZnBufferedReadWriteStream >> isStream [
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -67,6 +86,13 @@ ZnBufferedReadWriteStream >> next: anInteger [
 	
 	^ self readingActionDo: [ 
 		readStream next: anInteger ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> next: count putAll: collection [
+
+	self writingActionDo: [ 
+		writeStream next: count putAll: collection ]
 ]
 
 { #category : #accessing }
@@ -106,7 +132,17 @@ ZnBufferedReadWriteStream >> peek [
 { #category : #accessing }
 ZnBufferedReadWriteStream >> position [
 	
-	^ readStream position
+	^ lastRead
+		ifTrue: [ readStream position ]
+		ifFalse: [ writeStream position ]
+]
+
+{ #category : #accessing }
+ZnBufferedReadWriteStream >> position: anInteger [ 
+	
+	self writingActionDo: [ 
+		writeStream position: anInteger ]
+	
 ]
 
 { #category : #accessing }
@@ -134,7 +170,8 @@ ZnBufferedReadWriteStream >> readingActionDo: aBlock [
 { #category : #accessing }
 ZnBufferedReadWriteStream >> setToEnd [
 	
-	readStream setToEnd
+	^ self writingActionDo: [ 
+		writeStream setToEnd ]
 ]
 
 { #category : #'initialize-release' }
@@ -164,12 +201,19 @@ ZnBufferedReadWriteStream >> upToEnd [
 ]
 
 { #category : #accessing }
+ZnBufferedReadWriteStream >> wrappedStream [
+
+	^ readStream wrappedStream
+]
+
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> writingActionDo: aBlock [
 	
 	"Writing to the write stream.
 	We should 
 	 - write the write stream
 	 - discard the read buffer (which may contain incorrect data)"
-	readStream discardBuffer.
+	lastRead ifTrue: [ 
+		writeStream discardBuffer ].
 	^ aBlock ensure: [ lastRead := false ]
 ]

@@ -215,7 +215,7 @@ File >> openForWrite: writeMode [
 		CannotDeleteFileException signal: name
 	].
 
-	rawStream := BinaryFileStream handle: fileHandle file: self forWrite: writeMode;
+	rawStream := (BinaryFileStream handle: fileHandle file: self forWrite: writeMode)
 		register;
 		yourself.
 

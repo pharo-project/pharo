@@ -80,6 +80,12 @@ ZnBufferedWriteStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
 
+{ #category : #private }
+ZnBufferedWriteStream >> discardBuffer [
+
+	position := 0
+]
+
 { #category : #'initialize-release' }
 ZnBufferedWriteStream >> finish [
 	self flushBuffer
@@ -109,6 +115,18 @@ ZnBufferedWriteStream >> flushBufferIfFull [
 	position = self bufferSize 
 		ifTrue: [ self flushBuffer ]
 
+]
+
+{ #category : #testing }
+ZnBufferedWriteStream >> isBinary [
+
+	^ stream isBinary
+]
+
+{ #category : #testing }
+ZnBufferedWriteStream >> isStream [
+
+	^ true
 ]
 
 { #category : #accessing }
@@ -167,6 +185,18 @@ ZnBufferedWriteStream >> on: writeStream [
 ]
 
 { #category : #accessing }
+ZnBufferedWriteStream >> position [
+
+	^ stream position + position
+]
+
+{ #category : #accessing }
+ZnBufferedWriteStream >> position: anInteger [ 
+	self flush.
+	stream position: anInteger
+]
+
+{ #category : #accessing }
 ZnBufferedWriteStream >> print: object [
 	object printOn: self
 ]
@@ -176,6 +206,13 @@ ZnBufferedWriteStream >> printOn: aStream [
 	aStream 
 		nextPutAll: 'a '; 
 		nextPutAll: self class name
+]
+
+{ #category : #accessing }
+ZnBufferedWriteStream >> setToEnd [
+	
+	self flush.
+	stream setToEnd
 ]
 
 { #category : #accessing }

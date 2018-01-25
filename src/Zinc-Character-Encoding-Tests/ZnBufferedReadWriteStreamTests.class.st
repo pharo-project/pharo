@@ -78,8 +78,11 @@ ZnBufferedReadWriteStreamTests >> testReadThenWrite [
 	stream sizeBuffer: 8.
 	
 	stream next: 4.
-	stream nextPutAll: 'ABCD'.
+	self assert: stream position equals: 4.
 	
+	stream nextPutAll: 'ABCD'.
+	self assert: stream position equals: 8.
+		
 	self assert: stream peek equals: $8. 
 	self assert: stream upToEnd equals: '89'.
 	self assert: stream atEnd.
@@ -117,7 +120,9 @@ ZnBufferedReadWriteStreamTests >> testWriteThenRead [
 	stream nextPutAll: 'ABCD'.
 	
 	self assert: stream peek equals: $4. 
+	self assert: stream position equals: 4.
 	self assert: stream upToEnd equals: '456789'.
+	self assert: stream position equals: 10.
 	self assert: stream atEnd.
 	
 	self assert: stringStream contents equals: 'ABCD456789'
