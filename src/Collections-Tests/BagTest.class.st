@@ -275,9 +275,9 @@ BagTest >> setUp [
 		add: 5;
 		yourself.
 	collectionOfString := self speciesClass new
-		add: 1.5;
-		add: 5.5;
-		add: 7.5;
+		add: 1.5e50;
+		add: 5.5e50;
+		add: 7.5e50;
 		yourself.
 	otherCollectionWithoutEqualElements := self speciesClass new
 		add: 1;

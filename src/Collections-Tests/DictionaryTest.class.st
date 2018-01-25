@@ -325,7 +325,7 @@ DictionaryTest >> setUp [
 		at: #a
 			put: 5;
 		yourself.
-	nonEmptyWithFloat := Dictionary new add: #A->2.5; add: #b->3.5 ; yourself.
+	nonEmptyWithFloat := Dictionary new add: #A->2.5e50; add: #b->3.5e50 ; yourself.
 	duplicateValue := 2.5.
 	dictionaryWithDuplicateValues := 	Dictionary new add: #A->duplicateValue ; add: #b->3.5 ; add: #C->duplicateValue  ; yourself.
 

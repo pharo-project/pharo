@@ -279,7 +279,7 @@ IntervalTest >> setUp [
 	elementIn :=-2.
 	elementNotIn:= 12.
 	subCollectionNotIn:= -2 to: 1.
-	collectionOfFloat := 1.5 to: 7.5 by: 1.
+	collectionOfFloat := 1.5e50 to: (1.5e50 + 6) by: 1.
 	subCollection := 2 to: 8.
 	collectionWithSubCollection := 1 to: 10.
 ]
