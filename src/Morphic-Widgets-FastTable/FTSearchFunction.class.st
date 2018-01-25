@@ -37,9 +37,10 @@ FTSearchFunction >> keyStroke: anEvent [
 FTSearchFunction >> realSearch [
 	| founds |
 	founds := self table dataSource searchText: pattern.
-	self table
-		selectRowIndex: (founds ifEmpty: [ 1 ] ifNotEmpty: [ founds first ]);
-		highlightRowIndexes: founds.
+
+	founds ifNotEmpty: [ self table selectRowIndex: founds first ].
+	self table highlightRowIndexes: founds.
+	
 	^ founds notEmpty
 ]
 
