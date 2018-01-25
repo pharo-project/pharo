@@ -244,6 +244,11 @@ UndefinedObject >> suspend [
 ]
 
 { #category : #'class hierarchy' }
+UndefinedObject >> transform: ast [
+	^ ast
+]
+
+{ #category : #'class hierarchy' }
 UndefinedObject >> typeOfClass [
 	"Necessary to support disjoint class hierarchies."
 	^#normal
