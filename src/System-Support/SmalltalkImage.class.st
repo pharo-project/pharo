@@ -1482,7 +1482,7 @@ SmalltalkImage >> quitPrimitive [
 { #category : #compiler }
 SmalltalkImage >> recompile [
 	Smalltalk globals allClassesAndTraits 
-		do: [:classOrTrait | classOrTrait recompile] 
+		do: [:classOrTrait | classOrTrait recompile. classOrTrait class recompile ] 
 		displayingProgress: 'Recompiling all classes and traits'. 
 ]
 
