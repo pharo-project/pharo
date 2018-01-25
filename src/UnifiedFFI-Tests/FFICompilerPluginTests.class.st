@@ -12,13 +12,13 @@ FFICompilerPluginTests class >> compiler [
 ]
 
 { #category : #tests }
-FFICompilerPluginTests >> ffiCopyString2: aString to: dest [
-	^ self ffiCall: #( String strcpy ( String dest, String aString  ) )       
+FFICompilerPluginTests >> ffiCopyString: aString to: dest [
+	^ self ffiCall: #(String strcpy ( String dest, String aString  ) )
 ]
 
 { #category : #tests }
-FFICompilerPluginTests >> ffiCopyString: aString to: dest [
-	^ self ffiCall: #(String strcpy ( String dest, String aString  ) )
+FFICompilerPluginTests >> ffiCopyStringWithError: aString to: destError [
+	^ self ffiCall: #( String strcpy ( String dest, String aString  ) )         
 ]
 
 { #category : #tests }
@@ -27,20 +27,19 @@ FFICompilerPluginTests >> ffiLibraryName [
 ]
 
 { #category : #tests }
-FFICompilerPluginTests >> testMethodCall [
-	| buffer result |
+FFICompilerPluginTests >> testExecutionOfWrongFFIMethodShouldRaiseAnError [
+	self
+		should: [ 	| buffer result |
 	buffer := ByteArray new: 12.
-	result := self ffiCopyString2: 'Hello World!' to: buffer.
+	result := self ffiCopyStringWithError: 'Hello World!' to: buffer. ]
+		raise: Error
 ]
 
 { #category : #tests }
-FFICompilerPluginTests >> testRecompilationOfWrongFFIMethodShouldRaiseAnError [
-	self
-		should: [ self
-				class compile:
-					'ffiCopyString: aString to: dest2
-	^ self ffiCall: #(String strcpy ( String dest, String aString  ) )' ]
-		raise: NotFound
+FFICompilerPluginTests >> testMethodCall [
+	| buffer |
+	buffer := ByteArray new: 12.
+	self assert: (self ffiCopyString: 'Hello World!' to: buffer) equals: 'Hello World!'
 ]
 
 { #category : #tests }
