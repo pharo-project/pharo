@@ -18,12 +18,19 @@ FFICompilerPluginTests >> ffiCopyString: aString to: dest [
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiCopyStringWithError: aString to: destError [
-	^ self ffiCall: #( String strcpy ( String dest, String aString  ) )         
+	^ self ffiCall: #(String strcpy #(String dest , String aString))
 ]
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiLibraryName [
 	^ LibC
+]
+
+{ #category : #tests }
+FFICompilerPluginTests >> testDecompilationOfFFIMethodShouldHaveNamedArgs [
+	| decompiledFFIMethod |
+	decompiledFFIMethod := FBDDecompiler new decompile: FFICompilerPluginTests >> #ffiCopyString:to:.
+	self assert: decompiledFFIMethod argumentNames equals: #(#aString #dest)
 ]
 
 { #category : #tests }

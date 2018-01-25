@@ -8,7 +8,7 @@ The second step of decompilation is to interpret the byte code to create corresp
 
 Then the AST is returned. The Flashback Decompiler's job stops there, because there are already some frameworks to generate Smalltalk code from an AST.
 
-The returned AST is does not take optimized messages into account. Use FBDOptimizdMessagesRewriter to recover the optimized messages.
+The returned AST does not take optimized messages into account. Use FBDOptimizedMessagesRewriter to recover the optimized messages.
 
 Instance Variables
 	simulatedStack <OrderedCollection> Simulates the bytecode stack, pushing AST nodes instead of concrete values
@@ -59,7 +59,9 @@ FBDDecompiler >> createNArgs: numArgs [
 	^ (1 to: numArgs)
 		collect: [ :i | 
 			self incrArgCount.
-			builder codeArgument: 'arg' , argCount printString ]
+			builder compiledMethod isFFIMethod
+				ifFalse: [ builder codeArgument: 'arg' , argCount printString ]
+				ifTrue: [ builder codeArgument: (builder compiledMethod ffiArgumentNames at: i) ] ]
 ]
 
 { #category : #initialize }
@@ -135,6 +137,7 @@ FBDDecompiler >> decompile: aSelector in: aClass method: aCompiledMethod [
 	builder := FBDASTBuilder newFor: aClass.
 	(self canDecompile: aCompiledMethod)
 		ifFalse: [ ^ self generateNativeBoostCallErrorMethodFrom: aCompiledMethod ].
+	builder compiledMethod: aCompiledMethod.
 	self initializeForMethod: aCompiledMethod.
 	self interpretMethod: aCompiledMethod.
 	^ FBDOptimizedMessagesRewriter new

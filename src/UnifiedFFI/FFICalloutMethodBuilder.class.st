@@ -110,7 +110,7 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 { #category : #private }
 FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 	| ir |
-	ir := IRBuilder buildIR: [ :builder | 
+	ir := IRBuilder buildIR: [ :builder |
 		self generateFFICallout: builder spec: functionSpec ].
 	^ ir generate: self method trailer
 ]
