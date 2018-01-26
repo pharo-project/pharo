@@ -16,12 +16,14 @@ Class {
 
 { #category : #examples }
 GLMRubScrolledTextBrick class >> exampleBandOpen [
+	<sampleInstance>
 
 	self gtExampleBand openInBrickWindow
 ]
 
 { #category : #examples }
 GLMRubScrolledTextBrick class >> exampleOpen [
+	<sampleInstance>
 
 	self gtExample openInBrickWindow
 ]

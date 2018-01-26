@@ -47,6 +47,7 @@ GLMExamplesBrowser >> compose [
 
 { #category : #private }
 GLMExamplesBrowser >> exampleBrowserForPragma: each in: aClass [
+	<sampleInstance>
 	| exampleBrowser wrapperBrowser |
 	exampleBrowser := aClass new perform: each methodSelector.
 	wrapperBrowser := GLMTabulator new.
@@ -61,6 +62,7 @@ GLMExamplesBrowser >> exampleBrowserForPragma: each in: aClass [
 
 { #category : #building }
 GLMExamplesBrowser >> exampleIn: composer [
+	<sampleInstance>
 	| dynamicPresentation |
 	dynamicPresentation := composer dynamic
 		title: 'Browser';
@@ -91,6 +93,7 @@ GLMExamplesBrowser >> exampleIn: composer [
 
 { #category : #building }
 GLMExamplesBrowser >> exampleListIn: a [
+	<sampleInstance>
 	^ a list
 		title: 'Examples';
 		display: [ :exampleClass | exampleClass allExamples ];

@@ -89,6 +89,7 @@ SimpleHierarchicalListMorph class >> buildSimpleHierarchicalListShortcuts: aBuil
 
 { #category : #examples }
 SimpleHierarchicalListMorph class >> exampleSubmorphs [
+	<sampleInstance>
 	"display a hierarchical list of the World plus its submorphs plus its submorphs' submorphs etc."
 	"[SimpleHierarchicalListMorph exampleSubmorphs]"
 	| morph |

@@ -14,24 +14,28 @@ Class {
 
 { #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleBandOpen [
+	<sampleInstance>
 
 	self gtExampleBand openInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleFillOpen [
+	<sampleInstance>
 
 	self gtExampleFill openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleOpen [
+	<sampleInstance>
 
 	self gtExample openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubEditingAreaBrick class >> exampleScrollPaneOpen [
+	<sampleInstance>
 	
 	self gtExampleScrollPane openInBrickWindowLabeled: 'Rubric in ScrollPane'
 ]

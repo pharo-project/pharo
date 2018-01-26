@@ -16,6 +16,7 @@ Class {
 
 { #category : #example }
 LabelledList class >> example [
+	<sampleInstance>
 	| example |
 	example := self abstractExample.
 	example

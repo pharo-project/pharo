@@ -61,6 +61,7 @@ SMTPClient class >> deliverMailFrom: fromAddress to: recipientList text: message
 
 { #category : #example }
 SMTPClient class >> example [
+	<sampleInstance>
 	"SMTPClient example"
 
 	self deliverMailFrom: 'm.rueger@acm.org' to: #('m.rueger@acm.org') text:
@@ -74,6 +75,7 @@ Hello from Pharo!
 
 { #category : #example }
 SMTPClient class >> example2 [
+	<sampleInstance>
 	"SMTPClient example2"
 
 	self deliverMailFrom: 'm.rueger@acm.org' to: #('m.rueger@acm.org') text:

@@ -71,6 +71,7 @@ VersionnerProjectBrowser class >> defaultSpec [
 
 { #category : #examples }
 VersionnerProjectBrowser class >> example [
+	<sampleInstance>
 	^ self
 		openOn: (MBConfigurationRoot current configurations detect: [ :config | config name = 'ConfigurationOfOSWindow' ])
 ]

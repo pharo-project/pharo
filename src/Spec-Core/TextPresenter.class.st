@@ -88,6 +88,7 @@ TextPresenter class >> defaultSpec [
 
 { #category : #example }
 TextPresenter class >> example [
+	<sampleInstance>
 	^ self new
 	 openWithSpec;
 		text:

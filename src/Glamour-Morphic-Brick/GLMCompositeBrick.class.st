@@ -13,31 +13,31 @@ Class {
 
 { #category : #examples }
 GLMCompositeBrick class >> exampleListClassMethodsOpen [
-	
+	<sampleInstance>
 	self gtExampleListClassMethods openInBrickWindow
 ]
 
 { #category : #examples }
 GLMCompositeBrick class >> exampleListOpen [
-	
+	<sampleInstance>
 	self gtExampleList openInBrickWindow
 ]
 
 { #category : #examples }
 GLMCompositeBrick class >> exampleListWithCustomItemsOpen [
-	
+	<sampleInstance>
 	self gtExampleListWithCustomItems openInBrickWindowLabeled: 'Phlow list with custom item'
 ]
 
 { #category : #examples }
 GLMCompositeBrick class >> examplePharoMethodOpen [
-	
+	<sampleInstance>
 	self gtExamplePharoMethod openInBrickWindowLabeled: 'Phlow Pharo method'
 ]
 
 { #category : #examples }
 GLMCompositeBrick class >> exampleTableOpen [
-
+	<sampleInstance>
 	self gtExampleTable openInBrickWindowLabeled: 'Phlowr table'
 ]
 

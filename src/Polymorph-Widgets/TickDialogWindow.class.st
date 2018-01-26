@@ -20,6 +20,7 @@ Class {
 
 { #category : #example }
 TickDialogWindow class >> example [
+	<sampleInstance>
 	
 	(self itemsList: Morph methods itemsHeaderName: 'Plop' wrapBlockOrSelector: #selector title: 'Example') choose
 ]

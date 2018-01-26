@@ -33,6 +33,7 @@ MonticelloRepositoryBrowser class >> defaultSpec [
 
 { #category : #example }
 MonticelloRepositoryBrowser class >> example [
+	<sampleInstance>
 	"self example"
 	
 	self new 

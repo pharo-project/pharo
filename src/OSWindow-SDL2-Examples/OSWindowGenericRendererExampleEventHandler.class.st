@@ -12,11 +12,13 @@ Class {
 
 { #category : #accessing }
 OSWindowGenericRendererExampleEventHandler >> example [
+	<sampleInstance>
 	^ example
 ]
 
 { #category : #accessing }
 OSWindowGenericRendererExampleEventHandler >> example: anObject [
+	<sampleInstance>
 	example := anObject
 ]
 

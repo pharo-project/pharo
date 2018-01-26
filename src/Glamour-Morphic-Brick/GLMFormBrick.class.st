@@ -10,6 +10,7 @@ Class {
 
 { #category : #examples }
 GLMFormBrick class >> exampleOpen [
+	<sampleInstance>
 
 	self gtExample
 		when: GLMFormSubmitted do: [ :ann | ann result brickAlert ];

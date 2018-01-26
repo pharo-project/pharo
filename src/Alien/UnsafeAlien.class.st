@@ -50,6 +50,7 @@ UnsafeAlien class >> ensureInSpecialObjectsArray [
 
 { #category : #examples }
 UnsafeAlien class >> exampleSprintf [
+	<sampleInstance>
 	"Call the libc sprintf function."
 	"UnsafeAlien exampleSprintf"
 	| r s |

@@ -24,6 +24,7 @@ OpenOnNilExample class >> defaultSpec [
 
 { #category : #examples }
 OpenOnNilExample class >> example [
+	<sampleInstance>
 	| example |
 	example := self new.
 	example

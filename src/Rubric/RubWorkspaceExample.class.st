@@ -15,12 +15,14 @@ Class {
 
 { #category : #examples }
 RubWorkspaceExample class >> exampleWindowWithScrolledText [
+	<sampleInstance>
 
 	^self open
 ]
 
 { #category : #examples }
 RubWorkspaceExample class >> exampleWithCustomShortcut [
+	<sampleInstance>
 
 	 |  window text |
     text := RubScrolledTextMorph new.

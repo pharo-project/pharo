@@ -60,6 +60,7 @@ GTPlayground class >> edit: aString label: aLabel [
 
 { #category : #examples }
 GTPlayground class >> examplePlaygroundWithBindings [
+	<sampleInstance>
 	| playground wsBindings |
 	wsBindings := Dictionary newFrom: { #number-> 1 }.
 	playground := Smalltalk tools workspace

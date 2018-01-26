@@ -46,6 +46,7 @@ Job class >> current [
 
 { #category : #examples }
 Job class >> exampleCurrentValue [
+	<sampleInstance>
 
 	[ :job| 
 		job title: 'Simulating some progress for 1 Second'. 
@@ -59,6 +60,7 @@ Job class >> exampleCurrentValue [
 
 { #category : #examples }
 Job class >> exampleDebug [
+	<sampleInstance>
 	"Job exampleDebug"
 	| aJob |
 	aJob := [ :job| 
@@ -83,6 +85,7 @@ Job class >> exampleDebug [
 
 { #category : #examples }
 Job class >> exampleProgress [
+	<sampleInstance>
 
 	[:job | job title: 'Let us get started'.
 		1 to: 10 do: [:each | 

@@ -87,6 +87,7 @@ PolygonMorph class >> defaultArrowSpec [
 
 { #category : #examples }
 PolygonMorph class >> example1 [
+	<sampleInstance>
 	"self example1"
 	^ (PolygonMorph
 		vertices: {261@400. 388@519. 302@595. 	222@500.	141@583. 34@444}
@@ -97,6 +98,7 @@ PolygonMorph class >> example1 [
 
 { #category : #examples }
 PolygonMorph class >> example2 [
+	<sampleInstance>
 	"self example2"
 	| poly | 
 	poly := PolygonMorph
@@ -110,6 +112,7 @@ PolygonMorph class >> example2 [
 
 { #category : #examples }
 PolygonMorph class >> example3 [
+	<sampleInstance>
 	"self example3"
 	| poly | 
 	poly := PolygonMorph
@@ -123,6 +126,7 @@ PolygonMorph class >> example3 [
 
 { #category : #examples }
 PolygonMorph class >> example4 [
+	<sampleInstance>
 	"self example4"
 	| poly | 
 	poly :=  (PolygonMorph

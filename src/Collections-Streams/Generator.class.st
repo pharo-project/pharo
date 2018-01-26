@@ -81,6 +81,7 @@ Class {
 
 { #category : #examples }
 Generator class >> examplePrimes [
+	<sampleInstance>
 	| generator |
 	Transcript open.
 	generator := Generator on: [:g| Integer primesUpTo: 100 do:[:prime| g yield: prime]].

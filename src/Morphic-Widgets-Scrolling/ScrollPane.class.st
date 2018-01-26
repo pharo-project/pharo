@@ -51,6 +51,7 @@ ScrollPane class >> buildScrollPaneShortcuts: aBuilder [
 
 { #category : #examples }
 ScrollPane class >> example1 [
+	<sampleInstance>
 	| window scrollPane pasteUpMorph |
 	window := SystemWindow new.
 	scrollPane := ScrollPane new.
@@ -63,6 +64,7 @@ ScrollPane class >> example1 [
 
 { #category : #examples }
 ScrollPane class >> example2 [
+	<sampleInstance>
 	| window scrollPane pasteUpMorph point textMorph |
 	window := SystemWindow new.
 	scrollPane := ScrollPane new.

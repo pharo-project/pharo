@@ -14,6 +14,7 @@ Class {
 
 { #category : #example }
 TabGroupMorph class >> example [
+	<sampleInstance>
 	| builder window page1 page2 label1 label2 tabs content okButton cancelButton |
 	builder := self theme builder.
 	okButton := builder newOKButton.

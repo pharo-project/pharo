@@ -24,6 +24,7 @@ TextFieldExample class >> defaultSpec [
 
 { #category : #example }
 TextFieldExample class >> example [
+	<sampleInstance>
 	^ self new openWithSpec
 ]
 

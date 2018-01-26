@@ -22,6 +22,7 @@ LabelledDropListButton class >> defaultSpec [
 
 { #category : #example }
 LabelledDropListButton class >> example [
+	<sampleInstance>
 	| example |
 	example := self abstractExample.
 	example button label: 'I am a button'.
@@ -35,6 +36,7 @@ LabelledDropListButton class >> example [
 
 { #category : #example }
 LabelledDropListButton class >> exampleUse [
+	<sampleInstance>
 	| example |
 	example := self new.
 	example button label: 'Add'.

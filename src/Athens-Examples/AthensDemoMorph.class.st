@@ -25,6 +25,7 @@ Class {
 { #category : #examples }
 AthensDemoMorph class >> example [
 	"self example"
+	<sampleInstance>
 	
 	| demo model window |
 	demo := AthensDemoMorph new openInWorld. 

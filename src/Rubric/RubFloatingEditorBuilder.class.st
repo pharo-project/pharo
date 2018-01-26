@@ -39,6 +39,7 @@ Class {
 
 { #category : #example }
 RubFloatingEditorBuilder class >> exampleCommandLauncher [
+	<sampleInstance>
 	<example>
  	^RubFloatingEditorBuilder new
 		acceptOnCR: false;
@@ -53,6 +54,7 @@ RubFloatingEditorBuilder class >> exampleCommandLauncher [
 
 { #category : #example }
 RubFloatingEditorBuilder class >> exampleEditableStringMorph [
+	<sampleInstance>
 	<example>
 	| pane stringMorph edBuilder |
 	pane := Morph new.

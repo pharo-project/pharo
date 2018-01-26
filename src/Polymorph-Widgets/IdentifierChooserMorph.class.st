@@ -90,6 +90,7 @@ IdentifierChooserMorph class >> allowedArea [
 
 { #category : #'instance creation' }
 IdentifierChooserMorph class >> example [
+	<sampleInstance>
 
 	(self 
 		labels: #('aaa' 'bbb' 'ccc') 

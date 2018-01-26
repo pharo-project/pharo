@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 WBMacWebBrowser class >> example [
+	<sampleInstance>
 
 	self openOn: 'http://www.pharo.org'
 ]

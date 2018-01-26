@@ -9,12 +9,14 @@ Class {
 
 { #category : #examples }
 GLMPhlowListBrick class >> example [
+	<sampleInstance>
 	
 	^ GLMCompositeBrick gtExampleList
 ]
 
 { #category : #examples }
 GLMPhlowListBrick class >> example2 [
+	<sampleInstance>
 	
 	^ GLMCompositeBrick gtExampleListWithCustomItems
 ]

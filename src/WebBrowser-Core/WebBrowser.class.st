@@ -9,6 +9,7 @@ Class {
 
 { #category : #example }
 WebBrowser class >> example [
+	<sampleInstance>
 
 	self openOn: 'http://www.pharo.org'
 ]

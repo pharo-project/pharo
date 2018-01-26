@@ -26,37 +26,42 @@ Class {
 
 { #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleFullSpaceFillCenteredOpen [
+	<sampleInstance>
 
 	self gtExampleFullSpaceFillCentered openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleFullSpaceFillOpen [
+	<sampleInstance>
 
 	self gtExampleFullSpaceFill openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleHSpaceFillOpen [
+	<sampleInstance>
 
 	self gtExampleHSpaceFill openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleOpen [
+	<sampleInstance>
 
 	self gtExample openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleVSpaceFillCenteredOpen [
+	<sampleInstance>
 
 	self gtExampleVSpaceFillCentered openCenteredInBrickWindow
 ]
 
 { #category : #'examples-open' }
 GLMRubTextFieldBrick class >> exampleVSpaceFillOpen [
-
+	<sampleInstance>
 	self gtExampleVSpaceFill openCenteredInBrickWindow
 ]
 

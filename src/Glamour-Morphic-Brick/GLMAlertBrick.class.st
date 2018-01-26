@@ -17,6 +17,7 @@ GLMAlertBrick class >> alert: anObject [
 
 { #category : #examples }
 GLMAlertBrick class >> exampleOpen [
+	<sampleInstance>
 
 	'Hello world!' brickAlert
 ]

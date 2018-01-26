@@ -10,7 +10,7 @@ Class {
 
 { #category : #examples }
 GLMBandBrick class >> exampleOpen [
-	
+	<sampleInstance>
 	self gtExample openInBrickWindowLabeled: 'Band example'
 ]
 

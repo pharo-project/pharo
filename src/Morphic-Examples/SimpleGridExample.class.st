@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 SimpleGridExample class >> example [
+	<sampleInstance>
 
 	SimpleGridExample new open
 ]

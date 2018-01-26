@@ -59,6 +59,7 @@ Class {
 { #category : #example }
 FilteredMorphTreeModel class >> example [
 	"self example"
+	<sampleInstance>
 
 	| window row m |
 	window := StandardWindow new model: self.

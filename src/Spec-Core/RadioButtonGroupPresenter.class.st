@@ -48,6 +48,7 @@ RadioButtonGroupPresenter class >> defaultSpec [
 
 { #category : #example }
 RadioButtonGroupPresenter class >> example [
+	<sampleInstance>
 	| example |
 	example := RadioButtonGroupPresenter new.
 	example

@@ -123,6 +123,7 @@ ImageCleaner >> cleanUpProcesses [
 
 { #category : #cleaning }
 ImageCleaner >> examplePackages [
+	<sampleInstance>
 	^RPackageOrganizer default packageNames select: [ :each | each endsWith: 'Examples' ]
 ]
 

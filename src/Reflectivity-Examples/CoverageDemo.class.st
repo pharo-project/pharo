@@ -78,12 +78,14 @@ CoverageDemo >> coverageCode: anObject [
 
 { #category : #example }
 CoverageDemo >> exampleMethod [
+	<sampleInstance>
 
 	self openWithSpec.
 ]
 
 { #category : #example }
 CoverageDemo >> exampleNotCompleteCoverage [
+	<sampleInstance>
 
 	self coverageCode: [ ReflectivityExamples new exampleIfTrueIfFalse. ].
 	self compiledMethods add: ReflectivityExamples>>#exampleIfTrueIfFalse.

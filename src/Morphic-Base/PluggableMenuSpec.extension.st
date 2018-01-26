@@ -23,6 +23,7 @@ PluggableMenuSpec >> buildWith: aBuilder [
 
 { #category : #'*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithOneSingleItem [
+	<sampleInstance>
 	"self exampleWithOneSingleItem"
 	
 	| s |
@@ -33,6 +34,7 @@ PluggableMenuSpec class >> exampleWithOneSingleItem [
 
 { #category : #'*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithSubMenu [
+	<sampleInstance>
 	"
 	self exampleWithSubMenu
 	"
@@ -48,6 +50,7 @@ PluggableMenuSpec class >> exampleWithSubMenu [
 
 { #category : #'*Morphic-Base-Examples' }
 PluggableMenuSpec class >> exampleWithTwoSimpleItems [
+	<sampleInstance>
 	"self exampleWithTwoSimpleItems"
 	| s |
 	s := (self withModel: Transcript ) label: 'Hello'. 

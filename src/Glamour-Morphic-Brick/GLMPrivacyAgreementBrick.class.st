@@ -10,6 +10,7 @@ Class {
 
 { #category : #examples }
 GLMPrivacyAgreementBrick class >> exampleOpen [
+	<sampleInstance>
 
 	(GLMBrick new
 		hSpaceFill;

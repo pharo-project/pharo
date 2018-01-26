@@ -35,6 +35,7 @@ Click when done.' translated hand: evt hand.
 { #category : #'*Morphic-Base' }
 BorderedMorph class >> exampleGradient [
 	"self exampleGradient"
+	<sampleInstance>
 	
 	| morph fs |
 	morph := BorderedMorph new.

@@ -10,6 +10,7 @@ Class {
 
 { #category : #examples }
 FTExamples class >> example1 [
+	<sampleInstance>
 	<example>
 	| list |
 
@@ -24,6 +25,7 @@ FTExamples class >> example1 [
 
 { #category : #examples }
 FTExamples class >> example2 [
+	<sampleInstance>
 	<example>
 	| list |
 
@@ -40,6 +42,7 @@ FTExamples class >> example2 [
 { #category : #examples }
 FTExamples class >> exampleDragAndDrop1 [
 	"Show drag&drop between two lists"
+	<sampleInstance>
 	<example>
 	| list1 list2 |
 
@@ -79,6 +82,7 @@ FTExamples class >> exampleDragAndDrop1 [
 { #category : #examples }
 FTExamples class >> exampleDragAndDrop2 [
 	"Show drag&drop between two lists, multiple selection"
+	<sampleInstance>
 	<example>
 	| list1 list2 |
 
@@ -120,6 +124,7 @@ FTExamples class >> exampleDragAndDrop2 [
 FTExamples class >> exampleDragAndDrop3 [
 	"Show drag&drop between two lists, multiple selection. 
 	 Showing 50 elements, so we can test Cmd+A (select all)"
+	<sampleInstance>
 	<example>
 	| list1 list2 |
 
@@ -160,6 +165,7 @@ FTExamples class >> exampleDragAndDrop3 [
 { #category : #examples }
 FTExamples class >> exampleDragAndDrop4 [
 	"Show drag&drop in one list, with autoscroll"
+	<sampleInstance>
 	<example>
 	| list |
 
@@ -177,6 +183,7 @@ FTExamples class >> exampleDragAndDrop4 [
 { #category : #examples }
 FTExamples class >> exampleEasyList1 [
 	"Show an easy list with all Morph methods"
+	<sampleInstance>
 	<example>
 	| list |
 
@@ -195,6 +202,7 @@ FTExamples class >> exampleEasyList1 [
 FTExamples class >> exampleEasyList2 [
 	"Show an easy list with all Morph methods and a simple menu"
 	<example>
+	<sampleInstance>
 	| list |
 
 	list := FTEasyListMorph new
@@ -221,6 +229,7 @@ FTExamples class >> exampleEasyList2 [
 FTExamples class >> exampleEasyList3 [
 	"Show an easy list with all Morph methods and a simple menu, with a list header"
 	<example>
+	<sampleInstance>
 	| list |
 
 	list := FTEasyListMorph new
@@ -246,6 +255,7 @@ FTExamples class >> exampleEasyList3 [
 
 { #category : #examples }
 FTExamples class >> exampleEditableList1 [
+	<sampleInstance>
 	<example>
 	| list data|
 	data := OrderedCollection with: 'A' with: 'B' with: 'C'.
@@ -275,6 +285,7 @@ FTExamples class >> exampleEditableList1 [
 
 { #category : #examples }
 FTExamples class >> exampleFilterableList [
+	<sampleInstance>
 	<example>
 	| list |
 	list := FTTableMorph new
@@ -290,6 +301,7 @@ FTExamples class >> exampleFilterableList [
 FTExamples class >> exampleList1 [
 	"Show a list with all Object methods"
 	<example>
+	<sampleInstance>
 	| list |
 
 	list := FTTableMorph new
@@ -305,6 +317,7 @@ FTExamples class >> exampleList1 [
 FTExamples class >> exampleList2 [
 	"Show a list with all Object methods and preselects one item"
 	<example>
+	<sampleInstance>
 	| list |
 
 	list := FTTableMorph new
@@ -325,6 +338,7 @@ FTExamples class >> exampleList3 [
 		- preselects one element
 	 	- responds to selection changes"
 	<example>
+	<sampleInstance>
 	| list |
 
 	list := FTTableMorph new
@@ -345,6 +359,7 @@ FTExamples class >> exampleList4 [
 		- preselects one element 
 		- respond to selection changes
 		- respond to strong selections (double click)"
+	<sampleInstance>
 	<example>
 	| list |
 
@@ -369,6 +384,7 @@ FTExamples class >> exampleList5 [
 		- respond to selection changes
 		- respond to strong selections (double click)
 		- allows multiple selection"
+	<sampleInstance>
 	<example>
 	| list |
 
@@ -389,6 +405,7 @@ FTExamples class >> exampleList5 [
 
 { #category : #'function examples' }
 FTExamples class >> exampleListWithExplicitFilter [
+	<sampleInstance>
 	<example>
 	| list |
 	list := FTTableMorph new
@@ -402,6 +419,7 @@ FTExamples class >> exampleListWithExplicitFilter [
 
 { #category : #'function examples' }
 FTExamples class >> exampleListWithExplicitFilterAndActionButton [
+	<sampleInstance>
 	<example>
 	| list |
 	list := FTTableMorph new
@@ -414,6 +432,7 @@ FTExamples class >> exampleListWithExplicitFilterAndActionButton [
 
 { #category : #'function examples' }
 FTExamples class >> exampleListWithExplicitFilterAndActionButton2 [
+	<sampleInstance>
 	<example>
 	| list |
 	list := FTTableMorph new
@@ -426,6 +445,7 @@ FTExamples class >> exampleListWithExplicitFilterAndActionButton2 [
 
 { #category : #'function examples' }
 FTExamples class >> exampleListWithExplicitSearch [
+	<sampleInstance>
 	<example>
 	| list |
 	list := FTTableMorph new
@@ -439,6 +459,7 @@ FTExamples class >> exampleListWithExplicitSearch [
 
 { #category : #examples }
 FTExamples class >> exampleOutline1 [
+	<sampleInstance>
 	<example>
 	| list |
 	list := FTTableMorph new
@@ -456,6 +477,7 @@ FTExamples class >> exampleOutline1 [
 
 { #category : #examples }
 FTExamples class >> exampleOutline2 [
+	<sampleInstance>
 	<example>
 	| data list |
 	data := OrderedCollection
@@ -471,6 +493,7 @@ FTExamples class >> exampleOutline2 [
 { #category : #examples }
 FTExamples class >> exampleTable1 [
 	"Show a table with all Object methods"
+	<sampleInstance>
 	<example>
 	| table |
 
@@ -495,6 +518,7 @@ FTExamples class >> exampleTable1 [
 { #category : #examples }
 FTExamples class >> exampleTable2 [
 	"Show a table with all Object methods, with a fixed width"
+	<sampleInstance>
 	<example>
 	| table |
 
@@ -519,6 +543,7 @@ FTExamples class >> exampleTable2 [
 { #category : #examples }
 FTExamples class >> exampleTable3 [
 	"Show a table with all Object methods, with a header"
+	<sampleInstance>
 	<example>
 	| table |
 
@@ -545,6 +570,7 @@ FTExamples class >> exampleTable3 [
 { #category : #examples }
 FTExamples class >> exampleTable4 [
 	"Show a table with all Object methods, with a resizable header"
+	<sampleInstance>
 	<example>
 	| table |
 
@@ -572,6 +598,7 @@ FTExamples class >> exampleTable4 [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTree1 [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -587,6 +614,7 @@ FTExamples class >> exampleTree1 [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTree2 [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -603,6 +631,7 @@ FTExamples class >> exampleTree2 [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTreeWithAllItemsFilter [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -622,6 +651,7 @@ FTExamples class >> exampleTreeWithAllItemsFilter [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTreeWithAllItemsSearch [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -640,6 +670,7 @@ FTExamples class >> exampleTreeWithAllItemsSearch [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTreeWithRootFilter [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -659,6 +690,7 @@ FTExamples class >> exampleTreeWithRootFilter [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTreeWithRootSearch [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -678,6 +710,7 @@ FTExamples class >> exampleTreeWithRootSearch [
 { #category : #'tree examples' }
 FTExamples class >> exampleTreeWithVisibleItemsFilter [
 	<example>
+	<sampleInstance>
 	| ds |
 	ds := FTTreeDataSource
 		roots: (1 to: 1000)
@@ -696,6 +729,7 @@ FTExamples class >> exampleTreeWithVisibleItemsFilter [
 
 { #category : #'tree examples' }
 FTExamples class >> exampleTreeWithVisibleItemsSearch [
+	<sampleInstance>
 	<example>
 	| ds |
 	ds := FTTreeDataSource
@@ -715,6 +749,7 @@ FTExamples class >> exampleTreeWithVisibleItemsSearch [
 { #category : #'tree examples' }
 FTExamples class >> exampleexampleOneSubLevelTree [
 	<example>
+	<sampleInstance>
 	| ds |
 	ds := FTTreeDataSource
 		roots:

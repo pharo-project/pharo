@@ -13,6 +13,7 @@ Class {
 
 { #category : #examples }
 ClassTreeExample class >> example [
+	<sampleInstance>
 
 	ClassTreeExample new openOn: Object
 

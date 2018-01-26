@@ -16,6 +16,7 @@ Class {
 
 { #category : #example }
 TagMorphFactory class >> example [
+	<sampleInstance>
 	(TagMorphFactory newTag: 'development') 
 		morph openInHand 
 ]

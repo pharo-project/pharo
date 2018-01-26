@@ -15,13 +15,13 @@ Class {
 
 { #category : #examples }
 GLMEditorPopupBrick class >> exampleBorderOpen [
-	
+	<sampleInstance>
 	self gtExampleBorder openCenteredInBrickWindowLabeled: 'All Popup Types'
 ]
 
 { #category : #examples }
 GLMEditorPopupBrick class >> exampleShadowOpen [
-	
+	<sampleInstance>
 	self gtExampleShadow openCenteredInBrickWindowLabeled: 'All Popup Types'
 ]
 

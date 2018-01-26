@@ -36,6 +36,7 @@ Class {
 DockingBarMorph class >> example [
 	"self example"
 	<exampleWidget>
+	<sampleInstance>
 	
 	DockingBarMorph new 
 		addMorph: (SimpleButtonMorph new
@@ -58,6 +59,7 @@ DockingBarMorph class >> example [
 DockingBarMorph class >> exampleWithMenu [
 	"self exampleWithMenu"
 	<exampleWidget>
+	<sampleInstance>
 	
 	DockingBarMorph new 
 		add: 'Foo' 
