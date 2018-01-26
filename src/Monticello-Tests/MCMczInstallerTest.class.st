@@ -58,7 +58,7 @@ MCMczInstallerTest >> fileName [
 
 { #category : #accessing }
 MCMczInstallerTest >> fileStream [
-	^ FileStream forceNewFileNamed: self fileName.
+	^ (File named: self fileName) writeStream
 ]
 
 { #category : #running }
@@ -85,7 +85,7 @@ MCMczInstallerTest >> testInstallFromFile [
 { #category : #tests }
 MCMczInstallerTest >> testInstallFromStream [
 	| stream |
-	stream := RWBinaryOrTextStream on: String new.
+	stream := RWBinaryOrTextStream on: ByteArray new.
 	MCMczWriter fileOut: expected on: stream.
 	MczInstaller installStream: stream reset.
 	self assertNoChange.
