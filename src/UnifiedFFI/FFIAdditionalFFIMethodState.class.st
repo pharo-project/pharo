@@ -26,6 +26,11 @@ FFIAdditionalFFIMethodState >> argsNames: anObject [
 ]
 
 { #category : #testing }
+FFIAdditionalFFIMethodState >> decompiledArgumentNameAt: aNumber [
+	^ self argsNames at: aNumber
+]
+
+{ #category : #testing }
 FFIAdditionalFFIMethodState >> isFFIMethodState [
 	^ true
 ]

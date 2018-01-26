@@ -56,12 +56,12 @@ FBDDecompiler >> canDecompile: aCompiledMethod [
 
 { #category : #initialize }
 FBDDecompiler >> createNArgs: numArgs [
+	| compiledMethodProperties |
 	^ (1 to: numArgs)
 		collect: [ :i | 
 			self incrArgCount.
-			builder compiledMethod isFFIMethod
-				ifFalse: [ builder codeArgument: 'arg' , argCount printString ]
-				ifTrue: [ builder codeArgument: (builder compiledMethod ffiArgumentNames at: i) ] ]
+			compiledMethodProperties := builder compiledMethod properties.
+			builder codeArgument: (compiledMethodProperties decompiledArgumentNameAt: argCount) ]
 ]
 
 { #category : #initialize }
