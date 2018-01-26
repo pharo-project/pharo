@@ -9,7 +9,7 @@ Class {
 	#category : #'OpalCompiler-Tests-Plugins'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 ASTPluginMeaningOfLife class >> priority [
 	^ 0
 ]

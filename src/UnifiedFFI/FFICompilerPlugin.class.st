@@ -1,10 +1,15 @@
+"
+I am a FFICompilerPlugin. I am a plugin for the compiler that make the compiled method store the arguments names to be used for FFI when the sources are not loaded or unloaded.
+
+See also FFIAdditionalFFIMethodState and FDBDecompiler>>createNArgs:
+"
 Class {
 	#name : #FFICompilerPlugin,
 	#superclass : #OCCompilerASTPlugin,
 	#category : #UnifiedFFI
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 FFICompilerPlugin class >> priority [
 	^ 2
 ]

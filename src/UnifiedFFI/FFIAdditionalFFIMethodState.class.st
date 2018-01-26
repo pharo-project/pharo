@@ -1,3 +1,10 @@
+"
+I am a FFIAdditionalFFIMethodState. I am an extenstion of the AdditionalMethodState that store the arguments names to be used for FFI when the sources are not loaded or unloaded.
+
+See also FFICompilerPlugin and FDBDecompiler>>createNArgs:
+
+argsNames: Collection of Strings
+"
 Class {
 	#name : #FFIAdditionalFFIMethodState,
 	#superclass : #AdditionalMethodState,
