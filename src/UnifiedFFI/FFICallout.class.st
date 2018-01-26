@@ -195,7 +195,7 @@ FFICallout >> loaderForArgNamed: argName [
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.
 			loader 
-				ifNil: [ Error signal: 'Could not find accessor for variable named "' , argName , '"' ] ] ].
+				ifNil: [ FFIVariableNameNotFound signalFor: argName ] ] ].
 	^ loader
 ]
 

@@ -2,6 +2,7 @@ Extension { #name : #Object }
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec [
+	<ffiCallMethod>
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		function: fnSpec module: self ffiLibraryName
@@ -9,21 +10,24 @@ Object >> ffiCall: fnSpec [
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName [
+	<ffiCallMethod>
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
-		function: fnSpec module: aModuleName 
+		function: fnSpec module: aModuleName
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
+	<ffiCallMethod>
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: callOptions;
-		function: fnSpec module: aModuleName 
+		function: fnSpec module: aModuleName
 ]
 
 { #category : #'*UnifiedFFI' }
 Object >> ffiCall: fnSpec options: callOptions [
+	<ffiCallMethod>
 	^ (self ffiCalloutIn: thisContext sender)
 		convention: self ffiCallingConvention;
 		options: callOptions;
