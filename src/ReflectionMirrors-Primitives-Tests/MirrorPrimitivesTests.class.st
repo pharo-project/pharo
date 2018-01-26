@@ -38,6 +38,16 @@ MirrorPrimitivesTests >> testChangingFixedFieldOfFixedObject [
 	self should: [MirrorPrimitives fixedFieldOf: object at: 3 put: 500] raise: PrimitiveFailed
 ]
 
+{ #category : #'tests-write barrier' }
+MirrorPrimitivesTests >> testChangingFixedFieldOfReadOnlyObject [
+
+	| object |
+	object := 10@20.
+	object beReadOnlyObject.
+	
+	self should: [MirrorPrimitives fixedFieldOf: object at: 1 put: 500] raise: ModificationForbidden
+]
+
 { #category : #'tests-fields accessing' }
 MirrorPrimitivesTests >> testChangingFixedFieldOfWeakMessageSend [
 
@@ -126,6 +136,16 @@ MirrorPrimitivesTests >> testChangingIndexableFieldOfArray [
 MirrorPrimitivesTests >> testChangingIndexableFieldOfFixedObject [
 	
 	self should: [MirrorPrimitives indexableFieldOf: 10@20 at: 1 put: 10] raise: Error
+]
+
+{ #category : #'tests-write barrier' }
+MirrorPrimitivesTests >> testChangingIndexableFieldOfReadOnlyArray [
+	
+	| array |
+	array := {10. 20}.
+	array beReadOnlyObject.
+	
+	self should: [MirrorPrimitives indexableFieldOf: array at: 1 put: 5] raise: ModificationForbidden
 ]
 
 { #category : #'tests-fields accessing' }
@@ -387,6 +407,16 @@ MirrorPrimitivesTests >> testGettingIndexibleSizeOfWeakMessageSend [
 	actual := MirrorPrimitives indexableSizeOf: arrayWithInstVars.
 	
 	self assert: actual equals: 1 "receiver of weak message send is stored as first array item"
+]
+
+{ #category : #'tests-comparison' }
+MirrorPrimitivesTests >> testIdenticalEquality [
+
+	| object |
+	object := 0@0.
+	
+	self assert: (MirrorPrimitives check: object identicalTo: object).
+	self deny: (MirrorPrimitives check: object identicalTo: 0@0).
 ]
 
 { #category : #'tests-write barrier' }

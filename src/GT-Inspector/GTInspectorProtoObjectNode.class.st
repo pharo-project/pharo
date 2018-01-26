@@ -31,7 +31,7 @@ GTInspectorProtoObjectNode >> key [
 
 { #category : #accessing }
 GTInspectorProtoObjectNode >> rawValue [ 
-	^ thisContext object: self hostObject instVarAt: index 
+	^ MirrorPrimitives fixedFieldOf: self hostObject at: index 
 ]
 
 { #category : #accessing }

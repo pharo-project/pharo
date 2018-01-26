@@ -1329,7 +1329,7 @@ Context >> object: anObject perform: selector withArguments: argArray inClass: l
 	self primitiveFailed
 ]
 
-{ #category : #accessing }
+{ #category : #'mirror primitives' }
 Context >> objectClass: aReceiver [
 	<primitive: 111>
 	self primitiveFailed
