@@ -195,5 +195,6 @@ TraitsTestCase >> tearDown [
 			ChangeSet current removeClassChanges: behaviorName ].
 	createdClassesAndTraits := nil.
 	SystemAnnouncer announcer: oldAnnouncer.
+	super tearDown 
 
 ]

@@ -48,6 +48,7 @@ TimeTest >> setUp [
 { #category : #running }
 TimeTest >> tearDown [
 	DateAndTime localTimeZone: localTimeZoneToRestore.
+	super tearDown 
 
 ]
 
