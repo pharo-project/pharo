@@ -7,7 +7,7 @@ CompiledMethod >> ffiArgumentNames [
 	compile time. Useful, when there is no source code available (for some reason)"
 	^ self isFFIMethod
 		ifTrue: [ self properties argsNames ]
-		ifFalse: [ self halt. self argumentNames ]
+		ifFalse: [ self argumentNames ]
 ]
 
 { #category : #'*UnifiedFFI' }
