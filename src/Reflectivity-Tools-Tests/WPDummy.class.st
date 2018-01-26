@@ -12,7 +12,6 @@ Class {
 
 { #category : #examples }
 WPDummy >> exampleAssignment [
-	<sampleInstance>
 	foo := 1.
 	
 	
@@ -20,7 +19,6 @@ WPDummy >> exampleAssignment [
 
 { #category : #examples }
 WPDummy >> exampleAssignment: anObject [
-	<sampleInstance>
 	foo := anObject.
 	
 	
@@ -28,7 +26,6 @@ WPDummy >> exampleAssignment: anObject [
 
 { #category : #examples }
 WPDummy >> exampleMessageSend [
-	<sampleInstance>
 	self exampleOperation
 	
 	
@@ -42,7 +39,6 @@ WPDummy >> exampleOperation [
 
 { #category : #examples }
 WPDummy >> exampleOperationAndAssignment [
-	<sampleInstance>
 	|a|
 	a := 1 + 1.
 	foo := a + a.
@@ -52,7 +48,6 @@ WPDummy >> exampleOperationAndAssignment [
 
 { #category : #examples }
 WPDummy >> exampleOperationAndAssignment: aNumber [
-	<sampleInstance>
 	|a|
 	a := aNumber.
 	foo := a + a.

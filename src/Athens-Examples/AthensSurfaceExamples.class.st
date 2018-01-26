@@ -113,7 +113,6 @@ AthensSurfaceExamples class >> example1 [
 "
 self  example1
 "
-	<sampleInstance>
 	self openViewOn: [ :can |
 		can pathTransform restoreAfter: [ 
 
@@ -134,7 +133,6 @@ AthensSurfaceExamples class >> example10 [
 
 AthensCairoSurfaceExamples example10.
 "
-	<sampleInstance>
 
 	| surf |
 	
@@ -179,7 +177,6 @@ self example2.
 
 
 "
-	<sampleInstance>
 	self openViewOn: [ :can |
 		can setPaint: Color blue.
 		
@@ -203,7 +200,6 @@ Draw simple filled path, changing the transformation and colors to get some anim
 
  self example3 
 "
-	<sampleInstance>
 	| surf |
 	
 	surf := self newSurface: 800@800.
@@ -246,7 +242,6 @@ Draw simple stroke  path, changing the transformation and colors to get some ani
 
  self  example3stroke 
 "
-	<sampleInstance>
 
 	| surf |
 	
@@ -288,7 +283,6 @@ AthensSurfaceExamples class >> example4 [
 	First, we creating a path, and later we can use it in #drawShape: command.
 	self example4
 	"
-	<sampleInstance>
 
 	| surf path |
 	
@@ -319,7 +313,6 @@ Note how #moveTo: command implicitly starts new contour
 when inssued in the middle of command chain.
 self example5
 "
-	<sampleInstance>
 	| surf |
 	
 	surf := self newSurface: 100@100.
@@ -358,7 +351,6 @@ coordinates are affected by pathTransform matrix.
 
 self example6
 "
-	<sampleInstance>
 
 	| surf paint |
 	
@@ -395,7 +387,6 @@ coordinates are affected by pathTransform matrix.
 
 self example6point1
 "
-	<sampleInstance>
 
 	| surf paint |
 	
@@ -429,7 +420,6 @@ Draw two rectangles, stoked by linear gradient.
 Note that it should produce same rectangles with exact same fills, because gradient paint 
 coordinates are affected by pathTransform matrix.
 "
-	<sampleInstance>
 	| surf paint |
 	
 	surf := self newSurface: 100@100.
@@ -465,7 +455,6 @@ coordinates are affected by pathTransform matrix.
 
 self example7
 "
-	<sampleInstance>
 
 	| surf paint |
 	
@@ -503,7 +492,6 @@ AthensSurfaceExamples class >> example8 [
 "Draw a rectangle filled by radial gradient. 
 self example8
 "
-	<sampleInstance>
 	| surf paint |
 	
 	surf := self newSurface: 200@200.
@@ -533,7 +521,6 @@ AthensSurfaceExamples class >> example9 [
 Fill the rectangle using image paint.
 self example9
 "
-	<sampleInstance>
 	| surf paint f  |
 	
 	surf := self newSurface: 200@200.
@@ -588,7 +575,6 @@ self exampleClip
 { #category : #examples }
 AthensSurfaceExamples class >> exampleDrawForm [
 "self exampleDrawForm"
-	<sampleInstance>
 	| surf surf2   |
 
 	surf2 := self newSurface: 100@100.
@@ -621,7 +607,6 @@ AthensSurfaceExamples class >> exampleDrawForm [
 { #category : #examples }
 AthensSurfaceExamples class >> exampleDrawForm2 [
 "self exampleDrawForm2"
-	<sampleInstance>
 	| surf  |
 		
 	surf := self newSurface: 300@300.
@@ -648,7 +633,6 @@ AthensSurfaceExamples class >> exampleDrawText [
 "
 self subclasses anyOne exampleDrawText
 "
-	<sampleInstance>
 	| surf  font |
 	
 	font := LogicalFont familyName: 'Arial' pointSize: 20.
@@ -679,7 +663,6 @@ Draw a frame rectangle, rotate & transform it in a loop
 
  self exampleStrokeRect
 "
-	<sampleInstance>
 
 	| surf |
 	
@@ -707,7 +690,6 @@ Draw a frame rectangle, rotate & transform it in a loop
 { #category : #examples }
 AthensSurfaceExamples class >> exampleUseForm [
 " self exampleUseForm"
-	<sampleInstance>
 	| surf  form |
 	
 	form := Form extent: 100@100 depth: 32.

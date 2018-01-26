@@ -20,7 +20,6 @@ Class {
 
 { #category : #example }
 RubPluggableTextMorphExample class >> example [
-	<sampleInstance>
 	<example>
 	RubPluggableTextMorphExample new open
 ]

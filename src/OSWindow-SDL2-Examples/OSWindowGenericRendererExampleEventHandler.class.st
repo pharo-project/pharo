@@ -18,7 +18,6 @@ OSWindowGenericRendererExampleEventHandler >> example [
 
 { #category : #accessing }
 OSWindowGenericRendererExampleEventHandler >> example: anObject [
-	<sampleInstance>
 	example := anObject
 ]
 

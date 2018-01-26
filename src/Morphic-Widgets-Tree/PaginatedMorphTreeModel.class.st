@@ -12,7 +12,6 @@ Class {
 
 { #category : #examples }
 PaginatedMorphTreeModel class >> example [
-	<sampleInstance>
 	"This test demonstrate a paginating morphTreeMorph in action."
 
 	"self example."

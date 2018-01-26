@@ -13,7 +13,6 @@ Class {
 
 { #category : #examples }
 GLMPagerBrick class >> exampleBasic [
-	<sampleInstance>
 	|pager adapter|
 	adapter := GLMPagerModel new.
 	pager :=	GLMPagerBrick new.

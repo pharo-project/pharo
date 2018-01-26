@@ -43,7 +43,6 @@ GLMAnimation class >> borderColor [
 
 { #category : #sources }
 GLMAnimation class >> exampleSimple [
-	<sampleInstance>
 	|brick|
 
 	brick := GLMLabelBrick new

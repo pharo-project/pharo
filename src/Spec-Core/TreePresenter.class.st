@@ -81,7 +81,6 @@ TreePresenter class >> example [
 
 { #category : #examples }
 TreePresenter class >> exampleOfAutoRefreshOnExpand [
-	<sampleInstance>
 	"Each time a node is expanded, the computation of the children is made again, instead of being cached as it is usually"
 
 	TreePresenter new
@@ -96,7 +95,6 @@ TreePresenter class >> exampleOfAutoRefreshOnExpand [
 
 { #category : #examples }
 TreePresenter class >> exampleWithCustomColumnsAndNodes [
-	<sampleInstance>
 	"self exampleWithCustomColumnsAndNodes"
 	| m col1 col2 |
 
@@ -140,7 +138,6 @@ TreePresenter class >> exampleWithCustomColumnsAndNodes [
 
 { #category : #examples }
 TreePresenter class >> exampleWithCustomColumnsAndNodesAndChildren [
-	<sampleInstance>
 	"self exampleWithCustomColumnsAndNodesAndChildren"
 
 	| m col1 col2 |
@@ -171,7 +168,6 @@ TreePresenter class >> exampleWithCustomColumnsAndNodesAndChildren [
 
 { #category : #examples }
 TreePresenter class >> exampleWithNoSpecifiedNodes [
-	<sampleInstance>
 	"self exampleWithNoSpecifiedNodes"
 
 	TreePresenter new

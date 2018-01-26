@@ -30,14 +30,12 @@ Class {
 
 { #category : #examples }
 GLMLabelBrick class >> exampleOpen [
-	<sampleInstance>
 
 	self gtExample openCenteredInBrickWindow
 ]
 
 { #category : #examples }
 GLMLabelBrick class >> exampleWithPopupOpen [
-	<sampleInstance>
 	
 	self gtExampleWithPopup openCenteredInBrickWindowLabeled: 'Label example'
 ]

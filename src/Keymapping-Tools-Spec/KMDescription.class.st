@@ -34,7 +34,6 @@ KMDescription class >> defaultSpec [
 
 { #category : #example }
 KMDescription class >> example [
-	<sampleInstance>
 
 	| d |
 	d := KMDescription new.

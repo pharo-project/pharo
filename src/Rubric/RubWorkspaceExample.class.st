@@ -22,7 +22,6 @@ RubWorkspaceExample class >> exampleWindowWithScrolledText [
 
 { #category : #examples }
 RubWorkspaceExample class >> exampleWithCustomShortcut [
-	<sampleInstance>
 
 	 |  window text |
     text := RubScrolledTextMorph new.

@@ -36,7 +36,6 @@ SelectEntity class >> defaultSpec [
 
 { #category : #example }
 SelectEntity class >> example [
-	<sampleInstance>
 	self new
 		selectDialog: [ FastTablePresenter new items: #(Henrik Peter); yourself];
 		displaySymbol: #asString;

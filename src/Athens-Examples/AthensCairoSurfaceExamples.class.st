@@ -16,7 +16,6 @@ self exampleInterop
 Test the interoperability with bitblt.
 A cairo image surface bits are exposed to bitblt operations via surface plugin.
 "
-	<sampleInstance>
 	| surf |
 	
 	surf := self newSurface: 100@100.

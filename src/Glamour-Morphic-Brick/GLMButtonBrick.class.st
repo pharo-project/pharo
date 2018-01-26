@@ -24,7 +24,6 @@ Class {
 
 { #category : #examples }
 GLMButtonBrick class >> exampleOpen [
-	<sampleInstance>
 
 	self gtExample openCenteredInBrickWindow
 ]

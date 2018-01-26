@@ -13,7 +13,6 @@ Class {
 
 { #category : #example }
 TransformationMorph class >> example1 [
-	<sampleInstance>
 	| stringMorph transformationMorph |
 	stringMorph := 'vertical text' asMorph.
 	transformationMorph := TransformationMorph new asFlexOf: stringMorph.

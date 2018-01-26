@@ -13,7 +13,6 @@ Class {
 
 { #category : #examples }
 GLMStackedScrollPaneBrick class >> example [
-	<sampleInstance>
 
 	super example
 ]

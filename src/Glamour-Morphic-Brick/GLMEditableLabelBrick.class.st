@@ -27,7 +27,7 @@ Class {
 
 { #category : #examples }
 GLMEditableLabelBrick class >> exampleOpen [
-	<sampleInstance>
+
 	self gtExample openCenteredInBrickWindow
 ]
 

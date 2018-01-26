@@ -72,7 +72,6 @@ FTBasicTreeListDataSource class >> exampleInspect: anObject [
 
 { #category : #examples }
 FTBasicTreeListDataSource class >> exampleProtoObjectClassTree [
-	<sampleInstance>
 
 	| ds ft |
 
@@ -92,7 +91,6 @@ FTBasicTreeListDataSource class >> exampleProtoObjectClassTree [
 
 { #category : #examples }
 FTBasicTreeListDataSource class >> exampleSomeClassesSubclassesTree [
-	<sampleInstance>
 
 	| ds ft |
 
@@ -112,7 +110,6 @@ FTBasicTreeListDataSource class >> exampleSomeClassesSubclassesTree [
 
 { #category : #examples }
 FTBasicTreeListDataSource class >> exampleStateTree [
-	<sampleInstance>
 
 	| ds ft |
 
@@ -139,7 +136,6 @@ FTBasicTreeListDataSource class >> exampleStateTree [
 
 { #category : #examples }
 FTBasicTreeListDataSource class >> exampleWorldSubmorphTree [
-	<sampleInstance>
 
 	| ds ft |
 

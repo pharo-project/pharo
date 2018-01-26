@@ -15,7 +15,6 @@ Class {
 
 { #category : #example }
 CircleMorph class >> exampleCircleMorph [
-	<sampleInstance>
 	(CircleMorph new)
 	 extent: 50 @ 50;color: Color blue;
 	 openInWorld.

@@ -33,7 +33,6 @@ FBDExamples >> doubleRemoteAnidatedBlocks [
 
 { #category : #'examples - loops' }
 FBDExamples >> example2Loops [
-	<sampleInstance>
 	| t |
 	t := 1.
 	[ t < 5 ] whileTrue: [ t := t + 1. ].
@@ -42,7 +41,6 @@ FBDExamples >> example2Loops [
 
 { #category : #'examples - loops' }
 FBDExamples >> example2Loops2 [
-	<sampleInstance>
 	| t |
 	t := 1.
 	[ t < 5 ] whileTrue: [ [ t > 10 ] whileFalse: [ t := t * 2 ]. t := t + 1. ].
@@ -60,7 +58,6 @@ FBDExamples >> exampleAnd [
 
 { #category : #'examples - branches' }
 FBDExamples >> exampleAnd2 [
-	<sampleInstance>
 	| tmp1 |
 	tmp1 := true.
 	tmp1 and: [ tmp1 not ]
@@ -68,7 +65,6 @@ FBDExamples >> exampleAnd2 [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleAndOr [
-	<sampleInstance>
 	| t1 t2 |
 	t1 := true.
 	t2 := false.
@@ -315,7 +311,6 @@ FBDExamples >> exampleCascadeIntoBlockIntoCascade [
 
 { #category : #'examples - cascades' }
 FBDExamples >> exampleCascadeIntoBlockWithTempIfTrueIfFalse [
-	<sampleInstance>
 	| t |
 	t := OrderedCollection new.
 	t yourself
@@ -491,13 +486,11 @@ FBDExamples >> exampleCopyingBlock [
 
 { #category : #'examples-pragmas' }
 FBDExamples >> exampleDoublePrimitive [
-	<sampleInstance>
 	<primitive: 1>
 ]
 
 { #category : #'examples-blocks' }
 FBDExamples >> exampleEffectValues [
-	<sampleInstance>
 	#getMe.
 	#( got that ? ).
 	Class.
@@ -506,7 +499,6 @@ FBDExamples >> exampleEffectValues [
 
 { #category : #'examples-simple' }
 FBDExamples >> exampleEmptyMethod [
-	<sampleInstance>
 ]
 
 { #category : #'examples - blocks' }
@@ -556,7 +548,6 @@ FBDExamples >> exampleIfFalseIfTrue [
 
 { #category : #'examples - branches' }
 FBDExamples >> exampleIfFalseIfTrue2 [
-	<sampleInstance>
 	| a |
 	a := true.
 	a ifFalse: [ a := 1 + 2 ] ifTrue: [ a := 2 + 3 ]
@@ -660,7 +651,6 @@ FBDExamples >> exampleIfNotNilReturnNil [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleIfTrue [
-	<sampleInstance>
 	[ 1 < 2
 		ifTrue: [ ^ 'result' ]] value
 ]
@@ -709,7 +699,6 @@ FBDExamples >> exampleIfTrueIfFalse [
 
 { #category : #'examples - branches' }
 FBDExamples >> exampleIfTrueIfFalse2 [
-	<sampleInstance>
 	| a |
 	a := true.
 	a ifTrue: [ a:= 1 + 2 ] ifFalse: [ a := 2 + 3 ]
@@ -768,7 +757,6 @@ FBDExamples >> exampleIfTrueNested [
 
 { #category : #'examples - branches' }
 FBDExamples >> exampleIfTrueWithNilAssertion [
-	<sampleInstance>
 	| tmp1 |
 	tmp1 := 1.
 	tmp1 > 2
@@ -961,13 +949,11 @@ FBDExamples >> exampleSelf [
 
 { #category : #'examples - simple' }
 FBDExamples >> exampleSend [
-	<sampleInstance>
 	self basicSize 
 ]
 
 { #category : #'examples - simple' }
 FBDExamples >> exampleSend2Args [
-	<sampleInstance>
 	self instVarAt: 1 put: #banana
 ]
 
@@ -1204,7 +1190,6 @@ FBDExamples >> exampleToDoArgumentNotInlined [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleToDoInsideBlock [
-	<sampleInstance>
 	| tmp1 block |
 	tmp1 := {1.2.
 	3.4} asOrderedCollection.
@@ -1282,7 +1267,6 @@ FBDExamples >> exampleToDoWithMessage [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleToDoWithMessage2 [
-	<sampleInstance>
 	| t t1 t2 |
 	t := {true.true.true}.
 	t1 := 1.
@@ -1292,7 +1276,6 @@ FBDExamples >> exampleToDoWithMessage2 [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleWhileFalse [
-	<sampleInstance>
 	| t |
 	t := 1.
 	[ t > 10 ] whileFalse: [ t := t + 1. 1 + 2 ]
@@ -1300,7 +1283,6 @@ FBDExamples >> exampleWhileFalse [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleWhileFalse2 [
-	<sampleInstance>
 	| t |
 	t := 1.
 	[ t := t + 1. 1 + 2. t > 10 ] whileFalse
@@ -1346,7 +1328,6 @@ FBDExamples >> exampleWhileModificationBeforeNotInlined [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleWhileNoModification [
-	<sampleInstance>
 	"tempvars aren't modified in the loop, therefore they don't need to be in a indirection vector.
 	  number of temps = declared temps "
 
@@ -1363,7 +1344,6 @@ FBDExamples >> exampleWhileNoModification [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleWhileTrue [
-	<sampleInstance>
 	| array t |
 	array := {true.	true.true}.
 	t := 1.
@@ -1375,7 +1355,6 @@ FBDExamples >> exampleWhileTrue [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleWhileTrue2 [
-	<sampleInstance>
 	| t |
 	t := 1.
 	[ 
@@ -1386,7 +1365,6 @@ FBDExamples >> exampleWhileTrue2 [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleWhileTrue3 [
-	<sampleInstance>
 	| t1 t2 |
 	t2 := 5.
 	t1 := 1.
@@ -1399,7 +1377,6 @@ FBDExamples >> exampleWhileTrue3 [
 
 { #category : #'examples - loops' }
 FBDExamples >> exampleWhileTrue4 [
-	<sampleInstance>
 	| tmp1 tmp2 |
 	tmp1 := 1.
 	[ tmp1 <= 5 ]
@@ -1415,7 +1392,6 @@ FBDExamples >> exampleWhileTrue4 [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleWhileTrueSameJumpTarget [
-	<sampleInstance>
 	| tmp1 tmp2 |
 	tmp1 := 1.
 	tmp2 := 10.
@@ -1429,7 +1405,6 @@ FBDExamples >> exampleWhileTrueSameJumpTarget [
 
 { #category : #'examples-blocks-optimized' }
 FBDExamples >> exampleWhileTrueSameJumpTarget2 [
-	<sampleInstance>
 	| tmp1 tmp2 tmp3 tmp4 tmp5 tmp6 |
 	"need body + triple nested loop with same start"
 	tmp1 := 1.

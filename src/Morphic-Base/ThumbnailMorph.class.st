@@ -23,7 +23,6 @@ Class {
 
 { #category : #example }
 ThumbnailMorph class >> example1 [
-	<sampleInstance>
 	"Create a thumbnail representing another Morph. The thumbnail is continously updated."
 	"self example1"
 	| t r |

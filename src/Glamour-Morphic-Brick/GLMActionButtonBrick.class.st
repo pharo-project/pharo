@@ -37,7 +37,6 @@ Class {
 
 { #category : #examples }
 GLMActionButtonBrick class >> exampleOpen [
-	<sampleInstance>
 
 	self gtExample openCenteredInBrickWindowLabeled: 'Action button example'
 ]

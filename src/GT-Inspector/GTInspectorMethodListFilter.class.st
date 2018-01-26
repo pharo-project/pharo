@@ -16,7 +16,6 @@ Class {
 { #category : #examples }
 GTInspectorMethodListFilter class >> exampleASTBrowser [
 	"An inspector showing a browser for navigating through AST nodes."
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -29,7 +28,7 @@ GTInspectorMethodListFilter class >> exampleASTBrowser [
 { #category : #examples }
 GTInspectorMethodListFilter class >> exampleCodeBrowser [
 	"An inspector showing only the Meta presentation for all objects"
-	<sampleInstance>
+
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -41,7 +40,6 @@ GTInspectorMethodListFilter class >> exampleCodeBrowser [
 { #category : #examples }
 GTInspectorMethodListFilter class >> exampleFileBrowser [
 	"An inspector for browsing directories and files."
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -58,7 +56,6 @@ GTInspectorMethodListFilter class >> exampleFileBrowser [
 
 { #category : #examples }
 GTInspectorMethodListFilter class >> exampleFullInspector [
-	<sampleInstance>
 	"An inspector showing all presentations for all objects"
 	|inspector|
 	
@@ -74,7 +71,6 @@ GTInspectorMethodListFilter class >> exampleHelpBrowser [
 	
 	self exampleHelpBrowser
 	"
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -86,7 +82,6 @@ GTInspectorMethodListFilter class >> exampleHelpBrowser [
 
 { #category : #examples }
 GTInspectorMethodListFilter class >> exampleRawInspector [
-	<sampleInstance>
 	"An inspector showing only the Raw presentation for all objects"
 	|inspector|
 	

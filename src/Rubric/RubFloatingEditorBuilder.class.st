@@ -54,7 +54,6 @@ RubFloatingEditorBuilder class >> exampleCommandLauncher [
 
 { #category : #example }
 RubFloatingEditorBuilder class >> exampleEditableStringMorph [
-	<sampleInstance>
 	<example>
 	| pane stringMorph edBuilder |
 	pane := Morph new.

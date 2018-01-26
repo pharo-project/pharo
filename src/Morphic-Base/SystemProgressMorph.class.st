@@ -68,7 +68,6 @@ SystemProgressMorph class >> endJob: aJobEnd [
 
 { #category : #examples }
 SystemProgressMorph class >> example [
-	<sampleInstance>
 	"SystemProgressMorph example"
 	'Progress' 
 		displayProgressFrom: 0 to: 1000
@@ -78,7 +77,6 @@ SystemProgressMorph class >> example [
 
 { #category : #examples }
 SystemProgressMorph class >> exampleChangeLabel [
-	<sampleInstance>
 	"SystemProgressMorph exampleChangeLabel"
 	| classes |
 	classes := Smalltalk globals allClasses copyFrom: 1 to: 100.
@@ -93,7 +91,6 @@ SystemProgressMorph class >> exampleChangeLabel [
 
 { #category : #examples }
 SystemProgressMorph class >> exampleLabelOnly [
-	<sampleInstance>
 	"SystemProgressMorph exampleLabelOnly"
 	| words |
 	words := #(zero one two three four five six seven eight nine ten) reversed.

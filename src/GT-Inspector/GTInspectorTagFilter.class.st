@@ -20,7 +20,6 @@ Class {
 { #category : #examples }
 GTInspectorTagFilter class >> exampleBasicInspector [
 	"An inspector showing only the basic presentations Raw and Meta for all object."
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -32,7 +31,6 @@ GTInspectorTagFilter class >> exampleBasicInspector [
 { #category : #examples }
 GTInspectorTagFilter class >> exampleCustomInspector [
 	"An inspector showing only the custom presentations for all object (excluding Raw and Meta)."
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -45,7 +43,6 @@ GTInspectorTagFilter class >> exampleCustomInspector [
 { #category : #examples }
 GTInspectorTagFilter class >> exampleExampleBrowser [
 	"A browser for viewing examples"
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.
@@ -57,7 +54,6 @@ GTInspectorTagFilter class >> exampleExampleBrowser [
 { #category : #examples }
 GTInspectorTagFilter class >> exampleFullInspector [
 	"An inspector showing all the available presentations for all objects."
-	<sampleInstance>
 	|inspector|
 	
 	inspector := GTInspector new.

@@ -62,7 +62,7 @@ GLMExamplesBrowser >> exampleBrowserForPragma: each in: aClass [
 
 { #category : #building }
 GLMExamplesBrowser >> exampleIn: composer [
-	<sampleInstance>
+
 	| dynamicPresentation |
 	dynamicPresentation := composer dynamic
 		title: 'Browser';

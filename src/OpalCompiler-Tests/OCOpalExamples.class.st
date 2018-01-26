@@ -35,7 +35,6 @@ OCOpalExamples >> doubleRemoteAnidatedBlocks [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr [
-	<sampleInstance>
 	| t1 t2 |
 	t1 := true.
 	t2 := false.
@@ -44,7 +43,6 @@ OCOpalExamples >> exampleAndOr [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleAndOr2 [
-	<sampleInstance>
 	| t1 t2 |
 	t1 := true.
 	t2 := false.  
@@ -156,13 +154,11 @@ OCOpalExamples >> exampleBlockNested [
 
 { #category : #'examples-pragmas' }
 OCOpalExamples >> exampleDoublePrimitive [
-	<sampleInstance>
 	<primitive: 1>
 ]
 
 { #category : #'examples-blocks' }
 OCOpalExamples >> exampleEffectValues [
-	<sampleInstance>
 	#getMe.
 	#( got that ? ).
 	Class.
@@ -171,7 +167,6 @@ OCOpalExamples >> exampleEffectValues [
 
 { #category : #'examples-simple' }
 OCOpalExamples >> exampleEmptyMethod [
-	<sampleInstance>
 ]
 
 { #category : #'examples-variables' }
@@ -199,7 +194,6 @@ OCOpalExamples >> exampleIfFalse [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleIfFalseIfTrue [
-	<sampleInstance>
 	true ifFalse: [^1] ifTrue: [^2].
 ]
 
@@ -657,7 +651,6 @@ OCOpalExamples >> exampleWhileModificationBeforeNotInlined [
 
 { #category : #'examples-blocks-optimized' }
 OCOpalExamples >> exampleWhileNoModification [
-	<sampleInstance>
 	"tempvars aren't modified in the loop, therefore they don't need to be in a indirection vector.
 	  number of temps = declared temps "
 

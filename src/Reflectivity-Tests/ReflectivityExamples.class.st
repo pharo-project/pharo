@@ -129,7 +129,6 @@ ReflectivityExamples >> examplePrimitiveMethod [
 
 { #category : #examples }
 ReflectivityExamples >> exampleSendNoReturn [
-	<sampleInstance>
 	"just an example method that calls a mutation outside of a assignment or return node.
 (needed for before link test with receiver reification"
 

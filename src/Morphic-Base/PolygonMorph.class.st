@@ -98,7 +98,6 @@ PolygonMorph class >> example1 [
 
 { #category : #examples }
 PolygonMorph class >> example2 [
-	<sampleInstance>
 	"self example2"
 	| poly | 
 	poly := PolygonMorph
@@ -112,7 +111,6 @@ PolygonMorph class >> example2 [
 
 { #category : #examples }
 PolygonMorph class >> example3 [
-	<sampleInstance>
 	"self example3"
 	| poly | 
 	poly := PolygonMorph
@@ -126,7 +124,6 @@ PolygonMorph class >> example3 [
 
 { #category : #examples }
 PolygonMorph class >> example4 [
-	<sampleInstance>
 	"self example4"
 	| poly | 
 	poly :=  (PolygonMorph

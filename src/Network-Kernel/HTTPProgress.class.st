@@ -25,7 +25,6 @@ Class {
 
 { #category : #examples }
 HTTPProgress class >> example [
-	<sampleInstance>
 	"self example"
 	
  	UIManager default informUserDuring: [ :bar |

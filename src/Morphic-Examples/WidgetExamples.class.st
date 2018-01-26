@@ -64,7 +64,6 @@ WidgetExamples class >> colorControls [
 
 { #category : #examples }
 WidgetExamples class >> exampleBasicControls [
-	<sampleInstance>
 	"Open a window with examples of each of the basic controls."
 	"self exampleBasicControls"
 	<script>
@@ -150,7 +149,6 @@ WidgetExamples class >> exampleBasicControls [
 
 { #category : #examples }
 WidgetExamples class >> exampleColorControls [
-	<sampleInstance>
 	"Open a window with examples of each of the color controls."
 	"self exampleColorControls"
 	<script>
@@ -178,7 +176,6 @@ WidgetExamples class >> exampleColorControls [
 
 { #category : #examples }
 WidgetExamples class >> exampleDialogs [
-	<sampleInstance>
 	"Open an example of each services dialog"
 	"self exampleDialogs"
 	<script>
@@ -201,7 +198,6 @@ WidgetExamples class >> exampleDialogs [
 
 { #category : #examples }
 WidgetExamples class >> exampleGroups [
-	<sampleInstance>
 	"Open a window with examples of each of the group type morphs."
 	"self exampleGroups"
 	<script>
@@ -283,7 +279,6 @@ WidgetExamples class >> exampleGroups [
 
 { #category : #examples }
 WidgetExamples class >> exampleOtherControls [
-	<sampleInstance>
 	"Open a window with examples of each of the other controls."
 	"self exampleOtherControls"
 	<script>
@@ -353,7 +348,6 @@ WidgetExamples class >> exampleOtherControls [
 
 { #category : #examples }
 WidgetExamples class >> exampleTextEntryWithCompletionDialog [
-	<sampleInstance>
 	"self exampleTextEntryWithCompletionDialog"
 	<script>
 	| applicants entryCompletion |
@@ -376,7 +370,6 @@ WidgetExamples class >> exampleTextEntryWithCompletionDialog [
 
 { #category : #examples }
 WidgetExamples class >> exampleWindowWithToolbars [
-	<sampleInstance>
 	"Open an example window with toolbars."
 	"self exampleWindowWithToolbars"
 	<script>

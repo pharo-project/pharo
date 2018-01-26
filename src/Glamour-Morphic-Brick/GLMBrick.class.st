@@ -31,7 +31,6 @@ GLMBrick class >> exampleZindexOpen [
 	"
 	self exampleZindexOpen
 	"
-	<sampleInstance>
 	self gtExampleZindex openInBrickWindowLabeled: 'Z-Index example'
 ]
 

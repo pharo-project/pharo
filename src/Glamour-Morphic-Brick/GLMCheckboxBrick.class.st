@@ -25,14 +25,13 @@ Class {
 
 { #category : #examples }
 GLMCheckboxBrick class >> exampleOpen [
-	<sampleInstance>
 
 	self gtExample openCenteredInBrickWindow
 ]
 
 { #category : #examples }
 GLMCheckboxBrick class >> exampleWithLabelOpen [
-	<sampleInstance>
+
 	self gtExampleWithLabel openCenteredInBrickWindow
 ]
 

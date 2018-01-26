@@ -14,14 +14,12 @@ Class {
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButton [
-	<sampleInstance>
 	<example>
 	self new buildButton openInWindow
 ]
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButtonFont [
-	<sampleInstance>
 	<example>
 	self new buildButton
 		font: (LogicalFont familyName: 'Source Sans Pro' pointSize: 24);
@@ -30,35 +28,30 @@ PluggableButtonMorphExample class >> exampleButtonFont [
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButtonNoLabel [
-	<sampleInstance>
 	<example>
 	self new buildButtonNoLabel openInWindow
 ]
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButtonWithIcon [
-	<sampleInstance>
 	<example>
 	self new buildButtonWithIcon openInWindow
 ]
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButtonWithIconBottom [
-	<sampleInstance>
 	<example>
 	self new buildButtonWithIconBottom openInWindow
 ]
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButtonWithIconRight [
-	<sampleInstance>
 	<example>
 	self new buildButtonWithIconRight openInWindow
 ]
 
 { #category : #examples }
 PluggableButtonMorphExample class >> exampleButtonWithIconTop [
-	<sampleInstance>
 	<example>
 	self new buildButtonWithIconTop openInWindow
 ]

@@ -15,7 +15,6 @@ Class {
 
 { #category : #examples }
 AthensTreeView class >> example1 [
-	<sampleInstance>
 
 	AthensTreeView openOn: Collection extentBlock: [ :each | (5 + each instVarNames size)@(5 + each methodDict size)  ] childsBlock: [:el | el subclasses ] 
 ]

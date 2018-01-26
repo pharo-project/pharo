@@ -66,7 +66,6 @@ GLMScrollPaneBrick class >> defaultScrollVelocity [
 
 { #category : #examples }
 GLMScrollPaneBrick class >> example [
-	<sampleInstance>
 	|foundation scrollPane|
 	
 	scrollPane := self new.
@@ -88,7 +87,6 @@ GLMScrollPaneBrick class >> example [
 
 { #category : #examples }
 GLMScrollPaneBrick class >> exampleLarge [
-	<sampleInstance>
 	|foundation scrollPane|
 	
 	scrollPane := self new.

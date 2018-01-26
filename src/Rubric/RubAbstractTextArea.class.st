@@ -143,7 +143,6 @@ RubAbstractTextArea class >> editorFont [
 
 { #category : #'shortcut examples' }
 RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
-	<sampleInstance>
 	"No Keymap here, by default, the editor rely on a builtin keymapping engine (see TextEditor and SmallEditor)
 	Here are some example on how to declare them if you want to setup different shortcuts
 	
@@ -248,7 +247,6 @@ RubAbstractTextArea class >> examplesOfEditorShortcutsOn: aBuilder [
 
 { #category : #'shortcut examples' }
 RubAbstractTextArea class >> examplesOfSmalltalkEditorShortcutsOn: aBuilder [
-	<sampleInstance>
 	"No Keymap here, by default, the editor rely on a builtin keymapping engine (see TextEditor and SmallEditor)
 	Here are some example on how to declare them if you want to setup different shortcuts
 

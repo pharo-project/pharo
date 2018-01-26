@@ -43,7 +43,6 @@ Class {
 
 { #category : #examples }
 GIFReadWriter class >> exampleAnim [
-	<sampleInstance>
 	"GIFReadWriter exampleAnim"
 
 	| writer extent center |

@@ -44,7 +44,6 @@ DigitalSignatureAlgorithm class >> example [
 	"Example of signing a message and verifying its signature."
 	"Note: Secure random numbers are needed for key generation and message signing, but not for signature verification. There is no need to call initRandomFromUser if you are merely checking a signature."
 	"DigitalSignatureAlgorithm example"
-	<sampleInstance>
 
 	| msg keys sig |
 	msg := 'This is a test...'.

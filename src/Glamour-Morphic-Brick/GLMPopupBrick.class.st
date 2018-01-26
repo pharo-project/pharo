@@ -15,14 +15,12 @@ Class {
 
 { #category : #examples }
 GLMPopupBrick class >> exampleAllTypesBelowOpen [
-	<sampleInstance>
 	
 	self gtExampleAllTypesBelow openCenteredInBrickWindowLabeled: 'All Below Popup Types'
 ]
 
 { #category : #examples }
 GLMPopupBrick class >> exampleAllTypesOpen [
-	<sampleInstance>
 	
 	self gtExampleAllTypes openCenteredInBrickWindowLabeled: 'All Popup Types'
 ]

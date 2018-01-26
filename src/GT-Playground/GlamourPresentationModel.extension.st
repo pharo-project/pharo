@@ -2,7 +2,6 @@ Extension { #name : #GlamourPresentationModel }
 
 { #category : #'*GT-Playground' }
 GlamourPresentationModel class >> examplePlaygroundAndInspectorOn42 [
-	<sampleInstance>
 	|ui lay|	
 	ui := DynamicComposableModel new.
 	ui title: 'Too Much Glamour!' translated.

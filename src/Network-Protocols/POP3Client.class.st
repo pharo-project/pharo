@@ -18,7 +18,7 @@ POP3Client class >> defaultPortNumber [
 
 { #category : #example }
 POP3Client class >> example [
-	<sampleInstance>
+
 	"POP3Client example"
 	"download a user's messages into an OrderedCollection and inspect the OrderedCollection"
 
