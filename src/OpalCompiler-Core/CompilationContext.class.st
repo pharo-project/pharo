@@ -79,8 +79,9 @@ CompilationContext class >> defaultTransformationPlugins: anObject [
 
 { #category : #'class initialization' }
 CompilationContext class >> initialize [
+	DefaultTransformationPlugins := OrderedCollection new.
 	BytecodeBackend := EncoderForV3PlusClosures.
-	UsesFullBlockClosure := false.
+	UsesFullBlockClosure := false
 ]
 
 { #category : #accessing }
@@ -206,7 +207,7 @@ CompilationContext >> getClass [
 { #category : #initialization }
 CompilationContext >> initialize [
 	options := Set new.
-	astTransformPlugins := DefaultTransformationPlugins ifNil: [ OrderedCollection new ]
+	astTransformPlugins := OrderedCollection withAll: DefaultTransformationPlugins
 ]
 
 { #category : #accessing }

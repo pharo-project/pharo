@@ -9,8 +9,43 @@ Class {
 	#classVars : [
 		'FFICalloutSelectors'
 	],
+	#classInstVars : [
+		'collector'
+	],
 	#category : #UnifiedFFI
 }
+
+{ #category : #'as yet unclassified' }
+FFICompilerPlugin class >> addAFfiCalloutSelectorEvent: aPragmaAdded [
+	self addFfiCalloutSelector: aPragmaAdded pragma methodSelector.
+	aPragmaAdded pragma method senders do: [ :sender | sender recompile ].
+	
+]
+
+{ #category : #'as yet unclassified' }
+FFICompilerPlugin class >> addFfiCalloutSelector: aString [ 
+	FFICalloutSelectors add: aString
+]
+
+{ #category : #accessing }
+FFICompilerPlugin class >> defaultFfiCalloutSelectors [
+	^ #(ffiCall: #ffiCall:module: #ffiCall:options: #ffiCall:module:options: nbCall: #nbCall:module: #nbCall:options: #nbCall:module:options:)
+]
+
+{ #category : #accessing }
+FFICompilerPlugin class >> initialize [
+	FFICalloutSelectors := IdentitySet withAll: self defaultFfiCalloutSelectors.
+	self initializeFfiCalloutSelectorsListUpdate
+]
+
+{ #category : #accessing }
+FFICompilerPlugin class >> initializeFfiCalloutSelectorsListUpdate [
+	collector := PragmaCollector filter: [ :pragma | pragma keyword = #ffiCalloutTranslator ].
+	collector reset do: [ :pragma | self halt ].
+	collector when: PragmaAdded send: #addAFfiCalloutSelectorEvent: to: self.
+	collector when: PragmaRemoved send: #removeAFfiCalloutSelectorEvent: to: self.
+
+]
 
 { #category : #accessing }
 FFICompilerPlugin class >> priority [
@@ -28,7 +63,7 @@ FFICompilerPlugin >> ffiCalloutSelectors [
 FFICompilerPlugin >> transform [
 	"While plugin is used to compile every method we can use it for two purposes:
 		- collect all ffiCallout selectors like ffiCall:, nbCall:
-		- mark ffi methods which isses collected selectors that they are FFI"
+		- mark ffi methods which use collected selectors that they are FFI"
 	self transformsFFICalloutTranslator ifTrue: [ 
 		self ffiCalloutSelectors add: ast selector. ^ast ].
 
