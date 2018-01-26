@@ -77,7 +77,7 @@ UUID class >> new [
 { #category : #'instance creation' }
 UUID class >> new: aSize [
 
-	self assert: aSize = 16.
+	(aSize == 16) ifFalse: [ self error: 'Wrong UUID size' ].
 	
 	^ super new: aSize
 ]
