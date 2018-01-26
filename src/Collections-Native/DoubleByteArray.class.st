@@ -8,6 +8,14 @@ Class {
 	#category : #'Collections-Native'
 }
 
+{ #category : #private }
+DoubleByteArray >> atAllPut: value [
+	"Fill the receiver with the given value"
+
+	<primitive: 145>
+	super atAllPut: value
+]
+
 { #category : #accessing }
 DoubleByteArray >> byteSize [
 	^self size * 2
