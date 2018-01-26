@@ -1481,16 +1481,9 @@ SmalltalkImage >> quitPrimitive [
 
 { #category : #compiler }
 SmalltalkImage >> recompile [
-	Smalltalk globals allClassesAndTraits
-		do: [ :classOrTrait | 
-			Stdio stdout
-				<< classOrTrait name;
-				cr.
-			Stdio stdout flush.
-			classOrTrait == BoxedFloat64
-				ifTrue: [ self halt ].
-			classOrTrait recompile ]
-		displayingProgress: 'Recompiling all classes and traits'
+	Smalltalk globals allClassesAndTraits 
+		do: [:classOrTrait | classOrTrait recompile] 
+		displayingProgress: 'Recompiling all classes and traits'. 
 ]
 
 { #category : #'snapshot and quit' }

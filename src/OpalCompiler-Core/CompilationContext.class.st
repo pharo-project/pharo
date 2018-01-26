@@ -84,6 +84,11 @@ CompilationContext class >> initialize [
 	UsesFullBlockClosure := false
 ]
 
+{ #category : #removing }
+CompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
+	self defaultTransformationPlugins remove: aPlugin
+]
+
 { #category : #accessing }
 CompilationContext class >> usesFullBlockClosure [
 	^ UsesFullBlockClosure ifNil: [ self initialize. UsesFullBlockClosure ]

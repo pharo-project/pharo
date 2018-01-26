@@ -51,9 +51,22 @@ FFICompilerPlugin class >> initializeFfiCalloutSelectorsListUpdate [
 	collector when: PragmaRemoved send: #removeAFfiCalloutSelectorEvent: to: self
 ]
 
+{ #category : #installation }
+FFICompilerPlugin class >> install [
+	<script>
+	(CompilationContext defaultTransformationPlugins includes: self)
+		ifFalse: [ CompilationContext addDefaultTransformationPlugin: self.
+			self recompileSenders ]
+]
+
 { #category : #private }
 FFICompilerPlugin class >> priority [
 	^ 2
+]
+
+{ #category : #installation }
+FFICompilerPlugin class >> recompileSenders [
+	collector do: [ :pragma | self recompileSendersOf: pragma method ]
 ]
 
 { #category : #private }
@@ -72,6 +85,13 @@ FFICompilerPlugin class >> removeFfiCalloutSelector: aString [
 	FFICalloutSelectors remove: aString ifAbsent: [  ]
 ]
 
+{ #category : #installation }
+FFICompilerPlugin class >> uninstall [
+	<script>
+	CompilationContext removeDefaultTransformationPlugin: self.
+	self recompileSenders
+]
+
 { #category : #accessing }
 FFICompilerPlugin >> ffiCalloutSelectors [
 	^FFICalloutSelectors ifNil: [ FFICalloutSelectors := IdentitySet withAll: #( 
@@ -84,20 +104,11 @@ FFICompilerPlugin >> transform [
 	"While plugin is used to compile every method we can use it for two purposes:
 		- collect all ffiCallout selectors like ffiCall:, nbCall:
 		- mark ffi methods which use collected selectors that they are FFI"
-	self transformsFFICalloutTranslator ifTrue: [ 
-		self ffiCalloutSelectors add: ast selector. ^ast ].
-
 	self transformsFFIMethod ifFalse: [ ^ast].
 	 
 	ast ensureCachedArgumentNames.
 	ast methodPropertyAt: #isFFIMethod put: true.
 	^ast
-]
-
-{ #category : #api }
-FFICompilerPlugin >> transformsFFICalloutTranslator [
-
-   ^ast hasPragmaNamed: #ffiCalloutTranslator
 ]
 
 { #category : #api }
