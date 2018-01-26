@@ -32,7 +32,6 @@ TIndexAccessForMultipliness >> test0FixtureIndexAccessFotMultipliness [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIdentityIndexOfDuplicate [
-	"self debug: #testIdentityIndexOf"
 
 	| collection element |
 	"testing fixture here as this method may not be used by some collections testClass"
@@ -49,7 +48,7 @@ TIndexAccessForMultipliness >> testIdentityIndexOfDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIdentityIndexOfIAbsentDuplicate [
-	"self debug: #testIdentityIndexOfIfAbsent"
+
 	| collection element elementCopy |
 	collection := self collectionWithNonIdentitySameAtEndAndBegining .
 	element := collection last.
@@ -65,7 +64,7 @@ TIndexAccessForMultipliness >> testIdentityIndexOfIAbsentDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIndexOfDuplicate [
-	"self debug: #testIndexOf"
+
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
@@ -77,7 +76,7 @@ TIndexAccessForMultipliness >> testIndexOfDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIndexOfIfAbsentDuplicate [
-	"self debug: #testIndexOfIfAbsent"
+
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
@@ -91,7 +90,7 @@ TIndexAccessForMultipliness >> testIndexOfIfAbsentDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testIndexOfStartingAtDuplicate [
-	"self debug: #testLastIndexOf"
+
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
@@ -110,7 +109,7 @@ TIndexAccessForMultipliness >> testIndexOfStartingAtDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfDuplicate [
-	"self debug: #testLastIndexOf"
+
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection first.
@@ -122,8 +121,6 @@ TIndexAccessForMultipliness >> testLastIndexOfDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfIfAbsentDuplicate [
-	"self debug: #testIndexOfIfAbsent"
-	"self debug: #testLastIndexOf"
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection first.
@@ -137,7 +134,6 @@ TIndexAccessForMultipliness >> testLastIndexOfIfAbsentDuplicate [
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfStartingAtDuplicate [
-	"self debug: #testLastIndexOf"
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.

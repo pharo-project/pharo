@@ -10,8 +10,7 @@ Class {
 { #category : #'tests - operations on categories' }
 RPackageCategorySynchronisationTest >> testAddCategoryCreatesPackage [
 	"test that when we add a category that does not yet correspond to an existing package, a new package is created"
-	"self debug: #testAddCategoryCreatesPackage"
-	
+		
 	self flag: #todo. "To be removed when Categories are kicked out"
 	
 	self addXCategory.
@@ -21,7 +20,6 @@ RPackageCategorySynchronisationTest >> testAddCategoryCreatesPackage [
 { #category : #'tests - operations on categories' }
 RPackageCategorySynchronisationTest >> testAddCategoryIsAlreadyAPackageDoesNotCreatePackage [
 	"test that when we add a category corresponding to an existing package, we do not create a second package"
-	"self debug: #testAddCategoryIsAlreadyAPackageDoesNotCreatePackage"
 	
 	|tmpPackage|
 	
@@ -37,8 +35,7 @@ RPackageCategorySynchronisationTest >> testAddCategoryIsAlreadyAPackageDoesNotCr
 { #category : #'tests - operations on categories' }
 RPackageCategorySynchronisationTest >> testRenameCategoryAlsoRenameAllExtensionProtocols [
 	"test that when we rename a category, all corresponding extension protocols in the system are renamed"
-	"self debug: #testRenameCategoryAlsoRenameAllExtensionProtocols"
-	
+		
 	|XPackage YPackage ZPackage classInY classInZ| 
 	self addXCategory.
 	self addYCategory.

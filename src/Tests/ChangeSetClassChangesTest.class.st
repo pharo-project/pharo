@@ -244,8 +244,6 @@ ChangeSetClassChangesTest >> testInitialChangeSet [
 
 { #category : #support }
 ChangeSetClassChangesTest >> testRenaming [
-	"self debug: #testRenaming"
-
 	"self run: #testRenaming"
 
 	| oldName newMetaclassName class |

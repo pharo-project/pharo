@@ -259,7 +259,7 @@ SetTest >> testAdd [
 
 { #category : #'tests - growable' }
 SetTest >> testAddNonEmptyGrowsWhenNewElement [
-	"self debug: #testAddNonEmptyGrowsWhenNewElement"
+	
 	| oldSize |
 	oldSize := self nonEmpty size.
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
@@ -360,7 +360,7 @@ SetTest >> testDo2 [
 
 { #category : #'tests - iterate' }
 SetTest >> testDoWithoutNoDuplicates [
-	"self debug: #testDoWithoutNoDuplicates"
+	
 	| res |
 	res := self speciesClass new.  
 	self collection do: [:each | res add: each] without: -2.
@@ -415,7 +415,7 @@ SetTest >> testIncludes [
 
 { #category : #'tests - includes' }
 SetTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -497,8 +497,7 @@ SetTest >> testRemoveAll [
 
 { #category : #'tests - some' }
 SetTest >> testRemoveIfAbsent [
-	"self debug: #testRemoveIfAbsent"
-	
+		
 	self assert: (full remove: 8 ifAbsent: [true]).
 	self assert: (full remove: 4 ifAbsent: [false]) isNumber.
 	

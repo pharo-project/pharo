@@ -523,7 +523,7 @@ DictionaryTest >> testIncludesAssociationWithValue [
 
 { #category : #'tests - includes' }
 DictionaryTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
@@ -730,8 +730,7 @@ DictionaryTest >> testRemoveAll [
 
 { #category : #tests }
 DictionaryTest >> testSelectIsNotShallowCopy [
-	"self debug: #testSelectIsNotShallowCopy"
-	
+		
 	| original even |
 	original := self collectionClass new.
 	original at: #one put: 1.

@@ -42,9 +42,6 @@ MorphTest >> testBoundingBoxOfSubmorphs [
 
 { #category : #'testing - geometry' }
 MorphTest >> testExtent [
-	"
-	self debug: #testExtent
-	"
 	| m1 m2 v1 v2 v3 b1 b2 |
 	m1 := Morph new.
 	m2 := Morph new.

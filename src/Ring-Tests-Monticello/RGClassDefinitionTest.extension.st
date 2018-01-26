@@ -42,7 +42,6 @@ RGClassDefinitionTest >> testAsClassDefinition3 [
 
 { #category : #'*Ring-Tests-Monticello' }
 RGClassDefinitionTest >> testAsFullClassDefinition [
-	"self debug: #testAsFullClassDefinition"
 	
 	| rgClass |
 	rgClass := Class asRingDefinition.

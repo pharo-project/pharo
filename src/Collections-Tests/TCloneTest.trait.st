@@ -28,7 +28,7 @@ TCloneTest >> test0FixtureCloneTest [
 
 { #category : #'tests - copy - clone' }
 TCloneTest >> testCopyCreatesNewObject [
-	"self debug: #testCopyCreatesNewObject"
+	 
 	
 	| copy | 
 	copy := self nonEmpty copy.
@@ -38,7 +38,6 @@ TCloneTest >> testCopyCreatesNewObject [
 
 { #category : #'tests - copy - clone' }
 TCloneTest >> testCopyEmpty [
-	"self debug: #testCopyEmpty"
 	
 	| copy | 
 	copy := self empty copy.
@@ -47,7 +46,6 @@ TCloneTest >> testCopyEmpty [
 
 { #category : #'tests - copy - clone' }
 TCloneTest >> testCopyNonEmpty [
-	"self debug: #testCopyNonEmpty"
 	
 	| copy | 
 	copy := self nonEmpty copy.

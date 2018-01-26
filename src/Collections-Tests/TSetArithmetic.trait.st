@@ -64,7 +64,6 @@ TSetArithmetic >> test0FixtureSetAritmeticTest [
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testDifference [
 	"Answer the set theoretic difference of two collections."
-	"self debug: #testDifference"
 	
 	| difference |
 	self assert: (self collectionWithoutEqualElements difference: self collectionWithoutEqualElements) isEmpty.
@@ -79,7 +78,6 @@ TSetArithmetic >> testDifference [
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testDifferenceWithNonNullIntersection [
 	"Answer the set theoretic difference of two collections."
-	"self debug: #testDifferenceWithNonNullIntersection"
 	"	#(1 2 3) difference: #(2 4) 
 	->  #(1 3)"
 	| res overlapping |
@@ -94,9 +92,8 @@ TSetArithmetic >> testDifferenceWithNonNullIntersection [
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testDifferenceWithSeparateCollection [
 	"Answer the set theoretic difference of two collections."
-	"self debug: #testDifferenceWithSeparateCollection"
-	| res separateCol |
-	
+
+	| res separateCol |	
 	separateCol := self collectionClass with: self anotherElementOrAssociationNotIn.
 	res := self collectionWithoutEqualElements difference: separateCol.
 	
@@ -113,7 +110,6 @@ TSetArithmetic >> testDifferenceWithSeparateCollection [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionBasic [
-	"self debug: #testIntersectionBasic"
 	| inter |
 	inter := self collection intersection: (self collectionClass with: self anotherElementOrAssociationIn).
 	self deny: inter isEmpty.
@@ -122,7 +118,6 @@ TSetArithmetic >> testIntersectionBasic [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionEmpty [
-	"self debug: #testIntersectionEmpty"
 	
 	| inter |
 	inter := self empty intersection: self empty.
@@ -134,7 +129,6 @@ TSetArithmetic >> testIntersectionEmpty [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionItself [
-	"self debug: #testIntersectionItself"
 	
 	| result |
 	result :=  (self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements).
@@ -146,7 +140,7 @@ TSetArithmetic >> testIntersectionItself [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testIntersectionTwoSimilarElementsInIntersection [
-	"self debug: #testIntersectionBasic"
+
 	| inter |
 	inter := self collection intersection: (self collectionClass with: self anotherElementOrAssociationIn).
 	self assert: (self collection occurrencesOf: self anotherElementOrAssociationIn) = self numberOfSimilarElementsInIntersection.
@@ -155,7 +149,6 @@ TSetArithmetic >> testIntersectionTwoSimilarElementsInIntersection [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testUnion [
-	"self debug: #testUnionOfEmpties"
 	
 	| union |
 	union := self empty union: self nonEmpty.
@@ -168,7 +161,6 @@ TSetArithmetic >> testUnion [
 
 { #category : #'tests - set arithmetic' }
 TSetArithmetic >> testUnionOfEmpties [
-	"self debug: #testUnionOfEmpties"
 	
 	self assert:  (self empty union: self empty) isEmpty.
 	

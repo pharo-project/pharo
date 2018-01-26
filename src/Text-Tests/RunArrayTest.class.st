@@ -18,7 +18,7 @@ RunArrayTest >> testANewRunArrayIsEmpty [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testAt [
-	"self debug: #testAt"
+	
 	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: (array at: 3) = 2.
@@ -30,7 +30,7 @@ RunArrayTest >> testAt [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testAtPut [
-	"self debug: #testAtPut"
+	
 	| array |
 	array := RunArray new: 5 withAll: 2.
 	
@@ -43,7 +43,7 @@ RunArrayTest >> testAtPut [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testAtPut2 [
-	"self debug: #testAtPut2"
+	
 	| array |
 	array := RunArray new: 5 withAll: 2.
 	
@@ -54,7 +54,7 @@ RunArrayTest >> testAtPut2 [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testFirst [
-	"self debug: #testFirst"
+	
 	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array first = 2.
@@ -76,7 +76,7 @@ RunArrayTest >> testIsSelfEvaluating [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testLast [
-	"self debug: #testLast"
+	
 	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array last = 2.
@@ -87,7 +87,7 @@ RunArrayTest >> testLast [
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNew [
-	"self debug: #testNew"
+	
 	| array |
 	array := RunArray new.
 	self assert: array size = 0.
@@ -95,7 +95,7 @@ RunArrayTest >> testNew [
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNewFrom [
-	"self debug: #testNewFrom"
+	
 	| array |
 	array := RunArray newFrom: #($a $b $b $b $b $c $c $a).
 	self assert: array size = 8.
@@ -104,7 +104,7 @@ RunArrayTest >> testNewFrom [
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testNewWithAll [
-	"self debug: #testNewWithAll"
+	
 	| array |
 	array := RunArray new: 5 withAll: 2.
 	self assert: array size = 5.
@@ -121,7 +121,7 @@ RunArrayTest >> testNewWithSize [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testRunLengthAt [
-	"self debug: #testRunLengthAt"
+	
 	| array |
 	array := #($a $b $b $c $c $c $d $d) as: RunArray.
 	self assert: (array runLengthAt: 1) = 1.
@@ -136,7 +136,7 @@ RunArrayTest >> testRunLengthAt [
 
 { #category : #'tests - instance creation' }
 RunArrayTest >> testRunsValues [
-	"self debug: #testRunsValues"
+	
 	| array |
 	array := RunArray runs: #(1 4 2 1) values: #($a $b $c $a).
 	self assert: array size = 8.
@@ -153,7 +153,7 @@ RunArrayTest >> testScanFromANSICompatibility [
 
 { #category : #'tests - accessing' }
 RunArrayTest >> testWithStartStopAndValueDo [
-	"self debug: #testWithStartStopAndValueDo"
+	
 	| array elements startStops |
 	array := #($a $b $b $c $c $c $d $d) as: RunArray.
 	elements := OrderedCollection new.

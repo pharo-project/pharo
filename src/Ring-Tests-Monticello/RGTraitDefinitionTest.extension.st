@@ -2,7 +2,6 @@ Extension { #name : #RGTraitDefinitionTest }
 
 { #category : #'*Ring-Tests-Monticello' }
 RGTraitDefinitionTest >> testAsFullTraitDefinition [
-	"self debug: #testAsFullTraitDefinition"
 	
 	| rgClass |
 	rgClass := TBehavior asRingDefinition.

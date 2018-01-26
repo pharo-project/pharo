@@ -207,7 +207,6 @@ TIterateTest >> testDoSeparatedBy [
 
 { #category : #'tests - iterating' }
 TIterateTest >> testDoWithout [
-	"self debug: #testDoWithout"
 	
 	| res element collection |
 	collection := self collectionWithoutNilElements .	

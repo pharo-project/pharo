@@ -154,8 +154,7 @@ BasicBehaviorClassMetaclassTest >> testObjectAllSubclasses [
 ]
 
 { #category : #tests }
-BasicBehaviorClassMetaclassTest >> testSuperclass [
-	"self debug: #testSuperclass"
+BasicBehaviorClassMetaclassTest >> testSuperclass [	
 
 	| s b |
 	s := OrderedCollection new.

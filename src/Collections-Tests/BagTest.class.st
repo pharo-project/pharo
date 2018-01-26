@@ -337,8 +337,7 @@ BagTest >> test0CopyTest [
 { #category : #'basic tests' }
 BagTest >> testAdd [
 	"self run: #testAdd"
-	"self debug: #testAdd"
-
+	
 	| aBag |
 	aBag := Bag new.
 	aBag add: 'a'.
@@ -354,7 +353,6 @@ BagTest >> testAdd [
 
 { #category : #'basic tests' }
 BagTest >> testAddWithOccurrences [
-	"self debug:#testAddWithOccurrences"
 	
 	| aBag |
  	aBag := Bag new.	
@@ -419,7 +417,6 @@ BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
 { #category : #tests }
 BagTest >> testCreation [
 	"self run: #testCreation" 
-	"self debug: #testCreation"
 		
 	| bag |
 	bag := Bag new.
@@ -431,8 +428,7 @@ BagTest >> testCreation [
 
 { #category : #tests }
 BagTest >> testCumulativeCounts [
-	"self run: #testCumulativeCounts" 
-	"self debug: #testCumulativeCounts"
+	"self run: #testCumulativeCounts" 	
 		
 	| bag cumulativeCounts |
 	bag := Bag new.
@@ -451,8 +447,7 @@ BagTest >> testCumulativeCounts [
 
 { #category : #tests }
 BagTest >> testEqual [
-	"(self run: #testEqual)"
-	"(self debug: #testEqual)"
+	"(self run: #testEqual)"	 
 	| bag1 bag2 |
 	bag1 := Bag new.
 	bag2 := Bag new.
@@ -499,15 +494,14 @@ BagTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 BagTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
 { #category : #'basic tests' }
-BagTest >> testOccurrencesOf [
-	"self debug: #testOccurrencesOf"
+BagTest >> testOccurrencesOf [	
 
 	| aBag |
  	aBag := Bag new.	
@@ -527,8 +521,7 @@ BagTest >> testOccurrencesOf [
 
 { #category : #tests }
 BagTest >> testRemove [
-	"self run: #testRemove"
-	"self debug: #testRemove" 
+	"self run: #testRemove"	 
 	
 	| bag item |
 	item := 'test item'.
@@ -564,7 +557,7 @@ BagTest >> testRemoveAll [
 
 { #category : #'tests - remove' }
 BagTest >> testRemoveElementThatExistsTwice [
-	"self debug: #testRemoveElementThatDoesExistsTwice"
+	 
 	| size |
 	size := self nonEmpty size.
 	self assert: (self nonEmpty includes: self elementTwiceIn).
@@ -574,8 +567,7 @@ BagTest >> testRemoveElementThatExistsTwice [
 
 { #category : #tests }
 BagTest >> testSortedCounts [
-	"self run: #testSortedCounts"
-	"self debug: #testSortedCounts" 
+	"self run: #testSortedCounts"	 
 	
 	| bag sortedCounts|
 	bag := Bag new.
@@ -593,8 +585,7 @@ BagTest >> testSortedCounts [
 
 { #category : #tests }
 BagTest >> testSortedElements [
-	"self run: #testSortedElements" 
-	"self debug: #testSortedElements"
+	"self run: #testSortedElements" 	
 	
 	| bag sortedElements|
 	bag := Bag new.

@@ -106,6 +106,7 @@ SugsSuggestionTest >> setUp [
 
 { #category : #running }
 SugsSuggestionTest >> tearDown [
-	super tearDown.
-	self removeClass: emptyClass .
+	
+	self removeClass: emptyClass.
+	super tearDown
 ]

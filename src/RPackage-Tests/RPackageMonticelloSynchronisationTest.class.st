@@ -20,7 +20,7 @@ RPackageMonticelloSynchronisationTest >> testAddMCPackageCreatesAPackage [
 { #category : #'tests - operations on MCPackages' }
 RPackageMonticelloSynchronisationTest >> testAddMCPackageForCategoryAlreadyExistingDoesNotCreateAPackage [
 	"test that when we create a MCPackage and that a category of this name already exists, no package is created"
-	"self debug: #testAddMCPackageForCategoryAlreadyExistingDoesNotCreateAPackage"
+	
 	"self run: #testAddMCPackageForCategoryAlreadyExistingDoesNotCreateAPackage"	
 	
 	|tmpPackage|

@@ -8,9 +8,7 @@ Class {
 }
 
 { #category : #tests }
-ProcessTerminateBug >> testSchedulerTermination [
-	"self debug: #testSchedulerTermination"
-	
+ProcessTerminateBug >> testSchedulerTermination [	
 	| process sema gotHere sema2 |
 	gotHere := false.
 	sema := Semaphore new.
@@ -33,9 +31,7 @@ horribly screw up"
 ProcessTerminateBug >> testTerminationDuringUnwind [
 	"An illustration of the issue of process termination during unwind.
 	This uses a well-behaved unwind block that we should allow to complete
-	if at all possible."
-	"self debug: #testTerminationDuringUnwind"
-	
+	if at all possible."		
 	| unwindStarted unwindFinished p |
 	unwindStarted := unwindFinished := false.
 	p := [[] ensure:
@@ -51,9 +47,7 @@ ProcessTerminateBug >> testTerminationDuringUnwind [
 ]
 
 { #category : #tests }
-ProcessTerminateBug >> testUnwindFromActiveProcess [
-	"self debug: #testUnwindFromActiveProcess"
-	
+ProcessTerminateBug >> testUnwindFromActiveProcess [		
 	| sema process |
 	sema := Semaphore forMutualExclusion.
 	self assert: (sema isSignaled).
@@ -65,7 +59,6 @@ ProcessTerminateBug >> testUnwindFromActiveProcess [
 
 { #category : #tests }
 ProcessTerminateBug >> testUnwindFromForeignProcess [
-	"self debug:#testUnwindFromForeignProcess"
 
 	| sema process |
 	sema := Semaphore forMutualExclusion.

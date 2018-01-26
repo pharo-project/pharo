@@ -242,8 +242,7 @@ IntegerTest >> testBitShift [
 
 { #category : #'tests - bitLogic' }
 IntegerTest >> testBitString [
-	"self debug: #testBitString"
-	
+		
 	Smalltalk vm wordSize = 4
 		ifTrue: [
 			self assert: 2 bitString equals: '0000000000000000000000000000010'.
@@ -1507,11 +1506,8 @@ IntegerTest >> testRomanPrinting [
 
 { #category : #'tests - rounding' }
 IntegerTest >> testRounding [
-        "
-        self debug: #testRounding
-        "
-
-        self assert: (5 round: 2) equals: 5
+ 
+	self assert: (5 round: 2) equals: 5
 ]
 
 { #category : #'tests - mathematical functions' }

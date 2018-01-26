@@ -40,8 +40,7 @@ GLMFinderMorphicTest >> testDefaultFixedSizePanes [
 
 { #category : #tests }
 GLMFinderMorphicTest >> testEmbeddedBrowserRefreshesRendering [
-	| tabulator finder tabulator1 textMorph1 textMorph2 content1 details1 |
-	"self debug: #testEmbeddedBrowserRefreshesRendering"
+	| tabulator finder tabulator1 textMorph1 textMorph2 content1 details1 |	
 	tabulator := GLMTabulator new.
 	tabulator
 		row: #content;

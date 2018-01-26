@@ -146,8 +146,7 @@ ClassTest >> testDependencies [
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testHasPoolVarNamed [
-	"self debug: #testHasPoolVarNamed"
+ClassTest >> testHasPoolVarNamed [	
 
 	self assert: (Date usesLocalPoolVarNamed: 'DayNames').
 	"a metaclass does not have shared pools since only classes have shared pools"
@@ -216,8 +215,7 @@ ClassTest >> testNewSubclass [
 ]
 
 { #category : #'tests - file in/out' }
-ClassTest >> testOrdersACollectionOfClassesBySuperclass [
-	"self debug: #testOrdersACollectionOfClassesBySuperclass"
+ClassTest >> testOrdersACollectionOfClassesBySuperclass [	
 	| ordered |
 	ordered := (Class superclassOrder:  
 		(OrderedCollection 
@@ -264,8 +262,7 @@ ClassTest >> testReferencedClasses [
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testSharedPoolOfVarNamed [
-	"self debug: #testSharedPoolOfVarNamed"
+ClassTest >> testSharedPoolOfVarNamed [	
 
 	self assert: (Date sharedPoolOfVarNamed: 'DayNames') = ChronologyConstants.
 	"a metaclass does not have shared pools since only classes have shared pools"
@@ -356,8 +353,7 @@ ClassTest >> testSuperclassOrderPreservingOrder [
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testUsesPoolVarNamed [
-	"self debug: #testUsesPoolVarNamed"
+ClassTest >> testUsesPoolVarNamed [	
 
 	self assert: (Date usesPoolVarNamed: 'DayNames').
 	"a metaclass does not have shared pools since only classes have shared pools"

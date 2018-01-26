@@ -15,7 +15,8 @@ PharoTutorialTestGoOnMockTutorial >> setUp [
 
 { #category : #running }
 PharoTutorialTestGoOnMockTutorial >> tearDown [
-	ProfStef default close
+	ProfStef default close.
+	super tearDown
 ]
 
 { #category : #tests }

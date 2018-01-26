@@ -71,15 +71,15 @@ SystemNavigationTest >> systemNavigationToTest [
 
 { #category : #running }
 SystemNavigationTest >> tearDown [
-	super tearDown.
+	
 	self classFactory cleanUp. 
 	SystemAnnouncer announcer: oldSystemAnnouncer.
+	super tearDown.
 	
 ]
 
 { #category : #testing }
 SystemNavigationTest >> testAllClassesUsingSharedPool [
-	"self debug: #testAllClassesUsingSharedPool"
 
 	| res |
 	res := SystemNavigation new allClassesUsingSharedPool: 'ChronologyConstants'.
