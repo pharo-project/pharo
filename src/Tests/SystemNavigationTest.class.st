@@ -71,9 +71,10 @@ SystemNavigationTest >> systemNavigationToTest [
 
 { #category : #running }
 SystemNavigationTest >> tearDown [
-	super tearDown.
+	
 	self classFactory cleanUp. 
 	SystemAnnouncer announcer: oldSystemAnnouncer.
+	super tearDown.
 	
 ]
 

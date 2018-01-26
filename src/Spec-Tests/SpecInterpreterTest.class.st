@@ -27,6 +27,7 @@ SpecInterpreterTest >> tearDown [
 
 	specInterpreterClass := nil.
 	specInterpreter := nil.
+	super tearDown 
 ]
 
 { #category : #tests }
