@@ -15,14 +15,18 @@ Class {
 	#category : #UnifiedFFI
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
 FFICompilerPlugin class >> addAFfiCalloutSelectorEvent: aPragmaAdded [
-	self addFfiCalloutSelector: aPragmaAdded pragma methodSelector.
-	aPragmaAdded pragma method senders do: [ :sender | sender recompile ].
-	
+	self addAFfiCalloutSelectorFromPragma: aPragmaAdded pragma
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #adding }
+FFICompilerPlugin class >> addAFfiCalloutSelectorFromPragma: aPragma [
+	self addFfiCalloutSelector: aPragma methodSelector.
+	self recompileSendersOf: aPragma method
+]
+
+{ #category : #adding }
 FFICompilerPlugin class >> addFfiCalloutSelector: aString [ 
 	FFICalloutSelectors add: aString
 ]
@@ -32,24 +36,40 @@ FFICompilerPlugin class >> defaultFfiCalloutSelectors [
 	^ #(ffiCall: #ffiCall:module: #ffiCall:options: #ffiCall:module:options: nbCall: #nbCall:module: #nbCall:options: #nbCall:module:options:)
 ]
 
-{ #category : #accessing }
+{ #category : #'class initialization' }
 FFICompilerPlugin class >> initialize [
-	FFICalloutSelectors := IdentitySet withAll: self defaultFfiCalloutSelectors.
+	FFICalloutSelectors := IdentitySet
+		withAll: self defaultFfiCalloutSelectors.
 	self initializeFfiCalloutSelectorsListUpdate
 ]
 
-{ #category : #accessing }
+{ #category : #initialization }
 FFICompilerPlugin class >> initializeFfiCalloutSelectorsListUpdate [
 	collector := PragmaCollector filter: [ :pragma | pragma keyword = #ffiCalloutTranslator ].
-	collector reset do: [ :pragma | self halt ].
+	collector reset do: [ :pragma | self addAFfiCalloutSelectorFromPragma: pragma ].
 	collector when: PragmaAdded send: #addAFfiCalloutSelectorEvent: to: self.
-	collector when: PragmaRemoved send: #removeAFfiCalloutSelectorEvent: to: self.
-
+	collector when: PragmaRemoved send: #removeAFfiCalloutSelectorEvent: to: self
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 FFICompilerPlugin class >> priority [
 	^ 2
+]
+
+{ #category : #private }
+FFICompilerPlugin class >> recompileSendersOf: aCompiledMethod [
+	aCompiledMethod senders do: [ :sender | sender recompile ]
+]
+
+{ #category : #removing }
+FFICompilerPlugin class >> removeAFfiCalloutSelectorEvent: aPragmaRemoved [
+	self removeFfiCalloutSelector: aPragmaRemoved pragma methodSelector.
+	self recompileSendersOf: aPragmaRemoved pragma method
+]
+
+{ #category : #removing }
+FFICompilerPlugin class >> removeFfiCalloutSelector: aString [
+	FFICalloutSelectors remove: aString ifAbsent: [  ]
 ]
 
 { #category : #accessing }
