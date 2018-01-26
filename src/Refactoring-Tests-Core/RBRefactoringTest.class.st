@@ -440,9 +440,10 @@ RBRefactoringTest >> shouldWarn: aRefactoring [
 
 { #category : #running }
 RBRefactoringTest >> tearDown [
-	super tearDown.
+
 	RBRefactoringManager instance release.
 	RBRefactoringManager classVarNamed: #Instance put: manager.
+	super tearDown	
 ]
 
 { #category : #tests }
