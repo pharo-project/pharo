@@ -169,7 +169,9 @@ MethodMapTests >> testMethodSourceNodeAtInitialPC [
 
 { #category : #'testing - ast mapping' }
 MethodMapTests >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  22) isKindOf: RBMessageNode).
+	| method |
+	method := Object>>#halt.
+	self assert: ((method sourceNodeForPC: method initialPC + 2) isKindOf: RBMessageNode).
 
 ]
 
@@ -190,7 +192,7 @@ MethodMapTests >> testSimpleSourceMapping [
 
 	method := Object>>('ha', 'lt') asSymbol.
 
-	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: 23.
+	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: method initialPC + 2.
 	highlight := method sourceCode copyFrom:  range first to: range last.
 	self assert: highlight equals: 'now'.
 
@@ -200,14 +202,17 @@ MethodMapTests >> testSimpleSourceMapping [
 
 { #category : #'testing - source mapping' }
 MethodMapTests >> testSourceMappingBlock [
-	| method range highlight pcs |
+	| method range highlight pcs isSista sistaOffset initialPC endPC |
 
 	method := MethodMapExamples>>#exampleTempNamedCopying.
-	
-	"Cannot check for class since those encoders are changing names all the time..."
-	pcs := (method encoderClass name endsWith: 'SistaV1')
-		ifTrue: [ 41 to: 45 ]
-		ifFalse: [ 42 to: 46 ].
+	"Cannot check for class since those encoders are changing names all the time..."	
+	"Please, somebody that understands what this method tests, add a comment..."
+	isSista := method encoderClass name endsWith: 'SistaV1'.
+	sistaOffset := (method encoderClass name endsWith: 'SistaV1')
+		ifTrue: [ 0 ] ifFalse: [ 1 ].
+	initialPC := method initialPC + 8 + sistaOffset.
+	endPC := initialPC + 4.
+	pcs := initialPC to: endPC.
 	
 	range := (DebuggerMethodMapOpal forMethod: (self compileMethod: method)) rangeForPC: pcs first.
 	highlight := method sourceCode copyFrom:  range first to: range last.
