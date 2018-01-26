@@ -20,7 +20,7 @@ Class Instance Variables:
 
 Shared Variables:
 	PatternVariableCharacter	<Character>	the character that starts a pattern node
-"
+" 
 Class {
 	#name : #RBScanner,
 	#superclass : #Object,
