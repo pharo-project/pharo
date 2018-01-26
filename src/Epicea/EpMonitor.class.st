@@ -37,6 +37,13 @@ EpMonitor class >> current: aMonitor [
 	current := aMonitor
 ]
 
+{ #category : #testing }
+EpMonitor class >> hasCurrent [
+	"Answer if there is an instance of this class that is #current (without creating the instance if it does one not already exist)."
+
+	^ current isNotNil
+]
+
 { #category : #accessing }
 EpMonitor class >> logsDirectory [
 	self flag: #todo.	"The base locator could have a wrong fileSystem"
@@ -64,9 +71,9 @@ EpMonitor class >> reset [
 	self reset
 	"
 
-	current
-		ifNotNil: [ self current disable.
-			self current: nil ]
+	self hasCurrent ifTrue: [ 
+		self current disable.
+		self current: nil ]
 ]
 
 { #category : #initialization }
