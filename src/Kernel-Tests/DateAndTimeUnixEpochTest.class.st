@@ -25,7 +25,7 @@ DateAndTimeUnixEpochTest >> setUp [
 { #category : #running }
 DateAndTimeUnixEpochTest >> tearDown [
      DateAndTime localTimeZone: localTimeZoneToRestore.
-     "wish I could remove the time zones I added earlier, but there is no method for that"
+     super tearDown
 
 ]
 
