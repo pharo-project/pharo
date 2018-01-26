@@ -212,7 +212,7 @@ CompilationContext >> getClass [
 { #category : #initialization }
 CompilationContext >> initialize [
 	options := Set new.
-	astTransformPlugins := OrderedCollection withAll: DefaultTransformationPlugins
+	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins
 ]
 
 { #category : #accessing }
