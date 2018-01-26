@@ -26,7 +26,7 @@ FFICompilerPluginTests >> ffiLibraryName [
 	^ LibC
 ]
 
-{ #category : #tests }
+{ #category : #running }
 FFICompilerPluginTests >> setUp [
 	self class recompile
 ]
@@ -34,7 +34,7 @@ FFICompilerPluginTests >> setUp [
 { #category : #tests }
 FFICompilerPluginTests >> testDecompilationOfFFIMethodShouldHaveNamedArgs [
 	| decompiledFFIMethod |
-	decompiledFFIMethod := FBDDecompiler new decompile: FFICompilerPluginTests >> #ffiCopyString:to:.
+	decompiledFFIMethod := (FFICompilerPluginTests >> #ffiCopyString:to:) decompile.
 	self assert: decompiledFFIMethod argumentNames equals: #(#aString #dest)
 ]
 
