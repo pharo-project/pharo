@@ -370,6 +370,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Zinc-Tests'.
 		spec package: 'TravisIntegrationHelp'.
 		spec package: 'System-Identification-Tests'.
+		spec package: 'CompressedSegmentsStream-Tests'.
 
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
@@ -488,7 +489,8 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Resource-Meta-FileSystem'	
 	'Zinc-Resource-Meta-Tests'
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
-	'System-Identification-Tests'		
+	'System-Identification-Tests'	
+	'CompressedSegmentsStream-Tests'	
 	'System-DependenciesTests'
 ).	
 

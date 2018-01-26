@@ -133,11 +133,22 @@ PharoFilesOpener >> openSources [
 PharoFilesOpener >> openSources: fullSourcesName forImage: imagePath [
 	"Look in various places for a sources file, return an open stream to it."
 
-	| sourcesFile sourcesName |
+	| sourcesFile sourcesName memoryFileReference |
 	sourcesFile := fullSourcesName asFileReference.
 	sourcesName := sourcesFile basename.
 	
-	"look for the sources file or an alias to it in the VM's directory"
+	SourceFileArray sourcesFS
+		ifNotNil: [ 
+			memoryFileReference := (SourceFileArray sourcesFS root / sourcesFile base,'stc').
+			memoryFileReference exists 
+				ifTrue: [ self class environment at: #CompressedSegmentsStream ifPresent: [ :segmentsStream |
+					|  readStream |
+					readStream := (SourceFileArray sourcesFS store root fileEntryAt: memoryFileReference basename) bytes readStream.
+					^ SourcesReadStream 
+						on: (segmentsStream on: readStream)
+						encoding: #UTF8 ] ] ].
+
+		"look for the sources file or an alias to it in the VM's directory"
 	OSPlatform current potentialLocationsOfSourcesFile do: [ :dir |
 		self ignoreIfFail: [ 
 			(sourcesFile := dir / sourcesName) exists

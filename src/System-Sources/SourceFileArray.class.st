@@ -7,6 +7,7 @@ This implementation extends the source pointer address space using bit 25 of the
 
 The use of bit 25 of the source pointer for file references permits backward compatibility with StandardSourceFileArray, with essentially unlimited address space expansion for the sources and changes files.
 
+The class side instance varialbe 'sourcesFS' is an optional memory filesystem for storing sources files directly in the object memory.
 "
 Class {
 	#name : #SourceFileArray,
@@ -16,6 +17,12 @@ Class {
 		'readOnlyQueue',
 		'flushChanges'
 	],
+	#classVars : [
+		'SourcesFS'
+	],
+	#classInstVars : [
+		'sourcesFS'
+	],
 	#category : #'System-Sources'
 }
 
@@ -23,6 +30,15 @@ Class {
 SourceFileArray class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name.
+]
+
+{ #category : #accessing }
+SourceFileArray class >> sourcesFS [
+
+	^ sourcesFS ifNil: [ 
+		self class environment at: #MemoryStore
+			ifPresent: [ sourcesFS := FileSystem memory ]
+			ifAbsent: [ nil ] ].
 ]
 
 { #category : #'class initialization' }
