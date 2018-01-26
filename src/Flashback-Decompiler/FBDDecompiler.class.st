@@ -32,7 +32,8 @@ Class {
 		'argCount',
 		'tempCount',
 		'jumpSize',
-		'loopsArray'
+		'loopsArray',
+		'method'
 	],
 	#category : #'Flashback-Decompiler'
 }
@@ -56,12 +57,15 @@ FBDDecompiler >> canDecompile: aCompiledMethod [
 
 { #category : #initialize }
 FBDDecompiler >> createNArgs: numArgs [
-	| compiledMethodProperties |
+	
+	| argName |
 	^ (1 to: numArgs)
 		collect: [ :i | 
 			self incrArgCount.
-			compiledMethodProperties := builder compiledMethod properties.
-			builder codeArgument: (compiledMethodProperties decompiledArgumentNameAt: argCount) ]
+			argName := (method propertyAt: #argumentNames)
+				ifNil: [ 'arg' , argCount printString ]
+				ifNotNil: [ :args | args at: argCount ].
+			builder codeArgument: argName ]
 ]
 
 { #category : #initialize }
@@ -137,7 +141,6 @@ FBDDecompiler >> decompile: aSelector in: aClass method: aCompiledMethod [
 	builder := FBDASTBuilder newFor: aClass.
 	(self canDecompile: aCompiledMethod)
 		ifFalse: [ ^ self generateNativeBoostCallErrorMethodFrom: aCompiledMethod ].
-	builder compiledMethod: aCompiledMethod.
 	self initializeForMethod: aCompiledMethod.
 	self interpretMethod: aCompiledMethod.
 	^ FBDOptimizedMessagesRewriter new
@@ -252,20 +255,21 @@ FBDDecompiler >> initializeErrorCode: cm [
 
 { #category : #initialize }
 FBDDecompiler >> initializeForMethod: aCompiledMethod [
-	loopsArray := FBDLoopScanner scan: aCompiledMethod .
-	instructionStream := InstructionStream on: aCompiledMethod.
-	self initializeStackForMethod: aCompiledMethod.
+	method := aCompiledMethod.
+	loopsArray := FBDLoopScanner scan: method.
+	instructionStream := InstructionStream on: method.
+	self initializeStack.
 	jumpSize := 0
 ]
 
 { #category : #initialize }
-FBDDecompiler >> initializeStackForMethod: aCompiledMethod [
+FBDDecompiler >> initializeStack [
 	argCount := 0.
 	tempCount := 0.
 	self
-		initializeStackNumArgs: aCompiledMethod numArgs
+		initializeStackNumArgs: method numArgs
 		copied: #()
-		numTemps: aCompiledMethod numTemps - aCompiledMethod numArgs
+		numTemps: method numTemps - method numArgs
 ]
 
 { #category : #initialize }

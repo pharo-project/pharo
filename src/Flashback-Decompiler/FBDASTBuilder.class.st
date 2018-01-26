@@ -7,8 +7,7 @@ Class {
 	#name : #FBDASTBuilder,
 	#superclass : #Object,
 	#instVars : [
-		'methodClass',
-		'compiledMethod'
+		'methodClass'
 	],
 	#category : #'Flashback-Decompiler'
 }
@@ -170,16 +169,6 @@ FBDASTBuilder >> codeThisContext [
 { #category : #building }
 FBDASTBuilder >> codeVariable: variable [
 	^ RBVariableNode named: variable
-]
-
-{ #category : #accessing }
-FBDASTBuilder >> compiledMethod [
-	^ compiledMethod
-]
-
-{ #category : #accessing }
-FBDASTBuilder >> compiledMethod: aCompiledMethod [
-	compiledMethod := aCompiledMethod
 ]
 
 { #category : #accessing }

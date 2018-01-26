@@ -87,8 +87,8 @@ FFICalloutMethodBuilder >> generate [
 FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 	"Builds a method call"
 	builder
-		numArgs: self method ffiArgumentNames size;
-		addTemps: (self method ffiArgumentNames copyWith: #result).
+		numArgs: self method argumentNames size;
+		addTemps: (self method argumentNames copyWith: #result).
 	"save ffi call as literal"
 	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"

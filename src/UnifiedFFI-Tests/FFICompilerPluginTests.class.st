@@ -58,6 +58,6 @@ FFICompilerPluginTests >> testMethodCall [
 FFICompilerPluginTests >> testThatFFIAdditionalStateIsFilledCorrectlyWith2Parameters [
 	| ffiCallMethod |
 	ffiCallMethod := self class >> #ffiCopyString:to:.
-	self assert: ffiCallMethod properties class equals: FFIAdditionalFFIMethodState.
-	self assert: ffiCallMethod properties argsNames equals: #(#aString #dest)
+	self assert: ffiCallMethod properties notNil.
+	self assert: (ffiCallMethod propertyAt: #argumentNames) equals: #(#aString #dest)
 ]
