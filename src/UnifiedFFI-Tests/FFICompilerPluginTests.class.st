@@ -13,17 +13,22 @@ FFICompilerPluginTests class >> compiler [
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiCopyString: aString to: dest [
-	^ self ffiCall: #(String strcpy ( String dest, String aString  ) )
+	^ self ffiCall: #(String strcpy #(String dest , String aString))
 ]
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiCopyStringWithError: aString to: destError [
-	^ self ffiCall: #(String strcpy #(String dest , String aString))
+	^ self ffiCall: #(String strcpy #(String dest , String aString)) 
 ]
 
 { #category : #tests }
 FFICompilerPluginTests >> ffiLibraryName [
 	^ LibC
+]
+
+{ #category : #tests }
+FFICompilerPluginTests >> setUp [
+	self class recompile
 ]
 
 { #category : #tests }
