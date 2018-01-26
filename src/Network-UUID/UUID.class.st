@@ -79,7 +79,7 @@ UUID class >> new: aSize [
 
 	self assert: aSize = 16.
 	
-	super new: aSize
+	^ super new: aSize
 ]
 
 { #category : #'instance creation' }
