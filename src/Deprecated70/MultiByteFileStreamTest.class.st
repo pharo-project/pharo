@@ -34,6 +34,7 @@ MultiByteFileStreamTest >> lineEndTestFile [
 MultiByteFileStreamTest >> tearDown [
 	'foobug6933' asFileReference ensureDelete.
 	self lineEndTestFile asFileReference ensureDelete.
+	super tearDown 
 ]
 
 { #category : #testing }
