@@ -39,7 +39,7 @@ EpMonitor class >> current: aMonitor [
 
 { #category : #testing }
 EpMonitor class >> hasCurrent [
-	"Answer if there is an instance of this class that is #current (without creating the instance if it does one not already exist)."
+	"Answer if there is an instance of this class that is #current (without creating the instance if one not already exists)."
 
 	^ current isNotNil
 ]
