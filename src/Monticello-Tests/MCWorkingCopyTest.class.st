@@ -105,6 +105,7 @@ MCWorkingCopyTest >> tearDown [
 	self restoreMocks.
 	self clearPackageCache.
 	Author fullName: savedName.
+	super tearDown
 ]
 
 { #category : #tests }
