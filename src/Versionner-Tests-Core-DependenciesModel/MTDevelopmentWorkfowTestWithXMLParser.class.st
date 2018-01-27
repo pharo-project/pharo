@@ -30,6 +30,7 @@ MTDevelopmentWorkfowTestWithXMLParser >> setUp [
 { #category : #running }
 MTDevelopmentWorkfowTestWithXMLParser >> tearDown [ 
 	classFactory cleanUp.
+	super tearDown
 ]
 
 { #category : #tests }
