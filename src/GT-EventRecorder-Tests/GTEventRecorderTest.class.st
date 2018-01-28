@@ -72,10 +72,11 @@ GTEventRecorderTest >> setUpServer [
 
 { #category : #running }
 GTEventRecorderTest >> tearDown [
-	super tearDown.
+	
 	recorder deactivateDelivery.
 	server stop.
 	server unsubscribeAll.
+	super tearDown
 ]
 
 { #category : #tests }
