@@ -68,7 +68,8 @@ MCFileInTest >> setUp [
 MCFileInTest >> tearDown [
 	(diff isNil or: [diff isEmpty not])
 		 ifTrue: [expected updatePackage: self mockPackage].
-	MCDataStream initialize
+	MCDataStream initialize.
+	super tearDown
 ]
 
 { #category : #testing }
