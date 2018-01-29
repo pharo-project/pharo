@@ -85,12 +85,15 @@ FFICalloutMethodBuilder >> generate [
 
 { #category : #private }
 FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
+	"Copy the properties of the old method"
+	builder properties: sender methodProperties copy.
 	"Builds a method call"
 	builder
 		numArgs: self method argumentNames size;
 		addTemps: (self method argumentNames copyWith: #result).
 	"save ffi call as literal"
-	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
+	builder
+		pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"
 	functionSpec arguments
 		do: [ :each | each emitArgument: builder context: sender ].

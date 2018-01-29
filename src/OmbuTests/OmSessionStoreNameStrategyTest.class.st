@@ -41,7 +41,7 @@ OmSessionStoreNameStrategyTest >> fileReferenceWith: aName [
 
 { #category : #running }
 OmSessionStoreNameStrategyTest >> setUp [
-
+	super setUp.
 	strategy := self strategyClass new
 ]
 
@@ -54,8 +54,8 @@ OmSessionStoreNameStrategyTest >> strategyClass [
 
 { #category : #running }
 OmSessionStoreNameStrategyTest >> tearDown [
-
-	self directory ensureDeleteAll 
+	self directory ensureDeleteAll.
+	super tearDown
 ]
 
 { #category : #tests }
