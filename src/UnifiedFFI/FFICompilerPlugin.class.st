@@ -66,7 +66,7 @@ FFICompilerPlugin class >> priority [
 
 { #category : #installation }
 FFICompilerPlugin class >> recompileSenders [
-	collector do: [ :pragma | self recompileSendersOf: pragma method ]
+	collector reset do: [ :pragma | self recompileSendersOf: pragma method ]
 ]
 
 { #category : #private }
