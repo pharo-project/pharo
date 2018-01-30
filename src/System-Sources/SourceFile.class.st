@@ -1,3 +1,6 @@
+"
+asdasd
+"
 Class {
 	#name : #SourceFile,
 	#superclass : #Object,
@@ -191,4 +194,10 @@ SourceFile >> tryOpenReadOnly: readOnly [
 					on: each readStream binary
 					encoding: 'utf8'.
 			^ self ] on: Error do: [  ] ]
+]
+
+{ #category : #accessing }
+SourceFile >> upToEnd [
+	
+	^ stream upToEnd
 ]

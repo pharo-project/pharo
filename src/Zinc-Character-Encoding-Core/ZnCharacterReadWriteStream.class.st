@@ -20,6 +20,12 @@ ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 ]
 
 { #category : #accessing }
+ZnCharacterReadWriteStream >> atEnd [
+	
+	^ readStream atEnd
+]
+
+{ #category : #accessing }
 ZnCharacterReadWriteStream >> close [
 	
 	writeStream close
@@ -49,6 +55,12 @@ ZnCharacterReadWriteStream >> isReadOnly [
 ]
 
 { #category : #accessing }
+ZnCharacterReadWriteStream >> next [
+	
+	^ readStream next
+]
+
+{ #category : #accessing }
 ZnCharacterReadWriteStream >> next: anInteger [ 
 	
 	^ readStream next: anInteger
@@ -75,9 +87,21 @@ ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
 ]
 
 { #category : #accessing }
+ZnCharacterReadWriteStream >> peek [
+	
+	^ readStream peek
+]
+
+{ #category : #accessing }
 ZnCharacterReadWriteStream >> position [
 
 	^ readStream position
+]
+
+{ #category : #accessing }
+ZnCharacterReadWriteStream >> position: anInteger [ 
+	
+	readStream position: anInteger
 ]
 
 { #category : #accessing }
@@ -96,4 +120,10 @@ ZnCharacterReadWriteStream >> setToEnd [
 ZnCharacterReadWriteStream >> size [
 
 	^ readStream size
+]
+
+{ #category : #accessing }
+ZnCharacterReadWriteStream >> upToEnd [
+	
+	^ readStream upToEnd
 ]
