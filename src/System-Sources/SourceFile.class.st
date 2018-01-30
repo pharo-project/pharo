@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'path',
-		'stream'
+		'stream',
+		'potentialLocations'
 	],
 	#category : #'System-Sources'
 }
@@ -13,6 +14,18 @@ SourceFile class >> on: aPath [
 
 	^ self new
 		path: aPath;
+		potentialLocations: { 
+			FileLocator imageDirectory.
+			FileLocator workingDirectory }
+		yourself
+]
+
+{ #category : #'instance creation' }
+SourceFile class >> on: aPath potentialLocations: locations [
+
+	^ self new
+		path: aPath;
+		potentialLocations: locations;
 		yourself
 ]
 
@@ -111,6 +124,18 @@ SourceFile >> position: anInteger [
 ]
 
 { #category : #'as yet unclassified' }
+SourceFile >> potentialLocations [
+
+	^ potentialLocations
+]
+
+{ #category : #'as yet unclassified' }
+SourceFile >> potentialLocations: aCollection [
+
+	potentialLocations := aCollection
+]
+
+{ #category : #'as yet unclassified' }
 SourceFile >> printOn: aStream [
 
 	aStream
@@ -160,21 +185,19 @@ SourceFile >> tryOpen [
 
 { #category : #'as yet unclassified' }
 SourceFile >> tryOpenReadOnly: readOnly [
-	| originalPath relativeToImage relativeToWorkingDirectory locations |
-	originalPath := path asFileReference.
-	relativeToImage := FileLocator imageDirectory / originalPath basename.
-	relativeToWorkingDirectory := FileLocator workingDirectory / originalPath basename.
-	locations := Array with: relativeToImage with: relativeToWorkingDirectory.
+	|  basename fileCandidates |
+	basename := path asFileReference basename.
+	fileCandidates := potentialLocations collect: [ :each | each / basename ].
 
 	readOnly ifFalse: [
-		locations
+		fileCandidates
 			do: [ :each | 
 				[ stream := ZnCharacterReadWriteStream
 					on: each writeStream binary
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
-	locations do: [ :each | 
+	fileCandidates do: [ :each | 
 			[ stream := ZnCharacterReadStream
 					on: each readStream binary
 					encoding: 'utf8'.
