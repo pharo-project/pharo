@@ -82,12 +82,13 @@ FileReference >> asFileReference [
 	^ self
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 FileReference >> binaryReadStream [
+	
 	^ filesystem binaryReadStreamOn: self path
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : #streams }
 FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 

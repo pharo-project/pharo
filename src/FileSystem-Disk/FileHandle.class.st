@@ -78,12 +78,12 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 
 { #category : #'streams-compatibility' }
 FileHandle >> binaryReadStream [
-	^ (FileStream onHandle: self)
-		ifNil: [ self streamError ]
-		ifNotNil: [ :stream | 
-			stream
-				binary;
-				yourself ]
+	^ (File named: reference fullName) readStream
+]
+
+{ #category : #'streams-compatibility' }
+FileHandle >> binaryWriteStream [
+	^ (File named: reference fullName) writeStream
 ]
 
 { #category : #'streams-compatibility' }
@@ -134,9 +134,16 @@ FileHandle >> open [
 
 { #category : #public }
 FileHandle >> readStream [
-	^ (FileStream onHandle: self)
-		ifNil: [ self streamError ]
+
+	^ self readStreamEncoded: 'utf8'
+]
+
+{ #category : #public }
+FileHandle >> readStreamEncoded: anEncoding [
 	
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
 ]
 
 { #category : #finalization }
@@ -191,6 +198,14 @@ FileHandle >> truncateTo: anInteger [
 
 { #category : #public }
 FileHandle >> writeStream [
-	^( FileStream onHandle: self)
-		 ifNil: [ self streamError ]
+	
+	^ self writeStreamEncoded: 'utf8'
+]
+
+{ #category : #public }
+FileHandle >> writeStreamEncoded: anEncoding [
+
+	^ ZnCharacterWriteStream
+		on: self binaryWriteStream
+		encoding: anEncoding
 ]
