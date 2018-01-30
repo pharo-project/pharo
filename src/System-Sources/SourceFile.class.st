@@ -159,24 +159,22 @@ SourceFile >> tryOpen [
 ]
 
 { #category : #'as yet unclassified' }
-SourceFile >> tryOpenReadOnly: arg1 [
-	| tmp1 tmp2 tmp3 |
-	tmp1 := path asFileReference.
-	tmp2 := FileLocator imageDirectory / tmp1 basename.
-	tmp3 := Array with: tmp2 with: tmp1.
-	arg1
-		ifFalse: [ tmp3
-				do: [ :arg2 | 
-					[ stream := ZnCharacterReadWriteStream
-						on: arg2 writeStream binary
-						encoding: 'utf8'.
-					^ self ]
-						on: Error
-						do: [  ] ] ].
-	tmp3
-		do: [ :arg3 | 
+SourceFile >> tryOpenReadOnly: readOnly [
+	| originalPath relativeToImage relativeToWorkingDirectory locations |
+	originalPath := path asFileReference.
+	relativeToImage := FileLocator imageDirectory / originalPath basename.
+	relativeToWorkingDirectory := FileLocator workingDirectory / originalPath basename.
+	locations := Array with: relativeToImage with: relativeToWorkingDirectory.
+
+	readOnly ifFalse: [
+		locations
+			do: [ :arg2 | 
+				[ stream := ZnCharacterReadWriteStream
+					on: arg2 writeStream binary
+					encoding: 'utf8'.
+				^ self ] on: Error do: [  ] ] ].
+
+	locations do: [ :arg3 | 
 			[ stream := arg3 readStream.
-			^ self ]
-				on: Error
-				do: [  ] ]
+			^ self ] on: Error do: [  ] ]
 ]
