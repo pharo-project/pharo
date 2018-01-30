@@ -380,7 +380,9 @@ FileSystemStore >> signalDirectoryExists: aPath [
 
 { #category : #'error signalling' }
 FileSystemStore >> signalFileDoesNotExist: aPath [
-	^ FileDoesNotExist signalWith: aPath
+	^ FileDoesNotExistException
+		signalWithFile: (File named: aPath asString)
+		writeMode: false
 ]
 
 { #category : #'error signalling' }

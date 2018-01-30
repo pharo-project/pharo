@@ -128,7 +128,7 @@ File class >> unregister: anObject [
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
 	^ self class
-		retryWithGC: [ self primOpen: name writable: writeMode ]
+		retryWithGC: [ self primOpen: name utf8Encoded writable: writeMode ]
 		until:[ :id | id notNil ] 
 		forFileNamed: name
 ]

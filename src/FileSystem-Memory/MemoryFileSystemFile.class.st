@@ -60,6 +60,11 @@ MemoryFileSystemFile >> binaryReadStream [
 	^ ReadStream on: self bytes from: 1 to: size
 ]
 
+{ #category : #streams }
+MemoryFileSystemFile >> binaryWriteStream [
+	^ WriteStream on: self bytes from: 1 to: size
+]
+
 { #category : #accessing }
 MemoryFileSystemFile >> bytes [
 	^ bytes

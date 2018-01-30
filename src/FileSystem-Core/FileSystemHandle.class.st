@@ -60,6 +60,12 @@ FileSystemHandle >> basicOpen [
 		writable: writable
 ]
 
+{ #category : #streams }
+FileSystemHandle >> binaryWriteStream [
+	
+	self subclassResponsibility 
+]
+
 { #category : #public }
 FileSystemHandle >> close [
 	self subclassResponsibility
