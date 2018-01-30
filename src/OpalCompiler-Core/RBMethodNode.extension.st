@@ -36,6 +36,11 @@ RBMethodNode >> doSemanticAnalysisInContext: aCompilationContext [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> ensureCachedArgumentNames [
+	^self methodPropertyAt: #argumentNames put: self argumentNames
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [	
 	| message |
 	message := RBMessageNode 
@@ -107,6 +112,39 @@ RBMethodNode >> methodOrBlockNode [
 ]
 
 { #category : #'*OpalCompiler-Core' }
+RBMethodNode >> methodProperties [
+	^self propertyAt: #methodProperties ifAbsent: nil
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> methodPropertyAt: aKey [
+	
+	^self methodPropertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> methodPropertyAt: aKey ifAbsent: absentBlock [
+	| existingProperties |
+	existingProperties := self propertyAt: #methodProperties ifAbsent: absentBlock.
+	
+	^existingProperties propertyAt: aKey ifAbsent: absentBlock
+]
+
+{ #category : #'*OpalCompiler-Core' }
+RBMethodNode >> methodPropertyAt: aKey put: anObject [
+	| existingProperties newProperties |
+	existingProperties := self propertyAt: #methodProperties ifAbsentPut: [ 
+		AdditionalMethodState forSelector: self selector].
+	
+	existingProperties at: aKey ifPresent: [:existingValue |
+		existingProperties at: aKey put: anObject.
+		^self].
+	
+	newProperties := existingProperties copyWith: aKey -> anObject.
+	self propertyAt: #methodProperties put: newProperties
+]
+
+{ #category : #'*OpalCompiler-Core' }
 RBMethodNode >> notShadowedTemporaryNamesFrom: aContext [
 	| ownVariableNames |
 	ownVariableNames := self allDefinedVariables collect: [ :var | var asString ].
@@ -126,16 +164,6 @@ RBMethodNode >> primitiveFromPragma [
 		detect: [ :each | each isPrimitive ]
 		ifFound: [ :aPragmaPrimitive | aPragmaPrimitive asPrimitive ]
 		ifNone: [ IRPrimitive null ]
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> properties [
-	^self propertyAt: #methodProperties ifAbsent: nil
-]
-
-{ #category : #'*OpalCompiler-Core' }
-RBMethodNode >> properties: aMethodeProperties [ 
-	^self propertyAt: #methodProperties put: aMethodeProperties
 ]
 
 { #category : #'*OpalCompiler-Core' }

@@ -195,7 +195,7 @@ FFICallout >> loaderForArgNamed: argName [
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.
 			loader 
-				ifNil: [ Error signal: 'Could not find accessor for variable named "' , argName , '"' ] ] ].
+				ifNil: [ FFIVariableNameNotFound signalFor: argName ] ] ].
 	^ loader
 ]
 
@@ -384,7 +384,7 @@ FFICallout >> sender: aSenderContext [
 	| nArgs |
 	self requestor: aSenderContext method methodClass.
 	nArgs := aSenderContext method numArgs.
-	methodArgs := aSenderContext method ffiArgumentNames.
+	methodArgs := aSenderContext method argumentNames.
 	self receiver: aSenderContext receiver.
 	self assert: (methodArgs size = nArgs).
 

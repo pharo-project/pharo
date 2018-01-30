@@ -23,6 +23,13 @@ AdditionalMethodState class >> forMethod: aMethod selector: aSelector [
 ]
 
 { #category : #'instance creation' }
+AdditionalMethodState class >> forSelector: aSelector [
+	^(self new: 0)
+		selector: aSelector;
+		yourself
+]
+
+{ #category : #'instance creation' }
 AdditionalMethodState class >> new [
 	^ self new: 0
 ]

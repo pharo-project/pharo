@@ -28,10 +28,16 @@ Class {
 	],
 	#classVars : [
 		'BytecodeBackend',
+		'DefaultTransformationPlugins',
 		'UsesFullBlockClosure'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
+
+{ #category : #adding }
+CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
+	self defaultTransformationPlugins add: aPlugin
+]
 
 { #category : #accessing }
 CompilationContext class >> bytecodeBackend [
@@ -61,7 +67,17 @@ CompilationContext class >> default [
 	^instance.
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
+CompilationContext class >> defaultTransformationPlugins [
+	^ DefaultTransformationPlugins ifNil: [ DefaultTransformationPlugins := OrderedCollection new ]
+]
+
+{ #category : #accessing }
+CompilationContext class >> defaultTransformationPlugins: anObject [
+	DefaultTransformationPlugins := anObject
+]
+
+{ #category : #'class initialization' }
 CompilationContext class >> initialize [
 	BytecodeBackend := EncoderForV3PlusClosures.
 	UsesFullBlockClosure := false.
@@ -190,7 +206,7 @@ CompilationContext >> getClass [
 { #category : #initialization }
 CompilationContext >> initialize [
 	options := Set new.
-	astTransformPlugins := OrderedCollection new.
+	astTransformPlugins := DefaultTransformationPlugins ifNil: [ OrderedCollection new ]
 ]
 
 { #category : #accessing }

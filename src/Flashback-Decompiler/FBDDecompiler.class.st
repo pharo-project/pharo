@@ -8,7 +8,7 @@ The second step of decompilation is to interpret the byte code to create corresp
 
 Then the AST is returned. The Flashback Decompiler's job stops there, because there are already some frameworks to generate Smalltalk code from an AST.
 
-The returned AST is does not take optimized messages into account. Use FBDOptimizdMessagesRewriter to recover the optimized messages.
+The returned AST does not take optimized messages into account. Use FBDOptimizedMessagesRewriter to recover the optimized messages.
 
 Instance Variables
 	simulatedStack <OrderedCollection> Simulates the bytecode stack, pushing AST nodes instead of concrete values
@@ -32,7 +32,8 @@ Class {
 		'argCount',
 		'tempCount',
 		'jumpSize',
-		'loopsArray'
+		'loopsArray',
+		'method'
 	],
 	#category : #'Flashback-Decompiler'
 }
@@ -56,10 +57,15 @@ FBDDecompiler >> canDecompile: aCompiledMethod [
 
 { #category : #initialize }
 FBDDecompiler >> createNArgs: numArgs [
+	
+	| argName |
 	^ (1 to: numArgs)
 		collect: [ :i | 
 			self incrArgCount.
-			builder codeArgument: 'arg' , argCount printString ]
+			argName := (method propertyAt: #argumentNames)
+				ifNil: [ 'arg' , argCount printString ]
+				ifNotNil: [ :args | args at: argCount ].
+			builder codeArgument: argName ]
 ]
 
 { #category : #initialize }
@@ -249,20 +255,21 @@ FBDDecompiler >> initializeErrorCode: cm [
 
 { #category : #initialize }
 FBDDecompiler >> initializeForMethod: aCompiledMethod [
-	loopsArray := FBDLoopScanner scan: aCompiledMethod .
-	instructionStream := InstructionStream on: aCompiledMethod.
-	self initializeStackForMethod: aCompiledMethod.
+	method := aCompiledMethod.
+	loopsArray := FBDLoopScanner scan: method.
+	instructionStream := InstructionStream on: method.
+	self initializeStack.
 	jumpSize := 0
 ]
 
 { #category : #initialize }
-FBDDecompiler >> initializeStackForMethod: aCompiledMethod [
+FBDDecompiler >> initializeStack [
 	argCount := 0.
 	tempCount := 0.
 	self
-		initializeStackNumArgs: aCompiledMethod numArgs
+		initializeStackNumArgs: method numArgs
 		copied: #()
-		numTemps: aCompiledMethod numTemps - aCompiledMethod numArgs
+		numTemps: method numTemps - method numArgs
 ]
 
 { #category : #initialize }

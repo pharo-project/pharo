@@ -228,7 +228,7 @@ RFASTTranslator >> visitMethodNode: aMethodNode [
 	
 	aMethodNode isPrimitive ifFalse: [self emitMetaLinkBefore: aMethodNode].
 
-	methodBuilder properties: aMethodNode properties.
+	methodBuilder properties: aMethodNode methodProperties.
 	methodBuilder irPrimitive: aMethodNode primitiveFromPragma.
 	aMethodNode pragmas do: [:each | self visitPragmaNode: each].
 	methodBuilder numArgs: aMethodNode arguments size.
