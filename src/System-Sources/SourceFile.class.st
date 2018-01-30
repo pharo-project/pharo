@@ -175,6 +175,12 @@ SourceFile >> space [
 	stream space
 ]
 
+{ #category : #accessing }
+SourceFile >> stream: aStream [
+
+	stream := aStream
+]
+
 { #category : #'as yet unclassified' }
 SourceFile >> tryOpen [
 
@@ -192,13 +198,13 @@ SourceFile >> tryOpenReadOnly: readOnly [
 		fileCandidates
 			do: [ :each | 
 				[ stream := ZnCharacterReadWriteStream
-					on: each writeStream binary
+					on: (File named: each fullName) writeStream
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
 	fileCandidates do: [ :each | 
 			[ stream := ZnCharacterReadStream
-					on: each readStream binary
+					on: (File named: each fullName) readStream
 					encoding: 'utf8'.
 			^ self ] on: Error do: [  ] ]
 ]

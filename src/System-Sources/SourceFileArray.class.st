@@ -218,9 +218,9 @@ SourceFileArray >> closeFileArray: anArray [
 SourceFileArray >> createReadOnlyFiles [
 	| readOnly |
 	readOnly := {
-		self sourcesFileStream readOnlyCopy.
-		self changesFileStream readOnlyCopy }.
-	^ (readOnly anySatisfy: [ :each | each closed ])
+		self sourcesFileStream ifNotNil: [self sourcesFileStream readOnlyCopy].
+		self sourcesFileStream ifNotNil: [self changesFileStream readOnlyCopy] }.
+	^ (readOnly anySatisfy: [ :any | any isNil or: [any closed] ])
 			ifTrue: [ self closeFileArray: readOnly ]
 			ifFalse: [ readOnly ]
 ]
