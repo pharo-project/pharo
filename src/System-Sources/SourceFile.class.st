@@ -168,13 +168,15 @@ SourceFile >> tryOpenReadOnly: readOnly [
 
 	readOnly ifFalse: [
 		locations
-			do: [ :arg2 | 
+			do: [ :each | 
 				[ stream := ZnCharacterReadWriteStream
-					on: arg2 writeStream binary
+					on: each writeStream binary
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
-	locations do: [ :arg3 | 
-			[ stream := arg3 readStream.
+	locations do: [ :each | 
+			[ stream := ZnCharacterReadStream
+					on: each readStream binary
+					encoding: 'utf8'.
 			^ self ] on: Error do: [  ] ]
 ]
