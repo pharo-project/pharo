@@ -282,7 +282,8 @@ OpalCompiler >> evaluate [
 		ifTrue: [ itsSelectionString ]
 		ifFalse: [ source ].
 	self source: selectedSource.
-	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod:  self translate generateWithSource.
+	"for speed, we do not use #generateWithSource here, as it forces a pretty pring"
+	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod:  self translate generate.
 	self compilationContext logged
 		ifTrue: [ Smalltalk globals 
 			at: #SystemAnnouncer 
