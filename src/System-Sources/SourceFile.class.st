@@ -30,12 +30,13 @@ SourceFile >> atEnd [
 { #category : #'as yet unclassified' }
 SourceFile >> close [
 
-	stream close
+	stream close.
+	stream := nil.
 ]
 
 { #category : #accessing }
 SourceFile >> closed [
-	^ stream closed
+	^ stream isNil or: [ stream closed ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,6 +91,11 @@ SourceFile >> nextPut: aCharacter [
 SourceFile >> nextPutAll: aString [
 
 	stream nextPutAll: aString
+]
+
+{ #category : #accessing }
+SourceFile >> path [
+	^ path
 ]
 
 { #category : #accessing }
@@ -177,10 +183,11 @@ SourceFile >> tryOpen [
 
 { #category : #'as yet unclassified' }
 SourceFile >> tryOpenReadOnly: readOnly [
-	|  basename fileCandidates |
+	| basename fileCandidates |
 	basename := path asFileReference basename.
 	fileCandidates := potentialLocations collect: [ :each | each / basename ].
 
+	"Open a read write stream only if read only access was not requested"
 	readOnly ifFalse: [
 		fileCandidates
 			do: [ :each | 

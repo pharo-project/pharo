@@ -189,27 +189,21 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 
 	| changesFile |
 	changesFile := self changesFileStream.
-	changesFile ifNil: [ ^ self ].
 	changesFile closed ifTrue: [ ^ self ].
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
 	
-	^ aBlock value: changesFile
+	[ ^ aBlock value: changesFile] ensure: [ self emptyReadStreamsQueue ]
 ]
 
 { #category : #'public - file system operations' }
 SourceFileArray >> close [
 		
-	| oldFiles oldQueue | 
-	
+	| oldFiles |
 	oldFiles := files.
-	oldQueue := readOnlyQueue.
 	files := Array new: 2.
-	readOnlyQueue := SharedQueue new.
-
 	self closeFileArray: oldFiles.
-
-	oldQueue flushAllSuchThat: [ :each | self closeFileArray: each. true]
+	self emptyReadStreamsQueue
 ]
 
 { #category : #private }
@@ -226,10 +220,9 @@ SourceFileArray >> createReadOnlyFiles [
 	readOnly := {
 		self sourcesFileStream readOnlyCopy.
 		self changesFileStream readOnlyCopy }.
-	^ (readOnly anySatisfy: [ :each | 
-			each isNil or: [ each closed ] ])
-				ifTrue: [ self closeFileArray: readOnly ]
-				ifFalse: [ readOnly ]
+	^ (readOnly anySatisfy: [ :each | each closed ])
+			ifTrue: [ self closeFileArray: readOnly ]
+			ifFalse: [ readOnly ]
 ]
 
 { #category : #'public - string writing' }
@@ -241,7 +234,19 @@ SourceFileArray >> deferFlushDuring: aBlock [
 	
 	flushChanges := false.
 	
-	^ [ aBlock value ] ensure: [ flushChanges := true . self flushChangesFile ]
+	^ [ aBlock value ] ensure: [
+		flushChanges := true.
+		self flushChangesFile.
+		self emptyReadStreamsQueue ]
+]
+
+{ #category : #'public - file system operations' }
+SourceFileArray >> emptyReadStreamsQueue [
+		
+	| oldQueue | 
+	oldQueue := readOnlyQueue.
+	readOnlyQueue := SharedQueue new.
+	oldQueue flushAllSuchThat: [ :each | self closeFileArray: each. true]
 ]
 
 { #category : #'public - file system operations' }
@@ -301,8 +306,8 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
-	
-	self changesFileStream ifNotNil: [:f | f flush ]
+	self changesFileStream flush.
+	self emptyReadStreamsQueue.
 ]
 
 { #category : #'public - file system operations' }
@@ -315,6 +320,7 @@ SourceFileArray >> forceChangesToDisk [
 	changesFile close.
 	changesFile tryOpen.
 	changesFile setToEnd.
+	self emptyReadStreamsQueue
 ]
 
 { #category : #'public - string reading' }
@@ -375,8 +381,8 @@ SourceFileArray >> readOnlyCopy [
 	"Answer a read only copy of self. The caller is responsible of closing it."
 
 	^ self species new
-		sourcesFileStream: (self sourcesFileStream ifNotNil: [:aStream | aStream readOnlyCopy]);
-		changesFileStream: (self changesFileStream ifNotNil: [:aStream | aStream readOnlyCopy]);
+		sourcesFileStream: self sourcesFileStream readOnlyCopy;
+		changesFileStream: self changesFileStream readOnlyCopy;
 		yourself
 ]
 
@@ -559,7 +565,7 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 
 	| file position |
 	file := self changesFileStream.
-	(file isNil or: [ file isReadOnly ]) ifTrue: [ ^ failBlock value ].
+	(file closed or: [ file isReadOnly ]) ifTrue: [ ^ failBlock value ].
 
 	ChangesLog default assureStartupStampLogged.
 	
@@ -569,6 +575,7 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 	(ChunkWriteStream on: file) nextChunkPut: aString.
 
 	self flushChangesFile.
+	self emptyReadStreamsQueue.
 
 	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: position)
 ]

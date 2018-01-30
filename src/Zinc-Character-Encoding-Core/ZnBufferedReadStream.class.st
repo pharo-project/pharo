@@ -47,6 +47,11 @@ ZnBufferedReadStream >> close [
 	stream close
 ]
 
+{ #category : #testing }
+ZnBufferedReadStream >> closed [
+	^ stream closed
+]
+
 { #category : #accessing }
 ZnBufferedReadStream >> collectionSpecies [
 	^ stream isBinary
@@ -67,8 +72,8 @@ ZnBufferedReadStream >> defaultBufferSize [
 
 { #category : #private }
 ZnBufferedReadStream >> discardBuffer [
-
-	limit := 0
+	limit := 0.
+	position := 1
 ]
 
 { #category : #initialization }

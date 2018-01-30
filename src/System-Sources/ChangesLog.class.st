@@ -61,7 +61,7 @@ ChangesLog >> logChange: aStringOrText [
 	"Write the argument, aString, onto the changes file."
 
 	| aString |
-	SourceFiles changesFileStream ifNil: [ ^ self ].
+	SourceFiles changesFileStream closed ifTrue: [ ^ self ].
 	
 	self assureStartupStampLogged.
 
@@ -114,7 +114,7 @@ ChangesLog >> logSnapshot: save andQuit: quit [
 	"Log into the changes file the fact that the session will be either snapshoted, quit, or both."
 
 	| message |	
-	SourceFiles changesFileStream ifNil: [ ^ self ].
+	SourceFiles changesFileStream closed ifTrue: [ ^ self ].
 
 	message := String
 		streamContents: [ :s | 

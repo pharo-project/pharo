@@ -50,6 +50,11 @@ ZnBufferedReadWriteStream >> close [
 	writeStream close.
 ]
 
+{ #category : #'as yet unclassified' }
+ZnBufferedReadWriteStream >> closed [
+	^ readStream closed
+]
+
 { #category : #accessing }
 ZnBufferedReadWriteStream >> flush [
 	
@@ -174,6 +179,11 @@ ZnBufferedReadWriteStream >> setToEnd [
 		writeStream setToEnd ]
 ]
 
+{ #category : #'as yet unclassified' }
+ZnBufferedReadWriteStream >> size [
+	^ readStream size
+]
+
 { #category : #'initialize-release' }
 ZnBufferedReadWriteStream >> sizeBuffer: anInteger [ 
 	
@@ -215,5 +225,6 @@ ZnBufferedReadWriteStream >> writingActionDo: aBlock [
 	 - discard the read buffer (which may contain incorrect data)"
 	lastRead ifTrue: [ 
 		writeStream discardBuffer ].
+	readStream discardBuffer.
 	^ aBlock ensure: [ lastRead := false ]
 ]
