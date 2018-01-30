@@ -87,9 +87,10 @@ FFICalloutMethodBuilder >> generate [
 FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec [
 	| properties |
 	"Copy the properties of the old method"
-	properties := sender methodProperties copy.
-	properties method: nil.
-	builder properties: properties.
+	sender methodProperties
+		ifNotNil: [ properties := sender methodProperties copy.
+			properties method: nil.
+			builder properties: properties ].
 	builder
 		numArgs: self method argumentNames size;
 		addTemps: (self method argumentNames copyWith: #result).
