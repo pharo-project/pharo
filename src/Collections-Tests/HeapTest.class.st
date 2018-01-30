@@ -466,7 +466,7 @@ HeapTest >> setUp [
 	speciesClass := Heap.
 	sameAtEndAndBegining := Heap new add: 1.5 ;  add: 1.5 copy ; yourself.
 	nonEmpty1Element := Heap new add: 5 ; yourself.
-	floatCollection := Heap new add: 2.5e50 ; add: 5.5e50 ; add: 4.2e50 ; yourself.
+	floatCollection := Heap new add: 2.5 ; add: 5.5 ; add:4.2 ; yourself.
 	indexArray := #( 1 3).
 	subCollection := Heap new.
 	duplicateElement := 1.

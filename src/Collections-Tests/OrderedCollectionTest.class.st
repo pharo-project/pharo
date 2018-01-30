@@ -465,8 +465,8 @@ OrderedCollectionTest >> setUp [
 	withCharacters := OrderedCollection new add: $a; add: $x; add: $d; add: $c; add: $m; yourself.
 	emptyButAllocatedWith20 := OrderedCollection new: 20. 
 	collectionWithElement := OrderedCollection new add: self element; yourself.
-	collectionOfFloat := OrderedCollection new add: 4.1e50; add: 7.2e50; add: 2.5e50; yourself.
-	floatCollectionWithSameBeginingEnd := OrderedCollection new add: 4.1e50; add: 7.2e50; add: 4.1e50 copy ; yourself.
+	collectionOfFloat := OrderedCollection new add: 4.1; add: 7.2; add: 2.5; yourself.
+	floatCollectionWithSameBeginingEnd := OrderedCollection new add: 4.1; add: 7.2; add: 4.1 copy ; yourself.
 	duplicateElement := 2.
 	collectionWithDuplicateElement := OrderedCollection new add: duplicateElement ; add: duplicateElement ; add:4 ; yourself.	
 

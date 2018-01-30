@@ -418,13 +418,13 @@ SortedCollectionTest >> setUp [
 	collectResult add: SmallInteger.
 	collectResult add: SmallInteger.
 	nonEmpty1Element := SortedCollection new add:5; yourself.
-	collectionOfFloat := SortedCollection new add: 1.2e50 ; add: 5.6e50 ; add: 4.4e50 ; add: 1.9e50 ; yourself.
-	duplicateFloat := 1.2e50.
-	collectionOfFloatWithDuplicate := SortedCollection new add: duplicateFloat  ; add: 5.6e50 ; add: 4.4e50 ; add: duplicateFloat  ; yourself.
+	collectionOfFloat := SortedCollection new add:1.2 ; add: 5.6 ; add:4.4 ; add: 1.9 ; yourself.
+	duplicateFloat := 1.2.
+	collectionOfFloatWithDuplicate := SortedCollection new add: duplicateFloat  ; add: 5.6 ; add:4.4 ; add: duplicateFloat  ; yourself.
 	accessCollection := SortedCollection new add:1 ; add: 5 ; add:4 ; add: 2 ; add:7 ; yourself.
 	elementNoteIn := 999.
 	oldSubcollection := SortedCollection new add: 2 ; add: 2 ; add: 2 ; yourself.
-	floatCollectionSameEndAndBegining := SortedCollection new add: 1.5e50 ; add: 1.5e50 copy ; yourself.
+	floatCollectionSameEndAndBegining := SortedCollection new add: 1.5 ; add: 1.5 copy ; yourself.
 	withoutEqualElements := SortedCollection new add: 1 ; add: 8 copy ; add: 4;yourself.
 	nonEmpty5Elements := SortedCollection new add: 1 ; add: 8 copy ; add: 4; add: 4; add: 4;yourself.
 ]

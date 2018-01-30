@@ -71,8 +71,10 @@ ChangesLog >> logChange: aStringOrText [
 
 	SourceFiles changesWriteStreamDo: [ :changesFile |
 		changesFile
-			cr; cr;
-			nextChunkPut: aString ].
+			cr; cr.
+			
+		(ChunkWriteStream on: changesFile)
+			nextPut: aString ].
 
 	SourceFiles forceChangesToDisk
 ]

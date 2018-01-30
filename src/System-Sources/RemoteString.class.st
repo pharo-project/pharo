@@ -109,7 +109,7 @@ RemoteString >> string [
 	^ self sourceFileArray 
 		readStreamAtFileIndex: sourceFileNumber 
 		atPosition: filePositionHi 
-		ifPresent: [ :readStream | readStream nextChunk ]
+		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
 		ifAbsent: [ nil ]
 ]
 
@@ -132,6 +132,6 @@ RemoteString >> string: aString onFileNumber: fileNumber toFile: aFileStream [
 	| position |
 	position := aFileStream position.
 	self fileNumber: fileNumber position: position.
-	aFileStream nextChunkPut: aString.
+	(ChunkWriteStream on: aFileStream) nextPut: aString.
 	^ self 
 ]

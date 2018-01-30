@@ -38,6 +38,11 @@ ZnEncodedStream >> close [
 	stream close
 ]
 
+{ #category : #testing }
+ZnEncodedStream >> closed [
+	^ stream closed
+]
+
 { #category : #accessing }
 ZnEncodedStream >> encoder [
 	^ encoder ifNil: [ encoder := self class defaultEncoder ]
@@ -56,6 +61,28 @@ ZnEncodedStream >> encoding: encoding [
 { #category : #'initialize-release' }
 ZnEncodedStream >> on: wrappedStream [
 	stream := wrappedStream
+]
+
+{ #category : #accessing }
+ZnEncodedStream >> position [
+	^ stream position
+]
+
+{ #category : #accessing }
+ZnEncodedStream >> position: aPosition [
+
+	stream position: aPosition
+]
+
+{ #category : #accessing }
+ZnEncodedStream >> setToEnd [
+	stream setToEnd
+]
+
+{ #category : #accessing }
+ZnEncodedStream >> size [
+
+	^ stream size
 ]
 
 { #category : #accessing }

@@ -174,7 +174,7 @@ ArrayTest >> collectionWithCharacters [
 { #category : #requirements }
 ArrayTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
-	^ collectionOfCollectionsOfStrings
+	^ collectionOfCollection
 ]
 
 { #category : #requirements }
@@ -485,9 +485,9 @@ ArrayTest >> setUp [
 	replacementCollection:= {4. 3. 2. 1.}.
 	replacementCollectionSameSize := {5. 4. 3.}.	
 	nonEmpty1Element:={ 5.}.
-	collectionOfCollection:={1.5e50. 5.5e50. 6.5e50.}.
+	collectionOfCollection:={1.5. 5.5. 6.5.}.
 	collectionOfFloatWithEqualElements:={1.5. 5.5. 6.5. 1.5}.
-	floatCollectionWithSameBeginingAnEnd := {1.5e50. 5.5. 1.5e50 copy}.
+	floatCollectionWithSameBeginingAnEnd := {1.5. 5.5. 1.5 copy}.
 	collection5Elements := { 1. 2. 5. 3. 4.}.
 ]
 

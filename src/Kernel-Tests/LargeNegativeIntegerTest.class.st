@@ -21,10 +21,8 @@ LargeNegativeIntegerTest >> testEmptyTemplate [
 { #category : #'tests-printing' }
 LargeNegativeIntegerTest >> testStoreOn [
 	| integer |
-	integer := SmallInteger minVal - 1.
-	
-	"Store on adds a space before a negative number to avoid mistaking it with a - message"
+	integer := -1073741825.
 	self
 		assert: integer class equals: LargeNegativeInteger;
-		assert: (String streamContents: [ :s | integer storeOn: s ]) equals: ' ', integer asString
+		assert: (String streamContents: [ :s | integer storeOn: s ]) equals: ' -1073741825'.
 ]

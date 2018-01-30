@@ -63,7 +63,7 @@ BinaryFileStream >> position [
 	^ self primGetPosition: handle
 ]
 
-{ #category : #positioning }
+{ #category : #position }
 BinaryFileStream >> position: aPosition [
 	
 	self primSetPosition: handle to: aPosition

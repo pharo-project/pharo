@@ -108,6 +108,12 @@ ZnEncodedReadStream >> peekFor: object [
 ]
 
 { #category : #accessing }
+ZnEncodedReadStream >> position: anInteger [
+	super position: anInteger.
+	peeked := nil
+]
+
+{ #category : #accessing }
 ZnEncodedReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available.

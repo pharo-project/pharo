@@ -27,7 +27,7 @@ OCBytecodeGeneratorTest >> testBlockReturnTop [
 		blockReturnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <7D> blockReturn'.
+	self testMethod: cm against: '13 <7D> blockReturn'.
 	
 ]
 
@@ -122,10 +122,11 @@ OCBytecodeGeneratorTest >> testGoTo [
 		goto: #back;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <7C> returnTop
-{4} <A3 FC> jumpTo: {2}'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <76> pushConstant: 1
+15 <7C> returnTop
+16 <A3 FC> jumpTo: 14'
+
 ]
 
 { #category : #'tests - instructions' }
@@ -143,11 +144,11 @@ OCBytecodeGeneratorTest >> testGoToIf [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:   '{1} <10> pushTemp: 0
-{2} <76> pushConstant: 1
-{3} <A8 01> jumpTrue: {6}
-{5} <7C> returnTop
-{6} <7C> returnTop'
+	self testMethod: cm against:   '13 <10> pushTemp: 0
+14 <76> pushConstant: 1
+15 <A8 01> jumpTrue: 18
+17 <7C> returnTop
+18 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -165,11 +166,11 @@ OCBytecodeGeneratorTest >> testIfGoTo [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:   '{1} <10> pushTemp: 0
-{2} <76> pushConstant: 1
-{3} <A8 01> jumpTrue: {6}
-{5} <7C> returnTop
-{6} <7C> returnTop'
+	self testMethod: cm against:   '13 <10> pushTemp: 0
+14 <76> pushConstant: 1
+15 <A8 01> jumpTrue: 18
+17 <7C> returnTop
+18 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -188,11 +189,11 @@ OCBytecodeGeneratorTest >> testIfGoToOtherWise [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <10> pushTemp: 0
-{2} <76> pushConstant: 1
-{3} <A8 01> jumpTrue: {6}
-{5} <7C> returnTop
-{6} <7C> returnTop'
+	self testMethod: cm against:  '13 <10> pushTemp: 0
+14 <76> pushConstant: 1
+15 <A8 01> jumpTrue: 18
+17 <7C> returnTop
+18 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -209,10 +210,10 @@ OCBytecodeGeneratorTest >> testLabel [
 		goto: #back;
 		compiledMethod.
 
-	self testMethod: cm against:   '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <7C> returnTop
-{4} <A3 FC> jumpTo: {2}'
+	self testMethod: cm against:   '13 <76> pushConstant: 1
+14 <76> pushConstant: 1
+15 <7C> returnTop
+16 <A3 FC> jumpTo: 14'
 ]
 
 { #category : #helper }
@@ -221,8 +222,8 @@ OCBytecodeGeneratorTest >> testMethod: cm against: string [
 	| symbolic |
 	self assert: cm isCompiledMethod.
 	symbolic := String streamContents: [:str | cm longPrintOn: str ].
-
-	self assert: symbolic equals: (string format: (cm initialPC to: cm endPC))
+	self assert: symbolic = string
+	
 ]
 
 { #category : #'tests - instructions' }
@@ -238,10 +239,10 @@ OCBytecodeGeneratorTest >> testPopTop [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <87> pop
-{4} <7C> returnTop'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <76> pushConstant: 1
+15 <87> pop
+16 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -258,10 +259,10 @@ OCBytecodeGeneratorTest >> testPushClosureCopyNumCopiedValuesNumArgsTo [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <8F 00 00 02> closureNumCopied: 0 numArgs: 0 bytes {5} to {6}
-{5} <70> self
-{6} <7D> blockReturn
-{7} <7C> returnTop'
+	self testMethod: cm against:   '13 <8F 00 00 02> closureNumCopied: 0 numArgs: 0 bytes 17 to 18
+17 <70> self
+18 <7D> blockReturn
+19 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -276,9 +277,9 @@ OCBytecodeGeneratorTest >> testPushConsArray [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:   '{1} <76> pushConstant: 1
-{2} <8A 81> pop 1 into (Array new: 1)
-{4} <7C> returnTop'
+	self testMethod: cm against:   '13 <76> pushConstant: 1
+14 <8A 81> pop 1 into (Array new: 1)
+16 <7C> returnTop'
 	
 ]
 
@@ -293,8 +294,8 @@ OCBytecodeGeneratorTest >> testPushDup [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <88> dup
-{2} <7C> returnTop'
+	self testMethod: cm against:  '13 <88> dup
+14 <7C> returnTop'
 	
 ]
 
@@ -309,8 +310,8 @@ OCBytecodeGeneratorTest >> testPushInstVar [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <00> pushRcvr: 0
-{2} <7C> returnTop'
+	self testMethod: cm against:  '13 <00> pushRcvr: 0
+14 <7C> returnTop'
 	
 ]
 
@@ -325,8 +326,8 @@ OCBytecodeGeneratorTest >> testPushLiteral [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <76> pushConstant: 1
-{2} <7C> returnTop'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <7C> returnTop'
 	
 ]
 
@@ -341,8 +342,8 @@ OCBytecodeGeneratorTest >> testPushLiteralVariable [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <40> pushLit: 1
-{2} <7C> returnTop'
+	self testMethod: cm against:  '17 <40> pushLit: 1
+18 <7C> returnTop'
 	
 ]
 
@@ -357,8 +358,9 @@ OCBytecodeGeneratorTest >> testPushNewArray [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <8A 01> push: (Array new: 1)
-{3} <7C> returnTop'
+	self testMethod: cm against:  '13 <8A 01> push: (Array new: 1)
+15 <7C> returnTop'
+	
 ]
 
 { #category : #'tests - instructions' }
@@ -372,8 +374,8 @@ OCBytecodeGeneratorTest >> testPushReceiver [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <70> self
-{2} <7C> returnTop'
+	self testMethod: cm against:  '13 <70> self
+14 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -387,8 +389,8 @@ OCBytecodeGeneratorTest >> testPushRemoteTempInVectorAt [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <8C 00 00> pushTemp: 0 inVectorAt: 0
-{4} <7C> returnTop'
+	self testMethod: cm against:   '13 <8C 00 00> pushTemp: 0 inVectorAt: 0
+16 <7C> returnTop'
 ]
 
 { #category : #'tests - errors' }
@@ -421,8 +423,8 @@ OCBytecodeGeneratorTest >> testPushTemp [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <10> pushTemp: 0
-{2} <7C> returnTop'
+	self testMethod: cm against:  '13 <10> pushTemp: 0
+14 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -436,8 +438,8 @@ OCBytecodeGeneratorTest >> testPushThisContext [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <89> pushThisContext
-{2} <7C> returnTop'
+	self testMethod: cm against:  '13 <89> pushThisContext
+14 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -493,8 +495,8 @@ OCBytecodeGeneratorTest >> testReturnTop [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <7C> returnTop'
+	self testMethod: cm against:   '13 <76> pushConstant: 1
+14 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -509,9 +511,9 @@ OCBytecodeGeneratorTest >> testSend [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against:  '{1} <76> pushConstant: 1
-{2} <D0> send: a
-{3} <7C> returnTop'
+	self testMethod: cm against:  '17 <76> pushConstant: 1
+18 <D0> send: a
+19 <7C> returnTop'	
 ]
 
 { #category : #'tests - instructions' }
@@ -526,9 +528,9 @@ OCBytecodeGeneratorTest >> testSendToSuperOf [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <85 00> superSend: a
-{4} <7C> returnTop'
+	self testMethod: cm against:  '17 <76> pushConstant: 1
+18 <85 00> superSend: a
+20 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -542,12 +544,13 @@ OCBytecodeGeneratorTest >> testStoreInstVar [
 		storeInstVar: 1;
 		returnTop.
 	cm := gen compiledMethod.
+	symbolic := String streamContents: [:str | cm longPrintOn: str ].
 
 	self assert: gen stackFrameSize = 1.
 	self assert: cm isCompiledMethod.
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <81 00> storeIntoRcvr: 0
-{4} <7C> returnTop'
+	self assert: symbolic =  '13 <76> pushConstant: 1
+14 <81 00> storeIntoRcvr: 0
+16 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -562,9 +565,9 @@ OCBytecodeGeneratorTest >> testStoreIntoLiteralVariable [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <81 C0> storeIntoLit: 1
-{4} <7C> returnTop'
+	self testMethod: cm against:   '17 <76> pushConstant: 1
+18 <81 C0> storeIntoLit: 1
+20 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -578,9 +581,9 @@ OCBytecodeGeneratorTest >> testStoreLiteralVariable [
 		storeIntoLiteralVariable: OCBytecodeGeneratorTest binding;
 		returnTop;
 		compiledMethod.
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <81 C0> storeIntoLit: OCBytecodeGeneratorTest
-{4} <7C> returnTop'
+	self testMethod: cm against:  '17 <76> pushConstant: 1
+18 <81 C0> storeIntoLit: OCBytecodeGeneratorTest
+20 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -596,10 +599,10 @@ OCBytecodeGeneratorTest >> testStorePopInstVar [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <60> popIntoRcvr: 0
-{4} <7C> returnTop'
+	self testMethod: cm against:   '13 <76> pushConstant: 1
+14 <76> pushConstant: 1
+15 <60> popIntoRcvr: 0
+16 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -615,10 +618,10 @@ OCBytecodeGeneratorTest >> testStorePopIntoLiteralVariable [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <82 C0> popIntoLit: test
-{5} <7C> returnTop'
+	self testMethod: cm against:  '17 <76> pushConstant: 1
+18 <76> pushConstant: 1
+19 <82 C0> popIntoLit: test
+21 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -634,10 +637,10 @@ OCBytecodeGeneratorTest >> testStorePopRemoteTempInVectorAt [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <8E 00 00> popIntoTemp: 0 inVectorAt: 0
-{6} <7C> returnTop'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <76> pushConstant: 1
+15 <8E 00 00> popIntoTemp: 0 inVectorAt: 0
+18 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -653,10 +656,10 @@ OCBytecodeGeneratorTest >> testStorePopTemp [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <76> pushConstant: 1
-{3} <68> popIntoTemp: 0
-{4} <7C> returnTop'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <76> pushConstant: 1
+15 <68> popIntoTemp: 0
+16 <7C> returnTop'
 ]
 
 { #category : #'tests - instructions' }
@@ -671,9 +674,9 @@ OCBytecodeGeneratorTest >> testStoreRemoteTempInVectorAt [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <8D 00 00> storeIntoTemp: 0 inVectorAt: 0
-{5} <7C> returnTop'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <8D 00 00> storeIntoTemp: 0 inVectorAt: 0
+17 <7C> returnTop'
 ]
 
 { #category : #'tests - errors' }
@@ -706,7 +709,7 @@ OCBytecodeGeneratorTest >> testStoreTemp [
 		returnTop;
 		compiledMethod.
 
-	self testMethod: cm against: '{1} <76> pushConstant: 1
-{2} <81 40> storeIntoTemp: 0
-{4} <7C> returnTop'
+	self testMethod: cm against:  '13 <76> pushConstant: 1
+14 <81 40> storeIntoTemp: 0
+16 <7C> returnTop'
 ]

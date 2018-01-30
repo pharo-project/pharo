@@ -96,7 +96,8 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 		[ filePosition notNil & file notNil ]
 			whileTrue: [ 
 				file position: (0 max: filePosition - 150).	"Skip back to before the preamble"
-				[ file position < (filePosition - 1) ] whileTrue: [ preamble := file nextPreamble ].	"then pick it up from the front"	
+				[ file position < (filePosition - 1) ] whileTrue: [ 
+					preamble := (ChunkReadStream on: file) next ].	"then pick it up from the front"	
 					"Preamble is likely a linked method preamble, if we're in
 					a changes file (not the sources file).  Try to parse it
 					for prior source position and file index"
@@ -189,6 +190,7 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 	| changesFile |
 	changesFile := self changesFileStream.
 	changesFile ifNil: [ ^ self ].
+	changesFile closed ifTrue: [ ^ self ].
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
 	
@@ -216,24 +218,18 @@ SourceFileArray >> closeFileArray: anArray [
 	anArray 
 		reject: [ :file | file isNil ] 
 		thenDo: [ :file | file close ]
-		
 ]
 
 { #category : #private }
 SourceFileArray >> createReadOnlyFiles [
-
-	| readOnly failed |
-	
-	failed := false.
-	readOnly := files collect: [ :file | 
-		file 
-			ifNil: [  failed := true. nil ]
-			ifNotNil: [ [ file readOnlyCopy ] 
-        		on: FileDoesNotExistException
-        		do: [ failed := true. nil ] ]
-	].
-
-	^ failed ifFalse: [ readOnly ] ifTrue: [ self closeFileArray: readOnly. nil ]
+	| readOnly |
+	readOnly := {
+		self sourcesFileStream readOnlyCopy.
+		self changesFileStream readOnlyCopy }.
+	^ (readOnly anySatisfy: [ :each | 
+			each isNil or: [ each closed ] ])
+				ifTrue: [ self closeFileArray: readOnly ]
+				ifFalse: [ readOnly ]
 ]
 
 { #category : #'public - string writing' }
@@ -317,7 +313,7 @@ SourceFileArray >> forceChangesToDisk [
 	changesFile := self changesFileStream.
 	changesFile flush.
 	changesFile close.
-	changesFile open: changesFile name forWrite: true.
+	changesFile tryOpen.
 	changesFile setToEnd.
 ]
 
@@ -331,7 +327,7 @@ SourceFileArray >> getPreambleFrom: aFileStream at: position [
 	| startIndex |
 	startIndex := position.
 	[startIndex >= 0 and: [aFileStream position: startIndex.
-	aFileStream basicNext ~~ $!] ] whileTrue: [ startIndex := startIndex - 1 ].
+	aFileStream next ~~ $!] ] whileTrue: [ startIndex := startIndex - 1 ].
 
 	^String streamContents: [ :result | 
 		[aFileStream position <= position] whileTrue: [result nextPut: aFileStream next]]
@@ -481,7 +477,7 @@ SourceFileArray >> sourceCodeAt: sourcePointer [
 	
 	^ self
 		readStreamAt: sourcePointer 
-		ifPresent: [ :stream | stream nextChunk ]
+		ifPresent: [ :stream | (ChunkReadStream on: stream) next ]
 		ifAbsent: [ '' ]
 ]
 

@@ -10,7 +10,7 @@ Class {
 { #category : #actions }
 MCDirectoryRepositoryTest >> addVersion: aVersion [
 	| file |
-	file := (directory / aVersion fileName) asFileReference writeStream binary.
+	file := (directory / aVersion fileName) asFileReference writeStream.
 	aVersion fileOutOn: file.
 	file close.
 ]

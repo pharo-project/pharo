@@ -55,6 +55,12 @@ ZnBufferedReadStream >> collectionSpecies [
 ]
 
 { #category : #accessing }
+ZnBufferedReadStream >> contents [
+	
+	^ self upToEnd
+]
+
+{ #category : #accessing }
 ZnBufferedReadStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
