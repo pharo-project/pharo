@@ -108,6 +108,12 @@ ZnEncodedReadStream >> peekFor: object [
 ]
 
 { #category : #accessing }
+ZnEncodedReadStream >> position [
+
+	^ super position - (peeked ifNil: [ 0 ] ifNotNil: [ 1 ])
+]
+
+{ #category : #accessing }
 ZnEncodedReadStream >> position: anInteger [
 	super position: anInteger.
 	peeked := nil

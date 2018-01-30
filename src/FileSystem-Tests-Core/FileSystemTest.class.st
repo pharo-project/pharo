@@ -77,7 +77,7 @@ FileSystemTest >> testBinaryReadStreamDo [
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
 	self 
 		should: [ reference binaryReadStreamDo: [ :stream | self assert: false ] ] 
-		raise: FileDoesNotExist.
+		raise: FileDoesNotExistException.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
 	self assert: (reference readStreamDo: [ :stream | stream contents asString ]) 
 		= 'griffle'
@@ -584,7 +584,7 @@ FileSystemTest >> testNonExistentFileSize [
 FileSystemTest >> testReadStream [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self should: [ reference readStream ] raise: FileDoesNotExist.
+	self should: [ reference readStream ] raise: FileDoesNotExistException.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
 	stream := reference readStream.
 	self assert: stream contents asString equals: 'griffle'.

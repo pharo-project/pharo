@@ -229,3 +229,9 @@ ZnBufferedWriteStream >> space [
 ZnBufferedWriteStream >> tab [
 	self nextPut: Character tab
 ]
+
+{ #category : #accessing }
+ZnBufferedWriteStream >> truncate [
+	
+	stream truncate
+]

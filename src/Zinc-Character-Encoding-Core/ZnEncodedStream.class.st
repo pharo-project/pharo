@@ -86,6 +86,12 @@ ZnEncodedStream >> size [
 ]
 
 { #category : #accessing }
+ZnEncodedStream >> truncate [
+	
+	stream truncate
+]
+
+{ #category : #accessing }
 ZnEncodedStream >> wrappedStream [
 	^ stream
 ]

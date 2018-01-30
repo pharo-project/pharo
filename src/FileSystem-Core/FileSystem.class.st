@@ -157,7 +157,7 @@ FileSystem >> copy: aPath toReference: destinationReference [
 FileSystem >> copy: aPath toRemote: destRef [
 	| inputStream path |
 	path := self resolve: aPath.
-	[ inputStream := self readStreamOn: path.
+	[ inputStream := self binaryReadStreamOn: path.
 	inputStream ifNil: [ store signalFileDoesNotExist: path ].
 	destRef fileSystem copyFrom: inputStream to: destRef path ]
 		ensure: [ inputStream ifNotNil: [ inputStream close ] ]
@@ -186,7 +186,7 @@ FileSystem >> copyFrom: inputStream to: destPath [
 	(self exists: destPath)
 		ifTrue: [ store signalFileExists: destPath ].
 	^ [ 
-	out := self writeStreamOn: destPath.
+	out := self binaryWriteStreamOn: destPath.
 	buffer := ByteArray new: 1024.
 	[ inputStream atEnd ]
 		whileFalse: [ 

@@ -375,7 +375,7 @@ OmFileStore >> printOn: aStream [
 OmFileStore >> readEntriesWith: aBlockClosure [
 
 	self fileReference readStreamDo: [ :readStream | [
-		^ aBlockClosure value: readStream ascii ]
+		^ aBlockClosure value: readStream ]
 			on: Error
 			do: [ :error |
 				(OmFileStoreReadingError 

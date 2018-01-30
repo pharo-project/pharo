@@ -123,6 +123,18 @@ ZnCharacterReadWriteStream >> size [
 ]
 
 { #category : #accessing }
+ZnCharacterReadWriteStream >> skip: anInteger [ 
+	
+	readStream skip: anInteger
+]
+
+{ #category : #accessing }
+ZnCharacterReadWriteStream >> space [
+	
+	writeStream space
+]
+
+{ #category : #accessing }
 ZnCharacterReadWriteStream >> upToEnd [
 	
 	^ readStream upToEnd
