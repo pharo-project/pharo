@@ -374,7 +374,7 @@ EpMonitor >> jobEnded: aJobEnd [
 
 	entryReferenceByEvent
 		removeKey: aJob
-		ifAbsent: [ "Should not happen, but c'est pas grave." ]
+		ifAbsent: [ "Should not happen, but we do not care :)" ]
 ]
 
 { #category : #'announcement handling' }
