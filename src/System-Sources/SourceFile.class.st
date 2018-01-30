@@ -10,17 +10,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-SourceFile class >> on: aPath [
-
-	^ self new
-		path: aPath;
-		potentialLocations: { 
-			FileLocator imageDirectory.
-			FileLocator workingDirectory }
-		yourself
-]
-
-{ #category : #'instance creation' }
 SourceFile class >> on: aPath potentialLocations: locations [
 
 	^ self new
@@ -148,7 +137,7 @@ SourceFile >> printOn: aStream [
 { #category : #'as yet unclassified' }
 SourceFile >> readOnlyCopy [
 
-	^ (self species on: path)
+	^ (self species on: path potentialLocations: potentialLocations)
 		tryOpenReadOnly: true;
 		yourself
 ]
