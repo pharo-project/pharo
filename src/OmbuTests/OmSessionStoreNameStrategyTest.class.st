@@ -55,7 +55,8 @@ OmSessionStoreNameStrategyTest >> strategyClass [
 { #category : #running }
 OmSessionStoreNameStrategyTest >> tearDown [
 
-	self directory ensureDeleteAll 
+	self directory ensureDeleteAll.
+	super tearDown
 ]
 
 { #category : #tests }
