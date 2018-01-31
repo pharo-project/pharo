@@ -1,6 +1,4 @@
 "
-I am a FFICompilerPlugin. 
-
 I am a FFICompilerPlugin. I am a plugin for the OpalCompiler for the compiler that makes the compiled method store the arguments names 
 to be used for FFI when the sources are not loaded or unloaded.
 I can be activated with the command FFICompilerPlugin install.
