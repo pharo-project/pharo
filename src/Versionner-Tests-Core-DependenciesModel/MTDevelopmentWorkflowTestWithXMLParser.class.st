@@ -1,11 +1,11 @@
 Class {
-	#name : #MTDevelopmentWorkfowTestWithXMLParser,
-	#superclass : #MTDevelopmentWorkfowTest,
+	#name : #MTDevelopmentWorkflowTestWithXMLParser,
+	#superclass : #MTDevelopmentWorkflowTest,
 	#category : #'Versionner-Tests-Core-DependenciesModel'
 }
 
 { #category : #utility }
-MTDevelopmentWorkfowTestWithXMLParser >> setDevelopment: aVersionString [
+MTDevelopmentWorkflowTestWithXMLParser >> setDevelopment: aVersionString [
 	project configurationClass compile: 'development: spec
 	<symbolicVersion: #''development''>
 
@@ -13,7 +13,7 @@ MTDevelopmentWorkfowTestWithXMLParser >> setDevelopment: aVersionString [
 ]
 
 { #category : #running }
-MTDevelopmentWorkfowTestWithXMLParser >> setUp [
+MTDevelopmentWorkflowTestWithXMLParser >> setUp [
 	"Create a model of the project version we want to work on."
 	| version |
 	super setUp.
@@ -28,13 +28,13 @@ MTDevelopmentWorkfowTestWithXMLParser >> setUp [
 ]
 
 { #category : #running }
-MTDevelopmentWorkfowTestWithXMLParser >> tearDown [ 
+MTDevelopmentWorkflowTestWithXMLParser >> tearDown [ 
 	classFactory cleanUp.
 	super tearDown
 ]
 
 { #category : #tests }
-MTDevelopmentWorkfowTestWithXMLParser >> testCreateBaseline [
+MTDevelopmentWorkflowTestWithXMLParser >> testCreateBaseline [
 	| baselineName baseline |
 	
 	baselineName := '84.1'.
@@ -50,13 +50,13 @@ MTDevelopmentWorkfowTestWithXMLParser >> testCreateBaseline [
 ]
 
 { #category : #tests }
-MTDevelopmentWorkfowTestWithXMLParser >> testCreateNextDevelopment [
+MTDevelopmentWorkflowTestWithXMLParser >> testCreateNextDevelopment [
 	project devWorkflow createNextDevelopment: '999'.
 	self assert: (project configurationClass selectors includes: #'baseline999:').
 ]
 
 { #category : #tests }
-MTDevelopmentWorkfowTestWithXMLParser >> testIsDevelopmentUsedInRelease [
+MTDevelopmentWorkflowTestWithXMLParser >> testIsDevelopmentUsedInRelease [
 	| workflow |
 	workflow := project devWorkflow.
 	self assert: workflow isDevelopmentUsedInRelease equals: false.
