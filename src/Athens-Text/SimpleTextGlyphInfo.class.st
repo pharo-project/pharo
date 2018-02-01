@@ -25,6 +25,6 @@ SimpleTextGlyphInfo >> loadFrom: anFT2Face [
 	
 	face := anFT2Face.
 	self primLoadFrom: anFT2Face.
-	format := ((Smalltalk isLittleEndian) ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
+	format := (EndianDetector isLittleEndian ifTrue: [ format reversed ] ifFalse: [ format ]) asString.
 
 ]
