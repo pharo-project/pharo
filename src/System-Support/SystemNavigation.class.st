@@ -219,7 +219,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 	"Answer a SortedCollection of all the methods that contain, in source code, aString as a substring.  Search the class comments also"
 
 	| list addMethod addComment |
-	list := Set new.
+	list := OrderedCollection new.
 	
 	addMethod := [ :mrClass :mrSel | list add: (self createMethodNamed: mrSel realParent:  mrClass)].									
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].
@@ -235,7 +235,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 								 addMethod value: each value: sel]].
 					(each organization classComment asString includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [
 								addComment value: each]	]].
-			^ list asSortedCollection
+	^ list 
 ]
 
 { #category : #query }

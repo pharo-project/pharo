@@ -35,7 +35,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		order: 3;
 		with: [ (aBuilder pickOne: #monitorType)
 				label: 'Monitor type';
-				description: 'LCD is generally better for laptops, CRT for others';
+				description: 'LCD is generally better for flat screens';
 				target: FreeTypeSettings;
 				targetSelector: #current;
 				order: 0;

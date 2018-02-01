@@ -30,12 +30,12 @@ MCMethodDefinitionTest >> setUp [
 
 { #category : #running }
 MCMethodDefinitionTest >> tearDown [
-       self restoreMocks.
-       extensionPackage unregister.
+      self restoreMocks.
+      extensionPackage unregister.
 		extensionPackage := nil.
-       self class compile: 'override ^ 1' classified: 'mocks'.
-       self ownPackage modified: isModified.
-
+      self class compile: 'override ^ 1' classified: 'mocks'.
+      self ownPackage modified: isModified.
+		super tearDown
        "FIXME: Unregister Monticellomocks if it got created implicitly.
        This avoids a nasty failure of MCChangeNotificationTest due to
        some inconsistency about whether package names are case sensitive

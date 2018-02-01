@@ -18,9 +18,9 @@ EpLogTest >> setUp [
 
 { #category : #running }
 EpLogTest >> tearDown [
-	super tearDown.
-	
+		
 	logBuilder cleanUp.
+	super tearDown.
 ]
 
 { #category : #tests }

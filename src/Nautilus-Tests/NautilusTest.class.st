@@ -20,6 +20,7 @@ NautilusTest >> setUp [
 NautilusTest >> tearDown [
 
 	nautilus := nil.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -45,11 +45,11 @@ GlobalIdentifierTest >> setUpPersistenceStrategyAndChecker [
 
 { #category : #running }
 GlobalIdentifierTest >> tearDown [
-	super tearDown.
 	preferences ensureDelete.
 	(FileLocator workingDirectory / self folderName) 
 		ensureDeleteAllChildren; 
 		ensureDelete.
+	super tearDown.	
 ]
 
 { #category : #tests }

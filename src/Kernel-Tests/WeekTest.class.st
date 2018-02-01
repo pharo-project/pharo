@@ -42,10 +42,9 @@ WeekTest >> setUp [
 { #category : #running }
 WeekTest >> tearDown [
 
-	super tearDown.
 	Week startDay: restoredStartDay.
 	week := nil.
-
+	super tearDown 
 
 ]
 

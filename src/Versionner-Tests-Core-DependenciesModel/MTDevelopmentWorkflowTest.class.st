@@ -1,5 +1,5 @@
 Class {
-	#name : #MTDevelopmentWorkfowTest,
+	#name : #MTDevelopmentWorkflowTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'project',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : #tests }
-MTDevelopmentWorkfowTest >> testCreateInitialDevelopment [
+MTDevelopmentWorkflowTest >> testCreateInitialDevelopment [
 	|  version configuration |
 
 	project := MTProject newNamed: 'Z' withInitialVersion: '0.1'  inRepository: 'http://smalltalkhub.com/mc/demarey/Versionner/main'.
@@ -29,7 +29,7 @@ MTDevelopmentWorkfowTest >> testCreateInitialDevelopment [
 ]
 
 { #category : #tests }
-MTDevelopmentWorkfowTest >> testNewProjectWithInitialVersionInRepository [
+MTDevelopmentWorkflowTest >> testNewProjectWithInitialVersionInRepository [
 	|  projectName configClass |
 
 	projectName := 'VersionnerTest'.
@@ -46,7 +46,7 @@ MTDevelopmentWorkfowTest >> testNewProjectWithInitialVersionInRepository [
 ]
 
 { #category : #tests }
-MTDevelopmentWorkfowTest >> testNextDevelopmentVersionString [
+MTDevelopmentWorkflowTest >> testNextDevelopmentVersionString [
 	| workflow |
 	
 	workflow := MTDevelopmentWorkfow new.
@@ -56,7 +56,7 @@ MTDevelopmentWorkfowTest >> testNextDevelopmentVersionString [
 ]
 
 { #category : #tests }
-MTDevelopmentWorkfowTest >> testStandardizeDevVersionString [
+MTDevelopmentWorkflowTest >> testStandardizeDevVersionString [
 	| workflow |
 	
 	workflow := MTDevelopmentWorkfow new.

@@ -216,18 +216,18 @@ ReleaseTest >> testThatAllMethodsArePackaged [
 
 { #category : #testing }
 ReleaseTest >> testUndeclared [
-	| undeclaredReferences |
+	| undeclaredBindings |
 	
 	Smalltalk cleanOutUndeclared. 
-	undeclaredReferences := Undeclared.
+	undeclaredBindings := Undeclared keys reject: [:each |
+			each includesSubstring: 'undeclaredStub' caseSensitive: false].
 	
 	self 
-		assert: undeclaredReferences isEmpty 
+		assert: undeclaredBindings isEmpty 
 		description: (String streamContents: [ :s|
 			s 
 				nextPutAll: 'Found undeclared references: ';
-				print: undeclaredReferences ])
-	
+				print: undeclaredBindings ])
 ]
 
 { #category : #testing }
