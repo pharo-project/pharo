@@ -17,7 +17,7 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 	
 	50000 timesRepeat: [ (ann weak when: Announcement send: #value to: object) ].
 	
-	self assert: (ann numberOfSubscriptions =  50000).
+	self assert: ann numberOfSubscriptions equals: 50000.
 	
 	Smalltalk garbageCollect.
 	
@@ -25,34 +25,34 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 		Smalltalk garbageCollect. 
 		 ]timeToRun.
 	
-	self assert: (ann numberOfSubscriptions = 0).
+	self assert: ann numberOfSubscriptions equals: 0.
 	^ time
 ]
 
 { #category : #benchmarks }
 WeakAnnouncerTest >> benchWeakSubscriptionDynamic [
-
-	" run me to see how expensive becomeForward: is (compared to #benchWeakSubscriptionStatic ) "
+	"Run me to see how expensive #becomeForward: is (compared to #benchWeakSubscriptionStatic )"
+	
 	| object ann |
 	
 	object := Object new.
 	ann := Announcer new.
 	
-	^ [
+	^[
 		1000 timesRepeat: [ (ann when: Announcement send: #value to: object) makeWeak ].
 	] timeToRun
 ]
 
 { #category : #benchmarks }
 WeakAnnouncerTest >> benchWeakSubscriptionStatic [
+	"Run me to see how cheap object creation is (compared to #benchWeakSubscriptionDynamic ) "
 
-	" run me to see how cheap object creation is (compared to #benchWeakSubscriptionDynamic ) "
 	| object ann |
 	
 	object := Object new.
 	ann := Announcer new.
 	
-	^ [
+	^[
 		1000 timesRepeat: [ (ann weak when: Announcement send: #value to: object)  ].
 	] timeToRun
 ]
@@ -92,11 +92,11 @@ WeakAnnouncerTest >> testNoWeakBlock [
 	
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 1.
+	self assert: counter equals: 1.
 	
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 2
+	self assert: counter equals: 2
 ]
 
 { #category : #tests }
@@ -119,14 +119,14 @@ WeakAnnouncerTest >> testWeakDoubleAnnouncer [
 	a2 weak when: Announcement send: #abcdef to: o.	
 	
 	self 
-	assert: a1 subscriptions numberOfSubscriptions = 1;
-	assert: a2 subscriptions numberOfSubscriptions = 1.
+	assert: a1 subscriptions numberOfSubscriptions equals: 1;
+	assert: a2 subscriptions numberOfSubscriptions equals: 1.
 	
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 	
 	self 
-	assert: a1 subscriptions numberOfSubscriptions = 1;
-	assert: a2 subscriptions numberOfSubscriptions = 1.	
+	assert: a1 subscriptions numberOfSubscriptions equals: 1;
+	assert: a2 subscriptions numberOfSubscriptions equals: 1.	
 
 	o := nil.
 	
@@ -151,13 +151,13 @@ WeakAnnouncerTest >> testWeakObject [
 	" shouldn't go away, we are still holding a reference to 'forwarder': "
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 1.
+	self assert: counter equals: 1.
 	
 	" should go away as we let the only reference to 'forwarder' go: "
 	forwarder := nil.
 	Smalltalk garbageCollect.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 1
+	self assert: counter equals: 1
 ]
 
 { #category : #tests }
