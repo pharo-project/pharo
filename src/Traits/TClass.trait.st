@@ -322,12 +322,6 @@ TClass >> classVariables [
 ]
 
 { #category : #compiling }
-TClass >> compileAll [
-	super compileAll.
-	self classSide compileAll.
-]
-
-{ #category : #compiling }
 TClass >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
 	subclasses). Also recompile the methods in the metaclass."

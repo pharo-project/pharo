@@ -20,6 +20,7 @@ SimulateMouseSpecification >> menuOpenedDuring: aBlock [
 SimulateMouseSpecification >> tearDown [
 
 	morph delete.
+	super tearDown 
 ]
 
 { #category : #tests }

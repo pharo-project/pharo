@@ -386,12 +386,6 @@ Trait >> classVariables [
 ]
 
 { #category : #compiling }
-Trait >> compileAll [
-	super compileAll.
-	self classSide compileAll.
-]
-
-{ #category : #compiling }
 Trait >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
 	subclasses). Also recompile the methods in the metaclass."

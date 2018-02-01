@@ -28,10 +28,10 @@ OmFileStoreTest >> setUpStore [
 
 { #category : #running }
 OmFileStoreTest >> tearDown [
-	super tearDown.
 	
 	store fileReference ensureDelete.
 	otherStore fileReference ensureDelete.
+	super tearDown
 ]
 
 { #category : #tests }

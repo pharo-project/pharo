@@ -75,6 +75,14 @@ UUID class >> new [
 ]
 
 { #category : #'instance creation' }
+UUID class >> new: aSize [
+
+	(aSize == 16) ifFalse: [ self error: 'Wrong UUID size' ].
+	
+	^ super new: aSize
+]
+
+{ #category : #'instance creation' }
 UUID class >> nilUUID [
 	"Return a empty un-initialized UUID, with all zero values, 00000000-0000-0000-0000-000000000000"
 	

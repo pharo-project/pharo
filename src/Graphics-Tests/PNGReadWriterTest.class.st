@@ -406,6 +406,7 @@ PNGReadWriterTest >> setUp [
 { #category : #running }
 PNGReadWriterTest >> tearDown [
 	World changed.
+	super tearDown
 ]
 
 { #category : #'tests - bits' }

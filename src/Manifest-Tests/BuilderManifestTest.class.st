@@ -31,6 +31,7 @@ BuilderManifestTest >> tearDown [
 			cl
 				removeFromChanges;
 				removeFromSystemUnlogged ].
+	super tearDown		
 
 ]
 

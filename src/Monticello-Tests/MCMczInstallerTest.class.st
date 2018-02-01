@@ -72,6 +72,7 @@ MCMczInstallerTest >> setUp [
 MCMczInstallerTest >> tearDown [
 	expected snapshot updatePackage: self mockPackage.
 	self deleteFile.
+	super tearDown
 ]
 
 { #category : #tests }

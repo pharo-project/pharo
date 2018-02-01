@@ -322,7 +322,7 @@ LinkedListTest >> tearDown [
 	nonEmpty := nil.
 	otherList := nil.
 	
-	^ super tearDown
+	super tearDown
 ]
 
 { #category : #tests }

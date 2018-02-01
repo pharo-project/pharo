@@ -22,8 +22,8 @@ NECControllerTest >> setUp [
 NECControllerTest >> tearDown [
 	"Tearing down code for NECControllerTest"
 
-
 	controller := nil.
+	super tearDown
 ]
 
 { #category : #'tests-keyboard' }

@@ -23,7 +23,7 @@ MorphTest >> setUp [
 { #category : #running }
 MorphTest >> tearDown [
 	morph delete.
-	
+	super tearDown
 ]
 
 { #category : #'testing - geometry' }
