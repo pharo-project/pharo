@@ -46,10 +46,10 @@ OmStoreTest >> setUpStore [
 
 { #category : #running }
 OmStoreTest >> tearDown [
-	super tearDown.
 	
 	store flush.
 	otherStore flush.
+	super tearDown
 
 ]
 
