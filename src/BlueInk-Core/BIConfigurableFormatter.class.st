@@ -1354,7 +1354,7 @@ BIConfigurableFormatter >> traditionalBinaryPrecedenceArray [
 
 { #category : #accessing }
 BIConfigurableFormatter >> traditionalBinaryPrecedenceArray: anArray [
-	context traditionalBinaryPrecedenceAray: anArray
+	context traditionalBinaryPrecedenceArray: anArray
 ]
 
 { #category : #accessing }
