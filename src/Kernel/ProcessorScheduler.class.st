@@ -27,7 +27,7 @@ ProcessorScheduler class >> idleProcess [
 	"A default background process which is invisible."
 
 	[true] whileTrue:
-		[self relinquishProcessorForMicroseconds: 1000]
+		[self relinquishProcessorForMicroseconds: 50000]
 ]
 
 { #category : #'class initialization' }
