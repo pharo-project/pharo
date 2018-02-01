@@ -200,8 +200,7 @@ SystemReporter >> initialize [
 		add: #'VM Options' method: #reportVMOptions;
 		add: #'VM Modules' method: #reportModules;
 		add: #'VM Parameters' method: #reportVMParameters;
-		add: #'VM Stats' method: #reportVMStats;
-		add: #'Space Analysis' method: #reportSpaceAnalysis.
+		add: #'VM Stats' method: #reportVMStats.
 	Smalltalk os platformName = 'Win32'
 		ifTrue: [ self add: #'VM Configuration' method: #reportWin32VMConfig ].
 	self add: #'OS General' method: #reportOS.
@@ -325,23 +324,6 @@ SystemReporter >> reportSources: aStream [
 	self header: 'Image Sources' on: aStream.
 	aStream nextPutAll: SourceFiles class printString; cr.
 	aStream nextPutAll: SourceFiles reportString.
-]
-
-{ #category : #reporting }
-SystemReporter >> reportSpaceAnalysis: aStream [
-
-	spaceAnalysisResult ifNil: [
-		(UIManager default
-			confirm: 'Running the space analysis\might take a few seconds.' withCRs
-			label: 'System Reporter')
-				ifFalse: [
-					categoriesSelected remove: #'Space Analysis'.
-					^ self changed: #categorySelected ].
-		
-		spaceAnalysisResult := String streamContents: [ :stream |
-			SpaceTally new printSpaceAnalysis: 1 onStream: stream ] ].
-	self header: 'Space Analysis' on: aStream.
-	aStream nextPutAll: spaceAnalysisResult; cr
 ]
 
 { #category : #'accessing-report' }
