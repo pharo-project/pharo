@@ -20,7 +20,7 @@ Class {
 
 { #category : #'instance creation' }
 CommandLineArguments class >> default [
-	^ singleton ifNil: [singleton := self new initialize]
+	^singleton ifNil: [ singleton := self new ]
 ]
 
 { #category : #'instance creation' }
