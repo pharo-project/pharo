@@ -36,7 +36,7 @@ FileReferenceAttributeTests >> testCreationTime [
 { #category : #tests }
 FileReferenceAttributeTests >> testExists [
 
-	self assert: (self tempFileResource file exists).
+	self assert: self tempFileResource file exists
 ]
 
 { #category : #tests }
@@ -49,29 +49,29 @@ FileReferenceAttributeTests >> testFileSize [
 { #category : #tests }
 FileReferenceAttributeTests >> testIsBlock [
 
-	self assert: self tempFileResource file isBlock equals: false.
+	self deny: self tempFileResource file isBlock
 
 ]
 
 { #category : #tests }
 FileReferenceAttributeTests >> testIsCharacter [
 
-	self assert: self tempFileResource file isCharacter equals: false.
+	self deny: self tempFileResource file isCharacter
 
 ]
 
 { #category : #tests }
 FileReferenceAttributeTests >> testIsDirectory [
 
-	self assert: self tempFileResource file isDirectory equals: false.
+	self deny: self tempFileResource file isDirectory.
 	self assert: FileLocator temp isDirectory.
 ]
 
 { #category : #tests }
 FileReferenceAttributeTests >> testIsFile [
 
-	self assert: self tempFileResource file isFile equals: true.
-	self assert: FileLocator temp isFile equals: false.
+	self assert: self tempFileResource file isFile.
+	self deny: FileLocator temp isFile.
 ]
 
 { #category : #tests }
@@ -84,7 +84,7 @@ FileReferenceAttributeTests >> testIsReadable [
 { #category : #tests }
 FileReferenceAttributeTests >> testIsSymlink [
 
-	self assert: self tempFileResource file isSymlink equals: false.
+	self deny: self tempFileResource file isSymlink.
 
 ]
 
