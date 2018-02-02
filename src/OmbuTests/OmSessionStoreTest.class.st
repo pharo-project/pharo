@@ -25,9 +25,11 @@ OmSessionStoreTest >> setUpStore [
 { #category : #running }
 OmSessionStoreTest >> tearDown [
 		
+	super tearDown. "needs to be executed before"
+
 	(self directoryForTests / 'test-sessions-main') ensureDeleteAll.
 	(self directoryForTests / 'test-sessions-other') ensureDeleteAll.
-	super tearDown
+
 ]
 
 { #category : #tests }
