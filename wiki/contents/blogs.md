@@ -7,3 +7,5 @@
 - [https://pharoweekly.wordpress.com](https://pharoweekly.wordpress.com)
 - [http://astares.blogspot.fr](http://astares.blogspot.fr)
 - [https://clementbera.wordpress.com](https://clementbera.wordpress.com)
+- [https://80738163270632.blogspot.com] (https://80738163270632.blogspot.com)
+- [https://biosmalltalk.blogspot.com] (https://biosmalltalk.blogspot.com)
