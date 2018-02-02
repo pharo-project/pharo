@@ -35,15 +35,14 @@ AnnouncerTest >> setUp [
 
 { #category : #tests }
 AnnouncerTest >> testAnnounceClass [
-	self assert: (announcer announce: AnnouncementMockA) 
-		class = AnnouncementMockA
+	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA
 ]
 
 { #category : #tests }
 AnnouncerTest >> testAnnounceInstance [
 	| instance |
 	instance := AnnouncementMockA new.
-	self assert: (announcer announce: instance) = instance
+	self assert: (announcer announce: instance) equals: instance
 ]
 
 { #category : #tests }
@@ -77,7 +76,7 @@ AnnouncerTest >> testNoArgBlock [
 	counter := nil.
 	announcer subscribe: AnnouncementMockA do: [ counter := 1 ].
 	announcer announce: AnnouncementMockA new.
-	self assert: counter = 1
+	self assert: counter equals: 1
 ]
 
 { #category : #tests }
@@ -118,7 +117,7 @@ AnnouncerTest >> testSubscribeBlock [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
@@ -134,7 +133,7 @@ AnnouncerTest >> testSubscribeClassWithExclusion [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
@@ -162,7 +161,7 @@ AnnouncerTest >> testSubscribeOnSpecificAnnouncer [
 
 	announcement := nil.
 	instance := announcer announce: (AnnouncementMockB with: #expectedParam).
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: (AnnouncementMockC with: #expectedParam).
@@ -192,7 +191,7 @@ AnnouncerTest >> testSubscribeSet [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
@@ -200,7 +199,7 @@ AnnouncerTest >> testSubscribeSet [
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement = instance
+	self assert: announcement equals: instance
 ]
 
 { #category : #'tests - subscribing' }
@@ -212,11 +211,11 @@ AnnouncerTest >> testSubscribeSetWithExclusion [
 		
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
@@ -236,7 +235,7 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfMultipleAnnouncements [
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
@@ -256,7 +255,7 @@ AnnouncerTest >> testSubscribeSetWithExclusionOfSetItem [
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement = instance
+	self assert: announcement equals: instance
 ]
 
 { #category : #'tests - subscribing' }
@@ -272,11 +271,11 @@ AnnouncerTest >> testSubscribeSubclass [
 
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 	
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement = instance.
+	self assert: announcement equals: instance.
 ]
 
 { #category : #tests }
