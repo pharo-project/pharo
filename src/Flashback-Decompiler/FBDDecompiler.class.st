@@ -137,10 +137,14 @@ FBDDecompiler >> decompile: aCompiledMethod [
 ]
 
 { #category : #'public api' }
-FBDDecompiler >> decompile: aSelector in: aClass method: aCompiledMethod [
+FBDDecompiler >> decompile: aSelector in: aClass method: anInitialCompiledMethod [
+	| aCompiledMethod |
 	builder := FBDASTBuilder newFor: aClass.
-	(self canDecompile: aCompiledMethod)
-		ifFalse: [ ^ self generateNativeBoostCallErrorMethodFrom: aCompiledMethod ].
+	(self canDecompile: anInitialCompiledMethod)
+		ifFalse: [ ^ self generateNativeBoostCallErrorMethodFrom: anInitialCompiledMethod ].
+	aCompiledMethod := (self shouldUseOriginalMethod: anInitialCompiledMethod)
+		ifTrue: [ anInitialCompiledMethod propertyAt: #ffiNonCompiledMethod ]
+		ifFalse: [ anInitialCompiledMethod ].
 	self initializeForMethod: aCompiledMethod.
 	self interpretMethod: aCompiledMethod.
 	^ FBDOptimizedMessagesRewriter new
@@ -555,6 +559,11 @@ FBDDecompiler >> send: selector super: supered numArgs: numberArguments [
 	supered 
 		ifTrue:[ self superSend: selector numArgs: numberArguments ]
 		ifFalse: [ self send: selector numArgs: numberArguments ]
+]
+
+{ #category : #asserting }
+FBDDecompiler >> shouldUseOriginalMethod: aCompiledMethod [
+	^ aCompiledMethod hasProperty: #ffiNonCompiledMethod
 ]
 
 { #category : #'data flow instructions' }
