@@ -946,8 +946,8 @@ ChangeSet >> fileOutOn: stream [
 	(self isEmpty and: [stream isKindOf: FileStream])
 		ifTrue: [self inform: 'Warning: no changes to file out'].
 		
-	traits := self changedClasses reject: [:each | each isBehavior].
-	classes := self changedClasses select: [:each | each isBehavior].
+	traits := self changedClasses select: [:each | each isTrait].
+	classes := self changedClasses select: [:each | each isBehavior & each isTrait not].
 	traitList := self class traitsOrder: traits asOrderedCollection.
 	classList := self class classesOrder: classes asOrderedCollection.
 	list := OrderedCollection new
