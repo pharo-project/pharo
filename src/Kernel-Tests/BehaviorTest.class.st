@@ -130,6 +130,12 @@ BehaviorTest >> testHasAbstractMethods [
 ]
 
 { #category : #tests }
+BehaviorTest >> testIncludesMethod [
+	self assert: (Object includesMethod: Object>>#halt).
+	self deny: (Class includesMethod: Object>>#halt).
+]
+
+{ #category : #tests }
 BehaviorTest >> testIsAbstract [
 
 	self assert: Behavior isAbstract.	
