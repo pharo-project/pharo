@@ -19,7 +19,7 @@ ReadWriteStream >> = other [
 ReadWriteStream >> contents [
 	"Answer with a copy of my collection from 1 to readLimit."
 
-	readLimit := readLimit min: position.
+	readLimit := readLimit min: writeLimit.
 	^collection copyFrom: 1 to: readLimit
 ]
 

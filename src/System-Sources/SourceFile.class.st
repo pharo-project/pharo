@@ -81,6 +81,12 @@ SourceFile >> next: anInteger [
 	^ stream next: anInteger
 ]
 
+{ #category : #'fileIn/Out' }
+SourceFile >> nextChunk [
+
+	^ (ChunkReadStream on: stream) next
+]
+
 { #category : #'as yet unclassified' }
 SourceFile >> nextPut: aCharacter [
 
