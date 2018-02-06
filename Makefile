@@ -68,7 +68,7 @@ $(MC_IMAGE_PATH): $(MC_BOOTSTRAP_IMAGE_PATH)
 	zip "bootstrap-cache/$(MC_IMAGE_NAME).zip" bootstrap-cache/$(MC_IMAGE_NAME).*
 
 #Bootstrap Monticello Part 1: Core and Local repositories
-$(MC_BOOTSTRAP_IMAGE_PATH): $(CORE_IMAGE_PATH)
+$(MC_BOOTSTRAP_IMAGE_PATH): $(CORE_IMAGE_PATH) bootstrap-cache/PharoV60.sources
 	@echo "[Monticello] Bootstrap Monticello Core and Local repositories"
 	$(VM) "$(CORE_IMAGE_PATH)" save $(MC_BOOTSTRAP_IMAGE_NAME)
 	$(VM) "$(MC_BOOTSTRAP_IMAGE_PATH)" st bootstrap-cache/st-cache/Monticello.st --save --quit
@@ -98,6 +98,9 @@ $(COMPILER_IMAGE_PATH): bootstrap-cache/bootstrap.image bootstrap-cache/vm
 	$(VM) "$(COMPILER_IMAGE_PATH)" st bootstrap-cache/st-cache/Multilingual.st bootstrap-cache/st-cache/DeprecatedFileStream.st bootstrap-cache/st-cache/FileSystem.st --no-source --quit --save
 	$(VM) "$(COMPILER_IMAGE_PATH)" eval --save "SourceFileArray initialize"
 	zip "bootstrap-cache/$(COMPILER_IMAGE_NAME).zip" "$(COMPILER_IMAGE_PATH)"
+
+bootstrap-cache/PharoV60.sources:
+	cd bootstrap-cache && wget http://files.pharo.org/sources/PharoV60.sources
 
 bootstrap-cache/vm: bootstrap/scripts/download_vm.sh
 	cd bootstrap-cache && rm -rf vm && ../bootstrap/scripts/download_vm.sh
