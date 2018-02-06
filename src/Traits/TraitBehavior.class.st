@@ -799,9 +799,10 @@ TraitBehavior >> includesLocalSelector: aSymbol [
 
 { #category : #'testing method dictionary' }
 TraitBehavior >> includesMethod: aMethod [ 
-	"Answer whether aMethod is in the method dictionary"
+	"Answer whether aMethod is in the method dictionary. Use identityIncludes
+	as = of CompiledMethod is too weak (ignores the selector)"
 
-	^ self methodDict includes: aMethod
+	^ self methodDict identityIncludes: aMethod
 ]
 
 { #category : #'testing method dictionary' }
