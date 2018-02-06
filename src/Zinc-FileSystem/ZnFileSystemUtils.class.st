@@ -15,6 +15,12 @@ ZnFileSystemUtils class >> baseNameFor: fileName [
 	^ fileName asFileReference basename 
 ]
 
+{ #category : #streams }
+ZnFileSystemUtils class >> binaryFileStreamFor: fileName [
+	^ fileName asFileReference 
+		binaryWriteStream
+]
+
 { #category : #defaults }
 ZnFileSystemUtils class >> defaultDirectory [
 	^ FileSystem disk workingDirectory
@@ -94,16 +100,16 @@ ZnFileSystemUtils class >> modificationTimeFor: path [
 ]
 
 { #category : #streams }
-ZnFileSystemUtils class >> newFileNamed: fileName do: block [
+ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
 	^ fileName asFileReference 
-		writeStreamDo: block 
+		binaryWriteStreamDo: block 
 		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]
 
 { #category : #streams }
-ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
+ZnFileSystemUtils class >> newFileNamed: fileName do: block [
 	^ fileName asFileReference 
-		binaryWriteStreamDo: block 
+		writeStreamDo: block 
 		ifPresent: [ FileExists signalWith: fileName asFileReference ]
 ]
 

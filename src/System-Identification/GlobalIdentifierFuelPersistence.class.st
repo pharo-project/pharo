@@ -17,9 +17,14 @@ GlobalIdentifierFuelPersistence >> load [
 	^ FLMaterializer materializeFromFileNamed: self preferences fullName
 ]
 
+{ #category : #accessing }
+GlobalIdentifierFuelPersistence >> preferencesContents [
+	
+	^ self preferences binaryReadStreamDo: [ :stream | stream contents ]
+]
+
 { #category : #'load and saving' }
 GlobalIdentifierFuelPersistence >> save: aDictionary into: aWriteStream [
-	aWriteStream binary.
 	[ FLSerializer serialize: aDictionary on: aWriteStream ]
 		on: Error
 		do: [ :anError | "ignore" ]

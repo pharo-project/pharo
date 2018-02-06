@@ -235,3 +235,10 @@ ZnBufferedWriteStream >> truncate [
 	
 	stream truncate
 ]
+
+{ #category : #accessing }
+ZnBufferedWriteStream >> truncate: anInteger [ 
+	
+	self flushBuffer.
+	stream truncate: anInteger
+]

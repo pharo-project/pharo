@@ -146,7 +146,7 @@ GlobalIdentifierTest >> testBackwardCompatibility4 [
 	self assert: fuelPrefereces exists.
 	self assert: fuelPrefereces contents equals: data.
 	self assert: identifier persistenceStrategy preferences exists.
-	self deny: identifier persistenceStrategy preferences contents = data.
+	self deny: identifier persistenceStrategy preferencesContents = data.
 	dictionary := Dictionary new.
 	identifier persistenceStrategy load: dictionary.
 	self assert: dictionary equals: identifier persistedInformation.

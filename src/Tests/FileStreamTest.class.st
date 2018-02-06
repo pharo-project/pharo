@@ -72,7 +72,7 @@ FileStreamTest >> testDetectFileDo [
 		do: [ :stream | 
 			self assert: stream notNil.
 			self deny: stream closed.
-			self assert: stream contentsOfEntireFile = '42']]
+			self assert: stream upToEnd = '42']]
 		ensure: [
 			file ensureDelete ].
 ]
@@ -87,7 +87,6 @@ FileStreamTest >> testFileTruncation [
 	file writeStreamDo: [ :s | s nextPutAll: '1234567890' ].
 	file
 		writeStreamDo: [ :s | 
-			self assert: s contents equals: '1234567890'.
 			s truncate: 4 ].
 	file readStreamDo: [ :s | self assert: s contents equals: '1234' ] ]
 		ensure: [ file ensureDelete ]

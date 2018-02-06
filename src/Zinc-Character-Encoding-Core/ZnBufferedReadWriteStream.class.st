@@ -205,6 +205,12 @@ ZnBufferedReadWriteStream >> truncate [
 ]
 
 { #category : #accessing }
+ZnBufferedReadWriteStream >> truncate: anInteger [ 
+	
+	self writingActionDo: [ writeStream truncate: anInteger ]
+]
+
+{ #category : #accessing }
 ZnBufferedReadWriteStream >> upTo: aCharacter [ 
 	
 	^ self readingActionDo: [ readStream upTo: aCharacter ]

@@ -148,6 +148,12 @@ GlobalIdentifierPersistence >> preferences: anObject [
 ]
 
 { #category : #accessing }
+GlobalIdentifierPersistence >> preferencesContents [
+
+	self subclassResponsibility
+]
+
+{ #category : #accessing }
 GlobalIdentifierPersistence >> previous [
 	^ previousPersistence
 ]
@@ -162,7 +168,7 @@ GlobalIdentifierPersistence >> save: aDictionary [
 	self isEnabled ifFalse: [ ^ self ].
 	self delete.
 	self ensureDirectory.
-	self preferences writeStreamDo: [ :aPreferenceStream | 
+	self preferences binaryWriteStreamDo: [ :aPreferenceStream | 
 			self save: aDictionary into: aPreferenceStream ]
 ]
 
