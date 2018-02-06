@@ -38,6 +38,6 @@ fetcher := PBRing2GitFetcher new.
 fetcher gitRepositoryUrl: 'git@github.com:pharo-project/pharo.git' location: repositoryReference subdirectory: 'src'.
 fetcher buildNumber: buildNumber.
 	
-environment bootstrapWith: fetcher architecture: architecture to: bootstrap imageReference.	
+"environment bootstrapWith: fetcher architecture: architecture to: bootstrap imageReference.	"
 
 ] on: Warning do: #resume

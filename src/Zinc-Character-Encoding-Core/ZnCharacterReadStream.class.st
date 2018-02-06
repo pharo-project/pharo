@@ -94,7 +94,7 @@ ZnCharacterReadStream >> upToAll: aCollection [
 		matched := false.
 		([ matched or: [ self atEnd or: [ pattern atEnd ] ] ]) whileFalse: [
 			| ch |
-			(ch := self nextElement) = pattern next
+			(ch := self next) = pattern next
 				ifTrue: [
 					pattern atEnd
 						ifTrue: [ matched := true ]

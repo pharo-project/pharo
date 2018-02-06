@@ -63,25 +63,26 @@ ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 
 	| fileNameLength extraFieldLength fileCommentLength |
 
-	self versionMadeBy: (aStream nextLittleEndianNumber: 1).
-	fileAttributeFormat := aStream nextLittleEndianNumber: 1.
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	self versionMadeBy: (endianStream nextLittleEndianNumber: 1).
+	fileAttributeFormat := endianStream nextLittleEndianNumber: 1.
 
-	self versionNeededToExtract: (aStream nextLittleEndianNumber: 2).
-	self bitFlag: (aStream nextLittleEndianNumber: 2).
-	compressionMethod := aStream nextLittleEndianNumber: 2.
-	lastModFileDateTime := self unzipTimestamp: (aStream nextLittleEndianNumber: 4).
-	crc32 := aStream nextLittleEndianNumber: 4.
-	compressedSize := aStream nextLittleEndianNumber: 4.
-	uncompressedSize := aStream nextLittleEndianNumber: 4.
+	self versionNeededToExtract: (endianStream nextLittleEndianNumber: 2).
+	self bitFlag: (endianStream nextLittleEndianNumber: 2).
+	compressionMethod := endianStream nextLittleEndianNumber: 2.
+	lastModFileDateTime := self unzipTimestamp: (endianStream nextLittleEndianNumber: 4).
+	crc32 := endianStream nextLittleEndianNumber: 4.
+	compressedSize := endianStream nextLittleEndianNumber: 4.
+	uncompressedSize := endianStream nextLittleEndianNumber: 4.
 
-	fileNameLength := aStream nextLittleEndianNumber: 2.
-	extraFieldLength := aStream nextLittleEndianNumber: 2.
-	fileCommentLength := aStream nextLittleEndianNumber: 2.
-	aStream nextLittleEndianNumber: 2. 	"disk number start"
-	internalFileAttributes := aStream nextLittleEndianNumber: 2.
+	fileNameLength := endianStream nextLittleEndianNumber: 2.
+	extraFieldLength := endianStream nextLittleEndianNumber: 2.
+	fileCommentLength := endianStream nextLittleEndianNumber: 2.
+	endianStream nextLittleEndianNumber: 2. 	"disk number start"
+	internalFileAttributes := endianStream nextLittleEndianNumber: 2.
 
-	externalFileAttributes := aStream nextLittleEndianNumber: 4.
-	localHeaderRelativeOffset := aStream nextLittleEndianNumber: 4.
+	externalFileAttributes := endianStream nextLittleEndianNumber: 4.
+	localHeaderRelativeOffset := endianStream nextLittleEndianNumber: 4.
 
 	fileName := (aStream next: fileNameLength) asString.
 	cdExtraField := (aStream next: extraFieldLength) asByteArray asString.
@@ -116,16 +117,17 @@ ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [
 		ifFalse: [ aStream position: oldPos.
 				^self error: 'bad LH signature at ', localHeaderRelativeOffset printStringHex ].
 
-	versionNeededToExtract := aStream nextLittleEndianNumber: 2.
-	self bitFlag: (aStream nextLittleEndianNumber: 2).
-	compressionMethod := aStream nextLittleEndianNumber: 2.
-	lastModFileDateTime := self unzipTimestamp: (aStream nextLittleEndianNumber: 4).
-	xcrc32 := aStream nextLittleEndianNumber: 4.
-	xcompressedSize := aStream nextLittleEndianNumber: 4.
-	xuncompressedSize := aStream nextLittleEndianNumber: 4.
+	endianStream := ZnEndianessReadWriteStream on: aStream.
+	versionNeededToExtract := endianStream nextLittleEndianNumber: 2.
+	self bitFlag: (endianStream nextLittleEndianNumber: 2).
+	compressionMethod := endianStream nextLittleEndianNumber: 2.
+	lastModFileDateTime := self unzipTimestamp: (endianStream nextLittleEndianNumber: 4).
+	xcrc32 := endianStream nextLittleEndianNumber: 4.
+	xcompressedSize := endianStream nextLittleEndianNumber: 4.
+	xuncompressedSize := endianStream nextLittleEndianNumber: 4.
 
-	fileNameLength := aStream nextLittleEndianNumber: 2.
-	extraFieldLength := aStream nextLittleEndianNumber: 2.
+	fileNameLength := endianStream nextLittleEndianNumber: 2.
+	extraFieldLength := endianStream nextLittleEndianNumber: 2.
 
 	fileName := (aStream next: fileNameLength) asString.
 	localExtraField := (aStream next: extraFieldLength) asByteArray.
@@ -162,8 +164,9 @@ ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [
 
 	|  extraFieldLength fileNameLength |
 	aStream next: 22.
-	fileNameLength := aStream nextLittleEndianNumber: 2.
-	extraFieldLength := aStream nextLittleEndianNumber: 2.
+  endianStream := ZnEndianessReadWriteStream on: aStream.
+	fileNameLength := endianStream nextLittleEndianNumber: 2.
+	extraFieldLength := endianStream nextLittleEndianNumber: 2.
 	aStream next: fileNameLength.
 	aStream next: extraFieldLength.
 	dataOffset := aStream position.

@@ -58,6 +58,11 @@ ZnEncodedStream >> encoding: encoding [
 	encoder := encoding asZnCharacterEncoder
 ]
 
+{ #category : #'testing' }
+ZnEncodedStream >> isStream [
+  ^ true
+]
+
 { #category : #'initialize-release' }
 ZnEncodedStream >> on: wrappedStream [
 	stream := wrappedStream

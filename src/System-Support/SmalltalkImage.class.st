@@ -262,7 +262,8 @@ SmalltalkImage >> backupTo: newNameWithoutSuffix [
 	Results:
 		true  when continuing in the new session
 		false for the current session"
-	SourceFiles changesFileStream ifNotNil:[
+	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [
 		self 
 			closeSourceFiles; "so copying the changes file will always work"
 			saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)].
@@ -1678,7 +1679,8 @@ SmalltalkImage >> saveAs: newNameWithoutSuffix [
 		false for the current session "
 
 	newNameWithoutSuffix ifNil: [ ^ self ].
-	SourceFiles changesFileStream ifNotNil: [ 
+  (SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
+    ifFalse: [ 
 		self closeSourceFiles.
 		self saveChangesInFileNamed: (self fullNameForChangesNamed: newNameWithoutSuffix)	
 		"so copying the changes file will always work" ].

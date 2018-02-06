@@ -101,6 +101,13 @@ ZnFileSystemUtils class >> newFileNamed: fileName do: block [
 ]
 
 { #category : #streams }
+ZnFileSystemUtils class >> newBinaryFileNamed: fileName do: block [
+	^ fileName asFileReference 
+		binaryWriteStreamDo: block 
+		ifPresent: [ FileExists signalWith: fileName asFileReference ]
+]
+
+{ #category : #streams }
 ZnFileSystemUtils class >> oldFileNamed: fileName do: block [
 	^ fileName asFileReference 
 		readStreamDo: block

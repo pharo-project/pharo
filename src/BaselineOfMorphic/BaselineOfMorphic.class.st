@@ -212,7 +212,7 @@ BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 
 	| fonts styleNames fileName directoryReference |
 
-	directoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: ['..']) asFileReference / 'resources' / 'fonts'.
+	directoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAbsent: [ FileSystem workingDirectory ]) asFileReference / 'resources' / 'fonts'.
 
 	fonts := pointSizes collect: [ :pointSize | 	
 		| regular bold italic boldItalic |

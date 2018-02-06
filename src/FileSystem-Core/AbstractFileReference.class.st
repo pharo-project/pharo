@@ -172,6 +172,13 @@ AbstractFileReference >> binaryWriteStreamDo: aBlock [
 		ensure: [ stream close ]
 ]
 
+{ #category : #streams }
+AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
+	^ self isFile
+		ifTrue: presentBlock
+		ifFalse: [ self binaryWriteStreamDo: doBlock ]
+]
+
 { #category : #delegated }
 AbstractFileReference >> canonicalize [
 	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"

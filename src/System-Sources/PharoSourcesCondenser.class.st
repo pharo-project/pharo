@@ -42,9 +42,9 @@ PharoSourcesCondenser >> installFreshChangesFile [
 	changesFile := Smalltalk changesFile.
 	changesFile moveTo: (changesFile , 'bak') nextVersion.
 	
-	"create a fresh changes file "
+	"Force the creation of a fresh changes file "
 	changesFile writeStreamDo: [ :strm |
-		 strm timeStamp ].
+		 "Nothing, just create the file" ].
 ]
 
 { #category : #public }

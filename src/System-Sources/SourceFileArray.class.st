@@ -189,6 +189,7 @@ SourceFileArray >> changesWriteStreamDo: aBlock [
 
 	| changesFile |
 	changesFile := self changesFileStream.
+  changesFile ifNil: [ ^ self ].
 	changesFile closed ifTrue: [ ^ self ].
 	changesFile isReadOnly ifTrue: [ ^ self ].
 	changesFile setToEnd.
@@ -306,7 +307,7 @@ SourceFileArray >> finishedReading: aReadOnlyFileArray from: aQueue [
 SourceFileArray >> flushChangesFile [
 	
 	flushChanges ifFalse: [ ^ self ].
-	self changesFileStream flush.
+	self changesFileStream ifNotNil: #flush.
 	self emptyReadStreamsQueue.
 ]
 
@@ -565,7 +566,7 @@ SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlo
 
 	| file position |
 	file := self changesFileStream.
-	(file closed or: [ file isReadOnly ]) ifTrue: [ ^ failBlock value ].
+	(file isNil or: [file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
 
 	ChangesLog default assureStartupStampLogged.
 	

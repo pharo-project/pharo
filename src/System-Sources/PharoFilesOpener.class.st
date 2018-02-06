@@ -145,10 +145,10 @@ PharoFilesOpener >> openSources: fullSourcesName forImage: imagePath [
 	"Look in various places for a sources file, return an open stream to it."
 
 	| locations |
-	locations := (OSPlatform current potentialLocationsOfSourcesFile, {
-		FileLocator imageDirectory .
+	locations := OSPlatform current potentialLocationsOfSourcesFile, {
+		FileLocator imageDirectory.
 		FileLocator workingDirectory
-	}) collect: #asFileReference.
+	}.
 
 	^ (SourceFile on: fullSourcesName potentialLocations: locations)
 		tryOpenReadOnly: true;
@@ -171,7 +171,7 @@ PharoFilesOpener >> shouldInformAboutReadOnlyChanges [
 PharoFilesOpener >> sourcesFileOrNil [
 	| sources |
 	sources := self openSources.
-	^ (sources isNil or: [ sources atEnd ])
+	^ (sources isNil or: [ sources closed ])
 		ifTrue: [ 
 			self informCannotLocateSources.
 			nil ]

@@ -6,7 +6,8 @@ Class {
 	#superclass : #MCVersionReader,
 	#instVars : [
 		'zip',
-		'infoCache'
+		'infoCache',
+    'filename'
 	],
 	#category : #'Monticello-Storing'
 }
@@ -14,6 +15,13 @@ Class {
 { #category : #accessing }
 MCMczReader class >> extension [
 	^ 'mcz'
+]
+
+{ #category : #accessing }
+MCMczReader class >> on: s fileName: f [
+	^ (self on: s)
+		filename: f;
+		yourself
 ]
 
 { #category : #testing }
@@ -88,6 +96,16 @@ MCMczReader >> extractInfoFrom: dict [
 ]
 
 { #category : #accessing }
+MCMczReader >> filename [
+	^ filename
+]
+
+{ #category : #accessing }
+MCMczReader >> filename: aString [
+	filename := aString
+]
+
+{ #category : #accessing }
 MCMczReader >> infoCache [
 	^ infoCache ifNil: [infoCache := Dictionary new]
 ]
@@ -139,9 +157,13 @@ MCMczReader >> scanner [
 
 { #category : #accessing }
 MCMczReader >> zip [
-	stream closed ifTrue: [ zip := nil].
-	zip ifNil:
-		[zip := ZipArchive new.
-		zip readFrom: self stream].
+	stream closed ifTrue: [
+		zip := nil].
+	zip ifNil: [
+		zip := ZipArchive new.
+		zip readFrom: (stream closed
+        ifTrue: [	filename asFileReference binaryReadStream ]
+        ifFalse: [ stream ])
+	].
 	^ zip
 ]

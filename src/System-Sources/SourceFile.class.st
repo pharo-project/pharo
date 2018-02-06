@@ -189,22 +189,21 @@ SourceFile >> tryOpen [
 
 { #category : #'as yet unclassified' }
 SourceFile >> tryOpenReadOnly: readOnly [
-	| basename fileCandidates |
+	| basename |
 	basename := path asFileReference basename.
-	fileCandidates := potentialLocations collect: [ :each | each / basename ].
 
 	"Open a read write stream only if read only access was not requested"
 	readOnly ifFalse: [
-		fileCandidates
+		potentialLocations
 			do: [ :each | 
 				[ stream := ZnCharacterReadWriteStream
-					on: (File named: each fullName) writeStream
+					on: (File named: (each asFileReference / basename) fullName) writeStream
 					encoding: 'utf8'.
 				^ self ] on: Error do: [  ] ] ].
 
-	fileCandidates do: [ :each | 
+	potentialLocations do: [ :each | 
 			[ stream := ZnCharacterReadStream
-					on: (File named: each fullName) readStream
+					on: (File named: (each asFileReference / basename) fullName) readStream
 					encoding: 'utf8'.
 			^ self ] on: Error do: [  ] ]
 ]
