@@ -133,6 +133,7 @@ BehaviorTest >> testHasAbstractMethods [
 BehaviorTest >> testIncludesMethod [
 	self assert: (Object includesMethod: Object>>#halt).
 	self deny: (Class includesMethod: Object>>#halt).
+
 	self assert: (Point includesMethod: Point>>#x).
 	self deny: (LookupKey includesMethod: Point>>#x).
 ]
