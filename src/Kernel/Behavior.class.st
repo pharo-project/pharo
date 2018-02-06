@@ -1034,6 +1034,14 @@ Behavior >> includesLocalSelector: aSymbol [
 ]
 
 { #category : #'testing method dictionary' }
+Behavior >> includesMethod: aMethod [ 
+	"Answer whether aMethod is in the method dictionary. Use identityIncludes
+	as = of CompiledMethod is too weak (ignores the selector)"
+
+	^ self methodDict identityIncludes: aMethod
+]
+
+{ #category : #'testing method dictionary' }
 Behavior >> includesSelector: aSymbol [ 
 	"Answer whether the message whose selector is the argument is in the 
 	method dictionary of the receiver's class."
