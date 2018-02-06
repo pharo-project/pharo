@@ -777,7 +777,7 @@ SmalltalkImage >> image [
 SmalltalkImage >> imageDirectory [
 	"Answer the directory containing the current image."
 
-	^ (Path from: self primImagePath) parent
+	^ self primImagePath asFileReference parent
 ]
 
 { #category : #'image, changes name' }
