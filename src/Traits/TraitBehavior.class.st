@@ -798,6 +798,13 @@ TraitBehavior >> includesLocalSelector: aSymbol [
 ]
 
 { #category : #'testing method dictionary' }
+TraitBehavior >> includesMethod: aMethod [ 
+	"Answer whether aMethod is in the method dictionary"
+
+	^ self methodDict includes: aMethod
+]
+
+{ #category : #'testing method dictionary' }
 TraitBehavior >> includesSelector: aSymbol [ 
 	"Answer whether the message whose selector is the argument is in the 
 	method dictionary of the receiver's class."
