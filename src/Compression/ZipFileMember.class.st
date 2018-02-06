@@ -61,7 +61,7 @@ ZipFileMember >> looksLikeDirectory [
 ZipFileMember >> readCentralDirectoryFileHeaderFrom: aStream [
 	"Assumes aStream positioned after signature"
 
-	| fileNameLength extraFieldLength fileCommentLength |
+	| fileNameLength extraFieldLength fileCommentLength endianStream |
 
 	endianStream := ZnEndianessReadWriteStream on: aStream.
 	self versionMadeBy: (endianStream nextLittleEndianNumber: 1).
@@ -106,7 +106,7 @@ ZipFileMember >> readFrom: aStream [
 ZipFileMember >> readLocalDirectoryFileHeaderFrom: aStream [ 
 	"Positions stream as necessary. Will return stream to its original position"
 
-	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos |
+	| fileNameLength extraFieldLength xcrc32 xcompressedSize xuncompressedSize sig oldPos endianStream |
 
 	oldPos := aStream position.
 
@@ -162,9 +162,10 @@ ZipFileMember >> rewindData [
 ZipFileMember >> skipLocalDirectoryFileHeaderFrom: aStream [ 
 	"Assumes that stream is positioned after signature."
 
-	|  extraFieldLength fileNameLength |
+	|  extraFieldLength fileNameLength endianStream |
 	aStream next: 22.
-  endianStream := ZnEndianessReadWriteStream on: aStream.
+	
+	endianStream := ZnEndianessReadWriteStream on: aStream.
 	fileNameLength := endianStream nextLittleEndianNumber: 2.
 	extraFieldLength := endianStream nextLittleEndianNumber: 2.
 	aStream next: fileNameLength.

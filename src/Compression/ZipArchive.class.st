@@ -211,7 +211,7 @@ ZipArchive >> prependedDataSize [
 { #category : #private }
 ZipArchive >> readEndOfCentralDirectoryFrom: aStream [
 	"Read EOCD, starting from position before signature."
-	| signature zipFileCommentLength |
+	| signature zipFileCommentLength endianStream |
 	signature := self readSignatureFrom: aStream.
 	signature = EndOfCentralDirectorySignature ifFalse: [ ^self error: 'bad signature at ', aStream position printString ].
 
