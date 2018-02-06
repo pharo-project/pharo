@@ -644,7 +644,7 @@ RubSmalltalkEditor >> methodNamesContainingIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> methodSourceContainingIt [
-	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source).   EXTREMELY slow!"
+	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source)."
 
 	self lineSelectAndEmptyCheck: [ ^ self ].
 	self model interactionModel systemNavigation
