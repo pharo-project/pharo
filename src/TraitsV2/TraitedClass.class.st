@@ -35,7 +35,12 @@ TraitedClass class >> addSelector: selector withMethod: compiledMethod notifying
 { #category : #users }
 TraitedClass class >> addUser: aClass [
 
-	self traitUsers add: aClass.
+	self basicUsers add: aClass.
+]
+
+{ #category : #users }
+TraitedClass class >> basicUsers [
+	^ users ifNil: [ users := WeakSet new ]
 ]
 
 { #category : #accessing }
@@ -47,17 +52,18 @@ TraitedClass class >> isTrait [
 TraitedClass class >> propagateChangeOf: aSelector [
 	| change |
 
+	self halt.
 	change := TraitChange new
 		updatedSelectors: {aSelector};
 		yourself.
 		
-	self traitUsers do: [ :e | change applyOn: e ]
+	self basicUsers do: [ :e | change applyOn: e ]
 ]
 
 { #category : #users }
 TraitedClass class >> removeUser: aClass [
 
-	self traitUsers remove: aClass ifAbsent: [ ].
+	self basicUsers remove: aClass ifAbsent: [ ].
 ]
 
 { #category : #accessing }
@@ -68,7 +74,7 @@ TraitedClass class >> traitComposition [
 
 { #category : #users }
 TraitedClass class >> traitUsers [
-	^ users ifNil: [ users := WeakSet new ]
+	^ #()
 ]
 
 { #category : #'accessing method dictionary' }
@@ -109,7 +115,6 @@ TraitedClass >> addSlot: aSlot [
 
 { #category : #querying }
 TraitedClass >> allTraits [
-	
 	^ self traitComposition allTraits
 ]
 
