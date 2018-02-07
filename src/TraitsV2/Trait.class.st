@@ -129,21 +129,16 @@ Trait >> definition [
 	]
 ]
 
-{ #category : #'filein/out' }
+{ #category : #accessing }
 Trait >> definitionForNautilus [
 
 	^ self definition
 ]
 
-{ #category : #'filein/out' }
+{ #category : #accessing }
 Trait >> definitionForNautilusWithSlots [
 
 	^ self definition
-]
-
-{ #category : #'class initialization' }
-Trait >> initialize [
-	users := IdentitySet new.
 ]
 
 { #category : #testing }
