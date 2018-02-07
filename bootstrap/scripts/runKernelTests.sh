@@ -28,6 +28,8 @@ RPACKAGE_ARCHIVE=$(find ${CACHE} -name Pharo7.0-rpackage-${1}bit-*.zip)
 unzip $RPACKAGE_ARCHIVE
 
 mv $IMAGE_FILE bootstrap.image
+
+export PHARO_CI_TESTING_ENVIRONMENT=1
 			
 ./pharo bootstrap.image
 ./pharo bootstrap.image initializePackages --packages=packagesKernel.txt --protocols=protocolsKernel.txt --save

@@ -630,6 +630,12 @@ TestCase >> logFailure: aString [
 			
 ]
 
+{ #category : #'CI support' }
+TestCase >> onPharoCITestingEnvironment [
+	
+	^ Smalltalk os environment at: 'PHARO_CI_TESTING_ENVIRONMENT' ifPresent: [ true ] ifAbsent: [ false ]
+]
+
 { #category : #running }
 TestCase >> openDebuggerOnFailingTestMethod [
 	"SUnit has halted one step in front of the failing test method. Step over the 'self halt' and 
@@ -752,6 +758,13 @@ TestCase >> shouldAnnounce [
 { #category : #testing }
 TestCase >> shouldPass [
 	^self isExpectedFailure not
+]
+
+{ #category : #'CI support' }
+TestCase >> skipOnPharoCITestingEnvironment [
+	
+	self onPharoCITestingEnvironment 
+		ifTrue: [ self skip ].
 ]
 
 { #category : #running }
