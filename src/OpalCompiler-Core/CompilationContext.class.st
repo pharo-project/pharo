@@ -24,7 +24,8 @@ Class {
 		'encoderClass',
 		'astTransformPlugins',
 		'usesFullBlockClosure',
-		'requestorScopeClass'
+		'requestorScopeClass',
+		'bindings'
 	],
 	#classVars : [
 		'BytecodeBackend',
@@ -123,6 +124,16 @@ CompilationContext >> astTranslatorClass [
 { #category : #accessing }
 CompilationContext >> astTranslatorClass: anObject [
 	astTranslatorClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> bindings [
+	^ bindings
+]
+
+{ #category : #accessing }
+CompilationContext >> bindings: anObject [
+	bindings := anObject
 ]
 
 { #category : #accessing }
@@ -359,11 +370,16 @@ CompilationContext >> scope [
 	newScope := OCClassScope for: class.
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
-		newScope := (self requestorScopeClass new 
+		newScope := (self requestorScopeClass new
 			compilationContext: self;
 			requestor: requestor) outerScope: newScope].
+		
+	bindings ifNotNil: [
+		"if we passed additional bindings in, setup a scope here"  
+		newScope := (OCExtraBindingScope  new
+			bindings: bindings) outerScope: newScope].	
+		
 	^newScope
-	
 ]
 
 { #category : #accessing }
