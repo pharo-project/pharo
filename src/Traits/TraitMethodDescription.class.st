@@ -173,6 +173,11 @@ TraitMethodDescription >> isLocalAliasSelector [
 ]
 
 { #category : #testing }
+TraitMethodDescription >> isNotEmpty [
+	^self size > 0
+]
+
+{ #category : #testing }
 TraitMethodDescription >> isProvided [
 	^ self providedMethod notNil
 ]
