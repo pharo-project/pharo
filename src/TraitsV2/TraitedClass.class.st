@@ -52,7 +52,6 @@ TraitedClass class >> isTrait [
 TraitedClass class >> propagateChangeOf: aSelector [
 	| change |
 
-	self halt.
 	change := TraitChange new
 		updatedSelectors: {aSelector};
 		yourself.
