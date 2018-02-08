@@ -132,7 +132,7 @@ RubSmalltalkEditor >> basicInspectIt [
 ]
 
 { #category : #'menu messages' }
-RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
+RubSmalltalkEditor >> bestNodeInTextArea [
 	"Find the best node in the editor text area at the current pointer location"
 	
 	| node start stop |
@@ -140,8 +140,9 @@ RubSmalltalkEditor >> bestNodeInTextAreaOnError: aBlock [
 	start := self textArea startIndex.
 	stop := self textArea stopIndex.
 	
-	node := RBParser parseMethod: self textArea string onError: [ 
-		RBParser parseExpression: self textArea string  onError: aBlock].
+	[node := RBParser parseMethod: self textArea string onError: [ 
+		RBParser parseFaultyExpression: self textArea string]
+	] on: Error do: [^nil].
 	
 	^node bestNodeFor: (start to: stop).
 	
@@ -447,7 +448,7 @@ RubSmalltalkEditor >> findClassFromAST [
 	
 	fallbackBlock := [^nil].
 
-	node := self bestNodeInTextAreaOnError: fallbackBlock.
+	node := self bestNodeInTextArea.
 	
 	node ifNil: [ 
 		self selectLine.
@@ -470,18 +471,15 @@ RubSmalltalkEditor >> findClassFromAST [
 RubSmalltalkEditor >> findSelectorFromAST [
 	"Try to make a selector out of the current text selection"
 
-	| node fallbackBlock |
-
-	fallbackBlock := [^ ''].
-	node := self bestNodeInTextAreaOnError: fallbackBlock.
+	| node |
+	node := self bestNodeInTextArea.
 	(node isNil or: [node isSequence]) ifTrue: [
 		self selectLine.
-		node := self bestNodeInTextAreaOnError: fallbackBlock]. 
+		^ RBParser parseFaultyExpression: self selection string.]. 
 	node isMethod ifFalse: [ 
 		[ node isMessage ] whileFalse: [ 
-	 		(node := node parent) ifNil: fallbackBlock ]].
-	
-	^node selector
+	 		(node := node parent) ]].
+	^node 
 ]
 
 { #category : #private }
@@ -644,7 +642,7 @@ RubSmalltalkEditor >> methodNamesContainingIt: aKeyboardEvent [
 
 { #category : #'menu messages' }
 RubSmalltalkEditor >> methodSourceContainingIt [
-	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source).   EXTREMELY slow!"
+	"Open a browser on methods which contain the current selection in their source (case-sensitive full-text search of source)."
 
 	self lineSelectAndEmptyCheck: [ ^ self ].
 	self model interactionModel systemNavigation
@@ -834,10 +832,10 @@ RubSmalltalkEditor >> selectedSelector [
 
 	| node |
 	
-	self hasSelection ifFalse: [ ^self findSelectorFromAST ].
-	node := RBParser parseFaultyExpression: self selection string.
-	node
-		nodesDo: [ :n | 
+	node := self hasSelection 
+		ifTrue: [ RBParser parseFaultyExpression: self selection string. ]
+		ifFalse: [ self findSelectorFromAST ].
+	node nodesDo: [ :n | 
 			n isMessage
 				ifTrue: [ ^ n selector ].
 			n isVariable
