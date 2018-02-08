@@ -19,6 +19,9 @@ It first checks if another handler is available. If so it will activate the foun
 Class {
 	#name : #PharoCommandLineHandler,
 	#superclass : #BasicCommandLineHandler,
+	#classVars : [
+		'ForcePreferencesOmission'
+	],
 	#category : #'System-CommandLineHandler'
 }
 
@@ -34,9 +37,22 @@ PharoCommandLineHandler class >> description [
 	^ 'responsible for the default options and activating other commands'
 ]
 
+{ #category : #accessing }
+PharoCommandLineHandler class >> forcePreferencesOmission [
+	"If this variable is at true, command lines will not load preferences, even if the command line specify directly a preferences file. This is useful to deploy applications with proprietary code."
+
+	^ ForcePreferencesOmission ifNil: [ ForcePreferencesOmission := false ]
+]
+
+{ #category : #accessing }
+PharoCommandLineHandler class >> forcePreferencesOmission: anObject [
+	ForcePreferencesOmission := anObject
+]
+
 { #category : #'handler selection' }
 PharoCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"I do not match ever, because my activation is manual"
+
 	^ true
 ]
 
@@ -48,27 +64,35 @@ PharoCommandLineHandler class >> priority [
 
 { #category : #activation }
 PharoCommandLineHandler >> activate [
+	"If the command line is configured to force the omission of preferences, we should skip them in any case. To ensure the command line works perfectly, we should still ensure that there is no unneeded parameters as 'preferences-file' of 'no-default-preferences'."
 
-	self isChangingPreferences
-		ifTrue: [ self changePreferences ]
-		ifFalse: [ self runPreferences ].
-		
-	^ super activate.
+	self forcePreferencesOmission
+		ifTrue: [ self isChangingPreferences ifTrue: [ self copySubcommand ] ]
+		ifFalse: [ 
+			self isChangingPreferences
+				ifTrue: [ self changePreferences ]
+				ifFalse: [ self runPreferences ] 
+		].
+	
+	^ super activate
 ]
 
 { #category : #'private - preferences' }
-PharoCommandLineHandler >> changePreferences [	
+PharoCommandLineHandler >> changePreferences [
 	| preferenceFile |
-	
 	self isOmittingPreferences
-		ifTrue: [ 
-			commandLine := commandLine copySubcommand.
+		ifTrue: [ self copySubcommand.
 			^ self ].
 		
 	preferenceFile := (self optionAt: 'preferences-file') asFileReference.
-	commandLine := commandLine copySubcommand.
+	self copySubcommand.
 	
-	StartupPreferencesLoader default load: { preferenceFile }.
+	StartupPreferencesLoader default load: {preferenceFile}
+]
+
+{ #category : #'private - preferences' }
+PharoCommandLineHandler >> copySubcommand [
+	commandLine := commandLine copySubcommand
 ]
 
 { #category : #commands }
@@ -77,6 +101,11 @@ PharoCommandLineHandler >> default [
 		ifFalse: [ ^ self noQuit ].
 	
 	^ super default
+]
+
+{ #category : #accessing }
+PharoCommandLineHandler >> forcePreferencesOmission [
+	^ self class forcePreferencesOmission
 ]
 
 { #category : #'private - preferences' }
