@@ -52,6 +52,7 @@ PharoCommandLineHandler class >> forcePreferencesOmission: anObject [
 { #category : #'handler selection' }
 PharoCommandLineHandler class >> isResponsibleFor: aCommandLine [
 	"I do not match ever, because my activation is manual"
+
 	^ true
 ]
 
