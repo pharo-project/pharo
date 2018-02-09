@@ -126,7 +126,7 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" AST-Core-Traits.hermes CodeImport-Traits.hermes Collections-Abstract-Traits.hermes Kernel-Traits.hermes RPackage-Traits.hermes SUnit-Tests.hermes System-Sources-Traits.hermes CodeExport-Traits.hermes CodeImport.hermes Hermes-Extensions.hermes OpalCompiler-Core.hermes SUnit-Core-Traits.hermes System-Support-Traits.hermes Transcript-Core-Traits.hermes CodeExport.hermes CodeImportCommandLineHandlers.hermes JenkinsTools-Core.hermes OpalCompiler-Traits.hermes SUnit-Core.hermes Slot-Traits.hermes
+zip "${HERMES_ARCHIVE_NAME}.zip" AST-Core-Traits.hermes CodeImport-Traits.hermes Collections-Abstract-Traits.hermes Kernel-Traits.hermes RPackage-Traits.hermes SUnit-Tests.hermes System-Sources-Traits.hermes CodeExport-Traits.hermes CodeImport.hermes Hermes-Extensions.hermes OpalCompiler-Core.hermes SUnit-Core-Traits.hermes System-Support-Traits.hermes Transcript-Core-Traits.hermes CodeExport.hermes CodeImportCommandLineHandlers.hermes JenkinsTools-Core.hermes OpalCompiler-Traits.hermes SUnit-Core.hermes Slot-Traits.hermes TraitsV2-Compatibility.hermes
 
 # Archive RPackage definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
@@ -164,7 +164,7 @@ echo "[Compiler] Installing Traits through Hermes"
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" save ${TRAITS_IMAGE_NAME}
 ${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes TraitsV2.hermes --save
-${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes Kernel-Traits.hermes AST-Core-Traits.hermes Collections-Abstract-Traits.hermes Transcript-Core-Traits.hermes SUnit-Core-Traits.hermes CodeImport-Traits.hermes RPackage-Traits.hermes OpalCompiler-Traits.hermes Slot-Traits.hermes CodeExport-Traits.hermes System-Sources-Traits.hermes System-Support-Traits.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" loadHermes Kernel-Traits.hermes AST-Core-Traits.hermes Collections-Abstract-Traits.hermes Transcript-Core-Traits.hermes SUnit-Core-Traits.hermes CodeImport-Traits.hermes RPackage-Traits.hermes OpalCompiler-Traits.hermes Slot-Traits.hermes CodeExport-Traits.hermes System-Sources-Traits.hermes System-Support-Traits.hermes TraitsV2-Compatibility.hermes --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and RPackage initialization
