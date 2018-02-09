@@ -90,7 +90,7 @@ CommandLineHandler class >> priority [
 ]
 
 { #category : #testing }
-CommandLineHandler class >> requirePasswordInDeployment [
+CommandLineHandler class >> requireDeploymentPassword [
 	"Here so that we can distinguish user application services command line handlers from usual pharo command line handlers.
 	The objective is to be able to filter command line accessible by the user.
 	Command line handlers that are not application services can be protected by a password in deployment."
