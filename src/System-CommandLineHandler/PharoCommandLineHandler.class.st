@@ -62,6 +62,11 @@ PharoCommandLineHandler class >> priority [
 	^ Float infinity
 ]
 
+{ #category : #testing }
+PharoCommandLineHandler class >> requirePasswordInDeployment [
+	^ false
+]
+
 { #category : #activation }
 PharoCommandLineHandler >> activate [
 	"If the command line is configured to force the omission of preferences, we should skip them in any case. To ensure the command line works perfectly, we should still ensure that there is no unneeded parameters as 'preferences-file' of 'no-default-preferences'."

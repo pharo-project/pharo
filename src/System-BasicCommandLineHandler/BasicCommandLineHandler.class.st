@@ -3,10 +3,35 @@ I'm a command line handler who is not aware of any UI or Tools present in the sy
 I'm used as base handler for loading executing stripped images (kernel images, for example). 
 
 My usage is the same as PharoCommandLineHandler, see his comment as better explanation.
+
+I also implement a way to password-protect command lines. 
+
+The password will not be saved as in clear. It will be hash using pepper and iterations.
+
+The pepper of a hash is a fix string happened to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strenght of the protection.
+
+If you wish to define ""application"" command lines who do not need a password protection, implement the method #requirePasswordInDeployment on the class side to return false.
+
+Examples of password protection
+----------------
+
+""Enable password protection""
+BasicCommandLineHandler  protectCommandLinesByPasswordWith: 'PharoPassword'
+
+""You can also customize the pepper and number of iterations for the hashing of the password.""
+BasicCommandLineHandler  protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
+
+""Remove password protection""
+BasicCommandLineHandler  removePasswordProtection
 "
 Class {
 	#name : #BasicCommandLineHandler,
 	#superclass : #CommandLineHandler,
+	#classVars : [
+		'HashingPepper',
+		'NumberOfHashIterations',
+		'PasswordHash'
+	],
 	#category : #'System-BasicCommandLineHandler'
 }
 
@@ -18,6 +43,26 @@ BasicCommandLineHandler class >> commandName [
 { #category : #'handler selection' }
 BasicCommandLineHandler class >> description [
 	^ 'basic responsible for the default options and activating other commands'
+]
+
+{ #category : #'password-protection' }
+BasicCommandLineHandler class >> hashString: password [
+	| hash |
+	hash := self hashingPepper , password.
+	(self numberOfHashIterations min: 1) timesRepeat: [ hash := (SHA256 hashMessage: hash) hex ].
+	^ hash
+]
+
+{ #category : #accessing }
+BasicCommandLineHandler class >> hashingPepper [
+	"If the password protection is enable, the developer can change the pepper used to cypher the password. (https://en.wikipedia.org/wiki/Pepper_(cryptography))"
+	
+	^ HashingPepper ifNil: [ HashingPepper := 'Pharo' ]
+]
+
+{ #category : #accessing }
+BasicCommandLineHandler class >> hashingPepper: aString [
+	HashingPepper := aString
 ]
 
 { #category : #'class initialization' }
@@ -33,9 +78,64 @@ BasicCommandLineHandler class >> isResponsibleFor: aCommandLine [
 ]
 
 { #category : #accessing }
+BasicCommandLineHandler class >> numberOfHashIterations [
+	"When the password protection is activated, define the number of time we hash the password."
+	
+	^ NumberOfHashIterations ifNil: [ NumberOfHashIterations := 5 ]
+]
+
+{ #category : #accessing }
+BasicCommandLineHandler class >> numberOfHashIterations: anObject [
+	NumberOfHashIterations := anObject
+]
+
+{ #category : #accessing }
+BasicCommandLineHandler class >> passwordHash [
+	"When this variable is initialized, the command lines is protected by a password. The command line needs to begin with the argument '--password=ThePasswordDefinedByTheDev'"
+	
+	^ PasswordHash
+]
+
+{ #category : #accessing }
+BasicCommandLineHandler class >> passwordHash: anObject [
+	PasswordHash := anObject
+]
+
+{ #category : #accessing }
 BasicCommandLineHandler class >> priority [ 
 	"Lowest priority"
 	^ Float infinity negated
+]
+
+{ #category : #'password-protection' }
+BasicCommandLineHandler class >> protectCommandLinesByPasswordWith: aString [
+	"This method enables the password protection of command line. All command lines returning true to #requirePasswordInDeployment will ask a password to be launched. This is usefull in deployment mode of private applications.."
+	
+	self protectCommandLinesByPasswordWith: aString pepper: nil numberOfHashIterations: nil
+]
+
+{ #category : #'password-protection' }
+BasicCommandLineHandler class >> protectCommandLinesByPasswordWith: aString pepper: anotherString [
+	"This method enables the password protection of command line. All command lines returning true to #requirePasswordInDeployment will ask a password to be launched. This is usefull in deployment mode of private applications..
+	This method accepts to pass a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more informations."
+
+	self protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: nil
+]
+
+{ #category : #'password-protection' }
+BasicCommandLineHandler class >> protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber [
+	"This method enables the password protection of command line. All command lines returning true to #requirePasswordInDeployment will ask a password to be launched. This is usefull in deployment mode of private applications..
+	This method accepts to pass a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more informations.
+	This method also allow to specify a custom number of hash iteration."
+
+	self hashingPepper: anotherString.
+	self numberOfHashIterations: aNumber.
+	self passwordHash: (self hashString: aString)
+]
+
+{ #category : #'password-protection' }
+BasicCommandLineHandler class >> removePasswordProtection [
+	self passwordHash: nil
 ]
 
 { #category : #'system startup' }
@@ -159,16 +259,23 @@ BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 { #category : #activation }
 BasicCommandLineHandler >> handleSubcommand [
 	"check if there is an active subcommand"
-	
+
 	| handlers |
-	
 	handlers := self selectHandlers.
-	
+
 	"If there is no handler, use myself"
 	handlers ifEmpty: [ ^ self ].
-		
-	^self activateSubCommand: handlers first .
+
+	(self requirePasswordFor: handlers first)
+		ifTrue: [ self
+				optionAt: 'deploymentPassword'
+				ifPresent: [ :password | 
+					(self class hashString: password) = self class passwordHash
+						ifFalse: [ self exitFailure: 'ERROR: Wrong password.' ] ]
+				ifAbsent: [ self exitFailure: 'This command line is protected by a password' ].
+			commandLine := commandLine copyWithoutPassword ].
 	
+	^ self activateSubCommand: handlers first
 ]
 
 { #category : #initialization }
@@ -200,6 +307,13 @@ BasicCommandLineHandler >> list [
 { #category : #commands }
 BasicCommandLineHandler >> noQuit [
 	"Nothing to be done, unlike the other commands the image continues running"
+]
+
+{ #category : #testing }
+BasicCommandLineHandler >> requirePasswordFor: handler [
+	"If the password hash is nil, no password is set and we can just ignore it."
+
+	self class passwordHash isNotNil and: [ handler requirePasswordInDeployment ]
 ]
 
 { #category : #private }
