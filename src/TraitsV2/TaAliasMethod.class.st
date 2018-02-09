@@ -1,3 +1,8 @@
+"
+I aliases a method in a trait.
+As a result, the new trait includes both methods, the original and the newone with the new selector.
+I implement the #@ operator.
+"
 Class {
 	#name : #TaAliasMethod,
 	#superclass : #TaSingleComposition,

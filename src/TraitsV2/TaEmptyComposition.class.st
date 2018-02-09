@@ -1,3 +1,7 @@
+"
+I am an empty composition
+I have no methods or slots :(
+"
 Class {
 	#name : #TaEmptyComposition,
 	#superclass : #TaAbstractComposition,
@@ -71,6 +75,11 @@ TaEmptyComposition >> compiledMethodAt: aSelector [
 TaEmptyComposition >> copyTraitExpression [
 	^ self
 	
+]
+
+{ #category : #comparing }
+TaEmptyComposition >> hash [
+	^ 1
 ]
 
 { #category : #testing }

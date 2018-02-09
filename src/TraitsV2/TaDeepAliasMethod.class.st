@@ -1,3 +1,9 @@
+"
+I extend my superclass not only aliasing the method but also rewriting all the users of the method in my methods.
+I am useful when you want to rename a method. You alias deeply with me and then remove it.
+
+I implement the #@=  operator.
+"
 Class {
 	#name : #TaDeepAliasMethod,
 	#superclass : #TaAliasMethod,

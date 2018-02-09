@@ -1,3 +1,7 @@
+"
+I represent the root element in a TraitComposition.
+I wrap a class or Trait to be used as a trait in a trait composition.
+"
 Class {
 	#name : #TaCompositionElement,
 	#superclass : #TaAbstractComposition,
@@ -89,6 +93,11 @@ TaCompositionElement >> dealiasSelector: oldSelector [
 	^ oldSelector = self initializeSelectorForMe
 		ifTrue: [ ^ #initializeTalent ]
 		ifFalse: [ ^ oldSelector ]
+]
+
+{ #category : #comparing }
+TaCompositionElement >> hash [
+	^ self innerClass hash
 ]
 
 { #category : #'transforming selectors' }

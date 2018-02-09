@@ -1,3 +1,8 @@
+"
+I remove a Slot from a trait.
+I implement the #--  operator.
+
+"
 Class {
 	#name : #TaRemoveSlot,
 	#superclass : #TaSingleComposition,

@@ -1,3 +1,6 @@
+"
+I am the superclass of all the operations that modifies a single trait.
+"
 Class {
 	#name : #TaSingleComposition,
 	#superclass : #TaAbstractComposition,
@@ -50,6 +53,11 @@ TaSingleComposition >> copyWithoutTrait: aTrait [
 		ifTrue: [ ^ inner copyWithoutTrait: aTrait ].
 		
 	^ self copy
+]
+
+{ #category : #comparing }
+TaSingleComposition >> hash [
+	^ inner hash
 ]
 
 { #category : #accessing }

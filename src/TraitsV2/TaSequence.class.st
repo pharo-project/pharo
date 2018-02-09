@@ -1,3 +1,9 @@
+"
+I represent a sequence of traits in a trait composition.
+When two traits are operated with + I appear.
+The methods and slots are the union of my inner members.
+I solve when there are conflicts.
+"
 Class {
 	#name : #TaSequence,
 	#superclass : #TaAbstractComposition,
@@ -121,6 +127,11 @@ TaSequence >> copyWithoutTrait: aTrait [
 	^ self class withAll: newMembers
 	
 
+]
+
+{ #category : #comparing }
+TaSequence >> hash [
+	^ self class hash
 ]
 
 { #category : #initialization }

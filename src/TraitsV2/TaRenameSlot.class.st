@@ -1,3 +1,8 @@
+"
+I am able to rename a slot in a trait, so it does not conflict with the ones in the class.
+Also I rename all the uses of this slot in my methods.
+I implement the #>> operator in traits.
+"
 Class {
 	#name : #TaRenameSlot,
 	#superclass : #TaSingleComposition,

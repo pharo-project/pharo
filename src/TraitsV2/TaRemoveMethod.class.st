@@ -1,3 +1,7 @@
+"
+I can remove a method from a trait.
+I implement the #- operator.
+"
 Class {
 	#name : #TaRemoveMethod,
 	#superclass : #TaSingleComposition,

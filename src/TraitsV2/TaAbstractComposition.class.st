@@ -1,3 +1,12 @@
+"
+I represent a trait composition.
+All the trait compositions are represented by operations. 
+My subclasses are the possible operations. 
+
+I know how to resolve the methods and slots included in a trait or traited class.
+
+Also I and my subclasses control how the new methods are compiled.
+"
 Class {
 	#name : #TaAbstractComposition,
 	#superclass : #Object,

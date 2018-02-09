@@ -1,3 +1,7 @@
+"
+I represent the root element in a TraitComposition.
+I wrap a metaclass or classTrait to be used as a trait in a trait composition.
+"
 Class {
 	#name : #TaClassCompositionElement,
 	#superclass : #TaCompositionElement,

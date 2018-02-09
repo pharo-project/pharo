@@ -1,3 +1,12 @@
+"
+I am here to extend the ShiftClassBuilder when creating a Trait or TraitedClass.
+My class side method #isApplicableFor: is responsible of detecting if we are creating a trait or a class using a trait.
+
+I create the new class using the TraitedMetaclass or MetaclassForTraits.
+I inject the methods from TraitedClass to the generated metaclass. 
+
+Also I add all the slots and methods in the trait composition.
+"
 Class {
 	#name : #TraitBuilderEnhancer,
 	#superclass : #ShDefaultBuilderEnhancer,
