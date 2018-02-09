@@ -63,7 +63,7 @@ PharoCommandLineHandler class >> priority [
 ]
 
 { #category : #testing }
-PharoCommandLineHandler class >> requirePasswordInDeployment [
+PharoCommandLineHandler class >> requireDeploymentPassword [
 	^ false
 ]
 
