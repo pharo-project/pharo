@@ -44,6 +44,11 @@ TraitedClass class >> basicUsers [
 ]
 
 { #category : #accessing }
+TraitedClass class >> classTrait [
+	^ self class
+]
+
+{ #category : #accessing }
 TraitedClass class >> isTrait [
 	^ true
 ]
