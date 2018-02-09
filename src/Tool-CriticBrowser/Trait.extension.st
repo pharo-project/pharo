@@ -1,7 +1,7 @@
-Extension { #name : #TraitBehavior }
+Extension { #name : #Trait }
 
 { #category : #'*Tool-CriticBrowser' }
-TraitBehavior >> populateCBMenu: aMenu [
+Trait >> populateCBMenu: aMenu [
 	
 	super populateCBMenu: aMenu.
 	aMenu
