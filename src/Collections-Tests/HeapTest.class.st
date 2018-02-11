@@ -523,19 +523,16 @@ HeapTest >> test1 [
 
 { #category : #'basic tests' }
 HeapTest >> testAdd [
-	"self run: #testAdd" 
-
 	| heap |
 	heap := Heap new.
-	self assert: heap size = 0.
+	self assert: heap size equals: 0.
 	heap add: 3.
-	self assert: heap size = 1.
-	self assert: heap isEmpty not.
-	self assert: heap first = 3.
+	self assert: heap size equals: 1.
+	self deny: heap isEmpty.
+	self assert: heap first equals: 3.
 	heap add: 2.
-	self assert: heap size = 2.
-	self assert: heap first = 2.
-	
+	self assert: heap size equals: 2.
+	self assert: heap first equals: 2
 ]
 
 { #category : #'tests - growable' }
@@ -550,7 +547,6 @@ HeapTest >> testAddNonEmptyGrowsWhenNewElement [
 
 { #category : #'basic tests' }
 HeapTest >> testDo [
-	"self run: #testDo" 
 
 	| heap coll |
 	heap := Heap withAll: #(1 3 5).
@@ -558,8 +554,7 @@ HeapTest >> testDo [
 	
 	heap do: [:each | coll add: each].
 	
-	self assert: coll = #(1 3 5) asOrderedCollection.
-
+	self assert: coll equals: #(1 3 5) asOrderedCollection
 ]
 
 { #category : #tests }
@@ -570,29 +565,25 @@ HeapTest >> testExamples [
 
 { #category : #'basic tests' }
 HeapTest >> testFirst [
-	"self run: #testFirst"
 	| heap | 
 	heap := Heap new.
 	heap add: 5.
 	heap add: 12.
 	heap add: 1.
-	self assert: heap first = 1.
+	self assert: heap first equals: 1.
 	heap removeFirst.
-	self assert: heap first = 5.
+	self assert: heap first equals: 5.
 ]
 
 { #category : #'basic tests' }
 HeapTest >> testHeap [
-	"self run: #testHeap"
-
 	| heap | 
 	heap := Heap new.
 	self assert: heap isHeap.
 	
 	self assert: heap isEmpty.
 	heap add: 1.
-	self assert: heap isEmpty not
-	
+	self deny: heap isEmpty
 
 ]
 
@@ -611,28 +602,26 @@ HeapTest >> testIfEqualIsTransitive [
 
 { #category : #'basic tests' }
 HeapTest >> testRemove [
-	"self run: #testRemove"
 
 	| heap |
 	heap := Heap new.
 	self should: [ heap removeFirst ] raise: Error.
 	heap add: 5.
 	heap removeFirst.
-	self assert: heap size = 0.
+	self assert: heap size equals: 0.
 	heap add: 5.
 	self should: [ heap removeAt: 2 ] raise: Error
 ]
 
 { #category : #'basic tests' }
 HeapTest >> testSortBlock [
-	"self run: #testSortBlock"
 
 	| heap |
 	heap := Heap withAll: #(1 3 5).
-	self assert: heap asArray = #(1 3 5).
+	self assert: heap asArray equals: #(1 3 5).
 	
 	heap sortBlock: [ :e1 :e2 | e1 >= e2 ].
-	self assert: heap asArray = #(5 3 1)
+	self assert: heap asArray equals: #(5 3 1)
 
 ]
 
