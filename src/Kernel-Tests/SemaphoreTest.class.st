@@ -16,9 +16,9 @@ SemaphoreTest >> criticalError [
 ]
 
 { #category : #tests }
-SemaphoreTest >> testAfterCriticalWait [	"self run: #testSemaAfterCriticalWait"
-	"This tests whether a semaphore that has just left the wait in Semaphore>>critical:
-	leaves it with signaling the associated semaphore."
+SemaphoreTest >> testAfterCriticalWait [
+	"This tests whether a semaphore that has just left the wait in Semaphore>>critical: leaves it with signaling the associated semaphore."
+	
 	| s p |
 	s := Semaphore new.
 	p := [s critical:[]] forkAt: Processor activePriority-1.
@@ -29,7 +29,7 @@ SemaphoreTest >> testAfterCriticalWait [	"self run: #testSemaAfterCriticalWait"
 	anything."
 	s signal.
 	p terminate.
-	self assert:(s instVarNamed: #excessSignals) = 1
+	self assert: (s instVarNamed: #excessSignals) equals: 1
 ]
 
 { #category : #tests }
@@ -49,7 +49,7 @@ SemaphoreTest >> testCriticalIfError [
 ]
 
 { #category : #tests }
-SemaphoreTest >> testInCriticalWait [	"self run: #testSemaInCriticalWait"
+SemaphoreTest >> testInCriticalWait [
 	"This tests whether a semaphore that has entered the wait in Semaphore>>critical:
 	leaves it without signaling the associated semaphore."
 	| s p |
@@ -58,7 +58,7 @@ SemaphoreTest >> testInCriticalWait [	"self run: #testSemaInCriticalWait"
 	Processor yield.
 	self assert: (p suspendingList == s).
 	p terminate.
-	self assert:(s instVarNamed: #excessSignals) = 0
+	self assert: (s instVarNamed: #excessSignals) equals: 0
 ]
 
 { #category : #tests }
