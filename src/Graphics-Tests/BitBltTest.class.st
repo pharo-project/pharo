@@ -1,5 +1,5 @@
 "
-SUnit tests for class BitBlt
+SUnit tests for class BitBlt 
 "
 Class {
 	#name : #BitBltTest,
