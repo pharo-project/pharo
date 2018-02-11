@@ -10,6 +10,7 @@ Class {
 { #category : #tests }
 TestValueWithinFix >> testValueWithinNonLocalReturnFixReal [
 	"The real test for the fix is just as obscure as the original problem"
+	
 	| startTime |
 	self valueWithinNonLocalReturn.
 	startTime := Time millisecondClockValue.
