@@ -9,7 +9,7 @@ Class {
 
 { #category : #'meta-data' }
 ManifestKernel class >> dependencies [
-	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'System-Localization' #Slot #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #NewValueHolder #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
+	^ #(#'System-Announcements' #'System-CommandLine' #'Collections-Strings' #'System-Localization' #'Slot-Core' #'Collections-Unordered' #'Collections-Streams' #Files #'System-Object Events' #'Collections-Abstract' #'Collections-Native' #'Collections-Support' #'System-Support' #'Multilingual-Encodings' #'Collections-Sequenceable' #NewValueHolder #'System-Sources' #Compiler #'OpalCompiler-Core' #'System-Finalization' #Traits #'Collections-Weak' #UIManager)
 ]
 
 { #category : #'meta-data' }
