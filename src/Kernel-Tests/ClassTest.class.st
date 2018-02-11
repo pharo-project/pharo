@@ -41,7 +41,6 @@ ClassTest >> referencingMethod2 [
 
 { #category : #'referencing methods' }
 ClassTest >> referencingMethod3 [
-
 	"no reference"
 
 	^ self
