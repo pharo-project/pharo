@@ -30,6 +30,7 @@ PathTest >> testAbsolutePath [
 
 { #category : #tests }
 PathTest >> testAbsolutePrintString [
+	
 	| path actual |
 	path := Path / 'plonk' / 'griffle'.
 	actual := path printString.
