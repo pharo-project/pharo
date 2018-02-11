@@ -52,8 +52,7 @@ TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 ]
 
 { #category : #testing }
-TraitTest >> testAllClassVarNames [
-	
+TraitTest >> testAllClassVarNames [	
 	
 	self assert: self t1 allClassVarNames isEmpty
 ]
