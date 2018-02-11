@@ -523,6 +523,7 @@ HeapTest >> test1 [
 
 { #category : #'basic tests' }
 HeapTest >> testAdd [
+	
 	| heap |
 	heap := Heap new.
 	self assert: heap size equals: 0.
