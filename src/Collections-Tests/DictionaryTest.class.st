@@ -44,6 +44,7 @@ DictionaryTest >> anIndex [
 
 { #category : #requirements }
 DictionaryTest >> anotherElementNotIn [
+	
 	^ 42
 ]
 
