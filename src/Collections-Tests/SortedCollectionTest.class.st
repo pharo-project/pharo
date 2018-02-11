@@ -31,7 +31,7 @@ Class {
 
 { #category : #requirements }
 SortedCollectionTest >> accessCollection [
-" return a collection of size 5 "
+"Return a collection of size 5"
 	^accessCollection 
 ]
 
