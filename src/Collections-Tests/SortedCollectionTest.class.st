@@ -596,7 +596,7 @@ SortedCollectionTest >> testIndexOfIfAbsent [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfStartingAt [
-	"self debug: #testLastIndexOf"
+	 
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -616,23 +616,23 @@ SortedCollectionTest >> testIndexOfStartingAt [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfSubCollectionStartingAt [
-	"self debug: #testIndexOfIfAbsent"
+	 
 	| subcollection index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 1.
-	self assert: index = 1.
+	self assert: index equals: 1.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 2.
-	self assert: index = 0
+	self assert: index equals: 0
 ]
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfSubCollectionStartingAtIfAbsent [
-	"self debug: #testIndexOfIfAbsent"
+	 
 	| index absent subcollection collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
@@ -641,13 +641,13 @@ SortedCollectionTest >> testIndexOfSubCollectionStartingAtIfAbsent [
 		indexOfSubCollection: subcollection
 		startingAt: 1
 		ifAbsent: [ absent := true ].
-	self assert: absent = false.
+	self assert: absent equals: false.
 	absent := false.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 2
 		ifAbsent: [ absent := true ].
-	self assert: absent = true
+	self assert: absent equals: true
 ]
 
 { #category : #'tests - index access' }
