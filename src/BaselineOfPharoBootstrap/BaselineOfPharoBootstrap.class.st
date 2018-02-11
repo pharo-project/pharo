@@ -141,7 +141,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
-			'Slot'.
+			'Slot-Core'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
 			'System-CommandLine'.
