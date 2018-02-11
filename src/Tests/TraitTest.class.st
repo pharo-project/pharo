@@ -130,7 +130,6 @@ TraitTest >> testErrorClassCreation [
 
 { #category : #testing }
 TraitTest >> testExplicitRequirement [
-	"self run: #testExplicitRequirement"
 
 	self t1 compile: 'm self explicitRequirement'.
 	self t2 compile: 'm ^true'.
@@ -368,7 +367,6 @@ TraitTest >> testPrinting [
 
 { #category : #testing }
 TraitTest >> testPrintingClassSide [
-	"self run: #testPrintingClassSide"
 	
 	self assertPrints: self t6 classSide definition
 		like: 'T6 classTrait
