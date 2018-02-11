@@ -47,8 +47,8 @@ Base64MimeConverterTest >> testMimeEncodeDecode [
 	| encoded |
 	encoded := Base64MimeConverter mimeEncode: message.
 	self assert: encoded contents equals: 'SGkgVGhlcmUh'.
-   self assert: (Base64MimeConverter mimeDecodeToChars: encoded) contents 
-		  equals: message contents.
+   	self assert: (Base64MimeConverter mimeDecodeToChars: encoded) contents 
+	     equals: message contents.
 
 	"Encoding should proceed from the current stream position."
 	message reset.
