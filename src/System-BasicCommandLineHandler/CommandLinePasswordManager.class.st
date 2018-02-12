@@ -1,11 +1,11 @@
 "
-I provide a management of the password that is needed to execute the commands throught the command line handler. Use public API to define a new password a remove the current one.
+I provide password management to execute commands through the command line handler. Use public API to define a new password a remove the current one.
 
-The password will not be saved as in clear. It will be hash using pepper and iterations.
+The password is not be saved in clear. It is hashed using pepper and iterations.
 
-The pepper of a hash is a fix string happened to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strenght of the protection.
+The pepper of a hash is a fixed string appended to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strength of the protection.
 
-If you wish to define ""application"" command lines who do not need a password protection, implement the method #requirePasswordInDeployment on the class side to return false.
+If you wish to define ""application"" command lines who does not need a password protection, implement the method #requireDeploymentPassword on the class side to return false.
 
 Examples of password protection
 ----------------
@@ -46,6 +46,21 @@ CommandLinePasswordManager class >> defaultHashingPepper [
 { #category : #accessing }
 CommandLinePasswordManager class >> defaultNumberOfHashIterations [
 	^ 5
+]
+
+{ #category : #example }
+CommandLinePasswordManager class >> exampleEnablePasswordProtection [
+	self protectCommandLinesByPasswordWith: 'PharoPassword'
+]
+
+{ #category : #example }
+CommandLinePasswordManager class >> exampleEnablePasswordProtectionCustomized [
+	self protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
+]
+
+{ #category : #example }
+CommandLinePasswordManager class >> exampleRemovePasswordProtection [
+	self removePasswordProtection
 ]
 
 { #category : #public }
@@ -99,7 +114,7 @@ CommandLinePasswordManager >> hashingPepper [
 
 { #category : #accessing }
 CommandLinePasswordManager >> hashingPepper: aString [
-	self hasPasswordSet ifTrue: [ self error: 'The pepper should not be changed when the password is already saved.' ].
+	self hasPasswordSet ifTrue: [ self error: 'The pepper should not be changed when the password is already saved! Please, use #removePasswordProtection.' ].
 	hashingPepper := aString
 ]
 
@@ -117,7 +132,7 @@ CommandLinePasswordManager >> numberOfHashIterations [
 
 { #category : #accessing }
 CommandLinePasswordManager >> numberOfHashIterations: anObject [
-	self hasPasswordSet ifTrue: [ self error: 'The number of iterations should not be changed when the password is already saved.' ].
+	self hasPasswordSet ifTrue: [ self error: 'Number of iterations should not be changed when the password is already saved! Please, use #removePasswordProtection.' ].
 	numberOfHashIterations := anObject
 ]
 
