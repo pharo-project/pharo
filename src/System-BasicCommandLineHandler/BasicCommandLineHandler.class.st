@@ -23,6 +23,15 @@ CommandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword' pe
 
 ""Remove password protection""
 CommandLinePasswordManager removePasswordProtection
+
+How to specify the password
+----------------
+
+Command line without password:
+	Pharo.exe Pharo.image eval ""1+1""
+
+Command line with password:
+	Pharo.exe Pharo.image eval ""1+1"" --deploymentPassword=Test
 "
 Class {
 	#name : #BasicCommandLineHandler,
@@ -205,8 +214,10 @@ BasicCommandLineHandler >> handleSubcommand [
 
 	"If there is no handler, use myself"
 	handlers ifEmpty: [ ^ self ].
+	
 	(self requirePasswordFor: handlers first)
 		ifTrue: [ self checkPassword ].
+		
 	^ self activateSubCommand: handlers first
 ]
 
