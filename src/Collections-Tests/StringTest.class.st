@@ -3,7 +3,7 @@ This is the unit test for the class String. Unit tests are a good way to exercis
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- there is a chapter in the PharoByExample book (http://pharobyexample.org/)
 	- the sunit class category
-"
+" 
 Class {
 	#name : #StringTest,
 	#superclass : #CollectionRootTest,
