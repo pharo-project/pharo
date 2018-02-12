@@ -3,7 +3,7 @@ This is the unit test for the class Base64MimeConverter. Unit tests are a good w
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- there is a chapter in the PharoByExample book (http://pharobyexample.org/)
 	- the sunit class category
-"
+" 
 Class {
 	#name : #Base64MimeConverterTest,
 	#superclass : #TestCase,
