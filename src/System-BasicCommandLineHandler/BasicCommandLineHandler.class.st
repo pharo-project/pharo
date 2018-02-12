@@ -192,7 +192,7 @@ BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 
 { #category : #password }
 BasicCommandLineHandler >> handlePassword: password [
-	(self class commandLinePasswordManager isGoodPassword: password)
+	(self class commandLinePasswordManager isMatchingPassword: password)
 		ifFalse: [ self exitFailure: 'ERROR: Wrong password.' ]
 ]
 
@@ -246,7 +246,7 @@ BasicCommandLineHandler >> requirePasswordFor: handler [
 	"If the password hash is nil, no password is set and we can just ignore it."
 
 	^ handler requireDeploymentPassword
-		and: [ self class commandLinePasswordManager requirePassword ]
+		and: [ self class commandLinePasswordManager hasPasswordSet ]
 ]
 
 { #category : #private }

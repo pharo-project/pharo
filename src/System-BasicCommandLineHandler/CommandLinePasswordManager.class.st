@@ -61,6 +61,11 @@ CommandLinePasswordManager class >> removePasswordProtection [
 	self current removePasswordProtection
 ]
 
+{ #category : #testing }
+CommandLinePasswordManager >> hasPasswordSet [
+	^ self passwordHash isNotNil
+]
+
 { #category : #private }
 CommandLinePasswordManager >> hashString: password [
 	| hash |
@@ -78,11 +83,12 @@ CommandLinePasswordManager >> hashingPepper [
 
 { #category : #accessing }
 CommandLinePasswordManager >> hashingPepper: aString [
+	self hasPasswordSet ifTrue: [ self error: 'The pepper should not be changed when the password is already saved.' ].
 	hashingPepper := aString
 ]
 
 { #category : #activation }
-CommandLinePasswordManager >> isGoodPassword: aPassword [
+CommandLinePasswordManager >> isMatchingPassword: aPassword [
 	^ (self hashString: aPassword) = self class passwordHash
 ]
 
@@ -95,7 +101,13 @@ CommandLinePasswordManager >> numberOfHashIterations [
 
 { #category : #accessing }
 CommandLinePasswordManager >> numberOfHashIterations: anObject [
+	self hasPasswordSet ifTrue: [ self error: 'The number of iterations should not be changed when the password is already saved.' ].
 	numberOfHashIterations := anObject
+]
+
+{ #category : #public }
+CommandLinePasswordManager >> password: aString [
+	self passwordHash: (self hashString: aString)
 ]
 
 { #category : #accessing }
@@ -115,18 +127,15 @@ CommandLinePasswordManager >> protectCommandLinesByPasswordWith: aString pepper:
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is usefull in deployment mode of private applications.
 	This method accepts a custom pepper for the password hashing. See https://en.wikipedia.org/wiki/Pepper_(cryptography) for more information.
 	This method also allows to specify a custom number of hash iterations."
-
+	
+	"Before setting the pepper and the number of iterations we set the password hash to nil else it migh raise an error since we cannot change pepper/iterations while a password it set."
+	self passwordHash: nil.
 	self hashingPepper: anotherString.
 	self numberOfHashIterations: aNumber.
-	passwordHash := self hashString: aString
+	self password: aString
 ]
 
 { #category : #removing }
 CommandLinePasswordManager >> removePasswordProtection [
 	self passwordHash: nil
-]
-
-{ #category : #testing }
-CommandLinePasswordManager >> requirePassword [
-	^ self passwordHash isNotNil
 ]
