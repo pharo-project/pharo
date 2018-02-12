@@ -351,6 +351,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SmartSuggestions-Nautilus-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
+		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
 		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
