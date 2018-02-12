@@ -105,6 +105,11 @@ CommandLinePasswordManager >> passwordHash [
 	^ passwordHash
 ]
 
+{ #category : #accessing }
+CommandLinePasswordManager >> passwordHash: aString [	
+	passwordHash := aString
+]
+
 { #category : #public }
 CommandLinePasswordManager >> protectCommandLinesByPasswordWith: aString pepper: anotherString numberOfHashIterations: aNumber [
 	"This method enables the password protection of command line. All command lines returning true to #requireDeploymentPassword ask a password to be executed. This is usefull in deployment mode of private applications.
