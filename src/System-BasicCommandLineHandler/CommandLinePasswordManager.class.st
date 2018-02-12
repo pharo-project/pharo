@@ -70,7 +70,7 @@ CommandLinePasswordManager >> hasPasswordSet [
 CommandLinePasswordManager >> hashString: password [
 	| hash |
 	hash := self hashingPepper , password.
-	(self numberOfHashIterations min: 1) timesRepeat: [ hash := (SHA256 hashMessage: hash) hex ].
+	(self numberOfHashIterations max: 1) timesRepeat: [ hash := (SHA256 hashMessage: hash) hex ].
 	^ hash
 ]
 
