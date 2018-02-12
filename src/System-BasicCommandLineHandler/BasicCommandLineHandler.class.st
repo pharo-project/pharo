@@ -16,13 +16,13 @@ Examples of password protection
 ----------------
 
 ""Enable password protection""
-BasicCommandLineHandler  protectCommandLinesByPasswordWith: 'PharoPassword'
+BasicCommandLineHandler  commandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword'
 
 ""You can also customize the pepper and number of iterations for the hashing of the password.""
-BasicCommandLineHandler  protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
+BasicCommandLineHandler  commandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
 
 ""Remove password protection""
-BasicCommandLineHandler  removePasswordProtection
+BasicCommandLineHandler  commandLinePasswordManager removePasswordProtection
 "
 Class {
 	#name : #BasicCommandLineHandler,

@@ -1,7 +1,23 @@
 "
 I provide a management of the password that is needed to execute the commands throught the command line handler. Use public API to define a new password a remove the current one.
 
-The password is not save in clear text but salted
+The password will not be saved as in clear. It will be hash using pepper and iterations.
+
+The pepper of a hash is a fix string happened to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strenght of the protection.
+
+If you wish to define ""application"" command lines who do not need a password protection, implement the method #requirePasswordInDeployment on the class side to return false.
+
+Examples of password protection
+----------------
+
+""Enable password protection""
+BasicCommandLineHandler  commandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword'
+
+""You can also customize the pepper and number of iterations for the hashing of the password.""
+BasicCommandLineHandler  commandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
+
+""Remove password protection""
+BasicCommandLineHandler  commandLinePasswordManager removePasswordProtection
 "
 Class {
 	#name : #CommandLinePasswordManager,
