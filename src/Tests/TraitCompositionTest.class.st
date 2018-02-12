@@ -131,9 +131,9 @@ TraitCompositionTest >> testPrinting [
 				+ self t3 - { #d. #e } 
 				+ self t2 - { #b. #c }.
 	self assertPrints: composition1 printString
-		like:  '(((((T2 + T1) @ {#z->#c}) - {#a. #b. #c}) + T3) - {#d. #e}) + T4'.
+ 		like:  '(((T2 + T1) @ {#z->#c}) - {#a. #b. #c} + T3) - {#d. #e} + T4'.
 	self assertPrints: composition2 printString
-		like:  '((((((T4 @ {#x->#a. #y->#b}) + T1) - {#a}) + T3) - {#d. #e}) + T2) - {#b. #c}'
+		like:  '(((T4 @ {#x->#a. #y->#b} + T1) - {#a} + T3) - {#d. #e} + T2) - {#b. #c}'
 		
 		
 ]

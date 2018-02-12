@@ -264,7 +264,8 @@ TaSequence >> traitCompositionExpression [
 	self isEmpty
 		ifTrue: [ ^ '{}' ].
 
-	^ (members collect: #traitCompositionExpressionWithParens) joinUsing: ' + '
+	^ {members first traitCompositionExpression}
+		, (members allButFirst collect: #traitCompositionExpressionWithParens) joinUsing: ' + '
 ]
 
 { #category : #accessing }
