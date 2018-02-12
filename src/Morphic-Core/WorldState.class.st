@@ -432,18 +432,16 @@ WorldState >> displayWorld: aWorld submorphs: submorphs [
 	deferredUpdateMode
 		ifFalse: [ self assuredCanvas ].
 	canvas
-		roundCornersOf: aWorld
-		during: [ | worldDamageRects handDamageRects |
-			worldDamageRects := self
-				drawWorld: aWorld
-				submorphs: submorphs
-				invalidAreasOn: canvas.	"repair world's damage on canvas"
-			"self handsDo:[:h| h noticeDamageRects: worldDamageRects]."
-			handsToDraw := self selectHandsToDrawForDamage: worldDamageRects.
-			handDamageRects := handsToDraw
-				collect: [ :h | h savePatchFrom: canvas ].
-			allDamage := worldDamageRects , handDamageRects.
-			handsToDraw reverseDo: [ :h | canvas fullDrawMorph: h ]	"draw hands onto world canvas" ].
+		ifNotNil: [ :c | 
+			c
+				roundCornersOf: aWorld
+				during: [ | worldDamageRects handDamageRects |
+					worldDamageRects := self drawWorld: aWorld submorphs: submorphs invalidAreasOn: canvas.	"repair world's damage on canvas"
+					"self handsDo:[:h| h noticeDamageRects: worldDamageRects]."
+					handsToDraw := self selectHandsToDrawForDamage: worldDamageRects.
+					handDamageRects := handsToDraw collect: [ :h | h savePatchFrom: canvas ].
+					allDamage := worldDamageRects , handDamageRects.
+					handsToDraw reverseDo: [ :h | "draw hands onto world canvas" canvas fullDrawMorph: h ] ] ].
 	"*make this true to flash damaged areas for testing*"
 	self class debugShowDamage
 		ifTrue: [ aWorld flashRects: allDamage color: Color black ].
