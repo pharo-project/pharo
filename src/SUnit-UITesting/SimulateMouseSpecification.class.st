@@ -5,7 +5,7 @@ Class {
 		'morph'
 	],
 	#category : #'SUnit-UITesting'
-}
+} 
 
 { #category : #helpers }
 SimulateMouseSpecification >> menuOpenedDuring: aBlock [
