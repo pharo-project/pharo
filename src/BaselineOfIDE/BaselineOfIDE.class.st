@@ -491,6 +491,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
+	'System-BasicCommandLineHandler-Tests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
