@@ -1,7 +1,7 @@
 set -x
 set -e
 
-wget -O - get.pharo.org/vm60 | bash
+wget -O - get.pharo.org/vm61 | bash
 wget https://github.com/guillep/PharoBootstrap/releases/download/v1.3/bootstrapImage.zip
 unzip bootstrapImage.zip
 
