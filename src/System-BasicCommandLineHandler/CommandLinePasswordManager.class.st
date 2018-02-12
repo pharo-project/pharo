@@ -105,7 +105,7 @@ CommandLinePasswordManager >> hashingPepper: aString [
 
 { #category : #activation }
 CommandLinePasswordManager >> isMatchingPassword: aPassword [
-	^ (self hashString: aPassword) = self class passwordHash
+	^ (self hashString: aPassword) = self passwordHash
 ]
 
 { #category : #accessing }

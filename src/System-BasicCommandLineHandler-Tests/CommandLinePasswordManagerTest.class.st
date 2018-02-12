@@ -51,6 +51,12 @@ CommandLinePasswordManagerTest >> testHashingPepper [
 ]
 
 { #category : #tests }
+CommandLinePasswordManagerTest >> testIsMatchingPassword [
+	passwordManager protectCommandLinesByPasswordWith: 'test' pepper: nil numberOfHashIterations: nil.
+	self assert: (passwordManager isMatchingPassword: 'test')
+]
+
+{ #category : #tests }
 CommandLinePasswordManagerTest >> testNumberOfHashIterations [
 	| hashWithOneIteration |
 	passwordManager protectCommandLinesByPasswordWith: 'test' pepper: nil numberOfHashIterations: 1.
