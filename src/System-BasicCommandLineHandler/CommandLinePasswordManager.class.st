@@ -35,7 +35,7 @@ Class {
 
 { #category : #accessing }
 CommandLinePasswordManager class >> current [
-	^ Instance ifNil: [ self new ]
+	^ Instance ifNil: [ Instance := self new ]
 ]
 
 { #category : #accessing }
