@@ -14,8 +14,8 @@ RBParserTest class >> parserClass [
 
 { #category : #accessing }
 RBParserTest >> compare: anObject to: anotherObject [ 
-	self assert: anObject hash = anotherObject hash.
-	self assert: anObject = anotherObject
+	self assert: anObject hash equals: anotherObject hash.
+	self assert: anObject equals: anotherObject
 ]
 
 { #category : #accessing }
@@ -27,7 +27,7 @@ RBParserTest >> exampleClasses [
 RBParserTest >> parseError: each [
 	RBParser 
 		parseExpression: each first 
-		onError: [ :string :pos | ^ self assert: pos = each last ].
+		onError: [ :string :pos | ^ self assert: pos equals: each last ].
 	self assert: false description: 'Parser didn''t fail'
 ]
 
@@ -52,10 +52,10 @@ RBParserTest >> testArray [
 	#(('{}' 0 0) ('{.}' 0 1) ('{..}' 0 2) ('{foo. bar}' 2 1) ('{foo. bar.}' 2 2) ('{foo. bar. .}' 2 3) ('{. foo. bar}' 2 2) ('{foo.. bar}' 2 2))
 	 do: [ :each |
 		tree := self parserClass parseExpression: each first.
-		self assert: tree statements size = each second.
-		self assert: tree periods size = each last.
-		self assert: tree left = 1.
-		self assert: tree right = each first size ]
+		self assert: tree statements size equals: each second.
+		self assert: tree periods size equals: each last.
+		self assert: tree left equals: 1.
+		self assert: tree right equals: each first size ]
 ]
 
 { #category : #tests }
@@ -70,7 +70,7 @@ array would"
 				
 	self deny: arrayNode isArray.
 	self assert: arrayNode isDynamicArray.
-	self deny: nonArrayNode isDynamicArray.
+	self deny: nonArrayNode isDynamicArray
 
 ]
 
@@ -107,17 +107,17 @@ RBParserTest >> testBinarySelectors [
 	selectorStrings do: [:each | | methodNode messageNode |
 		methodNode := RBParser parseMethod: each, 'anObject
 	^self',each,'anObject'.
-		self assert: methodNode selector = each asSymbol.
-		self assert: methodNode argumentNames asArray = #(anObject).
-		self assert: methodNode statements size = 1.
+		self assert: methodNode selector equals: each asSymbol.
+		self assert: methodNode argumentNames asArray equals: #(anObject).
+		self assert: methodNode statements size equals: 1.
 	
 		messageNode := methodNode statements first value.
 		self assert: messageNode isMessage.
-		self assert: messageNode receiver name = #self.
-		self assert: messageNode selector = each asSymbol.
-		self assert: messageNode arguments size = 1.
+		self assert: messageNode receiver name equals: #self.
+		self assert: messageNode selector equals: each asSymbol.
+		self assert: messageNode arguments size equals: 1.
 		self assert: messageNode arguments first isValue.
-		self assert: messageNode arguments first name = #anObject].
+		self assert: messageNode arguments first name equals: #anObject].
 ]
 
 { #category : #tests }
@@ -135,7 +135,7 @@ RBParserTest >> testBlockNodeIsUsed [
 	"an explicit return node is *used*"
 	tree := self parserClass parseMethod:
 			'tmp ^[ 3+4 ]'.
-	self assert: tree body statements last isUsed.
+	self assert: tree body statements last isUsed
 	
 ]
 
@@ -154,7 +154,7 @@ RBParserTest >> testBlockReturnNode [
 	" explicit return"
 	tree := self parserClass parseMethod:
 			'tmp ^ [ 3+4 ]'.
-	self assert: tree lastIsReturn.
+	self assert: tree lastIsReturn
 	
 ]
 
@@ -164,7 +164,7 @@ RBParserTest >> testCascade [
 	self assert: (self parserClass parseExpression: ' self msg:(arg msg:arg); yourself') isCascade.
 	self should: [ self parserClass parseExpression: ' (self msg); yourself' ] raise: SyntaxErrorNotification.
 	self should: [ self parserClass parseExpression: ' self ; yourself' ] raise: SyntaxErrorNotification.
-	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: SyntaxErrorNotification.
+	self should: [ self parserClass parseExpression: ' (self) ; yourself' ] raise: SyntaxErrorNotification
 ]
 
 { #category : #'tests replacements' }
@@ -317,16 +317,16 @@ RBParserTest >> testLiteralArray [
 	collection := OrderedCollection new.
 	collection add: #a; add: #b; add: #c; add: #'.'; add: #+; add: #-; add: 1; add: -2; add: 3.4; add: #true; add: true; add: #false; add: false; add: #nil; add: nil; add: 'string'; add: #[1 2 3]; add: #(1 2 3).	
 	tree value with: collection do: [ :token :value | 
-		self assert: token value = value ]
+		self assert: token value equals: value ]
 ]
 
 { #category : #'tests interval' }
 RBParserTest >> testLiteralIntevals [
 	| tree |
 	tree := self parserClass parseExpression: '#(#a b #( c ))'.
-	self assert: tree contents first start = 3.
-	self assert: tree contents first stop = 4.
-	self assert: tree contents last contents first start = 11
+	self assert: tree contents first start equals: 3.
+	self assert: tree contents first stop equals: 4.
+	self assert: tree contents last contents first start equals: 11
 ]
 
 { #category : #'tests matching' }
@@ -404,8 +404,8 @@ RBParserTest >> testNumberParsing [
 	numbers := #(('1' 1) ('-1' -1) ('123' 123) ('123' 123) ('-123' -123) ('1.1' 1.1) ('-1.1' -1.1) ('1.23' 1.23) ('-1.23' -1.23) ('1e3' 1e3) ('1d3' 1d3) ('1q3' 1q3) ('-1e3' -1e3) ('1e-3' 1e-3) ('-1e-3' -1e-3) ('2r1e8'  2r1e8) ('-2r1e8' -2r1e8) ('2r1e-8' 2r1e-8) ('-2r1e-8' -2r1e-8) ('0.50s2' 0.50s2) ('0.500s3' 0.500s3) ('0.050s3' 0.050s3)).
 	numbers do: [ :spec |
 		node := self parserClass parseExpression: spec first.
-		self assert: node source = spec first.
-		self assert: node value = spec second ]
+		self assert: node source equals: spec first.
+		self assert: node value equals: spec second ]
 ]
 
 { #category : #'tests parsing' }
@@ -457,11 +457,11 @@ RBParserTest >> testParseFaultyLiteral [
 	node := self parseFaultyExpression: faultyLiteral.
 	self assert: node isFaulty.
 	self assert: node isSequence.
-	self assert: node statements first errorMessage equals:'Unknown character'.	
+	self assert: node statements first errorMessage equals: 'Unknown character'.	
 	node := self parseFaultyExpression: faultyLiteralArray.
 	self assert: node isFaulty.
 	self assert: node isLiteralArray.	
-	self assert: node contents first errorMessage equals:'Unknown character'.
+	self assert: node contents first errorMessage equals: 'Unknown character'
 ]
 
 { #category : #'tests parsing' }
@@ -486,7 +486,7 @@ RBParserTest >> testParseFaultyMethod [
 	strangeExpressions do: [ :exp | 
 			node := self parseFaultyMethod: exp.
 			self assert: node isMethod.
-			self assert: node isFaulty.
+			self assert: node isFaulty
 	].
 
 	
@@ -502,7 +502,7 @@ RBParserTest >> testParseFaultyMethodExpresionHasErrorNodeAsFinal [
 	self assert: node isMethod.
 	self assert: node isFaulty.
 	self assert: node statements size equals: 2.
-	self assert: node statements last  isFaulty
+	self assert: node statements last isFaulty
 	
 ]
 
@@ -546,7 +546,7 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	self assert: errorNode isFaulty.
 	self assert: errorNode value equals: 'wrong because no end.
 		^temp'.
-	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated.
+	self assert: errorNode errorMessage equals: 'Unmatched '' in string literal.' translated
 	
 	
 	
@@ -659,7 +659,7 @@ RBParserTest >> testPragmaImplicitLiteralArrayIsInvalid [
 	<func: ''(3+4)'' res: 7>
 	^ self'.
 	"should work"
-	self parserClass parseMethod: pragmaWithStringAsArgument.
+	self parserClass parseMethod: pragmaWithStringAsArgument
 
 ]
 
@@ -674,7 +674,7 @@ RBParserTest >> testPragmaPrimitiveError [
 	self assert: tree pragmas size equals: 1.
 	
 	pragma := tree pragmas first.
-	self assert: pragma selector equals: #primitive:module:error:.
+	self assert: pragma selector equals: #primitive:module:error:
 ]
 
 { #category : #'tests parsing' }
@@ -698,11 +698,11 @@ RBParserTest >> testPragmas [
 	('foo |t| <foo: 1 bar: 2>' #foo:bar: (1 2))
 	) do: [ :each |
 		tree := self parserClass parseMethod: each first.
-		self assert: (tree pragmas size = 1).
+		self assert: tree pragmas size equals: 1.
 		node := tree pragmas first.
-		self assert: node selector = each second.
+		self assert: node selector equals: each second.
 		1 to: node arguments size do: [ :i |
-			self assert: (node arguments at: i) value = (each last at: i) ].
+			self assert: (node arguments at: i) value equals: (each last at: i) ].
 		self assert: (each first at: node start) equals: $<.
 		self assert: (each first at: node stop) equals: $> ].
 	
@@ -722,13 +722,14 @@ RBParserTest >> testPragmas [
 		"comment2" 
 		<a> 
 		<.
-		^1'] raise: SyntaxErrorNotification.
+		^1'] raise: SyntaxErrorNotification
 ]
 
 { #category : #'tests parsing' }
 RBParserTest >> testPrimitives [
 	self assert: (Object parseTreeFor: #basicAt:) isPrimitive.
-	#(('foo ^true' false ) ('foo <some: #tag> ^true' false ) (' foo <some: #tag> <primitive: 123> ^true' true ) ) do: [:each | self assert: (self parserClass parseMethod: each first) isPrimitive = each last]
+	#(('foo ^true' false ) ('foo <some: #tag> ^true' false ) (' foo <some: #tag> <primitive: 123> ^true' true ) ) 
+			do: [:each | self assert: (self parserClass parseMethod: each first) isPrimitive equals: each last]
 ]
 
 { #category : #tests }
@@ -810,8 +811,8 @@ RBParserTest >> testStatements [
 	| tree |
 	#(('' 0 0) ('.' 0 1) ('| bar |' 0 0) ('| bar | .' 0 1) ('| bar | ..' 0 2) ('foo. bar' 2 1) ('foo. bar.' 2 2) ('foo. bar. .' 2 3) ('. foo. bar' 2 2)) do: [ :each |
 		tree := self parserClass parseExpression: each first.
-		self assert: tree statements size = each second.
-		self assert: tree periods size = each last ]
+		self assert: tree statements size equals: each second.
+		self assert: tree periods size equals: each last ]
 ]
 
 { #category : #'tests parsing' }

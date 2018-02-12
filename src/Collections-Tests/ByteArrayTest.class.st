@@ -9,8 +9,6 @@ Class {
 
 { #category : #tests }
 ByteArrayTest >> testBooleanAt [
-	"self run: #testBooleanAt"
-	
 	"Checking the result of ByteArray>>#booleanAt on a few instances of ByteArray. It should return false on 0-valued bytes and true on all other bytes (according to the integer to boolean C convention)."
 
 	self deny: (#[0] booleanAt: 1).
@@ -60,10 +58,9 @@ ByteArrayTest >> testFallbackReplaceFromToWithForWideString [
 
 { #category : #tests }
 ByteArrayTest >> testFourthByteArraysReturnTheCorrectValues [
-	"self run: #testFourthByteArraysReturnTheCorrectValues"
 	
-	self assert: ((#[16r3F 16r80 0 0]  floatAt:1 bigEndian: true) = 1.0).
-	self assert: ((#[16rC0 0 0 0]  floatAt:1 bigEndian: true) = -2.0).
+	self assert: (#[16r3F 16r80 0 0]  floatAt:1 bigEndian: true) equals: 1.0.
+	self assert: (#[16rC0 0 0 0]  floatAt:1 bigEndian: true) equals: -2.0.
 
 
 ]
@@ -87,10 +84,10 @@ ByteArrayTest >> testIsLiteral [
 
 { #category : #tests }
 ByteArrayTest >> testindexOfStartingAt [
-	"self run: #testindexOfStartingAt"
-	
-	self assert: (#[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0]  indexOf: 1 startingAt: 10) = 12.
-	self assert: (#[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0]  indexOf: 17 startingAt: 10) = 0.
+	|array|
+	array := #[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0].
+	self assert: (array indexOf: 1 startingAt: 10) equals: 12.
+	self assert: (array indexOf: 17 startingAt: 10) equals: 0.
 
 
 ]

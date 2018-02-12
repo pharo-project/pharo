@@ -19,7 +19,7 @@ RBFormatterTest >> formatClass: aClass selector: aSymbol [
 		parseMethod:
 			(self formatterClass new format: tree1)
 		onError: [ :err :pos | self assert: false ].
-	self assert: tree1 = tree2
+	self assert: tree1 equals: tree2
 ]
 
 { #category : #private }
@@ -57,7 +57,7 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	inputSource := 'foo  <selector> ^ self'.
 	tree := RBParser parseMethod: inputSource.
 	outputSource := self formatterClass new format: tree.
-	self shouldnt: [RBParser parseMethod: outputSource] raise: SyntaxErrorNotification.
+	self shouldnt: [RBParser parseMethod: outputSource] raise: SyntaxErrorNotification
 
 
 ]
@@ -67,7 +67,7 @@ RBFormatterTest >> testLiteralDynamicArray [
 	| source tree1 |
 	source := 'foo ^ { ''film'' . ''FILM''} '.
 	tree1 := RBParser parseMethod: source.
-	self assert: ((self formatterClass new format: tree1) occurrencesOf: $.) = 1
+	self assert: ((self formatterClass new format: tree1) occurrencesOf: $.) equals: 1
 ]
 
 { #category : #testing }
@@ -77,7 +77,7 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 	the formatter should not add a # character but just use the source form."
 	inputSource := '#(#withnumbersign nonumbersign ''string'')'.
    literalArrayNode := RBParser parseExpression: inputSource.
-	self assert: literalArrayNode source equals: literalArrayNode formattedCode.
+	self assert: literalArrayNode source equals: literalArrayNode formattedCode
 
 ]
 
@@ -89,6 +89,6 @@ RBFormatterTest >> testPreserveLiteralNumberFormat [
 	formatting."
 	inputSource := '#(1 4r33 16r0F 0.02 2e-2 -1)'.
    numbersNode := RBParser parseExpression: inputSource.
-	self assert: numbersNode source equals: numbersNode formattedCode.
+	self assert: numbersNode source equals: numbersNode formattedCode
 
 ]
