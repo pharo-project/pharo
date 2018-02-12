@@ -1,6 +1,6 @@
 "
 SUnit tests for classes
-"
+" 
 Class {
 	#name : #ClassTest,
 	#superclass : #ClassTestCase,
