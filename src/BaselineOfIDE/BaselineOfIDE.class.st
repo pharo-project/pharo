@@ -289,6 +289,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'EmbeddedFreeType-Tests'.
 		spec package: 'FileSystem-Tests-Disk'.
 		spec package: 'FileSystem-Tests-Memory'.
+		spec package: 'FileSystem-Tests-Attributes'.
 		spec package: 'Files-Prompt'.
 		spec package: 'Files-Tests'.
 		spec package: 'Flashback-Decompiler-Tests'.
@@ -351,6 +352,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'SmartSuggestions-Nautilus-Tests'.
 		spec package: 'Spec-Help'.	
 		spec package: 'Spec-Tests'.
+		spec package: 'System-BasicCommandLineHandler-Tests'.
 		spec package: 'System-Caching-Tests'.
 		spec package: 'System-Hashing-Tests'.
 		spec package: 'System-History-Tests'.
@@ -490,6 +492,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Zinc-Tests'	"requires Zinc-Resource-Meta-Tests"
 	'System-Identification-Tests'		
 	'System-DependenciesTests'
+	'System-BasicCommandLineHandler-Tests'
 ).	
 
 spec group: 'FuzzyMatcher-Core-Group' with: #(
@@ -815,6 +818,8 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Compression-Tests' 
 	'FileSystem-Tests-Core' 
 	'FileSystem-Tests-Disk'
+	'FileSystem-Tests-Memory'
+	'FileSystem-Tests-Attributes'
 	'Files-Tests' 
 	'Jobs-Tests' 
 	'Multilingual-Tests'
@@ -825,7 +830,6 @@ spec group: 'Kernel-Tests-Group' with: #(
 	'Ring-Tests-Containers' 
 	'Tests' 
 	'Zinc-Character-Encoding-Tests' 
-	'FileSystem-Tests-Memory'
 
 	'Text-Tests'		"required by Multilingual-Tests"
 ).
