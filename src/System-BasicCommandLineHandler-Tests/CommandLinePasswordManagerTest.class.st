@@ -16,12 +16,6 @@ CommandLinePasswordManagerTest >> setUp [
 	passwordManager := CommandLinePasswordManager new
 ]
 
-{ #category : #running }
-CommandLinePasswordManagerTest >> tearDown [
-	passwordManager := nil.
-	super tearDown
-]
-
 { #category : #tests }
 CommandLinePasswordManagerTest >> testCannotChangeNumberOfIterationsWhenPasswordIsSet [
 	passwordManager protectCommandLinesByPasswordWith: 'test' pepper: nil numberOfHashIterations: 1.
