@@ -83,14 +83,13 @@ BasicCommandLineHandler class >> startUp: isImageStarting [
 
 { #category : #activation }
 BasicCommandLineHandler >> activate [
-	
-	[ [ self handleArgument: (self arguments 
-			ifEmpty: [ '' ] 
-			ifNotEmpty: [ :arguments| arguments first ])] 
-		on: Exit 
-		do: [ :exit | ^ self handleExit: exit ] ]
-			forkAt: Processor userSchedulingPriority
-			named: 'CommandLine handler process'
+	[ [ self handleArgument: (self arguments ifEmpty: [ '' ] ifNotEmpty: [ :arguments | arguments first ]) ]
+		on: Exit
+		do: [ :exit | 
+			"If the command line is protected by password, we just exit the image because in non-headless mode the handleExit will let the image open. If the password protection is enabled, it is to avoid to let the access to the image."
+			self class commandLinePasswordManager hasPasswordSet
+				ifTrue: [ Smalltalk snapshot: false andQuit: true ].
+			^ self handleExit: exit ] ] forkAt: Processor userSchedulingPriority named: 'CommandLine handler process'
 ]
 
 { #category : #activation }
@@ -106,7 +105,8 @@ BasicCommandLineHandler >> checkPassword [
 	self
 		optionAt: 'deploymentPassword'
 		ifPresent: [ :password | self handlePassword: password ]
-		ifAbsent: [ self exitFailure: 'This command line is protected by a password' ].
+		ifAbsent: [ self stderr << 'This command line is protected by a password'.
+			Smalltalk snapshot: false andQuit: true ].
 	commandLine := commandLine copyWithoutPassword
 ]
 
@@ -201,8 +201,10 @@ BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 
 { #category : #password }
 BasicCommandLineHandler >> handlePassword: password [
-	(self class commandLinePasswordManager isMatchingPassword: password)
-		ifFalse: [ self exitFailure: 'ERROR: Wrong password.' ]
+	(self class commandLinePasswordManager isMatchingPassword: password) ifTrue: [ ^ self ].
+	
+	self stderr << 'ERROR: Wrong password.'.
+	Smalltalk snapshot: false andQuit: true
 ]
 
 { #category : #activation }
