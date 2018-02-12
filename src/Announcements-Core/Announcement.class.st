@@ -3,7 +3,7 @@ This class is the superclass for events that someone might want to announce, suc
 
 See in the help browser for more documentation. Just do:
 
-HelpBrowser  openOn: AnnouncementsHelp 
+HelpBrowser openOn: AnnouncementsHelp
 
 "
 Class {
