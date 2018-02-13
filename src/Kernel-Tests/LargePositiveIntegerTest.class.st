@@ -5,7 +5,7 @@ Class {
 	#name : #LargePositiveIntegerTest,
 	#superclass : #ClassTestCase,
 	#category : #'Kernel-Tests-Numbers'
-}
+} 
 
 { #category : #tests }
 LargePositiveIntegerTest >> testBitShift [
@@ -41,23 +41,21 @@ LargePositiveIntegerTest >> testLargeSqrtFloor [
 
 { #category : #tests }
 LargePositiveIntegerTest >> testMultDicAddSub [
-	"self run: #testMultDicAddSub"
 
 	| n f f1 |	
 	n := 100.
 	f := 100 factorial.
 	f1 := f*(n+1).
 	n timesRepeat: [f1 := f1 - f].
-	self assert: (f1 = f). 
+	self assert: f1 equals: f. 
 
 	n timesRepeat: [f1 := f1 + f].
-	self assert: (f1 // f = (n+1)). 
-	self assert: (f1 negated = (Number readFrom: '-' , f1 printString)).
+	self assert: f1 // f equals: n+1. 
+	self assert: f1 negated equals: (Number readFrom: '-' , f1 printString)
 ]
 
 { #category : #tests }
 LargePositiveIntegerTest >> testNormalize [
-	"self run: #testNormalize"
 	"Check normalization and conversion to/from SmallInts"
 
 	self assert: ((SmallInteger maxVal + 1 - 1) == SmallInteger maxVal).
