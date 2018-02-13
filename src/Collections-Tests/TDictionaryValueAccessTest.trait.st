@@ -181,8 +181,6 @@ TDictionaryValueAccessTest >> testAtPutDict [
 
 	"self run: #testAtPutDict"
 
-	"self debug: #testAtPutDict"
-
 	| collection keyIn newValue |
 	collection := self nonEmpty.
 	keyIn := collection keys anyOne.
@@ -206,8 +204,6 @@ TDictionaryValueAccessTest >> testAtPutDict [
 { #category : #'tests - DictionaryIndexAccessing' }
 TDictionaryValueAccessTest >> testAtPutNil [
 	"self run: #testAtPutNil"
-
-	"self debug: #testAtPutNil"
 
 	| collection keyIn newValue |
 	collection := self nonEmpty.

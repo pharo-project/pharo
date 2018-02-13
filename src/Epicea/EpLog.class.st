@@ -1,7 +1,13 @@
 "
 I am a log of system events.
 
-Normally I enable a monitor (an EpMonitor), who adds instances of EpEvent into me.
+A user of my instances is EpMonitor, who adds instances of EpEvent into me when certain system announcements happen.
+
+My #entries contain the events ordered as ""the oldest first"".
+ 
+Examples:
+
+EpLog freshFromFile: 'path/to/ombu/file.ombu' asFileReference.
 "
 Class {
 	#name : #EpLog,
@@ -37,6 +43,13 @@ EpLog class >> new [
 EpLog class >> newNull [
 
 	^ self newWithStore: OmNullStore new.
+]
+
+{ #category : #'instance creation' }
+EpLog class >> newWithEvents: eventsTheOldestFirst [
+	^ self
+		newWithStore:
+			(OmMemoryStore withAll: eventsTheOldestFirst)
 ]
 
 { #category : #'instance creation' }

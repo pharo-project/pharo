@@ -404,7 +404,7 @@ FTPluggableIconListMorphAdaptor >> resetListSelector: aSelector [
 ]
 
 { #category : #accessing }
-FTPluggableIconListMorphAdaptor >> scrollValue [
+FTPluggableIconListMorphAdaptor >> scrollValue [ 
 	self flag: #todo. "x is always zero because horizontal scroll bar is not yet implemented"
 	^ 0@(self verticalScrollBar value)
 ]

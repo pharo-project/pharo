@@ -336,25 +336,20 @@ BagTest >> test0CopyTest [
 
 { #category : #'basic tests' }
 BagTest >> testAdd [
-	"self run: #testAdd"
-	"self debug: #testAdd"
 
 	| aBag |
 	aBag := Bag new.
 	aBag add: 'a'.
 	aBag add: 'b'.
 	
-	self assert: aBag size = 2.
+	self assert: aBag size equals: 2.
 	aBag add: 'a'.
-	self assert: aBag size = 3.
-	self assert: (aBag occurrencesOf: 'a') = 2
-	
-
+	self assert: aBag size equals: 3.
+	self assert: (aBag occurrencesOf: 'a') equals: 2
 ]
 
 { #category : #'basic tests' }
 BagTest >> testAddWithOccurrences [
-	"self debug:#testAddWithOccurrences"
 	
 	| aBag |
  	aBag := Bag new.	
@@ -407,8 +402,8 @@ BagTest >> testCopy [
 	aBag add:'a' withOccurrences: 4.
 	aBag add:'b' withOccurrences: 2.
 	newBag := aBag copy.
-	self assert: newBag = newBag.
-	self assert: newBag asSet size = 2.
+	self assert: newBag equals: newBag.
+	self assert: newBag asSet size equals: 2
 ]
 
 { #category : #'tests - copy' }
@@ -418,22 +413,14 @@ BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
 
 { #category : #tests }
 BagTest >> testCreation [
-	"self run: #testCreation" 
-	"self debug: #testCreation"
-		
 	| bag |
 	bag := Bag new.
-	self assert: (bag size) = 0.
-	self assert: (bag isEmpty).
-	
-
+	self assert: (bag size) equals: 0.
+	self assert: (bag isEmpty)
 ]
 
 { #category : #tests }
 BagTest >> testCumulativeCounts [
-	"self run: #testCumulativeCounts" 
-	"self debug: #testCumulativeCounts"
-		
 	| bag cumulativeCounts |
 	bag := Bag new.
 	bag add: '1' withOccurrences: 50.
@@ -442,34 +429,32 @@ BagTest >> testCumulativeCounts [
 	
 	cumulativeCounts := bag cumulativeCounts.
 	
-	self assert: cumulativeCounts size = 3.
-	self assert: cumulativeCounts first = (50 -> '1').
-	self assert: cumulativeCounts second = (90 -> '2').
-	self assert: cumulativeCounts third = (100 -> '3').
-
+	self assert: cumulativeCounts size equals: 3.
+	self assert: cumulativeCounts first equals: (50 -> '1').
+	self assert: cumulativeCounts second equals: (90 -> '2').
+	self assert: cumulativeCounts third equals: (100 -> '3')
 ]
 
 { #category : #tests }
 BagTest >> testEqual [
-	"(self run: #testEqual)"
-	"(self debug: #testEqual)"
+ 
 	| bag1 bag2 |
 	bag1 := Bag new.
 	bag2 := Bag new.
-	self assert: bag1 = bag2.
+	self assert: bag1 equals: bag2.
 	bag1 add: #a;
 		 add: #b.
 	bag2 add: #a;
 		 add: #a.
 	self deny: bag1 = bag2.
-	self assert: bag1 = bag1.
+	self assert: bag1 equals: bag1.
 	bag1 add: #a.
 	bag2 add: #b.
-	self assert: bag1 = bag2.
+	self assert: bag1 equals: bag2.
 	bag1 add: #c.
 	self deny: bag1 = bag2.
 	bag2 add: #c.
-	self assert: bag1 = bag2
+	self assert: bag1 equals: bag2
 ]
 
 { #category : #tests }
@@ -499,15 +484,14 @@ BagTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 BagTest >> testIncludesElementIsNotThere [
-	"self debug: #testIncludesElementIsNotThere"
+	
 	self deny: (self nonEmpty includes: self elementNotInForOccurrences).
 	self assert: (self nonEmpty includes: self nonEmpty anyOne).
 	self deny: (self empty includes: self elementNotInForOccurrences)
 ]
 
 { #category : #'basic tests' }
-BagTest >> testOccurrencesOf [
-	"self debug: #testOccurrencesOf"
+BagTest >> testOccurrencesOf [	
 
 	| aBag |
  	aBag := Bag new.	
@@ -527,24 +511,21 @@ BagTest >> testOccurrencesOf [
 
 { #category : #tests }
 BagTest >> testRemove [
-	"self run: #testRemove"
-	"self debug: #testRemove" 
-	
 	| bag item |
 	item := 'test item'.
 	bag := Bag new. 
 	
 	bag add: item.
-	self assert: (bag size) = 1.
+	self assert: (bag size) equals: 1.
 	bag remove: item.
 	self assert: bag isEmpty.
 	
 	bag add: item withOccurrences: 2.
 	bag remove: item.
 	bag remove: item.
-	self assert: (bag size) = 0.
+	self assert: (bag size) equals: 0.
 	
-	self should: [bag remove: item.] raise: Error.
+	self should: [bag remove: item.] raise: Error
 ]
 
 { #category : #tests }
@@ -564,7 +545,7 @@ BagTest >> testRemoveAll [
 
 { #category : #'tests - remove' }
 BagTest >> testRemoveElementThatExistsTwice [
-	"self debug: #testRemoveElementThatDoesExistsTwice"
+	 
 	| size |
 	size := self nonEmpty size.
 	self assert: (self nonEmpty includes: self elementTwiceIn).
@@ -574,8 +555,6 @@ BagTest >> testRemoveElementThatExistsTwice [
 
 { #category : #tests }
 BagTest >> testSortedCounts [
-	"self run: #testSortedCounts"
-	"self debug: #testSortedCounts" 
 	
 	| bag sortedCounts|
 	bag := Bag new.
@@ -584,17 +563,15 @@ BagTest >> testSortedCounts [
 	bag add: '3' withOccurrences: 5.
 	
 	sortedCounts := bag sortedCounts.
-	self assert: sortedCounts size = 3.
+	self assert: sortedCounts size equals: 3.
 	
-	self assert: sortedCounts first = (10->'1').
-	self assert: sortedCounts second =  (5->'3').
-	self assert: sortedCounts third =  (1->'2').	
+	self assert: sortedCounts first equals: (10->'1').
+	self assert: sortedCounts second equals: (5->'3').
+	self assert: sortedCounts third equals: (1->'2')
 ]
 
 { #category : #tests }
 BagTest >> testSortedElements [
-	"self run: #testSortedElements" 
-	"self debug: #testSortedElements"
 	
 	| bag sortedElements|
 	bag := Bag new.
@@ -604,12 +581,11 @@ BagTest >> testSortedElements [
 	
 	sortedElements := bag sortedElements.
 	
-	self assert: sortedElements size = 3.
+	self assert: sortedElements size equals: 3.
 	
-	self assert: sortedElements first = ('1'->10).
-	self assert: sortedElements second =  ('2'->1).
-	self assert: sortedElements third =  ('3'->5).
-	
+	self assert: sortedElements first equals: ('1'->10).
+	self assert: sortedElements second equals: ('2'->1).
+	self assert: sortedElements third equals: ('3'->5)
 ]
 
 { #category : #requirements }

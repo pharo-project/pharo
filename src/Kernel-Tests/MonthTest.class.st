@@ -38,8 +38,8 @@ MonthTest >> setUp [
 { #category : #running }
 MonthTest >> tearDown [
 
-	super tearDown.
 	month := nil.
+	super tearDown.	
 ]
 
 { #category : #tests }
@@ -58,8 +58,7 @@ MonthTest >> testEnumerating [
 ]
 
 { #category : #tests }
-MonthTest >> testIndexOfMonth [
-	"self debug: #testIndexOfMonth"
+MonthTest >> testIndexOfMonth [	
        | m |
        m := #(#January #February #March #April #May #June #July #August
 #September #October #November #December).

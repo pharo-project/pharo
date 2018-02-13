@@ -15,12 +15,15 @@ FLLightGeneralMapper >> clusterClassForSmallInteger: aSmallInteger [
 		aSmallInteger <= 65535 ifTrue: [^ FLPositive16SmallIntegerCluster].
 		aSmallInteger <= 16777215 ifTrue: [^ FLPositive24SmallIntegerCluster].
 		aSmallInteger <= 4294967295 ifTrue: [^ FLPositive32SmallIntegerCluster].
+		aSmallInteger <= 1152921504606846975 ifTrue: [^ FLPositive64SmallIntegerCluster].
 	].
 	aSmallInteger >= -128 ifTrue: [^ FLNegative8SmallIntegerCluster].
 	aSmallInteger >= -32768 ifTrue: [^ FLNegative16SmallIntegerCluster].
 	aSmallInteger >= -8388608 ifTrue: [^ FLNegative24SmallIntegerCluster].
 	aSmallInteger >= -2147483648 ifTrue: [^ FLNegative32SmallIntegerCluster].
+	aSmallInteger >= -1152921504606846976 ifTrue: [^ FLNegative64SmallIntegerCluster].
 
+	self error: 'SmallInteger is out of range'
 
 ]
 

@@ -20,7 +20,7 @@ TSubCollectionAccess >> test0FixtureSubcollectionAccessTest [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirst [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButFirst.
@@ -30,7 +30,7 @@ TSubCollectionAccess >> testAllButFirst [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButFirstNElements [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButFirst: 2.
@@ -42,7 +42,7 @@ TSubCollectionAccess >> testAllButFirstNElements [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLast [
-	"self debug: #testAllButLast"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButLast.
@@ -52,7 +52,7 @@ TSubCollectionAccess >> testAllButLast [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testAllButLastNElements [
-	"self debug: #testAllButFirst"
+
 	| abf col |
 	col := self moreThan3Elements.
 	abf := col allButLast: 2.
@@ -64,7 +64,6 @@ TSubCollectionAccess >> testAllButLastNElements [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testFirstNElements [
-	"self debug: #testFirstNElements"
 
 	| result |
 	result := self moreThan3Elements first: self moreThan3Elements size - 1.
@@ -75,7 +74,7 @@ TSubCollectionAccess >> testFirstNElements [
 
 { #category : #'tests - subcollections access' }
 TSubCollectionAccess >> testLastNElements [
-	"self debug: #testLastNElements"
+
 	| result |
 	result := self moreThan3Elements last: self moreThan3Elements size - 1.
 	1 

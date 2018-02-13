@@ -14,7 +14,7 @@ Class {
 	#instVars : [
 		'builder'
 	],
-	#category : 'Shift-Changes'
+	#category : #'Shift-Changes'
 }
 
 { #category : #comparing }

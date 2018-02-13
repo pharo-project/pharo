@@ -1,6 +1,6 @@
 Extension { #name : #NautilusUI }
 
-{ #category : #'*SmartSuggestions' }
+{ #category : #'*SmartSuggestions-Nautilus' }
 NautilusUI >> sugsContext [
 	^ SugsNautilusContext model: self.
 ]

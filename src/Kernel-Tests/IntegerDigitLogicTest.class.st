@@ -16,9 +16,9 @@ IntegerDigitLogicTest >> testAndSingleBitWithMinusOne [
 { #category : #tests }
 IntegerDigitLogicTest >> testLargeShift [
 	"A sanity check for LargeInteger bitShifts"
-	"self debug: #testLargeShift"
+	
 	| suite |
-	suite := #(     "some numbers on 64 bits or less"
+	suite := #( "some numbers on 64 bits or less"
                '101101011101001100110111110110011101101101000001110110011'
                '1101101001100010011001101110100000111011011010100011101100'
                '101101101011110011001100110011011101011001111000100011101000'

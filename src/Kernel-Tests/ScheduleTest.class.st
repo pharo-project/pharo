@@ -61,6 +61,7 @@ ScheduleTest >> setUp [
 ScheduleTest >> tearDown [
 
 	DateAndTime localTimeZone: restoredTimeZone.
+	super tearDown 
 
 ]
 

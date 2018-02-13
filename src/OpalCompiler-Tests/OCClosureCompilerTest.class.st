@@ -341,6 +341,7 @@ OCClosureCompilerTest >> setUp [
 { #category : #running }
 OCClosureCompilerTest >> tearDown [
 	SmalltalkImage compilerClass: currentCompiler.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -6,7 +6,7 @@ Class {
 
 { #category : #tests }
 GLMTabulatorMorphicTest >> testMultipleInitialSelection [
-	| browser firstTreeMorph secondTreeMorph |
+	| browser firstTreeMorph |
 	browser := GLMTabulator new.
 	browser column: #one.
 	browser

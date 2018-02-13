@@ -39,6 +39,7 @@ FileSystemHandleTest >> setUp [
 FileSystemHandleTest >> tearDown [
 	handle ensureClosed.
 	reference ensureDelete.
+	super tearDown
 ]
 
 { #category : #tests }

@@ -162,17 +162,6 @@ DebugSession >> errorWasInUIProcess: aBoolean [
 	errorWasInUIProcess := aBoolean
 ]
 
-{ #category : #context }
-DebugSession >> filterTopContext: aContext [
-	|ctx|
-	 
-	ctx := aContext.
-	(self shouldDisplayOnTopContext: ctx) ifTrue: [^ ctx].
-	[(ctx := ctx sender) ~~ nil] whileTrue:
-		[(self shouldDisplayOnTopContext: ctx) ifTrue: [^ ctx]].
-	^ nil
-]
-
 { #category : #evaluating }
 DebugSession >> implement: aMessage classified: aSymbol inClass: aClass forContext: aContext [
 	
@@ -336,7 +325,6 @@ DebugSession >> process: aProcess context: aContext [
 	"aProcess stepToSendOrReturn ."
 	"aProcess isSuspended ifTrue: [ aProcess stepToSendOrReturn ]."
 	interruptedProcess := aProcess.
-	interruptedContext := self filterTopContext: aContext.
 	interruptedContext ifNil: [interruptedContext := aContext].
 	
 

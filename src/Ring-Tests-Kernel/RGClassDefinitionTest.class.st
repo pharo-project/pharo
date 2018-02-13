@@ -156,9 +156,6 @@ RGClassDefinitionTest >> testNonExistingClass [
 
 { #category : #testing }
 RGClassDefinitionTest >> testReadFrom [
-	"self debug: #testReadFrom"
-	
-	
 	| st rg |
 	rg := Point asRingDefinition.
 	st := String streamContents: [:s |
@@ -202,9 +199,6 @@ RGClassDefinitionTest >> testRemovingMethods [
 
 { #category : #testing }
 RGClassDefinitionTest >> testStoreOn [
-	"self debug: #testStoreOn"
-	
-	
 	| st |
 	st := String streamContents: [:s |
 		

@@ -10,7 +10,7 @@ Class {
 
 { #category : #testing }
 FontTest >> testDisplay [
-	"self debug: #testDisplay"
+	
 	| text font bb destPoint width |
 	text := 'test' asText.
 	font := TextStyle default fontOfSize: 21.
@@ -29,7 +29,7 @@ FontTest >> testDisplay [
 
 { #category : #testing }
 FontTest >> testParagraph [
-	"self debug: #testParagraph"
+	
 	| text p style height width |
 	text := 'test' asText.
 	p := Paragraph new.

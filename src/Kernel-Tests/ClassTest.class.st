@@ -1,6 +1,6 @@
 "
 SUnit tests for classes
-"
+" 
 Class {
 	#name : #ClassTest,
 	#superclass : #ClassTestCase,
@@ -41,7 +41,6 @@ ClassTest >> referencingMethod2 [
 
 { #category : #'referencing methods' }
 ClassTest >> referencingMethod3 [
-
 	"no reference"
 
 	^ self
@@ -63,7 +62,8 @@ ClassTest >> setUp [
 ClassTest >> tearDown [
 	self deleteClass.
 	{self unclassifiedCategory. self categoryNameForTemporaryClasses} do: [:category|
-			RPackage organizer unregisterPackageNamed: category]
+			RPackage organizer unregisterPackageNamed: category].
+	super tearDown	
 ]
 
 { #category : #tests }
@@ -79,54 +79,50 @@ ClassTest >> testAddClassSlot [
 
 { #category : #tests }
 ClassTest >> testAddInstVarName [
-	"self run: #testAddInstVarName"
 
 	| tutu |
 	tutu := Smalltalk globals at: #TUTU.
 	tutu addInstVarNamed: 'x'.
-	self assert: tutu instVarNames = #('x').
+	self assert: tutu instVarNames equals: #('x').
 	tutu addInstVarNamed: 'y'.
-	self assert: tutu instVarNames = #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : #tests }
 ClassTest >> testAddSlot [
-	"self run: #testAddInstVarName"
 
 	| tutu |
 	tutu := Smalltalk globals at: #TUTU.
 	tutu addSlot: #x => InstanceVariableSlot.
-	self assert: tutu instVarNames = #('x').
-	self assert: tutu name = #TUTU.
+	self assert: tutu instVarNames equals: #('x').
+	self assert: tutu name equals: #TUTU.
 	tutu addSlot: #y => InstanceVariableSlot.
-	self assert: tutu instVarNames = #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : #tests }
 ClassTest >> testAddSlotAnonymous [
-	"self run: #testAddInstVarName"
 
 	| tutu |
 	tutu := Object newAnonymousSubclass.
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #x => InstanceVariableSlot.
-	self assert: tutu instVarNames = #('x').
+	self assert: tutu instVarNames equals: #('x').
 	self assert: tutu getName isNil.
 	tutu := tutu addSlot: #y => InstanceVariableSlot.
 	self assert: tutu getName isNil.
-	self assert: tutu instVarNames = #('x' 'y')
+	self assert: tutu instVarNames equals: #('x' 'y')
 ]
 
 { #category : #'tests - access' }
 ClassTest >> testAllSharedPools [
-	"self run: #testAllSharedPools"
 
-	self assert: Point allSharedPools = OrderedCollection new.
-	self assert: Date sharedPools first = ChronologyConstants.
-	self assert: Date sharedPools size = 1.	"a metaclass does not have shared pools since only classes have shared pools"
-	Date class sharedPools.
-	self assert: RootClassPoolUser sharedPools size = 1.
-	self assert: ClassMultiplePoolUser sharedPools size = 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
+	self assert: Point allSharedPools equals: OrderedCollection new.
+	self assert: Date sharedPools first equals: ChronologyConstants.
+	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
+
+	self assert: RootClassPoolUser sharedPools size equals: 1.
+	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self assert: SubclassPoolUser sharedPools isEmpty
 ]
 
@@ -146,8 +142,7 @@ ClassTest >> testDependencies [
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testHasPoolVarNamed [
-	"self debug: #testHasPoolVarNamed"
+ClassTest >> testHasPoolVarNamed [	
 
 	self assert: (Date usesLocalPoolVarNamed: 'DayNames').
 	"a metaclass does not have shared pools since only classes have shared pools"
@@ -160,7 +155,6 @@ ClassTest >> testHasPoolVarNamed [
 
 { #category : #'tests - access' }
 ClassTest >> testHasSharedPools [
-	"self run: #testHasSharedPools"
 
 	self deny: Point hasSharedPools.
 	self assert: Date hasSharedPools.
@@ -216,8 +210,7 @@ ClassTest >> testNewSubclass [
 ]
 
 { #category : #'tests - file in/out' }
-ClassTest >> testOrdersACollectionOfClassesBySuperclass [
-	"self debug: #testOrdersACollectionOfClassesBySuperclass"
+ClassTest >> testOrdersACollectionOfClassesBySuperclass [	
 	| ordered |
 	ordered := (Class superclassOrder:  
 		(OrderedCollection 
@@ -264,8 +257,7 @@ ClassTest >> testReferencedClasses [
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testSharedPoolOfVarNamed [
-	"self debug: #testSharedPoolOfVarNamed"
+ClassTest >> testSharedPoolOfVarNamed [	
 
 	self assert: (Date sharedPoolOfVarNamed: 'DayNames') = ChronologyConstants.
 	"a metaclass does not have shared pools since only classes have shared pools"
@@ -282,14 +274,13 @@ ClassTest >> testSharedPoolOfVarNamed [
 
 { #category : #'tests - access' }
 ClassTest >> testSharedPools [
-	"self run: #testSharedPools"
 
-	self assert: Point sharedPools = OrderedCollection new.
-	self assert: Date sharedPools first = ChronologyConstants.
-	self assert: Date sharedPools size = 1.	"a metaclass does not have shared pools since only classes have shared pools"
+	self assert: Point sharedPools equals: OrderedCollection new.
+	self assert: Date sharedPools first equals: ChronologyConstants.
+	self assert: Date sharedPools size equals: 1.	"a metaclass does not have shared pools since only classes have shared pools"
 	Date class sharedPools.
-	self assert: RootClassPoolUser sharedPools size = 1.
-	self assert: ClassMultiplePoolUser sharedPools size = 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
+	self assert: RootClassPoolUser sharedPools size equals: 1.
+	self assert: ClassMultiplePoolUser sharedPools size equals: 2.	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self assert: SubclassPoolUser sharedPools isEmpty
 ]
 
@@ -356,8 +347,7 @@ ClassTest >> testSuperclassOrderPreservingOrder [
 ]
 
 { #category : #'tests - access' }
-ClassTest >> testUsesPoolVarNamed [
-	"self debug: #testUsesPoolVarNamed"
+ClassTest >> testUsesPoolVarNamed [	
 
 	self assert: (Date usesPoolVarNamed: 'DayNames').
 	"a metaclass does not have shared pools since only classes have shared pools"

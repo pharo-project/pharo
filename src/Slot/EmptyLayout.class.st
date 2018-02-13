@@ -27,6 +27,16 @@ EmptyLayout >> extendByte [
 ]
 
 { #category : #extending }
+EmptyLayout >> extendDoubleByte [
+	^ DoubleByteLayout new
+]
+
+{ #category : #extending }
+EmptyLayout >> extendDoubleWord [
+	^ DoubleWordLayout new
+]
+
+{ #category : #extending }
 EmptyLayout >> extendVariable: someSlots [
 	^ VariableLayout new
 		slotScope: (LayoutEmptyScope extend: someSlots)

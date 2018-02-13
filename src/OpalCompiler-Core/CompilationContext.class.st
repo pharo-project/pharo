@@ -24,14 +24,21 @@ Class {
 		'encoderClass',
 		'astTransformPlugins',
 		'usesFullBlockClosure',
-		'requestorScopeClass'
+		'requestorScopeClass',
+		'bindings'
 	],
 	#classVars : [
 		'BytecodeBackend',
+		'DefaultTransformationPlugins',
 		'UsesFullBlockClosure'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
+
+{ #category : #adding }
+CompilationContext class >> addDefaultTransformationPlugin: aPlugin [
+	self defaultTransformationPlugins add: aPlugin
+]
 
 { #category : #accessing }
 CompilationContext class >> bytecodeBackend [
@@ -61,10 +68,26 @@ CompilationContext class >> default [
 	^instance.
 ]
 
-{ #category : #initialize }
+{ #category : #accessing }
+CompilationContext class >> defaultTransformationPlugins [
+	^ DefaultTransformationPlugins ifNil: [ DefaultTransformationPlugins := OrderedCollection new ]
+]
+
+{ #category : #accessing }
+CompilationContext class >> defaultTransformationPlugins: anObject [
+	DefaultTransformationPlugins := anObject
+]
+
+{ #category : #'class initialization' }
 CompilationContext class >> initialize [
+	DefaultTransformationPlugins := OrderedCollection new.
 	BytecodeBackend := EncoderForV3PlusClosures.
-	UsesFullBlockClosure := false.
+	UsesFullBlockClosure := false
+]
+
+{ #category : #removing }
+CompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
+	self defaultTransformationPlugins remove: aPlugin
 ]
 
 { #category : #accessing }
@@ -101,6 +124,16 @@ CompilationContext >> astTranslatorClass [
 { #category : #accessing }
 CompilationContext >> astTranslatorClass: anObject [
 	astTranslatorClass := anObject
+]
+
+{ #category : #accessing }
+CompilationContext >> bindings [
+	^ bindings
+]
+
+{ #category : #accessing }
+CompilationContext >> bindings: anObject [
+	bindings := anObject
 ]
 
 { #category : #accessing }
@@ -190,7 +223,7 @@ CompilationContext >> getClass [
 { #category : #initialization }
 CompilationContext >> initialize [
 	options := Set new.
-	astTransformPlugins := OrderedCollection new.
+	astTransformPlugins := OrderedCollection withAll: self class defaultTransformationPlugins
 ]
 
 { #category : #accessing }
@@ -337,11 +370,16 @@ CompilationContext >> scope [
 	newScope := OCClassScope for: class.
 	requestor ifNotNil: [
 		"the requestor is allowed to manage variables, the workspace is using it to auto-define vars"  
-		newScope := (self requestorScopeClass new 
+		newScope := (self requestorScopeClass new
 			compilationContext: self;
 			requestor: requestor) outerScope: newScope].
+		
+	bindings ifNotNil: [
+		"if we passed additional bindings in, setup a scope here"  
+		newScope := (OCExtraBindingScope  new
+			bindings: bindings) outerScope: newScope].	
+		
 	^newScope
-	
 ]
 
 { #category : #accessing }

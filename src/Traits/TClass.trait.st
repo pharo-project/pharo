@@ -322,12 +322,6 @@ TClass >> classVariables [
 ]
 
 { #category : #compiling }
-TClass >> compileAll [
-	super compileAll.
-	self classSide compileAll.
-]
-
-{ #category : #compiling }
 TClass >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
 	subclasses). Also recompile the methods in the metaclass."
@@ -678,6 +672,11 @@ TClass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
 { #category : #'subclass creation' }
 TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [ 
+	^self explicitRequirement.
+]
+
+{ #category : #'subclass creation' }
+TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [ 
 	^self explicitRequirement.
 ]
 

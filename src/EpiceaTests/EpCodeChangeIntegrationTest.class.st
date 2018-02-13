@@ -16,9 +16,9 @@ EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
-	super tearDown.
 	
-	self class environment organization removeCategory: self categoryNameForTesting
+	self class environment organization removeCategory: self categoryNameForTesting.
+	super tearDown.
 ]
 
 { #category : #tests }

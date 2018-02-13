@@ -24,7 +24,7 @@ GLMAnnouncer >> announcer [
 
 { #category : #accessing }
 GLMAnnouncer >> glmSubscriptions [
-	^ registry glmSubscriptions
+	^ registry subscriptions
 ]
 
 { #category : #testing }

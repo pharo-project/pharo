@@ -386,12 +386,6 @@ Trait >> classVariables [
 ]
 
 { #category : #compiling }
-Trait >> compileAll [
-	super compileAll.
-	self classSide compileAll.
-]
-
-{ #category : #compiling }
 Trait >> compileAllFrom: oldClass [
 	"Recompile all the methods in the receiver's method dictionary (not the
 	subclasses). Also recompile the methods in the metaclass."
@@ -800,6 +794,12 @@ Trait >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
 { #category : #'subclass creation' }
 Trait >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [ 
+	"Compatibility purposes"
+	^self error: 'Traits cannot have subclasses'.
+]
+
+{ #category : #'subclass creation' }
+Trait >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [ 
 	"Compatibility purposes"
 	^self error: 'Traits cannot have subclasses'.
 ]

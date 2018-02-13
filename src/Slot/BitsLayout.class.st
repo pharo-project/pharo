@@ -24,10 +24,42 @@ BitsLayout >> extendAgain: aLayout with: aScope [
 ]
 
 { #category : #extending }
+BitsLayout >> extendByte [
+	IncompatibleLayoutConflict new
+		layout: self;
+		subType: #byte;
+		signal
+]
+
+{ #category : #extending }
+BitsLayout >> extendDoubleByte [
+	IncompatibleLayoutConflict new
+		layout: self;
+		subType: #doubleByte;
+		signal
+]
+
+{ #category : #extending }
+BitsLayout >> extendDoubleWord [
+	IncompatibleLayoutConflict new
+		layout: self;
+		subType: #doubleWord;
+		signal
+]
+
+{ #category : #extending }
 BitsLayout >> extendWeak: aLayoutClassScope [ 
 	IncompatibleLayoutConflict new
 		layout: self;
 		subType: #weak;
+		signal
+]
+
+{ #category : #extending }
+BitsLayout >> extendWord [
+	IncompatibleLayoutConflict new
+		layout: self;
+		subType: #word;
 		signal
 ]
 
@@ -42,7 +74,17 @@ BitsLayout >> isBits [
 
 { #category : #testing }
 BitsLayout >> isBytes [
-	^ self subclassResponsibility
+	^ false
+]
+
+{ #category : #testing }
+BitsLayout >> isDoubleBytes [
+	^ false
+]
+
+{ #category : #testing }
+BitsLayout >> isDoubleWords [
+	^ false
 ]
 
 { #category : #testing }
@@ -52,7 +94,7 @@ BitsLayout >> isVariable [
 
 { #category : #testing }
 BitsLayout >> isWords [
-	^ self isBytes not
+	^ false
 ]
 
 { #category : #reshaping }

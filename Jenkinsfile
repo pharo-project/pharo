@@ -128,9 +128,7 @@ Check for latest built images in http://files.pharo.org:
 
 try{
   timeout(60){
-    if( env.BRANCH_NAME == "development" ) {
-        properties([disableConcurrentBuilds()])
-    }
+    properties([disableConcurrentBuilds()])
 	
     node('unix') {
      	cleanWs()

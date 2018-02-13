@@ -198,8 +198,9 @@ OmFileStore >> entryPositionsByLocalName [
 
 { #category : #accessing }
 OmFileStore >> entryReferences [
+	"Optimized implementation for potentially large files"
 	
-	^ (self entriesCount to: 1 by: -1) collect: [:index |
+	^ (1 to: self entriesCount) collect: [:index |
 			self referenceToLocalName: index asString ]
 ]
 

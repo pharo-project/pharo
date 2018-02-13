@@ -107,13 +107,13 @@ RPackageOrganizerTest >> tearDown [
 				cls removeFromSystem ].
 	"createdPackages do:
 		[:each | self packageOrganizer unregisterPackage: each]"
+	super tearDown 
 	
 
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testAccessingPackage [
-	"self debug: #testAccessingPackage"
+RPackageOrganizerTest >> testAccessingPackage [	
 
 	| p1 |
 	p1 := self createNewPackageNamed: 'P1'.
@@ -127,7 +127,7 @@ RPackageOrganizerTest >> testAccessingPackage [
 
 { #category : #tests }
 RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
-	"self debug: #testDefinedClassesInstanceAndMetaSideAPI"
+	
 	| p1 |
 	p1 := self createNewPackageNamed: 'P1'.
 	self packageOrganizer registerPackage: p1.
@@ -141,15 +141,14 @@ RPackageOrganizerTest >> testDefinedClassesInstanceAndMetaSideAPI [
 
 { #category : #tests }
 RPackageOrganizerTest >> testEmpty [
-	"self debug: #testEmpty"
+	
 	self assert: self packageOrganizer packageNames size = 1.
 	self assert: (self packageOrganizer packageNames includes: self packageClass defaultPackageName)
 
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testFullRegistration [
-	"self debug: #testFullRegistration"
+RPackageOrganizerTest >> testFullRegistration [	
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
@@ -200,7 +199,6 @@ RPackageOrganizerTest >> testFullRegistration [
 
 { #category : #tests }
 RPackageOrganizerTest >> testFullUnregistration [
-	"self debug: #testFullRegistration"
 
 	| p1 p2 p3 a1 a2 b1 b2 a3 |
 	"taken from setup of RPackageReadOnlyCompleteSetup"
@@ -252,10 +250,8 @@ RPackageOrganizerTest >> testFullUnregistration [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
-	"self debug: #testRegisteredIsThere"
 
 	| package1 package2 |
-
 	package1 := self createNewPackageNamed: 'P1'.
 	package1 register.
 	
@@ -267,7 +263,6 @@ RPackageOrganizerTest >> testRegisterPackageConflictWithPackage [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisterPackageConflictWithPackageTag [
-	"self debug: #testRegisteredIsThere"
 
 	| package1 package2 |
 
@@ -295,8 +290,7 @@ RPackageOrganizerTest >> testRegisterPackageTagConflictWithPackage [
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
-	"self debug: #testRegisteredIsIncludedInPackageNames"
+RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [	
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -314,9 +308,7 @@ RPackageOrganizerTest >> testRegisteredIsIncludedInPackageNames [
 ]
 
 { #category : #tests }
-RPackageOrganizerTest >> testRegisteredIsThere [
-	"self debug: #testRegisteredIsThere"
-
+RPackageOrganizerTest >> testRegisteredIsThere [	
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -333,8 +325,6 @@ RPackageOrganizerTest >> testRegisteredIsThere [
 
 { #category : #tests }
 RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
-	"self debug: #testRegisteredNumberOfPackageIsOk"
-
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -350,8 +340,6 @@ RPackageOrganizerTest >> testRegisteredNumberOfPackageIsOk [
 
 { #category : #'tests extending' }
 RPackageOrganizerTest >> testRegistrationExtendingPackages [
-	"self debug: #testRegistrationExtendingPackages"
-
 	| p |
 	self assert: (self packageOrganizer extendingPackagesOf: self quadrangleClass) isEmpty.
 	p := self pointRectangleInGraphElement.
@@ -378,29 +366,8 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 	self deny: (class organization categories includes: #foo).	
 ]
 
-{ #category : #'tests extending' }
-RPackageOrganizerTest >> testTestingPackageExistence [
-
-	| extensionCategory package existingPackage |
-	
-	self skip. "This tests seems to not have sense anymore (because creating of duplicated packages is forbidden). 
- 	Loot at RPackageOrganizerTest>>#testRegisterPackageConflictWithPackageTag"
-	
-	existingPackage := (RPackage named: 'RPackage-Tests') register; yourself.
-	extensionCategory := existingPackage name, '-subcategory'.
-	package := RPackage named: extensionCategory.
-	packageOrganizer := package organizer.
-	self deny: (packageOrganizer includesPackageNamed: extensionCategory).
-
-	packageOrganizer checkPackageExistsOrRegister: extensionCategory.
-
-	self deny: (packageOrganizer includesPackageNamed: extensionCategory).
-]
-
 { #category : #tests }
 RPackageOrganizerTest >> testUnregisterBasedOnNames [
-	"self debug: #testUnregisterBasedOnNames"
-
 	| p1 p2 p3 |
 	p1 := self createNewPackageNamed: 'P1'.
 	p2 := self createNewPackageNamed: 'P2'.
@@ -418,11 +385,7 @@ RPackageOrganizerTest >> testUnregisterBasedOnNames [
 
 { #category : #'tests extending' }
 RPackageOrganizerTest >> testUnregistrationExtendingPackages [
-	"self debug: #testUnregistrationExtendingPackages"
-
-	| p |
-	
-	
+	| p |	
 	p := self pointRectangleInGraphElement.
 	self packageOrganizer
 		registerExtendingPackage: p

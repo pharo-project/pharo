@@ -43,7 +43,7 @@ TIndexAccess >> test0FixtureIndexAccessTest [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIdentityIndexOf [
-	"self debug: #testIdentityIndexOf"
+
 	| collection element |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -65,7 +65,7 @@ TIndexAccess >> testIdentityIndexOfIAbsent [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOf [
-	"self debug: #testIndexOf"
+
 	| tmp index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	tmp := collection size.
@@ -78,7 +78,7 @@ TIndexAccess >> testIndexOf [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOfIfAbsent [
-	"self debug: #testIndexOfIfAbsent"
+
 	| collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	self assert: (collection 
@@ -91,7 +91,7 @@ TIndexAccess >> testIndexOfIfAbsent [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOfStartingAt [
-	"self debug: #testLastIndexOf"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -111,7 +111,7 @@ TIndexAccess >> testIndexOfStartingAt [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOfStartingAtIfAbsent [
-	"self debug: #testLastIndexOf"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -131,7 +131,7 @@ TIndexAccess >> testIndexOfStartingAtIfAbsent [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOfSubCollectionStartingAt [
-	"self debug: #testIndexOfIfAbsent"
+
 	| subcollection index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
@@ -147,7 +147,7 @@ TIndexAccess >> testIndexOfSubCollectionStartingAt [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOfSubCollectionStartingAtIfAbsent [
-	"self debug: #testIndexOfIfAbsent"
+
 	| index absent subcollection collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
@@ -167,7 +167,7 @@ TIndexAccess >> testIndexOfSubCollectionStartingAtIfAbsent [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testLastIndexOf [
-	"self debug: #testLastIndexOf"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -177,7 +177,7 @@ TIndexAccess >> testLastIndexOf [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testLastIndexOfIfAbsent [
-	"self debug: #testIndexOfIfAbsent"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -191,7 +191,7 @@ TIndexAccess >> testLastIndexOfIfAbsent [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testLastIndexOfStartingAt [
-	"self debug: #testLastIndexOf"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection last.

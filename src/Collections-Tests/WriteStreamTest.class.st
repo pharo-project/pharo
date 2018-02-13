@@ -44,7 +44,7 @@ WriteStreamTest >> stringSize [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureASpace [
-	"self debug: #testEnsureASpace"
+	
 	| stream |
 	stream := self newStream.
 	stream nextPutAll: 'this is a test'.
@@ -62,7 +62,7 @@ WriteStreamTest >> testEnsureASpace [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureASpace2 [
-	"self debug: #testEnsureASpace2"
+	
 	| stream |
 	stream := self newStream.
 	stream ensureASpace.
@@ -72,7 +72,7 @@ WriteStreamTest >> testEnsureASpace2 [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureEndsWith [
-	"self debug: #testEnsureEndsWith"
+	
 	| stream |
 	stream := self newStream.
 	stream nextPutAll: 'this is a test'.
@@ -95,7 +95,7 @@ WriteStreamTest >> testEnsureEndsWith [
 
 { #category : #tests }
 WriteStreamTest >> testEnsureNoSpace [
-	"self debug: #testEnsureASpace2"
+	 
 	| stream |
 	stream := self newStream.
 	stream ensureNoSpace.

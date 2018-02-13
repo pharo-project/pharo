@@ -17,7 +17,7 @@ ChangeSetClassChangesTest >> categoryNameForTemporaryClasses [
 	"Answer the category where to classify temporarily created classes"
 
 	^'Dummy-Tests-Class' 
-]
+] 
 
 { #category : #support }
 ChangeSetClassChangesTest >> deleteClass [
@@ -69,7 +69,8 @@ ChangeSetClassChangesTest >> tearDown [
 	(Smalltalk globals classNamed: #JunkClass) ifNotNil: [ :c | c removeFromSystem: true ].
 	SystemOrganization removeCategory: #'DeleteMe-1'.
 	SystemOrganization removeCategory: #'DeleteMe-2'.
-	ChangeSet current removeClassChanges: 'JunkClass'
+	ChangeSet current removeClassChanges: 'JunkClass'.
+	super tearDown
 ]
 
 { #category : #testing }
@@ -234,19 +235,12 @@ ChangeSetClassChangesTest >> testChangeClassCategoryAddsNewChangeRecord [
 { #category : #testing }
 ChangeSetClassChangesTest >> testInitialChangeSet [
 	"Run this to assure the initial changeset is named. Checks bug found in 3.9 7052."
-	"self new testInitialChangeSet"
-	"self run:  #testInitialChangeSet"
 
-	self deny: (ChangeSet current printString = 'a ChangeSet named <no name -- garbage?>') .
-	
-^true
+	self deny: (ChangeSet current printString = 'a ChangeSet named <no name -- garbage?>')
 ]
 
 { #category : #support }
 ChangeSetClassChangesTest >> testRenaming [
-	"self debug: #testRenaming"
-
-	"self run: #testRenaming"
 
 	| oldName newMetaclassName class |
 	oldName := className.
@@ -254,7 +248,7 @@ ChangeSetClassChangesTest >> testRenaming [
 	class := Smalltalk globals at: oldName.
 	class class compile: 'dummyMeth'.
 	class rename: renamedName.
-	self assert: class name = renamedName.
+	self assert: class name equals: renamedName.
 	self assert: (ChangeSet current changedClassNames includes: renamedName).
 	self assert: (ChangeSet current changedClassNames includes: newMetaclassName)
 ]

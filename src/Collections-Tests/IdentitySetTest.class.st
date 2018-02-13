@@ -30,7 +30,6 @@ IdentitySetTest >> identityCollectionWithElementsCopyNotIdentical [
 
 { #category : #'tests - identity' }
 IdentitySetTest >> testGrowWithNil [
-	"self run: #testGrowWithNil"
 	"This test covers that grow take into account that nil are wrapped elements of sets"
 	| set |
 	set := IdentitySet new.
@@ -41,25 +40,20 @@ IdentitySetTest >> testGrowWithNil [
 
 { #category : #'tests - identity' }
 IdentitySetTest >> testIdentity [
-	"self run:#testIdentity" 
-	"self debug:#testIdentity"
 	| identitySet aString anOtherString |
 	
 	aString := 'hello'.
 	anOtherString := aString copy.
 	
-	self assert: (aString = anOtherString).
-	self assert: (aString == anOtherString) not.
-
+	self assert: aString equals: anOtherString.
+	self deny: aString == anOtherString.
 	
 	identitySet := self classToBeTested  new.
 	identitySet add: aString.
-
 	
-	self assert: (identitySet occurrencesOf: aString) = 1.
-	self assert: (identitySet occurrencesOf: anOtherString) = 0.
+	self assert: (identitySet occurrencesOf: aString) equals: 1.
+	self assert: (identitySet occurrencesOf: anOtherString) equals: 0.
 	
-
 	self assert: (identitySet includes: aString).
-	self deny: (identitySet includes: anOtherString) = 0.
+	self deny: (identitySet includes: anOtherString) equals: 0.
 ]

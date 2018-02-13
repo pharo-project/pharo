@@ -985,8 +985,7 @@ MetacelloScriptingResource >> setUp [
     setUpConfiguration181;
     setUpBaselineIssue215;
     setUpConfigurationIssue339;
-    setUpIssue399;
-    yourself
+    setUpIssue399
 ]
 
 { #category : #'baseline pragma - github reference' }

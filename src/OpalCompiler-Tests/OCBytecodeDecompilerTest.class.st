@@ -5,7 +5,7 @@ Class {
 		'currentCompiler'
 	],
 	#category : #'OpalCompiler-Tests-Bytecode'
-} 
+}
 
 { #category : #examples }
 OCBytecodeDecompilerTest >> pushClosureCopyNoCopied [
@@ -160,6 +160,7 @@ OCBytecodeDecompilerTest >> setUp [
 { #category : #running }
 OCBytecodeDecompilerTest >> tearDown [
 	SmalltalkImage compilerClass: currentCompiler.
+	super tearDown
 ]
 
 { #category : #'tests - blocks' }

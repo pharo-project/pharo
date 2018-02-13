@@ -52,8 +52,7 @@ TraitTest >> testAddAndRemoveMethodsInClassOrTrait [
 ]
 
 { #category : #testing }
-TraitTest >> testAllClassVarNames [
-	
+TraitTest >> testAllClassVarNames [	
 	
 	self assert: self t1 allClassVarNames isEmpty
 ]
@@ -130,7 +129,6 @@ TraitTest >> testErrorClassCreation [
 
 { #category : #testing }
 TraitTest >> testExplicitRequirement [
-	"self run: #testExplicitRequirement"
 
 	self t1 compile: 'm self explicitRequirement'.
 	self t2 compile: 'm ^true'.
@@ -275,11 +273,9 @@ TraitTest >> testLocalMethodWithSameCodeInTrait [
 
 { #category : #testing }
 TraitTest >> testMarkerMethods [
-	"self debug: #testMarkerMethods"
-
+	
 	self t1 compile: 'm1 self foo bar'.
 	self assert: (self t1 >> #m1) markerOrNil isNil.
-
 
 	self t1 compile: 'm2 self requirement'.
 	self assert: (self t1 >> #m2) markerOrNil == #requirement.
@@ -370,7 +366,6 @@ TraitTest >> testPrinting [
 
 { #category : #testing }
 TraitTest >> testPrintingClassSide [
-	"self run: #testPrintingClassSide"
 	
 	self assertPrints: self t6 classSide definition
 		like: 'T6 classTrait
@@ -394,8 +389,7 @@ TraitTest >> testRemoveFromSystem [
 
 { #category : #testing }
 TraitTest >> testRequirement [
-	"self debug: #testRequirement"
-
+	
 	self t1 compile: 'm self requirement'.
 	self t2 compile: 'm ^true'.
 	self assert: self c2 new m.
@@ -436,8 +430,7 @@ TraitTest >> testTraitRemoval [
 
 { #category : #testing }
 TraitTest >> testTraitsMethodClassSanity [
-	"self debug: #testTraitsMethodClassSanity"
-	
+		
 	(Smalltalk globals allTraits flatCollect: #traitUsers) asSet do: [ :each |
 		each selectorsDo: [ :selector |
 			self should: [ (each >> selector) methodClass == each ] ] ]
@@ -446,8 +439,7 @@ TraitTest >> testTraitsMethodClassSanity [
 { #category : #testing }
 TraitTest >> testTraitsUsersSanity [
 	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
-	"self debug: #testTraitsUsersSanity"
-	
+		
 	Smalltalk allClassesAndTraits do: [ :each |
 		self assert: (each traits allSatisfy: [ :t | t traitUsers includes: each  ]) ].
 
@@ -472,8 +464,7 @@ TraitTest >> testUsers [
 { #category : #testing }
 TraitTest >> testUsersWithClassChanges [
 	"This documents bug http://code.google.com/p/pharo/issues/detail?id=443"
-	"self debug: #testUsersWithClassChanges"
-	
+		
 	self c2 setTraitCompositionFrom: self t5.
 	self assert: self t5 traitUsers size = 1.
 	self assert: self t5 classSide traitUsers size = 1.

@@ -20,11 +20,11 @@ SimulateMouseSpecification >> menuOpenedDuring: aBlock [
 SimulateMouseSpecification >> tearDown [
 
 	morph delete.
+	super tearDown 
 ]
 
 { #category : #tests }
 SimulateMouseSpecification >> testSimulateClick [
-	"self run: #testSimulateClick"
 
 	morph := TextMorph new contents: ''; openInWorld.	
 	morph simulateClick.
@@ -33,7 +33,6 @@ SimulateMouseSpecification >> testSimulateClick [
 
 { #category : #tests }
 SimulateMouseSpecification >> testSimulateMiddleClick [
-	"self run: #testSimulateMiddleClick"
 	
 	morph := MorphHandlingMiddleButton new openInWorld.
 	morph simulateMiddleClick.
@@ -43,7 +42,6 @@ SimulateMouseSpecification >> testSimulateMiddleClick [
 
 { #category : #tests }
 SimulateMouseSpecification >> testSimulateRightClick [
-	"self run: #testSimulateRightClick"
 	
 	| menu |
 	morph := Smalltalk tools workspace open.

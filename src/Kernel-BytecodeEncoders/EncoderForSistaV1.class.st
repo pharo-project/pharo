@@ -15,11 +15,11 @@ Instance Variables (inherited)
 
 1 Byte Bytecodes
 	code	(note)	binary			name
-	0-15		0000 iiii 			Push Receiver Variable #iiii
-	16-31		0001 iiii			Push Literal Variable #iiii
+	0-15			0000 iiii 				Push Receiver Variable #iiii
+	16-31		0001 iiii				Push Literal Variable #iiii
 	32-63		001 iiiii				Push Literal #iiiii
-	64-71		01000 iii			Push Temp #iii
-	72-75		010010 ii			Push Temp #ii + 8
+	64-71		01000 iii				Push Temp #iii
+	72-75		010010 ii				Push Temp #ii + 8
 	76			01001100			Push Receiver
 	77			01001101			Push true
 	78			01001110			Push false
@@ -28,30 +28,26 @@ Instance Variables (inherited)
 	81			01010001			Push 1
 *	82			01010010			Push thisContext, (then Extend B = 1 => push thisProcess)
 	83			01010011			Duplicate Stack Top
-	84-87		010101 ii			UNASSIGNED
-	88-91		010110 ii			Return Receiver/true/false/nil
+	84-87		010101 ii				UNASSIGNED
+	88-91		010110 ii				Return Receiver/true/false/nil
 	92			01011100			Return top
 	93			01011101			BlockReturn nil
 *	94			01011110			BlockReturn Top [* return from enclosing block N, N = Extend A, then jump by Ext B ]
 *	95			01011111			Nop
-	96-111		0110 iiii			Send Arithmetic Message #iiii #(#+ #- #< #> #<= #>= #= #~= #* #/ #\\ #@ #bitShift: #// #bitAnd: #bitOr:)
-	112-119	01110 iii			Send Special Message #iii #(#at: #at:put: #size #next #nextPut: #atEnd #== class)
-	120		01111000			UNASSIGNED (was: blockCopy::, reserved for #~~)
-	121		01111001			Send Special Message #value
-	122-123	0111101 i			Send Special Message #i #(#value: #do:)
-	124-127	011111 ii			Send Special Message #ii #(#new #new: #x #y))
-	128-143	1000 iiii			Send Literal Selector #iiii With 0 Argument
-	144-159	1001 iiii			Send Literal Selector #iiii With 1 Arguments
-	160-175	1010 iiii			Send Literal Selector #iiii With 2 Arguments
-	176-183	10110 iii			Jump iii + 1 (i.e., 1 through 8)
-	184-191	10111 iii			Pop and Jump 0n True iii +1 (i.e., 1 through 8)
-	192-199	11000 iii			Pop and Jump 0n False iii +1 (i.e., 1 through 8)
-	200-207	11001 iii			Pop and Store Receiver Variable #iii
-	208-215	11010 iii			Pop and Store Temporary Variable #iii
-	216		11011000			Pop Stack Top
-	217		11011001			Unconditional trap
-	218-219	1101101 i			UNASSIGNED
-	220-223	110111 ii			UNASSIGNED
+	96-111		0110 iiii				Send Arithmetic Message #iiii #(#+ #- #< #> #<= #>= #= #~= #* #/ #\\ #@ #bitShift: #// #bitAnd: #bitOr:)
+	112-127	0111 iiii					Send Special Message #iiii #(#at: #at:put: #size #next #nextPut: #atEnd #== class #~~ #value #value: #do: #new #new: #x #y)
+	128-143	1000 iiii					Send Literal Selector #iiii With 0 Argument
+	144-159	1001 iiii					Send Literal Selector #iiii With 1 Arguments
+	160-175	1010 iiii					Send Literal Selector #iiii With 2 Arguments
+	176-183	10110 iii					Jump iii + 1 (i.e., 1 through 8)
+	184-191	10111 iii					Pop and Jump 0n True iii +1 (i.e., 1 through 8)
+	192-199	11000 iii					Pop and Jump 0n False iii +1 (i.e., 1 through 8)
+	200-207	11001 iii					Pop and Store Receiver Variable #iii
+	208-215	11010 iii					Pop and Store Temporary Variable #iii
+	216		11011000				Pop Stack Top
+	217		11011001				Unconditional trap [Sista specific]
+	218-219	1101101 i				UNASSIGNED
+	220-223	110111 ii					UNASSIGNED
 
 2 Byte Bytecodes
 *	224		11100000	aaaaaaaa	Extend A (Ext A = Ext A prev * 256 + Ext A) A is an unsigned extension.
@@ -69,90 +65,203 @@ Instance Variables (inherited)
 **	235	(1)	11101011	iiiiijjj	ExtendB < 64
 										ifTrue: [Send To Superclass Literal Selector #iiiii (+ Extend A * 32) with jjj (+ Extend B * 8) Arguments]
 										ifFalse: [Send To Superclass of Stacked Class Literal Selector #iiiii (+ Extend A * 32) with jjj (+ (Extend B bitAnd: 63) * 8) Arguments]
-*	236		11101100	iiiiiiii		UNASSIGNED
+	236		11101100	iiiiiiii		Call Mapped inlined primitive #iiiiiiii [Sista specific]
 *	237		11101101	iiiiiiii		Jump #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)
-**	238		11101110	iiiiiiii		Pop and Jump 0n True #iiiiiiii (+ Extend B * 256, where Extend B >= 0) (4)
-**	239		11101111	iiiiiiii		Pop and Jump 0n False #iiiiiiii (+ Extend B * 256, where Extend B >= 0) (4)
-**	240	(3)	11110000	iiiiiiii		Pop and Store Receiver Variable #iiiiiii (+ Extend A * 256) 
-**	241	(3)	11110001	iiiiiiii		Pop and Store Literal Variable #iiiiiiii (+ Extend A * 256) 
+**	238		11101110	iiiiiiii		Pop and Jump 0n True #iiiiiiii (+ Extend B * 256, where Extend B >= 0) 
+**	239		11101111	iiiiiiii		Pop and Jump 0n False #iiiiiiii (+ Extend B * 256, where Extend B >= 0)
+*	240		11110000	iiiiiiii		Pop and Store Receiver Variable #iiiiiii (+ Extend A * 256) 
+*	241		11110001	iiiiiiii		Pop and Store Literal Variable #iiiiiiii (+ Extend A * 256) 
 	242		11110010	iiiiiiii		Pop and Store Temporary Variable #iiiiiiii
-**	243	(3)	11110011	iiiiiiii		Store Receiver Variable #iiiiiii (+ Extend A * 256) 
-**	244	(3)	11110100	iiiiiiii		Store Literal Variable #iiiiiiii (+ Extend A * 256) 
+*	243		11110011	iiiiiiii		Store Receiver Variable #iiiiiii (+ Extend A * 256) 
+*	244		11110100	iiiiiiii		Store Literal Variable #iiiiiiii (+ Extend A * 256) 
 	245		11110110	iiiiiiii		Store Temporary Variable #iiiiiiii
 	246-247	1111011 i	xxxxxxxx	UNASSIGNED
 
 3 Byte Bytecodes
-	248	(2)	11111000 	iiiiiiii		mssjjjjj		Call Primitive #iiiiiiii + (jjjjj * 256) 
+	248	(2)	11111000 	iiiiiiii	mssjjjjj		Call Primitive #iiiiiiii + (jjjjj * 256) 
 								m=1 means inlined primitive, no hard return after execution. 
 								ss defines the unsafe operation set used to encode the operations. 
-								(ss = 0 means sista unsafe operations, ss = 01 means lowcode operations, other numbers are not used)
-								Inlined primitives may have extensions.
+								(ss = 0 means sista unsafe operations, ss = 01 means lowcode operations, other numbers are not used) [Sista specific]
 	249		11111001 	xxxxxxxx	siyyyyyy	push Closure Compiled block literal index xxxxxxxx (+ Extend A * 256) numCopied yyyyyy receiverOnStack: s = 1 ignoreOuterContext: i = 1
 **	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions
-	251		11111011 	kkkkkkkk	sjjjjjjj		Push Temp At kkkkkkkk In Temp Vector At: jjjjjjj, s = 1 implies remote inst var access instead of remote temp vector access 
-*	252	(3)	11111100 	kkkkkkkk	sjjjjjjj		Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access 
-*	253	(3)	11111101 	kkkkkkkk	sjjjjjjj		Pop and Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access
-**	254		11111110	kkkkkkkk	jjjjjjjj		branch If Not Instance Of Behavior/Array Of Behavior kkkkkkkk (+ Extend A * 256, where Extend A >= 0) distance jjjjjjjj (+ Extend B * 256, where Extend B >= 0)
-*	255		11111111	xxxxxxxx	jjjjjjjj		UNASSIGNED
+	251		11111011 	kkkkkkkk	jjjjjjjj		Push Temp At kkkkkkkk In Temp Vector At: jjjjjjjj
+*	252	(3)	11111100 	kkkkkkkk	jjjjjjjj		Store Temp At kkkkkkkk In Temp Vector At: jjjjjjjj
+*	253	(3)	11111101 	kkkkkkkk	jjjjjjjj		Pop and Store Temp At kkkkkkkk In Temp Vector At: jjjjjjjj
+	254		11111110	kkkkkkkk	jjjjjjjj		UNASSIGNED
+	255		11111111	xxxxxxxx	jjjjjjjj			UNASSIGNED
 
 (1) Bytecode 235 is a super send bytecode that starts the lookup in the superclass of some class.  It has two forms, ""normal"" and ""directed"". In the normal form, the class is the value of the method's methodClassAssociation which must be the last literal.  In the directed form the class is the class on top of stack.
 
 (2) The Call Primitive Bytecode specifies either a primitive in the primitive table (m=0) or an inlined primitive (m=1). Non-inlined primtiives from the primitive table have index (jjjjjjj * 256) + iiiiiiii and return from the method if they succeed.  This bytecode is only valid as the first bytecode of a method.  Inline primitives have index (jjjjjjj * 256) + iiiiiiii, cannot fail, and do not return when they succeed, yielding a result (typically on top of stack after popping their arguments, but possibly in a byte data stack, for example for unboxed floating-point primitives).
 
-(3) ExtB lowest bit implies no store check is needed, ExtB second bit implies the object may be a context, ExtB third bit implies no immutability/read-only check is needed, other bits in the extension are unused.
-
-(4) ExtA = 1 implies no mustBeBoolean trampoline is needed, other bits in the extension are unused
+[Sista specific] The 3 bytecodes with this annotations are not used in the default Pharo runtime but only in specific circumstances (Sista runtime, etc.)
 
 Here is the specification of the sista unsafe instructions (unsafe operations, set 00). The lowcode set uses external specifications.
-We sort the inline primitive operations by arity.  Nullary primitives occupy the 0-999 range. Unary primitives occupy the 1-1999 range, up until 8 args. 8191 instructions can be encoded in each unsafe operation set, instructions from 0 to 7 arguments can have 1000 different instructions each, while 8 args instructions can have 192 different instructions.
 
-We define the following inlined primitives:
-1000	unchecked class
-1001	unchecked pointer numSlots
-1002	unchecked pointer basicSize
-1003	unchecked byte8Type format numBytes (includes CompiledMethod)
-1004	unchecked short16Type format numShorts
-1005	unchecked word32Type format numWords
-1006	unchecked doubleWord64Type format numDoubleWords
-	
-1010	unchecked ensure number of bytes available.
-1011	unchecked fixed-sized new. (objects with 0 to n inst vars)
+We sort the inline primitive operations by arity.  Nullary primitives occupy the 0-999 range. Unary primitives occupy the 1-1999 range, up until 5 args. Primitives starting at 6000 are jumps. 6000-6999 are 1 parameter jump (the distance), 7000-7999 are 2 parameters jump and jumps over 8000 have 3 parameters.
 
-2000	unchecked SmallInteger #+.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2001	unchecked SmallInteger #-.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2002	unchecked SmallInteger #*.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2003	unchecked SmallInteger #/.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2004	unchecked SmallInteger #//.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2005	unchecked SmallInteger #\\.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2006	unchecked SmallInteger #quo:.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
+All jumps encoded as inlined primitives (mapped or not) use the pushIntegerLong: scheme to push their jump size on stack.
 
-2011	unchecked Variable-sized new (new:). Array, ByteArray, etc.
+We define the following *non-mapped* inlined primitives:
+1000	rawClass
+not a forwarder => Behavior (Same as class special send, but receiver is not a forwarder)
+1001	numSlots
+pointer object => Smi between 0 and SmallInteger maxVal // 4 - 1 (Answers total size in pointer-sized slots)
+1002	numBytes
+byte object => Smi between 0 and SmallInteger maxVal - 9 (Includes compiled code)
+1003	numShorts
+short object => Smi between 0 and SmallInteger maxVal - 9
+1004	numWords
+word object => Smi between 0 and SmallInteger maxVal - 9
+1005	numDoubleWords
+double word object => Smi between 0 and SmallInteger maxVal - 9
+1011	rawNew
+literal which is a fixed-sized behavior => instance of the receiver with fields nilled out
+1012	rawNewNoInit
+literal which is a fixed-sized behavior => instance of the receiver (Fields of returned value contain undefined data)
+1020	objectIdentityHash
+non-immediate and non-behavior => 22 bits strictly positive Smi
+1021	smiIdentityHash
+Smi => Smi
+1022	charIdentityHash
+Character => 22 bits strictly positive Smi
+1023	smallfloatIdentityHash
+SmallFloat => Smi
+1024	behaviorIdentityHash
+Behavior => 22 bits strictly positive Smi
+1030	characterAsInteger
+Character => 22 bits strictly positive Smi (Unicode)
+1031	smallFloatAsInteger
+SmallFloat => Smi
+1032	smiAsFloat
+Smi => SmallFloat
+1039	unforwardNonImmediate
+non immediate => Not a forwarder
+1040	unforward
+Anything => Not a forwarder
+1041	possibleRoot
+non-immediate, not a forwarder => receiver is returned (should be effect-only) (If old, becomes gray and remembered to allow many unchecked stores in a row afterwards)
 
-2016	unchecked SmallInteger #bitAnd:.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2017	unchecked SmallInteger #bitOr:.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2018	unchecked SmallInteger #bitXor:.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
-2019	unchecked SmallInteger #bitShift:.  Both arguments are SmallIntegers and the result fits in a SmallInteger (* depends on word size)
+2000	smiAdd:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2001	smiSub:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2002	smiMul:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2003	smiDivide:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2004	smiDiv:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2005	smiMod:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2006	smiQuo:
+Smi, Smi => Smi (no overflow, optimised if one operand is a constant)
+2016	smiBitAnd:
+Smi, Smi => Smi (optimised if one operand is a constant)
+2017	smiBitOr:
+Smi, Smi => Smi (optimised if one operand is a constant)
+2018	smiBitXor:
+Smi, Smi => Smi (optimised if one operand is a constant)
+2019	smiBitShiftLeft:
+Smi greater or equal to 0, Smi greater or equal to 0 => Smi (no overflow, optimised if arg1 is a constant)
+2020	smiBitShiftRight:
+Smi, Smi greater or equal to 0 => Smi (optimised if arg1 is a constant)
+2032	smiGreater:
+Smi, Smi => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2033	smiLess:
+Smi, Smi => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2034	smiGreaterOrEqual:
+Smi, Smi => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2035	smiLessOrEqual:
+Smi, Smi => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2036	smiEquals:
+Smi, Smi => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2037	smiNotEquals:
+Smi, Smi => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2038	rawEqualsEquals:
+not a forwarder, not a forwarder => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2039	rawNotEqualsEquals:
+not a forwarder, not a forwarder => Boolean (optimised if one operand is a constant, Pipelined with ifTrue:ifFalse:)
+2048	rawNewColon:
+literal which is a variable-sized behavior, Smi => instance of receiver, fields nilled/zeroed out (optimised if arg1 is a constant)
+2049	rawNewColonNoInit:
+literal which is a variable-sized behavior, Smi => instance of receiver (Fields of returned value contain undefined data, optimised if arg1 is a constant)
+2064	pointerAt:
+Pointer object (Fixed sized or not) and not a context, Smi =>  (1-based, optimised if arg1 is a constant)
+2065	maybeContextPointerAt:
+Pointer object (Fixed sized or not), Smi =>  (1-based, optimised if arg1 is a constant)
+2066	byteAt:
+byte object, Smi => 8 bits unsigned Smi (1-based, optimised if arg1 is a constant)
+2067	shortAt:
+short object, Smi => 16 bits unsigned Smi (1-based, optimised if arg1 is a constant)
+2068	wordAt:
+word object, Smi => 32 bits unsigned Smi (1-based, optimised if arg1 is a constant)
+2069	doubleWordAt:
+double word object, Smi => 64 bits unsigned Smi or LargePositiveInteger (1-based, optimised if arg1 is a constant)
 
-2032	unchecked SmallInteger #>.  Both arguments are SmallIntegers
-2033	unchecked SmallInteger #<.  Both arguments are SmallIntegers
-2034	unchecked SmallInteger #>=.  Both arguments are SmallIntegers
-2035	unchecked SmallInteger #<=.  Both arguments are SmallIntegers
-2036	unchecked SmallInteger #=.  Both arguments are SmallIntegers
-2037	unchecked SmallInteger #~=.  Both arguments are SmallIntegers
+3000	pointerAt:put:
+Mutable pointer object (Fixed sized or not) and not a context, Smi, Anything => arg2 (1-based, optimised if arg1 is a constant)
+3001	storeCheckPointerAt:put:
+Mutable pointer object (Fixed sized or not) and not a context, Smi, Anything => arg2 (1-based, optimised if arg1 is a constant)
+3002	maybeContextPointerAt:put:
+Mutable pointer object (Fixed sized or not), Smi, Anything => arg2 (1-based, optimised if arg1 is a constant)
+3003	maybeContextStoreCheckPointerAt:put:
+Mutable pointer object (Fixed sized or not), Smi, Anything => arg2 (1-based, optimised if arg1 is a constant)
+3004	byteAt:put:
+Mutable byte object, Smi, 8 bits unsigned Smi => arg2 (1-based, optimised if arg1 is a constant)
+3005	shortAt:put:
+Mutable short object, Smi, 16 bits unsigned Smi => arg2 (1-based, optimised if arg1 is a constant)
+3006	wordAt:put:
+Mutable word object, Smi, 32 bits unsigned Smi => arg2 (1-based, optimised if arg1 is a constant)
+3007	doubleWordAt:put:
+Mutable double word object, Smi, 64 bits unsigned Smi or LargePositiveInteger => arg2 (1-based, optimised if arg1 is a constant)
 
-2064	unchecked Pointer Object>>at:.		The receiver is guaranteed to be a pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger
-2065	unchecked Byte Object>>at:.			The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The result is a SmallInteger.
-2066	unchecked 16-bit Word Object>>at:.			The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The result is a SmallInteger.
-2067	unchecked Word Object>>at:.			The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The result is a SmallInteger.
-2068	unchecked DoubleWord Object>>at:.	The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The result is a SmallInteger or a LargePositiveInteger.
-2069	unchecked QuadWord Object>>at:.		The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The result is a SmallInteger or a LargePositiveInteger.
+6000	backjumpNoInterrupt
+literal which is a Smi
+7016	jumpWritable:
+Not a forwarder, literal which is a Smi
+7017	jumpReadOnly:
+Not a forwarder, literal which is a Smi
+7018	jumpYoung:
+Not a forwarder, literal which is a Smi
+7019	jumpOld:
+Not a forwarder, literal which is a Smi
 
-The following instructions can have the ExtB check flag (See (3)).
-3000	unchecked Pointer Object>>at:put:.			The receiver is guaranteed to be a pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger
-3001	unchecked Byte Object>>at:put:.			The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The argument is a SmallInteger.  The primitive stores the least significant 8 bits.
-3002	unchecked Word Object>>at:put:.			The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The argument is a SmallInteger.  The primitive stores the least significant 16 bits.
-3003	unchecked DoubleWord Object>>at:put:.	The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The argument is a SmallInteger.  The primitive stores the least significant 32 bits.
-3004	unchecked QuadWord Object>>at:put:.		The receiver is guaranteed to be a non-pointer object.  The 0-relative (1-relative?) index is an in-range SmallInteger.  The argument is a SmallInteger.  The primitive stores the least significant 64 bits.
+8000	instanceOf:jumpTrue:
+Anything, literal which is a Behavior, literal which is a Smi
+8001	instanceOf:jumpFalse:
+Anything, literal which is a Behavior, literal which is a Smi
+8002	instanceOfOneOf:jumpTrue:
+Anything, Array of behaviors, literal which is a Smi
+8003	instanceOfOneOf:jumpFalse:
+Anything, Array of behaviors, literal which is a Smi
+
+Mapped primitives are a bit different. They're sorting by arity up to 3 parameters (0-49 is nullary, 50-99 is binary, etc.). 200 and over are variable number of parameter instructions. 250 and over are mapped jumped. 
+
+We define the folloing mapped primitives:
+50	ensureEnoughSlots
+literal which is a Smi => ret value is receiver
+150	immCheckPointerAt:put:
+pointer object (Fixed sized or not) and not a context, Smi, Anything => arg2 (1-based, optimised if arg1 is a constant)
+151	immCheckStoreCheckPointerAt:put:
+pointer object (Fixed sized or not) and not a context, Smi, Anything => arg2 (1-based, optimised if arg1 is a constant)
+152	immCheckMaybeContextPointerAt:put:
+pointer object (Fixed sized or not), Smi, Anything => arg2 (1-based, optimised if arg1 is a constant (Concept-only, contexts are mutable right now))
+153	immCheckMaybeContextStoreCheckPointerAt:put:
+pointer object (Fixed sized or not), Smi, Anything => arg2 (1-based, optimised if arg1 is a constant (Concept-only, contexts are mutable right now))
+154	immCheckByteAt:put:
+byte object, Smi, 8 bits unsigned Smi => arg2 (1-based, optimised if arg1 is a constant)
+155	immCheckShortAt:put:
+short object, Smi, 16 bits unsigned Smi => arg2 (1-based, optimised if arg1 is a constant)
+156	immCheckWordAt:put:
+word object, Smi, 32 bits unsigned Smi => arg2 (1-based, optimised if arg1 is a constant)
+157	immCheckDoubleWordAt:put:
+double word object, Smi, 64 bits unsigned Smi or LargePositiveInteger => arg2 (1-based, optimised if arg1 is a constant)
+200	withArgs:executeMethod:
+literal index of the method to call on top of stack =>  (variable number of parameters (on contrary to what the selector suggests, no array), the index and not the method is pushed for efficient inline caches.)
+250	backjumpAlwaysInterrupt
+literal which is a Smi
+
 "
 Class {
 	#name : #EncoderForSistaV1,
@@ -774,28 +883,6 @@ EncoderForSistaV1 class >> unusedBytecode [
 	^ 84
 ]
 
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genBranchIfNotInstanceOf: literalIndex distance: distance [
-	"254		11111110	kkkkkkkk	jjjjjjjj		branch If Not Instance Of Behavior/Array Of Behavior kkkkkkkk (+ Extend A * 256, where Extend A >= 0) distance jjjjjjjj (+ Extend B * 256, where Extend B >= 0)"
-							
-	| extendedIndex extendedDistance |
-	(literalIndex < 0 or: [literalIndex > 65535]) ifTrue:
-		[^self outOfRangeError: 'index' index: literalIndex range: 0 to: 65536].
-	(distance < 1 or: [distance > 32767]) ifTrue:
-		[^self outOfRangeError: 'distance' index: distance range: 0 to: 32767].
-	(extendedIndex := literalIndex) > 255 ifTrue:
-		[self genUnsignedSingleExtendA: extendedIndex // 256.
-		 extendedIndex := extendedIndex \\ 256].
-	(extendedDistance := distance) > 255 ifTrue:
-		[self genUnsignedSingleExtendB: (distance bitShift: -8).
-		extendedDistance := distance bitAnd: 255].
-	
-	stream
-		nextPut: 254;
-		nextPut: extendedIndex;
-		nextPut: extendedDistance
-]
-
 { #category : #'bytecode generation' }
 EncoderForSistaV1 >> genBranchPopFalse: distance [
 	(distance > 0 and: [distance < 9]) ifTrue:
@@ -819,12 +906,6 @@ EncoderForSistaV1 >> genBranchPopFalseLong: distance [
 	stream
 		nextPut: 239;
 		nextPut: distanceMod256
-]
-
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genBranchPopFalseNoMustBeBoolean: distance [
-	self genNoMustBeBooleanFlag.
-	self genBranchPopFalseLong: distance
 ]
 
 { #category : #'bytecode generation' }
@@ -857,23 +938,13 @@ EncoderForSistaV1 >> genBranchPopTrueLong: distance [
 ]
 
 { #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genBranchPopTrueNoMustBeBoolean: distance [
-	self genNoMustBeBooleanFlag.
-	self genBranchPopTrueLong: distance
-]
-
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genCallInlinePrimitive: primitiveIndex [
-	"248		11111000	i i i i i i i i	1jjjjjjj		Call Primitive #iiiiiiii + (jjjjjjj * 256)"
-	"N.B. We could have made CallPrimitive a 2-byte code taking an extension, but that would
-	 complicate the VM's determination of the primitive number and the primitive error code
-	 store since the extension, being optional, would make the sequence variable length."
-	(primitiveIndex < 1 or: [primitiveIndex > 32767]) ifTrue:
-		[self outOfRangeError: 'primitive index' index: primitiveIndex range: 1 to: 32767].
+EncoderForSistaV1 >> genCallMappedInlinedPrimitive: primIndex [
+	"236		11101100	iiiiiiii		callMappedInlinedPrimitive [Sista specific]"
+	(primIndex < 0 or: [primIndex > 255]) ifTrue:
+		[self outOfRangeError: 'primitive index' index: primIndex range: 1 to: 32767].
 	stream
-		nextPut: 248;
-		nextPut: (primitiveIndex bitAnd: 255);
-		nextPut: (primitiveIndex bitShift: -8) + 128
+		nextPut: 236;
+		nextPut: primIndex
 ]
 
 { #category : #'bytecode generation' }
@@ -896,11 +967,6 @@ EncoderForSistaV1 >> genDup [
 	stream nextPut: 83
 ]
 
-{ #category : #'in-line primitive generation' }
-EncoderForSistaV1 >> genInlineSmallIntegerAdd [
-	^self genCallInlinePrimitive: 0
-]
-
 { #category : #'bytecode generation' }
 EncoderForSistaV1 >> genJump: distance [
 	(distance > 0 and: [distance < 9]) ifTrue:
@@ -921,11 +987,6 @@ EncoderForSistaV1 >> genJumpLong: distance [
 	stream
 		nextPut: 237;
 		nextPut: (distance bitAnd: 255)
-]
-
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genNoMustBeBooleanFlag [
-	self genUnsignedSingleExtendA: 1
 ]
 
 { #category : #'extended bytecode generation' }
@@ -1044,21 +1105,30 @@ EncoderForSistaV1 >> genPushInteger: anInteger [
 	"80			01010000				Push 0
 	 81			01010001				Push 1
 	 232		11101000	i i i i i i i i	Push Integer #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)"
-	"Why restrict the range to 16 bits when we could encode arbitrarily large integers?
-	 Well, 16 bits requires 4 bytes (extB + byte, 78 + byte) and so beyond this range we lose space
-	 verses a single-byte pushLiteral and a 4 byte integer literal on 32-bits.  And generating the same
-	 bytecode on 64-bit and 32-bit is important if we want to be able to load binary code from one to
-	 the other (e.g. via Fuel)."
 	anInteger = 0 ifTrue:
 		[stream nextPut: 80.
 		 ^self].
 	anInteger = 1 ifTrue:
 		[stream nextPut: 81.
 		 ^self].
+	(anInteger < 0 or: [anInteger > 255]) ifTrue:
+		[^self genPushIntegerLong: anInteger].
+	stream
+		nextPut: 232;
+		nextPut: (anInteger bitAnd: 255)
+]
+
+{ #category : #'extended bytecode generation' }
+EncoderForSistaV1 >> genPushIntegerLong: anInteger [
+	"232		11101000	i i i i i i i i	Push Integer #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)"
+	"Why restrict the range to 16 bits when we could encode arbitrarily large integers?
+	 Well, 16 bits requires 4 bytes (extB + byte, 78 + byte) and so beyond this range we lose space
+	 verses a single-byte pushLiteral and a 4 byte integer literal on 32-bits.  And generating the same
+	 bytecode on 64-bit and 32-bit is important if we want to be able to load binary code from one to
+	 the other (e.g. via Fuel)."
 	(anInteger < -32768 or: [anInteger > 32767]) ifTrue:
 		[^self outOfRangeError: 'integer' index: anInteger range: -32768 to: 32767].
-	(anInteger < 0 or: [anInteger > 255]) ifTrue:
-		[self genSignedSingleExtendB: (anInteger bitShift: -8)].
+	self genSignedSingleExtendB: (anInteger bitShift: -8).
 	stream
 		nextPut: 232;
 		nextPut: (anInteger bitAnd: 255)
@@ -1115,22 +1185,6 @@ EncoderForSistaV1 >> genPushNewArray: size [
 EncoderForSistaV1 >> genPushReceiver [
 	"76			01001100		Push Receiver"
 	stream nextPut: 76
-]
-
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genPushRemoteInstanceVariable: instanceVariableIndex inObjectAt: tempIndex [
-	"251		11111011 	kkkkkkkk	sjjjjjjj		Push Temp At kkkkkkkk In Temp Vector At: jjjjjjj, s = 1 implies remote inst var access instead of remote temp vector access"
-
-	(instanceVariableIndex < 0 or: [instanceVariableIndex > 65535]) ifTrue:
-		[^self outOfRangeError: 'instanceVariableIndex' index: instanceVariableIndex range: 0 to: 65535].
-	(tempIndex < 0 or: [tempIndex >= 128]) ifTrue:
-		[^self outOfRangeError: 'tempVectorIndex' index: tempIndex range: 0 to: 127].
-	instanceVariableIndex > 255 ifTrue:
-		[self genUnsignedSingleExtendA: instanceVariableIndex // 256].
-	stream
-		nextPut: 251;
-		nextPut: instanceVariableIndex \\ 256;
-		nextPut: 1 << 7 + tempIndex
 ]
 
 { #category : #'bytecode generation' }
@@ -1312,29 +1366,8 @@ EncoderForSistaV1 >> genSignedSingleExtendB: extendedIndex [
 		nextPut: (extendedIndex >= 0 ifTrue: [extendedIndex] ifFalse: [extendedIndex + 256]) 
 ]
 
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genStoreFlagExtensionIgnoreStoreCheck: ignoreStoreCheck maybeContext: maybeContext [
-	"ignoreStoreCheck: 
-	Can be applied to the long form of store and store pop of literal variable, remote inst var, remote temp, receiver inst var.
-	If present, the VM does not generate the GC store check. 
-	The main reasons the compiler can ignore the store check are one of these two:
-	- the mutated object is always young
-	- the object stored is immediate
-	Currently the store check is for the remembered table, but we may have it for tri color marking later. So the compiler cannot really remove the store check if the object stored is old.
-
-	maybeContext:
-	Can be used only with remote instance variable stores. If marked, the object can be a context and hence needs specific VM code. Receiver inst var have a separate encoding, temp vectors and literal variable can't be contexts"
-	self genUnsignedSingleExtendB: ignoreStoreCheck asBit + (maybeContext asBit << 1)
-]
-
 { #category : #'bytecode generation' }
 EncoderForSistaV1 >> genStoreInstVar: instVarIndex [
-	"243		11110011	iiiiiiii		Store Receiver Variable #iiiiiii (+ Extend A * 256)"
-	self genStoreInstVarLong: instVarIndex
-]
-
-{ #category : #'bytecode generation' }
-EncoderForSistaV1 >> genStoreInstVarLong: instVarIndex [
 	"243		11110011	iiiiiiii		Store Receiver Variable #iiiiiii (+ Extend A * 256)"
 	(instVarIndex < 0 or: [instVarIndex > 65535]) ifTrue:
 		[^self outOfRangeError: 'index' index: instVarIndex range: 0 to: 65535].
@@ -1343,6 +1376,13 @@ EncoderForSistaV1 >> genStoreInstVarLong: instVarIndex [
 	stream
 		nextPut: 243;
 		nextPut: instVarIndex \\ 256
+]
+
+{ #category : #'bytecode generation' }
+EncoderForSistaV1 >> genStoreInstVarLong: instVarIndex [
+	"Only one instruction for inst var store, so there is no long encoding. However this is used only for MaybeContext object, there is no storeInstVar in the image for those and it is very unlikely that anyone would add some. So I did not add a different bytecode for such an uncommon case."
+	self genStorePopInstVarLong: instVarIndex.
+	self genPushInstVarLong: instVarIndex.
 ]
 
 { #category : #'bytecode generation' }
@@ -1390,22 +1430,6 @@ EncoderForSistaV1 >> genStorePopLiteralVar: literalIndex [
 		nextPut: literalIndex \\ 256
 ]
 
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genStorePopRemoteInstanceVariable: instanceVariableIndex inObjectAt: tempIndex [
-	"*253	(3)	11111101 	kkkkkkkk	sjjjjjjj		Pop and Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access"
-
-	(instanceVariableIndex < 0 or: [instanceVariableIndex > 65535]) ifTrue:
-		[^self outOfRangeError: 'instanceVariableIndex' index: instanceVariableIndex range: 0 to: 65535].
-	(tempIndex < 0 or: [tempIndex >= 128]) ifTrue:
-		[^self outOfRangeError: 'tempVectorIndex' index: tempIndex range: 0 to: 127].
-	instanceVariableIndex > 255 ifTrue:
-		[self genUnsignedSingleExtendA: instanceVariableIndex // 256].
-	stream
-		nextPut: 253;
-		nextPut: instanceVariableIndex \\ 256;
-		nextPut: 1 << 7 + tempIndex
-]
-
 { #category : #'bytecode generation' }
 EncoderForSistaV1 >> genStorePopRemoteTemp: tempIndex inVectorAt: tempVectorIndex [
 	"*	253	(3)	11111101 	kkkkkkkk	sjjjjjjj		Pop and Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access"
@@ -1431,22 +1455,6 @@ EncoderForSistaV1 >> genStorePopTemp: tempIndex [
 	stream
 		nextPut: 242;
 		nextPut: tempIndex
-]
-
-{ #category : #'extended bytecode generation' }
-EncoderForSistaV1 >> genStoreRemoteInstanceVariable: instanceVariableIndex inObjectAt: tempIndex [
-	"*252	(3)	11111100 	kkkkkkkk	sjjjjjjj		Store Temp At kkkkkkkk In Temp Vector At: jjjjjjj s = 1 implies remote inst var access instead of remote temp vector access"
-
-	(instanceVariableIndex < 0 or: [instanceVariableIndex > 65535]) ifTrue:
-		[^self outOfRangeError: 'instanceVariableIndex' index: instanceVariableIndex range: 0 to: 65535].
-	(tempIndex < 0 or: [tempIndex >= 128]) ifTrue:
-		[^self outOfRangeError: 'tempVectorIndex' index: tempIndex range: 0 to: 127].
-	instanceVariableIndex > 255 ifTrue:
-		[self genUnsignedSingleExtendA: instanceVariableIndex // 256].
-	stream
-		nextPut: 252;
-		nextPut: instanceVariableIndex \\ 256;
-		nextPut: 1 << 7 + tempIndex
 ]
 
 { #category : #'bytecode generation' }

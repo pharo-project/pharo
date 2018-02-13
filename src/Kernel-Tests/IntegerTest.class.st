@@ -181,35 +181,34 @@ IntegerTest >> testBitClear [
 { #category : #'tests - bitLogic' }
 IntegerTest >> testBitLogic [  
 	"This little suite of tests is designed to verify correct operation of most of Pharo's bit manipulation code, including two's complement representation of negative values.  It was written in a hurry and is probably lacking several important checks."
-	"self run: #testBitLogic"
 	
 	| n |
 	"Shift 1 bit left then right and test for 1"
-	1 to: 100 do: [:i | self assert: ((1 bitShift: i) bitShift: i negated) = 1].
+	1 to: 100 do: [:i | self assert: ((1 bitShift: i) bitShift: i negated) equals: 1].
 
 	"Shift -1 left then right and test for 1"
-	1 to: 100 do: [:i | self assert: ((-1 bitShift: i) bitShift: i negated) = -1].
+	1 to: 100 do: [:i | self assert: ((-1 bitShift: i) bitShift: i negated) equals: -1].
 
 	"And a single bit with -1 and test for same value"
-	1 to: 100 do: [:i | self assert: ((1 bitShift: i) bitAnd: -1) = (1 bitShift: i)].
+	1 to: 100 do: [:i | self assert: ((1 bitShift: i) bitAnd: -1) equals: (1 bitShift: i)].
 
 	"Verify that (n bitAnd: n negated) = n for single bits"
-	1 to: 100 do: [:i |  n := 1 bitShift: i. self assert: (n bitAnd: n negated) = n].
+	1 to: 100 do: [:i |  n := 1 bitShift: i. self assert: (n bitAnd: n negated) equals: n].
 
 	"Verify that n negated = (n complemented + 1) for single bits"
 	1 to: 100 do: [:i | 
 					n := 1 bitShift: i. 
-					self assert: n negated = ((n bitXor: -1) + 1)].
+					self assert: n negated equals: ((n bitXor: -1) + 1)].
 
 	"Verify that (n + n complemented) = -1 for single bits"
 	1 to: 100 do: [:i | 
 					n := 1 bitShift: i.
-					self assert: (n + (n bitXor: -1)) = -1].
+					self assert: (n + (n bitXor: -1)) equals: -1].
 
 	"Verify that n negated = (n complemented +1) for single bits"
 	1 to: 100 do: [:i | 
 					n := 1 bitShift: i.
-					self assert: n negated = ((n bitXor: -1) + 1)].
+					self assert: n negated equals: ((n bitXor: -1) + 1)]
 ]
 
 { #category : #'tests - bitLogic' }
@@ -242,8 +241,7 @@ IntegerTest >> testBitShift [
 
 { #category : #'tests - bitLogic' }
 IntegerTest >> testBitString [
-	"self debug: #testBitString"
-	
+		
 	Smalltalk vm wordSize = 4
 		ifTrue: [
 			self assert: 2 bitString equals: '0000000000000000000000000000010'.
@@ -269,83 +267,77 @@ IntegerTest >> testBitXor [
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testCreationFromBytes1 [
-	"self run: #testCreationFromBytes1"
-	"it is illegal for a LargeInteger to be less than SmallInteger maxVal." 
-	"here we test that Integer>>byte!byte2:byte3:byte4: resconstructs SmallInteger maxVal as an instance of SmallInteger. "
+	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4: 
+	 reconstructs SmallInteger maxVal as an instance of SmallInteger."
   
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
 	Smalltalk vm wordSize = 4 ifFalse: [ ^ self skip ].
 	maxSmallInt := SmallInteger maxVal.
 	hexString := maxSmallInt printStringHex.
-	self assert: hexString size = 8.
+	self assert: hexString size equals: 8.
 	byte4 := Number readFrom: (hexString copyFrom: 1 to: 2) base: 16.
 	byte3 := Number readFrom: (hexString copyFrom: 3 to: 4) base: 16.
 	byte2 := Number readFrom: (hexString copyFrom: 5 to: 6) base: 16.
 	byte1 := Number readFrom: (hexString copyFrom: 7 to: 8) base: 16.
 	builtInteger := Integer byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4.
-	self assert: builtInteger = maxSmallInt.
-	self assert: builtInteger class = SmallInteger
+	self assert: builtInteger equals: maxSmallInt.
+	self assert: builtInteger class equals: SmallInteger
 
 ]
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testCreationFromBytes2 [
- 	"self run: #testCreationFromBytes2"
-
-	"it is illegal for a LargeInteger to be less than SmallInteger maxVal." 
-	"here we test that Integer>>byte!byte2:byte3:byte4: resconstructs (SmallInteger maxVal + 1) as an instance of LargePositiveInteger. "
+	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4: 
+	 reconstructs (SmallInteger maxVal + 1) as an instance of LargePositiveInteger."
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
 	Smalltalk vm wordSize = 4 ifFalse: [ ^ self skip ].
 	maxSmallInt := SmallInteger maxVal.
 	hexString := (maxSmallInt + 1) printStringHex.
-	self assert: hexString size = 8.
+	self assert: hexString size equals: 8.
 	byte4 := Number readFrom: (hexString copyFrom: 1 to: 2) base: 16.
 	byte3 := Number readFrom: (hexString copyFrom: 3 to: 4) base: 16.
 	byte2 := Number readFrom: (hexString copyFrom: 5 to: 6) base: 16.
 	byte1 := Number readFrom: (hexString copyFrom: 7 to: 8) base: 16.
 	builtInteger := Integer byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4.
-	self assert: builtInteger = (maxSmallInt + 1).
+	self assert: builtInteger equals: maxSmallInt + 1.
 	self deny: builtInteger class = SmallInteger
 
 ]
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testCreationFromBytes3 [
-	"self run: #testCreationFromBytes3"
-
-	"it is illegal for a LargeInteger to be less than SmallInteger maxVal." 
-	"here we test that Integer>>byte!byte2:byte3:byte4: resconstructs (SmallInteger maxVal - 1) as an instance of SmallInteger. "
+	"It is illegal for a LargeInteger to be less than SmallInteger maxVal. Here we test that Integer>>byte!byte2:byte3:byte4: 
+	 reconstructs (SmallInteger maxVal - 1) as an instance of SmallInteger."
+	
 	| maxSmallInt hexString byte1 byte2 byte3 byte4 builtInteger |
 	Smalltalk vm wordSize = 4 ifFalse: [ ^ self skip ].
 	maxSmallInt := SmallInteger maxVal.
 	hexString := (maxSmallInt - 1) printStringHex.
-	self assert: hexString size = 8.
+	self assert: hexString size equals: 8.
 	byte4 := Number readFrom: (hexString copyFrom: 1 to: 2) base: 16.
 	byte3 := Number readFrom: (hexString copyFrom: 3 to: 4) base: 16.
 	byte2 := Number readFrom: (hexString copyFrom: 5 to: 6) base: 16.
 	byte1 := Number readFrom: (hexString copyFrom: 7 to: 8) base: 16.
 	builtInteger := Integer byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4.
-	self assert: builtInteger = (maxSmallInt - 1).
-	self assert: builtInteger class = SmallInteger
+	self assert: builtInteger equals: (maxSmallInt - 1).
+	self assert: builtInteger class equals: SmallInteger
 
 ]
 
 { #category : #'tests - arithmetic' }
 IntegerTest >> testCrossSumBase [
-	"self run: #testCrossSumBase"
 
-	self assert: (
-		((-20 to: 20) collect: [:each | each crossSumBase: 10]) asArray = 
-		#(2 10 9 8 7 6 5 4 3 2 1 9 8 7 6 5 4 3 2 1 0 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 10 2)).
-	self assert: (
-		((-20 to: 20) collect: [:each | each crossSumBase: 2]) asArray = 
-		#(2 3 2 2 1 4 3 3 2 3 2 2 1 3 2 2 1 2 1 1 0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2)).
-	self should: [10 crossSumBase: 1] raise: AssertionFailure
+	self assert: ((-20 to: 20) collect: [:each | each crossSumBase: 10]) asArray   
+		  equals: #(2 10 9 8 7 6 5 4 3 2 1 9 8 7 6 5 4 3 2 1 0 1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 10 2).
+
+	self assert: ((-20 to: 20) collect: [:each | each crossSumBase: 2]) asArray 
+		  equals: #(2 3 2 2 1 4 3 3 2 3 2 2 1 3 2 2 1 2 1 1 0 1 1 2 1 2 2 3 1 2 2 3 2 3 3 4 1 2 2 3 2).
+
+	self should: [ 10 crossSumBase: 1 ] raise: AssertionFailure
 ]
 
 { #category : #'tests - mathematical functions' }
 IntegerTest >> testDegreeCos [
-	"self run: #testDegreeCos"
 
 	45 degreeCos.	"Following tests use approximate equality, because cosine are generally evaluated using inexact Floating point arithmetic"
 	self assert: (45 degreeCos squared - (1 / 2)) abs <= Float epsilon.
@@ -353,15 +345,14 @@ IntegerTest >> testDegreeCos [
 	self assert: (120 degreeCos + (1 / 2)) abs <= Float epsilon.
 	-360 to: 360 do: [ :i | self assert: (i degreeCos closeTo: i degreesToRadians cos) ].	"Following tests use strict equality which is a requested property of degreeCos"
 	-10 to: 10 do: [ :k | 
-		self assert: (k * 360 + 90) degreeCos = 0.
-		self assert: (k * 360 - 90) degreeCos = 0.
-		self assert: (k * 360 + 180) degreeCos + 1 = 0.
-		self assert: (k * 360) degreeCos - 1 = 0 ]
+		self assert: (k * 360 + 90) degreeCos equals: 0.
+		self assert: (k * 360 - 90) degreeCos equals: 0.
+		self assert: (k * 360 + 180) degreeCos + 1 equals: 0.
+		self assert: (k * 360) degreeCos - 1 equals: 0 ]
 ]
 
 { #category : #'tests - mathematical functions' }
 IntegerTest >> testDegreeSin [
-	"self run: #testDegreeSin"
 
 	45 degreeSin.	"Following tests use approximate equality, because sine are generally evaluated using inexact Floating point arithmetic"
 	self assert: (45 degreeSin squared - (1 / 2)) abs <= Float epsilon.
@@ -369,15 +360,15 @@ IntegerTest >> testDegreeSin [
 	self assert: (-30 degreeSin + (1 / 2)) abs <= Float epsilon.
 	-360 to: 360 do: [ :i | self assert: (i degreeSin closeTo: i degreesToRadians sin) ].	"Following tests use strict equality which is a requested property of degreeSin"
 	-10 to: 10 do: [ :k | 
-		self assert: (k * 360 + 90) degreeSin - 1 = 0.
-		self assert: (k * 360 - 90) degreeSin + 1 = 0.
-		self assert: (k * 360 + 180) degreeSin = 0.
-		self assert: (k * 360) degreeSin = 0 ]
+		self assert: (k * 360 + 90) degreeSin - 1 equals: 0.
+		self assert: (k * 360 - 90) degreeSin + 1 equals: 0.
+		self assert: (k * 360 + 180) degreeSin equals: 0.
+		self assert: (k * 360) degreeSin equals: 0 ]
 ]
 
 { #category : #'tests - instance creation' }
 IntegerTest >> testDifferentBases [
-	"self run: #testDifferentBases"
+ 
 	"| value |
 	2 to: 36 do: [:each|
 		value := 0.
@@ -393,77 +384,77 @@ IntegerTest >> testDifferentBases [
 ].
 	"
 
-	self assert: 2r10 = 2.
-	self assert: 3r210 = 21.
-	self assert: 4r3210 = 228.
-	self assert: 5r43210 = 2930.
-	self assert: 6r543210 = 44790.
-	self assert: 7r6543210 = 800667.
-	self assert: 8r76543210 = 16434824.
-	self assert: 9r876543210 = 381367044.
-	self assert: 10r9876543210 = 9876543210.
-	self assert: 11rA9876543210 = 282458553905.
-	self assert: 12rBA9876543210 = 8842413667692.
-	self assert: 13rCBA9876543210 = 300771807240918.
-	self assert: 14rDCBA9876543210 = 11046255305880158.
-	self assert: 15rEDCBA9876543210 = 435659737878916215.
-	self assert: 16rFEDCBA9876543210 = 18364758544493064720.
-	self assert: 17rGFEDCBA9876543210 = 824008854613343261192.
-	self assert: 18rHGFEDCBA9876543210 = 39210261334551566857170.
-	self assert: 19rIHGFEDCBA9876543210 = 1972313422155189164466189.
-	self assert: 20rJIHGFEDCBA9876543210 = 104567135734072022160664820.
-	self assert: 21rKJIHGFEDCBA9876543210 = 5827980550840017565077671610.
-	self assert: 22rLKJIHGFEDCBA9876543210 = 340653664490377789692799452102.
-	self assert: 23rMLKJIHGFEDCBA9876543210 = 20837326537038308910317109288851.
-	self assert: 24rNMLKJIHGFEDCBA9876543210 = 1331214537196502869015340298036888.
-	self assert: 25rONMLKJIHGFEDCBA9876543210 = 88663644327703473714387251271141900.
-	self assert: 26rPONMLKJIHGFEDCBA9876543210 = 6146269788878825859099399609538763450.
-	self assert: 27rQPONMLKJIHGFEDCBA9876543210 = 442770531899482980347734468443677777577.
-	self assert: 28rRQPONMLKJIHGFEDCBA9876543210 = 33100056003358651440264672384704297711484.
-	self assert: 29rSRQPONMLKJIHGFEDCBA9876543210 = 2564411043271974895869785066497940850811934.
-	self assert: 30rTSRQPONMLKJIHGFEDCBA9876543210 = 205646315052919334126040428061831153388822830.
-	self assert: 31rUTSRQPONMLKJIHGFEDCBA9876543210 = 17050208381689099029767742314582582184093573615.
-	self assert: 32rVUTSRQPONMLKJIHGFEDCBA9876543210 = 1459980823972598128486511383358617792788444579872.
-	self assert: 33rWVUTSRQPONMLKJIHGFEDCBA9876543210 = 128983956064237823710866404905431464703849549412368.
-	self assert: 34rXWVUTSRQPONMLKJIHGFEDCBA9876543210 = 11745843093701610854378775891116314824081102660800418.
-	self assert: 35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210 = 1101553773143634726491620528194292510495517905608180485.
-	self assert: 36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 = 106300512100105327644605138221229898724869759421181854980.
+	self assert: 2r10 equals: 2.
+	self assert: 3r210 equals: 21.
+	self assert: 4r3210 equals: 228.
+	self assert: 5r43210 equals: 2930.
+	self assert: 6r543210 equals: 44790.
+	self assert: 7r6543210 equals: 800667.
+	self assert: 8r76543210 equals: 16434824.
+	self assert: 9r876543210 equals: 381367044.
+	self assert: 10r9876543210 equals: 9876543210.
+	self assert: 11rA9876543210 equals: 282458553905.
+	self assert: 12rBA9876543210 equals: 8842413667692.
+	self assert: 13rCBA9876543210 equals: 300771807240918.
+	self assert: 14rDCBA9876543210 equals: 11046255305880158.
+	self assert: 15rEDCBA9876543210 equals: 435659737878916215.
+	self assert: 16rFEDCBA9876543210 equals: 18364758544493064720.
+	self assert: 17rGFEDCBA9876543210 equals: 824008854613343261192.
+	self assert: 18rHGFEDCBA9876543210 equals: 39210261334551566857170.
+	self assert: 19rIHGFEDCBA9876543210 equals: 1972313422155189164466189.
+	self assert: 20rJIHGFEDCBA9876543210 equals: 104567135734072022160664820.
+	self assert: 21rKJIHGFEDCBA9876543210 equals: 5827980550840017565077671610.
+	self assert: 22rLKJIHGFEDCBA9876543210 equals: 340653664490377789692799452102.
+	self assert: 23rMLKJIHGFEDCBA9876543210 equals: 20837326537038308910317109288851.
+	self assert: 24rNMLKJIHGFEDCBA9876543210 equals: 1331214537196502869015340298036888.
+	self assert: 25rONMLKJIHGFEDCBA9876543210 equals: 88663644327703473714387251271141900.
+	self assert: 26rPONMLKJIHGFEDCBA9876543210 equals: 6146269788878825859099399609538763450.
+	self assert: 27rQPONMLKJIHGFEDCBA9876543210 equals: 442770531899482980347734468443677777577.
+	self assert: 28rRQPONMLKJIHGFEDCBA9876543210 equals: 33100056003358651440264672384704297711484.
+	self assert: 29rSRQPONMLKJIHGFEDCBA9876543210 equals: 2564411043271974895869785066497940850811934.
+	self assert: 30rTSRQPONMLKJIHGFEDCBA9876543210 equals: 205646315052919334126040428061831153388822830.
+	self assert: 31rUTSRQPONMLKJIHGFEDCBA9876543210 equals: 17050208381689099029767742314582582184093573615.
+	self assert: 32rVUTSRQPONMLKJIHGFEDCBA9876543210 equals: 1459980823972598128486511383358617792788444579872.
+	self assert: 33rWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: 128983956064237823710866404905431464703849549412368.
+	self assert: 34rXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: 11745843093701610854378775891116314824081102660800418.
+	self assert: 35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: 1101553773143634726491620528194292510495517905608180485.
+	self assert: 36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: 106300512100105327644605138221229898724869759421181854980.
 
-	self assert: -2r10 = -2.
-	self assert: -3r210 = -21.
-	self assert: -4r3210 = -228.
-	self assert: -5r43210 = -2930.
-	self assert: -6r543210 = -44790.
-	self assert: -7r6543210 = -800667.
-	self assert: -8r76543210 = -16434824.
-	self assert: -9r876543210 = -381367044.
-	self assert: -10r9876543210 = -9876543210.
-	self assert: -11rA9876543210 = -282458553905.
-	self assert: -12rBA9876543210 = -8842413667692.
-	self assert: -13rCBA9876543210 = -300771807240918.
-	self assert: -14rDCBA9876543210 = -11046255305880158.
-	self assert: -15rEDCBA9876543210 = -435659737878916215.
-	self assert: -16rFEDCBA9876543210 = -18364758544493064720.
-	self assert: -17rGFEDCBA9876543210 = -824008854613343261192.
-	self assert: -18rHGFEDCBA9876543210 = -39210261334551566857170.
-	self assert: -19rIHGFEDCBA9876543210 = -1972313422155189164466189.
-	self assert: -20rJIHGFEDCBA9876543210 = -104567135734072022160664820.
-	self assert: -21rKJIHGFEDCBA9876543210 = -5827980550840017565077671610.
-	self assert: -22rLKJIHGFEDCBA9876543210 = -340653664490377789692799452102.
-	self assert: -23rMLKJIHGFEDCBA9876543210 = -20837326537038308910317109288851.
-	self assert: -24rNMLKJIHGFEDCBA9876543210 = -1331214537196502869015340298036888.
-	self assert: -25rONMLKJIHGFEDCBA9876543210 = -88663644327703473714387251271141900.
-	self assert: -26rPONMLKJIHGFEDCBA9876543210 = -6146269788878825859099399609538763450.
-	self assert: -27rQPONMLKJIHGFEDCBA9876543210 = -442770531899482980347734468443677777577.
-	self assert: -28rRQPONMLKJIHGFEDCBA9876543210 = -33100056003358651440264672384704297711484.
-	self assert: -29rSRQPONMLKJIHGFEDCBA9876543210 = -2564411043271974895869785066497940850811934.
-	self assert: -30rTSRQPONMLKJIHGFEDCBA9876543210 = -205646315052919334126040428061831153388822830.
-	self assert: -31rUTSRQPONMLKJIHGFEDCBA9876543210 = -17050208381689099029767742314582582184093573615.
-	self assert: -32rVUTSRQPONMLKJIHGFEDCBA9876543210 = -1459980823972598128486511383358617792788444579872.
-	self assert: -33rWVUTSRQPONMLKJIHGFEDCBA9876543210 = -128983956064237823710866404905431464703849549412368.
-	self assert: -34rXWVUTSRQPONMLKJIHGFEDCBA9876543210 = -11745843093701610854378775891116314824081102660800418.
-	self assert: -35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210 = -1101553773143634726491620528194292510495517905608180485.
-	self assert: -36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 = -106300512100105327644605138221229898724869759421181854980.
+	self assert: -2r10 equals: -2.
+	self assert: -3r210 equals: -21.
+	self assert: -4r3210 equals: -228.
+	self assert: -5r43210 equals: -2930.
+	self assert: -6r543210 equals: -44790.
+	self assert: -7r6543210 equals: -800667.
+	self assert: -8r76543210 equals: -16434824.
+	self assert: -9r876543210 equals: -381367044.
+	self assert: -10r9876543210 equals: -9876543210.
+	self assert: -11rA9876543210 equals: -282458553905.
+	self assert: -12rBA9876543210 equals: -8842413667692.
+	self assert: -13rCBA9876543210 equals: -300771807240918.
+	self assert: -14rDCBA9876543210 equals: -11046255305880158.
+	self assert: -15rEDCBA9876543210 equals: -435659737878916215.
+	self assert: -16rFEDCBA9876543210 equals: -18364758544493064720.
+	self assert: -17rGFEDCBA9876543210 equals: -824008854613343261192.
+	self assert: -18rHGFEDCBA9876543210 equals: -39210261334551566857170.
+	self assert: -19rIHGFEDCBA9876543210 equals: -1972313422155189164466189.
+	self assert: -20rJIHGFEDCBA9876543210 equals: -104567135734072022160664820.
+	self assert: -21rKJIHGFEDCBA9876543210 equals: -5827980550840017565077671610.
+	self assert: -22rLKJIHGFEDCBA9876543210 equals: -340653664490377789692799452102.
+	self assert: -23rMLKJIHGFEDCBA9876543210 equals: -20837326537038308910317109288851.
+	self assert: -24rNMLKJIHGFEDCBA9876543210 equals: -1331214537196502869015340298036888.
+	self assert: -25rONMLKJIHGFEDCBA9876543210 equals: -88663644327703473714387251271141900.
+	self assert: -26rPONMLKJIHGFEDCBA9876543210 equals: -6146269788878825859099399609538763450.
+	self assert: -27rQPONMLKJIHGFEDCBA9876543210 equals: -442770531899482980347734468443677777577.
+	self assert: -28rRQPONMLKJIHGFEDCBA9876543210 equals: -33100056003358651440264672384704297711484.
+	self assert: -29rSRQPONMLKJIHGFEDCBA9876543210 equals: -2564411043271974895869785066497940850811934.
+	self assert: -30rTSRQPONMLKJIHGFEDCBA9876543210 equals: -205646315052919334126040428061831153388822830.
+	self assert: -31rUTSRQPONMLKJIHGFEDCBA9876543210 equals: -17050208381689099029767742314582582184093573615.
+	self assert: -32rVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -1459980823972598128486511383358617792788444579872.
+	self assert: -33rWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -128983956064237823710866404905431464703849549412368.
+	self assert: -34rXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -11745843093701610854378775891116314824081102660800418.
+	self assert: -35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -1101553773143634726491620528194292510495517905608180485.
+	self assert: -36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210 equals: -106300512100105327644605138221229898724869759421181854980.
 ]
 
 { #category : #'tests - basic' }
@@ -625,79 +616,78 @@ IntegerTest >> testIntegerHex [
 
 { #category : #'tests - printing' }
 IntegerTest >> testIntegerPadding [
-	"self run: #testIntegerPadding"
+ 
+	self assert: (1 printStringBase: 10 length: 0 padded: false) equals: '1'.
+	self assert: (1 printStringBase: 10 length: 1 padded: false) equals: '1'.
+	self assert: (1 printStringBase: 10 length: 2 padded: false) equals: ' 1'.
+	self assert: (1024 printStringBase: 10 length: 19 padded: false) equals: '               1024'.
+	self assert: (1024 printStringBase: 10 length: -1 padded: false) equals: '1024'.
+	self assert: (1024 printStringBase: 10 length: 5 padded: false) equals: ' 1024'.
+	self assert: (-1024 printStringBase: 10 length: 5 padded: false) equals: '-1024'.
+	self assert: (-1024 printStringBase: 10 length: 19 padded: false) equals: '              -1024'.
 
-	self assert: (1 printStringBase: 10 length: 0 padded: false) = '1'.
-	self assert: (1 printStringBase: 10 length: 1 padded: false) = '1'.
-	self assert: (1 printStringBase: 10 length: 2 padded: false) = ' 1'.
-	self assert: (1024 printStringBase: 10 length: 19 padded: false) = '               1024'.
-	self assert: (1024 printStringBase: 10 length: -1 padded: false) = '1024'.
-	self assert: (1024 printStringBase: 10 length: 5 padded: false) =  ' 1024'.
-	self assert: (-1024 printStringBase: 10 length: 5 padded: false) =   '-1024'.
-	self assert: (-1024 printStringBase: 10 length: 19 padded: false) =  '              -1024'.
+	self assert: (1 printStringBase: 10 length: 0 padded: true) equals: '1'.
+	self assert: (1 printStringBase: 10 length: 1 padded: true) equals: '1'.
+	self assert: (1 printStringBase: 10 length: 2 padded: true) equals: '01'.
+	self assert: (1024 printStringBase: 10 length: 19 padded: true) equals: '0000000000000001024'.
+	self assert: (1024 printStringBase: 10 length: -1 padded: true) equals: '1024'.
+	self assert: (1024 printStringBase: 10 length: 5 padded: true) equals: '01024'.
+	self assert: (-1024 printStringBase: 10 length: 5 padded: true) equals: '-1024'.
+	self assert: (-1024 printStringBase: 10 length: 19 padded: true) equals: '-000000000000001024'.
 
-	self assert: (1 printStringBase: 10 length: 0 padded: true) = '1'.
-	self assert: (1 printStringBase: 10 length: 1 padded: true) = '1'.
-	self assert: (1 printStringBase: 10 length: 2 padded: true) = '01'.
-	self assert: (1024 printStringBase: 10 length: 19 padded: true) = '0000000000000001024'.
-	self assert: (1024 printStringBase: 10 length: -1 padded: true) = '1024'.
-	self assert: (1024 printStringBase: 10 length: 5 padded: true) =  '01024'.
-	self assert: (-1024 printStringBase: 10 length: 5 padded: true) =   '-1024'.
-	self assert: (-1024 printStringBase: 10 length: 19 padded: true) =  '-000000000000001024'.
+	self assert: (1 printStringBase: 16 length: 0 padded: false) equals: '1'.
+	self assert: (1 printStringBase: 16 length: 1 padded: false) equals: '1'.
+	self assert: (1 printStringBase: 16 length: 2 padded: false) equals: ' 1'.
+	self assert: (2047 printStringBase: 16 length: 19 padded: false) equals: '                7FF'.
+	self assert: (2047 printStringBase: 16 length: -1 padded: false) equals: '7FF'.
+	self assert: (2047 printStringBase: 16 length: 4 padded: false) equals: ' 7FF'.
+	self assert: (-2047 printStringBase: 16 length: 4 padded: false) equals: '-7FF'.
+	self assert: (-2047 printStringBase: 16 length: 19 padded: false) equals: '               -7FF'.
 
-	self assert: (1 printStringBase: 16 length: 0 padded: false) = '1'.
-	self assert: (1 printStringBase: 16 length: 1 padded: false) = '1'.
-	self assert: (1 printStringBase: 16 length: 2 padded: false) = ' 1'.
-	self assert: (2047 printStringBase: 16 length: 19 padded: false) =  '                7FF'.
-	self assert: (2047 printStringBase: 16 length: -1 padded: false) =  '7FF'.
-	self assert: (2047 printStringBase: 16 length: 4 padded: false) =  ' 7FF'.
-	self assert: (-2047 printStringBase: 16 length: 4 padded: false) = '-7FF'.
-	self assert: (-2047 printStringBase: 16 length: 19 padded: false) =  '               -7FF'.
+	self assert: (1 printStringBase: 16 length: 0 padded: true) equals: '1'.
+	self assert: (1 printStringBase: 16 length: 1 padded: true) equals: '1'.
+	self assert: (1 printStringBase: 16 length: 2 padded: true) equals: '01'.
+	self assert: (2047 printStringBase: 16 length: 19 padded: true) equals: '00000000000000007FF'.
+	self assert: (2047 printStringBase: 16 length: -1 padded: true) equals: '7FF'.
+	self assert: (2047 printStringBase: 16 length: 4 padded: true) equals: '07FF'.
+	self assert: (-2047 printStringBase: 16 length: 4 padded: true) equals: '-7FF'.
+	self assert: (-2047 printStringBase: 16 length: 19 padded: true) equals: '-0000000000000007FF'.
 
-	self assert: (1 printStringBase: 16 length: 0 padded: true) = '1'.
-	self assert: (1 printStringBase: 16 length: 1 padded: true) = '1'.
-	self assert: (1 printStringBase: 16 length: 2 padded: true) = '01'.
-	self assert: (2047 printStringBase: 16 length: 19 padded: true) =  '00000000000000007FF'.
-	self assert: (2047 printStringBase: 16 length: -1 padded: true) =  '7FF'.
-	self assert: (2047 printStringBase: 16 length: 4 padded: true) =  '07FF'.
-	self assert: (-2047 printStringBase: 16 length: 4 padded: true) = '-7FF'.
-	self assert: (-2047 printStringBase: 16 length: 19 padded: true) =  '-0000000000000007FF'.
+	self assert: (1 storeStringBase: 10 length: 0 padded: false) equals: '1'.
+	self assert: (1 storeStringBase: 10 length: 1 padded: false) equals: '1'.
+	self assert: (1 storeStringBase: 10 length: 2 padded: false) equals: ' 1'.
+	self assert: (1024 storeStringBase: 10 length: 19 padded: false) equals: '               1024'.
+	self assert: (1024 storeStringBase: 10 length: -1 padded: false) equals: '1024'.
+	self assert: (1024 storeStringBase: 10 length: 5 padded: false) equals:' 1024'.
+	self assert: (-1024 storeStringBase: 10 length: 5 padded: false) equals: '-1024'.
+	self assert: (-1024 storeStringBase: 10 length: 19 padded: false) equals: '              -1024'.
 
-	self assert: (1 storeStringBase: 10 length: 0 padded: false) = '1'.
-	self assert: (1 storeStringBase: 10 length: 1 padded: false) = '1'.
-	self assert: (1 storeStringBase: 10 length: 2 padded: false) = ' 1'.
-	self assert: (1024 storeStringBase: 10 length: 19 padded: false) = '               1024'.
-	self assert: (1024 storeStringBase: 10 length: -1 padded: false) = '1024'.
-	self assert: (1024 storeStringBase: 10 length: 5 padded: false) =  ' 1024'.
-	self assert: (-1024 storeStringBase: 10 length: 5 padded: false) =   '-1024'.
-	self assert: (-1024 storeStringBase: 10 length: 19 padded: false) =  '              -1024'.
+	self assert: (1 storeStringBase: 10 length: 0 padded: true) equals: '1'.
+	self assert: (1 storeStringBase: 10 length: 1 padded: true) equals: '1'.
+	self assert: (1 storeStringBase: 10 length: 2 padded: true) equals: '01'.
+	self assert: (1024 storeStringBase: 10 length: 19 padded: true) equals: '0000000000000001024'.
+	self assert: (1024 storeStringBase: 10 length: -1 padded: true) equals: '1024'.
+	self assert: (1024 storeStringBase: 10 length: 5 padded: true) equals: '01024'.
+	self assert: (-1024 storeStringBase: 10 length: 5 padded: true) equals: '-1024'.
+	self assert: (-1024 storeStringBase: 10 length: 19 padded: true) equals: '-000000000000001024'.
 
-	self assert: (1 storeStringBase: 10 length: 0 padded: true) = '1'.
-	self assert: (1 storeStringBase: 10 length: 1 padded: true) = '1'.
-	self assert: (1 storeStringBase: 10 length: 2 padded: true) = '01'.
-	self assert: (1024 storeStringBase: 10 length: 19 padded: true) = '0000000000000001024'.
-	self assert: (1024 storeStringBase: 10 length: -1 padded: true) = '1024'.
-	self assert: (1024 storeStringBase: 10 length: 5 padded: true) =  '01024'.
-	self assert: (-1024 storeStringBase: 10 length: 5 padded: true) =   '-1024'.
-	self assert: (-1024 storeStringBase: 10 length: 19 padded: true) =  '-000000000000001024'.
+	self assert: (1 storeStringBase: 16 length: 0 padded: false) equals: '16r1'.
+	self assert: (1 storeStringBase: 16 length: 4 padded: false) equals: '16r1'.
+	self assert: (1 storeStringBase: 16 length: 5 padded: false) equals: ' 16r1'.
+	self assert: (2047 storeStringBase: 16 length: 19 padded: false) equals: '             16r7FF'.
+	self assert: (2047 storeStringBase: 16 length: -1 padded: false) equals: '16r7FF'.
+	self assert: (2047 storeStringBase: 16 length: 7 padded: false) equals: ' 16r7FF'.
+	self assert: (-2047 storeStringBase: 16 length: 7 padded: false) equals: '-16r7FF'.
+	self assert: (-2047 storeStringBase: 16 length: 19 padded: false) equals: '            -16r7FF'.
 
-	self assert: (1 storeStringBase: 16 length: 0 padded: false) = '16r1'.
-	self assert: (1 storeStringBase: 16 length: 4 padded: false) = '16r1'.
-	self assert: (1 storeStringBase: 16 length: 5 padded: false) = ' 16r1'.
-	self assert: (2047 storeStringBase: 16 length: 19 padded: false) =  '             16r7FF'.
-	self assert: (2047 storeStringBase: 16 length: -1 padded: false) =  '16r7FF'.
-	self assert: (2047 storeStringBase: 16 length: 7 padded: false) =  ' 16r7FF'.
-	self assert: (-2047 storeStringBase: 16 length: 7 padded: false) = '-16r7FF'.
-	self assert: (-2047 storeStringBase: 16 length: 19 padded: false) =  '            -16r7FF'.
-
-	self assert: (1 storeStringBase: 16 length: 0 padded: true) = '16r1'.
-	self assert: (1 storeStringBase: 16 length: 4 padded: true) = '16r1'.
-	self assert: (1 storeStringBase: 16 length: 5 padded: true) = '16r01'.
-	self assert: (2047 storeStringBase: 16 length: 19 padded: true) =  '16r00000000000007FF'.
-	self assert: (2047 storeStringBase: 16 length: -1 padded: true) =  '16r7FF'.
-	self assert: (2047 storeStringBase: 16 length: 7 padded: true) =  '16r07FF'.
-	self assert: (-2047 storeStringBase: 16 length: 7 padded: true) = '-16r7FF'.
-	self assert: (-2047 storeStringBase: 16 length: 19 padded: true) =  '-16r0000000000007FF'.
+	self assert: (1 storeStringBase: 16 length: 0 padded: true) equals: '16r1'.
+	self assert: (1 storeStringBase: 16 length: 4 padded: true) equals: '16r1'.
+	self assert: (1 storeStringBase: 16 length: 5 padded: true) equals: '16r01'.
+	self assert: (2047 storeStringBase: 16 length: 19 padded: true) equals: '16r00000000000007FF'.
+	self assert: (2047 storeStringBase: 16 length: -1 padded: true) equals: '16r7FF'.
+	self assert: (2047 storeStringBase: 16 length: 7 padded: true) equals: '16r07FF'.
+	self assert: (-2047 storeStringBase: 16 length: 7 padded: true) equals: '-16r7FF'.
+	self assert: (-2047 storeStringBase: 16 length: 19 padded: true) equals: '-16r0000000000007FF'
 
 ]
 
@@ -869,183 +859,183 @@ IntegerTest >> testLowBit [
 
 { #category : #'tests - printing' }
 IntegerTest >> testNegativeIntegerPrinting [
-	"self run: #testnegativeIntegerPrinting"
+ 
 
-	self assert: (-2 printStringBase: 2) = '-10'.
-	self assert: (-2 radix: 2) = '-10'.
-	self assert: -2 printStringHex = '-2'.
-	self assert: (-2 storeStringBase: 2) = '-2r10'.
-	self assert: -2 storeStringHex = '-16r2'.
-	self assert: (-21 printStringBase: 3) = '-210'.
-	self assert: (-21 radix: 3) = '-210'.
-	self assert: -21 printStringHex = '-15'.
-	self assert: (-21 storeStringBase: 3) = '-3r210'.
-	self assert: -21 storeStringHex = '-16r15'.
-	self assert: (-228 printStringBase: 4) = '-3210'.
-	self assert: (-228 radix: 4) = '-3210'.
-	self assert: -228 printStringHex = '-E4'.
-	self assert: (-228 storeStringBase: 4) = '-4r3210'.
-	self assert: -228 storeStringHex = '-16rE4'.
-	self assert: (-2930 printStringBase: 5) = '-43210'.
-	self assert: (-2930 radix: 5) = '-43210'.
-	self assert: -2930 printStringHex = '-B72'.
-	self assert: (-2930 storeStringBase: 5) = '-5r43210'.
-	self assert: -2930 storeStringHex = '-16rB72'.
-	self assert: (-44790 printStringBase: 6) = '-543210'.
-	self assert: (-44790 radix: 6) = '-543210'.
-	self assert: -44790 printStringHex = '-AEF6'.
-	self assert: (-44790 storeStringBase: 6) = '-6r543210'.
-	self assert: -44790 storeStringHex = '-16rAEF6'.
-	self assert: (-800667 printStringBase: 7) = '-6543210'.
-	self assert: (-800667 radix: 7) = '-6543210'.
-	self assert: -800667 printStringHex = '-C379B'.
-	self assert: (-800667 storeStringBase: 7) = '-7r6543210'.
-	self assert: -800667 storeStringHex = '-16rC379B'.
-	self assert: (-16434824 printStringBase: 8) = '-76543210'.
-	self assert: (-16434824 radix: 8) = '-76543210'.
-	self assert: -16434824 printStringHex = '-FAC688'.
-	self assert: (-16434824 storeStringBase: 8) = '-8r76543210'.
-	self assert: -16434824 storeStringHex = '-16rFAC688'.
-	self assert: (-381367044 printStringBase: 9) = '-876543210'.
-	self assert: (-381367044 radix: 9) = '-876543210'.
-	self assert: -381367044 printStringHex = '-16BB3304'.
-	self assert: (-381367044 storeStringBase: 9) = '-9r876543210'.
-	self assert: -381367044 storeStringHex = '-16r16BB3304'.
-	self assert: (-9876543210 printStringBase: 10) = '-9876543210'.
-	self assert: (-9876543210 radix: 10) = '-9876543210'.
-	self assert: -9876543210 printStringHex = '-24CB016EA'.
-	self assert: (-9876543210 storeStringBase: 10) = '-9876543210'.
-	self assert: -9876543210 storeStringHex = '-16r24CB016EA'.
-	self assert: (-282458553905 printStringBase: 11) = '-A9876543210'.
-	self assert: (-282458553905 radix: 11) = '-A9876543210'.
-	self assert: -282458553905 printStringHex = '-41C3D77E31'.
-	self assert: (-282458553905 storeStringBase: 11) = '-11rA9876543210'.
-	self assert: -282458553905 storeStringHex = '-16r41C3D77E31'.
-	self assert: (-8842413667692 printStringBase: 12) = '-BA9876543210'.
-	self assert: (-8842413667692 radix: 12) = '-BA9876543210'.
-	self assert: -8842413667692 printStringHex = '-80AC8ECF56C'.
-	self assert: (-8842413667692 storeStringBase: 12) = '-12rBA9876543210'.
-	self assert: -8842413667692 storeStringHex = '-16r80AC8ECF56C'.
-	self assert: (-300771807240918 printStringBase: 13) = '-CBA9876543210'.
-	self assert: (-300771807240918 radix: 13) = '-CBA9876543210'.
-	self assert: -300771807240918 printStringHex = '-1118CE4BAA2D6'.
-	self assert: (-300771807240918 storeStringBase: 13) = '-13rCBA9876543210'.
-	self assert: -300771807240918 storeStringHex = '-16r1118CE4BAA2D6'.
-	self assert: (-11046255305880158 printStringBase: 14) = '-DCBA9876543210'.
-	self assert: (-11046255305880158 radix: 14) = '-DCBA9876543210'.
-	self assert: -11046255305880158 printStringHex = '-273E82BB9AF25E'.
-	self assert: (-11046255305880158 storeStringBase: 14) = '-14rDCBA9876543210'.
-	self assert: -11046255305880158 storeStringHex = '-16r273E82BB9AF25E'.
-	self assert: (-435659737878916215 printStringBase: 15) = '-EDCBA9876543210'.
-	self assert: (-435659737878916215 radix: 15) = '-EDCBA9876543210'.
-	self assert: -435659737878916215 printStringHex = '-60BC6392F366C77'.
-	self assert: (-435659737878916215 storeStringBase: 15) = '-15rEDCBA9876543210'.
-	self assert: -435659737878916215 storeStringHex = '-16r60BC6392F366C77'.
-	self assert: (-18364758544493064720 printStringBase: 16) = '-FEDCBA9876543210'.
-	self assert: (-18364758544493064720 radix: 16) = '-FEDCBA9876543210'.
-	self assert: -18364758544493064720 printStringHex = '-FEDCBA9876543210'.
-	self assert: (-18364758544493064720 storeStringBase: 16) = '-16rFEDCBA9876543210'.
-	self assert: -18364758544493064720 storeStringHex = '-16rFEDCBA9876543210'.
-	self assert: (-824008854613343261192 printStringBase: 17) = '-GFEDCBA9876543210'.
-	self assert: (-824008854613343261192 radix: 17) = '-GFEDCBA9876543210'.
-	self assert: -824008854613343261192 printStringHex = '-2CAB6B877C1CD2D208'.
-	self assert: (-824008854613343261192 storeStringBase: 17) = '-17rGFEDCBA9876543210'.
-	self assert: -824008854613343261192 storeStringHex = '-16r2CAB6B877C1CD2D208'.
-	self assert: (-39210261334551566857170 printStringBase: 18) = '-HGFEDCBA9876543210'.
-	self assert: (-39210261334551566857170 radix: 18) = '-HGFEDCBA9876543210'.
-	self assert: -39210261334551566857170 printStringHex = '-84D97AFCAE81415B3D2'.
-	self assert: (-39210261334551566857170 storeStringBase: 18) = '-18rHGFEDCBA9876543210'.
-	self assert: -39210261334551566857170 storeStringHex = '-16r84D97AFCAE81415B3D2'.
-	self assert: (-1972313422155189164466189 printStringBase: 19) = '-IHGFEDCBA9876543210'.
-	self assert: (-1972313422155189164466189 radix: 19) = '-IHGFEDCBA9876543210'.
-	self assert: -1972313422155189164466189 printStringHex = '-1A1A75329C5C6FC00600D'.
-	self assert: (-1972313422155189164466189 storeStringBase: 19) = '-19rIHGFEDCBA9876543210'.
-	self assert: -1972313422155189164466189 storeStringHex = '-16r1A1A75329C5C6FC00600D'.
-	self assert: (-104567135734072022160664820 printStringBase: 20) = '-JIHGFEDCBA9876543210'.
-	self assert: (-104567135734072022160664820 radix: 20) = '-JIHGFEDCBA9876543210'.
-	self assert: -104567135734072022160664820 printStringHex = '-567EF3C9636D242A8C68F4'.
-	self assert: (-104567135734072022160664820 storeStringBase: 20) = '-20rJIHGFEDCBA9876543210'.
-	self assert: -104567135734072022160664820 storeStringHex = '-16r567EF3C9636D242A8C68F4'.
-	self assert: (-5827980550840017565077671610 printStringBase: 21) = '-KJIHGFEDCBA9876543210'.
-	self assert: (-5827980550840017565077671610 radix: 21) = '-KJIHGFEDCBA9876543210'.
-	self assert: -5827980550840017565077671610 printStringHex = '-12D4CAE2B8A09BCFDBE30EBA'.
-	self assert: (-5827980550840017565077671610 storeStringBase: 21) = '-21rKJIHGFEDCBA9876543210'.
-	self assert: -5827980550840017565077671610 storeStringHex = '-16r12D4CAE2B8A09BCFDBE30EBA'.
-	self assert: (-340653664490377789692799452102 printStringBase: 22) = '-LKJIHGFEDCBA9876543210'.
-	self assert: (-340653664490377789692799452102 radix: 22) = '-LKJIHGFEDCBA9876543210'.
-	self assert: -340653664490377789692799452102 printStringHex = '-44CB61B5B47E1A5D8F88583C6'.
-	self assert: (-340653664490377789692799452102 storeStringBase: 22) = '-22rLKJIHGFEDCBA9876543210'.
-	self assert: -340653664490377789692799452102 storeStringHex = '-16r44CB61B5B47E1A5D8F88583C6'.
-	self assert: (-20837326537038308910317109288851 printStringBase: 23) = '-MLKJIHGFEDCBA9876543210'.
-	self assert: (-20837326537038308910317109288851 radix: 23) = '-MLKJIHGFEDCBA9876543210'.
-	self assert: -20837326537038308910317109288851 printStringHex = '-1070108876456E0EF115B389F93'.
-	self assert: (-20837326537038308910317109288851 storeStringBase: 23) = '-23rMLKJIHGFEDCBA9876543210'.
-	self assert: -20837326537038308910317109288851 storeStringHex = '-16r1070108876456E0EF115B389F93'.
-	self assert: (-1331214537196502869015340298036888 printStringBase: 24) = '-NMLKJIHGFEDCBA9876543210'.
-	self assert: (-1331214537196502869015340298036888 radix: 24) = '-NMLKJIHGFEDCBA9876543210'.
-	self assert: -1331214537196502869015340298036888 printStringHex = '-41A24A285154B026B6ED206C6698'.
-	self assert: (-1331214537196502869015340298036888 storeStringBase: 24) = '-24rNMLKJIHGFEDCBA9876543210'.
-	self assert: -1331214537196502869015340298036888 storeStringHex = '-16r41A24A285154B026B6ED206C6698'.
-	self assert: (-88663644327703473714387251271141900 printStringBase: 25) = '-ONMLKJIHGFEDCBA9876543210'.
-	self assert: (-88663644327703473714387251271141900 radix: 25) = '-ONMLKJIHGFEDCBA9876543210'.
-	self assert: -88663644327703473714387251271141900 printStringHex = '-111374860A2C6CEBE5999630398A0C'.
-	self assert: (-88663644327703473714387251271141900 storeStringBase: 25) = '-25rONMLKJIHGFEDCBA9876543210'.
-	self assert: -88663644327703473714387251271141900 storeStringHex = '-16r111374860A2C6CEBE5999630398A0C'.
-	self assert: (-6146269788878825859099399609538763450 printStringBase: 26) = '-PONMLKJIHGFEDCBA9876543210'.
-	self assert: (-6146269788878825859099399609538763450 radix: 26) = '-PONMLKJIHGFEDCBA9876543210'.
-	self assert: -6146269788878825859099399609538763450 printStringHex = '-49FBA7F30B0F48BD14E6A99BD8ADABA'.
-	self assert: (-6146269788878825859099399609538763450 storeStringBase: 26) = '-26rPONMLKJIHGFEDCBA9876543210'.
-	self assert: -6146269788878825859099399609538763450 storeStringHex = '-16r49FBA7F30B0F48BD14E6A99BD8ADABA'.
-	self assert: (-442770531899482980347734468443677777577 printStringBase: 27) = '-QPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-442770531899482980347734468443677777577 radix: 27) = '-QPONMLKJIHGFEDCBA9876543210'.
-	self assert: -442770531899482980347734468443677777577 printStringHex = '-14D1A80A997343640C1145A073731DEA9'.
-	self assert: (-442770531899482980347734468443677777577 storeStringBase: 27) = '-27rQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -442770531899482980347734468443677777577 storeStringHex = '-16r14D1A80A997343640C1145A073731DEA9'.
-	self assert: (-33100056003358651440264672384704297711484 printStringBase: 28) = '-RQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-33100056003358651440264672384704297711484 radix: 28) = '-RQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -33100056003358651440264672384704297711484 printStringHex = '-6145B6E6DACFA25D0E936F51D25932377C'.
-	self assert: (-33100056003358651440264672384704297711484 storeStringBase: 28) = '-28rRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -33100056003358651440264672384704297711484 storeStringHex = '-16r6145B6E6DACFA25D0E936F51D25932377C'.
-	self assert: (-2564411043271974895869785066497940850811934 printStringBase: 29) = '-SRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-2564411043271974895869785066497940850811934 radix: 29) = '-SRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -2564411043271974895869785066497940850811934 printStringHex = '-1D702071CBA4A1597D4DD37E95EFAC79241E'.
-	self assert: (-2564411043271974895869785066497940850811934 storeStringBase: 29) = '-29rSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -2564411043271974895869785066497940850811934 storeStringHex = '-16r1D702071CBA4A1597D4DD37E95EFAC79241E'.
-	self assert: (-205646315052919334126040428061831153388822830 printStringBase: 30) = '-TSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-205646315052919334126040428061831153388822830 radix: 30) = '-TSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -205646315052919334126040428061831153388822830 printStringHex = '-938B4343B54B550989989D02998718FFB212E'.
-	self assert: (-205646315052919334126040428061831153388822830 storeStringBase: 30) = '-30rTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -205646315052919334126040428061831153388822830 storeStringHex = '-16r938B4343B54B550989989D02998718FFB212E'.
-	self assert: (-17050208381689099029767742314582582184093573615 printStringBase: 31) = '-UTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-17050208381689099029767742314582582184093573615 radix: 31) = '-UTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -17050208381689099029767742314582582184093573615 printStringHex = '-2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
-	self assert: (-17050208381689099029767742314582582184093573615 storeStringBase: 31) = '-31rUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -17050208381689099029767742314582582184093573615 storeStringHex = '-16r2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
-	self assert: (-1459980823972598128486511383358617792788444579872 printStringBase: 32) = '-VUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-1459980823972598128486511383358617792788444579872 radix: 32) = '-VUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -1459980823972598128486511383358617792788444579872 printStringHex = '-FFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
-	self assert: (-1459980823972598128486511383358617792788444579872 storeStringBase: 32) = '-32rVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -1459980823972598128486511383358617792788444579872 storeStringHex = '-16rFFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
-	self assert: (-128983956064237823710866404905431464703849549412368 printStringBase: 33) = '-WVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-128983956064237823710866404905431464703849549412368 radix: 33) = '-WVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -128983956064237823710866404905431464703849549412368 printStringHex = '-584120A0328DE272AB055A8AA003CE4A559F223810'.
-	self assert: (-128983956064237823710866404905431464703849549412368 storeStringBase: 33) = '-33rWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -128983956064237823710866404905431464703849549412368 storeStringHex = '-16r584120A0328DE272AB055A8AA003CE4A559F223810'.
-	self assert: (-11745843093701610854378775891116314824081102660800418 printStringBase: 34) = '-XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-11745843093701610854378775891116314824081102660800418 radix: 34) = '-XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -11745843093701610854378775891116314824081102660800418 printStringHex = '-1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
-	self assert: (-11745843093701610854378775891116314824081102660800418 storeStringBase: 34) = '-34rXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -11745843093701610854378775891116314824081102660800418 storeStringHex = '-16r1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
-	self assert: (-1101553773143634726491620528194292510495517905608180485 printStringBase: 35) = '-YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-1101553773143634726491620528194292510495517905608180485 radix: 35) = '-YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -1101553773143634726491620528194292510495517905608180485 printStringHex = '-B8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
-	self assert: (-1101553773143634726491620528194292510495517905608180485 storeStringBase: 35) = '-35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -1101553773143634726491620528194292510495517905608180485 storeStringHex = '-16rB8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
-	self assert: (-106300512100105327644605138221229898724869759421181854980 printStringBase: 36) = '-ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (-106300512100105327644605138221229898724869759421181854980 radix: 36) = '-ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -106300512100105327644605138221229898724869759421181854980 printStringHex = '-455D441E55A37239AB4C303189576071AF5578FFCA80504'.
-	self assert: (-106300512100105327644605138221229898724869759421181854980 storeStringBase: 36) = '-36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: -106300512100105327644605138221229898724869759421181854980 storeStringHex = '-16r455D441E55A37239AB4C303189576071AF5578FFCA80504'.
+	self assert: (-2 printStringBase: 2) equals: '-10'.
+	self assert: (-2 radix: 2) equals: '-10'.
+	self assert: -2 printStringHex equals: '-2'.
+	self assert: (-2 storeStringBase: 2) equals: '-2r10'.
+	self assert: -2 storeStringHex equals: '-16r2'.
+	self assert: (-21 printStringBase: 3) equals: '-210'.
+	self assert: (-21 radix: 3) equals: '-210'.
+	self assert: -21 printStringHex equals: '-15'.
+	self assert: (-21 storeStringBase: 3) equals: '-3r210'.
+	self assert: -21 storeStringHex equals: '-16r15'.
+	self assert: (-228 printStringBase: 4) equals: '-3210'.
+	self assert: (-228 radix: 4) equals: '-3210'.
+	self assert: -228 printStringHex equals: '-E4'.
+	self assert: (-228 storeStringBase: 4) equals: '-4r3210'.
+	self assert: -228 storeStringHex equals: '-16rE4'.
+	self assert: (-2930 printStringBase: 5) equals: '-43210'.
+	self assert: (-2930 radix: 5) equals: '-43210'.
+	self assert: -2930 printStringHex equals: '-B72'.
+	self assert: (-2930 storeStringBase: 5) equals: '-5r43210'.
+	self assert: -2930 storeStringHex equals: '-16rB72'.
+	self assert: (-44790 printStringBase: 6) equals: '-543210'.
+	self assert: (-44790 radix: 6) equals: '-543210'.
+	self assert: -44790 printStringHex equals: '-AEF6'.
+	self assert: (-44790 storeStringBase: 6) equals: '-6r543210'.
+	self assert: -44790 storeStringHex equals: '-16rAEF6'.
+	self assert: (-800667 printStringBase: 7) equals: '-6543210'.
+	self assert: (-800667 radix: 7) equals: '-6543210'.
+	self assert: -800667 printStringHex equals: '-C379B'.
+	self assert: (-800667 storeStringBase: 7) equals: '-7r6543210'.
+	self assert: -800667 storeStringHex equals: '-16rC379B'.
+	self assert: (-16434824 printStringBase: 8) equals: '-76543210'.
+	self assert: (-16434824 radix: 8) equals: '-76543210'.
+	self assert: -16434824 printStringHex equals: '-FAC688'.
+	self assert: (-16434824 storeStringBase: 8) equals: '-8r76543210'.
+	self assert: -16434824 storeStringHex equals: '-16rFAC688'.
+	self assert: (-381367044 printStringBase: 9) equals: '-876543210'.
+	self assert: (-381367044 radix: 9) equals: '-876543210'.
+	self assert: -381367044 printStringHex equals: '-16BB3304'.
+	self assert: (-381367044 storeStringBase: 9) equals: '-9r876543210'.
+	self assert: -381367044 storeStringHex equals: '-16r16BB3304'.
+	self assert: (-9876543210 printStringBase: 10) equals: '-9876543210'.
+	self assert: (-9876543210 radix: 10) equals: '-9876543210'.
+	self assert: -9876543210 printStringHex equals: '-24CB016EA'.
+	self assert: (-9876543210 storeStringBase: 10) equals: '-9876543210'.
+	self assert: -9876543210 storeStringHex equals: '-16r24CB016EA'.
+	self assert: (-282458553905 printStringBase: 11) equals: '-A9876543210'.
+	self assert: (-282458553905 radix: 11) equals: '-A9876543210'.
+	self assert: -282458553905 printStringHex equals: '-41C3D77E31'.
+	self assert: (-282458553905 storeStringBase: 11) equals: '-11rA9876543210'.
+	self assert: -282458553905 storeStringHex equals: '-16r41C3D77E31'.
+	self assert: (-8842413667692 printStringBase: 12) equals: '-BA9876543210'.
+	self assert: (-8842413667692 radix: 12) equals: '-BA9876543210'.
+	self assert: -8842413667692 printStringHex equals: '-80AC8ECF56C'.
+	self assert: (-8842413667692 storeStringBase: 12) equals: '-12rBA9876543210'.
+	self assert: -8842413667692 storeStringHex equals: '-16r80AC8ECF56C'.
+	self assert: (-300771807240918 printStringBase: 13) equals: '-CBA9876543210'.
+	self assert: (-300771807240918 radix: 13) equals: '-CBA9876543210'.
+	self assert: -300771807240918 printStringHex equals: '-1118CE4BAA2D6'.
+	self assert: (-300771807240918 storeStringBase: 13) equals: '-13rCBA9876543210'.
+	self assert: -300771807240918 storeStringHex equals: '-16r1118CE4BAA2D6'.
+	self assert: (-11046255305880158 printStringBase: 14) equals: '-DCBA9876543210'.
+	self assert: (-11046255305880158 radix: 14) equals: '-DCBA9876543210'.
+	self assert: -11046255305880158 printStringHex equals: '-273E82BB9AF25E'.
+	self assert: (-11046255305880158 storeStringBase: 14) equals: '-14rDCBA9876543210'.
+	self assert: -11046255305880158 storeStringHex equals: '-16r273E82BB9AF25E'.
+	self assert: (-435659737878916215 printStringBase: 15) equals: '-EDCBA9876543210'.
+	self assert: (-435659737878916215 radix: 15) equals: '-EDCBA9876543210'.
+	self assert: -435659737878916215 printStringHex equals: '-60BC6392F366C77'.
+	self assert: (-435659737878916215 storeStringBase: 15) equals: '-15rEDCBA9876543210'.
+	self assert: -435659737878916215 storeStringHex equals: '-16r60BC6392F366C77'.
+	self assert: (-18364758544493064720 printStringBase: 16) equals: '-FEDCBA9876543210'.
+	self assert: (-18364758544493064720 radix: 16) equals: '-FEDCBA9876543210'.
+	self assert: -18364758544493064720 printStringHex equals: '-FEDCBA9876543210'.
+	self assert: (-18364758544493064720 storeStringBase: 16) equals: '-16rFEDCBA9876543210'.
+	self assert: -18364758544493064720 storeStringHex equals: '-16rFEDCBA9876543210'.
+	self assert: (-824008854613343261192 printStringBase: 17) equals: '-GFEDCBA9876543210'.
+	self assert: (-824008854613343261192 radix: 17) equals: '-GFEDCBA9876543210'.
+	self assert: -824008854613343261192 printStringHex equals: '-2CAB6B877C1CD2D208'.
+	self assert: (-824008854613343261192 storeStringBase: 17) equals: '-17rGFEDCBA9876543210'.
+	self assert: -824008854613343261192 storeStringHex equals: '-16r2CAB6B877C1CD2D208'.
+	self assert: (-39210261334551566857170 printStringBase: 18) equals: '-HGFEDCBA9876543210'.
+	self assert: (-39210261334551566857170 radix: 18) equals: '-HGFEDCBA9876543210'.
+	self assert: -39210261334551566857170 printStringHex equals: '-84D97AFCAE81415B3D2'.
+	self assert: (-39210261334551566857170 storeStringBase: 18) equals: '-18rHGFEDCBA9876543210'.
+	self assert: -39210261334551566857170 storeStringHex equals: '-16r84D97AFCAE81415B3D2'.
+	self assert: (-1972313422155189164466189 printStringBase: 19) equals: '-IHGFEDCBA9876543210'.
+	self assert: (-1972313422155189164466189 radix: 19) equals: '-IHGFEDCBA9876543210'.
+	self assert: -1972313422155189164466189 printStringHex equals: '-1A1A75329C5C6FC00600D'.
+	self assert: (-1972313422155189164466189 storeStringBase: 19) equals: '-19rIHGFEDCBA9876543210'.
+	self assert: -1972313422155189164466189 storeStringHex equals: '-16r1A1A75329C5C6FC00600D'.
+	self assert: (-104567135734072022160664820 printStringBase: 20) equals: '-JIHGFEDCBA9876543210'.
+	self assert: (-104567135734072022160664820 radix: 20) equals: '-JIHGFEDCBA9876543210'.
+	self assert: -104567135734072022160664820 printStringHex equals: '-567EF3C9636D242A8C68F4'.
+	self assert: (-104567135734072022160664820 storeStringBase: 20) equals: '-20rJIHGFEDCBA9876543210'.
+	self assert: -104567135734072022160664820 storeStringHex equals: '-16r567EF3C9636D242A8C68F4'.
+	self assert: (-5827980550840017565077671610 printStringBase: 21) equals: '-KJIHGFEDCBA9876543210'.
+	self assert: (-5827980550840017565077671610 radix: 21) equals: '-KJIHGFEDCBA9876543210'.
+	self assert: -5827980550840017565077671610 printStringHex equals: '-12D4CAE2B8A09BCFDBE30EBA'.
+	self assert: (-5827980550840017565077671610 storeStringBase: 21) equals: '-21rKJIHGFEDCBA9876543210'.
+	self assert: -5827980550840017565077671610 storeStringHex equals: '-16r12D4CAE2B8A09BCFDBE30EBA'.
+	self assert: (-340653664490377789692799452102 printStringBase: 22) equals: '-LKJIHGFEDCBA9876543210'.
+	self assert: (-340653664490377789692799452102 radix: 22) equals: '-LKJIHGFEDCBA9876543210'.
+	self assert: -340653664490377789692799452102 printStringHex equals: '-44CB61B5B47E1A5D8F88583C6'.
+	self assert: (-340653664490377789692799452102 storeStringBase: 22) equals: '-22rLKJIHGFEDCBA9876543210'.
+	self assert: -340653664490377789692799452102 storeStringHex equals: '-16r44CB61B5B47E1A5D8F88583C6'.
+	self assert: (-20837326537038308910317109288851 printStringBase: 23) equals: '-MLKJIHGFEDCBA9876543210'.
+	self assert: (-20837326537038308910317109288851 radix: 23) equals: '-MLKJIHGFEDCBA9876543210'.
+	self assert: -20837326537038308910317109288851 printStringHex equals: '-1070108876456E0EF115B389F93'.
+	self assert: (-20837326537038308910317109288851 storeStringBase: 23) equals: '-23rMLKJIHGFEDCBA9876543210'.
+	self assert: -20837326537038308910317109288851 storeStringHex equals: '-16r1070108876456E0EF115B389F93'.
+	self assert: (-1331214537196502869015340298036888 printStringBase: 24) equals: '-NMLKJIHGFEDCBA9876543210'.
+	self assert: (-1331214537196502869015340298036888 radix: 24) equals: '-NMLKJIHGFEDCBA9876543210'.
+	self assert: -1331214537196502869015340298036888 printStringHex equals: '-41A24A285154B026B6ED206C6698'.
+	self assert: (-1331214537196502869015340298036888 storeStringBase: 24) equals: '-24rNMLKJIHGFEDCBA9876543210'.
+	self assert: -1331214537196502869015340298036888 storeStringHex equals: '-16r41A24A285154B026B6ED206C6698'.
+	self assert: (-88663644327703473714387251271141900 printStringBase: 25) equals: '-ONMLKJIHGFEDCBA9876543210'.
+	self assert: (-88663644327703473714387251271141900 radix: 25) equals: '-ONMLKJIHGFEDCBA9876543210'.
+	self assert: -88663644327703473714387251271141900 printStringHex equals: '-111374860A2C6CEBE5999630398A0C'.
+	self assert: (-88663644327703473714387251271141900 storeStringBase: 25) equals: '-25rONMLKJIHGFEDCBA9876543210'.
+	self assert: -88663644327703473714387251271141900 storeStringHex equals: '-16r111374860A2C6CEBE5999630398A0C'.
+	self assert: (-6146269788878825859099399609538763450 printStringBase: 26) equals: '-PONMLKJIHGFEDCBA9876543210'.
+	self assert: (-6146269788878825859099399609538763450 radix: 26) equals: '-PONMLKJIHGFEDCBA9876543210'.
+	self assert: -6146269788878825859099399609538763450 printStringHex equals: '-49FBA7F30B0F48BD14E6A99BD8ADABA'.
+	self assert: (-6146269788878825859099399609538763450 storeStringBase: 26) equals: '-26rPONMLKJIHGFEDCBA9876543210'.
+	self assert: -6146269788878825859099399609538763450 storeStringHex equals: '-16r49FBA7F30B0F48BD14E6A99BD8ADABA'.
+	self assert: (-442770531899482980347734468443677777577 printStringBase: 27) equals: '-QPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-442770531899482980347734468443677777577 radix: 27) equals: '-QPONMLKJIHGFEDCBA9876543210'.
+	self assert: -442770531899482980347734468443677777577 printStringHex equals: '-14D1A80A997343640C1145A073731DEA9'.
+	self assert: (-442770531899482980347734468443677777577 storeStringBase: 27) equals: '-27rQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -442770531899482980347734468443677777577 storeStringHex equals: '-16r14D1A80A997343640C1145A073731DEA9'.
+	self assert: (-33100056003358651440264672384704297711484 printStringBase: 28) equals: '-RQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-33100056003358651440264672384704297711484 radix: 28) equals: '-RQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -33100056003358651440264672384704297711484 printStringHex equals: '-6145B6E6DACFA25D0E936F51D25932377C'.
+	self assert: (-33100056003358651440264672384704297711484 storeStringBase: 28) equals: '-28rRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -33100056003358651440264672384704297711484 storeStringHex equals: '-16r6145B6E6DACFA25D0E936F51D25932377C'.
+	self assert: (-2564411043271974895869785066497940850811934 printStringBase: 29) equals: '-SRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-2564411043271974895869785066497940850811934 radix: 29) equals: '-SRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -2564411043271974895869785066497940850811934 printStringHex equals: '-1D702071CBA4A1597D4DD37E95EFAC79241E'.
+	self assert: (-2564411043271974895869785066497940850811934 storeStringBase: 29) equals: '-29rSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -2564411043271974895869785066497940850811934 storeStringHex equals: '-16r1D702071CBA4A1597D4DD37E95EFAC79241E'.
+	self assert: (-205646315052919334126040428061831153388822830 printStringBase: 30) equals: '-TSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-205646315052919334126040428061831153388822830 radix: 30) equals: '-TSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -205646315052919334126040428061831153388822830 printStringHex equals: '-938B4343B54B550989989D02998718FFB212E'.
+	self assert: (-205646315052919334126040428061831153388822830 storeStringBase: 30) equals: '-30rTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -205646315052919334126040428061831153388822830 storeStringHex equals: '-16r938B4343B54B550989989D02998718FFB212E'.
+	self assert: (-17050208381689099029767742314582582184093573615 printStringBase: 31) equals: '-UTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-17050208381689099029767742314582582184093573615 radix: 31) equals: '-UTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -17050208381689099029767742314582582184093573615 printStringHex equals: '-2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
+	self assert: (-17050208381689099029767742314582582184093573615 storeStringBase: 31) equals: '-31rUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -17050208381689099029767742314582582184093573615 storeStringHex equals: '-16r2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
+	self assert: (-1459980823972598128486511383358617792788444579872 printStringBase: 32) equals: '-VUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-1459980823972598128486511383358617792788444579872 radix: 32) equals: '-VUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -1459980823972598128486511383358617792788444579872 printStringHex equals: '-FFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
+	self assert: (-1459980823972598128486511383358617792788444579872 storeStringBase: 32) equals: '-32rVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -1459980823972598128486511383358617792788444579872 storeStringHex equals: '-16rFFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
+	self assert: (-128983956064237823710866404905431464703849549412368 printStringBase: 33) equals: '-WVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-128983956064237823710866404905431464703849549412368 radix: 33) equals: '-WVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -128983956064237823710866404905431464703849549412368 printStringHex equals: '-584120A0328DE272AB055A8AA003CE4A559F223810'.
+	self assert: (-128983956064237823710866404905431464703849549412368 storeStringBase: 33) equals: '-33rWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -128983956064237823710866404905431464703849549412368 storeStringHex equals: '-16r584120A0328DE272AB055A8AA003CE4A559F223810'.
+	self assert: (-11745843093701610854378775891116314824081102660800418 printStringBase: 34) equals: '-XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-11745843093701610854378775891116314824081102660800418 radix: 34) equals: '-XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -11745843093701610854378775891116314824081102660800418 printStringHex equals: '-1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
+	self assert: (-11745843093701610854378775891116314824081102660800418 storeStringBase: 34) equals: '-34rXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -11745843093701610854378775891116314824081102660800418 storeStringHex equals: '-16r1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
+	self assert: (-1101553773143634726491620528194292510495517905608180485 printStringBase: 35) equals: '-YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-1101553773143634726491620528194292510495517905608180485 radix: 35) equals: '-YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -1101553773143634726491620528194292510495517905608180485 printStringHex equals: '-B8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
+	self assert: (-1101553773143634726491620528194292510495517905608180485 storeStringBase: 35) equals: '-35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -1101553773143634726491620528194292510495517905608180485 storeStringHex equals: '-16rB8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
+	self assert: (-106300512100105327644605138221229898724869759421181854980 printStringBase: 36) equals: '-ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (-106300512100105327644605138221229898724869759421181854980 radix: 36) equals: '-ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -106300512100105327644605138221229898724869759421181854980 printStringHex equals: '-455D441E55A37239AB4C303189576071AF5578FFCA80504'.
+	self assert: (-106300512100105327644605138221229898724869759421181854980 storeStringBase: 36) equals: '-36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: -106300512100105327644605138221229898724869759421181854980 storeStringHex equals: '-16r455D441E55A37239AB4C303189576071AF5578FFCA80504'.
 ]
 
 { #category : #'tests - instance creation' }
@@ -1118,187 +1108,186 @@ IntegerTest >> testNumberOfDigits [
 
 { #category : #'tests - printing' }
 IntegerTest >> testPositiveIntegerPrinting [
-	"self run: #testPositiveIntegerPrinting"
 
-	self assert: 0 printString = '0'.
-	self assert: 0 printStringHex = '0'.
-	self assert: 0 storeStringHex = '16r0'.
+	self assert: 0 printString equals: '0'.
+	self assert: 0 printStringHex equals: '0'.
+	self assert: 0 storeStringHex equals: '16r0'.
 
-	self assert: (2 printStringBase: 2) = '10'.
-	self assert: (2 radix: 2) = '10'.
-	self assert: 2 printStringHex = '2'.
-	self assert: (2 storeStringBase: 2) = '2r10'.
-	self assert: 2 storeStringHex = '16r2'.
-	self assert: (21 printStringBase: 3) = '210'.
-	self assert: (21 radix: 3) = '210'.
-	self assert: 21 printStringHex = '15'.
-	self assert: (21 storeStringBase: 3) = '3r210'.
-	self assert: 21 storeStringHex = '16r15'.
-	self assert: (228 printStringBase: 4) = '3210'.
-	self assert: (228 radix: 4) = '3210'.
-	self assert: 228 printStringHex = 'E4'.
-	self assert: (228 storeStringBase: 4) = '4r3210'.
-	self assert: 228 storeStringHex = '16rE4'.
-	self assert: (2930 printStringBase: 5) = '43210'.
-	self assert: (2930 radix: 5) = '43210'.
-	self assert: 2930 printStringHex = 'B72'.
-	self assert: (2930 storeStringBase: 5) = '5r43210'.
-	self assert: 2930 storeStringHex = '16rB72'.
-	self assert: (44790 printStringBase: 6) = '543210'.
-	self assert: (44790 radix: 6) = '543210'.
-	self assert: 44790 printStringHex = 'AEF6'.
-	self assert: (44790 storeStringBase: 6) = '6r543210'.
-	self assert: 44790 storeStringHex = '16rAEF6'.
-	self assert: (800667 printStringBase: 7) = '6543210'.
-	self assert: (800667 radix: 7) = '6543210'.
-	self assert: 800667 printStringHex = 'C379B'.
-	self assert: (800667 storeStringBase: 7) = '7r6543210'.
-	self assert: 800667 storeStringHex = '16rC379B'.
-	self assert: (16434824 printStringBase: 8) = '76543210'.
-	self assert: (16434824 radix: 8) = '76543210'.
-	self assert: 16434824 printStringHex = 'FAC688'.
-	self assert: (16434824 storeStringBase: 8) = '8r76543210'.
-	self assert: 16434824 storeStringHex = '16rFAC688'.
-	self assert: (381367044 printStringBase: 9) = '876543210'.
-	self assert: (381367044 radix: 9) = '876543210'.
-	self assert: 381367044 printStringHex = '16BB3304'.
-	self assert: (381367044 storeStringBase: 9) = '9r876543210'.
-	self assert: 381367044 storeStringHex = '16r16BB3304'.
-	self assert: (9876543210 printStringBase: 10) = '9876543210'.
-	self assert: (9876543210 radix: 10) = '9876543210'.
-	self assert: 9876543210 printStringHex = '24CB016EA'.
-	self assert: (9876543210 storeStringBase: 10) = '9876543210'.
-	self assert: 9876543210 storeStringHex = '16r24CB016EA'.
-	self assert: (282458553905 printStringBase: 11) = 'A9876543210'.
-	self assert: (282458553905 radix: 11) = 'A9876543210'.
-	self assert: 282458553905 printStringHex = '41C3D77E31'.
-	self assert: (282458553905 storeStringBase: 11) = '11rA9876543210'.
-	self assert: 282458553905 storeStringHex = '16r41C3D77E31'.
-	self assert: (8842413667692 printStringBase: 12) = 'BA9876543210'.
-	self assert: (8842413667692 radix: 12) = 'BA9876543210'.
-	self assert: 8842413667692 printStringHex = '80AC8ECF56C'.
-	self assert: (8842413667692 storeStringBase: 12) = '12rBA9876543210'.
-	self assert: 8842413667692 storeStringHex = '16r80AC8ECF56C'.
-	self assert: (300771807240918 printStringBase: 13) = 'CBA9876543210'.
-	self assert: (300771807240918 radix: 13) = 'CBA9876543210'.
-	self assert: 300771807240918 printStringHex = '1118CE4BAA2D6'.
-	self assert: (300771807240918 storeStringBase: 13) = '13rCBA9876543210'.
-	self assert: 300771807240918 storeStringHex = '16r1118CE4BAA2D6'.
-	self assert: (11046255305880158 printStringBase: 14) = 'DCBA9876543210'.
-	self assert: (11046255305880158 radix: 14) = 'DCBA9876543210'.
-	self assert: 11046255305880158 printStringHex = '273E82BB9AF25E'.
-	self assert: (11046255305880158 storeStringBase: 14) = '14rDCBA9876543210'.
-	self assert: 11046255305880158 storeStringHex = '16r273E82BB9AF25E'.
-	self assert: (435659737878916215 printStringBase: 15) = 'EDCBA9876543210'.
-	self assert: (435659737878916215 radix: 15) = 'EDCBA9876543210'.
-	self assert: 435659737878916215 printStringHex = '60BC6392F366C77'.
-	self assert: (435659737878916215 storeStringBase: 15) = '15rEDCBA9876543210'.
-	self assert: 435659737878916215 storeStringHex = '16r60BC6392F366C77'.
-	self assert: (18364758544493064720 printStringBase: 16) = 'FEDCBA9876543210'.
-	self assert: (18364758544493064720 radix: 16) = 'FEDCBA9876543210'.
-	self assert: 18364758544493064720 printStringHex = 'FEDCBA9876543210'.
-	self assert: (18364758544493064720 storeStringBase: 16) = '16rFEDCBA9876543210'.
-	self assert: 18364758544493064720 storeStringHex = '16rFEDCBA9876543210'.
-	self assert: (824008854613343261192 printStringBase: 17) = 'GFEDCBA9876543210'.
-	self assert: (824008854613343261192 radix: 17) = 'GFEDCBA9876543210'.
-	self assert: 824008854613343261192 printStringHex = '2CAB6B877C1CD2D208'.
-	self assert: (824008854613343261192 storeStringBase: 17) = '17rGFEDCBA9876543210'.
-	self assert: 824008854613343261192 storeStringHex = '16r2CAB6B877C1CD2D208'.
-	self assert: (39210261334551566857170 printStringBase: 18) = 'HGFEDCBA9876543210'.
-	self assert: (39210261334551566857170 radix: 18) = 'HGFEDCBA9876543210'.
-	self assert: 39210261334551566857170 printStringHex = '84D97AFCAE81415B3D2'.
-	self assert: (39210261334551566857170 storeStringBase: 18) = '18rHGFEDCBA9876543210'.
-	self assert: 39210261334551566857170 storeStringHex = '16r84D97AFCAE81415B3D2'.
-	self assert: (1972313422155189164466189 printStringBase: 19) = 'IHGFEDCBA9876543210'.
-	self assert: (1972313422155189164466189 radix: 19) = 'IHGFEDCBA9876543210'.
-	self assert: 1972313422155189164466189 printStringHex = '1A1A75329C5C6FC00600D'.
-	self assert: (1972313422155189164466189 storeStringBase: 19) = '19rIHGFEDCBA9876543210'.
-	self assert: 1972313422155189164466189 storeStringHex = '16r1A1A75329C5C6FC00600D'.
-	self assert: (104567135734072022160664820 printStringBase: 20) = 'JIHGFEDCBA9876543210'.
-	self assert: (104567135734072022160664820 radix: 20) = 'JIHGFEDCBA9876543210'.
-	self assert: 104567135734072022160664820 printStringHex = '567EF3C9636D242A8C68F4'.
-	self assert: (104567135734072022160664820 storeStringBase: 20) = '20rJIHGFEDCBA9876543210'.
-	self assert: 104567135734072022160664820 storeStringHex = '16r567EF3C9636D242A8C68F4'.
-	self assert: (5827980550840017565077671610 printStringBase: 21) = 'KJIHGFEDCBA9876543210'.
-	self assert: (5827980550840017565077671610 radix: 21) = 'KJIHGFEDCBA9876543210'.
-	self assert: 5827980550840017565077671610 printStringHex = '12D4CAE2B8A09BCFDBE30EBA'.
-	self assert: (5827980550840017565077671610 storeStringBase: 21) = '21rKJIHGFEDCBA9876543210'.
-	self assert: 5827980550840017565077671610 storeStringHex = '16r12D4CAE2B8A09BCFDBE30EBA'.
-	self assert: (340653664490377789692799452102 printStringBase: 22) = 'LKJIHGFEDCBA9876543210'.
-	self assert: (340653664490377789692799452102 radix: 22) = 'LKJIHGFEDCBA9876543210'.
-	self assert: 340653664490377789692799452102 printStringHex = '44CB61B5B47E1A5D8F88583C6'.
-	self assert: (340653664490377789692799452102 storeStringBase: 22) = '22rLKJIHGFEDCBA9876543210'.
-	self assert: 340653664490377789692799452102 storeStringHex = '16r44CB61B5B47E1A5D8F88583C6'.
-	self assert: (20837326537038308910317109288851 printStringBase: 23) = 'MLKJIHGFEDCBA9876543210'.
-	self assert: (20837326537038308910317109288851 radix: 23) = 'MLKJIHGFEDCBA9876543210'.
-	self assert: 20837326537038308910317109288851 printStringHex = '1070108876456E0EF115B389F93'.
-	self assert: (20837326537038308910317109288851 storeStringBase: 23) = '23rMLKJIHGFEDCBA9876543210'.
-	self assert: 20837326537038308910317109288851 storeStringHex = '16r1070108876456E0EF115B389F93'.
-	self assert: (1331214537196502869015340298036888 printStringBase: 24) = 'NMLKJIHGFEDCBA9876543210'.
-	self assert: (1331214537196502869015340298036888 radix: 24) = 'NMLKJIHGFEDCBA9876543210'.
-	self assert: 1331214537196502869015340298036888 printStringHex = '41A24A285154B026B6ED206C6698'.
-	self assert: (1331214537196502869015340298036888 storeStringBase: 24) = '24rNMLKJIHGFEDCBA9876543210'.
-	self assert: 1331214537196502869015340298036888 storeStringHex = '16r41A24A285154B026B6ED206C6698'.
-	self assert: (88663644327703473714387251271141900 printStringBase: 25) = 'ONMLKJIHGFEDCBA9876543210'.
-	self assert: (88663644327703473714387251271141900 radix: 25) = 'ONMLKJIHGFEDCBA9876543210'.
-	self assert: 88663644327703473714387251271141900 printStringHex = '111374860A2C6CEBE5999630398A0C'.
-	self assert: (88663644327703473714387251271141900 storeStringBase: 25) = '25rONMLKJIHGFEDCBA9876543210'.
-	self assert: 88663644327703473714387251271141900 storeStringHex = '16r111374860A2C6CEBE5999630398A0C'.
-	self assert: (6146269788878825859099399609538763450 printStringBase: 26) = 'PONMLKJIHGFEDCBA9876543210'.
-	self assert: (6146269788878825859099399609538763450 radix: 26) = 'PONMLKJIHGFEDCBA9876543210'.
-	self assert: 6146269788878825859099399609538763450 printStringHex = '49FBA7F30B0F48BD14E6A99BD8ADABA'.
-	self assert: (6146269788878825859099399609538763450 storeStringBase: 26) = '26rPONMLKJIHGFEDCBA9876543210'.
-	self assert: 6146269788878825859099399609538763450 storeStringHex = '16r49FBA7F30B0F48BD14E6A99BD8ADABA'.
-	self assert: (442770531899482980347734468443677777577 printStringBase: 27) = 'QPONMLKJIHGFEDCBA9876543210'.
-	self assert: (442770531899482980347734468443677777577 radix: 27) = 'QPONMLKJIHGFEDCBA9876543210'.
-	self assert: 442770531899482980347734468443677777577 printStringHex = '14D1A80A997343640C1145A073731DEA9'.
-	self assert: (442770531899482980347734468443677777577 storeStringBase: 27) = '27rQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 442770531899482980347734468443677777577 storeStringHex = '16r14D1A80A997343640C1145A073731DEA9'.
-	self assert: (33100056003358651440264672384704297711484 printStringBase: 28) = 'RQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (33100056003358651440264672384704297711484 radix: 28) = 'RQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 33100056003358651440264672384704297711484 printStringHex = '6145B6E6DACFA25D0E936F51D25932377C'.
-	self assert: (33100056003358651440264672384704297711484 storeStringBase: 28) = '28rRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 33100056003358651440264672384704297711484 storeStringHex = '16r6145B6E6DACFA25D0E936F51D25932377C'.
-	self assert: (2564411043271974895869785066497940850811934 printStringBase: 29) = 'SRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (2564411043271974895869785066497940850811934 radix: 29) = 'SRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 2564411043271974895869785066497940850811934 printStringHex = '1D702071CBA4A1597D4DD37E95EFAC79241E'.
-	self assert: (2564411043271974895869785066497940850811934 storeStringBase: 29) = '29rSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 2564411043271974895869785066497940850811934 storeStringHex = '16r1D702071CBA4A1597D4DD37E95EFAC79241E'.
-	self assert: (205646315052919334126040428061831153388822830 printStringBase: 30) = 'TSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (205646315052919334126040428061831153388822830 radix: 30) = 'TSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 205646315052919334126040428061831153388822830 printStringHex = '938B4343B54B550989989D02998718FFB212E'.
-	self assert: (205646315052919334126040428061831153388822830 storeStringBase: 30) = '30rTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 205646315052919334126040428061831153388822830 storeStringHex = '16r938B4343B54B550989989D02998718FFB212E'.
-	self assert: (17050208381689099029767742314582582184093573615 printStringBase: 31) = 'UTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (17050208381689099029767742314582582184093573615 radix: 31) = 'UTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 17050208381689099029767742314582582184093573615 printStringHex = '2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
-	self assert: (17050208381689099029767742314582582184093573615 storeStringBase: 31) = '31rUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 17050208381689099029767742314582582184093573615 storeStringHex = '16r2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
-	self assert: (1459980823972598128486511383358617792788444579872 printStringBase: 32) = 'VUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (1459980823972598128486511383358617792788444579872 radix: 32) = 'VUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 1459980823972598128486511383358617792788444579872 printStringHex = 'FFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
-	self assert: (1459980823972598128486511383358617792788444579872 storeStringBase: 32) = '32rVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 1459980823972598128486511383358617792788444579872 storeStringHex = '16rFFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
-	self assert: (128983956064237823710866404905431464703849549412368 printStringBase: 33) = 'WVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (128983956064237823710866404905431464703849549412368 radix: 33) = 'WVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 128983956064237823710866404905431464703849549412368 printStringHex = '584120A0328DE272AB055A8AA003CE4A559F223810'.
-	self assert: (128983956064237823710866404905431464703849549412368 storeStringBase: 33) = '33rWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 128983956064237823710866404905431464703849549412368 storeStringHex = '16r584120A0328DE272AB055A8AA003CE4A559F223810'.
-	self assert: (11745843093701610854378775891116314824081102660800418 printStringBase: 34) = 'XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (11745843093701610854378775891116314824081102660800418 radix: 34) = 'XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 11745843093701610854378775891116314824081102660800418 printStringHex = '1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
-	self assert: (11745843093701610854378775891116314824081102660800418 storeStringBase: 34) = '34rXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 11745843093701610854378775891116314824081102660800418 storeStringHex = '16r1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
-	self assert: (1101553773143634726491620528194292510495517905608180485 printStringBase: 35) = 'YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (1101553773143634726491620528194292510495517905608180485 radix: 35) = 'YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 1101553773143634726491620528194292510495517905608180485 printStringHex = 'B8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
-	self assert: (1101553773143634726491620528194292510495517905608180485 storeStringBase: 35) = '35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 1101553773143634726491620528194292510495517905608180485 storeStringHex = '16rB8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
-	self assert: (106300512100105327644605138221229898724869759421181854980 printStringBase: 36) = 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: (106300512100105327644605138221229898724869759421181854980 radix: 36) = 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 106300512100105327644605138221229898724869759421181854980 printStringHex = '455D441E55A37239AB4C303189576071AF5578FFCA80504'.
-	self assert: (106300512100105327644605138221229898724869759421181854980 storeStringBase: 36) = '36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
-	self assert: 106300512100105327644605138221229898724869759421181854980 storeStringHex = '16r455D441E55A37239AB4C303189576071AF5578FFCA80504'.
+	self assert: (2 printStringBase: 2) equals: '10'.
+	self assert: (2 radix: 2) equals: '10'.
+	self assert: 2 printStringHex equals: '2'.
+	self assert: (2 storeStringBase: 2) equals: '2r10'.
+	self assert: 2 storeStringHex equals: '16r2'.
+	self assert: (21 printStringBase: 3) equals: '210'.
+	self assert: (21 radix: 3) equals: '210'.
+	self assert: 21 printStringHex equals: '15'.
+	self assert: (21 storeStringBase: 3) equals: '3r210'.
+	self assert: 21 storeStringHex equals: '16r15'.
+	self assert: (228 printStringBase: 4) equals: '3210'.
+	self assert: (228 radix: 4) equals: '3210'.
+	self assert: 228 printStringHex equals: 'E4'.
+	self assert: (228 storeStringBase: 4) equals: '4r3210'.
+	self assert: 228 storeStringHex equals: '16rE4'.
+	self assert: (2930 printStringBase: 5) equals: '43210'.
+	self assert: (2930 radix: 5) equals: '43210'.
+	self assert: 2930 printStringHex equals: 'B72'.
+	self assert: (2930 storeStringBase: 5) equals: '5r43210'.
+	self assert: 2930 storeStringHex equals: '16rB72'.
+	self assert: (44790 printStringBase: 6) equals: '543210'.
+	self assert: (44790 radix: 6) equals: '543210'.
+	self assert: 44790 printStringHex equals: 'AEF6'.
+	self assert: (44790 storeStringBase: 6) equals: '6r543210'.
+	self assert: 44790 storeStringHex equals: '16rAEF6'.
+	self assert: (800667 printStringBase: 7) equals: '6543210'.
+	self assert: (800667 radix: 7) equals: '6543210'.
+	self assert: 800667 printStringHex equals: 'C379B'.
+	self assert: (800667 storeStringBase: 7) equals: '7r6543210'.
+	self assert: 800667 storeStringHex equals: '16rC379B'.
+	self assert: (16434824 printStringBase: 8) equals: '76543210'.
+	self assert: (16434824 radix: 8) equals: '76543210'.
+	self assert: 16434824 printStringHex equals: 'FAC688'.
+	self assert: (16434824 storeStringBase: 8) equals: '8r76543210'.
+	self assert: 16434824 storeStringHex equals: '16rFAC688'.
+	self assert: (381367044 printStringBase: 9) equals: '876543210'.
+	self assert: (381367044 radix: 9) equals: '876543210'.
+	self assert: 381367044 printStringHex equals: '16BB3304'.
+	self assert: (381367044 storeStringBase: 9) equals: '9r876543210'.
+	self assert: 381367044 storeStringHex equals: '16r16BB3304'.
+	self assert: (9876543210 printStringBase: 10) equals: '9876543210'.
+	self assert: (9876543210 radix: 10) equals: '9876543210'.
+	self assert: 9876543210 printStringHex equals: '24CB016EA'.
+	self assert: (9876543210 storeStringBase: 10) equals: '9876543210'.
+	self assert: 9876543210 storeStringHex equals: '16r24CB016EA'.
+	self assert: (282458553905 printStringBase: 11) equals: 'A9876543210'.
+	self assert: (282458553905 radix: 11) equals: 'A9876543210'.
+	self assert: 282458553905 printStringHex equals: '41C3D77E31'.
+	self assert: (282458553905 storeStringBase: 11) equals: '11rA9876543210'.
+	self assert: 282458553905 storeStringHex equals: '16r41C3D77E31'.
+	self assert: (8842413667692 printStringBase: 12) equals: 'BA9876543210'.
+	self assert: (8842413667692 radix: 12) equals: 'BA9876543210'.
+	self assert: 8842413667692 printStringHex equals: '80AC8ECF56C'.
+	self assert: (8842413667692 storeStringBase: 12) equals: '12rBA9876543210'.
+	self assert: 8842413667692 storeStringHex equals: '16r80AC8ECF56C'.
+	self assert: (300771807240918 printStringBase: 13) equals: 'CBA9876543210'.
+	self assert: (300771807240918 radix: 13) equals: 'CBA9876543210'.
+	self assert: 300771807240918 printStringHex equals: '1118CE4BAA2D6'.
+	self assert: (300771807240918 storeStringBase: 13) equals: '13rCBA9876543210'.
+	self assert: 300771807240918 storeStringHex equals: '16r1118CE4BAA2D6'.
+	self assert: (11046255305880158 printStringBase: 14) equals: 'DCBA9876543210'.
+	self assert: (11046255305880158 radix: 14) equals: 'DCBA9876543210'.
+	self assert: 11046255305880158 printStringHex equals: '273E82BB9AF25E'.
+	self assert: (11046255305880158 storeStringBase: 14) equals: '14rDCBA9876543210'.
+	self assert: 11046255305880158 storeStringHex equals: '16r273E82BB9AF25E'.
+	self assert: (435659737878916215 printStringBase: 15) equals: 'EDCBA9876543210'.
+	self assert: (435659737878916215 radix: 15) equals: 'EDCBA9876543210'.
+	self assert: 435659737878916215 printStringHex equals: '60BC6392F366C77'.
+	self assert: (435659737878916215 storeStringBase: 15) equals: '15rEDCBA9876543210'.
+	self assert: 435659737878916215 storeStringHex equals: '16r60BC6392F366C77'.
+	self assert: (18364758544493064720 printStringBase: 16) equals: 'FEDCBA9876543210'.
+	self assert: (18364758544493064720 radix: 16) equals: 'FEDCBA9876543210'.
+	self assert: 18364758544493064720 printStringHex equals: 'FEDCBA9876543210'.
+	self assert: (18364758544493064720 storeStringBase: 16) equals: '16rFEDCBA9876543210'.
+	self assert: 18364758544493064720 storeStringHex equals: '16rFEDCBA9876543210'.
+	self assert: (824008854613343261192 printStringBase: 17) equals: 'GFEDCBA9876543210'.
+	self assert: (824008854613343261192 radix: 17) equals: 'GFEDCBA9876543210'.
+	self assert: 824008854613343261192 printStringHex equals: '2CAB6B877C1CD2D208'.
+	self assert: (824008854613343261192 storeStringBase: 17) equals: '17rGFEDCBA9876543210'.
+	self assert: 824008854613343261192 storeStringHex equals: '16r2CAB6B877C1CD2D208'.
+	self assert: (39210261334551566857170 printStringBase: 18) equals: 'HGFEDCBA9876543210'.
+	self assert: (39210261334551566857170 radix: 18) equals: 'HGFEDCBA9876543210'.
+	self assert: 39210261334551566857170 printStringHex equals: '84D97AFCAE81415B3D2'.
+	self assert: (39210261334551566857170 storeStringBase: 18) equals: '18rHGFEDCBA9876543210'.
+	self assert: 39210261334551566857170 storeStringHex equals: '16r84D97AFCAE81415B3D2'.
+	self assert: (1972313422155189164466189 printStringBase: 19) equals: 'IHGFEDCBA9876543210'.
+	self assert: (1972313422155189164466189 radix: 19) equals: 'IHGFEDCBA9876543210'.
+	self assert: 1972313422155189164466189 printStringHex equals: '1A1A75329C5C6FC00600D'.
+	self assert: (1972313422155189164466189 storeStringBase: 19) equals: '19rIHGFEDCBA9876543210'.
+	self assert: 1972313422155189164466189 storeStringHex equals: '16r1A1A75329C5C6FC00600D'.
+	self assert: (104567135734072022160664820 printStringBase: 20) equals: 'JIHGFEDCBA9876543210'.
+	self assert: (104567135734072022160664820 radix: 20) equals: 'JIHGFEDCBA9876543210'.
+	self assert: 104567135734072022160664820 printStringHex equals: '567EF3C9636D242A8C68F4'.
+	self assert: (104567135734072022160664820 storeStringBase: 20) equals: '20rJIHGFEDCBA9876543210'.
+	self assert: 104567135734072022160664820 storeStringHex equals: '16r567EF3C9636D242A8C68F4'.
+	self assert: (5827980550840017565077671610 printStringBase: 21) equals: 'KJIHGFEDCBA9876543210'.
+	self assert: (5827980550840017565077671610 radix: 21) equals: 'KJIHGFEDCBA9876543210'.
+	self assert: 5827980550840017565077671610 printStringHex equals: '12D4CAE2B8A09BCFDBE30EBA'.
+	self assert: (5827980550840017565077671610 storeStringBase: 21) equals: '21rKJIHGFEDCBA9876543210'.
+	self assert: 5827980550840017565077671610 storeStringHex equals: '16r12D4CAE2B8A09BCFDBE30EBA'.
+	self assert: (340653664490377789692799452102 printStringBase: 22) equals: 'LKJIHGFEDCBA9876543210'.
+	self assert: (340653664490377789692799452102 radix: 22) equals: 'LKJIHGFEDCBA9876543210'.
+	self assert: 340653664490377789692799452102 printStringHex equals: '44CB61B5B47E1A5D8F88583C6'.
+	self assert: (340653664490377789692799452102 storeStringBase: 22) equals: '22rLKJIHGFEDCBA9876543210'.
+	self assert: 340653664490377789692799452102 storeStringHex equals: '16r44CB61B5B47E1A5D8F88583C6'.
+	self assert: (20837326537038308910317109288851 printStringBase: 23) equals: 'MLKJIHGFEDCBA9876543210'.
+	self assert: (20837326537038308910317109288851 radix: 23) equals: 'MLKJIHGFEDCBA9876543210'.
+	self assert: 20837326537038308910317109288851 printStringHex equals: '1070108876456E0EF115B389F93'.
+	self assert: (20837326537038308910317109288851 storeStringBase: 23) equals: '23rMLKJIHGFEDCBA9876543210'.
+	self assert: 20837326537038308910317109288851 storeStringHex equals: '16r1070108876456E0EF115B389F93'.
+	self assert: (1331214537196502869015340298036888 printStringBase: 24) equals: 'NMLKJIHGFEDCBA9876543210'.
+	self assert: (1331214537196502869015340298036888 radix: 24) equals: 'NMLKJIHGFEDCBA9876543210'.
+	self assert: 1331214537196502869015340298036888 printStringHex equals: '41A24A285154B026B6ED206C6698'.
+	self assert: (1331214537196502869015340298036888 storeStringBase: 24) equals: '24rNMLKJIHGFEDCBA9876543210'.
+	self assert: 1331214537196502869015340298036888 storeStringHex equals: '16r41A24A285154B026B6ED206C6698'.
+	self assert: (88663644327703473714387251271141900 printStringBase: 25) equals: 'ONMLKJIHGFEDCBA9876543210'.
+	self assert: (88663644327703473714387251271141900 radix: 25) equals: 'ONMLKJIHGFEDCBA9876543210'.
+	self assert: 88663644327703473714387251271141900 printStringHex equals: '111374860A2C6CEBE5999630398A0C'.
+	self assert: (88663644327703473714387251271141900 storeStringBase: 25) equals: '25rONMLKJIHGFEDCBA9876543210'.
+	self assert: 88663644327703473714387251271141900 storeStringHex equals: '16r111374860A2C6CEBE5999630398A0C'.
+	self assert: (6146269788878825859099399609538763450 printStringBase: 26) equals: 'PONMLKJIHGFEDCBA9876543210'.
+	self assert: (6146269788878825859099399609538763450 radix: 26) equals: 'PONMLKJIHGFEDCBA9876543210'.
+	self assert: 6146269788878825859099399609538763450 printStringHex equals: '49FBA7F30B0F48BD14E6A99BD8ADABA'.
+	self assert: (6146269788878825859099399609538763450 storeStringBase: 26) equals: '26rPONMLKJIHGFEDCBA9876543210'.
+	self assert: 6146269788878825859099399609538763450 storeStringHex equals: '16r49FBA7F30B0F48BD14E6A99BD8ADABA'.
+	self assert: (442770531899482980347734468443677777577 printStringBase: 27) equals: 'QPONMLKJIHGFEDCBA9876543210'.
+	self assert: (442770531899482980347734468443677777577 radix: 27) equals: 'QPONMLKJIHGFEDCBA9876543210'.
+	self assert: 442770531899482980347734468443677777577 printStringHex equals: '14D1A80A997343640C1145A073731DEA9'.
+	self assert: (442770531899482980347734468443677777577 storeStringBase: 27) equals: '27rQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 442770531899482980347734468443677777577 storeStringHex equals: '16r14D1A80A997343640C1145A073731DEA9'.
+	self assert: (33100056003358651440264672384704297711484 printStringBase: 28) equals: 'RQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (33100056003358651440264672384704297711484 radix: 28) equals: 'RQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 33100056003358651440264672384704297711484 printStringHex equals: '6145B6E6DACFA25D0E936F51D25932377C'.
+	self assert: (33100056003358651440264672384704297711484 storeStringBase: 28) equals: '28rRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 33100056003358651440264672384704297711484 storeStringHex equals: '16r6145B6E6DACFA25D0E936F51D25932377C'.
+	self assert: (2564411043271974895869785066497940850811934 printStringBase: 29) equals: 'SRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (2564411043271974895869785066497940850811934 radix: 29) equals: 'SRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 2564411043271974895869785066497940850811934 printStringHex equals: '1D702071CBA4A1597D4DD37E95EFAC79241E'.
+	self assert: (2564411043271974895869785066497940850811934 storeStringBase: 29) equals: '29rSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 2564411043271974895869785066497940850811934 storeStringHex equals: '16r1D702071CBA4A1597D4DD37E95EFAC79241E'.
+	self assert: (205646315052919334126040428061831153388822830 printStringBase: 30) equals: 'TSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (205646315052919334126040428061831153388822830 radix: 30) equals: 'TSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 205646315052919334126040428061831153388822830 printStringHex equals: '938B4343B54B550989989D02998718FFB212E'.
+	self assert: (205646315052919334126040428061831153388822830 storeStringBase: 30) equals: '30rTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 205646315052919334126040428061831153388822830 storeStringHex equals: '16r938B4343B54B550989989D02998718FFB212E'.
+	self assert: (17050208381689099029767742314582582184093573615 printStringBase: 31) equals: 'UTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (17050208381689099029767742314582582184093573615 radix: 31) equals: 'UTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 17050208381689099029767742314582582184093573615 printStringHex equals: '2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
+	self assert: (17050208381689099029767742314582582184093573615 storeStringBase: 31) equals: '31rUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 17050208381689099029767742314582582184093573615 storeStringHex equals: '16r2FC8ECB1521BA16D24A69E976D53873E2C661EF'.
+	self assert: (1459980823972598128486511383358617792788444579872 printStringBase: 32) equals: 'VUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (1459980823972598128486511383358617792788444579872 radix: 32) equals: 'VUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 1459980823972598128486511383358617792788444579872 printStringHex equals: 'FFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
+	self assert: (1459980823972598128486511383358617792788444579872 storeStringBase: 32) equals: '32rVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 1459980823972598128486511383358617792788444579872 storeStringHex equals: '16rFFBBCDEB38BDAB49CA307B9AC5A928398A418820'.
+	self assert: (128983956064237823710866404905431464703849549412368 printStringBase: 33) equals: 'WVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (128983956064237823710866404905431464703849549412368 radix: 33) equals: 'WVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 128983956064237823710866404905431464703849549412368 printStringHex equals: '584120A0328DE272AB055A8AA003CE4A559F223810'.
+	self assert: (128983956064237823710866404905431464703849549412368 storeStringBase: 33) equals: '33rWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 128983956064237823710866404905431464703849549412368 storeStringHex equals: '16r584120A0328DE272AB055A8AA003CE4A559F223810'.
+	self assert: (11745843093701610854378775891116314824081102660800418 printStringBase: 34) equals: 'XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (11745843093701610854378775891116314824081102660800418 radix: 34) equals: 'XWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 11745843093701610854378775891116314824081102660800418 printStringHex equals: '1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
+	self assert: (11745843093701610854378775891116314824081102660800418 storeStringBase: 34) equals: '34rXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 11745843093701610854378775891116314824081102660800418 storeStringHex equals: '16r1F64D4FC76000F7B92CF0CD5D0F350139AB9F25D8FA2'.
+	self assert: (1101553773143634726491620528194292510495517905608180485 printStringBase: 35) equals: 'YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (1101553773143634726491620528194292510495517905608180485 radix: 35) equals: 'YXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 1101553773143634726491620528194292510495517905608180485 printStringHex equals: 'B8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
+	self assert: (1101553773143634726491620528194292510495517905608180485 storeStringBase: 35) equals: '35rYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 1101553773143634726491620528194292510495517905608180485 storeStringHex equals: '16rB8031AD55AD1FAA89E07A271CA1ED2F420415D1570305'.
+	self assert: (106300512100105327644605138221229898724869759421181854980 printStringBase: 36) equals: 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: (106300512100105327644605138221229898724869759421181854980 radix: 36) equals: 'ZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 106300512100105327644605138221229898724869759421181854980 printStringHex equals: '455D441E55A37239AB4C303189576071AF5578FFCA80504'.
+	self assert: (106300512100105327644605138221229898724869759421181854980 storeStringBase: 36) equals: '36rZYXWVUTSRQPONMLKJIHGFEDCBA9876543210'.
+	self assert: 106300512100105327644605138221229898724869759421181854980 storeStringHex equals: '16r455D441E55A37239AB4C303189576071AF5578FFCA80504'.
 ]
 
 { #category : #'tests - basic' }
@@ -1359,10 +1348,10 @@ IntegerTest >> testPrintStringBase [
 
 { #category : #'tests - printing' }
 IntegerTest >> testPrintStringHex [
-	"self run: #testPrintStringHex"
-	self assert: 0 printStringHex = '0'.
-	self assert: 12 printStringHex = 'C'.
-	self assert: 1234 printStringHex = '4D2'.
+
+	self assert: 0 printStringHex equals: '0'.
+	self assert: 12 printStringHex equals: 'C'.
+	self assert: 1234 printStringHex equals: '4D2'
 ]
 
 { #category : #'tests - mathematical functions' }
@@ -1507,11 +1496,8 @@ IntegerTest >> testRomanPrinting [
 
 { #category : #'tests - rounding' }
 IntegerTest >> testRounding [
-        "
-        self debug: #testRounding
-        "
-
-        self assert: (5 round: 2) equals: 5
+ 
+	self assert: (5 round: 2) equals: 5
 ]
 
 { #category : #'tests - mathematical functions' }
@@ -1578,7 +1564,6 @@ IntegerTest >> testTwoComplementBitLogicWithCarry [
 
 { #category : #'tests - bitLogic' }
 IntegerTest >> testTwoComplementRightShift [
-	"self run: #testTwoComplementRightShift"
 
 	| large small |
 	small := 2 << 16.

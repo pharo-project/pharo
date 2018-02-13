@@ -12,7 +12,7 @@ Class {
 
 { #category : #failures }
 FLBasicSerializationTest >> expectedFailures [
-	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal)
+	^ #(testConsiderCustomWideSymbolGlobal testWideStringGlobal testWideStringClassName)
 ]
 
 { #category : #running }
@@ -30,28 +30,9 @@ FLBasicSerializationTest >> tearDown [
 { #category : #'tests-numbers' }
 FLBasicSerializationTest >> testAllRangeOfIntegers [
 
-		self assertSerializationIdentityOf: 100.
-		self assertSerializationIdentityOf: 10000.
-		self assertSerializationIdentityOf: 100000.
-		self assertSerializationIdentityOf: 10000000.
-		self assertSerializationIdentityOf: 100000000.
-		self assertSerializationIdentityOf: 1000000000.
-		self assertSerializationEqualityOf: 3000000000.
-		self assertSerializationEqualityOf: 10000000000.
-		self assertSerializationEqualityOf: 100000000000.
-		self assertSerializationEqualityOf: 100 factorial.
-
-		self assertSerializationIdentityOf: -100.
-		self assertSerializationIdentityOf: -10000.
-		self assertSerializationIdentityOf: -100000.
-		self assertSerializationIdentityOf: -10000000.
-		self assertSerializationIdentityOf: -100000000.
-		self assertSerializationIdentityOf: -1000000000.
-		self assertSerializationEqualityOf: -3000000000.
-		self assertSerializationEqualityOf: -10000000000.
-		self assertSerializationEqualityOf: -100000000000.
-		self assertSerializationEqualityOf:  100 factorial * -1.
-
+	1 to: 100 do: [:shift |
+		self assertSerializationEqualityOrIdentityOf: 1 << shift.
+		self assertSerializationEqualityOrIdentityOf: 0 - (1 << shift) ]
 
 ]
 
@@ -191,21 +172,19 @@ FLBasicSerializationTest >> testConsiderCustomWideSymbolGlobal [
 	"The same than #testConsiderCustomGlobal but with a WideSymbol."
 	
 	| aWideSymbol aPerson |
-	
 	aWideSymbol := (WideString streamContents: [ :stream |
-		256 to: 260 do: [ :code | 
-			stream nextPut: code asCharacter ] ]) asSymbol.
+		256 to: 280 do: [ :code | stream nextPut: code asCharacter ] ]) asSymbol.
 
 	self analyzer considerGlobal: aWideSymbol.
 
-	aPerson := FLPerson new.
-	
+	aPerson := FLPerson new.	
 	[ 
 		Smalltalk globals at: aWideSymbol put: aPerson.
 		self
-			shouldnt: [ self assertSerializationIdentityOf: aPerson ]
+			shouldnt: [ self resultOfSerializeAndMaterialize: aPerson ]
 			raise: Error
-	] ensure: [ Smalltalk globals removeKey: aWideSymbol ].
+	] ensure: [ 
+		Smalltalk globals removeKey: aWideSymbol ].
 
 ]
 
@@ -448,22 +427,21 @@ FLBasicSerializationTest >> testFalse [
 
 { #category : #'tests-numbers' }
 FLBasicSerializationTest >> testFloat [
-	
-	self assertSerializationEqualityOf: 180.0.
-	self assertSerializationEqualityOf: 0.0.
-	self assertSerializationEqualityOf: -0.0.
-	self assertSerializationEqualityOf: 11.22321.
-	self assertSerializationEqualityOf: -11.22321.
-	self assertSerializationEqualityOf: -132311.22321.
-	self assertSerializationEqualityOf: 1234567890.123456789.
-	self assertSerializationEqualityOf: -1234567890.123456789.
-	self assertSerializationEqualityOf: Float e.
-	self assertSerializationEqualityOf: Float infinity.
-	self assertSerializationEqualityOf: Float halfPi.
-	self assertSerializationEqualityOf: Float negativeZero.
-	self assertSerializationEqualityOf: Float halfPi.
-	self assertSerializationEqualityOf: Float pi.
-
+	{180.0.
+	0.0.
+	-0.0.
+	11.22321.
+	-11.22321.
+	-132311.22321.
+	1234567890.123456789.
+	-1234567890.123456789.
+	Float e.
+	Float infinity.
+	Float halfPi.
+	Float negativeZero.
+	Float halfPi.
+	Float pi} 
+		do: [ :aFloat | self assertSerializationEqualityOrIdentityOf: aFloat ]
 ]
 
 { #category : #tests }
@@ -744,23 +722,20 @@ FLBasicSerializationTest >> testSetWithSetElement [
 
 { #category : #tests }
 FLBasicSerializationTest >> testSharedReferences [
-	| oneDotOne  point1 point2 materialized array |
-	
-	oneDotOne := 1.1.
-	
-	"I cannot directly use 4.2 because the Compiler reuses the same float instance 4.2 for the literals and hence the last assert fails. "
-	point1:= Point x: oneDotOne y: (Float readFrom: '4.2' readStream).
-	point2:= Point x: (Float readFrom: '4.2' readStream) y: oneDotOne.
-	array := (Array with: point1 with: point2).
-	
+	| sharedObject point1 point2 materialized array |
+	sharedObject := SmallInteger maxVal + 1.
+	point1 := Point x: sharedObject y: SmallInteger maxVal + 2.
+	point2 := Point x: SmallInteger maxVal + 2 y: sharedObject.
+	array := Array with: point1 with: point2.
+
 	materialized := self resultOfSerializeAndMaterialize: array.
 	self assert: array = materialized.
-	self assert: materialized first x == materialized second y.
-	self deny: materialized first y == materialized second x.
-	
-
-	
-	
+	self 
+		assert: materialized first x == materialized second y 
+		description: 'An object that is referenced twice by the graph must not be duplicated when materialized'.
+	self 
+		deny: materialized first y == materialized second x 
+		description: 'Two (non-literal) objects must maintain different identity even if they are equal'
 ]
 
 { #category : #'tests-numbers' }
@@ -889,11 +864,11 @@ FLBasicSerializationTest >> testWideStringClassName [
 		yourself.
 	class := Class new setName: className; yourself.
 	[
-		Smalltalk at: class name put: class.
+		Smalltalk globals at: class name put: class.
 		self
-			shouldnt: [ FLSerializer serializeToByteArray: (Smalltalk at: class name) ]
+			shouldnt: [ self resultOfSerializeAndMaterialize: class ]
 			raise: Error
-	] ensure:[ Smalltalk removeKey: class name ]
+	] ensure:[ Smalltalk globals removeKey: class name ]
 ]
 
 { #category : #'tests-strings' }
@@ -904,7 +879,9 @@ FLBasicSerializationTest >> testWideStringGlobal [
 		yourself.
 	globalValue := global, 'value'.
 	[
-		Smalltalk at: global put: globalValue.
+		Smalltalk globals
+			at: global
+			put: globalValue.
 		self analyzer considerGlobal: global.
 
 		self
@@ -912,7 +889,7 @@ FLBasicSerializationTest >> testWideStringGlobal [
 			raise: Error.
 		self assert: self materialized class equals: Association.
 		self assert: self materialized value == global
-	] ensure: [ Smalltalk removeKey: global ]
+	] ensure: [ Smalltalk globals removeKey: global ]
 ]
 
 { #category : #'tests-collections' }

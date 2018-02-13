@@ -30,12 +30,12 @@ BreakpointTest >> setUp [
 
 { #category : #running }
 BreakpointTest >> tearDown [
-	| pkg |
-	super tearDown.
+	| pkg |	
 	Breakpoint all addAll: previousBreakpoints.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	pkg := 'DummyPackage' asPackageIfAbsent: [ ]. 
-	pkg ifNotNil: [ pkg removeFromSystem ]
+	pkg ifNotNil: [ pkg removeFromSystem ].
+	super tearDown.
 ]
 
 { #category : #tests }

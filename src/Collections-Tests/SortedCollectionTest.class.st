@@ -31,7 +31,7 @@ Class {
 
 { #category : #requirements }
 SortedCollectionTest >> accessCollection [
-" return a collection of size 5 "
+"Return a collection of size 5"
 	^accessCollection 
 ]
 
@@ -422,31 +422,29 @@ SortedCollectionTest >> test0FixtureTConvertAsSetForMultiplinessTest [
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testAdd [
-	"self run: #testAdd"
-	"self debug: #testAdd"
-	
+		
 	| collection |
 	collection := #(10 9 8 7 5 4 4 2) asSortedCollection.
-	self assert: collection first = 2.
-	self assert: collection last = 10.
-	self assert: (collection size = 8).
+	self assert: collection first equals: 2.
+	self assert: collection last equals: 10.
+	self assert: collection size equals: 8.
 	collection add:1.
-	self assert: (collection size = 9).
+	self assert: collection size equals: 9.
 	collection add: 6.
-	self assert: ((collection at: 5) = 5).
-	self assert: (collection size = 10).
+	self assert: (collection at: 5) equals: 5.
+	self assert: collection size equals: 10.
 	collection add: 3.
 	
 ]
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testAddAll [
-	"self run: #testAddAll"
-	"self debug: #testAddAll"
-	
+
 	| sorted2 sorted|
 	sorted2 := SortedCollection new.
-	sorted2 add: 'brochet'; add:'truitelle'.
+	sorted2 
+		add: 'brochet'; 
+		add:'truitelle'.
 	sorted := SortedCollection new.
 	sorted addAll: sorted2.
 	self assert: (sorted hasEqualElements: sorted2).
@@ -455,8 +453,6 @@ SortedCollectionTest >> testAddAll [
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testAddAll2 [
-	"self run: #testAddAll2"
-	"self debug: #testAddAll2"
 	
 	| sorted2 sorted|
 	sorted2 := SortedCollection new.
@@ -464,52 +460,54 @@ SortedCollectionTest >> testAddAll2 [
 	sorted := SortedCollection new.
 	sorted add: 'perche'.
 	sorted addAll: sorted2.
-	self assert: (sorted size = (sorted2 size + 1)).
-	sorted2 do: 
-			[ :each | self assert: (sorted includes: each)]
+	self assert: sorted size equals: (sorted2 size + 1).
+	sorted2 do: [ :each | self assert: (sorted includes: each)]
 	 
 ]
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testCollect [
-	"self run: #testCollect"
 	
 	|result aSortedCollection|
 	aSortedCollection := SortedCollection new.
 	result := OrderedCollection new.
-	result add:true ; add: true ; add: true ;add: false ; add: false.
+	result 
+		add: true; 
+		add: true; 
+		add: true;
+		add: false; 
+		add: false.
+	
 	aSortedCollection := (1 to: 5) asSortedCollection.
-	self assert: (result = (aSortedCollection collect: [:each | each < 4])).
+	self assert: result equals: (aSortedCollection collect: [:each | each < 4])
 	
 ]
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testCopy [
-	"self run: #testCopy"
-	"self debug: #testCopy"
-	
+		
 	|aSortedCollection copySorted|
 	aSortedCollection := SortedCollection new.
 	aSortedCollection sortBlock: [:a :b | a < b].
-	aSortedCollection add: 'truite' ; add: 'brochet'.
-	self assert: aSortedCollection first = 'brochet'.
+	aSortedCollection 
+		add: 'truite'; 
+		add: 'brochet'.
+	self assert: aSortedCollection first equals: 'brochet'.
 	
 	copySorted := aSortedCollection copy.
 	
 	self assert: (copySorted  hasEqualElements: aSortedCollection).
-	self assert: (copySorted  species = aSortedCollection species).
-	self assert: (copySorted  sortBlock = aSortedCollection sortBlock).
-	self assert: copySorted first = 'brochet'.
+	self assert: copySorted species equals: aSortedCollection species.
+	self assert: copySorted sortBlock equals: aSortedCollection sortBlock.
+	self assert: copySorted first = 'brochet'
 ]
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testCreation [
-	"self run: #testCreation"
-	"self debug: #testCreation"
-	
+		
 	| collection |
 	collection := #(10 9 3 6 1 8 7 5 4 2) asSortedCollection.
-	self assert: collection = (1 to: 10) asSortedCollection.
+	self assert: collection equals: (1 to: 10) asSortedCollection.
 	
 ]
 
@@ -525,13 +523,11 @@ SortedCollectionTest >> testDo2 [
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testEquals [
-	"self run: #testEquals"
-	"self debug: #testEquals"
-	
+		
 	|aSortedCollection|
 	aSortedCollection := SortedCollection new.
-	aSortedCollection add:'truite' ; add: 'brochet'.
-	self assert: aSortedCollection copy = aSortedCollection.
+	aSortedCollection add: 'truite'; add: 'brochet'.
+	self assert: aSortedCollection copy equals: aSortedCollection.
 ]
 
 { #category : #'tests - enumerating' }
@@ -554,7 +550,7 @@ SortedCollectionTest >> testIdentityIncludes [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIdentityIndexOf [
-	"self debug: #testIdentityIndexOf"
+	
 	| collection element |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -576,7 +572,7 @@ SortedCollectionTest >> testIdentityIndexOfIAbsent [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOf [
-	"self debug: #testIndexOf"
+	
 	| tmp index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	tmp := collection size.
@@ -589,7 +585,7 @@ SortedCollectionTest >> testIndexOf [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfIfAbsent [
-	"self debug: #testIndexOfIfAbsent"
+	
 	| collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	self assert: (collection 
@@ -602,7 +598,7 @@ SortedCollectionTest >> testIndexOfIfAbsent [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfStartingAt [
-	"self debug: #testLastIndexOf"
+	 
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -622,23 +618,23 @@ SortedCollectionTest >> testIndexOfStartingAt [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfSubCollectionStartingAt [
-	"self debug: #testIndexOfIfAbsent"
+	 
 	| subcollection index collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 1.
-	self assert: index = 1.
+	self assert: index equals: 1.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 2.
-	self assert: index = 0
+	self assert: index equals: 0
 ]
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testIndexOfSubCollectionStartingAtIfAbsent [
-	"self debug: #testIndexOfIfAbsent"
+	 
 	| index absent subcollection collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
@@ -647,18 +643,18 @@ SortedCollectionTest >> testIndexOfSubCollectionStartingAtIfAbsent [
 		indexOfSubCollection: subcollection
 		startingAt: 1
 		ifAbsent: [ absent := true ].
-	self assert: absent = false.
+	self assert: absent equals: false.
 	absent := false.
 	index := collection 
 		indexOfSubCollection: subcollection
 		startingAt: 2
 		ifAbsent: [ absent := true ].
-	self assert: absent = true
+	self assert: absent equals: true
 ]
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testLastIndexOf [
-	"self debug: #testLastIndexOf"
+	
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection first.
@@ -668,7 +664,7 @@ SortedCollectionTest >> testLastIndexOf [
 
 { #category : #'tests - index access' }
 SortedCollectionTest >> testLastIndexOfStartingAt [
-	"self debug: #testLastIndexOf"
+
 	| element collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	element := collection last.
@@ -688,16 +684,18 @@ SortedCollectionTest >> testLastIndexOfStartingAt [
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testMedian [
-	"self run: #testMedian"
-	"self debug: #testMedian"
 	
 	|aSortedCollection|
 	aSortedCollection := (1 to: 10) asSortedCollection.
-	self assert: aSortedCollection median=5.
+	self assert: aSortedCollection median equals: 5.
 	
 	aSortedCollection := SortedCollection new.
-	aSortedCollection add:'truite' ; add:'porcinet' ; add:'carpe'.
-	self assert: (aSortedCollection median = 'porcinet').
+	aSortedCollection 
+		add: 'truite'; 
+		add: 'porcinet'; 
+		add: 'carpe'.
+
+	self assert: aSortedCollection median equals: 'porcinet'.
 	
 ]
 
@@ -721,40 +719,43 @@ SortedCollectionTest >> testRemoveAll [
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testSort [
-	"self run: #testSort"
 	| s |
  	s := SortedCollection withAll: #(3 2 1).
- 	self assert: s asArray = #(1 2 3).
+ 	self assert: s asArray equals: #(1 2 3).
  	s sort: [:a :b | a >=b]. 
- 	self assert: s asArray = #(3 2 1).
+ 	self assert: s asArray equals: #(3 2 1).
  	s add: 4.
- 	self assert: s asArray = #(4 3 2 1).
+ 	self assert: s asArray equals: #(4 3 2 1).
  	s := SortedCollection new 
  		sortBlock: [:a :b | a >=b];
  		addAll: #(1 2 3);
  		yourself.
- 	self assert: s asArray = #(3 2 1).
+ 	self assert: s asArray equals: #(3 2 1).
  	s sort.
- 	self assert: s asArray = #(1 2 3).
+ 	self assert: s asArray equals: #(1 2 3).
  	s add: 0.
- 	self assert: s asArray = #(0 1 2 3)
+ 	self assert: s asArray equals: #(0 1 2 3)
 ]
 
 { #category : #'tests - basic' }
 SortedCollectionTest >> testSortBlock [
-	"self run: #testSortBlock"
-	"self debug: #testSortBlock"
-	
+		
 	|aSortedCollection|
 	aSortedCollection := SortedCollection new.
 	aSortedCollection sortBlock: [:a :b | a < b].
-	aSortedCollection add: 'truite' ; add: 'brochet' ; add: 'tortue'.
-	self assert: aSortedCollection first = 'brochet'.
+	aSortedCollection 
+		add: 'truite'; 
+		add: 'brochet'; 
+		add: 'tortue'.
+	self assert: aSortedCollection first equals: 'brochet'.
 	
 	aSortedCollection := SortedCollection new.
 	aSortedCollection sortBlock: [:a :b | a >b].
-	aSortedCollection add: 'truite' ; add: 'brochet' ; add: 'tortue'.
-	self assert: aSortedCollection first = 'truite'.
+	aSortedCollection 
+		add: 'truite'; 
+		add: 'brochet';
+		add: 'tortue'.
+	self assert: aSortedCollection first equals: 'truite'.
 	
 	
 	

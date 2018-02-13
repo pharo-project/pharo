@@ -49,7 +49,7 @@ TRemoveForMultiplenessTest >> test0FixtureTRemoveTest [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAll [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection collection res |
 	collection := self nonEmptyWithoutEqualElements.
 	el := collection anyOne.
@@ -61,7 +61,7 @@ TRemoveForMultiplenessTest >> testRemoveAll [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAllError [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection |
 	el := self elementNotIn.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWith: el.
@@ -72,7 +72,7 @@ TRemoveForMultiplenessTest >> testRemoveAllError [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAllFoundIn [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection res |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	aSubCollection := (self nonEmptyWithoutEqualElements copyWithout: el) copyWith: self elementNotIn.
@@ -83,7 +83,7 @@ TRemoveForMultiplenessTest >> testRemoveAllFoundIn [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveAllSuchThat [
-	"self debug: #testRemoveElementThatExists"
+
 	| el aSubCollection |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	aSubCollection := self nonEmptyWithoutEqualElements copyWithout: el.
@@ -94,7 +94,7 @@ TRemoveForMultiplenessTest >> testRemoveAllSuchThat [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementFromEmpty [
-	"self debug: #testRemoveElementFromEmpty"
+	 
 	self 
 		should: [ self empty remove: self nonEmptyWithoutEqualElements anyOne ]
 		raise: Error
@@ -102,7 +102,7 @@ TRemoveForMultiplenessTest >> testRemoveElementFromEmpty [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementReallyRemovesElement [
-	"self debug: #testRemoveElementReallyRemovesElement"
+ 
 	| size |
 	size := self nonEmptyWithoutEqualElements size.
 	self nonEmptyWithoutEqualElements remove: self nonEmptyWithoutEqualElements anyOne.
@@ -111,8 +111,7 @@ TRemoveForMultiplenessTest >> testRemoveElementReallyRemovesElement [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementThatExists [
-	"self debug: #testRemoveElementThatExists"
-
+ 
 	| el res |
 	el := self nonEmptyWithoutEqualElements anyOne.
 	res := self nonEmptyWithoutEqualElements remove: el.
@@ -121,7 +120,6 @@ TRemoveForMultiplenessTest >> testRemoveElementThatExists [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveElementThatExistsTwice [
-	"self debug: #testRemoveElementThatDoesExistsTwice"
 
 	| size |
 	size := self nonEmpty size.
@@ -136,7 +134,6 @@ TRemoveForMultiplenessTest >> testRemoveElementThatExistsTwice [
 
 { #category : #'tests - remove' }
 TRemoveForMultiplenessTest >> testRemoveIfAbsent [
-	"self debug: #testRemoveElementThatExists"
 
 	| el res |
 	el := self elementNotIn.

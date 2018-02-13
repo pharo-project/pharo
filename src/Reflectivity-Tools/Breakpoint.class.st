@@ -37,6 +37,12 @@ Breakpoint class >> browseAll [
 	Smalltalk tools messageList browse: methods
 ]
 
+{ #category : #checkCondition }
+Breakpoint class >> checkBreakConditionValue: aValue [
+	(aValue isKindOf: Boolean) ifTrue: [ ^ aValue ].
+	Error signal: 'Breakpoint condition returned a non boolean value'.
+]
+
 { #category : #cleanup }
 Breakpoint class >> cleanUp [
 	self removeAll.
@@ -128,7 +134,7 @@ Breakpoint >> breakLink [
 
 { #category : #links }
 Breakpoint >> breakLinkConditional [	
-	^self breakLink condition: condition.
+	^self breakLink condition: condition arguments: #(context)
 ]
 
 { #category : #links }
