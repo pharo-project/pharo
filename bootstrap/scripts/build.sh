@@ -126,7 +126,7 @@ cp "${BOOTSTRAP_IMAGE_NAME}.image" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 zip "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.zip" "${BOOTSTRAP_ARCHIVE_IMAGE_NAME}.image"
 
 # Archive binary Hermes packages
-zip "${HERMES_ARCHIVE_NAME}.zip" AST-Core-Traits.hermes CodeImport-Traits.hermes Collections-Abstract-Traits.hermes Kernel-Traits.hermes RPackage-Traits.hermes SUnit-Tests.hermes System-Sources-Traits.hermes CodeExport-Traits.hermes CodeImport.hermes Hermes-Extensions.hermes OpalCompiler-Core.hermes SUnit-Core-Traits.hermes System-Support-Traits.hermes Transcript-Core-Traits.hermes CodeExport.hermes CodeImportCommandLineHandlers.hermes JenkinsTools-Core.hermes OpalCompiler-Traits.hermes SUnit-Core.hermes Slot-Traits.hermes TraitsV2-Compatibility.hermes
+zip "${HERMES_ARCHIVE_NAME}.zip" *.hermes
 
 # Archive RPackage definitions
 zip "${RPACKAGE_ARCHIVE_NAME}.zip" protocolsKernel.txt packagesKernel.txt
@@ -146,12 +146,15 @@ cd ..
 echo "[Compiler] Installing RPackage"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
 
+echo "[Compiler] Adding more Kernel packages"
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes --save --no-fail-on-undeclared
+
 echo "[Compiler] Initializing the packages in the Kernel"
 ${VM} "${COMPILER_IMAGE_NAME}.image" initializePackages --protocols=protocolsKernel.txt --packages=packagesKernel.txt --save
 
 # Installing compiler through Hermes 
 echo "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Hermes-Extensions.hermes --save
 ${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes OpalCompiler-Core.hermes CodeExport.hermes CodeImport.hermes CodeImportCommandLineHandlers.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "CompilationContext initialize. OCASTTranslator initialize." 
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
