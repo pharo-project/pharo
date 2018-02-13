@@ -675,11 +675,6 @@ TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poo
 	^self explicitRequirement.
 ]
 
-{ #category : #'subclass creation' }
-TClass >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [ 
-	^self explicitRequirement.
-]
-
 { #category : #'class variables' }
 TClass >> readClassVariableNamed: aString [
 	"Answer the content of the Class Variable"

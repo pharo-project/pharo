@@ -17,7 +17,7 @@ TaSingleComposition >> = another [
 
 { #category : #users }
 TaSingleComposition >> addUser: aClass [ 
-
+	"I propagate to the inner trait"
 	inner addUser: aClass
 ]
 
@@ -104,7 +104,7 @@ TaSingleComposition >> originSelectorOf: aSelector [
 
 { #category : #users }
 TaSingleComposition >> removeUser: aClass [ 
-
+	"I propagate to the inner trait"
 	inner removeUser: aClass
 ]
 

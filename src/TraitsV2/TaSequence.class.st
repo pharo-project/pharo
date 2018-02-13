@@ -50,11 +50,13 @@ TaSequence >> = anotherTalent [
 
 { #category : #adding }
 TaSequence >> addAll: aCollection [
+	"Adds all the members in the othe sequence"
 	aCollection do:[:e | self addMember: e].
 ]
 
 { #category : #adding }
 TaSequence >> addMember: aTrait [
+	"Adds a single trait to me"
 	self validateDuplications: aTrait.
 	self validateSlots: aTrait.
 	
@@ -63,6 +65,7 @@ TaSequence >> addMember: aTrait [
 
 { #category : #operations }
 TaSequence >> addToSequence: sequence [
+	"I add my self to another sequence. When adding I add all my members, not myself"
 	members do:[:e |sequence addMember: e].
 	^ sequence
 
@@ -70,7 +73,7 @@ TaSequence >> addToSequence: sequence [
 
 { #category : #users }
 TaSequence >> addUser: aClass [ 
-
+	"I propagate the users to all my members"
 	members do: [ :m | m addUser: aClass ]
 ]
 
@@ -153,7 +156,7 @@ TaSequence >> isAliasSelector: aSelector [
 
 { #category : #testing }
 TaSequence >> isConflictingSelector: aSelector [
-
+	"I test if a given selector is defined in more than one of my members"
 	^ (self methods count: [ :e | e selector = aSelector and: [ e isRequired not ] ]) > 1
 ]
 
@@ -165,7 +168,8 @@ TaSequence >> isLocalAliasSelector: aSymbol [
 { #category : #accessing }
 TaSequence >> memberForSelector: aSelector [
 
-	"I first look for a valid member, if not, I will return the first"
+	"I return the member that defines a given selector.
+	I first look for a valid member, if not, I will return the first"
 	^ members
 		detect:
 			[ :e | (e selectors includes: aSelector) and: [ (e compiledMethodAt: aSelector) isRequired not ] ]
@@ -196,7 +200,7 @@ TaSequence >> originSelectorOf: aSelector [
 
 { #category : #users }
 TaSequence >> removeUser: aClass [ 
-	
+	"I propagate to my members the removal of an user"
 	self members do: [ :m | m removeUser: aClass] 
 ]
 
@@ -209,6 +213,10 @@ TaSequence >> reverseAlias: aSelector [
 { #category : #accessing }
 TaSequence >> selectorForConflict: selector [
 	| args keywords |
+	
+	"I calculate the selector to use when there is a conflict. 
+	I have to reimplement a similar code that is in RBParser, as the parser cannot be available when this code is executed in a bootstraped image"
+	
 	args := selector numArgs.
 
 	args = 0
@@ -249,6 +257,8 @@ TaSequence >> sourceCodeAt: selector [
 
 { #category : #accessing }
 TaSequence >> sourceCodeForConflictFor: selector [
+
+	"I return the method body for a conflicting selector"
 
 	^ String
 		streamContents: [ :s | 

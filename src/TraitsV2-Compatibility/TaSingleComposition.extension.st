@@ -7,6 +7,7 @@ TaSingleComposition >> includesElement: anElement [
 
 { #category : #'*TraitsV2-Compatibility' }
 TaSingleComposition >> subject [
+	"Do not use... do not access directly to the subject. Kept for compatibility"
 	^ inner
 ]
 

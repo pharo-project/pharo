@@ -40,6 +40,7 @@ TaAliasMethod >> aliases: anObject [
 
 { #category : #accessing }
 TaAliasMethod >> checkAssociations [
+	"I check the validity of the associations used for aliasing"
 	self aliases
 		associationsDo: [ :assoc | 
 			| old new |
@@ -76,6 +77,7 @@ TaAliasMethod >> copyWithoutTrait: aTrait [
 { #category : #accessing }
 TaAliasMethod >> existingAliasedSelectors [
 	| innerSelectors |
+	"I calculate the new aliases selectors"
 	innerSelectors := inner selectors.
 
 	^ self aliases associations
@@ -85,11 +87,13 @@ TaAliasMethod >> existingAliasedSelectors [
 
 { #category : #testing }
 TaAliasMethod >> hasAliasForNew: aSelector [
+	"Check if there is a alias for a new selector"
 	^ aliases includesKey: aSelector
 ]
 
 { #category : #testing }
 TaAliasMethod >> hasAliasForOld: aSelector [
+	"Check if there is a alias for a old selector"
 	^ aliases values includes: aSelector
 ]
 

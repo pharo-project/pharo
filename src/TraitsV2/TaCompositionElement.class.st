@@ -32,7 +32,7 @@ TaCompositionElement >> >> anAssociation [
 
 { #category : #users }
 TaCompositionElement >> addUser: aClass [ 
-	
+	"When a user is added to me I propagate to the real Trait, as I am the root of the TraitComposition"
 	innerClass addUser: aClass
 ]
 
@@ -71,6 +71,7 @@ TaCompositionElement >> compiledMethodAt: selector [
 
 { #category : #copying }
 TaCompositionElement >> copySlot: aSlot [
+	"This is a utitlity method to handle the copy of a slot. It is used for instance side and class side slots."
 	| newOne |
 	newOne := aSlot copy.
 	newOne isVirtual ifFalse: [ newOne index: nil ].
@@ -79,17 +80,22 @@ TaCompositionElement >> copySlot: aSlot [
 
 { #category : #copying }
 TaCompositionElement >> copyTraitExpression [
+	"I can be just shallowCopy, because I have only a reference to the real Trait"
 	^ self shallowCopy.
 ]
 
 { #category : #copying }
 TaCompositionElement >> copyWithoutTrait: aTrait [ 
 	
+	"If you want to remove a trait that is equivalent to me, I return an empty composition.
+	If not a copy is returned"
 	^ self = aTrait ifTrue: [ TaEmptyComposition new ] ifFalse: [ self copy ]
 ]
 
 { #category : #'transforming selectors' }
 TaCompositionElement >> dealiasSelector: oldSelector [
+	"Usefule to dealias the initialize selector. Used mostly with stateful Talents"
+
 	^ oldSelector = self initializeSelectorForMe
 		ifTrue: [ ^ #initializeTalent ]
 		ifFalse: [ ^ oldSelector ]
@@ -139,7 +145,7 @@ TaCompositionElement >> originSelectorOf: aSelector [
 
 { #category : #users }
 TaCompositionElement >> removeUser: aClass [ 
-	
+	"When a user is removed from me I propagate to the real Trait, as I am the root of the TraitComposition"	
 	innerClass removeUser: aClass
 ]
 
