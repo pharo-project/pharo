@@ -842,17 +842,16 @@ Class >> newAnonymousSubclass [
 Class >> newSubclass [
 	| i className |
 	i := 1.
-	[className := (self name , i printString) asSymbol.
-	 self environment includesKey: className]
-		whileTrue: [i := i + 1].
-
-	^ self subclass: className
+	[ className := (self name , i printString) asSymbol.
+	self environment includesKey: className ] whileTrue: [ i := i + 1 ].
+	^ self
+		subclass: className
 		instanceVariableNames: ''
 		classVariableNames: ''
 		poolDictionaries: ''
-		category: 'Unclassified'
+		package: 'Unclassified'
 
-"Point newSubclass new"
+	"Point newSubclass new"
 ]
 
 { #category : #'initialize-release' }
@@ -882,6 +881,36 @@ Class >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 			[ ^ misspelled correctAgainstDictionary: self environment continuedFrom: results ]
 		ifFalse:
 			[ ^ self superclass possibleVariablesFor: misspelled continuedFrom: results ]
+]
+
+{ #category : #'subclass creation - deprecated' }
+Class >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
+	"Deprecated!"
+
+	^ self
+		private_subclass: t
+		instanceVariableNames: f
+		classVariableNames: d
+		poolDictionaries: s
+		package: cat 
+]
+
+{ #category : #'subclass creation' }
+Class >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: package [ 
+	"This is the standard initialization message for creating a new class as a 
+	subclass of an existing class (the receiver)."
+	^ self classInstaller make: [ :builder |
+		builder
+			superclass: self;
+			name: t;
+			layoutClass: self classLayout class;
+			slots: f asSlotCollection;
+			sharedVariablesFromString: d;
+			sharedPools: s;
+			category: package;
+			environment: self environment;
+			copyClassSlotsFromExistingClass ].
+
 ]
 
 { #category : #'class variables' }
@@ -1118,23 +1147,34 @@ Class >> sharing: poolString [
 
 { #category : #'subclass creation' }
 Class >> subclass: t [
-	^ self subclass: t instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' category: 'Unclassified' 
+	^ self
+		subclass: t
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: 'Unclassified'
 ]
 
 { #category : #'subclass creation' }
 Class >> subclass: t instanceVariableNames: ins [
-	^ self subclass: t instanceVariableNames: ins classVariableNames: '' poolDictionaries: '' category: 'Unclassified' 
+	^ self
+		subclass: t
+		instanceVariableNames: ins
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: 'Unclassified'
 ]
 
-{ #category : #'subclass creation' }
+{ #category : #'subclass creation - deprecated' }
 Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVariableNames: classVarNames category: aCategorySymbol [
 	"Added to allow for a simplified subclass creation experience. "
+
 	^ self
 		subclass: aSubclassSymbol
 		instanceVariableNames: instVarNames
 		classVariableNames: classVarNames
 		poolDictionaries: ''
-		category: aCategorySymbol
+		package: aCategorySymbol
 ]
 
 { #category : #'subclass creation' }
@@ -1149,7 +1189,7 @@ Class >> subclass: aSubclassSymbol instanceVariableNames: instVarNames classVari
 		package: aPackageSymbol
 ]
 
-{ #category : #'subclass creation' }
+{ #category : #'subclass creation - deprecated' }
 Class >> subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s category: cat [
 	^ self
 		subclass: t
@@ -1226,6 +1266,164 @@ Class >> subclass: aSubclassSymbol slots: slotDefinition classVariables: classVa
 		sharedPools: someSharedPoolNames;
 		category: aCategorySymbol ].
 
+]
+
+{ #category : #'subclass creation' }
+Class >> subclass: className uses: aTraitComposition [
+	| cls |
+	cls := self
+		subclass: className
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		package: 'Unclassified'.
+	cls setTraitComposition: aTraitComposition asTraitComposition.
+	^ cls
+]
+
+{ #category : #'subclass creation - deprecated' }
+Class >> subclass: aTraitName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames category: cat [
+	^ self
+		subclass: aTraitName
+		uses: aTraitCompositionOrArray
+		instanceVariableNames: instVarNames
+		classVariableNames: classVarNames
+		poolDictionaries: ''
+		package: cat 
+]
+
+{ #category : #'subclass creation' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames package: packageName [
+	^ self
+		subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: instVarNames classVariableNames: classVarNames poolDictionaries: '' package: packageName
+]
+
+{ #category : #'subclass creation - deprecated' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames category: aCategory [
+	^ self
+		subclass: aName
+		uses: aTraitCompositionOrArray
+		instanceVariableNames: someInstanceVariableNames
+		classVariableNames: someClassVariableNames
+		poolDictionaries: someSharedPoolNames
+		package: aCategory 
+]
+
+{ #category : #'subclass creation' }
+Class >> subclass: aName uses: aTraitCompositionOrArray instanceVariableNames: someInstanceVariableNames classVariableNames: someClassVariableNames poolDictionaries: someSharedPoolNames package: aPackageName [
+	^ self
+		subclass: aName
+		uses: aTraitCompositionOrArray
+		with: [ self
+				private_subclass: aName
+				instanceVariableNames: someInstanceVariableNames
+				classVariableNames: someClassVariableNames
+				poolDictionaries: someSharedPoolNames
+				package: aPackageName ]
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		with: [ 
+			self classInstaller
+				make: [ :builder | 
+					builder
+						name: aSubclassSymbol;
+						superclass: self;
+						layoutClass: layoutClass;
+						slots: slotDefinition;
+						sharedVariables: classVarDefinition;
+						category: aCategorySymbol ] ]
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray  layout: layoutClass slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		with: [ 
+			self classInstaller
+				make: [ :builder | 
+					builder
+						name: aSubclassSymbol;
+						superclass: self;
+						layoutClass: layoutClass;
+						slots: slotDefinition;
+						sharedVariables: classVarDefinition;
+						sharedPools: someSharedPoolNames;
+						category: aCategorySymbol ] ]
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition category: aCategorySymbol [
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		with: [ 
+			self classInstaller
+				make: [ :builder | 
+					builder
+						name: aSubclassSymbol;
+						superclass: self;
+						slots: slotDefinition;
+						sharedVariables: classVarDefinition;
+						category: aCategorySymbol ] ]
+]
+
+{ #category : #'subclass creation - slots' }
+Class >> subclass: aSubclassSymbol uses: aTraitCompositionOrArray slots: slotDefinition classVariables: classVarDefinition poolDictionaries: someSharedPoolNames category: aCategorySymbol [
+	^ self
+		subclass: aSubclassSymbol
+		uses: aTraitCompositionOrArray
+		with: [ 
+			self classInstaller
+				make: [ :builder | 
+					builder
+						name: aSubclassSymbol;
+						superclass: self;
+						slots: slotDefinition;
+						sharedVariables: classVarDefinition;
+						sharedPools: someSharedPoolNames;
+						category: aCategorySymbol ] ]
+]
+
+{ #category : #'subclass creation - private' }
+Class >> subclass: aName uses: aTraitComposition with: aBlock [ 
+	"Define (or redefine) a subclass by evaluating a block closure. 
+
+	Note (MartinDias): 
+		This is a workaround for the subclass creation API when a trait is specified. 
+		To fix it well, in Pharo 4, a bit deeper refactoring is required, delegating this responsibility
+		to SlotClassBuilder."
+
+	^ self environment 
+		at: aName
+		ifPresent: [ :old | 
+			| copyOfOld newClass |
+			copyOfOld := old copy.
+
+			"Modify the class and set the new trait composition"
+			newClass := aBlock value. 
+			newClass setTraitComposition: aTraitComposition asTraitComposition.
+
+			"Announce that the definition changed when there is a new trait composution. 
+			Note: It may be a re-announce if there was other change in the class definition, 
+			e.g. an instace variable added."
+			(newClass traitComposition syntacticallyEquals: copyOfOld traitComposition) ifFalse: [ 
+				SystemAnnouncer uniqueInstance 
+					classDefinitionChangedFrom: copyOfOld to: newClass;
+					classModificationAppliedTo: newClass ].
+
+			newClass ]
+		ifAbsent: [ | newClass |
+			"Create the class and set the trait composition"
+			newClass := aBlock value.
+			newClass setTraitComposition: aTraitComposition asTraitComposition.
+			SystemAnnouncer uniqueInstance classModificationAppliedTo: newClass.
+			newClass].
 ]
 
 { #category : #'accessing class hierarchy' }
