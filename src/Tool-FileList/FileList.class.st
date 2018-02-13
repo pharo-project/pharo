@@ -60,10 +60,6 @@ FileList class >> contentMenu: aBuilder [
 		selector: #setSearchString;
 		withSeparatorAfter.
 		
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
-		iconName: #smallRedoIcon.
 	(aBuilder item: #'Undo' translated)
 		keyText: 'z';
 		selector: #undo;
