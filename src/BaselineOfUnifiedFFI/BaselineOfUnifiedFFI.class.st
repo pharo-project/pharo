@@ -29,6 +29,7 @@ BaselineOfUnifiedFFI >> baseline: spec [
 		spec 
 			"alien"
 			package: 'Alien';
+			package: 'Alien-Tests' with: [ spec requires: #('Alien') ];
 			"unified ffi"
 			package: 'UnifiedFFI' with: [ spec requires: #('Alien') ];
 			package: 'UnifiedFFI-Tests' with: [ spec requires: #('UnifiedFFI') ];
@@ -36,7 +37,7 @@ BaselineOfUnifiedFFI >> baseline: spec [
 			
 		spec 
 			group: 'default' with: #('core' 'legacy');
-			group: 'core' with: #('UnifiedFFI' 'UnifiedFFI-Tests');
+			group: 'core' with: #('UnifiedFFI' 'UnifiedFFI-Tests' 'Alien-Tests');
 			group: 'legacy' with: #('UnifiedFFI-Legacy') ]
 ]
 
