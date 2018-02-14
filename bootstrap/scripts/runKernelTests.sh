@@ -35,10 +35,13 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
 ./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes 
+./pharo bootstrap.image loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes Jobs.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
 #Initializing the package manager
 ./pharo bootstrap.image initializePackages --packages=packagesKernel.txt --protocols=protocolsKernel.txt --save
+
+#Load traits
+./pharo bootstrap.image loadHermes TraitsV2.hermes --save
 
 #Loading Tests
 ./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore

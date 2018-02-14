@@ -59,7 +59,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #Compiler #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools'  #Shout)
+	^ #(#'Athens-Morphic' #Compiler #NautilusRefactoring #'Refactoring-Critics' #'Reflectivity-Tools'  #Shout) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -67,7 +67,7 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#DeprecatedFileStream #'FileSystem-Core' #Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -75,7 +75,7 @@ SystemDependenciesTest >> knownDisplayDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Network-Mail' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization')
+	^ #(#'Fonts-Abstract' #'Graphics-Canvas' #'Graphics-Files' #'Network-Mail' #'Polymorph-Widgets' #'SUnit-Core' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -83,7 +83,7 @@ SystemDependenciesTest >> knownFileSystemDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'Zinc-Resource-Meta-Core')
+	^ #(#Monticello #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'Zinc-Resource-Meta-Core') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -91,7 +91,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler).
+	^ #(#Compiler) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -99,7 +99,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs)
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -107,7 +107,7 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'System-Localization')
+	^ #(#'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -115,7 +115,7 @@ SystemDependenciesTest >> knownMetacelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization')
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -123,7 +123,7 @@ SystemDependenciesTest >> knownMonticelloDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization')
+	^ #(#'Graphics-Files' #'Network-Mail' #'SUnit-Core' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -131,7 +131,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Network-Mail' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization')
+	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Morphic-Widgets-Windows' #'Network-Mail' #'Polymorph-Widgets' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Clipboard' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -139,7 +139,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers')
+	^ #(#Compiler #FontChooser #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Rubric #Shout #'Spec-Core' #'Tool-Base' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -147,7 +147,7 @@ SystemDependenciesTest >> knownSUnitDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs)
+	^ #(#'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization' #'AST-Core' #'Collections-Arithmetic' #Jobs) sorted
 ]
 
 { #category : #'known dependencies' }
@@ -155,7 +155,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization')
+	^ #(#CodeExport #CodeImportCommandLineHandlers #DeprecatedFileStream #'FileSystem-Core' #Monticello #'OpalCompiler-Core' #'Ring-Core-Kernel' #'System-Changes' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -163,7 +163,7 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization')
+	^ #(#Compiler #'Fonts-Abstract' #'Graphics-Files' #'Network-Mail' #'Refactoring-Critics' #'Refactoring-Environment' #'System-Localization') sorted
 ]
 
 { #category : #'known dependencies' }
@@ -171,7 +171,7 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"	
 
-	^ #(#'Athens-Morphic' #Compiler #Komitter #MonticelloGUI #'Morphic-Widgets-FastTable' #NautilusRefactoring #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers')
+	^ #(#'Athens-Morphic' #Compiler #Komitter #MonticelloGUI #'Morphic-Widgets-FastTable' #NautilusRefactoring #'Network-Mail' #RecentSubmissions #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-ProcessBrowser' #'Tool-Profilers') sorted
 ]
 
 { #category : #utility }
@@ -196,7 +196,7 @@ SystemDependenciesTest >> metacelloPackageNames [
 { #category : #accessing }
 SystemDependenciesTest >> specPackageNames [
 
-	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder)
+	^ #(#'Spec-Core' #'Spec-Layout' #'Keymapping-Pragmas' #'Keymapping-Core' #'Keymapping-KeyCombinations' #MenuRegistration #NewValueHolder) sorted
 ]
 
 { #category : #tests }
