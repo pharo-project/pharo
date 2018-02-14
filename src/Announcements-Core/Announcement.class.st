@@ -5,7 +5,7 @@ See in the help browser for more documentation. Just do:
 
 HelpBrowser openOn: AnnouncementsHelp
 
-"
+" 
 Class {
 	#name : #Announcement,
 	#superclass : #Object,
