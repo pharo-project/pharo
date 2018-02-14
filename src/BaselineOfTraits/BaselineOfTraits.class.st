@@ -53,7 +53,6 @@ BaselineOfTraits >> baseline: spec [
 		spec group: 'core' with: #('TraitsV2').
 					
 		spec group: 'traits-in-kernel' with: #(
-					'core'
 					'Kernel-Traits'
 					'AST-Core-Traits'
 					'Collections-Abstract-Traits'
