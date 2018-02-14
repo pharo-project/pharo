@@ -142,13 +142,8 @@ Class >> addClassVariable: aGlobal [
 Class >> addInstVarNamed: aString [
 	"Add the argument, aString, as one of the receiver's instance variables."
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	aString substrings do: [ :each|
-		self addSlot: (InstanceVariableSlot named: each asSymbol)]
+		self addSlot: (InstanceVariableSlot named: each asSymbol) ]
 
 ]
 
@@ -226,11 +221,6 @@ Class >> applyChangesOfNewTraitCompositionReplacing: oldComposition [
 { #category : #'accessing parallel hierarchy' }
 Class >> baseClass [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	^ self
 ]
 
@@ -250,21 +240,11 @@ Class >> basicLocalSelectors [
 	Since localSelectors is lazily initialized, this may 
 	return nil, which means that all selectors are local."
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	^ localSelectors
 ]
 
 { #category : #accessing }
 Class >> basicLocalSelectors: aSetOrNil [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	localSelectors := aSetOrNil
 ]
@@ -340,12 +320,7 @@ Class >> classBuilder [
 { #category : #'accessing parallel hierarchy' }
 Class >> classClass [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
-	^self class.
+	^ self class
 ]
 
 { #category : #'subclass creation' }
@@ -490,11 +465,6 @@ Class >> definesClassVariableNamed: aString [
 Class >> definitionForNautilus [
 	"Answer a String that defines the receiver."
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	| aStream poolString |
 	((self usesSpecialSlot 
 		or: [ self usesSpecialClassVariables ])
@@ -553,12 +523,6 @@ Class >> definitionForNautilus [
 Class >> definitionForNautilusWithSlots [
 	"the class definition with a way to specify slots. Shown when the class defines special Slot
 	 NOTE: this is just for testing, the final solution will evolve and be cleaner later"
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 
 	| aStream poolString|
 
@@ -669,11 +633,6 @@ Class >> externalName [
 
 { #category : #private }
 Class >> getName [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	^ name
 ]
@@ -817,11 +776,6 @@ Class >> isAnonymous [
 { #category : #testing }
 Class >> isClass [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	^ true
 ]
 
@@ -876,11 +830,6 @@ Class >> name: aString traitComposition: aComposition methodDict: aMethodDict lo
 
 { #category : #'subclass creation' }
 Class >> newAnonymousSubclass [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	^ Smalltalk anonymousClassInstaller make: [ :builder |
 		builder
@@ -1137,11 +1086,6 @@ from Undeclared. Check them after this change.'].
 
 { #category : #private }
 Class >> setName: aSymbol [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 
 	name := aSymbol.
 ]
@@ -1523,22 +1467,12 @@ Class >> superclass: aClass methodDictionary: mDict format: fmt [
 { #category : #accessing }
 Class >> traitComposition [
 
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
-
 	traitComposition ifNil: [traitComposition := TraitComposition new].
-	^traitComposition
+	^ traitComposition
 ]
 
 { #category : #accessing }
 Class >> traitComposition: aTraitComposition [
-
-	<localClassMethod> 
-    "This method is supposed to be local in Class because of a good reason.
-    We use this pragma to test if Class does not contain some accidental 
-    local selectors."
 	
 	traitComposition := aTraitComposition
 ]
