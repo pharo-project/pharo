@@ -85,7 +85,7 @@ FileLocatorTest >> testFileSystem [
 { #category : #'resolution tests' }
 FileLocatorTest >> testImageDirectory [
 	locator := FileLocator image.
-	self assert: locator resolve = FileLocator image resolve
+	self assert: locator resolve equals: FileLocator image resolve
 ]
 
 { #category : #'compatibility tests' }
