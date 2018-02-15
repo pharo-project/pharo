@@ -151,7 +151,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Ring-Tests-Kernel'.
 		spec package: 'AST-Tests-Core'.
 		spec package: 'FileSystem-Tests-Core'.
-		spec package: 'FuelTests'.
+		spec package: 'Fuel-Tests'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-WithCompiler'.
@@ -441,7 +441,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
-	'FuelTests'
+	'Fuel-Tests'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
