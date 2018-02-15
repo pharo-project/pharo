@@ -4,7 +4,7 @@ SUnit tests for RPackage category synchronization
 Class {
 	#name : #RPackageCategorySynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'RPackage-Tests'
+	#category : #'Monticello-Tests-RPackage'
 }
 
 { #category : #'tests - operations on categories' }

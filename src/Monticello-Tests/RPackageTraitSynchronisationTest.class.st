@@ -5,7 +5,7 @@ SUnit tests for RPackage trait synchronization
 Class {
 	#name : #RPackageTraitSynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'RPackage-Tests'
+	#category : #'Monticello-Tests-RPackage'
 }
 
 { #category : #'tests - operations on methods' }
