@@ -44,11 +44,14 @@ TimeZone class >> local [
 ]
 
 { #category : #accessing }
-TimeZone class >> offset: anOffset [
- 	"Return the timezone with the given offset"
+TimeZone class >> offset: aDuration [
+ 	"Return the timezone with the given offset
+	
+		TimeZone offset: 2 hours
+	"
  	^ self timeZones 
-		detect: [ :timeZone | timeZone offset = anOffset ]
-		ifNone: [ self new offset: anOffset ]
+		detect: [ :timeZone | timeZone offset = aDuration ]
+		ifNone: [ self new offset: aDuration ]
 ]
 
 { #category : #'instance creation' }

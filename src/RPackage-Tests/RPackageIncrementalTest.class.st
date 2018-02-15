@@ -79,7 +79,6 @@ RPackageIncrementalTest >> tearDown [
 		"but this also means that the consistency cannot be ensured by internal system announcer too."
 		].					
 	createdCategories do: [:each | 
-		|mCPackage|
 		SystemOrganization removeCategory: each.
 		 ].
 	super tearDown.

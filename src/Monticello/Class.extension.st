@@ -2,7 +2,7 @@ Extension { #name : #Class }
 
 { #category : #'*Monticello' }
 Class >> asClassDefinition [
-	"we use a very ugly hack to encode complex slots as string with MC... later MC shoudl model Slots directly"
+	"we use a very ugly hack to encode complex slots as string with MC... later MC should model Slots directly"
 	self usesSpecialVariables ifFalse: [  
 	 ^MCClassDefinition
 		name: self name
@@ -29,7 +29,7 @@ Class >> asClassDefinition [
 		poolDictionaryNames: self sharedPoolNames
 		classInstVarNames: (self class slots collect: #definitionString)
 		type: self typeOfClass
-		comment: self organization classComment	 asString
+		comment: self organization classComment	asString
 		commentStamp: self organization commentStamp.
 	
 

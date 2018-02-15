@@ -9,8 +9,8 @@ Class {
 
 { #category : #tests }
 TestValueWithinFix >> testValueWithinNonLocalReturnFixReal [
-	"self run: #testValueWithinNonLocalReturnFixReal"
 	"The real test for the fix is just as obscure as the original problem"
+	
 	| startTime |
 	self valueWithinNonLocalReturn.
 	startTime := Time millisecondClockValue.
@@ -26,8 +26,6 @@ TestValueWithinFix >> testValueWithinNonLocalReturnFixReal [
 
 { #category : #tests }
 TestValueWithinFix >> testValueWithinNonLocalReturnFixSimply [
-	"self run: #testValueWithinNonLocalReturnFixSimply"
-
 	"The simple version to test the fix"
 
 	self valueWithinNonLocalReturn.

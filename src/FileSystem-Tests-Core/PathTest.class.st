@@ -30,6 +30,7 @@ PathTest >> testAbsolutePath [
 
 { #category : #tests }
 PathTest >> testAbsolutePrintString [
+	
 	| path actual |
 	path := Path / 'plonk' / 'griffle'.
 	actual := path printString.
@@ -322,7 +323,6 @@ PathTest >> testIsRoot [
 
 { #category : #tests }
 PathTest >> testMakeRelative [
-	"self run: #testMakeRelative"
 	
 	| parent child relative |
 	parent := Path / 'griffle' / 'bibb'.
@@ -385,8 +385,7 @@ PathTest >> testParentUpTo [
 
 { #category : #tests }
 PathTest >> testParse [
-	"self run: #testParse"
-	
+
 	| path |
 	path := Path from: 'parent/child/grandChild' delimiter: $/.
 	self assert: path size equals: 3.
@@ -399,7 +398,6 @@ PathTest >> testParse [
 
 { #category : #tests }
 PathTest >> testParseBogus [
-	"self run: #testParseBogus"
 	
 	| path |
 	path := Path from: 'parent?<>~ \child/grandChild' delimiter: $/.
@@ -420,7 +418,6 @@ PathTest >> testParseTrailingSlash [
 
 { #category : #tests }
 PathTest >> testParseWindowsPathWithUnixDelimiters [
-	"self run: #testParse"
 	
 	| path |
 	path := WindowsStore new pathFromString: 'C:\a/b/c'.
@@ -580,7 +577,6 @@ PathTest >> testRelativePrintString [
 
 { #category : #tests }
 PathTest >> testRelativeTo [
-	"self run: #testRelativeTo"
 	"aPath relativeTo: aParent returns a new path relative to the parent"
 	
 	| parent child relative |

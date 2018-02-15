@@ -52,7 +52,7 @@ ClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
 		classeNames do: [:name|	
 			changeSet 
 				removeClassChanges: name;
-				removeClassChanges: name, ' class'] ]..	
+				removeClassChanges: name, ' class']]
 ]
 
 { #category : #accessing }
