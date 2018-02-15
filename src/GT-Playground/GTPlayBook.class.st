@@ -53,8 +53,7 @@ GTPlayBook class >> customDirectory: aFileReference [
 
 { #category : #'accessing-defaults' }
 GTPlayBook class >> defaultCacheDirectory [
-	^ DefaultCacheDirectory
-		ifNil: [ DefaultCacheDirectory := (FileLocator localDirectory / 'play-cache') asFileReference ]
+	^ (DefaultCacheDirectory ifNil: [ DefaultCacheDirectory := FileLocator localDirectory / 'play-cache' ]) asFileReference
 ]
 
 { #category : #'accessing-defaults' }
@@ -64,8 +63,7 @@ GTPlayBook class >> defaultCacheDirectory: aFileReference [
 
 { #category : #'accessing-defaults' }
 GTPlayBook class >> defaultStashDirectory [
-	^ DefaultStashDirectory
-		ifNil: [ DefaultStashDirectory := (FileLocator localDirectory / 'play-stash') asFileReference ]
+	^ (DefaultCacheDirectory ifNil: [ DefaultCacheDirectory := FileLocator localDirectory / 'play-cache' ]) asFileReference
 ]
 
 { #category : #'accessing-defaults' }
