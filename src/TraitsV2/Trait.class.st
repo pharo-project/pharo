@@ -166,10 +166,9 @@ Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCatego
 
 { #category : #'accessing method dictionary' }
 Trait >> rebuildMethodDictionary [
-
-	self doRebuildMethodDictionary.
-	self users do: [ :e | e rebuildMethodDictionary ]
-
+	self doRebuildMethodDictionary ifFalse: [ ^ false ].
+	self users do: [ :e | e rebuildMethodDictionary ].
+	^ true
 ]
 
 { #category : #'initialize-release' }

@@ -91,9 +91,9 @@ MetaclassForTraits >> printOn: aStream [
 
 { #category : #initialization }
 MetaclassForTraits >> rebuildMethodDictionary [
-	super rebuildMethodDictionary.
-	self users do: [ :e | e rebuildMethodDictionary ]
-
+	super rebuildMethodDictionary ifFalse: [ ^ false].
+	self users do: [ :e | e rebuildMethodDictionary ].
+	^ true
 ]
 
 { #category : #users }

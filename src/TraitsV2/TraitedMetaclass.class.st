@@ -94,6 +94,11 @@ TraitedMetaclass >> definition [
 							nextPutAll: self slotDefinitionString]]
 ]
 
+{ #category : #initialization }
+TraitedMetaclass >> emptyMethodDictionary [
+	^ MethodDictionary new: 64.
+]
+
 { #category : #testing }
 TraitedMetaclass >> hasTraitComposition [
 	
@@ -108,11 +113,18 @@ TraitedMetaclass >> includesLocalSelector: aSymbol [
 { #category : #initialization }
 TraitedMetaclass >> initialize [
 	super initialize.
-	localMethods := MethodDictionary new.
+	localMethods := self emptyMethodDictionary.
 	composition := TaEmptyComposition new.
 	
 	baseComposition := TaEmptyComposition new.
-	baseLocalMethods := MethodDictionary new.
+	baseLocalMethods := self emptyMethodDictionary.
+]
+
+{ #category : #initialization }
+TraitedMetaclass >> initializeBasicMethods [
+	| selectors |
+	selectors := self class traitedClassTrait selectors reject: [ :e | self isRejectedMethod: e ].
+	selectors do: [ :e | self class traitedClassTrait copyMethod: e into: self replacing: true ]
 ]
 
 { #category : #'initialize-release' }
@@ -154,6 +166,11 @@ TraitedMetaclass >> isLocalSelector: aSelector [
 { #category : #testing }
 TraitedMetaclass >> isRejectedMethod: e [
 	^ (localMethods includesKey: e) or: [ (Class canUnderstand: e) and: [ (TraitedClass methodDict includesKey: e) not ] ] 
+]
+
+{ #category : #testing }
+TraitedMetaclass >> isSelectorToKeep: e [
+	^ (localMethods includesKey: e) or: [ TraitedClass methodDict includesKey: e ].
 ]
 
 { #category : #accessing }
@@ -215,21 +232,21 @@ TraitedMetaclass >> originOfMethod: aMethod [
 
 { #category : #initialization }
 TraitedMetaclass >> rebuildMethodDictionary [
-	| selectors toUse removedSelectors |
-
-	toUse := self traitComposition + self class traitedClassTrait.
-
-	localMethods := MethodDictionary new.
+	| selectors removedSelectors modified |
+	
+	modified := false.
+	
 	methodDict valuesDo: [ :m | (m propertyAt: #traitSource) ifNil: [ localMethods at: m selector put: m ]].
-
-	selectors := toUse selectors reject: [ :e | self isRejectedMethod: e ].
-	selectors do: [ :e | toUse installSelector: e into: self ].
 	
-	removedSelectors := methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ localMethods includesKey: aSelector] ].
+	selectors := self traitComposition selectors reject: [ :e | self isRejectedMethod: e ].
+	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false) ].
+	
+	removedSelectors := methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self isSelectorToKeep: aSelector ] ].
+	modified := modified | (removedSelectors isNotEmpty).
 	removedSelectors do: [ :aSelector | methodDict removeKey: aSelector ].
-	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ].
+	removedSelectors do: [ :aSelector | self organization removeElement: aSelector ]. 
 	
-
+	^ modified
 ]
 
 { #category : #categories }

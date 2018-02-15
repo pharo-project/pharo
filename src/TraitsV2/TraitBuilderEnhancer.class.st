@@ -31,6 +31,12 @@ TraitBuilderEnhancer class >> isApplicableFor: aBuilder [
 	^ false
 ]
 
+{ #category : #'class modifications' }
+TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
+	builder newMetaclass rebuildMethodDictionary.
+	aBuilder newClass rebuildMethodDictionary.
+]
+
 { #category : #migrating }
 TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 
@@ -39,7 +45,11 @@ TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 	
 	TraitedClass addUser: aBuilder newMetaclass.
 	
-	aBuilder newClass rebuildMethodDictionary.
+	"If this is a trait I have to update the users"
+	aBuilder newClass isTrait ifFalse: [ ^ self ].
+	
+	builder newMetaclass traitUsers do: [:e | e rebuildMethodDictionary].
+	aBuilder newClass traitUsers do: [:e | e rebuildMethodDictionary].
 ]
 
 { #category : #migrating }
@@ -54,23 +64,17 @@ TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 	"If it is a Trait we should migrate the users "
 	aBuilder newClass isTrait ifFalse: [ ^ self ].	
 	aBuilder newClass users: aBuilder oldClass users.
-	aBuilder newMetaclass users: aBuilder oldMetaclass users.
-	 
-	
+	aBuilder newMetaclass users: aBuilder oldMetaclass users.	
 	
 ]
 
 { #category : #events }
 TraitBuilderEnhancer >> classCreated: aBuilder [
 
-	builder newMetaclass rebuildMethodDictionary.
-	builder newClass rebuildMethodDictionary.
+	builder newMetaclass initializeBasicMethods.
 	
 	builder newClass traitComposition: self traitComposition.
 	builder newMetaclass traitComposition: self classTraitComposition.
-
-	builder newClass rebuildMethodDictionary.
-	builder newMetaclass rebuildMethodDictionary.
 
 ]
 
@@ -95,8 +99,6 @@ TraitBuilderEnhancer >> classTraitCompositionOfClass: aClass [
 TraitBuilderEnhancer >> compileMethodsFor: aBuilder [
 	
 	super compileMethodsFor: aBuilder.
-	
-	aBuilder newClass rebuildMethodDictionary.
 ]
 
 { #category : #'class modifications' }

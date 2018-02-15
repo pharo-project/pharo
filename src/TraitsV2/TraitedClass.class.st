@@ -124,21 +124,22 @@ TraitedClass >> allTraits [
 
 { #category : #initialization }
 TraitedClass >> doRebuildMethodDictionary [
-	| selectors removedSelectors removeFromOrganization|
+	| selectors removedSelectors removeFromOrganization modified|
 
-	self localMethodDict: MethodDictionary new.
+	modified := false.
 	self methodDict valuesDo: [ :m | (m propertyAt: #traitSource) ifNil: [ self localMethodDict at: m selector put: m ]].
 
 	selectors := self traitComposition selectors reject: [ :e | (self localMethodDict includesKey: e) ].
-	selectors do: [ :e | self traitComposition installSelector: e into: self ].
+	selectors do: [ :e | modified := modified | (self traitComposition installSelector: e into: self replacing: false)].
 
 	removedSelectors := self methodDict keys reject: [ :aSelector | (selectors includes: aSelector) or: [ self localMethodDict includesKey: aSelector] ].
+	modified := modified | (removedSelectors isNotEmpty).
 	removedSelectors do: [ :aSelector | self methodDict removeKey: aSelector ].
 
 	removeFromOrganization := self organization allMethodSelectors reject: [:e | self methodDict includesKey: e ].
 	removeFromOrganization do: [ :aSelector | self organization removeElement: aSelector ].
 
-	self theMetaClass rebuildMethodDictionary
+	^ modified
 ]
 
 { #category : #testing }
@@ -236,7 +237,7 @@ TraitedClass >> originOfMethod: aMethod [
 TraitedClass >> rebuildMethodDictionary [
 
 	"Useful to be rewritten in Traits"
-	self doRebuildMethodDictionary.
+	^ self doRebuildMethodDictionary.
 
 ]
 

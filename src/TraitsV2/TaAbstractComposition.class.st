@@ -131,7 +131,10 @@ TaAbstractComposition >> compile: selector into: aClass [
 	"Compile the method associated with selector in aClass's method dictionary.
 	This version classify the method in the class passed as parameter"
 
-	| method newMethod sourceCode trailer |
+	| method newMethod sourceCode trailer traitDefining |
+	
+	traitDefining := self traitDefining: selector.
+
 	method := self compiledMethodAt: selector.
 	sourceCode := self sourceCodeAt: selector.
 	trailer := method trailer.
@@ -151,8 +154,10 @@ TaAbstractComposition >> compile: selector into: aClass [
 
 	aClass organization protocolOrganizer
 		classify: selector
-		inProtocolNamed: (self categoryOfMethod: method withSelector: selector).		
-
+		inProtocolNamed: (self categoryOfMethod: method withSelector: selector).
+	
+	aClass >> selector propertyAt: #traitSource put: traitDefining.
+	^ true
 ]
 
 { #category : #accessing }
@@ -173,17 +178,25 @@ TaAbstractComposition >> compiledMethodAt: aSelector ifAbsent: aValuable [
 ]
 
 { #category : #operations }
-TaAbstractComposition >> copyMethod: aSelector into: aClass [ 
+TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing [
 
 	"When the included method does not need to be source rewritten or recompiled, 
 	it is query by using #changesSourceCode:, the method is inserted in aClass' method dictionary.
 	The compiled method is just copied and the source is stored in the change file
+	
+	I check that the method is not already in the class
+	The method is only replaced if replacing is true. 
 	"
 
-	| aCompiledMethod source newMethod |
+	| aCompiledMethod source newMethod traitDefining |
 	
+	traitDefining := self traitDefining: aSelector.
 	aCompiledMethod := self compiledMethodAt: aSelector.
 	source := aCompiledMethod getSourceReplacingSelectorWith: aSelector.
+	
+	aClass methodDict at: aSelector ifPresent:[ :originalMethod | 
+		((replacing not and: [((originalMethod propertyAt: #traitSource) = traitDefining) and: [originalMethod hasSourceCode]]) and: [ aCompiledMethod hasSourceCode and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
+	
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
 	newMethod methodClass: aClass.
@@ -202,7 +215,9 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass [
 	
 	aClass organization removeEmptyCategories.
 	
-	^ newMethod
+	aClass >> aSelector propertyAt: #traitSource put: traitDefining.
+		
+	^ true
 ]
 
 { #category : #copying }
@@ -256,17 +271,30 @@ TaAbstractComposition >> initializeSelectorForMe [
 TaAbstractComposition >> installSelector: aSelector into: aClass [
 	"
 	This method tryies to install a selector in a given class. 
+	If the method is already installed it does not perform nothing.
 	This may fail because this is used when recalculating the method dictionary. 
 	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
 
+	^ self installSelector: aSelector into: aClass replacing: true
+]
+
+{ #category : #operations }
+TaAbstractComposition >> installSelector: aSelector into: aClass replacing: replacing [
+	"
+	This method tryies to install a selector in a given class. 
+	If the method is already installed it does not perform nothing.
+	This may fail because this is used when recalculating the method dictionary. 
+	It is probable the aliased method does not exists any more in the trait composition. This situation is checked when creating the trait composition."
+
+
 	[ 	
-		(self needsRecompilation: aSelector) 
+		^ (self needsRecompilation: aSelector) 
 			ifTrue:[ self compile: aSelector into: aClass	]
-			ifFalse:[ self copyMethod: aSelector into: aClass ].
-			
-	 	aClass >> aSelector propertyAt: #traitSource put: (self traitDefining: aSelector) ]
-		on: NotFound
-		do: [  ]
+			ifFalse:[ self copyMethod: aSelector into: aClass replacing: replacing ].	
+	 ] on: NotFound
+		do: [ ^ true ].
+		
+	^ true
 ]
 
 { #category : #testing }
