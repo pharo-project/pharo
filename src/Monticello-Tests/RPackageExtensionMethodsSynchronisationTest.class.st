@@ -4,7 +4,7 @@ SUnit tests for RPackage extension methods
 Class {
 	#name : #RPackageExtensionMethodsSynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'RPackage-Tests'
+	#category : #'Monticello-Tests-RPackage'
 }
 
 { #category : #'we are not sure' }
