@@ -91,7 +91,7 @@ RGTraitDefinitionTest >> testExistingTrait [
 	metaClass:= newClass classSide.
 	self assert: (metaClass isMeta).
 	self assert: (metaClass name = 'TSortable classTrait').
-	self assert: (metaClass classSide = newClass).
+	self assert: (metaClass instanceSide = newClass).
 	self assert: (metaClass realClass = TSortable classSide).
 ]
 
