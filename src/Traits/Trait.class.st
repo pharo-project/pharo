@@ -798,6 +798,12 @@ Trait >> private_subclass: t instanceVariableNames: f classVariableNames: d pool
 	^self error: 'Traits cannot have subclasses'.
 ]
 
+{ #category : #'subclass creation' }
+Trait >> private_subclass: t instanceVariableNames: f classVariableNames: d poolDictionaries: s package: cat [ 
+	"Compatibility purposes"
+	^self error: 'Traits cannot have subclasses'.
+]
+
 { #category : #'class variables' }
 Trait >> readClassVariableNamed: aString [
 	"Answer the content of the Class Variable"

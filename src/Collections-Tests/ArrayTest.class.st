@@ -625,7 +625,6 @@ ArrayTest >> testCombinations [
 
 { #category : #tests }
 ArrayTest >> testComplexIsSelfEvaluating [
-	"self run: #testComplexIsSelfEvaluating"
 
 	| complexArray restoredArray |
 	complexArray := {1.

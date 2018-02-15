@@ -215,11 +215,6 @@ PluggableTextMorph >> acceptTextInModelBasic [
 
 ]
 
-{ #category : #'menu commands' }
-PluggableTextMorph >> again [
-	self handleEdit: [textMorph editor again]
-]
-
 { #category : #accessing }
 PluggableTextMorph >> alwaysAccept [
 	^ alwaysAccept ifNil: [false]

@@ -56,8 +56,6 @@ TraitFileOutTest >> testFileOutCategory [
 	"File out whole system category, delete all classes and traits and then
 	file them in again."
 
-	"self run: #testFileOutCategory"
-
 	| file |
 	self class environment organization fileOutCategory: self categoryName.
 	self class environment organization removeSystemCategory: self categoryName.
@@ -79,8 +77,6 @@ TraitFileOutTest >> testFileOutCategory [
 { #category : #testing }
 TraitFileOutTest >> testFileOutTrait [
 	"fileOut trait T6, remove it from system and then file it in again"
-
-	"self run: #testFileOutTrait"
 
 	| fileName file |
 	self t6 compile: 'localMethod: argument ^argument'.
@@ -124,10 +120,7 @@ TraitFileOutTest >> testRemovingMethods [
 	from the trait is installed instead and that the users are 
 	updated."
 
-	"self run: #testRemovingMethods"
-
 	"Classes"
-
 	self c2 compile: 'm12 ^0' classified: #xxx.
 	self assert: (self c2 includesLocalSelector: #m12).
 	self c2 removeSelector: #m12.
@@ -136,9 +129,9 @@ TraitFileOutTest >> testRemovingMethods [
 
 	"Traits"
 	self t5 compile: 'm12 ^0' classified: #xxx.
-	self assert: self c2 new m12 = 0.
+	self assert: self c2 new m12 equals: 0.
 	self t5 removeSelector: #m12.
 	self deny: (self t5 includesLocalSelector: #m12).
 	self assert: (self t5 selectors includes: #m12).
-	self assert: self c2 new m12 = 12
+	self assert: self c2 new m12 equals: 12
 ]
