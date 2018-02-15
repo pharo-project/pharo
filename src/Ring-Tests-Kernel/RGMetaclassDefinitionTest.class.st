@@ -17,6 +17,6 @@ RGMetaclassDefinitionTest >> testAsMetaclassDefinition [
 	self assert: (rgClass isClass).  
 	self assert: (rgClass name == #'Class class').  
 	self assert: (rgClass category == class category).
-	self assert: (rgClass theMetaClass == rgClass).
+	self assert: (rgClass classSide == rgClass).
 
 ]

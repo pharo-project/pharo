@@ -80,7 +80,7 @@ RBCreateAccessorsForVariableRefactoring >> defineSetterMethod [
 { #category : #'private-accessing' }
 RBCreateAccessorsForVariableRefactoring >> definingClass [
 	^ classVariable 
-		ifTrue: [ class theMetaClass ]
+		ifTrue: [ class classSide ]
 		ifFalse: [ class ]
 ]
 
@@ -194,7 +194,7 @@ RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass 
 		ifTrue: [ aClass theNonMetaClass ]
 		ifFalse: [ aClass ].
 	^ (definingClass withAllSubclasses , (isClassVar 
-			ifTrue: [ definingClass theMetaClass withAllSubclasses ]
+			ifTrue: [ definingClass classSide withAllSubclasses ]
 			ifFalse: 
 				[ #() ]) 
 		detect: 

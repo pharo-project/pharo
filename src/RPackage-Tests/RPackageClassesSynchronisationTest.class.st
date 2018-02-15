@@ -232,9 +232,9 @@ RPackageClassesSynchronisationTest >> testRecategorizeClassWithMetaClassMethodsR
 	
 	class := self createNewClassNamed: 'NewClass' inCategory: 'XXXXX'.
 	
-	self createMethodNamed: 'method1' inClass: class theMetaClass inCategory: 'category'.
-	self createMethodNamed: 'method2' inClass: class theMetaClass inCategory: '*yyyyy'.
-	self createMethodNamed: 'method3' inClass: class theMetaClass inCategory: '*zzzzz'.
+	self createMethodNamed: 'method1' inClass: class classSide inCategory: 'category'.
+	self createMethodNamed: 'method2' inClass: class classSide inCategory: '*yyyyy'.
+	self createMethodNamed: 'method3' inClass: class classSide inCategory: '*zzzzz'.
 	
 	class category: 'YYYYY'.
 	

@@ -42,10 +42,22 @@ RGMetaclassDefinition >> category [
 	^ self theNonMetaClass category
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGMetaclassDefinition >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	^ self
+]
+
 { #category : #accessing }
 RGMetaclassDefinition >> environment [
 
 	^baseClass environment
+]
+
+{ #category : #'accessing - parallel hierarchy' }
+RGMetaclassDefinition >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	^ baseClass
 ]
 
 { #category : #testing }
@@ -71,7 +83,7 @@ RGMetaclassDefinition >> package [
 { #category : #accessing }
 RGMetaclassDefinition >> realClass [
 
-	^baseClass realClass theMetaClass
+	^baseClass realClass classSide
 ]
 
 { #category : #printing }
@@ -86,13 +98,13 @@ RGMetaclassDefinition >> storeOn: aStream [
 
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGMetaclassDefinition >> theMetaClass [
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy' }
 RGMetaclassDefinition >> theNonMetaClass [
 
 	^baseClass

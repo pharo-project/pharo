@@ -17,5 +17,5 @@ Metaclass >> instanceVariableNames: instVarString [
 			traitComposition: theClass traitComposition;
 			category: theClass category asString;
 			classSlots: instVarString asSlotCollection ].
-	^ theClass theMetaClass
+	^ theClass classSide
 ]

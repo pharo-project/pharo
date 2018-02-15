@@ -192,8 +192,8 @@ ClassWidget >> dropInClass: aCollection inARow: aRow [
 		receiver := self getClassesList at: aRow.
 		receiver := 
 		self model showInstance not
-			ifTrue: [ receiver theMetaClass ]
-			ifFalse: [ receiver theNonMetaClass ].
+			ifTrue: [ receiver classSide ]
+			ifFalse: [ receiver instanceSide ].
 		self model dropInAClass: aCollection into: receiver]
 ]
 
@@ -342,7 +342,7 @@ ClassWidget >> selectedClassIndex: anInteger [
 	| selection |
 	selection := self getClassesList at: anInteger ifAbsent: [nil].
 	
-	self model showInstance ifFalse: [selection ifNotNil: [selection := selection theMetaClass]].
+	self model showInstance ifFalse: [selection ifNotNil: [selection := selection classSide]].
 	self model selectedClassWithoutChangingSelection: selection.
 	
 	self model changed: #currentHistoryIndex.

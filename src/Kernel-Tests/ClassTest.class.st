@@ -1,6 +1,6 @@
 "
 SUnit tests for classes
-" 
+"
 Class {
 	#name : #ClassTest,
 	#superclass : #ClassTestCase,
@@ -126,6 +126,13 @@ ClassTest >> testAllSharedPools [
 	self assert: SubclassPoolUser sharedPools isEmpty
 ]
 
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testClassSide [
+
+	self assert: Point classSide equals: Point class. 
+	self assert: Point class classSide equals: Point class. 
+]
+
 { #category : #'tests - class variables' }
 ClassTest >> testClassVarNames [
 
@@ -166,6 +173,27 @@ ClassTest >> testHasSharedPools [
 	
 	"has shared pools does not take into account the fact that a superclass may use some shared pools"
 	self deny: SubclassPoolUser hasSharedPools.
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testInstanceSide [
+
+	self assert: Point instanceSide equals: Point. 
+	self assert: Point class instanceSide equals: Point. 
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testIsClassSide [
+
+	self deny: Point isClassSide.
+	self assert: Point class isClassSide
+]
+
+{ #category : #'test - accessing parallel hierarchy' }
+ClassTest >> testIsInstanceSide [
+
+	self assert: Point isInstanceSide.
+	self deny: Point class isInstanceSide
 ]
 
 { #category : #'tests - navigation' }
@@ -288,13 +316,13 @@ ClassTest >> testSharedPools [
 ClassTest >> testSubclass [
 	| cls |
 	(Smalltalk globals includesKey: #SubclassExample)
-		ifTrue: [ (Smalltalk at: #SubclassExample) removeFromSystem ].
+		ifTrue: [ (Smalltalk globals at: #SubclassExample) removeFromSystem ].
 	
 	self deny: (Smalltalk globals includesKey: #SubclassExample).
 	cls := Object subclass: #SubclassExample.
 	self assert: (Smalltalk globals includesKey: #SubclassExample).
 
-	self assert: (Smalltalk at: #SubclassExample) == cls.
+	self assert: (Smalltalk globals at: #SubclassExample) == cls.
 	self assert: cls category = #Unclassified.
 	self assert: cls instVarNames = #().
 	

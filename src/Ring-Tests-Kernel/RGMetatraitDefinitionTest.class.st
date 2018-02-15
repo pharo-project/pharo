@@ -16,5 +16,5 @@ RGMetatraitDefinitionTest >> testAsClassTraitfinition [
 	self assert: rgCTrait isTrait.
 	self assert: rgCTrait name == #'TClass classTrait'.
 	self assert: rgCTrait category == cTrait category.
-	self assert: rgCTrait theMetaClass == rgCTrait
+	self assert: rgCTrait classSide == rgCTrait
 ]

@@ -59,7 +59,7 @@ PharoChangesCondenser >> condenseClassOrTrait: classOrTrait [
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]].
 	
-	classOrTrait theMetaClass methodsDo: [ :method |
+	classOrTrait classSide methodsDo: [ :method |
 		(self shouldCondenseMethod: method)
 			ifTrue: [ self writeMethodSource: method ]]
 ]

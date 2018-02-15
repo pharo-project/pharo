@@ -2934,7 +2934,7 @@ AbstractNautilusUI >> instanceButtonLabel [
 	^ self selectedClass
 		ifNil: [ label ]
 		ifNotNil: [ :class | 
-			class theMetaClass hasMethods
+			class classSide hasMethods
 				ifTrue: [ label emphasis: 1 ]
 				ifFalse: [ label ] ]
 ]
@@ -4208,7 +4208,7 @@ AbstractNautilusUI >> showInstance: aBoolean [
 					aBoolean 
 						ifTrue: [self selectedClass: class theNonMetaClass.
 								acceptor := ClassOrMethodDefinitionAcceptor model: self ]
-						ifFalse: [self selectedClass: class theMetaClass.
+						ifFalse: [self selectedClass: class classSide.
 								acceptor := ClassDefinitionAcceptor model: self ]].
 			self updateCategoryAndMethodList.
 			self changed: #instanceButtonState.
