@@ -317,10 +317,6 @@ TextEditor class >> textEditorMenuOn: aBuilder [
 	(aBuilder item: #'Set search string' translated)
 		keyText: 'h';
 		selector: #setSearchString.
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
-		iconNamed: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;
@@ -491,15 +487,6 @@ TextEditor >> addTypeInUndoRecord [
 TextEditor >> afterSelectionInsertAndSelect: aString [
 
 	self insertAndSelect: aString at: self stopIndex 
-]
-
-{ #category : #'menu messages' }
-TextEditor >> again [
-	"Text substitution. If the left shift key is down, the substitution is
-	made throughout the entire Paragraph. Otherwise, only the next 
-	possible substitution is made"
-	true.
-	
 ]
 
 { #category : #'menu messages' }
