@@ -25,7 +25,7 @@ FormTest >> test32BitTranslucentBlackIsBlack [
 ]
 
 { #category : #tests }
-FormTest >> testIsAllWhite [	"self run: #testIsAllWhite"
+FormTest >> testIsAllWhite [
 	"Make sure #isAllWhite works for all bit depths"
 	
 	#(-32 -16 -8 -4 -2 -1 1 2 4 8 16 32) do:[:d| | form |
