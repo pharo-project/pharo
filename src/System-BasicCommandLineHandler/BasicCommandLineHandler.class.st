@@ -3,12 +3,46 @@ I'm a command line handler who is not aware of any UI or Tools present in the sy
 I'm used as base handler for loading executing stripped images (kernel images, for example). 
 
 My usage is the same as PharoCommandLineHandler, see his comment as better explanation.
+
+I also implement a way to password-protect command lines. 
+
+The password will not be saved as in clear. It will be hash using pepper and iterations.
+
+The pepper of a hash is a fix string happened to a password to increase the difficulty of finding the password. Also, we hash multiple times (iterations) to increase the strenght of the protection.
+
+If you wish to define ""application"" command lines who do not need a password protection, implement the method #requirePasswordInDeployment on the class side to return false.
+
+Examples of password protection
+----------------
+
+""Enable password protection""
+CommandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword'
+
+""You can also customize the pepper and number of iterations for the hashing of the password.""
+CommandLinePasswordManager protectCommandLinesByPasswordWith: 'PharoPassword' pepper: 'SomePepper' numberOfHashIterations: 10
+
+""Remove password protection""
+CommandLinePasswordManager removePasswordProtection
+
+How to specify the password
+----------------
+
+Command line without password:
+	Pharo.exe Pharo.image eval ""1+1""
+
+Command line with password:
+	Pharo.exe Pharo.image eval ""1+1"" --deploymentPassword=Test
 "
 Class {
 	#name : #BasicCommandLineHandler,
 	#superclass : #CommandLineHandler,
 	#category : #'System-BasicCommandLineHandler'
 }
+
+{ #category : #'password-protection' }
+BasicCommandLineHandler class >> commandLinePasswordManager [
+	^ CommandLinePasswordManager current
+]
 
 { #category : #accessing }
 BasicCommandLineHandler class >> commandName [
@@ -49,14 +83,13 @@ BasicCommandLineHandler class >> startUp: isImageStarting [
 
 { #category : #activation }
 BasicCommandLineHandler >> activate [
-	
-	[ [ self handleArgument: (self arguments 
-			ifEmpty: [ '' ] 
-			ifNotEmpty: [ :arguments| arguments first ])] 
-		on: Exit 
-		do: [ :exit | ^ self handleExit: exit ] ]
-			forkAt: Processor userSchedulingPriority
-			named: 'CommandLine handler process'
+	[ [ self handleArgument: (self arguments ifEmpty: [ '' ] ifNotEmpty: [ :arguments | arguments first ]) ]
+		on: Exit
+		do: [ :exit | 
+			"If the command line is protected by password, we just exit the image because in non-headless mode the handleExit will let the image open. If the password protection is enabled, it is to avoid to let the access to the image."
+			self class commandLinePasswordManager hasPasswordSet
+				ifTrue: [ Smalltalk snapshot: false andQuit: true ].
+			^ self handleExit: exit ] ] forkAt: Processor userSchedulingPriority named: 'CommandLine handler process'
 ]
 
 { #category : #activation }
@@ -65,6 +98,16 @@ BasicCommandLineHandler >> activateSubCommand: aCommandLinehandler [
 		^ self handleExit: exit for: aCommandLinehandler ].
 	"the return value of this method is used to check if the subcommand was successfull"
 	^ aCommandLinehandler
+]
+
+{ #category : #password }
+BasicCommandLineHandler >> checkPassword [
+	self
+		optionAt: 'deploymentPassword'
+		ifPresent: [ :password | self handlePassword: password ]
+		ifAbsent: [ self stderr << 'This command line is protected by a password'.
+			Smalltalk snapshot: false andQuit: true ].
+	commandLine := commandLine copyWithoutPassword
 ]
 
 { #category : #commands }
@@ -156,19 +199,28 @@ BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 		ifTrue: [ ^ aCommandLinehandler ].
 ]
 
+{ #category : #password }
+BasicCommandLineHandler >> handlePassword: password [
+	(self class commandLinePasswordManager isMatchingPassword: password) ifTrue: [ ^ self ].
+	
+	self stderr << 'ERROR: Wrong password.'.
+	Smalltalk snapshot: false andQuit: true
+]
+
 { #category : #activation }
 BasicCommandLineHandler >> handleSubcommand [
 	"check if there is an active subcommand"
-	
+
 	| handlers |
-	
 	handlers := self selectHandlers.
-	
+
 	"If there is no handler, use myself"
 	handlers ifEmpty: [ ^ self ].
-		
-	^self activateSubCommand: handlers first .
 	
+	(self requirePasswordFor: handlers first)
+		ifTrue: [ self checkPassword ].
+		
+	^ self activateSubCommand: handlers first
 ]
 
 { #category : #initialization }
@@ -200,6 +252,14 @@ BasicCommandLineHandler >> list [
 { #category : #commands }
 BasicCommandLineHandler >> noQuit [
 	"Nothing to be done, unlike the other commands the image continues running"
+]
+
+{ #category : #password }
+BasicCommandLineHandler >> requirePasswordFor: handler [
+	"If the password hash is nil, no password is set and we can just ignore it."
+
+	^ handler requireDeploymentPassword
+		and: [ self class commandLinePasswordManager hasPasswordSet ]
 ]
 
 { #category : #private }
