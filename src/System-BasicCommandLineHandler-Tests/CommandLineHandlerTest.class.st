@@ -1,7 +1,7 @@
 Class {
 	#name : #CommandLineHandlerTest,
 	#superclass : #TestCase,
-	#category : #'Tests-System-CommandLine'
+	#category : #'System-BasicCommandLineHandler-Tests'
 }
 
 { #category : #utility }

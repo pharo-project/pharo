@@ -43,7 +43,7 @@ RBVariableEnvironment class >> on: anEnvironment referencesToClassVariable: aSym
 	assoc := definingClass bindingOf: aSymbol.
 	definingClass withAllSubclassesDo: 
 			[:cls | 
-			((cls whichSelectorsReferTo: assoc) notEmpty or:[ (cls theMetaClass whichSelectorsReferTo: assoc) notEmpty]) 
+			((cls whichSelectorsReferTo: assoc) notEmpty or:[ (cls classSide whichSelectorsReferTo: assoc) notEmpty]) 
 				ifTrue: [newEnv addClass: cls classVariable: aSymbol]].
 	^newEnv
 ]
@@ -294,7 +294,7 @@ RBVariableEnvironment >> flushCachesFor: aClass [
 	aClass theNonMetaClass withAllSubclasses do: [ :each | 
 		selectorCache
 			removeKey: each name ifAbsent: [];
-			removeKey: each theMetaClass name ifAbsent: [] ]
+			removeKey: each classSide name ifAbsent: [] ]
 ]
 
 { #category : #testing }

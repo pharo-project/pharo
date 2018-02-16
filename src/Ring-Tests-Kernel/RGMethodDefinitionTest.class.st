@@ -217,7 +217,7 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	self assert: (newMethod sourceCode isNil).
 	self assert: (newMethod stamp isNil).
 	
-	newMethod := RGMethodDefinition realClass: OrderedCollection theMetaClass selector: #arrayType.
+	newMethod := RGMethodDefinition realClass: OrderedCollection classSide selector: #arrayType.
 	self assert: (newMethod isMethod).  
 	self assert: (newMethod selector == #arrayType).  
 	self assert: (newMethod protocol notNil).
@@ -418,7 +418,7 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 	newClass:= RGClassDefinition named: #OrderedCollection.
 	newClass withMetaclass.
 	
-	newMethod:= (RGMethodDefinition named: #foo) parent: newClass theMetaClass.
+	newMethod:= (RGMethodDefinition named: #foo) parent: newClass classSide.
 	newMethod sourceCode: 'foo
 									^true'.
 									
@@ -427,8 +427,8 @@ RGMethodDefinitionTest >> testNonExistingMethodWithClass [
 	self assert: (newMethod isMetaSide).
 	self assert: (newMethod protocol = nil).
 	
-	self assert: (newMethod parent = newClass theMetaClass).
-	self assert: (newMethod parentName = newClass theMetaClass name).
+	self assert: (newMethod parent = newClass classSide).
+	self assert: (newMethod parentName = newClass classSide name).
 	
 	self assert: (newMethod environment == Smalltalk globals).
 	self assert: (newMethod realClass = OrderedCollection class).

@@ -5,6 +5,7 @@ Usage: [<subcommand>] [--help] [--copyright] [--version] [--list] [ --no-quit ]
 	--version    print the version for the image and the vm
 	--list       list a description of all active command line handlers
 	--no-quit    keep the image running without activating any other command line handler
+	--deploymentPassword if a password needs to be used by the user to launch the command
 	<subcommand> a valid subcommand in --list
 	
 	Preference File Modification:
@@ -60,6 +61,11 @@ PharoCommandLineHandler class >> isResponsibleFor: aCommandLine [
 PharoCommandLineHandler class >> priority [ 
 	"Highest priority"
 	^ Float infinity
+]
+
+{ #category : #testing }
+PharoCommandLineHandler class >> requireDeploymentPassword [
+	^ false
 ]
 
 { #category : #activation }

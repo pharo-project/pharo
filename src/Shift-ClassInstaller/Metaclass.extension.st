@@ -16,5 +16,5 @@ Metaclass >> instanceVariableNames: instVarString [
 			sharedPools: theClass sharedPoolsString;
 			category: theClass category asString;
 			classSlots: instVarString asSlotCollection ].
-	^ theClass theMetaClass
+	^ theClass classSide
 ]

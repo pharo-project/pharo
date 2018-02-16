@@ -34,6 +34,13 @@ RBMetaclass >> allPoolDictionaryNames [
 	^ self theNonMetaClass allPoolDictionaryNames
 ]
 
+{ #category : #accessing }
+RBMetaclass >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test." 
+	
+	^ self
+]
+
 { #category : #testing }
 RBMetaclass >> directlyDefinesClassVariable: aString [ 
 	^ self theNonMetaClass directlyDefinesClassVariable: aString
@@ -66,7 +73,7 @@ RBMetaclass >> storeOn: aStream [
 	aStream nextPutAll: ' class'
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated' }
 RBMetaclass >> theMetaClass [
 	^ self
 ]

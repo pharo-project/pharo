@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'commandLine'
 	],
-	#category : #'Tests-System-CommandLine'
+	#category : #'System-BasicCommandLineHandler-Tests'
 }
 
 { #category : #accessing }

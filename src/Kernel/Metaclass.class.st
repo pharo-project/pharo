@@ -47,11 +47,6 @@ Metaclass >> addObsoleteSubclass: aClass [
 { #category : #'instance variables' }
 Metaclass >> addSlot: aClassSlot [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
 	^self theNonMetaClass addClassSlot: aClassSlot
 ]
 
@@ -75,13 +70,8 @@ Metaclass >> adoptInstance: oldInstance from: oldMetaClass [
 		map: (self instVarMappingFrom: oldMetaClass)
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> baseClass [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	^thisClass.
 ]
@@ -92,21 +82,11 @@ Metaclass >> basicLocalSelectors [
 	Since localSelectors is lazily initialized, this may 
 	return nil, which means that all selectors are local."
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
 	^ localSelectors
 ]
 
 { #category : #accessing }
 Metaclass >> basicLocalSelectors: aSetOrNil [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	localSelectors := aSetOrNil
 ]
@@ -139,13 +119,8 @@ Metaclass >> category [
 	^ self theNonMetaClass category
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> classClass [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	^self
 ]
@@ -155,6 +130,15 @@ Metaclass >> classPool [
 	"Answer the dictionary of class variables."
 
 	^self theNonMetaClass classPool
+]
+
+{ #category : #'accessing parallel hierarchy' }
+Metaclass >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	"Point classSide >>> Point class"
+	"Point class classSide >>> Point class"
+	
+	^ self
 ]
 
 { #category : #'accessing instances and variables' }
@@ -189,17 +173,12 @@ Metaclass >> definition [
 { #category : #accessing }
 Metaclass >> environment [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
 	^thisClass environment
 ]
 
-{ #category : #'accessing hierarchy protocol' }
+{ #category : #'accessing parallel hierarchy - deprecated' }
 Metaclass >> hasClassSide [
-	^false
+	^ false
 ]
 
 { #category : #initialize }
@@ -210,6 +189,15 @@ Metaclass >> initializeFrom: anotherClassTrait [
 	self basicOrganization: self organization copy.
 ]
 
+{ #category : #'accessing parallel hierarchy' }
+Metaclass >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	"Point instanceSide >>> Point"
+	"Point class instanceSide >>> Point"
+	
+	^ self soleInstance
+]
+
 { #category : #testing }
 Metaclass >> isAnonymous [
 	^self soleInstance isAnonymous 
@@ -217,11 +205,6 @@ Metaclass >> isAnonymous [
 
 { #category : #testing }
 Metaclass >> isClass [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	^ true
 ]
@@ -233,7 +216,6 @@ Metaclass >> isMeta [
 
 { #category : #'class hierarchy' }
 Metaclass >> isMetaclassOfClassOrNil [
-	
 	
 	^ self theNonMetaClass 
 		ifNil: [ true ] 
@@ -282,11 +264,6 @@ Metaclass >> new [
 { #category : #'instance creation' }
 Metaclass >> newAnonymousSubclass [
 
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
-
 	^self theNonMetaClass newAnonymousSubclass class
 ]
 
@@ -296,7 +273,7 @@ Metaclass >> obsoleteSubclasses [
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 
-	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass theMetaClass ]
+	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
 { #category : #compiling }
@@ -309,11 +286,6 @@ Metaclass >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 { #category : #copying }
 Metaclass >> postCopy [
 	"Don't share the reference to the sole instance."
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	super postCopy.
 	thisClass := nil.
@@ -359,7 +331,7 @@ Metaclass >> slots: slotsDefinition [
 			traitComposition: theClass traitComposition;
 			category: theClass category asString;
 			classSlots: slotsDefinition].
-	^ theClass theMetaClass
+	^ theClass classSide
 ]
 
 { #category : #accessing }
@@ -375,7 +347,7 @@ Metaclass >> subclasses [
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	
-	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass theMetaClass ].
+	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass classSide ].
 ]
 
 { #category : #'class hierarchy' }
@@ -384,16 +356,11 @@ Metaclass >> subclassesDo: aBlock [
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	
-	self theNonMetaClass subclasses do: [ :each | aBlock value: each theMetaClass ]
+	self theNonMetaClass subclasses do: [ :each | aBlock value: each classSide ]
 ]
 
 { #category : #copying }
 Metaclass >> veryDeepCopyWith: deepCopier [
-
-	<localMetaclassMethod> 
-    "This method is supposed to be local in Metaclass because of a good reason.
-    We use this pragma to test if Metaclass does not contain some accidental 
-    local selectors."
 
 	"Return self.  Must be created, not copied.  Do not record me."
 ]

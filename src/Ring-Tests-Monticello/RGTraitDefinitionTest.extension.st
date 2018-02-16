@@ -24,6 +24,6 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assert: rgClass superclass superclass isNil.
 	self assert: rgClass superclass package name equals: #TraitsV2.
 	
-	rgClass := TSortable theMetaClass asFullRingDefinition.
-	self assert: rgClass package = rgClass theNonMetaClass package.
+	rgClass := TBehavior classSide asFullRingDefinition.
+	self assert: rgClass package = rgClass classSide package.
 ]

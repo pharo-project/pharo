@@ -121,6 +121,12 @@ RGClassDefinition >> category: aSymbol [
 	category := aSymbol
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGClassDefinition >> classSide [
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	^ metaClass
+]
+
 { #category : #'class variables' }
 RGClassDefinition >> classVarNamed: aString [
 
@@ -200,6 +206,12 @@ RGClassDefinition >> initialize [
 	sharedPools:= OrderedCollection new.
 ]
 
+{ #category : #'accessing - parallel hierarchy' }
+RGClassDefinition >> instanceSide [
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	^ self
+]
+
 { #category : #'managing pool users' }
 RGClassDefinition >> isPool [
 	"The receiver is a shared pool if it inherits from SharedPool"
@@ -225,7 +237,7 @@ RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 		and:[ self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted  
 		and:[ self traitCompositionSource = aRGClassDefinition traitCompositionSource 
 		and:[ ((self hasComment and:[ self comment isSameRevisionAs: aRGClassDefinition comment ]) or:[ self hasComment not ])
-		and:[ (self theMetaClass isSameRevisionAs: aRGClassDefinition theMetaClass) ] ] ] ] ] ] ]
+		and:[ (self classSide isSameRevisionAs: aRGClassDefinition classSide) ] ] ] ] ] ] ]
 ]
 
 { #category : #accessing }
@@ -315,13 +327,13 @@ RGClassDefinition >> stamp: aString [
 						 stamp: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 RGClassDefinition >> theMetaClass [
 	
 	^metaClass
 ]
 
-{ #category : #accessing }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 RGClassDefinition >> theNonMetaClass [
 
 	^self

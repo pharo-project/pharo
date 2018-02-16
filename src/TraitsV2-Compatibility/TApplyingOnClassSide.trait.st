@@ -159,7 +159,7 @@ TApplyingOnClassSide >> obsoleteSubclasses [
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 
-	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass theMetaClass ]
+	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
 { #category : #compiling }
@@ -208,7 +208,7 @@ TApplyingOnClassSide >> subclasses [
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
 	
-	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass theMetaClass ].
+	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass classSide ].
 ]
 
 { #category : #'class hierarchy' }
@@ -217,7 +217,7 @@ TApplyingOnClassSide >> subclassesDo: aBlock [
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
 	
-	self theNonMetaClass subclasses do: [ :each | aBlock value: each theMetaClass ]
+	self theNonMetaClass subclasses do: [ :each | aBlock value: each classSide ]
 ]
 
 { #category : #composition }

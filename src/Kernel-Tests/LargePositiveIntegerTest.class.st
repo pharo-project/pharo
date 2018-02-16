@@ -5,7 +5,7 @@ Class {
 	#name : #LargePositiveIntegerTest,
 	#superclass : #ClassTestCase,
 	#category : #'Kernel-Tests-Numbers'
-} 
+}
 
 { #category : #tests }
 LargePositiveIntegerTest >> testBitShift [

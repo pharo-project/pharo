@@ -147,7 +147,7 @@ RGContainer >> allClassesDo: aBlock [
 	self allClasses do: [ :each|
 		aBlock value: each.
 		each hasMetaclass
-			ifTrue:[ aBlock value: each theMetaClass ] ]
+			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
 { #category : #'convenient accesses' }
@@ -171,7 +171,7 @@ RGContainer >> allTraitsDo: aBlock [
 	self allTraits do: [ :each|
 		aBlock value: each.
 		each hasMetaclass
-			ifTrue:[ aBlock value: each theMetaClass ] ]
+			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
 { #category : #'lookup by name' }
@@ -201,7 +201,7 @@ RGContainer >> classOrTraitNamed: className [
 	theClass ifNil:[ ^nil ].
 	
 	^(self isMetaclassName: className)
-		ifTrue: [ theClass theMetaClass ]
+		ifTrue: [ theClass classSide ]
 		ifFalse:[ theClass ] 
 ]
 
@@ -225,7 +225,7 @@ RGContainer >> classesDo: aBlock [
 	self classes do: [ :each|
 		aBlock value: each.
 		each hasMetaclass
-			ifTrue:[ aBlock value: each theMetaClass ] ]
+			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
 { #category : #'image package loading' }
@@ -255,7 +255,7 @@ RGContainer >> definedClassesDo: aBlock [
 	self definedClasses do: [ :each|
 		aBlock value: each.
 		each hasMetaclass
-			ifTrue:[ aBlock value: each theMetaClass ] ]
+			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
 { #category : #'convenient accesses' }
@@ -397,7 +397,7 @@ RGContainer >> loadTraitUsers [
 			rgTrait := self traitNamed: tname.
 			rgTrait notNil ifTrue: [
 				rgTrait addUser: each.
-				rgTrait theMetaClass addUser: each theMetaClass ] ] ]
+				rgTrait classSide addUser: each classSide ] ] ]
 ]
 
 { #category : #'lookup by name' }
@@ -408,7 +408,7 @@ RGContainer >> metaclassNamed: metaclassName [
 	theClass notNil
 	ifTrue:[ ^theClass isMeta 
 		      ifTrue: [ theClass ]
-		      ifFalse:[ theClass theMetaClass ] ].
+		      ifFalse:[ theClass classSide ] ].
 	
 	^nil
 ]
@@ -557,7 +557,7 @@ RGContainer >> traitsDo: aBlock [
 	self traits do: [ :each|
 		aBlock value: each.
 		each hasMetaclass
-			ifTrue:[ aBlock value: each theMetaClass ] ]
+			ifTrue:[ aBlock value: each classSide ] ]
 ]
 
 { #category : #'adding/removing' }

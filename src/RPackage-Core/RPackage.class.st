@@ -667,7 +667,7 @@ RPackage >> extendedClasses [
 	"Return classes and metaclasses that are extended in the receiver. They represent the classes of method extensions"
 	^ (metaclassExtensionSelectors keys 
 		select: [ :each| Smalltalk globals includesKey: each ]
-		thenCollect: [:each | (Smalltalk globals at: each) theMetaClass])
+		thenCollect: [:each | (Smalltalk globals at: each) classSide])
 			union:  (classExtensionSelectors keys 
 						select: [ :each| Smalltalk globals includesKey: each ]
 						thenCollect: [:each | Smalltalk globals at: each])
@@ -741,7 +741,7 @@ RPackage >> extensionMethods [
 	classExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
 		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) >> selector) ] ].
 	metaclassExtensionSelectors keysAndValuesDo: [ :classSymbol :methods |
-		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) theMetaClass >> selector) ] ].	
+		methods do: [ :selector | allExtensionMethods add: ((Smalltalk globals at: classSymbol) classSide >> selector) ] ].	
 	
 	^ allExtensionMethods				
 ]
@@ -787,7 +787,7 @@ RPackage >> importClass: aClass [
 	Pay attention that it will not import anything from the metaClass side"
 
 	self basicImportClass: aClass.
-	self basicImportClass: aClass theMetaClass.	
+	self basicImportClass: aClass classSide.	
 	self 
 		addClassDefinition:  aClass
 		toClassTag: (self toTagName: aClass category)
@@ -800,7 +800,7 @@ RPackage >> importClass: aClass inTag: aTag [
 	Pay attention that it will not import anything from the metaClass side"
 
 	self basicImportClass: aClass.
-	self basicImportClass: aClass theMetaClass.	
+	self basicImportClass: aClass classSide.	
 	self 
 		addClassDefinition:  aClass
 		toClassTag: aTag name
@@ -1050,12 +1050,12 @@ RPackage >> methods [
 	methods := OrderedCollection new.
 	
 	metaclassExtensionSelectors keysAndValuesDo: [:key :val | 
-		val do: [:sel | 	methods add: ((Smalltalk globals at: key) theMetaClass >> sel)]].
+		val do: [:sel | 	methods add: ((Smalltalk globals at: key) classSide >> sel)]].
 	classExtensionSelectors keysAndValuesDo: [:key :val |
 		val do: [:sel | methods add: ((Smalltalk globals at: key) >> sel)]].
 	
 	metaclassDefinedSelectors keysAndValuesDo: [:key :val | 
-		val do: [:sel | methods add: ((Smalltalk globals at: key) theMetaClass >> sel)]].
+		val do: [:sel | methods add: ((Smalltalk globals at: key) classSide >> sel)]].
 	classDefinedSelectors keysAndValuesDo: [:key :val | 
 		val do: [:sel | methods add: ((Smalltalk globals at: key) >> sel)]].
 	
@@ -1164,7 +1164,7 @@ RPackage >> packageComment [
 
 { #category : #accessing }
 RPackage >> packageComment: aDescription [
-	^ self packageManifest theMetaClass
+	^ self packageManifest classSide
 		ifNil: [ '' ]
 		ifNotNil: [ :manifest | manifest compile: 'description ^ ' , aDescription classified: 'meta-data' ]
 ]

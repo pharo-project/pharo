@@ -71,7 +71,7 @@ RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
 		(class := self model classNamed: aSymbol) 
 			ifNil: [ ^ self ].
 		self copyFrom: aClass to: class.
-		self copyFrom: aClass theMetaClass to: class theMetaClass ].
+		self copyFrom: aClass classSide to: class classSide ].
 	^ nil
 ]
 

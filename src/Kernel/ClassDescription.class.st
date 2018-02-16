@@ -177,10 +177,10 @@ ClassDescription >> allSlotsEverywhere [
 ClassDescription >> authors [
 	"Returns a bag representing the author frequency based on the latest version of the methods of the receiver."
 
-	^(self methods, self theMetaClass methods) collect: [ :each | each author ] as: Bag
+	^(self methods, self classSide methods) collect: [ :each | each author ] as: Bag
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> baseClass [
 	^self subclassResponsibility.
 ]
@@ -195,7 +195,7 @@ ClassDescription >> basicOrganization: aClassOrg [
 	organization := aClassOrg
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> classClass [
 	^self subclassResponsibility.
 ]
@@ -301,7 +301,11 @@ stream cr; cr; nextPutAll: '    Implementation Points'.
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> classSide [
-	^self theMetaClass.
+	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
+	"Point classSide >>> Point class"
+	"Point class classSide >>> Point class"
+	
+	^ self subclassResponsibility
 ]
 
 { #category : #'instance variables' }
@@ -750,7 +754,11 @@ ClassDescription >> instVarNamesAndOffsetsDo: aBinaryBlock [
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> instanceSide [
-	^ self theNonMetaClass
+	"Return the class of the couple class/metaclass. Useful to avoid explicit test."
+	"Point instanceSide >>> Point"
+	"Point class instanceSide >>> Point"
+	
+	^ self subclassResponsibility
 ]
 
 { #category : #accessing }
@@ -770,15 +778,23 @@ ClassDescription >> instanceVariablesString [
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isClassSide [
+	"Return true whether the receiver is a metaclass (in a couple class/metaclass sense)."
+	"Point isClassSide >>> false"
+	"Point class isClassSide >>> true"
+	
 	^self == self classSide
 ]
 
 { #category : #'accessing parallel hierarchy' }
 ClassDescription >> isInstanceSide [
-	^self isClassSide not
+	"Return true whether the receiver is a class (in a couple class/metaclass sense)."
+	"Point isClassSide >>> true"
+	"Point class isClassSide >>> false"
+	
+	^ self isClassSide not
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> isMeta [
 	^self isClassSide
 ]
@@ -797,7 +813,7 @@ ClassDescription >> linesOfCode [
 	lines := self localMethods inject: 0 into: [ :sum :each | sum + each linesOfCode ].
 	^ self isMeta 
 		ifTrue: [ lines ]
-		ifFalse: [ lines + self theMetaClass linesOfCode ]
+		ifFalse: [ lines + self classSide linesOfCode ]
 ]
 
 { #category : #'accessing tags' }
@@ -916,7 +932,7 @@ ClassDescription >> numberOfMethods [
 	num := self localMethods size.
 	^ self isMeta  
 		ifTrue: [ num ]
-		ifFalse: [ num + self theMetaClass numberOfMethods ] 
+		ifFalse: [ num + self classSide numberOfMethods ] 
 ]
 
 { #category : #'initialize-release' }
@@ -1189,14 +1205,16 @@ ClassDescription >> tagsForMethods [
 	^tags
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> theMetaClass [
-	^self classClass
+	"This method is deprecated so consider to migrate."
+	^ self classSide
 ]
 
-{ #category : #'accessing parallel hierarchy' }
+{ #category : #'accessing - deprecated parallel hierarchy ' }
 ClassDescription >> theNonMetaClass [
-	^self baseClass
+	"This method is deprecated so consider to migrate."
+	^ self instanceSide
 ]
 
 { #category : #'accessing method dictionary' }

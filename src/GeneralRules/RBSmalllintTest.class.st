@@ -87,7 +87,7 @@ RBSmalllintTest >> classAndMetaClassRuleFor: aTestSelector plusClasses: aCollect
 	expectedResultEnvironment :=
 		self classEnvironmentWithAll: expectedResultClasses.
 	expectedResultClasses do: [ :each |
-		expectedResultEnvironment addClass: each theMetaClass ].
+		expectedResultEnvironment addClass: each classSide ].
 	self
 		assertResultOfRule: result
 		hasSameClassesAsEnvironment: expectedResultEnvironment
