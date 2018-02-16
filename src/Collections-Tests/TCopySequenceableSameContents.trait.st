@@ -65,8 +65,8 @@ TCopySequenceableSameContents >> testShallowCopy [
 	result := self nonEmpty shallowCopy .
 	
 	"Verfy content"
-	1 to: self nonEmpty size do:
-		[:i | self assert: ((result at:i) equals: (self nonEmpty at:i))].
+	self nonEmpty withIndexDo:
+		[:el :i | self assert: (result at:i) equals: (self nonEmpty at:i)].
 	
 	"Verify size"
 	self assert: result size equals: self nonEmpty size.

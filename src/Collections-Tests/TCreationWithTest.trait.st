@@ -53,7 +53,7 @@ TCreationWithTest >> testWithAll [
 	
 	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
 	
-	self assert: (aCol size equals: collection size)
+	self assert: aCol size equals: collection size
 ]
 
 { #category : #'tests - creation' }
