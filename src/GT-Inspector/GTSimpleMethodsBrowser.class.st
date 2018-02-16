@@ -3,7 +3,7 @@ This browser is used to browse the class structure of every object in the inspec
 
 Example:
 self openOn: World
-"
+" 
 Class {
 	#name : #GTSimpleMethodsBrowser,
 	#superclass : #GLMCompositePresentation,
