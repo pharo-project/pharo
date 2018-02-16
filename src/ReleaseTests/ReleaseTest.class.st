@@ -116,8 +116,8 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 { #category : #testing }
 ReleaseTest >> testLayoutIntegrity [
 	SystemNavigation default allClassesDo: [ :class |
-		class theNonMetaClass classLayout checkIntegrity.
-		class theMetaClass classLayout checkIntegrity ]
+		class instanceSide classLayout checkIntegrity.
+		class classSide classLayout checkIntegrity ]
 ]
 
 { #category : #testing }

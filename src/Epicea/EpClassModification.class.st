@@ -41,7 +41,7 @@ EpClassModification >> behaviorAffectedName [
 EpClassModification >> hasMetaclassChanges [
 	"FIX should compare metaclasses as a whole"
 
-	^ oldClass theMetaClass instVarNames ~= newClass theMetaClass instVarNames
+	^ oldClass classSide instVarNames ~= newClass classSide instVarNames
 ]
 
 { #category : #testing }

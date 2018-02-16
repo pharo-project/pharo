@@ -180,8 +180,8 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnoucement [
 				with: aClassRemovedAnnoucement classRemoved originalName printString).
 
 		"Fix class name in the metaclass"
-		classRemoved theMetaClass definitionSource: 
-			(classRemoved theMetaClass definitionSource
+		classRemoved classSide definitionSource: 
+			(classRemoved classSide definitionSource
 				copyReplaceAll: aClassRemovedAnnoucement classRemoved name
 				with: aClassRemovedAnnoucement classRemoved originalName).
 

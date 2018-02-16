@@ -232,7 +232,7 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 	Smalltalk allClassesAndTraits 
 		do: [ :eachBehavior | 
 			self initializeMethodsFor: eachBehavior.
-			self initializeMethodsFor: eachBehavior theMetaClass ]
+			self initializeMethodsFor: eachBehavior classSide ]
 		displayingProgress: 'Importing methods'.
 
 	Smalltalk allClassesAndTraits 
@@ -241,9 +241,9 @@ RPackageOrganizer >> basicInitializeFromPackagesList: aPackagesList [
 				self 
 					initializeExtensionsFor: eachBehavior 
 					protocol: eachProtocol ].
-			eachBehavior theMetaClass organization extensionProtocols do: [ :eachProtocol | 
+			eachBehavior classSide organization extensionProtocols do: [ :eachProtocol | 
 				self 
-					initializeExtensionsFor: eachBehavior theMetaClass 
+					initializeExtensionsFor: eachBehavior classSide 
 					protocol: eachProtocol ] ]
 		displayingProgress: 'Importing extensions'.
 ]

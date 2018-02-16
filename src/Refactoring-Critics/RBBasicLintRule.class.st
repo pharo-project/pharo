@@ -43,7 +43,7 @@ RBBasicLintRule >> filteredResult [
 		ifTrue: [
 			filter classesDo: [ :class |
 				result
-					removeClass: class theMetaClass;
+					removeClass: class classSide;
 					removeClass: class theNonMetaClass ] ]
 		ifFalse: [
 			result isVariableEnvironment ifTrue: [

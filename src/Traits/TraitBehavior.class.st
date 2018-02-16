@@ -656,7 +656,7 @@ TraitBehavior >> dependentClasses [
 	self superclass ifNotNil: [ cll add: self superclass ].
 	
 	"We unify a class and its metaclass"
-	(self methods, self theMetaClass methods) 
+	(self methods, self classSide methods) 
 		do: [ :m | m literalsDo: [ :l | 
 					"We also check if the method is not an extension"
 					((((l isVariableBinding 

@@ -277,7 +277,7 @@ RBBrowserEnvironment >> forClasses: classCollection [
 	classCollection do: 
 			[:each | 
 			classes add: each theNonMetaClass;
-				add: each theMetaClass].
+				add: each classSide].
 	^RBClassEnvironment onEnvironment: self classes: classes
 ]
 
@@ -652,7 +652,7 @@ RBBrowserEnvironment >> systemDictionary [
 { #category : #private }
 RBBrowserEnvironment >> systemDictionaryClassesDo: aBlock [
 	self systemDictionary allClassesDo:[:class |
-		 aBlock value: class; value: class theMetaClass]
+		 aBlock value: class; value: class classSide]
 ]
 
 { #category : #accessing }

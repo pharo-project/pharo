@@ -62,7 +62,7 @@ RBClassTest >> testDefinesPoolDictionary [
 { #category : #'method tests' }
 RBClassTest >> testHierarchy [
 	| meta |
-	meta := objectClass theMetaClass.
+	meta := objectClass classSide.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)
 ]
@@ -70,5 +70,5 @@ RBClassTest >> testHierarchy [
 { #category : #tests }
 RBClassTest >> testObjectIsNotAbstract [
 	self deny: objectClass isAbstract.
-	self deny: objectClass theMetaClass isAbstract.
+	self deny: objectClass classSide isAbstract.
 ]
