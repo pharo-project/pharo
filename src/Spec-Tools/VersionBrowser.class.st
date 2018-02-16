@@ -152,7 +152,7 @@ VersionBrowser >> buildChangeList [
 	
 	^ (SourceFiles
 		changeRecordsFrom: rgMethod sourcePointer
-		className: rgMethod theNonMetaClassName
+		className: rgMethod instanceSideParentName
 		isMeta: rgMethod isMetaSide)
 		collectWithIndex: [ :c :i | | rg |
 			rg := c asRingDefinition.
