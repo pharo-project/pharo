@@ -9,7 +9,7 @@ Class {
 	#name : #BaselineOfPharoBootstrap,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfPharoBootstrap
-}
+} 
 
 { #category : #accessing }
 BaselineOfPharoBootstrap class >> compilerPackageNames [
