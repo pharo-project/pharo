@@ -9,6 +9,7 @@ repository := TonelRepository new
 	yourself.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
+(repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfTraits')) snapshot install.
 
 Transcript nextPutAll: '[Hermes] - Generating Environment from repository'; cr.
 
