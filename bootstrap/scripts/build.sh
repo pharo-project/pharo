@@ -214,6 +214,8 @@ dd if="displaySize.bin" of="${PHARO_IMAGE_NAME}.image" bs=1 seek=$SEEK count=4 c
 
 #Terrible HACK!!!! 
 #I am increasing the size of the eden space.
+#This allows to load the big baselines.
+#However, this is only needed because the VM has a bug when extending the space itself. It is corrupting the objects, this produces random crashes
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Smalltalk vm parameterAt: 45 put: (Smalltalk vm parameterAt: 44) * 4"
 
 ${VM} "${PHARO_IMAGE_NAME}.image" eval --save "Metacello new baseline: 'Tonel';repository: 'github://pharo-vcs/tonel:v1.0.5'; load: 'core'"
