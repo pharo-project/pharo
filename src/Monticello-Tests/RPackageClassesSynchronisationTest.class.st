@@ -4,7 +4,7 @@ SUnit tests for RPackage classes synchronisation
 Class {
 	#name : #RPackageClassesSynchronisationTest,
 	#superclass : #RPackageMCSynchronisationTest,
-	#category : #'RPackage-Tests'
+	#category : #'Monticello-Tests-RPackage'
 }
 
 { #category : #'tests - adding classes' }

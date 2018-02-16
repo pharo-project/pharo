@@ -174,11 +174,6 @@ SmalltalkEditor class >> smalltalkEditorMenuOn: aBuilder [
 	(aBuilder item: #'Code search...' translated)
 		selector: #shiftedTextPaneMenuRequest;
 		withSeparatorAfter.
-	(aBuilder item: #'Do again' translated)
-		keyText: 'j';
-		selector: #again;
-		help: nil;
-		iconName: #smallRedoIcon.
 	(aBuilder item: #Undo translated)
 		keyText: 'z';
 		selector: #undo;

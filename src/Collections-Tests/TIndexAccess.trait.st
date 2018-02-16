@@ -147,22 +147,15 @@ TIndexAccess >> testIndexOfSubCollectionStartingAt [
 
 { #category : #'tests - index access' }
 TIndexAccess >> testIndexOfSubCollectionStartingAtIfAbsent [
-
-	| index absent subcollection collection |
+	| absent subcollection collection |
 	collection := self collectionMoreThan1NoDuplicates.
 	subcollection := self collectionMoreThan1NoDuplicates.
 	absent := false.
-	index := collection 
-		indexOfSubCollection: subcollection
-		startingAt: 1
-		ifAbsent: [ absent := true ].
-	self assert: absent = false.
+	collection indexOfSubCollection: subcollection startingAt: 1 ifAbsent: [ absent := true ].
+	self deny: absent.
 	absent := false.
-	index := collection 
-		indexOfSubCollection: subcollection
-		startingAt: 2
-		ifAbsent: [ absent := true ].
-	self assert: absent = true
+	collection indexOfSubCollection: subcollection startingAt: 2 ifAbsent: [ absent := true ].
+	self assert: absent
 ]
 
 { #category : #'tests - index access' }

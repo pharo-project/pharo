@@ -65,6 +65,11 @@ CommandLineArguments >> copySubcommand [
 	^ self class withArguments: arguments allButFirst
 ]
 
+{ #category : #copying }
+CommandLineArguments >> copyWithoutPassword [
+	^ self class withArguments: (arguments reject: [ :each | each beginsWith: '--deploymentPassword' ])
+]
+
 { #category : #testing }
 CommandLineArguments >> hasArguments [
 	^ arguments size > 0
