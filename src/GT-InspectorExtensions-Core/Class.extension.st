@@ -10,7 +10,7 @@ Class >> gtInspectorAllReferencesIn: composite [
 						sorted: [ :x :y | x name < y name ] ];
 		format: #name;
 		tags: [ :each | { each package name } ]
-] 
+]
 
 { #category : #'*GT-InspectorExtensions-Core' }
 Class >> gtInspectorAllReferencesOutsideIn: composite [
