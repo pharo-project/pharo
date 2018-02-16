@@ -49,15 +49,15 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithFirst [
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithSequenceable [
 
 	| result index element |
-	index := self indexInNonEmpty .
+	index := self indexInNonEmpty.
 	element := self nonEmpty at: index.
 	result := self nonEmpty copyWith: (element ).
 	
 	self assert: result size equals: (self nonEmpty size + 1).
-	self assert: result last equals: element .
+	self assert: result last equals: element.
 	
 	1 to: (result size - 1) do:
-	[ :i | self assert: (result at: i) equals: ( self nonEmpty at: ( i  ))].
+		[ :i | self assert: (result at: i) equals: ( self nonEmpty at: i)]
 ]
 
 { #category : #'tests - copying with or without' }
@@ -69,7 +69,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutFirst [
 	self assert: result size equals: (self nonEmpty size - 1).
 	
 	result withIndexDo: 
-		[:el :i | self assert: (result at: i) equals: (self nonEmpty at: (i + 1))].
+		[:el :i | self assert: (result at: i) equals: (self nonEmpty at: (i + 1))]
 ]
 
 { #category : #'tests - copying with or without' }

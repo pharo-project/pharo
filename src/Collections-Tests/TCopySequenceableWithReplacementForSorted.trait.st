@@ -49,7 +49,7 @@ TCopySequenceableWithReplacementForSorted >> testCopyFromToWithForSorted [
  	self replacementCollection do:
 			[:each | self assert: (result occurrencesOf: each) equals: ( self replacementCollection occurrencesOf: each )].
 
-	self assert: result size equals: self replacementCollection size.
+	self assert: result size equals: self replacementCollection size
 
 
 ]
@@ -61,15 +61,15 @@ TCopySequenceableWithReplacementForSorted >> testCopyReplaceAllWithForSorted [
 	collection := self collectionOfSize5 .
 
 	"Testing that elements to be replaced are removed from the copy :"
-	result := collection copyReplaceAll: collection with: self empty .
+	result := collection copyReplaceAll: collection with: self empty.
 	self assert: result isEmpty.
 
 	"Testing that replacement elements  are all put into the copy :"
-	result := collection copyReplaceAll: collection with: self replacementCollection .
+	result := collection copyReplaceAll: collection with: self replacementCollection.
  	self replacementCollection do:
 			[:each | self assert: (result occurrencesOf: each) equals: (self replacementCollection occurrencesOf: each)].
 
-	self assert: result size equals: self replacementCollection size.
+	self assert: result size equals: self replacementCollection size
 
 
 ]

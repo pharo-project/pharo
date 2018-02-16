@@ -31,25 +31,29 @@ Class {
 
 { #category : #requirements }
 SortedCollectionTest >> accessCollection [
-"Return a collection of size 5"
+	"Return a collection of size 5"
+	
 	^accessCollection 
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> anotherElementNotIn [
-" return an element different of 'elementNotIn'  not included in 'nonEmpty' "
+	"Return an element different of 'elementNotIn'  not included in 'nonEmpty' "
+	
 	^666
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> anotherElementOrAssociationIn [
-	" return an element (or an association for Dictionary ) present  in 'collection' "
+	"Return an element (or an association for Dictionary ) present  in 'collection' "
+
 	^ self collection anyOne
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> anotherElementOrAssociationNotIn [
-	" return an element (or an association for Dictionary )not present  in 'collection' "
+	"Return an element (or an association for Dictionary )not present  in 'collection' "
+
 	^ elementNoteIn 
 ]
 
@@ -62,12 +66,14 @@ SortedCollectionTest >> collection [
 { #category : #requirements }
 SortedCollectionTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
+	
 	^ SortedCollection
 ]
 
 { #category : #requirements }
 SortedCollectionTest >> collectionMoreThan1NoDuplicates [
-	" return a collection of size 5 without equal elements"
+	"Return a collection of size 5 without equal elements"
+	
 	^ withoutEqualElements 
 ]
 
@@ -88,6 +94,7 @@ SortedCollectionTest >> collectionNotIncluded [
 { #category : #requirements }
 SortedCollectionTest >> collectionOfFloat [
  	"Return a collection only includiing Float elements "
+	
 	^ collectionOfFloat 
 ]
 
@@ -135,7 +142,7 @@ SortedCollectionTest >> collectionWithElement [
 
 { #category : #requirements }
 SortedCollectionTest >> collectionWithElementsToRemove [
-	"Return a collection of elements included in 'nonEmpty'  "
+	"Return a collection of elements included in 'nonEmpty'."
 
 	^ collectionIncluded 
 ]
@@ -366,7 +373,12 @@ SortedCollectionTest >> oldSubCollection [
 { #category : #requirements }
 SortedCollectionTest >> otherCollection [
 	"Returns a collection that does not include what is returned by #element."
-	 ^ SortedCollection new add:  7 ; add: 5 ; add: 2; yourself.
+	
+	 ^ SortedCollection new 
+			add: 7; 
+			add: 5; 
+			add: 2; 
+			yourself
 ]
 
 { #category : #requirements }
@@ -384,6 +396,7 @@ SortedCollectionTest >> result [
 
 { #category : #running }
 SortedCollectionTest >> setUp [
+
 	super setUp.
 	nonEmpty := SortedCollection new.
 	elementExistsTwice := 12332312321.
@@ -430,7 +443,8 @@ SortedCollectionTest >> speciesClass [
 
 { #category : #requirements }
 SortedCollectionTest >> subCollectionNotIn [
-" return a collection for which at least one element is not included in 'accessCollection' "
+	"Return a collection for which at least one element is not included in 'accessCollection'."
+	
 	^ SortedCollection new add: elementNoteIn ; add: elementNoteIn ; yourself.
 ]
 
@@ -466,7 +480,7 @@ SortedCollectionTest >> testAdd [
 	collection add: 6.
 	self assert: (collection at: 5) equals: 5.
 	self assert: collection size equals: 10.
-	collection add: 3.
+	collection add: 3
 	
 ]
 
@@ -477,10 +491,10 @@ SortedCollectionTest >> testAddAll [
 	sorted2 := SortedCollection new.
 	sorted2 
 		add: 'brochet'; 
-		add:'truitelle'.
+		add: 'truitelle'.
 	sorted := SortedCollection new.
 	sorted addAll: sorted2.
-	self assert: (sorted hasEqualElements: sorted2).
+	self assert: (sorted hasEqualElements: sorted2)
 	 
 ]
 
@@ -540,7 +554,7 @@ SortedCollectionTest >> testCreation [
 		
 	| collection |
 	collection := #(10 9 3 6 1 8 7 5 4 2) asSortedCollection.
-	self assert: collection equals: (1 to: 10) asSortedCollection.
+	self assert: collection equals: (1 to: 10) asSortedCollection
 	
 ]
 
@@ -550,7 +564,7 @@ SortedCollectionTest >> testDo2 [
 	| res |
 	res := self speciesClass sortBlock: [:a :b | a name < b name]..  
 	self collection do: [:each | res add: each class].
-	self assert: res asArray equals: self result asArray. 
+	self assert: res asArray equals: self result asArray
 
 ]
 
@@ -559,8 +573,10 @@ SortedCollectionTest >> testEquals [
 		
 	|aSortedCollection|
 	aSortedCollection := SortedCollection new.
-	aSortedCollection add: 'truite'; add: 'brochet'.
-	self assert: aSortedCollection copy equals: aSortedCollection.
+	aSortedCollection 
+		add: 'truite'; 
+		add: 'brochet'.
+	self assert: aSortedCollection copy equals: aSortedCollection
 ]
 
 { #category : #'tests - enumerating' }

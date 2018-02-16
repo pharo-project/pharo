@@ -28,7 +28,7 @@ TCopyPartOfSequenceableForMultipliness >> test0FixtureCopyPartOfForMultipliness 
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
 
 	| result element  collection |
-	collection := self collectionWithSameAtEndAndBegining .
+	collection := self collectionWithSameAtEndAndBegining.
 	element := collection first.
 	
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
@@ -45,7 +45,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterWithDuplicate [
 
 	| result element  collection |
-	collection := self collectionWithSameAtEndAndBegining .
+	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
 	
 	"collectionWithSameAtEndAndBegining first and last elements are equals.
@@ -75,7 +75,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
 	result withIndexDo: 
 		[:el :i | self assert: (result at: i) equals: (collection at: i) ].
 	
-	self assert: result size equals: (collection size - 1).
+	self assert: result size equals: (collection size - 1)
 
 
 ]
@@ -92,7 +92,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToWithDuplicate [
 	result := collection copyUpTo: (element ).
 	
 	"Verify content"
-	self assert: result isEmpty.
+	self assert: result isEmpty
 
 
 ]

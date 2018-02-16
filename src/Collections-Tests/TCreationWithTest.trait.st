@@ -90,22 +90,22 @@ TCreationWithTest >> testWithWithWithWith [
 	
 	| aCol collection |
 	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 4.
-	aCol := self collectionClass with: (collection at:1) with: ( collection at:2 ) with: ( collection at: 3) with: ( collection at: 4).
+	aCol := self collectionClass with: (collection at:1) with: (collection at:2) with: (collection at: 3) with: (collection at: 4).
 
-	1 to: 3 do: [ :i | self assert: ( aCol occurrencesOf: ( collection at: i ) ) equals: ( collection occurrencesOf: ( collection at: i ) ) ].
+	1 to: 3 do: [ :i | self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]
 
 { #category : #'tests - creation' }
 TCreationWithTest >> testWithWithWithWithWith [
 	
 	| aCol collection |
-	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 5 .
+	collection := self collectionMoreThan5Elements asOrderedCollection copyFrom: 1 to: 5.
 	aCol := self collectionClass 
-						with: (collection at:1) 
-						with: (collection at:2) 
+						with: (collection at: 1) 
+						with: (collection at: 2) 
 						with: (collection at: 3) 
 						with: (collection at: 4) 
 						with: (collection at: 5).
 
-	1 to: 3 do: [ :i | self assert: (aCol occurrencesOf: ( collection at: i ) ) equals: ( collection occurrencesOf: ( collection at: i ) ) ].
+	1 to: 3 do: [ :i | self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]

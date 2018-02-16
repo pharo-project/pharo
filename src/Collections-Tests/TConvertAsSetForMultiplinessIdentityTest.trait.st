@@ -12,6 +12,7 @@ Trait {
 TConvertAsSetForMultiplinessIdentityTest >> collectionWithCopy [
 	"Return a collection of type 'self collectionWIithoutEqualsElements class' containing no elements equals (with identity equality)
 	but 2 elements only equals with classic equality"
+	
 	| result collection |
 	collection := OrderedCollection withAll: self elementsCopyNonIdenticalWithoutEqualElements.
 	collection add: collection first copy.
@@ -71,7 +72,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithEqualsElements 
 	collection := self withEqualElements .
 	result := collection asIdentitySet.
 	collection do: [ :each | self assert: (result occurrencesOf: each) = 1 ].
-	self assert: result class = IdentitySet.
+	self assert: result class = IdentitySet
 ]
 
 { #category : #'tests - as identity set' }

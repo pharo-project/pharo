@@ -73,7 +73,7 @@ TSetArithmetic >> testDifference [
 	difference := (self collectionWithoutEqualElements difference: self empty).
 	self assert: difference size = self collectionWithoutEqualElements size.
 	self collectionWithoutEqualElements do: [ :each |
-		self assert: (difference includes: each)].
+		self assert: (difference includes: each) ].
 
 ]
 
@@ -125,8 +125,8 @@ TSetArithmetic >> testIntersectionEmpty [
 	| inter |
 	inter := self empty intersection: self empty.
 	self assert: inter isEmpty. 
-	inter := self empty intersection: self collection .
-	self assert: inter equals: self empty.
+	inter := self empty intersection: self collection.
+	self assert: inter equals: self empty
 	
 ]
 
@@ -134,7 +134,7 @@ TSetArithmetic >> testIntersectionEmpty [
 TSetArithmetic >> testIntersectionItself [
 	
 	| result |
-	result :=  (self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements).
+	result := self collectionWithoutEqualElements intersection: self collectionWithoutEqualElements.
 	self assert: result size equals: self collectionWithoutEqualElements size.
 	self collectionWithoutEqualElements do: [ :each|
 		self assert: (result includes: each) ].

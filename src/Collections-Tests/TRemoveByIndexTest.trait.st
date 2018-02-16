@@ -41,7 +41,7 @@ TRemoveByIndexTest >> testRemoveAt [
 { #category : #'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveAtNotPresent [
 
-	self should: [self empty removeAt: 2] raise: Error.
+	self should: [self empty removeAt: 2] raise: Error
 ]
 
 { #category : #'tests - removing by index' }
@@ -54,7 +54,7 @@ TRemoveByIndexTest >> testRemoveFirst [
 
 	result := collection removeFirst.
 	self assert: result equals: element .
-	self assert: collection size equals: (oldSize - 1).
+	self assert: collection size equals: (oldSize - 1)
 ]
 
 { #category : #'tests - removing by index' }
@@ -67,19 +67,19 @@ TRemoveByIndexTest >> testRemoveFirstNElements [
 
 	result := collection removeFirst: 2.
 	self assert: result equals: elements .
-	self assert: collection size equals: (oldSize - 2).
+	self assert: collection size equals: (oldSize - 2)
 ]
 
 { #category : #'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveFirstNElementsNotPresent [
 
-	self should: [self empty removeFirst: 2] raise: Error.
+	self should: [self empty removeFirst: 2] raise: Error
 ]
 
 { #category : #'tests - removing by index' }
 TRemoveByIndexTest >> testRemoveFirstNotPresent [
 
-	self should: [self empty removeFirst] raise: Error.
+	self should: [self empty removeFirst] raise: Error
 ]
 
 { #category : #'tests - removing by index' }
@@ -92,7 +92,7 @@ TRemoveByIndexTest >> testRemoveLast [
 
 	result := collection removeLast.
 	self assert: result equals: element .
-	self assert: collection size equals: (oldSize - 1).
+	self assert: collection size equals: (oldSize - 1)
 ]
 
 { #category : #'tests - removing by index' }
@@ -105,7 +105,7 @@ TRemoveByIndexTest >> testRemoveLastNElements [
 
 	result := (collection removeLast: 2).
 	self assert: result equals: elements.
-	self assert: collection size equals: (oldSize - 2).
+	self assert: collection size equals: (oldSize - 2)
 ]
 
 { #category : #'tests - removing by index' }

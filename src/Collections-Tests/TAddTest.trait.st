@@ -37,7 +37,7 @@ TAddTest >> test0FixtureRequirementsOfTAddTest [
 { #category : #'tests - adding' }
 TAddTest >> testTAdd [
 	| added collection |
-	collection :=self otherCollection.
+	collection := self otherCollection.
 	added := collection add: self element.
 	
 	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
@@ -84,13 +84,14 @@ TAddTest >> testTAddIfNotPresentWithNewElement [
 	
 	added := collection  addIfNotPresent: elem .
 	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
-	self assert: collection  size equals: (oldSize + 1).
+	self assert: collection size equals: (oldSize + 1).
 
 	
 ]
 
 { #category : #'tests - adding' }
 TAddTest >> testTAddTwice [
+
 	| added oldSize collection anElement |
 	collection := self collectionWithElement.
 	anElement := self element.
@@ -99,7 +100,7 @@ TAddTest >> testTAddTwice [
 		add: anElement;
 		add: anElement.
 	self assert: added == anElement.	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection includes: anElement ).
+	self assert: (collection includes: anElement).
 	self assert: collection size equals: (oldSize + 2)
 ]
 
@@ -122,7 +123,7 @@ TAddTest >> testTWrite [
 	| added collection elem |
 	collection := self otherCollection.
 	elem := self element.
-	added := collection  write: elem.
+	added := collection write: elem.
 	
 	self assert: added == elem.	"test for identiy because #add: has not reason to copy its parameter."
 	self assert: (collection includes: elem).

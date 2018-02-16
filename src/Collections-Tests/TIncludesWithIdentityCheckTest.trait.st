@@ -78,13 +78,13 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
-	" test the same comportement than 'includes: ' "
+	"Test the same comportement than 'includes: '."
 	
 	| collection |	
-	collection := self nonEmpty  .
+	collection := self nonEmpty.
 	
-	self deny: (collection identityIncludes: self elementNotIn ).
-	self assert:(collection identityIncludes: collection anyOne)
+	self deny: (collection identityIncludes: self elementNotIn).
+	self assert: (collection identityIncludes: collection anyOne)
 
 ]
 
@@ -100,7 +100,7 @@ TIncludesWithIdentityCheckTest >> testIncludesAnyAllThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
 	self assert: (self nonEmpty includesAny: { self nonEmpty anyOne }).
-	self assert: (self nonEmpty includesAny: self nonEmpty).
+	self assert: (self nonEmpty includesAny: self nonEmpty)
 ]
 
 { #category : #'tests - includes' }
@@ -121,5 +121,5 @@ TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsThere [
 	
-	self assert: (self nonEmpty includes: self nonEmpty anyOne).
+	self assert: (self nonEmpty includes: self nonEmpty anyOne)
 ]

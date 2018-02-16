@@ -87,7 +87,7 @@ TCopyTest >> testCopyEquals [
 	
 	| copy | 
 	copy := self nonEmpty copy.
-	self assert: copy equals: self nonEmpty.
+	self assert: copy equals: self nonEmpty
 ]
 
 { #category : #'tests - copy' }
@@ -171,5 +171,5 @@ TCopyTest >> testCopySameClass [
 	
 	| copy | 
 	copy := self empty copy.
-	self assert: copy class == self empty class.
+	self assert: copy class == self empty class
 ]

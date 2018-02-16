@@ -41,7 +41,7 @@ TCopySequenceableSameContents >> testReverse [
 		[:i | self assert: ((result at: i) 
 			= (self nonEmpty at: (self nonEmpty size - i + 1)))].
 	"verify size of 'result' :"
-	self assert: result size=self nonEmpty size.
+	self assert: result size=self nonEmpty size
 ]
 
 { #category : #'tests - copying same contents' }
@@ -62,7 +62,7 @@ TCopySequenceableSameContents >> testReversed [
 TCopySequenceableSameContents >> testShallowCopy [
 
 	| result |
-	result := self nonEmpty shallowCopy .
+	result := self nonEmpty shallowCopy.
 	
 	"Verfy content"
 	self nonEmpty withIndexDo:

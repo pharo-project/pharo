@@ -23,23 +23,23 @@ TPrintOnSequencedTest >> test0FixturePrintTest [
 TPrintOnSequencedTest >> testPrintElementsOn [
 
 	| aStream result allElementsAsString |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
+	result := ''.
+	aStream := ReadWriteStream on: result.
 	
-	self nonEmpty printElementsOn: aStream .
-	allElementsAsString:=(result findBetweenSubstrings: ' ' ).
+	self nonEmpty printElementsOn: aStream.
+	allElementsAsString:=(result findBetweenSubstrings: ' ').
 	allElementsAsString withIndexDo: 
-		[:el :i | self assert: (allElementsAsString at:i)=((self nonEmpty at:i)asString)].
+		[:el :i | self assert: el equals: ((self nonEmpty at: i)asString) ]
 ]
 
 { #category : #'tests - printing' }
 TPrintOnSequencedTest >> testPrintNameOn [
 
 	| aStream result |
-	result:=''.
-	aStream:= ReadWriteStream on: result.
+	result := ''.
+	aStream := ReadWriteStream on: result.
 	
-	self nonEmpty printNameOn: aStream .
+	self nonEmpty printNameOn: aStream.
 	Transcript show: result asString.
 	self nonEmpty class name first isVowel
 		ifTrue:[ self assert: aStream contents equals: ('an ',self nonEmpty class name ) ]
@@ -75,7 +75,7 @@ TPrintOnSequencedTest >> testPrintOnDelimiter [
 	result := ''.
 	aStream := ReadWriteStream on: result.
 	
-	self nonEmpty printOn: aStream delimiter: ', ' .
+	self nonEmpty printOn: aStream delimiter: ', '.
 	
 	allElementsAsString := (result findBetweenSubstrings: ', ' ).
 	allElementsAsString withIndexDo: 
@@ -91,7 +91,7 @@ TPrintOnSequencedTest >> testPrintOnDelimiterLast [
 	
 	self nonEmpty printOn: aStream delimiter: ', ' last: 'and'.
 	
-	allElementsAsString:=(result findBetweenSubstrings: ', ' ).
+	allElementsAsString:=(result findBetweenSubstrings: ', ').
 	allElementsAsString withIndexDo: 
 		[:el :i | 
 		i<(allElementsAsString size-1 )

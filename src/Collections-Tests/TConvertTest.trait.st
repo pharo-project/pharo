@@ -7,7 +7,8 @@ Trait {
 }
 
 { #category : #'as yet unclassified' }
-TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [ 
+TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
+
 	| result |
 	result := self collectionWithEqualElements asIdentitySet.
 	self assert: (result class includesBehavior: IdentitySet).
@@ -15,7 +16,8 @@ TConvertTest >> assertNoDuplicates: aCollection whenConvertedTo: aClass [
 ]
 
 { #category : #'tests - converting' }
-TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass [ 
+TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass [
+
 	| result |
 	result := aCollection perform: ('as' , aClass name) asSymbol.
 	self assert: (result class includesBehavior: aClass).
@@ -26,7 +28,8 @@ TConvertTest >> assertNonDuplicatedContents: aCollection whenConvertedTo: aClass
 ]
 
 { #category : #'tests - converting' }
-TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [ 
+TConvertTest >> assertSameContents: aCollection whenConvertedTo: aClass [
+
 	| result |
 	result := self assertNonDuplicatedContents: aCollection whenConvertedTo: aClass.
 	self assert: result size equals: aCollection size
@@ -91,7 +94,7 @@ TConvertTest >> testAsIdentitySet [
 
 	self 
 		assertSameContents: self collectionWithoutEqualElements
-		whenConvertedTo: IdentitySet.
+		whenConvertedTo: IdentitySet
 
 ]
 
@@ -103,8 +106,8 @@ TConvertTest >> testAsOrderedCollection [
 
 { #category : #'tests - converting' }
 TConvertTest >> testAsSet [
- 
-	"Test with a collection without equal elements"
-	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set.
+ 	"Test with a collection without equal elements"
+	
+	self assertSameContents: self collectionWithoutEqualElements whenConvertedTo: Set
 	
 ]
