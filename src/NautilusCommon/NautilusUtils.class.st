@@ -17,8 +17,7 @@ NautilusUtils class >> asTestMethod: aMethod [
 { #category : #utilities }
 NautilusUtils class >> correspondingTestCaseOf: aClassOrClassDefinition [
 	^ self environment
-		at:
-			(aClassOrClassDefinition theNonMetaClass name asString , 'Test') asSymbol
+		at: (aClassOrClassDefinition instanceSide name asString , 'Test') asSymbol
 		ifAbsent: [ nil ]
 ]
 

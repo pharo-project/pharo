@@ -16,7 +16,7 @@ CompiledMethod >> criticNameOn: aStream [
 		<< '>>#' 
 		<< self selector  
 		<< ' (' 
-		<< self methodClass theNonMetaClass category 
+		<< self methodClass instanceSide category 
 		<< ')'
 ]
 
@@ -24,7 +24,7 @@ CompiledMethod >> criticNameOn: aStream [
 CompiledMethod >> criticTheNonMetaclassClass [
 	"Return the class of the receiver for the critic browser. This behavior may be folded later by changing the name of this method or using another one."
 	
-	^ self methodClass theNonMetaClass
+	^ self methodClass instanceSide
 ]
 
 { #category : #'*Manifest-Core' }

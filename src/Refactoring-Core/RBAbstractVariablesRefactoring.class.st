@@ -44,7 +44,7 @@ RBAbstractVariablesRefactoring class >> model: aRBSmalltalk abstractVariablesIn:
 { #category : #transforming }
 RBAbstractVariablesRefactoring >> abstractClassVariable: aString [ 
 	| refactoring rewriter nonMetaClass |
-	nonMetaClass := fromClass theNonMetaClass.
+	nonMetaClass := fromClass instanceSide.
 	refactoring := RBCreateAccessorsForVariableRefactoring 
 		model: self model
 		variable: aString

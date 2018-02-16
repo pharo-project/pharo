@@ -30,7 +30,7 @@ MethodIsScriptWithArgumentAction >> runScriptForPragma: pragma [
 
 	self class compiler
 			evaluate: pragma arguments first
-			for: method methodClass theNonMetaClass
+			for: method methodClass instanceSide
 			logged: false
 
 ]

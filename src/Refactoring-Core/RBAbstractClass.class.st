@@ -547,7 +547,7 @@ RBAbstractClass >> selectors [
 
 { #category : #accessing }
 RBAbstractClass >> soleInstance [
-	^ self theNonMetaClass
+	^ self instanceSide
 ]
 
 { #category : #'method accessing' }
