@@ -47,11 +47,9 @@ AnnouncerTest >> testAnnounceInstance [
 
 { #category : #tests }
 AnnouncerTest >> testAnnouncingReentrant [
-	" Test that it is safe to announce when handling announcement,
-	so announcer are reentrant "
-
-	" self run: #testAnnouncingReentrant "
-
+	"Test that it is safe to announce when handling announcement,
+	so announcer are reentrant"
+ 
 	| bool ok |
 
 	ok := bool := false.
