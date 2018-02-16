@@ -395,7 +395,6 @@ BagTest >> testAsSet [
 
 { #category : #'basic tests' }
 BagTest >> testCopy [
-	"self run: #testCopy"
 	
 	| aBag newBag |
 	aBag := Bag new.
