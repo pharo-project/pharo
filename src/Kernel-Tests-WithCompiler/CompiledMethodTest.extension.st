@@ -111,7 +111,7 @@ CompiledMethodTest >> testSelector [
 		|  method cls |
 		
 		method := (self class)>>#returnTrue.
-		self assert: (method selector equals: #returnTrue).
+		self assert: method selector equals: #returnTrue.
 		
 		"now make an orphaned method. new semantics: return corrent name"	
 		Smalltalk removeClassNamed: #TUTU.
