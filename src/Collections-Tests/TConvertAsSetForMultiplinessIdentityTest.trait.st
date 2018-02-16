@@ -10,8 +10,8 @@ Trait {
 
 { #category : #requirements }
 TConvertAsSetForMultiplinessIdentityTest >> collectionWithCopy [
-	"return a collection of type 'self collectionWIithoutEqualsElements class' containing no elements equals ( with identity equality)
-	but  2 elements only equals with classic equality"
+	"Return a collection of type 'self collectionWIithoutEqualsElements class' containing no elements equals (with identity equality)
+	but 2 elements only equals with classic equality"
 	| result collection |
 	collection := OrderedCollection withAll: self elementsCopyNonIdenticalWithoutEqualElements.
 	collection add: collection first copy.
@@ -21,7 +21,8 @@ TConvertAsSetForMultiplinessIdentityTest >> collectionWithCopy [
 
 { #category : #requirements }
 TConvertAsSetForMultiplinessIdentityTest >> collectionWithIdentical [
-	"return a collection of type : 'self collectionWIithoutEqualsElements class containing two elements equals ( with identity equality)"
+	"Return a collection of type: 'self collectionWIithoutEqualsElements class containing two elements equals (with identity equality)."
+
 	| result collection anElement |
 	collection := OrderedCollection withAll: self elementsCopyNonIdenticalWithoutEqualElements.
 	anElement := collection first.
@@ -39,7 +40,7 @@ TConvertAsSetForMultiplinessIdentityTest >> elementsCopyNonIdenticalWithoutEqual
 
 { #category : #'tests - fixture' }
 TConvertAsSetForMultiplinessIdentityTest >> test0FixtureAsSetForIdentityMultiplinessTest [
-	"a collection (of elements for which copy is not identical ) without equal elements:"
+	"A collection (of elements for which copy is not identical ) without equal elements:"
 
 	| anElement res |
 	self elementsCopyNonIdenticalWithoutEqualElements.
@@ -65,6 +66,7 @@ TConvertAsSetForMultiplinessIdentityTest >> test0FixtureTConvertAsSetForMultipli
 
 { #category : #'tests - as set tests' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithEqualsElements [
+
 	| result collection |
 	collection := self withEqualElements .
 	result := collection asIdentitySet.
@@ -74,6 +76,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithEqualsElements 
 
 { #category : #'tests - as identity set' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithIdentityEqualsElements [
+
 	| result |
 	result := self collectionWithIdentical asIdentitySet.
 	" Only one element should have been removed as two elements are equals with Identity equality"
@@ -91,6 +94,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithIdentityEqualsE
 
 { #category : #'tests - as identity set' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithoutIdentityEqualsElements [
+
 	| result collection |
 	collection := self collectionWithCopy.
 	result := collection asIdentitySet.
@@ -104,6 +108,7 @@ TConvertAsSetForMultiplinessIdentityTest >> testAsIdentitySetWithoutIdentityEqua
 
 { #category : #'tests - as set tests' }
 TConvertAsSetForMultiplinessIdentityTest >> testAsSetWithEqualsElements [
+
 	| result |
 	result := self withEqualElements asSet.
 	self withEqualElements do: [ :each | self assert: (result occurrencesOf: each) = 1 ].

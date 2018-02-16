@@ -18,6 +18,7 @@ TBeginsEndsWith >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TBeginsEndsWith >> test0FixtureBeginsEndsWithTest [
+
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
 	self assert: self nonEmpty size > 1.
@@ -28,9 +29,9 @@ TBeginsEndsWith >> test0FixtureBeginsEndsWithTest [
 { #category : #'tests - begins ends with' }
 TBeginsEndsWith >> testsBeginsWith [
 	
-	self assert: (self nonEmpty beginsWith:(self nonEmpty copyUpTo: self nonEmpty last)).
-	self assert: (self nonEmpty beginsWith:(self nonEmpty )).
-	self deny: (self nonEmpty beginsWith:(self nonEmpty copyWith:self nonEmpty first)).
+	self assert: (self nonEmpty beginsWith: (self nonEmpty copyUpTo: self nonEmpty last)).
+	self assert: (self nonEmpty beginsWith: self nonEmpty).
+	self deny: (self nonEmpty beginsWith: (self nonEmpty copyWith: self nonEmpty first)).
 ]
 
 { #category : #'tests - begins ends with' }

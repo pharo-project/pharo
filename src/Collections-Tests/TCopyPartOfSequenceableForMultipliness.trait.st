@@ -15,6 +15,7 @@ TCopyPartOfSequenceableForMultipliness >> collectionWithSameAtEndAndBegining [
 
 { #category : #'tests - fixture' }
 TCopyPartOfSequenceableForMultipliness >> test0FixtureCopyPartOfForMultipliness [
+
 	self collectionWithSameAtEndAndBegining.
 	self assert: self collectionWithSameAtEndAndBegining first = self collectionWithSameAtEndAndBegining last.
 	self assert: self collectionWithSameAtEndAndBegining size > 1.
@@ -25,72 +26,72 @@ TCopyPartOfSequenceableForMultipliness >> test0FixtureCopyPartOfForMultipliness 
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
+
 	| result element  collection |
 	collection := self collectionWithSameAtEndAndBegining .
-	element := collection  first.
+	element := collection first.
 	
-	" collectionWithSameAtEndAndBegining first and last elements are equals.
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
 	'copyAfter:' should copy after the last occurence of element :"
-	result := collection   copyAfterLast: (element ).
+	result := collection copyAfterLast: (element ).
 	
-	"verifying content: "
-	self assert: result isEmpty.
+	"Verify content"
+	self assert: result isEmpty
 
 
 ]
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterWithDuplicate [
+
 	| result element  collection |
 	collection := self collectionWithSameAtEndAndBegining .
-	element := collection  last.
+	element := collection last.
 	
-	" collectionWithSameAtEndAndBegining first and last elements are equals.
-	'copyAfter:' should copy after the first occurence :"
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
+	'copyAfter:' should copy after the first occurence:"
 	result := collection   copyAfter: (element ).
 	
-	"verifying content: "
-	1 to: result size do: 
-		[:i |
-		self assert: (collection  at:(i + 1 )) = (result at: (i))
-		].
+	"Verifying content"
+	result withIndexDo: 
+		[:e :i | self assert: (collection at: (i + 1 )) equals: (result at: (i)) ].
 
-	"verify size: "
-	self assert: result size = (collection size - 1).
+	"Verify size"
+	self assert: result size equals: (collection size - 1).
 ]
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
+
 	| result element  collection |
-	collection := self collectionWithSameAtEndAndBegining .
-	element := collection  first.
+	collection := self collectionWithSameAtEndAndBegining.
+	element := collection first.
 	
-	" collectionWithSameAtEndAndBegining first and last elements are equals.
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
 	'copyUpToLast:' should copy until the last occurence :"
-	result := collection   copyUpToLast: (element ).
+	result := collection copyUpToLast: (element ).
 	
-	"verifying content: "
-	1 to: result size do:
-		[:i |
-		self assert: (result at: i ) = ( collection at: i )  
-		].
+	"Verify content"
+	result withIndexDo: 
+		[:el :i | self assert: (result at: i) equals: (collection at: i) ].
 	
-	self assert: result size = (collection size - 1).
+	self assert: result size equals: (collection size - 1).
 
 
 ]
 
 { #category : #'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyUpToWithDuplicate [
+
 	| result element  collection |
-	collection := self collectionWithSameAtEndAndBegining .
-	element := collection  last.
+	collection := self collectionWithSameAtEndAndBegining.
+	element := collection last.
 	
-	" collectionWithSameAtEndAndBegining first and last elements are equals.
-	'copyUpTo:' should copy until the first occurence :"
-	result := collection   copyUpTo: (element ).
+	"collectionWithSameAtEndAndBegining first and last elements are equals.
+ 	 'copyUpTo:' should copy until the first occurence"
+	result := collection copyUpTo: (element ).
 	
-	"verifying content: "
+	"Verify content"
 	self assert: result isEmpty.
 
 

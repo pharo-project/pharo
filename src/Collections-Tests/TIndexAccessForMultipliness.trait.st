@@ -22,6 +22,7 @@ TIndexAccessForMultipliness >> collectionWithSameAtEndAndBegining [
 
 { #category : #'tests - fixture' }
 TIndexAccessForMultipliness >> test0FixtureIndexAccessFotMultipliness [
+
 	self collectionWithSameAtEndAndBegining.
 	self assert: self collectionWithSameAtEndAndBegining first = self collectionWithSameAtEndAndBegining last.
 	self assert: self collectionWithSameAtEndAndBegining size > 1.
@@ -37,9 +38,9 @@ TIndexAccessForMultipliness >> testIdentityIndexOfDuplicate [
 	"testing fixture here as this method may not be used by some collections testClass"
 	self collectionWithNonIdentitySameAtEndAndBegining.
 	collection := self collectionWithNonIdentitySameAtEndAndBegining.
-	self assert: collection first = collection last.
+	self assert: collection first equals: collection last.
 	self deny: collection first == collection last.
-	1 to: collection size do: [ :i | 
+	collection withIndexDo: [:el :i | 
 		i > 1 & (i < collection size)
 			ifTrue: [ self deny: (collection at: i) = collection first ] ].
 	element := collection last.	" floatCollectionWithSameAtEndAndBegining first and last elements are equals but are not the same object"
@@ -56,10 +57,10 @@ TIndexAccessForMultipliness >> testIdentityIndexOfIAbsentDuplicate [
 	self deny: element  == elementCopy .
 	self assert: (collection 
 			identityIndexOf: element
-			ifAbsent: [ 0 ]) = collection size.
+			ifAbsent: [ 0 ]) equals: collection size.
 	self assert: (collection 
 			identityIndexOf: elementCopy
-			ifAbsent: [ 55 ]) = 55
+			ifAbsent: [ 55 ]) equals: 55
 ]
 
 { #category : #'tests - index accessing for multipliness' }
@@ -71,7 +72,7 @@ TIndexAccessForMultipliness >> testIndexOfDuplicate [
 
 	" floatCollectionWithSameAtEndAndBegining first and last elements are equals 
 	'indexOf: should return the position of the first occurrence :'"
-	self assert: (collection indexOf: element) = 1
+	self assert: (collection indexOf: element) equals: 1
 ]
 
 { #category : #'tests - index accessing for multipliness' }
@@ -85,7 +86,7 @@ TIndexAccessForMultipliness >> testIndexOfIfAbsentDuplicate [
 	'indexOf:ifAbsent: should return the position of the first occurrence :'"
 	self assert: (collection 
 			indexOf: element
-			ifAbsent: [ 55 ]) = 1
+			ifAbsent: [ 55 ]) equals: 1
 ]
 
 { #category : #'tests - index accessing for multipliness' }
@@ -95,16 +96,16 @@ TIndexAccessForMultipliness >> testIndexOfStartingAtDuplicate [
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
 
-	" floatCollectionWithSameAtEndAndBegining first and last elements are equals 
-	'indexOf:ifAbsent:startingAt: should return the position of the first occurrence :'"
+	"floatCollectionWithSameAtEndAndBegining first and last elements are equals 
+	'indexOf:ifAbsent:startingAt:' should return the position of the first occurrence"
 	self assert: (collection 
 			indexOf: element
 			startingAt: 1
-			ifAbsent: [ 55 ]) = 1.
+			ifAbsent: [ 55 ]) equals: 1.
 	self assert: (collection 
 			indexOf: element
 			startingAt: 2
-			ifAbsent: [ 55 ]) = collection size
+			ifAbsent: [ 55 ]) equals: collection size
 ]
 
 { #category : #'tests - index accessing for multipliness' }
@@ -116,24 +117,26 @@ TIndexAccessForMultipliness >> testLastIndexOfDuplicate [
 
 	" floatCollectionWithSameAtEndAndBegining first and last elements are equals 
 	'lastIndexOf: should return the position of the last occurrence :'"
-	self assert: (collection lastIndexOf: element) = collection size
+	self assert: (collection lastIndexOf: element) equals: collection size
 ]
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfIfAbsentDuplicate [
+
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection first.
 
-	" floatCollectionWithSameAtEndAndBegining first and last elements are equals 
+	"floatCollectionWithSameAtEndAndBegining first and last elements are equals 
 	'lastIndexOf: should return the position of the last occurrence :'"
 	self assert: (collection 
 			lastIndexOf: element
-			ifAbsent: [ 55 ]) = collection size
+			ifAbsent: [ 55 ]) equals: collection size
 ]
 
 { #category : #'tests - index accessing for multipliness' }
 TIndexAccessForMultipliness >> testLastIndexOfStartingAtDuplicate [
+
 	| collection element |
 	collection := self collectionWithSameAtEndAndBegining.
 	element := collection last.
@@ -143,9 +146,9 @@ TIndexAccessForMultipliness >> testLastIndexOfStartingAtDuplicate [
 	self assert: (collection 
 			lastIndexOf: element
 			startingAt: collection size
-			ifAbsent: [ 55 ]) = collection size.
+			ifAbsent: [ 55 ]) equals: collection size.
 	self assert: (collection 
 			lastIndexOf: element
 			startingAt: collection size - 1
-			ifAbsent: [ 55 ]) = 1
+			ifAbsent: [ 55 ]) equals: 1
 ]

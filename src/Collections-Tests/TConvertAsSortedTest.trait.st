@@ -14,12 +14,14 @@ TConvertAsSortedTest >> collectionWithSortableElements [
 
 { #category : #'tests - fixture' }
 TConvertAsSortedTest >> test0FixtureConverAsSortedTest [
+
 	self collectionWithSortableElements.
 	self deny: self collectionWithSortableElements isEmpty
 ]
 
 { #category : #'tests - as sorted collection' }
 TConvertAsSortedTest >> testAsSortedArray [
+
 	| result collection |
 	collection := self collectionWithSortableElements .
 	result := collection  asArray sort.
@@ -45,6 +47,7 @@ TConvertAsSortedTest >> testAsSortedCollection [
 
 { #category : #'tests - as sorted collection' }
 TConvertAsSortedTest >> testAsSortedCollectionWithSortBlock [
+
 	| result tmp |
 	result := self collectionWithSortableElements  asSortedCollection: [:a :b | a > b].
 	self assert: (result class includesBehavior: SortedCollection).

@@ -39,6 +39,7 @@ TIncludesWithIdentityCheckTest >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
+
 	| anElementIn |
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
@@ -56,6 +57,7 @@ TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
 
 { #category : #'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeWithIdentityTest [
+
 	| anElement |
 	self collectionWithCopyNonIdentical.
 	anElement := self collectionWithCopyNonIdentical anyOne.
@@ -76,7 +78,8 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
-	" test the same comportement than 'includes: '  "
+	" test the same comportement than 'includes: ' "
+	
 	| collection |	
 	collection := self nonEmpty  .
 	
@@ -88,7 +91,7 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
 { #category : #'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAllNoneThere [
 
-	self deny: (self empty includesAll: self nonEmpty ).
+	self deny: (self empty includesAll: self nonEmpty).
 	self deny: (self nonEmpty includesAll: { self elementNotIn. self anotherElementNotIn })
 ]
 

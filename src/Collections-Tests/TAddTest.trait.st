@@ -26,6 +26,7 @@ TAddTest >> otherCollection [
 
 { #category : #'tests - fixture' }
 TAddTest >> test0FixtureRequirementsOfTAddTest [
+
 	self collectionWithElement.
 	self otherCollection.
 	self element.
@@ -36,7 +37,7 @@ TAddTest >> test0FixtureRequirementsOfTAddTest [
 { #category : #'tests - adding' }
 TAddTest >> testTAdd [
 	| added collection |
-	collection :=self otherCollection .
+	collection :=self otherCollection.
 	added := collection add: self element.
 	
 	self assert: added == self element.	"test for identiy because #add: has not reason to copy its parameter."
@@ -48,10 +49,11 @@ TAddTest >> testTAdd [
 
 { #category : #'tests - adding' }
 TAddTest >> testTAddAll [
+
 	| added collection toBeAdded |
-	collection := self collectionWithElement .
-	toBeAdded := self otherCollection .
-	added := collection addAll: toBeAdded .
+	collection := self collectionWithElement.
+	toBeAdded := self otherCollection.
+	added := collection addAll: toBeAdded.
 	self assert: added == toBeAdded .	"test for identiy because #addAll: has not reason to copy its parameter."
 	self assert: (collection includesAll: toBeAdded )
 ]
@@ -60,29 +62,29 @@ TAddTest >> testTAddAll [
 TAddTest >> testTAddIfNotPresentWithElementAlreadyIn [
 
 	| added oldSize collection anElement |
-	collection := self collectionWithElement .
+	collection := self collectionWithElement.
 	oldSize := collection size.
-	anElement := self element .
-	self assert: (collection  includes: anElement ).
+	anElement := self element.
+	self assert: (collection includes: anElement).
 	
-	added := collection  addIfNotPresent: anElement .
+	added := collection addIfNotPresent: anElement.
 	
 	self assert: added == anElement .	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: collection  size = oldSize
+	self assert: collection size equals: oldSize
 ]
 
 { #category : #'tests - adding' }
 TAddTest >> testTAddIfNotPresentWithNewElement [
 
 	| added oldSize collection elem |
-	collection := self otherCollection .
-	oldSize := collection  size.
-	elem := self element .
-	self deny: (collection  includes: elem ).
+	collection := self otherCollection.
+	oldSize := collection size.
+	elem := self element.
+	self deny: (collection includes: elem ).
 	
 	added := collection  addIfNotPresent: elem .
 	self assert: added == elem . "test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection  size = (oldSize + 1)).
+	self assert: collection  size equals: (oldSize + 1).
 
 	
 ]
@@ -90,40 +92,41 @@ TAddTest >> testTAddIfNotPresentWithNewElement [
 { #category : #'tests - adding' }
 TAddTest >> testTAddTwice [
 	| added oldSize collection anElement |
-	collection := self collectionWithElement .
-	anElement := self element .
-	oldSize := collection  size.
+	collection := self collectionWithElement.
+	anElement := self element.
+	oldSize := collection size.
 	added := collection 
-		add: anElement ;
-		add: anElement .
-	self assert: added == anElement .	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection  includes: anElement ).
-	self assert: collection  size = (oldSize + 2)
+		add: anElement;
+		add: anElement.
+	self assert: added == anElement.	"test for identiy because #add: has not reason to copy its parameter."
+	self assert: (collection includes: anElement ).
+	self assert: collection size equals: (oldSize + 2)
 ]
 
 { #category : #'tests - adding' }
 TAddTest >> testTAddWithOccurences [
 	| added oldSize collection anElement |
-	collection := self collectionWithElement .
-	anElement := self element .
-	oldSize := collection  size.
-	added := collection  add: anElement withOccurrences: 5.
+	collection := self collectionWithElement.
+	anElement := self element.
+	oldSize := collection size.
+	added := collection add: anElement withOccurrences: 5.
 	
 	self assert: added == anElement.	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection  includes: anElement).
-	self assert: collection  size = (oldSize + 5)
+	self assert: (collection includes: anElement).
+	self assert: collection size equals: (oldSize + 5)
 ]
 
 { #category : #'tests - adding' }
 TAddTest >> testTWrite [
+
 	| added collection elem |
-	collection := self otherCollection  .
-	elem := self element .
-	added := collection  write: elem .
+	collection := self otherCollection.
+	elem := self element.
+	added := collection  write: elem.
 	
-	self assert: added == elem .	"test for identiy because #add: has not reason to copy its parameter."
-	self assert: (collection  includes: elem )	.
-	self assert: (collection  includes: elem ).
+	self assert: added == elem.	"test for identiy because #add: has not reason to copy its parameter."
+	self assert: (collection includes: elem).
+	self assert: (collection includes: elem)
 	
 	
 ]
@@ -131,13 +134,13 @@ TAddTest >> testTWrite [
 { #category : #'tests - adding' }
 TAddTest >> testTWriteTwice [
 	| added oldSize collection elem |
-	collection := self collectionWithElement .
-	elem := self element .
-	oldSize := collection  size.
+	collection := self collectionWithElement.
+	elem := self element.
+	oldSize := collection size.
 	added := collection 
-		write: elem ;
-		write: elem .
+		write: elem;
+		write: elem.
 	self assert: added == elem .	"test for identiy because #add: has not reason to copy its parameter."
 	self assert: (collection  includes: elem ).
-	self assert: collection  size = (oldSize + 2)
+	self assert: collection size equals: (oldSize + 2)
 ]

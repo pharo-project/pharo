@@ -28,6 +28,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> nonEmpty1Element [
 
 { #category : #'tests - fixture' }
 TAsStringCommaAndDelimiterSequenceableTest >> test0FixtureAsStringCommaAndDelimiterTest [
+
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
 	self empty.
@@ -49,8 +50,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringEmpty [
 TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringMore [
 
 	"self assert: self oneTwoThreeItemCol asCommaString = '1, 2, 3'.
-	self assert: self oneTwoThreeItemCol asCommaStringAnd = '1, 2 and 3'
-"
+	self assert: self oneTwoThreeItemCol asCommaStringAnd = '1, 2 and 3'"
 
 	| result resultAnd index allElementsAsString |
 	result:= self nonEmpty asCommaString .
@@ -99,11 +99,13 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringOne [
 
 { #category : #'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterEmpty [
+
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' ]) equals: ''
 ]
 
 { #category : #'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastEmpty [
+
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' last: 'and' ]) equals: ''
 ]
 
@@ -127,7 +129,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastMore [
 			ifTrue:[ self deny: (allElementsAsString at:i)=(last)asString].
 		i=(allElementsAsString size)
 			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)].
-			].
+			]
 	
 
 ]
@@ -135,13 +137,12 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastMore [
 { #category : #'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastOne [
 
-	| delim oneItemStream result |
-	
+	| delim oneItemStream result |	
 	delim := ', '.
 	result:=''.
 	oneItemStream := ReadWriteStream on: result.
 	self nonEmpty1Element  asStringOn: oneItemStream delimiter: delim last: 'and'.
-	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)].
+	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
 	
 
 	
@@ -151,11 +152,6 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastOne [
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterMore [
 
 	| delim multiItemStream result index |
-	"delim := ', '.
-	multiItemStream := '' readWrite.
-	self oneTwoThreeItemCol asStringOn: multiItemStream delimiter: ', '.
-	self assert: multiItemStream contents = '1, 2, 3'."
-	
 	delim := ', '.
 	result:=''.
 	multiItemStream := ReadWriteStream on:result.
@@ -166,18 +162,13 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterMore [
 		[:each |
 		self assert: each= ((self nonEmpty at:index)asString).
 		index:=index+1
-		].
+		]
 ]
 
 { #category : #'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterOne [
 
 	| delim oneItemStream result |
-	"delim := ', '.
-	oneItemStream := '' readWrite.
-	self oneItemCol asStringOn: oneItemStream delimiter: delim.
-	self assert: oneItemStream contents = '1'."
-	
 	delim := ', '.
 	result:=''.
 	oneItemStream := ReadWriteStream on: result.
