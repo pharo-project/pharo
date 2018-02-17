@@ -263,7 +263,7 @@ ClassWidget >> okToChange [
 { #category : #protocol }
 ClassWidget >> openFloatingEditorToRenameAtIndex: anIndex [
 	| selectedRowMorph ed clsMorph vScroll font cls |
-	cls := self model selectedClass theNonMetaClass.
+	cls := self model selectedClass instanceSide.
 	vScroll := self vScrollValue.
 	selectedRowMorph := classesList visibleRowMorphAtIndex: anIndex.
 	clsMorph := selectedRowMorph lastSubmorph lastSubmorph.
@@ -319,7 +319,7 @@ ClassWidget >> resetClassSelection [
 
 { #category : #protocol }
 ClassWidget >> selectClass: aClass [
-	self classesSelection at: aClass theNonMetaClass put: true.
+	self classesSelection at: aClass instanceSide put: true.
 
 ]
 
@@ -333,7 +333,7 @@ ClassWidget >> selectedClassIndex [
 	| item |
 	item := self selectedClass.
 	self model showInstance
-		ifFalse: [ item ifNotNil: [ item := item theNonMetaClass ] ].
+		ifFalse: [ item ifNotNil: [ item := item instanceSide ] ].
 	^ self getClassesList indexOf: item
 ]
 

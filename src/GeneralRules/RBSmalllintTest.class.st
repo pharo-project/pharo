@@ -49,7 +49,7 @@ RBSmalllintTest >> assertIsValidRule: aRule [
 RBSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnvironment [
 	anEnvironment classesDo: [ :class |
 		self assert: (critiques anySatisfy: [ :crit |
-			crit sourceAnchor entity theNonMetaClass = class theNonMetaClass ]) ]
+			crit sourceAnchor entity instanceSide = class theNonMetaClass ]) ]
 ]
 
 { #category : #asserting }

@@ -101,7 +101,7 @@ RBClassRegexRefactoring >> rootClass [
 
 { #category : #initialization }
 RBClassRegexRefactoring >> rootClass: aClass [
-	rootClass := aClass theNonMetaClass
+	rootClass := aClass instanceSide
 ]
 
 { #category : #transforming }

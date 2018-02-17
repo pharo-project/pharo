@@ -10,7 +10,7 @@ Trait {
 TApplyingOnClassSide >> acceptsLoggingOfCompilation [
 	"Answer whether the receiver's method submisions and class defintions should be logged to the changes file and to the current change set.  The metaclass follows the rule of the class itself."
 
-	^ self theNonMetaClass acceptsLoggingOfCompilation
+	^ self instanceSide acceptsLoggingOfCompilation
 ]
 
 { #category : #'instance variables' }
@@ -78,7 +78,7 @@ TApplyingOnClassSide >> binding [
 { #category : #compiling }
 TApplyingOnClassSide >> bindingOf: varName [
 
-	^self theNonMetaClass classBindingOf: varName
+	^self instanceSide classBindingOf: varName
 ]
 
 { #category : #testing }
@@ -91,22 +91,22 @@ TApplyingOnClassSide >> canZapMethodDictionary [
 
 { #category : #accessing }
 TApplyingOnClassSide >> category [
-	^ self theNonMetaClass category
+	^ self instanceSide category
 ]
 
 { #category : #'pool variables' }
 TApplyingOnClassSide >> classPool [
 	"Answer the dictionary of class variables."
 
-	^self theNonMetaClass classPool
+	^self instanceSide classPool
 ]
 
 { #category : #'accessing instances and variables' }
 TApplyingOnClassSide >> classVarNames [
 	"Answer a set of the names of the class variables defined in the receiver's instance."
 	
-	self theNonMetaClass ifNil: [ ^ Set new ].
-	^self theNonMetaClass classVarNames
+	self instanceSide ifNil: [ ^ Set new ].
+	^self instanceSide classVarNames
 ]
 
 { #category : #'fileIn/Out' }
@@ -145,8 +145,7 @@ TApplyingOnClassSide >> isMeta [
 { #category : #'class hierarchy' }
 TApplyingOnClassSide >> isMetaclassOfClassOrNil [
 	
-	
-	^ self theNonMetaClass 
+	^ self instanceSide 
 		ifNil: [ true ] 
 		ifNotNil: [ :nonMetaClass | nonMetaClass == Class ] 
 ]
@@ -207,14 +206,13 @@ TApplyingOnClassSide >> obsoleteSubclasses [
 	"Answer the receiver's subclasses."
 
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-
-	^ self theNonMetaClass obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
+	^ self instanceSide obsoleteSubclasses collect: [ :aSubclass | aSubclass classSide ]
 ]
 
 { #category : #compiling }
 TApplyingOnClassSide >> possibleVariablesFor: misspelled continuedFrom: oldResults [
 
-	^ self theNonMetaClass possibleVariablesFor: misspelled continuedFrom: oldResults
+	^ self instanceSide possibleVariablesFor: misspelled continuedFrom: oldResults
 
 ]
 
@@ -256,8 +254,7 @@ TApplyingOnClassSide >> subclasses [
 	"Answer the receiver's subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ #() ].
-	
-	^ self theNonMetaClass subclasses collect: [ :aSubclass | aSubclass classSide ].
+	^ self instanceSide subclasses collect: [ :aSubclass | aSubclass classSide ].
 ]
 
 { #category : #'class hierarchy' }
@@ -265,8 +262,7 @@ TApplyingOnClassSide >> subclassesDo: aBlock [
 	"Evaluate aBlock for each of the receiver's immediate subclasses."
 	
 	self isMetaclassOfClassOrNil ifTrue: [ ^ self ].
-	
-	self theNonMetaClass subclasses do: [ :each | aBlock value: each classSide ]
+	self instanceSide subclasses do: [ :each | aBlock value: each classSide ]
 ]
 
 { #category : #composition }
@@ -315,12 +311,12 @@ TApplyingOnClassSide >> uses: aTraitCompositionOrArray slots: slotArray [
 TApplyingOnClassSide >> wantsChangeSetLogging [
 	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism.The metaclass follows the rule of the class itself."
 
-	^ self theNonMetaClass wantsChangeSetLogging
+	^ self instanceSide wantsChangeSetLogging
 ]
 
 { #category : #compiling }
 TApplyingOnClassSide >> wantsRecompilationProgressReported [
 	"The metaclass follows the rule of the class itself."
 
-	^ self theNonMetaClass wantsRecompilationProgressReported
+	^ self instanceSide wantsRecompilationProgressReported
 ]

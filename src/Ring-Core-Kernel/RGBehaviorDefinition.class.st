@@ -456,7 +456,7 @@ RGBehaviorDefinition >> selectors [
 RGBehaviorDefinition >> soleInstance [
 	"to be depracated in the future"
 	
-	^self theNonMetaClass
+	^self instanceSide
 ]
 
 { #category : #printing }

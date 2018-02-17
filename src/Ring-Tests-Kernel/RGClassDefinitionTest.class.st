@@ -126,7 +126,7 @@ RGClassDefinitionTest >> testExistingClass [
 	metaClass:= newClass classSide.
 	self assert: (metaClass isMeta).
 	self assert: (metaClass name = 'OrderedCollection class').
-	self assert: (metaClass theNonMetaClass = newClass).
+	self assert: (metaClass instanceSide = newClass).
 	self assert: (metaClass realClass = OrderedCollection class).
 ]
 

@@ -271,7 +271,7 @@ ClassDescription >> classComment: aString stamp: aStamp [
 ClassDescription >> classCommentBlank [
 
 	| existingComment stream |
-	existingComment := self theNonMetaClass organization classComment.
+	existingComment := self instanceSide organization classComment.
 	existingComment isEmpty
 		ifFalse: [^existingComment].
 

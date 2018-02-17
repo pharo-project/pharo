@@ -71,10 +71,10 @@ RGClassDefinition >> addUser: aRGClassDefinition [
 	"The receiver registers the aRGClassDefinition as an user.  An reinforces its status as a shared pool."
 	
 	aRGClassDefinition isClass ifFalse:[ ^self ].
-	(aRGClassDefinition theNonMetaClass sharedPoolNamed: self name) isNil
-		ifTrue: [ aRGClassDefinition theNonMetaClass addSharedPoolNamed: self name ].
+	(aRGClassDefinition instanceSide sharedPoolNamed: self name) isNil
+		ifTrue: [ aRGClassDefinition instanceSide addSharedPoolNamed: self name ].
 	self isPool: true.
-	self users add: aRGClassDefinition theNonMetaClass
+	self users add: aRGClassDefinition instanceSide
 ]
 
 { #category : #'class variables' }
@@ -283,8 +283,8 @@ RGClassDefinition >> removeUser: aRGClassDefinition [
 	"Removes this RGClassDefinition from the users of the receiver"
 	
 	aRGClassDefinition isClass ifFalse:[ ^self ].
-	aRGClassDefinition theNonMetaClass removeSharedPoolNamed: self name.
-	self users remove: aRGClassDefinition theNonMetaClass ifAbsent:[ ]
+	aRGClassDefinition instanceSide removeSharedPoolNamed: self name.
+	self users remove: aRGClassDefinition instanceSide ifAbsent:[ ]
 ]
 
 { #category : #'shared pools' }

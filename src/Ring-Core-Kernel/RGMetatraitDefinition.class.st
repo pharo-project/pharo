@@ -27,7 +27,7 @@ RGMetatraitDefinition >> baseClass: anRGTraitDefinition [
 
 { #category : #accessing }
 RGMetatraitDefinition >> category [
-	^ self theNonMetaClass category
+	^ self instanceSide category
 ]
 
 { #category : #'accessing - parallel hierarchy' }

@@ -102,7 +102,7 @@ SmalllintManifestChecker >> manifestBuilderOf: aPackage [
 { #category : #accessing }
 SmalllintManifestChecker >> manifestBuilderOfClass: aClass [
 	| key |
-	key := aClass theNonMetaClass category.
+	key := aClass instanceSide category.
 	^ manifestClassCache
 		at: key
 		ifAbsentPut: [ 

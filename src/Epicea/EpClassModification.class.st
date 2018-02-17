@@ -57,8 +57,8 @@ EpClassModification >> hasNonMetaclassChanges [
 EpClassModification >> initializeOldClass: anOldClass newClass: aNewClass [
 
 	self initialize.
-	oldClass := anOldClass asEpiceaRingDefinition theNonMetaClass.
-	newClass := aNewClass asEpiceaRingDefinition theNonMetaClass.
+	oldClass := anOldClass asEpiceaRingDefinition instanceSide.
+	newClass := aNewClass asEpiceaRingDefinition instanceSide.
 ]
 
 { #category : #accessing }

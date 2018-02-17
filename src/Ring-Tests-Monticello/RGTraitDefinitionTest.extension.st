@@ -17,7 +17,7 @@ RGTraitDefinitionTest >> testAsFullTraitDefinition [
 	self assert: rgClass superclass name = #Trait.
 	self assert: rgClass subclasses isEmpty.
 	self assert: rgClass package notNil.
-	self assert: rgClass package = rgClass theNonMetaClass package.
+	self assert: rgClass package = rgClass instanceSide package.
 	self assert: rgClass package name = #Traits.
 	self assert: rgClass category = #'Traits-Kernel-Traits'.
 	

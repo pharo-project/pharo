@@ -182,7 +182,7 @@ SystemNavigation >> allLocalCallsOn: aSymbol ofClass: aClass [
 	
 	| aSet cls |
 	aSet := Set new.
-	cls := aClass theNonMetaClass.
+	cls := aClass instanceSide.
 	cls withAllSuperAndSubclassesDo: [ :class |
 		(class whichSelectorsReferTo: aSymbol)
 			do: [:sel |

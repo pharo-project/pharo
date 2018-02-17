@@ -95,7 +95,7 @@ RBNamespace >> allBehaviorsDo: aBlock [
 	environment classesDo: [ :each | 
 		each isObsolete ifFalse: [
 			| class |
-			class := each theNonMetaClass.
+			class := each instanceSide.
 			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
 				(class := self classFor: each) isNil ifFalse: [
 					seen add: class name.
@@ -118,7 +118,7 @@ RBNamespace >> allClassesDo: aBlock [
 	environment classesDo: [ :each | 
 		each isObsolete ifFalse: [
 			| class |
-			class := each theNonMetaClass.
+			class := each instanceSide.
 			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
 				(class := self classFor: each) isNil ifFalse: [
 					seen add: class name.
@@ -176,13 +176,13 @@ RBNamespace >> classFor: aBehavior [
 	aBehavior isNil 
 		ifTrue: [ ^ nil ].
 	^ aBehavior isMeta 
-		ifTrue: [ self metaclassNamed: aBehavior theNonMetaClass name ]
-		ifFalse: [ self classNamed: aBehavior theNonMetaClass name ]
+		ifTrue: [ self metaclassNamed: aBehavior instanceSide name ]
+		ifFalse: [ self classNamed: aBehavior instanceSide name ]
 ]
 
 { #category : #private }
 RBNamespace >> classNameFor: aBehavior [ 
-	^ aBehavior theNonMetaClass name
+	^ aBehavior instanceSide name
 ]
 
 { #category : #'accessing-classes' }
@@ -231,7 +231,7 @@ RBNamespace >> compile: aString in: aRBClass classified: aSymbol [
 { #category : #'accessing-classes' }
 RBNamespace >> createNewClassFor: aBehavior [ 
 	| nonMeta meta className |
-	className := aBehavior theNonMetaClass name.
+	className := aBehavior instanceSide name.
 	nonMeta := (RBClassModelFactory rbClass existingNamed: className)
 				model: self;
 				yourself.

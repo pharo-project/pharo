@@ -127,7 +127,7 @@ Context class >> initializePrimitiveSimulators [
 
 	Class allSubclassesDo: [:metaclass |
 		(metaclass includesSelector: #registerPrimitiveSimulators) ifTrue: [
-			metaclass theNonMetaClass registerPrimitiveSimulators.
+			metaclass instanceSide registerPrimitiveSimulators.
 			]
 		].
 ]

@@ -28,7 +28,7 @@ RGMethodDefinition >> asMCMethodDefinitionFromActiveDefinition [
 	methodClass := compiledMethod methodClass.
 	
    ^ MCMethodDefinition
-		className: methodClass theNonMetaClass name
+		className: methodClass instanceSide name
  	   	classIsMeta: methodClass isMeta
 		selector: compiledMethod selector
 		category: compiledMethod category

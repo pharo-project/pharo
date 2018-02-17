@@ -155,7 +155,7 @@ PragmaMenuBuilder >> collectRegistrations [
 		do: [ :prg | 
 			self
 				currentRoot: self
-				while: [ prg methodClass theNonMetaClass
+				while: [ prg methodClass instanceSide
 						perform: prg methodSelector
 						with: menu ] ].
 	self interpretRegistration: menu
