@@ -37,7 +37,7 @@ RBRefactoryClassChange >> changeClass [
 { #category : #accessing }
 RBRefactoryClassChange >> changeClass: aBehavior [ 
 	isMeta := aBehavior isMeta.
-	className := aBehavior theNonMetaClass name
+	className := aBehavior instanceSide name
 ]
 
 { #category : #accessing }

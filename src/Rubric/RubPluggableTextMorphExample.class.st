@@ -289,8 +289,8 @@ RubPluggableTextMorphExample >> scrollValueChanged: anAnnouncement [
 { #category : #'view creation' }
 RubPluggableTextMorphExample >> selectedClass [
 	| cls |
-	cls := (Smalltalk at: (self selectedClassName getString ifEmpty: [ ^ nil ]) asSymbol ifAbsent: [ ^ nil ])
-		theNonMetaClass.
+	cls := (Smalltalk globals at: (self selectedClassName getString ifEmpty: [ ^ nil ]) asSymbol ifAbsent: [ ^ nil ])
+		instanceSide.
 	^ self classIsMeta
 		ifTrue: [ cls class ]
 		ifFalse: [ cls ]

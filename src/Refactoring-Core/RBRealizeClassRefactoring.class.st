@@ -22,7 +22,7 @@ RBRealizeClassRefactoring >> preconditions [
 
 { #category : #accessing }
 RBRealizeClassRefactoring >> theClass [
-	^ (self classObjectFor: className) theNonMetaClass
+	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : #transforming }
