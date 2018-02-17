@@ -271,7 +271,7 @@ TextPresenter >> doItReceiver [
 	| receiver |
 	
 	receiver := doItReceiver value.
-	receiver isBehavior ifTrue: [receiver  := receiver theNonMetaClass].
+	receiver isBehavior ifTrue: [receiver  := receiver instanceSide].
 	^receiver
 ]
 

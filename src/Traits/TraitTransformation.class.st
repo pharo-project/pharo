@@ -175,7 +175,7 @@ TraitTransformation >> syntacticallyEquals: aTraitTransformation [
 
 { #category : #'accessing - deprecated parallel hierarchy' }
 TraitTransformation >> theNonMetaClass [ 
-	^ self subject theNonMetaClass  
+	^ self subject instanceSide  
 ]
 
 { #category : #enquiries }

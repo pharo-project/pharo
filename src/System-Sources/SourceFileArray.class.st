@@ -36,7 +36,7 @@ SourceFileArray >> changeRecordsFor: aMethodDefinition [
 
 	^ self 
 		changeRecordsFrom: aMethodDefinition sourcePointer 
-		className: aMethodDefinition methodClass theNonMetaClass name
+		className: aMethodDefinition methodClass instanceSide name
 		isMeta: aMethodDefinition methodClass isMeta
 ]
 

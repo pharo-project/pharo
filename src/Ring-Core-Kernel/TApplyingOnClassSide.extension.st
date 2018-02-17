@@ -3,11 +3,11 @@ Extension { #name : #TApplyingOnClassSide }
 { #category : #'*Ring-Core-Kernel' }
 TApplyingOnClassSide >> asFullRingDefinition [
 
-	^ self theNonMetaClass asFullRingDefinition classSide
+	^ self instanceSide asFullRingDefinition classSide
 ]
 
 { #category : #'*Ring-Core-Kernel' }
 TApplyingOnClassSide >> asRingDefinition [
 
-	^ self theNonMetaClass asRingDefinition classSide
+	^ self instanceSide asRingDefinition classSide
 ]
