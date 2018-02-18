@@ -76,7 +76,7 @@ HDCoverageReport >> generatePackage: aPackage class: aClass on: aStream [
 		on: aStream.
 	self
 		generateType: 'method' indent: 5
-		total: (items := aPackage coreMethodsForClass: aClass) size
+		total: (items := aPackage definedMethodsForClass: aClass) size
 		actual: (covered count: [ :each | items includes: each ])
 		on: aStream.
 	items do: [ :each | self generatePackage: each method: each on: aStream ].	
