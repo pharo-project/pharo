@@ -108,8 +108,7 @@ LibC >> resultOfCommand: cmd [
 	[ last := (self fgetc: file) value.
 	  last = 16rFFFFFFFF ] whileFalse: [ 	 
 			s nextPut: (Character value: last)
-	].
-	self pipeClose: file.
+	] ensure: [ self pipeClose: file ].
 	^s contents
 ]
 
