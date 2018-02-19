@@ -31,6 +31,7 @@ LabelledContainer class >> abstractExample [
 
 { #category : #example }
 LabelledContainer class >> example [
+	<sampleInstance>
 	| example |
 	example := self abstractExample.
 	example content: ButtonPresenter.

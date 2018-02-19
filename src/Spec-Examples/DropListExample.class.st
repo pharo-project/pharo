@@ -30,6 +30,8 @@ DropListExample class >> defaultSpec [
 
 { #category : #example }
 DropListExample class >> example [
+	<sampleInstance>
+	
 	^ self new openWithSpec
 ]
 

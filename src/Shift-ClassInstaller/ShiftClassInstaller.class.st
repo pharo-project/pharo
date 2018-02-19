@@ -31,6 +31,7 @@ Class {
 
 { #category : #examples }
 ShiftClassInstaller class >> example [
+	<sampleInstance>
 	^ Smalltalk classInstaller make: [ :aSlotClassBuilder |
 		aSlotClassBuilder
 			superclass: Object;
