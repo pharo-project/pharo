@@ -137,8 +137,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Reflectivity-Tools'.
 
 		spec package: 'Rubric-Styling'.
-
-		spec package: 'FuelTools-Debugger'.
 		
 		spec package: 'Deprecated70'.
 		spec package: 'Flashback-Decompiler'.
@@ -152,13 +150,13 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'AST-Tests-Core'.
 		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
-		spec package: 'FuelTests'.
+		spec package: 'Fuel-Tests'.
+		spec package: 'Fuel-Tools-Debugger'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
-		spec package: 'Monticello-Tests'.
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
@@ -184,6 +182,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsReference'.	"standalone"
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Monticello-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
@@ -388,7 +387,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> groups: spec [ 
     
 spec group: 'Mandatory-Group' with: #(
-	'FuelTools-Debugger'	"required by GT-Debugger HudsonBuildTools20"
+	'Fuel-Tools'	"required by GT-Debugger HudsonBuildTools20"
 	'Network-Tests'		"required by Multilingual-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 
@@ -443,7 +442,7 @@ spec group: 'General-Tests-Group' with: #(
 	'Kernel-Tests-Group' "dependency"
 	'Monticello-Tests'	"required by MonticelloMocks"
 	'MonticelloMocks'
-	'FuelTests'
+	'Fuel-Tests'
 	'Balloon-Tests'
 	'Collections-DoubleLinkedList-Tests'
 	'ConfigurationCommandLineHandler-Tests'
