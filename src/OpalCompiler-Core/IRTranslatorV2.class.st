@@ -247,8 +247,12 @@ IRTranslatorV2 >> visitPushInstVar: instVar [
 
 { #category : #visiting }
 IRTranslatorV2 >> visitPushLiteral: lit [
-
-	gen pushLiteral: lit literal
+	| literal |
+	literal := lit literal.
+	compilationContext optionReadOnlyLiterals ifTrue: [ 
+		(literal class isImmediateClass and: [ Smalltalk vm supportsWriteBarrier ]) 
+			ifFalse: [ literal beReadOnlyObject ] ].
+	gen pushLiteral: literal 
 ]
 
 { #category : #visiting }

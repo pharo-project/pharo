@@ -1,6 +1,14 @@
 "
 The compilationContext holds all information that is needed in the whole compiler chain.
 
+requestor <Object> usually a textEditor. This can be used to bind editor variables (typically variables local to a workspace/playground) and to properly write error messages inlined.
+failBlock <BlockClosure> block with non local return used to abort the compilation (like an exception).
+noPattern <Boolean> false if compiling a method which has selector and arguments at the beginning (the so-called pattern) and true if compiling something without selector and arguments (such as a DoIt).
+class <Behavior> the behavior in which the code is compiled into (used to know inst var names & methodClass for example)
+logged <Boolean> true if the sources will be logged in external logging system (change file, epicea, ...)
+interactive <Boolean> Interactive mode is typically used in the IDE (showing errors when compiling code inlined,  pop-ups for some errors/warnings, ...), non-interactive mode is used for headless & code loading to compile code by logging into stdout or Transcript but no interaction required by the user.
+options <Set of Symbols> See optionsDescription method comment class side
+environment <SystemDictionary> place to look for literal variables (Globals for instance)
 
 "
 Class {
@@ -29,8 +37,8 @@ Class {
 	],
 	#classVars : [
 		'BytecodeBackend',
-		'DefaultTransformationPlugins',
-		'UsesFullBlockClosure'
+		'DefaultOptions',
+		'DefaultTransformationPlugins'
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }
@@ -47,25 +55,52 @@ CompilationContext class >> bytecodeBackend [
 
 { #category : #accessing }
 CompilationContext class >> bytecodeBackend: bytecodeSet [
+	((self defaultOptions includes: #optionFullBlockClosure)
+		and: [ bytecodeSet ~= EncoderForSistaV1 ]) ifTrue: [ 
+			^ self notify: 'Operation aborted. Bytecode set incompatible with FullBlockClosure option.' ].
 	BytecodeBackend := bytecodeSet
 ]
 
-{ #category : #compiler }
-CompilationContext class >> compiler [
-	^self compilerClass new
-		compilationContextClass: CompilationContext;
-		environment: self environment;
-		class: self
+{ #category : #options }
+CompilationContext class >> cleanOptionString: string [
+	"Would be nice to put it on String but I don't fancy class extensions..."
+	"Takes the option symbol and tries to beautify it  bit for the option menu (Add space, etc.)"
+	| ws |
+	ws := WriteStream on: (String new: string size + 5).
+	string readStreamDo: [ :rs |
+		(rs next: 'option' size) = 'option' ifFalse: [ rs reset ].
+		ws nextPut: rs next asUppercase.
+		[rs peek isUppercase ifTrue: [ rs peekBack isUppercase ifFalse: [ws space] ].
+		 ws nextPut: rs next.
+		 rs atEnd ] whileFalse ].
+	^ ws contents
+]
+
+{ #category : #options }
+CompilationContext class >> compilerSpecificSettingsOn: aBuilder [
+	self optionsDescription withIndexDo: [ :description :index |
+		| optionStringCleaned option |
+		option := description second.
+		optionStringCleaned := self cleanOptionString: option.
+		(aBuilder setting: option)
+			order: index;
+			target: self;
+			label: optionStringCleaned;
+			description: description third;
+			default: (self defaultOptions includes: option).
+		 ]
 ]
 
 { #category : #'instance creation' }
 CompilationContext class >> default [ 
-	| instance |
-	instance := self new.
-	instance parseOptions: OpalCompiler defaultOptions.
-	AbstractCompiler compileWithErrors 
-		ifTrue: [ instance parseOptions: #(+ optionParseErrors) ].
-	^instance.
+	^ self new
+		setOptions: self defaultOptions;
+		yourself
+]
+
+{ #category : #options }
+CompilationContext class >> defaultOptions [
+	^ DefaultOptions ifNil: [ DefaultOptions := Set new parseOptions: self fallBackDefaultOptions ]
 ]
 
 { #category : #accessing }
@@ -78,11 +113,190 @@ CompilationContext class >> defaultTransformationPlugins: anObject [
 	DefaultTransformationPlugins := anObject
 ]
 
+{ #category : #options }
+CompilationContext class >> fallBackDefaultOptions [
+	^ (self optionsDescription collect: [ :each | each allButLast ]) flattened
+]
+
 { #category : #'class initialization' }
 CompilationContext class >> initialize [
+	"Note: we don't set-up here DefaultOptions since it requires other class-side methods, and that's messed up."
 	DefaultTransformationPlugins := OrderedCollection new.
 	BytecodeBackend := EncoderForV3PlusClosures.
-	UsesFullBlockClosure := false
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionFullBlockClosure [
+	^ self readDefaultOption: #optionFullBlockClosure
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionFullBlockClosure: aBoolean [
+	aBoolean ifTrue: [
+		BytecodeBackend = EncoderForSistaV1 ifFalse: [ 
+			^ self notify: 'Operation aborted. FullBlockClosure requires SistaV1 bytecode set.' ] ].
+	^ self writeDefaultOption: #optionFullBlockClosure value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineAndOr [
+	^ self readDefaultOption: #optionInlineAndOr
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineAndOr: aBoolean [
+	^ self writeDefaultOption: #optionInlineAndOr value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineCase [
+	^ self readDefaultOption: #optionInlineCase
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineCase: aBoolean [
+	^ self writeDefaultOption: #optionInlineCase value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineIf [
+	^ self readDefaultOption: #optionInlineIf
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineIf: aBoolean [
+	^ self writeDefaultOption: #optionInlineIf value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineIfNil [
+	^ self readDefaultOption: #optionInlineIfNil
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineIfNil: aBoolean [
+	^ self writeDefaultOption: #optionInlineIfNil value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineNone [
+	^ self readDefaultOption: #optionInlineNone
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineNone: aBoolean [
+	^ self writeDefaultOption: #optionInlineNone value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineRepeat [
+	^ self readDefaultOption: #optionInlineRepeat
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineRepeat: aBoolean [
+	^ self writeDefaultOption: #optionInlineRepeat value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineTimesRepeat [
+	^ self readDefaultOption: #optionInlineTimesRepeat
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineTimesRepeat: aBoolean [
+	^ self writeDefaultOption: #optionInlineTimesRepeat value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineToDo [
+	^ self readDefaultOption: #optionInlineToDo
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineToDo: aBoolean [
+	^ self writeDefaultOption: #optionInlineToDo value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineWhile [
+	^ self readDefaultOption: #optionInlineWhile
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionInlineWhile: aBoolean [
+	^ self writeDefaultOption: #optionInlineWhile value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionLongIvarAccessBytecodes [
+	^ self readDefaultOption: #optionLongIvarAccessBytecodes
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionLongIvarAccessBytecodes: aBoolean [
+	^ self writeDefaultOption: #optionLongIvarAccessBytecodes value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionOptimizeIR [
+	^ self readDefaultOption: #optionOptimizeIR
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionOptimizeIR: aBoolean [
+	^ self writeDefaultOption: #optionOptimizeIR value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionParseErrors [
+	^ self readDefaultOption: #optionParseErrors
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionParseErrors: aBoolean [
+	^ self writeDefaultOption: #optionParseErrors value: aBoolean
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionReadOnlyLiterals [
+	^ self readDefaultOption: #optionReadOnlyLiterals
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> optionReadOnlyLiterals: aBoolean [
+	^ self writeDefaultOption: #optionReadOnlyLiterals value: aBoolean
+]
+
+{ #category : #options }
+CompilationContext class >> optionsDescription [
+	"Default options are held by DefaultOptions class variable.
+	 The description of default options here is only used as a 
+	 fall-back if DefaultOptions is not initialized (bootstrap, ...)"
+	
+	"each entry is fall-back default value (+/-), option name, description"
+	^ #(
+	(+ optionInlineIf 					'Inline ifTrue:, ifFalse:, ifTrue:ifFalse:, ifFalse:ifTrue: if specific conditions are met (See isInlineIf)')
+	(+ optionInlineIfNil 				'Inline ifNil:, ifNotNil:, ifNil:ifNotNil:, ifNotNil:ifNil: if specific conditions are met (See isInlineIfNil)')
+	(+ optionInlineAndOr 				'Inline and:, or: if specific conditions are met (See isInlineAndOr)')
+	(+ optionInlineWhile 				'Inline whileTrue, whileTrue:, whileFalse:, whileFalse if specific conditions are met (See isInlineWhile)')
+	(+ optionInlineToDo 				'Inline to:do:, to:by:do: if specific conditions are met (See isInlineToDo)')
+	(+ optionInlineCase 				'Inline caseOf:, caseOf:otherwise: if specific conditions are met (See isInlineCase)')
+	(- optionInlineTimesRepeat 		'Inline timesRepeat: if specific conditions are met (See isInlineTimesRepeat)')
+	(- optionInlineRepeat 			'Inline repeat if specific conditions are met (See isInlineRepeat)')
+	(- optionInlineNone 				'To turn off all inlining options. Overrides the others')
+	
+	(- optionReadOnlyLiterals 			'Compiler sets literals as read-only')
+	(- optionFullBlockClosure 			'Compiler compiles closure creation to use FullBlockClosure instead of BlockClosure')
+	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
+	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
+	(- optionParseErrors 					'Parse syntactically wrong code')
+	)
+]
+
+{ #category : #'options - settings API' }
+CompilationContext class >> readDefaultOption: option [
+	^ self defaultOptions includes: option
 ]
 
 { #category : #removing }
@@ -90,20 +304,11 @@ CompilationContext class >> removeDefaultTransformationPlugin: aPlugin [
 	self defaultTransformationPlugins remove: aPlugin
 ]
 
-{ #category : #accessing }
-CompilationContext class >> usesFullBlockClosure [
-	^ UsesFullBlockClosure ifNil: [ self initialize. UsesFullBlockClosure ]
-]
-
-{ #category : #accessing }
-CompilationContext class >> usesFullBlockClosure: usesFullBlock [
-	usesFullBlock ifTrue: [ 
-		(BytecodeBackend name endsWith: 'SistaV1') ifFalse: [ 
-			UIManager default alert: 'Be careful ! Inconsistency detected !
-				It seems that the current bytecode encoder does not support FullBlockClosures.
-				It is recommended to switch to another bytecode backend (for example SistaV1)
-				or disable FullBlockClosure usage.' ] ].
-	UsesFullBlockClosure := usesFullBlock
+{ #category : #'options - settings API' }
+CompilationContext class >> writeDefaultOption: option value: boolean [
+	boolean 
+		ifTrue: [ self defaultOptions add: option ]
+		ifFalse: [ self defaultOptions remove: option ]
 ]
 
 { #category : #plugins }
@@ -257,6 +462,12 @@ CompilationContext >> noPattern: anObject [
 ]
 
 { #category : #options }
+CompilationContext >> optionFullBlockClosure [
+	^ options includes: #optionFullBlockClosure
+
+]
+
+{ #category : #options }
 CompilationContext >> optionInlineAndOr [
 	^ options includes: #optionInlineAndOr
 
@@ -328,6 +539,12 @@ CompilationContext >> optionParseErrors [
 ]
 
 { #category : #options }
+CompilationContext >> optionReadOnlyLiterals [
+	^ options includes: #optionReadOnlyLiterals
+
+]
+
+{ #category : #options }
 CompilationContext >> parseOptions: optionsArray [
 	options parseOptions: optionsArray
 ]
@@ -392,12 +609,7 @@ CompilationContext >> semanticAnalyzerClass: anObject [
 	semanticAnalyzerClass := anObject
 ]
 
-{ #category : #accessing }
-CompilationContext >> usesFullBlockClosure [
-	^ usesFullBlockClosure ifNil: [ usesFullBlockClosure := self class usesFullBlockClosure ].
-]
-
-{ #category : #accessing }
-CompilationContext >> usesFullBlockClosure: bool [
-	usesFullBlockClosure := bool
+{ #category : #options }
+CompilationContext >> setOptions: opts [
+	options := opts
 ]
