@@ -68,7 +68,7 @@ ReflectivityExamples >> exampleGlobalRead [
 
 { #category : #examples }
 ReflectivityExamples >> exampleIfTrueIfFalse [
-	<sampleInstance>
+
 	| t |
 	t := false.
 	t ifTrue: [ self bar ] ifFalse: [ 'hello' ].
@@ -101,7 +101,7 @@ ReflectivityExamples >> exampleLiteralArray [
 
 { #category : #examples }
 ReflectivityExamples >> exampleMethod [
-	<sampleInstance>
+
 	^ 2 + 3
 ]
 
