@@ -85,9 +85,7 @@ BenchmarkResult >> period [
 
 { #category : #printing }
 BenchmarkResult >> printFrequenceOn: stream [
-	self frequency > 999
-		ifTrue: [ self frequency rounded printWithCommasOn: stream ]
-		ifFalse: [ self frequency printOn: stream showingDecimalPlaces: 3 ].
+	self frequency printOn: stream showingDecimalPlaces: 3.
 	stream << ' per second'
 ]
 

@@ -28,6 +28,14 @@ RBCodeCruftLeftInMethodsRule >> addRuleRemoving: patternString [
 	self replace: findString with: replaceString
 ]
 
+{ #category : #helpers }
+RBCodeCruftLeftInMethodsRule >> anchorFor: aNode [
+	"we do not use the method of the superclass as it hightlights far too much"
+    ^ ReIntervalSourceAnchor
+            entity: aNode
+            interval: (1 to: aNode methodNode selector size).
+]
+
 { #category : #private }
 RBCodeCruftLeftInMethodsRule >> debuggingPatterns [
 	| result |

@@ -55,7 +55,7 @@ PluggableMenuSpec >> add: aString target: anObject selector: aSelector argumentL
 
 { #category : #construction }
 PluggableMenuSpec >> addList: aList [
-	"Add the given items to this menu, where each item is a pair (<string> <actionSelector>)..  If an element of the list is simply the symobl $-, add a line to the receiver.  The optional third element of each entry, if present, provides balloon help."
+	"Add the given items to this menu, where each item is a pair (<string> <actionSelector>).  If an element of the list is simply the symobl $-, add a line to the receiver. The optional third element of each entry, if present, provides balloon help."
 
 	aList
 		do: [ :tuple | 

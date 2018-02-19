@@ -1243,7 +1243,7 @@ Object >> isReadOnlyObject [
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code."
 	<primitive: 163 error: ec>
-	^self primitiveFailed
+	^self class isImmediateClass 
 ]
 
 { #category : #testing }

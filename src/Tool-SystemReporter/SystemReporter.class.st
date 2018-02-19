@@ -16,10 +16,8 @@ Class {
 	#instVars : [
 		'categories',
 		'categoriesSelected',
-		'report',
 		'categoryList',
-		'sourceTextModel',
-		'spaceAnalysisResult'
+		'sourceTextModel'
 	],
 	#category : #'Tool-SystemReporter'
 }
@@ -113,17 +111,6 @@ SystemReporter >> categoryList [
 ]
 
 { #category : #'accessing-categories' }
-SystemReporter >> categoryMenu: aMenu [
-	^ aMenu
-		addTitle: 'Categories';
-		add: 'Select all' selector: #selectAllCategories;
-		add: 'Select none' selector: #selectNoCategories;
-		addLine;
-		add: 'Refresh' selector: #refresh;
-		yourself
-]
-
-{ #category : #'accessing-categories' }
 SystemReporter >> categorySelected [
 	^ 0
 ]
@@ -132,12 +119,6 @@ SystemReporter >> categorySelected [
 SystemReporter >> categorySelected: anInteger [
 
 	self changed: #categorySelected.
-]
-
-{ #category : #'accessing-report' }
-SystemReporter >> copyReportToClipboard [
-	Clipboard clipboardText: self reportText.
-	UIManager default inform: 'Copied Report to Clipboard'
 ]
 
 { #category : #private }
@@ -191,29 +172,28 @@ SystemReporter >> initialExtent [
 SystemReporter >> initialize [
 	super initialize.
 	self
-		add: #Image method: #reportImage;
-		add: #'Image Parameters' method: #reportImageParameters;
-		add: #'Image Sources' method: #reportSources;
-		add: #'MC Repositories' method: #reportRepositories;
-		add: #'MC Working Copies' method: #reportWorkingCopies;
-		add: #'VM General' method: #reportVM;
-		add: #'VM Options' method: #reportVMOptions;
-		add: #'VM Modules' method: #reportModules;
-		add: #'VM Parameters' method: #reportVMParameters;
-		add: #'VM Stats' method: #reportVMStats;
-		add: #'Space Analysis' method: #reportSpaceAnalysis.
+		add: #Image method: #reportImage:;
+		add: #'Image Parameters' method: #reportImageParameters:;
+		add: #'Image Sources' method: #reportSources:;
+		add: #'MC Repositories' method: #reportRepositories:;
+		add: #'MC Working Copies' method: #reportWorkingCopies:;
+		add: #'VM General' method: #reportVM:;
+		add: #'VM Options' method: #reportVMOptions:;
+		add: #'VM Modules' method: #reportModules:;
+		add: #'VM Parameters' method: #reportVMParameters:;
+		add: #'VM Stats' method: #reportVMStats:.
 	Smalltalk os platformName = 'Win32'
-		ifTrue: [ self add: #'VM Configuration' method: #reportWin32VMConfig ].
-	self add: #'OS General' method: #reportOS.
+		ifTrue: [ self add: #'VM Configuration' method: #reportWin32VMConfig: ].
+	self add: #'OS General' method: #reportOS:.
 	Smalltalk os platformName = 'Win32'
 		ifTrue: [ 
 			self
-				add: #'OS Details' method: #reportWin32OSDetails;
-				add: #'Hardware Details' method: #reportWin32HardwareDetails;
-				add: #'GFX Hardware Details' method: #reportWin32GFXDetails ].
+				add: #'OS Details' method: #reportWin32OSDetails:;
+				add: #'Hardware Details' method: #reportWin32HardwareDetails:;
+				add: #'GFX Hardware Details' method: #reportWin32GFXDetails: ].
 	Smalltalk os version = 'linux'
-		ifTrue: [ self add: #'OS Details' method: #reportLinuxOSDetails ].
-	self add: #'OS Environment' method: #reportOSEnvironment.
+		ifTrue: [ self add: #'OS Details' method: #reportLinuxOSDetails: ].
+	self add: #'OS Environment' method: #reportOSEnvironment:.
 	categoriesSelected := Set with: #Image with: #'VM General'.
 	self updateReport
 ]
@@ -275,14 +255,6 @@ SystemReporter >> reportLinuxOSDetails: aStream [
 		self writeContentsSafelyFromFile: path on: aStream]
 ]
 
-{ #category : #'accessing-report' }
-SystemReporter >> reportMenu: aMenu [
-	^ aMenu
-		addTitle: 'Report' ;
-		add: 'Copy to Clipboard' selector: #copyReportToClipboard;
-		yourself
-]
-
 { #category : #reporting }
 SystemReporter >> reportModules: aStream [
 	self header: 'Loaded VM Modules' on: aStream.
@@ -325,31 +297,6 @@ SystemReporter >> reportSources: aStream [
 	self header: 'Image Sources' on: aStream.
 	aStream nextPutAll: SourceFiles class printString; cr.
 	aStream nextPutAll: SourceFiles reportString.
-]
-
-{ #category : #reporting }
-SystemReporter >> reportSpaceAnalysis: aStream [
-
-	spaceAnalysisResult ifNil: [
-		(UIManager default
-			confirm: 'Running the space analysis\might take a few seconds.' withCRs
-			label: 'System Reporter')
-				ifFalse: [
-					categoriesSelected remove: #'Space Analysis'.
-					^ self changed: #categorySelected ].
-		
-		spaceAnalysisResult := String streamContents: [ :stream |
-			SpaceTally new printSpaceAnalysis: 1 onStream: stream ] ].
-	self header: 'Space Analysis' on: aStream.
-	aStream nextPutAll: spaceAnalysisResult; cr
-]
-
-{ #category : #'accessing-report' }
-SystemReporter >> reportText [
-
-	^ (report isNil or: [categoriesSelected isEmpty])
-		ifTrue: ['-- Choose any category on the left --']
-		ifFalse: [report]
 ]
 
 { #category : #reporting }
@@ -539,20 +486,6 @@ SystemReporter >> reportWorkingCopies: aStream [
 	list do: [:each | aStream nextPutAll: each description; cr]
 ]
 
-{ #category : #operations }
-SystemReporter >> selectAllCategories [
-	categoriesSelected addAll: categoryList.
-	self changed: #categorySelected.
-	self updateReport
-]
-
-{ #category : #operations }
-SystemReporter >> selectNoCategories [
-	categoriesSelected removeAll.
-	self changed: #categorySelected.
-	self updateReport
-]
-
 { #category : #accessing }
 SystemReporter >> sourceTextModel [
 	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ].
@@ -564,7 +497,7 @@ SystemReporter >> updateReport [
 	self sourceTextModel setText: (Text streamContents: [:stream | 
 						self categoryList do: [:each |
 							(categoriesSelected includes: each) ifTrue: [
-								self perform: ((categories at: each), ':') asSymbol with: stream.
+								self perform: (categories at: each) with: stream.
 								stream cr]]])
 
 ]

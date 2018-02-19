@@ -17,7 +17,7 @@ RBPushDownClassVariableRefactoring >> findDestinationClass [
 	| classes |
 	classes := class withAllSubclasses reject: [ :each |
 		(each whichSelectorsReferToClassVariable: variableName) isEmpty
-			and: [ (each theMetaClass whichSelectorsReferToClassVariable: variableName) isEmpty ] ].
+			and: [ (each classSide whichSelectorsReferToClassVariable: variableName) isEmpty ] ].
 	destinationClass := classes isEmpty 
 		ifTrue: [ nil ]
 		ifFalse: [ classes asOrderedCollection first ].

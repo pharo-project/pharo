@@ -20,6 +20,7 @@ TCopySequenceableWithOrWithoutSpecificElements >> nonEmpty [
 
 { #category : #'tests - fixture' }
 TCopySequenceableWithOrWithoutSpecificElements >> test0FixtureCopyWithOrWithoutSpecificElementsTest [
+
 	self nonEmpty.
 	self deny: self nonEmpty isEmpty.
 	self indexInNonEmpty.
@@ -48,16 +49,15 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithFirst [
 TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithSequenceable [
 
 	| result index element |
-	index := self indexInNonEmpty .
+	index := self indexInNonEmpty.
 	element := self nonEmpty at: index.
 	result := self nonEmpty copyWith: (element ).
 	
-	self assert: result size = (self nonEmpty size + 1).
-	self assert: result last = element .
+	self assert: result size equals: (self nonEmpty size + 1).
+	self assert: result last equals: element.
 	
 	1 to: (result size - 1) do:
-	[ :i |
-	self assert: (result at: i) = ( self nonEmpty at: ( i  ))].
+		[ :i | self assert: (result at: i) equals: ( self nonEmpty at: i)]
 ]
 
 { #category : #'tests - copying with or without' }
@@ -66,11 +66,10 @@ TCopySequenceableWithOrWithoutSpecificElements >> testCopyWithoutFirst [
 	| result |
 	result := self nonEmpty copyWithoutFirst.
 	
-	self assert: result size = (self nonEmpty size - 1).
+	self assert: result size equals: (self nonEmpty size - 1).
 	
-	1 to: result size do:
-		[:i |
-		self assert: (result at: i)= (self nonEmpty at: (i + 1))].
+	result withIndexDo: 
+		[:el :i | self assert: (result at: i) equals: (self nonEmpty at: (i + 1))]
 ]
 
 { #category : #'tests - copying with or without' }

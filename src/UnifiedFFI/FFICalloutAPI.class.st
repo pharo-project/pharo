@@ -67,31 +67,27 @@ FFICalloutAPI >> convention: aCallingConvention [
 { #category : #action }
 FFICalloutAPI >> function: functionSignature module: moduleNameOrLibrary [
 	| sender ffiMethod |
-	
-	sender := context ifNil: [thisContext sender sender].
+	sender := context ifNil: [ thisContext sender sender ].
 
 	"Build new method"
-	ffiMethod := self newBuilder build: [ :builder | 
-		builder
-			signature: functionSignature;  
-			sender: sender;
-			module: moduleNameOrLibrary ].
-	ffiMethod 
+	ffiMethod := self newBuilder
+		build: [ :builder | 
+			builder
+				signature: functionSignature;
+				sender: sender;
+				module: moduleNameOrLibrary ].
+	ffiMethod
 		selector: sender selector;
-		methodClass: sender methodClass.		
+		methodClass: sender methodClass.
 	"Replace with generated ffi method, but save old one for future use"
-	ffiMethod 
-		propertyValueAt: #ffiNonCompiledMethod 
-		put: (sender methodClass methodDict at: sender selector).
-	sender methodClass methodDict 
-		at: sender selector
-		put: ffiMethod.
+	ffiMethod propertyValueAt: #ffiNonCompiledMethod put: (sender methodClass methodDict at: sender selector).
+	"For senders search, one need to keep the selector in the properties"
+	ffiMethod propertyValueAt: #ffiMethodSelector put: sender method sendNodes first selector.
+	sender methodClass methodDict at: sender selector put: ffiMethod.
 	"Register current method as compiled for ffi"
 	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.
 	"Resend"
-	sender return: (sender receiver 
-		withArgs: sender arguments 
-		executeMethod: ffiMethod)
+	sender return: (sender receiver withArgs: sender arguments executeMethod: ffiMethod)
 ]
 
 { #category : #initialization }

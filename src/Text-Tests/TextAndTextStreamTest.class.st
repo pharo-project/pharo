@@ -111,8 +111,7 @@ TextAndTextStreamTest >> testAddingAttributesPastTheEnd [
 
 { #category : #tests }
 TextAndTextStreamTest >> testExampleText1 [
-	"self run: #testExampleText1"
-	"inspired by a bug report from Tim Olson.
+	"Inspired by a bug report from Tim Olson.
 	Text attributes are lost when the stream collection is expanded.
 	Documented BUG!!!"
 
@@ -122,7 +121,7 @@ TextAndTextStreamTest >> testExampleText1 [
 	atts1 := text1 runs copyFrom: 6 to: 10. 
 	atts2 := text2 runs copyFrom: 6 to: 10. 
 
-	self assert: atts1 = atts2.
+	self assert: atts1 equals: atts2.
       
 ]
 

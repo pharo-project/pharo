@@ -137,6 +137,7 @@ CompiledMethodTest >> shouldNotImplementMethod [
 { #category : #running }
 CompiledMethodTest >> tearDown [
 	RPackage organizer unregisterPackageNamed: self categoryNameForTemporaryClasses.
+	super tearDown
 ]
 
 { #category : #'tests - slots' }
@@ -171,9 +172,9 @@ CompiledMethodTest >> testComparison [
 	| method1 method2 |
 	method1 := Float class >> #nan.
 	method2 := thisContext method.
-	
-	self assert: method1 = method1.
-	self assert: method2 = method2.
+
+	self assert: method1 equals: method1.
+	self assert: method2 equals: method2.
 	self deny: method1 = method2.
 	self deny: method2 = method1.
 	
@@ -184,7 +185,7 @@ CompiledMethodTest >> testComparison [
 		self deny: each = method2 ]
 ]
 
-{ #category : #'tests - comparing' }
+{ #category : #tests }
 CompiledMethodTest >> testCopy [
 	<pragma: #pragma>
 	| method copy |
@@ -192,8 +193,8 @@ CompiledMethodTest >> testCopy [
 	self assert: method pragmas notEmpty.
 	copy := method copy.
 	self assert: (method equivalentTo: copy).
-	self assert: method header = copy header.
-	self assert: method = copy.
+	self assert: method header equals: copy header.
+	self assert: method equals: copy.
 	self assert: method ~~ copy.
 	self assert: copy penultimateLiteral method == copy.
 	self assert: method penultimateLiteral method == method.
@@ -206,7 +207,7 @@ CompiledMethodTest >> testCopy [
 
 ]
 
-{ #category : #'tests - comparing' }
+{ #category : #tests }
 CompiledMethodTest >> testCopyWithTrailerBytes [
 	<pragma: #pragma>
 	| method copy |
@@ -215,7 +216,7 @@ CompiledMethodTest >> testCopyWithTrailerBytes [
 	copy := method copyWithTrailerBytes: method trailer.
 	self assert: (method equivalentTo: copy).
 	self deny: method == copy.
-	self assert: method symbolic = copy symbolic. "but their bytecode should be the same"
+	self assert: method symbolic equals: copy symbolic. "but their bytecode should be the same"
 	self assert: method ~~ copy.
 	self assert: copy penultimateLiteral method == copy.
 	self assert: method penultimateLiteral method == method.
@@ -302,9 +303,9 @@ CompiledMethodTest >> testPerformCanExecutelongMethodWithTemps [
 	temp1 := 33.
 	temp2 := 666.
 	temp3 := 42. 
-	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)) = 1.
-	self assert: (self class>>#testPerformCanExecutelongMethodWithTemps) frameSize = CompiledMethod smallFrameSize.
-	self assert: (self class>>#a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:) frameSize = CompiledMethod fullFrameSize.
+	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)) equals: 1.
+	self assert: (self class>>#testPerformCanExecutelongMethodWithTemps) frameSize equals: CompiledMethod smallFrameSize.
+	self assert: (self class>>#a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15:) frameSize equals: CompiledMethod fullFrameSize.
 ]
 
 { #category : #'tests - performing' }
@@ -315,7 +316,7 @@ CompiledMethodTest >> testPerformInSuperclassCanExecutelongMethodWithTemps [
 	temp1 := 33.
 	temp2 := 666.
 	temp3 := 42. 
-	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) inSuperclass: self class) = 1
+	self assert: (self perform: #a1:a2:a3:a4:a5:a6:a7:a8:a9:a10:a11:a12:a13:a14:a15: withArguments: #(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15) inSuperclass: self class) equals: 1
 ]
 
 { #category : #'tests - instance variable' }
@@ -367,11 +368,11 @@ CompiledMethodTest >> testValueWithReceiverArguments [
 	method := self class compiledMethodAt: #returnTrue.
 
 	value := method valueWithReceiver: nil arguments: #().
-	self assert: (value = true).
+	self assert: value equals: true.
 
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method valueWithReceiver: nil arguments: #(1).
-	self assert: (value = 2).	
+	self assert: value equals: 2.	
 ]
 
 { #category : #'tests - instance variable' }

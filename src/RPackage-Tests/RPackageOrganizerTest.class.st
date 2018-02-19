@@ -107,6 +107,7 @@ RPackageOrganizerTest >> tearDown [
 				cls removeFromSystem ].
 	"createdPackages do:
 		[:each | self packageOrganizer unregisterPackage: each]"
+	super tearDown 
 	
 
 ]
@@ -363,25 +364,6 @@ RPackageOrganizerTest >> testSilentlyRenameCategoryToBe [
 	
 	self assert: (class organization categories includes: #bar).
 	self deny: (class organization categories includes: #foo).	
-]
-
-{ #category : #'tests extending' }
-RPackageOrganizerTest >> testTestingPackageExistence [
-
-	| extensionCategory package existingPackage |
-	
-	self skip. "This tests seems to not have sense anymore (because creating of duplicated packages is forbidden). 
- 	Loot at RPackageOrganizerTest>>#testRegisterPackageConflictWithPackageTag"
-	
-	existingPackage := (RPackage named: 'RPackage-Tests') register; yourself.
-	extensionCategory := existingPackage name, '-subcategory'.
-	package := RPackage named: extensionCategory.
-	packageOrganizer := package organizer.
-	self deny: (packageOrganizer includesPackageNamed: extensionCategory).
-
-	packageOrganizer checkPackageExistsOrRegister: extensionCategory.
-
-	self deny: (packageOrganizer includesPackageNamed: extensionCategory).
 ]
 
 { #category : #tests }

@@ -50,7 +50,7 @@ PharoBootstrapRule >> bootstrapPackages [
 	#'Ring-Core-Kernel'
 	#'Ring-Monticello'
 	#RingChunkImporter
-	#Slot
+	#'Slot-Core'
 	#'System-Announcements'
 	#'System-BasicCommandLineHandler'
 	#'System-Changes'

@@ -97,7 +97,8 @@ GLMMorphicTest >> send: treeMorph mouseUpWithShift: aBoolean onItem: treeNodeMor
 
 { #category : #running }
 GLMMorphicTest >> tearDown [
-	window ifNotNil: [window delete]
+	window ifNotNil: [ window delete ].
+	super tearDown
 ]
 
 { #category : #private }

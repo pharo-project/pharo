@@ -24,7 +24,7 @@ SystemHelp class >> asHelpTopic [
 	|topic helpOnHelp sortedTopics |
 	topic := HelpTopic named: 'Help'.
 	self allSystemHelpPragmas do: [:each | 
-		topic subtopics addAll: each method methodClass theNonMetaClass asHelpTopic subtopics
+		topic subtopics addAll: each method methodClass instanceSide asHelpTopic subtopics
 	].
 	topic sortSubtopicsByTitle.
 	helpOnHelp := topic subtopics detect: [:t | t key = 'HelpOnHelp'] ifNone: [self error: 'Help for the help system is removed'].

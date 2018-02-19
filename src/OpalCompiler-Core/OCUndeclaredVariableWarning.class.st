@@ -10,7 +10,7 @@ Class {
 { #category : #correcting }
 OCUndeclaredVariableWarning >> declareClassVar [
 
-	self methodClass theNonMetaClass
+	self methodClass instanceSide
 		addClassVarNamed: node name asSymbol.
 	^ self lookUpVariable
 ]

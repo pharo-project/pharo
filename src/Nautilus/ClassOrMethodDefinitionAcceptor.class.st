@@ -21,7 +21,7 @@ ClassOrMethodDefinitionAcceptor >> accept: source notifying: aController [
 ClassOrMethodDefinitionAcceptor >> acceptClassSide: source notifying: aController [
 	| isClassDefinition |
 	
-	isClassDefinition := (' ' split: source) first = self model selectedClass theNonMetaClass name.
+	isClassDefinition := (' ' split: source) first = self model selectedClass instanceSide name.
 	
 	isClassDefinition
 		ifTrue: [

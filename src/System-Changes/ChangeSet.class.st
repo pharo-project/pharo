@@ -613,7 +613,7 @@ ChangeSet >> changeClass: class from: oldClass [
 	class wantsChangeSetLogging ifFalse: [^ self]. 
 	class isMeta 
 		ifFalse: [self atClass: class add: #change]	"normal"
-		ifTrue: [((self classChangeAt: class theNonMetaClass name) includes: #add) 
+		ifTrue: [((self classChangeAt: class instanceSide name) includes: #add) 
 			ifTrue: [self atClass: class add: #add] 	"When a class is defined, the metaclass
 				is not recorded, even though it was added.  A further change is
 				really just part of the original add."
@@ -932,9 +932,9 @@ ChangeSet >> fileOutClassDefinition: class on: stream [
 				vars in this class, warn author when new ones are added." ] ].
 	(self atClass: class includes: #comment)
 		ifFalse: [ ^ self ].
-	class theNonMetaClass organization
+	class instanceSide organization
 		putCommentOnFile: stream
-		forClass: class theNonMetaClass.
+		forClass: class instanceSide.
 	stream cr
 ]
 

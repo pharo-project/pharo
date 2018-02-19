@@ -43,7 +43,7 @@ RBAddClassVariableTest >> testMetaclass [
 	| refactoring |
 	refactoring := RBAddClassVariableRefactoring 
 		variable: #ClassVarName3
-		class: (model classNamed: #Object) theMetaClass.
+		class: (model classNamed: #Object) classSide.
 	refactoring model: model.
 	self shouldFail: refactoring
 ]
@@ -76,6 +76,6 @@ RBAddClassVariableTest >> testModelMetaclass [
 	refactoring := RBAddClassVariableRefactoring 
 		model: model
 		variable: #ClassVarName3
-		class: (model classNamed: #Bar) theMetaClass.
+		class: (model classNamed: #Bar) classSide.
 	self shouldFail: refactoring
 ]

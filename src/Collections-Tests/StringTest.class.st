@@ -733,10 +733,9 @@ self assert: ('  999' endsWithDigit).
 
 { #category : #tests }
 StringTest >> testEquality [
-	"self run: #testEquality"
 	
-	self assert: 'abc' = 'abc' asWideString.
-	self assert: 'abc' asWideString = 'abc'.
+	self assert: 'abc' equals: 'abc' asWideString.
+	self assert: 'abc' asWideString equals: 'abc'.
 	self assert: ( #[97 0 0 0] asString ~= 'a000' asWideString).
 	self assert: ('a000' asWideString ~=  #[97 0 0 0] asString).
 
@@ -1287,12 +1286,12 @@ self assert: ('123éàôüÖẞ' isAllAlphaNumerics).
 
 { #category : #tests }
 StringTest >> testIsAllDigits [
-	"self run: #testIsAllDigits"
-	self assert: '' isAllDigits = false.
-	self assert: '1.23' isAllDigits = false.
-	self assert: '12 3' isAllDigits = false.
-	self assert: '-123' isAllDigits = false.
-	self assert: '0123456789' isAllDigits = true.
+
+	self assert: '' isAllDigits equals: false.
+	self assert: '1.23' isAllDigits equals: false.
+	self assert: '12 3' isAllDigits equals: false.
+	self assert: '-123' isAllDigits equals: false.
+	self assert: '0123456789' isAllDigits equals: true.
 ]
 
 { #category : #tests }
@@ -1884,19 +1883,14 @@ StringTest >> testWithInternetLineEndings [
 
 { #category : #'tests - converting' }
 StringTest >> testWithNoLineLongerThan [
-	"self run: #testWithNoLineLongerThan"
 
-	self assert: ('Hello World' withNoLineLongerThan: 5) = ('Hello' , String cr , 'World').
-	String crlf withNoLineLongerThan: 5.
-	'Hello' , String cr , String cr , 'World' withNoLineLongerThan: 5.
-	self
-		assert:
-			('Sample text to line break at some point' withNoLineLongerThan: 28)
-				= ('Sample text to line break at' , String cr , 'some point').
-	self
-		assert:
-			('Sample text' , String cr , 'to line break' , String cr , 'at some point' withNoLineLongerThan: 28)
-				= ('Sample text' , String cr , 'to line break' , String cr , 'at some point')
+	self assert: ('Hello World' withNoLineLongerThan: 5) equals: ('Hello' , String cr , 'World').
+
+	self assert: ('Sample text to line break at some point' withNoLineLongerThan: 28)
+		  equals: ('Sample text to line break at' , String cr , 'some point').
+		
+	self assert: ('Sample text' , String cr , 'to line break' , String cr , 'at some point' withNoLineLongerThan: 28)
+		  equals: ('Sample text' , String cr , 'to line break' , String cr , 'at some point')
 ]
 
 { #category : #'tests - converting' }

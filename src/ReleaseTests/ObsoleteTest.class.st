@@ -18,9 +18,10 @@ ObsoleteTest >> setUp [
 
 { #category : #running }
 ObsoleteTest >> tearDown [
-	super tearDown.
+
 	classFactory cleanUp.
-	Smalltalk fixObsoleteReferences
+	Smalltalk fixObsoleteReferences.
+	super tearDown	
 ]
 
 { #category : #tests }

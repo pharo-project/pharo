@@ -11,3 +11,9 @@ CompiledMethod >> ffiArgumentNames [
 		ifAbsent: [ self  propertyValueAt: #ffiArgumentNames put: self argumentNames ]
 
 ]
+
+{ #category : #'*UnifiedFFI' }
+CompiledMethod >> isFFIMethod [
+	
+	^ self hasProperty: #isFFIMethod
+]

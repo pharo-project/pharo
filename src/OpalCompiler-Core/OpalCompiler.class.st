@@ -155,7 +155,7 @@ OpalCompiler >> bindings: aDictionary [
 	"for now we abuse the requestor infrastructure...we should rewrite the requestor to use bindings
 	instead"
 	self compilationContext 
-		requestor: aDictionary;
+		bindings: aDictionary;
 		interactive: false.
 ]
 
@@ -282,7 +282,7 @@ OpalCompiler >> evaluate [
 		ifTrue: [ itsSelectionString ]
 		ifFalse: [ source ].
 	self source: selectedSource.
-	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod:  self translate generateWithSource.
+	value := receiver withArgs: (context ifNil: [ #() ] ifNotNil: [ {context} ]) executeMethod:  self translate generate.
 	self compilationContext logged
 		ifTrue: [ Smalltalk globals 
 			at: #SystemAnnouncer 

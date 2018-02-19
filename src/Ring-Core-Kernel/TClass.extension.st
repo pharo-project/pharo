@@ -29,9 +29,9 @@ TClass >> asFullRingDefinition [
 			rgMethod := mth asActiveRingDefinition.
 			rgClass addMethod: rgMethod.
 			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
-	self theMetaClass methodsDo:[ :mth|  
+	self classSide methodsDo:[ :mth|  
 			rgMethod := mth asActiveRingDefinition.
-			rgClass theMetaClass addMethod: rgMethod.
+			rgClass classSide addMethod: rgMethod.
 			rgMethod package: (RGContainer packageOfMethod: rgMethod using: packageKeys) ].
 	
 	^ rgClass

@@ -60,8 +60,9 @@ MBAbstractTest >> setUp [
 
 { #category : #running }
 MBAbstractTest >> tearDown [
-	super tearDown.
+	
 	configuration := nil.
-	self removeClassIfExist: self configurationName asSymbol
+	self removeClassIfExist: self configurationName asSymbol.
+	super tearDown
 
 ]

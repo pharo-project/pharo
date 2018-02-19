@@ -56,8 +56,9 @@ SpecTestCase >> setUp [
 
 { #category : #running }
 SpecTestCase >> tearDown [
+	
+	window ifNotNil: [ window delete ].
 	super tearDown.
-	window ifNotNil: [ window delete ]
 ]
 
 { #category : #tests }

@@ -157,7 +157,7 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 	exportedClass methods do: [ :e | self rebuildMethod: e into: aClass ].
 	exportedClass classSideMethods
 		do:
-			[ :e | self rebuildMethod: e into: aClass theMetaClass ]
+			[ :e | self rebuildMethod: e into: aClass classSide ]
 ]
 
 { #category : #'installing package' }

@@ -18,8 +18,9 @@ IVsAndClassVarNamesConflictTest >> setUp [
 
 { #category : #running }
 IVsAndClassVarNamesConflictTest >> tearDown [
-	super tearDown.
-	classFactory cleanUp
+
+	classFactory cleanUp.
+	super tearDown
 ]
 
 { #category : #tests }

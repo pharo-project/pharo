@@ -26,11 +26,11 @@ BinaryFileStreamTest >> setUp [
 { #category : #running }
 BinaryFileStreamTest >> tearDown [
 
-	super tearDown.
 	self killTestFile.
 	"We must ensure that files are collected before running other tests.
 	In windows, we cannot open the same file twice."
-	3 timesRepeat: [ Smalltalk garbageCollect. ]
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+	super tearDown.
 ]
 
 { #category : #testing }

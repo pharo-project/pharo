@@ -66,7 +66,7 @@ RBRenameClassVariableRefactoring >> renameReferences [
 		handler: 
 			[ self refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses' expandMacrosWith: newName) ].
 	subclasses := class withAllSubclasses asSet.
-	subclasses addAll: class theMetaClass withAllSubclasses.
+	subclasses addAll: class classSide withAllSubclasses.
 	self 
 		convertClasses: subclasses
 		select: [ :aClass | aClass whichSelectorsReferToClassVariable: variableName ]

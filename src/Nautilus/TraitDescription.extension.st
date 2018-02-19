@@ -245,7 +245,7 @@ TraitDescription >> refactoringSubmenu: aBuilder [
 	(aBuilder item: #'Rename...')
 		keyText: 'r, c' if: Nautilus useOldStyleKeys not;
 		keyText: 'r' if: Nautilus useOldStyleKeys;		
-		action: [ target renameClassWithRefactoringEngine: target selectedClass theNonMetaClass ];
+		action: [ target renameClassWithRefactoringEngine: target selectedClass instanceSide ];
 		parent: #'Trait Refactoring';
 		order: 0.
 	

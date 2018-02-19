@@ -17,11 +17,12 @@ Class {
 	#category : #'FuzzyMatcher-Tests'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #examples }
 FuzzyMatcherExample class >> exampleAuthors [
 	<sampleInstance>
 	| authors blk |
 	
+	| authors blk |
 	authors := OrderedCollection new.
 	blk := [ :mtd | 
 		mtd timeStamp ifNotEmpty: [ :stamp |
@@ -30,10 +31,9 @@ FuzzyMatcherExample class >> exampleAuthors [
 			]
 		] 
 	].
-	
-	Smalltalk allClassesAndTraitsDo: [ :each |
+	Smalltalk globals allClassesAndTraitsDo: [ :each |
 		each methodsDo: blk. 
-		each theMetaClass methodsDo: blk.
+		each classSide methodsDo: blk.
 	].
 
 	^ self new 
@@ -47,7 +47,7 @@ FuzzyMatcherExample class >> exampleClasses [
 
 	^ self new 
 		pattern: 'mph';
-		elements: (Smalltalk allClassesAndTraits collect: #name);
+		elements: (Smalltalk globals allClassesAndTraits collect: #name);
 		open
 ]
 

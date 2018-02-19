@@ -76,8 +76,7 @@ MetacelloScriptingStdTstHarness >> setUpRepositoryContents [
 
 { #category : #running }
 MetacelloScriptingStdTstHarness >> tearDown [
-  | finalWorkingCopyList diff |
-  super tearDown.
+  | finalWorkingCopyList diff |  
   self tearDownPackages.
   self tearDownRepositories.
   MetacelloProjectRegistration registry: registry.
@@ -92,7 +91,8 @@ MetacelloScriptingStdTstHarness >> tearDown [
         cr;
         show:
             'leaked package from ' , self printString , ' -> ' , leak printString ].
-  self assert: diff isEmpty
+  self assert: diff isEmpty.
+  super tearDown
 ]
 
 { #category : #running }

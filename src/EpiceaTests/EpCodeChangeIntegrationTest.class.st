@@ -16,9 +16,9 @@ EpCodeChangeIntegrationTest >> categoryNameForTesting [
 
 { #category : #running }
 EpCodeChangeIntegrationTest >> tearDown [
-	super tearDown.
 	
-	self class environment organization removeCategory: self categoryNameForTesting
+	self class environment organization removeCategory: self categoryNameForTesting.
+	super tearDown.
 ]
 
 { #category : #tests }
@@ -163,7 +163,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAddition [
 	aClass := classFactory newClass.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	aClass theMetaClass instanceVariableNames: 'x'.	
+	aClass classSide instanceVariableNames: 'x'.	
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
 
 ]
@@ -176,7 +176,7 @@ EpCodeChangeIntegrationTest >> testMetaclassInstanceVariableAdditionWithTrait [
 	aTrait := classFactory newTrait.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
-	aClass theMetaClass uses: aTrait asTraitComposition instanceVariableNames: 'x'.	
+	aClass classSide uses: aTrait asTraitComposition instanceVariableNames: 'x'.	
 	self assert: (self countLogEventsWith: EpClassModification) equals: 1.
 
 ]
@@ -297,7 +297,7 @@ EpCodeChangeIntegrationTest >> testRedundantClassDefinition [
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 
-	self class compiler evaluate: aClass theMetaClass definition.
+	self class compiler evaluate: aClass classSide definition.
 
 	self assert: (self countLogEventsWith: EpClassModification) equals: 0.
 
