@@ -36,6 +36,7 @@ IconListPresenter class >> defaultSpec [
 
 { #category : #example }
 IconListPresenter class >> example [
+	<sampleInstance>
 	| example |
 	example := self new.
 	example

@@ -30,6 +30,7 @@ FastTablePresenter class >> defaultSpec [
 
 { #category : #example }
 FastTablePresenter class >> example [
+	<sampleInstance>
 	| example |
 	example := self new.
 	example
@@ -41,6 +42,7 @@ FastTablePresenter class >> example [
 
 { #category : #example }
 FastTablePresenter class >> exampleMultipleSelection [
+	<sampleInstance>
 	| example |
 	example := self new.
 	example

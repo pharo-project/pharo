@@ -58,6 +58,7 @@ OpenOnStringExample class >> defaultSpec [
 
 { #category : #examples }
 OpenOnStringExample class >> example [
+	<sampleInstance>
 	| example |
 	example := self new: 'Hello world'.
 	example

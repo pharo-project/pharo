@@ -9,6 +9,7 @@ Class {
 
 { #category : #examples }
 TextAndTextStreamTest >> example1: size [
+	<sampleInstance>
 
    | ts text |
 
@@ -22,8 +23,9 @@ TextAndTextStreamTest >> example1: size [
 
 { #category : #examples }
 TextAndTextStreamTest >> example2 [
+	<sampleInstance>
 
-      | ts text |
+  | ts text |
 
   ts := TextStream on: (Text new: 50).
   ts  nextPutAll: 'abc' asText.
