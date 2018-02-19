@@ -32,14 +32,14 @@ MetaclassForTraits >> asTraitComposition [
 { #category : #accessing }
 MetaclassForTraits >> baseTrait [
 	
-	^ self baseClass 
+	^ self instanceSide 
 ]
 
 { #category : #'fileIn/Out' }
 MetaclassForTraits >> definition [
 	^ String streamContents: [ :s | 
 		s 
-			nextPutAll: self baseClass name;
+			nextPutAll: self instanceSide name;
 			nextPutAll: ' classTrait';
 			cr; tab;
 			nextPutAll: 'uses: ';
@@ -85,7 +85,7 @@ MetaclassForTraits >> notifyOfRecategorizedSelector: selector from: oldCategory 
 { #category : #printing }
 MetaclassForTraits >> printOn: aStream [
 	aStream
-		nextPutAll: self baseClass name;
+		nextPutAll: self instanceSide name;
 		nextPutAll: ' classTrait'
 ]
 

@@ -114,7 +114,7 @@ Trait >> classTrait [
 { #category : #'filein/out' }
 Trait >> definition [
 	
-	(self baseClass name == #Trait) ifTrue: [ ^ super definition ].
+	(self instanceSide name == #Trait) ifTrue: [ ^ super definition ].
 
 	^ String streamContents: [ :s | 
 		s 

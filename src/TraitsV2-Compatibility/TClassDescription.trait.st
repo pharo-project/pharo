@@ -51,7 +51,7 @@ TClassDescription >> addSelector: selector withMethod: compiledMethod notifying:
 { #category : #'accessing method dictionary' }
 TClassDescription >> addSelectorSilently: selector withMethod: compiledMethod [
 	super addSelectorSilently: selector withMethod: compiledMethod.
-	self instanceSide noteAddedSelector: selector meta: self isMeta.
+	self instanceSide noteAddedSelector: selector meta: self isClassSide.
 ]
 
 { #category : #'instance variables' }
@@ -740,7 +740,7 @@ TClassDescription >> linesOfCode [
 
 	| lines |
 	lines := self localMethods inject: 0 into: [ :sum :each | sum + each linesOfCode ].
-	^ self isMeta 
+	^ self isClassSide 
 		ifTrue: [ lines ]
 		ifFalse: [ lines + self classSide linesOfCode ]
 ]
@@ -916,7 +916,7 @@ TClassDescription >> numberOfMethods [
 	"count all methods that are local (not comming from a trait)"
 	| num |
 	num := self localMethods size.
-	^ self isMeta  
+	^ self isClassSide  
 		ifTrue: [ num ]
 		ifFalse: [ num + self classSide numberOfMethods ] 
 ]
@@ -1256,7 +1256,7 @@ TClassDescription >> updateInstancesFrom: oldClass [
 	See bottom below for a simple example:"
 	| oldInstances |
 	oldInstances := oldClass allInstances asArray.
-	oldInstances := self updateInstances: oldInstances from: oldClass isMeta: self isMeta.
+	oldInstances := self updateInstances: oldInstances from: oldClass isMeta: self isClassSide.
 	^nil
 
 "	| crashingBlock class |

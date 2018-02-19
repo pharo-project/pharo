@@ -22,7 +22,7 @@ TClass classSide >> doesNotIncludeInstanceOrSuperclassesFor: aClass in: unproces
 { #category : #private }
 TClass classSide >> hasNoDependenciesFor: aClass in: unprocessedClasses cache: cache [ 
 	^ (self hasNoSuperclassesOf: aClass in: unprocessedClasses cache: cache) and: [
-		aClass isMeta not or: [
+		aClass isClassSide not or: [
 			self hasNoDependenciesForMetaclass: aClass in: unprocessedClasses cache: cache]] 
 ]
 

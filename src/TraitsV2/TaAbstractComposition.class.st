@@ -192,10 +192,15 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	
 	traitDefining := self traitDefining: aSelector.
 	aCompiledMethod := self compiledMethodAt: aSelector.
-	source := aCompiledMethod getSourceReplacingSelectorWith: aSelector.
+	source := self getSourceCodeOf: aCompiledMethod usingSelector: aSelector.
 	
+	"Check if the method should be replaced. It is replaced if:
+	 - replacing is true.
+	 - The trait defining the method is not the same.
+	 - If both methods have source code and if the source codes are not the same.
+	"
 	aClass methodDict at: aSelector ifPresent:[ :originalMethod | 
-		((replacing not and: [((originalMethod propertyAt: #traitSource) = traitDefining) and: [originalMethod hasSourceCode]]) and: [ aCompiledMethod hasSourceCode and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
+		((replacing not and: [((originalMethod propertyAt: #traitSource) = traitDefining) and: [originalMethod hasSourceCode]]) and: [ source isNotNil and: [ source = originalMethod sourceCode ] ]) ifTrue: [ ^ false ]].
 	
 	newMethod := aCompiledMethod copy.
 	newMethod selector: aSelector.
@@ -203,7 +208,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 		
 	"write source to changes file only if we have it (not available during bootstrap)"	
 	
-	((source includesSubstring: 'self error: ''No decompiler available''') not and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
+	(source isNotNil and: [((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [ 
 		newMethod putSource: source
 			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 
@@ -230,6 +235,14 @@ TaAbstractComposition >> copyTraitExpression [
 TaAbstractComposition >> copyWithoutTrait: aTrait [ 
 	"Returns a copy without the aTrait"
 	self subclassResponsibility 
+]
+
+{ #category : #operations }
+TaAbstractComposition >> getSourceCodeOf: aCompiledMethod usingSelector: aSelector [ 
+	
+	aCompiledMethod hasSourceCode ifFalse: [ ^ nil ].
+
+	^ aCompiledMethod getSourceReplacingSelectorWith: aSelector
 ]
 
 { #category : #accessing }

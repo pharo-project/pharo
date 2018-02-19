@@ -11,8 +11,12 @@ Class {
 TraitsBootstrap class >> fixSourceCodeOfTraits [
 	"This method fix the traits loaded with Hermes"
 
-	| incorrectMethods incorrectClasses |
-	incorrectMethods := SystemNavigation new installedMethodsWithIncorrectTrailerKind.
-	incorrectClasses := incorrectMethods collect: [ :e | e methodClass ] as:Set.
-	incorrectClasses do: [ :e | e rebuildMethodDictionary ].
+	| incorrectMethods |
+	incorrectMethods := SystemNavigation new installedMethodsWithIncorrectTrailerKind collect: [ :e | e compiledMethod ].
+	incorrectMethods
+		do: [ :aMethod | 
+			| aClass defining |
+			aClass := aMethod methodClass.
+			defining := aClass traitComposition traitDefining: aMethod selector ifNone: [ aMethod propertyAt: #traitSource ].
+			defining installSelector: aMethod selector into: aClass replacing: true ]
 ]

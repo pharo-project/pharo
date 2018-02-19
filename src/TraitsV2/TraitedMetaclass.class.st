@@ -291,13 +291,13 @@ TraitedMetaclass >> slots [
 TraitedMetaclass >> slots: slotCollection [ 
 
 	| theClass |
-	theClass := self theNonMetaClass.
+	theClass := self instanceSide.
 		
 	theClass := theClass classInstaller update: theClass to: [ :builder |
 		builder
 			fillFor: theClass;
 			classSlots: slotCollection ].
-	^ theClass theMetaClass
+	^ theClass classSide
 ]
 
 { #category : #accessing }

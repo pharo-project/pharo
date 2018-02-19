@@ -30,5 +30,5 @@ TaClassCompositionElement >> slots [
 { #category : #printing }
 TaClassCompositionElement >> traitCompositionExpression [
 	
-	^ innerClass baseClass name , ' classTrait'
+	^ innerClass instanceSide name , ' classTrait'
 ]

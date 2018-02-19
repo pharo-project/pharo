@@ -2,7 +2,7 @@ Extension { #name : #Metaclass }
 
 { #category : #'*TraitsV2' }
 Metaclass >> baseLocalMethods [
-	^ self baseClass methodDict
+	^ self instanceSide methodDict
 ]
 
 { #category : #'*TraitsV2' }
@@ -26,7 +26,7 @@ Metaclass >> uses: aTraitCompositionOrArray instanceVariableNames: instVarString
 { #category : #'*TraitsV2' }
 Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
 	| theClass builderEnhancer |
-	theClass := self theNonMetaClass.
+	theClass := self instanceSide.
 	
 	theClass := theClass classInstaller
 		update: theClass
@@ -35,5 +35,5 @@ Metaclass >> uses: aTraitCompositionOrArray slots: slotArray [
 				fillFor: theClass;
 				classTraitComposition: aTraitCompositionOrArray asTraitComposition;				
 				classSlots: slotArray ].
-	^ theClass theMetaClass
+	^ theClass classSide
 ]
