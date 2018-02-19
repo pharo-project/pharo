@@ -158,7 +158,6 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-Tests-WithCompiler'.
 		spec package: 'Manifest-Core'.
 		spec package: 'Manifest-Resources-Tests'.
-		spec package: 'Monticello-Tests'.
 		spec package: 'OpalCompiler-Tests'.
 		spec package: 'Refactoring-Tests-Core'.
 		spec package: 'Reflectivity-Tests'.
@@ -184,6 +183,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Metacello-TestsReference'.	"standalone"
 
 		spec package: 'RPackage-Tests'.
+		spec package: 'Monticello-Tests'.
 
 		spec package: 'Glamour-Announcements'.
 		spec package: 'Glamour-Helpers'.
