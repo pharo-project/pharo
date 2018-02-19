@@ -22,7 +22,6 @@ FuzzyMatcherExample class >> exampleAuthors [
 	<sampleInstance>
 	| authors blk |
 	
-	| authors blk |
 	authors := OrderedCollection new.
 	blk := [ :mtd | 
 		mtd timeStamp ifNotEmpty: [ :stamp |
