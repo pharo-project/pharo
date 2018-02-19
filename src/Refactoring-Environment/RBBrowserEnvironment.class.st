@@ -62,7 +62,7 @@ RBBrowserEnvironment >> allClasses [
 	| allClasses |
 	allClasses := IdentitySet new: 4096.
 	self classesDo: [ :each | 
-		allClasses add: each theNonMetaClass].
+		allClasses add: each instanceSide].
 	^ allClasses asArray
 ]
 
@@ -96,7 +96,7 @@ RBBrowserEnvironment >> allMetaClasses [
 	self
 		classesDo: [ :each | 
 			each isMeta
-				ifTrue: [ allMetaClasses add: each theNonMetaClass ] ].
+				ifTrue: [ allMetaClasses add: each instanceSide ] ].
 	^ allMetaClasses asArray
 ]
 
@@ -161,7 +161,7 @@ RBBrowserEnvironment >> categories [
 RBBrowserEnvironment >> classNames [
 	| names |
 	names := IdentitySet new: 4096.
-	self classesDo: [ :each | names add: each theNonMetaClass name ].
+	self classesDo: [ :each | names add: each instanceSide name ].
 	^ names
 ]
 
@@ -276,8 +276,7 @@ RBBrowserEnvironment >> forClasses: classCollection [
 	classes := OrderedCollection new: classCollection size * 2.
 	classCollection do: 
 			[:each | 
-			classes add: each theNonMetaClass;
-				add: each classSide].
+			classes add: each instanceSide; add: each classSide].
 	^RBClassEnvironment onEnvironment: self classes: classes
 ]
 

@@ -57,7 +57,7 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self assert: rgClass superclass name = #ClassDescription.
 	self assert: rgClass subclasses notEmpty.
 	self assert: rgClass package notNil.
-	self assert: rgClass package = rgClass theNonMetaClass package.
+	self assert: rgClass package = rgClass instanceSide package.
 	self assert: rgClass package name = #Kernel.
 	self assert: rgClass category = #'Kernel-Classes'.
 	self assert: rgClass extensionMethods notEmpty.
@@ -67,5 +67,5 @@ RGClassDefinitionTest >> testAsFullClassDefinition [
 	self assert: rgClass subclasses first package name equals: #Kernel.
 	
 	rgClass := RGClassDefinition classSide asFullRingDefinition.
-	self assert: rgClass package = rgClass theNonMetaClass package.
+	self assert: rgClass package = rgClass instanceSide package.
 ]

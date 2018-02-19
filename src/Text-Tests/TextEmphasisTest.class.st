@@ -28,8 +28,7 @@ TextEmphasisTest >> testAdd [
 
 { #category : #tests }
 TextEmphasisTest >> testAppendString [
-	"tests the Text>>prepend: method when appending a String " 
-	"self run: # testAppendString"
+	"Tests the Text>>prepend: method when appending a String" 
 
 	| receiver argument result expectedResult |
 

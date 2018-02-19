@@ -26,12 +26,12 @@ RBMetaclass class >> named: aSymbol [
 
 { #category : #accessing }
 RBMetaclass >> allClassVariableNames [
-	^ self theNonMetaClass allClassVariableNames
+	^ self instanceSide allClassVariableNames
 ]
 
 { #category : #accessing }
 RBMetaclass >> allPoolDictionaryNames [
-	^ self theNonMetaClass allPoolDictionaryNames
+	^ self instanceSide allPoolDictionaryNames
 ]
 
 { #category : #accessing }
@@ -43,12 +43,12 @@ RBMetaclass >> classSide [
 
 { #category : #testing }
 RBMetaclass >> directlyDefinesClassVariable: aString [ 
-	^ self theNonMetaClass directlyDefinesClassVariable: aString
+	^ self instanceSide directlyDefinesClassVariable: aString
 ]
 
 { #category : #testing }
 RBMetaclass >> directlyDefinesPoolDictionary: aString [ 
-	^ self theNonMetaClass directlyDefinesPoolDictionary: aString
+	^ self instanceSide directlyDefinesPoolDictionary: aString
 ]
 
 { #category : #testing }

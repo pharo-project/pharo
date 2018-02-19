@@ -11,7 +11,7 @@ RecentMessageList >> lastClasses: anInteger [
 	tempList do: [:method |
 		result size = anInteger ifTrue: [ ^ result ].
 		method methodClass ifNotNil:[:class | |nonMetaClass|
-		nonMetaClass := method methodClass theNonMetaClass.
+		nonMetaClass := method methodClass instanceSide.
 		(result includes: nonMetaClass) ifFalse: [ result add: nonMetaClass ]]].
 	^ result
 ]

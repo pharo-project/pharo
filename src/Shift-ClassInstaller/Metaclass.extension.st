@@ -4,7 +4,7 @@ Extension { #name : #Metaclass }
 Metaclass >> instanceVariableNames: instVarString [ 
 	"Declare additional named variables for my instance."
 	| theClass |
-	theClass := self theNonMetaClass.
+	theClass := self instanceSide.
 	
 	theClass := theClass classInstaller update: theClass to: [ :builder |
 		builder

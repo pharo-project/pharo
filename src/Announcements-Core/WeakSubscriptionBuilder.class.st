@@ -33,7 +33,7 @@ WeakSubscriptionBuilder >> subscribe: anAnnouncementClass do: aValuable [
 	"aValuable isBlock ifTrue: [  
 		self error: 'Do not use this message on weak and block because it does not work. We need ephemerons for that']."
 	^	announcer basicSubscribe: (
-			LegacyWeakSubscription new 
+			WeakAnnouncementSubscription new 
 				announcer: announcer;
 				announcementClass: anAnnouncementClass;
 				valuable: aValuable)

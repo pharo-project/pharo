@@ -200,7 +200,7 @@ RBVariableEnvironment >> classVariableSelectorsFor: aClass [
 			[:each | 
 			| cls |
 			cls := self classForName: each.
-			(cls notNil and: [aClass theNonMetaClass includesBehavior: cls]) 
+			(cls notNil and: [aClass instanceSide includesBehavior: cls]) 
 				ifTrue: [classVars addAll: (classVariables at: each)]].
 	classVars do: 
 			[:each | 
@@ -291,7 +291,7 @@ RBVariableEnvironment >> environmentForInstanceVariable: aString in: aClass [
 { #category : #private }
 RBVariableEnvironment >> flushCachesFor: aClass [ 
 	selectorCache isNil ifTrue: [ ^ self] .
-	aClass theNonMetaClass withAllSubclasses do: [ :each | 
+	aClass instanceSide withAllSubclasses do: [ :each | 
 		selectorCache
 			removeKey: each name ifAbsent: [];
 			removeKey: each classSide name ifAbsent: [] ]

@@ -21,7 +21,7 @@ RGMetaclassDefinition class >> class: anORClassDefinition [
 { #category : #variables }
 RGMetaclassDefinition >> allClassVarNames [
 
-	^self theNonMetaClass allClassVarNames
+	^self instanceSide allClassVarNames
 ]
 
 { #category : #variables }
@@ -39,7 +39,7 @@ RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 
 { #category : #accessing }
 RGMetaclassDefinition >> category [
-	^ self theNonMetaClass category
+	^ self instanceSide category
 ]
 
 { #category : #'accessing - parallel hierarchy' }
@@ -92,7 +92,7 @@ RGMetaclassDefinition >> storeOn: aStream [
 	aStream nextPut: $(. 
 	super storeOn: aStream.
 	aStream nextPutAll: ' baseClass:'.
-	self theNonMetaClass storeOn: aStream.
+	self instanceSide storeOn: aStream.
 	aStream nextPut: $).
 	
 

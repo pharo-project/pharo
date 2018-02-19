@@ -47,7 +47,7 @@ SugsSuggestionFactory class >> collectCommandsFrom: aPragmaCollector [
 	aPragmaCollector
 		do: [ :prg | 
 			commands
-				add: (prg methodClass theNonMetaClass perform: prg methodSelector) ].
+				add: (prg methodClass instanceSide perform: prg methodSelector) ].
 	^ commands
 ]
 

@@ -191,7 +191,7 @@ RBCreateAccessorsForVariableRefactoring >> usesAssignmentOf: aString in: aClass 
 		matches: aString , ' := ``@object'
 			do: [ :aNode :answer | answer or: [ aNode isUsed and: [ aNode methodNode selector ~= aString] ] ].
 	definingClass := isClassVar 
-		ifTrue: [ aClass theNonMetaClass ]
+		ifTrue: [ aClass instanceSide ]
 		ifFalse: [ aClass ].
 	^ (definingClass withAllSubclasses , (isClassVar 
 			ifTrue: [ definingClass classSide withAllSubclasses ]

@@ -4,12 +4,12 @@ This baseline describes packages included in the bootstrapped Pharo image.
 It is not supposed to be part of bootstrapped image because it is dependent on Metacello.
 
 This baseline includes several utility methods required to prepare data for the bootstrapping and initial image initialization.
-"
+" 
 Class {
 	#name : #BaselineOfPharoBootstrap,
 	#superclass : #BaselineOf,
 	#category : #BaselineOfPharoBootstrap
-}
+} 
 
 { #category : #accessing }
 BaselineOfPharoBootstrap class >> compilerPackageNames [
@@ -74,7 +74,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Shift-Changes'.
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'Shift-ClassInstaller'.
-		spec package: 'Slot'.
+		spec package: 'Slot-Core'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
 		spec package: 'System-CommandLine'.
@@ -136,7 +136,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Shift-Changes'.
 			'Shift-ClassBuilder'.
 			'Shift-ClassInstaller'.
-			'Slot'.
+			'Slot-Core'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
 			'System-CommandLine'.
