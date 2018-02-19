@@ -27,11 +27,13 @@ Class {
 
 { #category : #example }
 DatePresenter class >> example [
+	<sampleInstance>
 	^ self new openDialogWithSpec
 ]
 
 { #category : #example }
 DatePresenter class >> exampleModal [
+	<sampleInstance>
 	^ self new openDialogWithSpec modalRelativeTo: self currentWorld
 ]
 

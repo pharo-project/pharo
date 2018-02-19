@@ -23,6 +23,7 @@ TabsExample class >> defaultSpec [
 
 { #category : #examples }
 TabsExample class >> example [
+	<sampleInstance>
 	^ self open
 ]
 

@@ -74,6 +74,7 @@ PluggableButtonMorph class >> buildPluggableButtonShortcutsOn: aBuilder [
 
 { #category : #examples }
 PluggableButtonMorph class >> exampleButtonNoAction [
+	<sampleInstance>
 	<exampleWidget>
 
 	^ PluggableButtonMorph

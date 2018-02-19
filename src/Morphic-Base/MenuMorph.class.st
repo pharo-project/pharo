@@ -148,6 +148,7 @@ MenuMorph class >> entitled: aString [
 MenuMorph class >> example [
 	"MenuMorph example openInHand"
 	<example>
+	<sampleInstance>
 	
 	| menu |
 	menu := MenuMorph new.

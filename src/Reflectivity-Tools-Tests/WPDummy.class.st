@@ -32,7 +32,8 @@ WPDummy >> exampleMessageSend [
 ]
 
 { #category : #examples }
-WPDummy >> exampleOperation [ 
+WPDummy >> exampleOperation [
+	<sampleInstance>
 	^ 2+3
 ]
 

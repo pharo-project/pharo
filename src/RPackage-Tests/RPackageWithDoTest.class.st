@@ -64,39 +64,34 @@ RPackageWithDoTest >> packageOrganizerClass [
 
 { #category : #'simple ensure tests' }
 RPackageWithDoTest >> testDo [
-	"self run: #testDo"
-	
-	[self do: [ Error signal]] on:Error do: [:ex|].
-	"necessary else SUnit believe that the error is not handle"
-	self assert: x = 3
-
+	[ self do: [ Error signal ] ]
+		on: Error
+		do: [ :ex |  ].
+	"necessary else SUnit believes that the error is not handled"
+	self assert: x equals: 3
 ]
 
 { #category : #'simple ensure tests' }
 RPackageWithDoTest >> testDo2 [
-	"self run: #testDo2"
-	
-	[self do: [ self error]
-		] on: Error do: [:ex | ].
-	self assert: x = 3
-
+	[ self do: [ self error ] ]
+		on: Error
+		do: [ :ex |  ].
+	"necessary else SUnit believes that the error is not handled"
+	self assert: x equals: 3
 ]
 
 { #category : #'simple ensure tests' }
 RPackageWithDoTest >> testDoC [
-	"self run: #testDoC"
-	
-	[self doC: [ self error]] on: Error do: [:e|].
-	"necessary for SUnit"
-	self assert: x = 3
-
+	[ self doC: [ self error ] ]
+		on: Error
+		do: [ :e |  ].
+	"necessary else SUnit believes that the error is not handled"
+	self assert: x equals: 3
 ]
 
 { #category : #tests }
 RPackageWithDoTest >> testInvariant [
 	"The default invariant"
-	"self run: #testInvariant"
-	
 	self assert: (self packageOrganizerClass default packageNames size > 50).
 	"to be sure that this is real default one"
 	self assert: (self announcer hasSubscriber: self packageOrganizerClass default).
@@ -111,14 +106,11 @@ RPackageWithDoTest >> testInvariant [
 
 { #category : #'simple ensure tests' }
 RPackageWithDoTest >> testOnDo [
-	"self run: #testOnDo"
-	
-	self doOnDo: [ self error].
-	self assert: x = 3.
+	self doOnDo: [ self error ].
+	self assert: x equals: 3.
 	x := 77.
-	self doOnDo: [x = 21].
-	self assert: x = 3
-
+	self doOnDo: [ x = 21 ].
+	self assert: x equals: 3
 ]
 
 { #category : #tests }

@@ -15,6 +15,7 @@ Class {
 
 { #category : #examples }
 InstVarRefLocatorTest >> example1 [
+	<sampleInstance>
 	| ff |
 	(1 < 2) ifTrue: [tt ifNotNil: [ff := 'hallo']].
 	^ ff.
@@ -22,7 +23,8 @@ InstVarRefLocatorTest >> example1 [
 
 { #category : #examples }
 InstVarRefLocatorTest >> example2 [
-	| ff|	
+	<sampleInstance>
+	| ff |	
 	ff := 1.
 	(1 < 2) ifTrue: [ff ifNotNil: [ff := 'hallo']].
 	^ ff.

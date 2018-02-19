@@ -19,9 +19,9 @@ Class {
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleAuthors [
-	"self exampleAuthors "
-	
+	<sampleInstance>
 	| authors blk |
+	
 	authors := OrderedCollection new.
 	blk := [ :mtd | 
 		mtd timeStamp ifNotEmpty: [ :stamp |
@@ -42,6 +42,7 @@ FuzzyMatcherExample class >> exampleAuthors [
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleClasses [
+	<sampleInstance>
 
 	^ self new 
 		pattern: 'mph';
@@ -51,6 +52,7 @@ FuzzyMatcherExample class >> exampleClasses [
 
 { #category : #examples }
 FuzzyMatcherExample class >> examplePackages [
+	<sampleInstance>
 
 	^ self new 
 		pattern: '-st';
@@ -60,6 +62,7 @@ FuzzyMatcherExample class >> examplePackages [
 
 { #category : #examples }
 FuzzyMatcherExample class >> exampleSelectors [
+	<sampleInstance>
 
 	^ self new 
 		pattern: '::::::::::';
