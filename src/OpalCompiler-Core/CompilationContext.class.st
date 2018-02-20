@@ -94,7 +94,7 @@ CompilationContext class >> compilerSpecificSettingsOn: aBuilder [
 { #category : #'instance creation' }
 CompilationContext class >> default [ 
 	^ self new
-		setOptions: self defaultOptions;
+		setOptions: self defaultOptions copy;
 		yourself
 ]
 
@@ -291,7 +291,7 @@ CompilationContext class >> optionsDescription [
 	(- optionLongIvarAccessBytecodes 	'Specific inst var accesses to Maybe context objects')
 	(+ optionOptimizeIR 					'Rewrite jumps in bytecode in a slightly more efficient way')
 	(- optionParseErrors 					'Parse syntactically wrong code')
-	)
+	) 
 ]
 
 { #category : #'options - settings API' }

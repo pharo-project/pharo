@@ -26,3 +26,8 @@ OCReadOnlyVMWarning >> initialize [
 	super initialize.
 	messageText := 'Bytecode compiler is trying to set a literal as read-only but the VM used does not support read-only objects'.
 ]
+
+{ #category : #correcting }
+OCReadOnlyVMWarning >> openMenuIn: aBlock [
+	self error: 'should not be called'
+]

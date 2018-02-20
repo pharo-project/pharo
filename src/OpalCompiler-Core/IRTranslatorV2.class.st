@@ -249,10 +249,16 @@ IRTranslatorV2 >> visitPushInstVar: instVar [
 IRTranslatorV2 >> visitPushLiteral: lit [
 	| literal |
 	literal := lit literal.
-	compilationContext optionReadOnlyLiterals ifTrue: [ 
-		(literal class isImmediateClass and: [ Smalltalk vm supportsWriteBarrier ]) 
-			ifFalse: [ literal beReadOnlyObject ] ].
-	gen pushLiteral: literal 
+	literal class isImmediateClass ifTrue: [ ^ gen pushLiteral: literal ].
+	Smalltalk vm supportsWriteBarrier ifFalse: [ ^ gen pushLiteral: literal ].
+	"For symbol we need to set explicitely to writable or read-only. 
+	 Compilation to read-only then back to writable keep the object 
+	 read-only if we don't set it back to writable."
+	compilationContext optionReadOnlyLiterals
+		ifTrue: [ literal beReadOnlyObject ]
+		ifFalse: [ literal beWritableObject ].
+	^ gen pushLiteral: literal
+	
 ]
 
 { #category : #visiting }
