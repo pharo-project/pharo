@@ -151,7 +151,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Compiler-Tests'.
 		spec package: 'FileSystem-Tests-Core'.
 		spec package: 'Fuel-Tests'.
-		spec package: 'Fuel-Tools-Debugger'.
+		spec package: 'Fuel-Tools-Pharo'.
 		spec package: 'Gofer-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'Kernel-Tests-WithCompiler'.
@@ -387,7 +387,7 @@ BaselineOfIDE >> baseline: spec [
 BaselineOfIDE >> groups: spec [ 
     
 spec group: 'Mandatory-Group' with: #(
-	'Fuel-Tools'	"required by GT-Debugger HudsonBuildTools20"
+	'Fuel-Tools-Pharo'	"required by GT-Debugger HudsonBuildTools20"
 	'Network-Tests'		"required by Multilingual-Tests"
 	'Gofer-Tests'		"required by EpiceaTests Metacello-TestsMC, depends on 'Metacello-Tests-Group', cleanup needed?"
 ). 

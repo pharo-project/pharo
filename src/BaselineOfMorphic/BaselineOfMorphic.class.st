@@ -55,7 +55,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Fuel-Platform-Pharo-Core'.
 		spec package: 'Fuel-Platform-Pharo-07'.
 	
-		spec package: 'Fuel-Tools'.
+		spec package: 'Fuel-Tools-Pharo'.
 
 		spec package: 'Fonts-Abstract'.
 
