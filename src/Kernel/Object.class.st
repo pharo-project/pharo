@@ -1421,8 +1421,9 @@ Object >> modelWakeUpIn: aWindow [
 { #category : #'block support' }
 Object >> mustBeBoolean [
 	"Catches attempts to test truth of non-Booleans.  This message is sent from the VM.  The sending context is rewound to just before the jump causing this exception."
-
-	^ self mustBeBooleanInMagic: thisContext sender
+	^ Boolean mustBeBooleanDeOptimize
+		ifTrue: [ self mustBeBooleanDeOptimizeIn: thisContext sender  ]
+		ifFalse: [ self mustBeBooleanIn: thisContext sender ]
 ]
 
 { #category : #'block support' }
@@ -1442,7 +1443,7 @@ Object >> mustBeBooleanIn: context [
 		- recompile your method with the pragma : <compilerOptions: #(+ optIlineNone)>
 		- recompile your class with the method : MyClass class>>compiler 
 			^ super compiler options: #(+ optIlineNone)
-		- call from this method by Object>>#mustBeBooleanInMagic:"
+		- enable the option mustBeBooleanDeOptimize to call mustBeBooleanDeOptimizeIn: instead of this method "
 
 	| proceedValue |
 	
