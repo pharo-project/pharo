@@ -9,7 +9,7 @@ Class {
 		'identityOrderedAssociations'
 	],
 	#category : #'Collections-Tests-Sequenceable'
-} 
+}
 
 { #category : #testing }
 OrderedDictionaryTest class >> shouldInheritSelectors [
