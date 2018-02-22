@@ -61,7 +61,7 @@ GLMBrick class >> gtExampleZindex [
 		yourself
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> increaseFormExtentCentered: aForm to: aPoint [
 	| icon rect destination |
 	
@@ -73,7 +73,7 @@ GLMBrick class >> increaseFormExtentCentered: aForm to: aPoint [
 	^ icon
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> makeForm32Bit: aForm [
 	aForm ifNil: [ ^ nil ].
 	aForm depth = 32 ifTrue: [ ^ aForm ].
@@ -82,7 +82,7 @@ GLMBrick class >> makeForm32Bit: aForm [
 	^ aForm.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> makeFormTransparent: aForm factor: aFloat [
 	"a float must be in interval [0.0, 1.0]"
 	| a |
@@ -101,7 +101,7 @@ GLMBrick class >> makeFormTransparent: aForm factor: aFloat [
 	^ aForm 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> resizeImage: anImage scale: aScale [
 
 	((aScale > (1@0)) | (aScale > (0@1))) ifTrue: [
@@ -115,14 +115,14 @@ GLMBrick class >> resizeImage: anImage scale: aScale [
 	^ anImage magnify: anImage boundingBox by: aScale smoothing: 2.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> scaleForm: aForm by: aPoint [
 
 	aForm ifNil: [ ^ nil ].
 	^ aForm magnify: aForm boundingBox by: aPoint smoothing: 2
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> scaleForm: aForm to: aPoint [
 	|scaleX scaleY|
 	
@@ -132,7 +132,7 @@ GLMBrick class >> scaleForm: aForm to: aPoint [
 	^ self scaleForm: aForm by: scaleX @ scaleY.
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 GLMBrick class >> scalePatchForm: aForm size: aPoint [
 	"aPoint - width and height of new form
 	
