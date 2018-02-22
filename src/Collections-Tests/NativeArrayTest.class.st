@@ -7,7 +7,7 @@ Class {
 	#category : #'Collections-Tests-Arrayed'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 NativeArrayTest >> alignmentIndexesDo: aBlock [
 	| max |
 	max := self wordSize.
@@ -17,7 +17,7 @@ NativeArrayTest >> alignmentIndexesDo: aBlock [
 				aBlock value: i value: j value: k ] ] ] 
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 NativeArrayTest >> alignments [
 	"Arrays aligned differently on 8 bytes boundary (when turned into byteArrays)"
 	^ #( 
@@ -32,12 +32,12 @@ NativeArrayTest >> alignments [
 	)
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 NativeArrayTest >> guineaPigClasses [
 	^ { ByteArray . DoubleByteArray . WordArray . DoubleWordArray}
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 NativeArrayTest >> guineaPigHerd [
 	"Different alignment, different classes"
 	^ self guineaPigClasses flatCollect: [ :cls |
@@ -76,7 +76,7 @@ NativeArrayTest >> testReplaceFromToWithStartingAt [
 					self assert: (guineaPig at: j + 8) = (copy at: j + 8 - i + k) ] ]
 ]
 
-{ #category : #utils }
+{ #category : #utilities }
 NativeArrayTest >> wordSize [
 	^ Smalltalk wordSize
 ]
