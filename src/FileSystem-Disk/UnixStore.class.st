@@ -12,6 +12,13 @@ UnixStore class >> delimiter [
 	^ $/
 ]
 
+{ #category : #'class initialization' }
+UnixStore class >> fileAttributesPrimitivesClass [
+	"Answer the primitives class to be used to access file attributes"
+
+	^UnixFileAttributesPluginPrims
+]
+
 { #category : #current }
 UnixStore class >> isActiveClass [
 	^ Smalltalk os isUnix and: [ super isActiveClass ]
@@ -32,15 +39,6 @@ UnixStore class >> maxFileNameLength [
 { #category : #public }
 UnixStore class >> separator [ 
 	^ $:
-]
-
-{ #category : #'class initialization' }
-UnixStore class >> useFilePlugin [
-	"Initialise the FileAttributesPrimitives and call my superclass to continue initialisation"
-
-	FileAttributePrimitives := UnixFileAttributesPluginPrims new.
-	super useFilePlugin.
-
 ]
 
 { #category : #public }

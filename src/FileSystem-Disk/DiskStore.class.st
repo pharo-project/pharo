@@ -72,6 +72,13 @@ DiskStore class >> delimiter [
 ]
 
 { #category : #'class initialization' }
+DiskStore class >> fileAttributesPrimitivesClass [
+	"Answer the primitives class to be used to access file attributes"
+
+	^self subclassResponsibility
+]
+
+{ #category : #'class initialization' }
 DiskStore class >> initialize [
 	self useFilePlugin.
 	SessionManager default
@@ -112,7 +119,7 @@ DiskStore class >> startUp: resuming [
 DiskStore class >> useFilePlugin [
 	"Initialise the plugins required by the store and associated directory entries."
 	Primitives := FilePluginPrims new.
-	"FileAttributePrimitives is set by the appropriate subclass"
+	FileAttributePrimitives := self activeClass fileAttributesPrimitivesClass new.
 	FileAttributePrimitives class reset.
 	DiskDirectoryEntry initializeWithPrimitives: FileAttributePrimitives.
 ]

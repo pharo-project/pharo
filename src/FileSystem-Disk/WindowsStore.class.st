@@ -18,6 +18,13 @@ WindowsStore class >> delimiter [
 	^ $\
 ]
 
+{ #category : #'class initialization' }
+WindowsStore class >> fileAttributesPrimitivesClass [
+	"Answer the primitives class to be used to access file attributes"
+
+	^WindowsFileAttributesPluginPrims
+]
+
 { #category : #accessing }
 WindowsStore class >> isCaseSensitive [
 	^ false
@@ -32,15 +39,6 @@ WindowsStore class >> maxFileNameLength [
 { #category : #accessing }
 WindowsStore class >> separator [ 
 	^ $\
-]
-
-{ #category : #'class initialization' }
-WindowsStore class >> useFilePlugin [
-	"Initialise the FileAttributesPrimitives and call my superclass to continue initialisation"
-
-	FileAttributePrimitives := WindowsFileAttributesPluginPrims new.
-	super useFilePlugin.
-
 ]
 
 { #category : #public }
