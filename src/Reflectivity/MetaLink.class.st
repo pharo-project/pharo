@@ -52,6 +52,7 @@ MetaLink class >> defaultOptions [
 	- optionOneShot                     "remove link after first activation"
 	- optionMetalevel                   "force level: 0 for the link"
 	- optionDisabledLink                "links are active by default"
+	+ optionWeakAfter 						  "do not use #ensure: for #after "
 	)
 ]
 
