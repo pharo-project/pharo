@@ -289,7 +289,7 @@ ShiftClassBuilder >> environment: anEnvironment [
 ShiftClassBuilder >> fillFor: aClass [
 	self
 		superclass: aClass superclass;
-		name: aClass name;
+		name: aClass getName;
 		layoutClass: aClass classLayout class;
 		slots: aClass slots ;
 		sharedVariablesFromString: aClass classVariablesString;
