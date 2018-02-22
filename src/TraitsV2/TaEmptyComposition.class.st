@@ -77,6 +77,12 @@ TaEmptyComposition >> copyTraitExpression [
 	
 ]
 
+{ #category : #copying }
+TaEmptyComposition >> copyWithoutTrait: aTrait [
+	^ self
+	
+]
+
 { #category : #comparing }
 TaEmptyComposition >> hash [
 	^ 1
