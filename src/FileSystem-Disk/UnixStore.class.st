@@ -34,6 +34,15 @@ UnixStore class >> separator [
 	^ $:
 ]
 
+{ #category : #'class initialization' }
+UnixStore class >> useFilePlugin [
+	"Initialise the FileAttributesPrimitives and call my superclass to continue initialisation"
+
+	FileAttributePrimitives := UnixFileAttributesPluginPrims new.
+	super useFilePlugin.
+
+]
+
 { #category : #public }
 UnixStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
@@ -46,4 +55,12 @@ UnixStore >> checkName: aFileName fixErrors: fixing [
 	fixing ifFalse: [self error:'Invalid file name'].
 	
 	^ fName copyReplaceAll: self delimiter asString with: '#'
+]
+
+{ #category : #private }
+UnixStore >> fileAttributePrimitives [
+	"Answer the primitives for file attribute and directory enumerating operations.
+	To facilitate testing and initialisation problems, use lazy initialisation for now."
+
+	^FileAttributePrimitives ifNil: [ FileAttributePrimitives := UnixFileAttributesPluginPrims new ]
 ]

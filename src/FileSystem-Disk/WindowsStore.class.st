@@ -34,6 +34,15 @@ WindowsStore class >> separator [
 	^ $\
 ]
 
+{ #category : #'class initialization' }
+WindowsStore class >> useFilePlugin [
+	"Initialise the FileAttributesPrimitives and call my superclass to continue initialisation"
+
+	FileAttributePrimitives := WindowsFileAttributesPluginPrims new.
+	super useFilePlugin.
+
+]
+
 { #category : #public }
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
@@ -56,6 +65,33 @@ WindowsStore >> checkName: aFileName fixErrors: fixing [
 { #category : #converting }
 WindowsStore >> currentDisk [
 	^ disk ifNil: [  disk := FileSystem workingDirectory path segments first ]
+]
+
+{ #category : #private }
+WindowsStore >> fileAttributePrimitives [
+	"Answer the primitives for file attribute and directory enumerating operations.
+	To facilitate testing and initialisation problems, use lazy initialisation for now."
+
+	^FileAttributePrimitives ifNil: [ FileAttributePrimitives := WindowsFileAttributesPluginPrims new ]
+]
+
+{ #category : #private }
+WindowsStore >> nodesAt: aPath do: aBlock [
+
+	| mask drive node |
+
+	aPath isRoot ifFalse: [ ^super nodesAt: aPath do: aBlock ].
+
+	mask := FileAttributePrimitives primLogicalDrives.
+	0 to: 25 do: [ :i |
+		(mask bitAnd: (1 bitShift: i)) ~= 0 ifTrue: [ 
+			drive := String with: (Character value: ($A asciiValue + i)) with: $:.
+			node := Array
+				with: drive
+				with: drive asFileReference attributes statAttributes.
+			aBlock value: node.
+			]
+		].
 ]
 
 { #category : #converting }
