@@ -1,3 +1,6 @@
+"
+Simple class to be traited in the tests
+"
 Class {
 	#name : #ATraitedClass,
 	#superclass : #Object,

@@ -1,3 +1,12 @@
+"
+All the traited class metaclasses are instances of myself.
+
+I include all the custom behavior to implement traits.
+I override a number of methods in Metaclass to implement traits.
+
+Also I have the localMethodDict and the traitComposition of the base class.  
+So it is not needed to recompile the methods from TraitedClass. Check #initializeBasicMethods for more details
+"
 Class {
 	#name : #TraitedMetaclass,
 	#superclass : #Metaclass,
@@ -123,14 +132,12 @@ TraitedMetaclass >> initialize [
 { #category : #initialization }
 TraitedMetaclass >> initializeBasicMethods [
 	| selectors |
+	
+	"When a traited class is created, the methods from TraitedClass are inserted in the classSide of the new class. 
+	So this new class can have traits. The methods are filtered using #isRejectedMethod:"
+	
 	selectors := self class traitedClassTrait selectors reject: [ :e | self isRejectedMethod: e ].
 	selectors do: [ :e | self class traitedClassTrait copyMethod: e into: self replacing: true ]
-]
-
-{ #category : #'initialize-release' }
-TraitedMetaclass >> instanceVariableNames: instVarString [ 
-	
-	^ self slots: instVarString asSlotCollection 
 ]
 
 { #category : #testing }
@@ -152,8 +159,9 @@ TraitedMetaclass >> isLocalAliasSelector: aSymbol [
 
 { #category : #testing }
 TraitedMetaclass >> isLocalMethodsProtocol: aProtocol [
+
+	"Checks if the given protocol includes any local defined selector"	
 	aProtocol methods ifEmpty: [ ^true ].
-	
 	^aProtocol methods anySatisfy: [ :each | self isLocalSelector: each]
 ]
 
@@ -165,11 +173,17 @@ TraitedMetaclass >> isLocalSelector: aSelector [
 
 { #category : #testing }
 TraitedMetaclass >> isRejectedMethod: e [
+	"The method is not installed in method dictionary if:
+	 - It is in the localMethods.
+	 - It is from Class (we already have them) and are not overriden in TraitedClass.
+	"
 	^ (localMethods includesKey: e) or: [ (Class canUnderstand: e) and: [ (TraitedClass methodDict includesKey: e) not ] ] 
 ]
 
 { #category : #testing }
 TraitedMetaclass >> isSelectorToKeep: e [
+	"I have to keep the local methods and the methods from TraitedClass
+	The methods from TraitedClass makes me a class suporting traits, without them I am a normal class"
 	^ (localMethods includesKey: e) or: [ TraitedClass methodDict includesKey: e ].
 ]
 
@@ -191,15 +205,14 @@ TraitedMetaclass >> localSelectors [
 	^ localMethods keys
 ]
 
-{ #category : #adding }
-TraitedMetaclass >> new [
-	| newClass |
-	newClass := super new.
-	^newClass.
-]
-
 { #category : #testing }
 TraitedMetaclass >> originMethod: aMethod [
+
+	"I return the original method for a aMethod.
+	If this is a local method, the original method is itself.
+	If it cames from a trait composition I look for the method in teh trait composition.
+	First I try with the trai staored in the traitSource. 
+	If it is an aliased or conflicting method the method is look up in the whole trait composition"
 
 	(self localMethodDict includesKey: aMethod selector)
 		ifTrue: [ ^ self compiledMethodAt: aMethod selector].
@@ -219,6 +232,9 @@ TraitedMetaclass >> originMethod: aMethod [
 { #category : #testing }
 TraitedMetaclass >> originOfMethod: aMethod [
 
+	"I return the myself or the trait that has the original implementation of a method.
+	If the method is an alias, the returned class includes the original aliased method"
+
 	(aMethod hasProperty: #traitSource) 
 		ifTrue: [ ^ (aMethod propertyAt: #traitSource) innerClass ]. 
 
@@ -233,6 +249,10 @@ TraitedMetaclass >> originOfMethod: aMethod [
 { #category : #initialization }
 TraitedMetaclass >> rebuildMethodDictionary [
 	| selectors removedSelectors modified |
+	
+		"During the creation of the class or after a change in the traitComposition, the whole method dictionary is calculated.
+	If I return true, my users should be updated.
+	Check the version in TraitedClass for more details."
 	
 	modified := false.
 	
@@ -252,6 +272,8 @@ TraitedMetaclass >> rebuildMethodDictionary [
 { #category : #categories }
 TraitedMetaclass >> recategorizeSelector: selector from: oldCategory to: newCategory [
 	| original |
+
+	"When a method is recategorized I have to classify the method, but also recategorize the aliases pointing to it"
 	
 	original := self organization categoryOfElement: selector ifAbsent: [ ^ self ].
 
@@ -276,6 +298,9 @@ TraitedMetaclass >> removeFromComposition: aTrait [
 { #category : #'accessing method dictionary' }
 TraitedMetaclass >> removeSelector: aSelector [
 
+	"When a selector is removed it should be notified to my users.
+	Check the class TraitChange for more details"
+
 	self localMethodDict removeKey: aSelector ifAbsent: [  ].
 	super removeSelector: aSelector.
 	TraitChange removeSelector: aSelector on: self.
@@ -285,24 +310,6 @@ TraitedMetaclass >> removeSelector: aSelector [
 TraitedMetaclass >> slots [
 
 	^ super slots reject: [ :e | composition slots includes: e ]
-]
-
-{ #category : #'initialize-release' }
-TraitedMetaclass >> slots: slotCollection [ 
-
-	| theClass |
-	theClass := self instanceSide.
-		
-	theClass := theClass classInstaller update: theClass to: [ :builder |
-		builder
-			fillFor: theClass;
-			classSlots: slotCollection ].
-	^ theClass classSide
-]
-
-{ #category : #accessing }
-TraitedMetaclass >> slotsWithoutTraits [
-	^ self slots reject: [ :e | TraitedClass slots anySatisfy: [ :x | x name = e name ] ] 
 ]
 
 { #category : #accessing }

@@ -1,3 +1,6 @@
+"
+Abstract Test of all the TraitsV2 tests
+"
 Class {
 	#name : #T2AbstractTest,
 	#superclass : #TestCase,

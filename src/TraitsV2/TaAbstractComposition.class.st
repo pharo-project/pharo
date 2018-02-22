@@ -323,7 +323,7 @@ TaAbstractComposition >> isEmpty [
 	^ false
 ]
 
-{ #category : #'*TraitsV2' }
+{ #category : #testing }
 TaAbstractComposition >> isLocalAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias I define."
 	^ false

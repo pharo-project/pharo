@@ -1,3 +1,6 @@
+"
+Test Class used in the Traits tests
+"
 Class {
 	#name : #T2TestClass,
 	#superclass : #Object,

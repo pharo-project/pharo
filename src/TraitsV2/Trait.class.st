@@ -1,3 +1,20 @@
+"
+My instances are the traits used to create traited classes.
+The traits can be combined in different ways check TaAbstractComposition to see the different possible operations.
+
+I am a subclass of Class, and I implement the specific behavior for traits.
+So, the traits are polymorphic with classes.
+
+I support stateful traits. 
+Also Traits uses other metaclass to implement the behavior, check MetaclassForTraits. 
+
+Also a nice diagram can be seen evaluating:
+
+((ZnEasy getPng: 'https://raw.githubusercontent.com/wiki/pharo-project/pharo/figures/traits.png') 
+	asMorph resize: 800@800; openInWindow) 
+
+
+"
 Class {
 	#name : #Trait,
 	#superclass : #Class,
@@ -75,16 +92,20 @@ Trait class >> named: aName uses: aTraitCompositionOrCollection slots: someSlots
 
 { #category : #accessing }
 Trait >> + anotherTrait [
+	"I return my self in a sequence with anotherTrait"
 	^ self asTraitComposition + anotherTrait asTraitComposition
 ]
 
 { #category : #accessing }
 Trait >> - anArray [
+	"I return myself with a removed method. Check TaAbstractComposition >> #- for more details"
+
 	^ self asTraitComposition - anArray
 ]
 
 { #category : #accessing }
 Trait >> @ anArray [
+	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
 	^ self asTraitComposition @ anArray
 ]
 
@@ -160,12 +181,14 @@ Trait >> isTrait [
 
 { #category : #'organization updating' }
 Trait >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
 ]
 
 { #category : #'accessing method dictionary' }
 Trait >> rebuildMethodDictionary [
+	"I extend the behavior in TraitedMetaclass propagating the changes to my users"
 	self doRebuildMethodDictionary ifFalse: [ ^ false ].
 	self users do: [ :e | e rebuildMethodDictionary ].
 	^ true
@@ -174,6 +197,12 @@ Trait >> rebuildMethodDictionary [
 { #category : #'initialize-release' }
 Trait >> removeFromSystem: logged [
 	
+	"When a trait is removed from the system it should:
+	
+	- Remove it self from its trait compositions.
+	- Remove it self from its users.
+	- Remove its classTrait from its users.
+	- Do what any class does."
 	self traitComposition removeUser: self.
 	self class traitComposition removeUser: self class.
 	

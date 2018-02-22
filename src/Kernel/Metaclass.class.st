@@ -314,22 +314,15 @@ Metaclass >> sharedPools [
 ]
 
 { #category : #'initialize-release' }
-Metaclass >> slots: slotsDefinition [ 
-	"Declare additional named variables for my instance."
+Metaclass >> slots: slotCollection [ 
+
 	| theClass |
 	theClass := self instanceSide.
-	
-	theClass := theClass classInstaller make: [ :builder |
+		
+	theClass := theClass classInstaller update: theClass to: [ :builder |
 		builder
-			superclass: theClass superclass;
-			name: theClass name;
-			layoutClass: theClass classLayout class;
-			slots: theClass slots;
-			sharedVariablesFromString: theClass classVariablesString;
-			sharedPools: theClass sharedPoolsString;
-			traitComposition: theClass traitComposition;
-			category: theClass category asString;
-			classSlots: slotsDefinition].
+			fillFor: theClass;
+			classSlots: slotCollection ].
 	^ theClass classSide
 ]
 

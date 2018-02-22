@@ -1,3 +1,7 @@
+"
+I am the metaclass used for traits.
+I implement all the behavior for the classSide traits.
+"
 Class {
 	#name : #MetaclassForTraits,
 	#superclass : #TraitedMetaclass,
@@ -9,12 +13,13 @@ Class {
 
 { #category : #operations }
 MetaclassForTraits >> + anotherTrait [
-	
+	"I return my self in a sequence with anotherTrait"
 	^ self asTraitComposition + anotherTrait asTraitComposition
 ]
 
 { #category : #composition }
 MetaclassForTraits >> @ anArray [
+	"I return myself with an aliased method. Check TaAbstractComposition >> #@ for more details"
 	^ self asTraitComposition @ anArray
 ]
 
@@ -78,6 +83,7 @@ MetaclassForTraits >> name [
 
 { #category : #'organization updating' }
 MetaclassForTraits >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
+	"When there is a recategorization of a selector, I propagate the changes to my users"
 	super notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory.
 	self traitUsers do: [ :e | e recategorizeSelector: selector from: oldCategory to: newCategory ].
 ]
@@ -91,6 +97,7 @@ MetaclassForTraits >> printOn: aStream [
 
 { #category : #initialization }
 MetaclassForTraits >> rebuildMethodDictionary [
+	"I extend the behavior in TraitedMetaclass propagating the changes to my users"
 	super rebuildMethodDictionary ifFalse: [ ^ false].
 	self users do: [ :e | e rebuildMethodDictionary ].
 	^ true

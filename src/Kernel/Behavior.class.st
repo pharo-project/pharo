@@ -1507,6 +1507,9 @@ Behavior >> obsoleteSubclasses [
 
 { #category : #testing }
 Behavior >> originMethod: aMethod [
+	"I return the original method for a aMethod.
+	When in a normal class it is the same. Enhanced classes (eg. TraitedClasses)
+	can do something difference"
 
 	^ aMethod
 
@@ -1515,6 +1518,8 @@ Behavior >> originMethod: aMethod [
 { #category : #testing }
 Behavior >> originOfMethod: aMethod [
 
+	"I return the origin of my given method. In a basic class is always self.
+	Enhanced classes (eg. TraitedClasses) can do something else"
 	^ self	
 
 ]
