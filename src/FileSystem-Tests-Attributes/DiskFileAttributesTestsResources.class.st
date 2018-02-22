@@ -1,16 +1,3 @@
-"
-DiskFileAttributesTestsResources provides a file with known attributes that can be used to test attribute retrieval in the File System.
-
-DiskFileAttributesTestsResources is currently used by FileReferenceAttributeTests.
-
-    Instance Variables
-	afterCreationTime:	The time just after file was created	<DateAndTime>
-	beforeCreationTime:	The time just before file was created	<DateAndTime>
-	file:					The name of the file (with known attributes)	<FileReference>
-
-
-    Implementation Points
-"
 Class {
 	#name : #DiskFileAttributesTestsResources,
 	#superclass : #TestResource,
