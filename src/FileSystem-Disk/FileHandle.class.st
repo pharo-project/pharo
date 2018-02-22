@@ -86,6 +86,18 @@ FileHandle >> binaryReadStream [
 				yourself ]
 ]
 
+{ #category : #'streams-compatibility' }
+FileHandle >> binaryWriteStream [
+	"Answer a binary write stream on the reciver"
+
+	^ (FileStream onHandle: self)
+		ifNil: [ self streamError ]
+		ifNotNil: [ :stream | 
+			stream
+				binary;
+				yourself ]
+]
+
 { #category : #public }
 FileHandle >> close [
 	Primitives close: id.
