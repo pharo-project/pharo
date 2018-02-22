@@ -496,6 +496,25 @@ ReflectivityReificationTest >> testReifyReceiverOnSendWithArguments [
 	self assert: beforeSize equals: 2.
 ]
 
+{ #category : #'tests - sends' }
+ReflectivityReificationTest >> testReifyReceiverOnSendWithArgumentsAfter [
+	| sendNode instance beforeSize |
+	sendNode := (ReflectivityExamples>>#exampleSendNoReturn) ast body statements last.
+	beforeSize := 0.
+	link := MetaLink new 
+		metaObject: [:receiver | beforeSize := receiver size]; 
+		selector: #value:;
+		control: #after;
+		arguments: #(receiver).
+	sendNode link: link.
+	self assert: sendNode hasMetalink.
+	self assert: (ReflectivityExamples>>#exampleSendNoReturn) class equals: ReflectiveMethod.
+	self assert: beforeSize equals: 0.
+	instance := ReflectivityExamples new .
+	instance exampleSendNoReturn.
+	self assert: beforeSize equals: 1.
+]
+
 { #category : #'tests - return' }
 ReflectivityReificationTest >> testReifyReturnValue [
 	| returnNode instance |
