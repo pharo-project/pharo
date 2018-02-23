@@ -20,7 +20,7 @@ RPackageTest >> tearDown [
 RPackageTest >> testActualClassTags [
 
 	| packageWithoutClassTags packageWithClassTags |
-	packageWithoutClassTags := RPackageOrganizer default packageOf: Announcement.
+	packageWithoutClassTags := RPackageOrganizer default packageOf: StartupAction.
 	self deny: packageWithoutClassTags classTags isEmpty.
 	self assert: packageWithoutClassTags actualClassTags isEmpty.
 	
