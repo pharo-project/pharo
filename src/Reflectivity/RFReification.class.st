@@ -35,6 +35,14 @@ RFReification class >> for: aSelector [
 	^ self subclasses detect: [ :class | class key = aSelector ]
 ]
 
+{ #category : #testing }
+RFReification class >> isUsed [
+	"all my sublasses are used"
+	^self name = 'RFReification'
+		ifTrue: [ super isUsed ]
+		ifFalse: [ true ]
+]
+
 { #category : #'plugin interface' }
 RFReification class >> key [
 	^self subclassResponsibility

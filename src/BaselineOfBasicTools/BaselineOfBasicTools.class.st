@@ -103,7 +103,10 @@ BaselineOfBasicTools >> baseline: spec [
 { #category : #actions }
 BaselineOfBasicTools >> postload: loader package: packageSpec [
 
+	"Registering Nautilus"
  	Nautilus registerToolsOn: Smalltalk tools.
+	SessionManager default registerToolClassNamed: #Nautilus.
+	
 	Smalltalk tools register: TestRunner as: #testRunner.
 	Smalltalk tools register: MCWorkingCopyBrowser as: #monticelloBrowser.
 	

@@ -25,3 +25,9 @@ Object >> dragTransferTypeForMorph: dragSource [
 Object >> wantsDroppedMorph: aMorph event: anEvent inMorph: destinationLM [ 
 	^false 
 ]
+
+{ #category : #'*Morphic-Widgets-Basic' }
+Object >> withoutListWrapper [
+
+	^self
+]

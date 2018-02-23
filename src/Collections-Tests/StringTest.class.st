@@ -331,6 +331,7 @@ StringTest >> secondIndex [
 
 { #category : #running }
 StringTest >> setUp [
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
 	super setUp.
 	string := 'Hi, I am a String'.
 	emptyString := ''.
@@ -1733,22 +1734,22 @@ StringTest >> testSubstrings [
 
 { #category : #tests }
 StringTest >> testTranslateToLowercase [
-
-self assert: ('test this string' translateToLowercase) = 'test this string'.
-self assert: (' Test THIS sTRing' translateToLowercase) = ' test this string'.
-self assert: ('' translateToLowercase) = ''.
-self assert: ('ÔÜÖ' translateToLowercase) = 'ôüö'.
-self assert: ('123éàôüÖẞ' translateToLowercase) = '123éàôüöẞ'. 
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	self assert: ('test this string' translateToLowercase) = 'test this string'.
+	self assert: (' Test THIS sTRing' translateToLowercase) = ' test this string'.
+	self assert: ('' translateToLowercase) = ''.
+	self assert: ('ÔÜÖ' translateToLowercase) = 'ôüö'.
+	self assert: ('123éàôüÖẞ' translateToLowercase) = '123éàôüöẞ'. 
 ]
 
 { #category : #tests }
 StringTest >> testTranslateToUppercase [
-
-self assert: ('test this string' translateToUppercase) = 'TEST THIS STRING'.
-self assert: (' Test THIS sTRing' translateToUppercase) = ' TEST THIS STRING'.
-self assert: ('' translateToUppercase) = ''.
-self assert: ('ÔÜÖ' translateToUppercase) = 'ÔÜÖ'.
-self assert: ('123éàôüÖẞ' translateToUppercase) = '123ÉÀÔÜÖẞ'.
+	<compilerOptions: #(#- #optionReadOnlyLiterals)>
+	self assert: ('test this string' translateToUppercase) = 'TEST THIS STRING'.
+	self assert: (' Test THIS sTRing' translateToUppercase) = ' TEST THIS STRING'.
+	self assert: ('' translateToUppercase) = ''.
+	self assert: ('ÔÜÖ' translateToUppercase) = 'ÔÜÖ'.
+	self assert: ('123éàôüÖẞ' translateToUppercase) = '123ÉÀÔÜÖẞ'.
 ]
 
 { #category : #'tests - converting' }

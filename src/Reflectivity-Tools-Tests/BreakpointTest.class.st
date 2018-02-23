@@ -11,7 +11,7 @@ Class {
 	#category : #'Reflectivity-Tools-Tests'
 }
 
-{ #category : #utils }
+{ #category : #utilities }
 BreakpointTest >> newDummyClass [
 	^ Object
 		subclass: #DummyClassForBreakpoint
