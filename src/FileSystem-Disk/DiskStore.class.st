@@ -97,8 +97,16 @@ DiskStore class >> maxFileNameLength [
 
 { #category : #current }
 DiskStore class >> reset [
+	"Reset the class as part of session startup and shutdown"
+	| fileAttributesClass |
+
 	DefaultWorkingDirectory := nil.
-	CurrentFS := nil
+	CurrentFS := nil.
+	"Initialise the FileAttributes primitives and set the default instance"
+	fileAttributesClass := self activeClass fileAttributesPrimitivesClass.
+	fileAttributesClass reset.
+	FileAttributePrimitives := fileAttributesClass new.
+	DiskDirectoryEntry initializeWithPrimitives: FileAttributePrimitives.
 ]
 
 { #category : #'system startup' }
@@ -117,16 +125,10 @@ DiskStore class >> startUp: resuming [
 
 { #category : #'class initialization' }
 DiskStore class >> useFilePlugin [
-	"Initialise the plugins required by the store and associated directory entries."
-
-	| fileAttributesClass |
+	"Initialise the plugins required by the store"
 
 	Primitives := FilePluginPrims new.
-	"Initialise the FileAttributes primitives and set the default instance"
-	fileAttributesClass := self activeClass fileAttributesPrimitivesClass.
-	fileAttributesClass reset.
-	FileAttributePrimitives := fileAttributesClass new.
-	DiskDirectoryEntry initializeWithPrimitives: FileAttributePrimitives.
+
 ]
 
 { #category : #comparing }
