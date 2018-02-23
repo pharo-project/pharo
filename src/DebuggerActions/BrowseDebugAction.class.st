@@ -60,6 +60,12 @@ BrowseDebugAction class >> debugActionsFor: aDebugger [
 			keymap: PharoShortcuts current browseShortcut;
 			label: 'Browse full'.
 		self new
+			id: #browseReceiver;
+			order: initilOrder + 41;
+			"keymap: PharoShortcuts current browseShortcut;"
+			label: 'Browse receiver'.
+		
+		self new
 			id: #fileOutMessage;
 			order: initilOrder + 45;
 			label: 'File out'.

@@ -63,6 +63,14 @@ GTBrowsingActions >> browseMethodFull [
 ]
 
 { #category : #actions }
+GTBrowsingActions >> browseReceiver [
+	"Create and schedule a full Browser and then select the current class and message."
+	self currentContext receiver class ifNotNil: [ :instance |
+		Smalltalk tools browser 
+			openOnClass: instance ]
+]
+
+{ #category : #actions }
 GTBrowsingActions >> browseSendersOfMessages [
 	"Present a menu of the current message, as well as all messages sent by it.  Open a message set browser of all senders of the selector chosen."
 
