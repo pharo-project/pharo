@@ -510,13 +510,6 @@ Trait >> ephemeronSubclass: t instanceVariableNames: f
 			copyClassSlotsFromExistingClass ].
 ]
 
-{ #category : #viewer }
-Trait >> externalName [
-	"Answer a name by which the receiver can be known."
-
-	^ self name
-]
-
 { #category : #private }
 Trait >> getName [
 	^ self name
