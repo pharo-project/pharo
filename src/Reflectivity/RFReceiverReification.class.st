@@ -2,43 +2,41 @@
 I reify the receiver of a Message or a method
 "
 Class {
-	#name : #RFEReceiverReification,
+	#name : #RFReceiverReification,
 	#superclass : #RFReification,
 	#category : #'Reflectivity-Links'
 }
 
 { #category : #'plugin interface' }
-RFEReceiverReification class >> entities [
+RFReceiverReification class >> entities [
 	^{RBMethodNode. RBMessageNode}
 ]
 
 { #category : #'plugin interface' }
-RFEReceiverReification class >> key [
+RFReceiverReification class >> key [
 	^#receiver
 ]
 
 { #category : #generate }
-RFEReceiverReification >> genForRBMessageNode [
+RFReceiverReification >> genForRBMessageNode [
 	^RBTemporaryNode named: #RFReceiverReificationVar.
 ]
 
 { #category : #generate }
-RFEReceiverReification >> genForRBMethodNode [
-	^RBMessageNode 
-		receiver: (RBVariableNode named: 'thisContext')
-		selector: #receiver 
+RFReceiverReification >> genForRBMethodNode [
+	^RBVariableNode named: 'self'
 	
 ]
 
 { #category : #generate }
-RFEReceiverReification >> preamble: aNode [
+RFReceiverReification >> preamble: aNode [
 	^aNode isMessage 
 		ifTrue: [self preambleForMessage: aNode]
 		ifFalse: [{}]
 ]
 
 { #category : #generate }
-RFEReceiverReification >> preambleForMessage: aNode [
+RFReceiverReification >> preambleForMessage: aNode [
 	| preamble |
 	preamble := OrderedCollection new.
 
