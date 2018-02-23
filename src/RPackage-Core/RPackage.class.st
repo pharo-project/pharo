@@ -222,7 +222,7 @@ RPackage >> addClassDefinitionName: aClassName [
 		ifTrue: [ ^ self ].
 	classes add: aClassNameSymbol.
 	self extendedMethodsShouldBecomeDefinedWhenAddingClassName: aClassNameSymbol.
-	self registerClassName: aClassNameSymbol
+	self isRegistered ifTrue: [ self registerClassName: aClassNameSymbol]
 ]
 
 { #category : #'class tags' }
@@ -269,21 +269,22 @@ RPackage >> addExtensionMethod: aCompiledMethod [
 				ifAbsentPut: [ Set new ]) 
 					add: aCompiledMethod selector].
 	"we added a method extension so the receiver is an extending package of the class"
-	self organizer registerExtendingPackage: self forClass: methodClass.
+	self isRegistered ifTrue: [ 
+		self organizer registerExtendingPackage: self forClass: methodClass].
 	aCompiledMethod adoptToBeExtensionIn: self
 ]
 
 { #category : #'compiled method handling' }
 RPackage >> addMethod: aCompiledMethod [ 
 	"Add the method to the receiver as a defined method if the class is  defined in it, else as an extension."
-	| methodClass oldPackage |
-	oldPackage := aCompiledMethod package.
-	self = oldPackage ifTrue: [ ^self ].
-	methodClass := aCompiledMethod methodClass. 
-	(self includesClass: methodClass ) 
+	| oldPackage |
+	(self includesMethod: aCompiledMethod) ifTrue: [ ^self ].
+	oldPackage := aCompiledMethod package.	
+	(self includesClass: aCompiledMethod origin ) 
 		ifTrue: [ self addNonExtensionMethod: aCompiledMethod ]
 		ifFalse: [self addExtensionMethod: aCompiledMethod].
-	oldPackage removeMethod: aCompiledMethod.
+	(self ~= oldPackage and: [oldPackage includesMethod: aCompiledMethod])
+		ifTrue: [ oldPackage removeMethod: aCompiledMethod].
 	self fixExtensionProtocolOf: aCompiledMethod
 ]
 
@@ -919,7 +920,7 @@ RPackage >> includesExtensionSelector: aSelector ofMetaclassName: aClassName [
 
 { #category : #'system compatibility' }
 RPackage >> includesMethod: aSymbol ofClass: aClass [
-
+	self flag: #denis. "this method should be removed. I added simple #includesMethod:"
 	self flag: #stef. "only used by RB"
 	self flag: #cyrille. "looks like a bogus implementation because category have nothing to do with the fact that a method is in package or not."
 	"CD: Indeed, it looks strange. 
@@ -1010,6 +1011,11 @@ RPackage >> isOverrideOfYourMethod: aMethodReference [
 	"Answers true if the argument overrides a method in this package"
 	^ (self isYourClassExtension: aMethodReference category) not and:
 		[(self changeRecordForOverriddenMethod: aMethodReference) notNil]
+]
+
+{ #category : #testing }
+RPackage >> isRegistered [
+	^self organizer includesPackage: self
 ]
 
 { #category : #'system compatibility' }

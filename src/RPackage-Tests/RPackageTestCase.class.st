@@ -39,21 +39,21 @@ RPackageTestCase >> createNewClassNamed: aName inCategory: cat [
 	^ cls
 ]
 
-{ #category : #utilities }
+{ #category : #utility }
 RPackageTestCase >> createNewClassNamed: aName inPackage: p [
 	
 	| cls |
 	cls := self createNewClassNamed: aName.
-	p addClassDefinition: cls.
+	p addClass: cls.
 	^ cls
 ]
 
-{ #category : #utilities }
+{ #category : #utility }
 RPackageTestCase >> createNewPackageNamed: aName [
 
 	| pack |
 	self removePackage: aName.
-	pack := self packageClass named: aName.
+	pack := self organizer createPackageNamed: aName.
 	createdPackages add: pack.
 	^ pack
 ]
@@ -109,10 +109,12 @@ RPackageTestCase >> packageOrganizerClass [
 	^ RPackageOrganizer
 ]
 
-{ #category : #utilities }
+{ #category : #utility }
 RPackageTestCase >> removePackage: aName [
-	self packageClass organizer basicUnregisterPackageNamed: aName.
+	(self organizer includesPackageNamed: aName) ifFalse: [ ^self ].
 	
+	(self organizer packageNamed: aName) 
+		removeFromSystem
 ]
 
 { #category : #'announcer handling' }
