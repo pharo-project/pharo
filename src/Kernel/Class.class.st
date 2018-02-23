@@ -666,13 +666,6 @@ Class >> ephemeronSubclass: t instanceVariableNames: f
 			copyClassSlotsFromExistingClass ].
 ]
 
-{ #category : #viewer }
-Class >> externalName [
-	"Answer a name by which the receiver can be known."
-
-	^ self name
-]
-
 { #category : #private }
 Class >> getName [
 
