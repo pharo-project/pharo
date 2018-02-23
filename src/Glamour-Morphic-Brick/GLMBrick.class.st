@@ -13,7 +13,7 @@ brickBounds
 ports
 	- dictionary of phlow bindings. is not implemented yet
 
-"
+" 
 Class {
 	#name : #GLMBrick,
 	#superclass : #GLMBrickedMorph,
